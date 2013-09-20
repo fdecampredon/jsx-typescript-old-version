@@ -3808,7 +3808,7 @@ module TypeScript {
                 case NodeType.PreDecrementExpression:
                     // Check that operand is classified as a reference 
 
-                    if (!this.isValidLHS(unaryExpression.operand, expression)) {
+                    if (!this.isReference(unaryExpression.operand, expression)) {
                         context.postError(this.unitPath, unaryExpression.operand.minChar, unaryExpression.operand.getLength(), DiagnosticCode.The_operand_of_an_increment_or_decrement_operator_must_be_a_variable_property_or_indexer, null);
                     }
 
@@ -3816,39 +3816,50 @@ module TypeScript {
             }
         }
 
-        private resolveBinaryArithmeticExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.numberTypeSymbol, context);
-
-            if (this.canTypeCheckAST(ast, context)) {
-                this.typeCheckBinaryArithmeticExpression(ast, enclosingDecl, context);
+        private resolveBinaryArithmeticExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            if (this.canTypeCheckAST(binaryExpression, context)) {
+                this.typeCheckBinaryArithmeticExpression(binaryExpression, enclosingDecl, context);
             }
 
+            // September 17, 2013: The result is always of the Number primitive type.
             return this.semanticInfoChain.numberTypeSymbol;
         }
 
-        private typeCheckBinaryArithmeticExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
+        private typeCheckBinaryArithmeticExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            this.setTypeChecked(binaryExpression, context);
 
-            var binaryExpression = <BinaryExpression>ast;
-
-            var lhsSymbol = this.resolveAST(binaryExpression.operand1, false, enclosingDecl, context);
+            var lhsSymbol = this.resolveAST(binaryExpression.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
 
             var lhsType = lhsSymbol.type;
-            var rhsType = this.resolveAST(binaryExpression.operand2, false, enclosingDecl, context).type;
+            var rhsType = this.resolveAST(binaryExpression.operand2, /*inContextuallyTypedAssignment:*/false, enclosingDecl, context).type;
 
+            // September 17, 2013:
+            // If one operand is the null or undefined value, it is treated as having the 
+            // type of the other operand.
+            if (lhsType === this.semanticInfoChain.nullTypeSymbol || lhsType === this.semanticInfoChain.undefinedTypeSymbol) {
+                lhsType = rhsType;
+            }
+
+            if (rhsType === this.semanticInfoChain.nullTypeSymbol || rhsType === this.semanticInfoChain.undefinedTypeSymbol) {
+                rhsType = lhsType;
+            }
+
+            // September 17, 2013:
+            // 4.15.1	The *, /, %, –, <<, >>, >>>, &, ^, and | operators
+            // These operators require their operands to be of type Any, the Number primitive type,
+            // or an enum type
             var lhsIsFit = this.isAnyOrEquivalent(lhsType) || lhsType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(lhsType);
             var rhsIsFit = this.isAnyOrEquivalent(rhsType) || rhsType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(rhsType);
 
             if (!rhsIsFit) {
-                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_right_hand_side_of_an_arithmetic_operation_must_be_of_type_any_number_or_an_enum_type, null);
+                context.postError(this.unitPath, binaryExpression.operand2.minChar, binaryExpression.operand2.getLength(), DiagnosticCode.The_right_hand_side_of_an_arithmetic_operation_must_be_of_type_any_number_or_an_enum_type, null);
             }
 
             if (!lhsIsFit) {
-                context.postError(this.unitPath, binaryExpression.operand2.minChar, binaryExpression.operand2.getLength(), DiagnosticCode.The_left_hand_side_of_an_arithmetic_operation_must_be_of_type_any_number_or_an_enum_type, null);
+                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_left_hand_side_of_an_arithmetic_operation_must_be_of_type_any_number_or_an_enum_type, null);
             }
 
-            // If we havne't already reported an error, then check for assignment compatibility.
-            if (rhsIsFit && lhsIsFit) {
+            if (lhsIsFit && rhsIsFit) {
                 switch (binaryExpression.nodeType()) {
                     case NodeType.LeftShiftAssignmentExpression:
                     case NodeType.SignedRightShiftAssignmentExpression:
@@ -3861,44 +3872,42 @@ module TypeScript {
                     case NodeType.AndAssignmentExpression:
                     case NodeType.ExclusiveOrAssignmentExpression:
                         // Check if LHS is a valid target
-                        if (!this.isValidLHS(binaryExpression.operand1, lhsSymbol)) {
+                        if (!this.isReference(binaryExpression.operand1, lhsSymbol)) {
                             context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.Invalid_left_hand_side_of_assignment_expression, null);
                         }
 
                         this.checkAssignability(binaryExpression.operand1, rhsType, lhsType, enclosingDecl, context);
-                        break;
                 }
             }
         }
 
-        private resolveTypeOfExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.stringTypeSymbol, context);
-
+        private resolveTypeOfExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckTypeOfExpression(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The typeof operator takes an operand of any type and produces 
+            // a value of the String primitive type
             return this.semanticInfoChain.stringTypeSymbol;
         }
 
-        private typeCheckTypeOfExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckTypeOfExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(ast, context);
-            this.resolveAST((<UnaryExpression>ast).operand, false, enclosingDecl, context);
+            this.resolveAST(ast.operand, /*inContextuallyTypedAssignment*/ false, enclosingDecl, context);
         }
 
-        private resolveThrowStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
+        private resolveThrowStatement(ast: ThrowStatement, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckThrowStatement(ast, enclosingDecl, context);
             }
 
+            // All statements have the 'void' type.
             return this.semanticInfoChain.voidTypeSymbol;
         }
 
-        private typeCheckThrowStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckThrowStatement(ast: ThrowStatement, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(ast, context);
-            this.resolveAST((<ThrowStatement>ast).expression, false, enclosingDecl, context);
+            this.resolveAST(ast.expression, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
         private resolveDeleteStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -4728,9 +4737,7 @@ module TypeScript {
                 case NodeType.ModuloAssignmentExpression:
                 case NodeType.OrAssignmentExpression:
                 case NodeType.AndAssignmentExpression:
-                    // PERFREVIEW   
-                    return this.resolveBinaryArithmeticExpression(ast, enclosingDecl, context);
-                //return this.semanticInfoChain.numberTypeSymbol;
+                    return this.resolveBinaryArithmeticExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.ElementAccessExpression:
                     return this.resolveIndexExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
@@ -4742,12 +4749,10 @@ module TypeScript {
                     return this.resolveLogicalAndExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.TypeOfExpression:
-                    return this.resolveTypeOfExpression(ast, enclosingDecl, context);
-                //return this.semanticInfoChain.stringTypeSymbol;
+                    return this.resolveTypeOfExpression(<UnaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.ThrowStatement:
-                    return this.resolveThrowStatement(ast, enclosingDecl, context);
-                //return this.semanticInfoChain.voidTypeSymbol;
+                    return this.resolveThrowStatement(<ThrowStatement>ast, enclosingDecl, context);
 
                 case NodeType.DeleteExpression:
                     return this.resolveDeleteStatement(ast, enclosingDecl, context);
@@ -4988,7 +4993,7 @@ module TypeScript {
                 case NodeType.ModuloAssignmentExpression:
                 case NodeType.OrAssignmentExpression:
                 case NodeType.AndAssignmentExpression:
-                    this.typeCheckBinaryArithmeticExpression(ast, enclosingDecl, context);
+                    this.typeCheckBinaryArithmeticExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.ElementAccessExpression:
@@ -5000,11 +5005,11 @@ module TypeScript {
                     return;
 
                 case NodeType.TypeOfExpression:
-                    this.typeCheckTypeOfExpression(ast, enclosingDecl, context);
+                    this.typeCheckTypeOfExpression(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.ThrowStatement:
-                    this.typeCheckThrowStatement(ast, enclosingDecl, context);
+                    this.typeCheckThrowStatement(<ThrowStatement>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.DeleteExpression:
@@ -6824,7 +6829,7 @@ module TypeScript {
                 if (binaryExpression.nodeType() === NodeType.AddAssignmentExpression) {
                     // Check if LHS is a valid target
                     var lhsExpression = this.resolveAST(binaryExpression.operand1, false, enclosingDecl, context);
-                    if (!this.isValidLHS(binaryExpression.operand1, lhsExpression)) {
+                    if (!this.isReference(binaryExpression.operand1, lhsExpression)) {
                         context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.Invalid_left_hand_side_of_assignment_expression, null);
                     }
 
@@ -7870,7 +7875,7 @@ module TypeScript {
             // Check if LHS is a valid target
             if (this.canTypeCheckAST(binaryExpression, context)) {
                 this.setTypeChecked(binaryExpression, context);
-                if (!this.isValidLHS(binaryExpression.operand1, leftExpr)) {
+                if (!this.isReference(binaryExpression.operand1, leftExpr)) {
                     context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.Invalid_left_hand_side_of_assignment_expression, null);
                 }
                 else {
@@ -11038,7 +11043,7 @@ module TypeScript {
             }
         }
 
-        private isValidLHS(ast: AST, astSymbol: PullSymbol): boolean {
+        private isReference(ast: AST, astSymbol: PullSymbol): boolean {
             // References are the subset of expressions that are permitted as the target of an 
             // assignment.Specifically, references are combinations of identifiers(section 4.3),
             // parentheses(section 4.7), and property accesses(section 4.10).All other expression
@@ -11046,7 +11051,7 @@ module TypeScript {
 
             if (ast.nodeType() === NodeType.ParenthesizedExpression) {
                 // A parenthesized LHS is valid if the expression it wraps is valid.
-                return this.isValidLHS((<ParenthesizedExpression>ast).expression, astSymbol);
+                return this.isReference((<ParenthesizedExpression>ast).expression, astSymbol);
             }
 
             if (ast.nodeType() !== NodeType.Name && ast.nodeType() !== NodeType.MemberAccessExpression && ast.nodeType() !== NodeType.ElementAccessExpression) {
