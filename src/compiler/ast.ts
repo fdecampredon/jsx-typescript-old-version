@@ -869,7 +869,7 @@ module TypeScript {
             return NodeType.Parameter;
         }
 
-        public isOptionalArg(): boolean { return this.isOptional || this.init; }
+        public isOptionalArg(): boolean { return this.isOptional || this.init !== null; }
 
         public emitWorker(emitter: Emitter) {
             emitter.writeToOutputWithSourceMapRecord(this.id.actualText, this);

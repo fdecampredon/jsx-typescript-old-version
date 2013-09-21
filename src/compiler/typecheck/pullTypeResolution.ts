@@ -2014,7 +2014,7 @@ module TypeScript {
                     var initTypeSymbol = this.getInstanceTypeForAssignment(argDeclAST, initExprSymbol.type, enclosingDecl, context);
                     if (!contextualType) {
                         // Set the type to the inferred initializer type
-                        context.setTypeInContext(paramSymbol, this.widenType(initTypeSymbol, enclosingDecl, context));
+                        context.setTypeInContext(paramSymbol, this.widenType(argDeclAST.init, initTypeSymbol, enclosingDecl, context));
                         isImplicitAny = initTypeSymbol !== paramSymbol.type;
                     }
                     else {
@@ -2556,7 +2556,7 @@ module TypeScript {
             }
             else {
                 var initTypeSymbol = initExprSymbol.type;
-                var widenedInitTypeSymbol = this.widenType(initTypeSymbol, enclosingDecl, context);
+                var widenedInitTypeSymbol = this.widenType(varDecl.init, initTypeSymbol, enclosingDecl, context);
 
                 // Don't reset the type if we already have one from the type expression
                 if (!varDecl.typeExpr) {
@@ -2861,11 +2861,12 @@ module TypeScript {
 
             else {
                 var returnExpressionSymbols: PullTypeSymbol[] = [];
-                var returnType: PullTypeSymbol;
+                var returnExpressions: AST[] = [];
 
                 for (var i = 0; i < returnStatements.length; i++) {
-                    if (returnStatements[i].returnStatement.returnExpression) {
-                        returnType = this.resolveAST(returnStatements[i].returnStatement.returnExpression, useContextualType, returnStatements[i].enclosingDecl, context).type;
+                    var returnExpression = returnStatements[i].returnStatement.returnExpression;
+                    if (returnExpression) {
+                        var returnType = this.resolveAST(returnExpression, useContextualType, returnStatements[i].enclosingDecl, context).type;
 
                         if (returnType.isError()) {
                             signature.returnType = returnType;
@@ -2875,7 +2876,8 @@ module TypeScript {
                             this.setSymbolForAST(returnStatements[i].returnStatement, returnType, context);
                         }
 
-                        returnExpressionSymbols[returnExpressionSymbols.length] = returnType;
+                        returnExpressionSymbols.push(returnType);
+                        returnExpressions.push(returnExpression);
                     }
                 }
 
@@ -2883,7 +2885,6 @@ module TypeScript {
                     signature.returnType = this.semanticInfoChain.voidTypeSymbol;
                 }
                 else {
-
                     // combine return expression types for best common type
                     var collection: IPullTypeCollection = {
                         getLength: () => { return returnExpressionSymbols.length; },
@@ -2893,7 +2894,8 @@ module TypeScript {
                     };
 
                     var bestCommonReturnType = this.findBestCommonType(returnExpressionSymbols[0], collection, context, new TypeComparisonInfo());
-                    returnType = bestCommonReturnType;
+                    var returnType = bestCommonReturnType;
+                    var returnExpression = returnExpressions[returnExpressionSymbols.indexOf(returnType)];
 
                     if (useContextualType && returnType == this.semanticInfoChain.anyTypeSymbol) {
                         var contextualType = context.getContextualType();
@@ -2908,7 +2910,7 @@ module TypeScript {
 
                     if (returnType) {
                         var previousReturnType = returnType;
-                        var newReturnType = this.widenType(returnType, enclosingDecl, context);
+                        var newReturnType = this.widenType(returnExpression, returnType, enclosingDecl, context);
                         signature.returnType = newReturnType;
 
                         if (!ArrayUtilities.contains(returnExpressionSymbols, bestCommonReturnType)) {
@@ -4747,7 +4749,7 @@ module TypeScript {
                     return this.resolveIndexExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.LogicalOrExpression:
-                    return this.resolveLogicalOrExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveLogicalOrExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.LogicalAndExpression:
                     return this.resolveLogicalAndExpression(<BinaryExpression>ast, enclosingDecl, context);
@@ -5005,7 +5007,7 @@ module TypeScript {
                     return;
 
                 case NodeType.LogicalOrExpression:
-                    this.typeCheckLogicalOrExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckLogicalOrExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.TypeOfExpression:
@@ -6442,7 +6444,7 @@ module TypeScript {
                         }
                     }
 
-                    var memberExpr = this.widenType(this.resolveAST(binex.operand2, contextualMemberType != null, enclosingDecl, context).type, enclosingDecl, context);
+                    var memberExpr = this.widenType(binex.operand2, this.resolveAST(binex.operand2, contextualMemberType != null, enclosingDecl, context).type, enclosingDecl, context);
 
                     if (memberExpr.type) {
                         if (memberExpr.type.isGeneric()) {
@@ -6502,7 +6504,7 @@ module TypeScript {
                     getTypeAtIndex: (index: number) => indexerTypeCandidates[index]
                 };
                 var decl = objectLiteralSymbol.getDeclarations()[0];
-                var indexerReturnType = this.widenType(this.findBestCommonType(indexerTypeCandidates[0], typeCollection, context), decl, context);
+                var indexerReturnType = this.widenType(null, this.findBestCommonType(indexerTypeCandidates[0], typeCollection, context), decl, context);
                 if (indexerReturnType == contextualIndexSignature.returnType) {
                     objectLiteralSymbol.addIndexSignature(contextualIndexSignature);
                 }
@@ -6574,15 +6576,6 @@ module TypeScript {
                 }
             }
 
-            // if noImplicitAny flag is set to be true and array is not declared in the function invocation or object creation invocation, report an error
-            if (this.compilationSettings.noImplicitAny) {
-                // if it is an empty array and there is no contextual type
-                if (!inContextuallyTypedAssignment && elements.members.length == 0) {
-                    context.postError(this.unitPath, arrayLit.minChar, arrayLit.getLength(), DiagnosticCode.Array_Literal_implicitly_has_an_any_type_from_widening, null);
-
-                }
-            }
-
             // If there is no contextual type to apply attempt to find the best common type
             if (elementTypes.length) {
                 elementType = elementTypes[0];
@@ -6607,20 +6600,8 @@ module TypeScript {
 
             elementType = elementType ? this.findBestCommonType(elementType, collection, context, comparisonInfo) : elementType;
 
-            if (elementType === this.semanticInfoChain.undefinedTypeSymbol || elementType === this.semanticInfoChain.nullTypeSymbol) {
-                // if noImplicitAny flag is set to be true and array is not declared in the function invocation or object creation invocation, report an error
-                if (this.compilationSettings.noImplicitAny && !inContextuallyTypedAssignment) {
-                    context.postError(this.unitPath, arrayLit.minChar, arrayLit.getLength(), DiagnosticCode.Array_Literal_implicitly_has_an_any_type_from_widening, null);
-                }
-            }
-
             if (!elementType) {
                 elementType = this.semanticInfoChain.undefinedTypeSymbol;
-
-                // if noImplicitAny flag is set to be true and array is not declared in the function invocation or object creation invocation, report an error
-                if (this.compilationSettings.noImplicitAny && !inContextuallyTypedAssignment) {
-                    context.postError(this.unitPath, arrayLit.minChar, arrayLit.getLength(), DiagnosticCode.Array_Literal_implicitly_has_an_any_type_from_widening, null);
-                }
             }
 
             var arraySymbol = elementType.getArrayType();
@@ -6852,67 +6833,30 @@ module TypeScript {
             return exprType;
         }
 
-        private resolveLogicalOrExpression(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            var symbol = this.getSymbolForAST(binex);
-            if (!symbol) {
-                symbol = this.computeLogicalOrExpressionSymbol(binex, inContextuallyTypedAssignment, enclosingDecl, context);
-                this.setSymbolForAST(binex, symbol, context);
-                if (this.canTypeCheckAST(binex, context)) {
-                    this.setTypeChecked(binex, context);
-                }
-            } else if (this.canTypeCheckAST(binex, context)) {
-                this.typeCheckLogicalOrExpression(binex, inContextuallyTypedAssignment, enclosingDecl, context);
+        private resolveLogicalOrExpression(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            // September 17, 2013:  The || operator permits the operands to be of any type and 
+            // produces a result that is of the best common type(section 3.10) of the two operand
+            // types.
+            var leftType = this.resolveAST(binex.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+            var rightType = this.resolveAST(binex.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+
+            // findBestCommonType skips the left type (since it is explicitly provided as an 
+            // argument).  So we simply return the right type when asked.
+            var collection = { getLength: () => 2, getTypeAtIndex: (index: number) => rightType };
+            var result = this.findBestCommonType(leftType, collection, context);
+
+            if (this.canTypeCheckAST(binex, context)) {
+                this.typeCheckLogicalOrExpression(binex, enclosingDecl, context);
             }
 
-            return symbol;
+            return result;
         }
 
-        private typeCheckLogicalOrExpression(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckLogicalOrExpression(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(binex, context);
 
-            this.resolveAST(binex.operand1, inContextuallyTypedAssignment, enclosingDecl, context);
-            this.resolveAST(binex.operand2, inContextuallyTypedAssignment, enclosingDecl, context);
-        }
-
-        private computeLogicalOrExpressionSymbol(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            var leftType = <PullTypeSymbol>this.resolveAST(binex.operand1, inContextuallyTypedAssignment, enclosingDecl, context).type;
-            var rightType = <PullTypeSymbol>this.resolveAST(binex.operand2, inContextuallyTypedAssignment, enclosingDecl, context).type;
-
-            if (this.isAnyOrEquivalent(leftType) || this.isAnyOrEquivalent(rightType)) {
-                return this.semanticInfoChain.anyTypeSymbol;
-            }
-            else if (leftType === this.semanticInfoChain.booleanTypeSymbol) {
-                if (rightType === this.semanticInfoChain.booleanTypeSymbol) {
-                    return this.semanticInfoChain.booleanTypeSymbol;
-                }
-                else {
-                    return this.semanticInfoChain.anyTypeSymbol;
-                }
-            }
-            else if (leftType === this.semanticInfoChain.numberTypeSymbol) {
-                if (rightType === this.semanticInfoChain.numberTypeSymbol) {
-                    return this.semanticInfoChain.numberTypeSymbol;
-                }
-                else {
-                    return this.semanticInfoChain.anyTypeSymbol;
-                }
-            }
-            else if (leftType === this.semanticInfoChain.stringTypeSymbol) {
-                if (rightType === this.semanticInfoChain.stringTypeSymbol) {
-                    return this.semanticInfoChain.stringTypeSymbol;
-                }
-                else {
-                    return this.semanticInfoChain.anyTypeSymbol;
-                }
-            }
-            else if (this.sourceIsSubtypeOfTarget(leftType, rightType, context)) {
-                return rightType;
-            }
-            else if (this.sourceIsSubtypeOfTarget(rightType, leftType, context)) {
-                return leftType;
-            }
-
-            return this.semanticInfoChain.anyTypeSymbol;
+            this.resolveAST(binex.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            this.resolveAST(binex.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
         private resolveLogicalAndExpression(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -7998,7 +7942,7 @@ module TypeScript {
             return null;
         }
 
-        public widenType(type: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
+        public widenType(ast: AST, type: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
             if (type === this.semanticInfoChain.undefinedTypeSymbol ||
                 type === this.semanticInfoChain.nullTypeSymbol ||
                 type.isError()) {
@@ -8007,9 +7951,17 @@ module TypeScript {
             }
 
             if (type.isArray()) {
-                var elementType = this.widenType(type.getElementType(), enclosingDecl, context);
+                var elementType = this.widenType(null, type.getElementType(), enclosingDecl, context);
 
-                var arraySymbol: PullTypeSymbol = elementType.getArrayType();
+                if (ast && ast.nodeType() === NodeType.ArrayLiteralExpression && this.compilationSettings.noImplicitAny) {
+                    // If we widened from non-'any' type to 'any', then report error.
+                    if (elementType === this.semanticInfoChain.anyTypeSymbol && type.getElementType() !== this.semanticInfoChain.anyTypeSymbol) {
+                        context.postError(this.unitPath, ast.minChar, ast.getLength(), DiagnosticCode.Array_Literal_implicitly_has_an_any_type_from_widening, null);
+                    }
+                }
+
+
+                var arraySymbol = elementType.getArrayType();
 
                 // otherwise, create a new array symbol
                 if (!arraySymbol) {
