@@ -7824,45 +7824,53 @@ module TypeScript {
         }
 
         public resolveTypeAssertionExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
-            var typeAssertionType = <PullTypeSymbol>this.getSymbolForAST(assertionExpression);
-            var canTypeCheckAST = this.canTypeCheckAST(assertionExpression, context);
-            if (!typeAssertionType) {
-                typeAssertionType = this.resolveAST(assertionExpression.castTerm, false, enclosingDecl, context).type;
-                this.setSymbolForAST(assertionExpression, typeAssertionType, context);
-            } else if (canTypeCheckAST) {
-                this.resolveAST(assertionExpression.castTerm, false, enclosingDecl, context);
+            var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+
+            if (this.canTypeCheckAST(assertionExpression, context)) {
+                this.typeCheckAssertionExpression(assertionExpression, enclosingDecl, context);
             }
 
-            if (canTypeCheckAST) {
-                if (typeAssertionType.isError()) {
-                    var symbolName = (<PullErrorTypeSymbol>typeAssertionType).name;
-                    context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Could_not_find_symbol_0, [symbolName]);
-                }
-
-                context.pushContextualType(typeAssertionType, context.inProvisionalResolution(), null);
-                var exprType = this.resolveAST(assertionExpression.operand, true, enclosingDecl, context).type;
-                context.popContextualType();
-
-                if (!exprType.isResolved) {
-                    this.resolveDeclaredSymbol(exprType, enclosingDecl, context);
-                }
-
-                var comparisonInfo = new TypeComparisonInfo();
-
-                var isAssignable = this.sourceIsAssignableToTarget(typeAssertionType, exprType, context, comparisonInfo) ||
-                    this.sourceIsAssignableToTarget(exprType, typeAssertionType, context, comparisonInfo);
-
-                if (!isAssignable) {
-                    var message: string;
-                    if (comparisonInfo.message) {
-                        context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Cannot_convert_0_to_1_NL_2, [exprType.toString(), typeAssertionType.toString(), comparisonInfo.message]);
-                    } else {
-                        context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Cannot_convert_0_to_1, [exprType.toString(), typeAssertionType.toString()]);
-                    }
-                }
-            }
-
+            // September 17, 2013: 
+            // A type assertion expression of the form < T > e requires the type of e to be 
+            // assignable to T or T to be assignable to the type of e, or otherwise a compile - 
+            // time error occurs.The type of the result is T.
             return typeAssertionType;
+        }
+
+        private typeCheckAssertionExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+            this.setTypeChecked(assertionExpression, context);
+
+            var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+
+            // REVIEW(cyrusn): Why is this here?  Why didn't we just report the error while resolving the cast term.
+            if (typeAssertionType.isError()) {
+                var symbolName = (<PullErrorTypeSymbol>typeAssertionType).name;
+                context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Could_not_find_symbol_0, [symbolName]);
+            }
+
+            context.pushContextualType(typeAssertionType, context.inProvisionalResolution(), /*substitutions:*/ null);
+            var exprType = this.resolveAST(assertionExpression.operand, /*inContextuallyTypedAssignment:*/ true, enclosingDecl, context).type;
+            context.popContextualType();
+
+            this.resolveDeclaredSymbol(typeAssertionType, enclosingDecl, context);
+            this.resolveDeclaredSymbol(exprType, enclosingDecl, context);
+
+            // September 17, 2013: A type assertion expression of the form < T > e requires the 
+            // type of e to be assignable to T or T to be assignable to the type of e, or otherwise
+            // a compile - time error occurs. 
+            var comparisonInfo = new TypeComparisonInfo();
+
+            var isAssignable =
+                this.sourceIsAssignableToTarget(typeAssertionType, exprType, context, comparisonInfo) ||
+                this.sourceIsAssignableToTarget(exprType, typeAssertionType, context, comparisonInfo);
+
+            if (!isAssignable) {
+                if (comparisonInfo.message) {
+                    context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Cannot_convert_0_to_1_NL_2, [exprType.toString(), typeAssertionType.toString(), comparisonInfo.message]);
+                } else {
+                    context.postError(this.unitPath, assertionExpression.minChar, assertionExpression.getLength(), DiagnosticCode.Cannot_convert_0_to_1, [exprType.toString(), typeAssertionType.toString()]);
+                }
+            }
         }
 
         private resolveAssignmentStatement(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
