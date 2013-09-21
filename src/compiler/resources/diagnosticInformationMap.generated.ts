@@ -718,7 +718,7 @@ module TypeScript {
     "code": 2090,
     "category": DiagnosticCategory.Error
   },
-  "Type of conditional expression cannot be determined. Best common type could not be found between '{0}' and '{1}'.": {
+  "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.": {
     "code": 2091,
     "category": DiagnosticCategory.Error
   },

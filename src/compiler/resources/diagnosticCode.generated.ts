@@ -180,7 +180,7 @@ module TypeScript {
         Cannot_invoke_an_expression_whose_type_lacks_a_call_signature: "Cannot invoke an expression whose type lacks a call signature.",
         Calls_to_super_are_only_valid_inside_a_class: "Calls to 'super' are only valid inside a class.",
         Generic_type_0_requires_1_type_argument_s: "Generic type '{0}' requires {1} type argument(s).",
-        Type_of_conditional_expression_cannot_be_determined_Best_common_type_could_not_be_found_between_0_and_1: "Type of conditional expression cannot be determined. Best common type could not be found between '{0}' and '{1}'.",
+        Type_of_conditional_expression_cannot_be_determined_0_is_not_identical_to_a_supertype_of_or_a_subtype_of_1: "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.",
         Type_of_array_literal_cannot_be_determined_Best_common_type_could_not_be_found_for_array_elements: "Type of array literal cannot be determined. Best common type could not be found for array elements.",
         Could_not_find_enclosing_symbol_for_dotted_name_0: "Could not find enclosing symbol for dotted name '{0}'.",
         The_property_0_does_not_exist_on_value_of_type_1: "The property '{0}' does not exist on value of type '{1}'.",
