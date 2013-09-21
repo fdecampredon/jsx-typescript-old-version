@@ -8,7 +8,7 @@ module TypeScript {
     export var globalTyvarID = 0;
     export var sentinelEmptyArray: any[] = [];
 
-     export class PullSymbol {
+    export class PullSymbol {
 
         // private state
         public pullSymbolID = pullSymbolID++;
@@ -1043,6 +1043,11 @@ module TypeScript {
         public isTypeVariable() { return false; }
         public isError() { return false; }
         public isEnum() { return this.kind == PullElementKind.Enum; }
+
+        public isObject(): boolean {
+            return hasFlag(this.kind,
+                PullElementKind.Array | PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType | PullElementKind.Interface | PullElementKind.ObjectType);
+        }
 
         public getKnownBaseTypeCount() { return this._knownBaseTypeCount; }
         public resetKnownBaseTypeCount() { this._knownBaseTypeCount = 0; }

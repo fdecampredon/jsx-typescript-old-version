@@ -3732,24 +3732,25 @@ module TypeScript {
             this.resolveAST(ast.operand, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
-        private resolveLogicalOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.booleanTypeSymbol, context);
-
+        private resolveLogicalOperation(ast: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckLogicalOperation(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The result is always of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
-        private typeCheckLogicalOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
+        private typeCheckLogicalOperation(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            this.setTypeChecked(binex, context);
 
-            var binex = <BinaryExpression>ast;
+            var leftType = this.resolveAST(binex.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+            var rightType = this.resolveAST(binex.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
-            var leftType = this.resolveAST(binex.operand1, false, enclosingDecl, context).type;
-            var rightType = this.resolveAST(binex.operand2, false, enclosingDecl, context).type;
-
+            // September 17, 2013: 
+            // The <, >, <=, >=, ==, !=, ===, and !== operators
+            // These operators require one operand type to be identical to or a subtype of the 
+            // other operand type. 
             var comparisonInfo = new TypeComparisonInfo();
             if (!this.sourceIsAssignableToTarget(leftType, rightType, context, comparisonInfo) &&
                 !this.sourceIsAssignableToTarget(rightType, leftType, context, comparisonInfo)) {
@@ -3920,7 +3921,7 @@ module TypeScript {
                 this.typeCheckDeleteExpression(ast, enclosingDecl, context);
             }
 
-            // September 17, 2013: he delete operator takes an operand of any type and produces a
+            // September 17, 2013: The delete operator takes an operand of any type and produces a
             // result of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
@@ -3930,32 +3931,33 @@ module TypeScript {
             this.resolveAST(ast.operand, false, enclosingDecl, context);
         }
 
-        private resolveInstanceOfExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.booleanTypeSymbol, context);
-
+        private resolveInstanceOfExpression(ast: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckInstanceOfExpression(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The result is always of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
-        private typeCheckInstanceOfExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
-            var binaryExpression = <BinaryExpression>ast;
+        private typeCheckInstanceOfExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            this.setTypeChecked(binaryExpression, context);
 
+            // September 17, 2013: The instanceof operator requires the left operand to be of type 
+            // Any, an object type, or a type parameter type, and the right operand to be of type 
+            // Any or a subtype of the ‘Function’ interface type. 
             var lhsType = this.resolveAST(binaryExpression.operand1, false, enclosingDecl, context).type;
             var rhsType = this.resolveAST(binaryExpression.operand2, false, enclosingDecl, context).type;
 
-            var isValidLHS = lhsType && (this.isAnyOrEquivalent(lhsType) || !lhsType.isPrimitive());
-            var isValidRHS = rhsType && (this.isAnyOrEquivalent(rhsType) || rhsType.isClass() || this.typeIsSubtypeOfFunction(rhsType, context));
+            var isValidLHS = this.isAnyOrEquivalent(lhsType) || lhsType.isObject() || lhsType.isTypeParameter();
+            var isValidRHS = this.isAnyOrEquivalent(rhsType) || this.typeIsSubtypeOfFunction(rhsType, context);
 
             if (!isValidLHS) {
                 context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_left_hand_side_of_an_instanceof_expression_must_be_of_type_any_an_object_type_or_a_type_parameter, null);
             }
 
             if (!isValidRHS) {
-                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_right_hand_side_of_an_instanceof_expression_must_be_of_type_any_or_a_subtype_of_the_Function_interface_type, null);
+                context.postError(this.unitPath, binaryExpression.operand2.minChar, binaryExpression.operand2.getLength(), DiagnosticCode.The_right_hand_side_of_an_instanceof_expression_must_be_of_type_any_or_a_subtype_of_the_Function_interface_type, null);
             }
         }
 
@@ -4704,9 +4706,7 @@ module TypeScript {
                 case NodeType.LessThanOrEqualExpression:
                 case NodeType.GreaterThanOrEqualExpression:
                 case NodeType.GreaterThanExpression:
-                    // PERFREVIEW   
-                    return this.resolveLogicalOperation(ast, enclosingDecl, context);
-                //return this.semanticInfoChain.booleanTypeSymbol;
+                    return this.resolveLogicalOperation(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.AddExpression:
                 case NodeType.AddAssignmentExpression:
@@ -4774,7 +4774,7 @@ module TypeScript {
                     return this.resolveExpressionStatement(<ExpressionStatement>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.InstanceOfExpression:
-                    return this.resolveInstanceOfExpression(ast, enclosingDecl, context);
+                    return this.resolveInstanceOfExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.CommaExpression:
                     return this.resolveCommaExpression(ast, enclosingDecl, context);
@@ -4964,7 +4964,7 @@ module TypeScript {
                 case NodeType.LessThanOrEqualExpression:
                 case NodeType.GreaterThanOrEqualExpression:
                 case NodeType.GreaterThanExpression:
-                    this.typeCheckLogicalOperation(ast, enclosingDecl, context);
+                    this.typeCheckLogicalOperation(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.PlusExpression:
@@ -5025,7 +5025,7 @@ module TypeScript {
                     return;
 
                 case NodeType.InstanceOfExpression:
-                    this.typeCheckInstanceOfExpression(ast, enclosingDecl, context);
+                    this.typeCheckInstanceOfExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.CommaExpression:
@@ -8440,24 +8440,14 @@ module TypeScript {
         }
 
         public typeIsSubtypeOfFunction(source: PullTypeSymbol, context: PullTypeResolutionContext): boolean {
-
-            var callSignatures = source.getCallSignatures();
-
-            if (callSignatures.length) {
+            // Note that object types containing one or more call or construct signatures are 
+            // automatically subtypes of the ‘Function’ interface type, as described in section 3.3.
+            if (source.getCallSignatures().length || source.getConstructSignatures().length) {
                 return true;
             }
 
-            var constructSignatures = source.getConstructSignatures();
-
-            if (constructSignatures.length) {
-                return true;
-            }
-
-            if (this.cachedFunctionInterfaceType()) {
-                return this.sourceIsSubtypeOfTarget(source, this.cachedFunctionInterfaceType(), context);
-            }
-
-            return false;
+            return this.cachedFunctionInterfaceType() &&
+                   this.sourceIsSubtypeOfTarget(source, this.cachedFunctionInterfaceType(), context);
         }
 
         private signatureGroupIsSubtypeOfTarget(sg1: PullSignatureSymbol[], sg2: PullSignatureSymbol[], context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {

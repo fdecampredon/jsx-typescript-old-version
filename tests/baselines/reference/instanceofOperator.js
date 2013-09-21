@@ -18,3 +18,4 @@ Object instanceof obj;
 // Error on left hand side
 null instanceof null;
 obj instanceof Object;
+undefined instanceof undefined;
