@@ -3717,19 +3717,19 @@ module TypeScript {
             return this.semanticInfoChain.voidTypeSymbol;
         }
 
-        private resolveVoidExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.undefinedTypeSymbol, context);
-
+        private resolveVoidExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckVoidExpression(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The void operator takes an operand of any type and produces the 
+            // value undefined.The type of the result is the Undefined type(3.2.6).
             return this.semanticInfoChain.undefinedTypeSymbol;
         }
 
-        private typeCheckVoidExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckVoidExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(ast, context);
-            this.resolveAST((<UnaryExpression>ast).operand, false, enclosingDecl, context);
+            this.resolveAST(ast.operand, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
         private resolveLogicalOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -3758,61 +3758,66 @@ module TypeScript {
             }
         }
 
-        private resolveUnaryLogicalOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.booleanTypeSymbol, context);
-
+        private resolveUnaryLogicalOperation(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckUnaryLogicalOperation(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The ! operator permits its operand to be of any type and 
+            // produces a result of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
-        private typeCheckUnaryLogicalOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckUnaryLogicalOperation(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(ast, context);
-            this.resolveAST((<UnaryExpression>ast).operand, false, enclosingDecl, context);
+            this.resolveAST(ast.operand, false, enclosingDecl, context);
         }
 
-        private resolveUnaryArithmeticOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.numberTypeSymbol, context);
-
+        private resolveUnaryArithmeticOperation(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckUnaryArithmeticOperation(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013:
+            // The ++ and-- operators ... produce a result of the Number primitive type.
+            // The +, –, and ~ operators ... produce a result of the Number primitive type.
             return this.semanticInfoChain.numberTypeSymbol;
         }
 
-        private typeCheckUnaryArithmeticOperation(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
+        private isAnyOrNumberOrEnum(type: PullTypeSymbol): boolean {
+            return this.isAnyOrEquivalent(type) || type === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(type);
+        }
 
-            var nodeType = ast.nodeType();
-            var unaryExpression = <UnaryExpression>ast;
-            var expression = this.resolveAST(unaryExpression.operand, false, enclosingDecl, context);
+        private typeCheckUnaryArithmeticOperation(unaryExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+            this.setTypeChecked(unaryExpression, context);
 
+            var nodeType = unaryExpression.nodeType();
+            var expression = this.resolveAST(unaryExpression.operand, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            
+            // September 17, 2013: The +, –, and ~ operators
+            // These operators permit their operand to be of any type and produce a result of the 
+            // Number primitive type.
             if (nodeType == NodeType.PlusExpression || nodeType == NodeType.NegateExpression || nodeType == NodeType.BitwiseNotExpression) {
-                return this.semanticInfoChain.numberTypeSymbol;
+                return;
             }
+
+            Debug.assert(
+                nodeType === NodeType.PostIncrementExpression ||
+                nodeType === NodeType.PreIncrementExpression ||
+                nodeType === NodeType.PostDecrementExpression ||
+                nodeType === NodeType.PreDecrementExpression);
+
+            // September 17, 2013: 4.14.1	The ++ and -- operators
+            // These operators, in prefix or postfix form, require their operand to be of type Any,
+            // the Number primitive type, or an enum type, and classified as a reference(section 4.1).
             var operandType = expression.type;
-
-            var operandIsFit = this.isAnyOrEquivalent(operandType) || operandType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(operandType);
-
-            if (!operandIsFit) {
+            if (!this.isAnyOrNumberOrEnum(operandType)) {
                 context.postError(this.unitPath, unaryExpression.operand.minChar, unaryExpression.operand.getLength(), DiagnosticCode.The_type_of_a_unary_arithmetic_operation_operand_must_be_of_type_any_number_or_an_enum_type, null);
             }
 
-            switch (unaryExpression.nodeType()) {
-                case NodeType.PostIncrementExpression:
-                case NodeType.PreIncrementExpression:
-                case NodeType.PostDecrementExpression:
-                case NodeType.PreDecrementExpression:
-                    // Check that operand is classified as a reference 
-
-                    if (!this.isReference(unaryExpression.operand, expression)) {
-                        context.postError(this.unitPath, unaryExpression.operand.minChar, unaryExpression.operand.getLength(), DiagnosticCode.The_operand_of_an_increment_or_decrement_operator_must_be_a_variable_property_or_indexer, null);
-                    }
-
-                    break;
+            // September 17, ... and classified as a reference(section 4.1).
+            if (!this.isReference(unaryExpression.operand, expression)) {
+                context.postError(this.unitPath, unaryExpression.operand.minChar, unaryExpression.operand.getLength(), DiagnosticCode.The_operand_of_an_increment_or_decrement_operator_must_be_a_variable_property_or_indexer, null);
             }
         }
 
@@ -3848,8 +3853,8 @@ module TypeScript {
             // 4.15.1	The *, /, %, –, <<, >>, >>>, &, ^, and | operators
             // These operators require their operands to be of type Any, the Number primitive type,
             // or an enum type
-            var lhsIsFit = this.isAnyOrEquivalent(lhsType) || lhsType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(lhsType);
-            var rhsIsFit = this.isAnyOrEquivalent(rhsType) || rhsType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(rhsType);
+            var lhsIsFit = this.isAnyOrNumberOrEnum(lhsType);
+            var rhsIsFit = this.isAnyOrNumberOrEnum(rhsType);
 
             if (!rhsIsFit) {
                 context.postError(this.unitPath, binaryExpression.operand2.minChar, binaryExpression.operand2.getLength(), DiagnosticCode.The_right_hand_side_of_an_arithmetic_operation_must_be_of_type_any_number_or_an_enum_type, null);
@@ -3910,19 +3915,19 @@ module TypeScript {
             this.resolveAST(ast.expression, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
-        private resolveDeleteStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.booleanTypeSymbol, context);
-
+        private resolveDeleteExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
-                this.typeCheckDeleteStatement(ast, enclosingDecl, context);
+                this.typeCheckDeleteExpression(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: he delete operator takes an operand of any type and produces a
+            // result of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
-        private typeCheckDeleteStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckDeleteExpression(ast: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(ast, context);
-            this.resolveAST((<UnaryExpression>ast).operand, false, enclosingDecl, context);
+            this.resolveAST(ast.operand, false, enclosingDecl, context);
         }
 
         private resolveInstanceOfExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -4679,10 +4684,9 @@ module TypeScript {
                 case NodeType.TrueLiteral:
                 case NodeType.FalseLiteral:
                     return this.semanticInfoChain.booleanTypeSymbol;
+
                 case NodeType.VoidExpression:
-                    // PERFREVIEW: resolveVoidExpression   
-                    return this.resolveVoidExpression(ast, enclosingDecl, context);
-                //return this.semanticInfoChain.voidTypeSymbol;   
+                    return this.resolveVoidExpression(<UnaryExpression>ast, enclosingDecl, context);
 
                 // assignment
                 case NodeType.AssignmentExpression:
@@ -4690,7 +4694,7 @@ module TypeScript {
 
                 // boolean operations
                 case NodeType.LogicalNotExpression:
-                    return this.resolveUnaryLogicalOperation(ast, enclosingDecl, context);
+                    return this.resolveUnaryLogicalOperation(<UnaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.NotEqualsWithTypeConversionExpression:
                 case NodeType.EqualsWithTypeConversionExpression:
@@ -4715,7 +4719,7 @@ module TypeScript {
                 case NodeType.PreIncrementExpression:
                 case NodeType.PostDecrementExpression:
                 case NodeType.PreDecrementExpression:
-                    return this.resolveUnaryArithmeticOperation(ast, enclosingDecl, context);
+                    return this.resolveUnaryArithmeticOperation(<UnaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.SubtractExpression:
                 case NodeType.MultiplyExpression:
@@ -4755,7 +4759,7 @@ module TypeScript {
                     return this.resolveThrowStatement(<ThrowStatement>ast, enclosingDecl, context);
 
                 case NodeType.DeleteExpression:
-                    return this.resolveDeleteStatement(ast, enclosingDecl, context);
+                    return this.resolveDeleteExpression(<UnaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.ConditionalExpression:
                     return this.resolveConditionalExpression(<ConditionalExpression>ast, enclosingDecl, context);
@@ -4944,12 +4948,12 @@ module TypeScript {
                     return;
 
                 case NodeType.VoidExpression:
-                    this.typeCheckVoidExpression(ast, enclosingDecl, context);
+                    this.typeCheckVoidExpression(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 // boolean operations
                 case NodeType.LogicalNotExpression:
-                    this.typeCheckUnaryLogicalOperation(ast, enclosingDecl, context);
+                    this.typeCheckUnaryLogicalOperation(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.NotEqualsWithTypeConversionExpression:
@@ -4970,7 +4974,7 @@ module TypeScript {
                 case NodeType.PreIncrementExpression:
                 case NodeType.PostDecrementExpression:
                 case NodeType.PreDecrementExpression:
-                    this.typeCheckUnaryArithmeticOperation(ast, enclosingDecl, context);
+                    this.typeCheckUnaryArithmeticOperation(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.SubtractExpression:
@@ -5013,7 +5017,7 @@ module TypeScript {
                     return;
 
                 case NodeType.DeleteExpression:
-                    this.typeCheckDeleteStatement(ast, enclosingDecl, context);
+                    this.typeCheckDeleteExpression(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.ConditionalExpression:
