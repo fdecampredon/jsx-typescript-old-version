@@ -3979,35 +3979,35 @@ module TypeScript {
             this.resolveAST((<BinaryExpression>ast).operand2, false, enclosingDecl, context)
         }
 
-        private resolveInExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.booleanTypeSymbol, context);
-
+        private resolveInExpression(ast: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckInExpression(ast, enclosingDecl, context);
             }
 
+            // September 17, 2013: The result is always of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
-        private typeCheckInExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
+        private typeCheckInExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            this.setTypeChecked(binaryExpression, context);
 
-            var binaryExpression = <BinaryExpression>ast;
-            var lhsType = this.resolveAST(binaryExpression.operand1, false, enclosingDecl, context).type;
-            var rhsType = this.resolveAST(binaryExpression.operand2, false, enclosingDecl, context).type;
+            // September 17, 2013: The in operator requires the left operand to be of type Any or 
+            // the String primitive type, and the right operand to be of type Any, an object type,
+            // or a type parameter type. 
+            var lhsType = this.resolveAST(binaryExpression.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+            var rhsType = this.resolveAST(binaryExpression.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
-            var isStringAnyOrNumber = lhsType.type === this.semanticInfoChain.stringTypeSymbol ||
-                this.isAnyOrEquivalent(lhsType.type) ||
-                this.isNumberOrEquivalent(lhsType.type);
-            var isValidRHS = rhsType && (this.isAnyOrEquivalent(rhsType) || !rhsType.isPrimitive());
+            var isStringAnyOrNumber =
+                lhsType.type === this.semanticInfoChain.stringTypeSymbol ||
+                this.isAnyOrEquivalent(lhsType.type)
+            var isValidRHS = this.isAnyOrEquivalent(rhsType) || rhsType.isObject() || rhsType.isTypeParameter();
 
             if (!isStringAnyOrNumber) {
-                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_left_hand_side_of_an_in_expression_must_be_of_types_string_or_any, null);
+                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_left_hand_side_of_an_in_expression_must_be_of_types_string_or_any);
             }
 
             if (!isValidRHS) {
-
-                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_right_hand_side_of_an_in_expression_must_be_of_type_any_an_object_type_or_a_type_parameter, null);
+                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.The_right_hand_side_of_an_in_expression_must_be_of_type_any_an_object_type_or_a_type_parameter);
             }
         }
         
@@ -4780,7 +4780,7 @@ module TypeScript {
                     return this.resolveCommaExpression(ast, enclosingDecl, context);
 
                 case NodeType.InExpression:
-                    return this.resolveInExpression(ast, enclosingDecl, context);
+                    return this.resolveInExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.ForStatement:
                     return this.resolveForStatement(ast, enclosingDecl, context);
@@ -5033,7 +5033,7 @@ module TypeScript {
                     return;
 
                 case NodeType.InExpression:
-                    this.typeCheckInExpression(ast, enclosingDecl, context);
+                    this.typeCheckInExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.ForStatement:
