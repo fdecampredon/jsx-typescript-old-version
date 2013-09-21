@@ -4750,7 +4750,7 @@ module TypeScript {
                     return this.resolveLogicalOrExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.LogicalAndExpression:
-                    return this.resolveLogicalAndExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveLogicalAndExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.TypeOfExpression:
                     return this.resolveTypeOfExpression(<UnaryExpression>ast, enclosingDecl, context);
@@ -6915,13 +6915,23 @@ module TypeScript {
             return this.semanticInfoChain.anyTypeSymbol;
         }
 
-        private resolveLogicalAndExpression(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private resolveLogicalAndExpression(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            var secondOperandType = this.resolveAST(binex.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+
             if (this.canTypeCheckAST(binex, context)) {
-                this.setTypeChecked(binex, context);
-                this.resolveAST(binex.operand1, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.typeCheckLogicalAndExpression(binex, enclosingDecl, context);
             }
 
-            return this.resolveAST(binex.operand2, inContextuallyTypedAssignment, enclosingDecl, context).type;
+            // September 17, 2013: The && operator permits the operands to be of any type and 
+            // produces a result of the same type as the second operand.
+            return secondOperandType;
+        }
+
+        private typeCheckLogicalAndExpression(binex: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+            this.setTypeChecked(binex, context);
+
+            this.resolveAST(binex.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            this.resolveAST(binex.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
         private resolveConditionalExpression(trinex: ConditionalExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
