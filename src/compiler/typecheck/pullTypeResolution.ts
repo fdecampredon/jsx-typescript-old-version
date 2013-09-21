@@ -3963,22 +3963,23 @@ module TypeScript {
             }
         }
 
-        private resolveCommaExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            var rhsType = this.resolveAST((<BinaryExpression>ast).operand2, false, enclosingDecl, context).type;
+        private resolveCommaExpression(commaExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            var rhsType = this.resolveAST(commaExpression.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
-            if (this.canTypeCheckAST(ast, context)) {
-                this.typeCheckCommaExpression(ast, enclosingDecl, context);
+            if (this.canTypeCheckAST(commaExpression, context)) {
+                this.typeCheckCommaExpression(commaExpression, enclosingDecl, context);
             }
 
-            this.setSymbolForAST(ast, rhsType, context);
+            // September 17, 2013: The comma operator permits the operands to be of any type and
+            // produces a result that is of the same type as the second operand.
             return rhsType;
         }
 
-        private typeCheckCommaExpression(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
-            this.setTypeChecked(ast, context);
+        private typeCheckCommaExpression(commaExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            this.setTypeChecked(commaExpression, context);
 
-            this.resolveAST((<BinaryExpression>ast).operand1, false, enclosingDecl, context)
-            this.resolveAST((<BinaryExpression>ast).operand2, false, enclosingDecl, context)
+            this.resolveAST(commaExpression.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context)
+            this.resolveAST(commaExpression.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context)
         }
 
         private resolveInExpression(ast: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -4779,7 +4780,7 @@ module TypeScript {
                     return this.resolveInstanceOfExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.CommaExpression:
-                    return this.resolveCommaExpression(ast, enclosingDecl, context);
+                    return this.resolveCommaExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.InExpression:
                     return this.resolveInExpression(<BinaryExpression>ast, enclosingDecl, context);
@@ -5031,7 +5032,7 @@ module TypeScript {
                     return;
 
                 case NodeType.CommaExpression:
-                    this.typeCheckCommaExpression(ast, enclosingDecl, context);
+                    this.typeCheckCommaExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.InExpression:
