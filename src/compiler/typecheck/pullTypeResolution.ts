@@ -6573,27 +6573,23 @@ module TypeScript {
         }
 
         private resolveIndexExpression(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            var symbol = this.getSymbolForAST(callEx);
-            if (!symbol) {
-                symbol = this.computeIndexExpressionSymbol(callEx, enclosingDecl, context);
-                this.setSymbolForAST(callEx, symbol, context);
-                if (this.canTypeCheckAST(callEx, context)) {
-                    this.setTypeChecked(callEx, context);
-                }
-            } else if (this.canTypeCheckAST(callEx, context)) {
-                this.typeCheckIndexExpression(callEx, enclosingDecl, context);
+            var symbolAndDiagnostic = this.computeIndexExpressionSymbolAndDiagnostic(callEx, enclosingDecl, context);
+
+            if (this.canTypeCheckAST(callEx, context)) {
+                this.typeCheckIndexExpression(callEx, enclosingDecl, context, symbolAndDiagnostic);
             }
 
-            return symbol;
+            return symbolAndDiagnostic.symbol;
         }
 
-        private typeCheckIndexExpression(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckIndexExpression(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, symbolAndDiagnostic: { symbol: PullSymbol; diagnostic?: Diagnostic } = null): void {
             this.setTypeChecked(callEx, context);
-            this.resolveAST(callEx.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
-            this.resolveAST(callEx.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            var symbolAndDiagnostic = symbolAndDiagnostic || this.computeIndexExpressionSymbolAndDiagnostic(callEx, enclosingDecl, context);
+
+            context.postDiagnostic(symbolAndDiagnostic.diagnostic);
         }
 
-        private computeIndexExpressionSymbol(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private computeIndexExpressionSymbolAndDiagnostic(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): { symbol: PullSymbol; diagnostic?: Diagnostic } {
             // resolve the target
             var targetSymbol = this.resolveAST(callEx.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             var indexType = this.resolveAST(callEx.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
@@ -6601,7 +6597,7 @@ module TypeScript {
             var targetTypeSymbol = targetSymbol.type;
 
             if (this.isAnyOrEquivalent(targetTypeSymbol)) {
-                return targetTypeSymbol;
+                return { symbol: targetTypeSymbol }
             }
 
             var elementType = targetTypeSymbol.getElementType();
@@ -6609,7 +6605,7 @@ module TypeScript {
             var isNumberIndex = indexType === this.semanticInfoChain.numberTypeSymbol || PullHelpers.symbolIsEnum(indexType);
 
             if (elementType && isNumberIndex) {
-                return elementType;
+                return { symbol: elementType };
             }
 
             // if the index expression is a string literal or a numberic literal and the object expression has
@@ -6626,7 +6622,7 @@ module TypeScript {
                         this.resolveDeclaredSymbol(member, enclosingDecl, context);
                     }
 
-                    return member.type;
+                    return { symbol: member.type };
                 }
             }
 
@@ -6644,36 +6640,25 @@ module TypeScript {
             // of type Any, the Number primitive type or an enum type, the property access is of the type of that index
             // signature
             if (numberSignature && (isNumberIndex || indexType === this.semanticInfoChain.anyTypeSymbol)) {
-                var returnType = numberSignature.returnType;
-
-                if (!returnType) {
-                    returnType = this.semanticInfoChain.anyTypeSymbol;
-                }
-
-                return returnType;
+                return { symbol: numberSignature.returnType || this.semanticInfoChain.anyTypeSymbol };
             }
             // otherwise, if the object expression has a string index signature and the index expression is
             // of type Any, the String or Number primitive type or an enum type, the property access of the type of
             // that index signature
             else if (stringSignature && (isNumberIndex || indexType === this.semanticInfoChain.anyTypeSymbol || indexType === this.semanticInfoChain.stringTypeSymbol)) {
-                var returnType = stringSignature.returnType;
-
-                if (!returnType) {
-                    returnType = this.semanticInfoChain.anyTypeSymbol;
-                }
-
-                return returnType;
+                return { symbol: stringSignature.returnType || this.semanticInfoChain.anyTypeSymbol };
             }
             // otherwise, if indexExpr is of type Any, the String or Number primitive type or an enum type,
             // the property access is of type Any
             else if (isNumberIndex || indexType === this.semanticInfoChain.anyTypeSymbol || indexType === this.semanticInfoChain.stringTypeSymbol) {
-                var returnType = this.semanticInfoChain.anyTypeSymbol;
-                return returnType;
+                return { symbol: this.semanticInfoChain.anyTypeSymbol };
             }
             // otherwise, the property acess is invalid and a compile-time error occurs
             else {
-                context.postError(this.getUnitPath(), callEx.minChar, callEx.getLength(), DiagnosticCode.Value_of_type_0_is_not_indexable_by_type_1, [targetTypeSymbol.toString(), indexType.toString()]);
-                return this.getNewErrorTypeSymbol();
+                return {
+                    symbol: this.getNewErrorTypeSymbol(),
+                    diagnostic: new Diagnostic(this.getUnitPath(), callEx.minChar, callEx.getLength(), DiagnosticCode.Value_of_type_0_is_not_indexable_by_type_1, [targetTypeSymbol.toString(), indexType.toString()])
+                }
             }
         }
 
