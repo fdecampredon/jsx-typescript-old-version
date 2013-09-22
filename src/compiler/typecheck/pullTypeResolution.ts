@@ -4646,10 +4646,10 @@ module TypeScript {
                     return this.resolveSuperExpression(ast, enclosingDecl, context);
 
                 case NodeType.InvocationExpression:
-                    return this.resolveInvocationExpression(<InvocationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveInvocationExpression(<InvocationExpression>ast, enclosingDecl, context);
 
                 case NodeType.ObjectCreationExpression:
-                    return this.resolveObjectCreationExpression(<ObjectCreationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveObjectCreationExpression(<ObjectCreationExpression>ast, enclosingDecl, context);
 
                 case NodeType.CastExpression:
                     return this.resolveCastExpression(<CastExpression>ast, enclosingDecl, context);
@@ -4914,11 +4914,11 @@ module TypeScript {
                     return;
 
                 case NodeType.InvocationExpression:
-                    this.typeCheckInvocationExpression(<InvocationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckInvocationExpression(<InvocationExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.ObjectCreationExpression:
-                    this.typeCheckObjectCreationExpression(<ObjectCreationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckObjectCreationExpression(<ObjectCreationExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.CastExpression:
@@ -6881,14 +6881,14 @@ module TypeScript {
             this.resolveAST(ast.expression, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
-        public resolveInvocationExpression(callEx: InvocationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults?: PullAdditionalCallResolutionData): PullSymbol {
+        public resolveInvocationExpression(callEx: InvocationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults?: PullAdditionalCallResolutionData): PullSymbol {
             var symbol = this.getSymbolForAST(callEx);
 
             if (!symbol || !symbol.isResolved) {
                 if (!additionalResults) {
                     additionalResults = new PullAdditionalCallResolutionData();
                 }
-                symbol = this.computeInvocationExpressionSymbol(callEx, inContextuallyTypedAssignment, enclosingDecl, context, additionalResults);
+                symbol = this.computeInvocationExpressionSymbol(callEx, enclosingDecl, context, additionalResults);
                 if (this.canTypeCheckAST(callEx, context)) {
                     this.setTypeChecked(callEx, context);
                 }
@@ -6899,7 +6899,7 @@ module TypeScript {
             }
             else {
                 if (this.canTypeCheckAST(callEx, context)) {
-                    this.typeCheckInvocationExpression(callEx, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckInvocationExpression(callEx, enclosingDecl, context);
                 }
 
                 var callResolutionData = this.currentUnit.getCallResolutionDataForAST(callEx);
@@ -6915,9 +6915,9 @@ module TypeScript {
             return symbol;
         }
 
-        private typeCheckInvocationExpression(callEx: InvocationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckInvocationExpression(callEx: InvocationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(callEx, context);
-            var targetSymbol = this.resolveAST(callEx.target, inContextuallyTypedAssignment, enclosingDecl, context);
+            var targetSymbol = this.resolveAST(callEx.target, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             if (targetSymbol && callEx.target.nodeType() === NodeType.SuperExpression) {
                 var targetTypeSymbol = targetSymbol.type;
                 if (targetTypeSymbol.isClass()) {
@@ -6955,9 +6955,9 @@ module TypeScript {
             }
         }
 
-        public computeInvocationExpressionSymbol(callEx: InvocationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults: PullAdditionalCallResolutionData): PullSymbol {
+        public computeInvocationExpressionSymbol(callEx: InvocationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults: PullAdditionalCallResolutionData): PullSymbol {
             // resolve the target
-            var targetSymbol = this.resolveAST(callEx.target, inContextuallyTypedAssignment, enclosingDecl, context);
+            var targetSymbol = this.resolveAST(callEx.target, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             var targetAST = this.getCallTargetErrorSpanAST(callEx);
 
             // don't be fooled
@@ -6971,7 +6971,7 @@ module TypeScript {
                 // Note: targetType is either any or an error.
 
                 // resolve any arguments.
-                this.resolveAST(callEx.arguments, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.resolveAST(callEx.arguments, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
 
                 if (callEx.typeArguments && callEx.typeArguments.members.length) {
                     // Can't invoke 'any' generically.
@@ -7001,7 +7001,7 @@ module TypeScript {
                 }
                 else {
                     context.postError(this.unitPath, targetAST.minChar, targetAST.getLength(), DiagnosticCode.Calls_to_super_are_only_valid_inside_a_class, null);
-                    this.resolveAST(callEx.arguments, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.resolveAST(callEx.arguments, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
                     // POST diagnostics
                     return this.getNewErrorTypeSymbol();
                 }
@@ -7184,7 +7184,7 @@ module TypeScript {
                 if (isSuperCall) {
                     context.isResolvingSuperConstructorCallArgument = true;
                 }
-                this.resolveAST(callEx.arguments, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.resolveAST(callEx.arguments, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
                 if (isSuperCall) {
                     context.isResolvingSuperConstructorCallArgument = prevIsResolvingSuperConstructorCallArgument;
                 }
@@ -7333,14 +7333,14 @@ module TypeScript {
             return returnType;
         }
 
-        public resolveObjectCreationExpression(callEx: ObjectCreationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults?: PullAdditionalCallResolutionData): PullSymbol {
+        public resolveObjectCreationExpression(callEx: ObjectCreationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults?: PullAdditionalCallResolutionData): PullSymbol {
             var symbol = this.getSymbolForAST(callEx);
 
             if (!symbol || !symbol.isResolved) {
                 if (!additionalResults) {
                     additionalResults = new PullAdditionalCallResolutionData();
                 }
-                symbol = this.computeObjectCreationExpressionSymbol(callEx, inContextuallyTypedAssignment, enclosingDecl, context, additionalResults);
+                symbol = this.computeObjectCreationExpressionSymbol(callEx, enclosingDecl, context, additionalResults);
                 if (this.canTypeCheckAST(callEx, context)) {
                     this.setTypeChecked(callEx, context);
                 }
@@ -7349,7 +7349,7 @@ module TypeScript {
             }
             else {
                 if (this.canTypeCheckAST(callEx, context)) {
-                    this.typeCheckObjectCreationExpression(callEx, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckObjectCreationExpression(callEx, enclosingDecl, context);
                 }
 
                 var callResolutionData = this.currentUnit.getCallResolutionDataForAST(callEx);
@@ -7365,9 +7365,9 @@ module TypeScript {
             return symbol;
         }
 
-        private typeCheckObjectCreationExpression(callEx: ObjectCreationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckObjectCreationExpression(callEx: ObjectCreationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(callEx, context);
-            this.resolveAST(callEx.target, inContextuallyTypedAssignment, enclosingDecl, context);
+            this.resolveAST(callEx.target, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             var callResolutionData = this.currentUnit.getCallResolutionDataForAST(callEx);
             if (callEx.arguments) {
                 var callResolutionData = this.currentUnit.getCallResolutionDataForAST(callEx);
@@ -7389,11 +7389,11 @@ module TypeScript {
             }
         }
 
-        public computeObjectCreationExpressionSymbol(callEx: ObjectCreationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults: PullAdditionalCallResolutionData): PullSymbol {
+        public computeObjectCreationExpressionSymbol(callEx: ObjectCreationExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults: PullAdditionalCallResolutionData): PullSymbol {
             var returnType: PullTypeSymbol = null;
 
             // resolve the target
-            var targetSymbol = this.resolveAST(callEx.target, inContextuallyTypedAssignment, enclosingDecl, context);
+            var targetSymbol = this.resolveAST(callEx.target, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             var targetTypeSymbol = targetSymbol.isType() ? <PullTypeSymbol>targetSymbol : targetSymbol.type;
 
             var targetAST = this.getCallTargetErrorSpanAST(callEx);
@@ -7409,7 +7409,7 @@ module TypeScript {
 
             if (this.isAnyOrEquivalent(targetTypeSymbol)) {
                 // resolve any arguments
-                this.resolveAST(callEx.arguments, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.resolveAST(callEx.arguments, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
                 return targetTypeSymbol;
             }
 
@@ -7699,7 +7699,7 @@ module TypeScript {
 
                 return returnType
             } else {
-                this.resolveAST(callEx.arguments, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.resolveAST(callEx.arguments, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             }
 
             context.postError(this.unitPath, targetAST.minChar, targetAST.getLength(), DiagnosticCode.Invalid_new_expression, null);
