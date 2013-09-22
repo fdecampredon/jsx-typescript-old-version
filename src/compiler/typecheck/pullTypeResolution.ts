@@ -4594,7 +4594,7 @@ module TypeScript {
             }
 
             var symbol = specializingSignature ? null : this.semanticInfoChain.getSymbolForAST(ast, this.unitPath);
-            if (symbol && symbol.type && (symbol.isResolved /* || symbol.inResolution*/)) {
+            if (symbol && symbol.isResolved) {
                 this.typeCheckAST(ast, inContextuallyTypedAssignment, enclosingDecl, context);
                 return symbol;
             }
