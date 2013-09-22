@@ -2125,49 +2125,45 @@ module TypeScript {
                 return null;
             }
 
-            var type = <PullTypeSymbol>this.getSymbolForAST(typeRef);
             var aliasType: PullTypeAliasSymbol = null;
-            if (!type || this.canTypeCheckAST(typeRef, context)) {
-                if (this.canTypeCheckAST(typeRef, context)) {
-                    this.setTypeChecked(typeRef, context);
+            var type = this.computeTypeReferenceSymbol(typeRef, enclosingDecl, context);
+
+            if (type.kind == PullElementKind.Container) {
+                var container = <PullContainerSymbol>type;
+                var instanceSymbol = container.getInstanceSymbol();
+                // check if it is actually merged with class
+                if (instanceSymbol &&
+                    (instanceSymbol.hasFlag(PullElementFlags.ClassConstructorVariable) || instanceSymbol.kind == PullElementKind.ConstructorMethod)) {
+                    type = instanceSymbol.type.getAssociatedContainerType();
                 }
+            }
 
-                type = this.computeTypeReferenceSymbol(typeRef, enclosingDecl, context);
+            if (type && type.isAlias()) {
+                aliasType = <PullTypeAliasSymbol>type;
+                type = aliasType.getExportAssignedTypeSymbol();
+            }
 
-                if (type.kind == PullElementKind.Container) {
-                    var container = <PullContainerSymbol>type;
-                    var instanceSymbol = container.getInstanceSymbol();
-                    // check if it is actually merged with class
-                    if (instanceSymbol &&
-                        (instanceSymbol.hasFlag(PullElementFlags.ClassConstructorVariable) || instanceSymbol.kind == PullElementKind.ConstructorMethod)) {
-                        type = instanceSymbol.type.getAssociatedContainerType();
+            if (type && !type.isGeneric()) {
+                if (aliasType) {
+                    this.currentUnit.setAliasSymbolForAST(typeRef, aliasType);
+                }
+            }
+
+            if (type && !type.isError()) {
+                if ((type.kind & PullElementKind.SomeType) === 0) {
+                    // Provide some helper messages for common cases.
+                    if (type.kind & PullElementKind.SomeContainer) {
+                        context.postError(this.unitPath, typeRef.minChar, typeRef.getLength(),
+                            DiagnosticCode.Type_reference_cannot_refer_to_container_0, [aliasType ? aliasType.toString() : type.toString()]);
+                    } else {
+                        context.postError(this.unitPath, typeRef.minChar, typeRef.getLength(),
+                            DiagnosticCode.Type_reference_must_refer_to_type, null);
                     }
                 }
+            }
 
-                if (type && type.isAlias()) {
-                    aliasType = <PullTypeAliasSymbol>type;
-                    type = aliasType.getExportAssignedTypeSymbol();
-                }
-
-                if (type && !type.isGeneric()) {
-                    this.setSymbolForAST(typeRef, type, context);
-                    if (aliasType) {
-                        this.currentUnit.setAliasSymbolForAST(typeRef, aliasType);
-                    }
-                }
-
-                if (type && !type.isError()) {
-                    if ((type.kind & PullElementKind.SomeType) === 0) {
-                        // Provide some helper messages for common cases.
-                        if (type.kind & PullElementKind.SomeContainer) {
-                            context.postError(this.unitPath, typeRef.minChar, typeRef.getLength(),
-                                DiagnosticCode.Type_reference_cannot_refer_to_container_0, [aliasType ? aliasType.toString() : type.toString()]);
-                        } else {
-                            context.postError(this.unitPath, typeRef.minChar, typeRef.getLength(),
-                                DiagnosticCode.Type_reference_must_refer_to_type, null);
-                        }
-                    }
-                }
+            if (this.canTypeCheckAST(typeRef, context)) {
+                this.setTypeChecked(typeRef, context);
             }
 
             return type;
