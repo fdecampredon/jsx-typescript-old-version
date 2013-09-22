@@ -2902,7 +2902,7 @@ module TypeScript {
                     resolver.setUnitPath(typeDecl.getScriptName());
                     for (var j = 0; j < typeAST.extendsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
-                        extendTypeSymbol = resolver.resolveTypeReference(new TypeReference(typeAST.extendsList.members[j], 0), typeDecl, context);
+                        extendTypeSymbol = resolver.resolveTypeReference(<TypeReference>typeAST.extendsList.members[j], typeDecl, context);
                         resolver.setUnitPath(unitPath);
                         context.popTypeSpecializationCache();
 
@@ -2924,7 +2924,7 @@ module TypeScript {
                     resolver.setUnitPath(typeDecl.getScriptName());
                     for (var j = 0; j < typeAST.implementsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
-                        implementedTypeSymbol = resolver.resolveTypeReference(new TypeReference(typeAST.implementsList.members[j], 0), typeDecl, context);
+                        implementedTypeSymbol = resolver.resolveTypeReference(<TypeReference>typeAST.implementsList.members[j], typeDecl, context);
                         resolver.setUnitPath(unitPath);
                         context.popTypeSpecializationCache();
 

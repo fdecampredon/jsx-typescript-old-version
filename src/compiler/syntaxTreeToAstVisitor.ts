@@ -490,7 +490,7 @@ module TypeScript {
                     this.movePast(node.typeNames.childAt(i));
                 }
                 else {
-                    var type = this.visitType(node.typeNames.childAt(i)).term;
+                    var type = this.visitType(node.typeNames.childAt(i));
                     array[i / 2] = type;
                 }
             }

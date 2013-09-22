@@ -1840,8 +1840,7 @@ module TypeScript {
             this.writeToOutput("var " + className);
 
             var hasBaseClass = classDecl.extendsList && classDecl.extendsList.members.length;
-            var baseNameDecl: AST = null;
-            var baseName: AST = null;
+            var baseTypeReference: TypeReference = null;
             var varDecl: VariableDeclarator = null;
 
             if (hasBaseClass) {
@@ -1854,8 +1853,7 @@ module TypeScript {
             this.indenter.increaseIndent();
 
             if (hasBaseClass) {
-                baseNameDecl = classDecl.extendsList.members[0];
-                baseName = baseNameDecl.nodeType() === NodeType.InvocationExpression ? (<InvocationExpression>baseNameDecl).target : baseNameDecl;
+                baseTypeReference = <TypeReference>classDecl.extendsList.members[0];
                 this.emitIndent();
                 this.writeLineToOutput("__extends(" + className + ", _super);");
             }
@@ -1908,7 +1906,7 @@ module TypeScript {
             this.writeToOutput(")(");
             if (hasBaseClass) {
                 this.resolvingContext.resolvingTypeReference = true;
-                this.emitJavascript(baseName, false);
+                this.emitJavascript(baseTypeReference.term, /*startLine:*/ false);
                 this.resolvingContext.resolvingTypeReference = false;
             }
             this.writeToOutput(");");

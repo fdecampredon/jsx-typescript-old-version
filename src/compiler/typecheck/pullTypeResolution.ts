@@ -1140,7 +1140,7 @@ module TypeScript {
 
                 for (var i = typeDeclSymbol.getKnownBaseTypeCount(); i < typeDeclAST.extendsList.members.length; i = typeDeclSymbol.getKnownBaseTypeCount()) {
                     typeDeclSymbol.incrementKnownBaseCount();
-                    var parentType = this.resolveTypeReference(new TypeReference(typeDeclAST.extendsList.members[i], 0), typeDecl, context);
+                    var parentType = this.resolveTypeReference(<TypeReference>typeDeclAST.extendsList.members[i], typeDecl, context);
 
                     if (typeDeclSymbol.isValidBaseKind(parentType, true)) {
                         this.setSymbolForAST(typeDeclAST.extendsList.members[i], parentType, null /* setting it without context so that we record the baseType associated with the members */);
@@ -1167,8 +1167,8 @@ module TypeScript {
                 var extendsCount = typeDeclAST.extendsList ? typeDeclAST.extendsList.members.length : 0;
                 for (var i = typeDeclSymbol.getKnownBaseTypeCount(); ((i - extendsCount) >= 0) && ((i - extendsCount) < typeDeclAST.implementsList.members.length); i = typeDeclSymbol.getKnownBaseTypeCount()) {
                     typeDeclSymbol.incrementKnownBaseCount();
-                    var implementedTypeAST = typeDeclAST.implementsList.members[i - extendsCount];
-                    var implementedType = this.resolveTypeReference(new TypeReference(implementedTypeAST, 0), typeDecl, context);
+                    var implementedTypeAST = <TypeReference>typeDeclAST.implementsList.members[i - extendsCount];
+                    var implementedType = this.resolveTypeReference(implementedTypeAST, typeDecl, context);
 
                     if (typeDeclSymbol.isValidBaseKind(implementedType, false)) {
                         this.setSymbolForAST(typeDeclAST.implementsList.members[i - extendsCount], implementedType, null /* setting it without context so that we record the baseType associated with the members */);
@@ -10742,8 +10742,10 @@ module TypeScript {
             return true;
         }
 
-        private typeCheckBase(typeDeclAst: TypeDeclaration,
-            typeSymbol: PullTypeSymbol, baseDeclAST: AST,
+        private typeCheckBase(
+            typeDeclAst: TypeDeclaration,
+            typeSymbol: PullTypeSymbol,
+            baseDeclAST: TypeReference,
             isExtendedType: boolean,
             enclosingDecl: PullDecl,
             context: PullTypeResolutionContext) {
@@ -10752,7 +10754,7 @@ module TypeScript {
 
             var savedResolvingTypeReference = context.resolvingTypeReference;
             context.resolvingTypeReference = true;
-            var baseType = this.resolveTypeReference(new TypeReference(baseDeclAST, 0), typeDecl, context).type;
+            var baseType = this.resolveTypeReference(baseDeclAST, typeDecl, context).type;
             context.resolvingTypeReference = savedResolvingTypeReference;
 
             if (!baseType) {
@@ -10775,11 +10777,11 @@ module TypeScript {
                     }
                 }
                 return;
-            } else if (typeDeclIsClass && isExtendedType && baseDeclAST.nodeType() == NodeType.Name) {
+            } else if (typeDeclIsClass && isExtendedType && baseDeclAST.term.nodeType() == NodeType.Name) {
                 // Verify if the class extends another class verify the value position resolves to the same type expression
-                if (this.hasClassTypeSymbolConflictAsValue(<Identifier>baseDeclAST, baseType, enclosingDecl, context)) {
+                if (this.hasClassTypeSymbolConflictAsValue(<Identifier>baseDeclAST.term, baseType, enclosingDecl, context)) {
                     // Report error
-                    context.postError(this.unitPath, baseDeclAST.minChar, baseDeclAST.getLength(), DiagnosticCode.Type_reference_0_in_extends_clause_doesn_t_reference_constructor_function_for_1, [(<Identifier>baseDeclAST).actualText, baseType.toString(enclosingDecl ? enclosingDecl.getSymbol() : null)]);
+                    context.postError(this.unitPath, baseDeclAST.minChar, baseDeclAST.getLength(), DiagnosticCode.Type_reference_0_in_extends_clause_doesn_t_reference_constructor_function_for_1, [(<Identifier>baseDeclAST.term).actualText, baseType.toString(enclosingDecl ? enclosingDecl.getSymbol() : null)]);
                 }
             }
 
@@ -10817,14 +10819,14 @@ module TypeScript {
 
             if (typeDeclAst.extendsList) {
                 for (var i = 0; i < typeDeclAst.extendsList.members.length; i++) {
-                    this.typeCheckBase(typeDeclAst, typeSymbol, typeDeclAst.extendsList.members[i], true, enclosingDecl, context);
+                    this.typeCheckBase(typeDeclAst, typeSymbol, <TypeReference>typeDeclAst.extendsList.members[i], /*isExtendedType:*/ true, enclosingDecl, context);
                 }
             }
 
             if (typeSymbol.isClass()) {
                 if (typeDeclAst.implementsList) {
                     for (var i = 0; i < typeDeclAst.implementsList.members.length; i++) {
-                        this.typeCheckBase(typeDeclAst, typeSymbol, typeDeclAst.implementsList.members[i], false, enclosingDecl, context);
+                        this.typeCheckBase(typeDeclAst, typeSymbol, <TypeReference>typeDeclAst.implementsList.members[i], /*isExtendedType:*/false, enclosingDecl, context);
                     }
                 }
             }

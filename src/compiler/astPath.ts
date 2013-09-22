@@ -174,22 +174,6 @@ module TypeScript {
                 (<TypeScript.ObjectCreationExpression>this.asts[this.top - 1]).target === this.asts[this.top];
         }
 
-        public isInClassImplementsList(): boolean {
-            if (this.ast() === null || this.parent() === null)
-                return false;
-
-            return (this.parent().nodeType() === TypeScript.NodeType.ClassDeclaration) &&
-                (this.isMemberOfList((<TypeScript.ClassDeclaration>this.parent()).implementsList, this.ast()));
-        }
-
-        public isInInterfaceExtendsList(): boolean {
-            if (this.ast() === null || this.parent() === null)
-                return false;
-
-            return (this.parent().nodeType() === TypeScript.NodeType.InterfaceDeclaration) &&
-                (this.isMemberOfList((<TypeScript.InterfaceDeclaration>this.parent()).extendsList, this.ast()));
-        }
-
         public isMemberOfMemberAccessExpression() {
             if (this.count() > 1 &&
                 this.parent().nodeType() === NodeType.MemberAccessExpression &&
