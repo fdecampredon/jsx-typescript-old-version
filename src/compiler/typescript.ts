@@ -1372,7 +1372,7 @@ module TypeScript {
                             // We are outside the cast term
                             if (propagateContextualTypes) {
                                 var contextualType: PullTypeSymbol = null;
-                                var typeSymbol = this.resolver.resolveTypeAssertionExpression(castExpression, enclosingDecl, resolutionContext);
+                                var typeSymbol = this.resolver.resolveCastExpression(castExpression, enclosingDecl, resolutionContext);
 
                                 // Set the context type
                                 if (typeSymbol) {

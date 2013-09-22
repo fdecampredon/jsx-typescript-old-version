@@ -4652,7 +4652,7 @@ module TypeScript {
                     return this.resolveObjectCreationExpression(<ObjectCreationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.CastExpression:
-                    return this.resolveTypeAssertionExpression(<UnaryExpression>ast, enclosingDecl, context);
+                    return this.resolveCastExpression(<UnaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.TypeRef:
                     return this.resolveTypeReference(<TypeReference>ast, enclosingDecl, context);
@@ -4922,8 +4922,7 @@ module TypeScript {
                     return;
 
                 case NodeType.CastExpression:
-                    /* resolveTypeAssertionExpression will take care of correctly walking and resolving/typeChecking actions */
-                    this.resolveTypeAssertionExpression(<UnaryExpression>ast, enclosingDecl, context);
+                    this.typeCheckCastExpression(<UnaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.TypeRef:
@@ -7709,11 +7708,11 @@ module TypeScript {
             return this.getNewErrorTypeSymbol();
         }
 
-        public resolveTypeAssertionExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
+        public resolveCastExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
             var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
             if (this.canTypeCheckAST(assertionExpression, context)) {
-                this.typeCheckAssertionExpression(assertionExpression, enclosingDecl, context);
+                this.typeCheckCastExpression(assertionExpression, enclosingDecl, context);
             }
 
             // September 17, 2013: 
@@ -7723,7 +7722,7 @@ module TypeScript {
             return typeAssertionType;
         }
 
-        private typeCheckAssertionExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+        private typeCheckCastExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
             this.setTypeChecked(assertionExpression, context);
 
             var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
