@@ -5148,29 +5148,6 @@ module TypeScript {
             }
         }
 
-        private isNameOrMemberAccessExpression(ast: AST): boolean {
-
-            var checkAST = ast;
-
-            while (checkAST) {
-                if (checkAST.nodeType() === NodeType.ExpressionStatement) {
-                    checkAST = (<ExpressionStatement>checkAST).expression;
-                }
-                else if (checkAST.nodeType() === NodeType.ParenthesizedExpression) {
-                    checkAST = (<ParenthesizedExpression>checkAST).expression;
-                }
-                else if (checkAST.nodeType() === NodeType.Name) {
-                    return true;
-                }
-                else if (checkAST.nodeType() === NodeType.MemberAccessExpression) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-        }
-
         private resolveNameSymbol(nameSymbol: PullSymbol, context: PullTypeResolutionContext) {
             if (nameSymbol &&
                 !context.canUseTypeSymbol &&
