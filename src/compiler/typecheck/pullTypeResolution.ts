@@ -631,9 +631,7 @@ module TypeScript {
                 return null;
             }
 
-            if (!lhsType.isResolved) {
-                this.resolveDeclaredSymbol(lhsType, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(lhsType, enclosingDecl, context);
 
             if (lhsType.isContainer() && lhsType.isAlias()) {
                 lhsType = (<PullTypeAliasSymbol>lhsType).getExportAssignedTypeSymbol();
@@ -721,9 +719,8 @@ module TypeScript {
                     var associatedInstance = (<PullContainerSymbol>lhsType).getInstanceSymbol();
                     if (associatedInstance) {
                         var instanceType = associatedInstance.type;
-                        if (!instanceType.isResolved) {
-                            this.resolveDeclaredSymbol(instanceType, enclosingDecl, context);
-                        }
+                        this.resolveDeclaredSymbol(instanceType, enclosingDecl, context);
+
                         var instanceMembers = instanceType.getAllMembers(declSearchKind, memberVisibilty);
                         members = members.concat(instanceMembers);
 
@@ -747,9 +744,8 @@ module TypeScript {
                     var associatedContainerSymbol = lhsType.getAssociatedContainerType();
                     if (associatedContainerSymbol) {
                         var containerType = associatedContainerSymbol.type;
-                        if (!containerType.isResolved) {
-                            this.resolveDeclaredSymbol(containerType, enclosingDecl, context);
-                        }
+                        this.resolveDeclaredSymbol(containerType, enclosingDecl, context);
+
                         var containerMembers = containerType.getAllMembers(declSearchKind, memberVisibilty);
                         members = members.concat(containerMembers);
                     }
@@ -1435,9 +1431,7 @@ module TypeScript {
                 }
 
                 if (symbol.isAlias()) {
-                    if (!symbol.isResolved) {
-                        this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
 
                     var alias = <PullTypeAliasSymbol>symbol;
                     if (kind & PullElementKind.SomeContainer) {
@@ -1479,9 +1473,8 @@ module TypeScript {
             }
 
             if (!acceptableAlias && containerSymbol && containerSymbol.kind == PullElementKind.TypeAlias) {
-                if (!containerSymbol.isResolved) {
-                    this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
+
                 var aliasedAssignedValue = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedValueSymbol();
                 var aliasedAssignedType = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedTypeSymbol();
                 var aliasedAssignedContainer = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedContainerSymbol();
@@ -1778,9 +1771,7 @@ module TypeScript {
             }
 
             if (!acceptableAlias && containerSymbol && containerSymbol.kind == PullElementKind.TypeAlias) {
-                if (!containerSymbol.isResolved) {
-                    this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
 
                 var aliasedAssignedValue = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedValueSymbol();
                 var aliasedAssignedType = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedTypeSymbol();
@@ -1827,15 +1818,9 @@ module TypeScript {
                 (<PullContainerSymbol>parentSymbol).setExportAssignedContainerSymbol(<PullContainerSymbol>containerSymbol);
             }
 
-            if (valueSymbol && !valueSymbol.isResolved) {
-                this.resolveDeclaredSymbol(valueSymbol, enclosingDecl, context);
-            }
-            if (typeSymbol && !typeSymbol.isResolved) {
-                this.resolveDeclaredSymbol(typeSymbol, enclosingDecl, context);
-            }
-            if (containerSymbol && !containerSymbol.isResolved) {
-                this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(valueSymbol, enclosingDecl, context);
+            this.resolveDeclaredSymbol(typeSymbol, enclosingDecl, context);
+            this.resolveDeclaredSymbol(containerSymbol, enclosingDecl, context);
 
             return this.semanticInfoChain.voidTypeSymbol;
         }
@@ -2307,9 +2292,7 @@ module TypeScript {
                 if (!arraySymbol) {
                     // for each member in the array interface symbol, substitute in the the typeDecl symbol for "_element"
 
-                    if (!this.cachedArrayInterfaceType().isResolved) {
-                        this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
 
                     arraySymbol = specializeType(this.cachedArrayInterfaceType(), [typeDeclSymbol], this, this.cachedArrayInterfaceType().getDeclarations()[0], context);
 
@@ -2710,9 +2693,7 @@ module TypeScript {
             var classSymbol = this.getContextualClassSymbolForEnclosingDecl(enclosingDecl, context);
 
             if (classSymbol) {
-                if (!classSymbol.isResolved) {
-                    this.resolveDeclaredSymbol(classSymbol, enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(classSymbol, enclosingDecl, context);
 
                 var parents = classSymbol.getExtendedTypes();
                 if (parents.length) {
@@ -4278,9 +4259,7 @@ module TypeScript {
                         var classDecl = parentDecl.getParentDecl();
                         if (classDecl) {
                             var classSymbol = classDecl.getSymbol();
-                            if (!classSymbol.isResolved) {
-                                this.resolveDeclaredSymbol(classSymbol, classDecl, context);
-                            }
+                            this.resolveDeclaredSymbol(classSymbol, classDecl, context);
 
                             var comparisonInfo = new TypeComparisonInfo();
                             var isAssignable = this.sourceIsAssignableToTarget(resolvedReturnType, classSymbol.type, context, comparisonInfo);
@@ -4321,13 +4300,8 @@ module TypeScript {
                                     }
                                 }
 
-                                if (!resolvedReturnType.isResolved) {
-                                    this.resolveDeclaredSymbol(resolvedReturnType, enclosingDecl, context);
-                                }
-
-                                if (!sigReturnType.isResolved) {
-                                    this.resolveDeclaredSymbol(resolvedReturnType, enclosingDecl, context);
-                                }
+                                this.resolveDeclaredSymbol(resolvedReturnType, enclosingDecl, context);
+                                this.resolveDeclaredSymbol(sigReturnType, enclosingDecl, context);
 
                                 var isAssignable = this.sourceIsAssignableToTarget(resolvedReturnType, sigReturnType, context, comparisonInfo);
 
@@ -5164,9 +5138,7 @@ module TypeScript {
                 nameSymbol = this.computeNameExpression(nameAST, enclosingDecl, context);
             }
 
-            if (!nameSymbol.isResolved) {
-                this.resolveDeclaredSymbol(nameSymbol, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(nameSymbol, enclosingDecl, context);
 
             // We don't want to capture an intermediate 'any' from a recursive resolution
             if (nameSymbol &&
@@ -5197,9 +5169,7 @@ module TypeScript {
             if (!nameSymbol && id === "arguments" && enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction)) {
                 nameSymbol = this.cachedFunctionArgumentsSymbol;
 
-                if (this.cachedIArgumentsInterfaceType() && !this.cachedIArgumentsInterfaceType().isResolved) {
-                    this.resolveDeclaredSymbol(this.cachedIArgumentsInterfaceType(), enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(this.cachedIArgumentsInterfaceType(), enclosingDecl, context);
             }
 
             // Try looking up a type alias with an associated instance type
@@ -5258,17 +5228,10 @@ module TypeScript {
                     aliasSymbol.isUsedAsValue = true;
                 }
 
-                if (!nameSymbol.isResolved) {
-                    this.resolveDeclaredSymbol(nameSymbol, enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(nameSymbol, enclosingDecl, context);
 
-                if (aliasSymbol.assignedValue) {
-                    if (!aliasSymbol.assignedValue.isResolved) {
-                        this.resolveDeclaredSymbol(aliasSymbol.assignedValue, enclosingDecl, context);
-                    }
-                } else if (aliasSymbol.assignedContainer && !aliasSymbol.assignedContainer.isResolved) {
-                    this.resolveDeclaredSymbol(aliasSymbol.assignedContainer, enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(aliasSymbol.assignedValue, enclosingDecl, context);
+                this.resolveDeclaredSymbol(aliasSymbol.assignedContainer, enclosingDecl, context);
 
                 var exportAssignmentSymbol = (<PullTypeAliasSymbol>nameSymbol).getExportAssignedValueSymbol();
 
@@ -5299,9 +5262,7 @@ module TypeScript {
                 symbol = this.computeDottedNameExpressionSymbol(dottedNameAST, enclosingDecl, context, canTypeCheckDottedNameAST);
             }
 
-            if (symbol && !symbol.isResolved) {
-                this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
 
             if (symbol &&
                 (symbol.type != this.semanticInfoChain.anyTypeSymbol ||
@@ -5506,9 +5467,7 @@ module TypeScript {
                 this.setSymbolForAST(nameAST, typeNameSymbol, context);
             }
 
-            if (!typeNameSymbol.isResolved) {
-                this.resolveDeclaredSymbol(typeNameSymbol, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(typeNameSymbol, enclosingDecl, context);
 
             if (typeNameSymbol && !(typeNameSymbol.isTypeParameter() && (<PullTypeParameterSymbol>typeNameSymbol).isFunctionTypeParameter() && context.isSpecializingSignatureTypeParameters && !context.isSpecializingConstructorMethod)) {
                 var substitution = context.findSpecializationForType(typeNameSymbol);
@@ -5573,15 +5532,11 @@ module TypeScript {
                 var typeNameSymbolAlias: PullTypeAliasSymbol = null;
                 if (typeNameSymbol.isAlias()) {
                     typeNameSymbolAlias = <PullTypeAliasSymbol>typeNameSymbol;
-                    if (!typeNameSymbol.isResolved) {
-                        this.resolveDeclaredSymbol(typeNameSymbol, enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(typeNameSymbol, enclosingDecl, context);
 
                     var aliasedType = typeNameSymbolAlias.getExportAssignedTypeSymbol();
 
-                    if (aliasedType && !aliasedType.isResolved) {
-                        this.resolveDeclaredSymbol(aliasedType, enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(aliasedType, enclosingDecl, context);
                 }
 
                 if (typeNameSymbol.isTypeParameter()) {
@@ -5723,9 +5678,7 @@ module TypeScript {
                 this.setSymbolForAST(dottedNameAST, symbol, context);
             }
 
-            if (!symbol.isResolved) {
-                this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
-            }
+            this.resolveDeclaredSymbol(symbol, enclosingDecl, context);
 
             return symbol;
         }
@@ -5845,7 +5798,6 @@ module TypeScript {
             }
 
             if (shouldContextuallyType) {
-
                 assigningFunctionTypeSymbol = context.getContextualType();
 
                 if (assigningFunctionTypeSymbol) {
@@ -6143,10 +6095,7 @@ module TypeScript {
                 var classSymbol = this.getContextualClassSymbolForEnclosingDecl(enclosingDecl, context);
 
                 if (classSymbol) {
-
-                    if (!classSymbol.isResolved) {
-                        this.resolveDeclaredSymbol(classSymbol, enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(classSymbol, enclosingDecl, context);
 
                     var parents = classSymbol.getExtendedTypes();
 
@@ -6350,7 +6299,6 @@ module TypeScript {
                         }
 
                         if (assigningSymbol) {
-
                             this.resolveDeclaredSymbol(assigningSymbol, enclosingDecl, context);
 
                             var contextualMemberType = assigningSymbol.kind === PullElementKind.IndexSignature ? (<PullSignatureSymbol>assigningSymbol).returnType : assigningSymbol.type;
@@ -6556,10 +6504,7 @@ module TypeScript {
 
             // ...But in case we haven't...
             if (!arraySymbol) {
-
-                if (!this.cachedArrayInterfaceType().isResolved) {
-                    this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
 
                 arraySymbol = specializeType(this.cachedArrayInterfaceType(), [elementType], this, this.cachedArrayInterfaceType().getDeclarations()[0], context);
 
@@ -6617,9 +6562,7 @@ module TypeScript {
                 var member = this.getMemberSymbol(memberName, PullElementKind.SomeValue, targetTypeSymbol);
 
                 if (member) {
-                    if (!member.isResolved) {
-                        this.resolveDeclaredSymbol(member, enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(member, enclosingDecl, context);
 
                     return { symbol: member.type };
                 }
@@ -7913,9 +7856,7 @@ module TypeScript {
                 if (!arraySymbol) {
                     // for each member in the array interface symbol, substitute in the the typeDecl symbol for "_element"
 
-                    if (!this.cachedArrayInterfaceType().isResolved) {
-                        this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
-                    }
+                    this.resolveDeclaredSymbol(this.cachedArrayInterfaceType(), enclosingDecl, context);
 
                     arraySymbol = specializeType(this.cachedArrayInterfaceType(), [elementType], this, this.cachedArrayInterfaceType().getDeclarations()[0], context);
 
@@ -8417,21 +8358,15 @@ module TypeScript {
             //  - When source is an enum type, sourceSubstitution is the global interface type 'Number'
             //  - When source is a type parameter, sourceSubstituion is the constraint of that type parameter
             if (source == this.semanticInfoChain.stringTypeSymbol && this.cachedStringInterfaceType()) {
-                if (!this.cachedStringInterfaceType().isResolved) {
-                    this.resolveDeclaredSymbol(this.cachedStringInterfaceType(), null, context);
-                }
+                this.resolveDeclaredSymbol(this.cachedStringInterfaceType(), null, context);
                 sourceSubstitution = this.cachedStringInterfaceType();
             }
             else if (source == this.semanticInfoChain.numberTypeSymbol && this.cachedNumberInterfaceType()) {
-                if (!this.cachedNumberInterfaceType().isResolved) {
-                    this.resolveDeclaredSymbol(this.cachedNumberInterfaceType(), null, context);
-                }
+                this.resolveDeclaredSymbol(this.cachedNumberInterfaceType(), null, context);
                 sourceSubstitution = this.cachedNumberInterfaceType();
             }
             else if (source == this.semanticInfoChain.booleanTypeSymbol && this.cachedBooleanInterfaceType()) {
-                if (!this.cachedBooleanInterfaceType().isResolved) {
-                    this.resolveDeclaredSymbol(this.cachedBooleanInterfaceType(), null, context);
-                }
+                this.resolveDeclaredSymbol(this.cachedBooleanInterfaceType(), null, context);
                 sourceSubstitution = this.cachedBooleanInterfaceType();
             }
             else if (PullHelpers.symbolIsEnum(source) && this.cachedNumberInterfaceType()) {
@@ -8625,9 +8560,7 @@ module TypeScript {
                 var targetProp = targetProps[itargetProp];
                 var sourceProp = this.getMemberSymbol(targetProp.name, PullElementKind.SomeValue, source);
 
-                if (!targetProp.isResolved) {
-                    this.resolveDeclaredSymbol(targetProp, null, context);
-                }
+                this.resolveDeclaredSymbol(targetProp, null, context);
 
                 var targetPropType = targetProp.type;
 
@@ -8712,9 +8645,7 @@ module TypeScript {
                 }
             }
 
-            if (!sourceProp.isResolved) {
-                this.resolveDeclaredSymbol(sourceProp, null, context);
-            }
+            this.resolveDeclaredSymbol(sourceProp, null, context);
 
             var sourcePropType = sourceProp.type;
             var targetPropType = targetProp.type;
@@ -9115,9 +9046,7 @@ module TypeScript {
 
                 for (var i = 0; i < args.members.length; i++) {
                     if (!isInVarArg) {
-                        if (!parameters[i].isResolved) {
-                            this.resolveDeclaredSymbol(parameters[i], enclosingDecl, context);
-                        }
+                        this.resolveDeclaredSymbol(parameters[i], enclosingDecl, context);
 
                         if (parameters[i].isVarArg) {
                             // If the vararg has no element type, it is malformed, so just use the any symbol (we will have errored when resolving the signature).
@@ -9297,9 +9226,7 @@ module TypeScript {
 
             // Make sure the first signature has every parameter resolved
             for (var p = 0; p < best.signature.parameters.length; p++) {
-                if (!best.signature.parameters[p].isResolved) {
-                    this.resolveDeclaredSymbol(best.signature.parameters[p], enclosingDecl, context);
-                }
+                this.resolveDeclaredSymbol(best.signature.parameters[p], enclosingDecl, context);
             }
 
             // Resolve the argument types with a provisional any (this is a hack to make sure the symbol does not get cached when we resolve the AST)

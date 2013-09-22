@@ -3223,9 +3223,7 @@ module TypeScript {
                 newField.isOptional = true;
             }
 
-            if (!field.isResolved) {
-                resolver.resolveDeclaredSymbol(field, newTypeDecl, context);
-            }            
+            resolver.resolveDeclaredSymbol(field, newTypeDecl, context);
 
             fieldType = field.type;
 
@@ -3278,9 +3276,7 @@ module TypeScript {
 
             // If we haven't yet resolved the constructor method, we need to resolve it *without* substituting
             // for any type variables, so as to avoid accidentally specializing the root declaration
-            if (!constructorMethod.isResolved) {
-                resolver.resolveDeclaredSymbol(constructorMethod, enclosingDecl, context);
-            }
+            resolver.resolveDeclaredSymbol(constructorMethod, enclosingDecl, context);
 
             var newConstructorMethod = new PullSymbol(constructorMethod.name, PullElementKind.ConstructorMethod);
             var newConstructorType = specializeType(constructorMethod.type, typeArguments, resolver, newTypeDecl, context);         
@@ -3436,12 +3432,9 @@ module TypeScript {
         newSignature.returnType = newReturnType;
 
         for (var k = 0; k < parameters.length; k++) {
-
-            if (!parameters[k].isResolved) {
-                // This can only be the case if we're specializing a class that inherited an implicit
-                // constructor containing parameters
-                resolver.resolveDeclaredSymbol(parameters[k], enclosingDecl, context);
-            }
+            // This can only be the case if we're specializing a class that inherited an implicit
+            // constructor containing parameters
+            resolver.resolveDeclaredSymbol(parameters[k], enclosingDecl, context);
 
             newParameter = new PullSymbol(parameters[k].name, parameters[k].kind);
             newParameter.setRootSymbol(parameters[k]);
