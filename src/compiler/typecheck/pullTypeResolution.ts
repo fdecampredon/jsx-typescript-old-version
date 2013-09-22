@@ -4774,7 +4774,7 @@ module TypeScript {
                     return this.resolveParenthesizedExpression(<ParenthesizedExpression>ast, enclosingDecl, context);
 
                 case NodeType.ExpressionStatement:
-                    return this.resolveExpressionStatement(<ExpressionStatement>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveExpressionStatement(<ExpressionStatement>ast, enclosingDecl, context);
 
                 case NodeType.InstanceOfExpression:
                     return this.resolveInstanceOfExpression(<BinaryExpression>ast, enclosingDecl, context);
@@ -6929,19 +6929,24 @@ module TypeScript {
         }
 
         private resolveParenthesizedExpression(ast: ParenthesizedExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            // Note: we don't want to consider errors at a lower node to also be happening at this
-            // node.  If we did that, then we'd end up reporting an error multiple times in type check.
-            // First as we hit this node, then as we hit the lower node that actually produced the
-            // error.
+            // September 17, 2013: A parenthesized expression (Expression) has the same type and 
+            // classification as the Expression itself
             return this.resolveAST(ast.expression, false, enclosingDecl, context);
         }
 
-        private resolveExpressionStatement(ast: ExpressionStatement, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            // Note: we don't want to consider errors at a lower node to also be happening at this
-            // node.  If we did that, then we'd end up reporting an error multiple times in type check.
-            // First as we hit this node, then as we hit the lower node that actually produced the
-            // error.
-            return this.resolveAST(ast.expression, inContextuallyTypedAssignment, enclosingDecl, context);
+        private resolveExpressionStatement(ast: ExpressionStatement, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            if (this.canTypeCheckAST(ast, context)) {
+                this.typeCheckExpressionStatement(ast, enclosingDecl, context);
+            }
+
+            // All statements have the 'void' type.
+            return this.semanticInfoChain.voidTypeSymbol;
+        }
+
+        private typeCheckExpressionStatement(ast: ExpressionStatement, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+            this.setTypeChecked(ast, context);
+
+            this.resolveAST(ast.expression, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
         public resolveInvocationExpression(callEx: InvocationExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext, additionalResults?: PullAdditionalCallResolutionData): PullSymbol {
