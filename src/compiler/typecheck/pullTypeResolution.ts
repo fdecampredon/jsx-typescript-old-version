@@ -4695,7 +4695,7 @@ module TypeScript {
 
                 // assignment
                 case NodeType.AssignmentExpression:
-                    return this.resolveAssignmentStatement(<BinaryExpression>ast, enclosingDecl, context);
+                    return this.resolveAssignmentExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 // boolean operations
                 case NodeType.LogicalNotExpression:
@@ -7803,12 +7803,21 @@ module TypeScript {
             }
         }
 
-        private resolveAssignmentStatement(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private resolveAssignmentExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            // September 17, 2013: An assignment of the form
+            //
+            //      VarExpr = ValueExpr
+            //
+            // requires VarExpr to be classified as a reference(section 4.1).ValueExpr is 
+            // contextually typed(section 4.19) by the type of VarExpr, and the type of ValueExpr 
+            // must be assignable to(section 3.8.4) the type of VarExpr, or otherwise a compile - 
+            // time error occurs.The result is a value with the type of ValueExpr.
 
-            var leftExpr = this.resolveAST(binaryExpression.operand1, false, enclosingDecl, context);
+
+            var leftExpr = this.resolveAST(binaryExpression.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
             var leftType = leftExpr.type;
 
-            context.pushContextualType(leftType, context.inProvisionalResolution(), null);
+            context.pushContextualType(leftType, context.inProvisionalResolution(), /*substitutions*/null);
             var rightType = this.resolveAST(binaryExpression.operand2, true, enclosingDecl, context).type;
             context.popContextualType();
 
@@ -7816,15 +7825,21 @@ module TypeScript {
 
             // Check if LHS is a valid target
             if (this.canTypeCheckAST(binaryExpression, context)) {
-                this.setTypeChecked(binaryExpression, context);
-                if (!this.isReference(binaryExpression.operand1, leftExpr)) {
-                    context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.Invalid_left_hand_side_of_assignment_expression, null);
-                }
-                else {
-                    this.checkAssignability(binaryExpression.operand1, rightType, leftType, enclosingDecl, context);
-                }
+                this.typeCheckAssignmentExpression(binaryExpression, enclosingDecl, context, leftExpr, rightType);
             }
+
             return rightType;
+        }
+
+        private typeCheckAssignmentExpression(binaryExpression: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, leftExpr: PullSymbol, rightType: PullTypeSymbol): void {
+            this.setTypeChecked(binaryExpression, context);
+
+            if (!this.isReference(binaryExpression.operand1, leftExpr)) {
+                context.postError(this.unitPath, binaryExpression.operand1.minChar, binaryExpression.operand1.getLength(), DiagnosticCode.Invalid_left_hand_side_of_assignment_expression, null);
+            }
+            else {
+                this.checkAssignability(binaryExpression.operand1, rightType, leftExpr.type, enclosingDecl, context);
+            }
         }
 
         private computeAssignmentStatementSymbol(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
