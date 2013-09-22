@@ -4652,7 +4652,7 @@ module TypeScript {
                     return this.resolveObjectCreationExpression(<ObjectCreationExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
                 case NodeType.CastExpression:
-                    return this.resolveCastExpression(<UnaryExpression>ast, enclosingDecl, context);
+                    return this.resolveCastExpression(<CastExpression>ast, enclosingDecl, context);
 
                 case NodeType.TypeRef:
                     return this.resolveTypeReference(<TypeReference>ast, enclosingDecl, context);
@@ -4922,7 +4922,7 @@ module TypeScript {
                     return;
 
                 case NodeType.CastExpression:
-                    this.typeCheckCastExpression(<UnaryExpression>ast, enclosingDecl, context);
+                    this.typeCheckCastExpression(<CastExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.TypeRef:
@@ -7708,8 +7708,8 @@ module TypeScript {
             return this.getNewErrorTypeSymbol();
         }
 
-        public resolveCastExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
-            var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+        public resolveCastExpression(assertionExpression: CastExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
+            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
             if (this.canTypeCheckAST(assertionExpression, context)) {
                 this.typeCheckCastExpression(assertionExpression, enclosingDecl, context);
@@ -7722,10 +7722,10 @@ module TypeScript {
             return typeAssertionType;
         }
 
-        private typeCheckCastExpression(assertionExpression: UnaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
+        private typeCheckCastExpression(assertionExpression: CastExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
             this.setTypeChecked(assertionExpression, context);
 
-            var typeAssertionType = this.resolveAST(assertionExpression.castTerm, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
+            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
             // REVIEW(cyrusn): Why is this here?  Why didn't we just report the error while resolving the cast term.
             if (typeAssertionType.isError()) {

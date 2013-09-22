@@ -921,7 +921,7 @@ module TypeScript {
             this.movePast(node.operatorToken);
             var operand = node.operand.accept(this);
 
-            var result = new UnaryExpression(this.getUnaryExpressionNodeType(node.kind()), operand, null);
+            var result = new UnaryExpression(this.getUnaryExpressionNodeType(node.kind()), operand);
             this.setSpan(result, start, node);
 
             return result;
@@ -941,7 +941,7 @@ module TypeScript {
             var closeStart = this.position + node.closeBracketToken.leadingTriviaWidth();
             this.movePast(node.closeBracketToken);
 
-            var result = new UnaryExpression(NodeType.ArrayLiteralExpression, expressions, null);
+            var result = new UnaryExpression(NodeType.ArrayLiteralExpression, expressions);
             this.setSpan(result, start, node);
 
             if (this.isOnSingleLine(openStart, closeStart)) {
@@ -1292,7 +1292,7 @@ module TypeScript {
             var operand = node.operand.accept(this);
             this.movePast(node.operatorToken);
 
-            var result = new UnaryExpression(node.kind() === SyntaxKind.PostIncrementExpression ? NodeType.PostIncrementExpression : NodeType.PostDecrementExpression, operand, null);
+            var result = new UnaryExpression(node.kind() === SyntaxKind.PostIncrementExpression ? NodeType.PostIncrementExpression : NodeType.PostDecrementExpression, operand);
             this.setSpan(result, start, node);
 
             return result;
@@ -1968,7 +1968,7 @@ module TypeScript {
             return result;
         }
 
-        public visitCastExpression(node: CastExpressionSyntax): UnaryExpression {
+        public visitCastExpression(node: CastExpressionSyntax): CastExpression {
             var start = this.position;
 
             this.movePast(node.lessThanToken);
@@ -1976,7 +1976,7 @@ module TypeScript {
             this.movePast(node.greaterThanToken);
             var expression = node.expression.accept(this);
 
-            var result = new UnaryExpression(NodeType.CastExpression, expression, castTerm);
+            var result = new CastExpression(castTerm, expression);
             this.setSpan(result, start, node);
 
             return result;
@@ -1993,7 +1993,7 @@ module TypeScript {
             var closeStart = this.position + node.closeBraceToken.leadingTriviaWidth();
             this.movePast(node.closeBraceToken);
 
-            var result = new UnaryExpression(NodeType.ObjectLiteralExpression, propertyAssignments, null);
+            var result = new UnaryExpression(NodeType.ObjectLiteralExpression, propertyAssignments);
             this.setCommentsAndSpan(result, start, node);
 
             if (this.isOnSingleLine(openStart, closeStart)) {
@@ -2217,7 +2217,7 @@ module TypeScript {
             this.movePast(node.typeOfKeyword);
             var expression = node.expression.accept(this);
 
-            var result = new UnaryExpression(NodeType.TypeOfExpression, expression, null);
+            var result = new UnaryExpression(NodeType.TypeOfExpression, expression);
             this.setSpan(result, start, node);
 
             return result;
@@ -2229,7 +2229,7 @@ module TypeScript {
             this.movePast(node.deleteKeyword);
             var expression = node.expression.accept(this);
 
-            var result = new UnaryExpression(NodeType.DeleteExpression, expression, null);
+            var result = new UnaryExpression(NodeType.DeleteExpression, expression);
             this.setSpan(result, start, node);
 
             return result;
@@ -2241,7 +2241,7 @@ module TypeScript {
             this.movePast(node.voidKeyword);
             var expression = node.expression.accept(this);
 
-            var result = new UnaryExpression(NodeType.VoidExpression, expression, null);
+            var result = new UnaryExpression(NodeType.VoidExpression, expression);
             this.setSpan(result, start, node);
 
             return result;
@@ -2929,8 +2929,8 @@ module TypeScript {
             return result;
         }
 
-        public visitCastExpression(node: CastExpressionSyntax): UnaryExpression {
-            var result: UnaryExpression = this.getAndMovePastAST(node);
+        public visitCastExpression(node: CastExpressionSyntax): CastExpression {
+            var result: CastExpression = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitCastExpression(node);
                 this.setAST(node, result);

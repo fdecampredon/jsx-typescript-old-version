@@ -1366,9 +1366,9 @@ module TypeScript {
                         break;
 
                     case NodeType.CastExpression:
-                        var castExpression = <UnaryExpression>current;
+                        var castExpression = <CastExpression>current;
 
-                        if (!(i + 1 < n && path.asts[i + 1] === castExpression.castTerm)) {
+                        if (!(i + 1 < n && path.asts[i + 1] === castExpression.castType)) {
                             // We are outside the cast term
                             if (propagateContextualTypes) {
                                 var contextualType: PullTypeSymbol = null;

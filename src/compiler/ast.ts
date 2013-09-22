@@ -366,8 +366,28 @@ module TypeScript {
         }
     }
 
+    export class CastExpression extends AST {
+        constructor(public castType: TypeReference, public operand: AST) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.CastExpression;
+        }
+
+        public emitWorker(emitter: Emitter) {
+            this.operand.emit(emitter);
+        }
+
+        public structuralEquals(ast: CastExpression, includingPosition: boolean): boolean {
+            return super.structuralEquals(ast, includingPosition) &&
+                structuralEquals(this.castType, ast.castType, includingPosition) &&
+                structuralEquals(this.operand, ast.operand, includingPosition);
+        }
+    }
+
     export class UnaryExpression extends AST {
-        constructor(private _nodeType: NodeType, public operand: AST, public castTerm: TypeReference) {
+        constructor(private _nodeType: NodeType, public operand: AST) {
             super();
         }
 
@@ -450,7 +470,6 @@ module TypeScript {
 
         public structuralEquals(ast: UnaryExpression, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.castTerm, ast.castTerm, includingPosition) &&
                    structuralEquals(this.operand, ast.operand, includingPosition);
         }
     }

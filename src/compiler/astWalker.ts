@@ -164,7 +164,7 @@ module TypeScript {
             this.childrenWalkers[NodeType.PreDecrementExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
             this.childrenWalkers[NodeType.PostIncrementExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
             this.childrenWalkers[NodeType.PostDecrementExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
-            this.childrenWalkers[NodeType.CastExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
+            this.childrenWalkers[NodeType.CastExpression] = ChildrenWalkers.walkCastExpressionChildren;
             this.childrenWalkers[NodeType.ParenthesizedExpression] = ChildrenWalkers.walkParenthesizedExpressionChildren;
             this.childrenWalkers[NodeType.FunctionDeclaration] = ChildrenWalkers.walkFuncDeclChildren;
             this.childrenWalkers[NodeType.Member] = ChildrenWalkers.walkBinaryExpressionChildren;
@@ -237,8 +237,14 @@ module TypeScript {
         }
 
         export function walkUnaryExpressionChildren(preAst: UnaryExpression, parent: AST, walker: IAstWalker): void {
-            if (preAst.castTerm) {
-                preAst.castTerm = <TypeReference>walker.walk(preAst.castTerm, preAst);
+            if (preAst.operand) {
+                preAst.operand = walker.walk(preAst.operand, preAst);
+            }
+        }
+
+        export function walkCastExpressionChildren(preAst: CastExpression, parent: AST, walker: IAstWalker): void {
+            if (preAst.castType) {
+                preAst.castType = <TypeReference>walker.walk(preAst.castType, preAst);
             }
             if (preAst.operand) {
                 preAst.operand = walker.walk(preAst.operand, preAst);
