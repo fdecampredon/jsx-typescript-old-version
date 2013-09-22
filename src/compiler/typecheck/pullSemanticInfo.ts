@@ -317,11 +317,9 @@ module TypeScript {
             this.nullTypeSymbol = this.addPrimitiveType("null", null);
             this.undefinedTypeSymbol = this.addPrimitiveType("undefined", null);
             this.addPrimitiveValue("undefined", this.undefinedTypeSymbol, globalDecl);
-            this.addPrimitiveValue("null", this.nullTypeSymbol, globalDecl);      
 
-            return globalDecl;      
+            return globalDecl;
         }
-        
 
         constructor() {
             if (globalBinder) {
