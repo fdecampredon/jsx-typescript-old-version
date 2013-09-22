@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 === tests/cases/compiler/aliasUsedAsNameValue_2.ts ===
-Line 2 col 7 IdentifierName "mod" = any
-Line 3 col 7 IdentifierName "b" = any
+Line 2 col 7 IdentifierName "mod" = mod
+Line 3 col 7 IdentifierName "b" = b
 Line 5 col 11 IdentifierName "a" = () => void
 Line 5 col 15 FunctionExpression "function () {
-=======
-=== tests/cases/compiler/aliasUsedAsNameValue_1.ts ===
-Line 1 col 7 IdentifierName "mod" = mod
-Line 2 col 7 IdentifierName "b" = b
-Line 4 col 11 IdentifierName "a" = () => void
-Line 4 col 15 FunctionExpression "function () {
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
     //var x = mod.id; // TODO needed hack that mod is loaded
     b.b(mod);
 }" = () => void

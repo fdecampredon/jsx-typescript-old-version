@@ -1,11 +1,6 @@
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_1.ts ===
-<<<<<<< HEAD
-Line 1 col 7 IdentifierName "a" = any
-Line 2 col 4 IdentifierName "x" = { B: new() => B; }
-=======
 Line 1 col 7 IdentifierName "a" = a
-Line 2 col 4 IdentifierName "x" = { B: new() => 'a'.B; }
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
+Line 2 col 4 IdentifierName "x" = { B: new() => B; }
 Line 2 col 14 IdentifierName "a" = a
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_require.ts ===
 Line 0 col 13 IdentifierName "B" = B

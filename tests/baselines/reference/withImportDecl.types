@@ -26,8 +26,7 @@ Line 23 col 0 IdentifierName "y" = string
 Line 24 col 0 IdentifierName "n" = number
 Line 28 col 7 IdentifierName "m1" = m1
 Line 29 col 20 IdentifierName "foo" = () => string
-<<<<<<< HEAD
-Line 34 col 7 IdentifierName "m3" = any
+Line 34 col 7 IdentifierName "m3" = m3
 Line 36 col 4 IdentifierName "b" = A
 Line 36 col 8 ObjectCreationExpression "new m3.A()" = A
 Line 36 col 12 MemberAccessExpression "m3.A" = new() => A
@@ -36,14 +35,6 @@ Line 36 col 15 IdentifierName "A" = new() => A
 Line 37 col 0 MemberAccessExpression "b.foo" = string
 Line 37 col 0 IdentifierName "b" = A
 Line 37 col 2 IdentifierName "foo" = string
-=======
-Line 37 col 7 IdentifierName "m3" = m3
-Line 39 col 4 IdentifierName "b" = "m1".A
-Line 39 col 8 ObjectCreationExpression "new m3.A()" = "m1".A
-Line 39 col 12 MemberAccessExpression "m3.A" = new() => "m1".A
-Line 39 col 12 IdentifierName "m3" = m3
-Line 39 col 15 IdentifierName "A" = new() => "m1".A
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 === tests/cases/compiler/withImportDecl_0.ts ===
 Line 0 col 13 IdentifierName "A" = A
 Line 0 col 17 IdentifierName "foo" = string

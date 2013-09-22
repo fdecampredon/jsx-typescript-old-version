@@ -6,18 +6,9 @@ Line 4 col 0 MemberAccessExpression "fs.mkdirSync" = { (path: string, mode?: num
 Line 4 col 0 IdentifierName "fs" = fs
 Line 4 col 4 IdentifierName "mkdirSync" = { (path: string, mode?: number): void; }
 === tests/cases/compiler/voidAsNonAmbiguousReturnType_0.ts ===
-<<<<<<< HEAD
 Line 0 col 16 IdentifierName "mkdirSync" = { (path: string, mode?: number): void; }
-Line 0 col 26 IdentifierName "path" = any
-Line 0 col 40 IdentifierName "mode" = any
+Line 0 col 26 IdentifierName "path" = string
+Line 0 col 40 IdentifierName "mode" = number
 Line 1 col 16 IdentifierName "mkdirSync" = { (path: string, mode?: number): void; }
-Line 1 col 26 IdentifierName "path" = any
-Line 1 col 40 IdentifierName "mode" = any
-=======
-Line 1 col 20 IdentifierName "mkdirSync" = { (path: string, mode?: number): void; (path: string, mode?: string): void; }
-Line 1 col 30 IdentifierName "path" = string
-Line 1 col 44 IdentifierName "mode" = number
-Line 2 col 20 IdentifierName "mkdirSync" = { (path: string, mode?: number): void; (path: string, mode?: string): void; }
-Line 2 col 30 IdentifierName "path" = string
-Line 2 col 44 IdentifierName "mode" = string
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
+Line 1 col 26 IdentifierName "path" = string
+Line 1 col 40 IdentifierName "mode" = string

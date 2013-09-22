@@ -1,5 +1,5 @@
 === tests/cases/compiler/arrayOfExportedClass_1.ts ===
-Line 1 col 7 IdentifierName "Car" = new() => 'Car'.Car
+Line 1 col 7 IdentifierName "Car" = new() => Car
 Line 3 col 6 IdentifierName "Road" = Road
 Line 5 col 11 IdentifierName "cars" = Car[]
 Line 5 col 17 IdentifierName "Car" = Car
@@ -13,11 +13,6 @@ Line 9 col 13 IdentifierName "cars" = Car[]
 Line 9 col 20 IdentifierName "cars" = Car[]
 Line 13 col 9 IdentifierName "Road" = new() => Road
 === tests/cases/compiler/arrayOfExportedClass_0.ts ===
-<<<<<<< HEAD
 Line 0 col 6 IdentifierName "Car" = Car
 Line 1 col 0 IdentifierName "foo" = string
-Line 4 col 9 IdentifierName "Car" = any
-=======
-Line 1 col 10 IdentifierName "Car" = 'Car'.Car
-Line 5 col 13 IdentifierName "Car" = new() => 'Car'.Car
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
+Line 4 col 9 IdentifierName "Car" = new() => Car

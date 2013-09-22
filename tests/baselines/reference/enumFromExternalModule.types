@@ -1,15 +1,8 @@
 === tests/cases/compiler/enumFromExternalModule_1.ts ===
-<<<<<<< HEAD
-Line 1 col 7 IdentifierName "f" = any
+Line 1 col 7 IdentifierName "f" = f
 Line 3 col 4 IdentifierName "x" = Mode
 Line 3 col 8 MemberAccessExpression "f.Mode.Open" = Mode
 Line 3 col 8 MemberAccessExpression "f.Mode" = { Open: Mode; [x: number]: string; }
-=======
-Line 1 col 7 IdentifierName "f" = f
-Line 3 col 4 IdentifierName "x" = 'filexx'.Mode
-Line 3 col 8 MemberAccessExpression "f.Mode.Open" = 'filexx'.Mode
-Line 3 col 8 MemberAccessExpression "f.Mode" = { Open: 'filexx'.Mode; [x: number]: string; }
->>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 Line 3 col 8 IdentifierName "f" = f
 Line 3 col 10 IdentifierName "Mode" = { Open: Mode; [x: number]: string; }
 Line 3 col 15 IdentifierName "Open" = Mode
