@@ -4905,8 +4905,7 @@ module TypeScript {
                     return;
 
                 case NodeType.ThisExpression:
-                    /* follow same as resolving */
-                    this.resolveThisExpression(ast, enclosingDecl, context);
+                    this.typeCheckThisExpression(ast, enclosingDecl, context);
                     return;
 
                 case NodeType.SuperExpression:
