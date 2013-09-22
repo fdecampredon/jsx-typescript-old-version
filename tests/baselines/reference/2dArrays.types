@@ -15,7 +15,7 @@ Line 12 col 15 ThisKeyword "this" = Board
 Line 12 col 20 IdentifierName "ships" = Ship[]
 Line 12 col 26 IdentifierName "every" = (callbackfn: (value: Ship, index: number, array: Ship[]) => boolean, thisArg?: any) => boolean
 Line 12 col 32 FunctionExpression "function (val) { return val.isSunk; }" = (val: Ship) => boolean
-Line 12 col 42 IdentifierName "val" = any
+Line 12 col 42 IdentifierName "val" = Ship
 Line 12 col 56 MemberAccessExpression "val.isSunk" = boolean
 Line 12 col 56 IdentifierName "val" = Ship
 Line 12 col 60 IdentifierName "isSunk" = boolean

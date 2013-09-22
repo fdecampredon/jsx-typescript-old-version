@@ -18,7 +18,7 @@ Line 5 col 8 MemberAccessExpression "_arr.map" = <U>(callbackfn: (value: { key: 
 Line 5 col 8 IdentifierName "_arr" = { key: string; }[]
 Line 5 col 13 IdentifierName "map" = <U>(callbackfn: (value: { key: string; }, index: number, array: { key: string; }[]) => U, thisArg?: any) => U[]
 Line 5 col 17 SimpleArrowFunctionExpression "o => MyEnumType[o.key] === enumValue" = (o: { key: string; }) => boolean
-Line 5 col 17 IdentifierName "o" = any
+Line 5 col 17 IdentifierName "o" = { key: string; }
 Line 5 col 22 EqualsExpression "MyEnumType[o.key] === enumValue" = boolean
 Line 5 col 22 ElementAccessExpression "MyEnumType[o.key]" = any
 Line 5 col 22 IdentifierName "MyEnumType" = { foo: MyEnumType; bar: MyEnumType; [x: number]: string; }

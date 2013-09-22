@@ -1,7 +1,7 @@
 === tests/cases/compiler/sourceMapValidationClass.ts ===
 Line 0 col 6 IdentifierName "Greeter" = Greeter
 Line 1 col 23 IdentifierName "greeting" = string
-Line 1 col 44 IdentifierName "b" = any
+Line 1 col 44 IdentifierName "b" = string[]
 Line 3 col 0 IdentifierName "greet" = () => string
 Line 4 col 15 AddExpression ""<h1>" + this.greeting + "</h1>"" = string
 Line 4 col 15 AddExpression ""<h1>" + this.greeting" = string
@@ -19,7 +19,7 @@ Line 12 col 15 MemberAccessExpression "this.greeting" = string
 Line 12 col 15 ThisKeyword "this" = Greeter
 Line 12 col 20 IdentifierName "greeting" = string
 Line 14 col 8 IdentifierName "greetings" = (greetings: string) => any
-Line 14 col 18 IdentifierName "greetings" = any
+Line 14 col 18 IdentifierName "greetings" = string
 Line 15 col 0 AssignmentExpression "this.greeting = greetings" = string
 Line 15 col 0 MemberAccessExpression "this.greeting" = string
 Line 15 col 0 ThisKeyword "this" = Greeter

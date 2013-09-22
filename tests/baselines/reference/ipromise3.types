@@ -3,68 +3,68 @@ Line 0 col 10 IdentifierName "IPromise3" = IPromise3<T>
 Line 0 col 20 IdentifierName "T" = any
 Line 1 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
 Line 1 col 5 IdentifierName "U" = any
-Line 1 col 8 IdentifierName "success" = any
-Line 1 col 19 IdentifierName "value" = any
+Line 1 col 8 IdentifierName "success" = (value: T) => IPromise3<U>
+Line 1 col 19 IdentifierName "value" = T
 Line 1 col 26 IdentifierName "T" = T
 Line 1 col 32 IdentifierName "IPromise3" = IPromise3<T>
 Line 1 col 42 IdentifierName "U" = U
-Line 1 col 46 IdentifierName "error" = any
+Line 1 col 46 IdentifierName "error" = (error: any) => IPromise3<U>
 Line 1 col 55 IdentifierName "error" = any
 Line 1 col 70 IdentifierName "IPromise3" = IPromise3<T>
 Line 1 col 80 IdentifierName "U" = U
-Line 1 col 84 IdentifierName "progress" = any
+Line 1 col 84 IdentifierName "progress" = (progress: any) => void
 Line 1 col 96 IdentifierName "progress" = any
 Line 1 col 122 IdentifierName "IPromise3" = IPromise3<T>
 Line 1 col 132 IdentifierName "U" = U
 Line 2 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
 Line 2 col 5 IdentifierName "U" = any
-Line 2 col 8 IdentifierName "success" = any
-Line 2 col 19 IdentifierName "value" = any
+Line 2 col 8 IdentifierName "success" = (value: T) => IPromise3<U>
+Line 2 col 19 IdentifierName "value" = T
 Line 2 col 26 IdentifierName "T" = T
 Line 2 col 32 IdentifierName "IPromise3" = IPromise3<T>
 Line 2 col 42 IdentifierName "U" = U
-Line 2 col 46 IdentifierName "error" = any
+Line 2 col 46 IdentifierName "error" = (error: any) => U
 Line 2 col 55 IdentifierName "error" = any
 Line 2 col 70 IdentifierName "U" = U
-Line 2 col 73 IdentifierName "progress" = any
+Line 2 col 73 IdentifierName "progress" = (progress: any) => void
 Line 2 col 85 IdentifierName "progress" = any
 Line 2 col 111 IdentifierName "IPromise3" = IPromise3<T>
 Line 2 col 121 IdentifierName "U" = U
 Line 3 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
 Line 3 col 5 IdentifierName "U" = any
-Line 3 col 8 IdentifierName "success" = any
-Line 3 col 19 IdentifierName "value" = any
+Line 3 col 8 IdentifierName "success" = (value: T) => U
+Line 3 col 19 IdentifierName "value" = T
 Line 3 col 26 IdentifierName "T" = T
 Line 3 col 32 IdentifierName "U" = U
-Line 3 col 35 IdentifierName "error" = any
+Line 3 col 35 IdentifierName "error" = (error: any) => IPromise3<U>
 Line 3 col 44 IdentifierName "error" = any
 Line 3 col 59 IdentifierName "IPromise3" = IPromise3<T>
 Line 3 col 69 IdentifierName "U" = U
-Line 3 col 73 IdentifierName "progress" = any
+Line 3 col 73 IdentifierName "progress" = (progress: any) => void
 Line 3 col 85 IdentifierName "progress" = any
 Line 3 col 111 IdentifierName "IPromise3" = IPromise3<T>
 Line 3 col 121 IdentifierName "U" = U
 Line 4 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
 Line 4 col 5 IdentifierName "U" = any
-Line 4 col 8 IdentifierName "success" = any
-Line 4 col 19 IdentifierName "value" = any
+Line 4 col 8 IdentifierName "success" = (value: T) => U
+Line 4 col 19 IdentifierName "value" = T
 Line 4 col 26 IdentifierName "T" = T
 Line 4 col 32 IdentifierName "U" = U
-Line 4 col 35 IdentifierName "error" = any
+Line 4 col 35 IdentifierName "error" = (error: any) => U
 Line 4 col 44 IdentifierName "error" = any
 Line 4 col 59 IdentifierName "U" = U
-Line 4 col 62 IdentifierName "progress" = any
+Line 4 col 62 IdentifierName "progress" = (progress: any) => void
 Line 4 col 74 IdentifierName "progress" = any
 Line 4 col 100 IdentifierName "IPromise3" = IPromise3<T>
 Line 4 col 110 IdentifierName "U" = U
 Line 5 col 0 IdentifierName "done" = <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void) => void
 Line 5 col 7 IdentifierName "U" = any
-Line 5 col 10 IdentifierName "success" = any
-Line 5 col 21 IdentifierName "value" = any
+Line 5 col 10 IdentifierName "success" = (value: T) => any
+Line 5 col 21 IdentifierName "value" = T
 Line 5 col 28 IdentifierName "T" = T
-Line 5 col 39 IdentifierName "error" = any
+Line 5 col 39 IdentifierName "error" = (error: any) => any
 Line 5 col 48 IdentifierName "error" = any
-Line 5 col 68 IdentifierName "progress" = any
+Line 5 col 68 IdentifierName "progress" = (progress: any) => void
 Line 5 col 80 IdentifierName "progress" = any
 Line 7 col 4 IdentifierName "p1" = IPromise3<string>
 Line 7 col 8 IdentifierName "IPromise3" = IPromise3<T>
@@ -79,5 +79,5 @@ Line 8 col 31 IdentifierName "then" = { <U>(success?: (value: string) => IPromis
 Line 8 col 36 FunctionExpression "function (x) {
 return x; 
 }" = (x: string) => string
-Line 8 col 46 IdentifierName "x" = any
+Line 8 col 46 IdentifierName "x" = string
 Line 9 col 7 IdentifierName "x" = string

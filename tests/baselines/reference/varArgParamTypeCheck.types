@@ -1,8 +1,8 @@
 === tests/cases/compiler/varArgParamTypeCheck.ts ===
 Line 0 col 9 IdentifierName "sequence" = (...sequences: { (): void; }[]) => void
-Line 0 col 21 IdentifierName "sequences" = any
+Line 0 col 21 IdentifierName "sequences" = { (): void; }[]
 Line 3 col 9 IdentifierName "callback" = (clb: () => void) => void
-Line 3 col 18 IdentifierName "clb" = any
+Line 3 col 18 IdentifierName "clb" = () => void
 Line 5 col 0 InvocationExpression "sequence(
     function bar() {
     },

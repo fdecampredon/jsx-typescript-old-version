@@ -3,7 +3,7 @@ Line 0 col 6 IdentifierName "Foo" = Foo
 Line 2 col 12 IdentifierName "_bar" = { a: string; }
 Line 2 col 20 IdentifierName "a" = string
 Line 4 col 8 IdentifierName "bar" = (thing: { a: string; }) => any
-Line 4 col 12 IdentifierName "thing" = any
+Line 4 col 12 IdentifierName "thing" = { a: string; }
 Line 4 col 21 IdentifierName "a" = string
 Line 5 col 0 AssignmentExpression "this._bar = thing" = { a: string; }
 Line 5 col 0 MemberAccessExpression "this._bar" = { a: string; }

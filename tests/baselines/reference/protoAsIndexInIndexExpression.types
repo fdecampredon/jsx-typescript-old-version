@@ -18,5 +18,12 @@ Line 8 col 8 ObjectLiteralExpression "{
     "__proto__": 0
 }" = { "__proto__": number; }
 Line 11 col 6 IdentifierName "C" = C
+<<<<<<< HEAD
+=======
+Line 14 col 7 IdentifierName "p" = p
+Line 15 col 0 MemberAccessExpression "p.x" = any
+Line 15 col 0 IdentifierName "p" = p
+Line 15 col 2 IdentifierName "x" = any
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 === tests/cases/compiler/protoAsIndexInIndexExpression_0.ts ===
 Line 0 col 11 IdentifierName "x" = any

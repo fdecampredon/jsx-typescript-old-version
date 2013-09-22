@@ -1,9 +1,14 @@
 === tests/cases/compiler/requireEmitSemicolon_1.ts ===
-Line 1 col 7 IdentifierName "P" = any
+Line 1 col 7 IdentifierName "P" = P
 Line 3 col 14 IdentifierName "Database" = Database
 Line 4 col 14 IdentifierName "DB" = Database.DB
+<<<<<<< HEAD
 Line 5 col 12 IdentifierName "findPerson" = (id: number) => Models.Person
 Line 5 col 23 IdentifierName "id" = any
+=======
+Line 5 col 12 IdentifierName "findPerson" = (id: number) => "Person".Models.Person
+Line 5 col 23 IdentifierName "id" = number
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 Line 5 col 36 IdentifierName "P" = P
 Line 5 col 38 IdentifierName "Models" = any
 Line 5 col 45 IdentifierName "Person" = any
@@ -14,6 +19,12 @@ Line 6 col 20 IdentifierName "P" = P
 Line 6 col 22 IdentifierName "Models" = { Person: new(name: string) => Models.Person; }
 Line 6 col 29 IdentifierName "Person" = new(name: string) => Models.Person
 === tests/cases/compiler/requireEmitSemicolon_0.ts ===
+<<<<<<< HEAD
 Line 0 col 14 IdentifierName "Models" = Models
 Line 1 col 14 IdentifierName "Person" = Models.Person
 Line 2 col 20 IdentifierName "name" = any
+=======
+Line 1 col 15 IdentifierName "Models" = "Person".Models
+Line 2 col 15 IdentifierName "Person" = "Person".Models.Person
+Line 3 col 15 IdentifierName "name" = string
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.

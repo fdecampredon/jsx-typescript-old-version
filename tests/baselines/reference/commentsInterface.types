@@ -10,21 +10,21 @@ Line 9 col 0 IdentifierName "/** this is x*/
     x" = number
 Line 11 col 0 IdentifierName "/** this is foo*/
     foo" = (b: number) => string
-Line 12 col 25 IdentifierName "b" = any
-Line 14 col 22 IdentifierName "i" = any
-Line 16 col 20 IdentifierName "i" = any
+Line 12 col 25 IdentifierName "b" = number
+Line 14 col 22 IdentifierName "i" = string
+Line 16 col 20 IdentifierName "i" = i1
 Line 16 col 23 IdentifierName "i1" = i1
 Line 17 col 0 IdentifierName "nc_x" = number
 Line 18 col 0 IdentifierName "nc_foo" = (b: number) => string
-Line 18 col 13 IdentifierName "b" = any
-Line 19 col 5 IdentifierName "i" = any
-Line 21 col 21 IdentifierName "a" = any
-Line 21 col 48 IdentifierName "b" = any
+Line 18 col 13 IdentifierName "b" = number
+Line 19 col 5 IdentifierName "i" = number
+Line 21 col 21 IdentifierName "a" = number
+Line 21 col 48 IdentifierName "b" = number
 Line 22 col 0 IdentifierName "/** this is fnfoo*/
     fnfoo" = (b: number) => string
-Line 23 col 25 IdentifierName "b" = any
+Line 23 col 25 IdentifierName "b" = number
 Line 24 col 0 IdentifierName "nc_fnfoo" = (b: number) => string
-Line 24 col 13 IdentifierName "b" = any
+Line 24 col 13 IdentifierName "b" = number
 Line 25 col 0 IdentifierName "// nc_y
     nc_y" = number
 Line 28 col 4 IdentifierName "i2_i" = i2
@@ -91,15 +91,15 @@ Line 44 col 0 IdentifierName "/** Comment i3 x*/
     x" = number
 Line 46 col 0 IdentifierName "/** Function i3 f*/
     f" = (a: number) => string
-Line 47 col 27 IdentifierName "a" = any
+Line 47 col 27 IdentifierName "a" = number
 Line 48 col 0 IdentifierName "/** i3 l*/
     l" = (b: number) => string
-Line 49 col 27 IdentifierName "b" = any
+Line 49 col 27 IdentifierName "b" = number
 Line 50 col 0 IdentifierName "nc_x" = number
 Line 51 col 0 IdentifierName "nc_f" = (a: number) => string
-Line 51 col 9 IdentifierName "a" = any
+Line 51 col 9 IdentifierName "a" = number
 Line 52 col 0 IdentifierName "nc_l" = (b: number) => string
-Line 52 col 11 IdentifierName "b" = any
+Line 52 col 11 IdentifierName "b" = number
 Line 54 col 4 IdentifierName "i3_i" = i3
 Line 54 col 10 IdentifierName "i3" = i3
 Line 55 col 0 AssignmentExpression "i3_i = {
@@ -123,7 +123,7 @@ Line 55 col 7 ObjectLiteralExpression "{
 }" = { f: (a: number) => string; l: any; x: any; nc_x: any; nc_f: any; nc_l: any; }
 Line 56 col 0 IdentifierName "f" = (a: number) => string
 Line 56 col 18 ParenthesizedArrowFunctionExpression "(/**i3_i a*/a: number) => "Hello" + a" = (a: number) => string
-Line 56 col 30 IdentifierName "a" = any
+Line 56 col 30 IdentifierName "a" = number
 Line 56 col 44 AddExpression ""Hello" + a" = string
 Line 56 col 54 IdentifierName "a" = number
 Line 57 col 0 IdentifierName "l" = any

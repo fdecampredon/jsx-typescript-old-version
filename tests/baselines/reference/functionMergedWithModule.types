@@ -1,6 +1,6 @@
 === tests/cases/compiler/functionMergedWithModule.ts ===
 Line 0 col 9 IdentifierName "foo" = { Bar: { f(): void; }; Baz: { g(): void; }; (title: string): void; }
-Line 0 col 13 IdentifierName "title" = any
+Line 0 col 13 IdentifierName "title" = string
 Line 1 col 8 IdentifierName "x" = number
 Line 4 col 7 IdentifierName "foo" = foo
 Line 4 col 11 IdentifierName "Bar" = foo.Bar

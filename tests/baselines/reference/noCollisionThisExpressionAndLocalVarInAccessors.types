@@ -23,7 +23,7 @@ Line 5 col 23 InvocationExpression "callback(_this)" = any
 Line 5 col 23 IdentifierName "callback" = any
 Line 5 col 32 IdentifierName "_this" = number
 Line 11 col 8 IdentifierName "a" = (val: number) => any
-Line 11 col 10 IdentifierName "val" = any
+Line 11 col 10 IdentifierName "val" = number
 Line 12 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }
 Line 12 col 17 ObjectLiteralExpression "{
             doStuff: (callback) => () => {
@@ -66,7 +66,7 @@ Line 27 col 23 InvocationExpression "callback(_this)" = any
 Line 27 col 23 IdentifierName "callback" = any
 Line 27 col 32 IdentifierName "_this" = number
 Line 33 col 8 IdentifierName "a" = (val: number) => any
-Line 33 col 10 IdentifierName "val" = any
+Line 33 col 10 IdentifierName "val" = number
 Line 34 col 12 IdentifierName "_this" = number
 Line 35 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }
 Line 35 col 17 ObjectLiteralExpression "{

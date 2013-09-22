@@ -1,17 +1,17 @@
 === tests/cases/compiler/restParameters.ts ===
 Line 0 col 9 IdentifierName "f18" = (a?: string, ...b: number[]) => void
-Line 0 col 13 IdentifierName "a" = any
-Line 0 col 27 IdentifierName "b" = any
+Line 0 col 13 IdentifierName "a" = string
+Line 0 col 27 IdentifierName "b" = number[]
 Line 2 col 9 IdentifierName "f19" = (a?: string, b?: number, ...c: number[]) => void
-Line 2 col 13 IdentifierName "a" = any
-Line 2 col 24 IdentifierName "b" = any
-Line 2 col 38 IdentifierName "c" = any
+Line 2 col 13 IdentifierName "a" = string
+Line 2 col 24 IdentifierName "b" = number
+Line 2 col 38 IdentifierName "c" = number[]
 Line 4 col 9 IdentifierName "f20" = (a: string, b?: string, ...c: number[]) => void
-Line 4 col 13 IdentifierName "a" = any
-Line 4 col 23 IdentifierName "b" = any
-Line 4 col 37 IdentifierName "c" = any
+Line 4 col 13 IdentifierName "a" = string
+Line 4 col 23 IdentifierName "b" = string
+Line 4 col 37 IdentifierName "c" = number[]
 Line 6 col 9 IdentifierName "f21" = (a: string, b?: string, c?: number, ...d: number[]) => void
-Line 6 col 13 IdentifierName "a" = any
-Line 6 col 23 IdentifierName "b" = any
-Line 6 col 34 IdentifierName "c" = any
-Line 6 col 48 IdentifierName "d" = any
+Line 6 col 13 IdentifierName "a" = string
+Line 6 col 23 IdentifierName "b" = string
+Line 6 col 34 IdentifierName "c" = number
+Line 6 col 48 IdentifierName "d" = number[]

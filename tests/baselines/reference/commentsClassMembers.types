@@ -2,7 +2,7 @@
 Line 2 col 6 IdentifierName "c1" = c1
 Line 4 col 11 IdentifierName "p1" = number
 Line 6 col 11 IdentifierName "p2" = (b: number) => number
-Line 6 col 33 IdentifierName "b" = any
+Line 6 col 33 IdentifierName "b" = number
 Line 7 col 15 AddExpression "this.p1 + b" = number
 Line 7 col 15 MemberAccessExpression "this.p1" = number
 Line 7 col 15 ThisKeyword "this" = c1
@@ -17,7 +17,7 @@ Line 11 col 23 MemberAccessExpression "this.p1" = number
 Line 11 col 23 ThisKeyword "this" = c1
 Line 11 col 28 IdentifierName "p1" = number
 Line 14 col 15 IdentifierName "p3" = (value: number) => any
-Line 14 col 37 IdentifierName "value" = any
+Line 14 col 37 IdentifierName "value" = number
 Line 15 col 0 AssignmentExpression "this.p1 = this.p2(value)" = number
 Line 15 col 0 MemberAccessExpression "this.p1" = number
 Line 15 col 0 ThisKeyword "this" = c1
@@ -29,7 +29,7 @@ Line 15 col 23 IdentifierName "p2" = (b: number) => number
 Line 15 col 26 IdentifierName "value" = number
 Line 18 col 12 IdentifierName "pp1" = number
 Line 20 col 12 IdentifierName "pp2" = (b: number) => number
-Line 20 col 35 IdentifierName "b" = any
+Line 20 col 35 IdentifierName "b" = number
 Line 21 col 15 AddExpression "this.p1 + b" = number
 Line 21 col 15 MemberAccessExpression "this.p1" = number
 Line 21 col 15 ThisKeyword "this" = c1
@@ -44,7 +44,7 @@ Line 25 col 24 MemberAccessExpression "this.pp1" = number
 Line 25 col 24 ThisKeyword "this" = c1
 Line 25 col 29 IdentifierName "pp1" = number
 Line 28 col 16 IdentifierName "pp3" = (value: number) => any
-Line 28 col 40 IdentifierName "value" = any
+Line 28 col 40 IdentifierName "value" = number
 Line 29 col 0 AssignmentExpression "this.pp1 = this.pp2(value)" = number
 Line 29 col 0 MemberAccessExpression "this.pp1" = number
 Line 29 col 0 ThisKeyword "this" = c1
@@ -56,7 +56,7 @@ Line 29 col 24 IdentifierName "pp2" = (b: number) => number
 Line 29 col 28 IdentifierName "value" = number
 Line 35 col 11 IdentifierName "s1" = number
 Line 37 col 11 IdentifierName "s2" = (b: number) => number
-Line 37 col 33 IdentifierName "b" = any
+Line 37 col 33 IdentifierName "b" = number
 Line 38 col 15 AddExpression "c1.s1 + b" = number
 Line 38 col 15 MemberAccessExpression "c1.s1" = number
 Line 38 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -71,7 +71,7 @@ Line 42 col 21 MemberAccessExpression "c1.s1" = number
 Line 42 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 42 col 24 IdentifierName "s1" = number
 Line 45 col 15 IdentifierName "s3" = (value: number) => any
-Line 45 col 38 IdentifierName "value" = any
+Line 45 col 38 IdentifierName "value" = number
 Line 46 col 0 AssignmentExpression "c1.s1 = c1.s2(value)" = number
 Line 46 col 0 MemberAccessExpression "c1.s1" = number
 Line 46 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -83,7 +83,7 @@ Line 46 col 19 IdentifierName "s2" = (b: number) => number
 Line 46 col 22 IdentifierName "value" = number
 Line 48 col 11 IdentifierName "nc_p1" = number
 Line 49 col 11 IdentifierName "nc_p2" = (b: number) => number
-Line 49 col 17 IdentifierName "b" = any
+Line 49 col 17 IdentifierName "b" = number
 Line 50 col 15 AddExpression "this.nc_p1 + b" = number
 Line 50 col 15 MemberAccessExpression "this.nc_p1" = number
 Line 50 col 15 ThisKeyword "this" = c1
@@ -98,7 +98,7 @@ Line 53 col 26 MemberAccessExpression "this.nc_p1" = number
 Line 53 col 26 ThisKeyword "this" = c1
 Line 53 col 31 IdentifierName "nc_p1" = number
 Line 55 col 15 IdentifierName "nc_p3" = (value: number) => any
-Line 55 col 21 IdentifierName "value" = any
+Line 55 col 21 IdentifierName "value" = number
 Line 56 col 0 AssignmentExpression "this.nc_p1 = this.nc_p2(value)" = number
 Line 56 col 0 MemberAccessExpression "this.nc_p1" = number
 Line 56 col 0 ThisKeyword "this" = c1
@@ -110,7 +110,7 @@ Line 56 col 26 IdentifierName "nc_p2" = (b: number) => number
 Line 56 col 32 IdentifierName "value" = number
 Line 58 col 12 IdentifierName "nc_pp1" = number
 Line 59 col 12 IdentifierName "nc_pp2" = (b: number) => number
-Line 59 col 19 IdentifierName "b" = any
+Line 59 col 19 IdentifierName "b" = number
 Line 60 col 15 AddExpression "this.nc_pp1 + b" = number
 Line 60 col 15 MemberAccessExpression "this.nc_pp1" = number
 Line 60 col 15 ThisKeyword "this" = c1
@@ -125,7 +125,7 @@ Line 63 col 27 MemberAccessExpression "this.nc_pp1" = number
 Line 63 col 27 ThisKeyword "this" = c1
 Line 63 col 32 IdentifierName "nc_pp1" = number
 Line 65 col 16 IdentifierName "nc_pp3" = (value: number) => any
-Line 65 col 23 IdentifierName "value" = any
+Line 65 col 23 IdentifierName "value" = number
 Line 66 col 0 AssignmentExpression "this.nc_pp1 = this.nc_pp2(value)" = number
 Line 66 col 0 MemberAccessExpression "this.nc_pp1" = number
 Line 66 col 0 ThisKeyword "this" = c1
@@ -137,7 +137,7 @@ Line 66 col 27 IdentifierName "nc_pp2" = (b: number) => number
 Line 66 col 34 IdentifierName "value" = number
 Line 68 col 11 IdentifierName "nc_s1" = number
 Line 69 col 11 IdentifierName "nc_s2" = (b: number) => number
-Line 69 col 17 IdentifierName "b" = any
+Line 69 col 17 IdentifierName "b" = number
 Line 70 col 15 AddExpression "c1.nc_s1 + b" = number
 Line 70 col 15 MemberAccessExpression "c1.nc_s1" = number
 Line 70 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -152,7 +152,7 @@ Line 73 col 24 MemberAccessExpression "c1.nc_s1" = number
 Line 73 col 24 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 73 col 27 IdentifierName "nc_s1" = number
 Line 75 col 15 IdentifierName "nc_s3" = (value: number) => any
-Line 75 col 21 IdentifierName "value" = any
+Line 75 col 21 IdentifierName "value" = number
 Line 76 col 0 AssignmentExpression "c1.nc_s1 = c1.nc_s2(value)" = number
 Line 76 col 0 MemberAccessExpression "c1.nc_s1" = number
 Line 76 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -164,7 +164,7 @@ Line 76 col 22 IdentifierName "nc_s2" = (b: number) => number
 Line 76 col 28 IdentifierName "value" = number
 Line 80 col 11 IdentifierName "a_p1" = number
 Line 82 col 11 IdentifierName "a_p2" = (b: number) => number
-Line 82 col 16 IdentifierName "b" = any
+Line 82 col 16 IdentifierName "b" = number
 Line 83 col 15 AddExpression "this.a_p1 + b" = number
 Line 83 col 15 MemberAccessExpression "this.a_p1" = number
 Line 83 col 15 ThisKeyword "this" = c1
@@ -179,7 +179,7 @@ Line 87 col 25 MemberAccessExpression "this.a_p1" = number
 Line 87 col 25 ThisKeyword "this" = c1
 Line 87 col 30 IdentifierName "a_p1" = number
 Line 90 col 15 IdentifierName "a_p3" = (value: number) => any
-Line 90 col 20 IdentifierName "value" = any
+Line 90 col 20 IdentifierName "value" = number
 Line 91 col 0 AssignmentExpression "this.a_p1 = this.a_p2(value)" = number
 Line 91 col 0 MemberAccessExpression "this.a_p1" = number
 Line 91 col 0 ThisKeyword "this" = c1
@@ -191,7 +191,7 @@ Line 91 col 25 IdentifierName "a_p2" = (b: number) => number
 Line 91 col 30 IdentifierName "value" = number
 Line 94 col 12 IdentifierName "a_pp1" = number
 Line 96 col 12 IdentifierName "a_pp2" = (b: number) => number
-Line 96 col 18 IdentifierName "b" = any
+Line 96 col 18 IdentifierName "b" = number
 Line 97 col 15 AddExpression "this.a_p1 + b" = number
 Line 97 col 15 MemberAccessExpression "this.a_p1" = number
 Line 97 col 15 ThisKeyword "this" = c1
@@ -206,7 +206,7 @@ Line 101 col 26 MemberAccessExpression "this.a_pp1" = number
 Line 101 col 26 ThisKeyword "this" = c1
 Line 101 col 31 IdentifierName "a_pp1" = number
 Line 104 col 16 IdentifierName "a_pp3" = (value: number) => any
-Line 104 col 22 IdentifierName "value" = any
+Line 104 col 22 IdentifierName "value" = number
 Line 105 col 0 AssignmentExpression "this.a_pp1 = this.a_pp2(value)" = number
 Line 105 col 0 MemberAccessExpression "this.a_pp1" = number
 Line 105 col 0 ThisKeyword "this" = c1
@@ -218,7 +218,7 @@ Line 105 col 26 IdentifierName "a_pp2" = (b: number) => number
 Line 105 col 32 IdentifierName "value" = number
 Line 109 col 11 IdentifierName "a_s1" = number
 Line 111 col 11 IdentifierName "a_s2" = (b: number) => number
-Line 111 col 16 IdentifierName "b" = any
+Line 111 col 16 IdentifierName "b" = number
 Line 112 col 15 AddExpression "c1.a_s1 + b" = number
 Line 112 col 15 MemberAccessExpression "c1.a_s1" = number
 Line 112 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -233,7 +233,7 @@ Line 116 col 21 MemberAccessExpression "c1.s1" = number
 Line 116 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 116 col 24 IdentifierName "s1" = number
 Line 120 col 15 IdentifierName "a_s3" = (value: number) => any
-Line 120 col 20 IdentifierName "value" = any
+Line 120 col 20 IdentifierName "value" = number
 Line 121 col 0 AssignmentExpression "c1.a_s1 = c1.a_s2(value)" = number
 Line 121 col 0 MemberAccessExpression "c1.a_s1" = number
 Line 121 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -245,7 +245,7 @@ Line 121 col 21 IdentifierName "a_s2" = (b: number) => number
 Line 121 col 26 IdentifierName "value" = number
 Line 125 col 11 IdentifierName "b_p1" = number
 Line 127 col 11 IdentifierName "b_p2" = (b: number) => number
-Line 127 col 16 IdentifierName "b" = any
+Line 127 col 16 IdentifierName "b" = number
 Line 128 col 15 AddExpression "this.b_p1 + b" = number
 Line 128 col 15 MemberAccessExpression "this.b_p1" = number
 Line 128 col 15 ThisKeyword "this" = c1
@@ -260,7 +260,7 @@ Line 132 col 25 MemberAccessExpression "this.b_p1" = number
 Line 132 col 25 ThisKeyword "this" = c1
 Line 132 col 30 IdentifierName "b_p1" = number
 Line 135 col 15 IdentifierName "b_p3" = (value: number) => any
-Line 135 col 20 IdentifierName "value" = any
+Line 135 col 20 IdentifierName "value" = number
 Line 136 col 0 AssignmentExpression "this.b_p1 = this.b_p2(value)" = number
 Line 136 col 0 MemberAccessExpression "this.b_p1" = number
 Line 136 col 0 ThisKeyword "this" = c1
@@ -272,7 +272,7 @@ Line 136 col 25 IdentifierName "b_p2" = (b: number) => number
 Line 136 col 30 IdentifierName "value" = number
 Line 139 col 12 IdentifierName "b_pp1" = number
 Line 141 col 12 IdentifierName "b_pp2" = (b: number) => number
-Line 141 col 18 IdentifierName "b" = any
+Line 141 col 18 IdentifierName "b" = number
 Line 142 col 15 AddExpression "this.b_p1 + b" = number
 Line 142 col 15 MemberAccessExpression "this.b_p1" = number
 Line 142 col 15 ThisKeyword "this" = c1
@@ -287,7 +287,7 @@ Line 146 col 26 MemberAccessExpression "this.b_pp1" = number
 Line 146 col 26 ThisKeyword "this" = c1
 Line 146 col 31 IdentifierName "b_pp1" = number
 Line 149 col 16 IdentifierName "b_pp3" = (value: number) => any
-Line 149 col 22 IdentifierName "value" = any
+Line 149 col 22 IdentifierName "value" = number
 Line 150 col 0 AssignmentExpression "this.b_pp1 = this.b_pp2(value)" = number
 Line 150 col 0 MemberAccessExpression "this.b_pp1" = number
 Line 150 col 0 ThisKeyword "this" = c1
@@ -299,7 +299,7 @@ Line 150 col 26 IdentifierName "b_pp2" = (b: number) => number
 Line 150 col 32 IdentifierName "value" = number
 Line 154 col 11 IdentifierName "b_s1" = number
 Line 156 col 11 IdentifierName "b_s2" = (b: number) => number
-Line 156 col 16 IdentifierName "b" = any
+Line 156 col 16 IdentifierName "b" = number
 Line 157 col 15 AddExpression "c1.b_s1 + b" = number
 Line 157 col 15 MemberAccessExpression "c1.b_s1" = number
 Line 157 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
@@ -314,7 +314,7 @@ Line 162 col 21 MemberAccessExpression "c1.s1" = number
 Line 162 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 162 col 24 IdentifierName "s1" = number
 Line 167 col 15 IdentifierName "b_s3" = (value: number) => any
-Line 167 col 20 IdentifierName "value" = any
+Line 167 col 20 IdentifierName "value" = number
 Line 168 col 0 AssignmentExpression "/** setter */
         c1.b_s1 = c1.b_s2(value)" = number
 Line 168 col 0 MemberAccessExpression "/** setter */
@@ -431,14 +431,14 @@ Line 201 col 15 MemberAccessExpression "this.val" = number
 Line 201 col 15 ThisKeyword "this" = cProperties
 Line 201 col 20 IdentifierName "val" = number
 Line 204 col 15 IdentifierName "p2" = (value: number) => any
-Line 204 col 18 IdentifierName "value" = any
+Line 204 col 18 IdentifierName "value" = number
 Line 205 col 0 AssignmentExpression "this.val = value" = number
 Line 205 col 0 MemberAccessExpression "this.val" = number
 Line 205 col 0 ThisKeyword "this" = cProperties
 Line 205 col 13 IdentifierName "val" = number
 Line 205 col 19 IdentifierName "value" = number
 Line 207 col 15 IdentifierName "nc_p2" = (value: number) => any
-Line 207 col 21 IdentifierName "value" = any
+Line 207 col 21 IdentifierName "value" = number
 Line 208 col 0 AssignmentExpression "this.val = value" = number
 Line 208 col 0 MemberAccessExpression "this.val" = number
 Line 208 col 0 ThisKeyword "this" = cProperties

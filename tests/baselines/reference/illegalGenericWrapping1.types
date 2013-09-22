@@ -2,27 +2,27 @@
 Line 0 col 10 IdentifierName "Sequence" = Sequence<T>
 Line 0 col 19 IdentifierName "T" = any
 Line 1 col 0 IdentifierName "each" = (iterator: (value: T) => void) => void
-Line 1 col 9 IdentifierName "iterator" = any
-Line 1 col 20 IdentifierName "value" = any
+Line 1 col 9 IdentifierName "iterator" = (value: T) => void
+Line 1 col 20 IdentifierName "value" = T
 Line 1 col 27 IdentifierName "T" = T
 Line 2 col 0 IdentifierName "map" = <U>(iterator: (value: T) => U) => Sequence<U>
 Line 2 col 8 IdentifierName "U" = any
-Line 2 col 11 IdentifierName "iterator" = any
-Line 2 col 22 IdentifierName "value" = any
+Line 2 col 11 IdentifierName "iterator" = (value: T) => U
+Line 2 col 22 IdentifierName "value" = T
 Line 2 col 29 IdentifierName "T" = T
 Line 2 col 35 IdentifierName "U" = U
 Line 2 col 39 IdentifierName "Sequence" = Sequence<T>
 Line 2 col 48 IdentifierName "U" = U
 Line 3 col 0 IdentifierName "filter" = (iterator: (value: T) => boolean) => Sequence<T>
-Line 3 col 11 IdentifierName "iterator" = any
-Line 3 col 22 IdentifierName "value" = any
+Line 3 col 11 IdentifierName "iterator" = (value: T) => boolean
+Line 3 col 22 IdentifierName "value" = T
 Line 3 col 29 IdentifierName "T" = T
 Line 3 col 45 IdentifierName "Sequence" = Sequence<T>
 Line 3 col 54 IdentifierName "T" = T
 Line 4 col 0 IdentifierName "groupBy" = <K>(keySelector: (value: T) => K) => Sequence<{ key: K; items: Sequence<T>; }>
 Line 4 col 12 IdentifierName "K" = any
-Line 4 col 15 IdentifierName "keySelector" = any
-Line 4 col 29 IdentifierName "value" = any
+Line 4 col 15 IdentifierName "keySelector" = (value: T) => K
+Line 4 col 29 IdentifierName "value" = T
 Line 4 col 36 IdentifierName "T" = T
 Line 4 col 42 IdentifierName "K" = K
 Line 4 col 46 IdentifierName "Sequence" = Sequence<T>

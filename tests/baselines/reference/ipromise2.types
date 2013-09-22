@@ -5,16 +5,16 @@ Line 1 col 21 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
 Line 1 col 30 IdentifierName "T" = any
 Line 2 col 0 IdentifierName "then" = { <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
 Line 2 col 13 IdentifierName "U" = any
-Line 2 col 16 IdentifierName "success" = any
-Line 2 col 27 IdentifierName "value" = any
+Line 2 col 16 IdentifierName "success" = (value: T) => Windows.Foundation.IPromise<U>
+Line 2 col 27 IdentifierName "value" = T
 Line 2 col 34 IdentifierName "T" = T
 Line 2 col 40 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
 Line 2 col 49 IdentifierName "U" = U
-Line 2 col 53 IdentifierName "error" = any
+Line 2 col 53 IdentifierName "error" = (error: any) => Windows.Foundation.IPromise<U>
 Line 2 col 62 IdentifierName "error" = any
 Line 2 col 77 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
 Line 2 col 86 IdentifierName "U" = U
-Line 2 col 90 IdentifierName "progress" = any
+Line 2 col 90 IdentifierName "progress" = (progress: any) => void
 Line 2 col 102 IdentifierName "progress" = any
 Line 2 col 128 IdentifierName "Windows" = Windows
 Line 2 col 136 IdentifierName "Foundation" = any
@@ -22,15 +22,15 @@ Line 2 col 147 IdentifierName "IPromise" = any
 Line 2 col 156 IdentifierName "U" = U
 Line 3 col 0 IdentifierName "then" = { <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
 Line 3 col 13 IdentifierName "U" = any
-Line 3 col 16 IdentifierName "success" = any
-Line 3 col 27 IdentifierName "value" = any
+Line 3 col 16 IdentifierName "success" = (value: T) => Windows.Foundation.IPromise<U>
+Line 3 col 27 IdentifierName "value" = T
 Line 3 col 34 IdentifierName "T" = T
 Line 3 col 40 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
 Line 3 col 49 IdentifierName "U" = U
-Line 3 col 53 IdentifierName "error" = any
+Line 3 col 53 IdentifierName "error" = (error: any) => U
 Line 3 col 62 IdentifierName "error" = any
 Line 3 col 77 IdentifierName "U" = U
-Line 3 col 80 IdentifierName "progress" = any
+Line 3 col 80 IdentifierName "progress" = (progress: any) => void
 Line 3 col 92 IdentifierName "progress" = any
 Line 3 col 118 IdentifierName "Windows" = Windows
 Line 3 col 126 IdentifierName "Foundation" = any
@@ -38,15 +38,15 @@ Line 3 col 137 IdentifierName "IPromise" = any
 Line 3 col 146 IdentifierName "U" = U
 Line 4 col 0 IdentifierName "then" = { <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
 Line 4 col 13 IdentifierName "U" = any
-Line 4 col 16 IdentifierName "success" = any
-Line 4 col 27 IdentifierName "value" = any
+Line 4 col 16 IdentifierName "success" = (value: T) => U
+Line 4 col 27 IdentifierName "value" = T
 Line 4 col 34 IdentifierName "T" = T
 Line 4 col 40 IdentifierName "U" = U
-Line 4 col 43 IdentifierName "error" = any
+Line 4 col 43 IdentifierName "error" = (error: any) => Windows.Foundation.IPromise<U>
 Line 4 col 52 IdentifierName "error" = any
 Line 4 col 67 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
 Line 4 col 76 IdentifierName "U" = U
-Line 4 col 80 IdentifierName "progress" = any
+Line 4 col 80 IdentifierName "progress" = (progress: any) => void
 Line 4 col 92 IdentifierName "progress" = any
 Line 4 col 118 IdentifierName "Windows" = Windows
 Line 4 col 126 IdentifierName "Foundation" = any
@@ -54,14 +54,14 @@ Line 4 col 137 IdentifierName "IPromise" = any
 Line 4 col 146 IdentifierName "U" = U
 Line 5 col 0 IdentifierName "then" = { <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
 Line 5 col 13 IdentifierName "U" = any
-Line 5 col 16 IdentifierName "success" = any
-Line 5 col 27 IdentifierName "value" = any
+Line 5 col 16 IdentifierName "success" = (value: T) => U
+Line 5 col 27 IdentifierName "value" = T
 Line 5 col 34 IdentifierName "T" = T
 Line 5 col 40 IdentifierName "U" = U
-Line 5 col 43 IdentifierName "error" = any
+Line 5 col 43 IdentifierName "error" = (error: any) => U
 Line 5 col 52 IdentifierName "error" = any
 Line 5 col 67 IdentifierName "U" = U
-Line 5 col 70 IdentifierName "progress" = any
+Line 5 col 70 IdentifierName "progress" = (progress: any) => void
 Line 5 col 82 IdentifierName "progress" = any
 Line 5 col 108 IdentifierName "Windows" = Windows
 Line 5 col 116 IdentifierName "Foundation" = any
@@ -69,12 +69,12 @@ Line 5 col 127 IdentifierName "IPromise" = any
 Line 5 col 136 IdentifierName "U" = U
 Line 6 col 0 IdentifierName "done" = <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void) => void
 Line 6 col 13 IdentifierName "U" = any
-Line 6 col 16 IdentifierName "success" = any
-Line 6 col 27 IdentifierName "value" = any
+Line 6 col 16 IdentifierName "success" = (value: T) => any
+Line 6 col 27 IdentifierName "value" = T
 Line 6 col 34 IdentifierName "T" = T
-Line 6 col 45 IdentifierName "error" = any
+Line 6 col 45 IdentifierName "error" = (error: any) => any
 Line 6 col 54 IdentifierName "error" = any
-Line 6 col 74 IdentifierName "progress" = any
+Line 6 col 74 IdentifierName "progress" = (progress: any) => void
 Line 6 col 86 IdentifierName "progress" = any
 Line 7 col 0 IdentifierName "value" = T
 Line 7 col 15 IdentifierName "T" = T
@@ -92,7 +92,7 @@ Line 13 col 11 IdentifierName "then" = { <U>(success?: (value: string) => Window
 Line 13 col 16 FunctionExpression "function (s) {
     return 34;
 }" = (s: string) => number
-Line 13 col 26 IdentifierName "s" = any
+Line 13 col 26 IdentifierName "s" = string
 Line 18 col 4 IdentifierName "x" = number
 Line 18 col 16 MemberAccessExpression "p2.value" = number
 Line 18 col 16 IdentifierName "p2" = Windows.Foundation.IPromise<number>

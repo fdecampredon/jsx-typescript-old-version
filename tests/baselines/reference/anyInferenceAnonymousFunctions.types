@@ -13,7 +13,7 @@ Line 2 col 14 FunctionExpression "function (a1, a2) {
     return a1.concat({});
 
 }" = (a1: any[], a2: any) => any[]
-Line 2 col 24 IdentifierName "a1" = any
+Line 2 col 24 IdentifierName "a1" = any[]
 Line 2 col 28 IdentifierName "a2" = any
 Line 4 col 11 InvocationExpression "a1.concat({})" = any[]
 Line 4 col 11 MemberAccessExpression "a1.concat" = { <U extends Array<T>>(...items: U[]): any[]; (...items: any[]): any[]; }
@@ -32,7 +32,7 @@ Line 8 col 14 ParenthesizedArrowFunctionExpression "(b1, b2) => {
 
     return b1.concat({});
 }" = (b1: any[], b2: any) => any[]
-Line 8 col 15 IdentifierName "b1" = any
+Line 8 col 15 IdentifierName "b1" = any[]
 Line 8 col 19 IdentifierName "b2" = any
 Line 10 col 11 InvocationExpression "b1.concat({})" = any[]
 Line 10 col 11 MemberAccessExpression "b1.concat" = { <U extends Array<T>>(...items: U[]): any[]; (...items: any[]): any[]; }
@@ -45,7 +45,7 @@ Line 12 col 0 MemberAccessExpression "paired.reduce" = { (callbackfn: (previousV
 Line 12 col 0 IdentifierName "paired" = any[]
 Line 13 col 7 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
 Line 13 col 14 ParenthesizedArrowFunctionExpression "(b3, b4) => b3.concat({})" = (b3: any[], b4: any) => any[]
-Line 13 col 15 IdentifierName "b3" = any
+Line 13 col 15 IdentifierName "b3" = any[]
 Line 13 col 19 IdentifierName "b4" = any
 Line 13 col 26 InvocationExpression "b3.concat({})" = any[]
 Line 13 col 26 MemberAccessExpression "b3.concat" = { <U extends Array<T>>(...items: U[]): any[]; (...items: any[]): any[]; }

@@ -1,7 +1,7 @@
 === tests/cases/compiler/topLevelExports.ts ===
 Line 0 col 11 IdentifierName "foo" = number
 Line 2 col 9 IdentifierName "log" = (n: number) => number
-Line 2 col 13 IdentifierName "n" = any
+Line 2 col 13 IdentifierName "n" = number
 Line 2 col 32 IdentifierName "n" = number
 Line 3 col 0 VoidExpression "void log(foo).toString()" = undefined
 Line 4 col 5 InvocationExpression "log(foo).toString()" = string

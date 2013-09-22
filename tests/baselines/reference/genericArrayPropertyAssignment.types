@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericArrayPropertyAssignment.ts ===
 Line 0 col 9 IdentifierName "isEmpty" = (list: { length: number; }) => boolean
-Line 0 col 17 IdentifierName "list" = any
+Line 0 col 17 IdentifierName "list" = { length: number; }
 Line 0 col 24 IdentifierName "length" = number
 Line 2 col 7 EqualsExpression "list.length ===0" = boolean
 Line 2 col 7 MemberAccessExpression "list.length" = number

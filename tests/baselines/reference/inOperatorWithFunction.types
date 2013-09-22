@@ -1,7 +1,7 @@
 === tests/cases/compiler/inOperatorWithFunction.ts ===
 Line 0 col 4 IdentifierName "fn" = (val: boolean) => boolean
 Line 0 col 9 FunctionExpression "function (val: boolean) { return val; }" = (val: boolean) => boolean
-Line 0 col 19 IdentifierName "val" = any
+Line 0 col 19 IdentifierName "val" = boolean
 Line 0 col 42 IdentifierName "val" = boolean
 Line 1 col 0 InvocationExpression "fn("a" in { "a": true })" = boolean
 Line 1 col 0 IdentifierName "fn" = (val: boolean) => boolean

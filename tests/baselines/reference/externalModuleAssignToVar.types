@@ -1,13 +1,20 @@
 === tests/cases/compiler/externalModuleAssignToVar_core.ts ===
+<<<<<<< HEAD
 Line 1 col 7 IdentifierName "ext" = any
 Line 2 col 4 IdentifierName "y1" = { C: new() => C; }
 Line 2 col 10 IdentifierName "C" = new() => C
+=======
+Line 1 col 7 IdentifierName "ext" = ext
+Line 2 col 4 IdentifierName "y1" = { C: new() => "ext".C; }
+Line 2 col 10 IdentifierName "C" = new() => "ext".C
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 Line 2 col 22 IdentifierName "ext" = ext
-Line 2 col 26 IdentifierName "C" = any
+Line 2 col 26 IdentifierName "C" = new() => "ext".C
 Line 2 col 33 IdentifierName "ext" = ext
 Line 3 col 0 AssignmentExpression "y1 = ext" = { C: new() => C; }
 Line 3 col 0 IdentifierName "y1" = { C: new() => C; }
 Line 3 col 5 IdentifierName "ext" = ext
+<<<<<<< HEAD
 Line 5 col 7 IdentifierName "ext2" = any
 Line 6 col 4 IdentifierName "y2" = new() => C
 Line 6 col 17 IdentifierName "ext2" = ext2
@@ -33,3 +40,26 @@ Line 0 col 17 IdentifierName "bar" = string
 Line 0 col 6 IdentifierName "C" = C
 Line 0 col 10 IdentifierName "baz" = string
 Line 1 col 9 IdentifierName "C" = any
+=======
+Line 6 col 7 IdentifierName "ext2" = new() => "ext2".C
+Line 7 col 4 IdentifierName "y2" = new() => "ext2".C
+Line 7 col 17 IdentifierName "ext2" = ext2
+Line 7 col 24 IdentifierName "ext2" = new() => "ext2".C
+Line 8 col 0 AssignmentExpression "y2 = ext2" = new() => "ext2".C
+Line 8 col 0 IdentifierName "y2" = new() => "ext2".C
+Line 8 col 5 IdentifierName "ext2" = new() => "ext2".C
+Line 10 col 7 IdentifierName "ext3" = new() => D
+Line 11 col 4 IdentifierName "y3" = new() => D
+Line 11 col 18 IdentifierName "ext3" = ext3
+Line 11 col 25 IdentifierName "ext3" = new() => D
+Line 12 col 0 AssignmentExpression "y3 = ext3" = new() => D
+Line 12 col 0 IdentifierName "y3" = new() => D
+Line 12 col 5 IdentifierName "ext3" = new() => D
+=== tests/cases/compiler/externalModuleAssignToVar_ext.ts ===
+Line 0 col 6 IdentifierName "D" = D
+Line 1 col 9 IdentifierName "D" = new() => D
+=== tests/cases/compiler/externalModuleAssignToVar_core_require.ts ===
+Line 1 col 17 IdentifierName "C" = "ext".C
+Line 5 col 10 IdentifierName "C" = "ext2".C
+Line 6 col 13 IdentifierName "C" = new() => "ext2".C
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.

@@ -5,7 +5,7 @@ Line 2 col 0 IdentifierName "flag" = boolean
 Line 3 col 0 IdentifierName "short" = string
 Line 4 col 0 IdentifierName "usage" = string
 Line 5 col 0 IdentifierName "set" = (s: string) => void
-Line 5 col 11 IdentifierName "s" = any
+Line 5 col 11 IdentifierName "s" = string
 Line 6 col 0 IdentifierName "type" = string
 Line 7 col 0 IdentifierName "experimental" = boolean
 Line 10 col 6 IdentifierName "parser" = parser
@@ -56,8 +56,8 @@ Line 14 col 35 FunctionExpression "function(a, b) {
                 return 0;
             }
         }" = (a: IOptions, b: IOptions) => number
-Line 14 col 44 IdentifierName "a" = any
-Line 14 col 47 IdentifierName "b" = any
+Line 14 col 44 IdentifierName "a" = IOptions
+Line 14 col 47 IdentifierName "b" = IOptions
 Line 15 col 16 IdentifierName "aName" = string
 Line 15 col 24 InvocationExpression "a.name.toLowerCase()" = string
 Line 15 col 24 MemberAccessExpression "a.name.toLowerCase" = () => string

@@ -11,7 +11,7 @@ Line 4 col 20 IdentifierName "forEach" = (callbackfn: (value: string, index: num
 Line 4 col 28 FunctionExpression "function(keyword) {						
 		result.push({text:keyword, type:"keyword"}); // this should not cause a crash - push should be typed to any
 	}" = (keyword: string) => void
-Line 4 col 37 IdentifierName "keyword" = any
+Line 4 col 37 IdentifierName "keyword" = string
 Line 5 col 0 InvocationExpression "result.push({text:keyword, type:"keyword"})" = any
 Line 5 col 0 MemberAccessExpression "result.push" = any
 Line 5 col 0 IdentifierName "result" = any

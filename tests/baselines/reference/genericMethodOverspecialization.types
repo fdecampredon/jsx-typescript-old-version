@@ -8,7 +8,7 @@ Line 7 col 12 IdentifierName "document" = Document
 Line 7 col 22 IdentifierName "Document" = Document
 Line 8 col 10 IdentifierName "Document" = Document
 Line 9 col 0 IdentifierName "getElementById" = (elementId: string) => HTMLElement
-Line 9 col 19 IdentifierName "elementId" = any
+Line 9 col 19 IdentifierName "elementId" = string
 Line 9 col 39 IdentifierName "HTMLElement" = HTMLElement
 Line 12 col 4 IdentifierName "elements" = HTMLElement[]
 Line 12 col 15 InvocationExpression "names.map(function (name) {
@@ -20,7 +20,7 @@ Line 12 col 21 IdentifierName "map" = <U>(callbackfn: (value: string, index: num
 Line 12 col 25 FunctionExpression "function (name) {
     return document.getElementById(name);
 }" = (name: string) => HTMLElement
-Line 12 col 35 IdentifierName "name" = any
+Line 12 col 35 IdentifierName "name" = string
 Line 13 col 11 InvocationExpression "document.getElementById(name)" = HTMLElement
 Line 13 col 11 MemberAccessExpression "document.getElementById" = (elementId: string) => HTMLElement
 Line 13 col 11 IdentifierName "document" = Document
@@ -36,7 +36,7 @@ Line 17 col 19 IdentifierName "filter" = (callbackfn: (value: HTMLElement, index
 Line 17 col 26 FunctionExpression "function (e) {
     return !e.isDisabled;
 }" = (e: HTMLElement) => boolean
-Line 17 col 36 IdentifierName "e" = any
+Line 17 col 36 IdentifierName "e" = HTMLElement
 Line 18 col 11 LogicalNotExpression "!e.isDisabled" = boolean
 Line 18 col 12 MemberAccessExpression "e.isDisabled" = boolean
 Line 18 col 12 IdentifierName "e" = HTMLElement
@@ -51,7 +51,7 @@ Line 21 col 31 IdentifierName "map" = <U>(callbackfn: (value: HTMLElement, index
 Line 21 col 35 FunctionExpression "function (e) { // should not error
     return e.clientWidth;
 }" = (e: HTMLElement) => number
-Line 21 col 45 IdentifierName "e" = any
+Line 21 col 45 IdentifierName "e" = HTMLElement
 Line 22 col 11 MemberAccessExpression "e.clientWidth" = number
 Line 22 col 11 IdentifierName "e" = HTMLElement
 Line 22 col 13 IdentifierName "clientWidth" = number

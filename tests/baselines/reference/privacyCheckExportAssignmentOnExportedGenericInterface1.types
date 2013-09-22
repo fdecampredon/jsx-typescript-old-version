@@ -8,4 +8,4 @@ Line 6 col 4 IdentifierName "Foo" = new() => Foo.A<Foo<string>>
 Line 6 col 19 IdentifierName "Foo" = Foo
 Line 6 col 23 IdentifierName "A" = any
 Line 6 col 25 IdentifierName "Foo" = Foo<T>
-Line 7 col 9 IdentifierName "Foo" = any
+Line 7 col 9 IdentifierName "Foo" = new() => Foo.A<Foo<string>>

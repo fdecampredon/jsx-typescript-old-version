@@ -1,16 +1,16 @@
 === tests/cases/compiler/inferSecondaryParameter.ts ===
 Line 2 col 10 IdentifierName "Ib" = Ib
 Line 2 col 15 IdentifierName "m" = (test: string, fn: Function) => any
-Line 2 col 17 IdentifierName "test" = any
-Line 2 col 31 IdentifierName "fn" = any
+Line 2 col 17 IdentifierName "test" = string
+Line 2 col 31 IdentifierName "fn" = Function
 Line 2 col 35 IdentifierName "Function" = Function
 Line 4 col 4 IdentifierName "b" = Ib
 Line 4 col 7 IdentifierName "Ib" = Ib
 Line 4 col 12 ObjectLiteralExpression "{ m: function (test: string, fn: Function) { } }" = { m: (test: string, fn: Function) => void; }
 Line 4 col 14 IdentifierName "m" = (test: string, fn: Function) => void
 Line 4 col 17 FunctionExpression "function (test: string, fn: Function) { }" = (test: string, fn: Function) => void
-Line 4 col 27 IdentifierName "test" = any
-Line 4 col 41 IdentifierName "fn" = any
+Line 4 col 27 IdentifierName "test" = string
+Line 4 col 41 IdentifierName "fn" = Function
 Line 4 col 45 IdentifierName "Function" = Function
 Line 5 col 0 InvocationExpression "b.m("test", function (bug) {
     var a: number = bug;

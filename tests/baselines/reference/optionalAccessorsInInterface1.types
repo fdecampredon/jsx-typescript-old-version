@@ -5,8 +5,8 @@ Line 2 col 0 IdentifierName "set" = (v: any) => void
 Line 2 col 10 IdentifierName "v" = any
 Line 5 col 17 IdentifierName "defineMyProperty" = (o: any, p: string, attributes: MyPropertyDescriptor) => any
 Line 5 col 34 IdentifierName "o" = any
-Line 5 col 42 IdentifierName "p" = any
-Line 5 col 53 IdentifierName "attributes" = any
+Line 5 col 42 IdentifierName "p" = string
+Line 5 col 53 IdentifierName "attributes" = MyPropertyDescriptor
 Line 5 col 65 IdentifierName "MyPropertyDescriptor" = MyPropertyDescriptor
 Line 6 col 0 InvocationExpression "defineMyProperty({}, "name", { get: function () { return 5; } })" = any
 Line 6 col 0 IdentifierName "defineMyProperty" = (o: any, p: string, attributes: MyPropertyDescriptor) => any
@@ -20,8 +20,8 @@ Line 10 col 0 IdentifierName "set" = (v: any) => void
 Line 10 col 11 IdentifierName "v" = any
 Line 13 col 17 IdentifierName "defineMyProperty2" = (o: any, p: string, attributes: MyPropertyDescriptor2) => any
 Line 13 col 35 IdentifierName "o" = any
-Line 13 col 43 IdentifierName "p" = any
-Line 13 col 54 IdentifierName "attributes" = any
+Line 13 col 43 IdentifierName "p" = string
+Line 13 col 54 IdentifierName "attributes" = MyPropertyDescriptor2
 Line 13 col 66 IdentifierName "MyPropertyDescriptor2" = MyPropertyDescriptor2
 Line 14 col 0 InvocationExpression "defineMyProperty2({}, "name", { get: function () { return 5; } })" = any
 Line 14 col 0 IdentifierName "defineMyProperty2" = (o: any, p: string, attributes: MyPropertyDescriptor2) => any

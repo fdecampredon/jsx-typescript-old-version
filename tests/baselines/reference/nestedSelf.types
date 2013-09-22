@@ -8,7 +8,7 @@ Line 3 col 18 MemberAccessExpression "[1,2,3].map" = <U>(callbackfn: (value: num
 Line 3 col 18 ArrayLiteralExpression "[1,2,3]" = number[]
 Line 3 col 26 IdentifierName "map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
 Line 3 col 30 ParenthesizedArrowFunctionExpression "(x) => { return this.n * x; }" = (x: number) => number
-Line 3 col 31 IdentifierName "x" = any
+Line 3 col 31 IdentifierName "x" = number
 Line 3 col 46 MultiplyExpression "this.n * x" = number
 Line 3 col 46 MemberAccessExpression "this.n" = number
 Line 3 col 46 ThisKeyword "this" = M.C

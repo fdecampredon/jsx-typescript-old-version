@@ -1,12 +1,12 @@
 === tests/cases/compiler/specializedSignaturesShouldNotBeRelationTested.ts ===
 Line 0 col 10 IdentifierName "Base" = Base
 Line 1 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'foo'): string; }
-Line 2 col 17 IdentifierName "x" = any
+Line 2 col 17 IdentifierName "x" = string
 Line 3 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'foo'): string; }
-Line 4 col 17 IdentifierName "x" = any
+Line 4 col 17 IdentifierName "x" = 'foo'
 Line 8 col 10 IdentifierName "Deriver" = Deriver
 Line 8 col 26 IdentifierName "Base" = Base
 Line 9 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'bar'): string; }
-Line 10 col 17 IdentifierName "x" = any
+Line 10 col 17 IdentifierName "x" = string
 Line 11 col 0 IdentifierName "addEventListener" = { (x: string): any; (x: 'bar'): string; }
-Line 12 col 17 IdentifierName "x" = any
+Line 12 col 17 IdentifierName "x" = 'bar'

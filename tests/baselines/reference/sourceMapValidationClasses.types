@@ -10,7 +10,7 @@ Line 8 col 28 MemberAccessExpression "this.greeting" = string
 Line 8 col 28 ThisKeyword "this" = Foo.Bar.Greeter
 Line 8 col 33 IdentifierName "greeting" = string
 Line 13 col 13 IdentifierName "foo" = (greeting: string) => Foo.Bar.Greeter
-Line 13 col 17 IdentifierName "greeting" = any
+Line 13 col 17 IdentifierName "greeting" = string
 Line 13 col 36 IdentifierName "Greeter" = Foo.Bar.Greeter
 Line 14 col 15 ObjectCreationExpression "new Greeter(greeting)" = Foo.Bar.Greeter
 Line 14 col 19 IdentifierName "Greeter" = new(greeting: string) => Foo.Bar.Greeter
@@ -24,8 +24,8 @@ Line 18 col 14 MemberAccessExpression "greeter.greet" = () => string
 Line 18 col 14 IdentifierName "greeter" = Foo.Bar.Greeter
 Line 18 col 22 IdentifierName "greet" = () => string
 Line 20 col 13 IdentifierName "foo2" = (greeting: string, ...restGreetings: string[]) => Foo.Bar.Greeter[]
-Line 20 col 18 IdentifierName "greeting" = any
-Line 20 col 39 IdentifierName "restGreetings /* more greeting */" = any
+Line 20 col 18 IdentifierName "greeting" = string
+Line 20 col 39 IdentifierName "restGreetings /* more greeting */" = string[]
 Line 21 col 12 IdentifierName "greeters" = Foo.Bar.Greeter[]
 Line 21 col 22 IdentifierName "Greeter" = Foo.Bar.Greeter
 Line 21 col 34 ArrayLiteralExpression "[]" = Foo.Bar.Greeter[]

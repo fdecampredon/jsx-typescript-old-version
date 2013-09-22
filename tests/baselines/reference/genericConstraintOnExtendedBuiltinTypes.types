@@ -12,7 +12,7 @@ Line 11 col 23 IdentifierName "T" = any
 Line 11 col 33 IdentifierName "ICloneable" = EndGate.ICloneable
 Line 12 col 16 IdentifierName "_from" = T
 Line 12 col 23 IdentifierName "T" = T
-Line 15 col 20 IdentifierName "from" = any
+Line 15 col 20 IdentifierName "from" = T
 Line 15 col 26 IdentifierName "T" = T
 Line 16 col 0 AssignmentExpression "this._from = from.Clone()" = any
 Line 16 col 0 MemberAccessExpression "this._from" = T
@@ -26,6 +26,6 @@ Line 21 col 7 IdentifierName "EndGate" = EndGate
 Line 21 col 15 IdentifierName "Tweening" = EndGate.Tweening
 Line 22 col 17 IdentifierName "NumberTween" = EndGate.Tweening.NumberTween
 Line 22 col 37 IdentifierName "Tween" = EndGate.Tweening.Tween<T>
-Line 23 col 20 IdentifierName "from" = any
+Line 23 col 20 IdentifierName "from" = number
 Line 24 col 0 InvocationExpression "super(from)" = void
 Line 24 col 18 IdentifierName "from" = number

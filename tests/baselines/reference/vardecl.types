@@ -26,7 +26,7 @@ Line 19 col 25 ObjectLiteralExpression "{ x: 30, y : 'hello world' }" = { x: num
 Line 19 col 27 IdentifierName "x" = number
 Line 19 col 34 IdentifierName "y" = string
 Line 21 col 4 IdentifierName "n1" = { [s: string]: number; }
-Line 21 col 11 IdentifierName "s" = any
+Line 21 col 11 IdentifierName "s" = string
 Line 23 col 4 IdentifierName "c" = { new?(): any; }
 Line 24 col 0 IdentifierName "new" = () => any
 Line 27 col 4 IdentifierName "d" = { foo?(): { x: number; }; }
@@ -43,8 +43,8 @@ Line 46 col 4 IdentifierName "n2" = () => void
 Line 49 col 4 IdentifierName "n4" = { (): void; }[]
 Line 53 col 4 IdentifierName "d4" = { foo(n: string, x: { x: number; y: number; }): { x: number; y: number; }; }
 Line 54 col 0 IdentifierName "foo" = (n: string, x: { x: number; y: number; }) => { x: number; y: number; }
-Line 54 col 8 IdentifierName "n" = any
-Line 54 col 19 IdentifierName "x" = any
+Line 54 col 8 IdentifierName "n" = string
+Line 54 col 19 IdentifierName "x" = { x: number; y: number; }
 Line 54 col 24 IdentifierName "x" = number
 Line 54 col 35 IdentifierName "y" = number
 Line 55 col 0 IdentifierName "x" = number

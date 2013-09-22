@@ -1,20 +1,20 @@
 === tests/cases/compiler/objectLiteralArraySpecialization.ts ===
 Line 0 col 17 IdentifierName "create" = <T>(initialValues?: T[]) => MyArrayWrapper<T>
 Line 0 col 24 IdentifierName "T" = any
-Line 0 col 27 IdentifierName "initialValues" = any
+Line 0 col 27 IdentifierName "initialValues" = T[]
 Line 0 col 43 IdentifierName "T" = T
 Line 0 col 49 IdentifierName "MyArrayWrapper" = MyArrayWrapper<T>
 Line 0 col 64 IdentifierName "T" = T
 Line 1 col 10 IdentifierName "MyArrayWrapper" = MyArrayWrapper<T>
 Line 1 col 25 IdentifierName "T" = any
 Line 2 col 0 IdentifierName "constructor" = (initialItems?: T[]) => any
-Line 2 col 13 IdentifierName "initialItems" = any
+Line 2 col 13 IdentifierName "initialItems" = T[]
 Line 2 col 28 IdentifierName "T" = T
 Line 3 col 0 IdentifierName "doSomething" = (predicate: (x: T, y: T) => boolean) => void
-Line 3 col 13 IdentifierName "predicate" = any
-Line 3 col 25 IdentifierName "x" = any
+Line 3 col 13 IdentifierName "predicate" = (x: T, y: T) => boolean
+Line 3 col 25 IdentifierName "x" = T
 Line 3 col 28 IdentifierName "T" = T
-Line 3 col 31 IdentifierName "y" = any
+Line 3 col 31 IdentifierName "y" = T
 Line 3 col 34 IdentifierName "T" = T
 Line 5 col 4 IdentifierName "thing" = MyArrayWrapper<{ name: string; id: number; }>
 Line 5 col 12 InvocationExpression "create([ { name: "bob", id: 24 }, { name: "doug", id: 32 } ])" = MyArrayWrapper<{ name: string; id: number; }>
@@ -31,8 +31,8 @@ Line 6 col 0 MemberAccessExpression "thing.doSomething" = (predicate: (x: { name
 Line 6 col 0 IdentifierName "thing" = MyArrayWrapper<{ name: string; id: number; }>
 Line 6 col 6 IdentifierName "doSomething" = (predicate: (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean) => void
 Line 6 col 18 ParenthesizedArrowFunctionExpression "(x, y) => x.name === "bob"" = (x: { name: string; id: number; }, y: { name: string; id: number; }) => boolean
-Line 6 col 19 IdentifierName "x" = any
-Line 6 col 22 IdentifierName "y" = any
+Line 6 col 19 IdentifierName "x" = { name: string; id: number; }
+Line 6 col 22 IdentifierName "y" = { name: string; id: number; }
 Line 6 col 28 EqualsExpression "x.name === "bob"" = boolean
 Line 6 col 28 MemberAccessExpression "x.name" = string
 Line 6 col 28 IdentifierName "x" = { name: string; id: number; }

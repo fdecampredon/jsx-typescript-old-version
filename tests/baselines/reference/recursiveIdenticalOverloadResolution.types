@@ -1,11 +1,11 @@
 === tests/cases/compiler/recursiveIdenticalOverloadResolution.ts ===
 Line 1 col 7 IdentifierName "M" = M
 Line 3 col 13 IdentifierName "I" = M.I
-Line 3 col 18 IdentifierName "i" = any
+Line 3 col 18 IdentifierName "i" = M.I
 Line 3 col 21 IdentifierName "I" = M.I
 Line 3 col 25 IdentifierName "I" = M.I
 Line 5 col 12 IdentifierName "f" = (p: M.I) => any
-Line 5 col 14 IdentifierName "p" = any
+Line 5 col 14 IdentifierName "p" = M.I
 Line 5 col 17 IdentifierName "I" = M.I
 Line 5 col 29 IdentifierName "f" = (p: M.I) => any
 Line 7 col 7 IdentifierName "i" = M.I

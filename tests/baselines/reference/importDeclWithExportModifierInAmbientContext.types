@@ -1,7 +1,7 @@
 === tests/cases/compiler/importDeclWithExportModifierInAmbientContext.ts ===
 Line 1 col 11 IdentifierName "x" = "m".x
 Line 2 col 18 IdentifierName "c" = "m".x.c
-Line 5 col 18 IdentifierName "a" = any
+Line 5 col 18 IdentifierName "a" = "m".a
 Line 5 col 22 IdentifierName "x" = any
 Line 5 col 24 IdentifierName "c" = any
 Line 6 col 8 IdentifierName "b" = "m".x.c

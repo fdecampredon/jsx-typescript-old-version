@@ -1,13 +1,13 @@
 === tests/cases/compiler/declFileObjectLiteralWithOnlySetter.ts ===
 Line 1 col 14 IdentifierName "makePoint" = (x: number) => { b: number; x: number; }
-Line 1 col 24 IdentifierName "x" = any
+Line 1 col 24 IdentifierName "x" = number
 Line 2 col 11 ObjectLiteralExpression "{
         b: 10,
         set x(a: number) { this.b = a; }
     }" = { b: number; x: number; }
 Line 3 col 0 IdentifierName "b" = number
 Line 4 col 12 IdentifierName "x" = (a: number) => any
-Line 4 col 14 IdentifierName "a" = any
+Line 4 col 14 IdentifierName "a" = number
 Line 4 col 27 AssignmentExpression "this.b = a" = number
 Line 4 col 27 MemberAccessExpression "this.b" = any
 Line 4 col 27 ThisKeyword "this" = any

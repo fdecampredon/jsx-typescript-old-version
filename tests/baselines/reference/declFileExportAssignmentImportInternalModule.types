@@ -7,11 +7,11 @@ Line 3 col 18 IdentifierName "req" = any
 Line 3 col 23 IdentifierName "next" = any
 Line 5 col 25 IdentifierName "connectExport" = m3.m2.connectExport
 Line 6 col 0 IdentifierName "use" = (mod: m3.m2.connectModule) => m3.m2.connectExport
-Line 6 col 18 IdentifierName "mod" = any
+Line 6 col 18 IdentifierName "mod" = m3.m2.connectModule
 Line 6 col 23 IdentifierName "connectModule" = m3.m2.connectModule
 Line 6 col 41 IdentifierName "connectExport" = m3.m2.connectExport
 Line 7 col 0 IdentifierName "listen" = (port: number) => void
-Line 7 col 21 IdentifierName "port" = any
+Line 7 col 21 IdentifierName "port" = number
 Line 12 col 15 IdentifierName "server" = { test1: m3.m2.connectModule; test2(): m3.m2.connectModule; (): m3.m2.connectExport; }
 Line 13 col 12 IdentifierName "m2" = m3.m2
 Line 13 col 15 IdentifierName "connectExport" = any
@@ -21,6 +21,6 @@ Line 14 col 18 IdentifierName "connectModule" = any
 Line 15 col 0 IdentifierName "test2" = () => m3.m2.connectModule
 Line 15 col 17 IdentifierName "m2" = m3.m2
 Line 15 col 20 IdentifierName "connectModule" = any
-Line 19 col 7 IdentifierName "m" = any
+Line 19 col 7 IdentifierName "m" = m
 Line 19 col 11 IdentifierName "m3" = m3
-Line 20 col 9 IdentifierName "m" = any
+Line 20 col 9 IdentifierName "m" = m

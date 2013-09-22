@@ -42,47 +42,47 @@ Line 89 col 9 IdentifierName "noHelpComment3" = () => void
 Line 91 col 0 InvocationExpression "noHelpComment3()" = void
 Line 91 col 0 IdentifierName "noHelpComment3" = () => void
 Line 96 col 9 IdentifierName "sum" = (a: number, b: number) => number
-Line 96 col 13 IdentifierName "a" = any
-Line 96 col 24 IdentifierName "b" = any
+Line 96 col 13 IdentifierName "a" = number
+Line 96 col 24 IdentifierName "b" = number
 Line 97 col 11 AddExpression "a + b" = number
 Line 97 col 11 IdentifierName "a" = number
 Line 97 col 15 IdentifierName "b" = number
 Line 99 col 0 InvocationExpression "sum(10, 20)" = number
 Line 99 col 0 IdentifierName "sum" = (a: number, b: number) => number
 Line 107 col 9 IdentifierName "multiply" = (a: number, b: number, c?: number, d?: any, e?: any) => void
-Line 107 col 18 IdentifierName "a" = any
-Line 107 col 29 IdentifierName "b" = any
-Line 107 col 40 IdentifierName "c" = any
+Line 107 col 18 IdentifierName "a" = number
+Line 107 col 29 IdentifierName "b" = number
+Line 107 col 40 IdentifierName "c" = number
 Line 107 col 52 IdentifierName "d" = any
 Line 107 col 56 IdentifierName "e" = any
 Line 112 col 9 IdentifierName "f1" = { (a: number): any; (b: string): any; }
-Line 112 col 12 IdentifierName "a" = any
+Line 112 col 12 IdentifierName "a" = number
 Line 113 col 9 IdentifierName "f1" = { (a: number): any; (b: string): any; }
-Line 113 col 12 IdentifierName "b" = any
+Line 113 col 12 IdentifierName "b" = string
 Line 115 col 9 IdentifierName "f1" = { (a: number): any; (b: string): any; }
 Line 115 col 12 IdentifierName "aOrb" = any
 Line 115 col 18 IdentifierName "opt" = any
 Line 116 col 11 IdentifierName "aOrb" = any
 Line 126 col 9 IdentifierName "subtract" = (a: number, b: number, c?: () => string, d?: () => string, e?: () => string, f?: () => string) => void
-Line 126 col 18 IdentifierName "a" = any
-Line 126 col 29 IdentifierName "b" = any
-Line 126 col 40 IdentifierName "c" = any
-Line 126 col 58 IdentifierName "d" = any
-Line 126 col 76 IdentifierName "e" = any
-Line 126 col 94 IdentifierName "f" = any
+Line 126 col 18 IdentifierName "a" = number
+Line 126 col 29 IdentifierName "b" = number
+Line 126 col 40 IdentifierName "c" = () => string
+Line 126 col 58 IdentifierName "d" = () => string
+Line 126 col 76 IdentifierName "e" = () => string
+Line 126 col 94 IdentifierName "f" = () => string
 Line 133 col 9 IdentifierName "square" = (a: number) => number
-Line 133 col 16 IdentifierName "a" = any
+Line 133 col 16 IdentifierName "a" = number
 Line 134 col 11 MultiplyExpression "a * a" = number
 Line 134 col 11 IdentifierName "a" = number
 Line 134 col 15 IdentifierName "a" = number
 Line 141 col 9 IdentifierName "divide" = (a: number, b: number) => void
-Line 141 col 16 IdentifierName "a" = any
-Line 141 col 27 IdentifierName "b" = any
+Line 141 col 16 IdentifierName "a" = number
+Line 141 col 27 IdentifierName "b" = number
 Line 147 col 9 IdentifierName "jsDocParamTest" = (a: number, b: number, c: number, d: number) => number
-Line 147 col 59 IdentifierName "a" = any
-Line 147 col 105 IdentifierName "b" = any
-Line 147 col 116 IdentifierName "c" = any
-Line 147 col 127 IdentifierName "d" = any
+Line 147 col 59 IdentifierName "a" = number
+Line 147 col 105 IdentifierName "b" = number
+Line 147 col 116 IdentifierName "c" = number
+Line 147 col 127 IdentifierName "d" = number
 Line 148 col 11 AddExpression "a + b + c + d" = number
 Line 148 col 11 AddExpression "a + b + c" = number
 Line 148 col 11 AddExpression "a + b" = number

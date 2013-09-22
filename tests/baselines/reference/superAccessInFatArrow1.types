@@ -5,7 +5,7 @@ Line 2 col 0 IdentifierName "foo" = () => void
 Line 5 col 17 IdentifierName "B" = test.B
 Line 5 col 27 IdentifierName "A" = test.A
 Line 6 col 0 IdentifierName "bar" = (callback: () => void) => void
-Line 6 col 12 IdentifierName "callback" = any
+Line 6 col 12 IdentifierName "callback" = () => void
 Line 8 col 0 IdentifierName "runme" = () => void
 Line 9 col 0 InvocationExpression "this.bar(() => {
                 super.foo();

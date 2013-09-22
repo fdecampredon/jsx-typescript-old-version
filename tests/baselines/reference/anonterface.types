@@ -2,9 +2,9 @@
 Line 0 col 7 IdentifierName "M" = M
 Line 1 col 17 IdentifierName "C" = M.C
 Line 2 col 0 IdentifierName "m" = (fn: (n: number) => string, n2: number) => string
-Line 2 col 10 IdentifierName "fn" = any
-Line 2 col 16 IdentifierName "n" = any
-Line 2 col 36 IdentifierName "n2" = any
+Line 2 col 10 IdentifierName "fn" = (n: number) => string
+Line 2 col 16 IdentifierName "n" = number
+Line 2 col 36 IdentifierName "n2" = number
 Line 3 col 19 InvocationExpression "fn(n2)" = string
 Line 3 col 19 IdentifierName "fn" = (n: number) => string
 Line 3 col 22 IdentifierName "n2" = number
@@ -18,6 +18,6 @@ Line 9 col 0 MemberAccessExpression "c.m" = (fn: (n: number) => string, n2: numb
 Line 9 col 0 IdentifierName "c" = M.C
 Line 9 col 2 IdentifierName "m" = (fn: (n: number) => string, n2: number) => string
 Line 9 col 4 FunctionExpression "function(n) { return "hello: "+n; }" = (n: number) => string
-Line 9 col 13 IdentifierName "n" = any
+Line 9 col 13 IdentifierName "n" = number
 Line 9 col 25 AddExpression ""hello: "+n" = string
 Line 9 col 35 IdentifierName "n" = number

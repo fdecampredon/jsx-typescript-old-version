@@ -17,20 +17,20 @@ Line 9 col 4 IdentifierName "ar" = any[]
 Line 9 col 9 CastExpression "<any[]>null" = any[]
 Line 11 col 4 IdentifierName "f" = (res: number) => void
 Line 11 col 8 CastExpression "<(res : number) => void>null" = (res: number) => void
-Line 11 col 10 IdentifierName "res" = any
+Line 11 col 10 IdentifierName "res" = number
 Line 13 col 14 IdentifierName "Point" = Point
 Line 15 col 0 IdentifierName "x" = number
 Line 16 col 0 IdentifierName "y" = number
 Line 17 col 0 IdentifierName "add" = (dx: number, dy: number) => Point
-Line 17 col 8 IdentifierName "dx" = any
-Line 17 col 20 IdentifierName "dy" = any
+Line 17 col 8 IdentifierName "dx" = number
+Line 17 col 20 IdentifierName "dy" = number
 Line 17 col 33 IdentifierName "Point" = Point
 Line 18 col 0 IdentifierName "mult" = (p: Point) => Point
-Line 18 col 9 IdentifierName "p" = any
+Line 18 col 9 IdentifierName "p" = Point
 Line 18 col 12 IdentifierName "Point" = Point
 Line 18 col 20 IdentifierName "Point" = Point
-Line 19 col 16 IdentifierName "x" = any
-Line 19 col 27 IdentifierName "y" = any
+Line 19 col 16 IdentifierName "x" = number
+Line 19 col 27 IdentifierName "y" = number
 Line 22 col 4 IdentifierName "p_cast" = Point
 Line 22 col 13 CastExpression "<Point> ({
     x: 0,

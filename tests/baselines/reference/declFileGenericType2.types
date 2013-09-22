@@ -7,14 +7,14 @@ Line 5 col 22 IdentifierName "mvc" = templa.mvc
 Line 6 col 14 IdentifierName "IController" = templa.mvc.IController<ModelType>
 Line 6 col 26 IdentifierName "ModelType" = any
 Line 6 col 44 IdentifierName "templa" = templa
-Line 6 col 51 IdentifierName "mvc" = any
+Line 6 col 51 IdentifierName "mvc" = { AbstractController: new<ModelType extends templa.mvc.IModel>() => templa.mvc.AbstractController<ModelType>; }
 Line 6 col 55 IdentifierName "IModel" = any
 Line 9 col 15 IdentifierName "templa" = templa
 Line 9 col 22 IdentifierName "mvc" = templa.mvc
 Line 10 col 10 IdentifierName "AbstractController" = templa.mvc.AbstractController<ModelType>
 Line 10 col 29 IdentifierName "ModelType" = any
 Line 10 col 47 IdentifierName "templa" = templa
-Line 10 col 54 IdentifierName "mvc" = any
+Line 10 col 54 IdentifierName "mvc" = { AbstractController: new<ModelType extends templa.mvc.IModel>() => templa.mvc.AbstractController<ModelType>; }
 Line 10 col 58 IdentifierName "IModel" = any
 Line 10 col 77 IdentifierName "mvc" = templa.mvc
 Line 10 col 81 IdentifierName "IController" = any
@@ -36,10 +36,10 @@ Line 18 col 18 IdentifierName "mvc" = templa.dom.mvc
 Line 19 col 21 IdentifierName "IElementController" = templa.dom.mvc.IElementController<ModelType>
 Line 19 col 40 IdentifierName "ModelType" = any
 Line 19 col 58 IdentifierName "templa" = templa
-Line 19 col 65 IdentifierName "mvc" = any
+Line 19 col 65 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 19 col 69 IdentifierName "IModel" = any
 Line 19 col 85 IdentifierName "templa" = templa
-Line 19 col 92 IdentifierName "mvc" = any
+Line 19 col 92 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 19 col 96 IdentifierName "IController" = any
 Line 19 col 108 IdentifierName "ModelType" = ModelType
 Line 23 col 7 IdentifierName "templa" = templa
@@ -48,10 +48,10 @@ Line 23 col 18 IdentifierName "mvc" = templa.dom.mvc
 Line 25 col 17 IdentifierName "AbstractElementController" = templa.dom.mvc.AbstractElementController<ModelType>
 Line 25 col 43 IdentifierName "ModelType" = any
 Line 25 col 61 IdentifierName "templa" = templa
-Line 25 col 68 IdentifierName "mvc" = any
+Line 25 col 68 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 25 col 72 IdentifierName "IModel" = any
 Line 25 col 88 IdentifierName "templa" = templa
-Line 25 col 95 IdentifierName "mvc" = any
+Line 25 col 95 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 25 col 99 IdentifierName "AbstractController" = any
 Line 25 col 118 IdentifierName "ModelType" = ModelType
 Line 25 col 140 IdentifierName "IElementController" = templa.dom.mvc.IElementController<ModelType>
@@ -64,20 +64,20 @@ Line 32 col 22 IdentifierName "composite" = templa.dom.mvc.composite
 Line 33 col 17 IdentifierName "AbstractCompositeElementController" = templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>
 Line 33 col 52 IdentifierName "ModelType" = any
 Line 33 col 70 IdentifierName "templa" = templa
-Line 33 col 77 IdentifierName "mvc" = any
-Line 33 col 81 IdentifierName "composite" = any
+Line 33 col 77 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
+Line 33 col 81 IdentifierName "composite" = { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }
 Line 33 col 91 IdentifierName "ICompositeControllerModel" = any
 Line 33 col 126 IdentifierName "templa" = templa
-Line 33 col 133 IdentifierName "dom" = any
-Line 33 col 137 IdentifierName "mvc" = any
-Line 33 col 141 IdentifierName "AbstractElementController" = any
+Line 33 col 133 IdentifierName "dom" = { mvc: { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }; }
+Line 33 col 137 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
+Line 33 col 141 IdentifierName "AbstractElementController" = new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>
 Line 33 col 167 IdentifierName "ModelType" = ModelType
 Line 34 col 15 IdentifierName "_controllers" = templa.mvc.IController<templa.mvc.IModel>[]
 Line 34 col 29 IdentifierName "templa" = templa
-Line 34 col 36 IdentifierName "mvc" = any
+Line 34 col 36 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 34 col 40 IdentifierName "IController" = any
 Line 34 col 52 IdentifierName "templa" = templa
-Line 34 col 59 IdentifierName "mvc" = any
+Line 34 col 59 IdentifierName "mvc" = { AbstractElementController: new<ModelType extends templa.mvc.IModel>() => templa.dom.mvc.AbstractElementController<ModelType>; composite: { AbstractCompositeElementController: new<ModelType extends templa.mvc.composite.ICompositeControllerModel>() => templa.dom.mvc.composite.AbstractCompositeElementController<ModelType>; }; }
 Line 34 col 63 IdentifierName "IModel" = any
 Line 36 col 0 InvocationExpression "super()" = void
 Line 37 col 0 AssignmentExpression "this._controllers = []" = templa.mvc.IController<templa.mvc.IModel>[]

@@ -29,7 +29,7 @@ Line 7 col 6 MemberAccessExpression "x.doStuff" = (callback: any) => () => any
 Line 7 col 6 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
 Line 7 col 8 IdentifierName "doStuff" = (callback: any) => () => any
 Line 7 col 16 SimpleArrowFunctionExpression "x => alert(x)" = (x: any) => void
-Line 7 col 16 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
+Line 7 col 16 IdentifierName "x" = any
 Line 7 col 21 InvocationExpression "alert(x)" = void
 Line 7 col 21 IdentifierName "alert" = (message?: any) => void
-Line 7 col 27 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
+Line 7 col 27 IdentifierName "x" = any

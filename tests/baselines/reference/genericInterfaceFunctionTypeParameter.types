@@ -3,8 +3,8 @@ Line 0 col 17 IdentifierName "IFoo" = IFoo<A>
 Line 0 col 22 IdentifierName "A" = any
 Line 1 col 16 IdentifierName "foo" = <A>(fn: (ifoo: IFoo<A>) => void) => void
 Line 1 col 20 IdentifierName "A" = any
-Line 1 col 23 IdentifierName "fn" = any
-Line 1 col 28 IdentifierName "ifoo" = any
+Line 1 col 23 IdentifierName "fn" = (ifoo: IFoo<A>) => void
+Line 1 col 28 IdentifierName "ifoo" = IFoo<A>
 Line 1 col 34 IdentifierName "IFoo" = IFoo<A>
 Line 1 col 39 IdentifierName "A" = A
 Line 2 col 0 InvocationExpression "foo(fn)" = void

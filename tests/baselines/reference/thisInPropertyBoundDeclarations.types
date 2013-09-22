@@ -11,16 +11,16 @@ Line 3 col 38 ArrayLiteralExpression "[
 Line 4 col 0 ParenthesizedArrowFunctionExpression "(that: Bug, name: string) => {
          that.foo(name);
      }" = (that: Bug, name: string) => void
-Line 4 col 6 IdentifierName "that" = any
+Line 4 col 6 IdentifierName "that" = Bug
 Line 4 col 12 IdentifierName "Bug" = Bug
-Line 4 col 17 IdentifierName "name" = any
+Line 4 col 17 IdentifierName "name" = string
 Line 5 col 0 InvocationExpression "that.foo(name)" = void
 Line 5 col 0 MemberAccessExpression "that.foo" = (name: string) => void
 Line 5 col 0 IdentifierName "that" = Bug
 Line 5 col 14 IdentifierName "foo" = (name: string) => void
 Line 5 col 18 IdentifierName "name" = string
 Line 9 col 12 IdentifierName "foo" = (name: string) => void
-Line 9 col 16 IdentifierName "name" = any
+Line 9 col 16 IdentifierName "name" = string
 Line 10 col 0 AssignmentExpression "this.name = name" = string
 Line 10 col 0 MemberAccessExpression "this.name" = string
 Line 10 col 0 ThisKeyword "this" = Bug

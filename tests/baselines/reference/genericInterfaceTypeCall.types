@@ -2,19 +2,19 @@
 Line 0 col 10 IdentifierName "Foo" = Foo<T>
 Line 0 col 14 IdentifierName "T" = any
 Line 1 col 0 IdentifierName "reject" = (arg: T) => void
-Line 1 col 11 IdentifierName "arg" = any
+Line 1 col 11 IdentifierName "arg" = T
 Line 1 col 16 IdentifierName "T" = T
 Line 3 col 4 IdentifierName "foo" = Foo<string>
 Line 3 col 9 IdentifierName "Foo" = Foo<T>
 Line 5 col 10 IdentifierName "bar" = bar<T>
 Line 5 col 14 IdentifierName "T" = any
 Line 6 col 0 IdentifierName "fail" = (func: (arg: T) => void) => void
-Line 6 col 9 IdentifierName "func" = any
-Line 6 col 16 IdentifierName "arg" = any
+Line 6 col 9 IdentifierName "func" = (arg: T) => void
+Line 6 col 16 IdentifierName "arg" = T
 Line 6 col 21 IdentifierName "T" = T
 Line 7 col 0 IdentifierName "fail2" = (func2: (arg: T) => void) => void
-Line 7 col 10 IdentifierName "func2" = any
-Line 7 col 20 IdentifierName "arg" = any
+Line 7 col 10 IdentifierName "func2" = (arg: T) => void
+Line 7 col 20 IdentifierName "arg" = T
 Line 7 col 25 IdentifierName "T" = T
 Line 9 col 4 IdentifierName "test" = bar<string>
 Line 9 col 10 IdentifierName "bar" = bar<T>
@@ -23,7 +23,7 @@ Line 10 col 0 MemberAccessExpression "test.fail" = (func: (arg: string) => void)
 Line 10 col 0 IdentifierName "test" = bar<string>
 Line 11 col 5 IdentifierName "fail" = (func: (arg: string) => void) => void
 Line 11 col 10 SimpleArrowFunctionExpression "arg => foo.reject(arg)" = (arg: string) => void
-Line 11 col 10 IdentifierName "arg" = any
+Line 11 col 10 IdentifierName "arg" = string
 Line 11 col 17 InvocationExpression "foo.reject(arg)" = void
 Line 11 col 17 MemberAccessExpression "foo.reject" = (arg: string) => void
 Line 11 col 17 IdentifierName "foo" = Foo<string>
@@ -34,7 +34,7 @@ Line 12 col 0 MemberAccessExpression "test.fail2" = (func2: (arg: string) => voi
 Line 12 col 0 IdentifierName "test" = bar<string>
 Line 12 col 5 IdentifierName "fail2" = (func2: (arg: string) => void) => void
 Line 12 col 11 SimpleArrowFunctionExpression "arg => foo.reject(arg)" = (arg: string) => void
-Line 12 col 11 IdentifierName "arg" = any
+Line 12 col 11 IdentifierName "arg" = string
 Line 12 col 18 InvocationExpression "foo.reject(arg)" = void
 Line 12 col 18 MemberAccessExpression "foo.reject" = (arg: string) => void
 Line 12 col 18 IdentifierName "foo" = Foo<string>

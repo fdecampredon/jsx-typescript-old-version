@@ -6,7 +6,7 @@ Line 5 col 12 IdentifierName "Series" = Series
 Line 8 col 9 IdentifierName "foo" = () => any
 Line 10 col 8 IdentifierName "seriesExtent" = (series: any) => any
 Line 10 col 23 ParenthesizedArrowFunctionExpression "(series) => null" = (series: any) => any
-Line 10 col 24 IdentifierName "series" = Series
+Line 10 col 24 IdentifierName "series" = any
 Line 12 col 8 IdentifierName "series2" = number[]
 Line 13 col 0 InvocationExpression "series2.map(seriesExtent)" = any[]
 Line 13 col 0 MemberAccessExpression "series2.map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
@@ -21,5 +21,5 @@ Line 19 col 24 IdentifierName "series" = Series
 Line 19 col 31 IdentifierName "data" = string[]
 Line 19 col 36 IdentifierName "map" = <U>(callbackfn: (value: string, index: number, array: string[]) => U, thisArg?: any) => U[]
 Line 19 col 40 FunctionExpression "function (d: string) { return d; }" = (d: string) => string
-Line 19 col 50 IdentifierName "d" = any
+Line 19 col 50 IdentifierName "d" = string
 Line 19 col 70 IdentifierName "d" = string

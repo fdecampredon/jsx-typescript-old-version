@@ -87,9 +87,8 @@ module TypeScript {
         }
 
         public getDeclForAST(ast: AST): PullDecl {
-
             if (useDirectTypeStorage) {
-                return ast.decl;
+                return ast.decl ? ast.decl : null;
             }
 
             return this.astDeclMap.read(ast.astIDString);

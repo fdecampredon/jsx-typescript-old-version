@@ -1,5 +1,5 @@
 === tests/cases/compiler/exportAssignmentEnum_B.ts ===
-Line 0 col 7 IdentifierName "EnumE" = any
+Line 0 col 7 IdentifierName "EnumE" = { A: E; B: E; C: E; [x: number]: string; }
 Line 2 col 4 IdentifierName "a" = E
 Line 2 col 8 MemberAccessExpression "EnumE.A" = E
 Line 2 col 8 IdentifierName "EnumE" = { A: E; B: E; C: E; [x: number]: string; }
@@ -17,4 +17,4 @@ Line 0 col 5 IdentifierName "E" = E
 Line 1 col 0 IdentifierName "A" = E
 Line 2 col 0 IdentifierName "B" = E
 Line 3 col 0 IdentifierName "C" = E
-Line 6 col 9 IdentifierName "E" = any
+Line 6 col 9 IdentifierName "E" = { A: E; B: E; C: E; [x: number]: string; }

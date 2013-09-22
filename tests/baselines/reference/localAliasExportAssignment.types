@@ -1,7 +1,12 @@
 === tests/cases/compiler/localAliasExportAssignment_1.ts ===
-Line 1 col 7 IdentifierName "connect" = any
+Line 1 col 7 IdentifierName "connect" = () => any
 Line 2 col 0 InvocationExpression "connect()" = any
 Line 2 col 0 IdentifierName "connect" = () => any
 === tests/cases/compiler/localAliasExportAssignment_0.ts ===
+<<<<<<< HEAD
 Line 0 col 4 IdentifierName "server" = () => any
 Line 4 col 9 IdentifierName "server" = any
+=======
+Line 2 col 8 IdentifierName "server" = () => any
+Line 8 col 13 IdentifierName "server" = () => any
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.

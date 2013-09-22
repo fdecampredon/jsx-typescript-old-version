@@ -1,8 +1,8 @@
 === tests/cases/compiler/implementInterfaceAnyMemberWithVoid.ts ===
 Line 0 col 10 IdentifierName "I" = I
 Line 1 col 0 IdentifierName "foo" = (value: number) => any
-Line 1 col 8 IdentifierName "value" = any
+Line 1 col 8 IdentifierName "value" = number
 Line 4 col 6 IdentifierName "Bug" = Bug
 Line 4 col 21 IdentifierName "I" = I
 Line 5 col 11 IdentifierName "foo" = (value: number) => void
-Line 5 col 15 IdentifierName "value" = any
+Line 5 col 15 IdentifierName "value" = number

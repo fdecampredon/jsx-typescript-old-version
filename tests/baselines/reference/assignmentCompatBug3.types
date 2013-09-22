@@ -1,7 +1,7 @@
 === tests/cases/compiler/assignmentCompatBug3.ts ===
 Line 0 col 9 IdentifierName "makePoint" = (x: number, y: number) => { x: number; y: number; dist: () => number; }
-Line 0 col 19 IdentifierName "x" = any
-Line 0 col 30 IdentifierName "y" = any
+Line 0 col 19 IdentifierName "x" = number
+Line 0 col 30 IdentifierName "y" = number
 Line 1 col 11 ObjectLiteralExpression "{
         get x() { return x;}, // shouldn't be "void"
         get y() { return y;}, // shouldn't be "void"
@@ -35,7 +35,7 @@ Line 7 col 26 IdentifierName "y" = number
 Line 12 col 6 IdentifierName "C" = C
 Line 13 col 8 IdentifierName "x" = () => number
 Line 18 col 9 IdentifierName "foo" = (test: string) => void
-Line 18 col 13 IdentifierName "test" = any
+Line 18 col 13 IdentifierName "test" = string
 Line 20 col 4 IdentifierName "x" = any
 Line 21 col 4 IdentifierName "y" = any
 Line 22 col 0 InvocationExpression "foo(x)" = void

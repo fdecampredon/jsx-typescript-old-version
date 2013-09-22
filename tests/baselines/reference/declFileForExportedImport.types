@@ -1,11 +1,16 @@
 === tests/cases/compiler/declFileForExportedImport_1.ts ===
-Line 1 col 14 IdentifierName "a" = any
+Line 1 col 14 IdentifierName "a" = a
 Line 2 col 4 IdentifierName "y" = number
 Line 2 col 8 MemberAccessExpression "a.x" = number
 Line 2 col 8 IdentifierName "a" = a
 Line 2 col 10 IdentifierName "x" = number
+<<<<<<< HEAD
 Line 4 col 14 IdentifierName "b" = any
 Line 4 col 18 IdentifierName "a" = tests/cases/compiler/declFileForExportedImport_0.ts
+=======
+Line 4 col 14 IdentifierName "b" = b
+Line 4 col 18 IdentifierName "a" = 'm'
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 Line 5 col 4 IdentifierName "z" = number
 Line 5 col 8 MemberAccessExpression "b.x" = number
 Line 5 col 8 IdentifierName "b" = b

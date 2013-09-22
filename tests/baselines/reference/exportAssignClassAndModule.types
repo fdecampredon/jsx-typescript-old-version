@@ -1,6 +1,11 @@
 === tests/cases/compiler/exportAssignClassAndModule_1.ts ===
+<<<<<<< HEAD
 Line 1 col 7 IdentifierName "Foo" = any
 Line 3 col 4 IdentifierName "z" = Foo.Bar
+=======
+Line 1 col 7 IdentifierName "Foo" = new() => "foo".Foo
+Line 3 col 4 IdentifierName "z" = "foo".Foo.Bar
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.
 Line 3 col 7 IdentifierName "Foo" = Foo
 Line 3 col 11 IdentifierName "Bar" = any
 Line 4 col 4 IdentifierName "zz" = Foo
@@ -9,6 +14,7 @@ Line 5 col 0 MemberAccessExpression "zz.x" = Foo.Bar
 Line 5 col 0 IdentifierName "zz" = Foo
 Line 5 col 3 IdentifierName "x" = Foo.Bar
 === tests/cases/compiler/exportAssignClassAndModule_0.ts ===
+<<<<<<< HEAD
 Line 0 col 6 IdentifierName "Foo" = Foo
 Line 1 col 0 IdentifierName "x" = Foo.Bar
 Line 1 col 7 IdentifierName "Foo" = Foo
@@ -16,3 +22,12 @@ Line 1 col 11 IdentifierName "Bar" = any
 Line 3 col 7 IdentifierName "Foo" = Foo
 Line 4 col 21 IdentifierName "Bar" = Foo.Bar
 Line 7 col 9 IdentifierName "Foo" = any
+=======
+Line 1 col 10 IdentifierName "Foo" = "foo".Foo
+Line 2 col 0 IdentifierName "x" = "foo".Foo.Bar
+Line 2 col 11 IdentifierName "Foo" = "foo".Foo
+Line 2 col 15 IdentifierName "Bar" = any
+Line 4 col 11 IdentifierName "Foo" = "foo".Foo
+Line 5 col 25 IdentifierName "Bar" = "foo".Foo.Bar
+Line 8 col 13 IdentifierName "Foo" = new() => "foo".Foo
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.

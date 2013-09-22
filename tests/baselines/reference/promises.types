@@ -3,16 +3,16 @@ Line 0 col 10 IdentifierName "Promise" = Promise<T>
 Line 0 col 18 IdentifierName "T" = any
 Line 1 col 0 IdentifierName "then" = { <U>(success?: (value: T) => U): Promise<U>; <U>(success?: (value: T) => Promise<U>): Promise<U>; }
 Line 1 col 9 IdentifierName "U" = any
-Line 1 col 12 IdentifierName "success" = any
-Line 1 col 23 IdentifierName "value" = any
+Line 1 col 12 IdentifierName "success" = (value: T) => U
+Line 1 col 23 IdentifierName "value" = T
 Line 1 col 30 IdentifierName "T" = T
 Line 1 col 36 IdentifierName "U" = U
 Line 1 col 40 IdentifierName "Promise" = Promise<T>
 Line 1 col 48 IdentifierName "U" = U
 Line 2 col 0 IdentifierName "then" = { <U>(success?: (value: T) => U): Promise<U>; <U>(success?: (value: T) => Promise<U>): Promise<U>; }
 Line 2 col 9 IdentifierName "U" = any
-Line 2 col 12 IdentifierName "success" = any
-Line 2 col 23 IdentifierName "value" = any
+Line 2 col 12 IdentifierName "success" = (value: T) => Promise<U>
+Line 2 col 23 IdentifierName "value" = T
 Line 2 col 30 IdentifierName "T" = T
 Line 2 col 36 IdentifierName "Promise" = Promise<T>
 Line 2 col 44 IdentifierName "U" = U

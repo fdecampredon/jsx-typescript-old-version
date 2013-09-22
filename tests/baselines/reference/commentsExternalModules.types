@@ -1,5 +1,5 @@
 === tests/cases/compiler/commentsExternalModules_1.ts ===
-Line 1 col 7 IdentifierName "extMod" = any
+Line 1 col 7 IdentifierName "extMod" = extMod
 Line 2 col 0 InvocationExpression "extMod.m1.fooExport()" = number
 Line 2 col 0 MemberAccessExpression "extMod.m1.fooExport" = () => number
 Line 2 col 0 MemberAccessExpression "extMod.m1" = { b: number; m2: { c: new() => m1.m2.c; i: m1.m2.c; }; fooExport(): number; }

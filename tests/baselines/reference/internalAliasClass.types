@@ -2,7 +2,7 @@
 Line 0 col 7 IdentifierName "a" = a
 Line 1 col 17 IdentifierName "c" = a.c
 Line 5 col 7 IdentifierName "c" = c
-Line 6 col 11 IdentifierName "b" = any
+Line 6 col 11 IdentifierName "b" = new() => a.c
 Line 6 col 15 IdentifierName "a" = { c: new() => a.c; }
 Line 6 col 17 IdentifierName "c" = { x: a.c; }
 Line 7 col 15 IdentifierName "x" = a.c

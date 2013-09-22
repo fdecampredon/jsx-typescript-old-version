@@ -1,5 +1,5 @@
 === tests/cases/compiler/instanceOfInExternalModules_1.ts ===
-Line 1 col 7 IdentifierName "Bar" = any
+Line 1 col 7 IdentifierName "Bar" = Bar
 Line 2 col 9 IdentifierName "IsFoo" = (value: any) => boolean
 Line 2 col 15 IdentifierName "value" = any
 Line 3 col 11 InstanceOfExpression "value instanceof Bar.Foo" = boolean

@@ -1,5 +1,6 @@
 === tests/cases/compiler/reuseInnerModuleMember_1.ts ===
 Line 1 col 15 IdentifierName "bar" = bar
+<<<<<<< HEAD
 Line 2 col 14 IdentifierName "alpha" = bar.alpha
 Line 5 col 7 IdentifierName "f" = any
 Line 6 col 7 IdentifierName "bar" = bar
@@ -7,3 +8,11 @@ Line 7 col 8 IdentifierName "x" = bar.alpha
 Line 7 col 11 IdentifierName "alpha" = bar.alpha
 === tests/cases/compiler/reuseInnerModuleMember_0.ts ===
 Line 0 col 14 IdentifierName "M" = M
+=======
+Line 3 col 14 IdentifierName "alpha" = bar.alpha
+Line 7 col 7 IdentifierName "f" = f
+Line 9 col 7 IdentifierName "bar" = bar
+Line 11 col 8 IdentifierName "x" = bar.alpha
+Line 11 col 11 IdentifierName "alpha" = bar.alpha
+=== tests/cases/compiler/reuseInnerModuleMember_0.ts ===
+>>>>>>> Fix issues that was causing the Type-Writer to emit 'any' for lots of expression *not* of the 'any' type.

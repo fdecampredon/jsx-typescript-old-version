@@ -13,7 +13,7 @@ Line 2 col 14 FunctionExpression "function (a1, a2) {
     return a1.concat({});
 
 }" = (a1: any[], a2: any) => any[]
-Line 2 col 24 IdentifierName "a1" = any
+Line 2 col 24 IdentifierName "a1" = any[]
 Line 2 col 28 IdentifierName "a2" = any
 Line 4 col 11 InvocationExpression "a1.concat({})" = any[]
 Line 4 col 11 MemberAccessExpression "a1.concat" = { <U extends Array<T>>(...items: U[]): any[]; (...items: any[]): any[]; }

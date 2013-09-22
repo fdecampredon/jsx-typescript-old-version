@@ -9,44 +9,44 @@ Line 9 col 9 IdentifierName "withReturn" = () => string
 Line 12 col 4 IdentifierName "withReturnVar" = () => string
 Line 12 col 20 IdentifierName "withReturn" = () => string
 Line 14 col 9 IdentifierName "withParams" = (a: string) => string
-Line 14 col 20 IdentifierName "a" = any
+Line 14 col 20 IdentifierName "a" = string
 Line 15 col 11 IdentifierName "a" = string
 Line 17 col 4 IdentifierName "withparamsVar" = (a: string) => string
 Line 17 col 20 IdentifierName "withParams" = (a: string) => string
 Line 19 col 9 IdentifierName "withMultiParams" = (a: number, b: any, c: Object) => number
-Line 19 col 25 IdentifierName "a" = any
+Line 19 col 25 IdentifierName "a" = number
 Line 19 col 37 IdentifierName "b" = any
-Line 19 col 40 IdentifierName "c" = any
+Line 19 col 40 IdentifierName "c" = Object
 Line 19 col 43 IdentifierName "Object" = Object
 Line 20 col 11 IdentifierName "a" = number
 Line 22 col 4 IdentifierName "withMultiParamsVar" = (a: number, b: any, c: Object) => number
 Line 22 col 25 IdentifierName "withMultiParams" = (a: number, b: any, c: Object) => number
 Line 24 col 9 IdentifierName "withOptionalParams" = (a?: string) => void
-Line 24 col 28 IdentifierName "a" = any
+Line 24 col 28 IdentifierName "a" = string
 Line 26 col 4 IdentifierName "withOptionalParamsVar" = (a?: string) => void
 Line 26 col 28 IdentifierName "withOptionalParams" = (a?: string) => void
 Line 28 col 9 IdentifierName "withInitializedParams" = (a: string, b0: any, b?: number, c?: string) => void
-Line 28 col 31 IdentifierName "a" = any
+Line 28 col 31 IdentifierName "a" = string
 Line 28 col 42 IdentifierName "b0" = any
-Line 28 col 46 IdentifierName "b" = any
-Line 28 col 54 IdentifierName "c" = any
+Line 28 col 46 IdentifierName "b" = number
+Line 28 col 54 IdentifierName "c" = string
 Line 30 col 4 IdentifierName "withInitializedParamsVar" = (a: string, b0: any, b?: number, c?: string) => void
 Line 30 col 31 IdentifierName "withInitializedParams" = (a: string, b0: any, b?: number, c?: string) => void
 Line 32 col 9 IdentifierName "withOptionalInitializedParams" = (a: string, c?: string) => void
-Line 32 col 39 IdentifierName "a" = any
-Line 32 col 50 IdentifierName "c" = any
+Line 32 col 39 IdentifierName "a" = string
+Line 32 col 50 IdentifierName "c" = string
 Line 34 col 4 IdentifierName "withOptionalInitializedParamsVar" = (a: string, c?: string) => void
 Line 34 col 39 IdentifierName "withOptionalInitializedParams" = (a: string, c?: string) => void
 Line 36 col 9 IdentifierName "withRestParams" = (a: string, ...myRestParameter: number[]) => number[]
-Line 36 col 24 IdentifierName "a" = any
-Line 36 col 39 IdentifierName "myRestParameter" = any
+Line 36 col 24 IdentifierName "a" = string
+Line 36 col 39 IdentifierName "myRestParameter" = number[]
 Line 37 col 11 IdentifierName "myRestParameter" = number[]
 Line 39 col 4 IdentifierName "withRestParamsVar" = (a: string, ...myRestParameter: number[]) => number[]
 Line 39 col 24 IdentifierName "withRestParams" = (a: string, ...myRestParameter: number[]) => number[]
 Line 41 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
-Line 41 col 19 IdentifierName "n" = any
+Line 41 col 19 IdentifierName "n" = number
 Line 42 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
-Line 42 col 19 IdentifierName "s" = any
+Line 42 col 19 IdentifierName "s" = string
 Line 43 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
 Line 43 col 19 IdentifierName "ns" = any
 Line 44 col 11 InvocationExpression "ns.toString()" = any
@@ -56,10 +56,10 @@ Line 44 col 14 IdentifierName "toString" = any
 Line 46 col 4 IdentifierName "withOverloadSignature" = { (n: number): string; (s: string): string; }
 Line 46 col 28 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
 Line 48 col 9 IdentifierName "f" = (n: () => void) => void
-Line 48 col 11 IdentifierName "n" = any
+Line 48 col 11 IdentifierName "n" = () => void
 Line 50 col 7 IdentifierName "m2" = m2
 Line 51 col 20 IdentifierName "foo" = (n: () => void) => void
-Line 51 col 24 IdentifierName "n" = any
+Line 51 col 24 IdentifierName "n" = () => void
 Line 55 col 0 InvocationExpression "m2.foo(() =>  {
 
     var b = 30;
@@ -76,11 +76,11 @@ Line 56 col 7 ParenthesizedArrowFunctionExpression "() =>  {
 Line 58 col 8 IdentifierName "b" = number
 Line 59 col 11 IdentifierName "b" = number
 Line 63 col 17 IdentifierName "fooAmbient" = (n: number) => string
-Line 63 col 28 IdentifierName "n" = any
+Line 63 col 28 IdentifierName "n" = number
 Line 65 col 17 IdentifierName "overloadAmbient" = { (n: number): string; (s: string): string; }
-Line 65 col 33 IdentifierName "n" = any
+Line 65 col 33 IdentifierName "n" = number
 Line 66 col 17 IdentifierName "overloadAmbient" = { (n: number): string; (s: string): string; }
-Line 66 col 33 IdentifierName "s" = any
+Line 66 col 33 IdentifierName "s" = string
 Line 68 col 4 IdentifierName "f2" = () => string
 Line 68 col 9 ParenthesizedArrowFunctionExpression "() => {
     return "string";

@@ -1,8 +1,8 @@
 === tests/cases/compiler/assignToPrototype1.ts ===
 Line 0 col 14 IdentifierName "Point" = Point
 Line 1 col 0 IdentifierName "add" = (dx: number, dy: number) => void
-Line 1 col 6 IdentifierName "dx" = any
-Line 1 col 18 IdentifierName "dy" = any
+Line 1 col 6 IdentifierName "dx" = number
+Line 1 col 18 IdentifierName "dy" = number
 Line 3 col 0 AssignmentExpression "Point.prototype.add = function(dx, dy) {
 }" = (dx: number, dy: number) => void
 Line 3 col 0 MemberAccessExpression "Point.prototype.add" = (dx: number, dy: number) => void
@@ -12,5 +12,5 @@ Line 4 col 6 IdentifierName "prototype" = Point
 Line 4 col 16 IdentifierName "add" = (dx: number, dy: number) => void
 Line 4 col 22 FunctionExpression "function(dx, dy) {
 }" = (dx: number, dy: number) => void
-Line 4 col 31 IdentifierName "dx" = any
-Line 4 col 35 IdentifierName "dy" = any
+Line 4 col 31 IdentifierName "dx" = number
+Line 4 col 35 IdentifierName "dy" = number

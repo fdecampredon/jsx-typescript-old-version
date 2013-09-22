@@ -6,7 +6,7 @@ Line 2 col 0 MemberAccessExpression "regexMatchList.forEach" = (callbackfn: (val
 Line 2 col 0 IdentifierName "regexMatchList" = string[]
 Line 2 col 15 IdentifierName "forEach" = (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
 Line 2 col 23 SimpleArrowFunctionExpression "match => ''.replace(match, '')" = (match: string) => string
-Line 2 col 23 IdentifierName "match" = any
+Line 2 col 23 IdentifierName "match" = string
 Line 2 col 32 InvocationExpression "''.replace(match, '')" = string
 Line 2 col 32 MemberAccessExpression "''.replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
 Line 2 col 35 IdentifierName "replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }

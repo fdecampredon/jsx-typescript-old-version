@@ -2,8 +2,8 @@
 Line 0 col 7 IdentifierName "Bugs" = Bugs
 Line 1 col 8 IdentifierName "A" = Bugs.A
 Line 5 col 11 IdentifierName "bug2" = (message: string, ...args: any[]) => string
-Line 5 col 16 IdentifierName "message" = any
-Line 5 col 35 IdentifierName "args" = any
+Line 5 col 16 IdentifierName "message" = string
+Line 5 col 35 IdentifierName "args" = any[]
 Line 6 col 8 IdentifierName "result" = string
 Line 6 col 16 InvocationExpression "message.replace(/\{(\d+)\}/g, function(match, rest) {
       var index= rest[0];
@@ -20,7 +20,7 @@ Line 6 col 46 FunctionExpression "function(match, rest) {
         ? args[index]
         : match;
     }" = (match: string, rest: any) => string
-Line 6 col 55 IdentifierName "match" = any
+Line 6 col 55 IdentifierName "match" = string
 Line 6 col 62 IdentifierName "rest" = any
 Line 7 col 10 IdentifierName "index" = any
 Line 7 col 17 ElementAccessExpression "rest[0]" = any
@@ -39,12 +39,12 @@ Line 9 col 15 IdentifierName "index" = any
 Line 10 col 10 IdentifierName "match" = string
 Line 12 col 11 IdentifierName "result" = string
 Line 16 col 9 IdentifierName "bug3" = (f: (x: string) => string) => string
-Line 16 col 14 IdentifierName "f" = any
-Line 16 col 17 IdentifierName "x" = any
+Line 16 col 14 IdentifierName "f" = (x: string) => string
+Line 16 col 17 IdentifierName "x" = string
 Line 16 col 45 InvocationExpression "f("s")" = string
 Line 16 col 45 IdentifierName "f" = (x: string) => string
 Line 18 col 9 IdentifierName "fprime" = (x: string) => string
-Line 18 col 16 IdentifierName "x" = any
+Line 18 col 16 IdentifierName "x" = string
 Line 18 col 42 IdentifierName "x" = string
 Line 19 col 0 InvocationExpression "bug3(fprime)" = string
 Line 19 col 0 IdentifierName "bug3" = (f: (x: string) => string) => string
@@ -52,5 +52,5 @@ Line 20 col 5 IdentifierName "fprime" = (x: string) => string
 Line 21 col 0 InvocationExpression "bug3(function(x:string):string { return x; })" = string
 Line 21 col 0 IdentifierName "bug3" = (f: (x: string) => string) => string
 Line 22 col 5 FunctionExpression "function(x:string):string { return x; }" = (x: string) => string
-Line 22 col 14 IdentifierName "x" = any
+Line 22 col 14 IdentifierName "x" = string
 Line 22 col 40 IdentifierName "x" = string

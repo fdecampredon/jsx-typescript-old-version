@@ -6,7 +6,7 @@ Line 3 col 15 MemberAccessExpression "this.__x" = () => string
 Line 3 col 15 ThisKeyword "this" = a
 Line 3 col 20 IdentifierName "__x" = () => string
 Line 5 col 8 IdentifierName "x" = (aValue: () => string) => any
-Line 5 col 10 IdentifierName "aValue" = any
+Line 5 col 10 IdentifierName "aValue" = () => string
 Line 6 col 0 AssignmentExpression "this.__x = aValue" = () => string
 Line 6 col 0 MemberAccessExpression "this.__x" = () => string
 Line 6 col 0 ThisKeyword "this" = a

@@ -1172,7 +1172,7 @@ Line 104 col 0 IdentifierName "eurycerus" = () => panamensis.linulus<ruatanica.P
 Line 104 col 18 IdentifierName "panamensis" = panamensis
 Line 104 col 29 IdentifierName "linulus" = any
 Line 104 col 37 IdentifierName "ruatanica" = ruatanica
-Line 104 col 47 IdentifierName "Praseodymium" = any
+Line 104 col 47 IdentifierName "Praseodymium" = new<T0, T1>() => ruatanica.Praseodymium<T0, T1>
 Line 104 col 60 IdentifierName "Lanthanum" = Lanthanum
 Line 104 col 70 IdentifierName "jugularis" = any
 Line 104 col 81 IdentifierName "dammermani" = dammermani
@@ -1183,7 +1183,7 @@ Line 104 col 125 IdentifierName "x" = panamensis.linulus<ruatanica.Praseodymium<
 Line 104 col 129 IdentifierName "panamensis" = panamensis
 Line 104 col 140 IdentifierName "linulus" = any
 Line 104 col 148 IdentifierName "ruatanica" = ruatanica
-Line 104 col 158 IdentifierName "Praseodymium" = any
+Line 104 col 158 IdentifierName "Praseodymium" = new<T0, T1>() => ruatanica.Praseodymium<T0, T1>
 Line 104 col 171 IdentifierName "Lanthanum" = Lanthanum
 Line 104 col 181 IdentifierName "jugularis" = any
 Line 104 col 192 IdentifierName "dammermani" = dammermani
@@ -2897,14 +2897,14 @@ Line 242 col 0 IdentifierName "Copper" = () => argurus.netscheri<quasiater.carol
 Line 242 col 15 IdentifierName "argurus" = argurus
 Line 242 col 23 IdentifierName "netscheri" = any
 Line 242 col 33 IdentifierName "quasiater" = quasiater
-Line 242 col 43 IdentifierName "carolinensis" = any
+Line 242 col 43 IdentifierName "carolinensis" = new() => quasiater.carolinensis
 Line 242 col 57 IdentifierName "dogramacii" = dogramacii
 Line 242 col 68 IdentifierName "kaiseri" = any
 Line 242 col 83 IdentifierName "x" = argurus.netscheri<quasiater.carolinensis, dogramacii.kaiseri>
 Line 242 col 87 IdentifierName "argurus" = argurus
 Line 242 col 95 IdentifierName "netscheri" = any
 Line 242 col 105 IdentifierName "quasiater" = quasiater
-Line 242 col 115 IdentifierName "carolinensis" = any
+Line 242 col 115 IdentifierName "carolinensis" = new() => quasiater.carolinensis
 Line 242 col 129 IdentifierName "dogramacii" = dogramacii
 Line 242 col 140 IdentifierName "kaiseri" = any
 Line 242 col 150 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -4363,7 +4363,7 @@ Line 363 col 0 IdentifierName "Tin" = () => sagitta.leptoceros<lutreolus.punicus
 Line 363 col 12 IdentifierName "sagitta" = sagitta
 Line 363 col 20 IdentifierName "leptoceros" = any
 Line 363 col 31 IdentifierName "lutreolus" = lutreolus
-Line 363 col 41 IdentifierName "punicus" = any
+Line 363 col 41 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 363 col 50 IdentifierName "daubentonii" = daubentonii
 Line 363 col 62 IdentifierName "arboreus" = any
 Line 363 col 71 IdentifierName "quasiater" = quasiater
@@ -4374,7 +4374,7 @@ Line 363 col 127 IdentifierName "x" = sagitta.leptoceros<lutreolus.punicus, daub
 Line 363 col 131 IdentifierName "sagitta" = sagitta
 Line 363 col 139 IdentifierName "leptoceros" = any
 Line 363 col 150 IdentifierName "lutreolus" = lutreolus
-Line 363 col 160 IdentifierName "punicus" = any
+Line 363 col 160 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 363 col 169 IdentifierName "daubentonii" = daubentonii
 Line 363 col 181 IdentifierName "arboreus" = any
 Line 363 col 190 IdentifierName "quasiater" = quasiater
@@ -4395,7 +4395,7 @@ Line 364 col 75 IdentifierName "arboreus" = any
 Line 364 col 84 IdentifierName "dogramacii" = dogramacii
 Line 364 col 95 IdentifierName "kaiseri" = any
 Line 364 col 104 IdentifierName "lutreolus" = lutreolus
-Line 364 col 114 IdentifierName "punicus" = any
+Line 364 col 114 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 364 col 130 IdentifierName "x" = panamensis.setulosus<quasiater.carolinensis, daubentonii.arboreus<dogramacii.kaiseri, lutreolus.punicus>>
 Line 364 col 134 IdentifierName "panamensis" = panamensis
 Line 364 col 145 IdentifierName "setulosus" = any
@@ -4406,7 +4406,7 @@ Line 364 col 191 IdentifierName "arboreus" = any
 Line 364 col 200 IdentifierName "dogramacii" = dogramacii
 Line 364 col 211 IdentifierName "kaiseri" = any
 Line 364 col 220 IdentifierName "lutreolus" = lutreolus
-Line 364 col 230 IdentifierName "punicus" = any
+Line 364 col 230 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 364 col 241 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 364 col 253 IdentifierName "y" = lutreolus.schlegeli
 Line 364 col 257 ThisKeyword "this" = lutreolus.schlegeli
@@ -4435,14 +4435,14 @@ Line 366 col 30 IdentifierName "nesiotes" = any
 Line 366 col 39 IdentifierName "macrorhinos" = macrorhinos
 Line 366 col 51 IdentifierName "konganensis" = any
 Line 366 col 64 IdentifierName "lutreolus" = lutreolus
-Line 366 col 74 IdentifierName "punicus" = any
+Line 366 col 74 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 366 col 89 IdentifierName "x" = daubentonii.nesiotes<macrorhinos.konganensis, lutreolus.punicus>
 Line 366 col 93 IdentifierName "daubentonii" = daubentonii
 Line 366 col 105 IdentifierName "nesiotes" = any
 Line 366 col 114 IdentifierName "macrorhinos" = macrorhinos
 Line 366 col 126 IdentifierName "konganensis" = any
 Line 366 col 139 IdentifierName "lutreolus" = lutreolus
-Line 366 col 149 IdentifierName "punicus" = any
+Line 366 col 149 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 366 col 159 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 366 col 171 IdentifierName "y" = lutreolus.schlegeli
 Line 366 col 175 ThisKeyword "this" = lutreolus.schlegeli
@@ -4675,11 +4675,11 @@ Line 383 col 50 IdentifierName "konganensis" = any
 Line 383 col 63 IdentifierName "caurinus" = caurinus
 Line 383 col 72 IdentifierName "johorensis" = any
 Line 383 col 83 IdentifierName "argurus" = argurus
-Line 383 col 91 IdentifierName "peninsulae" = any
+Line 383 col 91 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 383 col 103 IdentifierName "daubentonii" = daubentonii
 Line 383 col 115 IdentifierName "arboreus" = any
 Line 383 col 124 IdentifierName "argurus" = argurus
-Line 383 col 132 IdentifierName "germaini" = any
+Line 383 col 132 IdentifierName "germaini" = new() => argurus.germaini
 Line 383 col 142 IdentifierName "sagitta" = sagitta
 Line 383 col 150 IdentifierName "stolzmanni" = any
 Line 383 col 170 IdentifierName "x" = caurinus.johorensis<macrorhinos.konganensis, caurinus.johorensis<argurus.peninsulae, daubentonii.arboreus<argurus.germaini, sagitta.stolzmanni>>>
@@ -4690,11 +4690,11 @@ Line 383 col 206 IdentifierName "konganensis" = any
 Line 383 col 219 IdentifierName "caurinus" = caurinus
 Line 383 col 228 IdentifierName "johorensis" = any
 Line 383 col 239 IdentifierName "argurus" = argurus
-Line 383 col 247 IdentifierName "peninsulae" = any
+Line 383 col 247 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 383 col 259 IdentifierName "daubentonii" = daubentonii
 Line 383 col 271 IdentifierName "arboreus" = any
 Line 383 col 280 IdentifierName "argurus" = argurus
-Line 383 col 288 IdentifierName "germaini" = any
+Line 383 col 288 IdentifierName "germaini" = new() => argurus.germaini
 Line 383 col 298 IdentifierName "sagitta" = sagitta
 Line 383 col 306 IdentifierName "stolzmanni" = any
 Line 383 col 321 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -4707,14 +4707,14 @@ Line 384 col 27 IdentifierName "moojeni" = any
 Line 384 col 35 IdentifierName "lutreolus" = lutreolus
 Line 384 col 45 IdentifierName "foina" = any
 Line 384 col 52 IdentifierName "argurus" = argurus
-Line 384 col 60 IdentifierName "oreas" = any
+Line 384 col 60 IdentifierName "oreas" = new() => argurus.oreas
 Line 384 col 73 IdentifierName "x" = rendalli.moojeni<lutreolus.foina, argurus.oreas>
 Line 384 col 77 IdentifierName "rendalli" = rendalli
 Line 384 col 86 IdentifierName "moojeni" = any
 Line 384 col 94 IdentifierName "lutreolus" = lutreolus
 Line 384 col 104 IdentifierName "foina" = any
 Line 384 col 111 IdentifierName "argurus" = argurus
-Line 384 col 119 IdentifierName "oreas" = any
+Line 384 col 119 IdentifierName "oreas" = new() => argurus.oreas
 Line 384 col 127 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 384 col 139 IdentifierName "y" = argurus.dauricus<T0, T1>
 Line 384 col 143 ThisKeyword "this" = argurus.dauricus<T0, T1>
@@ -4723,14 +4723,14 @@ Line 385 col 0 IdentifierName "mahomet" = () => imperfecta.ciliolabrum<argurus.g
 Line 385 col 16 IdentifierName "imperfecta" = imperfecta
 Line 385 col 27 IdentifierName "ciliolabrum" = any
 Line 385 col 39 IdentifierName "argurus" = argurus
-Line 385 col 47 IdentifierName "germaini" = any
+Line 385 col 47 IdentifierName "germaini" = new() => argurus.germaini
 Line 385 col 57 IdentifierName "lutreolus" = lutreolus
 Line 385 col 67 IdentifierName "foina" = any
 Line 385 col 80 IdentifierName "x" = imperfecta.ciliolabrum<argurus.germaini, lutreolus.foina>
 Line 385 col 84 IdentifierName "imperfecta" = imperfecta
 Line 385 col 95 IdentifierName "ciliolabrum" = any
 Line 385 col 107 IdentifierName "argurus" = argurus
-Line 385 col 115 IdentifierName "germaini" = any
+Line 385 col 115 IdentifierName "germaini" = new() => argurus.germaini
 Line 385 col 125 IdentifierName "lutreolus" = lutreolus
 Line 385 col 135 IdentifierName "foina" = any
 Line 385 col 143 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -4843,7 +4843,7 @@ Line 393 col 45 IdentifierName "oconnelli" = any
 Line 393 col 56 IdentifierName "sagitta" = sagitta
 Line 393 col 64 IdentifierName "cinereus" = any
 Line 393 col 73 IdentifierName "nigra" = nigra
-Line 393 col 79 IdentifierName "caucasica" = any
+Line 393 col 79 IdentifierName "caucasica" = new<T0, T1>() => nigra.caucasica<T0, T1>
 Line 393 col 89 IdentifierName "julianae" = julianae
 Line 393 col 98 IdentifierName "sumatrana" = any
 Line 393 col 109 IdentifierName "trivirgatus" = trivirgatus
@@ -4866,7 +4866,7 @@ Line 393 col 282 IdentifierName "oconnelli" = any
 Line 393 col 293 IdentifierName "sagitta" = sagitta
 Line 393 col 301 IdentifierName "cinereus" = any
 Line 393 col 310 IdentifierName "nigra" = nigra
-Line 393 col 316 IdentifierName "caucasica" = any
+Line 393 col 316 IdentifierName "caucasica" = new<T0, T1>() => nigra.caucasica<T0, T1>
 Line 393 col 326 IdentifierName "julianae" = julianae
 Line 393 col 335 IdentifierName "sumatrana" = any
 Line 393 col 346 IdentifierName "trivirgatus" = trivirgatus
@@ -5421,7 +5421,7 @@ Line 440 col 77 ThisKeyword "this" = minutus.himalayana<T0, T1>
 Line 440 col 93 IdentifierName "x" = patas.uralensis
 Line 441 col 0 IdentifierName "flaviceps" = () => minutus.inez<argurus.oreas, panglima.fundatus<gabriellae.amicus, lutreolus.foina>>
 Line 441 col 21 IdentifierName "minutus" = minutus
-Line 441 col 29 IdentifierName "inez" = any
+Line 441 col 29 IdentifierName "inez" = new<T0, T1>() => minutus.inez<T0, T1>
 Line 441 col 34 IdentifierName "argurus" = argurus
 Line 441 col 42 IdentifierName "oreas" = any
 Line 441 col 49 IdentifierName "panglima" = panglima
@@ -5432,7 +5432,7 @@ Line 441 col 86 IdentifierName "lutreolus" = lutreolus
 Line 441 col 96 IdentifierName "foina" = any
 Line 441 col 110 IdentifierName "x" = minutus.inez<argurus.oreas, panglima.fundatus<gabriellae.amicus, lutreolus.foina>>
 Line 441 col 113 IdentifierName "minutus" = minutus
-Line 441 col 121 IdentifierName "inez" = any
+Line 441 col 121 IdentifierName "inez" = new<T0, T1>() => minutus.inez<T0, T1>
 Line 441 col 126 IdentifierName "argurus" = argurus
 Line 441 col 134 IdentifierName "oreas" = any
 Line 441 col 141 IdentifierName "panglima" = panglima
@@ -5573,7 +5573,7 @@ Line 452 col 75 IdentifierName "marmosurus" = any
 Line 452 col 86 IdentifierName "dammermani" = dammermani
 Line 452 col 97 IdentifierName "melanops" = any
 Line 452 col 107 IdentifierName "caurinus" = caurinus
-Line 452 col 116 IdentifierName "mahaganus" = any
+Line 452 col 116 IdentifierName "mahaganus" = new<T0, T1>() => caurinus.mahaganus<T0, T1>
 Line 452 col 126 IdentifierName "julianae" = julianae
 Line 452 col 135 IdentifierName "nudicaudus" = any
 Line 452 col 147 IdentifierName "lavali" = lavali
@@ -5588,7 +5588,7 @@ Line 452 col 221 IdentifierName "marmosurus" = any
 Line 452 col 232 IdentifierName "dammermani" = dammermani
 Line 452 col 243 IdentifierName "melanops" = any
 Line 452 col 253 IdentifierName "caurinus" = caurinus
-Line 452 col 262 IdentifierName "mahaganus" = any
+Line 452 col 262 IdentifierName "mahaganus" = new<T0, T1>() => caurinus.mahaganus<T0, T1>
 Line 452 col 272 IdentifierName "julianae" = julianae
 Line 452 col 281 IdentifierName "nudicaudus" = any
 Line 452 col 293 IdentifierName "lavali" = lavali
@@ -5647,14 +5647,14 @@ Line 455 col 28 IdentifierName "dolichurus" = any
 Line 455 col 39 IdentifierName "patas" = patas
 Line 455 col 45 IdentifierName "uralensis" = any
 Line 455 col 56 IdentifierName "caurinus" = caurinus
-Line 455 col 65 IdentifierName "psilurus" = any
+Line 455 col 65 IdentifierName "psilurus" = new() => caurinus.psilurus
 Line 455 col 81 IdentifierName "x" = nigra.dolichurus<patas.uralensis, caurinus.psilurus>
 Line 455 col 84 IdentifierName "nigra" = nigra
 Line 455 col 90 IdentifierName "dolichurus" = any
 Line 455 col 101 IdentifierName "patas" = patas
 Line 455 col 107 IdentifierName "uralensis" = any
 Line 455 col 118 IdentifierName "caurinus" = caurinus
-Line 455 col 127 IdentifierName "psilurus" = any
+Line 455 col 127 IdentifierName "psilurus" = new() => caurinus.psilurus
 Line 455 col 138 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 455 col 150 IdentifierName "y" = caurinus.mahaganus<T0, T1>
 Line 455 col 154 ThisKeyword "this" = caurinus.mahaganus<T0, T1>
@@ -5671,7 +5671,7 @@ Line 456 col 87 ThisKeyword "this" = caurinus.mahaganus<T0, T1>
 Line 456 col 103 IdentifierName "x" = gabriellae.echinatus
 Line 457 col 0 IdentifierName "nigrovittatus" = () => caurinus.mahaganus<gabriellae.echinatus, petrophilus.rosalia<Lanthanum.megalonyx, panglima.abidi<dogramacii.kaiseri, lavali.wilsoni>>>
 Line 457 col 25 IdentifierName "caurinus" = caurinus
-Line 457 col 34 IdentifierName "mahaganus" = any
+Line 457 col 34 IdentifierName "mahaganus" = new<T0, T1>() => caurinus.mahaganus<T0, T1>
 Line 457 col 44 IdentifierName "gabriellae" = gabriellae
 Line 457 col 55 IdentifierName "echinatus" = any
 Line 457 col 66 IdentifierName "petrophilus" = petrophilus
@@ -5686,7 +5686,7 @@ Line 457 col 142 IdentifierName "lavali" = lavali
 Line 457 col 149 IdentifierName "wilsoni" = any
 Line 457 col 166 IdentifierName "x" = caurinus.mahaganus<gabriellae.echinatus, petrophilus.rosalia<Lanthanum.megalonyx, panglima.abidi<dogramacii.kaiseri, lavali.wilsoni>>>
 Line 457 col 169 IdentifierName "caurinus" = caurinus
-Line 457 col 178 IdentifierName "mahaganus" = any
+Line 457 col 178 IdentifierName "mahaganus" = new<T0, T1>() => caurinus.mahaganus<T0, T1>
 Line 457 col 188 IdentifierName "gabriellae" = gabriellae
 Line 457 col 199 IdentifierName "echinatus" = any
 Line 457 col 210 IdentifierName "petrophilus" = petrophilus
@@ -5761,10 +5761,10 @@ Line 468 col 43 IdentifierName "sagitta" = sagitta
 Line 468 col 51 IdentifierName "stolzmanni" = any
 Line 469 col 0 IdentifierName "pennatus" = () => howi.marcanoi
 Line 469 col 20 IdentifierName "howi" = howi
-Line 469 col 25 IdentifierName "marcanoi" = any
+Line 469 col 25 IdentifierName "marcanoi" = new() => howi.marcanoi
 Line 469 col 40 IdentifierName "x" = howi.marcanoi
 Line 469 col 43 IdentifierName "howi" = howi
-Line 469 col 48 IdentifierName "marcanoi" = any
+Line 469 col 48 IdentifierName "marcanoi" = new() => howi.marcanoi
 Line 469 col 58 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 469 col 70 IdentifierName "y" = howi.angulatus<T0, T1>
 Line 469 col 74 ThisKeyword "this" = howi.angulatus<T0, T1>
@@ -6161,14 +6161,14 @@ Line 516 col 26 IdentifierName "T0" = any
 Line 516 col 30 IdentifierName "T1" = any
 Line 517 col 0 IdentifierName "weddellii" = () => nigra.dolichurus<dogramacii.aurata, julianae.steerii>
 Line 517 col 21 IdentifierName "nigra" = nigra
-Line 517 col 27 IdentifierName "dolichurus" = any
+Line 517 col 27 IdentifierName "dolichurus" = new<T0, T1>() => nigra.dolichurus<T0, T1>
 Line 517 col 38 IdentifierName "dogramacii" = dogramacii
 Line 517 col 49 IdentifierName "aurata" = any
 Line 517 col 57 IdentifierName "julianae" = julianae
 Line 517 col 66 IdentifierName "steerii" = any
 Line 517 col 81 IdentifierName "x" = nigra.dolichurus<dogramacii.aurata, julianae.steerii>
 Line 517 col 84 IdentifierName "nigra" = nigra
-Line 517 col 90 IdentifierName "dolichurus" = any
+Line 517 col 90 IdentifierName "dolichurus" = new<T0, T1>() => nigra.dolichurus<T0, T1>
 Line 517 col 101 IdentifierName "dogramacii" = dogramacii
 Line 517 col 112 IdentifierName "aurata" = any
 Line 517 col 120 IdentifierName "julianae" = julianae
@@ -6215,7 +6215,7 @@ Line 519 col 88 ThisKeyword "this" = nigra.gracilis<T0, T1>
 Line 519 col 104 IdentifierName "x" = dogramacii.koepckeae
 Line 520 col 0 IdentifierName "rouxii" = () => nigra.gracilis<argurus.dauricus<macrorhinos.konganensis, patas.uralensis>, nigra.thalia<patas.uralensis, julianae.galapagoensis>>
 Line 520 col 18 IdentifierName "nigra" = nigra
-Line 520 col 24 IdentifierName "gracilis" = any
+Line 520 col 24 IdentifierName "gracilis" = new<T0, T1>() => nigra.gracilis<T0, T1>
 Line 520 col 33 IdentifierName "argurus" = argurus
 Line 520 col 41 IdentifierName "dauricus" = any
 Line 520 col 50 IdentifierName "macrorhinos" = macrorhinos
@@ -6223,14 +6223,14 @@ Line 520 col 62 IdentifierName "konganensis" = any
 Line 520 col 75 IdentifierName "patas" = patas
 Line 520 col 81 IdentifierName "uralensis" = any
 Line 520 col 93 IdentifierName "nigra" = nigra
-Line 520 col 99 IdentifierName "thalia" = any
+Line 520 col 99 IdentifierName "thalia" = new<T0, T1>() => nigra.thalia<T0, T1>
 Line 520 col 106 IdentifierName "patas" = patas
 Line 520 col 112 IdentifierName "uralensis" = any
 Line 520 col 123 IdentifierName "julianae" = julianae
 Line 520 col 132 IdentifierName "galapagoensis" = any
 Line 520 col 154 IdentifierName "x" = nigra.gracilis<argurus.dauricus<macrorhinos.konganensis, patas.uralensis>, nigra.thalia<patas.uralensis, julianae.galapagoensis>>
 Line 520 col 157 IdentifierName "nigra" = nigra
-Line 520 col 163 IdentifierName "gracilis" = any
+Line 520 col 163 IdentifierName "gracilis" = new<T0, T1>() => nigra.gracilis<T0, T1>
 Line 520 col 172 IdentifierName "argurus" = argurus
 Line 520 col 180 IdentifierName "dauricus" = any
 Line 520 col 189 IdentifierName "macrorhinos" = macrorhinos
@@ -6238,7 +6238,7 @@ Line 520 col 201 IdentifierName "konganensis" = any
 Line 520 col 214 IdentifierName "patas" = patas
 Line 520 col 220 IdentifierName "uralensis" = any
 Line 520 col 232 IdentifierName "nigra" = nigra
-Line 520 col 238 IdentifierName "thalia" = any
+Line 520 col 238 IdentifierName "thalia" = new<T0, T1>() => nigra.thalia<T0, T1>
 Line 520 col 245 IdentifierName "patas" = patas
 Line 520 col 251 IdentifierName "uralensis" = any
 Line 520 col 262 IdentifierName "julianae" = julianae
@@ -6281,7 +6281,7 @@ Line 523 col 106 IdentifierName "pallidus" = any
 Line 523 col 117 IdentifierName "argurus" = argurus
 Line 523 col 125 IdentifierName "luctuosa" = any
 Line 523 col 136 IdentifierName "nigra" = nigra
-Line 523 col 142 IdentifierName "dolichurus" = any
+Line 523 col 142 IdentifierName "dolichurus" = new<T0, T1>() => nigra.dolichurus<T0, T1>
 Line 523 col 153 IdentifierName "lavali" = lavali
 Line 523 col 160 IdentifierName "lepturus" = any
 Line 523 col 170 IdentifierName "samarensis" = samarensis
@@ -6300,7 +6300,7 @@ Line 523 col 288 IdentifierName "pallidus" = any
 Line 523 col 299 IdentifierName "argurus" = argurus
 Line 523 col 307 IdentifierName "luctuosa" = any
 Line 523 col 318 IdentifierName "nigra" = nigra
-Line 523 col 324 IdentifierName "dolichurus" = any
+Line 523 col 324 IdentifierName "dolichurus" = new<T0, T1>() => nigra.dolichurus<T0, T1>
 Line 523 col 335 IdentifierName "lavali" = lavali
 Line 523 col 342 IdentifierName "lepturus" = any
 Line 523 col 352 IdentifierName "samarensis" = samarensis
@@ -7057,7 +7057,7 @@ Line 579 col 96 IdentifierName "arboreus" = any
 Line 579 col 105 IdentifierName "argurus" = argurus
 Line 579 col 113 IdentifierName "germaini" = any
 Line 579 col 123 IdentifierName "sagitta" = sagitta
-Line 579 col 131 IdentifierName "stolzmanni" = any
+Line 579 col 131 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 580 col 0 IdentifierName "victus" = () => rionegrensis.caniventer
 Line 580 col 18 IdentifierName "rionegrensis" = rionegrensis
 Line 580 col 31 IdentifierName "caniventer" = any
@@ -7344,14 +7344,14 @@ Line 618 col 89 ThisKeyword "this" = argurus.wetmorei<T0, T1>
 Line 618 col 105 IdentifierName "x" = Lanthanum.jugularis
 Line 619 col 0 IdentifierName "cracens" = () => argurus.gilbertii<lavali.thaeleri, lutreolus.punicus>
 Line 619 col 19 IdentifierName "argurus" = argurus
-Line 619 col 27 IdentifierName "gilbertii" = any
+Line 619 col 27 IdentifierName "gilbertii" = new<T0, T1>() => argurus.gilbertii<T0, T1>
 Line 619 col 37 IdentifierName "lavali" = lavali
 Line 619 col 44 IdentifierName "thaeleri" = any
 Line 619 col 54 IdentifierName "lutreolus" = lutreolus
 Line 619 col 64 IdentifierName "punicus" = any
 Line 619 col 79 IdentifierName "x" = argurus.gilbertii<lavali.thaeleri, lutreolus.punicus>
 Line 619 col 82 IdentifierName "argurus" = argurus
-Line 619 col 90 IdentifierName "gilbertii" = any
+Line 619 col 90 IdentifierName "gilbertii" = new<T0, T1>() => argurus.gilbertii<T0, T1>
 Line 619 col 100 IdentifierName "lavali" = lavali
 Line 619 col 107 IdentifierName "thaeleri" = any
 Line 619 col 117 IdentifierName "lutreolus" = lutreolus
@@ -7480,14 +7480,14 @@ Line 632 col 0 IdentifierName "nghetinhensis" = () => gabriellae.klossii<argurus
 Line 632 col 25 IdentifierName "gabriellae" = gabriellae
 Line 632 col 36 IdentifierName "klossii" = any
 Line 632 col 44 IdentifierName "argurus" = argurus
-Line 632 col 52 IdentifierName "luctuosa" = any
+Line 632 col 52 IdentifierName "luctuosa" = new() => argurus.luctuosa
 Line 632 col 62 IdentifierName "julianae" = julianae
 Line 632 col 71 IdentifierName "steerii" = any
 Line 632 col 86 IdentifierName "x" = gabriellae.klossii<argurus.luctuosa, julianae.steerii>
 Line 632 col 89 IdentifierName "gabriellae" = gabriellae
 Line 632 col 100 IdentifierName "klossii" = any
 Line 632 col 108 IdentifierName "argurus" = argurus
-Line 632 col 116 IdentifierName "luctuosa" = any
+Line 632 col 116 IdentifierName "luctuosa" = new() => argurus.luctuosa
 Line 632 col 126 IdentifierName "julianae" = julianae
 Line 632 col 135 IdentifierName "steerii" = any
 Line 632 col 145 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -7514,10 +7514,10 @@ Line 633 col 168 ThisKeyword "this" = argurus.oreas
 Line 633 col 184 IdentifierName "x" = samarensis.cahirinus<lavali.lepturus, quasiater.carolinensis>
 Line 634 col 0 IdentifierName "univittatus" = () => argurus.peninsulae
 Line 634 col 23 IdentifierName "argurus" = argurus
-Line 634 col 31 IdentifierName "peninsulae" = any
+Line 634 col 31 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 634 col 48 IdentifierName "x" = argurus.peninsulae
 Line 634 col 51 IdentifierName "argurus" = argurus
-Line 634 col 59 IdentifierName "peninsulae" = any
+Line 634 col 59 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 634 col 71 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 634 col 83 IdentifierName "y" = argurus.oreas
 Line 634 col 87 ThisKeyword "this" = argurus.oreas
@@ -8054,7 +8054,7 @@ Line 679 col 192 IdentifierName "psilurus" = any
 Line 679 col 203 IdentifierName "gabriellae" = gabriellae
 Line 679 col 214 IdentifierName "echinatus" = any
 Line 679 col 226 IdentifierName "sagitta" = sagitta
-Line 679 col 234 IdentifierName "stolzmanni" = any
+Line 679 col 234 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 679 col 253 IdentifierName "x" = macrorhinos.marmosurus<Lanthanum.nitidus<dammermani.melanops, lavali.lepturus>, macrorhinos.marmosurus<rendalli.moojeni<panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>, gabriellae.echinatus>, sagitta.stolzmanni>>
 Line 679 col 256 IdentifierName "macrorhinos" = macrorhinos
 Line 679 col 268 IdentifierName "marmosurus" = any
@@ -8077,7 +8077,7 @@ Line 679 col 427 IdentifierName "psilurus" = any
 Line 679 col 438 IdentifierName "gabriellae" = gabriellae
 Line 679 col 449 IdentifierName "echinatus" = any
 Line 679 col 461 IdentifierName "sagitta" = sagitta
-Line 679 col 469 IdentifierName "stolzmanni" = any
+Line 679 col 469 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 679 col 483 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 679 col 495 IdentifierName "y" = sagitta.sicarius<T0, T1>
 Line 679 col 499 ThisKeyword "this" = sagitta.sicarius<T0, T1>
@@ -8212,7 +8212,7 @@ Line 690 col 59 IdentifierName "steerii" = any
 Line 690 col 68 IdentifierName "lavali" = lavali
 Line 690 col 75 IdentifierName "lepturus" = any
 Line 690 col 86 IdentifierName "howi" = howi
-Line 690 col 91 IdentifierName "coludo" = any
+Line 690 col 91 IdentifierName "coludo" = new<T0, T1>() => howi.coludo<T0, T1>
 Line 690 col 98 IdentifierName "julianae" = julianae
 Line 690 col 107 IdentifierName "steerii" = any
 Line 690 col 116 IdentifierName "julianae" = julianae
@@ -8231,7 +8231,7 @@ Line 690 col 229 IdentifierName "steerii" = any
 Line 690 col 238 IdentifierName "lavali" = lavali
 Line 690 col 245 IdentifierName "lepturus" = any
 Line 690 col 256 IdentifierName "howi" = howi
-Line 690 col 261 IdentifierName "coludo" = any
+Line 690 col 261 IdentifierName "coludo" = new<T0, T1>() => howi.coludo<T0, T1>
 Line 690 col 268 IdentifierName "julianae" = julianae
 Line 690 col 277 IdentifierName "steerii" = any
 Line 690 col 286 IdentifierName "julianae" = julianae
@@ -8358,14 +8358,14 @@ Line 704 col 0 IdentifierName "sondaicus" = () => samarensis.fuscus<argurus.peni
 Line 704 col 21 IdentifierName "samarensis" = samarensis
 Line 704 col 32 IdentifierName "fuscus" = any
 Line 704 col 39 IdentifierName "argurus" = argurus
-Line 704 col 47 IdentifierName "peninsulae" = any
+Line 704 col 47 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 704 col 59 IdentifierName "lavali" = lavali
 Line 704 col 66 IdentifierName "lepturus" = any
 Line 704 col 82 IdentifierName "x" = samarensis.fuscus<argurus.peninsulae, lavali.lepturus>
 Line 704 col 85 IdentifierName "samarensis" = samarensis
 Line 704 col 96 IdentifierName "fuscus" = any
 Line 704 col 103 IdentifierName "argurus" = argurus
-Line 704 col 111 IdentifierName "peninsulae" = any
+Line 704 col 111 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 704 col 123 IdentifierName "lavali" = lavali
 Line 704 col 130 IdentifierName "lepturus" = any
 Line 704 col 141 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -8396,14 +8396,14 @@ Line 706 col 30 IdentifierName "Praseodymium" = any
 Line 706 col 43 IdentifierName "Lanthanum" = Lanthanum
 Line 706 col 53 IdentifierName "jugularis" = any
 Line 706 col 64 IdentifierName "argurus" = argurus
-Line 706 col 72 IdentifierName "oreas" = any
+Line 706 col 72 IdentifierName "oreas" = new() => argurus.oreas
 Line 706 col 85 IdentifierName "x" = ruatanica.Praseodymium<Lanthanum.jugularis, argurus.oreas>
 Line 706 col 88 IdentifierName "ruatanica" = ruatanica
 Line 706 col 98 IdentifierName "Praseodymium" = any
 Line 706 col 111 IdentifierName "Lanthanum" = Lanthanum
 Line 706 col 121 IdentifierName "jugularis" = any
 Line 706 col 132 IdentifierName "argurus" = argurus
-Line 706 col 140 IdentifierName "oreas" = any
+Line 706 col 140 IdentifierName "oreas" = new() => argurus.oreas
 Line 706 col 148 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 706 col 160 IdentifierName "y" = argurus.gilbertii<T0, T1>
 Line 706 col 164 ThisKeyword "this" = argurus.gilbertii<T0, T1>
@@ -8576,14 +8576,14 @@ Line 726 col 32 IdentifierName "fundatus" = any
 Line 726 col 41 IdentifierName "gabriellae" = gabriellae
 Line 726 col 52 IdentifierName "amicus" = any
 Line 726 col 60 IdentifierName "lutreolus" = lutreolus
-Line 726 col 70 IdentifierName "foina" = any
+Line 726 col 70 IdentifierName "foina" = new() => lutreolus.foina
 Line 726 col 83 IdentifierName "x" = panglima.fundatus<gabriellae.amicus, lutreolus.foina>
 Line 726 col 86 IdentifierName "panglima" = panglima
 Line 726 col 95 IdentifierName "fundatus" = any
 Line 726 col 104 IdentifierName "gabriellae" = gabriellae
 Line 726 col 115 IdentifierName "amicus" = any
 Line 726 col 123 IdentifierName "lutreolus" = lutreolus
-Line 726 col 133 IdentifierName "foina" = any
+Line 726 col 133 IdentifierName "foina" = new() => lutreolus.foina
 Line 726 col 141 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 726 col 153 IdentifierName "y" = lutreolus.punicus
 Line 726 col 157 ThisKeyword "this" = lutreolus.punicus
@@ -8632,14 +8632,14 @@ Line 730 col 28 IdentifierName "coludo" = any
 Line 730 col 35 IdentifierName "lavali" = lavali
 Line 730 col 42 IdentifierName "lepturus" = any
 Line 730 col 52 IdentifierName "lutreolus" = lutreolus
-Line 730 col 62 IdentifierName "punicus" = any
+Line 730 col 62 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 730 col 77 IdentifierName "x" = howi.coludo<lavali.lepturus, lutreolus.punicus>
 Line 730 col 80 IdentifierName "howi" = howi
 Line 730 col 85 IdentifierName "coludo" = any
 Line 730 col 92 IdentifierName "lavali" = lavali
 Line 730 col 99 IdentifierName "lepturus" = any
 Line 730 col 109 IdentifierName "lutreolus" = lutreolus
-Line 730 col 119 IdentifierName "punicus" = any
+Line 730 col 119 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 730 col 129 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 730 col 141 IdentifierName "y" = lutreolus.punicus
 Line 730 col 145 ThisKeyword "this" = lutreolus.punicus
@@ -8648,14 +8648,14 @@ Line 731 col 0 IdentifierName "purinus" = () => ruatanica.hector<lutreolus.schle
 Line 731 col 19 IdentifierName "ruatanica" = ruatanica
 Line 731 col 29 IdentifierName "hector" = any
 Line 731 col 36 IdentifierName "lutreolus" = lutreolus
-Line 731 col 46 IdentifierName "schlegeli" = any
+Line 731 col 46 IdentifierName "schlegeli" = new() => lutreolus.schlegeli
 Line 731 col 57 IdentifierName "provocax" = provocax
 Line 731 col 66 IdentifierName "melanoleuca" = any
 Line 731 col 85 IdentifierName "x" = ruatanica.hector<lutreolus.schlegeli, provocax.melanoleuca>
 Line 731 col 88 IdentifierName "ruatanica" = ruatanica
 Line 731 col 98 IdentifierName "hector" = any
 Line 731 col 105 IdentifierName "lutreolus" = lutreolus
-Line 731 col 115 IdentifierName "schlegeli" = any
+Line 731 col 115 IdentifierName "schlegeli" = new() => lutreolus.schlegeli
 Line 731 col 126 IdentifierName "provocax" = provocax
 Line 731 col 135 IdentifierName "melanoleuca" = any
 Line 731 col 149 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -8988,10 +8988,10 @@ Line 758 col 156 ThisKeyword "this" = sagitta.cinereus<T0, T1>
 Line 758 col 172 IdentifierName "x" = nigra.gracilis<argurus.luctuosa, imperfecta.subspinosus>
 Line 759 col 0 IdentifierName "epimelas" = () => sagitta.stolzmanni
 Line 759 col 20 IdentifierName "sagitta" = sagitta
-Line 759 col 28 IdentifierName "stolzmanni" = any
+Line 759 col 28 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 759 col 45 IdentifierName "x" = sagitta.stolzmanni
 Line 759 col 48 IdentifierName "sagitta" = sagitta
-Line 759 col 56 IdentifierName "stolzmanni" = any
+Line 759 col 56 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 759 col 68 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 759 col 80 IdentifierName "y" = sagitta.cinereus<T0, T1>
 Line 759 col 84 ThisKeyword "this" = sagitta.cinereus<T0, T1>
@@ -9002,14 +9002,14 @@ Line 760 col 31 IdentifierName "fuscus" = any
 Line 760 col 38 IdentifierName "quasiater" = quasiater
 Line 760 col 48 IdentifierName "carolinensis" = any
 Line 760 col 62 IdentifierName "sagitta" = sagitta
-Line 760 col 70 IdentifierName "stolzmanni" = any
+Line 760 col 70 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 760 col 88 IdentifierName "x" = samarensis.fuscus<quasiater.carolinensis, sagitta.stolzmanni>
 Line 760 col 91 IdentifierName "samarensis" = samarensis
 Line 760 col 102 IdentifierName "fuscus" = any
 Line 760 col 109 IdentifierName "quasiater" = quasiater
 Line 760 col 119 IdentifierName "carolinensis" = any
 Line 760 col 133 IdentifierName "sagitta" = sagitta
-Line 760 col 141 IdentifierName "stolzmanni" = any
+Line 760 col 141 IdentifierName "stolzmanni" = new() => sagitta.stolzmanni
 Line 760 col 154 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 760 col 166 IdentifierName "y" = sagitta.cinereus<T0, T1>
 Line 760 col 170 ThisKeyword "this" = sagitta.cinereus<T0, T1>
@@ -9875,10 +9875,10 @@ Line 856 col 7 IdentifierName "lutreolus" = lutreolus
 Line 857 col 17 IdentifierName "foina" = lutreolus.foina
 Line 858 col 0 IdentifierName "tarfayensis" = () => lutreolus.punicus
 Line 858 col 23 IdentifierName "lutreolus" = lutreolus
-Line 858 col 33 IdentifierName "punicus" = any
+Line 858 col 33 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 858 col 47 IdentifierName "x" = lutreolus.punicus
 Line 858 col 50 IdentifierName "lutreolus" = lutreolus
-Line 858 col 60 IdentifierName "punicus" = any
+Line 858 col 60 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 858 col 69 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 858 col 81 IdentifierName "y" = lutreolus.foina
 Line 858 col 85 ThisKeyword "this" = lutreolus.foina
@@ -10063,14 +10063,14 @@ Line 870 col 37 IdentifierName "mixtus" = any
 Line 870 col 44 IdentifierName "gabriellae" = gabriellae
 Line 870 col 55 IdentifierName "amicus" = any
 Line 870 col 63 IdentifierName "lutreolus" = lutreolus
-Line 870 col 73 IdentifierName "punicus" = any
+Line 870 col 73 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 870 col 88 IdentifierName "x" = trivirgatus.mixtus<gabriellae.amicus, lutreolus.punicus>
 Line 870 col 91 IdentifierName "trivirgatus" = trivirgatus
 Line 870 col 103 IdentifierName "mixtus" = any
 Line 870 col 110 IdentifierName "gabriellae" = gabriellae
 Line 870 col 121 IdentifierName "amicus" = any
 Line 870 col 129 IdentifierName "lutreolus" = lutreolus
-Line 870 col 139 IdentifierName "punicus" = any
+Line 870 col 139 IdentifierName "punicus" = new() => lutreolus.punicus
 Line 870 col 149 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 870 col 161 IdentifierName "y" = lutreolus.foina
 Line 870 col 165 ThisKeyword "this" = lutreolus.foina
@@ -10145,14 +10145,14 @@ Line 878 col 33 IdentifierName "lotor" = any
 Line 878 col 39 IdentifierName "sagitta" = sagitta
 Line 878 col 47 IdentifierName "stolzmanni" = any
 Line 878 col 59 IdentifierName "lutreolus" = lutreolus
-Line 878 col 69 IdentifierName "foina" = any
+Line 878 col 69 IdentifierName "foina" = new() => lutreolus.foina
 Line 878 col 82 IdentifierName "x" = trivirgatus.lotor<sagitta.stolzmanni, lutreolus.foina>
 Line 878 col 85 IdentifierName "trivirgatus" = trivirgatus
 Line 878 col 97 IdentifierName "lotor" = any
 Line 878 col 103 IdentifierName "sagitta" = sagitta
 Line 878 col 111 IdentifierName "stolzmanni" = any
 Line 878 col 123 IdentifierName "lutreolus" = lutreolus
-Line 878 col 133 IdentifierName "foina" = any
+Line 878 col 133 IdentifierName "foina" = new() => lutreolus.foina
 Line 878 col 141 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 878 col 153 IdentifierName "y" = lutreolus.cor<T0, T1>
 Line 878 col 157 ThisKeyword "this" = lutreolus.cor<T0, T1>
@@ -10472,13 +10472,13 @@ Line 915 col 42 IdentifierName "inez" = any
 Line 915 col 47 IdentifierName "sagitta" = sagitta
 Line 915 col 55 IdentifierName "stolzmanni" = any
 Line 915 col 67 IdentifierName "dammermani" = dammermani
-Line 915 col 78 IdentifierName "melanops" = any
+Line 915 col 78 IdentifierName "melanops" = new() => dammermani.melanops
 Line 916 col 0 IdentifierName "blarina" = () => dammermani.melanops
 Line 916 col 19 IdentifierName "dammermani" = dammermani
-Line 916 col 30 IdentifierName "melanops" = any
+Line 916 col 30 IdentifierName "melanops" = new() => dammermani.melanops
 Line 916 col 45 IdentifierName "x" = dammermani.melanops
 Line 916 col 48 IdentifierName "dammermani" = dammermani
-Line 916 col 59 IdentifierName "melanops" = any
+Line 916 col 59 IdentifierName "melanops" = new() => dammermani.melanops
 Line 916 col 69 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 916 col 81 IdentifierName "y" = dammermani.melanops
 Line 916 col 85 ThisKeyword "this" = dammermani.melanops
@@ -10691,7 +10691,7 @@ Line 933 col 0 IdentifierName "aitkeni" = () => trivirgatus.mixtus<argurus.dauri
 Line 933 col 19 IdentifierName "trivirgatus" = trivirgatus
 Line 933 col 31 IdentifierName "mixtus" = any
 Line 933 col 38 IdentifierName "argurus" = argurus
-Line 933 col 46 IdentifierName "dauricus" = any
+Line 933 col 46 IdentifierName "dauricus" = new<T0, T1>() => argurus.dauricus<T0, T1>
 Line 933 col 55 IdentifierName "dogramacii" = dogramacii
 Line 933 col 66 IdentifierName "aurata" = any
 Line 933 col 74 IdentifierName "dammermani" = dammermani
@@ -10706,7 +10706,7 @@ Line 933 col 163 IdentifierName "x" = trivirgatus.mixtus<argurus.dauricus<dogram
 Line 933 col 166 IdentifierName "trivirgatus" = trivirgatus
 Line 933 col 178 IdentifierName "mixtus" = any
 Line 933 col 185 IdentifierName "argurus" = argurus
-Line 933 col 193 IdentifierName "dauricus" = any
+Line 933 col 193 IdentifierName "dauricus" = new<T0, T1>() => argurus.dauricus<T0, T1>
 Line 933 col 202 IdentifierName "dogramacii" = dogramacii
 Line 933 col 213 IdentifierName "aurata" = any
 Line 933 col 221 IdentifierName "dammermani" = dammermani
@@ -10795,14 +10795,14 @@ Line 940 col 30 IdentifierName "inez" = any
 Line 940 col 35 IdentifierName "gabriellae" = gabriellae
 Line 940 col 46 IdentifierName "echinatus" = any
 Line 940 col 57 IdentifierName "argurus" = argurus
-Line 940 col 65 IdentifierName "luctuosa" = any
+Line 940 col 65 IdentifierName "luctuosa" = new() => argurus.luctuosa
 Line 940 col 81 IdentifierName "x" = minutus.inez<gabriellae.echinatus, argurus.luctuosa>
 Line 940 col 84 IdentifierName "minutus" = minutus
 Line 940 col 92 IdentifierName "inez" = any
 Line 940 col 97 IdentifierName "gabriellae" = gabriellae
 Line 940 col 108 IdentifierName "echinatus" = any
 Line 940 col 119 IdentifierName "argurus" = argurus
-Line 940 col 127 IdentifierName "luctuosa" = any
+Line 940 col 127 IdentifierName "luctuosa" = new() => argurus.luctuosa
 Line 940 col 138 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 940 col 150 IdentifierName "y" = argurus.peninsulae
 Line 940 col 154 ThisKeyword "this" = argurus.peninsulae
@@ -10887,7 +10887,7 @@ Line 948 col 104 IdentifierName "abidi" = any
 Line 948 col 110 IdentifierName "lutreolus" = lutreolus
 Line 948 col 120 IdentifierName "foina" = any
 Line 948 col 127 IdentifierName "argurus" = argurus
-Line 948 col 135 IdentifierName "peninsulae" = any
+Line 948 col 135 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 948 col 154 IdentifierName "x" = dammermani.siberu<nigra.thalia<lutreolus.schlegeli, julianae.sumatrana>, panglima.abidi<lutreolus.foina, argurus.peninsulae>>
 Line 948 col 157 IdentifierName "dammermani" = dammermani
 Line 948 col 168 IdentifierName "siberu" = any
@@ -10902,7 +10902,7 @@ Line 948 col 239 IdentifierName "abidi" = any
 Line 948 col 245 IdentifierName "lutreolus" = lutreolus
 Line 948 col 255 IdentifierName "foina" = any
 Line 948 col 262 IdentifierName "argurus" = argurus
-Line 948 col 270 IdentifierName "peninsulae" = any
+Line 948 col 270 IdentifierName "peninsulae" = new() => argurus.peninsulae
 Line 948 col 284 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 948 col 296 IdentifierName "y" = argurus.netscheri<T0, T1>
 Line 948 col 300 ThisKeyword "this" = argurus.netscheri<T0, T1>
@@ -10947,9 +10947,9 @@ Line 951 col 186 ThisKeyword "this" = argurus.netscheri<T0, T1>
 Line 951 col 202 IdentifierName "x" = chrysaeolus.sarasinorum<macrorhinos.konganensis, julianae.acariensis>
 Line 952 col 0 IdentifierName "tatei" = () => argurus.pygmaea<argurus.oreas, panglima.fundatus<quasiater.carolinensis, macrorhinos.daphaenodon>>
 Line 952 col 17 IdentifierName "argurus" = argurus
-Line 952 col 25 IdentifierName "pygmaea" = any
+Line 952 col 25 IdentifierName "pygmaea" = new<T0, T1>() => argurus.pygmaea<T0, T1>
 Line 952 col 33 IdentifierName "argurus" = argurus
-Line 952 col 41 IdentifierName "oreas" = any
+Line 952 col 41 IdentifierName "oreas" = new() => argurus.oreas
 Line 952 col 48 IdentifierName "panglima" = panglima
 Line 952 col 57 IdentifierName "fundatus" = any
 Line 952 col 66 IdentifierName "quasiater" = quasiater
@@ -10958,9 +10958,9 @@ Line 952 col 90 IdentifierName "macrorhinos" = macrorhinos
 Line 952 col 102 IdentifierName "daphaenodon" = any
 Line 952 col 122 IdentifierName "x" = argurus.pygmaea<argurus.oreas, panglima.fundatus<quasiater.carolinensis, macrorhinos.daphaenodon>>
 Line 952 col 125 IdentifierName "argurus" = argurus
-Line 952 col 133 IdentifierName "pygmaea" = any
+Line 952 col 133 IdentifierName "pygmaea" = new<T0, T1>() => argurus.pygmaea<T0, T1>
 Line 952 col 141 IdentifierName "argurus" = argurus
-Line 952 col 149 IdentifierName "oreas" = any
+Line 952 col 149 IdentifierName "oreas" = new() => argurus.oreas
 Line 952 col 156 IdentifierName "panglima" = panglima
 Line 952 col 165 IdentifierName "fundatus" = any
 Line 952 col 174 IdentifierName "quasiater" = quasiater
@@ -10993,14 +10993,14 @@ Line 954 col 91 ThisKeyword "this" = argurus.netscheri<T0, T1>
 Line 954 col 107 IdentifierName "x" = trivirgatus.falconeri
 Line 955 col 0 IdentifierName "delator" = () => argurus.netscheri<dogramacii.kaiseri, lavali.lepturus>
 Line 955 col 19 IdentifierName "argurus" = argurus
-Line 955 col 27 IdentifierName "netscheri" = any
+Line 955 col 27 IdentifierName "netscheri" = new<T0, T1>() => argurus.netscheri<T0, T1>
 Line 955 col 37 IdentifierName "dogramacii" = dogramacii
 Line 955 col 48 IdentifierName "kaiseri" = any
 Line 955 col 57 IdentifierName "lavali" = lavali
 Line 955 col 64 IdentifierName "lepturus" = any
 Line 955 col 80 IdentifierName "x" = argurus.netscheri<dogramacii.kaiseri, lavali.lepturus>
 Line 955 col 83 IdentifierName "argurus" = argurus
-Line 955 col 91 IdentifierName "netscheri" = any
+Line 955 col 91 IdentifierName "netscheri" = new<T0, T1>() => argurus.netscheri<T0, T1>
 Line 955 col 101 IdentifierName "dogramacii" = dogramacii
 Line 955 col 112 IdentifierName "kaiseri" = any
 Line 955 col 121 IdentifierName "lavali" = lavali
@@ -11098,7 +11098,7 @@ Line 961 col 17 IdentifierName "Praseodymium" = ruatanica.Praseodymium<T0, T1>
 Line 961 col 30 IdentifierName "T0" = any
 Line 961 col 34 IdentifierName "T1" = any
 Line 961 col 46 IdentifierName "ruatanica" = ruatanica
-Line 961 col 56 IdentifierName "hector" = any
+Line 961 col 56 IdentifierName "hector" = new<T0, T1>() => ruatanica.hector<T0, T1>
 Line 961 col 63 IdentifierName "lutreolus" = lutreolus
 Line 961 col 73 IdentifierName "punicus" = any
 Line 961 col 82 IdentifierName "gabriellae" = gabriellae
@@ -11115,7 +11115,7 @@ Line 962 col 90 IdentifierName "beisa" = any
 Line 962 col 98 IdentifierName "argurus" = argurus
 Line 962 col 106 IdentifierName "dauricus" = any
 Line 962 col 115 IdentifierName "ruatanica" = ruatanica
-Line 962 col 125 IdentifierName "americanus" = any
+Line 962 col 125 IdentifierName "americanus" = new() => ruatanica.americanus
 Line 962 col 137 IdentifierName "rionegrensis" = rionegrensis
 Line 962 col 150 IdentifierName "caniventer" = any
 Line 962 col 169 IdentifierName "x" = panglima.amphibius<imperfecta.ciliolabrum<quasiater.carolinensis, lavali.beisa>, argurus.dauricus<ruatanica.americanus, rionegrensis.caniventer>>
@@ -11130,7 +11130,7 @@ Line 962 col 245 IdentifierName "beisa" = any
 Line 962 col 253 IdentifierName "argurus" = argurus
 Line 962 col 261 IdentifierName "dauricus" = any
 Line 962 col 270 IdentifierName "ruatanica" = ruatanica
-Line 962 col 280 IdentifierName "americanus" = any
+Line 962 col 280 IdentifierName "americanus" = new() => ruatanica.americanus
 Line 962 col 292 IdentifierName "rionegrensis" = rionegrensis
 Line 962 col 305 IdentifierName "caniventer" = any
 Line 962 col 319 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
@@ -11817,14 +11817,14 @@ Line 1010 col 29 IdentifierName "amphibius" = any
 Line 1010 col 39 IdentifierName "trivirgatus" = trivirgatus
 Line 1010 col 51 IdentifierName "falconeri" = any
 Line 1010 col 62 IdentifierName "caurinus" = caurinus
-Line 1010 col 71 IdentifierName "psilurus" = any
+Line 1010 col 71 IdentifierName "psilurus" = new() => caurinus.psilurus
 Line 1010 col 87 IdentifierName "x" = panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>
 Line 1010 col 90 IdentifierName "panglima" = panglima
 Line 1010 col 99 IdentifierName "amphibius" = any
 Line 1010 col 109 IdentifierName "trivirgatus" = trivirgatus
 Line 1010 col 121 IdentifierName "falconeri" = any
 Line 1010 col 132 IdentifierName "caurinus" = caurinus
-Line 1010 col 141 IdentifierName "psilurus" = any
+Line 1010 col 141 IdentifierName "psilurus" = new() => caurinus.psilurus
 Line 1010 col 152 ParenthesizedArrowFunctionExpression "() => { var y = this; }" = () => void
 Line 1010 col 164 IdentifierName "y" = caurinus.psilurus
 Line 1010 col 168 ThisKeyword "this" = caurinus.psilurus

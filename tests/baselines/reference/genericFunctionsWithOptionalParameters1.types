@@ -3,16 +3,16 @@ Line 0 col 10 IdentifierName "Utils" = Utils
 Line 1 col 0 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
 Line 1 col 8 IdentifierName "T" = any
 Line 1 col 11 IdentifierName "S" = any
-Line 1 col 14 IdentifierName "c" = any
+Line 1 col 14 IdentifierName "c" = T[]
 Line 1 col 18 IdentifierName "Array" = Array<T>
 Line 1 col 24 IdentifierName "T" = T
-Line 1 col 28 IdentifierName "folder" = any
-Line 1 col 38 IdentifierName "s" = any
+Line 1 col 28 IdentifierName "folder" = (s: S, t: T) => T
+Line 1 col 38 IdentifierName "s" = S
 Line 1 col 41 IdentifierName "S" = S
-Line 1 col 44 IdentifierName "t" = any
+Line 1 col 44 IdentifierName "t" = T
 Line 1 col 47 IdentifierName "T" = T
 Line 1 col 53 IdentifierName "T" = T
-Line 1 col 56 IdentifierName "init" = any
+Line 1 col 56 IdentifierName "init" = S
 Line 1 col 63 IdentifierName "S" = S
 Line 1 col 67 IdentifierName "T" = T
 Line 4 col 4 IdentifierName "utils" = Utils

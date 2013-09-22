@@ -12,7 +12,8 @@ module TypeScript {
         }
 
         public read(id: string): T {
-            return <T>this.map[id];
+            var result = <T>this.map[id];
+            return result ? result : null;
         }
     }
 }

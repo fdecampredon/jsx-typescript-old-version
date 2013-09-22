@@ -1,7 +1,7 @@
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_fs.ts ===
-Line 0 col 7 IdentifierName "commands" = any
+Line 0 col 7 IdentifierName "commands" = commands
 Line 1 col 9 IdentifierName "run" = (configuration: IConfiguration) => void
-Line 1 col 13 IdentifierName "configuration" = any
+Line 1 col 13 IdentifierName "configuration" = IConfiguration
 Line 1 col 28 IdentifierName "commands" = commands
 Line 1 col 37 IdentifierName "IConfiguration" = any
 Line 2 col 8 IdentifierName "absoluteWorkspacePath" = string
@@ -15,8 +15,8 @@ Line 2 col 71 MemberAccessExpression "configuration.server" = IServer
 Line 2 col 71 IdentifierName "configuration" = IConfiguration
 Line 2 col 85 IdentifierName "server" = IServer
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_commands.ts ===
-Line 2 col 7 IdentifierName "fs" = any
-Line 3 col 7 IdentifierName "server" = any
+Line 2 col 7 IdentifierName "fs" = fs
+Line 3 col 7 IdentifierName "server" = server
 Line 5 col 17 IdentifierName "IConfiguration" = IConfiguration
 Line 6 col 0 IdentifierName "workspace" = IWorkspace
 Line 6 col 15 IdentifierName "server" = server
@@ -28,6 +28,6 @@ Line 7 col 20 IdentifierName "IServer" = any
 Line 0 col 17 IdentifierName "IServer" = IServer
 Line 3 col 17 IdentifierName "IWorkspace" = IWorkspace
 Line 4 col 0 IdentifierName "toAbsolutePath" = (server: IServer, workspaceRelativePath?: string) => string
-Line 4 col 19 IdentifierName "server" = any
+Line 4 col 19 IdentifierName "server" = IServer
 Line 4 col 27 IdentifierName "IServer" = IServer
-Line 4 col 36 IdentifierName "workspaceRelativePath" = any
+Line 4 col 36 IdentifierName "workspaceRelativePath" = string

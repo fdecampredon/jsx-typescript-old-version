@@ -1,7 +1,7 @@
 === tests/cases/compiler/functionExpressionAndLambdaMatchesFunction.ts ===
 Line 0 col 6 IdentifierName "CDoc" = CDoc
 Line 2 col 17 IdentifierName "doSomething" = (a: Function) => void
-Line 2 col 29 IdentifierName "a" = any
+Line 2 col 29 IdentifierName "a" = Function
 Line 2 col 32 IdentifierName "Function" = Function
 Line 4 col 0 InvocationExpression "doSomething(() => undefined)" = void
 Line 4 col 0 IdentifierName "doSomething" = (a: Function) => void

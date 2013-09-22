@@ -5,7 +5,7 @@ Line 1 col 12 ParenthesizedArrowFunctionExpression "(greeting: string): number =
     greetings++;
     return greetings;
 }" = (greeting: string) => number
-Line 1 col 13 IdentifierName "greeting" = any
+Line 1 col 13 IdentifierName "greeting" = string
 Line 2 col 0 PostIncrementExpression "greetings++" = number
 Line 2 col 0 IdentifierName "greetings" = number
 Line 3 col 11 IdentifierName "greetings" = number

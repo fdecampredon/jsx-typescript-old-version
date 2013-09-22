@@ -93,7 +93,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         while (astPath.count() > 0) {
             var pop = astPath.pop();
             var decl = this.resolver.getDeclForAST(pop);
-            if (decl !== null) {
+            if (decl) {
                 return decl;
             }
         }
