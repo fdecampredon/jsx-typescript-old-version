@@ -4015,8 +4015,6 @@ module TypeScript {
         }
         
         private resolveForStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckForStatement(ast, enclosingDecl, context);
             }
@@ -4039,8 +4037,6 @@ module TypeScript {
         }
 
         private resolveForInStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckForInStatement(ast, enclosingDecl, context);
             }
@@ -4091,8 +4087,6 @@ module TypeScript {
         }
 
         private resolveWhileStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckWhileStatement(ast, enclosingDecl, context);
             }
@@ -4113,8 +4107,6 @@ module TypeScript {
         }
 
         private resolveDoStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckDoStatement(ast, enclosingDecl, context);
             }
@@ -4135,8 +4127,6 @@ module TypeScript {
         }
 
         private resolveIfStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckIfStatement(ast, enclosingDecl, context);
             }
@@ -4180,8 +4170,6 @@ module TypeScript {
         }
 
         private resolveWithStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckWithStatement(ast, enclosingDecl, context);
             }
@@ -4196,8 +4184,6 @@ module TypeScript {
         }
 
         private resolveTryStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckTryStatement(ast, enclosingDecl, context);
             }
@@ -4215,8 +4201,6 @@ module TypeScript {
         }
 
         private resolveCatchClause(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckCatchClause(ast, enclosingDecl, context);
             }
@@ -4363,8 +4347,6 @@ module TypeScript {
         }
         
         private resolveSwitchStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckSwitchStatement(ast, enclosingDecl, context);
             }
@@ -4412,8 +4394,6 @@ module TypeScript {
         }
 
         private resolveCaseClause(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            this.setSymbolForAST(ast, this.semanticInfoChain.voidTypeSymbol, context);
-
             if (this.canTypeCheckAST(ast, context)) {
                 this.typeCheckCaseClause(ast, enclosingDecl, context);
             }
@@ -4837,7 +4817,7 @@ module TypeScript {
             return this.semanticInfoChain.anyTypeSymbol;
         }
 
-        private typeCheckAST(ast: AST, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckAST(ast: AST, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): void {
             if (!this.canTypeCheckAST(ast, context)) {
                 return;
             }
