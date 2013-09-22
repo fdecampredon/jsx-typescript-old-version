@@ -4728,7 +4728,7 @@ module TypeScript {
                     return this.resolveBinaryArithmeticExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.ElementAccessExpression:
-                    return this.resolveIndexExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveIndexExpression(<BinaryExpression>ast, enclosingDecl, context);
 
                 case NodeType.LogicalOrExpression:
                     return this.resolveLogicalOrExpression(<BinaryExpression>ast, enclosingDecl, context);
@@ -4984,7 +4984,7 @@ module TypeScript {
                     return;
 
                 case NodeType.ElementAccessExpression:
-                    this.typeCheckIndexExpression(<BinaryExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.typeCheckIndexExpression(<BinaryExpression>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.LogicalOrExpression:
@@ -6572,31 +6572,31 @@ module TypeScript {
             return arraySymbol;
         }
 
-        private resolveIndexExpression(callEx: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private resolveIndexExpression(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             var symbol = this.getSymbolForAST(callEx);
             if (!symbol) {
-                symbol = this.computeIndexExpressionSymbol(callEx, inContextuallyTypedAssignment, enclosingDecl, context);
+                symbol = this.computeIndexExpressionSymbol(callEx, enclosingDecl, context);
                 this.setSymbolForAST(callEx, symbol, context);
                 if (this.canTypeCheckAST(callEx, context)) {
                     this.setTypeChecked(callEx, context);
                 }
             } else if (this.canTypeCheckAST(callEx, context)) {
-                this.typeCheckIndexExpression(callEx, inContextuallyTypedAssignment, enclosingDecl, context);
+                this.typeCheckIndexExpression(callEx, enclosingDecl, context);
             }
 
             return symbol;
         }
 
-        private typeCheckIndexExpression(callEx: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckIndexExpression(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             this.setTypeChecked(callEx, context);
-            this.resolveAST(callEx.operand1, inContextuallyTypedAssignment, enclosingDecl, context);
-            this.resolveAST(callEx.operand2, inContextuallyTypedAssignment, enclosingDecl, context);
+            this.resolveAST(callEx.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            this.resolveAST(callEx.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
         }
 
-        private computeIndexExpressionSymbol(callEx: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private computeIndexExpressionSymbol(callEx: BinaryExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             // resolve the target
-            var targetSymbol = this.resolveAST(callEx.operand1, inContextuallyTypedAssignment, enclosingDecl, context);
-            var indexType = this.resolveAST(callEx.operand2, inContextuallyTypedAssignment, enclosingDecl, context).type;
+            var targetSymbol = this.resolveAST(callEx.operand1, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context);
+            var indexType = this.resolveAST(callEx.operand2, /*inContextuallyTypedAssignment:*/ false, enclosingDecl, context).type;
 
             var targetTypeSymbol = targetSymbol.type;
 
