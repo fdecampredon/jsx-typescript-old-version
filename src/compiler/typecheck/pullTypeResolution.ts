@@ -4215,13 +4215,14 @@ module TypeScript {
             this.validateVariableDeclarationGroups(catchDecl, context);
         }
 
-        private resolveReturnStatement(ast: AST, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+        private resolveReturnStatement(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
             var parentDecl = enclosingDecl;
             var returnAST = <ReturnStatement>ast;
             var returnExpr = returnAST.returnExpression;
 
             var returnType = <PullTypeSymbol>this.getSymbolForAST(ast);
             var canTypeCheckAST = this.canTypeCheckAST(ast, context);
+            var inContextuallyTypedAssignment = false;
             if (!returnType || canTypeCheckAST) {
                 while (parentDecl) {
                     if (parentDecl.kind & PullElementKind.SomeFunction) {
@@ -4796,7 +4797,7 @@ module TypeScript {
                     return this.resolveCatchClause(ast, enclosingDecl, context);
 
                 case NodeType.ReturnStatement:
-                    return this.resolveReturnStatement(ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveReturnStatement(ast, enclosingDecl, context);
 
                 case NodeType.SwitchStatement:
                     return this.resolveSwitchStatement(ast, enclosingDecl, context);
@@ -5052,7 +5053,7 @@ module TypeScript {
 
                 case NodeType.ReturnStatement:
                     // Since we want to resolve the return expression to traverse parents, resolve will take care of typeChecking
-                    this.resolveReturnStatement(ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    this.resolveReturnStatement(ast, enclosingDecl, context);
                     return;
 
                 case NodeType.SwitchStatement:
