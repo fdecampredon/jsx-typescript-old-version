@@ -23,6 +23,11 @@ module TypeScript.Syntax {
                 this._textOrWidth);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -147,6 +152,11 @@ module TypeScript.Syntax {
                 this._textOrWidth);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -269,6 +279,11 @@ module TypeScript.Syntax {
                 this.tokenKind,
                 this._textOrWidth,
                 this._trailingTriviaInfo);
+        }
+
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
         }
 
         public isNode(): boolean { return false; }
@@ -398,6 +413,11 @@ module TypeScript.Syntax {
                 this._trailingTriviaInfo);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -513,6 +533,10 @@ module TypeScript.Syntax {
                 this.tokenKind);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -612,6 +636,11 @@ module TypeScript.Syntax {
                 this._leadingTriviaInfo);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -709,6 +738,11 @@ module TypeScript.Syntax {
                 this._fullStart,
                 this.tokenKind,
                 this._trailingTriviaInfo);
+        }
+
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
         }
 
         public isNode(): boolean { return false; }
@@ -813,6 +847,11 @@ module TypeScript.Syntax {
                 this._trailingTriviaInfo);
         }
 
+        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
+            this._fullStart = fullStart;
+            this._sourceText = sourceText;
+        }
+
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
         public isList(): boolean { return false; }
@@ -894,49 +933,6 @@ module TypeScript.Syntax {
         token.leadingTrivia().collectTextElements(elements);
         elements.push(token.text());
         token.trailingTrivia().collectTextElements(elements);
-    }
-
-    export function fixedWidthToken(sourceText: ISimpleText, fullStart: number,
-        kind: SyntaxKind,
-        leadingTriviaInfo: number,
-        trailingTriviaInfo: number): ISyntaxToken {
-
-        if (leadingTriviaInfo === 0) {
-            if (trailingTriviaInfo === 0) {
-                return new FixedWidthTokenWithNoTrivia(fullStart, kind);
-            }
-            else {
-                return new FixedWidthTokenWithTrailingTrivia(sourceText, fullStart, kind, trailingTriviaInfo);
-            }
-        }
-        else if (trailingTriviaInfo === 0) {
-            return new FixedWidthTokenWithLeadingTrivia(sourceText, fullStart, kind, leadingTriviaInfo);
-        }
-        else {
-            return new FixedWidthTokenWithLeadingAndTrailingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, trailingTriviaInfo);
-        }
-    }
-
-    export function variableWidthToken(sourceText: ISimpleText, fullStart: number,
-        kind: SyntaxKind,
-        leadingTriviaInfo: number,
-        width: number,
-        trailingTriviaInfo: number): ISyntaxToken {
-
-        if (leadingTriviaInfo === 0) {
-            if (trailingTriviaInfo === 0) {
-                return new VariableWidthTokenWithNoTrivia(sourceText, fullStart, kind, width);
-            }
-            else {
-                return new VariableWidthTokenWithTrailingTrivia(sourceText, fullStart, kind, width, trailingTriviaInfo);
-            }
-        }
-        else if (trailingTriviaInfo === 0) {
-            return new VariableWidthTokenWithLeadingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, width);
-        }
-        else {
-            return new VariableWidthTokenWithLeadingAndTrailingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, width, trailingTriviaInfo);
-        }
     }
 
     function getTriviaWidth(value: number): number {

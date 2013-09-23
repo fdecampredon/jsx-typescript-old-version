@@ -2348,6 +2348,18 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += ");\r\n";
     result += "        }\r\n\r\n";
 
+    if (needsSourcetext) {
+        result += "        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {\r\n";
+        result += "            this._fullStart = fullStart;\r\n";
+        result += "            this._sourceText = sourceText;\r\n";
+        result += "        }\r\n\r\n";
+    }
+    else {
+        result += "        public setFullStartAndText(fullStart: number): void {\r\n";
+        result += "            this._fullStart = fullStart;\r\n";
+        result += "        }\r\n\r\n";
+    }
+
     result +=
 "        public isNode(): boolean { return false; }\r\n" +
 "        public isToken(): boolean { return true; }\r\n" +
@@ -2531,62 +2543,6 @@ function generateTokens(): string {
 "        token.leadingTrivia().collectTextElements(elements);\r\n" +
 "        elements.push(token.text());\r\n" +
 "        token.trailingTrivia().collectTextElements(elements);\r\n" +
-"    }\r\n" +
-"\r\n" +
-"    export function fixedWidthToken(sourceText: ISimpleText, fullStart: number,\r\n" +
-"        kind: SyntaxKind,\r\n" +
-"        leadingTriviaInfo: number,\r\n" +
-"        trailingTriviaInfo: number): ISyntaxToken {\r\n" +
-"\r\n" +
-"        if (leadingTriviaInfo === 0) {\r\n" +
-"            if (trailingTriviaInfo === 0) {\r\n" +
-"                return new FixedWidthTokenWithNoTrivia(kind);\r\n" +
-"            }\r\n" +
-"            else {\r\n" +
-"                return new FixedWidthTokenWithTrailingTrivia(sourceText, fullStart, kind, trailingTriviaInfo);\r\n" +
-"            }\r\n" +
-"        }\r\n" +
-"        else if (trailingTriviaInfo === 0) {\r\n" +
-"            return new FixedWidthTokenWithLeadingTrivia(sourceText, fullStart, kind, leadingTriviaInfo);\r\n" +
-"        }\r\n" +
-"        else {\r\n" +
-"            return new FixedWidthTokenWithLeadingAndTrailingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, trailingTriviaInfo);\r\n" +
-"        }\r\n" +
-"    }\r\n" +
-"\r\n" +
-"    export function variableWidthToken(sourceText: ISimpleText, fullStart: number,\r\n" +
-"        kind: SyntaxKind,\r\n" +
-"        leadingTriviaInfo: number,\r\n" +
-"        width: number,\r\n" +
-"        trailingTriviaInfo: number): ISyntaxToken {\r\n" +
-"\r\n" +
-"        if (leadingTriviaInfo === 0) {\r\n" +
-"            if (trailingTriviaInfo === 0) {\r\n" +
-"                return new VariableWidthTokenWithNoTrivia(sourceText, fullStart, kind, width);\r\n" +
-"            }\r\n" +
-"            else {\r\n" +
-"                return new VariableWidthTokenWithTrailingTrivia(sourceText, fullStart, kind, width, trailingTriviaInfo);\r\n" +
-"            }\r\n" +
-"        }\r\n" +
-"        else if (trailingTriviaInfo === 0) {\r\n" +
-"            return new VariableWidthTokenWithLeadingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, width);\r\n" +
-"        }\r\n" +
-"        else {\r\n" +
-"            return new VariableWidthTokenWithLeadingAndTrailingTrivia(sourceText, fullStart, kind, leadingTriviaInfo, width, trailingTriviaInfo);\r\n" +
-"        }\r\n" +
-//"    }\r\n" +
-//"\r\n" +
-//"    export function tokenFromText(text: IText, fullStart: number,\r\n" +
-//"        kind: SyntaxKind,\r\n" +
-//"        leadingTriviaInfo: number,\r\n" +
-//"        width: number,\r\n" +
-//"        trailingTriviaInfo: number): ISyntaxToken {\r\n" +
-//"        if (kind >= SyntaxKind.FirstFixedWidth) {\r\n" +
-//"            return fixedWidthToken(text, fullStart, kind, leadingTriviaInfo, trailingTriviaInfo);\r\n" +
-//"        }\r\n" +
-//"        else {\r\n" +
-//"            return variableWidthToken(text, fullStart, kind, leadingTriviaInfo, width, trailingTriviaInfo);\r\n" +
-//"        }\r\n" +
 "    }\r\n\r\n"
 
     result += 

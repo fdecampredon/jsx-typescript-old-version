@@ -12,13 +12,20 @@
 var timer = new TypeScript.Timer();
 
 var specificFile: string =
-    // "ExportAssignment5.ts";
+    // "S7.9_A4.js";
     undefined;
 
 var generate = false;
 
 var htmlReport = new Diff.HtmlBaselineReport("fidelity-report.html");
 htmlReport.reset();
+
+class PositionValidatingWalker extends TypeScript.PositionTrackingWalker {
+    public visitToken(token: TypeScript.ISyntaxToken): void {
+        TypeScript.Debug.assert(this.position() === token.fullStart());
+        super.visitToken(token);
+    }
+}
 
 class Program {
     runAllTests(verify: boolean): void {
@@ -366,12 +373,12 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
 
                    var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
-        var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
+        //var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
 
-        var result = justText
-            ? <any>emitted.fullText()
-            : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
-        this.checkResult(fileName, result, verify, generateBaseline, justText);
+        //var result = justText
+        //    ? <any>emitted.fullText()
+        //    : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
+        //this.checkResult(fileName, result, verify, generateBaseline, justText);
     }
 
     runPrettyPrinter(fileName: string,
@@ -422,7 +429,7 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
 
         timer.start();
-                  var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
+        var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
         timer.end();
         
         if (!allowErrors) {
@@ -434,6 +441,7 @@ class Program {
         }
 
         TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
+        tree.sourceUnit().accept(new PositionValidatingWalker());
 
         TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
 
@@ -571,10 +579,14 @@ class Program {
         var tokens: TypeScript.ISyntaxToken[] = [];
         var textArray: string[] = [];
         var diagnostics: TypeScript.Diagnostic[] = [];
+        var position = 0;
 
         while (true) {
             var token = scanner.scan(diagnostics, /*allowRegularExpression:*/ false);
             tokens.push(token);
+
+            TypeScript.Debug.assert(position === token.fullStart());
+            position += token.fullWidth();
 
             if (token.tokenKind === TypeScript.SyntaxKind.EndOfFileToken) {
                 break;

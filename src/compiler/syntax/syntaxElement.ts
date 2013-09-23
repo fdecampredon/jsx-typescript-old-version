@@ -50,6 +50,18 @@ module TypeScript {
         // Width of this element, not including leading and trailing trivia.
         width(): number;
 
+        // The absolute start of this element, including the leading trivia.
+        fullStart(): number;
+
+        // The absolute end of this element, including the trailing trivia.
+        fullEnd(): number;
+
+        // The absolute start of this element, not including the leading trivia.
+        start(): number;
+
+        // The absolute start of this element, not including the trailing trivia.
+        end(): number;
+
         // Text for this element, including leading and trailing trivia.
         fullText(): string;
 

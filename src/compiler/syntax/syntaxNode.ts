@@ -30,6 +30,22 @@ module TypeScript {
             return false;
         }
 
+        public fullStart(): number {
+            return this.firstToken().fullStart();
+        }
+
+        public fullEnd(): number {
+            return this.lastToken().fullEnd();
+        }
+
+        public start(): number {
+            return this.firstToken().start();
+        }
+
+        public end(): number {
+            return this.lastToken().end();
+        }
+
         // Returns the first non-missing token inside this node (or null if there are no such token).
         public firstToken(): ISyntaxToken {
             for (var i = 0, n = this.childCount(); i < n; i++) {

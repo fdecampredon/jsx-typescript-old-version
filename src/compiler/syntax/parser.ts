@@ -1036,6 +1036,21 @@ module TypeScript.Parser {
         }
     }
 
+    class SetTokenPositionWalker extends SyntaxWalker {
+        private position: number = 0;
+
+        constructor(private text: ISimpleText) {
+            super();
+        }
+
+        public visitToken(token: ISyntaxToken): void {
+            var position = this.position;
+            token.setFullStartAndText(position, this.text);
+
+            this.position += token.fullWidth();
+        }
+    }
+
     // Contains the actual logic to parse typescript/javascript.  This is the code that generally
     // represents the logic necessary to handle all the language grammar constructs.  When the 
     // language changes, this should generally only be the place necessary to fix up.
@@ -1072,7 +1087,7 @@ module TypeScript.Parser {
 
         private factory: Syntax.IFactory = Syntax.normalModeFactory;
 
-        constructor(fileName: string, lineMap: LineMap, source: IParserSource, parseOptions: ParseOptions) {
+        constructor(fileName: string, lineMap: LineMap, source: IParserSource, parseOptions: ParseOptions, private text: ISimpleText) {
             this.fileName = fileName;
             this.lineMap = lineMap;
             this.source = source;
@@ -1581,6 +1596,8 @@ module TypeScript.Parser {
 
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
+
+            sourceUnit.accept(new SetTokenPositionWalker(this.text));
 
             return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
         }
@@ -5678,7 +5695,7 @@ module TypeScript.Parser {
                           options: ParseOptions): SyntaxTree {
         var source = new NormalParserSource(fileName, text, options.languageVersion());
 
-        return new ParserImpl(fileName, text.lineMap(), source, options).parseSyntaxTree(isDeclaration);
+        return new ParserImpl(fileName, text.lineMap(), source, options, text).parseSyntaxTree(isDeclaration);
     }
 
     export function incrementalParse(oldSyntaxTree: SyntaxTree,
@@ -5690,6 +5707,6 @@ module TypeScript.Parser {
         
         var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
 
-        return new ParserImpl(oldSyntaxTree.fileName(), newText.lineMap(), source, oldSyntaxTree.parseOptions()).parseSyntaxTree(oldSyntaxTree.isDeclaration());
+        return new ParserImpl(oldSyntaxTree.fileName(), newText.lineMap(), source, oldSyntaxTree.parseOptions(), newText).parseSyntaxTree(oldSyntaxTree.isDeclaration());
     }
 }

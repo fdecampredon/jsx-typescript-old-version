@@ -5,6 +5,9 @@ module TypeScript {
         // Same as kind(), just exposed through a property for perf.
         tokenKind: SyntaxKind;
 
+        // Adjusts the full start of this token.  Should only be called by the parser.
+        setFullStartAndText(fullStart: number, sourceText: ISimpleText): void;
+
         // Text for this token, not including leading or trailing trivia.
         text(): string;
 
@@ -46,13 +49,13 @@ module TypeScript.Syntax {
     }
 
     export function realizeToken(token: ISyntaxToken): ISyntaxToken {
-        return new RealizedToken(token.tokenKind,
+        return new RealizedToken(token.fullStart(), token.tokenKind,
             token.leadingTrivia(), token.text(), token.value(), token.valueText(), token.trailingTrivia());
     }
 
     export function convertToIdentifierName(token: ISyntaxToken): ISyntaxToken {
         Debug.assert(SyntaxFacts.isAnyKeyword(token.tokenKind));
-        return new RealizedToken(SyntaxKind.IdentifierName,
+        return new RealizedToken(token.fullStart(), SyntaxKind.IdentifierName,
             token.leadingTrivia(), token.text(), token.text(), token.text(), token.trailingTrivia());
     }
 
@@ -302,13 +305,19 @@ module TypeScript.Syntax {
     class EmptyToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
+        private _fullStart: number;
 
-        constructor(kind: SyntaxKind) {
+        constructor(fullStart: number, kind: SyntaxKind) {
+            this._fullStart = fullStart;
             this.tokenKind = kind;
         }
 
+        public setFullStartAndText(fullStart: number): void {
+            this._fullStart = fullStart;
+        }
+
         public clone(): ISyntaxToken {
-            return new EmptyToken(this.tokenKind);
+            return new EmptyToken(this._fullStart, this.tokenKind);
         }
 
         public kind() { return this.tokenKind; }
@@ -346,6 +355,12 @@ module TypeScript.Syntax {
 
         public fullWidth() { return 0; }
         public width() { return 0; }
+
+        public fullStart(): number { return this._fullStart; }
+        public fullEnd(): number { return this._fullStart; }
+        public start(): number { return this._fullStart; }
+        public end(): number { return this._fullStart; }
+
         public text() { return ""; }
         public fullText(): string { return ""; }
         public value(): any { return null; }
@@ -395,25 +410,27 @@ module TypeScript.Syntax {
     }
 
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
-        return new EmptyToken(kind);
+        return new EmptyToken(-1, kind);
     }
 
     class RealizedToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
+        private _fullStart: number;
         public tokenKind: SyntaxKind;
-        // public tokenKeywordKind: SyntaxKind;
         private _leadingTrivia: ISyntaxTriviaList;
         private _text: string;
         private _value: any;
         private _valueText: string;
         private _trailingTrivia: ISyntaxTriviaList;
 
-        constructor(tokenKind: SyntaxKind,
+        constructor(fullStart: number,
+                    tokenKind: SyntaxKind,
                     leadingTrivia: ISyntaxTriviaList,
                     text: string,
                     value: any,
                     valueText: string,
                     trailingTrivia: ISyntaxTriviaList) {
+            this._fullStart = fullStart;
             this.tokenKind = tokenKind;
             this._leadingTrivia = leadingTrivia;
             this._text = text;
@@ -422,8 +439,12 @@ module TypeScript.Syntax {
             this._trailingTrivia = trailingTrivia;
         }
 
+        public setFullStartAndText(fullStart: number): void {
+            this._fullStart = fullStart;
+        }
+
         public clone(): ISyntaxToken {
-            return new RealizedToken(this.tokenKind, /*this.tokenKeywordKind,*/ this._leadingTrivia,
+            return new RealizedToken(this._fullStart, this.tokenKind, /*this.tokenKeywordKind,*/ this._leadingTrivia,
                 this._text, this._value, this._valueText, this._trailingTrivia);
         }
 
@@ -460,6 +481,11 @@ module TypeScript.Syntax {
         public fullWidth(): number { return this._leadingTrivia.fullWidth() + this.width() + this._trailingTrivia.fullWidth(); }
         public width(): number { return this.text().length; }
 
+        public fullStart(): number { return this._fullStart; }
+        public fullEnd(): number { return this._fullStart + this.fullWidth(); }
+        public start(): number { return this._fullStart + this._leadingTrivia.fullWidth(); }
+        public end(): number { return this.start() + this.width(); }
+
         public text(): string { return this._text; }
         public fullText(): string { return this._leadingTrivia.fullText() + this.text() + this._trailingTrivia.fullText(); }
 
@@ -495,12 +521,12 @@ module TypeScript.Syntax {
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return new RealizedToken(
-                this.tokenKind, leadingTrivia, this._text, this._value, this._valueText, this._trailingTrivia);
+                this._fullStart, this.tokenKind, leadingTrivia, this._text, this._value, this._valueText, this._trailingTrivia);
         }
 
         public withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return new RealizedToken(
-                this.tokenKind,  this._leadingTrivia, this._text, this._value, this._valueText, trailingTrivia);
+                this._fullStart, this.tokenKind,  this._leadingTrivia, this._text, this._value, this._valueText, trailingTrivia);
         }
 
         public isPrimaryExpression(): boolean {
@@ -524,6 +550,7 @@ module TypeScript.Syntax {
         var text = (info !== null && info.text !== undefined) ? info.text : SyntaxFacts.getText(kind);
 
         return new RealizedToken(
+            -1,
             kind,
             Syntax.triviaList(info === null ? null : info.leadingTrivia),
             text,

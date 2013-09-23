@@ -96,12 +96,28 @@ module TypeScript.Syntax {
             return 0;
         }
 
-        fullText() {
-            return "";
-        }
-
         width() {
             return 0;
+        }
+
+        public fullStart(): number {
+            throw Errors.invalidOperation("'fullStart' invalid on a singleton element.");
+        }
+
+        public fullEnd(): number {
+            throw Errors.invalidOperation("'fullEnd' invalid on a singleton element.");
+        }
+
+        public start(): number {
+            throw Errors.invalidOperation("'start' invalid on a singleton element.");
+        }
+
+        public end(): number {
+            throw Errors.invalidOperation("'end' invalid on a singleton element.");
+        }
+
+        fullText() {
+            return "";
         }
 
         isTypeScriptSpecific() {
@@ -207,6 +223,22 @@ module TypeScript.Syntax {
 
         public width(): number {
             return this.item.width();
+        }
+
+        public fullStart(): number {
+            return this.firstToken().fullStart();
+        }
+
+        public fullEnd(): number {
+            return this.lastToken().fullEnd();
+        }
+
+        public start(): number {
+            return this.firstToken().start();
+        }
+
+        public end(): number {
+            return this.lastToken().end();
         }
 
         public fullText(): string {
@@ -378,6 +410,22 @@ module TypeScript.Syntax {
         public width(): number {
             var fullWidth = this.fullWidth();
             return fullWidth - this.leadingTriviaWidth() - this.trailingTriviaWidth();
+        }
+
+        public fullStart(): number {
+            return this.firstToken().fullStart();
+        }
+
+        public fullEnd(): number {
+            return this.lastToken().fullEnd();
+        }
+
+        public start(): number {
+            return this.firstToken().start();
+        }
+
+        public end(): number {
+            return this.lastToken().end();
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
