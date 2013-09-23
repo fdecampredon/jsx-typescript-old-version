@@ -2,6 +2,7 @@
 
 module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
+        public parent: ISyntaxElement = null;
         private _data: number;
 
         constructor(parsedInStrictMode: boolean) {
@@ -23,6 +24,10 @@ module TypeScript {
 
         public childAt(slot: number): ISyntaxElement {
             throw Errors.abstract();
+        }
+
+        public isSingleton(): boolean {
+            return false;
         }
 
         // Returns the first non-missing token inside this node (or null if there are no such token).

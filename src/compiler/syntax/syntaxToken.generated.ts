@@ -6,6 +6,7 @@ module TypeScript.Syntax {
         private _fullStart: number;
         public tokenKind: SyntaxKind;
         private _textOrWidth: any;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, textOrWidth: any) {
             this._sourceText = sourceText;
@@ -29,6 +30,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -124,6 +126,7 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _leadingTriviaInfo: number;
         private _textOrWidth: any;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, textOrWidth: any) {
             this._sourceText = sourceText;
@@ -149,6 +152,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -244,6 +248,7 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _textOrWidth: any;
         private _trailingTriviaInfo: number;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, textOrWidth: any, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -269,6 +274,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -365,6 +371,7 @@ module TypeScript.Syntax {
         private _leadingTriviaInfo: number;
         private _textOrWidth: any;
         private _trailingTriviaInfo: number;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, textOrWidth: any, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -392,6 +399,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -483,6 +491,7 @@ module TypeScript.Syntax {
 
     export class FixedWidthTokenWithNoTrivia implements ISyntaxToken {
         public tokenKind: SyntaxKind;
+        public parent: ISyntaxElement = null;
 
         constructor(kind: SyntaxKind) {
             this.tokenKind = kind;
@@ -500,6 +509,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -568,6 +578,7 @@ module TypeScript.Syntax {
         private _fullStart: number;
         public tokenKind: SyntaxKind;
         private _leadingTriviaInfo: number;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -591,6 +602,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -662,6 +674,7 @@ module TypeScript.Syntax {
         private _fullStart: number;
         public tokenKind: SyntaxKind;
         private _trailingTriviaInfo: number;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -685,6 +698,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -757,6 +771,7 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _leadingTriviaInfo: number;
         private _trailingTriviaInfo: number;
+        public parent: ISyntaxElement = null;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -782,6 +797,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
+        public isSingleton(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 

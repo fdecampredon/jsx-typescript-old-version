@@ -300,6 +300,7 @@ module TypeScript.Syntax {
     }
 
     class EmptyToken implements ISyntaxToken {
+        public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
 
         constructor(kind: SyntaxKind) {
@@ -323,6 +324,10 @@ module TypeScript.Syntax {
 
         public childAt(index: number): ISyntaxElement {
             throw Errors.argumentOutOfRange("index");
+        }
+
+        public isSingleton(): boolean {
+            return false;
         }
 
         public toJSON(key: any): any { return tokenToJSON(this); }
@@ -394,6 +399,7 @@ module TypeScript.Syntax {
     }
 
     class RealizedToken implements ISyntaxToken {
+        public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
         // public tokenKeywordKind: SyntaxKind;
         private _leadingTrivia: ISyntaxTriviaList;
@@ -438,6 +444,10 @@ module TypeScript.Syntax {
 
         public childAt(index: number): ISyntaxElement {
             throw Errors.argumentOutOfRange("index");
+        }
+
+        public isSingleton(): boolean {
+            return false;
         }
 
         public isToken(): boolean { return true; }

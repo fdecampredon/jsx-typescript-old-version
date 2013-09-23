@@ -1324,6 +1324,7 @@ function generateConstructor(definition: ITypeDefinition): string {
         }
     }
 
+    result += "            Syntax.setParentForChildren(this);\r\n";
     result += "        }\r\n";
 
     return result;
@@ -2275,6 +2276,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        private _trailingTriviaInfo: number;\r\n";
     }
 
+    result += "        public parent: ISyntaxElement = null;\r\n";
     result += "\r\n";
 
     if (needsSourcetext) {
@@ -2360,6 +2362,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     result += "        public kind(): SyntaxKind { return this.tokenKind; }\r\n\r\n";
 
+    result += "        public isSingleton(): boolean { return false; }\r\n";
     result += "        public childCount(): number { return 0; }\r\n";
     result += "        public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }\r\n\r\n";
 

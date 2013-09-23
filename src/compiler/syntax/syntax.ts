@@ -1,6 +1,16 @@
 ///<reference path='references.ts' />
 
 module TypeScript.Syntax {
+    export function setParentForChildren(element: ISyntaxElement): void {
+        for (var i = 0, n = element.childCount(); i < n; i++) {
+            var child = element.childAt(i);
+
+            if (child && !child.isSingleton()) {
+                child.parent = element;
+            }
+        }
+    }
+
     export function emptySourceUnit() {
         return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList, Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }));
     }

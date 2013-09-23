@@ -3,6 +3,7 @@
 module TypeScript {
     export interface ISyntaxElement {
         kind(): SyntaxKind;
+        parent: ISyntaxElement;
 
         isNode(): boolean;
         isToken(): boolean;
@@ -11,6 +12,9 @@ module TypeScript {
 
         childCount(): number;
         childAt(index: number): ISyntaxElement;
+
+        // True if this node is a singleton (and thus can be reused in many places in a syntax tree).
+        isSingleton(): boolean;
 
         // True if this element is typescript specific and would not be legal in pure javascript.
         isTypeScriptSpecific(): boolean;

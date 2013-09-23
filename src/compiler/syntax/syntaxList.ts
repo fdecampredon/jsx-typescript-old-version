@@ -12,6 +12,7 @@ module TypeScript {
 module TypeScript.Syntax {
     // TODO: stop exporting this once typecheck bug is fixed.
     export class EmptySyntaxList implements ISyntaxList {
+        public parent: ISyntaxElement = null;
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
         public isNode(): boolean { return false; }
@@ -29,6 +30,10 @@ module TypeScript.Syntax {
 
         public childAt(index: number): ISyntaxNodeOrToken {
             throw Errors.argumentOutOfRange("index");
+        }
+
+        public isSingleton(): boolean {
+            return true;
         }
 
         public toArray(): ISyntaxNodeOrToken[] {
@@ -95,10 +100,10 @@ module TypeScript.Syntax {
     export var emptyList: ISyntaxList = new EmptySyntaxList();
 
     class SingletonSyntaxList implements ISyntaxList {
-        private item: ISyntaxNodeOrToken;
+        public parent: ISyntaxElement = null;
 
-        constructor(item: ISyntaxNodeOrToken) {
-            this.item = item;
+        constructor(private item: ISyntaxNodeOrToken) {
+            Syntax.setParentForChildren(this);
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -122,6 +127,10 @@ module TypeScript.Syntax {
             }
 
             return this.item;
+        }
+
+        public isSingleton(): boolean {
+            return false;
         }
 
         public toArray(): ISyntaxNodeOrToken[] {
@@ -188,11 +197,11 @@ module TypeScript.Syntax {
     }
 
     class NormalSyntaxList implements ISyntaxList {
-        private nodeOrTokens: ISyntaxNodeOrToken[];
+        public parent: ISyntaxElement = null;
         private _data: number = 0;
 
-        constructor(nodeOrTokens: ISyntaxNodeOrToken[]) {
-            this.nodeOrTokens = nodeOrTokens;
+        constructor(private nodeOrTokens: ISyntaxNodeOrToken[]) {
+            Syntax.setParentForChildren(this);
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -216,6 +225,10 @@ module TypeScript.Syntax {
             }
 
             return this.nodeOrTokens[index];
+        }
+
+        public isSingleton(): boolean {
+            return false;
         }
 
         public toArray(): ISyntaxNodeOrToken[] {

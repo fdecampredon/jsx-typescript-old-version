@@ -19,6 +19,8 @@ module TypeScript {
 
 module TypeScript.Syntax {
     class EmptySeparatedSyntaxList implements ISeparatedSyntaxList {
+        public parent: ISyntaxElement = null;
+
         public kind() {
             return SyntaxKind.SeparatedList;
         }
@@ -45,6 +47,10 @@ module TypeScript.Syntax {
 
         public childCount() {
             return 0;
+        }
+
+        public isSingleton(): boolean {
+            return true;
         }
 
         public nonSeparatorCount() {
@@ -135,10 +141,10 @@ module TypeScript.Syntax {
     export var emptySeparatedList: ISeparatedSyntaxList = new EmptySeparatedSyntaxList();
 
     class SingletonSeparatedSyntaxList implements ISeparatedSyntaxList {
-        private item: ISyntaxNodeOrToken;
+        public parent: ISyntaxElement = null;
 
-        constructor(item: ISyntaxNodeOrToken) {
-            this.item = item;
+        constructor(private item: ISyntaxNodeOrToken) {
+            Syntax.setParentForChildren(this);
         }
 
         public toJSON(key: any) {
@@ -155,6 +161,10 @@ module TypeScript.Syntax {
         public childCount() { return 1; }
         public nonSeparatorCount() { return 1; }
         public separatorCount() { return 0; }
+
+        public isSingleton(): boolean {
+            return false;
+        }
 
         public toArray() { return [this.item]; }
         public toNonSeparatorArray() { return [this.item]; }
@@ -239,11 +249,11 @@ module TypeScript.Syntax {
     }
 
     class NormalSeparatedSyntaxList implements ISeparatedSyntaxList {
-        private elements: ISyntaxNodeOrToken[];
+        public parent: ISyntaxElement = null;
         private _data: number = 0;
 
-        constructor(elements: ISyntaxNodeOrToken[]) {
-            this.elements = elements;
+        constructor(private elements: ISyntaxNodeOrToken[]) {
+            Syntax.setParentForChildren(this);
         }
 
         public kind() { return SyntaxKind.SeparatedList; }
@@ -257,6 +267,10 @@ module TypeScript.Syntax {
         public childCount() { return this.elements.length; }
         public nonSeparatorCount() { return IntegerUtilities.integerDivide(this.elements.length + 1, 2); }
         public separatorCount() { return IntegerUtilities.integerDivide(this.elements.length, 2); }
+
+        public isSingleton(): boolean {
+            return false;
+        }
 
         public toArray(): ISyntaxNodeOrToken[] { return this.elements.slice(0); }
 
