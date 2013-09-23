@@ -108,7 +108,7 @@ module TypeScript {
             if (!isVariableWidthKeyword && kind >= SyntaxKind.FirstFixedWidth) {
                 if (leadingTriviaInfo === 0) {
                     if (trailingTriviaInfo === 0) {
-                        return new Syntax.FixedWidthTokenWithNoTrivia(kind);
+                        return new Syntax.FixedWidthTokenWithNoTrivia(fullStart, kind);
                     }
                     else {
                         return new Syntax.FixedWidthTokenWithTrailingTrivia(this.text, fullStart, kind, trailingTriviaInfo);

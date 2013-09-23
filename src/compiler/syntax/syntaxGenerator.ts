@@ -2258,9 +2258,9 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     if (needsSourcetext) {
         result += "        private _sourceText: ISimpleText;\r\n";
-        result += "        private _fullStart: number;\r\n";
     }
 
+    result += "        private _fullStart: number;\r\n";
     result += "        public tokenKind: SyntaxKind;\r\n";
     // result += "        public tokenKeywordKind: SyntaxKind;\r\n";
 
@@ -2283,7 +2283,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        constructor(sourceText: ISimpleText, fullStart: number,";
     }
     else {
-        result += "        constructor(";
+        result += "        constructor(fullStart: number,";
     }
 
     result += "kind: SyntaxKind";
@@ -2304,9 +2304,9 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     if (needsSourcetext) {
         result += "            this._sourceText = sourceText;\r\n";
-        result += "            this._fullStart = fullStart;\r\n";
     }
 
+    result += "            this._fullStart = fullStart;\r\n";
     result += "            this.tokenKind = kind;\r\n";
 
     if (leading) {
@@ -2328,15 +2328,9 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     if (needsSourcetext) {
         result += "                this._sourceText,\r\n";
-        result += "                this._fullStart,\r\n";
     }
 
-    //if (isKeyword) {
-    //    result += "                this.tokenKeywordKind";
-    //}
-    //else {
-    //    result += "                this.tokenKind";
-    //}
+    result += "                this._fullStart,\r\n";
     result += "                this.tokenKind";
 
     if (leading) {
@@ -2382,29 +2376,29 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        public fullWidth(): number { return this.width(); }\r\n";
     }
 
-    if (needsSourcetext) {
-        if (leading) {
-            result += "        private start(): number { return this._fullStart + " + leadingTriviaWidth + "; }\r\n";
-        }
-        else {
-            result += "        private start(): number { return this._fullStart; }\r\n";
-        }
-
-        result += "        private end(): number { return this.start() + this.width(); }\r\n\r\n";
-    }
-
     if (isFixedWidth) {
-        result += "        public width(): number { return this.text().length; }\r\n";
+        result += "        public width(): number { return this.text().length; }\r\n\r\n";
     }
     else {
-        result += "        public width(): number { return typeof this._textOrWidth === 'number' ? this._textOrWidth : this._textOrWidth.length; }\r\n";
+        result += "        public width(): number { return typeof this._textOrWidth === 'number' ? this._textOrWidth : this._textOrWidth.length; }\r\n\r\n";
     }
+
+    result += "        public fullStart(): number { return this._fullStart; }\r\n";
+
+    if (leading) {
+        result += "        public start(): number { return this._fullStart + " + leadingTriviaWidth + "; }\r\n";
+    }
+    else {
+        result += "        public start(): number { return this._fullStart; }\r\n";
+    }
+
+    result += "        public end(): number { return this.start() + this.width(); }\r\n";
+    result += "        public fullEnd(): number { return this._fullStart + this.fullWidth(); } \r\n\r\n";
 
     if (isFixedWidth) {
         result += "        public text(): string { return SyntaxFacts.getText(this.tokenKind); }\r\n";
     }
     else {
-        result += "\r\n";
         result += "        public text(): string {\r\n";
         result += "            if (typeof this._textOrWidth === 'number') {\r\n";
         result += "                this._textOrWidth = this._sourceText.substr(\r\n";
