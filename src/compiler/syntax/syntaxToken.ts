@@ -305,19 +305,17 @@ module TypeScript.Syntax {
     class EmptyToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
-        private _fullStart: number;
 
-        constructor(fullStart: number, kind: SyntaxKind) {
-            this._fullStart = fullStart;
+        constructor(kind: SyntaxKind) {
             this.tokenKind = kind;
         }
 
-        public setFullStartAndText(fullStart: number): void {
-            this._fullStart = fullStart;
+        public setFullStartAndText(): void {
+            // An empty token is always at the -1 position.
         }
 
         public clone(): ISyntaxToken {
-            return new EmptyToken(this._fullStart, this.tokenKind);
+            return new EmptyToken(this.tokenKind);
         }
 
         public kind() { return this.tokenKind; }
@@ -356,10 +354,10 @@ module TypeScript.Syntax {
         public fullWidth() { return 0; }
         public width() { return 0; }
 
-        public fullStart(): number { return this._fullStart; }
-        public fullEnd(): number { return this._fullStart; }
-        public start(): number { return this._fullStart; }
-        public end(): number { return this._fullStart; }
+        public fullStart(): number { return -1; }
+        public fullEnd(): number { return -1; }
+        public start(): number { return -1; }
+        public end(): number { return -1; }
 
         public text() { return ""; }
         public fullText(): string { return ""; }
@@ -410,7 +408,7 @@ module TypeScript.Syntax {
     }
 
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
-        return new EmptyToken(-1, kind);
+        return new EmptyToken(kind);
     }
 
     class RealizedToken implements ISyntaxToken {

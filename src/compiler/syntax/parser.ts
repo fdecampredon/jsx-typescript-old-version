@@ -1037,9 +1037,7 @@ module TypeScript.Parser {
     }
 
     class SetTokenPositionWalker extends SyntaxWalker {
-        private position: number = 0;
-
-        constructor(private text: ISimpleText) {
+        constructor(private position: number, private text: ISimpleText) {
             super();
         }
 
@@ -1597,7 +1595,7 @@ module TypeScript.Parser {
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
 
-            sourceUnit.accept(new SetTokenPositionWalker(this.text));
+            sourceUnit.accept(new SetTokenPositionWalker(0, this.text));
 
             return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
         }

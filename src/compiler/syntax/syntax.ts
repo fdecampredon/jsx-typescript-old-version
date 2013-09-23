@@ -155,6 +155,10 @@ module TypeScript.Syntax {
         return token1.kind() === token2.kind() &&
                token1.width() === token2.width() &&
                token1.fullWidth() === token2.fullWidth() &&
+               token1.fullStart() === token2.fullStart() &&
+               token1.fullEnd() === token2.fullEnd() &&
+               token1.start() === token2.start() &&
+               token1.end() === token2.end() &&
                token1.text() === token2.text() &&
                Syntax.triviaListStructuralEquals(token1.leadingTrivia(), token2.leadingTrivia()) &&
                Syntax.triviaListStructuralEquals(token1.trailingTrivia(), token2.trailingTrivia());

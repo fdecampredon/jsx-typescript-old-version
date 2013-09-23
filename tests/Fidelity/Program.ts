@@ -22,7 +22,7 @@ htmlReport.reset();
 
 class PositionValidatingWalker extends TypeScript.PositionTrackingWalker {
     public visitToken(token: TypeScript.ISyntaxToken): void {
-        TypeScript.Debug.assert(this.position() === token.fullStart());
+        TypeScript.Debug.assert(token.fullWidth() === 0 || this.position() === token.fullStart());
         super.visitToken(token);
     }
 }
@@ -373,12 +373,12 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
 
                    var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
-        //var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
+        var emitted = TypeScript.Emitter1.emit(<TypeScript.SourceUnitSyntax>tree.sourceUnit());
 
-        //var result = justText
-        //    ? <any>emitted.fullText()
-        //    : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
-        //this.checkResult(fileName, result, verify, generateBaseline, justText);
+        var result = justText
+            ? <any>emitted.fullText()
+            : { fullText: emitted.fullText().split("\r\n"), sourceUnit: emitted };
+        this.checkResult(fileName, result, verify, generateBaseline, justText);
     }
 
     runPrettyPrinter(fileName: string,
