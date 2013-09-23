@@ -1058,6 +1058,10 @@ module TypeScript.Parser {
                     var changeRangeSpanInNewText = this._changeRange.newSpan();
                     if (this.absolutePosition() >= changeRangeSpanInNewText.end()) {
                         this._changeDelta += this._changeRange.newLength() - this._changeRange.span().length();
+
+                        // Once we're past the change range, we no longer need it.  Null it out.
+                        // From now on we can check if we're past the change range just by seeing
+                        // if this is null.
                         this._changeRange = null;
                     }
                 }
