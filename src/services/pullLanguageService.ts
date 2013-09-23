@@ -920,7 +920,7 @@ module Services {
             var document = this.compilerState.getDocument(fileName);
             var script = document.script;
 
-            var path = this.getAstPathToPosition(script, position, false);
+            var path = this.getAstPathToPosition(script, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
             if (path.count() == 0) {
                 return null;
             }

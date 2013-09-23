@@ -65,8 +65,8 @@
 ** Statement: "use strict"
 **Pos: 32 SpanInfo: {"minChar":21,"limChar":33,"text":null}
 ** Statement: "use strict"
-**Pos: 33 SpanInfo: null
-** Statement: 
+**Pos: 33 SpanInfo: {"minChar":21,"limChar":33,"text":null}
+** Statement: "use strict"
 **Pos: 34 SpanInfo: null
 ** Statement: 
 **Pos: 35 SpanInfo: null
@@ -313,8 +313,8 @@
 ** Statement: "<h1>"
 **Pos: 156 SpanInfo: {"minChar":151,"limChar":157,"text":null}
 ** Statement: "<h1>"
-**Pos: 157 SpanInfo: null
-** Statement: 
+**Pos: 157 SpanInfo: {"minChar":151,"limChar":157,"text":null}
+** Statement: "<h1>"
 **Pos: 158 SpanInfo: null
 ** Statement: 
 **Pos: 159 SpanInfo: null
@@ -327,8 +327,8 @@
 ** Statement: this
 **Pos: 163 SpanInfo: {"minChar":160,"limChar":164,"text":null}
 ** Statement: this
-**Pos: 164 SpanInfo: {"minChar":160,"limChar":173,"text":null}
-** Statement: this.greeting
+**Pos: 164 SpanInfo: {"minChar":160,"limChar":164,"text":null}
+** Statement: this
 **Pos: 165 SpanInfo: {"minChar":160,"limChar":173,"text":null}
 ** Statement: this.greeting
 **Pos: 166 SpanInfo: {"minChar":160,"limChar":173,"text":null}
@@ -365,8 +365,8 @@
 ** Statement: "</h1>"
 **Pos: 182 SpanInfo: {"minChar":176,"limChar":183,"text":null}
 ** Statement: "</h1>"
-**Pos: 183 SpanInfo: null
-** Statement: 
+**Pos: 183 SpanInfo: {"minChar":176,"limChar":183,"text":null}
+** Statement: "</h1>"
 **Pos: 184 SpanInfo: null
 ** Statement: 
 **Pos: 185 SpanInfo: null
@@ -677,8 +677,8 @@
 ** Statement: "Hello, world!"
 **Pos: 338 SpanInfo: {"minChar":324,"limChar":339,"text":null}
 ** Statement: "Hello, world!"
-**Pos: 339 SpanInfo: null
-** Statement: 
+**Pos: 339 SpanInfo: {"minChar":324,"limChar":339,"text":null}
+** Statement: "Hello, world!"
 **Pos: 340 SpanInfo: null
 ** Statement: 
 **Pos: 341 SpanInfo: null
@@ -1503,8 +1503,8 @@
 ** Statement: "Hello"
 **Pos: 751 SpanInfo: {"minChar":745,"limChar":752,"text":null}
 ** Statement: "Hello"
-**Pos: 752 SpanInfo: null
-** Statement: 
+**Pos: 752 SpanInfo: {"minChar":745,"limChar":752,"text":null}
+** Statement: "Hello"
 **Pos: 753 SpanInfo: null
 ** Statement: 
 **Pos: 754 SpanInfo: {"minChar":754,"limChar":761,"text":null}
@@ -1521,8 +1521,8 @@
 ** Statement: "World"
 **Pos: 760 SpanInfo: {"minChar":754,"limChar":761,"text":null}
 ** Statement: "World"
-**Pos: 761 SpanInfo: null
-** Statement: 
+**Pos: 761 SpanInfo: {"minChar":754,"limChar":761,"text":null}
+** Statement: "World"
 **Pos: 762 SpanInfo: null
 ** Statement: 
 **Pos: 763 SpanInfo: {"minChar":763,"limChar":766,"text":null}
@@ -1531,8 +1531,8 @@
 ** Statement: "!"
 **Pos: 765 SpanInfo: {"minChar":763,"limChar":766,"text":null}
 ** Statement: "!"
-**Pos: 766 SpanInfo: null
-** Statement: 
+**Pos: 766 SpanInfo: {"minChar":763,"limChar":766,"text":null}
+** Statement: "!"
 **Pos: 767 SpanInfo: null
 ** Statement: 
 **Pos: 768 SpanInfo: null
@@ -1727,8 +1727,8 @@
 ** Statement: j
 **Pos: 863 SpanInfo: {"minChar":862,"limChar":863,"text":null}
 ** Statement: j
-**Pos: 864 SpanInfo: {"minChar":860,"limChar":870,"text":null}
-** Statement: b[j].greet
+**Pos: 864 SpanInfo: null
+** Statement: 
 **Pos: 865 SpanInfo: {"minChar":860,"limChar":870,"text":null}
 ** Statement: b[j].greet
 **Pos: 866 SpanInfo: {"minChar":860,"limChar":870,"text":null}

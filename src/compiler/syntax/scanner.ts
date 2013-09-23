@@ -626,9 +626,14 @@ module TypeScript {
             while (this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
 
             if (sawUnicodeEscape) {
-                // Interesting case.  Some browsers and APIs (including FireFox, IE, and esprima,
-                // but not Chrome or Safari) allow unicode escapes to be used in a keyword.  i.e.
-                // "\u0076ar" is the keyword 'var'.  Check for that here.
+                // From ES6 specification.
+                // The ReservedWord definitions are specified as literal sequences of Unicode 
+                // characters.However, any Unicode character in a ReservedWord can also be 
+                // expressed by a \ UnicodeEscapeSequence that expresses that same Unicode 
+                // character’s code point.Use of such escape sequences does not change the meaning 
+                // of the ReservedWord.
+                //
+                // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.
                 var text = this.text.substr(startIndex, this.slidingWindow.absoluteIndex(), /*intern:*/ false);
                 var valueText = Syntax.massageEscapes(text);
 

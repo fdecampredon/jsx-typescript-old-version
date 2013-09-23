@@ -8,6 +8,7 @@ interface testSpec {
     compileList: string[];  // files we want to compile
     outputFile: string;     // the final output file
     skipThisCheck?: boolean;
+    target?: string;
 }
 
 class RWCEmitter implements TypeScript.EmitterIOHost {
@@ -201,7 +202,7 @@ class RWCRunner extends RunnerBase {
                         if (actual !== expected) {
                             runner.htmlBaselineReport.addDifference("codegen baseline check for " + spec.projectName, spec.outputFile + '.js', spec.outputFile + '.js', expected, actual, /* includeUnchangedRegions*/ false);
 
-                            var errMsg = 'The baseline file ' + spec.outputFile + '.err.out' + ' has changed. Please refer to rwc-report.html and ';
+                            var errMsg = 'The baseline file ' + spec.outputFile + '.js' + ' has changed. Please refer to rwc-report.html and ';
                             errMsg += 'either fix the regression (if unintended) or update the baseline (if intended).'
                             Harness.Assert.throwAssertError(new Error(errMsg));
                         }
@@ -222,7 +223,7 @@ class RWCRunner extends RunnerBase {
                         if (actual !== expected) {
                             runner.htmlBaselineReport.addDifference("codegen baseline check for " + spec.projectName, spec.outputFile + '.d.ts', spec.outputFile + '.d.ts', expected, actual, /* includeUnchangedRegions*/ false);
 
-                            var errMsg = 'The baseline file ' + spec.outputFile + '.err.out' + ' has changed. Please refer to rwc-report.html and ';
+                            var errMsg = 'The baseline file ' + spec.outputFile + '.d.ts' + ' has changed. Please refer to rwc-report.html and ';
                             errMsg += 'either fix the regression (if unintended) or update the baseline (if intended).'
                             Harness.Assert.throwAssertError(new Error(errMsg));
                         }
