@@ -47,6 +47,9 @@ class Program {
         //Environment.standardOut.WriteLine("Testing Monoco.");
         //this.runTests(Environment.currentDirectory() + "c:\\temp\\monoco",
         //    fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, false, /*generateBaselines:*/ generate, /*allowErrors:*/ false));
+        Environment.standardOut.WriteLine("Testing Incremental 1.");
+        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
+            fileName => this.runIncremental(fileName, TypeScript.LanguageVersion.EcmaScript5));
 
         if (specificFile === undefined) {
             Environment.standardOut.WriteLine("Testing Incremental 2.");
@@ -93,10 +96,6 @@ class Program {
         this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
             fileName => this.runTrivia(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing Incremental 1.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
-            fileName => this.runIncremental(fileName, TypeScript.LanguageVersion.EcmaScript5));
-            
         Environment.standardOut.WriteLine("Testing emitter 2.");
         this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\emitter2\\ecmascript5",
             fileName => this.runEmitter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate, /*justText:*/ true));

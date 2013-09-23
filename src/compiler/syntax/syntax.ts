@@ -12,7 +12,7 @@ module TypeScript.Syntax {
     }
 
     export function emptySourceUnit() {
-        return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList, Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }));
+        return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList, Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
     }
 
     export function getStandaloneExpression(positionedToken: PositionedToken): PositionedNodeOrToken {

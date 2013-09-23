@@ -544,11 +544,11 @@ module TypeScript.Syntax {
         }
     }
 
-    export function token(kind: SyntaxKind, info: ITokenInfo = null): ISyntaxToken {
+    export function token(kind: SyntaxKind, info: ITokenInfo = null, fullStart = -1): ISyntaxToken {
         var text = (info !== null && info.text !== undefined) ? info.text : SyntaxFacts.getText(kind);
 
         return new RealizedToken(
-            -1,
+            fullStart,
             kind,
             Syntax.triviaList(info === null ? null : info.leadingTrivia),
             text,

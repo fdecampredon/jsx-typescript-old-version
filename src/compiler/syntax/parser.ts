@@ -598,6 +598,8 @@ module TypeScript.Parser {
     // prevent this level of reuse include substantially destructive operations like introducing
     // "/*" without a "*/" nearby to terminate the comment.
     class IncrementalParserSource implements IParserSource {
+        private _newText: ISimpleText;
+
         // The underlying parser source that we will use to scan tokens from any new text, or any 
         // tokens from the old tree that we decide we can't use for any reason.  We will also 
         // continue scanning tokens from this source until we've decided that we're resynchronized
@@ -636,6 +638,7 @@ module TypeScript.Parser {
         constructor(oldSyntaxTree: SyntaxTree,
                     textChangeRange: TextChangeRange,
                     newText: ISimpleText) {
+            this._newText = newText;
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
             this._oldSourceUnitCursor = new SyntaxCursor(oldSourceUnit);
 
@@ -765,12 +768,36 @@ module TypeScript.Parser {
             return this._changeDelta === 0 &&
                    !this._oldSourceUnitCursor.isFinished();
         }
-        
+
+        private setTokenPositionWalker = new SetTokenPositionWalker();
+
+        private updateTokenPositions(nodeOrToken: ISyntaxNodeOrToken): void {
+            // If we got a node or token, and we're past the range of edited text, then walk its
+            // constituent tokens, making sure all their positions are correct.  We don't need to
+            // do this for the tokens before the edited range (since their positions couldn't have 
+            // been affected by the edit), and we don't need to do this for the tokens in the 
+            // edited range, as their positions will be correct when the underlying parser source 
+            // creates them.
+
+            var position = this.absolutePosition();
+            if (this.isPastChangeRange() && nodeOrToken.fullStart() !== position) {
+                this.setTokenPositionWalker.position = position;
+                this.setTokenPositionWalker.text = this._newText;
+
+                nodeOrToken.accept(this.setTokenPositionWalker);
+            }
+        }
+
         public currentNode(): SyntaxNode {
             if (this.canReadFromOldSourceUnit()) {
                 // Try to read a node.  If we can't then our caller will call back in and just try
                 // to get a token.
-                return this.tryGetNodeFromOldSourceUnit();
+                var node = this.tryGetNodeFromOldSourceUnit();
+                if (node !== null) {
+                    // Make sure the positions for the tokens in this node are correct.
+                    this.updateTokenPositions(node);
+                    return node;
+                }
             }
 
             // Either we were ahead of the old text, or we were pinned.  No node can be read here.
@@ -781,6 +808,8 @@ module TypeScript.Parser {
             if (this.canReadFromOldSourceUnit()) {
                 var token = this.tryGetTokenFromOldSourceUnit();
                 if (token !== null) {
+                    // Make sure the token's position/text is correct.
+                    this.updateTokenPositions(token);
                     return token;
                 }
             }
@@ -845,7 +874,7 @@ module TypeScript.Parser {
         }
 
         private intersectsWithChangeRangeSpanInOriginalText(start: number, length: number) {
-            return this._changeRange !== null && this._changeRange.span().intersectsWith(start, length);
+            return !this.isPastChangeRange() && this._changeRange.span().intersectsWith(start, length);
         }
 
         private tryGetNodeFromOldSourceUnit(): SyntaxNode {
@@ -976,7 +1005,7 @@ module TypeScript.Parser {
             // Debug.assert(previousToken !== null);
             // Debug.assert(previousToken.width() > 0);
 
-            if (this._changeRange !== null) {
+            if (!this.isPastChangeRange()) {
                 // If we still have a change range, then this node must have ended before the 
                 // change range starts.  Thus, we don't need to call 'skipPastChanges'.
                 // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
@@ -1008,7 +1037,7 @@ module TypeScript.Parser {
                 // Debug.assert(previousToken !== null);
                 // Debug.assert(previousToken.width() > 0);
 
-                if (this._changeRange !== null) {
+                if (!this.isPastChangeRange()) {
                     // If we still have a change range, then this token must have ended before the 
                     // change range starts.  Thus, we don't need to call 'skipPastChanges'.
                     // Debug.assert(this.absolutePosition() < this._changeRange.span().start());
@@ -1024,7 +1053,7 @@ module TypeScript.Parser {
                 // Because we read a token from the new text, we may have moved ourselves past the
                 // change range.  If we did, then we may also have to update our change delta to
                 // compensate for the length change between the old and new text.
-                if (this._changeRange !== null) {
+                if (!this.isPastChangeRange()) {
                     // var changeEndInNewText = this._changeRange.span().start() + this._changeRange.newLength();
                     var changeRangeSpanInNewText = this._changeRange.newSpan();
                     if (this.absolutePosition() >= changeRangeSpanInNewText.end()) {
@@ -1034,12 +1063,17 @@ module TypeScript.Parser {
                 }
             }
         }
+
+        private isPastChangeRange(): boolean {
+            return this._changeRange === null;
+        }
     }
 
+    // A simple walker we use to hit all the tokens of a node and update their positions when they
+    // are reused in a different location because of an incremental parse.
     class SetTokenPositionWalker extends SyntaxWalker {
-        constructor(private position: number, private text: ISimpleText) {
-            super();
-        }
+        public position: number;
+        public text: ISimpleText;
 
         public visitToken(token: ISyntaxToken): void {
             var position = this.position;
@@ -1532,14 +1566,23 @@ module TypeScript.Parser {
 
             var leadingTrivia: ISyntaxTrivia[] = [];
             for (var i = 0, n = skippedTokens.length; i < n; i++) {
-                this.addSkippedTokenToTriviaArray(leadingTrivia, skippedTokens[i]);
+                var skippedToken = skippedTokens[i];
+                this.addSkippedTokenToTriviaArray(leadingTrivia, skippedToken);
             }
 
             this.addTriviaTo(token.leadingTrivia(), leadingTrivia);
 
+            var updatedToken = token.withLeadingTrivia(Syntax.triviaList(leadingTrivia));
+
+            // We've prepending this token with new leading trivia.  This means the full start of
+            // the token is not where the scanner originally thought it was, but is instead at the
+            // start of the first skipped token.
+            updatedToken.setFullStartAndText(skippedTokens[0].fullStart(), this.text);
+
             // Don't need this array anymore.  Give it back so we can reuse it.
             this.returnArray(skippedTokens);
-            return token.withLeadingTrivia(Syntax.triviaList(leadingTrivia));
+
+            return updatedToken;
         }
 
         private addSkippedTokensAfterToken(token: ISyntaxToken, skippedTokens: ISyntaxToken[]): ISyntaxToken {
@@ -1594,8 +1637,6 @@ module TypeScript.Parser {
 
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
-
-            sourceUnit.accept(new SetTokenPositionWalker(0, this.text));
 
             return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
         }
@@ -3657,11 +3698,16 @@ module TypeScript.Parser {
                     // Precedence is okay, so we'll "take" this operator.  If we have a merged token, 
                     // then create a new synthesized token with all the operators combined.  In that 
                     // case make sure it has the right trivia associated with it.
-                    var operatorToken = mergedToken === null
-                        ? token0
-                        : Syntax.token(mergedToken.syntaxKind)
-                                .withLeadingTrivia(token0.leadingTrivia())
-                                .withTrailingTrivia(this.peekToken(mergedToken.tokenCount - 1).trailingTrivia());
+                    var operatorToken = token0;
+                    if (mergedToken !== null) {
+                        operatorToken = Syntax.token(mergedToken.syntaxKind)
+                            .withLeadingTrivia(token0.leadingTrivia())
+                            .withTrailingTrivia(this.peekToken(mergedToken.tokenCount - 1).trailingTrivia());
+
+                        // We're synthesizing a new operator token.  We need to ensure it starts at 
+                        // the right position.
+                        operatorToken.setFullStartAndText(token0.fullStart(), this.text);
+                    }
 
                     // Now skip the operator token we're on, or the tokens we merged.
                     var skipCount = mergedToken === null ? 1 : mergedToken.tokenCount;
