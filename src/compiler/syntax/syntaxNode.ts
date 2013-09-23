@@ -26,7 +26,7 @@ module TypeScript {
             throw Errors.abstract();
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 

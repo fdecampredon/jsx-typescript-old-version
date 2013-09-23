@@ -49,7 +49,7 @@ module TypeScript.Syntax {
             return 0;
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return true;
         }
 
@@ -178,7 +178,7 @@ module TypeScript.Syntax {
         public nonSeparatorCount() { return 1; }
         public separatorCount() { return 0; }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 
@@ -300,7 +300,7 @@ module TypeScript.Syntax {
         public nonSeparatorCount() { return IntegerUtilities.integerDivide(this.elements.length + 1, 2); }
         public separatorCount() { return IntegerUtilities.integerDivide(this.elements.length, 2); }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 

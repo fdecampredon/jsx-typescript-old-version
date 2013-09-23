@@ -13,8 +13,12 @@ module TypeScript {
         childCount(): number;
         childAt(index: number): ISyntaxElement;
 
-        // True if this node is a singleton (and thus can be reused in many places in a syntax tree).
-        isSingleton(): boolean;
+        // True if there is only a single instance of this element (and thus can be reused in many 
+        // places in a syntax tree).  Examples of this include our empty lists.  Because empty 
+        // lists can be found all over the tree, we want to save on memory by using this single
+        // instance instead of creating new objects for each case.  Note: because of this, shared
+        // nodes don't have positions or parents.
+        isShared(): boolean;
 
         // True if this element is typescript specific and would not be legal in pure javascript.
         isTypeScriptSpecific(): boolean;

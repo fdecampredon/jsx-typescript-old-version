@@ -333,7 +333,7 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 
@@ -465,7 +465,7 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 

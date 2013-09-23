@@ -35,7 +35,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -164,7 +164,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -293,7 +293,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -425,7 +425,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -544,7 +544,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -648,7 +648,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -752,7 +752,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 
@@ -859,7 +859,7 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
-        public isSingleton(): boolean { return false; }
+        public isShared(): boolean { return false; }
         public childCount(): number { return 0; }
         public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }
 

@@ -5,7 +5,9 @@ module TypeScript.Syntax {
         for (var i = 0, n = element.childCount(); i < n; i++) {
             var child = element.childAt(i);
 
-            if (child && !child.isSingleton()) {
+            // Don't set the parent for this child if it is a shared child.  This child can be 
+            // found under multiple parents, and thus has no valid 'parent' reference.
+            if (child && !child.isShared()) {
                 child.parent = element;
             }
         }

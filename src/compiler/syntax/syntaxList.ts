@@ -32,7 +32,7 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return true;
         }
 
@@ -145,7 +145,7 @@ module TypeScript.Syntax {
             return this.item;
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 
@@ -259,7 +259,7 @@ module TypeScript.Syntax {
             return this.nodeOrTokens[index];
         }
 
-        public isSingleton(): boolean {
+        public isShared(): boolean {
             return false;
         }
 
