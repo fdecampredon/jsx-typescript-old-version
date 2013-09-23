@@ -79,12 +79,15 @@ module TypeScript {
             var leadingTriviaInfo = this.scanTriviaInfo(diagnostics, /*isTrailing: */ false);
 
             var start = this.slidingWindow.absoluteIndex();
-            var kind = this.scanSyntaxToken(diagnostics, allowRegularExpression);
+            var kindAndFlags = this.scanSyntaxToken(diagnostics, allowRegularExpression);
             var end = this.slidingWindow.absoluteIndex();
 
             var trailingTriviaInfo = this.scanTriviaInfo(diagnostics,/*isTrailing: */true);
 
-            var token = this.createToken(fullStart, leadingTriviaInfo, start, kind, end, trailingTriviaInfo);
+            var isVariableWidthKeyword = (kindAndFlags & SyntaxConstants.IsVariableWidthKeyword) !== 0;
+            var kind = kindAndFlags & ~SyntaxConstants.IsVariableWidthKeyword;
+
+            var token = this.createToken(fullStart, leadingTriviaInfo, start, kind, end, trailingTriviaInfo, isVariableWidthKeyword);
 
             // If we produced any diagnostics while creating this token, then realize the token so 
             // it won't be reused in incremental scenarios.
@@ -93,8 +96,16 @@ module TypeScript {
                 : token;
         }
 
-        private createToken(fullStart: number, leadingTriviaInfo: number, start: number, kind: SyntaxKind, end: number, trailingTriviaInfo: number): ISyntaxToken {
-            if (kind >= SyntaxKind.FirstFixedWidth) {
+        private createToken(
+            fullStart: number,
+            leadingTriviaInfo: number,
+            start: number,
+            kind: SyntaxKind,
+            end: number,
+            trailingTriviaInfo: number,
+            isVariableWidthKeyword: boolean): ISyntaxToken {
+
+            if (!isVariableWidthKeyword && kind >= SyntaxKind.FirstFixedWidth) {
                 if (leadingTriviaInfo === 0) {
                     if (trailingTriviaInfo === 0) {
                         return new Syntax.FixedWidthTokenWithNoTrivia(kind);
@@ -542,7 +553,7 @@ module TypeScript {
             }
 
             if (this.isIdentifierStart(this.peekCharOrUnicodeEscape())) {
-                return this.slowScanIdentifier(diagnostics);
+                return this.slowScanIdentifierOrKeyword(diagnostics);
             }
 
             return this.scanDefaultCharacter(character, diagnostics);
@@ -604,13 +615,28 @@ module TypeScript {
 
         // A slow path for scanning identifiers.  Called when we run into a unicode character or 
         // escape sequence while processing the fast path.
-        private slowScanIdentifier(diagnostics: Diagnostic[]): SyntaxKind {
+        private slowScanIdentifierOrKeyword(diagnostics: Diagnostic[]): SyntaxKind {
             var startIndex = this.slidingWindow.absoluteIndex();
+            var sawUnicodeEscape = false;
 
             do {
-                this.scanCharOrUnicodeEscape(diagnostics);
+                var unicodeEscape = this.scanCharOrUnicodeEscape(diagnostics);
+                sawUnicodeEscape = sawUnicodeEscape || unicodeEscape;
             }
             while (this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
+
+            if (sawUnicodeEscape) {
+                // Interesting case.  Some browsers and APIs (including FireFox, IE, and esprima,
+                // but not Chrome or Safari) allow unicode escapes to be used in a keyword.  i.e.
+                // "\u0076ar" is the keyword 'var'.  Check for that here.
+                var text = this.text.substr(startIndex, this.slidingWindow.absoluteIndex(), /*intern:*/ false);
+                var valueText = Syntax.massageEscapes(text);
+
+                var keywordKind = SyntaxFacts.getTokenKind(valueText);
+                if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {
+                    return keywordKind | SyntaxConstants.IsVariableWidthKeyword;
+                }
+            }
 
             return SyntaxKind.IdentifierName;
         }
@@ -1169,17 +1195,19 @@ module TypeScript {
             return ch;
         }
 
-        private scanCharOrUnicodeEscape(errors: Diagnostic[]): number {
+        // Returns true if this was a unicode escape.
+        private scanCharOrUnicodeEscape(errors: Diagnostic[]): boolean {
             var ch = this.currentCharCode();
             if (ch === CharacterCodes.backslash) {
                 var ch2 = this.slidingWindow.peekItemN(1);
                 if (ch2 === CharacterCodes.u) {
-                    return this.scanUnicodeOrHexEscape(errors);
+                    this.scanUnicodeOrHexEscape(errors);
+                    return true;
                 }
             }
 
             this.slidingWindow.moveToNextItem();
-            return ch;
+            return false;
         }
 
         private scanCharOrUnicodeOrHexEscape(errors: Diagnostic[]): number {
