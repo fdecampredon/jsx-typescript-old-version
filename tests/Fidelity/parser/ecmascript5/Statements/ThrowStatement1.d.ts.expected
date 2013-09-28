@@ -13,16 +13,30 @@
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 8,
+        "start": 0,
+        "end": 8,
         "fullWidth": 8,
+        "width": 8,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ThrowStatement",
+                "fullStart": 0,
+                "fullEnd": 8,
+                "start": 0,
+                "end": 8,
                 "fullWidth": 8,
+                "width": 8,
                 "throwKeyword": {
                     "kind": "ThrowKeyword",
-                    "width": 5,
+                    "fullStart": 0,
+                    "fullEnd": 6,
+                    "start": 0,
+                    "end": 5,
                     "fullWidth": 6,
+                    "width": 5,
                     "text": "throw",
                     "value": "throw",
                     "valueText": "throw",
@@ -36,6 +50,11 @@
                 },
                 "expression": {
                     "kind": "IdentifierName",
+                    "fullStart": 6,
+                    "fullEnd": 7,
+                    "start": 6,
+                    "end": 7,
+                    "fullWidth": 1,
                     "width": 1,
                     "text": "e",
                     "value": "e",
@@ -43,6 +62,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": 7,
+                    "fullEnd": 8,
+                    "start": 7,
+                    "end": 8,
+                    "fullWidth": 1,
                     "width": 1,
                     "text": ";",
                     "value": ";",
@@ -52,6 +76,11 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
+            "fullStart": 8,
+            "fullEnd": 8,
+            "start": 8,
+            "end": 8,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }

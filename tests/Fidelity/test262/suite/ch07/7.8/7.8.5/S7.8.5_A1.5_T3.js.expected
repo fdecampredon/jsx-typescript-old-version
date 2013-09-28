@@ -36,26 +36,50 @@
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 345,
+        "start": 339,
+        "end": 345,
         "fullWidth": 345,
+        "width": 6,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 0,
+                "fullEnd": 342,
+                "start": 339,
+                "end": 340,
                 "fullWidth": 342,
+                "width": 1,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "DivideExpression",
+                    "fullStart": 0,
+                    "fullEnd": 342,
+                    "start": 339,
+                    "end": 340,
                     "fullWidth": 342,
+                    "width": 1,
                     "isIncrementallyUnusable": true,
                     "left": {
                         "kind": "IdentifierName",
+                        "fullStart": -1,
+                        "fullEnd": -1,
+                        "start": -1,
+                        "end": -1,
+                        "fullWidth": 0,
                         "width": 0,
                         "text": ""
                     },
                     "operatorToken": {
                         "kind": "SlashToken",
-                        "width": 1,
+                        "fullStart": 0,
+                        "fullEnd": 342,
+                        "start": 339,
+                        "end": 340,
                         "fullWidth": 342,
+                        "width": 1,
                         "text": "/",
                         "value": "/",
                         "valueText": "/",
@@ -112,6 +136,11 @@
                                 "kind": "SkippedTokenTrivia",
                                 "skippedToken": {
                                     "kind": "ErrorToken",
+                                    "fullStart": 340,
+                                    "fullEnd": 341,
+                                    "start": 340,
+                                    "end": 341,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "\\"
                                 }
@@ -124,33 +153,62 @@
                     },
                     "right": {
                         "kind": "IdentifierName",
+                        "fullStart": -1,
+                        "fullEnd": -1,
+                        "start": -1,
+                        "end": -1,
+                        "fullWidth": 0,
                         "width": 0,
                         "text": ""
                     }
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
             },
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 342,
+                "fullEnd": 344,
+                "start": 342,
+                "end": 343,
                 "fullWidth": 2,
+                "width": 1,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "DivideExpression",
+                    "fullStart": 342,
+                    "fullEnd": 344,
+                    "start": 342,
+                    "end": 343,
                     "fullWidth": 2,
+                    "width": 1,
                     "isIncrementallyUnusable": true,
                     "left": {
                         "kind": "IdentifierName",
+                        "fullStart": -1,
+                        "fullEnd": -1,
+                        "start": -1,
+                        "end": -1,
+                        "fullWidth": 0,
                         "width": 0,
                         "text": ""
                     },
                     "operatorToken": {
                         "kind": "SlashToken",
-                        "width": 1,
+                        "fullStart": 342,
+                        "fullEnd": 344,
+                        "start": 342,
+                        "end": 343,
                         "fullWidth": 2,
+                        "width": 1,
                         "text": "/",
                         "value": "/",
                         "valueText": "/",
@@ -165,12 +223,22 @@
                     },
                     "right": {
                         "kind": "IdentifierName",
+                        "fullStart": -1,
+                        "fullEnd": -1,
+                        "start": -1,
+                        "end": -1,
+                        "fullWidth": 0,
                         "width": 0,
                         "text": ""
                     }
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -178,8 +246,12 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
-            "width": 0,
+            "fullStart": 344,
+            "fullEnd": 345,
+            "start": 345,
+            "end": 345,
             "fullWidth": 1,
+            "width": 0,
             "text": "",
             "hasLeadingTrivia": true,
             "hasLeadingNewLine": true,

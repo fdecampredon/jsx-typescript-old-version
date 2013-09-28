@@ -20,6 +20,11 @@
     "tokens": [
         {
             "kind": "IdentifierName",
+            "fullStart": 0,
+            "fullEnd": 3,
+            "start": 0,
+            "end": 3,
+            "fullWidth": 3,
             "width": 3,
             "text": "foo",
             "value": "foo",
@@ -27,11 +32,21 @@
         },
         {
             "kind": "ErrorToken",
+            "fullStart": 3,
+            "fullEnd": 4,
+            "start": 3,
+            "end": 4,
+            "fullWidth": 1,
             "width": 1,
             "text": "\u0000"
         },
         {
             "kind": "PlusToken",
+            "fullStart": 4,
+            "fullEnd": 5,
+            "start": 4,
+            "end": 5,
+            "fullWidth": 1,
             "width": 1,
             "text": "+",
             "value": "+",
@@ -39,11 +54,21 @@
         },
         {
             "kind": "ErrorToken",
+            "fullStart": 5,
+            "fullEnd": 6,
+            "start": 5,
+            "end": 6,
+            "fullWidth": 1,
             "width": 1,
             "text": "\u0000"
         },
         {
             "kind": "IdentifierName",
+            "fullStart": 6,
+            "fullEnd": 9,
+            "start": 6,
+            "end": 9,
+            "fullWidth": 3,
             "width": 3,
             "text": "bar",
             "value": "bar",
@@ -51,6 +76,11 @@
         },
         {
             "kind": "SemicolonToken",
+            "fullStart": 9,
+            "fullEnd": 10,
+            "start": 9,
+            "end": 10,
+            "fullWidth": 1,
             "width": 1,
             "text": ";",
             "value": ";",
@@ -58,6 +88,11 @@
         },
         {
             "kind": "EndOfFileToken",
+            "fullStart": 10,
+            "fullEnd": 10,
+            "start": 10,
+            "end": 10,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }

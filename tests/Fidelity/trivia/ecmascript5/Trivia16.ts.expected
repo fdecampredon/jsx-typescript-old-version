@@ -1,8 +1,12 @@
 [
     {
         "kind": "SemicolonToken",
-        "width": 1,
+        "fullStart": 0,
+        "fullEnd": 17,
+        "start": 0,
+        "end": 1,
         "fullWidth": 17,
+        "width": 1,
         "text": ";",
         "value": ";",
         "valueText": ";",
@@ -34,6 +38,11 @@
     },
     {
         "kind": "EndOfFileToken",
+        "fullStart": 17,
+        "fullEnd": 17,
+        "start": 17,
+        "end": 17,
+        "fullWidth": 0,
         "width": 0,
         "text": ""
     }

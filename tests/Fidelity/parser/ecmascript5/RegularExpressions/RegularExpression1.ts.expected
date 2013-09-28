@@ -6,17 +6,31 @@
     },
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 45,
+        "start": 0,
+        "end": 45,
         "fullWidth": 45,
+        "width": 45,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ReturnStatement",
+                "fullStart": 0,
+                "fullEnd": 45,
+                "start": 0,
+                "end": 45,
                 "fullWidth": 45,
+                "width": 45,
                 "isIncrementallyUnusable": true,
                 "returnKeyword": {
                     "kind": "ReturnKeyword",
-                    "width": 6,
+                    "fullStart": 0,
+                    "fullEnd": 7,
+                    "start": 0,
+                    "end": 6,
                     "fullWidth": 7,
+                    "width": 6,
                     "text": "return",
                     "value": "return",
                     "valueText": "return",
@@ -30,6 +44,11 @@
                 },
                 "expression": {
                     "kind": "RegularExpressionLiteral",
+                    "fullStart": 7,
+                    "fullEnd": 44,
+                    "start": 7,
+                    "end": 44,
+                    "fullWidth": 37,
                     "width": 37,
                     "text": "/(#?-?\\d*\\.\\d\\w*%?)|(@?#?[\\w-?]+%?)/g",
                     "value": {},
@@ -37,6 +56,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": 44,
+                    "fullEnd": 45,
+                    "start": 44,
+                    "end": 45,
+                    "fullWidth": 1,
                     "width": 1,
                     "text": ";",
                     "value": ";",
@@ -46,6 +70,11 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
+            "fullStart": 45,
+            "fullEnd": 45,
+            "start": 45,
+            "end": 45,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }

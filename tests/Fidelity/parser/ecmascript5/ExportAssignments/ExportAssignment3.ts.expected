@@ -13,17 +13,31 @@
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 8,
+        "start": 0,
+        "end": 8,
         "fullWidth": 8,
+        "width": 8,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExportAssignment",
+                "fullStart": 0,
+                "fullEnd": 8,
+                "start": 0,
+                "end": 8,
                 "fullWidth": 8,
+                "width": 8,
                 "isIncrementallyUnusable": true,
                 "exportKeyword": {
                     "kind": "ExportKeyword",
-                    "width": 6,
+                    "fullStart": 0,
+                    "fullEnd": 7,
+                    "start": 0,
+                    "end": 6,
                     "fullWidth": 7,
+                    "width": 6,
                     "text": "export",
                     "value": "export",
                     "valueText": "export",
@@ -37,6 +51,11 @@
                 },
                 "equalsToken": {
                     "kind": "EqualsToken",
+                    "fullStart": 7,
+                    "fullEnd": 8,
+                    "start": 7,
+                    "end": 8,
+                    "fullWidth": 1,
                     "width": 1,
                     "text": "=",
                     "value": "=",
@@ -44,11 +63,21 @@
                 },
                 "identifier": {
                     "kind": "IdentifierName",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -56,6 +85,11 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
+            "fullStart": 8,
+            "fullEnd": 8,
+            "start": 8,
+            "end": 8,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }

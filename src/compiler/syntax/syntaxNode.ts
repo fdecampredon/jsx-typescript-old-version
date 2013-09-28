@@ -31,19 +31,23 @@ module TypeScript {
         }
 
         public fullStart(): number {
-            return this.firstToken().fullStart();
+            var firstToken = this.firstToken();
+            return firstToken ? firstToken.fullStart() : -1;
         }
 
         public fullEnd(): number {
-            return this.lastToken().fullEnd();
+            var lastToken = this.lastToken();
+            return lastToken ? lastToken.fullEnd() : -1;
         }
 
         public start(): number {
-            return this.firstToken().start();
+            var firstToken = this.firstToken();
+            return firstToken ? firstToken.start() : -1;
         }
 
         public end(): number {
-            return this.lastToken().end();
+            var lastToken = this.lastToken();
+            return lastToken ? lastToken.end() : -1;
         }
 
         // Returns the first non-missing token inside this node (or null if there are no such token).
@@ -108,8 +112,16 @@ module TypeScript {
         public toJSON(key: any): any {
             var result: any = {
                 kind: SyntaxKind[this.kind()],
-                fullWidth: this.fullWidth()
             };
+
+            result.fullStart = this.fullStart();
+            result.fullEnd = this.fullEnd();
+
+            result.start = this.start();
+            result.end = this.end();
+
+            result.fullWidth = this.fullWidth();
+            result.width = this.width();
 
             if (this.isIncrementallyUnusable()) {
                 result.isIncrementallyUnusable = true;

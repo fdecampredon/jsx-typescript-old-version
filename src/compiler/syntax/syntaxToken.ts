@@ -69,10 +69,14 @@ module TypeScript.Syntax {
             }
         }
 
+        result.fullStart = token.fullStart();
+        result.fullEnd = token.fullEnd();
+
+        result.start = token.start();
+        result.end = token.end();
+
+        result.fullWidth = token.fullWidth();
         result.width = token.width();
-        if (token.fullWidth() !== token.width()) {
-            result.fullWidth = token.fullWidth();
-        }
 
         result.text = token.text();
 

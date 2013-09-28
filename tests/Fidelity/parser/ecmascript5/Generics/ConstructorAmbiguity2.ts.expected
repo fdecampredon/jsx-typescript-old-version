@@ -6,23 +6,47 @@
     },
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 10,
+        "start": 0,
+        "end": 10,
         "fullWidth": 10,
+        "width": 10,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 0,
+                "fullEnd": 10,
+                "start": 0,
+                "end": 10,
                 "fullWidth": 10,
+                "width": 10,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "LessThanExpression",
+                    "fullStart": 0,
+                    "fullEnd": 10,
+                    "start": 0,
+                    "end": 10,
                     "fullWidth": 10,
+                    "width": 10,
                     "left": {
                         "kind": "ObjectCreationExpression",
+                        "fullStart": 0,
+                        "fullEnd": 8,
+                        "start": 0,
+                        "end": 8,
                         "fullWidth": 8,
+                        "width": 8,
                         "newKeyword": {
                             "kind": "NewKeyword",
-                            "width": 3,
+                            "fullStart": 0,
+                            "fullEnd": 4,
+                            "start": 0,
+                            "end": 3,
                             "fullWidth": 4,
+                            "width": 3,
                             "text": "new",
                             "value": "new",
                             "valueText": "new",
@@ -36,6 +60,11 @@
                         },
                         "expression": {
                             "kind": "IdentifierName",
+                            "fullStart": 4,
+                            "fullEnd": 8,
+                            "start": 4,
+                            "end": 8,
+                            "fullWidth": 4,
                             "width": 4,
                             "text": "Date",
                             "value": "Date",
@@ -44,6 +73,11 @@
                     },
                     "operatorToken": {
                         "kind": "LessThanToken",
+                        "fullStart": 8,
+                        "fullEnd": 9,
+                        "start": 8,
+                        "end": 9,
+                        "fullWidth": 1,
                         "width": 1,
                         "text": "<",
                         "value": "<",
@@ -51,6 +85,11 @@
                     },
                     "right": {
                         "kind": "IdentifierName",
+                        "fullStart": 9,
+                        "fullEnd": 10,
+                        "start": 9,
+                        "end": 10,
+                        "fullWidth": 1,
                         "width": 1,
                         "text": "A",
                         "value": "A",
@@ -59,6 +98,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -66,6 +110,11 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
+            "fullStart": 10,
+            "fullEnd": 10,
+            "start": 10,
+            "end": 10,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }

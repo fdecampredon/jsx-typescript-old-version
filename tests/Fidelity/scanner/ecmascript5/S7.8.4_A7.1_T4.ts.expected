@@ -9,8 +9,12 @@
     "tokens": [
         {
             "kind": "StringLiteral",
-            "width": 8,
+            "fullStart": 0,
+            "fullEnd": 362,
+            "start": 353,
+            "end": 361,
             "fullWidth": 362,
+            "width": 8,
             "text": "\"\\u000G\"",
             "value": "\u0000",
             "valueText": "\u0000",
@@ -70,8 +74,12 @@
         },
         {
             "kind": "EndOfFileToken",
-            "width": 0,
+            "fullStart": 362,
+            "fullEnd": 363,
+            "start": 363,
+            "end": 363,
             "fullWidth": 1,
+            "width": 0,
             "text": "",
             "hasLeadingTrivia": true,
             "hasLeadingNewLine": true,

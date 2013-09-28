@@ -13,17 +13,31 @@
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 327,
+        "start": 320,
+        "end": 327,
         "fullWidth": 327,
+        "width": 7,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 0,
+                "fullEnd": 326,
+                "start": 320,
+                "end": 325,
                 "fullWidth": 326,
+                "width": 5,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "StringLiteral",
-                    "width": 5,
+                    "fullStart": 0,
+                    "fullEnd": 326,
+                    "start": 320,
+                    "end": 325,
                     "fullWidth": 326,
+                    "width": 5,
                     "text": "\"\\u1\"",
                     "value": "\u0001",
                     "valueText": "\u0001",
@@ -83,6 +97,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -90,8 +109,12 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
-            "width": 0,
+            "fullStart": 326,
+            "fullEnd": 327,
+            "start": 327,
+            "end": 327,
             "fullWidth": 1,
+            "width": 0,
             "text": "",
             "hasLeadingTrivia": true,
             "hasLeadingNewLine": true,

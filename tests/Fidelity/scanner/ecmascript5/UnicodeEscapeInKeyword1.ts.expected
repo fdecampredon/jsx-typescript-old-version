@@ -1,8 +1,12 @@
 [
     {
         "kind": "VarKeyword",
-        "width": 8,
+        "fullStart": 0,
+        "fullEnd": 9,
+        "start": 0,
+        "end": 8,
         "fullWidth": 9,
+        "width": 8,
         "text": "\\u0076ar",
         "value": "var",
         "valueText": "var",
@@ -16,8 +20,12 @@
     },
     {
         "kind": "IdentifierName",
-        "width": 1,
+        "fullStart": 9,
+        "fullEnd": 11,
+        "start": 9,
+        "end": 10,
         "fullWidth": 2,
+        "width": 1,
         "text": "x",
         "value": "x",
         "valueText": "x",
@@ -31,8 +39,12 @@
     },
     {
         "kind": "EqualsToken",
-        "width": 1,
+        "fullStart": 11,
+        "fullEnd": 13,
+        "start": 11,
+        "end": 12,
         "fullWidth": 2,
+        "width": 1,
         "text": "=",
         "value": "=",
         "valueText": "=",
@@ -46,6 +58,11 @@
     },
     {
         "kind": "StringLiteral",
+        "fullStart": 13,
+        "fullEnd": 20,
+        "start": 13,
+        "end": 20,
+        "fullWidth": 7,
         "width": 7,
         "text": "\"hello\"",
         "value": "hello",
@@ -53,6 +70,11 @@
     },
     {
         "kind": "SemicolonToken",
+        "fullStart": 20,
+        "fullEnd": 21,
+        "start": 20,
+        "end": 21,
+        "fullWidth": 1,
         "width": 1,
         "text": ";",
         "value": ";",
@@ -60,6 +82,11 @@
     },
     {
         "kind": "EndOfFileToken",
+        "fullStart": 21,
+        "fullEnd": 21,
+        "start": 21,
+        "end": 21,
+        "fullWidth": 0,
         "width": 0,
         "text": ""
     }

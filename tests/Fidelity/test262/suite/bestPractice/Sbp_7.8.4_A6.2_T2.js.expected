@@ -13,17 +13,31 @@
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 296,
+        "start": 289,
+        "end": 296,
         "fullWidth": 296,
+        "width": 7,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 0,
+                "fullEnd": 295,
+                "start": 289,
+                "end": 294,
                 "fullWidth": 295,
+                "width": 5,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "StringLiteral",
-                    "width": 5,
+                    "fullStart": 0,
+                    "fullEnd": 295,
+                    "start": 289,
+                    "end": 294,
                     "fullWidth": 295,
+                    "width": 5,
                     "text": "\"\\xA\"",
                     "value": "\n",
                     "valueText": "\n",
@@ -83,6 +97,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -90,8 +109,12 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
-            "width": 0,
+            "fullStart": 295,
+            "fullEnd": 296,
+            "start": 296,
+            "end": 296,
             "fullWidth": 1,
+            "width": 0,
             "text": "",
             "hasLeadingTrivia": true,
             "hasLeadingNewLine": true,

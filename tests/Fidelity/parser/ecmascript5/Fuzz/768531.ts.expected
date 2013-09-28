@@ -6,15 +6,30 @@
     },
     "sourceUnit": {
         "kind": "SourceUnit",
+        "fullStart": 0,
+        "fullEnd": 11,
+        "start": 0,
+        "end": 11,
         "fullWidth": 11,
+        "width": 11,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "Block",
+                "fullStart": 0,
+                "fullEnd": 8,
+                "start": 0,
+                "end": 6,
                 "fullWidth": 8,
+                "width": 6,
                 "isIncrementallyUnusable": true,
                 "openBraceToken": {
                     "kind": "OpenBraceToken",
+                    "fullStart": 0,
+                    "fullEnd": 1,
+                    "start": 0,
+                    "end": 1,
+                    "fullWidth": 1,
                     "width": 1,
                     "text": "{",
                     "value": "{",
@@ -23,10 +38,20 @@
                 "statements": [
                     {
                         "kind": "LabeledStatement",
+                        "fullStart": 1,
+                        "fullEnd": 5,
+                        "start": 1,
+                        "end": 5,
                         "fullWidth": 4,
+                        "width": 4,
                         "isIncrementallyUnusable": true,
                         "identifier": {
                             "kind": "IdentifierName",
+                            "fullStart": 1,
+                            "fullEnd": 2,
+                            "start": 1,
+                            "end": 2,
+                            "fullWidth": 1,
                             "width": 1,
                             "text": "a",
                             "value": "a",
@@ -34,8 +59,12 @@
                         },
                         "colonToken": {
                             "kind": "ColonToken",
-                            "width": 1,
+                            "fullStart": 2,
+                            "fullEnd": 4,
+                            "start": 2,
+                            "end": 3,
                             "fullWidth": 2,
+                            "width": 1,
                             "text": ":",
                             "value": ":",
                             "valueText": ":",
@@ -49,10 +78,20 @@
                         },
                         "statement": {
                             "kind": "ExpressionStatement",
+                            "fullStart": 4,
+                            "fullEnd": 5,
+                            "start": 4,
+                            "end": 5,
                             "fullWidth": 1,
+                            "width": 1,
                             "isIncrementallyUnusable": true,
                             "expression": {
                                 "kind": "NumericLiteral",
+                                "fullStart": 4,
+                                "fullEnd": 5,
+                                "start": 4,
+                                "end": 5,
+                                "fullWidth": 1,
                                 "width": 1,
                                 "text": "3",
                                 "value": 3,
@@ -60,6 +99,11 @@
                             },
                             "semicolonToken": {
                                 "kind": "SemicolonToken",
+                                "fullStart": -1,
+                                "fullEnd": -1,
+                                "start": -1,
+                                "end": -1,
+                                "fullWidth": 0,
                                 "width": 0,
                                 "text": ""
                             }
@@ -68,8 +112,12 @@
                 ],
                 "closeBraceToken": {
                     "kind": "CloseBraceToken",
-                    "width": 1,
+                    "fullStart": 5,
+                    "fullEnd": 8,
+                    "start": 5,
+                    "end": 6,
                     "fullWidth": 3,
+                    "width": 1,
                     "text": "}",
                     "value": "}",
                     "valueText": "}",
@@ -85,10 +133,20 @@
             },
             {
                 "kind": "ExpressionStatement",
+                "fullStart": 8,
+                "fullEnd": 11,
+                "start": 8,
+                "end": 11,
                 "fullWidth": 3,
+                "width": 3,
                 "isIncrementallyUnusable": true,
                 "expression": {
                     "kind": "RegularExpressionLiteral",
+                    "fullStart": 8,
+                    "fullEnd": 11,
+                    "start": 8,
+                    "end": 11,
+                    "fullWidth": 3,
                     "width": 3,
                     "text": "/x/",
                     "value": {},
@@ -96,6 +154,11 @@
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",
+                    "fullStart": -1,
+                    "fullEnd": -1,
+                    "start": -1,
+                    "end": -1,
+                    "fullWidth": 0,
                     "width": 0,
                     "text": ""
                 }
@@ -103,6 +166,11 @@
         ],
         "endOfFileToken": {
             "kind": "EndOfFileToken",
+            "fullStart": 11,
+            "fullEnd": 11,
+            "start": 11,
+            "end": 11,
+            "fullWidth": 0,
             "width": 0,
             "text": ""
         }
