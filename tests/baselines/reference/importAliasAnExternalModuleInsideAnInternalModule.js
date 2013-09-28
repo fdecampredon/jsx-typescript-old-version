@@ -7,7 +7,6 @@
 var m = exports.m;
 
 //// [importAliasAnExternalModuleInsideAnInternalModule_file1.js]
-
 var m_private;
 (function (m_private) {
     //import r2 = require('m'); // would be error

@@ -29,6 +29,9 @@
 ////	}
 ////}
 
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
+
 // References to a member method with the same name as a static.
 goTo.marker("1");
 verify.referencesCountIs(3);

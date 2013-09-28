@@ -134,6 +134,8 @@ module TypeScript {
     export class PullContextualTypeContext {
         public provisionallyTypedSymbols: PullSymbol[] = [];
         public hasProvisionalErrors = false;
+        private symbolASTMap = new DataMap<AST>();
+        private astSymbolMap = new DataMap<PullSymbol>();
 
         constructor(public contextualType: PullTypeSymbol,
                     public provisional: boolean,
@@ -147,6 +149,19 @@ module TypeScript {
             for (var i = 0; i < this.provisionallyTypedSymbols.length; i++) {
                 this.provisionallyTypedSymbols[i].invalidate();
             }
+        }
+
+        public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
+            this.astSymbolMap.link(ast.astIDString, symbol);
+            this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
+        }
+
+        public getASTForSymbol(symbol: PullSymbol): AST {
+            return this.symbolASTMap.read(symbol.pullSymbolIDString);
+        }
+
+        public getSymbolForAST(ast: IAST): PullSymbol {
+            return this.astSymbolMap.read(ast.astIDString);
         }
     }
 
@@ -384,6 +399,44 @@ module TypeScript {
             }
             // If we didn't find it, return -1 (which signals that we are in the function body
             return -1;
+        }
+
+        public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
+            this.contextStack[this.contextStack.length - 1].setSymbolForAST(ast, symbol);
+        }
+
+        public getASTForSymbol(symbol: PullSymbol): AST {
+            for (var i = this.contextStack.length - 1; i >= 0; i--) {
+                var typeContext = this.contextStack[i];
+                if (!typeContext.provisional) {
+                    // Only provisional contexts have caches
+                    break;
+                }
+
+                var ast = typeContext.getASTForSymbol(symbol);
+                if (ast) {
+                    return ast;
+                }
+            }
+
+            return null;
+        }
+
+        public getSymbolForAST(ast: IAST): PullSymbol {
+            for (var i = this.contextStack.length - 1; i >= 0; i--) {
+                var typeContext = this.contextStack[i];
+                if (!typeContext.provisional) {
+                    // Only provisional contexts have caches
+                    break;
+                }
+
+                var symbol = typeContext.getSymbolForAST(ast);
+                if (symbol) {
+                    return symbol;
+                }
+            }
+
+            return null;
         }
     }
 

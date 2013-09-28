@@ -69,10 +69,9 @@ define(["require", "exports"], function(require, exports) {
     var im_public_f_private = m_private.f_private;
     exports.im_public_f_private = im_public_f_private;
     exports.im_public_v_private = m_private.v_private;
-    
+
     var im_public_mi_private = m_private.mi_private;
     exports.im_public_mi_private = im_public_mi_private;
-    
 
     // Usage of privacy error imports
     var privateUse_im_public_c_private = new exports.im_public_c_private();
@@ -98,10 +97,9 @@ define(["require", "exports"], function(require, exports) {
     var im_public_f_public = m_public.f_public;
     exports.im_public_f_public = im_public_f_public;
     exports.im_public_v_public = m_public.v_public;
-    
+
     var im_public_mi_public = m_public.mi_public;
     exports.im_public_mi_public = im_public_mi_public;
-    
 
     // Usage of above decls
     var privateUse_im_public_c_public = new exports.im_public_c_public();

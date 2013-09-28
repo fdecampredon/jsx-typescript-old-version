@@ -76,7 +76,6 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [commentsExternalModules_1.js]
 define(["require", "exports", "commentsExternalModules_0"], function(require, exports, extMod) {
-    
     extMod.m1.fooExport();
     var newVar = new extMod.m1.m2.c();
     extMod.m4.fooExport();

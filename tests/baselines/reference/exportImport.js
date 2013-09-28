@@ -15,8 +15,6 @@ define(["require", "exports", './w1'], function(require, exports, w) {
 });
 //// [consumer.js]
 define(["require", "exports", './exporter'], function(require, exports, e) {
-    
-
     function w() {
         return new e.w();
     }

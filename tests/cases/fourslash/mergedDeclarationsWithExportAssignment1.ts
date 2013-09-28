@@ -15,6 +15,9 @@
 ////var z/*3*/ = new /*2*/Foo();
 ////var r2/*5*/ = Foo./*4*/x;
 
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
+
 goTo.marker('1');
 verify.quickInfoIs('{ x: number; new(): Foo; }');
 

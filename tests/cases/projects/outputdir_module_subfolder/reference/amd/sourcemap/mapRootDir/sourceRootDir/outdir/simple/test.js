@@ -1,5 +1,4 @@
 define(["require", "exports", "ref/m1"], function(require, exports, m1) {
-    
     exports.a1 = 10;
     var c1 = (function () {
         function c1() {

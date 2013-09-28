@@ -1,6 +1,7 @@
 ///<reference path='..\..\..\src\harness\harness.ts'/>
 ///<reference path='..\..\..\src\harness\exec.ts'/>
 ///<reference path='..\runnerbase.ts' />
+/// <reference path='..\compiler\typeWriter.ts' />
 
 interface testSpec {
     projectName: string;    // name of the scenario
@@ -8,7 +9,7 @@ interface testSpec {
     compileList: string[];  // files we want to compile
     outputFile: string;     // the final output file
     skipThisCheck?: boolean;
-    target?: string;
+    skipTypeCheck?: boolean;
 }
 
 class RWCEmitter implements TypeScript.EmitterIOHost {
@@ -109,11 +110,13 @@ class RWCRunner extends RunnerBase {
                 var outputErrorFilename = runner.outputPath + spec.outputFile + ".err.out";
                 var outputCrashFilename = runner.outputPath + spec.outputFile + ".crash.out";
                 var outputDeclarationFilename = runner.outputPath + spec.outputFile + ".d.ts";
+                var outputTypesFilename = runner.outputPath + spec.outputFile + ".types";
 
                 var baselineJsFilename = runner.referencePath + spec.outputFile + ".js";
                 var baselineErrorFilename = runner.referencePath + spec.outputFile + ".err.out";
                 var baselineCrashFilename = runner.referencePath + spec.outputFile + ".crash.out";
                 var baselineDeclarationFilename = runner.referencePath + spec.outputFile + ".d.ts";
+                var baselineTypesFilename = runner.referencePath + spec.outputFile + ".types";
 
                 var emitterIOHost = new RWCEmitter(fsOutput, fsDeclOutput);
 
@@ -225,6 +228,55 @@ class RWCRunner extends RunnerBase {
 
                             var errMsg = 'The baseline file ' + spec.outputFile + '.d.ts' + ' has changed. Please refer to rwc-report.html and ';
                             errMsg += 'either fix the regression (if unintended) or update the baseline (if intended).'
+                            Harness.Assert.throwAssertError(new Error(errMsg));
+                        }
+                    }
+                });
+
+                it("correct expression types check", () => {
+                    if (!hasCrashed && !spec.skipTypeCheck && errors.length == 0) {
+                        var host = new TypeWriterHost();
+                        var compilerState = new Services.CompilerState(host);
+
+                        host.addScript('lib.d.ts', Harness.Compiler.libTextMinimal);
+
+                        spec.compileList.forEach((item: string) => {
+                            content = IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
+                            host.addScript(spec.projectRoot + "/" + item, content);
+                        });
+
+                        compilerState.refresh();
+                        spec.compileList.forEach(file => {
+                            compilerState.getSemanticDiagnostics(spec.projectRoot + "/" + file);
+                        });
+
+                        var typeLines: string[] = [];
+                        spec.compileList.forEach(file => {
+                            typeLines.push('=== ' + file + ' ===');
+                            var walker = new TypeWriterWalker(spec.projectRoot + "/" + file, host, compilerState);
+                            walker.run();
+                            walker.results.forEach(line => typeLines.push(line));
+                        });
+
+                        var typesResult = typeLines.join('\n');
+
+                        // write file for baseline updates
+                        if (IO.fileExists(outputTypesFilename)) {
+                            IO.deleteFile(outputTypesFilename);
+                        }
+                        IO.writeFile(outputTypesFilename, typesResult, /*codepage*/ null);
+                        
+                        if (!IO.fileExists(baselineTypesFilename)) {
+                            var expected = "<no content>";
+                        } else {
+                            var expected = IO.readFile(baselineTypesFilename, null).contents;
+                        }
+
+                        expected = expected.replace(/\r\n?/g, '\n');
+                        var actual = typesResult.replace(/\r\n?/g, '\n');
+                        if (actual !== expected) {
+                            var errMsg = 'The baseline file ' + spec.outputFile + '.types' + ' has changed. Due to the size of the generated files, '
+                            errMsg += 'use odd (or your favorite diff tool) to analyze the differences.';
                             Harness.Assert.throwAssertError(new Error(errMsg));
                         }
                     }

@@ -9,7 +9,5 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [exportAssignmentFunction_B.js]
 define(["require", "exports", "exportAssignmentFunction_A"], function(require, exports, fooFunc) {
-    
-
     var n = fooFunc();
 });

@@ -222,6 +222,30 @@ class HarnessBatch implements TypeScript.IDiagnosticReporter, TypeScript.IRefere
     }
 }
 
+interface ProjectRunnerTestCase {
+    scenario: string;
+    projectRoot: string;
+    inputFiles: string[];
+    collectedFiles: string[];
+    outputFiles: string[];
+    declareFiles?: string[];
+    verifyEmitFiles?: boolean;
+    errors?: string[];
+    verifyFileNamesOnly?: boolean;
+    baselineCheck?: boolean;
+    baselineFiles?: string[];
+    path?: string;
+    skipRun?: boolean;
+    skipNodeRun?: boolean;
+    negative?: boolean;
+    bug?: string;
+    outputOption?: string;
+    outDirOption?: string;
+    sourceMapRecordBaseline?: string;
+    mapRoot?: string;
+    sourceRoot?: string;
+}
+
 class ProjectRunner extends RunnerBase {
     public initializeTests() {
 
@@ -268,7 +292,7 @@ class ProjectRunner extends RunnerBase {
                 }
             }
 
-            function createTest(spec: any) {
+            function createTest(spec: ProjectRunnerTestCase) {
                 var inputFiles: string[] = [];
                 for (var i = 0; i < spec.inputFiles.length; i++) {
                     inputFiles.push(Harness.userSpecifiedroot + spec.projectRoot + "/" + spec.inputFiles[i]);
@@ -610,7 +634,7 @@ class ProjectRunner extends RunnerBase {
                 });
             }
 
-            var tests: any[] = [];
+            var tests: ProjectRunnerTestCase[] = [];
 
             tests.push({
                 scenario: 'module identifier'

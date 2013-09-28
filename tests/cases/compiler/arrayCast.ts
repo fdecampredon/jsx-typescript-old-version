@@ -1,2 +1,2 @@
-<{ id: number; }[]>[{ foo: "s" }]; // Contextual typing makes this succeed, since the array literal is typed as {}[], which is assignable to by {id: number;}[]
+<{ id: number; }[]>[{ foo: "s" }]; //Error { foo:string }[] is not assignable to by {id: number;}[]
 <{ id: number; }[]>[{ foo: "s" }, {}]; // Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]

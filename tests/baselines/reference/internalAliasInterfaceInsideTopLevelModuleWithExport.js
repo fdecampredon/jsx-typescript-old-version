@@ -1,5 +1,4 @@
 //// [internalAliasInterfaceInsideTopLevelModuleWithExport.js]
-
 exports.x;
 
 

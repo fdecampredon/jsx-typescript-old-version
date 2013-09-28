@@ -51,7 +51,6 @@ function foo() {
 exports.foo = foo;
 
 //// [importDecl_require4.js]
-
 function foo2() {
     return null;
 }

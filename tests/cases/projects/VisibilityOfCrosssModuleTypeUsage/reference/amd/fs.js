@@ -1,6 +1,4 @@
 define(["require", "exports"], function(require, exports) {
-    
-
     var RM = (function () {
         function RM() {
         }

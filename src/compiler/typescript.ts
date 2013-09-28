@@ -133,6 +133,7 @@ module TypeScript {
         public lineMap: LineMap;
 
         constructor(public fileName: string,
+                    public referencedFiles: string[],
                     private compilationSettings: CompilationSettings,
                     public scriptSnapshot: IScriptSnapshot,
                     public byteOrderMark: ByteOrderMark,
@@ -180,7 +181,7 @@ module TypeScript {
         public bloomFilter(): BloomFilter {
             if (!this._bloomFilter) {
                 var identifiers = new BlockIntrinsics<boolean>();
-                var pre = function (cur: TypeScript.AST, parent: TypeScript.AST, walker: IAstWalker) {
+                var pre = function (cur: TypeScript.AST, walker: IAstWalker) {
                     if (isValidAstNode(cur)) {
                         if (cur.nodeType() === NodeType.Name) {
                             var nodeText = (<TypeScript.Identifier>cur).text();
@@ -188,8 +189,6 @@ module TypeScript {
                             identifiers[nodeText] = true;
                         }
                     }
-
-                    return cur;
                 };
 
                 TypeScript.getAstWalkerFactory().walk(this.script, pre, null, null, identifiers);
@@ -220,7 +219,7 @@ module TypeScript {
                 ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this.compilationSettings))
                 : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
-            return new Document(this.fileName, this.compilationSettings, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree);
+            return new Document(this.fileName, this.referencedFiles, this.compilationSettings, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree);
         }
 
         public static create(fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[], compilationSettings: CompilationSettings): Document {
@@ -229,8 +228,7 @@ module TypeScript {
             var syntaxTree = Parser.parse(fileName, SimpleText.fromScriptSnapshot(scriptSnapshot), TypeScript.isDTSFile(fileName), getParseOptions(compilationSettings));
             TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
 
-            var document = new Document(fileName, compilationSettings, scriptSnapshot, byteOrderMark, version, isOpen, syntaxTree);
-            document.script.referencedFiles = referencedFiles;
+            var document = new Document(fileName, referencedFiles, compilationSettings, scriptSnapshot, byteOrderMark, version, isOpen, syntaxTree);
 
             return document;
         }
@@ -306,7 +304,7 @@ module TypeScript {
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var document = this.getDocument(fileNames[i]);
                 var script = document.script;
-                if (!script.isDeclareFile && script.topLevelMod !== null) {
+                if (!script.isDeclareFile && script.isExternalModule) {
                     return true;
                 }
             }
@@ -439,13 +437,13 @@ module TypeScript {
 
         private writeByteOrderMarkForDocument(document: Document) {
             // If module its always emitted in its own file
-            if (this.emitOptions.outputMany || document.script.topLevelMod) {
+            if (this.emitOptions.outputMany || document.script.isExternalModule) {
                 return document.byteOrderMark !== ByteOrderMark.None;
             } else {
                 var fileNames = this.fileNameToDocument.getAllKeys();
 
                 for (var i = 0, n = fileNames.length; i < n; i++) {
-                    if (document.script.topLevelMod) {
+                    if (document.script.isExternalModule) {
                         // Dynamic module never contributes to the single file
                         continue;
                     }
@@ -508,7 +506,7 @@ module TypeScript {
                         var document = this.getDocument(fileNames[i]);
 
                         // Emitting module or multiple files, always goes to single file
-                        if (this.emitOptions.outputMany || document.script.topLevelMod) {
+                        if (this.emitOptions.outputMany || document.script.isExternalModule) {
                             var singleEmitter = this.emitDeclarations(document);
                             if (singleEmitter) {
                                 singleEmitter.close();
@@ -545,7 +543,7 @@ module TypeScript {
 
             if (this.shouldEmitDeclarations(document.script)) {
                 // Emitting module or multiple files, always goes to single file
-                if (this.emitOptions.outputMany || document.script.topLevelMod) {
+                if (this.emitOptions.outputMany || document.script.isExternalModule) {
                     try {
                         var emitter = this.emitDeclarations(document);
                         if (emitter) {
@@ -640,7 +638,7 @@ module TypeScript {
 
                 try {
                     // Emitting module or multiple files, always goes to single file
-                    if (this.emitOptions.outputMany || document.script.topLevelMod) {
+                    if (this.emitOptions.outputMany || document.script.isExternalModule) {
                         // We're outputting to mulitple files.  We don't want to reuse an emitter in that case.
                         var singleEmitter = this.emit(document, inputOutputMapper);
 
@@ -683,7 +681,7 @@ module TypeScript {
 
             var document = this.getDocument(fileName);
             // Emitting module or multiple files, always goes to single file
-            if (this.emitOptions.outputMany || document.script.topLevelMod) {
+            if (this.emitOptions.outputMany || document.script.isExternalModule) {
                 // In outputMany mode, only emit the document specified and its sourceMap if needed
                 try {
                     var emitter = this.emit(document, inputOutputMapper);
@@ -944,7 +942,7 @@ module TypeScript {
                 globalBinder.semanticInfoChain = this.semanticInfoChain;
             }            
 
-            var pre = (cur: AST, parent: AST): AST => {
+            var pre = (cur: AST) => {
                 if (isValidAstNode(cur)) {
                     if (pos >= cur.minChar && pos <= cur.limChar) {
 
@@ -982,7 +980,6 @@ module TypeScript {
                         }
                     }
                 }
-                return cur;
             };
 
             getAstWalkerFactory().walk(script, pre);
@@ -1031,7 +1028,7 @@ module TypeScript {
                 var funcDecl: FunctionDeclaration = null;
                 if (lastDeclAST === foundAST) {
                     symbol = declStack[declStack.length - 1].getSymbol();
-                    this.resolver.resolveDeclaredSymbol(symbol, null, resolutionContext);
+                    this.resolver.resolveDeclaredSymbol(symbol, resolutionContext);
                     symbol.setUnresolved();
                     enclosingDecl = declStack[declStack.length - 1].getParentDecl();
                     if (foundAST.nodeType() === NodeType.FunctionDeclaration) {
@@ -1365,27 +1362,6 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.CastExpression:
-                        var castExpression = <CastExpression>current;
-
-                        if (!(i + 1 < n && path.asts[i + 1] === castExpression.castType)) {
-                            // We are outside the cast term
-                            if (propagateContextualTypes) {
-                                var contextualType: PullTypeSymbol = null;
-                                var typeSymbol = this.resolver.resolveCastExpression(castExpression, enclosingDecl, resolutionContext);
-
-                                // Set the context type
-                                if (typeSymbol) {
-                                    inContextuallyTypedAssignment = true;
-                                    contextualType = typeSymbol;
-                                }
-
-                                resolutionContext.pushContextualType(contextualType, false, null);
-                            }
-                        }
-
-                        break;
-
                     case NodeType.ReturnStatement:
                         if (propagateContextualTypes) {
                             var returnStatement = <ReturnStatement>current;
@@ -1456,7 +1432,6 @@ module TypeScript {
                         var interfaceDeclaration = <InterfaceDeclaration>current;
                         if (path.asts[i + 1]) {
                             if (path.asts[i + 1] === interfaceDeclaration.extendsList ||
-                                path.asts[i + 1] === interfaceDeclaration.implementsList ||
                                 path.asts[i + 1] === interfaceDeclaration.name) {
                                 resolutionContext.resolvingTypeReference = true;
                             }
@@ -1524,7 +1499,11 @@ module TypeScript {
 
             var ast = path.ast();
 
-            if (ast.nodeType() !== NodeType.ClassDeclaration && ast.nodeType() !== NodeType.InterfaceDeclaration && ast.nodeType() !== NodeType.ModuleDeclaration && ast.nodeType() !== NodeType.FunctionDeclaration && ast.nodeType() !== NodeType.VariableDeclarator) {
+            if (ast.nodeType() !== NodeType.ClassDeclaration &&
+                ast.nodeType() !== NodeType.InterfaceDeclaration &&
+                ast.nodeType() !== NodeType.ModuleDeclaration &&
+                ast.nodeType() !== NodeType.FunctionDeclaration &&
+                ast.nodeType() !== NodeType.VariableDeclarator) {
                 return null;
             }
 
@@ -1541,7 +1520,7 @@ module TypeScript {
             var semanticInfo = this.semanticInfoChain.getUnit(scriptName);
             var decl = semanticInfo.getDeclForAST(ast);
             var symbol = (decl.kind & PullElementKind.SomeSignature) ? decl.getSignatureSymbol() : decl.getSymbol();
-            this.resolver.resolveDeclaredSymbol(symbol, null, context.resolutionContext);
+            this.resolver.resolveDeclaredSymbol(symbol, context.resolutionContext);
 
             // we set the symbol as unresolved so as not to interfere with typecheck
             symbol.setUnresolved();
@@ -1666,7 +1645,7 @@ module TypeScript {
             }
 
             var symbol = decl.getSymbol();
-            this.resolver.resolveDeclaredSymbol(symbol, context.enclosingDecl, context.resolutionContext);
+            this.resolver.resolveDeclaredSymbol(symbol, context.resolutionContext);
             symbol.setUnresolved();
 
             return {

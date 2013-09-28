@@ -280,6 +280,13 @@ module TypeScript {
                 }
             }
 
+            // We add the declaration early so that during any recursive binding of other module decls with the same name, this declaration is present.
+            moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
+            moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
+
+            this.semanticInfo.setSymbolForAST(moduleAST.name, moduleContainerTypeSymbol);
+            this.semanticInfo.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
+
             if (!moduleInstanceSymbol && isInitializedModule) {
                 // search for a complementary instance symbol first
                 var variableSymbol: PullSymbol = null;
@@ -364,12 +371,6 @@ module TypeScript {
                     moduleInstanceTypeSymbol.setAssociatedContainerType(moduleContainerTypeSymbol);
                 }
             }
-
-            moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
-            moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
-
-            this.semanticInfo.setSymbolForAST(moduleAST.name, moduleContainerTypeSymbol);
-            this.semanticInfo.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
 
             // If we have an enum with more than one declaration, then this enum's first element
             // must have an initializer.
@@ -601,7 +602,7 @@ module TypeScript {
             var interfaceName = interfaceDecl.name;
             var interfaceSymbol: PullTypeSymbol = null;
 
-            var interfaceAST = <TypeDeclaration>this.semanticInfo.getASTForDecl(interfaceDecl);
+            var interfaceAST = <InterfaceDeclaration>this.semanticInfo.getASTForDecl(interfaceDecl);
             var createdNewSymbol = false;
             var parent = this.getParent(interfaceDecl);
 
@@ -880,7 +881,9 @@ module TypeScript {
             if ((declFlags & PullElementFlags.ImplicitVariable) === 0) {
                 if (!variableSymbol) {
                     variableSymbol = new PullSymbol(declName, declKind);
-                    this.semanticInfoChain.cacheGlobalSymbol(variableSymbol, declKind);
+                    if (!parent) {
+                        this.semanticInfoChain.cacheGlobalSymbol(variableSymbol, declKind);
+                    }
                 }
 
                 variableSymbol.addDeclaration(variableDeclaration);

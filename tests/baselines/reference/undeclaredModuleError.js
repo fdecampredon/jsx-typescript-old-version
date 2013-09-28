@@ -1,5 +1,4 @@
 define(["require", "exports", 'fs'], function(require, exports, fs) {
-    
     function readdir(path, accept, callback) {
     }
 

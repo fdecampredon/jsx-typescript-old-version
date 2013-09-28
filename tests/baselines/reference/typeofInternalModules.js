@@ -13,7 +13,6 @@ var Outer;
 
 var importInst = Outer.instantiated;
 
-
 var x1 = importInst.C;
 var x2 = new x1();
 var x3;

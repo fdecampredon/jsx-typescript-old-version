@@ -6,6 +6,5 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [exportEqualCallable_1.js]
 define(["require", "exports", 'exportEqualCallable_0'], function(require, exports, connect) {
-    
     connect();
 });

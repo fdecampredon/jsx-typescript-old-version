@@ -24,15 +24,9 @@ var provide = foo;
 var booz = foo.bar.baz;
 var beez = foo.bar;
 
-
-
-
 5;
-
 "s";
-
 null;
-
 
 var p = new provide.Provide();
 

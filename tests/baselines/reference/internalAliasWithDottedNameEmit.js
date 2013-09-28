@@ -1,0 +1,20 @@
+var a;
+(function (a) {
+    (function (b) {
+        (function (c) {
+            c.d;
+        })(b.c || (b.c = {}));
+        var c = b.c;
+    })(a.b || (a.b = {}));
+    var b = a.b;
+})(a || (a = {}));
+var a;
+(function (a) {
+    (function (e) {
+        (function (f) {
+            var g = a.b.c;
+        })(e.f || (e.f = {}));
+        var f = e.f;
+    })(a.e || (a.e = {}));
+    var e = a.e;
+})(a || (a = {}));

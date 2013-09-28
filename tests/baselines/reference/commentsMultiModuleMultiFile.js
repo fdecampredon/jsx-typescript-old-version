@@ -37,8 +37,6 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [commentsMultiModuleMultiFile_1.js]
 define(["require", "exports"], function(require, exports) {
-    
-
     /** this is multi module 3 comment*/
     var multiM;
     (function (multiM) {

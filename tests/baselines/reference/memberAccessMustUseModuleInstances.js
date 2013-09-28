@@ -12,7 +12,5 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [memberAccessMustUseModuleInstances_1.js]
 define(["require", "exports", 'memberAccessMustUseModuleInstances_0'], function(require, exports, WinJS) {
-    
-
     WinJS.Promise.timeout(10);
 });

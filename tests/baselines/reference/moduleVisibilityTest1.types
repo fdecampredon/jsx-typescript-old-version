@@ -5,7 +5,7 @@ Line 3 col 50 NegateExpression "-1" = number
 Line 5 col 15 IdentifierName "OuterInnerMod" = OuterMod.OuterInnerMod
 Line 6 col 18 IdentifierName "someExportedOuterInnerFunc" = () => string
 Line 10 col 7 IdentifierName "OuterInnerAlias" = { someExportedOuterInnerFunc(): string; }
-Line 10 col 25 IdentifierName "OuterMod" = { someExportedOuterFunc(): number; OuterInnerMod: { someExportedOuterInnerFunc(): string; }; }
+Line 10 col 25 IdentifierName "OuterMod" = OuterMod
 Line 10 col 34 IdentifierName "OuterInnerMod" = any
 Line 12 col 7 IdentifierName "M" = M
 Line 14 col 15 IdentifierName "InnerMod" = M.InnerMod

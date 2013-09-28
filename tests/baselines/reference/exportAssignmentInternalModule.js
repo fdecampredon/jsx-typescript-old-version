@@ -10,7 +10,5 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [exportAssignmentInternalModule_B.js]
 define(["require", "exports", "exportAssignmentInternalModule_A"], function(require, exports, modM) {
-    
-
     var n = modM.x;
 });

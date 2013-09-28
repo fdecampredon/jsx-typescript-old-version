@@ -1,5 +1,4 @@
 //// [internalAliasUninitializedModuleInsideTopLevelModuleWithoutExport.js]
-
 exports.x;
 exports.x.foo();
 

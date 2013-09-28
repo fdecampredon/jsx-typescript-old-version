@@ -630,7 +630,7 @@ module TypeScript {
                 // The ReservedWord definitions are specified as literal sequences of Unicode 
                 // characters.However, any Unicode character in a ReservedWord can also be 
                 // expressed by a \ UnicodeEscapeSequence that expresses that same Unicode 
-                // character’s code point.Use of such escape sequences does not change the meaning 
+                // character's code point.Use of such escape sequences does not change the meaning 
                 // of the ReservedWord.
                 //
                 // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.

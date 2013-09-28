@@ -1464,6 +1464,10 @@ module TypeScript {
         }
         public setTypeArguments(typeArgs: PullTypeSymbol[]) { this._typeArguments = typeArgs; }
 
+        public getTypeArgumentsOrTypeParameters() {
+            return this.getIsSpecialized() ? this.getTypeArguments() : this.getTypeParameters();
+        }
+
         public addCallSignature(callSignature: PullSignatureSymbol) {
 
             if (!this._callSignatures) {
@@ -1891,11 +1895,7 @@ module TypeScript {
         public getNamePartForFullName() {
             var name = super.getNamePartForFullName();
 
-            var typars = this.getTypeArguments();
-            if (!typars || !typars.length) {
-                typars = this.getTypeParameters();
-            }
-
+            var typars = this.getTypeArgumentsOrTypeParameters();
             var typarString = PullSymbol.getTypeParameterString(typars, this, /*useConstraintInName:*/ true);
             return name + typarString;
         }
@@ -1947,11 +1947,7 @@ module TypeScript {
             var builder = new MemberNameArray();
             builder.prefix = super.getScopedName(scopeSymbol, useConstraintInName);
 
-            var typars = this.getTypeArguments();
-            if (!typars || !typars.length) {
-                typars = this.getTypeParameters();
-            }
-
+            var typars = this.getTypeArgumentsOrTypeParameters();
             builder.add(PullSymbol.getTypeParameterStringEx(typars, scopeSymbol, getTypeParamMarkerInfo, useConstraintInName));
 
             return builder;
@@ -2045,29 +2041,6 @@ module TypeScript {
             }
 
             return MemberName.create("{}");
-        }
-
-        public isExternallyVisible(inIsExternallyVisibleSymbols?: PullSymbol[]): boolean {
-            var isVisible = super.isExternallyVisible(inIsExternallyVisibleSymbols);
-            if (isVisible) {
-                // Get type parameters
-                var typars = this.getTypeArguments();
-                if (!typars || !typars.length) {
-                    typars = this.getTypeParameters();
-                }
-
-                if (typars) {
-                    // If any of the type parameter is not visible the type is invisible
-                    for (var i = 0; i < typars.length; i++) {
-                        isVisible = PullSymbol.getIsExternallyVisible(typars[i], this, inIsExternallyVisibleSymbols);
-                        if (!isVisible) {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return isVisible;
         }
     }
 
@@ -2447,11 +2420,6 @@ module TypeScript {
         }
 
         public isExternallyVisible(inIsExternallyVisibleSymbols?: PullSymbol[]): boolean {
-            var constraint = this.getConstraint();
-            if (constraint) {
-                return PullSymbol.getIsExternallyVisible(constraint, this, inIsExternallyVisibleSymbols);
-            }
-
             return true;          
         }
     }
@@ -2672,7 +2640,7 @@ module TypeScript {
         return true;
     }
 
-    export function specializeType(typeToSpecialize: PullTypeSymbol, typeArguments: PullTypeSymbol[], resolver: PullTypeResolver, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
+    export function specializeType(typeToSpecialize: PullTypeSymbol, typeArguments: PullTypeSymbol[], resolver: PullTypeResolver, context: PullTypeResolutionContext): PullTypeSymbol {
 
         if (typeToSpecialize.isPrimitive() || !typeToSpecialize.isGeneric()) {
             return typeToSpecialize;
@@ -2727,14 +2695,14 @@ module TypeScript {
             if (!context.specializingToAny) {
                 var elementType = typeToSpecialize.getElementType();
 
-                newElementType = specializeType(elementType, typeArguments, resolver, enclosingDecl, context);
+                newElementType = specializeType(elementType, typeArguments, resolver, context);
             }
             else {
                 newElementType = resolver.semanticInfoChain.anyTypeSymbol;
             }
 
             // we re-specialize so that we can re-use any cached array type symbols
-            var newArrayType = specializeType(resolver.getCachedArrayType(), [newElementType], resolver, enclosingDecl, context);
+            var newArrayType = specializeType(resolver.getCachedArrayType(), [newElementType], resolver, context);
 
             return newArrayType;
         }     
@@ -2794,7 +2762,7 @@ module TypeScript {
                 // of specializing the type, and if we didn't we would "over wrap" the type parameter 
                 replacementType = typeToSpecialize.memberWrapsOwnTypeParameter ? (<PullTypeSymbol>typesToReplace[i].getRootSymbol()) : typesToReplace[i];
 
-                substitution = specializeType(replacementType, null, resolver, enclosingDecl, context);
+                substitution = specializeType(replacementType, null, resolver, context);
 
                 typeArguments[i] = (substitution != null && !resolver.typesAreIdentical(typesToReplace[i], substitution)) ? substitution : typesToReplace[i];
             }
@@ -2885,7 +2853,6 @@ module TypeScript {
         // specialize any extends/implements types
         var extendedTypesToSpecialize = typeToSpecialize.getExtendedTypes();
         var typeDecl: PullDecl;
-        var typeAST: TypeDeclaration;
         var unitPath: string;
         var decls: PullDecl[] = typeToSpecialize.getDeclarations();
         var extendTypeSymbol: PullTypeSymbol = null;
@@ -2894,15 +2861,18 @@ module TypeScript {
         if (extendedTypesToSpecialize.length) {
             for (var i = 0; i < decls.length; i++) {
                 typeDecl = decls[i];
-                typeAST = <TypeDeclaration>resolver.semanticInfoChain.getASTForDecl(typeDecl);
+                var typeAST = resolver.semanticInfoChain.getASTForDecl(typeDecl);
+                var extendsList = typeAST.nodeType() === NodeType.ClassDeclaration
+                    ? (<ClassDeclaration>typeAST).extendsList
+                    : (<InterfaceDeclaration>typeAST).extendsList;
 
                 // if this is an 'extended' interface declaration, the AST's extends list may not match
-                if (typeAST.extendsList) {
+                if (extendsList) {
                     unitPath = resolver.getUnitPath();
                     resolver.setUnitPath(typeDecl.getScriptName());
-                    for (var j = 0; j < typeAST.extendsList.members.length; j++) {
+                    for (var j = 0; j < extendsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
-                        extendTypeSymbol = resolver.resolveTypeReference(<TypeReference>typeAST.extendsList.members[j], typeDecl, context);
+                        extendTypeSymbol = resolver.resolveTypeReference(<TypeReference>extendsList.members[j], typeDecl, context);
                         resolver.setUnitPath(unitPath);
                         context.popTypeSpecializationCache();
 
@@ -2917,14 +2887,17 @@ module TypeScript {
         if (implementedTypesToSpecialize.length) {
             for (var i = 0; i < decls.length; i++) {
                 typeDecl = decls[i];
-                typeAST = <TypeDeclaration>resolver.semanticInfoChain.getASTForDecl(typeDecl);
+                var typeAST = resolver.semanticInfoChain.getASTForDecl(typeDecl);
+                var implementsList = typeAST.nodeType() === NodeType.ClassDeclaration
+                    ? (<ClassDeclaration>typeAST).implementsList
+                    : null;
 
-                if (typeAST.implementsList) {
+                if (implementsList) {
                     unitPath = resolver.getUnitPath();
                     resolver.setUnitPath(typeDecl.getScriptName());
-                    for (var j = 0; j < typeAST.implementsList.members.length; j++) {
+                    for (var j = 0; j < implementsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
-                        implementedTypeSymbol = resolver.resolveTypeReference(<TypeReference>typeAST.implementsList.members[j], typeDecl, context);
+                        implementedTypeSymbol = resolver.resolveTypeReference(<TypeReference>implementsList.members[j], typeDecl, context);
                         resolver.setUnitPath(unitPath);
                         context.popTypeSpecializationCache();
 
@@ -2976,7 +2949,7 @@ module TypeScript {
                 // if the signature is not yet specialized, specialize the signature using an empty context first - that way, no type parameters
                 // will be accidentally specialized
                 if (!(signature.isResolved || signature.inResolution)) {
-                    resolver.resolveDeclaredSymbol(signature, enclosingDecl, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
+                    resolver.resolveDeclaredSymbol(signature, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
                 }
 
                 context.recursiveSignatureSpecializationDepth++;
@@ -3059,7 +3032,7 @@ module TypeScript {
                 decl.setSpecializingSignatureSymbol(newSignature);
 
                 if (!(signature.isResolved || signature.inResolution)) {
-                    resolver.resolveDeclaredSymbol(signature, enclosingDecl, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
+                    resolver.resolveDeclaredSymbol(signature, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
                 } 
 
                 context.recursiveSignatureSpecializationDepth++;
@@ -3140,7 +3113,7 @@ module TypeScript {
                 decl.setSpecializingSignatureSymbol(newSignature);
 
                 if (!(signature.isResolved || signature.inResolution)) {
-                    resolver.resolveDeclaredSymbol(signature, enclosingDecl, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
+                    resolver.resolveDeclaredSymbol(signature, new PullTypeResolutionContext(resolver, context.typeCheck(), context.typeCheckUnitPath));
                 } 
 
                 context.recursiveSignatureSpecializationDepth++;
@@ -3223,7 +3196,7 @@ module TypeScript {
                 newField.isOptional = true;
             }
 
-            resolver.resolveDeclaredSymbol(field, newTypeDecl, context);
+            resolver.resolveDeclaredSymbol(field, context);
 
             fieldType = field.type;
 
@@ -3250,7 +3223,7 @@ module TypeScript {
                     context.pushTypeSpecializationCache(typeReplacementMap);
 
                     context.recursiveMemberSpecializationDepth++;
-                    newFieldType = specializeType(fieldType, !fieldType.getIsSpecialized() ? typeArguments : null, resolver, newTypeDecl, context);
+                    newFieldType = specializeType(fieldType, !fieldType.getIsSpecialized() ? typeArguments : null, resolver, context);
                     context.recursiveMemberSpecializationDepth--;
 
                     resolver.setUnitPath(unitPath);
@@ -3276,10 +3249,10 @@ module TypeScript {
 
             // If we haven't yet resolved the constructor method, we need to resolve it *without* substituting
             // for any type variables, so as to avoid accidentally specializing the root declaration
-            resolver.resolveDeclaredSymbol(constructorMethod, enclosingDecl, context);
+            resolver.resolveDeclaredSymbol(constructorMethod, context);
 
             var newConstructorMethod = new PullSymbol(constructorMethod.name, PullElementKind.ConstructorMethod);
-            var newConstructorType = specializeType(constructorMethod.type, typeArguments, resolver, newTypeDecl, context);         
+            var newConstructorType = specializeType(constructorMethod.type, typeArguments, resolver, context);         
 
             context.isSpecializingConstructorMethod = prevIsSpecializingConstructorMethod;
 
@@ -3319,7 +3292,7 @@ module TypeScript {
                     context.pushTypeSpecializationCache(typeReplacementMap);
                     context.recursiveConstraintSpecializationDepth++;
 
-                    newConstraint = specializeType(constraint, /*typeArguments*/ null, resolver, constraintDecl.getParentDecl(), context);
+                    newConstraint = specializeType(constraint, /*typeArguments*/ null, resolver, context);
 
                     context.recursiveConstraintSpecializationDepth--;
                     resolver.setUnitPath(unitPath);
@@ -3351,7 +3324,7 @@ module TypeScript {
         }
 
         if (!signature.isResolved && !signature.inResolution) {
-            resolver.resolveDeclaredSymbol(signature, enclosingDecl, context);
+            resolver.resolveDeclaredSymbol(signature, context);
         }
 
         var newSignature = signature.getSpecialization(typeArguments);
@@ -3423,7 +3396,7 @@ module TypeScript {
         if (skipLocalTypeParameters && localSkipMap) {
             context.pushTypeSpecializationCache(localSkipMap);
         }
-        var newReturnType = (!localTypeParameters[returnType.name] /*&& typeArguments != null*/) ? specializeType(returnType, null/*typeArguments*/, resolver, enclosingDecl, context) : returnType;
+        var newReturnType = (!localTypeParameters[returnType.name] /*&& typeArguments != null*/) ? specializeType(returnType, null/*typeArguments*/, resolver, context) : returnType;
         if (skipLocalTypeParameters && localSkipMap) {
             context.popTypeSpecializationCache();
         }
@@ -3434,7 +3407,7 @@ module TypeScript {
         for (var k = 0; k < parameters.length; k++) {
             // This can only be the case if we're specializing a class that inherited an implicit
             // constructor containing parameters
-            resolver.resolveDeclaredSymbol(parameters[k], enclosingDecl, context);
+            resolver.resolveDeclaredSymbol(parameters[k], context);
 
             newParameter = new PullSymbol(parameters[k].name, parameters[k].kind);
             newParameter.setRootSymbol(parameters[k]);
@@ -3445,7 +3418,7 @@ module TypeScript {
             if (skipLocalTypeParameters && localSkipMap) {
                 context.pushTypeSpecializationCache(localSkipMap);
             }
-            newParameterType = !localTypeParameters[parameterType.name] ? specializeType(parameterType, null/*typeArguments*/, resolver, enclosingDecl, context) : parameterType;
+            newParameterType = !localTypeParameters[parameterType.name] ? specializeType(parameterType, null/*typeArguments*/, resolver, context) : parameterType;
             if (skipLocalTypeParameters && localSkipMap) {
                 context.popTypeSpecializationCache();
             }

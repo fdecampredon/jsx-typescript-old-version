@@ -7,7 +7,6 @@ var Promise = (function () {
 exports.Promise = Promise;
 
 //// [moduleInTypePosition1_1.js]
-
 var x = function (w1) {
 };
 

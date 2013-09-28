@@ -50,6 +50,8 @@
 
 ////var r8a/*23*/ = _.map</*error1*/B/*error2*/, string>(c5, (x/*8*/) => { return x.foo() });
 
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
 
 goTo.marker('1');
 verify.quickInfoIs('number');

@@ -75,8 +75,6 @@
     m1.m1_im1_public = m1_im1_public;
     var m1_im2_public = m1_M2_private;
     m1.m1_im2_public = m1_im2_public;
-    
-    
 })(exports.m1 || (exports.m1 = {}));
 var m1 = exports.m1;
 
@@ -159,8 +157,6 @@ var m2;
     m2.m1_im1_public = m1_im1_public;
     var m1_im2_public = m2_M2_private;
     m2.m1_im2_public = m1_im2_public;
-    
-    
 })(m2 || (m2 = {}));
 
 (function (glo_M1_public) {
@@ -241,24 +237,18 @@ exports.glo_im1_public = glo_im1_public;
 var glo_im2_public = glo_M3_private;
 exports.glo_im2_public = glo_im2_public;
 
-
-
 var m2;
 (function (m2) {
-    
     var m4;
     (function (m4) {
         var a = 10;
-        
     })(m4 || (m4 = {}));
 })(m2 || (m2 = {}));
 
 (function (m3) {
-    
     var m4;
     (function (m4) {
         var a = 10;
-        
     })(m4 || (m4 = {}));
 })(exports.m3 || (exports.m3 = {}));
 var m3 = exports.m3;

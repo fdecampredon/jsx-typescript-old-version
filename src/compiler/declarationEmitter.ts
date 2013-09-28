@@ -155,18 +155,18 @@ module TypeScript {
                     var emitDeclare = !hasFlag(pullFlags, PullElementFlags.Exported);
 
                     var container = this.getAstDeclarationContainer();
-                    var isWholeFileDynamicModule = container.nodeType() === NodeType.ModuleDeclaration &&
-                        hasFlag((<ModuleDeclaration>container).getModuleFlags(), ModuleFlags.IsWholeFile);
+                    var isExternalModule = container.nodeType() === NodeType.ModuleDeclaration &&
+                        hasFlag((<ModuleDeclaration>container).getModuleFlags(), ModuleFlags.IsExternalModule);
 
                     // Emit export only for global export statements. 
                     // The container for this would be dynamic module which is whole file
-                    if (isWholeFileDynamicModule && hasFlag(pullFlags, PullElementFlags.Exported)) {
+                    if (isExternalModule && hasFlag(pullFlags, PullElementFlags.Exported)) {
                         result += "export ";
                         emitDeclare = true;
                     }
 
                     // Emit declare only in global context
-                    if (isWholeFileDynamicModule || container.nodeType() == NodeType.Script) {
+                    if (isExternalModule || container.nodeType() == NodeType.Script) {
                         // Emit declare if not interface declaration or import declaration && is not from module
                         if (emitDeclare && typeString !== "interface" && typeString != "import") {
                             result += "declare ";
@@ -527,8 +527,7 @@ module TypeScript {
             this.declFile.WriteLine(";");
         }
 
-        private emitBaseList(typeDecl: TypeDeclaration, useExtendsList: boolean) {
-            var bases = useExtendsList ? typeDecl.extendsList : typeDecl.implementsList;
+        private emitBaseList(bases: ASTList, useExtendsList: boolean) {
             if (bases && (bases.members.length > 0)) {
                 var qual = useExtendsList ? "extends" : "implements";
                 this.declFile.Write(" " + qual + " ");
@@ -620,8 +619,8 @@ module TypeScript {
             this.declFile.Write(className);
             this.pushDeclarationContainer(classDecl);
             this.emitTypeParameters(classDecl.typeParameters);
-            this.emitBaseList(classDecl, true);
-            this.emitBaseList(classDecl, false);
+            this.emitBaseList(classDecl.extendsList, true);
+            this.emitBaseList(classDecl.implementsList, false);
             this.declFile.WriteLine(" {");
 
             this.indenter.increaseIndent();
@@ -656,10 +655,7 @@ module TypeScript {
                 typars = funcSignature.getTypeParameters();
             }
             else {
-                typars = containerSymbol.getTypeArguments();
-                if (!typars || !typars.length) {
-                    typars = containerSymbol.getTypeParameters();
-                }
+                typars = containerSymbol.getTypeArgumentsOrTypeParameters();
             }
 
             for (var i = 0; i < typars.length; i++) {
@@ -675,7 +671,7 @@ module TypeScript {
         }
 
         private emitDeclarationsForInterfaceDeclaration(interfaceDecl: InterfaceDeclaration) {
-            if (interfaceDecl.isObjectTypeLiteral || !this.canEmitDeclarations(ToDeclFlags(interfaceDecl.getVarFlags()), interfaceDecl)) {
+            if (!this.canEmitDeclarations(ToDeclFlags(interfaceDecl.getVarFlags()), interfaceDecl)) {
                 return;
             }
 
@@ -686,7 +682,7 @@ module TypeScript {
             this.declFile.Write(interfaceName);
             this.pushDeclarationContainer(interfaceDecl);
             this.emitTypeParameters(interfaceDecl.typeParameters);
-            this.emitBaseList(interfaceDecl, true);
+            this.emitBaseList(interfaceDecl.extendsList, true);
             this.declFile.WriteLine(" {");
 
             this.indenter.increaseIndent();
@@ -742,7 +738,7 @@ module TypeScript {
                 this.emitIndent();
                 this.declFile.Write(varDeclarator.id.actualText);
                 if (varDeclarator.init && varDeclarator.init.nodeType() == NodeType.NumericLiteral) {
-                    this.declFile.Write(" = " + (<NumberLiteral>varDeclarator.init).text());
+                    this.declFile.Write(" = " + (<NumericLiteral>varDeclarator.init).text());
                 }
                 this.declFile.WriteLine(",");
             }
@@ -757,13 +753,13 @@ module TypeScript {
                 return this.emitEnumSignature(moduleDecl);
             }
 
-            var isWholeFileModule = hasFlag(moduleDecl.getModuleFlags(), ModuleFlags.IsWholeFile);
-            if (!isWholeFileModule && !this.canEmitDeclarations(ToDeclFlags(moduleDecl.getModuleFlags()), moduleDecl)) {
+            var isExternalModule = hasFlag(moduleDecl.getModuleFlags(), ModuleFlags.IsExternalModule);
+            if (!isExternalModule && !this.canEmitDeclarations(ToDeclFlags(moduleDecl.getModuleFlags()), moduleDecl)) {
                 return;
             }
 
             var dottedModuleContainers: ModuleDeclaration[] = [];
-            if (!isWholeFileModule) {
+            if (!isExternalModule) {
                 var modulePullDecl = this.compiler.semanticInfoChain.getDeclForAST(moduleDecl, this.document.fileName);
                 var moduleName = this.getDeclFlagsString(ToDeclFlags(moduleDecl.getModuleFlags()), modulePullDecl, "module");
 
@@ -800,7 +796,7 @@ module TypeScript {
 
             this.emitDeclarationsForList(moduleDecl.members);
 
-            if (!isWholeFileModule) {
+            if (!isExternalModule) {
                 this.indenter.decreaseIndent();
                 this.emitIndent();
                 this.declFile.WriteLine("}");
@@ -838,9 +834,9 @@ module TypeScript {
 
             // Collect all the documents that need to be emitted as reference
             var documents: Document[] = [];
-            if (this.compiler.emitOptions.outputMany || script.topLevelMod) {
+            if (this.compiler.emitOptions.outputMany || script.isExternalModule) {
                 // Emit only from this file
-                var scriptReferences = script.referencedFiles;
+                var scriptReferences = this.document.referencedFiles;
                 var addedGlobalDocument = false;
                 for (var j = 0; j < scriptReferences.length; j++) {
                     var currentReference = this.resolveScriptReference(this.document, scriptReferences[j]);
@@ -848,9 +844,11 @@ module TypeScript {
                     // All the references that are not going to be part of same file
 
                     if (document &&
-                        (this.compiler.emitOptions.outputMany || document.script.isDeclareFile || document.script.topLevelMod || !addedGlobalDocument)) {
+                        (this.compiler.emitOptions.outputMany || document.script.isDeclareFile || document.script.isExternalModule || !addedGlobalDocument)) {
+
                         documents = documents.concat(document);
-                        if (!document.script.isDeclareFile && document.script.topLevelMod) {
+
+                        if (!document.script.isDeclareFile && document.script.isExternalModule) {
                             addedGlobalDocument = true;
                         }
                     }
@@ -859,15 +857,15 @@ module TypeScript {
                 // Collect from all the references and emit
                 var allDocuments = this.compiler.getDocuments();
                 for (var i = 0; i < allDocuments.length; i++) {
-                    if (!allDocuments[i].script.isDeclareFile && !allDocuments[i].script.topLevelMod) {
+                    if (!allDocuments[i].script.isDeclareFile && !allDocuments[i].script.isExternalModule) {
                         // Check what references need to be added
-                        var scriptReferences = allDocuments[i].script.referencedFiles;
+                        var scriptReferences = allDocuments[i].referencedFiles;
                         for (var j = 0; j < scriptReferences.length; j++) {
                             var currentReference = this.resolveScriptReference(allDocuments[i], scriptReferences[j]);
                             var document = this.compiler.getDocument(currentReference);
                             // All the references that are not going to be part of same file
                             if (document &&
-                                (document.script.isDeclareFile || document.script.topLevelMod)) {
+                                (document.script.isDeclareFile || document.script.isExternalModule)) {
                                 for (var k = 0; k < documents.length; k++) {
                                     if (documents[k] == document) {
                                         break;

@@ -9,7 +9,6 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [instanceOfInExternalModules_1.js]
 define(["require", "exports", "instanceOfInExternalModules_require"], function(require, exports, Bar) {
-    
     function IsFoo(value) {
         return value instanceof Bar.Foo;
     }

@@ -98,6 +98,13 @@ module FourSlash {
         Complete
     }
 
+    export enum TypingFidelity {
+        /** Performs typing and formatting (if formatting is enabled) */
+        Low,
+        /** Performs typing, checks completion lists, signature help, and formatting (if enabled) */
+        High
+    }
+
     // List of allowed metadata names
     var fileMetadataNames = ['Filename'];
     var globalMetadataNames = ['Module', 'Target', 'BaselineFile']; // Note: Only BaselineFile is actually supported at the moment
@@ -125,6 +132,7 @@ module FourSlash {
         public formatCodeOptions: Services.FormatCodeOptions = null;
 
         public editValidation = IncrementalEditValidation.Complete;
+        public typingFidelity = TypingFidelity.Low;
 
         constructor(public testData: FourSlashData) {
 
@@ -178,7 +186,6 @@ module FourSlash {
 
             // Open the first file by default
             this.openFile(0);
-            this.checkPostEditInvariants();
         }
 
         // Entry points from fourslash.ts
@@ -782,6 +789,14 @@ module FourSlash {
 
         // Enters lines of text at the current caret position
         public type(text: string) {
+            if (this.typingFidelity === TypingFidelity.Low) {
+                return this.typeLowFidelity(text);
+            } else {
+                return this.typeHighFidelity(text);
+            }
+        }
+
+        private typeLowFidelity(text: string) {
             var offset = this.currentCaretPosition;
             for (var i = 0; i < text.length; i++) {
                 // Make the edit
@@ -790,6 +805,49 @@ module FourSlash {
                 this.updateMarkersForEdit(this.activeFile.fileName, offset, offset, ch);
                 this.editCheckpoint(this.activeFile.fileName);
                 offset++;
+
+                // Handle post-keystroke formatting
+                if (this.enableFormatting) {
+                    var edits = this.languageService.getFormattingEditsAfterKeystroke(this.activeFile.fileName, offset, ch, this.formatCodeOptions);
+                    offset += this.applyEdits(this.activeFile.fileName, edits, true);
+                    this.editCheckpoint(this.activeFile.fileName);
+                }
+            }
+
+            // Move the caret to wherever we ended up
+            this.currentCaretPosition = offset;
+
+            this.fixCaretPosition();
+
+            this.checkPostEditInvariants();
+        }
+
+        // Enters lines of text at the current caret position, invoking
+        // language service APIs to mimic Visual Studio's behavior
+        // as much as possible
+        private typeHighFidelity(text: string, errorCadence = 5) {
+            var offset = this.currentCaretPosition;
+            var prevChar = ' ';
+            for (var i = 0; i < text.length; i++) {
+                // Make the edit
+                var ch = text.charAt(i);
+                this.languageServiceShimHost.editScript(this.activeFile.fileName, offset, offset, ch);
+                this.updateMarkersForEdit(this.activeFile.fileName, offset, offset, ch);
+                this.editCheckpoint(this.activeFile.fileName);
+                offset++;
+
+                if (ch === '(' || ch === ',') {
+                    /* Signature help*/
+                    this.languageService.getSignatureAtPosition(this.activeFile.fileName, offset);
+                } else if (prevChar === ' ' && /A-Za-z_/.test(ch)) {
+                    /* Completions */
+                    this.languageService.getCompletionsAtPosition(this.activeFile.fileName, offset, false);
+                }
+
+                if (i % errorCadence === 0) {
+                    this.languageService.getSyntacticDiagnostics(this.activeFile.fileName);
+                    this.languageService.getSemanticDiagnostics(this.activeFile.fileName);
+                }
 
                 // Handle post-keystroke formatting
                 if (this.enableFormatting) {

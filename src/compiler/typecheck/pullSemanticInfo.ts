@@ -216,7 +216,7 @@ module TypeScript {
             var topLevelDecl = this.getTopLevelDecl();
             if (topLevelDecl.kind == PullElementKind.Script) {
                 var script = <Script>this.getASTForDecl(topLevelDecl);
-                return !!script.topLevelMod;
+                return script.isExternalModule;
             }
 
             // Global context

@@ -1162,6 +1162,70 @@ module TypeScript {
     "code": 2207,
     "category": DiagnosticCategory.Error
   },
+  "TypeParameter '{0}' of constructor signature from exported interface has or is using private type '{1}'.": {
+    "code": 2208,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of call signature from exported interface has or is using private type '{1}'.": {
+    "code": 2209,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of public static method from exported class has or is using private type '{1}'.": {
+    "code": 2210,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of public method from exported class has or is using private type '{1}'.": {
+    "code": 2211,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of method from exported interface has or is using private type '{1}'.": {
+    "code": 2212,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported function has or is using private type '{1}'.": {
+    "code": 2213,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of constructor signature from exported interface is using inaccessible module {1}.": {
+    "code": 2214,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of call signature from exported interface is using inaccessible module {1}": {
+    "code": 2215,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of public static method from exported class is using inaccessible module {1}.": {
+    "code": 2216,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of public method from exported class is using inaccessible module {1}.": {
+    "code": 2217,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of method from exported interface is using inaccessible module {1}.": {
+    "code": 2218,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported function is using inaccessible module {1}.": {
+    "code": 2219,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported class has or is using private type '{1}'.": {
+    "code": 2220,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported interface has or is using private type '{1}'.": {
+    "code": 2221,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported class is using inaccessible module {1}.": {
+    "code": 2222,
+    "category": DiagnosticCategory.Error
+  },
+  "TypeParameter '{0}' of exported interface is using inaccessible module {1}.": {
+    "code": 2223,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix

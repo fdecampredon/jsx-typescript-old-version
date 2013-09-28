@@ -8,7 +8,7 @@ var M;
         (function (X) {
             (function (Y) {
                 (function (Z) {
-                    Z.v2 = N.f(Z.v);
+                    Z.v2 = N.f(M.N.X.Y.Z.v);
                 })(Y.Z || (Y.Z = {}));
                 var Z = Y.Z;
             })(X.Y || (X.Y = {}));
@@ -25,7 +25,7 @@ var M;
         (function (X) {
             (function (Y) {
                 (function (Z) {
-                    Z.v = N.f(10);
+                    Z.v = M.N.f(10);
                 })(Y.Z || (Y.Z = {}));
                 var Z = Y.Z;
             })(X.Y || (X.Y = {}));

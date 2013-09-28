@@ -6,5 +6,4 @@ var A = (function () {
 
 var B;
 (function (B) {
-    
 })(B || (B = {}));

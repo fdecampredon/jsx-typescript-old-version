@@ -77,8 +77,6 @@ var m1;
     m1.m1_im1_public = m1_im1_public;
     var m1_im2_public = m1_M2_private;
     m1.m1_im2_public = m1_im2_public;
-    
-    
 })(m1 || (m1 = {}));
 
 var glo_M1_public;
@@ -99,10 +97,8 @@ var glo_M1_public;
 
 var m2;
 (function (m2) {
-    
     var m4;
     (function (m4) {
         var a = 10;
-        
     })(m4 || (m4 = {}));
 })(m2 || (m2 = {}));

@@ -1,0 +1,3 @@
+var myFn;
+function myFn() {
+}

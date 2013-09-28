@@ -69,10 +69,9 @@ var m_public = exports.m_public;
     var im_public_f_private = m_private.f_private;
     import_public.im_public_f_private = im_public_f_private;
     import_public.im_public_v_private = m_private.v_private;
-    
+
     var im_public_mi_private = m_private.mi_private;
     import_public.im_public_mi_private = im_public_mi_private;
-    
 
     // Usage of privacy error imports
     var privateUse_im_public_c_private = new im_public_c_private();
@@ -98,10 +97,9 @@ var m_public = exports.m_public;
     var im_public_f_public = m_public.f_public;
     import_public.im_public_f_public = im_public_f_public;
     import_public.im_public_v_public = m_public.v_public;
-    
+
     var im_public_mi_public = m_public.mi_public;
     import_public.im_public_mi_public = im_public_mi_public;
-    
 
     // Usage of above
     var privateUse_im_public_c_public = new im_public_c_public();
@@ -131,10 +129,9 @@ var import_private;
     var im_private_f_private = m_private.f_private;
     import_private.im_private_f_private = im_private_f_private;
     import_private.im_private_v_private = m_private.v_private;
-    
+
     var im_private_mi_private = m_private.mi_private;
     import_private.im_private_mi_private = im_private_mi_private;
-    
 
     // Usage of above decls
     var privateUse_im_private_c_private = new im_private_c_private();
@@ -160,10 +157,9 @@ var import_private;
     var im_private_f_public = m_public.f_public;
     import_private.im_private_f_public = im_private_f_public;
     import_private.im_private_v_public = m_public.v_public;
-    
+
     var im_private_mi_public = m_public.mi_public;
     import_private.im_private_mi_public = im_private_mi_public;
-    
 
     // Usage of no privacy error imports
     var privateUse_im_private_c_public = new im_private_c_public();

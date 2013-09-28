@@ -16,8 +16,6 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 define(["require", "exports", "exportAssignmentOfGenericType1_0"], function(require, exports, q) {
-    
-
     var M = (function (_super) {
         __extends(M, _super);
         function M() {

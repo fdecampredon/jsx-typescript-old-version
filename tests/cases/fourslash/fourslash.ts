@@ -37,6 +37,13 @@ enum IncrementalEditValidation {
     Complete = FourSlash.IncrementalEditValidation.Complete
 }
 
+enum TypingFidelity {
+    /** Performs typing and formatting (if formatting is enabled) */
+    Low = FourSlash.TypingFidelity.Low,
+    /** Performs typing, checks completion lists, signature help, and formatting (if enabled) */
+    High = FourSlash.TypingFidelity.High
+}
+
 module FourSlashInterface {
     declare var FourSlash;
 
@@ -79,6 +86,10 @@ module FourSlashInterface {
 
         public setEditValidation(validation: IncrementalEditValidation) {
             FourSlash.currentTestState.editValidation = validation;
+        }
+
+        public setTypingFidelity(fidelity: TypingFidelity) {
+            FourSlash.currentTestState.typingFidelity = fidelity;
         }
     }
 

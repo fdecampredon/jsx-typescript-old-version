@@ -12,6 +12,9 @@
 ////var f = new Foo();
 ////f/*c3*/;
 
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
+
 goTo.marker("c1");
 edit.insert(".");
 verify.memberListContains("x");

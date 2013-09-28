@@ -58,6 +58,9 @@
 ////}
 ////var myVar = new m.m2.c/*33*/1();
 
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
+
 goTo.marker('1');
 verify.quickInfoIs(undefined, "This is class c2 without constuctor", "c2", "class");
 

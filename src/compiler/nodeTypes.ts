@@ -40,6 +40,7 @@ module TypeScript {
         FunctionDeclaration,
         ClassDeclaration,
         InterfaceDeclaration,
+        ObjectType,
         ModuleDeclaration,
         ImportDeclaration,
         VariableDeclarator,

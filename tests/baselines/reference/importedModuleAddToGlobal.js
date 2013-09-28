@@ -8,7 +8,6 @@ var A;
 
 var B;
 (function (B) {
-    
     var B = (function () {
         function B() {
         }
@@ -19,7 +18,6 @@ var B;
 
 var C;
 (function (C) {
-    
     function hello() {
         return null;
     }

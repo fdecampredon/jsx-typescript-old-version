@@ -27,7 +27,7 @@ var EndGate;
                 _super.call(this, from);
             }
             return NumberTween;
-        })(Tweening.Tween);
+        })(EndGate.Tweening.Tween);
         Tweening.NumberTween = NumberTween;
     })(EndGate.Tweening || (EndGate.Tweening = {}));
     var Tweening = EndGate.Tweening;

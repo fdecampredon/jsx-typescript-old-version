@@ -1,6 +1,5 @@
 //// [internalAliasUninitializedModuleInsideLocalModuleWithExport.js]
 (function (c) {
-    
     c.x;
     c.x.foo();
 })(exports.c || (exports.c = {}));

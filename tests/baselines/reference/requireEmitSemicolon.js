@@ -12,8 +12,6 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [requireEmitSemicolon_1.js]
 define(["require", "exports", "requireEmitSemicolon_0"], function(require, exports, P) {
-    
-
     (function (Database) {
         var DB = (function () {
             function DB() {

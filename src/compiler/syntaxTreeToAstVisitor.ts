@@ -243,13 +243,13 @@ module TypeScript {
                 result = new StringLiteral(token.text(), token.valueText());
             }
             else if (token.tokenKind === SyntaxKind.RegularExpressionLiteral) {
-                result = new RegexLiteral(token.text());
+                result = new RegularExpressionLiteral(token.text());
             }
             else if (token.tokenKind === SyntaxKind.NumericLiteral) {
                 var preComments = this.convertTokenLeadingComments(token, fullStart);
 
                 var value = token.text().indexOf(".") > 0 ? parseFloat(token.text()) : parseInt(token.text());
-                result = new NumberLiteral(value, token.text());
+                result = new NumericLiteral(value, token.text());
 
                 result.setPreComments(preComments);
             }
@@ -327,28 +327,30 @@ module TypeScript {
 
             var bod = this.visitSyntaxList(node.moduleElements);
 
-            var topLevelMod: ModuleDeclaration = null;
+            var isExternalModule = false;
+            var amdDependencies: string[] = [];
+            var moduleFlags = ModuleFlags.None;
             if (this.hasTopLevelImportOrExport(node)) {
+                isExternalModule = true;
+
                 var correctedFileName = switchToForwardSlashes(this.fileName);
                 var id: Identifier = new Identifier(correctedFileName, correctedFileName);
-                topLevelMod = new ModuleDeclaration(id, bod, null);
+                var topLevelMod = new ModuleDeclaration(id, bod, null);
                 this.setSpanExplicit(topLevelMod, start, this.position);
 
-                var moduleFlags = topLevelMod.getModuleFlags() | ModuleFlags.IsDynamic | ModuleFlags.IsWholeFile | ModuleFlags.Exported;
+                moduleFlags = ModuleFlags.IsExternalModule | ModuleFlags.Exported;
                 if (isDTSFile(this.fileName)) {
                     moduleFlags |= ModuleFlags.Ambient;
                 }
 
                 topLevelMod.setModuleFlags(moduleFlags);
 
-                topLevelMod.prettyName = getPrettyName(correctedFileName);
-
                 var leadingComments = this.getLeadingComments(node);
                 for (var i = 0, n = leadingComments.length; i < n; i++) {
                     var trivia = leadingComments[i];
                     var amdDependency = this.getAmdDependency(trivia.fullText());
                     if (amdDependency) {
-                        topLevelMod.amdDependencies.push(amdDependency);
+                        amdDependencies.push(amdDependency);
                     }
                 }
 
@@ -356,12 +358,10 @@ module TypeScript {
                 this.setSpanExplicit(bod, start, this.position);
             }
 
-            var result = new Script();
+            var result = new Script(bod, isExternalModule, isDTSFile(this.fileName), amdDependencies);
             this.setSpanExplicit(result, start, start + node.fullWidth());
 
-            result.moduleElements = bod;
-            result.topLevelMod = topLevelMod;
-            result.isDeclareFile = isDTSFile(this.fileName);
+            result.setModuleFlags(moduleFlags);
 
             return result;
         }
@@ -407,7 +407,7 @@ module TypeScript {
             var closeBraceSpan = new ASTSpan();
             this.setSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
 
-            var result = new ClassDeclaration(name, typeParameters, members, extendsList, implementsList, closeBraceSpan);
+            var result = new ClassDeclaration(name, typeParameters, extendsList, implementsList, members, closeBraceSpan);
             this.setCommentsAndSpan(result, start, node);
 
             for (var i = 0; i < members.members.length; i++) {
@@ -466,7 +466,7 @@ module TypeScript {
 
             this.movePast(node.body.closeBraceToken);
 
-            var result = new InterfaceDeclaration(name, typeParameters, members, extendsList, null, /*isObjectTypeLiteral:*/ false);
+            var result = new InterfaceDeclaration(name, typeParameters, members, extendsList);
             this.setCommentsAndSpan(result, start, node);
 
             this.completeInterfaceDeclaration(node, result);
@@ -1167,14 +1167,13 @@ module TypeScript {
             var typeMembers = this.visitSeparatedSyntaxList(node.typeMembers);
             this.movePast(node.closeBraceToken);
 
-            var interfaceDecl = new InterfaceDeclaration(
-                new Identifier("__anonymous", "__anonymous"), null, typeMembers, null, null, /*isObjectTypeLiteral:*/ true);
-            this.setSpan(interfaceDecl, start, node);
+            var objectType = new ObjectType(typeMembers);
+            this.setSpan(objectType, start, node);
 
-            interfaceDecl.setFlags(interfaceDecl.getFlags() | ASTFlags.TypeReference);
+            objectType.setFlags(objectType.getFlags() | ASTFlags.TypeReference);
 
-            var result = new TypeReference(interfaceDecl, 0);
-            this.copySpan(interfaceDecl, result);
+            var result = new TypeReference(objectType, 0);
+            this.copySpan(objectType, result);
 
             return result;
         }
@@ -2287,7 +2286,7 @@ module TypeScript {
                 return;
             }
 
-            var pre = function (cur: TypeScript.AST, parent: TypeScript.AST, walker: TypeScript.IAstWalker) {
+            var pre = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
                 // Apply delta to this node
                 applyDelta(cur, delta);
                 applyDeltaToComments(cur.preComments(), delta);
@@ -2323,8 +2322,6 @@ module TypeScript {
                         applyDelta((<SwitchStatement>cur).statement, delta);
                         break;
                 }
-
-                return cur;
             };
 
             TypeScript.getAstWalkerFactory().walk(ast, pre);

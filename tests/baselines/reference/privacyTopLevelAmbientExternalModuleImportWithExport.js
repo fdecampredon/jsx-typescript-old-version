@@ -24,7 +24,6 @@ exports.im_public_mu_private = im_public_mu_private;
 var im_public_mi_public = require("m");
 exports.im_public_mi_public = im_public_mi_public;
 
-
 // Usage of privacy error imports
 var privateUse_im_public_mi_private = new exports.im_public_mi_private.c_private();
 exports.publicUse_im_public_mi_private = new exports.im_public_mi_private.c_private();

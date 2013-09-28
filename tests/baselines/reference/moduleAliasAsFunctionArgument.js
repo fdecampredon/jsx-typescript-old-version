@@ -4,8 +4,6 @@ define(["require", "exports"], function(require, exports) {
 });
 //// [moduleAliasAsFunctionArgument_1.js]
 define(["require", "exports", 'moduleAliasAsFunctionArgument_0'], function(require, exports, a) {
-    
-
     function fn(arg) {
     }
 

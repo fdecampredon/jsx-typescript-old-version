@@ -1,6 +1,5 @@
 //// [declFileAmbientExternalModuleWithSingleExportedModule_0.js]
 //// [declFileAmbientExternalModuleWithSingleExportedModule_1.js]
-
 exports.x;
 
 

@@ -68,7 +68,7 @@ module DumpAST {
         var entries: DumpEntry[] = [];
         var root: DumpEntry = null;
 
-        var pre = (cur: TypeScript.AST, parent: TypeScript.AST): TypeScript.AST => {
+        var pre = (cur: TypeScript.AST): TypeScript.AST => {
             //verifyAstNodePositions(script, cur);
 
             var parent2 = (entries.length == 0 ? null : entries[entries.length - 1]);
@@ -91,7 +91,7 @@ module DumpAST {
             return cur;
         };
 
-        var post = (cur: TypeScript.AST, parent: TypeScript.AST) => {
+        var post = (cur: TypeScript.AST) => {
             entries.pop();
             return cur;
         };

@@ -16,6 +16,5 @@ goTo.marker('var');
 edit.insert('var o;');
 
 goTo.marker('check');
-// Bug 771751: Crash here
-// verify.quickInfoExists();
+verify.quickInfoExists();
 

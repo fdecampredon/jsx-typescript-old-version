@@ -66,7 +66,7 @@
 ////}
 ////// CONTEXT: Variable assignment
 ////var /*41*/c6t5: (n: number) => IFoo;
-////c6t5 = <(n: number) => IFoo>function(/*42*/n) { return <IFoo>({}) };
+////c6t5 =function(/*42*/n) { return <IFoo>({}) };
 ////// CONTEXT: Array index assignment
 ////var /*43*/c7t2: IFoo[];
 /////*44*/c7t2[0] = <IFoo>({n: 1});
@@ -149,16 +149,16 @@
 ////});
 ////var /*78*/c12t3 = <number[]> [];
 ////var /*79*/c12t4 = <() => IFoo> function() { return <IFoo>({}) };
-////var /*80*/c12t5 = <(n: number) => IFoo> function(/*81*/n) { return <IFoo>({}) };
+////var /*80*/c12t5 :{ (n: number): IFoo; } = function(/*81*/n) { return <IFoo>({}) };
 ////var /*82*/c12t6 = <(n: number, s: string) => IFoo> function(/*83*/n, /*84*/s) { return <IFoo>({}) };
 ////var /*85*/c12t7 = <{
 ////    (n: number, s: string): number;    
 ////    //(s1: string, s2: string): number;
 ////}> function(n:number) { return n };
-////var /*86*/c12t8 = <(n: number, s: string) => number> function (/*87*/n) { return n; };
+////var /*86*/c12t8 : {(n: number, s: string): number; } =  function (/*87*/n) { return n; };
 ////var /*88*/c12t9 = <number[][]> [[],[]];
 ////var /*89*/c12t10 = <IFoo[]> [<IFoo>({}),<IFoo>({})];
-////var /*90*/c12t11 = <{ (n: number, s: string): string; }[]>[function (/*91*/n, /*92*/s) { return s; }];
+////var /*90*/c12t11: { (n: number, s: string): string; }[] = [function (/*91*/n, /*92*/s) { return s; }];
 ////var /*93*/c12t12 = <IBar> {
 ////    /*94*/foo: <IFoo>({})
 ////}
@@ -193,6 +193,9 @@
 ////        return new Point(this.x + dx, this.y + dy);
 ////    }
 ////};
+
+// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
+edit.insert('');
 
 goTo.marker('1');
 verify.quickInfoIs("(i: number, s: string) => number");
@@ -357,9 +360,9 @@ verify.quickInfoIs("number");
 goTo.marker('82');
 verify.quickInfoIs("(n: number, s: string) => IFoo");
 goTo.marker('83');
-verify.quickInfoIs("number");
+verify.quickInfoIs("any");
 goTo.marker('84');
-verify.quickInfoIs("string");
+verify.quickInfoIs("any");
 goTo.marker('85');
 verify.quickInfoIs("(n: number, s: string) => number");
 goTo.marker('86');
