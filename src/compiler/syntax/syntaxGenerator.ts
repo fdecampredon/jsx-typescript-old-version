@@ -663,7 +663,7 @@ var definitions:ITypeDefinition[] = [
         isTypeScriptSpecific: true
     },
     <any>{
-        name: 'IndexMemberDeclaration',
+        name: 'IndexMemberDeclarationSyntax',
         baseType: 'SyntaxNode',
         interfaces: ['IClassElementSyntax'],
         children: [

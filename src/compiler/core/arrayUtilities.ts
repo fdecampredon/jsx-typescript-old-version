@@ -122,6 +122,17 @@ module TypeScript {
             return null;
         }
 
+        public static lastOrDefault<T>(array: T[], func: (v: T) => boolean): T {
+            for (var i = array.length - 1; i >= 0; i--) {
+                var value = array[i];
+                if (func(value)) {
+                    return value;
+                }
+            }
+
+            return null;
+        }
+
         public static sum<T>(array: T[], func: (v: T) => number): number {
             var result = 0;
 

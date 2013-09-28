@@ -927,7 +927,7 @@ module TypeScript {
             var callSignatures: PullSignatureSymbol[] = null;
 
             // these are used to track intermediate nodes so that we can properly apply contextual types
-            var lambdaAST: FunctionDeclaration = null;
+            var lambdaAST: AST = null;
             var declarationInitASTs: VariableDeclarator[] = [];
             var objectLitAST: UnaryExpression = null;
             var asgAST: BinaryExpression = null;
@@ -958,7 +958,10 @@ module TypeScript {
                             }
 
                             if (cur.nodeType() === NodeType.FunctionDeclaration && hasFlag((<FunctionDeclaration>cur).getFunctionFlags(), FunctionFlags.IsFunctionExpression)) {
-                                lambdaAST = <FunctionDeclaration>cur;
+                                lambdaAST = cur;
+                            }
+                            else if (cur.nodeType() === NodeType.ArrowFunctionExpression) {
+                                lambdaAST = cur;
                             }
                             else if (cur.nodeType() === NodeType.VariableDeclarator) {
                                 declarationInitASTs[declarationInitASTs.length] = <VariableDeclarator>cur;
@@ -1031,7 +1034,8 @@ module TypeScript {
                     this.resolver.resolveDeclaredSymbol(symbol, resolutionContext);
                     symbol.setUnresolved();
                     enclosingDecl = declStack[declStack.length - 1].getParentDecl();
-                    if (foundAST.nodeType() === NodeType.FunctionDeclaration) {
+                    if (foundAST.nodeType() === NodeType.FunctionDeclaration ||
+                        foundAST.nodeType() === NodeType.ArrowFunctionExpression) {
                         funcDecl = <FunctionDeclaration>foundAST;
                     }
                 }
@@ -1222,9 +1226,13 @@ module TypeScript {
                     case NodeType.FunctionDeclaration:
                         // A function expression does not have a decl, so we need to resolve it first to get the decl created.
                         if (hasFlag((<FunctionDeclaration>current).getFunctionFlags(), FunctionFlags.IsFunctionExpression)) {
-                            this.resolver.resolveAST((<FunctionDeclaration>current), true, enclosingDecl, resolutionContext);
+                            this.resolver.resolveAST(current, true, enclosingDecl, resolutionContext);
                         }
 
+                        break;
+
+                    case NodeType.ArrowFunctionExpression:
+                        this.resolver.resolveAST(current, true, enclosingDecl, resolutionContext);
                         break;
 
                     case NodeType.VariableDeclarator:
@@ -1373,7 +1381,7 @@ module TypeScript {
                                     // The containing function has a type annotation, propagate it as the contextual type
                                     var currentResolvingTypeReference = resolutionContext.resolvingTypeReference;
                                     resolutionContext.resolvingTypeReference = true;
-                                    var returnTypeSymbol = this.resolver.resolveTypeReference(<TypeReference>functionDeclaration.returnTypeAnnotation, enclosingDecl, resolutionContext);
+                                    var returnTypeSymbol = this.resolver.resolveTypeReference(functionDeclaration.returnTypeAnnotation, enclosingDecl, resolutionContext);
                                     resolutionContext.resolvingTypeReference = currentResolvingTypeReference;
                                     if (returnTypeSymbol) {
                                         inContextuallyTypedAssignment = true;
@@ -1503,6 +1511,7 @@ module TypeScript {
                 ast.nodeType() !== NodeType.InterfaceDeclaration &&
                 ast.nodeType() !== NodeType.ModuleDeclaration &&
                 ast.nodeType() !== NodeType.FunctionDeclaration &&
+                ast.nodeType() !== NodeType.ArrowFunctionExpression &&
                 ast.nodeType() !== NodeType.VariableDeclarator) {
                 return null;
             }

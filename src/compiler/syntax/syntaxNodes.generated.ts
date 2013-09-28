@@ -4692,7 +4692,7 @@ module TypeScript {
     }
     }
 
-    export class IndexMemberDeclaration extends SyntaxNode implements IClassElementSyntax {
+    export class IndexMemberDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
 
         constructor(public modifiers: ISyntaxList,
                     public indexSignature: IndexSignatureSyntax,
@@ -4730,44 +4730,44 @@ module TypeScript {
 
     public update(modifiers: ISyntaxList,
                   indexSignature: IndexSignatureSyntax,
-                  semicolonToken: ISyntaxToken): IndexMemberDeclaration {
+                  semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
         if (this.modifiers === modifiers && this.indexSignature === indexSignature && this.semicolonToken === semicolonToken) {
             return this;
         }
 
-        return new IndexMemberDeclaration(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new IndexMemberDeclarationSyntax(modifiers, indexSignature, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
     public static create(indexSignature: IndexSignatureSyntax,
-                         semicolonToken: ISyntaxToken): IndexMemberDeclaration {
-        return new IndexMemberDeclaration(Syntax.emptyList, indexSignature, semicolonToken, /*parsedInStrictMode:*/ false);
+                         semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
+        return new IndexMemberDeclarationSyntax(Syntax.emptyList, indexSignature, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
-    public static create1(indexSignature: IndexSignatureSyntax): IndexMemberDeclaration {
-        return new IndexMemberDeclaration(Syntax.emptyList, indexSignature, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
+    public static create1(indexSignature: IndexSignatureSyntax): IndexMemberDeclarationSyntax {
+        return new IndexMemberDeclarationSyntax(Syntax.emptyList, indexSignature, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): IndexMemberDeclaration {
-        return <IndexMemberDeclaration>super.withLeadingTrivia(trivia);
+    public withLeadingTrivia(trivia: ISyntaxTriviaList): IndexMemberDeclarationSyntax {
+        return <IndexMemberDeclarationSyntax>super.withLeadingTrivia(trivia);
     }
 
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): IndexMemberDeclaration {
-        return <IndexMemberDeclaration>super.withTrailingTrivia(trivia);
+    public withTrailingTrivia(trivia: ISyntaxTriviaList): IndexMemberDeclarationSyntax {
+        return <IndexMemberDeclarationSyntax>super.withTrailingTrivia(trivia);
     }
 
-    public withModifiers(modifiers: ISyntaxList): IndexMemberDeclaration {
+    public withModifiers(modifiers: ISyntaxList): IndexMemberDeclarationSyntax {
         return this.update(modifiers, this.indexSignature, this.semicolonToken);
     }
 
-    public withModifier(modifier: ISyntaxToken): IndexMemberDeclaration {
+    public withModifier(modifier: ISyntaxToken): IndexMemberDeclarationSyntax {
         return this.withModifiers(Syntax.list([modifier]));
     }
 
-    public withIndexSignature(indexSignature: IndexSignatureSyntax): IndexMemberDeclaration {
+    public withIndexSignature(indexSignature: IndexSignatureSyntax): IndexMemberDeclarationSyntax {
         return this.update(this.modifiers, indexSignature, this.semicolonToken);
     }
 
-    public withSemicolonToken(semicolonToken: ISyntaxToken): IndexMemberDeclaration {
+    public withSemicolonToken(semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
         return this.update(this.modifiers, this.indexSignature, semicolonToken);
     }
 

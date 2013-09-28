@@ -1,3 +1,4 @@
+
 // Copyright (c) Microsoft. All rights reserved. Licensed under the Apache License, Version 2.0. 
 // See LICENSE.txt in the project root for complete license information.
 
@@ -975,8 +976,9 @@ module Services {
                 symbol = declarationInformation.symbol;
                 enclosingScopeSymbol = declarationInformation.enclosingScopeSymbol;
 
-                if (path.ast().nodeType() === TypeScript.NodeType.FunctionDeclaration) {
-                    var funcDecl = <TypeScript.FunctionDeclaration>(path.ast());
+                if (path.ast().nodeType() === TypeScript.NodeType.FunctionDeclaration ||
+                    path.ast().nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
+                    var funcDecl = path.ast();
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
                         var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(funcDecl, this.compilerState.getSemanticInfoChain().getUnit(fileName));
                         isCallExpression = true;

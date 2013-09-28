@@ -2400,7 +2400,7 @@ module TypeScript.Parser {
             return this.isIndexSignature(index);
         }
 
-        private parseIndexMemberDeclaration(): IndexMemberDeclaration {
+        private parseIndexMemberDeclaration(): IndexMemberDeclarationSyntax {
             // Debug.assert(this.isIndexMemberDeclaration()
             var modifiers = this.parseModifiers();
             var indexSignature = this.parseIndexSignature();

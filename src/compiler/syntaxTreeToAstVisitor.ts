@@ -410,25 +410,6 @@ module TypeScript {
             var result = new ClassDeclaration(name, typeParameters, extendsList, implementsList, members, closeBraceSpan);
             this.setCommentsAndSpan(result, start, node);
 
-            for (var i = 0; i < members.members.length; i++) {
-                var member = members.members[i];
-                if (member.nodeType() === NodeType.FunctionDeclaration) {
-                    var funcDecl = <FunctionDeclaration>member;
-
-                    if (funcDecl.isConstructor) {
-                        funcDecl.classDecl = result;
-
-                        result.constructorDecl = funcDecl;
-                    }
-                }
-            }
-
-            this.completeClassDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeClassDeclaration(node: ClassDeclarationSyntax, result: ClassDeclaration): void {
             var flags = result.getVarFlags();
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 flags = flags | VariableFlags.Exported;
@@ -439,6 +420,8 @@ module TypeScript {
             }
 
             result.setVarFlags(flags);
+
+            return result;
         }
 
         public visitInterfaceDeclaration(node: InterfaceDeclarationSyntax): InterfaceDeclaration {
@@ -469,15 +452,11 @@ module TypeScript {
             var result = new InterfaceDeclaration(name, typeParameters, members, extendsList);
             this.setCommentsAndSpan(result, start, node);
 
-            this.completeInterfaceDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeInterfaceDeclaration(node: InterfaceDeclarationSyntax, result: InterfaceDeclaration): void {
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 result.setVarFlags(result.getVarFlags() | VariableFlags.Exported);
             }
+
+            return result;
         }
 
         public visitHeritageClause(node: HeritageClauseSyntax): ASTList {
@@ -571,17 +550,12 @@ module TypeScript {
                 members = new ASTList([result]);
             }
 
-            this.completeModuleDeclaration(node, result);
-
-            this.setSpan(result, start, node);
-            return result;
-        }
-
-        public completeModuleDeclaration(node: ModuleDeclarationSyntax, result: ModuleDeclaration): void {
-            // mark ambient if declare keyword or parsing ambient module or parsing declare file
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.DeclareKeyword)) {
                 result.setModuleFlags(result.getModuleFlags() | ModuleFlags.Ambient);
             }
+
+            this.setSpan(result, start, node);
+            return result;
         }
 
         private hasDotDotDotParameter(parameters: ISeparatedSyntaxList): boolean {
@@ -613,19 +587,13 @@ module TypeScript {
 
             this.movePast(node.semicolonToken);
 
-            var result = new FunctionDeclaration(name, block, false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new FunctionDeclaration(name, false, typeParameters, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
 
             if (node.semicolonToken) {
                 result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.Signature);
             }
 
-            this.completeFunctionDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeFunctionDeclaration(node: FunctionDeclarationSyntax, result: FunctionDeclaration): void {
             var flags = result.getFunctionFlags();
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 flags = flags | FunctionFlags.Exported;
@@ -636,6 +604,8 @@ module TypeScript {
             }
 
             result.setFunctionFlags(flags);
+
+            return result;
         }
 
         public visitEnumDeclaration(node: EnumDeclarationSyntax): ModuleDeclaration {
@@ -883,9 +853,15 @@ module TypeScript {
             var result = new VariableDeclarator(name, typeExpr, init);
             this.setSpan(result, start, node);
 
-            if (init && init.nodeType() === NodeType.FunctionDeclaration) {
-                var funcDecl = <FunctionDeclaration>init;
-                funcDecl.hint = name.actualText;
+            if (init) {
+                if (init.nodeType() === NodeType.FunctionDeclaration) {
+                    var funcDecl = <FunctionDeclaration>init;
+                    funcDecl.hint = name.actualText;
+                }
+                else if (init.nodeType() === NodeType.ArrowFunctionExpression) {
+                    var arrowFunction = <ArrowFunctionExpression>init;
+                    arrowFunction.hint = name.actualText;
+                }
             }
 
             return result;
@@ -1010,29 +986,27 @@ module TypeScript {
             }
         }
 
-        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): FunctionDeclaration {
+        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): ArrowFunctionExpression {
             var start = this.position;
 
             var identifier = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
             this.movePast(node.equalsGreaterThanToken);
 
-            var parameter = new Parameter(identifier, null, null, false);
+            var parameter = new Parameter(identifier, null, null, false, /*isRest:*/ false);
             this.setSpanExplicit(parameter, identifier.minChar, identifier.limChar);
 
             var parameters = new ASTList([parameter]);
 
             var statements = this.getArrowFunctionStatements(node.body);
 
-            var result = new FunctionDeclaration(null, statements, /*isConstructor:*/ false, null, parameters, null, false);
+            var result = new ArrowFunctionExpression(null, parameters, null, statements);
             this.setSpan(result, start, node);
-
-            result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IsFunctionExpression | FunctionFlags.IsFatArrowFunction);
 
             return result;
         }
 
-        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): FunctionDeclaration {
+        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ArrowFunctionExpression {
             var start = this.position;
 
             var typeParameters = node.callSignature.typeParameterList === null ? null : node.callSignature.typeParameterList.accept(this);
@@ -1042,10 +1016,8 @@ module TypeScript {
 
             var block = this.getArrowFunctionStatements(node.body);
 
-            var result = new FunctionDeclaration(null, block, /*isConstructor:*/ false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new ArrowFunctionExpression(typeParameters, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
-
-            result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IsFunctionExpression | FunctionFlags.IsFatArrowFunction);
 
             return result;
         }
@@ -1126,14 +1098,13 @@ module TypeScript {
             this.movePast(node.equalsGreaterThanToken);
             var returnType = node.type ? this.visitType(node.type) : null;
 
-            var funcDecl = new FunctionDeclaration(null, null, false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.parameterList.parameters));
+            var funcDecl = new FunctionDeclaration(null, false, typeParameters, parameters, returnType, null);
             this.setSpan(funcDecl, start, node);
 
             funcDecl.setFunctionFlags(funcDecl.getFunctionFlags() | FunctionFlags.Signature | FunctionFlags.ConstructMember);
 
             funcDecl.setFlags(funcDecl.getFlags() | ASTFlags.TypeReference);
             funcDecl.hint = "_construct";
-            funcDecl.classDecl = null;
 
             var result = new TypeReference(funcDecl, 0);
             this.copySpan(funcDecl, result);
@@ -1148,7 +1119,7 @@ module TypeScript {
             this.movePast(node.equalsGreaterThanToken);
             var returnType = node.type ? this.visitType(node.type) : null;
 
-            var funcDecl = new FunctionDeclaration(null, null, false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.parameterList.parameters));
+            var funcDecl = new FunctionDeclaration(null, false, typeParameters, parameters, returnType, null);
             this.setSpan(funcDecl, start, node);
 
             funcDecl.setFlags(funcDecl.getFunctionFlags() | FunctionFlags.Signature);
@@ -1252,7 +1223,7 @@ module TypeScript {
             var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
             var init = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
 
-            var result = new Parameter(identifier, typeExpr, init, !!node.questionToken);
+            var result = new Parameter(identifier, typeExpr, init, !!node.questionToken, node.dotDotDotToken !== null);
             this.setCommentsAndSpan(result, start, node);
 
             if (node.publicOrPrivateKeyword) {
@@ -1415,7 +1386,8 @@ module TypeScript {
             var result = new BinaryExpression(nodeType, left, right);
             this.setSpan(result, start, node);
 
-            if (right.nodeType() === NodeType.FunctionDeclaration) {
+            if (right.nodeType() === NodeType.FunctionDeclaration ||
+                right.nodeType() === NodeType.ArrowFunctionExpression) {
                 var id = left.nodeType() === NodeType.MemberAccessExpression ? (<BinaryExpression>left).operand2 : left;
                 var idHint: string = id.nodeType() === NodeType.Name ? id.actualText : null;
 
@@ -1449,7 +1421,7 @@ module TypeScript {
             var parameters = node.callSignature.parameterList.accept(this);
             var returnType = node.callSignature.typeAnnotation ? node.callSignature.typeAnnotation.accept(this) : null;
 
-            var result = new FunctionDeclaration(null, null, /*isConstructor:*/ false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new FunctionDeclaration(null, /*isConstructor:*/ false, typeParameters, parameters, returnType, null);
             this.setCommentsAndSpan(result, start, node);
 
             result.hint = "_construct";
@@ -1469,7 +1441,7 @@ module TypeScript {
             var parameters = node.callSignature.parameterList.accept(this);
             var returnType = node.callSignature.typeAnnotation ? node.callSignature.typeAnnotation.accept(this) : null;
 
-            var result = new FunctionDeclaration(name, null, false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new FunctionDeclaration(name, false, typeParameters, parameters, returnType, null);
             this.setCommentsAndSpan(result, start, node);
 
             result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.Method | FunctionFlags.Signature);
@@ -1492,7 +1464,7 @@ module TypeScript {
 
             var parameters = new ASTList([parameter]);
 
-            var result = new FunctionDeclaration(name, null, /*isConstructor:*/ false, null, parameters, returnType, false);
+            var result = new FunctionDeclaration(name, /*isConstructor:*/ false, null, parameters, returnType, null);
             this.setCommentsAndSpan(result, start, node);
 
             result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IndexerMember | FunctionFlags.Method | FunctionFlags.Signature);
@@ -1537,7 +1509,7 @@ module TypeScript {
             var parameters = node.parameterList.accept(this);
             var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
 
-            var result = new FunctionDeclaration(null, null, /*isConstructor:*/ false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.parameterList.parameters));
+            var result = new FunctionDeclaration(null, /*isConstructor:*/ false, typeParameters, parameters, returnType, null);
             this.setCommentsAndSpan(result, start, node);
 
             result.hint = "_call";
@@ -1614,7 +1586,7 @@ module TypeScript {
 
             this.movePast(node.semicolonToken);
 
-            var result = new FunctionDeclaration(null, block, /*isConstructor:*/ true, null, parameters, null, this.hasDotDotDotParameter(node.parameterList.parameters));
+            var result = new FunctionDeclaration(null, /*isConstructor:*/ true, null, parameters, null, block);
             this.setCommentsAndSpan(result, start, node);
 
             if (node.semicolonToken) {
@@ -1624,7 +1596,7 @@ module TypeScript {
             return result;
         }
 
-        public visitIndexMemberDeclaration(node: IndexMemberDeclaration): FunctionDeclaration {
+        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): FunctionDeclaration {
             var start = this.position;
 
             this.moveTo(node, node.indexSignature);
@@ -1657,7 +1629,7 @@ module TypeScript {
             var block = node.block ? node.block.accept(this) : null;
             this.movePast(node.semicolonToken);
 
-            var result = new FunctionDeclaration(name, block, /*isConstructor:*/ false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new FunctionDeclaration(name, /*isConstructor:*/ false, typeParameters, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
 
             var flags = result.getFunctionFlags();
@@ -1692,7 +1664,7 @@ module TypeScript {
             var returnType = typeAnnotation ? typeAnnotation.accept(this) : null;
 
             var block = node.block ? node.block.accept(this) : null;
-            var result = new FunctionDeclaration(name, block, /*isConstructor:*/ false, null, parameters, returnType, this.hasDotDotDotParameter(node.parameterList.parameters));
+            var result = new FunctionDeclaration(name, /*isConstructor:*/ false, null, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
 
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.PrivateKeyword)) {
@@ -1923,7 +1895,7 @@ module TypeScript {
             if (node.variableDeclaration) {
                 var variableDeclaration: VariableDeclaration = init;
                 for (var i = 0, n = variableDeclaration.declarators.members.length; i < n; i++) {
-                    var boundDecl = <BoundDecl>variableDeclaration.declarators.members[i];
+                    var boundDecl = <VariableDeclarator>variableDeclaration.declarators.members[i];
                     boundDecl.setVarFlags(boundDecl.getVarFlags() | VariableFlags.ForInVariable);
                 }
             }
@@ -2017,7 +1989,8 @@ module TypeScript {
             var result = new BinaryExpression(NodeType.Member, left, right);
             this.setCommentsAndSpan(result, start, node);
 
-            if (right.nodeType() === NodeType.FunctionDeclaration) {
+            if (right.nodeType() === NodeType.FunctionDeclaration ||
+                right.nodeType() === NodeType.ArrowFunctionExpression) {
                 var funcDecl = <FunctionDeclaration>right;
                 funcDecl.hint = left.text();
             }
@@ -2057,7 +2030,7 @@ module TypeScript {
 
             var block = node.block ? node.block.accept(this) : null;
 
-            var funcDecl = new FunctionDeclaration(functionName, block, /*isConstructor:*/ false, null, new ASTList([]), returnType, false);
+            var funcDecl = new FunctionDeclaration(functionName, /*isConstructor:*/ false, null, new ASTList([]), returnType, block);
             this.setSpan(funcDecl, start, node);
 
             funcDecl.setFunctionFlags(funcDecl.getFunctionFlags() | FunctionFlags.GetAccessor | FunctionFlags.IsFunctionExpression);
@@ -2084,7 +2057,7 @@ module TypeScript {
 
             var block = node.block ? node.block.accept(this) : null;
 
-            var funcDecl = new FunctionDeclaration(functionName, block, /*isConstructor:*/ false, null, parameters, null, false);
+            var funcDecl = new FunctionDeclaration(functionName, /*isConstructor:*/ false, null, parameters, null, block);
             this.setSpan(funcDecl, start, node);
 
             funcDecl.setFunctionFlags(funcDecl.getFunctionFlags() | FunctionFlags.SetAccessor | FunctionFlags.IsFunctionExpression);
@@ -2110,7 +2083,7 @@ module TypeScript {
 
             var block = node.block ? node.block.accept(this) : null;
 
-            var result = new FunctionDeclaration(name, block, false, typeParameters, parameters, returnType, this.hasDotDotDotParameter(node.callSignature.parameterList.parameters));
+            var result = new FunctionDeclaration(name, false, typeParameters, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
 
             result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IsFunctionExpression);
@@ -2405,10 +2378,7 @@ module TypeScript {
 
         public visitClassDeclaration(node: ClassDeclarationSyntax): ClassDeclaration {
             var result: ClassDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeClassDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitClassDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2418,10 +2388,7 @@ module TypeScript {
 
         public visitInterfaceDeclaration(node: InterfaceDeclarationSyntax): InterfaceDeclaration {
             var result: InterfaceDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeInterfaceDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitInterfaceDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2441,10 +2408,7 @@ module TypeScript {
 
         public visitModuleDeclaration(node: ModuleDeclarationSyntax): ModuleDeclaration {
             var result: ModuleDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeModuleDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitModuleDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2454,10 +2418,7 @@ module TypeScript {
 
         public visitFunctionDeclaration(node: FunctionDeclarationSyntax): FunctionDeclaration {
             var result: FunctionDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeFunctionDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitFunctionDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2525,8 +2486,8 @@ module TypeScript {
             return result;
         }
 
-        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): FunctionDeclaration {
-            var result: FunctionDeclaration = this.getAndMovePastAST(node);
+        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): ArrowFunctionExpression {
+            var result: ArrowFunctionExpression = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitSimpleArrowFunctionExpression(node);
                 this.setAST(node, result);
@@ -2535,8 +2496,8 @@ module TypeScript {
             return result;
         }
 
-        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): FunctionDeclaration {
-            var result: FunctionDeclaration = this.getAndMovePastAST(node);
+        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ArrowFunctionExpression {
+            var result: ArrowFunctionExpression = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitParenthesizedArrowFunctionExpression(node);
                 this.setAST(node, result);

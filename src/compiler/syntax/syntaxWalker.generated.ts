@@ -407,7 +407,7 @@ module TypeScript {
             this.visitToken(node.semicolonToken);
         }
 
-        public visitIndexMemberDeclaration(node: IndexMemberDeclaration): void {
+        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): void {
             this.visitList(node.modifiers);
             this.visitNode(node.indexSignature);
             this.visitToken(node.semicolonToken);

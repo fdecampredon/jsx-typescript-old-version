@@ -108,6 +108,7 @@ module TypeScript {
         PostDecrementExpression,
         CastExpression,
         ParenthesizedExpression,
+        ArrowFunctionExpression,
         Member,
 
         // Statements

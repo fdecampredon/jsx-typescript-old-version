@@ -10,13 +10,13 @@
 ////var max2: Comparer = (x/*1*/x, y/*2*/y) => { return x/*3*/x.compareTo(y/*4*/y) };
 
 goTo.marker('1');
-verify.quickInfoIs('T extends Comparable<T>', null, 'xx');
+verify.quickInfoIs('any', null, 'xx');
 
 goTo.marker('2');
-verify.quickInfoIs('T extends Comparable<T>', null, 'yy');
+verify.quickInfoIs('any', null, 'yy');
 
 goTo.marker('3');
-verify.quickInfoIs('T extends Comparable<T>', null, 'xx');
+verify.quickInfoIs('any', null, 'xx');
 
 goTo.marker('4');
-verify.quickInfoIs('T extends Comparable<T>', null, 'yy');
+verify.quickInfoIs('any', null, 'yy');

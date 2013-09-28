@@ -183,6 +183,7 @@ module TypeScript {
         private typeSpecializationStack: any[] = [];
         private genericASTResolutionStack: AST[] = [];
         private enclosingFunctionParameterIndexStack: IParameterIndexContext[] = [];
+        public currentClassDeclaration: ClassDeclaration = null;
 
         // Each entry in the stack contains the labels that are currently in scope.  Each time we 
         // enter/exist a method, we push/pop a new context onto the stack.
@@ -376,7 +377,7 @@ module TypeScript {
             this.genericASTResolutionStack.length--;
         }
 
-        public pushParameterIndexContext(enclosingFunction: FunctionDeclaration) {
+        public pushParameterIndexContext(enclosingFunction: AST) {
             this.enclosingFunctionParameterIndexStack.push({
                 enclosingFunction: enclosingFunction,
                 index: 0

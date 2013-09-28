@@ -6,12 +6,32 @@
 module TypeScript {
 
     export module PullHelpers {
+        export function isConstructor(ast: AST) {
+            return ast.nodeType() === NodeType.FunctionDeclaration &&
+                (<FunctionDeclaration>ast).isConstructor;
+        }
+
+        export function isConstructMember(ast: AST) {
+            return ast.nodeType() === NodeType.FunctionDeclaration &&
+                (<FunctionDeclaration>ast).isConstructMember();
+        }
+
+        export function isIndexerMember(ast: AST) {
+            return ast.nodeType() === NodeType.FunctionDeclaration &&
+                (<FunctionDeclaration>ast).isIndexerMember();
+        }
+
+        export function isCallMember(ast: AST) {
+            return ast.nodeType() === NodeType.FunctionDeclaration &&
+                (<FunctionDeclaration>ast).isCallMember();
+        }
+
         export interface SignatureInfoForFuncDecl {
             signature: PullSignatureSymbol;
             allSignatures: PullSignatureSymbol[];
         }
 
-        export function getSignatureForFuncDecl(funcDecl: FunctionDeclaration, semanticInfo: SemanticInfo) {
+        export function getSignatureForFuncDecl(funcDecl: AST, semanticInfo: SemanticInfo) {
             var functionDecl = semanticInfo.getDeclForAST(funcDecl);
             var funcSymbol = functionDecl.getSymbol();
 
@@ -30,13 +50,17 @@ module TypeScript {
                 typeSymbolWithAllSignatures = funcSymbol.type;
             }
             var signatures: PullSignatureSymbol[];
-            if (funcDecl.isConstructor || funcDecl.isConstructMember()) {
+
+            if (isConstructor(funcDecl) || isConstructMember(funcDecl)) {
                 signatures = typeSymbolWithAllSignatures.getConstructSignatures();
-            } else if (funcDecl.isIndexerMember()) {
+            }
+            else if (isIndexerMember(funcDecl)) {
                 signatures = typeSymbolWithAllSignatures.getIndexSignatures();
-            } else {
+            }
+            else {
                 signatures = typeSymbolWithAllSignatures.getCallSignatures();
             }
+
             return {
                 signature: functionSignature,
                 allSignatures: signatures

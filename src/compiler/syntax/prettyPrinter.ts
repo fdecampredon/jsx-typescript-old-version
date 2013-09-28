@@ -638,7 +638,7 @@ module TypeScript.PrettyPrinter {
             this.appendBlockOrSemicolon(node.block, node.semicolonToken);
         }
 
-        public visitIndexMemberDeclaration(node: IndexMemberDeclaration): void {
+        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): void {
             this.appendSpaceList(node.modifiers);
             this.ensureSpace();
             node.indexSignature.accept(this);

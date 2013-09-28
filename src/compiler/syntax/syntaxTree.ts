@@ -780,7 +780,7 @@ module TypeScript {
             return false;
         }
 
-        public visitIndexMemberDeclaration(node: IndexMemberDeclaration): void {
+        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): void {
             if (this.checkClassElementModifiers(node.modifiers) ||
                 this.checkIndexMemberModifiers(node)) {
                 this.skip(node);
@@ -790,7 +790,7 @@ module TypeScript {
             super.visitIndexMemberDeclaration(node);
         }
 
-        private checkIndexMemberModifiers(node: IndexMemberDeclaration): boolean {
+        private checkIndexMemberModifiers(node: IndexMemberDeclarationSyntax): boolean {
             var modifierFullStart = this.position();
 
             for (var i = 0, n = node.modifiers.childCount(); i < n; i++) {

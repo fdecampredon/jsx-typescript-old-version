@@ -36,13 +36,6 @@ module TypeScript {
             return (items === null || items.length <= index) ? null : items[items.length - index - 1];
         }
 
-        public clone(): AstPath {
-            var clone = new AstPath();
-            clone.asts = this.asts.map((value) => { return value; });
-            clone.top = this.top;
-            return clone;
-        }
-
         public pop(): TypeScript.AST {
             var head = this.ast();
             this.up();
@@ -65,18 +58,6 @@ module TypeScript {
             if (this.top <= -1)
                 throw Errors.invalidOperation(getLocalizedText(DiagnosticCode.Invalid_call_to_up, null));
             this.top--;
-        }
-
-        public down() {
-            if (this.top === this.ast.length - 1)
-                throw Errors.invalidOperation(getLocalizedText(DiagnosticCode.Invalid_call_to_down, null));
-            this.top++;
-        }
-
-        public nodeType(): TypeScript.NodeType {
-            if (this.ast() === null)
-                return TypeScript.NodeType.None;
-            return this.ast().nodeType();
         }
 
         public ast() {
@@ -113,15 +94,6 @@ module TypeScript {
                 ((<TypeScript.InterfaceDeclaration>this.parent()).name === this.ast());
         }
 
-        public isNameOfArgument(): boolean {
-            if (this.ast() === null || this.parent() === null)
-                return false;
-
-            return (this.ast().nodeType() === TypeScript.NodeType.Name) &&
-                (this.parent().nodeType() === TypeScript.NodeType.Parameter) &&
-                ((<TypeScript.Parameter>this.parent()).id === this.ast());
-        }
-
         public isNameOfVariable(): boolean {
             if (this.ast() === null || this.parent() === null)
                 return false;
@@ -131,15 +103,6 @@ module TypeScript {
                 ((<TypeScript.VariableDeclarator>this.parent()).id === this.ast());
         }
 
-        public isNameOfModule(): boolean {
-            if (this.ast() === null || this.parent() === null)
-                return false;
-
-            return (this.ast().nodeType() === TypeScript.NodeType.Name) &&
-                (this.parent().nodeType() === TypeScript.NodeType.ModuleDeclaration) &&
-                ((<TypeScript.ModuleDeclaration>this.parent()).name === this.ast());
-        }
-
         public isNameOfFunction(): boolean {
             if (this.ast() === null || this.parent() === null)
                 return false;
@@ -147,31 +110,6 @@ module TypeScript {
             return (this.ast().nodeType() === TypeScript.NodeType.Name) &&
                 (this.parent().nodeType() === TypeScript.NodeType.FunctionDeclaration) &&
                 ((<TypeScript.FunctionDeclaration>this.parent()).name === this.ast());
-        }
-
-        public isBodyOfFunction(): boolean {
-            return this.count() >= 2 &&
-                this.asts[this.top - 1].nodeType() === TypeScript.NodeType.FunctionDeclaration &&
-                 (<TypeScript.FunctionDeclaration>this.asts[this.top - 1]).block === this.asts[this.top - 0];
-        }
-
-        public isArgumentListOfFunction(): boolean {
-            return this.count() >= 2 &&
-                this.asts[this.top - 0].nodeType() === TypeScript.NodeType.List &&
-                this.asts[this.top - 1].nodeType() === TypeScript.NodeType.FunctionDeclaration &&
-                (<TypeScript.FunctionDeclaration>this.asts[this.top - 1]).arguments === this.asts[this.top - 0];
-        }
-        
-        public isTargetOfCall(): boolean {
-            return this.count() >= 2 &&
-                this.asts[this.top - 1].nodeType() === TypeScript.NodeType.InvocationExpression &&
-                (<TypeScript.InvocationExpression>this.asts[this.top - 1]).target === this.asts[this.top];
-        }
-        
-        public isTargetOfNew(): boolean {
-            return this.count() >= 2 &&
-                this.asts[this.top - 1].nodeType() === TypeScript.NodeType.ObjectCreationExpression &&
-                (<TypeScript.ObjectCreationExpression>this.asts[this.top - 1]).target === this.asts[this.top];
         }
 
         public isMemberOfMemberAccessExpression() {
@@ -217,7 +155,6 @@ module TypeScript {
                 this.asts[current + 1] === (<TypeScript.InvocationExpression>this.asts[current]).target;
         }
 
-
         public isDeclaration(): boolean {
             if (this.ast() !== null) {
                 switch (this.ast().nodeType()) {
@@ -226,19 +163,8 @@ module TypeScript {
                     case TypeScript.NodeType.ModuleDeclaration:
                     case TypeScript.NodeType.FunctionDeclaration:
                     case TypeScript.NodeType.VariableDeclarator:
+                    case TypeScript.NodeType.ArrowFunctionExpression:
                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        private isMemberOfList(list: ASTList, item: AST): boolean {
-            if (list && list.members) {
-                for (var i = 0, n = list.members.length; i < n; i++) {
-                    if (list.members[i] === item) {
-                        return true;
-                    }
                 }
             }
 
@@ -256,7 +182,7 @@ module TypeScript {
         return true;
     }
 
-    export class AstPathContext {
+    class AstPathContext {
         public path = new TypeScript.AstPath();
     }
 
@@ -340,24 +266,5 @@ module TypeScript {
         var ctx = new AstPathContext();
         TypeScript.getAstWalkerFactory().walk(script, pre, null, null, ctx);
         return ctx.path;
-    }
-
-    ///
-    /// Simple function to Walk an AST using a simple callback function.
-    ///
-    export function walkAST(ast: TypeScript.AST, callback: (path: AstPath, walker: TypeScript.IAstWalker) => void ): void {
-        var pre = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
-            var path: TypeScript.AstPath = walker.state;
-            path.push(cur);
-            callback(path, walker);
-            return cur;
-        };
-        var post = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
-            var path: TypeScript.AstPath = walker.state;
-            path.pop();
-        };
-
-        var path = new AstPath();
-        TypeScript.getAstWalkerFactory().walk(ast, pre, post, null, path);
     }
 }
