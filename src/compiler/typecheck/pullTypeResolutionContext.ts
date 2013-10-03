@@ -183,7 +183,6 @@ module TypeScript {
         private typeSpecializationStack: any[] = [];
         private genericASTResolutionStack: AST[] = [];
         private enclosingFunctionParameterIndexStack: IParameterIndexContext[] = [];
-        public currentClassDeclaration: ClassDeclaration = null;
 
         // Each entry in the stack contains the labels that are currently in scope.  Each time we 
         // enter/exist a method, we push/pop a new context onto the stack.
@@ -192,8 +191,6 @@ module TypeScript {
         public resolvingTypeReference = false;
         public resolvingNamespaceMemberAccess = false;
         public resolvingTypeQueryExpression = false;
-
-        public resolveAggressively = false;
 
         public canUseTypeSymbol = false;
 
@@ -349,7 +346,7 @@ module TypeScript {
                         (this.contextStack[this.contextStack.length - 1]).hasProvisionalErrors = true;
                     }
                     else if (this.inTypeCheck && this.resolver) {
-                        this.resolver.currentUnit.addDiagnostic(diagnostic);
+                        this.resolver.semanticInfoChain.addDiagnostic(diagnostic);
                     }
                 }
             }

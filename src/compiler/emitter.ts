@@ -94,11 +94,6 @@ module TypeScript {
         pullDecl: PullDecl;
     }
 
-    export function getClassConstructor(classDecl: ClassDeclaration): FunctionDeclaration {
-        return <FunctionDeclaration>ArrayUtilities.lastOrDefault(classDecl.members.members,
-            m => m.nodeType() === NodeType.FunctionDeclaration && (<FunctionDeclaration>m).isConstructor);
-    }
-
     export function lastParameterIsRest(parameters: ASTList): boolean {
         return parameters.members.length > 0 && ArrayUtilities.last(<Parameter[]>parameters.members).isRest;
     }
@@ -403,11 +398,13 @@ module TypeScript {
             }
         }
 
-        public emitObjectLiteral(objectLiteral: UnaryExpression) {
+        public emitObjectLiteralExpression(objectLiteral: ObjectLiteralExpression) {
             var useNewLines = !hasFlag(objectLiteral.getFlags(), ASTFlags.SingleLine);
 
+            this.recordSourceMappingStart(objectLiteral);
+
             this.writeToOutput("{");
-            var list = <ASTList>objectLiteral.operand;
+            var list = objectLiteral.propertyAssignments;
             if (list.members.length > 0) {
                 if (useNewLines) {
                     this.writeLineToOutput("");
@@ -427,13 +424,17 @@ module TypeScript {
                 }
             }
             this.writeToOutput("}");
+
+            this.recordSourceMappingEnd(objectLiteral);
         }
 
-        public emitArrayLiteral(arrayLiteral: UnaryExpression) {
+        public emitArrayLiteralExpression(arrayLiteral: ArrayLiteralExpression) {
             var useNewLines = !hasFlag(arrayLiteral.getFlags(), ASTFlags.SingleLine);
 
+            this.recordSourceMappingStart(arrayLiteral);
+
             this.writeToOutput("[");
-            var list = <ASTList>arrayLiteral.operand;
+            var list = arrayLiteral.expressions;
             if (list.members.length > 0) {
                 if (useNewLines) {
                     this.writeLineToOutput("");
@@ -447,6 +448,8 @@ module TypeScript {
                 }
             }
             this.writeToOutput("]");
+
+            this.recordSourceMappingEnd(arrayLiteral);
         }
 
         public emitObjectCreationExpression(objectCreationExpression: ObjectCreationExpression) {
@@ -476,7 +479,7 @@ module TypeScript {
         }
 
         public getConstantDecl(dotExpr: BinaryExpression): BoundDeclInfo {
-            var pullSymbol = this.semanticInfoChain.getSymbolForAST(dotExpr, this.document.fileName);
+            var pullSymbol = this.semanticInfoChain.getSymbolForAST(dotExpr);
             if (pullSymbol && pullSymbol.hasFlag(PullElementFlags.Constant)) {
                 var pullDecls = pullSymbol.getDeclarations();
                 if (pullDecls.length === 1) {
@@ -620,7 +623,7 @@ module TypeScript {
                 this.writeToOutput("function ");
             }
 
-            if (funcDecl.isConstructor) {
+            if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Constructor)) {
                 this.writeToOutput(this.thisClassNode.name.actualText);
             }
 
@@ -641,7 +644,7 @@ module TypeScript {
             this.emitFunctionParameters(funcDecl.parameters);
             this.writeLineToOutput(") {");
 
-            if (funcDecl.isConstructor) {
+            if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Constructor)) {
                 this.recordSourceMappingNameStart("constructor");
             } else if (funcDecl.isGetAccessor()) {
                 this.recordSourceMappingNameStart("get_" + funcDecl.getNameText());
@@ -659,7 +662,7 @@ module TypeScript {
                 this.writeCaptureThisStatement(funcDecl);
             }
 
-            if (funcDecl.isConstructor) {
+            if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Constructor)) {
                 this.emitConstructorStatements(funcDecl);
             }
             else {
@@ -1043,7 +1046,7 @@ module TypeScript {
             var savedInArrowFunction = this.inArrowFunction;
             this.inArrowFunction = false;
 
-            if (funcDecl.isConstructor) {
+            if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Constructor)) {
                 temp = this.setContainer(EmitContainer.Constructor);
             }
             else {
@@ -1110,7 +1113,7 @@ module TypeScript {
         public emitVariableDeclaration(declaration: VariableDeclaration) {
             var varDecl = <VariableDeclarator>declaration.declarators.members[0];
 
-            var symbol = this.semanticInfoChain.getSymbolForAST(varDecl, this.document.fileName);
+            var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
 
             var parentSymbol = symbol ? symbol.getContainer() : null;
             var parentKind = parentSymbol ? parentSymbol.kind : PullElementKind.None;
@@ -1161,7 +1164,7 @@ module TypeScript {
                 var varDeclName = varDecl.id.actualText;
                 var quotedOrNumber = isQuoted(varDeclName) || varDecl.id.isNumber;
 
-                var symbol = this.semanticInfoChain.getSymbolForAST(varDecl, this.document.fileName);
+                var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
                 var parentSymbol = symbol ? symbol.getContainer() : null;
                 var parentDecl = pullDecl && pullDecl.getParentDecl();
                 var parentIsClass = parentDecl && parentDecl.kind === PullElementKind.Class;
@@ -1297,7 +1300,8 @@ module TypeScript {
         // Emits the container name of the symbol in the given enclosing context
         private emitSymbolContainerNameInEnclosingContext(pullSymbol: PullSymbol) {
             var decl = pullSymbol.getDeclarations()[0];
-            var symbolContainerDeclPath = getPathToDecl(decl.getParentDecl());
+            var parentDecl = decl.getParentDecl();
+            var symbolContainerDeclPath = parentDecl? parentDecl.getParentPath(): <PullDecl[]>[];
 
             var enclosingContextDeclPath = this.declStack;
             var potentialDeclPath = symbolContainerDeclPath;
@@ -1350,11 +1354,11 @@ module TypeScript {
             this.emitComments(name, true);
             this.recordSourceMappingStart(name);
             if (!name.isMissing()) {
-                var pullSymbol = this.semanticInfoChain.getSymbolForAST(name, this.document.fileName);
+                var pullSymbol = this.semanticInfoChain.getSymbolForAST(name);
                 if (!pullSymbol) {
                     pullSymbol = this.semanticInfoChain.anyTypeSymbol;
                 }
-                var pullSymbolAlias = this.semanticInfoChain.getAliasSymbolForAST(name, this.document.fileName);
+                var pullSymbolAlias = this.semanticInfoChain.getAliasSymbolForAST(name);
                 if (pullSymbol && pullSymbolAlias) {
                     var symbolToCompare = this.resolvingContext.resolvingTypeReference ?
                         pullSymbolAlias.getExportAssignedTypeSymbol() :
@@ -1513,7 +1517,7 @@ module TypeScript {
 
         private emitParameterPropertyAndMemberVariableAssignments(): void {
             // emit any parameter properties first
-            var constructorDecl = getClassConstructor(this.thisClassNode);
+            var constructorDecl = this.thisClassNode.constructorDecl;
 
             if (constructorDecl && constructorDecl.parameters) {
                 for (var i = 0, n = constructorDecl.parameters.members.length; i < n; i++) {
@@ -1887,7 +1891,7 @@ module TypeScript {
 
             this.emitIndent();
 
-            var constrDecl = getClassConstructor(classDecl);
+            var constrDecl = classDecl.constructorDecl;
 
             // output constructor
             if (constrDecl) {
@@ -2174,12 +2178,6 @@ module TypeScript {
                     expression.operand.emit(this);
                     this.writeToOutput("--");
                     break;
-                case NodeType.ObjectLiteralExpression:
-                    this.emitObjectLiteral(expression);
-                    break;
-                case NodeType.ArrayLiteralExpression:
-                    this.emitArrayLiteral(expression);
-                    break;
                 case NodeType.BitwiseNotExpression:
                     this.writeToOutput("~");
                     expression.operand.emit(this);
@@ -2278,6 +2276,77 @@ module TypeScript {
                     }
             }
             this.recordSourceMappingEnd(expression);
+        }
+
+        public emitSimplePropertyAssignment(property: SimplePropertyAssignment): void {
+            this.recordSourceMappingStart(property);
+            property.propertyName.emit(this);
+            this.writeToOutput(": ");
+            property.expression.emit(this);
+            this.recordSourceMappingEnd(property);
+        }
+
+        public emitFunctionPropertyAssignment(funcProp: FunctionPropertyAssignment): void {
+            this.recordSourceMappingStart(funcProp);
+
+            funcProp.propertyName.emit(this);
+            this.writeToOutput(": ");
+
+            var pullFunctionDecl = this.semanticInfoChain.getDeclForAST(funcProp, this.document.fileName);
+
+            var savedInArrowFunction = this.inArrowFunction;
+            this.inArrowFunction = false;
+
+            var temp = this.setContainer(EmitContainer.Function);
+            var funcName = funcProp.propertyName;
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(funcProp, this.document.fileName);
+            this.pushDecl(pullDecl);
+
+            this.emitComments(funcProp, true);
+
+            this.recordSourceMappingStart(funcProp);
+            this.writeToOutput("function ");
+
+            //this.recordSourceMappingStart(funcProp.propertyName);
+            //this.writeToOutput(funcProp.propertyName.actualText);
+            //this.recordSourceMappingEnd(funcProp.propertyName);
+
+            this.writeToOutput("(");
+            this.emitFunctionParameters(funcProp.parameters);
+            this.writeLineToOutput(") {");
+
+            this.recordSourceMappingNameStart(funcProp.propertyName.actualText);
+            this.indenter.increaseIndent();
+
+            this.emitDefaultValueAssignments(funcProp.parameters);
+            this.emitRestParameterInitializer(funcProp.parameters);
+
+            if (this.shouldCaptureThis(funcProp)) {
+                this.writeCaptureThisStatement(funcProp);
+            }
+
+            this.emitList(funcProp.block.statements);
+            this.emitCommentsArray(funcProp.block.closeBraceLeadingComments);
+
+            this.indenter.decreaseIndent();
+            this.emitIndent();
+            this.writeToOutputWithSourceMapRecord("}", funcProp.block.closeBraceSpan);
+
+            this.recordSourceMappingNameEnd();
+            this.recordSourceMappingEnd(funcProp);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(funcProp);
+
+            this.emitComments(funcProp, false);
+
+            this.popDecl(pullDecl);
+
+            this.setContainer(temp);
+            this.inArrowFunction = savedInArrowFunction;
+
+            this.recordSourceMappingEnd(funcProp);
         }
 
         public emitConditionalExpression(expression: ConditionalExpression): void {

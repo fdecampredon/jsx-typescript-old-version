@@ -347,6 +347,77 @@ module TypeScript {
         }
     }
 
+    export class SimplePropertyAssignment extends AST {
+        constructor(public propertyName: Identifier,
+                    public expression: AST) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.SimplePropertyAssignment;
+        }
+
+        public emitWorker(emitter: Emitter): void {
+            emitter.emitSimplePropertyAssignment(this);
+        }
+    }
+
+    export class FunctionPropertyAssignment extends AST {
+        constructor(public propertyName: Identifier,
+                    public typeParameters: ASTList,
+                    public parameters: ASTList,
+                    public returnTypeAnnotation: TypeReference,
+                    public block: Block) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.FunctionPropertyAssignment;
+        }
+
+        public emitWorker(emitter: Emitter): void {
+            emitter.emitFunctionPropertyAssignment(this);
+        }
+    }
+
+    export class ObjectLiteralExpression extends AST {
+        constructor(public propertyAssignments: ASTList) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.ObjectLiteralExpression;
+        }
+
+        public emitWorker(emitter: Emitter) {
+            emitter.emitObjectLiteralExpression(this);
+        }
+
+        public structuralEquals(ast: ObjectLiteralExpression, includingPosition: boolean): boolean {
+            return super.structuralEquals(ast, includingPosition) &&
+                structuralEquals(this.propertyAssignments, ast.propertyAssignments, includingPosition);
+        }
+    }
+
+    export class ArrayLiteralExpression extends AST {
+        constructor(public expressions: ASTList) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.ArrayLiteralExpression;
+        }
+
+        public emitWorker(emitter: Emitter) {
+            emitter.emitArrayLiteralExpression(this);
+        }
+
+        public structuralEquals(ast: ArrayLiteralExpression, includingPosition: boolean): boolean {
+            return super.structuralEquals(ast, includingPosition) &&
+                structuralEquals(this.expressions, ast.expressions, includingPosition);
+        }
+    }
+
     export class UnaryExpression extends AST {
         constructor(private _nodeType: NodeType, public operand: AST) {
             super();
@@ -775,9 +846,9 @@ module TypeScript {
     export class FunctionDeclaration extends AST {
         public hint: string = null;
         private _functionFlags = FunctionFlags.None;
+        public classDecl: ClassDeclaration = null;
 
         constructor(public name: Identifier,
-                    public isConstructor: boolean,
                     public typeParameters: ASTList,
                     public parameters: ASTList,
                     public returnTypeAnnotation: TypeReference,
@@ -806,7 +877,6 @@ module TypeScript {
                    this.hint === ast.hint &&
                    structuralEquals(this.name, ast.name, includingPosition) &&
                    structuralEquals(this.block, ast.block, includingPosition) &&
-                   this.isConstructor === ast.isConstructor &&
                    structuralEquals(this.typeParameters, ast.typeParameters, includingPosition) &&
                    structuralEquals(this.parameters, ast.parameters, includingPosition);
         }
@@ -832,10 +902,6 @@ module TypeScript {
             return (this.getFunctionFlags() & FunctionFlags.Method) !== FunctionFlags.None;
         }
 
-        public isCallMember() { return hasFlag(this.getFunctionFlags(), FunctionFlags.CallMember); }
-        public isConstructMember() { return hasFlag(this.getFunctionFlags(), FunctionFlags.ConstructMember); }
-        public isIndexerMember() { return hasFlag(this.getFunctionFlags(), FunctionFlags.IndexerMember); }
-        public isSpecialFn() { return this.isCallMember() || this.isIndexerMember() || this.isConstructMember(); }
         public isAccessor() { return hasFlag(this.getFunctionFlags(), FunctionFlags.GetAccessor) || hasFlag(this.getFunctionFlags(), FunctionFlags.SetAccessor); }
         public isGetAccessor() { return hasFlag(this.getFunctionFlags(), FunctionFlags.GetAccessor); }
         public isSetAccessor() { return hasFlag(this.getFunctionFlags(), FunctionFlags.SetAccessor); }
@@ -918,6 +984,7 @@ module TypeScript {
     }
 
     export class ClassDeclaration extends AST {
+        public constructorDecl: FunctionDeclaration = null;
         private _varFlags = VariableFlags.None;
 
         constructor(public name: Identifier,

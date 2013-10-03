@@ -99,8 +99,10 @@ module TypeScript {
             this.childrenWalkers[NodeType.StringLiteral] = ChildrenWalkers.walkNone;
             this.childrenWalkers[NodeType.RegularExpressionLiteral] = ChildrenWalkers.walkNone;
             this.childrenWalkers[NodeType.NullLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.ArrayLiteralExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
-            this.childrenWalkers[NodeType.ObjectLiteralExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
+            this.childrenWalkers[NodeType.ArrayLiteralExpression] = ChildrenWalkers.walkArrayLiteralExpressionChildren;
+            this.childrenWalkers[NodeType.ObjectLiteralExpression] = ChildrenWalkers.walkObjectLiteralExpressionChildren;
+            this.childrenWalkers[NodeType.SimplePropertyAssignment] = ChildrenWalkers.walkSimplePropertyAssignmentChildren;
+            this.childrenWalkers[NodeType.FunctionPropertyAssignment] = ChildrenWalkers.walkFunctionPropertyAssignmentChildren;
             this.childrenWalkers[NodeType.VoidExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
             this.childrenWalkers[NodeType.CommaExpression] = ChildrenWalkers.walkBinaryExpressionChildren;
             this.childrenWalkers[NodeType.PlusExpression] = ChildrenWalkers.walkUnaryExpressionChildren;
@@ -233,6 +235,27 @@ module TypeScript {
 
         export function walkUnaryExpressionChildren(preAst: UnaryExpression, walker: IAstWalker): void {
             walker.walk(preAst.operand);
+        }
+
+        export function walkArrayLiteralExpressionChildren(preAst: ArrayLiteralExpression, walker: IAstWalker): void {
+            walker.walk(preAst.expressions);
+        }
+
+        export function walkSimplePropertyAssignmentChildren(preAst: SimplePropertyAssignment, walker: IAstWalker): void {
+            walker.walk(preAst.propertyName);
+            walker.walk(preAst.expression);
+        }
+
+        export function walkFunctionPropertyAssignmentChildren(preAst: FunctionPropertyAssignment, walker: IAstWalker): void {
+            walker.walk(preAst.propertyName);
+            walker.walk(preAst.typeParameters);
+            walker.walk(preAst.parameters);
+            walker.walk(preAst.returnTypeAnnotation);
+            walker.walk(preAst.block);
+        }
+
+        export function walkObjectLiteralExpressionChildren(preAst: ObjectLiteralExpression, walker: IAstWalker): void {
+            walker.walk(preAst.propertyAssignments);
         }
 
         export function walkCastExpressionChildren(preAst: CastExpression, walker: IAstWalker): void {

@@ -159,7 +159,8 @@ class RWCRunner extends RunnerBase {
                         IO.writeFile(outputDeclarationFilename, dtsresult, /* codepath */ null);
                     } catch (e) {
                         hasCrashed = true;
-                        IO.writeFile(outputCrashFilename, e.message, /*codepage*/ null);
+                        var message = e.message + (e.stack ? '\r\n' + e.stack : '');
+                        IO.writeFile(outputCrashFilename, message, /*codepage*/ null);
                         Harness.Assert.throwAssertError(new Error("Failed compilation"));
                     }
                 });

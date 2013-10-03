@@ -22,44 +22,12 @@ module TypeScript {
         private compilationUnitPath: string;  // the "file" this is associated with
 
         private topLevelDecl: PullDecl = null;
-        private topLevelSynthesizedDecls: PullDecl[] = [];
 
         private declASTMap = new DataMap<AST>();
         private astDeclMap = new DataMap<PullDecl>();
 
-        // <-- Data to clear when we get invalidated
-        private astSymbolMap = new DataMap<PullSymbol>();
-        private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-        private symbolASTMap = new DataMap<AST>();
-        private diagnostics: Diagnostic[] = null;
-        public hasBeenTypeChecked = false;
-
-        private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> =
-            Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
-
-        private importDeclarationNames: BlockIntrinsics<boolean> = null;
-        // Data to clear when we get invalidated --> 
-
         constructor(compilationUnitPath: string) {
             this.compilationUnitPath = compilationUnitPath;
-        }
-
-        public invalidate() {
-            this.astSymbolMap = new DataMap<PullSymbol>();
-            this.astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-            this.symbolASTMap = new DataMap<AST>();
-            this.diagnostics = null;
-            this.astCallResolutionDataMap = Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
-            this.importDeclarationNames = null;
-            this.hasBeenTypeChecked = false;
-        }
-
-        public addDiagnostic(diagnostic: Diagnostic): void {
-            if (this.diagnostics === null) {
-                this.diagnostics = [];
-            }
-
-            this.diagnostics.push(diagnostic);
         }
 
         public addTopLevelDecl(decl: PullDecl) {
@@ -70,20 +38,6 @@ module TypeScript {
 
         public getPath(): string {
             return this.compilationUnitPath;
-        }
-
-        public addSynthesizedDecl(decl: PullDecl) {
-            //if (!decl.getParentDecl()) {
-                this.topLevelSynthesizedDecls[this.topLevelSynthesizedDecls.length] = decl;
-            //}
-        }
-
-        public getSynthesizedDecls() {
-            return this.topLevelSynthesizedDecls;
-        }
-
-        public cleanSynthesizedDecls() {
-            this.topLevelSynthesizedDecls = [];
         }
 
         public getDeclForAST(ast: AST): PullDecl {
@@ -122,96 +76,6 @@ module TypeScript {
             this.declASTMap.link(decl.declIDString, ast);
         }
 
-        public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-
-            if (useDirectTypeStorage) {
-                ast.symbol = symbol;
-                symbol.ast = ast;
-                return;
-            }
-
-            this.astSymbolMap.link(ast.astIDString, symbol);
-            this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
-        }
-
-        public getSymbolForAST(ast: IAST): PullSymbol {
-            if (useDirectTypeStorage) {
-                return (<AST>ast).symbol;
-            }
-
-            return this.astSymbolMap.read(ast.astIDString);
-        }
-
-        public getASTForSymbol(symbol: PullSymbol): AST {
-            if (useDirectTypeStorage) {
-                return symbol.ast;
-            }
-
-            return this.symbolASTMap.read(symbol.pullSymbolIDString);
-        }
-
-        public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
-            if (useDirectTypeStorage) {
-                ast.aliasSymbol = symbol;
-                return;
-            }
-            this.astAliasSymbolMap.link(ast.astIDString, symbol);
-        }
-
-        public getAliasSymbolForAST(ast: IAST): PullTypeAliasSymbol {
-            if (useDirectTypeStorage) {
-                return <PullTypeAliasSymbol>(<AST>ast).aliasSymbol;
-            }
-
-            return this.astAliasSymbolMap.read(ast.astIDString);
-        }
-
-
-        public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            if (useDirectTypeStorage) {
-                return (<InvocationExpression>ast).callResolutionData;
-            }
-            return <PullAdditionalCallResolutionData>this.astCallResolutionDataMap.get(ast.astID);
-        }
-
-        public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
-            if (callResolutionData) {
-                if (useDirectTypeStorage) {
-                    (<InvocationExpression>ast).callResolutionData = callResolutionData;
-                    return;
-                }
-                this.astCallResolutionDataMap.set(ast.astID, callResolutionData);
-            }
-        }
-
-
-        public getDiagnostics(semanticErrors: Diagnostic[]) {
-            if (this.diagnostics) {
-                semanticErrors.push.apply(semanticErrors, this.diagnostics);
-            }
-        }
-
-        public getImportDeclarationNames(): BlockIntrinsics<boolean> {
-            if (this.importDeclarationNames === null) {
-                this.importDeclarationNames = new BlockIntrinsics();
-                this.populateImportDeclarationNames([this.topLevelDecl]);
-            }
-
-            return this.importDeclarationNames;
-        }
-
-        private populateImportDeclarationNames(decls: PullDecl[]): void {
-            for (var i = 0, n = decls.length; i < n; i++) {
-                var decl = decls[i];
-                if (decl.kind === PullElementKind.TypeAlias) {
-                    this.importDeclarationNames[decl.name] = true;
-                }
-                else {
-                    this.populateImportDeclarationNames(decl.getChildDecls());
-                }
-            }
-        }
-
         public isExternalModule() {
             var topLevelDecl = this.getTopLevelDecl();
             if (topLevelDecl.kind == PullElementKind.Script) {
@@ -237,14 +101,8 @@ module TypeScript {
             containingSymbol.addIndexSignature(indexSignature);
 
             var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
-            var indexSigDecl = new PullDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Index | PullElementFlags.Signature, span, this.getPath());
-            var indexParamDecl = new PullDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, span, this.getPath());
-            indexSigDecl.addChildDecl(indexParamDecl);
-            indexParamDecl.setParentDecl(indexSigDecl);
-            containingDecl.addChildDecl(indexSigDecl);
-            indexSigDecl.setParentDecl(containingDecl);
-            this.addSynthesizedDecl(indexSigDecl);
-            this.addSynthesizedDecl(indexParamDecl);
+            var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl, span, this.getPath());
+            var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl , span, this.getPath());
             indexSigDecl.setSignatureSymbol(indexSignature);
             indexParamDecl.setSymbol(indexParameterSymbol);
             indexSignature.addDeclaration(indexSigDecl);
@@ -261,6 +119,7 @@ module TypeScript {
         private declCache = new BlockIntrinsics<PullDecl[]>();
         private symbolCache = new BlockIntrinsics<PullSymbol>();
         private unitCache = new BlockIntrinsics<SemanticInfo>();
+        private fileNameToDiagnostics = new BlockIntrinsics<Diagnostic[]>();
         private topLevelDecls: PullDecl[] = [];
 
         public anyTypeSymbol: PullTypeSymbol = null;
@@ -270,10 +129,18 @@ module TypeScript {
         public nullTypeSymbol: PullTypeSymbol = null;
         public undefinedTypeSymbol: PullTypeSymbol = null;
         public voidTypeSymbol: PullTypeSymbol = null;
+        public emptyTypeSymbol: PullTypeSymbol = null;
 
-        public addPrimitiveType(name: string, globalDecl: PullDecl) {
+        // <-- Data to clear when we get invalidated
+        private astSymbolMap = new DataMap<PullSymbol>();
+        private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
+        private symbolASTMap = new DataMap<AST>();
+        private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> =
+            Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
+
+        private addPrimitiveType(name: string, globalDecl: PullDecl) {
             var span = new TextSpan(0, 0);
-            var decl = new PullDecl(name, name, PullElementKind.Primitive, PullElementFlags.None, span, "");
+            var decl = new PullDecl(name, name, PullElementKind.Primitive, PullElementFlags.None, globalDecl, span, "");
             var symbol = new PullPrimitiveTypeSymbol(name);
 
             symbol.addDeclaration(decl);
@@ -281,29 +148,23 @@ module TypeScript {
 
             symbol.setResolved();
 
-            if (globalDecl) {
-                globalDecl.addChildDecl(decl);
-            }
-
             return symbol;
         }
 
-        public addPrimitiveValue(name: string, type: PullTypeSymbol, globalDecl: PullDecl) {
+        private addPrimitiveValue(name: string, type: PullTypeSymbol, globalDecl: PullDecl) {
             var span = new TextSpan(0, 0);
-            var decl = new PullDecl(name, name, PullElementKind.Variable, PullElementFlags.Ambient, span, "");
+            var decl = new PullDecl(name, name, PullElementKind.Variable, PullElementFlags.Ambient, globalDecl, span, "");
             var symbol = new PullSymbol(name, PullElementKind.Variable);
 
             symbol.addDeclaration(decl);
             decl.setSymbol(symbol);
             symbol.type = type;
             symbol.setResolved();
-
-            globalDecl.addChildDecl(decl);
         }
 
-        public getGlobalDecl() {
+        private getGlobalDecl() {
             var span = new TextSpan(0, 0);
-            var globalDecl = new PullDecl("", "", PullElementKind.Global, PullElementFlags.None, span, "");
+            var globalDecl = new PullDecl("", "", PullElementKind.Global, PullElementFlags.None, /*parentDecl*/ null, span, "");
 
             // add primitive types
             this.anyTypeSymbol = this.addPrimitiveType("any", globalDecl);
@@ -316,6 +177,14 @@ module TypeScript {
             this.nullTypeSymbol = this.addPrimitiveType("null", null);
             this.undefinedTypeSymbol = this.addPrimitiveType("undefined", null);
             this.addPrimitiveValue("undefined", this.undefinedTypeSymbol, globalDecl);
+
+            // other decls not reachable from the globalDecl
+            var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, /*parentDecl*/ null, span, "");
+            var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType);
+            emptyTypeDecl.setSymbol(emptyTypeSymbol);
+            emptyTypeSymbol.addDeclaration(emptyTypeDecl);
+            emptyTypeSymbol.setResolved();
+            this.emptyTypeSymbol = emptyTypeSymbol;
 
             return globalDecl;
         }
@@ -363,20 +232,6 @@ module TypeScript {
             return this.topLevelDecls;
         }
 
-        private collectAllSynthesizedDecls() {
-            var decls: PullDecl[] = [];
-            var synthDecls: PullDecl[];
-
-            for (var i = 0; i < this.units.length; i++) {
-                synthDecls = this.units[i].getSynthesizedDecls();
-                for (var j = 0; j < synthDecls.length; j++) {
-                    decls[decls.length] = synthDecls[j];
-                }
-            }
-
-            return decls;
-        }        
-
         private getDeclPathCacheID(declPath: string[], declKind: PullElementKind) {
             var cacheID = "";
 
@@ -386,34 +241,6 @@ module TypeScript {
 
             return cacheID + "#" + declKind.toString();
         }
-        
-        // REVIEW: The method below is part of an experiment on how to speed up up dynamic module lookup
-        //public findExternalModuleSymbol(name) {
-        //    var cacheID = this.getDeclPathCacheID([name], PullElementKind.DynamicModule);
-
-        //    var symbol = this.symbolCache[name];
-
-        //    if (!symbol) {
-        //        var unit = <SemanticInfo>this.unitCache[name];
-        //        var symbol: PullContainerTypeSymbol = null;
-        //        if (unit) {
-        //            // the dynamic module will be the only child
-        //            var decl = unit.getTopLevelDecls()[0].getChildDecls()[0];
-
-        //            if (decl.kind == PullElementKind.DynamicModule) {
-        //                symbol = decl.getSymbol();
-        //            }
-        //        }
-        //    }
-
-        //    if (symbol) {
-        //        this.symbolCache[cacheID] = symbol;
-
-        //        symbol.addCacheID(cacheID);
-        //    }
-
-        //    return symbol;
-        //}
 
         public findTopLevelSymbol(name: string, kind: PullElementKind, stopAtFile: string): PullSymbol {
             var cacheID = this.getDeclPathCacheID([name], kind);
@@ -681,75 +508,30 @@ module TypeScript {
             }
         }
 
-        private cleanDecl(decl: PullDecl) {
-            decl.setSymbol(null);
-            decl.setSignatureSymbol(null);
-            decl.setSpecializingSignatureSymbol(null);
-            decl.setIsBound(false);
-
-            var children = decl.getChildDecls();
-
-            for (var i = 0; i < children.length; i++) {
-                this.cleanDecl(children[i]);
-            }
-
-            var typeParameters = decl.getTypeParameters();
-
-            for (var i = 0; i < typeParameters.length; i++) {
-                this.cleanDecl(typeParameters[i]);
-            }
-
-            var valueDecl = decl.getValueDecl();
-
-            if (valueDecl) {
-                this.cleanDecl(valueDecl);
-            }
-        }
-
         private cleanAllDecls() {
             var topLevelDecls = this.collectAllTopLevelDecls();
 
             // skip the first tld, which contains global primitive symbols
             for (var i = 1; i < topLevelDecls.length; i++) {
-                this.cleanDecl(topLevelDecls[i]);
+                topLevelDecls[i].clean();
             }
 
-            var synthesizedDecls = this.collectAllSynthesizedDecls();
-
-            for (var i = 0; i < synthesizedDecls.length; i++) {
-                this.cleanDecl(synthesizedDecls[i]);
-            }
-
-            this.cleanAllSynthesizedDecls();
             this.topLevelDecls = [];
         }
 
-        private cleanAllSynthesizedDecls() {
-            for (var i = 0; i < this.units.length; i++) {
-                this.units[i].cleanSynthesizedDecls();
-            }
-        }
-
-        public update() {
-
-            // PULLTODO: Be less aggressive about clearing the cache
+        public invalidate() {
             this.declCache = new BlockIntrinsics();
             this.symbolCache = new BlockIntrinsics();
+            this.fileNameToDiagnostics = new BlockIntrinsics();
+
             this.units[0] = new SemanticInfo("");
             this.units[0].addTopLevelDecl(this.getGlobalDecl());
             this.cleanAllDecls();
-            for (var unit in this.unitCache) {
-                if (this.unitCache[unit]) {
-                    this.unitCache[unit].invalidate();
-                }
-            } 
-        }
 
-        public invalidateUnit(compilationUnitPath: string) {
-            var unit: SemanticInfo = this.unitCache[compilationUnitPath];
-            if (unit) {
-                unit.invalidate();
-            }
+            this.astSymbolMap = new DataMap<PullSymbol>();
+            this.astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
+            this.symbolASTMap = new DataMap<AST>();
+            this.astCallResolutionDataMap = Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
         }
 
         public getDeclForAST(ast: AST, unitPath: string): PullDecl {
@@ -772,81 +554,80 @@ module TypeScript {
             return null;
         }
 
-        public getSymbolForAST(ast: IAST, unitPath: string): PullSymbol {
+        public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
+            if (useDirectTypeStorage) {
+                ast.symbol = symbol;
+                symbol.ast = ast;
+                return;
+            }
 
+            this.astSymbolMap.link(ast.astIDString, symbol);
+            this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
+        }
+
+        public getSymbolForAST(ast: IAST): PullSymbol {
             if (useDirectTypeStorage) {
                 return (<AST>ast).symbol;
             }
 
-            var unit = <SemanticInfo>this.unitCache[unitPath];
-
-            if (unit) {
-                return unit.getSymbolForAST(ast);
-            }
-
-            return null;
+            return this.astSymbolMap.read(ast.astIDString);
         }
 
-        public getASTForSymbol(symbol: PullSymbol, unitPath: string) {
-
+        public getASTForSymbol(symbol: PullSymbol): AST {
             if (useDirectTypeStorage) {
                 return symbol.ast;
             }
 
-            var unit = <SemanticInfo>this.unitCache[unitPath];
-
-            if (unit) {
-                return unit.getASTForSymbol(symbol);
-            }
-
-            return null;
+            return this.symbolASTMap.read(symbol.pullSymbolIDString);
         }
 
-        public setSymbolForAST(ast: AST, symbol: PullSymbol, unitPath: string): void {
+        public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
             if (useDirectTypeStorage) {
-                ast.symbol = symbol;
+                ast.aliasSymbol = symbol;
                 return;
             }
-
-            var unit = <SemanticInfo>this.unitCache[unitPath];
-
-            if (unit) {
-                unit.setSymbolForAST(ast, symbol);
-            }
+            this.astAliasSymbolMap.link(ast.astIDString, symbol);
         }
 
-        public getAliasSymbolForAST(ast: IAST, unitPath: string): PullTypeAliasSymbol {
+        public getAliasSymbolForAST(ast: IAST): PullTypeAliasSymbol {
             if (useDirectTypeStorage) {
                 return <PullTypeAliasSymbol>(<AST>ast).aliasSymbol;
             }
 
-            var unit = <SemanticInfo>this.unitCache[unitPath];
-
-            if (unit) {
-                return unit.getAliasSymbolForAST(ast);
-            }
-
-            return null;
+            return this.astAliasSymbolMap.read(ast.astIDString);
         }
 
-        public removeSymbolFromCache(symbol: PullSymbol) {
-
-            var path = [symbol.name];
-            var kind = (symbol.kind & PullElementKind.SomeType) !== 0 ? PullElementKind.SomeType : PullElementKind.SomeValue;
-
-            var kindID = this.getDeclPathCacheID(path, kind);
-            var symID = this.getDeclPathCacheID(path, symbol.kind);
+        public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
+            if (useDirectTypeStorage) {
+                return (<InvocationExpression>ast).callResolutionData;
+            }
+            return <PullAdditionalCallResolutionData>this.astCallResolutionDataMap.get(ast.astID);
         }
 
-        public postDiagnostics(): Diagnostic[] {
-            var errors: Diagnostic[] = [];
+        public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
+            if (callResolutionData) {
+                if (useDirectTypeStorage) {
+                    (<InvocationExpression>ast).callResolutionData = callResolutionData;
+                    return;
+                }
+                this.astCallResolutionDataMap.set(ast.astID, callResolutionData);
+            }
+        }
 
-            // PULLTODO: Why are we indexing from 1?
-            for (var i = 1; i < this.units.length; i++) {
-                this.units[i].getDiagnostics(errors);
+        public addDiagnostic(diagnostic: Diagnostic): void {
+            var fileName = diagnostic.fileName();
+            var diagnostics = this.fileNameToDiagnostics[fileName];
+            if (!diagnostics) {
+                diagnostics = [];
+                this.fileNameToDiagnostics[fileName] = diagnostics;
             }
 
-            return errors;
+            diagnostics.push(diagnostic);
+        }
+
+        public getDiagnostics(fileName: string): Diagnostic[] {
+            var diagnostics = this.fileNameToDiagnostics[fileName];
+            return diagnostics ? diagnostics : [];
         }
     }
 }

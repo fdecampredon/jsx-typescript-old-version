@@ -59,8 +59,8 @@ module TypeScript {
             return (this.kind & PullElementKind.SomeSignature) != 0;
         }
 
-        public isArray() {
-            return (this.kind & PullElementKind.Array) != 0;
+        public isArrayNamedTypeReference() {
+            return false;
         }
 
         public isPrimitive() {
@@ -1033,6 +1033,38 @@ module TypeScript {
             this.type = this;
         }
 
+        // Returns true if this is type reference to Array<T>.  Note that because this is a type
+        // reference, it will have type arguments, not type parameters.
+        private _isArrayNamedTypeReference: boolean = undefined;
+        public isArrayNamedTypeReference() {
+            if (this._isArrayNamedTypeReference === undefined) {
+                this._isArrayNamedTypeReference = this.computeIsArrayNamedTypeReference();
+            }
+
+            return this._isArrayNamedTypeReference;
+        }
+
+        private computeIsArrayNamedTypeReference(): boolean {
+            var typeArgs = this.getTypeArguments()
+            if (typeArgs && this.getTypeArguments().length === 1 &&
+                this.name === "Array") {
+
+                var container = this.getContainer();
+                var declaration = this.getDeclarations()[0];
+
+                // If we're a child of the global module (i.e. we have a parent decl, but our 
+                // parent has no parent), then we're the Array<T> type.
+                if (declaration &&
+                    declaration.getParentDecl() &&
+                    declaration.getParentDecl().getParentDecl() === null) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public isType() { return true; }
         public isClass() {
             return this.kind == PullElementKind.Class || (this._constructorMethod != null);
@@ -1046,7 +1078,7 @@ module TypeScript {
 
         public isObject(): boolean {
             return hasFlag(this.kind,
-                PullElementKind.Array | PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType | PullElementKind.Interface | PullElementKind.ObjectType);
+                PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType | PullElementKind.Interface | PullElementKind.ObjectType);
         }
 
         public getKnownBaseTypeCount() { return this._knownBaseTypeCount; }
@@ -1105,7 +1137,7 @@ module TypeScript {
 
         public getArrayType() { return this._arrayVersionOfThisType; }
 
-        public getElementType(): PullTypeSymbol {            
+        public getElementType(): PullTypeSymbol {
             return this._elementType;
         }
 
@@ -1363,11 +1395,10 @@ module TypeScript {
         }
 
         public isGeneric(): boolean {
-            return (this._typeParameters && this._typeParameters.length != 0) ||
+            return (this._typeParameters && this._typeParameters.length > 0) ||
                 this._hasGenericSignature ||
                 this._hasGenericMember ||
-                (this._typeArguments && this._typeArguments.length) ||
-                this.isArray();
+                (this._typeArguments && this._typeArguments.length > 0);
         }
 
         public isFixed() {
@@ -1752,7 +1783,7 @@ module TypeScript {
 
             // Interface extending non interface or class 
             // or class implementing non interface or class - are invalid
-            return !!(baseType.kind & (PullElementKind.Interface | PullElementKind.Class | PullElementKind.Array));
+            return !!(baseType.kind & (PullElementKind.Interface | PullElementKind.Class));
         }
 
         public findMember(name: string, lookInParent = true): PullSymbol {
@@ -1905,10 +1936,6 @@ module TypeScript {
         }
 
         public isNamedTypeSymbol() {
-            if (this.isArray()) {
-                return false;
-            }
-
             var kind = this.kind;
             if (kind === PullElementKind.Primitive || // primitives
             kind === PullElementKind.Class || // class
@@ -1931,9 +1958,9 @@ module TypeScript {
 
         public getScopedNameEx(scopeSymbol?: PullSymbol, useConstraintInName?: boolean, getPrettyTypeName?: boolean, getTypeParamMarkerInfo?: boolean) {
 
-            if (this.isArray()) {
+            if (this.isArrayNamedTypeReference()) {
                 var elementMemberName = this._elementType ?
-                    (this._elementType.isArray() || this._elementType.isNamedTypeSymbol() ?
+                    (this._elementType.isArrayNamedTypeReference() || this._elementType.isNamedTypeSymbol() ?
                     this._elementType.getScopedNameEx(scopeSymbol, false, getPrettyTypeName, getTypeParamMarkerInfo) :
                     this._elementType.getMemberTypeNameEx(false, scopeSymbol, getPrettyTypeName)) :
                     MemberName.create("any");
@@ -2149,12 +2176,6 @@ module TypeScript {
 
         public getExportAssignedContainerSymbol() {
             return this.assignedContainer;
-        }
-
-        public resetExportAssignedSymbols() {
-            this.assignedValue = null;
-            this.assignedType = null;
-            this.assignedContainer = null;
         }
 
         static usedAsSymbol(containerSymbol: PullSymbol, symbol: PullSymbol): boolean {
@@ -2684,7 +2705,7 @@ module TypeScript {
         }
 
         // In this case, we have an array type that may have been specialized to a type variable
-        if (typeToSpecialize.isArray()) {
+        if (typeToSpecialize.isArrayNamedTypeReference()) {
 
             if (typeToSpecialize.currentlyBeingSpecialized()) {
                 return typeToSpecialize;
@@ -2702,7 +2723,7 @@ module TypeScript {
             }
 
             // we re-specialize so that we can re-use any cached array type symbols
-            var newArrayType = specializeType(resolver.getCachedArrayType(), [newElementType], resolver, context);
+            var newArrayType = specializeType(resolver.getArrayNamedType(), [newElementType], resolver, context);
 
             return newArrayType;
         }     
@@ -2720,7 +2741,7 @@ module TypeScript {
 
         var rootType: PullTypeSymbol = getRootType(typeToSpecialize);
 
-        var isArray = typeToSpecialize === resolver.getCachedArrayType() || typeToSpecialize.isArray();
+        var isArray = typeToSpecialize === resolver.getArrayNamedType() || typeToSpecialize.isArrayNamedTypeReference();
 
         if (searchForExistingSpecialization || context.specializingToAny) {
             if (!typeArguments.length || context.specializingToAny) {
@@ -2803,11 +2824,11 @@ module TypeScript {
         if (!newType) {
             nSpecializationsCreated++;
 
-            newType = typeToSpecialize.isClass() ? new PullTypeSymbol(typeToSpecialize.name, PullElementKind.Class) :
-                                                    isArray ? new PullTypeSymbol("Array", PullElementKind.Array) :
-                                                        typeToSpecialize.isTypeParameter() ? // watch out for replacing one tyvar with another
-                                                            new PullTypeVariableSymbol(typeToSpecialize.name, (<PullTypeParameterSymbol>typeToSpecialize).isFunctionTypeParameter()) :
-                                                                new PullTypeSymbol(typeToSpecialize.name, typeToSpecialize.kind);
+            newType = typeToSpecialize.isClass()
+                ? new PullTypeSymbol(typeToSpecialize.name, PullElementKind.Class)
+                : typeToSpecialize.isTypeParameter()
+                    ? new PullTypeVariableSymbol(typeToSpecialize.name, (<PullTypeParameterSymbol>typeToSpecialize).isFunctionTypeParameter())
+                    : new PullTypeSymbol(typeToSpecialize.name, typeToSpecialize.kind);
             newType.setRootSymbol(rootType);
         }
 
@@ -2911,7 +2932,15 @@ module TypeScript {
         var callSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getCallSignatures(false) : typeToSpecialize.getCallSignatures(false);
         var constructSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getConstructSignatures(false) : typeToSpecialize.getConstructSignatures(false);
         var indexSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getIndexSignatures(false) : typeToSpecialize.getIndexSignatures(false);
-        var members = typeToSpecialize.memberWrapsOwnTypeParameter? rootType.getMembers() : typeToSpecialize.getMembers();
+        var members = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getMembers() : typeToSpecialize.getMembers();
+
+        // if no members of any kind were found on a class type, we may not have yet specialized the parent type's members, so we'll need to do so now
+        if (typeToSpecialize.isClass() && !(members.length || callSignatures.length || constructSignatures.length || indexSignatures.length)) {
+            callSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getCallSignatures(true) : typeToSpecialize.getCallSignatures(true);
+            constructSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getConstructSignatures(true) : typeToSpecialize.getConstructSignatures(true);
+            indexSignatures = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getIndexSignatures(true) : typeToSpecialize.getIndexSignatures(true);
+            members = typeToSpecialize.memberWrapsOwnTypeParameter ? rootType.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all) : typeToSpecialize.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
+        }
 
         // specialize call signatures
         var newSignature: PullSignatureSymbol;

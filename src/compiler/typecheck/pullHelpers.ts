@@ -8,22 +8,7 @@ module TypeScript {
     export module PullHelpers {
         export function isConstructor(ast: AST) {
             return ast.nodeType() === NodeType.FunctionDeclaration &&
-                (<FunctionDeclaration>ast).isConstructor;
-        }
-
-        export function isConstructMember(ast: AST) {
-            return ast.nodeType() === NodeType.FunctionDeclaration &&
-                (<FunctionDeclaration>ast).isConstructMember();
-        }
-
-        export function isIndexerMember(ast: AST) {
-            return ast.nodeType() === NodeType.FunctionDeclaration &&
-                (<FunctionDeclaration>ast).isIndexerMember();
-        }
-
-        export function isCallMember(ast: AST) {
-            return ast.nodeType() === NodeType.FunctionDeclaration &&
-                (<FunctionDeclaration>ast).isCallMember();
+                hasFlag((<FunctionDeclaration>ast).getFunctionFlags(), FunctionFlags.Constructor);
         }
 
         export interface SignatureInfoForFuncDecl {
@@ -45,16 +30,17 @@ module TypeScript {
                 functionSignature = <PullSignatureSymbol>funcSymbol;
                 var parent = functionDecl.getParentDecl();
                 typeSymbolWithAllSignatures = parent.getSymbol().type;                
-            } else {
+            }
+            else {
                 functionSignature = functionDecl.getSignatureSymbol();
                 typeSymbolWithAllSignatures = funcSymbol.type;
             }
             var signatures: PullSignatureSymbol[];
 
-            if (isConstructor(funcDecl) || isConstructMember(funcDecl)) {
+            if (isConstructor(funcDecl) || functionDecl.kind === PullElementKind.ConstructSignature) {
                 signatures = typeSymbolWithAllSignatures.getConstructSignatures();
             }
-            else if (isIndexerMember(funcDecl)) {
+            else if (functionDecl.kind === PullElementKind.IndexSignature) {
                 signatures = typeSymbolWithAllSignatures.getIndexSignatures();
             }
             else {

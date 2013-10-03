@@ -933,7 +933,7 @@ module Services {
                 case TypeScript.NodeType.FunctionDeclaration:
                     var funcDecl = <TypeScript.FunctionDeclaration>cur;
                     // constructor keyword
-                    if (!isConstructorValidPosition || !funcDecl.isConstructor || !(position >= funcDecl.minChar && position <= funcDecl.minChar + 11 /*constructor*/)) {
+                    if (!isConstructorValidPosition || !TypeScript.hasFlag(funcDecl.getFunctionFlags(), TypeScript.FunctionFlags.Constructor) || !(position >= funcDecl.minChar && position <= funcDecl.minChar + 11 /*constructor*/)) {
                         return null;
                     }
                 case TypeScript.NodeType.MemberAccessExpression:

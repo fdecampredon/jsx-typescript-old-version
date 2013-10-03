@@ -39,7 +39,6 @@
 ///<reference path='typecheck\pullFlags.ts' />
 ///<reference path='typecheck\pullDecls.ts' />
 ///<reference path='typecheck\pullSymbols.ts' />
-///<reference path='typecheck\pullSymbolBindingContext.ts' />
 ///<reference path='typecheck\pullTypeResolutionContext.ts' />
 ///<reference path='typecheck\pullTypeResolution.ts' />
 ///<reference path='typecheck\pullSemanticInfo.ts' />
@@ -724,7 +723,6 @@ module TypeScript {
         }
 
         public getSemanticDiagnostics(fileName: string): Diagnostic[] {
-            var errors: Diagnostic[] = [];
             var unit = this.semanticInfoChain.getUnit(fileName);
 
             globalSemanticInfoChain = this.semanticInfoChain;
@@ -736,16 +734,14 @@ module TypeScript {
                 var document = this.getDocument(fileName);
                 var script = document.script;
 
-                if (script) {
-                    var startTime = (new Date()).getTime();
-                    PullTypeResolver.typeCheck(this.settings, this.semanticInfoChain, fileName, script)
+                var startTime = (new Date()).getTime();
+                PullTypeResolver.typeCheck(this.settings, this.semanticInfoChain, fileName, script)
                     var endTime = (new Date()).getTime();
 
-                    typeCheckTime += endTime - startTime;
-
-                    unit.getDiagnostics(errors);
-                }
+                typeCheckTime += endTime - startTime;
             }
+
+            var errors = this.semanticInfoChain.getDiagnostics(fileName);
 
             errors = ArrayUtilities.distinct(errors, Diagnostic.equals);
             errors.sort((d1, d2) => {
@@ -843,7 +839,6 @@ module TypeScript {
 
             this.logger.log("Decl creation: " + (createDeclsEndTime - createDeclsStartTime));
             this.logger.log("Binding: " + (bindEndTime - bindStartTime));
-            this.logger.log("    Time in findSymbol: " + time_in_findSymbol);
             this.logger.log("Number of symbols created: " + pullSymbolID);
             this.logger.log("Number of specialized types created: " + nSpecializationsCreated);
             this.logger.log("Number of specialized signatures created: " + nSpecializedSignaturesCreated);
@@ -851,7 +846,6 @@ module TypeScript {
 
         private pullUpdateScript(oldDocument: Document, newDocument: Document): void {
             this.timeFunction("pullUpdateScript: ", () => {
-
                 var oldScript = oldDocument.script;
                 var newScript = newDocument.script;
                 
@@ -872,25 +866,22 @@ module TypeScript {
                 newScriptSemanticInfo.addTopLevelDecl(newTopLevelDecl);
 
                 // If we havne't yet created a new resolver, clean any cached symbols
-                if (this.resolver) {
-                    this.resolver.cleanCachedGlobals();
-                }
+                this.resolver = new PullTypeResolver(
+                    this.settings, this.semanticInfoChain, oldDocument.fileName);
 
                 // replace the old semantic info               
                 this.semanticInfoChain.updateUnit(oldScriptSemanticInfo, newScriptSemanticInfo);
 
                 this.logger.log("Cleaning symbols...");
                 var cleanStart = new Date().getTime();
-                this.semanticInfoChain.update();
+                this.semanticInfoChain.invalidate();
                 var cleanEnd = new Date().getTime();
-                this.logger.log("   time to clean: " +(cleanEnd - cleanStart));
+                this.logger.log("   time to clean: " + (cleanEnd - cleanStart));
 
-                // reset the resolver's current unit, since we've replaced those decls they won't
-                // be cleaned
-                if (this.resolver) {
-                    this.resolver.setUnitPath(oldDocument.fileName);
-                }
-            } );
+                // A file has changed, increment the type check phase so that future type chech
+                // operations will proceed.
+                PullTypeResolver.globalTypeCheckPhase++;
+            });
         }
 
         public getSymbolOfDeclaration(decl: PullDecl): PullSymbol {
@@ -929,7 +920,7 @@ module TypeScript {
             // these are used to track intermediate nodes so that we can properly apply contextual types
             var lambdaAST: AST = null;
             var declarationInitASTs: VariableDeclarator[] = [];
-            var objectLitAST: UnaryExpression = null;
+            var objectLitAST: ObjectLiteralExpression = null;
             var asgAST: BinaryExpression = null;
             var typeAssertionASTs: UnaryExpression[] = [];
             var resolutionContext = new PullTypeResolutionContext(this.resolver);
@@ -967,7 +958,7 @@ module TypeScript {
                                 declarationInitASTs[declarationInitASTs.length] = <VariableDeclarator>cur;
                             }
                             else if (cur.nodeType() === NodeType.ObjectLiteralExpression) {
-                                objectLitAST = <UnaryExpression>cur;
+                                objectLitAST = <ObjectLiteralExpression>cur;
                             }
                             else if (cur.nodeType() === NodeType.CastExpression) {
                                 typeAssertionASTs[typeAssertionASTs.length] = <UnaryExpression>cur;
@@ -1099,7 +1090,7 @@ module TypeScript {
                             inContextuallyTypedAssignment = (assigningAST !== null) && (assigningAST.typeExpr !== null);
 
                             this.resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment:*/false, null, resolutionContext);
-                            var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST, scriptName);
+                            var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
 
                             if (varSymbol && inContextuallyTypedAssignment) {
                                 var contextualType = varSymbol.type;
@@ -1210,7 +1201,6 @@ module TypeScript {
             }
 
             var resolutionContext = new PullTypeResolutionContext(this.resolver);
-            resolutionContext.resolveAggressively = true;
 
             if (path.count() === 0) {
                 return null;
@@ -1242,7 +1232,7 @@ module TypeScript {
                         if (inContextuallyTypedAssignment) {
                             if (propagateContextualTypes) {
                                 this.resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment*/false, null, resolutionContext);
-                                var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST, scriptName);
+                                var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
 
                                 var contextualType: PullTypeSymbol = null;
                                 if (varSymbol && inContextuallyTypedAssignment) {
@@ -1312,7 +1302,7 @@ module TypeScript {
                             // Propagate the child element type
                             var contextualType: PullTypeSymbol = null;
                             var currentContextualType = resolutionContext.getContextualType();
-                            if (currentContextualType && currentContextualType.isArray()) {
+                            if (currentContextualType && currentContextualType.isArrayNamedTypeReference()) {
                                 contextualType = currentContextualType.getElementType();
                             }
 
@@ -1323,7 +1313,7 @@ module TypeScript {
 
                     case NodeType.ObjectLiteralExpression:
                         if (propagateContextualTypes) {
-                            var objectLiteralExpression = <UnaryExpression>current;
+                            var objectLiteralExpression = <ObjectLiteralExpression>current;
                             var objectLiteralResolutionContext = new PullAdditionalObjectLiteralResolutionData();
                             this.resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, enclosingDecl, resolutionContext, objectLiteralResolutionContext);
 
@@ -1332,7 +1322,7 @@ module TypeScript {
                             if (memeberAST) {
                                 // Propagate the member contextual type
                                 var contextualType: PullTypeSymbol = null;
-                                var memberDecls = <ASTList>objectLiteralExpression.operand;
+                                var memberDecls = objectLiteralExpression.propertyAssignments;
                                 if (memberDecls && objectLiteralResolutionContext.membersContextTypeSymbols) {
                                     for (var j = 0, m = memberDecls.members.length; j < m; j++) {
                                         if (memberDecls.members[j] === memeberAST) {
@@ -1491,7 +1481,7 @@ module TypeScript {
 
             var ast = path.ast();
             var symbol = this.resolver.resolveAST(ast, context.inContextuallyTypedAssignment, context.enclosingDecl, context.resolutionContext);
-            var aliasSymbol = this.semanticInfoChain.getUnit(document.fileName).getAliasSymbolForAST(ast);
+            var aliasSymbol = this.semanticInfoChain.getAliasSymbolForAST(ast);
 
             return {
                 symbol: symbol,
