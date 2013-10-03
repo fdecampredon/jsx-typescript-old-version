@@ -608,7 +608,7 @@ module TypeScript {
 
     // index signatures
     function createIndexSignatureDeclaration(indexSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext) {
-        var declFlags = PullElementFlags.Signature | PullElementFlags.Index;
+        var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.IndexSignature;
 
         var span = TextSpan.fromBounds(indexSignatureDeclAST.minChar, indexSignatureDeclAST.limChar);
@@ -646,7 +646,7 @@ module TypeScript {
 
     // call signatures
     function createCallSignatureDeclaration(callSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext) {
-        var declFlags = PullElementFlags.Signature | PullElementFlags.Call;
+        var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.CallSignature;
 
         var span = TextSpan.fromBounds(callSignatureDeclAST.minChar, callSignatureDeclAST.limChar);
@@ -679,7 +679,7 @@ module TypeScript {
 
     // construct signatures
     function createConstructSignatureDeclaration(constructSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext) {
-        var declFlags = PullElementFlags.Signature | PullElementFlags.Call;
+        var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.ConstructSignature;
 
         var span = TextSpan.fromBounds(constructSignatureDeclAST.minChar, constructSignatureDeclAST.limChar);
@@ -712,7 +712,7 @@ module TypeScript {
 
     // class constructors
     function createClassConstructorDeclaration(constructorDeclAST: FunctionDeclaration, context: DeclCollectionContext) {
-        var declFlags = PullElementFlags.Constructor;
+        var declFlags = PullElementFlags.None;
         var declType = PullElementKind.ConstructorMethod;
 
         if (!constructorDeclAST.block) {

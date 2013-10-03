@@ -12,12 +12,7 @@ module TypeScript {
         Public = 1 << 2,
         Ambient = 1 << 3,
         Static = 1 << 4,
-        GetAccessor = 1 << 5,
-        SetAccessor = 1 << 6,
         Optional = 1 << 7,
-        Call = 1 << 8,
-        Constructor = 1 << 9,
-        Index = 1 << 10,
         Signature = 1 << 11,
         Enum = 1 << 12,
         FatArrow = 1 << 13,
@@ -29,8 +24,6 @@ module TypeScript {
 
         MustCaptureThis = 1 << 18,
         Constant = 1 << 19,
-
-        ExpressionElement = 1 << 20,
 
         DeclaredInAWithBlock = 1 << 21,
 
