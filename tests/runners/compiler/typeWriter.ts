@@ -87,7 +87,6 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     private getEnclosingDecl(element: TypeScript.ISyntaxElement) {
         this.resolver.setUnitPath(this.filename);
 
-        var ast = this.getAstForElement(element);
         var pos = this.position();
         var astPath = TypeScript.getAstPathToPosition(this.compilerState.getDocument(this.filename).script, pos, false, false);
         while (astPath.count() > 0) {
@@ -125,9 +124,12 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     private getTypeOfElement(element: TypeScript.ISyntaxElement) {
         var ast = this.getAstForElement(element);
         var decl = this.getEnclosingDecl(element);
-        var result = this.resolver.resolveAST(ast, false, decl, new TypeScript.PullTypeResolutionContext(this.resolver, false));
+        if (decl && ast) {
+            var result = this.resolver.resolveAST(ast, false, decl, new TypeScript.PullTypeResolutionContext(this.resolver, false));
+            return result.type.toString();
+        }
 
-        return result.type.toString();
+        return "<unknown>";
     }
 
     public visitPrefixUnaryExpression(node: TypeScript.PrefixUnaryExpressionSyntax) {

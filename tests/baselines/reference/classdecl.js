@@ -128,7 +128,7 @@ declare class a {
     constructor(s: string);
     public pgF(): void;
     public pv: any;
-    public d : any;
+    public d : number;
     static p2 : {
         x: number;
         y: number;

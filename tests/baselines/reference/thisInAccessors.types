@@ -4,11 +4,11 @@ Line 2 col 8 IdentifierName "Value" = () => string
 Line 3 col 12 IdentifierName "fn" = () => GetterOnly
 Line 3 col 17 ParenthesizedArrowFunctionExpression "() => this" = () => GetterOnly
 Line 3 col 23 ThisKeyword "this" = GetterOnly
-Line 6 col 8 IdentifierName "Value" = (val: string) => any
+Line 6 col 8 IdentifierName "Value" = (val: string) => void
 Line 6 col 14 IdentifierName "val" = string
 Line 11 col 6 IdentifierName "SetterOnly" = SetterOnly
 Line 12 col 8 IdentifierName "Value" = () => string
-Line 15 col 8 IdentifierName "Value" = (val: string) => any
+Line 15 col 8 IdentifierName "Value" = (val: string) => void
 Line 15 col 14 IdentifierName "val" = string
 Line 16 col 12 IdentifierName "fn" = () => SetterOnly
 Line 16 col 17 ParenthesizedArrowFunctionExpression "() => this" = () => SetterOnly
@@ -18,7 +18,7 @@ Line 22 col 8 IdentifierName "Value" = () => string
 Line 23 col 12 IdentifierName "fn" = () => GetterAndSetter
 Line 23 col 17 ParenthesizedArrowFunctionExpression "() => this" = () => GetterAndSetter
 Line 23 col 23 ThisKeyword "this" = GetterAndSetter
-Line 26 col 8 IdentifierName "Value" = (val: string) => any
+Line 26 col 8 IdentifierName "Value" = (val: string) => void
 Line 26 col 14 IdentifierName "val" = string
 Line 27 col 12 IdentifierName "fn" = () => GetterAndSetter
 Line 27 col 17 ParenthesizedArrowFunctionExpression "() => this" = () => GetterAndSetter

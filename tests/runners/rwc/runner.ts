@@ -239,7 +239,7 @@ class RWCRunner extends RunnerBase {
                         var host = new TypeWriterHost();
                         var compilerState = new Services.CompilerState(host);
 
-                        host.addScript('lib.d.ts', Harness.Compiler.libTextMinimal);
+                        host.addScript('lib.d.ts', Harness.Compiler.libText);
 
                         spec.compileList.forEach((item: string) => {
                             content = IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;

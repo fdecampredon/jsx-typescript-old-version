@@ -10,8 +10,8 @@ class Foo {
 class Foo2 {
 
     get bar() {
-        return 0;
+        return 0; // should be an error - can't coerce infered return type to match setter annotated type
     }
-    set bar(n:string) { // should be an error - can't coerce
+    set bar(n:string) {
     }
 }
