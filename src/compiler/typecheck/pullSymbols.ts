@@ -1395,11 +1395,10 @@ module TypeScript {
         }
 
         public isGeneric(): boolean {
-            return (this._typeParameters && this._typeParameters.length != 0) ||
+            return (this._typeParameters && this._typeParameters.length > 0) ||
                 this._hasGenericSignature ||
                 this._hasGenericMember ||
-                (this._typeArguments && this._typeArguments.length) ||
-                this.isArrayNamedTypeReference();
+                (this._typeArguments && this._typeArguments.length > 0);
         }
 
         public isFixed() {
@@ -1937,10 +1936,6 @@ module TypeScript {
         }
 
         public isNamedTypeSymbol() {
-            if (this.isArrayNamedTypeReference()) {
-                return false;
-            }
-
             var kind = this.kind;
             if (kind === PullElementKind.Primitive || // primitives
             kind === PullElementKind.Class || // class

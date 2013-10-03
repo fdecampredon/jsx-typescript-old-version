@@ -793,10 +793,6 @@ module TypeScript {
                 return true;
             }
 
-            if (type.isArrayNamedTypeReference()) {
-                return this.isTypeArgumentOrWrapper(type.getElementType());
-            }
-
             var typeArguments = type.getTypeArguments();
 
             if (typeArguments) {
@@ -1959,7 +1955,7 @@ module TypeScript {
             if (argDeclAST.typeExpr) {
                 var typeRef = this.resolveTypeReference(<TypeReference>argDeclAST.typeExpr, enclosingDecl, context);
 
-                if (paramSymbol.isVarArg && !(typeRef.isArrayNamedTypeReference() || typeRef == this.cachedArrayInterfaceType())) {
+                if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
                     var diagnostic = context.postError(this.unitPath, argDeclAST.minChar, argDeclAST.getLength(), DiagnosticCode.Rest_parameters_must_be_array_types, null);
                     typeRef = this.getNewErrorTypeSymbol();
                 }
@@ -2003,7 +1999,7 @@ module TypeScript {
             if (argDeclAST.typeExpr) {
                 var typeRef = this.resolveTypeReference(<TypeReference>argDeclAST.typeExpr, enclosingDecl, context);
 
-                if (paramSymbol.isVarArg && !(typeRef.isArrayNamedTypeReference() || typeRef == this.cachedArrayInterfaceType())) {
+                if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
                     var diagnostic = context.postError(this.unitPath, argDeclAST.minChar, argDeclAST.getLength(), DiagnosticCode.Rest_parameters_must_be_array_types, null);
                     typeRef = this.getNewErrorTypeSymbol();
                 }
@@ -6729,15 +6725,10 @@ module TypeScript {
                 this.resolveDeclaredSymbol(contextualType, context);
 
                 if (contextualType) {
-                    if (contextualType.isArrayNamedTypeReference()) {
-                        contextualElementType = contextualType.getElementType();
-                    }
-                    else {
-                        // Get the number indexer if it exists
-                        var indexSignatures = this.getBothKindsOfIndexSignatures(contextualType, context);
-                        if (indexSignatures.numericSignature) {
-                            contextualElementType = indexSignatures.numericSignature.returnType;
-                        }
+                    // Get the number indexer if it exists
+                    var indexSignatures = this.getBothKindsOfIndexSignatures(contextualType, context);
+                    if (indexSignatures.numericSignature) {
+                        contextualElementType = indexSignatures.numericSignature.returnType;
                     }
                 }
             }
@@ -8072,23 +8063,6 @@ module TypeScript {
             else if (!a.isTypeParameter() && b.isTypeParameter()) {
                 return a;
             }
-            else if (a.isArrayNamedTypeReference() && b.isArrayNamedTypeReference()) {
-                if (a.getElementType() === b.getElementType()) {
-                    return a;
-                }
-                else {
-                    var mergedET = this.mergeOrdered(a.getElementType(), b.getElementType(), context, comparisonInfo);
-                    if (mergedET) {
-                        var mergedArrayType = mergedET.getArrayType();
-
-                        if (!mergedArrayType) {
-                            mergedArrayType = specializeType(this.cachedArrayInterfaceType(), [mergedET], this, context);
-                        }
-
-                        return mergedArrayType;
-                    }
-                }
-            }
             else if (this.sourceIsSubtypeOfTarget(a, b, context, comparisonInfo)) {
                 return b;
             }
@@ -8251,22 +8225,6 @@ module TypeScript {
             // If one is an enum, and they're not the same type, they're not identical
             if ((t1.kind & PullElementKind.Enum) || (t2.kind & PullElementKind.Enum)) {
                 return t1.getAssociatedContainerType() === t2 || t2.getAssociatedContainerType() === t1;
-            }
-
-            if (t1.isArrayNamedTypeReference() || t2.isArrayNamedTypeReference()) {
-                if (!(t1.isArrayNamedTypeReference() && t2.isArrayNamedTypeReference())) {
-                    return false;
-                }
-                this.identicalCache[comboId] = false;
-                var ret = this.typesAreIdentical(t1.getElementType(), t2.getElementType());
-                if (ret) {
-                    this.identicalCache[comboId] = true;
-                }
-                else {
-                    this.identicalCache[comboId] = undefined;
-                }
-
-                return ret;
             }
 
             if (t1.isPrimitive() != t2.isPrimitive()) {
@@ -8695,6 +8653,17 @@ module TypeScript {
                 return false;
             }
 
+            // Note: this code isn't necessary, but is helpful for error reporting purposes.  
+            // Instead of reporting something like:
+            //
+            // Cannot convert 'A[]' to 'B[]':
+            //  Types of property 'pop' of types 'A[]' and 'B[]' are incompatible:
+            //    Call signatures of types '() => A' and '() => B' are incompatible:
+            //      Type 'A' is missing property 'C' from type 'B'.
+            //
+            // We instead report:
+            // Cannot convert 'A[]' to 'B[]':
+            //   Type 'A' is missing property 'C' from type 'B'.
             if (source.isArrayNamedTypeReference() && target.isArrayNamedTypeReference()) {
                 comparisonCache[comboId] = false;
                 var ret = this.sourceIsRelatableToTarget(source.getElementType(), target.getElementType(), assignableTo, comparisonCache, context, comparisonInfo);
@@ -8706,12 +8675,6 @@ module TypeScript {
                 }
 
                 return ret;
-            }
-            else if (source.isArrayNamedTypeReference() && target == this.cachedArrayInterfaceType()) {
-                return true;
-            }
-            else if (target.isArrayNamedTypeReference() && source == this.cachedArrayInterfaceType()) {
-                return true;
             }
 
             // this check ensures that we only operate on object types from this point forward,
@@ -9701,10 +9664,10 @@ module TypeScript {
                 argContext.addCandidateForInference(<PullTypeParameterSymbol>parameterType, expressionType, shouldFix);
                 return;
             }
+
             var parameterDeclarations = parameterType.getDeclarations();
             var expressionDeclarations = expressionType.getDeclarations();
-            if (!parameterType.isArrayNamedTypeReference() &&
-                parameterDeclarations.length &&
+            if (parameterDeclarations.length &&
                 expressionDeclarations.length &&
                 !(parameterType.isTypeParameter() || expressionType.isTypeParameter()) &&
                 (parameterDeclarations[0].isEqual(expressionDeclarations[0]) ||
@@ -9745,12 +9708,6 @@ module TypeScript {
                 return;
             }
             context.specializingToAny = prevSpecializingToAny;
-
-            if (expressionType.isArrayNamedTypeReference() && parameterType.isArrayNamedTypeReference()) {
-                this.relateArrayTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, enclosingDecl, context);
-
-                return;
-            }
 
             this.relateObjectTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, enclosingDecl, context);
         }
@@ -10167,9 +10124,8 @@ module TypeScript {
             if (symbol.isType()) {
                 var typeSymbol = <PullTypeSymbol>symbol;
                 var isNamedType = typeSymbol.isNamedTypeSymbol();
-                var isArrayType = typeSymbol.isArrayNamedTypeReference();
                 if (typeSymbol.inSymbolPrivacyCheck) {
-                    if (!isArrayType && !isNamedType) {
+                    if (!isNamedType) {
                         var associatedContainerType = typeSymbol.getAssociatedContainerType();
                         if (associatedContainerType && associatedContainerType.isNamedTypeSymbol()) {
                             this.checkSymbolPrivacy(declSymbol, associatedContainerType, privacyErrorReporter);
@@ -10189,18 +10145,14 @@ module TypeScript {
                 }
 
                 if (!isNamedType) {
-                    if (isArrayType) {
-                        this.checkSymbolPrivacy(declSymbol, typeSymbol.getElementType(), privacyErrorReporter);
-                    } else {
-                        var members = typeSymbol.getMembers();
-                        for (var i = 0; i < members.length; i++) {
-                            this.checkSymbolPrivacy(declSymbol, members[i].type, privacyErrorReporter);
-                        }
-
-                        this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getCallSignatures(), privacyErrorReporter);
-                        this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getConstructSignatures(), privacyErrorReporter);
-                        this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getIndexSignatures(), privacyErrorReporter);
+                    var members = typeSymbol.getMembers();
+                    for (var i = 0; i < members.length; i++) {
+                        this.checkSymbolPrivacy(declSymbol, members[i].type, privacyErrorReporter);
                     }
+
+                    this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getCallSignatures(), privacyErrorReporter);
+                    this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getConstructSignatures(), privacyErrorReporter);
+                    this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getIndexSignatures(), privacyErrorReporter);
                 } else if (typeSymbol.kind == PullElementKind.TypeParameter) {
                     this.checkSymbolPrivacy(declSymbol, (<PullTypeParameterSymbol>typeSymbol).getConstraint(), privacyErrorReporter);
                 }
