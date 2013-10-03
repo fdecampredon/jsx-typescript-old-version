@@ -1302,7 +1302,7 @@ module TypeScript {
                             // Propagate the child element type
                             var contextualType: PullTypeSymbol = null;
                             var currentContextualType = resolutionContext.getContextualType();
-                            if (currentContextualType && currentContextualType.isArray()) {
+                            if (currentContextualType && currentContextualType.isArrayNamedTypeReference()) {
                                 contextualType = currentContextualType.getElementType();
                             }
 

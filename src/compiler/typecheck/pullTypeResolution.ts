@@ -71,7 +71,9 @@ module TypeScript {
             return this._cachedArrayInterfaceType;
         }
 
-        public getCachedArrayType() {
+        // Returns the named type for the global Array<T> symbol.  Note that this will be 
+        // uninstantiated (i.e. it will have type parameters, and not type arguments).
+        public getArrayNamedType(): PullTypeSymbol {
             return this.cachedArrayInterfaceType();
         }
 
@@ -791,7 +793,7 @@ module TypeScript {
                 return true;
             }
 
-            if (type.isArray()) {
+            if (type.isArrayNamedTypeReference()) {
                 return this.isTypeArgumentOrWrapper(type.getElementType());
             }
 
@@ -1957,7 +1959,7 @@ module TypeScript {
             if (argDeclAST.typeExpr) {
                 var typeRef = this.resolveTypeReference(<TypeReference>argDeclAST.typeExpr, enclosingDecl, context);
 
-                if (paramSymbol.isVarArg && !(typeRef.isArray() || typeRef == this.cachedArrayInterfaceType())) {
+                if (paramSymbol.isVarArg && !(typeRef.isArrayNamedTypeReference() || typeRef == this.cachedArrayInterfaceType())) {
                     var diagnostic = context.postError(this.unitPath, argDeclAST.minChar, argDeclAST.getLength(), DiagnosticCode.Rest_parameters_must_be_array_types, null);
                     typeRef = this.getNewErrorTypeSymbol();
                 }
@@ -2001,7 +2003,7 @@ module TypeScript {
             if (argDeclAST.typeExpr) {
                 var typeRef = this.resolveTypeReference(<TypeReference>argDeclAST.typeExpr, enclosingDecl, context);
 
-                if (paramSymbol.isVarArg && !(typeRef.isArray() || typeRef == this.cachedArrayInterfaceType())) {
+                if (paramSymbol.isVarArg && !(typeRef.isArrayNamedTypeReference() || typeRef == this.cachedArrayInterfaceType())) {
                     var diagnostic = context.postError(this.unitPath, argDeclAST.minChar, argDeclAST.getLength(), DiagnosticCode.Rest_parameters_must_be_array_types, null);
                     typeRef = this.getNewErrorTypeSymbol();
                 }
@@ -2544,7 +2546,7 @@ module TypeScript {
                         }
                     }
                 }
-                else if (declSymbol.isVarArg && !(typeExprSymbol.isArray() || typeExprSymbol == this.cachedArrayInterfaceType())) {
+                else if (declSymbol.isVarArg && !(typeExprSymbol.isArrayNamedTypeReference() || typeExprSymbol == this.cachedArrayInterfaceType())) {
                     context.postError(this.unitPath, varDeclOrParameter.minChar, varDeclOrParameter.getLength(), DiagnosticCode.Rest_parameters_must_be_array_types, null);
                     typeExprSymbol = this.getNewErrorTypeSymbol();
                 }
@@ -2563,7 +2565,7 @@ module TypeScript {
 
                 // if the typeExprSymbol is generic, set the "hasGenericParameter" field on the enclosing signature
                 // we filter out arrays, since for those we just want to know if their element type is a type parameter...
-                if (varDeclOrParameter.nodeType() === NodeType.Parameter && enclosingDecl && ((typeExprSymbol.isGeneric() && !typeExprSymbol.isArray()) || this.isTypeArgumentOrWrapper(typeExprSymbol))) {
+                if (varDeclOrParameter.nodeType() === NodeType.Parameter && enclosingDecl && ((typeExprSymbol.isGeneric() && !typeExprSymbol.isArrayNamedTypeReference()) || this.isTypeArgumentOrWrapper(typeExprSymbol))) {
                     var signature = enclosingDecl.getSpecializingSignatureSymbol();
 
                     if (signature) {
@@ -6727,7 +6729,7 @@ module TypeScript {
                 this.resolveDeclaredSymbol(contextualType, context);
 
                 if (contextualType) {
-                    if (contextualType.isArray()) {
+                    if (contextualType.isArrayNamedTypeReference()) {
                         contextualElementType = contextualType.getElementType();
                     }
                     else {
@@ -7502,7 +7504,7 @@ module TypeScript {
                         }
                         else if (signature.hasVarArgs) {
                             contextualType = params[params.length - 1].type;
-                            if (contextualType.isArray()) {
+                            if (contextualType.isArrayNamedTypeReference()) {
                                 contextualType = contextualType.getElementType();
                             }
                         }
@@ -7880,7 +7882,7 @@ module TypeScript {
                             }
                             else if (signature.hasVarArgs) {
                                 contextualType = params[params.length - 1].type;
-                                if (contextualType.isArray()) {
+                                if (contextualType.isArrayNamedTypeReference()) {
                                     contextualType = contextualType.getElementType();
                                 }
                             }
@@ -8070,7 +8072,7 @@ module TypeScript {
             else if (!a.isTypeParameter() && b.isTypeParameter()) {
                 return a;
             }
-            else if (a.isArray() && b.isArray()) {
+            else if (a.isArrayNamedTypeReference() && b.isArrayNamedTypeReference()) {
                 if (a.getElementType() === b.getElementType()) {
                     return a;
                 }
@@ -8105,7 +8107,7 @@ module TypeScript {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
 
-            if (type.isArray()) {
+            if (type.isArrayNamedTypeReference()) {
                 var elementType = this.widenType(null, type.getElementType(), enclosingDecl, context);
 
                 if (this.compilationSettings.noImplicitAny && ast && ast.nodeType() === NodeType.ArrayLiteralExpression) {
@@ -8251,8 +8253,8 @@ module TypeScript {
                 return t1.getAssociatedContainerType() === t2 || t2.getAssociatedContainerType() === t1;
             }
 
-            if (t1.isArray() || t2.isArray()) {
-                if (!(t1.isArray() && t2.isArray())) {
+            if (t1.isArrayNamedTypeReference() || t2.isArrayNamedTypeReference()) {
+                if (!(t1.isArrayNamedTypeReference() && t2.isArrayNamedTypeReference())) {
                     return false;
                 }
                 this.identicalCache[comboId] = false;
@@ -8693,7 +8695,7 @@ module TypeScript {
                 return false;
             }
 
-            if (source.isArray() && target.isArray()) {
+            if (source.isArrayNamedTypeReference() && target.isArrayNamedTypeReference()) {
                 comparisonCache[comboId] = false;
                 var ret = this.sourceIsRelatableToTarget(source.getElementType(), target.getElementType(), assignableTo, comparisonCache, context, comparisonInfo);
                 if (ret) {
@@ -8705,10 +8707,10 @@ module TypeScript {
 
                 return ret;
             }
-            else if (source.isArray() && target == this.cachedArrayInterfaceType()) {
+            else if (source.isArrayNamedTypeReference() && target == this.cachedArrayInterfaceType()) {
                 return true;
             }
-            else if (target.isArray() && source == this.cachedArrayInterfaceType()) {
+            else if (target.isArrayNamedTypeReference() && source == this.cachedArrayInterfaceType()) {
                 return true;
             }
 
@@ -9166,7 +9168,7 @@ module TypeScript {
                 }
                 else if (iSource === sourceVarArgCount) {
                     sourceParamType = sourceParameters[iSource].type;
-                    if (sourceParamType.isArray()) {
+                    if (sourceParamType.isArrayNamedTypeReference()) {
                         sourceParamType = sourceParamType.getElementType();
                     }
                     sourceParamName = sourceParameters[iSource].name;
@@ -9179,7 +9181,7 @@ module TypeScript {
                 else if (targetSig.hasVarArgs && iTarget === targetVarArgCount) {
                     targetParamType = targetParameters[iTarget].type;
 
-                    if (targetParamType.isArray()) {
+                    if (targetParamType.isArrayNamedTypeReference()) {
                         targetParamType = targetParamType.getElementType();
                     }
                     targetParamName = targetParameters[iTarget].name;
@@ -9603,7 +9605,7 @@ module TypeScript {
                 parameterType = parameters[i].type;
 
                 // account for varargs
-                if (signature.hasVarArgs && (i >= signature.nonOptionalParamCount - 1) && parameterType.isArray()) {
+                if (signature.hasVarArgs && (i >= signature.nonOptionalParamCount - 1) && parameterType.isArrayNamedTypeReference()) {
                     parameterType = parameterType.getElementType();
                 }
 
@@ -9701,7 +9703,7 @@ module TypeScript {
             }
             var parameterDeclarations = parameterType.getDeclarations();
             var expressionDeclarations = expressionType.getDeclarations();
-            if (!parameterType.isArray() &&
+            if (!parameterType.isArrayNamedTypeReference() &&
                 parameterDeclarations.length &&
                 expressionDeclarations.length &&
                 !(parameterType.isTypeParameter() || expressionType.isTypeParameter()) &&
@@ -9744,7 +9746,7 @@ module TypeScript {
             }
             context.specializingToAny = prevSpecializingToAny;
 
-            if (expressionType.isArray() && parameterType.isArray()) {
+            if (expressionType.isArrayNamedTypeReference() && parameterType.isArrayNamedTypeReference()) {
                 this.relateArrayTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, enclosingDecl, context);
 
                 return;
@@ -10165,7 +10167,7 @@ module TypeScript {
             if (symbol.isType()) {
                 var typeSymbol = <PullTypeSymbol>symbol;
                 var isNamedType = typeSymbol.isNamedTypeSymbol();
-                var isArrayType = typeSymbol.isArray();
+                var isArrayType = typeSymbol.isArrayNamedTypeReference();
                 if (typeSymbol.inSymbolPrivacyCheck) {
                     if (!isArrayType && !isNamedType) {
                         var associatedContainerType = typeSymbol.getAssociatedContainerType();

@@ -60,7 +60,6 @@ module TypeScript {
         Interface = 1 << 4,
         DynamicModule = 1 << 5,
         Enum = 1 << 6,
-        Array = 1 << 7,
         TypeAlias = 1 << 8,
         ObjectLiteral = 1 << 9,
 
@@ -93,7 +92,7 @@ module TypeScript {
         // WARNING: To prevent JS VMs from wrapping these values as floats, we don't want to utilize more than the 31 bits above.  (Doing so would
         // seriously slow down bitwise operations
 
-        All = Script | Global | Primitive | Container | Class | Interface | DynamicModule | Enum | Array | TypeAlias |
+        All = Script | Global | Primitive | Container | Class | Interface | DynamicModule | Enum | TypeAlias |
             ObjectLiteral | Variable | Parameter | Property | TypeParameter | Function | ConstructorMethod | Method |
             FunctionExpression | GetAccessor | SetAccessor | CallSignature | ConstructSignature | IndexSignature | ObjectType |
             FunctionType | ConstructorType | EnumMember | WithBlock | CatchBlock,
@@ -104,7 +103,7 @@ module TypeScript {
         SomeValue = Variable | Parameter | Property | EnumMember | SomeFunction,
 
         SomeType = Script | Global | Primitive | Class | Interface |
-                    Enum | Array | ObjectType | FunctionType | ConstructorType | TypeParameter,
+                    Enum | ObjectType | FunctionType | ConstructorType | TypeParameter,
 
         AcceptableAlias = Variable | SomeFunction | Class | Interface | Enum | Container | ObjectType | FunctionType | ConstructorType,
 
