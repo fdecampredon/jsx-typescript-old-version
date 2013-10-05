@@ -334,11 +334,6 @@ module TypeScript {
             return type;
         }
 
-        public postError(fileName: string, offset: number, length: number, diagnosticKey: string, arguments: any[] = null): void {
-            var diagnostic = new Diagnostic(fileName, offset, length, diagnosticKey, arguments);
-            this.postDiagnostic(diagnostic);
-        }
-
         public postDiagnostic(diagnostic: Diagnostic): void {
             if (diagnostic) {
                 if (!this.inSpecialization) { // Do not report errors if in specialization resolutions, its not a typeCheckMode

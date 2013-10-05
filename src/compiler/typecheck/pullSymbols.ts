@@ -2890,7 +2890,7 @@ module TypeScript {
                 // if this is an 'extended' interface declaration, the AST's extends list may not match
                 if (extendsList) {
                     unitPath = resolver.getUnitPath();
-                    resolver.setUnitPath(typeDecl.getScriptName());
+                    resolver.setUnitPath(typeDecl.fileName());
                     for (var j = 0; j < extendsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
                         extendTypeSymbol = resolver.resolveTypeReference(<TypeReference>extendsList.members[j], typeDecl, context);
@@ -2915,7 +2915,7 @@ module TypeScript {
 
                 if (implementsList) {
                     unitPath = resolver.getUnitPath();
-                    resolver.setUnitPath(typeDecl.getScriptName());
+                    resolver.setUnitPath(typeDecl.fileName());
                     for (var j = 0; j < implementsList.members.length; j++) {
                         context.pushTypeSpecializationCache(typeReplacementMap);
                         implementedTypeSymbol = resolver.resolveTypeReference(<TypeReference>implementsList.members[j], typeDecl, context);
@@ -2963,7 +2963,7 @@ module TypeScript {
 
                 decl = signature.getDeclarations()[0];
                 unitPath = resolver.getUnitPath();
-                resolver.setUnitPath(decl.getScriptName());
+                resolver.setUnitPath(decl.fileName());
 
                 newSignature = new PullSignatureSymbol(signature.kind);
                 nSpecializedSignaturesCreated++;
@@ -3048,7 +3048,7 @@ module TypeScript {
 
                 decl = signature.getDeclarations()[0];
                 unitPath = resolver.getUnitPath();
-                resolver.setUnitPath(decl.getScriptName());
+                resolver.setUnitPath(decl.fileName());
 
                 newSignature = new PullSignatureSymbol(signature.kind);
                 nSpecializedSignaturesCreated++;
@@ -3129,7 +3129,7 @@ module TypeScript {
 
                 decl = signature.getDeclarations()[0];
                 unitPath = resolver.getUnitPath();
-                resolver.setUnitPath(decl.getScriptName());
+                resolver.setUnitPath(decl.fileName());
 
                 newSignature = new PullSignatureSymbol(signature.kind);
                 nSpecializedSignaturesCreated++;
@@ -3247,7 +3247,7 @@ module TypeScript {
                 // re-resolve all field decls using the current replacements
                 if (fieldType.isGeneric() && !fieldType.isFixed()) {
                     unitPath = resolver.getUnitPath();
-                    resolver.setUnitPath(decls[0].getScriptName());
+                    resolver.setUnitPath(decls[0].fileName());
 
                     context.pushTypeSpecializationCache(typeReplacementMap);
 
@@ -3317,7 +3317,7 @@ module TypeScript {
                     var constraintDecl = constraint.getDeclarations()[0];
                     var unitPath = resolver.getUnitPath();
 
-                    resolver.setUnitPath(constraintDecl.getScriptName());
+                    resolver.setUnitPath(constraintDecl.fileName());
                     context.pushTypeSpecializationCache(typeReplacementMap);
                     context.recursiveConstraintSpecializationDepth++;
 

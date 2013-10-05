@@ -18,9 +18,6 @@ module TypeScript {
         public hashCode = -1;
         public flags: PullElementFlags = PullElementFlags.None;
         private span: TextSpan;
-        private scriptName: string;
-        private parentDecl: PullDecl = null;
-        private parentPath: PullDecl[] = null;
 
         // Properties that need to be cleaned after a change
         private _isBound: boolean = false;
@@ -49,12 +46,11 @@ module TypeScript {
         // if the useDirectTypeStorage flag is set
         public ast: AST = null;
 
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, scriptName: string) {
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan) {
             this.name = declName;
             this.kind = kind;
             this.flags = declFlags;
             this.span = span;
-            this.scriptName = scriptName;
 
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
@@ -62,16 +58,26 @@ module TypeScript {
 
             this.hashCode = this.declID ^ this.kind;
             this.declIDString = this.declID.toString();
+        }
 
-            // Link to parent
-            if (parentDecl) {
-                parentDecl.addChildDecl(this);
-                this.setParentDecl(parentDecl);
-            }
+        public fileName(): string {
+            throw Errors.abstract();
+        }
 
-            if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Global && kind !== PullElementKind.Script && kind !== PullElementKind.Primitive) {
-                throw Errors.invalidOperation("Orphaned decl " + PullElementKind[kind]);
-            }
+        public getParentPath(): PullDecl[] {
+            throw Errors.abstract();
+        }
+
+        public getParentDecl(): PullDecl {
+            throw Errors.abstract();
+        }
+
+        public semanticInfoChain(): SemanticInfoChain {
+            throw Errors.abstract();
+        }
+
+        public isExternalModule(): boolean {
+            throw Errors.abstract();
         }
 
         public clean() {
@@ -113,15 +119,9 @@ module TypeScript {
         public setSymbol(symbol: PullSymbol) { this.symbol = symbol; }
 
         public ensureSymbolIsBound(bindSignatureSymbol=false) {
-
             if (!((bindSignatureSymbol && this.signatureSymbol) || this.symbol) && !this._isBound && this.kind != PullElementKind.Script) {
-                //var binder = new PullSymbolBinder(globalSemanticInfoChain);
-                var prevUnit = globalBinder.semanticInfo;
-                globalBinder.setUnit(this.scriptName);
-                globalBinder.bindDeclToPullSymbol(this);
-                if (prevUnit) {
-                    globalBinder.setUnit(prevUnit.getPath());
-                }
+                var binder = this.semanticInfoChain().getBinder();
+                binder.bindDeclToPullSymbol(this);
             }
         }
 
@@ -165,8 +165,6 @@ module TypeScript {
         public getSpan(): TextSpan { return this.span; }
         public setSpan(span: TextSpan) { this.span = span; }
 
-        public getScriptName(): string { return this.scriptName; }
-
         public setValueDecl(valDecl: PullDecl) { this.synthesizedValDecl = valDecl; }
         public getValueDecl() { return this.synthesizedValDecl; }
 
@@ -174,17 +172,9 @@ module TypeScript {
             return  (this.name === other.name) &&
                     (this.kind === other.kind) &&
                     (this.flags === other.flags) &&
-                    (this.scriptName === other.scriptName) &&
+                    (this.fileName() === other.fileName()) &&
                     (this.span.start() === other.span.start()) &&
                     (this.span.end() === other.span.end());
-        }
-
-        public getParentDecl(): PullDecl {
-            return this.parentDecl;
-        }
-
-        public setParentDecl(parentDecl: PullDecl) {
-            this.parentDecl = parentDecl;
         }
 
         private getChildDeclCache(declKind: PullElementKind): any {
@@ -196,8 +186,9 @@ module TypeScript {
                         ? this.childDeclTypeCache
                         : this.childDeclValueCache;
         }
-
-        private addChildDecl(childDecl: PullDecl): void {
+        
+        // Should only be called by subclasses.
+        public addChildDecl(childDecl: PullDecl): void {
             if (childDecl.kind === PullElementKind.TypeParameter) {
                 if (!this.typeParameters) {
                     this.typeParameters = [];
@@ -313,25 +304,6 @@ module TypeScript {
             return declGroups ? declGroups : sentinelEmptyPullDeclArray;
         }
 
-        public getParentPath(): PullDecl[] {
-            if (!this.parentPath) {
-                var path = [this];
-                var parentDecl = this.parentDecl;
-
-                while (parentDecl) {
-                    if (parentDecl && path[path.length - 1] != parentDecl && !(parentDecl.kind & PullElementKind.ObjectLiteral)) {
-                        path.unshift(parentDecl);
-                    }
-
-                    parentDecl = parentDecl.parentDecl;
-                }
-
-                this.parentPath = path;
-            }
-
-            return this.parentPath;
-        }
-
         public setIsBound(isBinding: boolean) {
             this._isBound = isBinding;
         }
@@ -345,11 +317,103 @@ module TypeScript {
         }
     }
 
-    export class PullFunctionExpressionDecl extends PullDecl {
+    // A root decl represents the top level decl for a file.  By specializing this decl, we 
+    // provide a location, per file, to store data that all decls in the file would otherwise
+    // have to duplicate.  For example, there is no need to store the 'fileName' in each decl.
+    // Instead, only the root decl needs to store this data.  Decls underneath it can determine
+    // the file name by queryign their parent.  In other words, a Root Decl allows us to trade
+    // space for logarithmic speed. 
+    export class RootPullDecl extends PullDecl {
+        private _semanticInfoChain: SemanticInfoChain;
+        private _isExternalModule: boolean;
+
+        constructor(fileName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
+            super(fileName, fileName, kind, declFlags, span);
+            this._semanticInfoChain = semanticInfoChain;
+            this._isExternalModule = isExternalModule;
+        }
+
+        public fileName(): string {
+            return this.name;
+        }
+
+        public getParentPath(): PullDecl[]{
+            return [this];
+        }
+
+        public getParentDecl(): PullDecl {
+            return null;
+        }
+
+        public semanticInfoChain(): SemanticInfoChain {
+            return this._semanticInfoChain;
+        }
+
+        public isExternalModule(): boolean {
+            return this._isExternalModule;
+        }
+    }
+
+    export class NormalPullDecl extends PullDecl {
+        private parentDecl: PullDecl = null;
+        private parentPath: PullDecl[] = null;
+
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, addToParent = true) {
+            super(declName, displayName, kind, declFlags, span);
+
+            // Link to parent
+            this.parentDecl = parentDecl;
+            if (parentDecl && addToParent) {
+                parentDecl.addChildDecl(this);
+            }
+
+            if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Global && kind !== PullElementKind.Script && kind !== PullElementKind.Primitive) {
+                throw Errors.invalidOperation("Orphaned decl " + PullElementKind[kind]);
+            }
+        }
+
+        public fileName(): string {
+            return this.parentDecl ? this.parentDecl.fileName() : "";
+        }
+
+        public getParentDecl(): PullDecl {
+            return this.parentDecl;
+        }
+
+        public getParentPath(): PullDecl[] {
+            if (!this.parentPath) {
+                var path: PullDecl[] = [this];
+                var parentDecl = this.parentDecl;
+
+                while (parentDecl) {
+                    if (parentDecl && path[path.length - 1] != parentDecl && !(parentDecl.kind & PullElementKind.ObjectLiteral)) {
+                        path.unshift(parentDecl);
+                    }
+
+                    parentDecl = parentDecl.getParentDecl();
+                }
+
+                this.parentPath = path;
+            }
+
+            return this.parentPath;
+        }
+
+        public semanticInfoChain(): SemanticInfoChain {
+            Debug.assert(this.getParentDecl());
+            return this.getParentDecl().semanticInfoChain();
+        }
+
+        public isExternalModule(): boolean {
+            return false;
+        }
+    }
+
+    export class PullFunctionExpressionDecl extends NormalPullDecl {
         private functionExpressionName: string;
 
-        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, scriptName: string) {
-            super("", "", PullElementKind.FunctionExpression, declFlags, parentDecl, span, scriptName);
+        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan) {
+            super("", "", PullElementKind.FunctionExpression, declFlags, parentDecl, span);
             this.functionExpressionName = expressionName;
         }
 
@@ -358,15 +422,12 @@ module TypeScript {
         }
     }
 
-    export class PullSynthesizedDecl extends PullDecl {
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, scriptName: string) {
-            super(declName, displayName, kind, declFlags, /*parentDecl*/ null, span, scriptName);
-
-            // This is a synthesized decl; its life time should match that of the symbol using it, and not that of its parent decl. To 
-            // enforce this we are not making it reachable from its parent, but will set the parent link.
-            if (parentDecl) {
-                this.setParentDecl(parentDecl);
-            }
+    export class PullSynthesizedDecl extends NormalPullDecl {
+        // This is a synthesized decl; its life time should match that of the symbol using it, and 
+        // not that of its parent decl. To enforce this we are not making it reachable from its 
+        // parent, but will set the parent link.
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan) {
+            super(declName, displayName, kind, declFlags, parentDecl, span, /*addToParent*/ false);
         }
 
         public isSynthesized(): boolean {

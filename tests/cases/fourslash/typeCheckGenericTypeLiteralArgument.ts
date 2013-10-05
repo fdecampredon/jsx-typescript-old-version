@@ -9,5 +9,4 @@
 goTo.file(0);
 
 // Marker in above file is placed at position 154
-// Bug 773624: crash here
-// diagnostics.validateTypesAtPositions(154);
+diagnostics.validateTypesAtPositions(154);

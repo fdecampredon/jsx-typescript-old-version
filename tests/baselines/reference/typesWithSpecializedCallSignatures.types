@@ -1,0 +1,83 @@
+=== tests/cases/compiler/typesWithSpecializedCallSignatures.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 0 col 13 IdentifierName "foo" = string
+Line 1 col 6 IdentifierName "Derived1" = Derived1
+Line 1 col 23 IdentifierName "Base" = Base
+Line 1 col 30 IdentifierName "bar" = string
+Line 2 col 6 IdentifierName "Derived2" = Derived2
+Line 2 col 23 IdentifierName "Base" = Base
+Line 2 col 30 IdentifierName "baz" = string
+Line 4 col 6 IdentifierName "C" = C
+Line 5 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 5 col 8 IdentifierName "x" = 'hi'
+Line 5 col 18 IdentifierName "Derived1" = Derived1
+Line 6 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 6 col 8 IdentifierName "x" = 'bye'
+Line 6 col 19 IdentifierName "Derived2" = Derived2
+Line 7 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 7 col 8 IdentifierName "x" = string
+Line 7 col 20 IdentifierName "Base" = Base
+Line 8 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 8 col 8 IdentifierName "x" = any
+Line 9 col 15 IdentifierName "x" = any
+Line 12 col 4 IdentifierName "c" = C
+Line 12 col 8 ObjectCreationExpression "new C()" = C
+Line 12 col 12 IdentifierName "C" = new() => C
+Line 14 col 10 IdentifierName "I" = I
+Line 15 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 15 col 8 IdentifierName "x" = 'hi'
+Line 15 col 18 IdentifierName "Derived1" = Derived1
+Line 16 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 16 col 8 IdentifierName "x" = 'bye'
+Line 16 col 19 IdentifierName "Derived2" = Derived2
+Line 17 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 17 col 8 IdentifierName "x" = string
+Line 17 col 20 IdentifierName "Base" = Base
+Line 19 col 4 IdentifierName "i" = I
+Line 19 col 7 IdentifierName "I" = I
+Line 21 col 4 IdentifierName "a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 22 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 22 col 8 IdentifierName "x" = 'hi'
+Line 22 col 18 IdentifierName "Derived1" = Derived1
+Line 23 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 23 col 8 IdentifierName "x" = 'bye'
+Line 23 col 19 IdentifierName "Derived2" = Derived2
+Line 24 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 24 col 8 IdentifierName "x" = string
+Line 24 col 20 IdentifierName "Base" = Base
+Line 26 col 0 AssignmentExpression "c = i" = I
+Line 26 col 0 IdentifierName "c" = C
+Line 27 col 4 IdentifierName "i" = I
+Line 28 col 0 AssignmentExpression "c = a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 28 col 0 IdentifierName "c" = C
+Line 28 col 4 IdentifierName "a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 29 col 0 AssignmentExpression "i = c" = C
+Line 29 col 0 IdentifierName "i" = I
+Line 30 col 4 IdentifierName "c" = C
+Line 31 col 0 AssignmentExpression "i = a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 31 col 0 IdentifierName "i" = I
+Line 31 col 4 IdentifierName "a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 32 col 0 AssignmentExpression "a = c" = C
+Line 32 col 0 IdentifierName "a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 33 col 4 IdentifierName "c" = C
+Line 34 col 0 AssignmentExpression "a = i" = I
+Line 34 col 0 IdentifierName "a" = { foo(x: 'hi'): Derived1; foo(x: 'bye'): Derived2; foo(x: string): Base; }
+Line 34 col 4 IdentifierName "i" = I
+Line 36 col 4 IdentifierName "r1" = Derived1
+Line 36 col 8 IdentifierName "Derived1" = Derived1
+Line 36 col 19 InvocationExpression "c.foo('hi')" = Derived1
+Line 36 col 19 MemberAccessExpression "c.foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 36 col 19 IdentifierName "c" = C
+Line 36 col 21 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 37 col 4 IdentifierName "r2" = Derived2
+Line 37 col 8 IdentifierName "Derived2" = Derived2
+Line 37 col 19 InvocationExpression "c.foo('bye')" = Derived2
+Line 37 col 19 MemberAccessExpression "c.foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 37 col 19 IdentifierName "c" = C
+Line 37 col 21 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 38 col 4 IdentifierName "r3" = Base
+Line 38 col 8 IdentifierName "Base" = Base
+Line 38 col 15 InvocationExpression "c.foo('hm')" = Base
+Line 38 col 15 MemberAccessExpression "c.foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
+Line 38 col 15 IdentifierName "c" = C
+Line 38 col 17 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }

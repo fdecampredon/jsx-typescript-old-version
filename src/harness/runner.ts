@@ -213,8 +213,9 @@ var opts = new TypeScript.OptionsParser(IO, "testCompiler");
 
 opts.flag('compiler', {
     set: function () {
-        runners.push(new CompilerBaselineRunner());
-        runners.push(new UnitTestRunner('compiler'));        
+        runners.push(new CompilerBaselineRunner('conformance'));
+        runners.push(new CompilerBaselineRunner('compiler'));
+        runners.push(new UnitTestRunner('compiler'));
         runners.push(new ProjectRunner());
     }
 });
@@ -324,8 +325,9 @@ opts.parse(IO.arguments)
 if (runners.length === 0) {
     if (opts.unnamed.length === 0) {
         // compiler
-        runners.push(new CompilerBaselineRunner());
-        runners.push(new UnitTestRunner('compiler'));        
+        runners.push(new CompilerBaselineRunner('conformance'));
+        runners.push(new CompilerBaselineRunner('compiler'));
+        runners.push(new UnitTestRunner('compiler'));
         runners.push(new ProjectRunner());
 
         // language services

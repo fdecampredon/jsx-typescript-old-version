@@ -88,13 +88,16 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         this.resolver.setUnitPath(this.filename);
 
         var pos = this.position();
-        var astPath = TypeScript.getAstPathToPosition(this.compilerState.getDocument(this.filename).script, pos, false, false);
-        while (astPath.count() > 0) {
-            var pop = astPath.pop();
-            var decl = this.resolver.getDeclForAST(pop);
-            if (decl) {
-                return decl;
+        var node = TypeScript.getAstAtPosition(this.compilerState.getDocument(this.filename).script, pos, false, false);
+        while (node) {
+            if (node.nodeType() !== TypeScript.NodeType.Comment) {
+                var decl = this.resolver.getDeclForAST(node);
+                if (decl) {
+                    return decl;
+                }
             }
+
+            node = node.parent;
         }
         return null;
     }
@@ -104,13 +107,13 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
 
         var s = this.host.getScriptSnapshot(this.filename);
         for (var i = 0; i < element.fullWidth(); i++) {
-            var astPath = TypeScript.getAstPathToPosition(this.compilerState.getDocument(this.filename).script, (<PositionedNode>element).position + i, false, false);
-            while (astPath.count() > 0) {
-                var pop = astPath.pop();
-                candidates.push(s.getText(pop.minChar, pop.limChar));
-                if (pop.limChar - pop.minChar === element.width()) {
-                    return pop;
+            var ast = TypeScript.getAstAtPosition(this.compilerState.getDocument(this.filename).script, (<PositionedNode>element).position + i, false, false);
+            while (ast) {
+                candidates.push(s.getText(ast.minChar, ast.limChar));
+                if (ast.limChar - ast.minChar === element.width()) {
+                    return ast;
                 }
+                ast = ast.parent;
             }
         }
 

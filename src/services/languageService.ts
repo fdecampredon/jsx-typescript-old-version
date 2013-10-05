@@ -108,15 +108,6 @@ module Services {
         public containerKind: string = "";  // see ScriptElementKind
     }
 
-    export class NavigateToContext {
-        public options = new TypeScript.AstWalkOptions();
-        public fileName: string = "";
-        public containerKinds: string[] = [];
-        public containerASTs: TypeScript.AST[] = [];
-        public path: TypeScript.AstPath = new TypeScript.AstPath();
-        public result: NavigateToItem[] = [];
-    }
-
     export class TextEdit {
         constructor(public minChar: number, public limChar: number, public text: string) {
         }

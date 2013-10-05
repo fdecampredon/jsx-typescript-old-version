@@ -1,0 +1,16 @@
+invalidNumberAssignments.ts line 3 col 5: error TS2011: Cannot convert 'number' to 'boolean'.
+invalidNumberAssignments.ts line 4 col 5: error TS2011: Cannot convert 'number' to 'string'.
+invalidNumberAssignments.ts line 5 col 5: error TS2011: Cannot convert 'number' to 'void'.
+invalidNumberAssignments.ts line 6 col 5: error TS2011: Cannot convert 'number' to 'undefined'.
+invalidNumberAssignments.ts line 9 col 5: error TS2012: Cannot convert 'number' to 'C':
+	Type 'Number' is missing property 'foo' from type 'C'.
+invalidNumberAssignments.ts line 12 col 5: error TS2012: Cannot convert 'number' to 'I':
+	Type 'Number' is missing property 'bar' from type 'I'.
+invalidNumberAssignments.ts line 14 col 5: error TS2012: Cannot convert 'number' to '{ baz: string; }':
+	Type 'Number' is missing property 'baz' from type '{ baz: string; }'.
+invalidNumberAssignments.ts line 15 col 5: error TS2012: Cannot convert 'number' to '{ 0: number; }':
+	Type 'Number' is missing property '0' from type '{ 0: number; }'.
+invalidNumberAssignments.ts line 18 col 1: error TS2130: Invalid left-hand side of assignment expression.
+invalidNumberAssignments.ts line 21 col 5: error TS2011: Cannot convert 'number' to 'T'.
+invalidNumberAssignments.ts line 23 col 1: error TS2012: Cannot convert 'number' to '<T>(a: T) => void':
+	Type '<T>(a: T) => void' requires a call signature, but type 'Number' lacks one.

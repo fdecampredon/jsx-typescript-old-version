@@ -1,0 +1,20 @@
+=== tests/cases/compiler/numberPropertyAccess.ts ===
+Line 0 col 4 IdentifierName "x" = number
+Line 1 col 4 IdentifierName "a" = string
+Line 1 col 8 InvocationExpression "x.toExponential()" = string
+Line 1 col 8 MemberAccessExpression "x.toExponential" = (fractionDigits?: number) => string
+Line 1 col 8 IdentifierName "x" = number
+Line 1 col 10 IdentifierName "toExponential" = (fractionDigits?: number) => string
+Line 3 col 4 IdentifierName "b" = boolean
+Line 3 col 8 InvocationExpression "x.hasOwnProperty('toFixed')" = boolean
+Line 3 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
+Line 3 col 8 IdentifierName "x" = number
+Line 3 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 5 col 4 IdentifierName "c" = any
+Line 5 col 8 InvocationExpression "x['toExponential']()" = any
+Line 5 col 8 ElementAccessExpression "x['toExponential']" = any
+Line 5 col 8 IdentifierName "x" = number
+Line 6 col 4 IdentifierName "d" = any
+Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = any
+Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = any
+Line 6 col 8 IdentifierName "x" = number

@@ -5,7 +5,7 @@
 //// }
 //// 
 
-// Bug 771754: Cannot read property 'kind' of undefined 
 edit.disableFormatting(); // Disregard, just here to keep Fourslash happy
-// diagnostics.validateTypesAtPositions(44);
+
+diagnostics.validateTypesAtPositions(44);
 

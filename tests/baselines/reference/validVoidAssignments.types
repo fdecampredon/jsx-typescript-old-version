@@ -1,0 +1,13 @@
+=== tests/cases/compiler/validVoidAssignments.ts ===
+Line 0 col 4 IdentifierName "x" = void
+Line 1 col 4 IdentifierName "y" = any
+Line 2 col 4 IdentifierName "z" = void
+Line 3 col 0 AssignmentExpression "y = x" = void
+Line 3 col 0 IdentifierName "y" = any
+Line 3 col 4 IdentifierName "x" = void
+Line 4 col 0 AssignmentExpression "x = y" = any
+Line 4 col 0 IdentifierName "x" = void
+Line 4 col 4 IdentifierName "y" = any
+Line 5 col 0 AssignmentExpression "x = z" = void
+Line 5 col 0 IdentifierName "x" = void
+Line 5 col 4 IdentifierName "z" = void

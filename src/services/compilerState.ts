@@ -394,32 +394,32 @@ module Services {
         //
         // New Pull stuff
         //
-        public getDeclarationSymbolInformation(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetDeclarationSymbolInformation(path, document);
+        public getDeclarationSymbolInformation(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetDeclarationSymbolInformation(ast, document);
         }
 
-        public getSymbolInformationFromPath(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetSymbolInformationFromPath(path, document);
+        public getSymbolInformationFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetSymbolInformationFromAST(ast, document);
         }
 
-        public getCallInformationFromPath(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetCallInformationFromPath(path, document);
+        public getCallInformationFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetCallInformationFromAST(ast, document);
         }
 
-        public getVisibleMemberSymbolsFromPath(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetVisibleMemberSymbolsFromPath(path, document);
+        public getVisibleMemberSymbolsFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetVisibleMemberSymbolsFromAST(ast, document);
         }
 
-        public getVisibleDeclsFromPath(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetVisibleDeclsFromPath(path, document);
+        public getVisibleDeclsFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetVisibleDeclsFromAST(ast, document);
         }
 
-        public getContextualMembersFromPath(path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetContextualMembersFromPath(path, document);
+        public getContextualMembersFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetContextualMembersFromAST(ast, document);
         }
 
-        public pullGetDeclInformation(decl: TypeScript.PullDecl, path: TypeScript.AstPath, document: TypeScript.Document) {
-            return this.compiler.pullGetDeclInformation(decl, path, document);
+        public pullGetDeclInformation(decl: TypeScript.PullDecl, ast: TypeScript.AST, document: TypeScript.Document) {
+            return this.compiler.pullGetDeclInformation(decl, ast, document);
         }
 
         public getTopLevelDeclaration(fileName: string) {

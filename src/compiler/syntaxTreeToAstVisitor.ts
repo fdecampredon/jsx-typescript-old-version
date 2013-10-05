@@ -358,7 +358,7 @@ module TypeScript {
                 this.setSpanExplicit(bod, start, this.position);
             }
 
-            var result = new Script(bod, isExternalModule, isDTSFile(this.fileName), amdDependencies);
+            var result = new Script(bod, this.fileName, isExternalModule, amdDependencies);
             this.setSpanExplicit(result, start, start + node.fullWidth());
 
             result.setModuleFlags(moduleFlags);
@@ -423,12 +423,6 @@ module TypeScript {
                 }
             }
 
-            this.completeClassDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeClassDeclaration(node: ClassDeclarationSyntax, result: ClassDeclaration): void {
             var flags = result.getVarFlags();
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 flags = flags | VariableFlags.Exported;
@@ -439,6 +433,8 @@ module TypeScript {
             }
 
             result.setVarFlags(flags);
+
+            return result;
         }
 
         public visitInterfaceDeclaration(node: InterfaceDeclarationSyntax): InterfaceDeclaration {
@@ -469,15 +465,11 @@ module TypeScript {
             var result = new InterfaceDeclaration(name, typeParameters, members, extendsList);
             this.setCommentsAndSpan(result, start, node);
 
-            this.completeInterfaceDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeInterfaceDeclaration(node: InterfaceDeclarationSyntax, result: InterfaceDeclaration): void {
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 result.setVarFlags(result.getVarFlags() | VariableFlags.Exported);
             }
+
+            return result;
         }
 
         public visitHeritageClause(node: HeritageClauseSyntax): ASTList {
@@ -571,17 +563,13 @@ module TypeScript {
                 members = new ASTList([result]);
             }
 
-            this.completeModuleDeclaration(node, result);
-
-            this.setSpan(result, start, node);
-            return result;
-        }
-
-        public completeModuleDeclaration(node: ModuleDeclarationSyntax, result: ModuleDeclaration): void {
             // mark ambient if declare keyword or parsing ambient module or parsing declare file
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.DeclareKeyword)) {
                 result.setModuleFlags(result.getModuleFlags() | ModuleFlags.Ambient);
             }
+
+            this.setSpan(result, start, node);
+            return result;
         }
 
         private hasDotDotDotParameter(parameters: ISeparatedSyntaxList): boolean {
@@ -620,12 +608,6 @@ module TypeScript {
                 result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.Signature);
             }
 
-            this.completeFunctionDeclaration(node, result);
-
-            return result;
-        }
-
-        public completeFunctionDeclaration(node: FunctionDeclarationSyntax, result: FunctionDeclaration): void {
             var flags = result.getFunctionFlags();
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 flags = flags | FunctionFlags.Exported;
@@ -636,6 +618,8 @@ module TypeScript {
             }
 
             result.setFunctionFlags(flags);
+
+            return result;
         }
 
         public visitEnumDeclaration(node: EnumDeclarationSyntax): ModuleDeclaration {
@@ -703,9 +687,12 @@ module TypeScript {
             this.setCommentsAndSpan(result, start, node);
 
             var flags = result.getModuleFlags() | ModuleFlags.IsEnum;
-
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
                 flags = flags | ModuleFlags.Exported;
+            }
+
+            if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.DeclareKeyword)) {
+                flags = flags | ModuleFlags.Ambient;
             }
 
             result.setModuleFlags(flags);
@@ -1822,15 +1809,10 @@ module TypeScript {
             this.movePast(node.openBraceToken);
 
             var array = new Array(node.switchClauses.childCount());
-            var defaultCase: CaseClause = null;
 
             for (var i = 0, n = node.switchClauses.childCount(); i < n; i++) {
                 var switchClause = node.switchClauses.childAt(i);
                 var translated = switchClause.accept(this);
-
-                if (switchClause.kind() === SyntaxKind.DefaultSwitchClause) {
-                    defaultCase = translated;
-                }
 
                 array[i] = translated;
             }
@@ -1841,7 +1823,7 @@ module TypeScript {
 
             this.movePast(node.closeBraceToken);
 
-            var result = new SwitchStatement(expression, new ASTList(array), defaultCase, span);
+            var result = new SwitchStatement(expression, new ASTList(array), span);
             this.setSpan(result, start, node);
 
             return result;
@@ -2421,10 +2403,7 @@ module TypeScript {
 
         public visitClassDeclaration(node: ClassDeclarationSyntax): ClassDeclaration {
             var result: ClassDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeClassDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitClassDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2434,10 +2413,7 @@ module TypeScript {
 
         public visitInterfaceDeclaration(node: InterfaceDeclarationSyntax): InterfaceDeclaration {
             var result: InterfaceDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeInterfaceDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitInterfaceDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2457,10 +2433,7 @@ module TypeScript {
 
         public visitModuleDeclaration(node: ModuleDeclarationSyntax): ModuleDeclaration {
             var result: ModuleDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeModuleDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitModuleDeclaration(node);
                 this.setAST(node, result);
             }
@@ -2470,10 +2443,7 @@ module TypeScript {
 
         public visitFunctionDeclaration(node: FunctionDeclarationSyntax): FunctionDeclaration {
             var result: FunctionDeclaration = this.getAndMovePastAST(node);
-            if (result) {
-                this.completeFunctionDeclaration(node, result);
-            }
-            else {
+            if (!result) {
                 result = super.visitFunctionDeclaration(node);
                 this.setAST(node, result);
             }

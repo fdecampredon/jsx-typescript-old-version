@@ -22,5 +22,5 @@ edit.insert(", X");
 goTo.marker('addTypeParam');
 
 edit.insert(", X");
-// Bug 771752: Cannot read property 'minChar' of undefined
-// diagnostics.validateTypesAtPositions(91, 163);
+
+diagnostics.validateTypesAtPositions(91, 163);

@@ -16,8 +16,8 @@ module TypeScript {
             allSignatures: PullSignatureSymbol[];
         }
 
-        export function getSignatureForFuncDecl(funcDecl: AST, semanticInfo: SemanticInfo) {
-            var functionDecl = semanticInfo.getDeclForAST(funcDecl);
+        export function getSignatureForFuncDecl(funcDecl: AST, semanticInfoChain: SemanticInfoChain) {
+            var functionDecl = semanticInfoChain.getDeclForAST(funcDecl);
             var funcSymbol = functionDecl.getSymbol();
 
             if (!funcSymbol) {
@@ -53,15 +53,15 @@ module TypeScript {
             };
         }
 
-        export function getAccessorSymbol(getterOrSetter: FunctionDeclaration, semanticInfoChain: SemanticInfoChain, unitPath: string): PullAccessorSymbol {
-            var functionDecl = semanticInfoChain.getDeclForAST(getterOrSetter, unitPath);
+        export function getAccessorSymbol(getterOrSetter: FunctionDeclaration, semanticInfoChain: SemanticInfoChain): PullAccessorSymbol {
+            var functionDecl = semanticInfoChain.getDeclForAST(getterOrSetter);
             var getterOrSetterSymbol = functionDecl.getSymbol();
             
             return <PullAccessorSymbol>getterOrSetterSymbol;
         }
 
-        export function getGetterAndSetterFunction(funcDecl: FunctionDeclaration, semanticInfoChain: SemanticInfoChain, unitPath: string): { getter: FunctionDeclaration; setter: FunctionDeclaration; } {
-            var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, semanticInfoChain, unitPath);
+        export function getGetterAndSetterFunction(funcDecl: FunctionDeclaration, semanticInfoChain: SemanticInfoChain): { getter: FunctionDeclaration; setter: FunctionDeclaration; } {
+            var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, semanticInfoChain);
             var result: { getter: FunctionDeclaration; setter: FunctionDeclaration; } = {
                 getter: null,
                 setter: null

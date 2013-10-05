@@ -45,8 +45,7 @@ module Services {
 
             /// TODO: this does not allow getting references on "constructor"
 
-            var path = this.getAstPathToPosition(script, pos);
-            var topNode = path.ast();
+            var topNode = TypeScript.getAstAtPosition(script, pos);
             if (topNode === null || (requireName && topNode.nodeType() !== TypeScript.NodeType.Name)) {
                 this.logger.log("No name found at the given position");
                 return null;
@@ -54,7 +53,7 @@ module Services {
 
             // Store the actual name before calling getSymbolInformationFromPath
 
-            var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromPath(path, document);
+            var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromAST(topNode, document);
             if (symbolInfoAtPosition === null || (symbolInfoAtPosition.symbol === null && symbolInfoAtPosition.aliasSymbol)) {
                 this.logger.log("No symbol found at the given position");
                 // only single reference
@@ -75,7 +74,7 @@ module Services {
                 }
             }
 
-            var containingASTOpt = this.getSymbolScopeAST(symbol, path);
+            var containingASTOpt = this.getSymbolScopeAST(symbol, topNode);
 
             return { symbol: symbol, containingASTOpt: containingASTOpt };
         }
@@ -119,7 +118,7 @@ module Services {
             return result;
         }
 
-        private getSymbolScopeAST(symbol: TypeScript.PullSymbol, path: TypeScript.AstPath): TypeScript.AST {
+        private getSymbolScopeAST(symbol: TypeScript.PullSymbol, ast: TypeScript.AST): TypeScript.AST {
             if (symbol.kind === TypeScript.PullElementKind.TypeParameter &&
                 symbol.getDeclarations().length > 0 &&
                 symbol.getDeclarations()[0].getParentDecl() &&
@@ -127,12 +126,13 @@ module Services {
 
                 // The compiler shares class method type parameter symbols.  So if we get one, 
                 // scope our search down to the method ast so we don't find other hits elsewhere.
-                for (var i = path.top; i >= 0; i--) {
-                    var ast = path.asts[i];
+                while (ast) {
                     if (ast.nodeType() === TypeScript.NodeType.FunctionDeclaration &&
                         TypeScript.hasFlag((<TypeScript.FunctionDeclaration>ast).getFunctionFlags(), TypeScript.FunctionFlags.IsClassMethod)) {
-                            return ast;
+                        return ast;
                     }
+
+                    ast = ast.parent;
                 }
             }
 
@@ -165,13 +165,12 @@ module Services {
             var document = this.compilerState.getDocument(fileName);
             var script = document.script;
 
-            var path = this.getAstPathToPosition(script, position);
-            if (path.ast() === null || path.ast().nodeType() !== TypeScript.NodeType.Name) {
+            var node = TypeScript.getAstAtPosition(script, position);
+            if (node === null || node.nodeType() !== TypeScript.NodeType.Name) {
                 return [];
             }
 
-            var node = path.ast();
-            var isWriteAccess = this.isWriteAccess(node, path.parent());
+            var isWriteAccess = this.isWriteAccess(node);
             return [
                 new ReferenceEntry(this.compilerState.getHostFileName(fileName), node.minChar, node.limChar, isWriteAccess)
             ];
@@ -186,16 +185,16 @@ module Services {
             var document = this.compilerState.getDocument(fileName);
             var script = document.script;
 
-            var path = this.getAstPathToPosition(script, pos);
-            if (path.ast() === null || path.ast().nodeType() !== TypeScript.NodeType.Name) {
+            var ast = TypeScript.getAstAtPosition(script, pos);
+            if (ast === null || ast.nodeType() !== TypeScript.NodeType.Name) {
                 this.logger.log("No identifier at the specified location.");
                 return result;
             }
 
             // Store the actual name before calling getSymbolInformationFromPath
-            var actualNameAtPosition = (<TypeScript.Identifier>path.ast()).text();
+            var actualNameAtPosition = (<TypeScript.Identifier>ast).text();
 
-            var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromPath(path, document);
+            var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromAST(ast, document);
             var symbol = symbolInfoAtPosition.symbol;
 
             if (symbol === null) {
@@ -294,12 +293,11 @@ module Services {
                 var script = document.script;
 
                 possiblePositions.forEach(p => {
-                    var path = this.getAstPathToPosition(script, p);
-                    var nameAST = path.ast();
+                    var nameAST = TypeScript.getAstAtPosition(script, p);
                     if (nameAST === null || nameAST.nodeType() !== TypeScript.NodeType.Name) {
                         return;
                     }
-                    var searchSymbolInfoAtPosition = this.compilerState.getSymbolInformationFromPath(path, document);
+                    var searchSymbolInfoAtPosition = this.compilerState.getSymbolInformationFromAST(nameAST, document);
                     if (searchSymbolInfoAtPosition !== null) {
 
                         var normalizedSymbol: TypeScript.PullSymbol;
@@ -312,16 +310,15 @@ module Services {
                         }
 
                         if (normalizedSymbol === symbol) {
-                            var isWriteAccess = this.isWriteAccess(path.ast(), path.parent());
+                            var isWriteAccess = this.isWriteAccess(nameAST);
 
                             result.push(new ReferenceEntry(this.compilerState.getHostFileName(fileName),
                                 nameAST.minChar, nameAST.limChar, isWriteAccess));
-
                         }
                     }
                 });
-
             }
+
             return result;
         }
 
@@ -340,21 +337,20 @@ module Services {
                         return;
                     }
 
-                    var path = this.getAstPathToPosition(script, p);
-                    var nameAST = path.ast();
+                    var nameAST = TypeScript.getAstAtPosition(script, p);
 
                     // Compare the length so we filter out strict superstrings of the symbol we are looking for
                     if (nameAST === null || nameAST.nodeType() !== TypeScript.NodeType.Name || (nameAST.limChar - nameAST.minChar !== symbolName.length)) {
                         return;
                     }
 
-                    var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromPath(path, document);
+                    var symbolInfoAtPosition = this.compilerState.getSymbolInformationFromAST(nameAST, document);
                     if (symbolInfoAtPosition !== null) {
                         var searchSymbol = symbolInfoAtPosition.aliasSymbol || symbolInfoAtPosition.symbol;
 
                         if (FindReferenceHelpers.compareSymbolsForLexicalIdentity(searchSymbol, symbol, this.compilerState.getSemanticInfoChain())) {
 
-                            var isWriteAccess = this.isWriteAccess(path.ast(), path.parent());
+                            var isWriteAccess = this.isWriteAccess(nameAST);
                             result.push(new ReferenceEntry(this.compilerState.getHostFileName(fileName), nameAST.minChar, nameAST.limChar, isWriteAccess));
                         }
                     }
@@ -364,7 +360,8 @@ module Services {
             return result;
         }
 
-        private isWriteAccess(current: TypeScript.AST, parent: TypeScript.AST): boolean {
+        private isWriteAccess(current: TypeScript.AST): boolean {
+            var parent = current.parent;
             if (parent !== null) {
                 var parentNodeType = parent.nodeType();
                 switch (parentNodeType) {
@@ -481,29 +478,33 @@ module Services {
 
             // Third set the path to find ask the type system about the call expression
             var script = document.script;
-            var path = this.getAstPathToPosition(script, position);
-            if (path.count() == 0) {
+            var node = TypeScript.getAstAtPosition(script, position);
+            if (!node) {
                 return null;
             }
 
             // Find call expression
-            while (path.count() >= 2) {
-                if (path.ast().nodeType() === TypeScript.NodeType.InvocationExpression ||
-                    path.ast().nodeType() === TypeScript.NodeType.ObjectCreationExpression ||  // Valid call or new expressions
-                    (path.isDeclaration() && position > path.ast().minChar)) // Its a declaration node - call expression cannot be in parent scope
+            while (node) {
+                if (node.nodeType() === TypeScript.NodeType.InvocationExpression ||
+                    node.nodeType() === TypeScript.NodeType.ObjectCreationExpression ||  // Valid call or new expressions
+                    (isSignatureHelpBlocker(node) && position > node.minChar)) // Its a declaration node - call expression cannot be in parent scope
                 {
                     break;
                 }
 
-                path.pop();
+                node = node.parent;
             }
 
-            if (path.ast().nodeType() !== TypeScript.NodeType.InvocationExpression && path.ast().nodeType() !== TypeScript.NodeType.ObjectCreationExpression) {
+            if (!node) {
+                return null;
+            }
+
+            if (node.nodeType() !== TypeScript.NodeType.InvocationExpression && node.nodeType() !== TypeScript.NodeType.ObjectCreationExpression) {
                 this.logger.log("No call expression or generic arguments found for the given position");
                 return null;
             }
 
-            var callExpression = <TypeScript.InvocationExpression>path.ast();
+            var callExpression = <TypeScript.InvocationExpression>node;
             var isNew = (callExpression.nodeType() === TypeScript.NodeType.ObjectCreationExpression);
 
             if (position <= callExpression.target.limChar + callExpression.target.trailingTriviaWidth || position > callExpression.arguments.limChar + callExpression.arguments.trailingTriviaWidth) {
@@ -512,7 +513,7 @@ module Services {
             }
 
             // Resolve symbol
-            var callSymbolInfo = this.compilerState.getCallInformationFromPath(path, document);
+            var callSymbolInfo = this.compilerState.getCallInformationFromAST(node, document);
             if (!callSymbolInfo || !callSymbolInfo.targetSymbol || !callSymbolInfo.resolvedSignatures) {
                 this.logger.log("Could not find symbol for call expression");
                 return null;
@@ -537,12 +538,12 @@ module Services {
             var script = document.script;
 
             // Get the identifier information
-            var path = this.getAstPathToPosition(script, genericTypeArgumentListInfo.genericIdentifer.start());
-            if (path.count() == 0 || path.ast().nodeType() !== TypeScript.NodeType.Name) {
+            var ast = TypeScript.getAstAtPosition(script, genericTypeArgumentListInfo.genericIdentifer.start());
+            if (ast === null || ast.nodeType() !== TypeScript.NodeType.Name) {
                 throw new Error("getTypeParameterSignatureAtPosition: " + TypeScript.getLocalizedText(TypeScript.DiagnosticCode.Looking_up_path_for_identifier_token_did_not_result_in_an_identifer, null));
             }
 
-            var symbolInformation = this.compilerState.getSymbolInformationFromPath(path, document);
+            var symbolInformation = this.compilerState.getSymbolInformationFromAST(ast, document);
 
             if (!symbolInformation.symbol) {
                 return null;
@@ -628,7 +629,7 @@ module Services {
         private addDeclaration(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declaration: TypeScript.PullDecl, result: DefinitionInfo[]): void {
             var span = declaration.getSpan();
             result.push(new DefinitionInfo(
-                this.compilerState.getHostFileName(declaration.getScriptName()),
+                this.compilerState.getHostFileName(declaration.fileName()),
                 span.start(), span.end(), symbolKind, symbolName, containerKind, containerName));
         }
 
@@ -870,17 +871,6 @@ module Services {
             return this.compilerState.getEmitOutput(fileName);
         }
 
-        ///
-        /// Return the stack of AST nodes containing "position"
-        ///
-        private getAstPathToPosition(script: TypeScript.AST, pos: number, useTrailingTriviaAsLimChar = true, forceInclusive = false): TypeScript.AstPath {
-            if (this.logger.information()) {
-                this.logger.log("getAstPathToPosition(" + script + ", " + pos + ")");
-            }
-
-            return TypeScript.getAstPathToPosition(script, pos, useTrailingTriviaAsLimChar, forceInclusive);
-        }
-
         private getFullNameOfSymbol(symbol: TypeScript.PullSymbol, enclosingScopeSymbol: TypeScript.PullSymbol) {
             var container = symbol.getContainer();
             if (this.isLocal(symbol) ||
@@ -921,12 +911,12 @@ module Services {
             var document = this.compilerState.getDocument(fileName);
             var script = document.script;
 
-            var path = this.getAstPathToPosition(script, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
-            if (path.count() == 0) {
+            var ast = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
+            if (ast === null) {
                 return null;
             }
 
-            var cur = path.ast();
+            var cur = ast;
             switch (cur.nodeType()) {
                 default:
                     return null;
@@ -936,12 +926,16 @@ module Services {
                     if (!isConstructorValidPosition || !TypeScript.hasFlag(funcDecl.getFunctionFlags(), TypeScript.FunctionFlags.Constructor) || !(position >= funcDecl.minChar && position <= funcDecl.minChar + 11 /*constructor*/)) {
                         return null;
                     }
+                    else {
+                        return ast;
+                    }
+
                 case TypeScript.NodeType.MemberAccessExpression:
                 case TypeScript.NodeType.SuperExpression:
                 case TypeScript.NodeType.StringLiteral:
                 case TypeScript.NodeType.ThisExpression:
                 case TypeScript.NodeType.Name:
-                    return path;
+                    return ast;
             }
         }
 
@@ -949,8 +943,8 @@ module Services {
             fileName = TypeScript.switchToForwardSlashes(fileName);
             this.refresh();
 
-            var path = this.getTypeInfoEligiblePath(fileName, position, true);
-            if (!path) {
+            var node = this.getTypeInfoEligiblePath(fileName, position, true);
+            if (!node) {
                 return null;
             }
 
@@ -959,43 +953,43 @@ module Services {
             var symbol: TypeScript.PullSymbol;
             var typeSymbol: TypeScript.PullTypeSymbol;
             var enclosingScopeSymbol: TypeScript.PullSymbol;
-            var isCallExpression: boolean = false;
+            var _isCallExpression: boolean = false;
             var resolvedSignatures: TypeScript.PullSignatureSymbol[];
             var candidateSignature: TypeScript.PullSignatureSymbol;
             var isConstructorCall: boolean;
 
-            if (path.isNameOfClass() || path.isNameOfInterface() || path.isNameOfFunction() || path.isNameOfVariable()) {
+            if (isNameOfClass(node) || isNameOfInterface(node) || isNameOfFunction(node) || isNameOfVariable(node)) {
                 // Skip the name and get to the declaration
-                path.pop();
+                node = node.parent;
             }
 
-            if (path.isDeclaration()) {
-                var declarationInformation = this.compilerState.getDeclarationSymbolInformation(path, document);
+            if (node.isDeclaration()) {
+                var declarationInformation = this.compilerState.getDeclarationSymbolInformation(node, document);
 
                 ast = declarationInformation.ast;
                 symbol = declarationInformation.symbol;
                 enclosingScopeSymbol = declarationInformation.enclosingScopeSymbol;
 
-                if (path.ast().nodeType() === TypeScript.NodeType.FunctionDeclaration ||
-                    path.ast().nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
-                    var funcDecl = path.ast();
+                if (node.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
+                    node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
+                    var funcDecl = node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
-                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(funcDecl, this.compilerState.getSemanticInfoChain().getUnit(fileName));
-                        isCallExpression = true;
+                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(funcDecl, this.compilerState.getSemanticInfoChain());
+                        _isCallExpression = true;
                         candidateSignature = signatureInfo.signature;
                         resolvedSignatures = signatureInfo.allSignatures;
                     }
                 }
             }
-            else if (path.isCallExpression() || path.isCallExpressionTarget()) {
+            else if (isCallExpression(node) || isCallExpressionTarget(node)) {
                 // If this is a call we need to get the call singuatures as well
                 // Move the cursor to point to the call expression
-                while (!path.isCallExpression()) {
-                    path.pop();
+                while (!isCallExpression(node)) {
+                    node = node.parent;
                 }
 
                 // Get the call expression symbol
-                var callExpressionInformation = this.compilerState.getCallInformationFromPath(path, document);
+                var callExpressionInformation = this.compilerState.getCallInformationFromAST(node, document);
 
                 if (!callExpressionInformation.targetSymbol) {
                     return null;
@@ -1016,14 +1010,14 @@ module Services {
                 }
 
                 if (!isPropertyOrVar) {
-                    isCallExpression = true;
+                    _isCallExpression = true;
                     resolvedSignatures = callExpressionInformation.resolvedSignatures;
                     candidateSignature = callExpressionInformation.candidateSignature;
                     isConstructorCall = callExpressionInformation.isConstructorCall;
                 }
             }
             else {
-                var symbolInformation = this.compilerState.getSymbolInformationFromPath(path, document);
+                var symbolInformation = this.compilerState.getSymbolInformationFromAST(node, document);
 
                 if (!symbolInformation.symbol) {
                     return null;
@@ -1033,11 +1027,10 @@ module Services {
                 symbol = symbolInformation.symbol;
                 enclosingScopeSymbol = symbolInformation.enclosingScopeSymbol;
 
-
                 if (symbol.kind === TypeScript.PullElementKind.Method || symbol.kind == TypeScript.PullElementKind.Function) {
                     typeSymbol = symbol.type;
                     if (typeSymbol) {
-                        isCallExpression = true;
+                        _isCallExpression = true;
                         resolvedSignatures = typeSymbol.getCallSignatures();
                     }
                 }
@@ -1054,11 +1047,11 @@ module Services {
                 }
             }
 
-            var memberName = isCallExpression
+            var memberName = _isCallExpression
                 ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, enclosingScopeSymbol)
                 : symbol.getTypeNameEx(enclosingScopeSymbol, true);
-            var kind = this.mapPullElementKind(symbol.kind, symbol, !isCallExpression, isCallExpression, isConstructorCall);
-            var docComment = this.compilerState.getDocComments(candidateSignature || symbol, !isCallExpression);
+            var kind = this.mapPullElementKind(symbol.kind, symbol, !_isCallExpression, _isCallExpression, isConstructorCall);
+            var docComment = this.compilerState.getDocComments(candidateSignature || symbol, !_isCallExpression);
             var symbolName = this.getFullNameOfSymbol(symbol, enclosingScopeSymbol);
             var minChar = ast ? ast.minChar : -1;
             var limChar = ast ? ast.limChar : -1;
@@ -1078,28 +1071,28 @@ module Services {
                 return null;
             }
 
-            var path = this.getAstPathToPosition(script, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
+            var node = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
 
-            if (path.count() >= 1 && path.asts[path.top].nodeType() === TypeScript.NodeType.Name &&
-                path.asts[path.top].minChar === path.asts[path.top].limChar) {
+            if (node && node.nodeType() === TypeScript.NodeType.Name &&
+                node.minChar === node.limChar) {
                 // Ignore missing name nodes
-                path.pop();
+                node = node.parent;
             }
 
             var isRightOfDot = false;
-            if (path.count() >= 1 &&
-                path.asts[path.top].nodeType() === TypeScript.NodeType.MemberAccessExpression
-                && (<TypeScript.BinaryExpression>path.asts[path.top]).operand1.limChar < position) {
+            if (node &&
+                node.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
+                (<TypeScript.BinaryExpression>node).operand1.limChar < position) {
+
                 isRightOfDot = true;
-                path.push((<TypeScript.BinaryExpression>path.asts[path.top]).operand1);
+                node = (<TypeScript.BinaryExpression>node).operand1;
             }
-            else if (path.count() >= 2 &&
-                path.asts[path.top].nodeType() === TypeScript.NodeType.Name &&
-                path.asts[path.top - 1].nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-                (<TypeScript.BinaryExpression>path.asts[path.top - 1]).operand2 === path.asts[path.top]) {
+            else if (node && node.parent &&
+                node.nodeType() === TypeScript.NodeType.Name &&
+                node.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
+                (<TypeScript.BinaryExpression>node.parent).operand2 === node) {
                 isRightOfDot = true;
-                path.pop();
-                path.push((<TypeScript.BinaryExpression>path.asts[path.top]).operand1);
+                node = (<TypeScript.BinaryExpression>node.parent).operand1;
             }
 
             // Get the completions
@@ -1107,7 +1100,7 @@ module Services {
 
             // Right of dot member completion list
             if (isRightOfDot) {
-                var members = this.compilerState.getVisibleMemberSymbolsFromPath(path, document);
+                var members = this.compilerState.getVisibleMemberSymbolsFromAST(node, document);
                 if (!members) {
                     return null;
                 }
@@ -1121,24 +1114,24 @@ module Services {
                 // Object literal expression, look up possible property names from contextual type
                 if (containingObjectLiteral) {
                     var searchPosition = Math.min(position, containingObjectLiteral.end());
-                    path = this.getAstPathToPosition(script, searchPosition);
+                    var path = TypeScript.getAstAtPosition(script, searchPosition);
                     // Get the object literal node
 
-                    while (path.ast().nodeType() !== TypeScript.NodeType.ObjectLiteralExpression) {
-                        path.pop();
+                    while (node && node.nodeType() !== TypeScript.NodeType.ObjectLiteralExpression) {
+                        node = node.parent;
                     }
 
-                    if (!path.ast() || path.ast().nodeType() !== TypeScript.NodeType.ObjectLiteralExpression) {
+                    if (!node || node.nodeType() !== TypeScript.NodeType.ObjectLiteralExpression) {
                         throw TypeScript.Errors.invalidOperation("AST Path look up did not result in the same node as Fidelity Syntax Tree look up.");
                     }
 
                     isMemberCompletion = true;
 
                     // Try to get the object members form contextual typing
-                    var contextualMembers = this.compilerState.getContextualMembersFromPath(path, document);
+                    var contextualMembers = this.compilerState.getContextualMembersFromAST(node, document);
                     if (contextualMembers && contextualMembers.symbols && contextualMembers.symbols.length > 0) {
                         // get existing members
-                        var existingMembers = this.compilerState.getVisibleMemberSymbolsFromPath(path, document);
+                        var existingMembers = this.compilerState.getVisibleMemberSymbolsFromAST(node, document);
 
                         // Add filtterd items to the completion list
                         this.getCompletionEntriesFromSymbols({
@@ -1150,7 +1143,7 @@ module Services {
                 // Get scope memebers
                 else {
                     isMemberCompletion = false;
-                    var decls = this.compilerState.getVisibleDeclsFromPath(path, document);
+                    var decls = this.compilerState.getVisibleDeclsFromAST(node, document);
                     this.getCompletionEntriesFromDecls(decls, entries);
                 }
             }
@@ -1276,7 +1269,7 @@ module Services {
                 var decl = (<DeclReferenceCompletionEntry>entry).decl;
 
                 // If this decl has been invalidated becuase of a user edit, try to find the new decl that matches it
-                if (decl.getScriptName() === TypeScript.switchToForwardSlashes(fileName) && this.compilerState.getScriptVersion(fileName) !== this.activeCompletionSession.version) {
+                if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName) && this.compilerState.getScriptVersion(fileName) !== this.activeCompletionSession.version) {
                     decl = this.compilerState.findMatchingValidDecl(decl)[0];
 
                     if (decl) {
@@ -1294,8 +1287,8 @@ module Services {
                 // This entry has not been resolved yet. Resolve it.
                 if (decl) {
                     var document = this.compilerState.getDocument(fileName);
-                    var path = this.getAstPathToPosition(document.script, position);
-                    var symbolInfo = this.compilerState.pullGetDeclInformation(decl, path, document);
+                    var node = TypeScript.getAstAtPosition(document.script, position);
+                    var symbolInfo = this.compilerState.pullGetDeclInformation(decl, node, document);
 
                     if (!symbolInfo) {
                         return null;
@@ -1517,21 +1510,21 @@ module Services {
             fileName = TypeScript.switchToForwardSlashes(fileName);
             this.refresh();
 
-            var path = this.getTypeInfoEligiblePath(fileName, startPos, false);
+            var node = this.getTypeInfoEligiblePath(fileName, startPos, false);
 
-            if (!path) {
+            if (!node) {
                 return null;
             }
 
-            while (path.count() > 0) {
-                if (path.isMemberOfMemberAccessExpression()) {
-                    path.pop();
+            while (node) {
+                if (isMemberOfMemberAccessExpression(node)) {
+                    node = node.parent;
                 } else {
                     break;
                 }
             }
-            var cur = path.ast();
-            var spanInfo = new SpanInfo(cur.minChar, cur.limChar);
+
+            var spanInfo = new SpanInfo(node.minChar, node.limChar);
             return spanInfo;
         }
 
@@ -1756,5 +1749,100 @@ module Services {
             var actualSnapshotText = newScriptSnapshot.getText(0, newScriptSnapshot.getLength());
             TypeScript.Debug.assert(incrementalTreeText === actualSnapshotText);
         }
+    }
+
+    function isCallExpression(ast: TypeScript.AST): boolean {
+        return (ast && ast.nodeType() === TypeScript.NodeType.InvocationExpression) ||
+            (ast && ast.nodeType() === TypeScript.NodeType.ObjectCreationExpression);
+    }
+
+    function isCallExpressionTarget(ast: TypeScript.AST): boolean {
+        if (!ast) {
+            return false;
+        }
+
+        var current = ast;
+
+        while (current && current.parent) {
+            if (current.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
+                (<TypeScript.BinaryExpression>current.parent).operand2 === current) {
+                current = current.parent;
+                continue;
+            }
+
+            break;
+        }
+
+        if (current && current.parent) {
+            if (current.parent.nodeType() === TypeScript.NodeType.InvocationExpression || current.parent.nodeType() === TypeScript.NodeType.ObjectCreationExpression) {
+                return current === (<TypeScript.InvocationExpression>current.parent).target;
+            }
+        }
+
+        return false;
+    }
+
+    function isNameOfClass(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.nodeType() === TypeScript.NodeType.Name &&
+            ast.parent.nodeType() === TypeScript.NodeType.ClassDeclaration &&
+            (<TypeScript.ClassDeclaration>ast.parent).name === ast;
+    }
+
+    function isNameOfFunction(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.nodeType() === TypeScript.NodeType.Name &&
+            ast.parent.nodeType() === TypeScript.NodeType.FunctionDeclaration &&
+            (<TypeScript.FunctionDeclaration>ast.parent).name === ast;
+    }
+
+    function isNameOfInterface(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.nodeType() === TypeScript.NodeType.Name &&
+            ast.parent.nodeType() === TypeScript.NodeType.InterfaceDeclaration &&
+            (<TypeScript.InterfaceDeclaration>ast.parent).name === ast;
+    }
+
+    function isNameOfVariable(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.nodeType() === TypeScript.NodeType.Name &&
+            ast.parent.nodeType() === TypeScript.NodeType.VariableDeclarator &&
+            (<TypeScript.VariableDeclarator>ast.parent).id === ast;
+    }
+
+    function isMemberOfMemberAccessExpression(ast: TypeScript.AST) {
+        if (ast &&
+            ast.parent &&
+            ast.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
+            (<TypeScript.BinaryExpression>ast.parent).operand2 === ast) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    function isSignatureHelpBlocker(ast: TypeScript.AST): boolean {
+        if (ast) {
+            switch (ast.nodeType()) {
+                case TypeScript.NodeType.ClassDeclaration:
+                case TypeScript.NodeType.InterfaceDeclaration:
+                case TypeScript.NodeType.ModuleDeclaration:
+                case TypeScript.NodeType.FunctionDeclaration:
+                case TypeScript.NodeType.VariableDeclarator:
+                case TypeScript.NodeType.ArrowFunctionExpression:
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

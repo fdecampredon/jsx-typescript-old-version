@@ -1,0 +1,24 @@
+=== tests/cases/compiler/stringPropertyAccess.ts ===
+Line 0 col 4 IdentifierName "x" = string
+Line 1 col 4 IdentifierName "a" = string
+Line 1 col 8 InvocationExpression "x.charAt(0)" = string
+Line 1 col 8 MemberAccessExpression "x.charAt" = (pos: number) => string
+Line 1 col 8 IdentifierName "x" = string
+Line 1 col 10 IdentifierName "charAt" = (pos: number) => string
+Line 2 col 4 IdentifierName "b" = boolean
+Line 2 col 8 InvocationExpression "x.hasOwnProperty('charAt')" = boolean
+Line 2 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
+Line 2 col 8 IdentifierName "x" = string
+Line 2 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 4 col 4 IdentifierName "c" = any
+Line 4 col 8 InvocationExpression "x['charAt'](0)" = any
+Line 4 col 8 ElementAccessExpression "x['charAt']" = any
+Line 4 col 8 IdentifierName "x" = string
+Line 5 col 4 IdentifierName "d" = any
+Line 5 col 8 InvocationExpression "x['charAt']('invalid')" = any
+Line 5 col 8 ElementAccessExpression "x['charAt']" = any
+Line 5 col 8 IdentifierName "x" = string
+Line 6 col 4 IdentifierName "e" = any
+Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = any
+Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = any
+Line 6 col 8 IdentifierName "x" = string

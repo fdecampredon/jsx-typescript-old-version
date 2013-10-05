@@ -61,6 +61,7 @@ module TypeScript {
     }
 
     export class AST implements IAST {
+        public parent: AST = null;
         public minChar: number = -1;  // -1 = "undefined" or "compiler generated"
         public limChar: number = -1;  // -1 = "undefined" or "compiler generated"
         public trailingTriviaWidth = 0;
@@ -83,6 +84,10 @@ module TypeScript {
         private _docComments: Comment[] = null;
 
         constructor() {
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public nodeType(): NodeType {
@@ -187,6 +192,10 @@ module TypeScript {
     export class ASTList extends AST {
         constructor(public members: AST[], public separatorCount?: number) {
             super();
+
+            for (var i = 0, n = members.length; i < n; i++) {
+                members[i].parent = this;
+            }
         }
 
         public nodeType(): NodeType {
@@ -311,6 +320,7 @@ module TypeScript {
 
         constructor(public expression: AST) {
             super();
+            expression && (expression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -330,6 +340,8 @@ module TypeScript {
     export class CastExpression extends AST {
         constructor(public castType: TypeReference, public operand: AST) {
             super();
+            castType && (castType.parent = this);
+            operand && (operand.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -351,6 +363,8 @@ module TypeScript {
         constructor(public propertyName: Identifier,
                     public expression: AST) {
             super();
+            propertyName && (propertyName.parent = this);
+            expression && (expression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -369,6 +383,11 @@ module TypeScript {
                     public returnTypeAnnotation: TypeReference,
                     public block: Block) {
             super();
+            propertyName && (propertyName.parent = this);
+            typeParameters && (typeParameters.parent = this);
+            parameters && (parameters.parent = this);
+            returnTypeAnnotation && (returnTypeAnnotation.parent = this);
+            block && (block.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -383,6 +402,7 @@ module TypeScript {
     export class ObjectLiteralExpression extends AST {
         constructor(public propertyAssignments: ASTList) {
             super();
+            propertyAssignments && (propertyAssignments.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -402,6 +422,7 @@ module TypeScript {
     export class ArrayLiteralExpression extends AST {
         constructor(public expressions: ASTList) {
             super();
+            expressions && (expressions.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -421,6 +442,7 @@ module TypeScript {
     export class UnaryExpression extends AST {
         constructor(private _nodeType: NodeType, public operand: AST) {
             super();
+            operand && (operand.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -451,7 +473,10 @@ module TypeScript {
                     public typeArguments: ASTList,
                     public arguments: ASTList,
                     public closeParenSpan: ASTSpan) {
-            super();
+                        super();
+            target && (target.parent = this);
+            typeArguments && (typeArguments.parent = this);
+            arguments && (arguments.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -476,7 +501,10 @@ module TypeScript {
                     public typeArguments: ASTList,
                     public arguments: ASTList,
                     public closeParenSpan: ASTSpan) {
-            super();
+                        super();
+            target && (target.parent = this);
+            typeArguments && (typeArguments.parent = this);
+            arguments && (arguments.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -500,6 +528,8 @@ module TypeScript {
                     public operand1: AST,
                     public operand2: AST) {
             super();
+            operand1 && (operand1.parent = this);
+            operand2 && (operand2.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -565,6 +595,9 @@ module TypeScript {
                     public operand2: AST,
                     public operand3: AST) {
             super();
+            operand1 && (operand1.parent = this);
+            operand2 && (operand2.parent = this);
+            operand3 && (operand3.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -656,6 +689,8 @@ module TypeScript {
         private _varFlags = VariableFlags.None;
         constructor(public id: Identifier, public alias: AST) {
             super();
+            id && (id.parent = this);
+            alias && (alias.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -714,6 +749,7 @@ module TypeScript {
     export class ExportAssignment extends AST {
         constructor(public id: Identifier) {
             super();
+            id && (id.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -736,6 +772,9 @@ module TypeScript {
 
         constructor(public id: Identifier, public typeExpr: TypeReference, public init: AST) {
             super();
+            id && (id.parent = this);
+            typeExpr && (typeExpr.parent = this);
+            init && (init.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -775,6 +814,9 @@ module TypeScript {
 
         constructor(public id: Identifier, public typeExpr: TypeReference, public init: AST, public isOptional: boolean, public isRest: boolean) {
             super();
+            id && (id.parent = this);
+            typeExpr && (typeExpr.parent = this);
+            init && (init.parent = this);
         }
 
         public isDeclaration() { return true; }
@@ -812,12 +854,15 @@ module TypeScript {
     export class ArrowFunctionExpression extends AST {
         public hint: string = null;
 
-        constructor(
-            public typeParameters: ASTList,
-            public parameters: ASTList,
-            public returnTypeAnnotation: TypeReference,
-            public block: Block) {
+        constructor(public typeParameters: ASTList,
+                    public parameters: ASTList,
+                    public returnTypeAnnotation: TypeReference,
+                    public block: Block) {
             super();
+            typeParameters && (typeParameters.parent = this);
+            parameters && (parameters.parent = this);
+            returnTypeAnnotation && (returnTypeAnnotation.parent = this);
+            block && (block.parent = this);
         }
 
         public isDeclaration() { return true; }
@@ -854,6 +899,11 @@ module TypeScript {
                     public returnTypeAnnotation: TypeReference,
                     public block: Block) {
             super();
+            name && (name.parent = this);
+            typeParameters && (typeParameters.parent = this);
+            parameters && (parameters.parent = this);
+            returnTypeAnnotation && (returnTypeAnnotation.parent = this);
+            block && (block.parent = this);
         }
 
         public isDeclaration() { return true; }
@@ -913,8 +963,20 @@ module TypeScript {
     export class Script extends AST {
         private _moduleFlags = ModuleFlags.None;
 
-        constructor(public moduleElements: ASTList, public isExternalModule: boolean, public isDeclareFile: boolean, public amdDependencies: string[]) {
+        constructor(public moduleElements: ASTList,
+                    private _fileName: string,
+                    public isExternalModule: boolean,
+                    public amdDependencies: string[]) {
             super();
+            moduleElements && (moduleElements.parent = this);
+        }
+
+        public fileName(): string {
+            return this._fileName;
+        }
+
+        public isDeclareFile(): boolean {
+            return isDTSFile(this.fileName());
         }
 
         public nodeType(): NodeType {
@@ -946,6 +1008,8 @@ module TypeScript {
                     public members: ASTList,
                     public endingToken: ASTSpan) {
             super();
+            name && (name.parent = this);
+            members && (members.parent = this);
         }
 
         public isDeclaration() {
@@ -994,6 +1058,11 @@ module TypeScript {
                     public members: ASTList,
                     public endingToken: ASTSpan) {
             super();
+            name && (name.parent = this);
+            typeParameters && (typeParameters.parent = this);
+            extendsList && (extendsList.parent = this);
+            implementsList && (implementsList.parent = this);
+            members && (members.parent = this);
         }
 
         public isDeclaration() {
@@ -1040,6 +1109,10 @@ module TypeScript {
                     public members: ASTList,
                     public extendsList: ASTList) {
             super();
+            name && (name.parent = this);
+            typeParameters && (typeParameters.parent = this);
+            members && (members.parent = this);
+            extendsList && (extendsList.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1078,9 +1151,9 @@ module TypeScript {
     }
 
     export class ObjectType extends AST {
-
         constructor(public members: ASTList) {
             super();
+            members && (members.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1104,6 +1177,7 @@ module TypeScript {
     export class ThrowStatement extends AST {
         constructor(public expression: AST) {
             super();
+            expression && (expression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1127,6 +1201,7 @@ module TypeScript {
     export class ExpressionStatement extends AST {
         constructor(public expression: AST) {
             super();
+            expression && (expression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1150,6 +1225,8 @@ module TypeScript {
     export class LabeledStatement extends AST {
         constructor(public identifier: Identifier, public statement: AST) {
             super();
+            identifier && (identifier.parent = this);
+            statement && (statement.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1174,6 +1251,7 @@ module TypeScript {
     export class VariableDeclaration extends AST {
         constructor(public declarators: ASTList) {
             super();
+            declarators && (declarators.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1193,6 +1271,7 @@ module TypeScript {
     export class VariableStatement extends AST {
         constructor(public declaration: VariableDeclaration) {
             super();
+            declaration && (declaration.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1222,6 +1301,7 @@ module TypeScript {
 
         constructor(public statements: ASTList, public closeBraceSpan: IASTSpan) {
             super();
+            statements && (statements.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1268,6 +1348,8 @@ module TypeScript {
     export class WhileStatement extends AST {
         constructor(public cond: AST, public body: AST) {
             super();
+            cond && (cond.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1292,6 +1374,8 @@ module TypeScript {
     export class DoStatement extends AST {
         constructor(public body: AST, public cond: AST, public whileSpan: ASTSpan) {
             super();
+            body && (body.parent = this);
+            cond && (cond.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1318,6 +1402,9 @@ module TypeScript {
                     public thenBod: AST,
                     public elseBod: AST) {
             super();
+            cond && (cond.parent = this);
+            thenBod && (thenBod.parent = this);
+            elseBod && (elseBod.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1343,6 +1430,7 @@ module TypeScript {
     export class ReturnStatement extends AST {
         constructor(public returnExpression: AST) {
             super();
+            returnExpression && (returnExpression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1366,6 +1454,9 @@ module TypeScript {
     export class ForInStatement extends AST {
         constructor(public lval: AST, public obj: AST, public body: AST) {
             super();
+            lval && (lval.parent = this);
+            obj && (obj.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1394,6 +1485,10 @@ module TypeScript {
                     public incr: AST,
                     public body: AST) {
             super();
+            init && (init.parent = this);
+            cond && (cond.parent = this);
+            incr && (incr.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1420,6 +1515,8 @@ module TypeScript {
     export class WithStatement extends AST {
         constructor(public expr: AST, public body: AST) {
             super();
+            expr && (expr.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1442,8 +1539,10 @@ module TypeScript {
     }
 
     export class SwitchStatement extends AST {
-        constructor(public val: AST, public caseList: ASTList, public defaultCase: CaseClause, public statement: ASTSpan) {
+        constructor(public val: AST, public caseList: ASTList, public statement: ASTSpan) {
             super();
+            val && (val.parent = this);
+            caseList && (caseList.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1468,6 +1567,8 @@ module TypeScript {
     export class CaseClause extends AST {
         constructor(public expr: AST, public body: ASTList) {
             super();
+            expr && (expr.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1488,6 +1589,8 @@ module TypeScript {
     export class TypeParameter extends AST {
         constructor(public name: Identifier, public constraint: TypeReference) {
             super();
+            name && (name.parent = this);
+            constraint && (constraint.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1504,6 +1607,8 @@ module TypeScript {
     export class GenericType extends AST {
         constructor(public name: AST, public typeArguments: ASTList) {
             super();
+            name && (name.parent = this);
+            typeArguments && (typeArguments.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1524,6 +1629,7 @@ module TypeScript {
     export class TypeQuery extends AST {
         constructor(public name: AST) {
             super();
+            name && (name.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1543,6 +1649,7 @@ module TypeScript {
     export class TypeReference extends AST {
         constructor(public term: AST, public arrayCount: number) {
             super();
+            term && (term.parent = this);
             Debug.assert(term !== null && term !== undefined);
             this.minChar = term.minChar;
             this.limChar = term.limChar;
@@ -1566,6 +1673,9 @@ module TypeScript {
     export class TryStatement extends AST {
         constructor(public tryBody: Block, public catchClause: CatchClause, public finallyBody: Block) {
             super();
+            tryBody && (tryBody.parent = this);
+            catchClause && (catchClause.parent = this);
+            finallyBody && (finallyBody.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1591,6 +1701,8 @@ module TypeScript {
     export class CatchClause extends AST {
         constructor(public param: VariableDeclarator, public body: Block) {
             super();
+            param && (param.parent = this);
+            body && (body.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1948,5 +2060,96 @@ module TypeScript {
 
             return "";
         }
+    }
+
+    export function diagnosticFromAST(ast: AST, diagnosticKey: string, arguments: any[] = null): Diagnostic {
+        return new Diagnostic(ast.fileName(), ast.minChar, ast.getLength(), diagnosticKey, arguments);
+    }
+
+    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, arguments: any[]= null): Diagnostic {
+        var span = decl.getSpan();
+        return new Diagnostic(decl.fileName(), span.start(), span.length(), diagnosticKey, arguments);
+    }
+
+    function min(a: number, b: number): number {
+        return a <= b ? a : b;
+    }
+
+    export function isValidAstNode(ast: TypeScript.IASTSpan): boolean {
+        if (!ast)
+            return false;
+
+        if (ast.minChar === -1 || ast.limChar === -1)
+            return false;
+
+        return true;
+    }
+
+    ///
+    /// Return the AST containing "position"
+    ///
+    export function getAstAtPosition(script: TypeScript.AST, pos: number, useTrailingTriviaAsLimChar: boolean = true, forceInclusive: boolean = false): TypeScript.AST {
+        var top: TypeScript.AST = null;
+
+        var pre = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
+            if (TypeScript.isValidAstNode(cur)) {
+                var isInvalid1 = cur.nodeType() === TypeScript.NodeType.ExpressionStatement && cur.getLength() === 0;
+
+                if (isInvalid1) {
+                    walker.options.goChildren = false;
+                }
+                else {
+                    // Add "cur" to the stack if it contains our position
+                    // For "identifier" nodes, we need a special case: A position equal to "limChar" is
+                    // valid, since the position corresponds to a caret position (in between characters)
+                    // For example:
+                    //  bar
+                    //  0123
+                    // If "position === 3", the caret is at the "right" of the "r" character, which should be considered valid
+                    var inclusive =
+                        forceInclusive ||
+                        cur.nodeType() === TypeScript.NodeType.Name ||
+                        cur.nodeType() === TypeScript.NodeType.MemberAccessExpression ||
+                        cur.nodeType() === TypeScript.NodeType.TypeRef ||
+                        cur.nodeType() === TypeScript.NodeType.VariableDeclaration ||
+                        cur.nodeType() === TypeScript.NodeType.VariableDeclarator ||
+                        cur.nodeType() === TypeScript.NodeType.InvocationExpression ||
+                        pos === script.limChar + script.trailingTriviaWidth; // Special "EOF" case
+
+                    var minChar = cur.minChar;
+                    var limChar = cur.limChar + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth : 0) + (inclusive ? 1 : 0);
+                    if (pos >= minChar && pos < limChar) {
+
+                        // Ignore empty lists
+                        if (cur.nodeType() !== TypeScript.NodeType.List || cur.limChar > cur.minChar) {
+                            // TODO: Since AST is sometimes not correct wrt to position, only add "cur" if it's better
+                            //       than top of the stack.
+                            if (top === null) {
+                                top = cur;
+                            }
+                            else if (cur.minChar >= top.minChar &&
+                                (cur.limChar + (useTrailingTriviaAsLimChar ? cur.trailingTriviaWidth : 0)) <= (top.limChar + (useTrailingTriviaAsLimChar ? top.trailingTriviaWidth : 0))) {
+                                // this new node appears to be better than the one we're 
+                                // storing.  Make this the new node.
+
+                                // However, If the current top is a missing identifier, we 
+                                // don't want to replace it with another missing identifier.
+                                // We want to return the first missing identifier found in a
+                                // depth first walk of  the tree.
+                                if (top.getLength() !== 0 || cur.getLength() !== 0) {
+                                    top = cur;
+                                }
+                            }
+                        }
+                    }
+
+                    // Don't go further down the tree if pos is outside of [minChar, limChar]
+                    walker.options.goChildren = (minChar <= pos && pos <= limChar);
+                }
+            }
+        };
+
+        TypeScript.getAstWalkerFactory().walk(script, pre);
+        return top;
     }
 }

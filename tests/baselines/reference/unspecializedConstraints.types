@@ -1,0 +1,419 @@
+=== tests/cases/compiler/unspecializedConstraints.ts ===
+Line 0 col 7 IdentifierName "ts" = ts
+Line 1 col 14 IdentifierName "Map" = ts.Map<T>
+Line 1 col 18 IdentifierName "T" = any
+Line 2 col 9 IdentifierName "index" = string
+Line 2 col 25 IdentifierName "T" = T
+Line 5 col 14 IdentifierName "Equals" = ts.Equals<T>
+Line 5 col 21 IdentifierName "T" = any
+Line 6 col 0 IdentifierName "equals" = (other: T) => boolean
+Line 6 col 15 IdentifierName "other" = T
+Line 6 col 22 IdentifierName "T" = T
+Line 9 col 10 IdentifierName "Symbol" = ts.Symbol
+Line 12 col 10 IdentifierName "Type" = ts.Type
+Line 12 col 23 IdentifierName "Symbol" = ts.Symbol
+Line 13 col 0 IdentifierName "equals" = (that: ts.Type) => boolean
+Line 13 col 15 IdentifierName "that" = ts.Type
+Line 13 col 21 IdentifierName "Type" = ts.Type
+Line 14 col 16 EqualsExpression "this === that" = boolean
+Line 14 col 16 ThisKeyword "this" = ts.Type
+Line 14 col 25 IdentifierName "that" = ts.Type
+Line 15 col 16 LogicalNotExpression "!(this.isObjectType() && that.isObjectType())" = boolean
+Line 15 col 17 ParenthesizedExpression "(this.isObjectType() && that.isObjectType())" = boolean
+Line 15 col 18 LogicalAndExpression "this.isObjectType() && that.isObjectType()" = boolean
+Line 15 col 18 InvocationExpression "this.isObjectType()" = boolean
+Line 15 col 18 MemberAccessExpression "this.isObjectType" = () => boolean
+Line 15 col 18 ThisKeyword "this" = ts.Type
+Line 15 col 23 IdentifierName "isObjectType" = () => boolean
+Line 15 col 41 InvocationExpression "that.isObjectType()" = boolean
+Line 15 col 41 MemberAccessExpression "that.isObjectType" = () => boolean
+Line 15 col 41 IdentifierName "that" = ts.Type
+Line 15 col 46 IdentifierName "isObjectType" = () => boolean
+Line 16 col 16 IdentifierName "propCount" = number
+Line 16 col 28 InvocationExpression "that.getPropertyCount()" = number
+Line 16 col 28 MemberAccessExpression "that.getPropertyCount" = () => number
+Line 16 col 28 IdentifierName "that" = ts.Type
+Line 16 col 33 IdentifierName "getPropertyCount" = () => number
+Line 17 col 16 NotEqualsExpression "propCount !== this.getPropertyCount()" = boolean
+Line 17 col 16 IdentifierName "propCount" = number
+Line 17 col 30 InvocationExpression "this.getPropertyCount()" = number
+Line 17 col 30 MemberAccessExpression "this.getPropertyCount" = () => number
+Line 17 col 30 ThisKeyword "this" = ts.Type
+Line 17 col 35 IdentifierName "getPropertyCount" = () => number
+Line 18 col 16 IdentifierName "sigCount" = number
+Line 18 col 27 InvocationExpression "that.getSignatureCount()" = number
+Line 18 col 27 MemberAccessExpression "that.getSignatureCount" = () => number
+Line 18 col 27 IdentifierName "that" = ts.Type
+Line 18 col 32 IdentifierName "getSignatureCount" = () => number
+Line 19 col 16 NotEqualsExpression "sigCount !== this.getSignatureCount()" = boolean
+Line 19 col 16 IdentifierName "sigCount" = number
+Line 19 col 29 InvocationExpression "this.getSignatureCount()" = number
+Line 19 col 29 MemberAccessExpression "this.getSignatureCount" = () => number
+Line 19 col 29 ThisKeyword "this" = ts.Type
+Line 19 col 34 IdentifierName "getSignatureCount" = () => number
+Line 20 col 16 IdentifierName "propCount" = number
+Line 21 col 25 IdentifierName "i" = number
+Line 21 col 32 LessThanExpression "i < propCount" = boolean
+Line 21 col 32 IdentifierName "i" = number
+Line 21 col 36 IdentifierName "propCount" = number
+Line 21 col 47 PostIncrementExpression "i++" = number
+Line 21 col 47 IdentifierName "i" = number
+Line 22 col 24 IdentifierName "thisProp" = ts.Property
+Line 22 col 35 InvocationExpression "this.getProperty(i)" = ts.Property
+Line 22 col 35 MemberAccessExpression "this.getProperty" = (index: number) => ts.Property
+Line 22 col 35 ThisKeyword "this" = ts.Type
+Line 22 col 40 IdentifierName "getProperty" = (index: number) => ts.Property
+Line 22 col 52 IdentifierName "i" = number
+Line 23 col 24 IdentifierName "thatProp" = ts.Property
+Line 23 col 35 InvocationExpression "that.getPropertyByName(thisProp.name)" = ts.Property
+Line 23 col 35 MemberAccessExpression "that.getPropertyByName" = (name: string) => ts.Property
+Line 23 col 35 IdentifierName "that" = ts.Type
+Line 23 col 40 IdentifierName "getPropertyByName" = (name: string) => ts.Property
+Line 23 col 58 MemberAccessExpression "thisProp.name" = string
+Line 23 col 58 IdentifierName "thisProp" = ts.Property
+Line 23 col 67 IdentifierName "name" = string
+Line 24 col 24 LogicalNotExpression "!(thatProp && thisProp.flags === thatProp.flags && thisProp.type.equals(thatProp.type))" = boolean
+Line 24 col 25 ParenthesizedExpression "(thatProp && thisProp.flags === thatProp.flags && thisProp.type.equals(thatProp.type))" = boolean
+Line 24 col 26 LogicalAndExpression "thatProp && thisProp.flags === thatProp.flags && thisProp.type.equals(thatProp.type)" = boolean
+Line 24 col 26 LogicalAndExpression "thatProp && thisProp.flags === thatProp.flags" = boolean
+Line 24 col 26 IdentifierName "thatProp" = ts.Property
+Line 24 col 38 EqualsExpression "thisProp.flags === thatProp.flags" = boolean
+Line 24 col 38 MemberAccessExpression "thisProp.flags" = ts.PropertyFlags
+Line 24 col 38 IdentifierName "thisProp" = ts.Property
+Line 24 col 47 IdentifierName "flags" = ts.PropertyFlags
+Line 24 col 57 MemberAccessExpression "thatProp.flags" = ts.PropertyFlags
+Line 24 col 57 IdentifierName "thatProp" = ts.Property
+Line 24 col 66 IdentifierName "flags" = ts.PropertyFlags
+Line 24 col 75 InvocationExpression "thisProp.type.equals(thatProp.type)" = boolean
+Line 24 col 75 MemberAccessExpression "thisProp.type.equals" = (that: ts.Type) => boolean
+Line 24 col 75 MemberAccessExpression "thisProp.type" = ts.Type
+Line 24 col 75 IdentifierName "thisProp" = ts.Property
+Line 24 col 84 IdentifierName "type" = ts.Type
+Line 24 col 89 IdentifierName "equals" = (that: ts.Type) => boolean
+Line 24 col 96 MemberAccessExpression "thatProp.type" = ts.Type
+Line 24 col 96 IdentifierName "thatProp" = ts.Property
+Line 24 col 105 IdentifierName "type" = ts.Type
+Line 27 col 16 IdentifierName "sigCount" = number
+Line 28 col 20 LogicalNotExpression "!setEquals(this.getSignatures(), that.getSignatures())" = boolean
+Line 28 col 21 InvocationExpression "setEquals(this.getSignatures(), that.getSignatures())" = boolean
+Line 28 col 21 IdentifierName "setEquals" = <T extends ts.Equals<T>>(a: T[], b: T[]) => boolean
+Line 28 col 31 InvocationExpression "this.getSignatures()" = ts.Signature[]
+Line 28 col 31 MemberAccessExpression "this.getSignatures" = () => ts.Signature[]
+Line 28 col 31 ThisKeyword "this" = ts.Type
+Line 28 col 36 IdentifierName "getSignatures" = () => ts.Signature[]
+Line 28 col 53 InvocationExpression "that.getSignatures()" = ts.Signature[]
+Line 28 col 53 MemberAccessExpression "that.getSignatures" = () => ts.Signature[]
+Line 28 col 53 IdentifierName "that" = ts.Type
+Line 28 col 58 IdentifierName "getSignatures" = () => ts.Signature[]
+Line 32 col 0 IdentifierName "getProperties" = () => ts.Property[]
+Line 32 col 25 IdentifierName "Property" = ts.Property
+Line 33 col 19 ArrayLiteralExpression "[]" = ts.Property[]
+Line 35 col 0 IdentifierName "getProperty" = (index: number) => ts.Property
+Line 35 col 20 IdentifierName "index" = number
+Line 35 col 36 IdentifierName "Property" = ts.Property
+Line 36 col 19 IdentifierName "undefined" = undefined
+Line 38 col 0 IdentifierName "getPropertyByName" = (name: string) => ts.Property
+Line 38 col 26 IdentifierName "name" = string
+Line 38 col 41 IdentifierName "Property" = ts.Property
+Line 39 col 19 IdentifierName "undefined" = undefined
+Line 41 col 0 IdentifierName "getPropertyCount" = () => number
+Line 44 col 0 IdentifierName "getSignature" = (index: number) => ts.Signature
+Line 44 col 21 IdentifierName "index" = number
+Line 44 col 37 IdentifierName "Signature" = ts.Signature
+Line 45 col 19 IdentifierName "undefined" = undefined
+Line 47 col 0 IdentifierName "getSignatureCount" = () => number
+Line 50 col 0 IdentifierName "getSignatures" = () => ts.Signature[]
+Line 50 col 25 IdentifierName "Signature" = ts.Signature
+Line 51 col 19 ArrayLiteralExpression "[]" = ts.Signature[]
+Line 53 col 0 IdentifierName "isPrimitive" = () => boolean
+Line 56 col 0 IdentifierName "isObjectType" = () => boolean
+Line 59 col 0 IdentifierName "isTypeParameter" = () => boolean
+Line 62 col 0 IdentifierName "isSubTypeOf" = (type: ts.Type) => void
+Line 62 col 20 IdentifierName "type" = ts.Type
+Line 62 col 26 IdentifierName "Type" = ts.Type
+Line 66 col 10 IdentifierName "Property" = ts.Property
+Line 66 col 27 IdentifierName "Symbol" = ts.Symbol
+Line 67 col 27 IdentifierName "name" = string
+Line 67 col 48 IdentifierName "type" = ts.Type
+Line 67 col 54 IdentifierName "Type" = ts.Type
+Line 67 col 67 IdentifierName "flags" = ts.PropertyFlags
+Line 67 col 74 IdentifierName "PropertyFlags" = ts.PropertyFlags
+Line 68 col 0 InvocationExpression "super()" = void
+Line 70 col 0 IdentifierName "equals" = (other: ts.Property) => boolean
+Line 70 col 15 IdentifierName "other" = ts.Property
+Line 70 col 22 IdentifierName "Property" = ts.Property
+Line 71 col 19 LogicalAndExpression "this.name === other.name &&
+                this.flags === other.flags &&
+                this.type.equals(other.type)" = boolean
+Line 71 col 19 LogicalAndExpression "this.name === other.name &&
+                this.flags === other.flags" = boolean
+Line 71 col 19 EqualsExpression "this.name === other.name" = boolean
+Line 71 col 19 MemberAccessExpression "this.name" = string
+Line 71 col 19 ThisKeyword "this" = ts.Property
+Line 71 col 24 IdentifierName "name" = string
+Line 71 col 33 MemberAccessExpression "other.name" = string
+Line 71 col 33 IdentifierName "other" = ts.Property
+Line 71 col 39 IdentifierName "name" = string
+Line 72 col 0 EqualsExpression "this.flags === other.flags" = boolean
+Line 72 col 0 MemberAccessExpression "this.flags" = ts.PropertyFlags
+Line 72 col 0 ThisKeyword "this" = ts.Property
+Line 72 col 21 IdentifierName "flags" = ts.PropertyFlags
+Line 72 col 31 MemberAccessExpression "other.flags" = ts.PropertyFlags
+Line 72 col 31 IdentifierName "other" = ts.Property
+Line 72 col 37 IdentifierName "flags" = ts.PropertyFlags
+Line 73 col 0 InvocationExpression "this.type.equals(other.type)" = boolean
+Line 73 col 0 MemberAccessExpression "this.type.equals" = (that: ts.Type) => boolean
+Line 73 col 0 MemberAccessExpression "this.type" = ts.Type
+Line 73 col 0 ThisKeyword "this" = ts.Property
+Line 73 col 21 IdentifierName "type" = ts.Type
+Line 73 col 26 IdentifierName "equals" = (that: ts.Type) => boolean
+Line 73 col 33 MemberAccessExpression "other.type" = ts.Type
+Line 73 col 33 IdentifierName "other" = ts.Property
+Line 73 col 39 IdentifierName "type" = ts.Type
+Line 77 col 9 IdentifierName "PropertyFlags" = ts.PropertyFlags
+Line 78 col 0 IdentifierName "Optional" = ts.PropertyFlags
+Line 79 col 0 IdentifierName "Private" = ts.PropertyFlags
+Line 82 col 10 IdentifierName "Signature" = ts.Signature
+Line 82 col 28 IdentifierName "Symbol" = ts.Symbol
+Line 83 col 27 IdentifierName "typeParameters" = any
+Line 83 col 43 IdentifierName "TypeParameter" = any
+Line 83 col 67 IdentifierName "parameters" = ts.Parameter[]
+Line 83 col 79 IdentifierName "Parameter" = ts.Parameter
+Line 83 col 99 IdentifierName "returnType" = ts.Type
+Line 83 col 111 IdentifierName "Type" = ts.Type
+Line 84 col 0 InvocationExpression "super()" = void
+Line 86 col 0 IdentifierName "equalsNoReturn" = (other: ts.Signature) => boolean
+Line 86 col 23 IdentifierName "other" = ts.Signature
+Line 86 col 30 IdentifierName "Signature" = ts.Signature
+Line 87 col 19 LogicalAndExpression "this.parameters.length === other.parameters.length &&
+                this.typeParameters.length === other.typeParameters.length &&
+                arrayEquals(this.parameters, other.parameters) &&
+                arrayEquals(this.typeParameters, other.typeParameters)" = boolean
+Line 87 col 19 LogicalAndExpression "this.parameters.length === other.parameters.length &&
+                this.typeParameters.length === other.typeParameters.length &&
+                arrayEquals(this.parameters, other.parameters)" = boolean
+Line 87 col 19 LogicalAndExpression "this.parameters.length === other.parameters.length &&
+                this.typeParameters.length === other.typeParameters.length" = boolean
+Line 87 col 19 EqualsExpression "this.parameters.length === other.parameters.length" = boolean
+Line 87 col 19 MemberAccessExpression "this.parameters.length" = number
+Line 87 col 19 MemberAccessExpression "this.parameters" = ts.Parameter[]
+Line 87 col 19 ThisKeyword "this" = ts.Signature
+Line 87 col 24 IdentifierName "parameters" = ts.Parameter[]
+Line 87 col 35 IdentifierName "length" = number
+Line 87 col 46 MemberAccessExpression "other.parameters.length" = number
+Line 87 col 46 MemberAccessExpression "other.parameters" = ts.Parameter[]
+Line 87 col 46 IdentifierName "other" = ts.Signature
+Line 87 col 52 IdentifierName "parameters" = ts.Parameter[]
+Line 87 col 63 IdentifierName "length" = number
+Line 88 col 0 EqualsExpression "this.typeParameters.length === other.typeParameters.length" = boolean
+Line 88 col 0 MemberAccessExpression "this.typeParameters.length" = any
+Line 88 col 0 MemberAccessExpression "this.typeParameters" = any
+Line 88 col 0 ThisKeyword "this" = ts.Signature
+Line 88 col 21 IdentifierName "typeParameters" = any
+Line 88 col 36 IdentifierName "length" = any
+Line 88 col 47 MemberAccessExpression "other.typeParameters.length" = any
+Line 88 col 47 MemberAccessExpression "other.typeParameters" = any
+Line 88 col 47 IdentifierName "other" = ts.Signature
+Line 88 col 53 IdentifierName "typeParameters" = any
+Line 88 col 68 IdentifierName "length" = any
+Line 89 col 0 InvocationExpression "arrayEquals(this.parameters, other.parameters)" = boolean
+Line 89 col 0 IdentifierName "arrayEquals" = <T extends ts.Equals<T>>(a: T[], b: T[]) => boolean
+Line 89 col 28 MemberAccessExpression "this.parameters" = ts.Parameter[]
+Line 89 col 28 ThisKeyword "this" = ts.Signature
+Line 89 col 33 IdentifierName "parameters" = ts.Parameter[]
+Line 89 col 45 MemberAccessExpression "other.parameters" = ts.Parameter[]
+Line 89 col 45 IdentifierName "other" = ts.Signature
+Line 89 col 51 IdentifierName "parameters" = ts.Parameter[]
+Line 90 col 0 InvocationExpression "arrayEquals(this.typeParameters, other.typeParameters)" = boolean
+Line 90 col 0 IdentifierName "arrayEquals" = <T extends ts.Equals<T>>(a: T[], b: T[]) => boolean
+Line 90 col 28 MemberAccessExpression "this.typeParameters" = any
+Line 90 col 28 ThisKeyword "this" = ts.Signature
+Line 90 col 33 IdentifierName "typeParameters" = any
+Line 90 col 49 MemberAccessExpression "other.typeParameters" = any
+Line 90 col 49 IdentifierName "other" = ts.Signature
+Line 90 col 55 IdentifierName "typeParameters" = any
+Line 92 col 0 IdentifierName "equals" = (other: ts.Signature) => boolean
+Line 92 col 15 IdentifierName "other" = ts.Signature
+Line 92 col 22 IdentifierName "Signature" = ts.Signature
+Line 93 col 19 LogicalAndExpression "this.equalsNoReturn(other) &&
+                this.returnType.equals(other.returnType)" = boolean
+Line 93 col 19 InvocationExpression "this.equalsNoReturn(other)" = boolean
+Line 93 col 19 MemberAccessExpression "this.equalsNoReturn" = (other: ts.Signature) => boolean
+Line 93 col 19 ThisKeyword "this" = ts.Signature
+Line 93 col 24 IdentifierName "equalsNoReturn" = (other: ts.Signature) => boolean
+Line 93 col 39 IdentifierName "other" = ts.Signature
+Line 94 col 0 InvocationExpression "this.returnType.equals(other.returnType)" = boolean
+Line 94 col 0 MemberAccessExpression "this.returnType.equals" = (that: ts.Type) => boolean
+Line 94 col 0 MemberAccessExpression "this.returnType" = ts.Type
+Line 94 col 0 ThisKeyword "this" = ts.Signature
+Line 94 col 21 IdentifierName "returnType" = ts.Type
+Line 94 col 32 IdentifierName "equals" = (that: ts.Type) => boolean
+Line 94 col 39 MemberAccessExpression "other.returnType" = ts.Type
+Line 94 col 39 IdentifierName "other" = ts.Signature
+Line 94 col 45 IdentifierName "returnType" = ts.Type
+Line 98 col 10 IdentifierName "Parameter" = ts.Parameter
+Line 98 col 28 IdentifierName "Symbol" = ts.Symbol
+Line 99 col 27 IdentifierName "name" = string
+Line 99 col 48 IdentifierName "type" = ts.Type
+Line 99 col 54 IdentifierName "Type" = ts.Type
+Line 99 col 67 IdentifierName "flags" = ts.ParameterFlags
+Line 99 col 74 IdentifierName "ParameterFlags" = ts.ParameterFlags
+Line 100 col 0 InvocationExpression "super()" = void
+Line 102 col 0 IdentifierName "equals" = (other: ts.Parameter) => boolean
+Line 102 col 15 IdentifierName "other" = ts.Parameter
+Line 102 col 22 IdentifierName "Parameter" = ts.Parameter
+Line 103 col 19 LogicalAndExpression "this.name === other.name &&
+                this.flags === other.flags &&
+                this.type.equals(other.type)" = boolean
+Line 103 col 19 LogicalAndExpression "this.name === other.name &&
+                this.flags === other.flags" = boolean
+Line 103 col 19 EqualsExpression "this.name === other.name" = boolean
+Line 103 col 19 MemberAccessExpression "this.name" = string
+Line 103 col 19 ThisKeyword "this" = ts.Parameter
+Line 103 col 24 IdentifierName "name" = string
+Line 103 col 33 MemberAccessExpression "other.name" = string
+Line 103 col 33 IdentifierName "other" = ts.Parameter
+Line 103 col 39 IdentifierName "name" = string
+Line 104 col 0 EqualsExpression "this.flags === other.flags" = boolean
+Line 104 col 0 MemberAccessExpression "this.flags" = ts.ParameterFlags
+Line 104 col 0 ThisKeyword "this" = ts.Parameter
+Line 104 col 21 IdentifierName "flags" = ts.ParameterFlags
+Line 104 col 31 MemberAccessExpression "other.flags" = ts.ParameterFlags
+Line 104 col 31 IdentifierName "other" = ts.Parameter
+Line 104 col 37 IdentifierName "flags" = ts.ParameterFlags
+Line 105 col 0 InvocationExpression "this.type.equals(other.type)" = boolean
+Line 105 col 0 MemberAccessExpression "this.type.equals" = (that: ts.Type) => boolean
+Line 105 col 0 MemberAccessExpression "this.type" = ts.Type
+Line 105 col 0 ThisKeyword "this" = ts.Parameter
+Line 105 col 21 IdentifierName "type" = ts.Type
+Line 105 col 26 IdentifierName "equals" = (that: ts.Type) => boolean
+Line 105 col 33 MemberAccessExpression "other.type" = ts.Type
+Line 105 col 33 IdentifierName "other" = ts.Parameter
+Line 105 col 39 IdentifierName "type" = ts.Type
+Line 109 col 9 IdentifierName "ParameterFlags" = ts.ParameterFlags
+Line 110 col 0 IdentifierName "Optional" = ts.ParameterFlags
+Line 111 col 0 IdentifierName "Rest" = ts.ParameterFlags
+Line 115 col 8 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 115 col 25 MemberAccessExpression "Object.prototype.hasOwnProperty" = (v: string) => boolean
+Line 115 col 25 MemberAccessExpression "Object.prototype" = Object
+Line 115 col 25 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+Line 115 col 32 IdentifierName "prototype" = Object
+Line 115 col 42 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 117 col 13 IdentifierName "getProperty" = <T>(map: ts.Map<T>, key: string) => T
+Line 117 col 25 IdentifierName "T" = any
+Line 117 col 28 IdentifierName "map" = ts.Map<T>
+Line 117 col 33 IdentifierName "Map" = ts.Map<T>
+Line 117 col 37 IdentifierName "T" = T
+Line 117 col 41 IdentifierName "key" = string
+Line 117 col 55 IdentifierName "T" = T
+Line 118 col 12 LogicalNotExpression "!hasOwnProperty.call(map, key)" = boolean
+Line 118 col 13 InvocationExpression "hasOwnProperty.call(map, key)" = any
+Line 118 col 13 MemberAccessExpression "hasOwnProperty.call" = (thisArg: any, ...argArray: any[]) => any
+Line 118 col 13 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 118 col 28 IdentifierName "call" = (thisArg: any, ...argArray: any[]) => any
+Line 118 col 33 IdentifierName "map" = ts.Map<T>
+Line 118 col 38 IdentifierName "key" = string
+Line 118 col 51 IdentifierName "undefined" = undefined
+Line 119 col 15 ElementAccessExpression "map[key]" = T
+Line 119 col 15 IdentifierName "map" = ts.Map<T>
+Line 119 col 19 IdentifierName "key" = string
+Line 122 col 13 IdentifierName "hasProperty" = <T>(map: ts.Map<T>, key: string) => boolean
+Line 122 col 25 IdentifierName "T" = any
+Line 122 col 28 IdentifierName "map" = ts.Map<T>
+Line 122 col 33 IdentifierName "Map" = ts.Map<T>
+Line 122 col 37 IdentifierName "T" = T
+Line 122 col 41 IdentifierName "key" = string
+Line 123 col 15 InvocationExpression "hasOwnProperty.call(map, key)" = any
+Line 123 col 15 MemberAccessExpression "hasOwnProperty.call" = (thisArg: any, ...argArray: any[]) => any
+Line 123 col 15 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 123 col 30 IdentifierName "call" = (thisArg: any, ...argArray: any[]) => any
+Line 123 col 35 IdentifierName "map" = ts.Map<T>
+Line 123 col 40 IdentifierName "key" = string
+Line 126 col 13 IdentifierName "arrayContains" = <T extends ts.Equals<T>>(a: T[], item: T) => boolean
+Line 126 col 27 IdentifierName "T" = any
+Line 126 col 37 IdentifierName "Equals" = ts.Equals<T>
+Line 126 col 44 IdentifierName "T" = T
+Line 126 col 48 IdentifierName "a" = T[]
+Line 126 col 51 IdentifierName "T" = T
+Line 126 col 56 IdentifierName "item" = T
+Line 126 col 62 IdentifierName "T" = T
+Line 127 col 12 IdentifierName "len" = number
+Line 127 col 18 MemberAccessExpression "a.length" = number
+Line 127 col 18 IdentifierName "a" = T[]
+Line 127 col 20 IdentifierName "length" = number
+Line 128 col 17 IdentifierName "i" = number
+Line 128 col 24 LessThanExpression "i < len" = boolean
+Line 128 col 24 IdentifierName "i" = number
+Line 128 col 28 IdentifierName "len" = number
+Line 128 col 33 PostIncrementExpression "i++" = number
+Line 128 col 33 IdentifierName "i" = number
+Line 129 col 16 InvocationExpression "item.equals(a[i])" = boolean
+Line 129 col 16 MemberAccessExpression "item.equals" = (other: T) => boolean
+Line 129 col 16 IdentifierName "item" = T
+Line 129 col 21 IdentifierName "equals" = (other: T) => boolean
+Line 129 col 28 ElementAccessExpression "a[i]" = T
+Line 129 col 28 IdentifierName "a" = T[]
+Line 129 col 30 IdentifierName "i" = number
+Line 134 col 13 IdentifierName "arrayEquals" = <T extends ts.Equals<T>>(a: T[], b: T[]) => boolean
+Line 134 col 25 IdentifierName "T" = any
+Line 134 col 35 IdentifierName "Equals" = ts.Equals<T>
+Line 134 col 42 IdentifierName "T" = T
+Line 134 col 46 IdentifierName "a" = T[]
+Line 134 col 49 IdentifierName "T" = T
+Line 134 col 54 IdentifierName "b" = T[]
+Line 134 col 57 IdentifierName "T" = T
+Line 135 col 12 IdentifierName "len" = number
+Line 135 col 18 MemberAccessExpression "a.length" = number
+Line 135 col 18 IdentifierName "a" = T[]
+Line 135 col 20 IdentifierName "length" = number
+Line 136 col 12 NotEqualsExpression "b.length !== len" = boolean
+Line 136 col 12 MemberAccessExpression "b.length" = number
+Line 136 col 12 IdentifierName "b" = T[]
+Line 136 col 14 IdentifierName "length" = number
+Line 136 col 25 IdentifierName "len" = number
+Line 137 col 17 IdentifierName "i" = number
+Line 137 col 24 LessThanExpression "i < len" = boolean
+Line 137 col 24 IdentifierName "i" = number
+Line 137 col 28 IdentifierName "len" = number
+Line 137 col 33 PostIncrementExpression "i++" = number
+Line 137 col 33 IdentifierName "i" = number
+Line 138 col 16 LogicalNotExpression "!a[i].equals(b[i])" = boolean
+Line 138 col 17 InvocationExpression "a[i].equals(b[i])" = boolean
+Line 138 col 17 MemberAccessExpression "a[i].equals" = (other: T) => boolean
+Line 138 col 17 ElementAccessExpression "a[i]" = T
+Line 138 col 17 IdentifierName "a" = T[]
+Line 138 col 19 IdentifierName "i" = number
+Line 138 col 22 IdentifierName "equals" = (other: T) => boolean
+Line 138 col 29 ElementAccessExpression "b[i]" = T
+Line 138 col 29 IdentifierName "b" = T[]
+Line 138 col 31 IdentifierName "i" = number
+Line 143 col 13 IdentifierName "setEquals" = <T extends ts.Equals<T>>(a: T[], b: T[]) => boolean
+Line 143 col 23 IdentifierName "T" = any
+Line 143 col 33 IdentifierName "Equals" = ts.Equals<T>
+Line 143 col 40 IdentifierName "T" = T
+Line 143 col 44 IdentifierName "a" = T[]
+Line 143 col 47 IdentifierName "T" = T
+Line 143 col 52 IdentifierName "b" = T[]
+Line 143 col 55 IdentifierName "T" = T
+Line 144 col 12 IdentifierName "len" = number
+Line 144 col 18 MemberAccessExpression "a.length" = number
+Line 144 col 18 IdentifierName "a" = T[]
+Line 144 col 20 IdentifierName "length" = number
+Line 145 col 12 NotEqualsExpression "b.length !== len" = boolean
+Line 145 col 12 MemberAccessExpression "b.length" = number
+Line 145 col 12 IdentifierName "b" = T[]
+Line 145 col 14 IdentifierName "length" = number
+Line 145 col 25 IdentifierName "len" = number
+Line 146 col 17 IdentifierName "i" = number
+Line 146 col 24 LessThanExpression "i < len" = boolean
+Line 146 col 24 IdentifierName "i" = number
+Line 146 col 28 IdentifierName "len" = number
+Line 146 col 33 PostIncrementExpression "i++" = number
+Line 146 col 33 IdentifierName "i" = number
+Line 147 col 16 LogicalNotExpression "!arrayContains(b, a[i])" = boolean
+Line 147 col 17 InvocationExpression "arrayContains(b, a[i])" = boolean
+Line 147 col 17 IdentifierName "arrayContains" = <T extends ts.Equals<T>>(a: T[], item: T) => boolean
+Line 147 col 31 IdentifierName "b" = T[]
+Line 147 col 34 ElementAccessExpression "a[i]" = T
+Line 147 col 34 IdentifierName "a" = T[]
+Line 147 col 36 IdentifierName "i" = number
