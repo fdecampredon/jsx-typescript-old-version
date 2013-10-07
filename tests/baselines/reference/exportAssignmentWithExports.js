@@ -8,6 +8,4 @@ var D = (function () {
     }
     return D;
 })();
-
 module.exports = D;
-

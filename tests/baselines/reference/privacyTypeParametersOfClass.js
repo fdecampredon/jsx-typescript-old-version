@@ -68,4 +68,3 @@ var privateClassWithPublicTypeParametersWithoutExtends = (function () {
     };
     return privateClassWithPublicTypeParametersWithoutExtends;
 })();
-

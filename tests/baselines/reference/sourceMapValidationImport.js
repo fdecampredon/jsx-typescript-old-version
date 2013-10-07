@@ -12,5 +12,4 @@ var b = m.c;
 exports.b = b;
 var x = new a();
 var y = new exports.b();
-
 //# sourceMappingURL=sourceMapValidationImport.js.map

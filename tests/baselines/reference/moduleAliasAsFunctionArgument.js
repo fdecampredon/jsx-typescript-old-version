@@ -7,6 +7,6 @@ define(["require", "exports", 'moduleAliasAsFunctionArgument_0'], function(requi
     function fn(arg) {
     }
 
-    a.x;
-    fn(a);
+    a.x; // OK
+    fn(a); // Error: property 'x' is missing from 'a'
 });

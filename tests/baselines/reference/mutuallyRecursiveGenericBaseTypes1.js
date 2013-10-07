@@ -1,2 +1,2 @@
 var b;
-b.foo();
+b.foo(); // should not error

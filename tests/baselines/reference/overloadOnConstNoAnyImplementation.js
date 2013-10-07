@@ -4,7 +4,7 @@ function x1(a, cb) {
     var hm = 'hm';
     cb(hm);
     cb('uh');
-    cb(1);
+    cb(1); // error
 }
 
 var cb = function (x) {
@@ -13,7 +13,7 @@ var cb = function (x) {
 x1(1, cb);
 x1(1, function (x) {
     return 1;
-});
+}); // error
 x1(1, function (x) {
     return 1;
 });

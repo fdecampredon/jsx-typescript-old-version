@@ -1,9 +1,7 @@
 //// [commentsInterface.js]
-
 var i1_i;
 
 var nc_i1_i;
-
 
 var i2_i;
 var i2_i_x = i2_i.x;

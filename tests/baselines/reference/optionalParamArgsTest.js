@@ -6,7 +6,6 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 
-
 // test basic configurations
 var C1 = (function () {
     function C1(v, p) {

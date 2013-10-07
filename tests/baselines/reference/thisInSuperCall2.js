@@ -13,7 +13,7 @@ var Base = (function () {
 var Foo = (function (_super) {
     __extends(Foo, _super);
     function Foo() {
-        _super.call(this, this);
+        _super.call(this, this); // no error
     }
     return Foo;
 })(Base);
@@ -21,7 +21,7 @@ var Foo = (function (_super) {
 var Foo2 = (function (_super) {
     __extends(Foo2, _super);
     function Foo2() {
-        _super.call(this, this);
+        _super.call(this, this); // error
         this.x = 0;
     }
     return Foo2;

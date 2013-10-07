@@ -8,7 +8,7 @@ var B = (function () {
 })();
 
 var x;
-x.foo(1);
+x.foo(1); // no error
 var f = function (x) {
     return x.foo(1);
 };

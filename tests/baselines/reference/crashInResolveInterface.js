@@ -5,4 +5,3 @@ var x = q1.each(function (x) {
 });
 //// [file2.js]
 ///<reference path='file1.ts'/>
-

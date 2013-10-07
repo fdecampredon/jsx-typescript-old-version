@@ -1,11 +1,11 @@
 with (ooo.eee.oo.ah_ah.ting.tang.walla.walla) {
-    bing = true;
-    bang = true;
+    bing = true; // no error
+    bang = true; // no error
 
     function bar() {
     }
 
-    bar();
+    bar(); // no error
 }
 
 var C = (function () {

@@ -86,7 +86,7 @@ var I = (function (_super) {
 var J = (function (_super) {
     __extends(J, _super);
     function J(p1) {
-        _super.call(this);
+        _super.call(this); // NO ERROR
         this.p1 = p1;
     }
     return J;
@@ -105,7 +105,7 @@ var K = (function (_super) {
 var L = (function (_super) {
     __extends(L, _super);
     function L(p1) {
-        _super.call(this);
+        _super.call(this); // NO ERROR
         this.p1 = p1;
     }
     return L;
@@ -152,14 +152,14 @@ var P = (function () {
 
 var Q = (function () {
     function Q() {
-        this.p1 = 0;
+        this.p1 = 0; // ERROR
     }
     return Q;
 })();
 
 var R = (function () {
     function R() {
-        this.p1 = 0;
+        this.p1 = 0; // ERROR
     }
     return R;
 })();

@@ -2,15 +2,15 @@ var yellow;
 var blue;
 var s = "some string";
 
-yellow[5];
-yellow["hue"];
-yellow[{}];
+yellow[5]; // ok
+yellow["hue"]; // ok
+yellow[{}]; // ok
 
-s[0];
-s["s"];
-s[{}];
+s[0]; // error
+s["s"]; // ok
+s[{}]; // ok
 
-yellow[blue];
+yellow[blue]; // error
 
 var x;
 x[0];

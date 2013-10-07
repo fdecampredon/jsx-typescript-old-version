@@ -17,7 +17,6 @@ var a = exports.a;
 var c = exports.c;
 
 
-
 ////[internalAliasEnumInsideLocalModuleWithExport.d.ts]
 export declare module a {
     enum weekend {

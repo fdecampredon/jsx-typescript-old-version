@@ -6,4 +6,4 @@ var List = (function () {
     return List;
 })();
 
-List.prototype.add("abc");
+List.prototype.add("abc"); // Error

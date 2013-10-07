@@ -6,7 +6,7 @@ var d = null;
 var e = null;
 
 // BUG 791098
-e = null;
+e = null; // should work
 
 var E;
 (function (E) {
@@ -43,5 +43,4 @@ var h = null;
 function i(a) {
     a = null;
 }
-i = null;// should be an error
-
+i = null; // should be an error

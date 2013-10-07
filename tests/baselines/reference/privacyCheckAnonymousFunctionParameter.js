@@ -13,4 +13,3 @@ var Query;
         });
     }
 })(Query || (Query = {}));
-

@@ -5,4 +5,3 @@ var Baz = exports.Baz;
 
 Baz.x = "goodbye";
 void 0;
-

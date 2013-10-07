@@ -1,6 +1,6 @@
 null instanceof (function () {
 });
-({}) instanceof null;
+({}) instanceof null; // Ok because null is a subtype of function
 
 null in {};
 "" in null;

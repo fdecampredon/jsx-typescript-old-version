@@ -1,9 +1,9 @@
 var x;
 
 var foo;
-foo = { id: 1234 };
-foo = { id: 1234, name: "test" };
-foo = { name: "test" };
+foo = { id: 1234 }; // Ok
+foo = { id: 1234, name: "test" }; // Ok
+foo = { name: "test" }; // Error, id missing
 foo = { id: 1234, print: function () {
     } };
 

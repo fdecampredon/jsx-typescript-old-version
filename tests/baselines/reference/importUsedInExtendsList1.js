@@ -5,7 +5,6 @@ var Super = (function () {
     return Super;
 })();
 exports.Super = Super;
-
 //// [importUsedInExtendsList1_1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -24,4 +23,3 @@ var Sub = (function (_super) {
 })(foo.Super);
 var s;
 var r = s.foo;
-

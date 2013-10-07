@@ -16,7 +16,6 @@ function attr(nameOrMap, value) {
 }
 
 
-
 function attr2(nameOrMap, value) {
     if (nameOrMap && typeof nameOrMap === "object") {
         // handle map case
@@ -26,7 +25,6 @@ function attr2(nameOrMap, value) {
         return "s";
     }
 }
-
 
 function foo() {
     return "a";

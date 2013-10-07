@@ -22,5 +22,5 @@ var fra4 = (function () {
             return v;
         };
     })();
-})()// should work
+})() // should work
 ;

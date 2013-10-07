@@ -1,2 +1,2 @@
 var x;
-x(true);
+x(true); // was error

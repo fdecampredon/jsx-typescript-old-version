@@ -801,7 +801,7 @@ module TypeScript {
             var bindStartTime = new Date().getTime();
 
             // start at '1', so as to skip binding for global primitives such as 'any'
-            var topLevelDecls = this.semanticInfoChain.getTopLevelDecls();
+            var topLevelDecls = this.semanticInfoChain.topLevelDecls();
             for (var i = 1, n = topLevelDecls.length; i < n; i++) {
                 var topLevelDecl = topLevelDecls[i];
 
@@ -825,8 +825,9 @@ module TypeScript {
 
                 lastBoundPullDeclId = pullDeclID;
 
-                // replace the old semantic info               
-                this.semanticInfoChain.updateScript(newScript);
+                // Note: the semantic info chain will recognize that this is a replacement of an
+                // existing script, and will handle it appropriately.
+                this.semanticInfoChain.addScript(newScript);
 
                 // If we havne't yet created a new resolver, clean any cached symbols
                 this.resolver = new PullTypeResolver(
@@ -875,7 +876,7 @@ module TypeScript {
             var declarationInitASTs: VariableDeclarator[] = [];
             var objectLitAST: ObjectLiteralExpression = null;
             var asgAST: BinaryExpression = null;
-            var typeAssertionASTs: UnaryExpression[] = [];
+            var typeAssertionASTs: CastExpression[] = [];
             var resolutionContext = new PullTypeResolutionContext(this.resolver);
             var inTypeReference = false;
             var enclosingDecl: PullDecl = null;
@@ -909,7 +910,7 @@ module TypeScript {
                                 objectLitAST = <ObjectLiteralExpression>cur;
                             }
                             else if (cur.nodeType() === NodeType.CastExpression) {
-                                typeAssertionASTs[typeAssertionASTs.length] = <UnaryExpression>cur;
+                                typeAssertionASTs.push(<CastExpression>cur);
                             }
                             else if (cur.nodeType() === NodeType.AssignmentExpression) {
                                 asgAST = <BinaryExpression>cur;
@@ -937,12 +938,12 @@ module TypeScript {
                     var previousAST = resultASTs[resultASTs.length - 2];
                     switch (previousAST.nodeType()) {
                         case NodeType.InterfaceDeclaration:
-                            if (foundAST === (<InterfaceDeclaration>previousAST).name) {
+                            if (foundAST === (<InterfaceDeclaration>previousAST).identifier) {
                                 foundAST = previousAST;
                             }
                             break;
                         case NodeType.ClassDeclaration:
-                            if (foundAST === (<ClassDeclaration>previousAST).name) {
+                            if (foundAST === (<ClassDeclaration>previousAST).identifier) {
                                 foundAST = previousAST;
                             }
                             break;
@@ -996,10 +997,11 @@ module TypeScript {
                     // since those will give us the right typing
                     var callExpression: ICallExpression = null;
                     if ((foundAST.nodeType() === NodeType.SuperExpression || foundAST.nodeType() === NodeType.ThisExpression || foundAST.nodeType() === NodeType.Name) &&
-                    resultASTs.length > 1) {
+                        resultASTs.length > 1) {
+
                         for (var i = resultASTs.length - 2; i >= 0; i--) {
                             if (resultASTs[i].nodeType() === NodeType.MemberAccessExpression &&
-                            (<BinaryExpression>resultASTs[i]).operand2 === resultASTs[i + 1]) {
+                                (<MemberAccessExpression>resultASTs[i]).name === resultASTs[i + 1]) {
                                 foundAST = resultASTs[i];
                             }
                             else if ((resultASTs[i].nodeType() === NodeType.InvocationExpression || resultASTs[i].nodeType() === NodeType.ObjectCreationExpression) &&
@@ -1343,7 +1345,6 @@ module TypeScript {
 
                     case NodeType.TypeQuery:
                         resolutionContext.resolvingTypeReference = false;
-                        resolutionContext.resolvingTypeQueryExpression = true;
                         break;
 
                     case NodeType.TypeRef:
@@ -1358,8 +1359,9 @@ module TypeScript {
                         // Set the resolvingTypeReference to true if this a name (e.g. var x: Type) but not 
                         // when we are looking at a function type (e.g. var y : (a) => void)
                         if (!typeExpressionNode ||
-                            typeExpressionNode.nodeType() == NodeType.Name ||
-                            typeExpressionNode.nodeType() == NodeType.MemberAccessExpression) {
+                            typeExpressionNode.nodeType() === NodeType.Name ||
+                            typeExpressionNode.nodeType() === NodeType.QualifiedName ||
+                            typeExpressionNode.nodeType() === NodeType.MemberAccessExpression) {
                             resolutionContext.resolvingTypeReference = true;
                         }
 
@@ -1370,8 +1372,9 @@ module TypeScript {
                         // when we are looking at a function type (e.g. var y : (a) => void)
                         var typeExpressionNode = path[i + 1];
                         if (!typeExpressionNode ||
-                            typeExpressionNode.nodeType() == NodeType.Name ||
-                            typeExpressionNode.nodeType() == NodeType.MemberAccessExpression) {
+                            typeExpressionNode.nodeType() === NodeType.Name ||
+                            typeExpressionNode.nodeType() === NodeType.QualifiedName ||
+                            typeExpressionNode.nodeType() === NodeType.MemberAccessExpression) {
                             resolutionContext.resolvingTypeReference = true;
                         }
 
@@ -1380,8 +1383,7 @@ module TypeScript {
                     case NodeType.ClassDeclaration:
                         var classDeclaration = <ClassDeclaration>current;
                         if (path[i + 1]) {
-                            if (path[i + 1] === classDeclaration.extendsList ||
-                                path[i + 1] === classDeclaration.implementsList) {
+                            if (path[i + 1] === classDeclaration.heritageClauses) {
                                 resolutionContext.resolvingTypeReference = true;
                             }
                         }
@@ -1391,8 +1393,8 @@ module TypeScript {
                     case NodeType.InterfaceDeclaration:
                         var interfaceDeclaration = <InterfaceDeclaration>current;
                         if (path[i + 1]) {
-                            if (path[i + 1] === interfaceDeclaration.extendsList ||
-                                path[i + 1] === interfaceDeclaration.name) {
+                            if (path[i + 1] === interfaceDeclaration.heritageClauses ||
+                                path[i + 1] === interfaceDeclaration.identifier) {
                                 resolutionContext.resolvingTypeReference = true;
                             }
                         }
@@ -1410,9 +1412,16 @@ module TypeScript {
 
             // if the found AST is a named, we want to check for previous dotted expressions,
             // since those will give us the right typing
-            if (ast && ast.parent && ast.nodeType() === NodeType.Name && ast.parent.nodeType() === NodeType.MemberAccessExpression) {
-                if ((<BinaryExpression>ast.parent).operand2 === ast) {
-                    ast = ast.parent;
+            if (ast && ast.parent && ast.nodeType() === NodeType.Name) {
+                if (ast.parent.nodeType() === NodeType.MemberAccessExpression) {
+                    if ((<MemberAccessExpression>ast.parent).name === ast) {
+                        ast = ast.parent;
+                    }
+                }
+                else if (ast.parent.nodeType() === NodeType.QualifiedName) {
+                    if ((<QualifiedName>ast.parent).right === ast) {
+                        ast = ast.parent;
+                    }
                 }
             }
 
@@ -1460,6 +1469,7 @@ module TypeScript {
             if (ast.nodeType() !== NodeType.ClassDeclaration &&
                 ast.nodeType() !== NodeType.InterfaceDeclaration &&
                 ast.nodeType() !== NodeType.ModuleDeclaration &&
+                ast.nodeType() !== NodeType.ConstructorDeclaration &&
                 ast.nodeType() !== NodeType.FunctionDeclaration &&
                 ast.nodeType() !== NodeType.ArrowFunctionExpression &&
                 ast.nodeType() !== NodeType.VariableDeclarator) {
@@ -1588,13 +1598,7 @@ module TypeScript {
         }
 
         public getTopLevelDeclaration(fileName: string) : PullDecl {
-            return this.semanticInfoChain.getTopLevelDecl(fileName);
-        }
-
-        public reportDiagnostics(errors: Diagnostic[], errorReporter: TypeScript.IDiagnosticReporter): void {
-            for (var i = 0; i < errors.length; i++) {
-                errorReporter.addDiagnostic(errors[i]);
-            }
+            return this.semanticInfoChain.topLevelDecl(fileName);
         }
     }
 }

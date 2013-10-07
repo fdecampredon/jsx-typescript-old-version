@@ -1,4 +1,5 @@
 //@module: amd
+//@declaration: true
 
 // @Filename: w1.ts
 export = Widget1

@@ -8,6 +8,6 @@ var M;
 var M2;
 (function (M2) {
     var x = 10;
-    y = x;
+    y = x; // can't use private in modules
     M2.z = y;
 })(M2 || (M2 = {}));

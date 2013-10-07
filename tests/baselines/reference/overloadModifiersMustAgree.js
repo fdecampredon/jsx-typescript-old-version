@@ -8,4 +8,3 @@ var baz = (function () {
 
 function bar(s) {
 }
-

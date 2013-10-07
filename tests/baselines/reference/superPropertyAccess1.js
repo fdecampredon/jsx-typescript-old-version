@@ -27,17 +27,17 @@ var D = (function (_super) {
     function D() {
         _super.call(this);
         _super.prototype.bar.call(this);
-        _super.prototype.x;
+        _super.prototype.x; // error
     }
     D.prototype.foo = function () {
         _super.prototype.bar.call(this);
-        _super.prototype.x;
+        _super.prototype.x; // error
     };
 
     Object.defineProperty(D.prototype, "y", {
         get: function () {
             _super.prototype.bar.call(this);
-            _super.prototype.x;
+            _super.prototype.x; // error
             return 1;
         },
         enumerable: true,

@@ -4,11 +4,9 @@ function foo() {
     return new classes(null);
 }
 exports.foo = foo;
-
 //// [file2.js]
 var f = require('file1');
 f.foo();
-
 
 
 ////[file1.d.ts]

@@ -121,4 +121,3 @@ exports.publicFunctionWithPublicTypeParametersWithoutExtends = publicFunctionWit
 
 function privateFunctionWithPublicTypeParametersWithoutExtends() {
 }
-

@@ -1,2 +1,1 @@
-A = undefined;// invalid LHS
-
+A = undefined; // invalid LHS

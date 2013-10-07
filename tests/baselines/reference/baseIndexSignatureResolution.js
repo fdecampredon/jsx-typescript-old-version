@@ -18,6 +18,5 @@ var Derived = (function (_super) {
 })(Base);
 
 
-
 var x = null;
 var y = x[0];

@@ -26,18 +26,18 @@ var D = (function (_super) {
     __extends(D, _super);
     function D() {
         _super.call(this);
-        _super.prototype.bar.call(this);
-        _super.prototype.x;
+        _super.prototype.bar.call(this); // error
+        _super.prototype.x; // error
     }
     D.foo = function () {
-        _super.prototype.bar.call(this);
-        _super.prototype.x;
+        _super.prototype.bar.call(this); // error
+        _super.prototype.x; // error
     };
 
     Object.defineProperty(D, "y", {
         get: function () {
-            _super.prototype.bar.call(this);
-            _super.prototype.x;
+            _super.prototype.bar.call(this); // error
+            _super.prototype.x; // error
             return 1;
         },
         enumerable: true,

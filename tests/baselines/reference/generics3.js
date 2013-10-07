@@ -8,8 +8,7 @@ var C = (function () {
 var a;
 var b;
 
-a = b;// Ok - should be identical
-
+a = b; // Ok - should be identical
 
 
 ////[generics3.d.ts]

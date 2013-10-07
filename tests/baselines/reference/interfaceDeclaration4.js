@@ -18,8 +18,6 @@ var C1 = (function () {
 
 
 
-
-
 // Err - not implemented item
 var C2 = (function () {
     function C2() {
@@ -28,13 +26,11 @@ var C2 = (function () {
 })();
 
 
-
 var C3 = (function () {
     function C3() {
     }
     return C3;
 })();
-
 
 I1;
  {

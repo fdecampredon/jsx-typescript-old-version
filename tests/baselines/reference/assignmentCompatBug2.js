@@ -1,6 +1,6 @@
 var b2 = { a: 0 };
 
-b2 = { a: 0 };
+b2 = { a: 0 }; // error
 
 b2 = { b: 0, a: 0 };
 
@@ -14,7 +14,7 @@ b3 = {
         return 0;
     },
     m: 0
-};
+}; // ok
 
 b3 = {
     f: function (n) {
@@ -23,14 +23,14 @@ b3 = {
     g: function (s) {
         return 0;
     }
-};
+}; // error
 
 b3 = {
     f: function (n) {
         return 0;
     },
     m: 0
-};
+}; // error
 
 b3 = {
     f: function (n) {
@@ -44,7 +44,7 @@ b3 = {
     k: function (a) {
         return null;
     }
-};
+}; // ok
 
 b3 = {
     f: function (n) {
@@ -57,5 +57,4 @@ b3 = {
     k: function (a) {
         return null;
     }
-};// error
-
+}; // error

@@ -1,5 +1,4 @@
 
-
 // Module
 var Shapes;
 (function (Shapes) {

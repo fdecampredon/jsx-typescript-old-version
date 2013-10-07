@@ -6,7 +6,6 @@
 var c = exports.c;
 
 
-
 ////[internalAliasUninitializedModuleInsideLocalModuleWithoutExport.d.ts]
 export declare module a.b {
     interface I {

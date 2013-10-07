@@ -7,7 +7,7 @@ class SourceFile {
     }
 }
 
-class HarnessBatch implements TypeScript.IDiagnosticReporter, TypeScript.IReferenceResolverHost {
+class HarnessBatch implements TypeScript.IReferenceResolverHost {
     private host: IIO;
     public errout: Harness.Compiler.WriterAggregator;
     private inputFiles: string[];
@@ -99,22 +99,22 @@ class HarnessBatch implements TypeScript.IDiagnosticReporter, TypeScript.IRefere
         files.forEach(file => {
             if (file.indexOf('lib.d.ts') == -1) {
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(file);
-                compiler.reportDiagnostics(syntacticDiagnostics, this);
+                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
 
                 var semanticDiagnostics = compiler.getSemanticDiagnostics(file);
-                compiler.reportDiagnostics(semanticDiagnostics, this);
+                semanticDiagnostics.forEach(d => this.addDiagnostic(d));
             }
         });
 
         compiler.settings.sourceMapEmitterCallback = sourceMapEmitterCallback;
         var emitDiagnostics = compiler.emitAll(emitterIOHost);
-        compiler.reportDiagnostics(emitDiagnostics, this);
+        emitDiagnostics.forEach(d => this.addDiagnostic(d));
 
         emitterIOHost.writeFile = writeDeclareFile;
         compiler.emitOptions.ioHost = emitterIOHost;
 
         var emitDeclarationsDiagnostics = compiler.emitAllDeclarations();
-        compiler.reportDiagnostics(emitDeclarationsDiagnostics, this);
+        emitDeclarationsDiagnostics.forEach(d => this.addDiagnostic(d));
 
         if (this.errout) {
             this.errout.Close();

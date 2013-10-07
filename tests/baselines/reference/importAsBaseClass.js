@@ -8,7 +8,6 @@ var Greeter = (function () {
     return Greeter;
 })();
 exports.Greeter = Greeter;
-
 //// [importAsBaseClass_1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -23,4 +22,3 @@ var Hello = (function (_super) {
     }
     return Hello;
 })(Greeter);
-

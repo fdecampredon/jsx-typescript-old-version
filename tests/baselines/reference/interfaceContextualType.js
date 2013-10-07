@@ -12,4 +12,3 @@ var Bug = (function () {
     };
     return Bug;
 })();
-

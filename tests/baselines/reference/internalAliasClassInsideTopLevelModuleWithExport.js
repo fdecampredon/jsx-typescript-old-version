@@ -18,7 +18,6 @@ exports.cProp = new exports.xc();
 var cReturnVal = exports.cProp.foo(10);
 
 
-
 ////[internalAliasClassInsideTopLevelModuleWithExport.d.ts]
 export declare module x {
     class c {

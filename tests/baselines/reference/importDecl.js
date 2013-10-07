@@ -10,7 +10,6 @@ function foo() {
     return null;
 }
 exports.foo = foo;
-
 //// [importDecl_require1.js]
 var d = (function () {
     function d() {
@@ -23,7 +22,6 @@ function foo() {
     return null;
 }
 exports.foo = foo;
-
 //// [importDecl_require2.js]
 var d = (function () {
     function d() {
@@ -36,7 +34,6 @@ function foo() {
     return null;
 }
 exports.foo = foo;
-
 //// [importDecl_require3.js]
 var d = (function () {
     function d() {
@@ -49,13 +46,11 @@ function foo() {
     return null;
 }
 exports.foo = foo;
-
 //// [importDecl_require4.js]
 function foo2() {
     return null;
 }
 exports.foo2 = foo2;
-
 //// [importDecl_1.js]
 ///<reference path='importDecl_require.ts'/>
 ///<reference path='importDecl_require1.ts'/>
@@ -106,7 +101,6 @@ var multiImport_m4 = require("importDecl_require");
 exports.useMultiImport_m4_x4 = multiImport_m4.x;
 exports.useMultiImport_m4_d4 = multiImport_m4.d;
 exports.useMultiImport_m4_f4 = multiImport_m4.foo();
-
 
 
 ////[importDecl_require.d.ts]

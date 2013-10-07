@@ -326,15 +326,17 @@ module TypeScript {
     export class RootPullDecl extends PullDecl {
         private _semanticInfoChain: SemanticInfoChain;
         private _isExternalModule: boolean;
+        private _fileName: string;
 
-        constructor(fileName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
-            super(fileName, fileName, kind, declFlags, span);
+        constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
+            super(name, name, kind, declFlags, span);
             this._semanticInfoChain = semanticInfoChain;
             this._isExternalModule = isExternalModule;
+            this._fileName = fileName;
         }
 
         public fileName(): string {
-            return this.name;
+            return this._fileName;
         }
 
         public getParentPath(): PullDecl[]{
@@ -363,7 +365,7 @@ module TypeScript {
 
             // Link to parent
             this.parentDecl = parentDecl;
-            if (parentDecl && addToParent) {
+            if (addToParent) {
                 parentDecl.addChildDecl(this);
             }
 
@@ -412,8 +414,8 @@ module TypeScript {
     export class PullFunctionExpressionDecl extends NormalPullDecl {
         private functionExpressionName: string;
 
-        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan) {
-            super("", "", PullElementKind.FunctionExpression, declFlags, parentDecl, span);
+        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, displayName: string = "") {
+            super("", displayName, PullElementKind.FunctionExpression, declFlags, parentDecl, span);
             this.functionExpressionName = expressionName;
         }
 

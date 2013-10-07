@@ -1,6 +1,5 @@
 //// [declFileForExportedImport_0.js]
 exports.x;
-
 //// [declFileForExportedImport_1.js]
 ///<reference path='declFileForExportedImport_0.ts'/>
 var a = require('declFileForExportedImport_0');
@@ -10,7 +9,6 @@ var y = exports.a.x;
 var b = a;
 exports.b = b;
 var z = exports.b.x;
-
 
 
 ////[declFileForExportedImport_0.d.ts]

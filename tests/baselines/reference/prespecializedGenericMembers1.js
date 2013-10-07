@@ -16,4 +16,3 @@ var catThing = {
     barry: cat
 };
 var catBag = new CatBag(catThing);
-

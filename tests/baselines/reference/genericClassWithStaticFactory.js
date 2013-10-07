@@ -45,7 +45,7 @@ var Editor;
             entry.next = this.next;
             entry.prev = this;
             this.next = entry;
-            entry.next.prev = entry;
+            entry.next.prev = entry; // entry.next.prev does not show intellisense, but entry.prev.prev does
         };
 
         List.prototype.push = function (data) {
@@ -55,7 +55,7 @@ var Editor;
             entry.next = this.next;
             entry.prev = this;
             this.next = entry;
-            entry.next.prev = entry;
+            entry.next.prev = entry; // entry.next.prev does not show intellisense, but entry.prev.prev does
         };
 
         List.prototype.popEntry = function (head) {
@@ -80,7 +80,7 @@ var Editor;
             entry.next = this.next;
             entry.prev = this;
             this.next = entry;
-            entry.next.prev = entry;
+            entry.next.prev = entry; // entry.next.prev does not show intellisense, but entry.prev.prev does
             return entry;
         };
 

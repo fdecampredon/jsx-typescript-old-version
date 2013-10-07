@@ -1,10 +1,8 @@
 /*
 0 .. \u0030
 9 .. \u0039
-
 A .. \u0041
 Z .. \u005a
-
 a .. \u0061
 z .. \u00za
 */
@@ -52,7 +50,6 @@ var classType2Object1 = new classType2();
 classType2Object1.foo2 = 2;
 var classType2Object2 = new classType\u0032();
 classType2Object2.foo2 = 2;
-
 
 
 var interfaceType1Object1 = { bar1: 0 };

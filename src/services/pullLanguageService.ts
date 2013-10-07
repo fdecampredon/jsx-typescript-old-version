@@ -366,10 +366,10 @@ module Services {
                 var parentNodeType = parent.nodeType();
                 switch (parentNodeType) {
                     case TypeScript.NodeType.ClassDeclaration:
-                        return (<TypeScript.ClassDeclaration>parent).name === current;
+                        return (<TypeScript.ClassDeclaration>parent).identifier === current;
 
                     case TypeScript.NodeType.InterfaceDeclaration:
-                        return (<TypeScript.InterfaceDeclaration>parent).name === current;
+                        return (<TypeScript.InterfaceDeclaration>parent).identifier === current;
 
                     case TypeScript.NodeType.ModuleDeclaration:
                         return (<TypeScript.ModuleDeclaration>parent).name === current;
@@ -378,7 +378,7 @@ module Services {
                         return (<TypeScript.FunctionDeclaration>parent).name === current;
 
                     case TypeScript.NodeType.ImportDeclaration:
-                        return (<TypeScript.ImportDeclaration>parent).id === current;
+                        return (<TypeScript.ImportDeclaration>parent).identifier === current;
 
                     case TypeScript.NodeType.VariableDeclarator:
                         var varDeclarator = <TypeScript.VariableDeclarator>parent;
@@ -403,6 +403,8 @@ module Services {
 
                     case TypeScript.NodeType.PreIncrementExpression:
                     case TypeScript.NodeType.PostIncrementExpression:
+                        return true;
+
                     case TypeScript.NodeType.PreDecrementExpression:
                     case TypeScript.NodeType.PostDecrementExpression:
                         return true;
@@ -876,7 +878,7 @@ module Services {
             if (this.isLocal(symbol) ||
                 symbol.kind == TypeScript.PullElementKind.Parameter) {
                 // Local var
-                return symbol.getScopedName(enclosingScopeSymbol, true);
+                return symbol.getScopedName(this.compilerState.getResolver(), enclosingScopeSymbol, /*useConstraintInName*/ true);
             }
 
             var symbolKind = symbol.kind;
@@ -895,10 +897,10 @@ module Services {
                 symbolKind != TypeScript.PullElementKind.TypeParameter &&
                 !symbol.hasFlag(TypeScript.PullElementFlags.Exported)) {
                 // Non exported variable/function
-                return symbol.getScopedName(enclosingScopeSymbol, true);
+                return symbol.getScopedName(this.compilerState.getResolver(), enclosingScopeSymbol,  /*useConstraintInName*/true);
             }
 
-            return symbol.fullName(enclosingScopeSymbol);
+            return symbol.fullName(this.compilerState.getResolver(), enclosingScopeSymbol);
         }
 
         //
@@ -920,17 +922,20 @@ module Services {
             switch (cur.nodeType()) {
                 default:
                     return null;
-                case TypeScript.NodeType.FunctionDeclaration:
-                    var funcDecl = <TypeScript.FunctionDeclaration>cur;
-                    // constructor keyword
-                    if (!isConstructorValidPosition || !TypeScript.hasFlag(funcDecl.getFunctionFlags(), TypeScript.FunctionFlags.Constructor) || !(position >= funcDecl.minChar && position <= funcDecl.minChar + 11 /*constructor*/)) {
+                case TypeScript.NodeType.ConstructorDeclaration:
+                    var constructorAST = <TypeScript.ConstructorDeclaration>ast;
+                    if (!isConstructorValidPosition || !(position >= constructorAST.minChar && position <= constructorAST.minChar + 11 /*constructor*/)) {
                         return null;
                     }
                     else {
                         return ast;
                     }
 
+                case TypeScript.NodeType.FunctionDeclaration:
+                    return null;
+
                 case TypeScript.NodeType.MemberAccessExpression:
+                case TypeScript.NodeType.QualifiedName:
                 case TypeScript.NodeType.SuperExpression:
                 case TypeScript.NodeType.StringLiteral:
                 case TypeScript.NodeType.ThisExpression:
@@ -970,7 +975,8 @@ module Services {
                 symbol = declarationInformation.symbol;
                 enclosingScopeSymbol = declarationInformation.enclosingScopeSymbol;
 
-                if (node.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
+                if (node.nodeType() === TypeScript.NodeType.ConstructorDeclaration ||
+                    node.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
                     node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
                     var funcDecl = node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
@@ -1047,9 +1053,10 @@ module Services {
                 }
             }
 
+            var resolver = this.compilerState.getResolver();
             var memberName = _isCallExpression
-                ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, enclosingScopeSymbol)
-                : symbol.getTypeNameEx(enclosingScopeSymbol, true);
+                ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, resolver, enclosingScopeSymbol)
+                : symbol.getTypeNameEx(resolver, enclosingScopeSymbol, /*useConstraintInName*/ true);
             var kind = this.mapPullElementKind(symbol.kind, symbol, !_isCallExpression, _isCallExpression, isConstructorCall);
             var docComment = this.compilerState.getDocComments(candidateSignature || symbol, !_isCallExpression);
             var symbolName = this.getFullNameOfSymbol(symbol, enclosingScopeSymbol);
@@ -1082,17 +1089,33 @@ module Services {
             var isRightOfDot = false;
             if (node &&
                 node.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-                (<TypeScript.BinaryExpression>node).operand1.limChar < position) {
+                (<TypeScript.MemberAccessExpression>node).expression.limChar < position) {
 
                 isRightOfDot = true;
-                node = (<TypeScript.BinaryExpression>node).operand1;
+                node = (<TypeScript.MemberAccessExpression>node).expression;
+            }
+            else if (node &&
+                node.nodeType() === TypeScript.NodeType.QualifiedName &&
+                (<TypeScript.QualifiedName>node).left.limChar < position) {
+
+                isRightOfDot = true;
+                node = (<TypeScript.QualifiedName>node).left;
             }
             else if (node && node.parent &&
                 node.nodeType() === TypeScript.NodeType.Name &&
                 node.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-                (<TypeScript.BinaryExpression>node.parent).operand2 === node) {
+                (<TypeScript.MemberAccessExpression>node.parent).name === node) {
+
                 isRightOfDot = true;
-                node = (<TypeScript.BinaryExpression>node.parent).operand1;
+                node = (<TypeScript.MemberAccessExpression>node.parent).expression;
+            }
+            else if (node && node.parent &&
+                node.nodeType() === TypeScript.NodeType.Name &&
+                node.parent.nodeType() === TypeScript.NodeType.QualifiedName &&
+                (<TypeScript.QualifiedName>node.parent).right === node) {
+
+                isRightOfDot = true;
+                node = (<TypeScript.QualifiedName>node.parent).left;
             }
 
             // Get the completions
@@ -1195,7 +1218,7 @@ module Services {
 
                 if (symbol.isResolved) {
                     // If the symbol has already been resolved, cache the needed information for completion details.
-                    var typeName = symbol.getTypeName(symbolInfo.enclosingScopeSymbol, true);
+                    var typeName = symbol.getTypeName(this.compilerState.getResolver(), symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
                     var fullSymbolName = this.getFullNameOfSymbol(symbol, symbolInfo.enclosingScopeSymbol);
 
                     var type = symbol.type;
@@ -1295,7 +1318,7 @@ module Services {
                     }
 
                     var symbol = symbolInfo.symbol;
-                    var typeName = symbol.getTypeName(symbolInfo.enclosingScopeSymbol, true);
+                    var typeName = symbol.getTypeName(this.compilerState.getResolver(), symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
                     var fullSymbolName = this.getFullNameOfSymbol(symbol, symbolInfo.enclosingScopeSymbol);
 
                     var type = symbol.type;
@@ -1517,7 +1540,8 @@ module Services {
             }
 
             while (node) {
-                if (isMemberOfMemberAccessExpression(node)) {
+                if (isNameOfMemberAccessExpression(node) ||
+                    isRightSideOfQualifiedName(node)) {
                     node = node.parent;
                 } else {
                     break;
@@ -1765,7 +1789,7 @@ module Services {
 
         while (current && current.parent) {
             if (current.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-                (<TypeScript.BinaryExpression>current.parent).operand2 === current) {
+                (<TypeScript.MemberAccessExpression>current.parent).name === current) {
                 current = current.parent;
                 continue;
             }
@@ -1788,7 +1812,7 @@ module Services {
 
         return ast.nodeType() === TypeScript.NodeType.Name &&
             ast.parent.nodeType() === TypeScript.NodeType.ClassDeclaration &&
-            (<TypeScript.ClassDeclaration>ast.parent).name === ast;
+            (<TypeScript.ClassDeclaration>ast.parent).identifier === ast;
     }
 
     function isNameOfFunction(ast: TypeScript.AST): boolean {
@@ -1806,7 +1830,7 @@ module Services {
 
         return ast.nodeType() === TypeScript.NodeType.Name &&
             ast.parent.nodeType() === TypeScript.NodeType.InterfaceDeclaration &&
-            (<TypeScript.InterfaceDeclaration>ast.parent).name === ast;
+            (<TypeScript.InterfaceDeclaration>ast.parent).identifier === ast;
     }
 
     function isNameOfVariable(ast: TypeScript.AST): boolean {
@@ -1818,11 +1842,23 @@ module Services {
             (<TypeScript.VariableDeclarator>ast.parent).id === ast;
     }
 
-    function isMemberOfMemberAccessExpression(ast: TypeScript.AST) {
+    function isNameOfMemberAccessExpression(ast: TypeScript.AST) {
         if (ast &&
             ast.parent &&
             ast.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-            (<TypeScript.BinaryExpression>ast.parent).operand2 === ast) {
+            (<TypeScript.MemberAccessExpression>ast.parent).name === ast) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    function isRightSideOfQualifiedName(ast: TypeScript.AST) {
+        if (ast &&
+            ast.parent &&
+            ast.parent.nodeType() === TypeScript.NodeType.QualifiedName &&
+            (<TypeScript.QualifiedName>ast.parent).right === ast) {
 
             return true;
         }
@@ -1836,6 +1872,7 @@ module Services {
                 case TypeScript.NodeType.ClassDeclaration:
                 case TypeScript.NodeType.InterfaceDeclaration:
                 case TypeScript.NodeType.ModuleDeclaration:
+                case TypeScript.NodeType.ConstructorDeclaration:
                 case TypeScript.NodeType.FunctionDeclaration:
                 case TypeScript.NodeType.VariableDeclarator:
                 case TypeScript.NodeType.ArrowFunctionExpression:

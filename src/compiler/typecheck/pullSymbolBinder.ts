@@ -175,8 +175,196 @@ module TypeScript {
         // decl binding
         //
 
-        private bindModuleDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
+        private bindEnumDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
+            // 1. Test for existing decl - if it exists, use its symbol
+            // 2. If no other decl exists, create a new symbol and use that one
 
+            var modName = moduleContainerDecl.name;
+
+            var moduleContainerTypeSymbol: PullContainerSymbol = null;
+            var moduleInstanceSymbol: PullSymbol = null;
+            var moduleInstanceTypeSymbol: PullTypeSymbol = null;
+
+            var moduleInstanceDecl: PullDecl = moduleContainerDecl.getValueDecl();
+
+            var moduleKind = moduleContainerDecl.kind;
+
+            var parent = this.getParent(moduleContainerDecl);
+            var parentInstanceSymbol = this.getParent(moduleContainerDecl, true);
+            var parentDecl = moduleContainerDecl.getParentDecl();
+            var moduleAST = <EnumDeclaration>this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
+
+            var isExported = moduleContainerDecl.flags & PullElementFlags.Exported;
+            var isInitializedModule = (moduleContainerDecl.flags & PullElementFlags.SomeInitializedModule) != 0;
+
+            var createdNewSymbol = false;
+
+            moduleContainerTypeSymbol = <PullContainerSymbol>this.getExistingSymbol(moduleContainerDecl, PullElementKind.Enum, parent);
+
+            if (moduleContainerTypeSymbol) {
+                if (moduleContainerTypeSymbol.kind !== moduleKind) {
+                    // duplicate symbol error
+                    if (isInitializedModule) {
+                        this.semanticInfoChain.addDiagnostic(
+                            diagnosticFromAST(moduleAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]));
+                    }
+                    moduleContainerTypeSymbol = null;
+                }
+                else if (!this.checkThatExportsMatch(moduleContainerDecl, moduleContainerTypeSymbol)) {
+                    moduleContainerTypeSymbol = null;
+                }
+            }
+
+            if (moduleContainerTypeSymbol) {
+                moduleInstanceSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
+            }
+            else {
+                moduleContainerTypeSymbol = new PullContainerSymbol(modName, moduleKind);
+                createdNewSymbol = true;
+
+                if (!parent) {
+                    this.semanticInfoChain.cacheGlobalSymbol(moduleContainerTypeSymbol, PullElementKind.Enum);
+                }
+            }
+
+            // We add the declaration early so that during any recursive binding of other module decls with the same name, this declaration is present.
+            moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
+            moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
+
+            this.semanticInfoChain.setSymbolForAST(moduleAST.identifier, moduleContainerTypeSymbol);
+            this.semanticInfoChain.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
+
+            if (!moduleInstanceSymbol && isInitializedModule) {
+                // search for a complementary instance symbol first
+                var variableSymbol: PullSymbol = null;
+                if (parentInstanceSymbol) {
+                    if (isExported) {
+                        // We search twice because export visibility does not need to agree
+                        variableSymbol = parentInstanceSymbol.findMember(modName, false);
+
+                        if (!variableSymbol) {
+                            variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+                        }
+                    }
+                    else {
+                        variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+
+                        if (!variableSymbol) {
+                            variableSymbol = parentInstanceSymbol.findMember(modName, false);
+                        }
+                    }
+
+                    if (variableSymbol) {
+                        var declarations = variableSymbol.getDeclarations();
+
+                        if (declarations.length) {
+                            var variableSymbolParentDecl = declarations[0].getParentDecl();
+
+                            if (parentDecl !== variableSymbolParentDecl) {
+                                variableSymbol = null;
+                            }
+                        }
+                    }
+                }
+                else if (!(moduleContainerDecl.flags & PullElementFlags.Exported)) {
+                    // Search locally to this file for a previous declaration that's suitable for augmentation
+                    var siblingDecls = parentDecl.getChildDecls();
+                    var augmentedDecl: PullDecl = null;
+
+                    for (var i = 0; i < siblingDecls.length; i++) {
+                        if (siblingDecls[i] == moduleContainerDecl) {
+                            break;
+                        }
+
+                        if ((siblingDecls[i].name == modName) && (siblingDecls[i].kind & PullElementKind.SomeValue)) {
+                            augmentedDecl = siblingDecls[i];
+                            break;
+                        }
+                    }
+
+                    if (augmentedDecl) {
+                        variableSymbol = augmentedDecl.getSymbol();
+
+                        if (variableSymbol) {
+                            if (variableSymbol.isContainer()) {
+                                variableSymbol = (<PullContainerSymbol>variableSymbol).getInstanceSymbol();
+                            }
+                            else if (variableSymbol && variableSymbol.isType()) {
+                                variableSymbol = (<PullTypeSymbol>variableSymbol).getConstructorMethod();
+                            }
+                        }
+                    }
+                }
+
+                // The instance symbol is further set up in bindVariableDeclaration
+                if (variableSymbol) {
+                    moduleInstanceSymbol = variableSymbol;
+                    moduleInstanceTypeSymbol = variableSymbol.type;
+                }
+                else {
+                    moduleInstanceSymbol = new PullSymbol(modName, PullElementKind.Variable);
+                }
+
+                moduleContainerTypeSymbol.setInstanceSymbol(moduleInstanceSymbol);
+
+                if (!moduleInstanceTypeSymbol) {
+                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
+                    moduleInstanceSymbol.type = moduleInstanceTypeSymbol;
+                }
+
+                moduleInstanceTypeSymbol.addDeclaration(moduleContainerDecl);
+
+                if (!moduleInstanceTypeSymbol.getAssociatedContainerType()) {
+                    moduleInstanceTypeSymbol.setAssociatedContainerType(moduleContainerTypeSymbol);
+                }
+            }
+
+            // If we have an enum with more than one declaration, then this enum's first element
+            // must have an initializer.
+            var moduleDeclarations = moduleContainerTypeSymbol.getDeclarations();
+
+            if (moduleDeclarations.length > 1 && moduleAST.enumElements.members.length > 0) {
+                var multipleEnums = ArrayUtilities.where(moduleDeclarations, d => d.kind === PullElementKind.Enum).length > 1;
+                if (multipleEnums) {
+                    var firstVariable = <EnumElement>moduleAST.enumElements.members[0];
+                    if (!firstVariable.value) {
+                        this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
+                            firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null));
+                    }
+                }
+            }
+
+            if (createdNewSymbol) {
+                if (parent) {
+                    if (moduleContainerDecl.flags & PullElementFlags.Exported) {
+                        parent.addEnclosedMemberType(moduleContainerTypeSymbol);
+                    }
+                    else {
+                        parent.addEnclosedNonMemberType(moduleContainerTypeSymbol);
+                    }
+                }
+            }
+
+            // if it's an enum, create an index signature and a decl for it
+            this.semanticInfoChain.addSyntheticIndexSignature(moduleContainerDecl, moduleContainerTypeSymbol.getInstanceSymbol().type, moduleAST.identifier, "x",
+                /*indexParamType*/ this.semanticInfoChain.numberTypeSymbol, /*returnType*/ this.semanticInfoChain.stringTypeSymbol);
+
+            var valueDecl = moduleContainerDecl.getValueDecl();
+
+            if (valueDecl) {
+                valueDecl.ensureSymbolIsBound();
+            }
+
+            var otherDecls = this.findDeclsInContext(moduleContainerDecl, moduleContainerDecl.kind, true);
+
+            if (otherDecls && otherDecls.length) {
+                for (var i = 0; i < otherDecls.length; i++) {
+                    otherDecls[i].ensureSymbolIsBound();
+                }
+            }
+        }
+
+        private bindModuleDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
             // 1. Test for existing decl - if it exists, use its symbol
             // 2. If no other decl exists, create a new symbol and use that one
 
@@ -196,8 +384,7 @@ module TypeScript {
             var moduleAST = <ModuleDeclaration>this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
 
             var isExported = moduleContainerDecl.flags & PullElementFlags.Exported;
-            var isEnum = (moduleKind & PullElementKind.Enum) != 0;
-            var searchKind = isEnum ? PullElementKind.Enum : PullElementKind.SomeContainer;
+            var searchKind = PullElementKind.SomeContainer;
             var isInitializedModule = (moduleContainerDecl.flags & PullElementFlags.SomeInitializedModule) != 0;
 
             if (parent && moduleKind == PullElementKind.DynamicModule) {
@@ -211,7 +398,6 @@ module TypeScript {
             moduleContainerTypeSymbol = <PullContainerSymbol>this.getExistingSymbol(moduleContainerDecl, searchKind, parent);
 
             if (moduleContainerTypeSymbol) {
-
                 if (moduleContainerTypeSymbol.kind !== moduleKind) {
                     // duplicate symbol error
                     if (isInitializedModule) {
@@ -335,43 +521,15 @@ module TypeScript {
             // must have an initializer.
             var moduleDeclarations = moduleContainerTypeSymbol.getDeclarations();
 
-            if (isEnum && moduleDeclarations.length > 1 && moduleAST.members.members.length > 0) {
-                var multipleEnums = ArrayUtilities.where(moduleDeclarations, d => d.kind === PullElementKind.Enum).length > 1;
-                if (multipleEnums) {
-                    var firstVariable = <VariableStatement>moduleAST.members.members[0];
-                    var firstVariableDeclarator = <VariableDeclarator>firstVariable.declaration.declarators.members[0];
-                    if (!firstVariableDeclarator.init) {
-                        this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
-                            firstVariableDeclarator, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null));
-                    }
-                }
-            }
-
             if (createdNewSymbol) {
                 if (parent) {
-                    if (isEnum) {
-                        if (moduleContainerDecl.flags & PullElementFlags.Exported) {
-                            parent.addEnclosedMemberType(moduleContainerTypeSymbol);
-                        }
-                        else {
-                            parent.addEnclosedNonMemberType(moduleContainerTypeSymbol);
-                        }
+                    if (moduleContainerDecl.flags & PullElementFlags.Exported) {
+                        parent.addEnclosedMemberContainer(moduleContainerTypeSymbol);
                     }
                     else {
-                        if (moduleContainerDecl.flags & PullElementFlags.Exported) {
-                            parent.addEnclosedMemberContainer(moduleContainerTypeSymbol);
-                        }
-                        else {
-                            parent.addEnclosedNonMemberContainer(moduleContainerTypeSymbol);
-                        }
+                        parent.addEnclosedNonMemberContainer(moduleContainerTypeSymbol);
                     }
                 }
-            }
-
-            // if it's an enum, create an index signature and a decl for it
-            if (isEnum) {
-                this.semanticInfoChain.addSyntheticIndexSignature(moduleContainerDecl, moduleContainerTypeSymbol.getInstanceSymbol().type, moduleAST.name, "x",
-                    /*indexParamType*/ this.semanticInfoChain.numberTypeSymbol, /*returnType*/ this.semanticInfoChain.stringTypeSymbol);
             }
 
             var valueDecl = moduleContainerDecl.getValueDecl();
@@ -474,7 +632,7 @@ module TypeScript {
 
             classDecl.setSymbol(classSymbol);
 
-            this.semanticInfoChain.setSymbolForAST(classAST.name, classSymbol);
+            this.semanticInfoChain.setSymbolForAST(classAST.identifier, classSymbol);
             this.semanticInfoChain.setSymbolForAST(classAST, classSymbol);
 
             if (parent) {
@@ -672,7 +830,6 @@ module TypeScript {
             var typeParameter: PullTypeParameterSymbol;
 
             for (var i = 0; i < typeParameters.length; i++) {
-
                 typeParameter = objectSymbol.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
@@ -689,7 +846,6 @@ module TypeScript {
                 typeParameter.addDeclaration(typeParameters[i]);
                 typeParameters[i].setSymbol(typeParameter);
             }
-
         }
 
         public bindConstructorTypeDeclarationToPullSymbol(constructorTypeDeclaration: PullDecl) {
@@ -705,14 +861,15 @@ module TypeScript {
 
             var signature = new PullSignatureSymbol(PullElementKind.ConstructSignature);
 
-            if (lastParameterIsRest((<FunctionDeclaration>constructorTypeAST).parameters)) {
+            if (lastParameterIsRest((<FunctionDeclaration>constructorTypeAST).parameterList)) {
                 signature.hasVarArgs = true;
             }
 
             signature.addDeclaration(constructorTypeDeclaration);
             constructorTypeDeclaration.setSignatureSymbol(signature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(constructorTypeDeclaration), constructorTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(constructorTypeDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, constructorTypeSymbol, signature);
 
             // add the implicit construct member for this function type
             constructorTypeSymbol.addConstructSignature(signature);
@@ -1025,6 +1182,43 @@ module TypeScript {
         }
 
         // properties
+        private bindEnumMemberDeclarationToPullSymbol(propertyDeclaration: PullDecl) {
+            var declFlags = propertyDeclaration.flags;
+            var declKind = propertyDeclaration.kind;
+            var propDeclAST = <EnumElement>this.semanticInfoChain.getASTForDecl(propertyDeclaration);
+
+            var declName = propertyDeclaration.name;
+
+            var parentHadSymbol = false;
+
+            var parent = this.getParent(propertyDeclaration, true);
+
+            var propertySymbol = parent.findMember(declName, false);
+
+            if (propertySymbol) {
+                this.semanticInfoChain.addDiagnostic(
+                    diagnosticFromDecl(propertyDeclaration, DiagnosticCode.Duplicate_identifier_0, [propertyDeclaration.getDisplayName()]));
+            }
+
+            if (propertySymbol) {
+                parentHadSymbol = true;
+            }
+
+            if (!parentHadSymbol) {
+                propertySymbol = new PullSymbol(declName, declKind);
+            }
+
+            propertySymbol.addDeclaration(propertyDeclaration);
+            propertyDeclaration.setSymbol(propertySymbol);
+
+            this.semanticInfoChain.setSymbolForAST(propDeclAST.identifier, propertySymbol);
+            this.semanticInfoChain.setSymbolForAST(propDeclAST, propertySymbol);
+
+            if (parent && !parentHadSymbol) {
+                parent.addMember(propertySymbol);
+            }
+        }
+
         private bindPropertyDeclarationToPullSymbol(propertyDeclaration: PullDecl) {
             var declFlags = propertyDeclaration.flags;
             var declKind = propertyDeclaration.kind;
@@ -1086,7 +1280,7 @@ module TypeScript {
         }
 
         // parameters
-        private bindParameterSymbols(functionDeclaration: FunctionDeclaration, funcType: PullTypeSymbol, signatureSymbol: PullSignatureSymbol) {
+        private bindParameterSymbols(functionDeclaration: AST, parameterList: ASTList, funcType: PullTypeSymbol, signatureSymbol: PullSignatureSymbol) {
             // create a symbol for each ast
             // if it's a property, add the symbol to the enclosing type's member list
             var parameters: PullSymbol[] = [];
@@ -1097,12 +1291,11 @@ module TypeScript {
             var params = new BlockIntrinsics<boolean>();
             var funcDecl = this.semanticInfoChain.getDeclForAST(functionDeclaration);
 
-            if (functionDeclaration.parameters) {
-
-                for (var i = 0; i < functionDeclaration.parameters.members.length; i++) {
-                    argDecl = <Parameter>functionDeclaration.parameters.members[i];
+            if (parameterList) {
+                for (var i = 0; i < parameterList.members.length; i++) {
+                    argDecl = <Parameter>parameterList.members[i];
                     decl = this.semanticInfoChain.getDeclForAST(argDecl);
-                    isProperty = hasFlag(argDecl.getVarFlags(), VariableFlags.Property);
+                    isProperty = hasFlag(decl.flags, PullElementFlags.PropertyParameter);
                     parameterSymbol = new PullSymbol(argDecl.id.text(), PullElementKind.Parameter);
 
                     if (argDecl.isRest) {
@@ -1226,11 +1419,12 @@ module TypeScript {
             signature.addDeclaration(functionDeclaration);
             functionDeclaration.setSignatureSymbol(signature);
 
-            if (lastParameterIsRest(funcDeclAST.parameters)) {
+            if (lastParameterIsRest(funcDeclAST.parameterList)) {
                 signature.hasVarArgs = true;
             }
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionDeclaration), functionTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, functionTypeSymbol, signature);
 
             var typeParameters = functionDeclaration.getTypeParameters();
             var typeParameter: PullTypeParameterSymbol;
@@ -1294,7 +1488,7 @@ module TypeScript {
 
             var signature = new PullDefinitionSignatureSymbol(PullElementKind.CallSignature);
 
-            if (lastParameterIsRest(funcExpAST.parameters)) {
+            if (lastParameterIsRest(funcExpAST.parameterList)) {
                 signature.hasVarArgs = true;
             }
 
@@ -1323,7 +1517,8 @@ module TypeScript {
             signature.addDeclaration(functionExpressionDeclaration);
             functionExpressionDeclaration.setSignatureSymbol(signature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration), functionTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, functionTypeSymbol, signature);
 
             // add the implicit call member for this function type
             functionTypeSymbol.addCallSignature(signature);
@@ -1346,7 +1541,7 @@ module TypeScript {
             var isSignature: boolean = (declFlags & PullElementFlags.Signature) !== 0;
             var signature = isSignature ? new PullSignatureSymbol(PullElementKind.CallSignature) : new PullDefinitionSignatureSymbol(PullElementKind.CallSignature);
 
-            if (lastParameterIsRest(funcTypeAST.parameters)) {
+            if (lastParameterIsRest(funcTypeAST.parameterList)) {
                 signature.hasVarArgs = true;
             }
 
@@ -1375,7 +1570,8 @@ module TypeScript {
             signature.addDeclaration(functionTypeDeclaration);
             functionTypeDeclaration.setSignatureSymbol(signature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionTypeDeclaration), functionTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionTypeDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, functionTypeSymbol, signature);
 
             // add the implicit call member for this function type
             functionTypeSymbol.addCallSignature(signature);
@@ -1449,7 +1645,7 @@ module TypeScript {
 
             var signature = isSignature ? new PullSignatureSymbol(sigKind) : new PullDefinitionSignatureSymbol(sigKind);
 
-            if (lastParameterIsRest(methodAST.parameters)) {
+            if (lastParameterIsRest(methodAST.parameterList)) {
                 signature.hasVarArgs = true;
             }
 
@@ -1492,7 +1688,8 @@ module TypeScript {
             signature.addDeclaration(methodDeclaration);
             methodDeclaration.setSignatureSymbol(signature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(methodDeclaration), methodTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(methodDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, methodTypeSymbol, signature);
 
             // add the implicit call member for this function type
             methodTypeSymbol.addCallSignature(signature);
@@ -1510,7 +1707,7 @@ module TypeScript {
         private bindConstructorDeclarationToPullSymbol(constructorDeclaration: PullDecl) {
             var declKind = constructorDeclaration.kind;
             var declFlags = constructorDeclaration.flags;
-            var constructorAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(constructorDeclaration);
+            var constructorAST = <ConstructorDeclaration>this.semanticInfoChain.getASTForDecl(constructorDeclaration);
 
             var constructorName = constructorDeclaration.name;
 
@@ -1573,7 +1770,7 @@ module TypeScript {
             constructSignature.addDeclaration(constructorDeclaration);
             constructorDeclaration.setSignatureSymbol(constructSignature);
 
-            this.bindParameterSymbols(constructorAST, constructorTypeSymbol, constructSignature);
+            this.bindParameterSymbols(constructorAST, constructorAST.parameterList, constructorTypeSymbol, constructSignature);
 
             var typeParameters = constructorTypeSymbol.getTypeParameters();
 
@@ -1581,7 +1778,7 @@ module TypeScript {
                 constructSignature.addTypeParameter(typeParameters[i]);
             }
 
-            if (lastParameterIsRest(constructorAST.parameters)) {
+            if (lastParameterIsRest(constructorAST.parameterList)) {
                 constructSignature.hasVarArgs = true;
             }
 
@@ -1602,7 +1799,7 @@ module TypeScript {
 
             var constructSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature);
 
-            if (lastParameterIsRest(constructorAST.parameters)) {
+            if (lastParameterIsRest(constructorAST.parameterList)) {
                 constructSignature.hasVarArgs = true;
             }
 
@@ -1631,7 +1828,8 @@ module TypeScript {
             constructSignature.addDeclaration(constructSignatureDeclaration);
             constructSignatureDeclaration.setSignatureSymbol(constructSignature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(constructSignatureDeclaration), null, constructSignature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(constructSignatureDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, null, constructSignature);
 
             this.semanticInfoChain.setSymbolForAST(this.semanticInfoChain.getASTForDecl(constructSignatureDeclaration), constructSignature);
 
@@ -1644,7 +1842,7 @@ module TypeScript {
 
             var callSignature = new PullSignatureSymbol(PullElementKind.CallSignature);
 
-            if (lastParameterIsRest(callSignatureAST.parameters)) {
+            if (lastParameterIsRest(callSignatureAST.parameterList)) {
                 callSignature.hasVarArgs = true;
             }
 
@@ -1673,7 +1871,8 @@ module TypeScript {
             callSignature.addDeclaration(callSignatureDeclaration);
             callSignatureDeclaration.setSignatureSymbol(callSignature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(callSignatureDeclaration), null, callSignature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(callSignatureDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, null, callSignature);
 
             this.semanticInfoChain.setSymbolForAST(this.semanticInfoChain.getASTForDecl(callSignatureDeclaration), callSignature);
 
@@ -1708,7 +1907,8 @@ module TypeScript {
             indexSignature.addDeclaration(indexSignatureDeclaration);
             indexSignatureDeclaration.setSignatureSymbol(indexSignature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(indexSignatureDeclaration), null, indexSignature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(indexSignatureDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, null, indexSignature);
 
             this.semanticInfoChain.setSymbolForAST(this.semanticInfoChain.getASTForDecl(indexSignatureDeclaration), indexSignature);
 
@@ -1812,7 +2012,8 @@ module TypeScript {
             signature.addDeclaration(getAccessorDeclaration);
             getAccessorDeclaration.setSignatureSymbol(signature);
 
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(getAccessorDeclaration), getterTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(getAccessorDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, getterTypeSymbol, signature);
 
             var typeParameters = getAccessorDeclaration.getTypeParameters();
 
@@ -1913,7 +2114,8 @@ module TypeScript {
             setAccessorDeclaration.setSignatureSymbol(signature);
 
             // PULLTODO: setter should not have a parameters
-            this.bindParameterSymbols(<FunctionDeclaration>this.semanticInfoChain.getASTForDecl(setAccessorDeclaration), setterTypeSymbol, signature);
+            var funcDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(setAccessorDeclaration);
+            this.bindParameterSymbols(funcDecl, funcDecl.parameterList, setterTypeSymbol, signature);
 
             var typeParameters = setAccessorDeclaration.getTypeParameters();
 
@@ -1948,6 +2150,9 @@ module TypeScript {
                     break;
 
                 case PullElementKind.Enum:
+                    this.bindEnumDeclarationToPullSymbol(decl);
+                    break;
+
                 case PullElementKind.DynamicModule:
                 case PullElementKind.Container:
                     this.bindModuleDeclarationToPullSymbol(decl);
@@ -1970,6 +2175,9 @@ module TypeScript {
                     break;
 
                 case PullElementKind.EnumMember:
+                    this.bindEnumMemberDeclarationToPullSymbol(decl);
+                    break;
+
                 case PullElementKind.Property:
                     this.bindPropertyDeclarationToPullSymbol(decl);
                     break;

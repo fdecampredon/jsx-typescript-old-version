@@ -5,16 +5,13 @@ var C = (function () {
     return C;
 })();
 exports.C = C;
-
 //// [typeofAmbientExternalModules_1.js]
 var D = (function () {
     function D() {
     }
     return D;
 })();
-
 module.exports = D;
-
 //// [typeofAmbientExternalModules_2.js]
 ///<reference path='typeofAmbientExternalModules_0.ts'/>
 ///<reference path='typeofAmbientExternalModules_1.ts'/>
@@ -25,4 +22,3 @@ var y1 = ext;
 y1 = exp;
 var y2 = exp;
 y2 = ext;
-

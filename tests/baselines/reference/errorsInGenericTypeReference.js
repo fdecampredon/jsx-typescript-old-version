@@ -19,7 +19,7 @@ var testClass1 = (function () {
     return testClass1;
 })();
 var tc1 = new testClass1();
-tc1.method();
+tc1.method(); // error: could not find symbol V
 
 // in constructor type arguments
 var testClass2 = (function () {
@@ -90,5 +90,4 @@ var testClass8 = (function () {
     }
     return testClass8;
 })();
-
 

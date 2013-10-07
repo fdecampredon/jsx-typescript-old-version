@@ -12,5 +12,4 @@ f2({ toString: function (s) {
     } });
 f2({ value: '', toString: function (s) {
         return s.uhhh;
-    } });// error
-
+    } });

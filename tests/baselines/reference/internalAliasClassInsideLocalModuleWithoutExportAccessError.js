@@ -22,4 +22,3 @@ var x = exports.x;
 var m2 = exports.m2;
 
 exports.d = new m2.m3.c();
-

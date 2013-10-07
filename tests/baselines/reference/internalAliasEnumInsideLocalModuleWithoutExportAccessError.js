@@ -15,4 +15,3 @@ var a = exports.a;
 var c = exports.c;
 
 var happyFriday = c.b.Friday;
-

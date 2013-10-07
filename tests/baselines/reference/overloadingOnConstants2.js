@@ -32,7 +32,6 @@ var b = foo("bye", []);
 var c = foo("um", []);
 
 
-
 function bar(x, items) {
     return null;
 }

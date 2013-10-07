@@ -5,7 +5,5 @@ var B = (function () {
     return B;
 })();
 exports.B = B;
-
 //// [importDeclarationUsedAsTypeQuery_1.js]
 var x;
-

@@ -1,5 +1,5 @@
-Object.prototype;
-new Object().prototype;
+Object.prototype; // ok
+new Object().prototype; // error
 function f() {
 }
 f.prototype;

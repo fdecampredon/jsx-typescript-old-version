@@ -1,5 +1,4 @@
 // Should all be allowed
-
 M = null;
 
 var C = (function () {

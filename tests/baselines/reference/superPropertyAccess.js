@@ -35,15 +35,15 @@ var MyDerived = (function (_super) {
         _super.apply(this, arguments);
     }
     MyDerived.prototype.foo = function () {
-        _super.prototype.m1.call(this, "hi");
+        _super.prototype.m1.call(this, "hi"); // Should be allowed, method on base prototype
 
         var l2 = _super.prototype.m1.bind(this);
 
         var x = _super.prototype.m1;
 
-        _super.prototype.m2.bind(this);
+        _super.prototype.m2.bind(this); // Should error, instance property, not a public instance member function
 
-        _super.prototype.p1.call(this);
+        _super.prototype.p1.call(this); // Should error, private not public instance member function
 
         var l1 = _super.prototype.d1;
 
@@ -51,9 +51,9 @@ var MyDerived = (function (_super) {
 
         _super.prototype.m1 = function (a) {
             return "";
-        };
+        }; // Should be allowed, we will not restrict assignment
 
-        _super.prototype.value = 0;
+        _super.prototype.value = 0; // Should error, instance data property not a public instance member function
 
         var z = _super.prototype.value;
     };

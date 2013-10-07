@@ -83,7 +83,6 @@ exports.h = h;
 exports.j = C.F6;
 
 
-
 ////[declFileGenericType.d.ts]
 export declare module C {
     class A<T> {

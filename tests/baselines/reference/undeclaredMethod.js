@@ -12,5 +12,5 @@ var M;
 
 var c = new M.C();
 
-c.salt();
-c.saltbar();
+c.salt(); // cool
+c.saltbar(); // crash

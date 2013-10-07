@@ -1,6 +1,6 @@
 var utils;
 
-utils.fold();
-utils.fold(null);
-utils.fold(null, null);
-utils.fold(null, null, null);
+utils.fold(); // no error
+utils.fold(null); // no error
+utils.fold(null, null); // no error
+utils.fold(null, null, null); // no error

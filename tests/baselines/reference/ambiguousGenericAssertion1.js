@@ -8,4 +8,4 @@ var r2 = f;
 var r3 =  << T > (x), T;
 (function (__missing) {
     return T > f;
-});
+}); // ambiguous, appears to the parser as a << operation

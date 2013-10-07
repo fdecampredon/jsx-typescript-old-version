@@ -27,5 +27,4 @@ var a;
 var b;
 
 a = b;
-b = a;// error
-
+b = a; // error

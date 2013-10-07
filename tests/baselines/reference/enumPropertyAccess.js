@@ -6,10 +6,10 @@ var Colors;
 
 var x = Colors.Red;
 var p = x.Green;
-x.toFixed();
+x.toFixed(); // ok
 
 // Now with generics
 function fill(f) {
-    f.Green;
-    f.toFixed();
+    f.Green; // error
+    f.toFixed(); // ok
 }

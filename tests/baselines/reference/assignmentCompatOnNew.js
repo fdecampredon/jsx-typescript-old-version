@@ -8,4 +8,4 @@ var Foo = (function () {
 function bar(x) {
 }
 
-bar(Foo);
+bar(Foo); // Error, but should be allowed

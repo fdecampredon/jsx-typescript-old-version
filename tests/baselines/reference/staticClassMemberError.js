@@ -7,7 +7,6 @@ var C = (function () {
     return C;
 })();
 
-
 var Foo = (function () {
     function Foo() {
     }

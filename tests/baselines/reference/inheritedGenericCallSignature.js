@@ -2,4 +2,4 @@ var x;
 
 var y = x(undefined);
 
-y.length;
+y.length; // should not error

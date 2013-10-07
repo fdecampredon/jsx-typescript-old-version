@@ -7,5 +7,4 @@ var foo = (function () {
 
 var f = new foo();
 
-f[0] = 4;// Shouldn't be allowed
-
+f[0] = 4; // Shouldn't be allowed

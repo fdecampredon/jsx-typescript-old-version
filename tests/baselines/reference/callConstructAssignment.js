@@ -2,6 +2,5 @@ var foo;
 
 var bar;
 
-foo = bar;
-bar = foo;// error
-
+foo = bar; // error
+bar = foo; // error

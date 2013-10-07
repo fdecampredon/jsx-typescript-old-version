@@ -1,5 +1,4 @@
 
-
 var TestFileDir = ".\\TempTestFiles";
 
 var TestCase = (function () {
@@ -315,4 +314,3 @@ exports.tests = (function () {
 
     return testRunner;
 })();
-

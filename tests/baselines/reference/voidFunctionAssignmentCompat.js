@@ -14,14 +14,14 @@ function execAny(callback) {
     return callback(0);
 }
 execAny(function () {
-});
+}); // should work
 
 function execVoid(callback) {
     callback(0);
 }
 execVoid(function () {
     return 0;
-});
+}); // should work
 
 var fra = function () {
     return function () {

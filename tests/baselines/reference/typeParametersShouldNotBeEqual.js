@@ -1,7 +1,7 @@
 function ff(x, y) {
     var z;
-    x = x;
-    x = y;
-    x = z;
-    z = x;
+    x = x; // Ok
+    x = y; // Error
+    x = z; // Error
+    z = x; // Ok
 }

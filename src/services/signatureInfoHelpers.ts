@@ -153,12 +153,13 @@ module Services {
 
                 var signatureGroupInfo = new FormalSignatureItemInfo();
                 var paramIndexInfo: number[] = [];
-                var functionName = signature.getScopedNameEx(enclosingScopeSymbol).toString();
+                var resolver = compilerState.getResolver();
+                var functionName = signature.getScopedNameEx(resolver, enclosingScopeSymbol).toString();
                 if (!functionName && (!symbol.isType() || (<TypeScript.PullTypeSymbol>symbol).isNamedTypeSymbol())) {
-                    functionName = symbol.getScopedNameEx(enclosingScopeSymbol).toString();
+                    functionName = symbol.getScopedNameEx(resolver, enclosingScopeSymbol).toString();
                 }
 
-                var signatureMemberName = signature.getSignatureTypeNameEx(functionName, false, false, enclosingScopeSymbol, true, true);
+                var signatureMemberName = signature.getSignatureTypeNameEx(functionName, /*shortform*/ false, /*brackets*/ false, resolver, enclosingScopeSymbol, /*getParamMarkerInfo*/ true, /*getTypeParameterMarkerInfo*/ true);
                 signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(signatureMemberName, paramIndexInfo);
                 signatureGroupInfo.docComment = compilerState.getDocComments(signature);
 
@@ -201,7 +202,7 @@ module Services {
             var signatureGroupInfo = new FormalSignatureItemInfo();
 
             var paramIndexInfo: number[] = [];
-            var symbolName = symbol.getScopedNameEx(enclosingScopeSymbol, true, false, true);
+            var symbolName = symbol.getScopedNameEx(compilerState.getResolver(), enclosingScopeSymbol, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
 
             signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(symbolName, paramIndexInfo);
             signatureGroupInfo.docComment = compilerState.getDocComments(symbol);

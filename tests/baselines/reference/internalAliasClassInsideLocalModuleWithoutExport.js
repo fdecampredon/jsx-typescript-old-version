@@ -23,7 +23,6 @@ var x = exports.x;
 var m2 = exports.m2;
 
 
-
 ////[internalAliasClassInsideLocalModuleWithoutExport.d.ts]
 export declare module x {
     class c {

@@ -4,5 +4,4 @@ function f(x) {
 var r = function (x) {
     return x;
 };
-r = f;// should be allowed
-
+r = f; // should be allowed

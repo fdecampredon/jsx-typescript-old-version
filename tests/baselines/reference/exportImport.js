@@ -20,3 +20,15 @@ define(["require", "exports", './exporter'], function(require, exports, e) {
     }
     exports.w = w;
 });
+
+
+////[w1.d.ts]
+export = Widget1;
+declare class Widget1 {
+    public name: string;
+}
+////[exporter.d.ts]
+export import w = require('./w1');
+////[consumer.d.ts]
+import e = require('./exporter');
+export declare function w(): e.w;

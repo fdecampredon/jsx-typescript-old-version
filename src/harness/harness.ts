@@ -1095,22 +1095,18 @@ module Harness {
                     }
                 });
 
-                var report = (type: ErrorType) => {
-                    return { addDiagnostic: (err: TypeScript.Diagnostic) => this.addError(type, err) }
-                };
-
                 units.forEach(u => {
-                    this.compiler.reportDiagnostics(this.compiler.getSyntacticDiagnostics(u), report(ErrorType.Syntactic));
-                    this.compiler.reportDiagnostics(this.compiler.getSemanticDiagnostics(u), report(ErrorType.Semantic));
+                    this.compiler.getSyntacticDiagnostics(u).forEach(d => this.addError(ErrorType.Syntactic, d));
+                    this.compiler.getSemanticDiagnostics(u).forEach(d => this.addError(ErrorType.Semantic, d));
                 });
 
                 // Emit (note: reportDiagnostics is what causes the emit to happen)
                 var emitDiagnostics = this.emitAll(this.ioHost);
-                this.compiler.reportDiagnostics(emitDiagnostics, report(ErrorType.Emit));
+                emitDiagnostics.forEach(d => this.addError(ErrorType.Emit, d));
 
                 // Emit declarations
                 var emitDeclarationsDiagnostics = this.compiler.emitAllDeclarations();
-                this.compiler.reportDiagnostics(emitDeclarationsDiagnostics, report(ErrorType.Declaration));
+                emitDeclarationsDiagnostics.forEach(d => this.addError(ErrorType.Declaration, d));
 
                 return this.errorList;
             }           
@@ -1545,7 +1541,15 @@ module Harness {
                 var name = '';
                 // Depending on the node type one of these properties will be there and have the value we care about
                 var a = <any>ast;
-                name = a.id ? a.id.actualText : a.name ? a.name.actualText : a.text ? a.text : '';
+                name = a.id
+                    ? a.id.actualText
+                    : a.name
+                        ? a.name.actualText
+                        : a.text
+                            ? a.text
+                            : a.identifier
+                                ? a.identifier.actualText
+                                : '';
 
                 return name;
             }

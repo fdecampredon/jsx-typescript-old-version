@@ -29,10 +29,10 @@ var C = (function () {
     };
     return C;
 })();
-C.g(3);
+C.g(3); // error
 
 var f4;
-f4 = 3;
+f4 = 3; // error
 
 function f5() {
     return f5;
@@ -42,11 +42,10 @@ function f6(a) {
     return f6;
 }
 
-f6("", 3);
-f6("");
-f6();
+f6("", 3); // error (arity mismatch)
+f6(""); // ok (function takes an any param)
+f6(); // ok
 
-f7("", 3);
-f7("");
-f7();// ok
-
+f7("", 3); // error (arity mismatch)
+f7(""); // ok (function takes an any param)
+f7(); // ok

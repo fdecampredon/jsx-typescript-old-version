@@ -35,12 +35,15 @@ module TypeScript {
         GenericType,
         TypeRef,
         TypeQuery,
+        QualifiedName,
 
         // Declarations
         FunctionDeclaration,
+        ConstructorDeclaration,
         ClassDeclaration,
         InterfaceDeclaration,
         ObjectType,
+        ArrayType,
         ModuleDeclaration,
         ImportDeclaration,
         VariableDeclarator,
@@ -48,6 +51,8 @@ module TypeScript {
         Parameter,
         SimplePropertyAssignment,
         FunctionPropertyAssignment,
+        EnumDeclaration,
+        EnumElement,
 
         // Expressions
         Name,
@@ -135,8 +140,12 @@ module TypeScript {
         WithStatement,
 
         // Clauses
-        CaseClause,
+        CaseSwitchClause,
+        DefaultSwitchClause,
         CatchClause,
+        ExtendsHeritageClause,
+        ImplementsHeritageClause,
+        ElseClause,
 
         Comment,
     }

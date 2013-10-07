@@ -1,6 +1,5 @@
 //// [protoAsIndexInIndexExpression_0.js]
 exports.x;
-
 //// [protoAsIndexInIndexExpression_1.js]
 ///<reference path='protoAsIndexInIndexExpression_0.ts'/>
 var EntityPrototype = undefined;

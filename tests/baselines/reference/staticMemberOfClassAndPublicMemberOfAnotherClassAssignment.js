@@ -14,12 +14,12 @@ var C = (function () {
 })();
 
 var a = new B();
-a = new C();
-a = B;
+a = new C(); // error name is missing
+a = B; // error name is missing
 a = C;
 
 var b = new C();
-b = B;
+b = B; // error name is missing
 b = C;
 b = a;
 

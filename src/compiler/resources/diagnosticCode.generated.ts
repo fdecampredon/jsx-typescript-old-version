@@ -165,7 +165,6 @@ module TypeScript {
         A_class_may_only_extend_another_class: "A class may only extend another class.",
         A_class_may_only_implement_another_class_or_interface: "A class may only implement another class or interface.",
         An_interface_may_only_extend_another_class_or_interface: "An interface may only extend another class or interface.",
-        An_interface_cannot_implement_another_type: "An interface cannot implement another type.",
         Unable_to_resolve_type: "Unable to resolve type.",
         Unable_to_resolve_type_of_0: "Unable to resolve type of '{0}'.",
         Unable_to_resolve_type_parameter_constraint: "Unable to resolve type parameter constraint.",

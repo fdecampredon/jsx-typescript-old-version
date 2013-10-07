@@ -7,5 +7,4 @@ var C = (function () {
 var a;
 var b;
 
-a = b;// Not ok - return types of "f" are different
-
+a = b; // Not ok - return types of "f" are different

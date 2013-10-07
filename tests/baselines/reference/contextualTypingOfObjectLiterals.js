@@ -1,12 +1,11 @@
 var obj1;
 var obj2 = { x: "" };
-obj1 = {};
-obj1 = obj2;
+obj1 = {}; // Ok
+obj1 = obj2; // Error - indexer doesn't match
 
 function f(x) {
 }
 
-f({});
-f(obj1);
-f(obj2);// Error - indexer doesn't match
-
+f({}); // Ok
+f(obj1); // Ok
+f(obj2); // Error - indexer doesn't match

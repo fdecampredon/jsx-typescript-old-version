@@ -14,8 +14,8 @@ x.toString();
 var n = 0;
 var N;
 
-n = N;
-N = n;
+n = N; // should not work, as 'number' has a different brand
+N = n; // should work
 
 var o = {};
 var f = function (x) {

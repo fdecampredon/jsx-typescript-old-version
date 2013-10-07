@@ -2,7 +2,6 @@
 //// [underscoreTest1_underscoreTests.js]
 /// <reference path="underscoreTest1_underscore.ts" />
 
-
 _.each([1, 2, 3], function (num) {
     return alert(num.toString());
 });

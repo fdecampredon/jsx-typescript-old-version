@@ -4,4 +4,4 @@ var a = function then(onFulfill, onReject) {
 var b = function then(onFulFill, onReject) {
     return null;
 };
-a = b;
+a = b; // no error

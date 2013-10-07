@@ -3,7 +3,7 @@ f10('', function () {
     return function (a) {
         return a.foo;
     };
-}, '');
+}, ''); // a is string, fixed by first parameter
 var r9 = f10('', function () {
     return (function (a) {
         return a.foo;

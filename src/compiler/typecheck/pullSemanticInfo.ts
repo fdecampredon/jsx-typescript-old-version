@@ -19,22 +19,31 @@ module TypeScript {
     var sentinalEmptyArray: any[] = [];
 
     class SemanticInfo {
-        private _fileName: string;  // the "file" this is associated with
-
-        private topLevelDecl: PullDecl = null;
-
         private declASTMap = new DataMap<AST>();
         private astDeclMap = new DataMap<PullDecl>();
 
-        constructor(fileName: string) {
-            this._fileName = fileName;
+        constructor(private _semanticInfoChain: SemanticInfoChain,
+                    private _fileName: string,
+                    private _script: Script,
+                    private _topLevelDecl: PullDecl = null) {
         }
 
-        public addTopLevelDecl(decl: PullDecl) {
-            this.topLevelDecl = decl;
+        public topLevelDecl(): PullDecl {
+            if (this._topLevelDecl === null) {
+                this._topLevelDecl = PullDeclWalker.create(this._script, this._semanticInfoChain);
+
+                // Now that we've computed the decls, there's no need to hold onto the script.
+                this._script = null;
+            }
+
+            return this._topLevelDecl;
         }
 
-        public getTopLevelDecl() { return this.topLevelDecl; }
+        public cleanDecls(): void {
+            if (this._topLevelDecl) {
+                this._topLevelDecl.clean();
+            }
+        }
 
         public fileName(): string {
             return this._fileName;
@@ -80,14 +89,8 @@ module TypeScript {
     }
 
     export class SemanticInfoChain {
-        private units: SemanticInfo[] = [new SemanticInfo("")];
-        private declCache = new BlockIntrinsics<PullDecl[]>();
-        private symbolCache = new BlockIntrinsics<PullSymbol>();
+        private units: SemanticInfo[] = [];
         private fileNameToSemanticInfo = new BlockIntrinsics<SemanticInfo>();
-        private fileNameToDiagnostics = new BlockIntrinsics<Diagnostic[]>();
-        private binder: PullSymbolBinder = null;
-
-        private topLevelDecls: PullDecl[] = [];
 
         public anyTypeSymbol: PullTypeSymbol = null;
         public booleanTypeSymbol: PullTypeSymbol = null;
@@ -99,15 +102,24 @@ module TypeScript {
         public emptyTypeSymbol: PullTypeSymbol = null;
 
         // <-- Data to clear when we get invalidated
-        private astSymbolMap = new DataMap<PullSymbol>();
+        private astSymbolMap: DataMap<PullSymbol> = null;
         private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
         private symbolASTMap = new DataMap<AST>();
-        private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> =
-            Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
+        private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> = null;
+
+        private declCache: BlockIntrinsics<PullDecl[]> = null;
+        private symbolCache: BlockIntrinsics<PullSymbol> = null;
+        private fileNameToDiagnostics: BlockIntrinsics<Diagnostic[]> = null;
+        private binder: PullSymbolBinder = null;
+
+        private _topLevelDecls: PullDecl[] = null;
 
         private addPrimitiveType(name: string, globalDecl: PullDecl) {
             var span = new TextSpan(0, 0);
-            var decl = new NormalPullDecl(name, name, PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+
+            var decl = globalDecl
+                ? <PullDecl>new NormalPullDecl(name, name, PullElementKind.Primitive, PullElementFlags.None, globalDecl, span)
+                : new RootPullDecl(name, "", PullElementKind.Primitive, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
             var symbol = new PullPrimitiveTypeSymbol(name);
 
             symbol.addDeclaration(decl);
@@ -131,7 +143,7 @@ module TypeScript {
 
         private getGlobalDecl() {
             var span = new TextSpan(0, 0);
-            var globalDecl = new RootPullDecl(/*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
+            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
 
             // add primitive types
             this.anyTypeSymbol = this.addPrimitiveType("any", globalDecl);
@@ -158,67 +170,31 @@ module TypeScript {
         }
 
         constructor(private logger: ILogger) {
-            var globalDecl = this.getGlobalDecl();
-            var globalInfo = this.units[0];
-            globalInfo.addTopLevelDecl(globalDecl);
-        }
-
-        public addScript(script: Script) {
-            var fileName = script.fileName();
-
-            var semanticInfo = new SemanticInfo(fileName);
-            this.units.push(semanticInfo);
-            this.fileNameToSemanticInfo[fileName] = semanticInfo;
-
-            this.createTopLevelDecl(semanticInfo, script);
-        }
-
-        private createTopLevelDecl(semanticInfo: SemanticInfo, script: Script): void {
-            var declCollectionContext = new DeclCollectionContext(this);
-
-            // create decls
-            getAstWalkerFactory().walk(script, preCollectDecls, postCollectDecls, null, declCollectionContext);
-
-            semanticInfo.addTopLevelDecl(declCollectionContext.getParent());
+            this.invalidate();
         }
 
         private getSemanticInfo(fileName: string): SemanticInfo {
             return this.fileNameToSemanticInfo[fileName];
         }
 
-        public updateScript(newScript: Script): void {
-            var newSemanticInfo = this.updateScriptWorker(newScript);
-            this.createTopLevelDecl(newSemanticInfo, newScript);
+        public addScript(script: Script): void {
+            var fileName = script.fileName();
+            var semanticInfo = new SemanticInfo(this, fileName, script);
 
+            var existingIndex = ArrayUtilities.indexOf(this.units, u => u.fileName() === fileName);
+            if (existingIndex < 0) {
+                // Adding the script for the first time.
+                this.units.push(semanticInfo);
+            }
+            else {
+                this.units[existingIndex] = semanticInfo;
+            }
+
+            this.fileNameToSemanticInfo[fileName] = semanticInfo;
+
+            // We changed the scripts we're responsible for.  Invalidate all existing cached
+            // semantic information.
             this.invalidate();
-        }
-
-        private updateScriptWorker(newScript: Script): SemanticInfo {
-            var fileName = newScript.fileName();
-            var newSemanticInfo = new SemanticInfo(fileName);
-
-            for (var i = 0; i < this.units.length; i++) {
-                if (this.units[i].fileName() === fileName) {
-                    this.units[i] = newSemanticInfo;
-                    this.fileNameToSemanticInfo[fileName] = newSemanticInfo;
-                    break;
-                }
-            }
-
-            return newSemanticInfo;
-        }
-
-        private collectAllTopLevelDecls() {
-
-            if (this.topLevelDecls.length) {
-                return this.topLevelDecls;
-            }
-
-            for (var i = 0; i < this.units.length; i++) {
-                this.topLevelDecls[this.topLevelDecls.length] = this.units[i].getTopLevelDecl();
-            }
-
-            return this.topLevelDecls;
         }
 
         private getDeclPathCacheID(declPath: string[], declKind: PullElementKind) {
@@ -237,7 +213,7 @@ module TypeScript {
             var symbol = this.symbolCache[cacheID];
 
             if (!symbol) {
-                var topLevelDecls = this.collectAllTopLevelDecls();
+                var topLevelDecls = this.topLevelDecls();
                 var foundDecls: PullDecl[] = null;
 
                 for (var i = 0; i < topLevelDecls.length; i++) {
@@ -283,7 +259,7 @@ module TypeScript {
             symbol = null;
             for (var i = 0; i < this.units.length; i++) {
                 var unit = this.units[i];
-                var topLevelDecl = unit.getTopLevelDecl(); // Script
+                var topLevelDecl = unit.topLevelDecl(); // Script
 
                 if (topLevelDecl.isExternalModule()) {
                     var unitPath = unit.fileName();
@@ -312,7 +288,7 @@ module TypeScript {
                 symbol = null;
                 for (var i = 0; i < this.units.length; i++) {
                     var unit = this.units[i];
-                    var topLevelDecl = unit.getTopLevelDecl();
+                    var topLevelDecl = unit.topLevelDecl();
 
                     if (!topLevelDecl.isExternalModule()) {
                         var dynamicModules = topLevelDecl.searchChildDecls(id, PullElementKind.DynamicModule);
@@ -346,7 +322,7 @@ module TypeScript {
 
             declCacheMiss++;
 
-            var declsToSearch = this.collectAllTopLevelDecls();
+            var declsToSearch = this.topLevelDecls();
 
             var decls: PullDecl[] = sentinelEmptyArray;
             var path: string;
@@ -421,7 +397,7 @@ module TypeScript {
             }
 
             // now search for that decl
-            var declsToSearch = [unit.getTopLevelDecl()];
+            var declsToSearch = [unit.topLevelDecl()];
             var foundDecls: PullDecl[] = [];
             var keepSearching = (invalidatedDecl.kind & PullElementKind.Container) || 
                 (invalidatedDecl.kind & PullElementKind.Interface) ||
@@ -500,33 +476,29 @@ module TypeScript {
         }
 
         private cleanAllDecls() {
-            var topLevelDecls = this.collectAllTopLevelDecls();
-
-            // skip the first tld, which contains global primitive symbols
-            for (var i = 1; i < topLevelDecls.length; i++) {
-                topLevelDecls[i].clean();
+            // skip the first semantic info, which contains global primitive symbols
+            for (var i = 1, n = this.units.length; i < n; i++) {
+                this.units[i].cleanDecls();
             }
-
-            this.topLevelDecls = [];
         }
 
         private invalidate() {
             this.logger.log("Cleaning symbols...");
             var cleanStart = new Date().getTime();
 
-            this.declCache = new BlockIntrinsics();
-            this.symbolCache = new BlockIntrinsics();
-            this.fileNameToDiagnostics = new BlockIntrinsics();
-            this.binder = null;
-
-            this.units[0] = new SemanticInfo("");
-            this.units[0].addTopLevelDecl(this.getGlobalDecl());
-            this.cleanAllDecls();
-
             this.astSymbolMap = new DataMap<PullSymbol>();
             this.astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
             this.symbolASTMap = new DataMap<AST>();
             this.astCallResolutionDataMap = Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
+
+            this.declCache = new BlockIntrinsics();
+            this.symbolCache = new BlockIntrinsics();
+            this.fileNameToDiagnostics = new BlockIntrinsics();
+            this.binder = null;
+            this._topLevelDecls = null;
+
+            this.units[0] = new SemanticInfo(this, "", /*script:*/ null, this.getGlobalDecl());
+            this.cleanAllDecls();
 
             var cleanEnd = new Date().getTime();
             this.logger.log("   time to clean: " + (cleanEnd - cleanStart));
@@ -669,12 +641,16 @@ module TypeScript {
             this.getSemanticInfo(decl.fileName())._setASTForDecl(decl, ast);
         }
 
-        public getTopLevelDecl(fileName: string): PullDecl {
-            return this.getSemanticInfo(fileName).getTopLevelDecl();
+        public topLevelDecl(fileName: string): PullDecl {
+            return this.getSemanticInfo(fileName).topLevelDecl();
         }
 
-        public getTopLevelDecls(): PullDecl[] {
-            return ArrayUtilities.select(this.units, u => u.getTopLevelDecl());
+        public topLevelDecls(): PullDecl[] {
+            if (!this._topLevelDecls) {
+                this._topLevelDecls = ArrayUtilities.select(this.units, u => u.topLevelDecl());
+            }
+
+            return this._topLevelDecls;
         }
     }
 }

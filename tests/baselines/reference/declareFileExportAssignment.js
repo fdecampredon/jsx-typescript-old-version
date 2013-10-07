@@ -1,9 +1,7 @@
 //// [declareFileExportAssignment.js]
 var m2;
 
-
 module.exports = m2;
-
 
 
 ////[declareFileExportAssignment.d.ts]

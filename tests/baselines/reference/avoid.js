@@ -5,7 +5,7 @@ function f() {
 var y = f();
 var why = f();
 var w;
-w = f();
+w = f(); // error void fn
 
 var C = (function () {
     function C() {

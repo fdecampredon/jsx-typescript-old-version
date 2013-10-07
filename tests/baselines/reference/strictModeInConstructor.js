@@ -13,7 +13,7 @@ var A = (function () {
 var B = (function (_super) {
     __extends(B, _super);
     function B() {
-        "use strict";
+        "use strict"; // No error
         this.s = 9;
         _super.call(this);
     }
@@ -23,7 +23,7 @@ var B = (function (_super) {
 var C = (function (_super) {
     __extends(C, _super);
     function C() {
-        _super.call(this);
+        _super.call(this); // No error
         this.s = 9;
         "use strict";
     }
@@ -44,7 +44,7 @@ var D = (function (_super) {
 var Bs = (function (_super) {
     __extends(Bs, _super);
     function Bs() {
-        "use strict";
+        "use strict"; // No error
         _super.call(this);
     }
     Bs.s = 9;
@@ -54,7 +54,7 @@ var Bs = (function (_super) {
 var Cs = (function (_super) {
     __extends(Cs, _super);
     function Cs() {
-        _super.call(this);
+        _super.call(this); // No error
         "use strict";
     }
     Cs.s = 9;

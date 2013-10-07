@@ -11,4 +11,3 @@ function test(foo) {
     return true;
 }
 exports.test = test;
-

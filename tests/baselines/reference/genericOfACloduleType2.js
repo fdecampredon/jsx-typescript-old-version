@@ -27,7 +27,7 @@ var M;
     var C = M.C;
 
     var g1 = new G();
-    g1.bar(null).foo();
+    g1.bar(null).foo(); // no error
 })(M || (M = {}));
 
 var N;

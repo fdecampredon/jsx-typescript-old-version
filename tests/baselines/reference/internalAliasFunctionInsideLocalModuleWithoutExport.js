@@ -15,7 +15,6 @@ var a = exports.a;
 var c = exports.c;
 
 
-
 ////[internalAliasFunctionInsideLocalModuleWithoutExport.d.ts]
 export declare module a {
     function foo(x: number): number;

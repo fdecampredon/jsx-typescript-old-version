@@ -5,9 +5,7 @@ var m3;
 })(m3 || (m3 = {}));
 
 var m = m3;
-
 module.exports = m;
-
 
 
 ////[declFileExportAssignmentImportInternalModule.d.ts]

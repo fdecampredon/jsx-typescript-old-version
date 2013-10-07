@@ -7,9 +7,7 @@ var MainModule = (function () {
     }
     return MainModule;
 })();
-
 module.exports = MainModule;
-
 
 
 ////[missingImportAfterModuleImport_0.d.ts]

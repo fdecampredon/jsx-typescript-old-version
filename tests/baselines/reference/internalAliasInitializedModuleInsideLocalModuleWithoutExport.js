@@ -19,7 +19,6 @@ var a = exports.a;
 var c = exports.c;
 
 
-
 ////[internalAliasInitializedModuleInsideLocalModuleWithoutExport.d.ts]
 export declare module a.b {
     class c {

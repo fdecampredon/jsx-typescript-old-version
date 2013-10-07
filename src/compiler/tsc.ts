@@ -38,7 +38,7 @@ module TypeScript {
 
     useDirectTypeStorage = true;
 
-    export class BatchCompiler implements IReferenceResolverHost, IDiagnosticReporter, EmitterIOHost {
+    export class BatchCompiler implements IReferenceResolverHost, EmitterIOHost {
         public compilerVersion = "0.9.1.1";
         private inputFiles: string[] = [];
         private compilationSettings: CompilationSettings;
@@ -181,6 +181,12 @@ module TypeScript {
             TypeScript.fileResolutionTime = new Date().getTime() - start;
         }
 
+        private reportDiagnostics(errors: Diagnostic[]) {
+            for (var i = 0; i < errors.length; i++) {
+                this.addDiagnostic(errors[i]);
+            }
+        }
+
         /// Do the actual compilation reading from input files and
         /// writing to output file(s).
         private compile(): boolean {
@@ -195,7 +201,7 @@ module TypeScript {
                 compiler.addSourceUnit(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
 
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                compiler.reportDiagnostics(syntacticDiagnostics, this);
+                this.reportDiagnostics(syntacticDiagnostics);
 
                 if (syntacticDiagnostics.length > 0) {
                     anySyntacticErrors = true;
@@ -214,7 +220,7 @@ module TypeScript {
                 var semanticDiagnostics = compiler.getSemanticDiagnostics(fileName);
                 if (semanticDiagnostics.length > 0) {
                     anySemanticErrors = true;
-                    compiler.reportDiagnostics(semanticDiagnostics, this);
+                    this.reportDiagnostics(semanticDiagnostics);
                 }
             }
 
@@ -225,7 +231,7 @@ module TypeScript {
 
                 // TODO: if there are any emit diagnostics.  Don't proceed.
                 var emitDiagnostics = compiler.emitAll(this, mapInputToOutput);
-                compiler.reportDiagnostics(emitDiagnostics, this);
+                this.reportDiagnostics(emitDiagnostics);
                 if (emitDiagnostics.length > 0) {
                     return true;
                 }
@@ -236,7 +242,7 @@ module TypeScript {
                 }
 
                 var emitDeclarationsDiagnostics = compiler.emitAllDeclarations();
-                compiler.reportDiagnostics(emitDeclarationsDiagnostics, this);
+                this.reportDiagnostics(emitDeclarationsDiagnostics);
                 if (emitDeclarationsDiagnostics.length > 0) {
                     return true;
                 }
@@ -269,7 +275,7 @@ module TypeScript {
                 compiler.addSourceUnit(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, resolvedFile.referencedFiles);
 
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                compiler.reportDiagnostics(syntacticDiagnostics, this);
+                this.reportDiagnostics(syntacticDiagnostics);
 
                 if (syntacticDiagnostics.length > 0) {
                     anySyntacticErrors = true;
@@ -287,7 +293,7 @@ module TypeScript {
 
             for (var i = 0; i < iCode; i++) {
                 semanticDiagnostics = compiler.getSemanticDiagnostics(this.resolvedFiles[i].path);
-                compiler.reportDiagnostics(semanticDiagnostics, this);
+                this.reportDiagnostics(semanticDiagnostics);
             }
 
             // Note: we continue even if there were type check warnings.
@@ -306,7 +312,7 @@ module TypeScript {
 
                     // resolve the file to simulate an IDE-driven pull
                     semanticDiagnostics = compiler.getSemanticDiagnostics(lastTypecheckedFileName);
-                    compiler.reportDiagnostics(semanticDiagnostics, this);
+                    this.reportDiagnostics(semanticDiagnostics);
                 }
             }
 
@@ -780,8 +786,7 @@ module TypeScript {
             return this.ioHost.dirName(path);
         }
 
-        /// IDiagnosticsReporter methods
-        addDiagnostic(diagnostic: Diagnostic) {
+        private addDiagnostic(diagnostic: Diagnostic) {
             var diagnosticInfo = TypeScript.getDiagnosticInfoFromKey(diagnostic.diagnosticKey());
             if (diagnosticInfo.category === DiagnosticCategory.Error) {
                 this.hasErrors = true;

@@ -12,5 +12,5 @@ var Test;
     Test.F = F;
 })(Test || (Test = {}));
 var func;
-Test.F(func);
+Test.F(func); // OK
 var test = new Test.MyClass(func);

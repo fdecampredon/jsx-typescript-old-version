@@ -4,5 +4,4 @@ var C = (function () {
     return C;
 })();
 var x = new C();
-new x();// should error
-
+new x(); // should error

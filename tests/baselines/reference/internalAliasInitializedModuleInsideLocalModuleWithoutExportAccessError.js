@@ -18,4 +18,3 @@ var a = exports.a;
 var c = exports.c;
 
 exports.d = new c.b.c();
-

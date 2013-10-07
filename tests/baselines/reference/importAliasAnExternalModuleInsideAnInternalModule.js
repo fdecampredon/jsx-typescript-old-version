@@ -5,7 +5,6 @@
     m.foo = foo;
 })(exports.m || (exports.m = {}));
 var m = exports.m;
-
 //// [importAliasAnExternalModuleInsideAnInternalModule_file1.js]
 var m_private;
 (function (m_private) {
@@ -14,4 +13,3 @@ var m_private;
     m_private.C = C;
     C.m.foo();
 })(m_private || (m_private = {}));
-

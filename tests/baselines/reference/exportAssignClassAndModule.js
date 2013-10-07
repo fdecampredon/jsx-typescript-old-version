@@ -5,9 +5,7 @@ var Foo = (function () {
     return Foo;
 })();
 
-
 module.exports = Foo;
-
 //// [exportAssignClassAndModule_1.js]
 ///<reference path='exportAssignClassAndModule_0.ts'/>
 var Foo = require('exportAssignClassAndModule_0');
@@ -15,4 +13,3 @@ var Foo = require('exportAssignClassAndModule_0');
 var z;
 var zz;
 zz.x;
-

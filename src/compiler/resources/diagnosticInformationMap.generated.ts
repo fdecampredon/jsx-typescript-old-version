@@ -658,10 +658,6 @@ module TypeScript {
     "code": 2075,
     "category": DiagnosticCategory.Error
   },
-  "An interface cannot implement another type.": {
-    "code": 2076,
-    "category": DiagnosticCategory.Error
-  },
   "Unable to resolve type.": {
     "code": 2077,
     "category": DiagnosticCategory.Error

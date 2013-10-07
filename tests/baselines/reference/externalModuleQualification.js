@@ -13,4 +13,3 @@ var NavigateAction = (function () {
     };
     return NavigateAction;
 })();
-
