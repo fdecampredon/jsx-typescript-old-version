@@ -1,11 +1,11 @@
 === tests/cases/compiler/genericConstraint3.ts ===
 Line 0 col 10 IdentifierName "C" = C<P>
-Line 0 col 12 IdentifierName "P" = any
+Line 0 col 12 IdentifierName "P" = P
 Line 0 col 17 IdentifierName "x" = P
 Line 0 col 20 IdentifierName "P" = P
 Line 1 col 10 IdentifierName "A" = A<T, U>
-Line 1 col 12 IdentifierName "T" = any
-Line 1 col 15 IdentifierName "U" = any
+Line 1 col 12 IdentifierName "T" = T
+Line 1 col 15 IdentifierName "U" = U
 Line 1 col 25 IdentifierName "C" = C<P>
 Line 1 col 27 IdentifierName "T" = T
 Line 1 col 33 IdentifierName "x" = U

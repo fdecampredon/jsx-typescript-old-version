@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescript.ts' />
+///<reference path='references.ts' />
 
 module TypeScript {
     export class SourceMapPosition {
@@ -51,9 +51,13 @@ module TypeScript {
         public currentMappings: SourceMapping[][];
         public currentNameIndex: number[];
 
-        constructor(private jsFile: ITextWriter, private sourceMapOut: ITextWriter, document: Document, jsFilePath: string, emitOptions: EmitOptions) {
-            this.setSourceMapOptions(document, jsFilePath, emitOptions);
+        constructor(private jsFile: TextWriter, private sourceMapOut: TextWriter, document: Document, jsFilePath: string, emitOptions: EmitOptions, resolvePath: (path: string) => string) {
+            this.setSourceMapOptions(document, jsFilePath, emitOptions, resolvePath);
             this.setNewSourceFile(document, emitOptions);
+        }
+
+        public getOutputFile(): OutputFile {
+            return this.sourceMapOut.getOutputFile();
         }
 
         public setNewSourceFile(document: Document, emitOptions: EmitOptions) {
@@ -67,7 +71,7 @@ module TypeScript {
             this.setNewSourceFilePath(document, emitOptions);
         }
 
-        private setSourceMapOptions(document: Document, jsFilePath: string, emitOptions: EmitOptions) {
+        private setSourceMapOptions(document: Document, jsFilePath: string, emitOptions: EmitOptions, resolvePath: (path: string) => string) {
             // Decode mapRoot and sourceRoot
 
             // Js File Name = pretty name of js file
@@ -88,7 +92,7 @@ module TypeScript {
                 if (isRelative(this.sourceMapDirectory)) {
                     // The relative paths are relative to the common directory
                     this.sourceMapDirectory = emitOptions.commonDirectoryPath + this.sourceMapDirectory;
-                    this.sourceMapDirectory = convertToDirectoryPath(switchToForwardSlashes(emitOptions.ioHost.resolvePath(this.sourceMapDirectory)));
+                    this.sourceMapDirectory = convertToDirectoryPath(switchToForwardSlashes(resolvePath(this.sourceMapDirectory)));
                     this.sourceMapPath = getRelativePathToFixedPath(getRootFilePath(jsFilePath), this.sourceMapDirectory + prettyMapFileName);
                 } else {
                     this.sourceMapPath = this.sourceMapDirectory + prettyMapFileName;

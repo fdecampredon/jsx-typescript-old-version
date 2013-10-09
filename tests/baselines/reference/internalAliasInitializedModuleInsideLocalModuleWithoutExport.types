@@ -5,10 +5,10 @@ Line 2 col 21 IdentifierName "c" = a.b.c
 Line 7 col 14 IdentifierName "c" = c
 Line 8 col 11 IdentifierName "b" = { c: new() => a.b.c; }
 Line 8 col 15 IdentifierName "a" = a
-Line 8 col 17 IdentifierName "b" = { c: new() => a.b.c; }
+Line 8 col 17 IdentifierName "b" = any
 Line 9 col 15 IdentifierName "x" = a.b.c
 Line 9 col 18 IdentifierName "b" = c.b
-Line 9 col 20 IdentifierName "c" = { x: a.b.c; }
+Line 9 col 20 IdentifierName "c" = a.b.c
 Line 9 col 24 ObjectCreationExpression "new b.c()" = a.b.c
 Line 9 col 28 MemberAccessExpression "b.c" = new() => a.b.c
 Line 9 col 28 IdentifierName "b" = { c: new() => a.b.c; }

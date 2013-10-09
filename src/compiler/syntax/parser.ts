@@ -2214,12 +2214,17 @@ module TypeScript.Parser {
         }
 
         private isConstructorDeclaration(): boolean {
-            return this.currentToken().tokenKind === SyntaxKind.ConstructorKeyword;
+            // Note: we need to look for 'constructor(' because 'public constructor' is a legal
+            // variable name.
+            var index = this.modifierCount();
+            return this.peekToken(index).tokenKind === SyntaxKind.ConstructorKeyword &&
+                this.peekToken(index + 1).tokenKind === SyntaxKind.OpenParenToken;
         }
 
         private parseConstructorDeclaration(): ConstructorDeclarationSyntax {
             // Debug.assert(this.isConstructorDeclaration());
 
+            var modifiers = this.parseModifiers();
             var constructorKeyword = this.eatKeyword(SyntaxKind.ConstructorKeyword);
             var parameterList = this.parseParameterList();
 
@@ -2233,7 +2238,7 @@ module TypeScript.Parser {
                 semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
             }
 
-            return this.factory.constructorDeclaration(constructorKeyword, parameterList, block, semicolonToken);
+            return this.factory.constructorDeclaration(modifiers, constructorKeyword, parameterList, block, semicolonToken);
         }
 
         private isMemberFunctionDeclaration(inErrorRecovery: boolean): boolean {

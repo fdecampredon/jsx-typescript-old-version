@@ -7,6 +7,6 @@ Line 3 col 9 IdentifierName "Foo" = Foo
 === tests/cases/compiler/privacyCheckExternalModuleExportAssignmentOfGenericClass_0.ts ===
 Line 0 col 9 IdentifierName "Foo" = new<A>(a: A) => Foo<A>
 Line 1 col 6 IdentifierName "Foo" = Foo<A>
-Line 1 col 10 IdentifierName "A" = any
+Line 1 col 10 IdentifierName "A" = A
 Line 2 col 23 IdentifierName "a" = A
 Line 2 col 26 IdentifierName "A" = A

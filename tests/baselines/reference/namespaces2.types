@@ -4,8 +4,8 @@ Line 1 col 18 IdentifierName "B" = A.B
 Line 2 col 21 IdentifierName "C" = A.B.C
 Line 6 col 4 IdentifierName "c" = A.B.C
 Line 6 col 7 IdentifierName "A" = A
-Line 6 col 9 IdentifierName "B" = any
-Line 6 col 11 IdentifierName "C" = any
+Line 6 col 9 IdentifierName "B" = A.B
+Line 6 col 11 IdentifierName "C" = A.B.C
 Line 6 col 15 ObjectCreationExpression "new A.B.C()" = A.B.C
 Line 6 col 19 MemberAccessExpression "A.B.C" = new() => A.B.C
 Line 6 col 19 MemberAccessExpression "A.B" = { C: new() => A.B.C; }

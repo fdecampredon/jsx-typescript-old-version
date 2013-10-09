@@ -598,6 +598,7 @@ var definitions:ITypeDefinition[] = [
         baseType: 'SyntaxNode',
         interfaces: ['IClassElementSyntax'],
         children: [
+            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'constructorKeyword', isToken: true },
             <any>{ name: 'parameterList', type: 'ParameterListSyntax' },
             <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },

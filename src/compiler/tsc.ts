@@ -36,18 +36,14 @@ module TypeScript {
         }
     }
 
-    useDirectTypeStorage = true;
-
-    export class BatchCompiler implements IReferenceResolverHost, EmitterIOHost {
+    export class BatchCompiler implements IReferenceResolverHost {
         public compilerVersion = "0.9.1.1";
         private inputFiles: string[] = [];
         private compilationSettings: CompilationSettings;
         private resolvedFiles: IResolvedFile[] = [];
-        private inputFileNameToOutputFileName = new StringHashTable();
         private fileNameToSourceFile = new StringHashTable();
         private hasErrors: boolean = false;
         private logger: ILogger = null;
-        private tcOnly = false;
 
         constructor(private ioHost: IIO) {
             this.compilationSettings = new CompilationSettings();
@@ -181,15 +177,8 @@ module TypeScript {
             TypeScript.fileResolutionTime = new Date().getTime() - start;
         }
 
-        private reportDiagnostics(errors: Diagnostic[]) {
-            for (var i = 0; i < errors.length; i++) {
-                this.addDiagnostic(errors[i]);
-            }
-        }
-
-        /// Do the actual compilation reading from input files and
-        /// writing to output file(s).
-        private compile(): boolean {
+        // Returns true if compilation failed from some reason.
+        private compile(): void {
             var compiler = new TypeScriptCompiler(this.logger, this.compilationSettings);
 
             var anySyntacticErrors = false;
@@ -198,10 +187,10 @@ module TypeScript {
             for (var i = 0, n = this.resolvedFiles.length; i < n; i++) {
                 var resolvedFile = this.resolvedFiles[i];
                 var sourceFile = this.getSourceFile(resolvedFile.path);
-                compiler.addSourceUnit(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
+                compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
 
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                this.reportDiagnostics(syntacticDiagnostics);
+                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
 
                 if (syntacticDiagnostics.length > 0) {
                     anySyntacticErrors = true;
@@ -209,46 +198,42 @@ module TypeScript {
             }
 
             if (anySyntacticErrors) {
-                return true;
+                return;
             }
 
             compiler.pullTypeCheck();
-            var fileNames = compiler.fileNameToDocument.getAllKeys();
-            var n = fileNames.length;
-            for (var i = 0; i < n; i++) {
+            var fileNames = compiler.fileNames();
+            for (var i = 0, n = fileNames.length; i < n; i++) {
                 var fileName = fileNames[i];
                 var semanticDiagnostics = compiler.getSemanticDiagnostics(fileName);
                 if (semanticDiagnostics.length > 0) {
                     anySemanticErrors = true;
-                    this.reportDiagnostics(semanticDiagnostics);
+                    semanticDiagnostics.forEach(d => this.addDiagnostic(d));
                 }
             }
 
-            if (!this.tcOnly) {
-                var mapInputToOutput = (inputFile: string, outputFile: string): void => {
-                    this.inputFileNameToOutputFileName.addOrUpdate(inputFile, outputFile);
-                };
-
-                // TODO: if there are any emit diagnostics.  Don't proceed.
-                var emitDiagnostics = compiler.emitAll(this, mapInputToOutput);
-                this.reportDiagnostics(emitDiagnostics);
-                if (emitDiagnostics.length > 0) {
-                    return true;
-                }
-
-                // Don't emit declarations if we have any semantic diagnostics.
-                if (anySemanticErrors) {
-                    return true;
-                }
-
-                var emitDeclarationsDiagnostics = compiler.emitAllDeclarations();
-                this.reportDiagnostics(emitDeclarationsDiagnostics);
-                if (emitDeclarationsDiagnostics.length > 0) {
-                    return true;
-                }
+            var emitOutput = compiler.emitAll((path: string) => this.resolvePath(path));
+            emitOutput.diagnostics.forEach(d => this.addDiagnostic(d));
+            if (emitOutput.diagnostics.length > 0) {
+                return;
             }
 
-            return false;
+            if (!this.tryWriteOutputFiles(emitOutput)) {
+                return;
+            }
+
+            // Don't emit declarations if we have any semantic diagnostics.
+            if (anySemanticErrors) {
+                return;
+            }
+
+            var emitDeclarationsOutput = compiler.emitAllDeclarations((path: string) => this.resolvePath(path));
+            emitDeclarationsOutput.diagnostics.forEach(d => this.addDiagnostic(d));
+            if (emitDeclarationsOutput.diagnostics.length > 0) {
+                return;
+            }
+
+            this.tryWriteOutputFiles(emitDeclarationsOutput);
         }
 
         public updateCompile(): boolean {
@@ -272,10 +257,10 @@ module TypeScript {
                 // if file resolving is disabled, the file's content will not yet be loaded
 
                 var sourceFile = this.getSourceFile(resolvedFile.path);
-                compiler.addSourceUnit(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, resolvedFile.referencedFiles);
+                compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, resolvedFile.referencedFiles);
 
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                this.reportDiagnostics(syntacticDiagnostics);
+                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
 
                 if (syntacticDiagnostics.length > 0) {
                     anySyntacticErrors = true;
@@ -293,7 +278,7 @@ module TypeScript {
 
             for (var i = 0; i < iCode; i++) {
                 semanticDiagnostics = compiler.getSemanticDiagnostics(this.resolvedFiles[i].path);
-                this.reportDiagnostics(semanticDiagnostics);
+                semanticDiagnostics.forEach(d => this.addDiagnostic(d));
             }
 
             // Note: we continue even if there were type check warnings.
@@ -308,11 +293,11 @@ module TypeScript {
                     var sourceFile = this.getSourceFile(resolvedFile.path);
                     this.ioHost.stdout.WriteLine("**** Update type check and errors for " + resolvedFile.path + ":");
 
-                    compiler.updateSourceUnit(lastTypecheckedFileName, sourceFile.scriptSnapshot, /*version:*/ 0, /*isOpen:*/ true, null);
+                    compiler.updateFile(lastTypecheckedFileName, sourceFile.scriptSnapshot, /*version:*/ 0, /*isOpen:*/ true, null);
 
                     // resolve the file to simulate an IDE-driven pull
                     semanticDiagnostics = compiler.getSemanticDiagnostics(lastTypecheckedFileName);
-                    this.reportDiagnostics(semanticDiagnostics);
+                    semanticDiagnostics.forEach(d => this.addDiagnostic(d));
                 }
             }
 
@@ -804,7 +789,23 @@ module TypeScript {
             this.ioHost.stderr.WriteLine(diagnostic.message());
         }
 
-        /// EmitterIOHost methods
+        private tryWriteOutputFiles(emitOutput: EmitOutput): boolean {
+            for (var i = 0, n = emitOutput.outputFiles.length; i < n; i++) {
+                var outputFile = emitOutput.outputFiles[i];
+
+                try {
+                    this.writeFile(outputFile.name, outputFile.text, outputFile.writeByteOrderMark);
+                }
+                catch (e) {
+                    this.addDiagnostic(
+                        new Diagnostic(outputFile.name, 0, 0, DiagnosticCode.Emit_Error_0, [e.message]));
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         writeFile(fileName: string, contents: string, writeByteOrderMark: boolean): void {
             var start = new Date().getTime();
             IOUtils.writeFileAndFolderStructure(this.ioHost, fileName, contents, writeByteOrderMark);

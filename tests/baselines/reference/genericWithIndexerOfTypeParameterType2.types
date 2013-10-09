@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericWithIndexerOfTypeParameterType2.ts ===
 Line 0 col 13 IdentifierName "Collection" = Collection<TItem>
-Line 0 col 24 IdentifierName "TItem" = any
+Line 0 col 24 IdentifierName "TItem" = TItem
 Line 0 col 38 IdentifierName "CollectionItem" = CollectionItem
 Line 1 col 0 IdentifierName "_itemsByKey" = { [key: string]: TItem; }
 Line 1 col 20 IdentifierName "key" = string

@@ -303,7 +303,7 @@ module Services {
 
         }
 
-        public getEmitOutput(fileName: string): Services.EmitOutput {
+        public getEmitOutput(fileName: string): TypeScript.EmitOutput {
 
             var args = "fileName: " + this.stringify(fileName);
             var result = this.internal.getEmitOutput(fileName);

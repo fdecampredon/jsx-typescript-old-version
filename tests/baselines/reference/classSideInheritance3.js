@@ -26,5 +26,6 @@ var C = (function (_super) {
     return C;
 })(A);
 
-var b = B;
-var c = C;
+var r1 = B;
+var r2 = B;
+var r3 = C;

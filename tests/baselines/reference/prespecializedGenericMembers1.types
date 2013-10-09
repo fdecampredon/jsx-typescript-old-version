@@ -1,7 +1,7 @@
 === tests/cases/compiler/prespecializedGenericMembers1.ts ===
 Line 0 col 17 IdentifierName "IKitty" = IKitty
 Line 4 col 13 IdentifierName "Cat" = Cat<CatType>
-Line 4 col 17 IdentifierName "CatType" = any
+Line 4 col 17 IdentifierName "CatType" = CatType
 Line 4 col 33 IdentifierName "IKitty" = IKitty
 Line 10 col 13 IdentifierName "CatBag" = CatBag
 Line 11 col 16 IdentifierName "cats" = { barry: Cat<IKitty>; }

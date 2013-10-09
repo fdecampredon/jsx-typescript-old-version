@@ -1,7 +1,7 @@
 === tests/cases/compiler/transitiveTypeArgumentInference1.ts ===
 Line 0 col 10 IdentifierName "I1" = I1<T, U>
-Line 0 col 13 IdentifierName "T" = any
-Line 0 col 16 IdentifierName "U" = any
+Line 0 col 13 IdentifierName "T" = T
+Line 0 col 16 IdentifierName "U" = U
 Line 1 col 0 IdentifierName "m" = (value: T) => U
 Line 1 col 3 IdentifierName "value" = T
 Line 1 col 10 IdentifierName "T" = T
@@ -9,7 +9,7 @@ Line 1 col 14 IdentifierName "U" = U
 Line 4 col 4 IdentifierName "i" = I1<boolean, string>
 Line 4 col 7 IdentifierName "I1" = I1<T, U>
 Line 6 col 6 IdentifierName "C" = C<T>
-Line 6 col 8 IdentifierName "T" = any
+Line 6 col 8 IdentifierName "T" = T
 Line 7 col 13 IdentifierName "p" = I1<boolean, T>
 Line 7 col 16 IdentifierName "I1" = I1<T, U>
 Line 7 col 28 IdentifierName "T" = T

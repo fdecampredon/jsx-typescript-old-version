@@ -1,12 +1,12 @@
 === tests/cases/compiler/genericClasses4.ts ===
 Line 1 col 6 IdentifierName "Vec2_T" = Vec2_T<A>
-Line 1 col 13 IdentifierName "A" = any
+Line 1 col 13 IdentifierName "A" = A
 Line 3 col 23 IdentifierName "x" = A
 Line 3 col 26 IdentifierName "A" = A
 Line 3 col 36 IdentifierName "y" = A
 Line 3 col 39 IdentifierName "A" = A
 Line 4 col 0 IdentifierName "fmap" = <B>(f: (a: A) => B) => Vec2_T<B>
-Line 4 col 9 IdentifierName "B" = any
+Line 4 col 9 IdentifierName "B" = B
 Line 4 col 12 IdentifierName "f" = (a: A) => B
 Line 4 col 16 IdentifierName "a" = A
 Line 4 col 19 IdentifierName "A" = A
@@ -36,7 +36,7 @@ Line 7 col 43 IdentifierName "x" = B
 Line 7 col 46 IdentifierName "y" = B
 Line 8 col 15 IdentifierName "retval" = Vec2_T<B>
 Line 10 col 0 IdentifierName "apply" = <B>(f: Vec2_T<(a: A) => B>) => Vec2_T<B>
-Line 10 col 10 IdentifierName "B" = any
+Line 10 col 10 IdentifierName "B" = B
 Line 10 col 13 IdentifierName "f" = Vec2_T<(a: A) => B>
 Line 10 col 16 IdentifierName "Vec2_T" = Vec2_T<A>
 Line 10 col 24 IdentifierName "a" = A

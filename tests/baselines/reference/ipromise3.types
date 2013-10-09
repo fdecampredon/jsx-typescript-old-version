@@ -1,8 +1,8 @@
 === tests/cases/compiler/ipromise3.ts ===
 Line 0 col 10 IdentifierName "IPromise3" = IPromise3<T>
-Line 0 col 20 IdentifierName "T" = any
+Line 0 col 20 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
-Line 1 col 5 IdentifierName "U" = any
+Line 1 col 5 IdentifierName "U" = U
 Line 1 col 8 IdentifierName "success" = (value: T) => IPromise3<U>
 Line 1 col 19 IdentifierName "value" = T
 Line 1 col 26 IdentifierName "T" = T
@@ -17,7 +17,7 @@ Line 1 col 96 IdentifierName "progress" = any
 Line 1 col 122 IdentifierName "IPromise3" = IPromise3<T>
 Line 1 col 132 IdentifierName "U" = U
 Line 2 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
-Line 2 col 5 IdentifierName "U" = any
+Line 2 col 5 IdentifierName "U" = U
 Line 2 col 8 IdentifierName "success" = (value: T) => IPromise3<U>
 Line 2 col 19 IdentifierName "value" = T
 Line 2 col 26 IdentifierName "T" = T
@@ -31,7 +31,7 @@ Line 2 col 85 IdentifierName "progress" = any
 Line 2 col 111 IdentifierName "IPromise3" = IPromise3<T>
 Line 2 col 121 IdentifierName "U" = U
 Line 3 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
-Line 3 col 5 IdentifierName "U" = any
+Line 3 col 5 IdentifierName "U" = U
 Line 3 col 8 IdentifierName "success" = (value: T) => U
 Line 3 col 19 IdentifierName "value" = T
 Line 3 col 26 IdentifierName "T" = T
@@ -45,7 +45,7 @@ Line 3 col 85 IdentifierName "progress" = any
 Line 3 col 111 IdentifierName "IPromise3" = IPromise3<T>
 Line 3 col 121 IdentifierName "U" = U
 Line 4 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => IPromise3<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise3<U>, progress?: (progress: any) => void): IPromise3<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise3<U>; }
-Line 4 col 5 IdentifierName "U" = any
+Line 4 col 5 IdentifierName "U" = U
 Line 4 col 8 IdentifierName "success" = (value: T) => U
 Line 4 col 19 IdentifierName "value" = T
 Line 4 col 26 IdentifierName "T" = T
@@ -58,7 +58,7 @@ Line 4 col 74 IdentifierName "progress" = any
 Line 4 col 100 IdentifierName "IPromise3" = IPromise3<T>
 Line 4 col 110 IdentifierName "U" = U
 Line 5 col 0 IdentifierName "done" = <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void) => void
-Line 5 col 7 IdentifierName "U" = any
+Line 5 col 7 IdentifierName "U" = U
 Line 5 col 10 IdentifierName "success" = (value: T) => any
 Line 5 col 21 IdentifierName "value" = T
 Line 5 col 28 IdentifierName "T" = T

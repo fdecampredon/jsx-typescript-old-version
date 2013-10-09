@@ -1,60 +1,60 @@
 === tests/cases/compiler/declFileGenericType.ts ===
 Line 0 col 14 IdentifierName "C" = C
 Line 1 col 17 IdentifierName "A" = C.A<T>
-Line 1 col 19 IdentifierName "T" = any
+Line 1 col 19 IdentifierName "T" = T
 Line 2 col 17 IdentifierName "B" = C.B
 Line 4 col 20 IdentifierName "F" = <T>(x: T) => C.A<C.B>
-Line 4 col 22 IdentifierName "T" = any
+Line 4 col 22 IdentifierName "T" = T
 Line 4 col 25 IdentifierName "x" = T
 Line 4 col 28 IdentifierName "T" = T
 Line 4 col 32 IdentifierName "A" = C.A<T>
 Line 4 col 34 IdentifierName "B" = C.B
 Line 5 col 20 IdentifierName "F2" = <T>(x: T) => C.A<C.B>
-Line 5 col 23 IdentifierName "T" = any
+Line 5 col 23 IdentifierName "T" = T
 Line 5 col 26 IdentifierName "x" = T
 Line 5 col 29 IdentifierName "T" = T
 Line 5 col 33 IdentifierName "C" = C
-Line 5 col 35 IdentifierName "A" = new<T>() => C.A<T>
+Line 5 col 35 IdentifierName "A" = C.A<T>
 Line 5 col 37 IdentifierName "C" = C
-Line 5 col 39 IdentifierName "B" = new() => C.B
+Line 5 col 39 IdentifierName "B" = C.B
 Line 6 col 20 IdentifierName "F3" = <T>(x: T) => C.A<C.B>[]
-Line 6 col 23 IdentifierName "T" = any
+Line 6 col 23 IdentifierName "T" = T
 Line 6 col 26 IdentifierName "x" = T
 Line 6 col 29 IdentifierName "T" = T
 Line 6 col 33 IdentifierName "C" = C
-Line 6 col 35 IdentifierName "A" = new<T>() => C.A<T>
+Line 6 col 35 IdentifierName "A" = C.A<T>
 Line 6 col 37 IdentifierName "C" = C
-Line 6 col 39 IdentifierName "B" = new() => C.B
+Line 6 col 39 IdentifierName "B" = C.B
 Line 7 col 20 IdentifierName "F4" = <T extends C.A<C.B>>(x: T) => C.A<C.B>[]
-Line 7 col 23 IdentifierName "T" = any
+Line 7 col 23 IdentifierName "T" = T
 Line 7 col 33 IdentifierName "A" = C.A<T>
 Line 7 col 35 IdentifierName "B" = C.B
 Line 7 col 39 IdentifierName "x" = T
 Line 7 col 42 IdentifierName "T" = T
 Line 7 col 46 IdentifierName "Array" = Array<T>
 Line 7 col 52 IdentifierName "C" = C
-Line 7 col 54 IdentifierName "A" = new<T>() => C.A<T>
+Line 7 col 54 IdentifierName "A" = C.A<T>
 Line 7 col 56 IdentifierName "C" = C
-Line 7 col 58 IdentifierName "B" = new() => C.B
+Line 7 col 58 IdentifierName "B" = C.B
 Line 9 col 20 IdentifierName "F5" = <T>() => T
-Line 9 col 23 IdentifierName "T" = any
+Line 9 col 23 IdentifierName "T" = T
 Line 9 col 29 IdentifierName "T" = T
 Line 11 col 20 IdentifierName "F6" = <T extends C.A<C.B>>(x: T) => T
-Line 11 col 23 IdentifierName "T" = any
+Line 11 col 23 IdentifierName "T" = T
 Line 11 col 33 IdentifierName "A" = C.A<T>
 Line 11 col 35 IdentifierName "B" = C.B
 Line 11 col 39 IdentifierName "x" = T
 Line 11 col 42 IdentifierName "T" = T
 Line 11 col 46 IdentifierName "T" = T
 Line 13 col 17 IdentifierName "D" = C.D<T>
-Line 13 col 19 IdentifierName "T" = any
+Line 13 col 19 IdentifierName "T" = T
 Line 15 col 27 IdentifierName "val" = T
 Line 15 col 32 IdentifierName "T" = T
 Line 20 col 11 IdentifierName "a" = C.A<C.B>
 Line 20 col 14 IdentifierName "C" = C
-Line 20 col 16 IdentifierName "A" = any
+Line 20 col 16 IdentifierName "A" = C.A<T>
 Line 20 col 18 IdentifierName "C" = C
-Line 20 col 20 IdentifierName "B" = any
+Line 20 col 20 IdentifierName "B" = C.B
 Line 22 col 11 IdentifierName "b" = <T>(x: T) => C.A<C.B>
 Line 22 col 15 MemberAccessExpression "C.F" = <T>(x: T) => C.A<C.B>
 Line 22 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
@@ -79,41 +79,41 @@ Line 27 col 20 MemberAccessExpression "C.D" = new<T>(val: T) => C.D<T>
 Line 27 col 20 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
 Line 27 col 22 IdentifierName "D" = new<T>(val: T) => C.D<T>
 Line 27 col 24 IdentifierName "C" = C
-Line 27 col 26 IdentifierName "A" = any
+Line 27 col 26 IdentifierName "A" = C.A<T>
 Line 27 col 28 IdentifierName "C" = C
-Line 27 col 30 IdentifierName "B" = any
+Line 27 col 30 IdentifierName "B" = C.B
 Line 27 col 34 ObjectCreationExpression "new C.A<C.B>()" = C.A<C.B>
 Line 27 col 38 MemberAccessExpression "C.A" = new<T>() => C.A<T>
 Line 27 col 38 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
 Line 27 col 40 IdentifierName "A" = new<T>() => C.A<T>
 Line 27 col 42 IdentifierName "C" = C
-Line 27 col 44 IdentifierName "B" = any
+Line 27 col 44 IdentifierName "B" = C.B
 Line 27 col 51 IdentifierName "val" = C.A<C.B>
 Line 29 col 16 IdentifierName "f" = <T extends C.A<C.B>>() => void
-Line 29 col 18 IdentifierName "T" = any
+Line 29 col 18 IdentifierName "T" = T
 Line 29 col 28 IdentifierName "C" = C
-Line 29 col 30 IdentifierName "A" = any
+Line 29 col 30 IdentifierName "A" = C.A<T>
 Line 29 col 32 IdentifierName "C" = C
-Line 29 col 34 IdentifierName "B" = any
+Line 29 col 34 IdentifierName "B" = C.B
 Line 31 col 11 IdentifierName "g" = C.A<C.B>
 Line 31 col 15 InvocationExpression "C.F5<C.A<C.B>>()" = C.A<C.B>
 Line 31 col 15 MemberAccessExpression "C.F5" = <T>() => T
 Line 31 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
 Line 31 col 17 IdentifierName "F5" = <T>() => T
 Line 31 col 20 IdentifierName "C" = C
-Line 31 col 22 IdentifierName "A" = any
+Line 31 col 22 IdentifierName "A" = C.A<T>
 Line 31 col 24 IdentifierName "C" = C
-Line 31 col 26 IdentifierName "B" = any
+Line 31 col 26 IdentifierName "B" = C.B
 Line 33 col 13 IdentifierName "h" = h
 Line 33 col 23 IdentifierName "C" = C
-Line 33 col 25 IdentifierName "A" = any
+Line 33 col 25 IdentifierName "A" = C.A<T>
 Line 33 col 27 IdentifierName "C" = C
-Line 33 col 29 IdentifierName "B" = any
+Line 33 col 29 IdentifierName "B" = C.B
 Line 35 col 17 IdentifierName "i" = i
 Line 35 col 27 IdentifierName "C" = C
-Line 35 col 29 IdentifierName "A" = any
+Line 35 col 29 IdentifierName "A" = C.A<T>
 Line 35 col 31 IdentifierName "C" = C
-Line 35 col 33 IdentifierName "B" = any
+Line 35 col 33 IdentifierName "B" = C.B
 Line 37 col 11 IdentifierName "j" = <T extends C.A<C.B>>(x: T) => T
 Line 37 col 15 MemberAccessExpression "C.F6" = <T extends C.A<C.B>>(x: T) => T
 Line 37 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }

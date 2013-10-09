@@ -1,8 +1,8 @@
 === tests/cases/compiler/genericTypeParameterEquivalence2.ts ===
 Line 1 col 9 IdentifierName "compose" = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => C
-Line 1 col 17 IdentifierName "A" = any
-Line 1 col 20 IdentifierName "B" = any
-Line 1 col 23 IdentifierName "C" = any
+Line 1 col 17 IdentifierName "A" = A
+Line 1 col 20 IdentifierName "B" = B
+Line 1 col 23 IdentifierName "C" = C
 Line 1 col 26 IdentifierName "f" = (b: B) => C
 Line 1 col 30 IdentifierName "b" = B
 Line 1 col 33 IdentifierName "B" = B
@@ -28,7 +28,7 @@ Line 3 col 17 IdentifierName "g" = (a: A) => B
 Line 3 col 19 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
 Line 3 col 31 IdentifierName "a" = A
 Line 8 col 9 IdentifierName "forEach" = <A>(list: A[], f: (a: A, n?: number) => void) => void
-Line 8 col 17 IdentifierName "A" = any
+Line 8 col 17 IdentifierName "A" = A
 Line 8 col 20 IdentifierName "list" = A[]
 Line 8 col 26 IdentifierName "A" = A
 Line 8 col 31 IdentifierName "f" = (a: A, n?: number) => void
@@ -50,7 +50,7 @@ Line 10 col 10 IdentifierName "list" = A[]
 Line 10 col 15 IdentifierName "i" = number
 Line 10 col 19 IdentifierName "i" = number
 Line 15 col 9 IdentifierName "filter" = <A>(f: (a: A) => boolean, ar: A[]) => A[]
-Line 15 col 16 IdentifierName "A" = any
+Line 15 col 16 IdentifierName "A" = A
 Line 15 col 19 IdentifierName "f" = (a: A) => boolean
 Line 15 col 23 IdentifierName "a" = A
 Line 15 col 26 IdentifierName "A" = A
@@ -82,16 +82,16 @@ Line 19 col 16 IdentifierName "push" = (...items: any[]) => number
 Line 19 col 21 IdentifierName "el" = A
 Line 23 col 11 IdentifierName "ret" = any[]
 Line 27 col 9 IdentifierName "length2" = <A>(ar: A[]) => number
-Line 27 col 17 IdentifierName "A" = any
+Line 27 col 17 IdentifierName "A" = A
 Line 27 col 20 IdentifierName "ar" = A[]
 Line 27 col 24 IdentifierName "A" = A
 Line 28 col 11 MemberAccessExpression "ar.length" = number
 Line 28 col 11 IdentifierName "ar" = A[]
 Line 28 col 14 IdentifierName "length" = number
 Line 32 col 9 IdentifierName "curry1" = <A, B, C>(f: (a: A, b: B) => C) => (ax: A) => (bx: B) => C
-Line 32 col 16 IdentifierName "A" = any
-Line 32 col 19 IdentifierName "B" = any
-Line 32 col 22 IdentifierName "C" = any
+Line 32 col 16 IdentifierName "A" = A
+Line 32 col 19 IdentifierName "B" = B
+Line 32 col 22 IdentifierName "C" = C
 Line 32 col 25 IdentifierName "f" = (a: A, b: B) => C
 Line 32 col 29 IdentifierName "a" = A
 Line 32 col 32 IdentifierName "A" = A
@@ -124,7 +124,7 @@ Line 40 col 14 InvocationExpression "curry1(filter)" = (ax: (a: any) => boolean)
 Line 40 col 14 IdentifierName "curry1" = <A, B, C>(f: (a: A, b: B) => C) => (ax: A) => (bx: B) => C
 Line 40 col 21 IdentifierName "filter" = <A>(f: (a: A) => boolean, ar: A[]) => A[]
 Line 48 col 9 IdentifierName "countWhere_1" = <A>(pred: (a: A) => boolean) => (a: A[]) => number
-Line 48 col 22 IdentifierName "A" = any
+Line 48 col 22 IdentifierName "A" = A
 Line 48 col 25 IdentifierName "pred" = (a: A) => boolean
 Line 48 col 32 IdentifierName "a" = A
 Line 48 col 35 IdentifierName "A" = A
@@ -137,7 +137,7 @@ Line 49 col 28 InvocationExpression "cfilter(pred)" = (bx: any[]) => any[]
 Line 49 col 28 IdentifierName "cfilter" = (ax: (a: any) => boolean) => (bx: any[]) => any[]
 Line 49 col 36 IdentifierName "pred" = (a: A) => boolean
 Line 52 col 9 IdentifierName "countWhere_2" = <A>(pred: (a: A) => boolean) => (a: A[]) => number
-Line 52 col 22 IdentifierName "A" = any
+Line 52 col 22 IdentifierName "A" = A
 Line 52 col 25 IdentifierName "pred" = (a: A) => boolean
 Line 52 col 32 IdentifierName "a" = A
 Line 52 col 35 IdentifierName "A" = A

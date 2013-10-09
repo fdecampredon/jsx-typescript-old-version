@@ -4,13 +4,13 @@ Line 1 col 14 IdentifierName "Position" = EM.Position
 Line 3 col 14 IdentifierName "EC" = EM.EC
 Line 4 col 9 IdentifierName "getPosition" = () => EM.Position
 Line 4 col 25 IdentifierName "EM" = EM
-Line 4 col 28 IdentifierName "Position" = new() => EM.Position
+Line 4 col 28 IdentifierName "Position" = EM.Position
 Line 8 col 4 IdentifierName "x" = EM.Position
 Line 8 col 6 IdentifierName "EM" = EM
-Line 8 col 9 IdentifierName "Position" = any
+Line 8 col 9 IdentifierName "Position" = EM.Position
 Line 9 col 4 IdentifierName "ec" = EM.EC
 Line 9 col 7 IdentifierName "EM" = EM
-Line 9 col 10 IdentifierName "EC" = any
+Line 9 col 10 IdentifierName "EC" = EM.EC
 Line 9 col 15 ObjectCreationExpression "new EM.EC()" = EM.EC
 Line 9 col 19 MemberAccessExpression "EM.EC" = new() => EM.EC
 Line 9 col 19 IdentifierName "EM" = { Position: new() => EM.Position; EC: new() => EM.EC; }

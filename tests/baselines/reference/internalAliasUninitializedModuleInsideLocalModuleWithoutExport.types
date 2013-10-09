@@ -6,10 +6,10 @@ Line 3 col 0 IdentifierName "foo" = () => any
 Line 8 col 14 IdentifierName "c" = c
 Line 9 col 11 IdentifierName "b" = c.b
 Line 9 col 15 IdentifierName "a" = a
-Line 9 col 17 IdentifierName "b" = c.b
+Line 9 col 17 IdentifierName "b" = any
 Line 10 col 15 IdentifierName "x" = a.b.I
 Line 10 col 18 IdentifierName "b" = c.b
-Line 10 col 20 IdentifierName "I" = any
+Line 10 col 20 IdentifierName "I" = a.b.I
 Line 11 col 0 InvocationExpression "x.foo()" = any
 Line 11 col 0 MemberAccessExpression "x.foo" = () => any
 Line 11 col 0 IdentifierName "x" = a.b.I

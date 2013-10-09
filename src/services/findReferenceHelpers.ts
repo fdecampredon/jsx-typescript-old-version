@@ -6,8 +6,7 @@
 
 module Services {
     export class FindReferenceHelpers {
-        public static compareSymbolsForLexicalIdentity(firstSymbol: TypeScript.PullSymbol, secondSymbol: TypeScript.PullSymbol, semanticInfoChain: TypeScript.SemanticInfoChain): boolean {
-
+        public static compareSymbolsForLexicalIdentity(firstSymbol: TypeScript.PullSymbol, secondSymbol: TypeScript.PullSymbol): boolean {
             // Unwrap modules so that we're always referring to the variable.
             if (!firstSymbol.isAlias() && firstSymbol.isContainer()) {
                 firstSymbol = (<TypeScript.PullContainerSymbol>firstSymbol).getInstanceSymbol();
@@ -50,7 +49,7 @@ module Services {
                     if (firstParentDecl.kind === TypeScript.PullElementKind.ObjectLiteral &&
                         secondParentDecl.kind === TypeScript.PullElementKind.ObjectLiteral) {
 
-                        return semanticInfoChain.getASTForDecl(firstParentDecl) === semanticInfoChain.getASTForDecl(secondParentDecl);
+                        return firstParentDecl.ast() === secondParentDecl.ast();
                     }
                 }
 

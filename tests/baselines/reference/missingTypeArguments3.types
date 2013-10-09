@@ -1,0 +1,111 @@
+=== tests/cases/compiler/missingTypeArguments3.ts ===
+Line 0 col 15 IdentifierName "linq" = linq
+Line 2 col 14 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 2 col 25 IdentifierName "T" = T
+Line 3 col 0 IdentifierName "OrderByDescending" = (keySelector?: string) => linq.OrderedEnumerable<T>
+Line 3 col 26 IdentifierName "keySelector" = string
+Line 3 col 49 IdentifierName "OrderedEnumerable" = linq.OrderedEnumerable<T>
+Line 3 col 67 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "GroupBy" = { <TKey>(keySelector: (element: T) => TKey): linq.Enumerable<linq.Grouping<TKey, T>>; <TKey, TElement>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TElement): linq.Enumerable<linq.Grouping<TKey, TElement>>; }
+Line 4 col 16 IdentifierName "TKey" = TKey
+Line 4 col 22 IdentifierName "keySelector" = (element: T) => TKey
+Line 4 col 36 IdentifierName "element" = T
+Line 4 col 45 IdentifierName "T" = T
+Line 4 col 51 IdentifierName "TKey" = TKey
+Line 4 col 58 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 4 col 69 IdentifierName "Grouping" = linq.Grouping<TKey, TElement>
+Line 4 col 78 IdentifierName "TKey" = TKey
+Line 4 col 84 IdentifierName "T" = T
+Line 5 col 0 IdentifierName "GroupBy" = { <TKey>(keySelector: (element: T) => TKey): linq.Enumerable<linq.Grouping<TKey, T>>; <TKey, TElement>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TElement): linq.Enumerable<linq.Grouping<TKey, TElement>>; }
+Line 5 col 16 IdentifierName "TKey" = TKey
+Line 5 col 22 IdentifierName "TElement" = TElement
+Line 5 col 32 IdentifierName "keySelector" = (element: T) => TKey
+Line 5 col 46 IdentifierName "element" = T
+Line 5 col 55 IdentifierName "T" = T
+Line 5 col 61 IdentifierName "TKey" = TKey
+Line 5 col 67 IdentifierName "elementSelector" = (element: T) => TElement
+Line 5 col 85 IdentifierName "element" = T
+Line 5 col 94 IdentifierName "T" = T
+Line 5 col 100 IdentifierName "TElement" = TElement
+Line 5 col 111 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 5 col 122 IdentifierName "Grouping" = linq.Grouping<TKey, TElement>
+Line 5 col 131 IdentifierName "TKey" = TKey
+Line 5 col 137 IdentifierName "TElement" = TElement
+Line 6 col 0 IdentifierName "ToDictionary" = <TKey>(keySelector: (element: T) => TKey) => linq.Dictionary<TKey, T>
+Line 6 col 21 IdentifierName "TKey" = TKey
+Line 6 col 27 IdentifierName "keySelector" = (element: T) => TKey
+Line 6 col 41 IdentifierName "element" = T
+Line 6 col 50 IdentifierName "T" = T
+Line 6 col 56 IdentifierName "TKey" = TKey
+Line 6 col 63 IdentifierName "Dictionary" = linq.Dictionary<TKey, TValue>
+Line 6 col 74 IdentifierName "TKey" = TKey
+Line 6 col 80 IdentifierName "T" = T
+Line 9 col 14 IdentifierName "OrderedEnumerable" = linq.OrderedEnumerable<T>
+Line 9 col 32 IdentifierName "T" = T
+Line 9 col 43 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 9 col 54 IdentifierName "T" = T
+Line 10 col 0 IdentifierName "ThenBy" = <TCompare>(keySelector: (element: T) => TCompare) => linq.OrderedEnumerable<T>
+Line 10 col 15 IdentifierName "TCompare" = TCompare
+Line 10 col 25 IdentifierName "keySelector" = (element: T) => TCompare
+Line 10 col 39 IdentifierName "element" = T
+Line 10 col 48 IdentifierName "T" = T
+Line 10 col 54 IdentifierName "TCompare" = TCompare
+Line 10 col 65 IdentifierName "OrderedEnumerable" = linq.OrderedEnumerable<T>
+Line 10 col 83 IdentifierName "T" = T
+Line 13 col 14 IdentifierName "Grouping" = linq.Grouping<TKey, TElement>
+Line 13 col 23 IdentifierName "TKey" = TKey
+Line 13 col 29 IdentifierName "TElement" = TElement
+Line 13 col 47 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 13 col 58 IdentifierName "TElement" = TElement
+Line 14 col 0 IdentifierName "Key" = () => TKey
+Line 14 col 15 IdentifierName "TKey" = TKey
+Line 17 col 14 IdentifierName "Lookup" = linq.Lookup<TKey, TElement>
+Line 17 col 21 IdentifierName "TKey" = TKey
+Line 17 col 27 IdentifierName "TElement" = TElement
+Line 18 col 0 IdentifierName "Count" = () => number
+Line 19 col 0 IdentifierName "Get" = (key: any) => linq.Enumerable<any>
+Line 19 col 12 IdentifierName "key" = any
+Line 19 col 18 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 20 col 0 IdentifierName "Contains" = (key: any) => boolean
+Line 20 col 17 IdentifierName "key" = any
+Line 21 col 0 IdentifierName "ToEnumerable" = () => linq.Enumerable<linq.Grouping<TKey, any>>
+Line 21 col 24 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 21 col 35 IdentifierName "Grouping" = linq.Grouping<TKey, TElement>
+Line 21 col 44 IdentifierName "TKey" = TKey
+Line 24 col 14 IdentifierName "Dictionary" = linq.Dictionary<TKey, TValue>
+Line 24 col 25 IdentifierName "TKey" = TKey
+Line 24 col 31 IdentifierName "TValue" = TValue
+Line 25 col 0 IdentifierName "Add" = (key: TKey, value: TValue) => void
+Line 25 col 12 IdentifierName "key" = TKey
+Line 25 col 17 IdentifierName "TKey" = TKey
+Line 25 col 23 IdentifierName "value" = TValue
+Line 25 col 30 IdentifierName "TValue" = TValue
+Line 26 col 0 IdentifierName "Get" = (ke: TKey) => TValue
+Line 26 col 12 IdentifierName "ke" = TKey
+Line 26 col 16 IdentifierName "TKey" = TKey
+Line 26 col 23 IdentifierName "TValue" = TValue
+Line 27 col 0 IdentifierName "Set" = (key: TKey, value: TValue) => boolean
+Line 27 col 12 IdentifierName "key" = TKey
+Line 27 col 17 IdentifierName "TKey" = TKey
+Line 27 col 23 IdentifierName "value" = TValue
+Line 27 col 30 IdentifierName "TValue" = TValue
+Line 28 col 0 IdentifierName "Contains" = (key: TKey) => boolean
+Line 28 col 17 IdentifierName "key" = TKey
+Line 28 col 22 IdentifierName "TKey" = TKey
+Line 29 col 0 IdentifierName "Clear" = () => void
+Line 30 col 0 IdentifierName "Remove" = (key: TKey) => void
+Line 30 col 15 IdentifierName "key" = TKey
+Line 30 col 20 IdentifierName "TKey" = TKey
+Line 31 col 0 IdentifierName "Count" = () => number
+Line 32 col 0 IdentifierName "ToEnumerable" = () => linq.Enumerable<linq.KeyValuePair<TKey, TValue>>
+Line 32 col 24 IdentifierName "Enumerable" = linq.Enumerable<T>
+Line 32 col 35 IdentifierName "KeyValuePair" = linq.KeyValuePair<TKey, TValue>
+Line 32 col 48 IdentifierName "TKey" = TKey
+Line 32 col 54 IdentifierName "TValue" = TValue
+Line 35 col 14 IdentifierName "KeyValuePair" = linq.KeyValuePair<TKey, TValue>
+Line 35 col 27 IdentifierName "TKey" = TKey
+Line 35 col 33 IdentifierName "TValue" = TValue
+Line 36 col 0 IdentifierName "Key" = TKey
+Line 36 col 13 IdentifierName "TKey" = TKey
+Line 37 col 0 IdentifierName "Value" = TValue
+Line 37 col 15 IdentifierName "TValue" = TValue

@@ -1,7 +1,7 @@
 === tests/cases/compiler/contextualSignatureInstantiation1.ts ===
 Line 0 col 17 IdentifierName "map" = <S, T>(f: (x: S) => T) => (a: S[]) => T[]
-Line 0 col 21 IdentifierName "S" = any
-Line 0 col 24 IdentifierName "T" = any
+Line 0 col 21 IdentifierName "S" = S
+Line 0 col 24 IdentifierName "T" = T
 Line 0 col 27 IdentifierName "f" = (x: S) => T
 Line 0 col 31 IdentifierName "x" = S
 Line 0 col 34 IdentifierName "S" = S
@@ -11,7 +11,7 @@ Line 0 col 48 IdentifierName "S" = S
 Line 0 col 56 IdentifierName "T" = T
 Line 1 col 4 IdentifierName "e" = <K>(x: string, y?: K) => number
 Line 1 col 8 ParenthesizedArrowFunctionExpression "<K>(x: string, y?: K) => x.length" = <K>(x: string, y?: K) => number
-Line 1 col 9 IdentifierName "K" = any
+Line 1 col 9 IdentifierName "K" = K
 Line 1 col 12 IdentifierName "x" = string
 Line 1 col 23 IdentifierName "y" = K
 Line 1 col 27 IdentifierName "K" = K
@@ -23,9 +23,9 @@ Line 2 col 10 InvocationExpression "map(e)" = (a: string[]) => number[]
 Line 2 col 10 IdentifierName "map" = <S, T>(f: (x: S) => T) => (a: S[]) => T[]
 Line 2 col 14 IdentifierName "e" = <K>(x: string, y?: K) => number
 Line 4 col 17 IdentifierName "map2" = <S extends { length: number; }, T>(f: (x: S) => T) => (a: S[]) => T[]
-Line 4 col 22 IdentifierName "S" = any
+Line 4 col 22 IdentifierName "S" = S
 Line 4 col 34 IdentifierName "length" = number
-Line 4 col 52 IdentifierName "T" = any
+Line 4 col 52 IdentifierName "T" = T
 Line 4 col 55 IdentifierName "f" = (x: S) => T
 Line 4 col 59 IdentifierName "x" = S
 Line 4 col 62 IdentifierName "S" = S
@@ -35,7 +35,7 @@ Line 4 col 76 IdentifierName "S" = S
 Line 4 col 84 IdentifierName "T" = T
 Line 5 col 4 IdentifierName "e2" = <K>(x: string, y?: K) => number
 Line 5 col 9 ParenthesizedArrowFunctionExpression "<K>(x: string, y?: K) => x.length" = <K>(x: string, y?: K) => number
-Line 5 col 10 IdentifierName "K" = any
+Line 5 col 10 IdentifierName "K" = K
 Line 5 col 13 IdentifierName "x" = string
 Line 5 col 24 IdentifierName "y" = K
 Line 5 col 28 IdentifierName "K" = K

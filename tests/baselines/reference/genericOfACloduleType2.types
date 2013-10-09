@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericOfACloduleType2.ts ===
 Line 0 col 6 IdentifierName "G" = G<T>
-Line 0 col 8 IdentifierName "T" = any
+Line 0 col 8 IdentifierName "T" = T
 Line 0 col 12 IdentifierName "bar" = (x: T) => T
 Line 0 col 16 IdentifierName "x" = T
 Line 0 col 19 IdentifierName "T" = T
@@ -26,4 +26,4 @@ Line 13 col 8 IdentifierName "g2" = G<M.C>
 Line 13 col 13 ObjectCreationExpression "new G<M.C>()" = G<M.C>
 Line 13 col 17 IdentifierName "G" = new<T>() => G<T>
 Line 13 col 19 IdentifierName "M" = M
-Line 13 col 21 IdentifierName "C" = any
+Line 13 col 21 IdentifierName "C" = M.C

@@ -1,7 +1,7 @@
 === tests/cases/compiler/genericInstantiationEquivalentToObjectLiteral.ts ===
 Line 0 col 10 IdentifierName "Pair" = Pair<T1, T2>
-Line 0 col 15 IdentifierName "T1" = any
-Line 0 col 19 IdentifierName "T2" = any
+Line 0 col 15 IdentifierName "T1" = T1
+Line 0 col 19 IdentifierName "T2" = T2
 Line 0 col 25 IdentifierName "first" = T1
 Line 0 col 32 IdentifierName "T1" = T1
 Line 0 col 36 IdentifierName "second" = T2
@@ -18,15 +18,15 @@ Line 5 col 0 AssignmentExpression "y = x" = Pair<string, number>
 Line 5 col 0 IdentifierName "y" = { first: string; second: number; }
 Line 5 col 4 IdentifierName "x" = Pair<string, number>
 Line 7 col 17 IdentifierName "f" = <T, U>(x: Pair<T, U>) => any
-Line 7 col 19 IdentifierName "T" = any
-Line 7 col 22 IdentifierName "U" = any
+Line 7 col 19 IdentifierName "T" = T
+Line 7 col 22 IdentifierName "U" = U
 Line 7 col 25 IdentifierName "x" = Pair<T, U>
 Line 7 col 28 IdentifierName "Pair" = Pair<T1, T2>
 Line 7 col 33 IdentifierName "T" = T
 Line 7 col 36 IdentifierName "U" = U
 Line 8 col 17 IdentifierName "f2" = <T, U>(x: { first: T; second: U; }) => any
-Line 8 col 20 IdentifierName "T" = any
-Line 8 col 23 IdentifierName "U" = any
+Line 8 col 20 IdentifierName "T" = T
+Line 8 col 23 IdentifierName "U" = U
 Line 8 col 26 IdentifierName "x" = { first: T; second: U; }
 Line 8 col 31 IdentifierName "first" = T
 Line 8 col 38 IdentifierName "T" = T

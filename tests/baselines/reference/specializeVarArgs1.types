@@ -1,15 +1,15 @@
 === tests/cases/compiler/specializeVarArgs1.ts ===
 Line 0 col 10 IdentifierName "Observable" = Observable<T>
-Line 0 col 21 IdentifierName "T" = any
+Line 0 col 21 IdentifierName "T" = T
 Line 4 col 10 IdentifierName "ObservableArray" = ObservableArray<T>
-Line 4 col 26 IdentifierName "T" = any
+Line 4 col 26 IdentifierName "T" = T
 Line 4 col 37 IdentifierName "Observable" = Observable<T>
 Line 4 col 48 IdentifierName "T" = T
 Line 7 col 0 IdentifierName "push" = (...values: T[]) => any
 Line 8 col 12 IdentifierName "values" = T[]
 Line 8 col 20 IdentifierName "T" = T
 Line 14 col 9 IdentifierName "observableArray" = <T>() => ObservableArray<T>
-Line 14 col 25 IdentifierName "T" = any
+Line 14 col 25 IdentifierName "T" = T
 Line 14 col 31 IdentifierName "ObservableArray" = ObservableArray<T>
 Line 14 col 47 IdentifierName "T" = T
 Line 18 col 4 IdentifierName "a" = ObservableArray<string>

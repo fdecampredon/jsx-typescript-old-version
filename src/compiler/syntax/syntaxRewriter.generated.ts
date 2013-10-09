@@ -429,6 +429,7 @@ module TypeScript {
 
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): any {
             return node.update(
+                this.visitList(node.modifiers),
                 this.visitToken(node.constructorKeyword),
                 <ParameterListSyntax>this.visitNode(node.parameterList),
                 node.block === null ? null : <BlockSyntax>this.visitNode(node.block),

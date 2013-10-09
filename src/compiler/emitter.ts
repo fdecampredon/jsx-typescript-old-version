@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescript.ts' />
+///<reference path='references.ts' />
 
 module TypeScript {
     export enum EmitContainer {
@@ -40,7 +40,6 @@ module TypeScript {
     }
 
     export class EmitOptions {
-        public ioHost: EmitterIOHost = null;
         public outputMany: boolean = true;
         public commonDirectoryPath = "";
 
@@ -101,21 +100,21 @@ module TypeScript {
         public moduleName = "";
         public emitState = new EmitState();
         public indenter = new Indenter();
-        public allSourceMappers: SourceMapper[] = [];
         public sourceMapper: SourceMapper = null;
         public captureThisStmtString = "var _this = this;";
         private currentVariableDeclaration: VariableDeclaration;
         private declStack: PullDecl[] = [];
         private resolvingContext = new PullTypeResolutionContext(null);
         private exportAssignmentIdentifier: string = null;
+        private inWithBlock = false;
 
         public document: Document = null;
         private copyrightElement: AST = null;
 
         constructor(public emittingFileName: string,
-            public outfile: ITextWriter,
-            public emitOptions: EmitOptions,
-            private semanticInfoChain: SemanticInfoChain) {
+                    public outfile: TextWriter,
+                    public emitOptions: EmitOptions,
+                    private semanticInfoChain: SemanticInfoChain) {
         }
 
         private pushDecl(decl: PullDecl) {
@@ -256,8 +255,8 @@ module TypeScript {
             this.emitComments(importDeclAST, false);
         }
 
-        public createSourceMapper(document: Document, jsFileName: string, jsFile: ITextWriter, sourceMapOut: ITextWriter) {
-            this.sourceMapper = new SourceMapper(jsFile, sourceMapOut, document, jsFileName, this.emitOptions);
+        public createSourceMapper(document: Document, jsFileName: string, jsFile: TextWriter, sourceMapOut: TextWriter, resolvePath: (path: string) => string) {
+            this.sourceMapper = new SourceMapper(jsFile, sourceMapOut, document, jsFileName, this.emitOptions, resolvePath);
         }
 
         public setSourceMapperNewSourceFile(document: Document) {
@@ -1615,18 +1614,16 @@ module TypeScript {
         }
 
         // Note: may throw exception.
-        public emitSourceMapsAndClose(): void {
+        public getOutputFiles(): OutputFile[] {
             // Output a source mapping.  As long as we haven't gotten any errors yet.
+            var result: OutputFile[] = [];
             if (this.sourceMapper !== null) {
                 this.sourceMapper.emitSourceMapping(this.emitOptions.compilationSettings.sourceMapEmitterCallback);
+                result.push(this.sourceMapper.getOutputFile());
             }
 
-            try {
-                this.outfile.Close();
-            }
-            catch (e) {
-                Emitter.throwEmitterError(e);
-            }
+            result.push(this.outfile.getOutputFile());
+            return result;
         }
 
         private emitParameterPropertyAndMemberVariableAssignments(): void {
@@ -2194,7 +2191,7 @@ module TypeScript {
         }
 
         public emitThis() {
-            if (this.inArrowFunction) {
+            if (!this.inWithBlock && this.inArrowFunction) {
                 this.writeToOutput("_this");
             }
             else {
@@ -2214,20 +2211,6 @@ module TypeScript {
             }
         }
 
-        public static throwEmitterError(e: Error): void {
-            var error: any = new Error(e.message);
-            error.isEmitterError = true;
-            throw error;
-        }
-
-        public static handleEmitterError(fileName: string, e: Error): Diagnostic[] {
-            if ((<any>e).isEmitterError === true) {
-                return [new Diagnostic(fileName, 0, 0, DiagnosticCode.Emit_Error_0, [e.message])];
-            }
-
-            throw e;
-        }
-
         public emitLiteralExpression(expression: LiteralExpression): void {
             switch (expression.nodeType()) {
                 case NodeType.NullLiteral:
@@ -2245,7 +2228,7 @@ module TypeScript {
         }
 
         public emitThisExpression(expression: ThisExpression): void {
-            if (this.inArrowFunction) {
+            if (!this.inWithBlock && this.inArrowFunction) {
                 this.writeToOutputWithSourceMapRecord("_this", expression);
             }
             else {
@@ -2683,7 +2666,10 @@ module TypeScript {
             }
 
             this.writeToOutput(")");
+            var prevInWithBlock = this.inWithBlock;
+            this.inWithBlock = true;
             this.emitBlockOrStatement(statement.body);
+            this.inWithBlock = prevInWithBlock;
             this.recordSourceMappingEnd(statement);
         }
 

@@ -12,7 +12,7 @@ interface testSpec {
     skipTypeCheck?: boolean;
 }
 
-class RWCEmitter implements TypeScript.EmitterIOHost {
+class RWCEmitter implements Harness.Compiler.IEmitterIOHost {
     constructor(private fsOutput: Harness.Compiler.WriterAggregator, private fsDeclOutput: Harness.Compiler.WriterAggregator) {
     }
     writeFile(path: string, contents: string, writeByteOrderMark: boolean) {
@@ -134,7 +134,7 @@ class RWCRunner extends RunnerBase {
 
                         // Emiting the results
                         harnessCompiler.emitAll(emitterIOHost);
-                        harnessCompiler.emitAllDeclarations();
+                        harnessCompiler.emitAllDeclarations(emitterIOHost);
 
                         fsOutput.Close();
                         fsDeclOutput.Close();
@@ -236,25 +236,29 @@ class RWCRunner extends RunnerBase {
 
                 it("correct expression types check", () => {
                     if (!hasCrashed && !spec.skipTypeCheck && errors.length == 0) {
-                        var host = new TypeWriterHost();
-                        var compilerState = new Services.CompilerState(host);
+                        var compiler = new TypeScript.TypeScriptCompiler(
+                            new TypeScript.NullLogger(), new TypeScript.CompilationSettings());
 
-                        host.addScript('lib.d.ts', Harness.Compiler.libText);
+                        compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libText),
+                            ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
 
                         spec.compileList.forEach((item: string) => {
                             content = IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
-                            host.addScript(spec.projectRoot + "/" + item, content);
+                            compiler.addFile(spec.projectRoot + "/" + item, TypeScript.ScriptSnapshot.fromString(content),
+                                ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
                         });
 
-                        compilerState.refresh();
+                        // TODO: we really want to not have to do this call here.
+                        compiler.pullTypeCheck();
+
                         spec.compileList.forEach(file => {
-                            compilerState.getSemanticDiagnostics(spec.projectRoot + "/" + file);
+                            compiler.getSemanticDiagnostics(spec.projectRoot + "/" + file);
                         });
 
                         var typeLines: string[] = [];
                         spec.compileList.forEach(file => {
                             typeLines.push('=== ' + file + ' ===');
-                            var walker = new TypeWriterWalker(spec.projectRoot + "/" + file, host, compilerState);
+                            var walker = new TypeWriterWalker(spec.projectRoot + "/" + file, compiler);
                             walker.run();
                             walker.results.forEach(line => typeLines.push(line));
                         });

@@ -1,11 +1,11 @@
 === tests/cases/compiler/privacyCheckCallbackOfInterfaceMethodWithTypeParameter.ts ===
 Line 0 col 17 IdentifierName "A" = A<T>
-Line 0 col 19 IdentifierName "T" = any
+Line 0 col 19 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "f1" = (callback: (p: T) => any) => any
 Line 1 col 7 IdentifierName "callback" = (p: T) => any
 Line 1 col 18 IdentifierName "p" = T
 Line 1 col 21 IdentifierName "T" = T
 Line 4 col 17 IdentifierName "B" = B<T>
-Line 4 col 19 IdentifierName "T" = any
+Line 4 col 19 IdentifierName "T" = T
 Line 4 col 30 IdentifierName "A" = A<T>
 Line 4 col 32 IdentifierName "T" = T

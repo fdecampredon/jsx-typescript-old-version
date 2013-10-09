@@ -1,7 +1,7 @@
 === tests/cases/compiler/overloadOnGenericArity.ts ===
 Line 0 col 10 IdentifierName "Test" = Test
 Line 1 col 0 IdentifierName "then" = { <U>(p: string): string; (p: string): Date; }
-Line 1 col 9 IdentifierName "U" = any
+Line 1 col 9 IdentifierName "U" = U
 Line 1 col 12 IdentifierName "p" = string
 Line 2 col 0 IdentifierName "then" = { <U>(p: string): string; (p: string): Date; }
 Line 2 col 9 IdentifierName "p" = string

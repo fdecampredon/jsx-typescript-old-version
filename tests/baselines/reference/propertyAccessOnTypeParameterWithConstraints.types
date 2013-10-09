@@ -1,6 +1,6 @@
 === tests/cases/compiler/propertyAccessOnTypeParameterWithConstraints.ts ===
 Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = any
+Line 0 col 8 IdentifierName "T" = T
 Line 0 col 18 IdentifierName "Date" = Date
 Line 1 col 0 IdentifierName "f" = () => any
 Line 2 col 12 IdentifierName "x" = T
@@ -24,7 +24,7 @@ Line 8 col 13 IdentifierName "C" = new<T extends Date>() => C<T>
 Line 8 col 15 IdentifierName "Date" = Date
 Line 8 col 24 IdentifierName "f" = () => any
 Line 10 col 10 IdentifierName "I" = I<T>
-Line 10 col 12 IdentifierName "T" = any
+Line 10 col 12 IdentifierName "T" = T
 Line 10 col 22 IdentifierName "Date" = Date
 Line 11 col 0 IdentifierName "foo" = T
 Line 11 col 9 IdentifierName "T" = T
@@ -45,7 +45,7 @@ Line 15 col 10 MemberAccessExpression "i.foo" = Date
 Line 15 col 10 IdentifierName "i" = I<Date>
 Line 15 col 12 IdentifierName "foo" = Date
 Line 17 col 4 IdentifierName "a" = <T extends Date>() => T
-Line 18 col 5 IdentifierName "T" = any
+Line 18 col 5 IdentifierName "T" = T
 Line 18 col 15 IdentifierName "Date" = Date
 Line 18 col 24 IdentifierName "T" = T
 Line 20 col 4 IdentifierName "r3" = string
@@ -71,7 +71,7 @@ Line 24 col 9 ParenthesizedArrowFunctionExpression "<T extends Date>(x: T) => {
         var a = x['getDate'](); // should be string
         return a + x.getDate();
     }" = <T extends Date>(x: T) => any
-Line 24 col 10 IdentifierName "T" = any
+Line 24 col 10 IdentifierName "T" = T
 Line 24 col 20 IdentifierName "Date" = Date
 Line 24 col 26 IdentifierName "x" = T
 Line 24 col 29 IdentifierName "T" = T

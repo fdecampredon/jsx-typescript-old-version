@@ -31,8 +31,7 @@
 // this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
 edit.insert('');
 
-// Bug 790185: Error when we try to do the inserts below under high fidelity
-// diagnostics.setTypingFidelity(TypingFidelity.High);
+diagnostics.setTypingFidelity(TypingFidelity.High);
 
 goTo.marker('1');
 verify.completionListContains('foo');

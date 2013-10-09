@@ -5,7 +5,7 @@ Line 0 col 8 ObjectLiteralExpression "{
 }" = { x: <T>(y: T) => T; }
 Line 1 col 0 IdentifierName "x" = <T>(y: T) => T
 Line 1 col 6 FunctionExpression "function <T>(y: T): T { return null; }" = <T>(y: T) => T
-Line 1 col 16 IdentifierName "T" = any
+Line 1 col 16 IdentifierName "T" = T
 Line 1 col 19 IdentifierName "y" = T
 Line 1 col 22 IdentifierName "T" = T
 Line 1 col 26 IdentifierName "T" = T
@@ -18,7 +18,7 @@ Line 4 col 6 FunctionExpression "function (y: any): any { return null; }" = (y: 
 Line 4 col 16 IdentifierName "y" = any
 Line 6 col 17 IdentifierName "I" = I
 Line 7 col 0 IdentifierName "x" = <T>(y: T) => T
-Line 7 col 5 IdentifierName "T" = any
+Line 7 col 5 IdentifierName "T" = T
 Line 7 col 8 IdentifierName "y" = T
 Line 7 col 11 IdentifierName "T" = T
 Line 7 col 15 IdentifierName "T" = T

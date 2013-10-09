@@ -923,10 +923,10 @@ module FourSlash {
                 var compiler = new TypeScript.TypeScriptCompiler();
                 for (var i = 0; i < this.testData.files.length; i++) {
                     snapshot = this.languageServiceShimHost.getScriptSnapshot(this.testData.files[i].fileName);
-                    compiler.addSourceUnit(this.testData.files[i].fileName, TypeScript.ScriptSnapshot.fromString(snapshot.getText(0, snapshot.getLength())), ByteOrderMark.None, 0, true);
+                    compiler.addFile(this.testData.files[i].fileName, TypeScript.ScriptSnapshot.fromString(snapshot.getText(0, snapshot.getLength())), ByteOrderMark.None, 0, true);
                 }
 
-                compiler.addSourceUnit('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal), ByteOrderMark.None, 0, true);
+                compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal), ByteOrderMark.None, 0, true);
                 compiler.pullTypeCheck();
 
 
@@ -1562,10 +1562,8 @@ module FourSlash {
         harnessCompiler.addInputFiles(filesToAdd);
         harnessCompiler.compile();
 
-        var emitterIOHost: TypeScript.EmitterIOHost = {
+        var emitterIOHost: Harness.Compiler.IEmitterIOHost = {
             writeFile: (path: string, contents: string, writeByteOrderMark: boolean) => fsOutput.Write(contents),
-            directoryExists: (s: string) => false,
-            fileExists: (s: string) => true,
             resolvePath: (s: string) => s
         }
 

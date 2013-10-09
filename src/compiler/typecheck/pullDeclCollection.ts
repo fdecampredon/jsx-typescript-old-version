@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the Apache License, Version 2.0. 
 // See LICENSE.txt in the project root for complete license information.
 
-///<reference path='..\typescript.ts' />
+///<reference path='..\references.ts' />
 
 module TypeScript {
     class DeclCollectionContext {
@@ -264,6 +264,9 @@ module TypeScript {
             context.semanticInfoChain.setASTForDecl(decl, argDecl);
             context.semanticInfoChain.setDeclForAST(argDecl, decl);
         }
+
+        // Record this decl in its parent in the declGroup with the corresponding name
+        parent.addVariableDeclToGroup(decl);
         
         // Note: it is intentional that a parameter does not get added to hte context stack.  A 
         // parameter does not introduce a new name scope, so it shouldn't be in the context decl stack.
@@ -363,6 +366,11 @@ module TypeScript {
         var decl = new NormalPullDecl(varDecl.id.text(), varDecl.id.actualText, declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(varDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, varDecl);
+
+        if (parent) {
+            // Record this decl in its parent in the declGroup with the corresponding name
+            parent.addVariableDeclToGroup(decl);
+        }
 
         // Note: it is intentional that a var decl does not get added to hte context stack.  A var
         // decl does not introduce a new name scope, so it shouldn't be in the context decl stack.

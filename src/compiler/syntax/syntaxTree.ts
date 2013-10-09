@@ -1450,10 +1450,33 @@ module TypeScript {
         }
 
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): void {
+            if (this.checkClassElementModifiers(node.modifiers) ||
+                this.checkConstructorModifiers(node.modifiers)) {
+
+                this.skip(node);
+                return;
+            }
+
             var savedCurrentConstructor = this.currentConstructor;
             this.currentConstructor = node;
             super.visitConstructorDeclaration(node);
             this.currentConstructor = savedCurrentConstructor;
+        }
+
+        private checkConstructorModifiers(modifiers: ISyntaxList): boolean {
+            var currentElementFullStart = this.position();
+
+            for (var i = 0, n = modifiers.childCount(); i < n; i++) {
+                var child = modifiers.childAt(i);
+                if (child.kind() !== SyntaxKind.PublicKeyword) {
+                    this.pushDiagnostic1(currentElementFullStart, child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
+                    return true;
+                }
+
+                currentElementFullStart += child.fullWidth();
+            }
+
+            return false;
         }
 
         public visitSourceUnit(node: SourceUnitSyntax): void {

@@ -1,0 +1,22 @@
+=== tests/cases/compiler/genericPrototypeProperty.ts ===
+Line 0 col 6 IdentifierName "C" = C<T>
+Line 0 col 8 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "x" = T
+Line 1 col 7 IdentifierName "T" = T
+Line 2 col 0 IdentifierName "foo" = (x: T) => T
+Line 2 col 8 IdentifierName "x" = T
+Line 2 col 11 IdentifierName "T" = T
+Line 2 col 15 IdentifierName "T" = T
+Line 5 col 4 IdentifierName "r" = C<any>
+Line 5 col 8 MemberAccessExpression "C.prototype" = C<any>
+Line 5 col 8 IdentifierName "C" = new<T>() => C<T>
+Line 5 col 10 IdentifierName "prototype" = C<any>
+Line 7 col 4 IdentifierName "r2" = any
+Line 7 col 9 MemberAccessExpression "r.x" = any
+Line 7 col 9 IdentifierName "r" = C<any>
+Line 7 col 11 IdentifierName "x" = any
+Line 8 col 4 IdentifierName "r3" = any
+Line 8 col 9 InvocationExpression "r.foo(null)" = any
+Line 8 col 9 MemberAccessExpression "r.foo" = (x: any) => any
+Line 8 col 9 IdentifierName "r" = C<any>
+Line 8 col 11 IdentifierName "foo" = (x: any) => any

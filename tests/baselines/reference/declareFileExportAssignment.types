@@ -13,11 +13,11 @@ Line 6 col 0 IdentifierName "listen" = (port: number) => void
 Line 6 col 17 IdentifierName "port" = number
 Line 11 col 4 IdentifierName "m2" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
 Line 12 col 8 IdentifierName "m2" = m2
-Line 12 col 11 IdentifierName "connectExport" = any
+Line 12 col 11 IdentifierName "connectExport" = m2.connectExport
 Line 13 col 0 IdentifierName "test1" = m2.connectModule
 Line 13 col 11 IdentifierName "m2" = m2
-Line 13 col 14 IdentifierName "connectModule" = any
+Line 13 col 14 IdentifierName "connectModule" = m2.connectModule
 Line 14 col 0 IdentifierName "test2" = () => m2.connectModule
 Line 14 col 13 IdentifierName "m2" = m2
-Line 14 col 16 IdentifierName "connectModule" = any
+Line 14 col 16 IdentifierName "connectModule" = m2.connectModule
 Line 17 col 9 IdentifierName "m2" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }

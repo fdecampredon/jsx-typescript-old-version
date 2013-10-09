@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescript.ts' />
+///<reference path='references.ts' />
 
 module TypeScript {
     // Note: Any addition to the NodeType should also be supported with addition to AstWalkerDetailCallback

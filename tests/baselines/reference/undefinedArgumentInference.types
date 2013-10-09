@@ -1,6 +1,6 @@
 === tests/cases/compiler/undefinedArgumentInference.ts ===
 Line 0 col 9 IdentifierName "foo1" = <T>(f1: { x: T; y: T; }) => T
-Line 0 col 14 IdentifierName "T" = any
+Line 0 col 14 IdentifierName "T" = T
 Line 0 col 17 IdentifierName "f1" = { x: T; y: T; }
 Line 0 col 23 IdentifierName "x" = T
 Line 0 col 26 IdentifierName "T" = T

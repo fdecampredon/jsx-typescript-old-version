@@ -1,11 +1,11 @@
 === tests/cases/compiler/mutuallyRecursiveGenericBaseTypes2.ts ===
 Line 0 col 6 IdentifierName "foo" = foo<T>
-Line 0 col 10 IdentifierName "T" = any
+Line 0 col 10 IdentifierName "T" = T
 Line 2 col 0 IdentifierName "bar" = () => foo2<T[]>
 Line 2 col 11 IdentifierName "foo2" = foo2<T>
 Line 2 col 16 IdentifierName "T" = T
 Line 5 col 6 IdentifierName "foo2" = foo2<T>
-Line 5 col 11 IdentifierName "T" = any
+Line 5 col 11 IdentifierName "T" = T
 Line 5 col 22 IdentifierName "foo" = foo<T>
 Line 5 col 26 IdentifierName "T" = T
 Line 8 col 4 IdentifierName "test" = foo<string>

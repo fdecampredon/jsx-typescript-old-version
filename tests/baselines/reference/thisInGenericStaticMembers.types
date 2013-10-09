@@ -1,14 +1,14 @@
 === tests/cases/compiler/thisInGenericStaticMembers.ts ===
 Line 2 col 6 IdentifierName "A" = A
 Line 4 col 11 IdentifierName "one" = <T>(source: T, value: number) => T
-Line 4 col 15 IdentifierName "T" = any
+Line 4 col 15 IdentifierName "T" = T
 Line 4 col 18 IdentifierName "source" = T
 Line 4 col 25 IdentifierName "T" = T
 Line 4 col 28 IdentifierName "value" = number
 Line 4 col 44 IdentifierName "T" = T
 Line 5 col 15 IdentifierName "source" = T
 Line 8 col 11 IdentifierName "two" = <T>(source: T) => T
-Line 8 col 15 IdentifierName "T" = any
+Line 8 col 15 IdentifierName "T" = T
 Line 8 col 18 IdentifierName "source" = T
 Line 8 col 26 IdentifierName "T" = T
 Line 8 col 30 IdentifierName "T" = T

@@ -1,13 +1,13 @@
 === tests/cases/compiler/genericClassPropertyInheritanceSpecialization.ts ===
 Line 0 col 10 IdentifierName "KnockoutObservableBase" = KnockoutObservableBase<T>
-Line 0 col 33 IdentifierName "T" = any
+Line 0 col 33 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "peek" = () => T
 Line 1 col 12 IdentifierName "T" = T
 Line 2 col 8 IdentifierName "T" = T
 Line 3 col 5 IdentifierName "value" = T
 Line 3 col 12 IdentifierName "T" = T
 Line 6 col 10 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
-Line 6 col 29 IdentifierName "T" = any
+Line 6 col 29 IdentifierName "T" = T
 Line 6 col 40 IdentifierName "KnockoutObservableBase" = KnockoutObservableBase<T>
 Line 6 col 63 IdentifierName "T" = T
 Line 7 col 0 IdentifierName "equalityComparer" = (a: T, b: T) => boolean
@@ -18,7 +18,7 @@ Line 7 col 30 IdentifierName "T" = T
 Line 8 col 0 IdentifierName "valueHasMutated" = () => void
 Line 9 col 0 IdentifierName "valueWillMutate" = () => void
 Line 12 col 10 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 12 col 34 IdentifierName "T" = any
+Line 12 col 34 IdentifierName "T" = T
 Line 12 col 45 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
 Line 12 col 64 IdentifierName "T" = T
 Line 13 col 0 IdentifierName "indexOf" = (searchElement: T, fromIndex?: number) => number
@@ -75,7 +75,7 @@ Line 26 col 23 IdentifierName "T" = T
 Line 29 col 10 IdentifierName "KnockoutObservableArrayStatic" = KnockoutObservableArrayStatic
 Line 30 col 0 IdentifierName "fn" = KnockoutObservableArray<any>
 Line 30 col 8 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
-Line 32 col 5 IdentifierName "T" = any
+Line 32 col 5 IdentifierName "T" = T
 Line 32 col 8 IdentifierName "value" = T[]
 Line 32 col 16 IdentifierName "T" = T
 Line 32 col 22 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
@@ -87,7 +87,7 @@ Line 39 col 7 IdentifierName "Portal" = Portal
 Line 39 col 14 IdentifierName "Controls" = Portal.Controls
 Line 39 col 23 IdentifierName "Validators" = Portal.Controls.Validators
 Line 41 col 17 IdentifierName "Validator" = Portal.Controls.Validators.Validator<TValue>
-Line 41 col 27 IdentifierName "TValue" = any
+Line 41 col 27 IdentifierName "TValue" = TValue
 Line 42 col 16 IdentifierName "_subscription" = any
 Line 43 col 15 IdentifierName "message" = KnockoutObservable<string>
 Line 43 col 24 IdentifierName "KnockoutObservable" = KnockoutObservable<T>
@@ -106,44 +106,44 @@ Line 52 col 16 IdentifierName "ViewModels" = PortalFx.ViewModels
 Line 52 col 27 IdentifierName "Controls" = PortalFx.ViewModels.Controls
 Line 52 col 36 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
 Line 54 col 17 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
-Line 54 col 27 IdentifierName "TValue" = any
+Line 54 col 27 IdentifierName "TValue" = TValue
 Line 54 col 43 IdentifierName "Portal" = Portal
-Line 54 col 50 IdentifierName "Controls" = { Validators: { Validator: new<TValue>(message?: string) => PortalFx.ViewModels.Controls.Validators.Validator<TValue>; }; }
-Line 54 col 59 IdentifierName "Validators" = { Validator: new<TValue>(message?: string) => PortalFx.ViewModels.Controls.Validators.Validator<TValue>; }
-Line 54 col 70 IdentifierName "Validator" = new<TValue>(message?: string) => PortalFx.ViewModels.Controls.Validators.Validator<TValue>
+Line 54 col 50 IdentifierName "Controls" = Portal.Controls
+Line 54 col 59 IdentifierName "Validators" = Portal.Controls.Validators
+Line 54 col 70 IdentifierName "Validator" = Portal.Controls.Validators.Validator<TValue>
 Line 54 col 80 IdentifierName "TValue" = TValue
 Line 56 col 20 IdentifierName "message" = string
 Line 57 col 0 InvocationExpression "super(message)" = void
 Line 57 col 18 IdentifierName "message" = string
 Line 63 col 10 IdentifierName "Contract" = Contract<TValue>
-Line 63 col 19 IdentifierName "TValue" = any
+Line 63 col 19 IdentifierName "TValue" = TValue
 Line 64 col 0 IdentifierName "validators" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
 Line 65 col 16 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
 Line 65 col 40 IdentifierName "PortalFx" = PortalFx
-Line 65 col 49 IdentifierName "ViewModels" = any
-Line 65 col 60 IdentifierName "Controls" = any
-Line 65 col 69 IdentifierName "Validators" = any
-Line 65 col 80 IdentifierName "Validator" = any
+Line 65 col 49 IdentifierName "ViewModels" = PortalFx.ViewModels
+Line 65 col 60 IdentifierName "Controls" = PortalFx.ViewModels.Controls
+Line 65 col 69 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
+Line 65 col 80 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
 Line 65 col 90 IdentifierName "TValue" = TValue
 Line 69 col 6 IdentifierName "ViewModel" = ViewModel<TValue>
-Line 69 col 16 IdentifierName "TValue" = any
+Line 69 col 16 IdentifierName "TValue" = TValue
 Line 69 col 35 IdentifierName "Contract" = Contract<TValue>
 Line 69 col 44 IdentifierName "TValue" = TValue
 Line 71 col 11 IdentifierName "validators" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
 Line 71 col 23 IdentifierName "KnockoutObservableArray" = KnockoutObservableArray<T>
 Line 71 col 47 IdentifierName "PortalFx" = PortalFx
-Line 71 col 56 IdentifierName "ViewModels" = any
-Line 71 col 67 IdentifierName "Controls" = any
-Line 71 col 76 IdentifierName "Validators" = any
-Line 71 col 87 IdentifierName "Validator" = any
+Line 71 col 56 IdentifierName "ViewModels" = PortalFx.ViewModels
+Line 71 col 67 IdentifierName "Controls" = PortalFx.ViewModels.Controls
+Line 71 col 76 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
+Line 71 col 87 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
 Line 71 col 97 IdentifierName "TValue" = TValue
 Line 71 col 108 InvocationExpression "ko.observableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>()" = KnockoutObservableArray<PortalFx.ViewModels.Controls.Validators.Validator<TValue>>
 Line 71 col 108 MemberAccessExpression "ko.observableArray" = KnockoutObservableArrayStatic
 Line 71 col 108 IdentifierName "ko" = { observableArray: KnockoutObservableArrayStatic; }
 Line 71 col 111 IdentifierName "observableArray" = KnockoutObservableArrayStatic
 Line 71 col 127 IdentifierName "PortalFx" = PortalFx
-Line 71 col 136 IdentifierName "ViewModels" = any
-Line 71 col 147 IdentifierName "Controls" = any
-Line 71 col 156 IdentifierName "Validators" = any
-Line 71 col 167 IdentifierName "Validator" = any
+Line 71 col 136 IdentifierName "ViewModels" = PortalFx.ViewModels
+Line 71 col 147 IdentifierName "Controls" = PortalFx.ViewModels.Controls
+Line 71 col 156 IdentifierName "Validators" = PortalFx.ViewModels.Controls.Validators
+Line 71 col 167 IdentifierName "Validator" = PortalFx.ViewModels.Controls.Validators.Validator<TValue>
 Line 71 col 177 IdentifierName "TValue" = TValue

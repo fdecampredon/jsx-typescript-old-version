@@ -1,3 +1,6 @@
 classSideInheritance3.ts line 16 col 5: error TS2012: Cannot convert 'new(x: string, data: string) => B' to 'new(x: string) => A':
 	Construct signatures of types 'new(x: string, data: string) => B' and 'new(x: string) => A' are incompatible:
 		Call signature expects 1 or fewer parameters.
+classSideInheritance3.ts line 17 col 5: error TS2012: Cannot convert 'new(x: string, data: string) => B' to 'new(x: string) => A':
+	Construct signatures of types 'new(x: string, data: string) => B' and 'new(x: string) => A' are incompatible:
+		Call signature expects 1 or fewer parameters.

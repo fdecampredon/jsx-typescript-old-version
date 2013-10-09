@@ -5,9 +5,9 @@ Line 4 col 6 IdentifierName "B" = B
 Line 4 col 16 IdentifierName "A" = A
 Line 5 col 0 IdentifierName "bar" = () => string
 Line 10 col 6 IdentifierName "C" = C<U, T>
-Line 10 col 8 IdentifierName "U" = any
+Line 10 col 8 IdentifierName "U" = U
 Line 10 col 18 IdentifierName "T" = T
-Line 10 col 21 IdentifierName "T" = any
+Line 10 col 21 IdentifierName "T" = T
 Line 10 col 31 IdentifierName "A" = A
 Line 11 col 0 IdentifierName "f" = () => string
 Line 12 col 12 IdentifierName "x" = U
@@ -56,9 +56,9 @@ Line 24 col 26 IdentifierName "g" = (x: B) => string
 Line 24 col 28 ObjectCreationExpression "new B()" = B
 Line 24 col 32 IdentifierName "B" = new() => B
 Line 26 col 10 IdentifierName "I" = I<U, T>
-Line 26 col 12 IdentifierName "U" = any
+Line 26 col 12 IdentifierName "U" = U
 Line 26 col 22 IdentifierName "T" = T
-Line 26 col 25 IdentifierName "T" = any
+Line 26 col 25 IdentifierName "T" = T
 Line 26 col 35 IdentifierName "A" = A
 Line 27 col 0 IdentifierName "foo" = U
 Line 27 col 9 IdentifierName "U" = U
@@ -80,14 +80,14 @@ Line 31 col 10 MemberAccessExpression "i.foo" = B
 Line 31 col 10 IdentifierName "i" = I<B, A>
 Line 31 col 12 IdentifierName "foo" = B
 Line 33 col 4 IdentifierName "a" = { <U extends T, T extends A>(): U; <U extends T, T extends A>(x: U): U; }
-Line 34 col 5 IdentifierName "U" = any
+Line 34 col 5 IdentifierName "U" = U
 Line 34 col 15 IdentifierName "T" = T
-Line 34 col 18 IdentifierName "T" = any
+Line 34 col 18 IdentifierName "T" = T
 Line 34 col 28 IdentifierName "A" = A
 Line 34 col 34 IdentifierName "U" = U
-Line 35 col 5 IdentifierName "U" = any
+Line 35 col 5 IdentifierName "U" = U
 Line 35 col 15 IdentifierName "T" = T
-Line 35 col 18 IdentifierName "T" = any
+Line 35 col 18 IdentifierName "T" = T
 Line 35 col 28 IdentifierName "A" = A
 Line 35 col 31 IdentifierName "x" = U
 Line 35 col 34 IdentifierName "U" = U
@@ -130,9 +130,9 @@ Line 44 col 9 ParenthesizedArrowFunctionExpression "<U extends T, T extends A>(x
         var a = x['foo'](); // should be string
         return a + x.foo();
     }" = <U extends T, T extends A>(x: U) => string
-Line 44 col 10 IdentifierName "U" = any
+Line 44 col 10 IdentifierName "U" = U
 Line 44 col 20 IdentifierName "T" = T
-Line 44 col 23 IdentifierName "T" = any
+Line 44 col 23 IdentifierName "T" = T
 Line 44 col 33 IdentifierName "A" = A
 Line 44 col 36 IdentifierName "x" = U
 Line 44 col 39 IdentifierName "U" = U

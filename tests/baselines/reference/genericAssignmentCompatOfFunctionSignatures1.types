@@ -2,8 +2,8 @@
 Line 0 col 4 IdentifierName "x1" = <T, U extends { a: T; b: string; }>(x: T, z: U) => void
 Line 0 col 9 FunctionExpression "function foo3<T, U extends { a: T; b: string }>(x: T, z: U) { }" = <T, U extends { a: T; b: string; }>(x: T, z: U) => void
 Line 0 col 18 IdentifierName "foo3" = <T, U extends { a: T; b: string; }>(x: T, z: U) => void
-Line 0 col 23 IdentifierName "T" = any
-Line 0 col 26 IdentifierName "U" = any
+Line 0 col 23 IdentifierName "T" = T
+Line 0 col 26 IdentifierName "U" = U
 Line 0 col 38 IdentifierName "a" = T
 Line 0 col 41 IdentifierName "T" = T
 Line 0 col 44 IdentifierName "b" = string
@@ -14,8 +14,8 @@ Line 0 col 66 IdentifierName "U" = U
 Line 1 col 4 IdentifierName "x2" = <T, U extends { a: T; b: number; }>(x: T, z: U) => void
 Line 1 col 9 FunctionExpression "function foo3<T, U extends { a: T; b: number }>(x: T, z: U) { }" = <T, U extends { a: T; b: number; }>(x: T, z: U) => void
 Line 1 col 18 IdentifierName "foo3" = <T, U extends { a: T; b: number; }>(x: T, z: U) => void
-Line 1 col 23 IdentifierName "T" = any
-Line 1 col 26 IdentifierName "U" = any
+Line 1 col 23 IdentifierName "T" = T
+Line 1 col 26 IdentifierName "U" = U
 Line 1 col 38 IdentifierName "a" = T
 Line 1 col 41 IdentifierName "T" = T
 Line 1 col 44 IdentifierName "b" = number

@@ -1,12 +1,12 @@
 === tests/cases/compiler/inheritedGenericCallSignature.ts ===
 Line 1 col 10 IdentifierName "I1" = I1<T>
-Line 1 col 13 IdentifierName "T" = any
+Line 1 col 13 IdentifierName "T" = T
 Line 3 col 5 IdentifierName "a" = T
 Line 3 col 8 IdentifierName "T" = T
 Line 3 col 12 IdentifierName "T" = T
 Line 8 col 10 IdentifierName "Object" = Object
 Line 12 col 10 IdentifierName "I2" = I2<T>
-Line 12 col 13 IdentifierName "T" = any
+Line 12 col 13 IdentifierName "T" = T
 Line 12 col 24 IdentifierName "I1" = I1<T>
 Line 12 col 27 IdentifierName "T" = T
 Line 13 col 0 IdentifierName "b" = T

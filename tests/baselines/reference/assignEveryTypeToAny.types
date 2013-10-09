@@ -72,12 +72,12 @@ Line 48 col 0 AssignmentExpression "x = { f<T>(x: T) { return x; } }" = { f: <T>
 Line 48 col 0 IdentifierName "x" = any
 Line 48 col 4 ObjectLiteralExpression "{ f<T>(x: T) { return x; } }" = { f: <T>(x: T) => T; }
 Line 48 col 6 IdentifierName "f" = <T>(x: T) => T
-Line 48 col 8 IdentifierName "T" = any
+Line 48 col 8 IdentifierName "T" = T
 Line 48 col 11 IdentifierName "x" = T
 Line 48 col 14 IdentifierName "T" = T
 Line 48 col 26 IdentifierName "x" = T
 Line 50 col 9 IdentifierName "j" = <T>(a: T) => void
-Line 50 col 11 IdentifierName "T" = any
+Line 50 col 11 IdentifierName "T" = T
 Line 50 col 14 IdentifierName "a" = T
 Line 50 col 17 IdentifierName "T" = T
 Line 51 col 0 AssignmentExpression "x = a" = T

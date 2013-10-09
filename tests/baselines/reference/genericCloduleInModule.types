@@ -1,14 +1,14 @@
 === tests/cases/compiler/genericCloduleInModule.ts ===
 Line 1 col 7 IdentifierName "A" = A
 Line 2 col 17 IdentifierName "B" = A.B<T>
-Line 2 col 19 IdentifierName "T" = any
+Line 2 col 19 IdentifierName "T" = T
 Line 3 col 0 IdentifierName "foo" = () => void
 Line 4 col 15 IdentifierName "bar" = () => void
 Line 6 col 18 IdentifierName "B" = A.B
 Line 7 col 19 IdentifierName "x" = number
 Line 11 col 4 IdentifierName "b" = A.B<number>
 Line 11 col 7 IdentifierName "A" = A
-Line 11 col 9 IdentifierName "B" = any
+Line 11 col 9 IdentifierName "B" = A.B<T>
 Line 12 col 0 InvocationExpression "b.foo()" = void
 Line 12 col 0 MemberAccessExpression "b.foo" = () => void
 Line 12 col 0 IdentifierName "b" = A.B<number>

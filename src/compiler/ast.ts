@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescript.ts' />
+///<reference path='references.ts' />
 
 module TypeScript {
     export interface IASTSpan {
@@ -72,12 +72,6 @@ module TypeScript {
 
         public astIDString: string = astID.toString();
         public astID: number = astID++;
-
-        // These are used to store type resolution information directly on the AST, rather than
-        // within a data map, if the useDirectTypeStorage flag is set
-        public symbol: PullSymbol = null; 
-        public aliasSymbol: PullSymbol = null;
-        public decl: PullDecl = null;
 
         private _preComments: Comment[] = null;
         private _postComments: Comment[] = null;
@@ -1967,7 +1961,7 @@ module TypeScript {
         }
 
         public emit(emitter: Emitter) {
-            Emitter.throwEmitterError(new Error(getLocalizedText(DiagnosticCode.Should_not_emit_a_type_query, null)));
+            throw Errors.invalidOperation("Should not emit a type query.");
         }
 
         public structuralEquals(ast: TypeQuery, includingPosition: boolean): boolean {
@@ -1990,7 +1984,7 @@ module TypeScript {
         }
 
         public emit(emitter: Emitter) {
-            Emitter.throwEmitterError(new Error(getLocalizedText(DiagnosticCode.Should_not_emit_a_type_reference, null)));
+            throw Errors.invalidOperation("Should not emit a type reference.");
         }
 
         public structuralEquals(ast: TypeReference, includingPosition: boolean): boolean {

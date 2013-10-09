@@ -1,13 +1,13 @@
 === tests/cases/compiler/genericFunctionsWithOptionalParameters3.ts ===
 Line 0 col 6 IdentifierName "Collection" = Collection<T>
-Line 0 col 17 IdentifierName "T" = any
+Line 0 col 17 IdentifierName "T" = T
 Line 1 col 11 IdentifierName "add" = (x: T) => void
 Line 1 col 15 IdentifierName "x" = T
 Line 1 col 18 IdentifierName "T" = T
 Line 3 col 10 IdentifierName "Utils" = Utils
 Line 4 col 0 IdentifierName "fold" = <T, S>(c?: Collection<T>, folder?: (s: S, t: T) => T, init?: S) => T
-Line 4 col 9 IdentifierName "T" = any
-Line 4 col 12 IdentifierName "S" = any
+Line 4 col 9 IdentifierName "T" = T
+Line 4 col 12 IdentifierName "S" = S
 Line 4 col 15 IdentifierName "c" = Collection<T>
 Line 4 col 19 IdentifierName "Collection" = Collection<T>
 Line 4 col 30 IdentifierName "T" = T
@@ -21,9 +21,9 @@ Line 4 col 62 IdentifierName "init" = S
 Line 4 col 69 IdentifierName "S" = S
 Line 4 col 73 IdentifierName "T" = T
 Line 5 col 0 IdentifierName "mapReduce" = <T, U, V>(c: Collection<T>, mapper: (x: T) => U, reducer: (y: U) => V) => Collection<V>
-Line 5 col 14 IdentifierName "T" = any
-Line 5 col 17 IdentifierName "U" = any
-Line 5 col 20 IdentifierName "V" = any
+Line 5 col 14 IdentifierName "T" = T
+Line 5 col 17 IdentifierName "U" = U
+Line 5 col 20 IdentifierName "V" = V
 Line 5 col 23 IdentifierName "c" = Collection<T>
 Line 5 col 26 IdentifierName "Collection" = Collection<T>
 Line 5 col 37 IdentifierName "T" = T

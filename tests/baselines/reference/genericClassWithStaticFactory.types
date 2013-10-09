@@ -1,7 +1,7 @@
 === tests/cases/compiler/genericClassWithStaticFactory.ts ===
 Line 0 col 7 IdentifierName "Editor" = Editor
 Line 2 col 17 IdentifierName "List" = Editor.List<T>
-Line 2 col 22 IdentifierName "T" = any
+Line 2 col 22 IdentifierName "T" = T
 Line 3 col 15 IdentifierName "next" = Editor.List<T>
 Line 3 col 21 IdentifierName "List" = Editor.List<T>
 Line 3 col 26 IdentifierName "T" = T
@@ -324,9 +324,9 @@ Line 104 col 19 ThisKeyword "this" = Editor.List<T>
 Line 104 col 24 IdentifierName "insertEntryBefore" = (entry: Editor.List<T>) => Editor.List<T>
 Line 104 col 42 IdentifierName "entry" = Editor.List<T>
 Line 108 col 17 IdentifierName "ListFactory" = Editor.ListFactory<T>
-Line 108 col 29 IdentifierName "T" = any
+Line 108 col 29 IdentifierName "T" = T
 Line 110 col 15 IdentifierName "MakeHead" = <T>() => Editor.List<T>
-Line 110 col 24 IdentifierName "T" = any
+Line 110 col 24 IdentifierName "T" = T
 Line 110 col 30 IdentifierName "List" = Editor.List<T>
 Line 110 col 35 IdentifierName "T" = T
 Line 111 col 16 IdentifierName "entry" = Editor.List<T>
@@ -347,7 +347,7 @@ Line 113 col 18 IdentifierName "next" = Editor.List<T>
 Line 113 col 25 IdentifierName "entry" = Editor.List<T>
 Line 114 col 19 IdentifierName "entry" = Editor.List<T>
 Line 117 col 15 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
-Line 117 col 25 IdentifierName "T" = any
+Line 117 col 25 IdentifierName "T" = T
 Line 117 col 28 IdentifierName "data" = T
 Line 117 col 34 IdentifierName "T" = T
 Line 117 col 38 IdentifierName "List" = Editor.List<T>
@@ -371,7 +371,7 @@ Line 120 col 18 IdentifierName "next" = Editor.List<T>
 Line 120 col 25 IdentifierName "entry" = Editor.List<T>
 Line 121 col 19 IdentifierName "entry" = Editor.List<T>
 Line 124 col 15 IdentifierName "RemoveEntry" = <T>(entry: Editor.List<T>) => Editor.List<T>
-Line 124 col 27 IdentifierName "T" = any
+Line 124 col 27 IdentifierName "T" = T
 Line 124 col 30 IdentifierName "entry" = Editor.List<T>
 Line 124 col 37 IdentifierName "List" = Editor.List<T>
 Line 124 col 42 IdentifierName "T" = T

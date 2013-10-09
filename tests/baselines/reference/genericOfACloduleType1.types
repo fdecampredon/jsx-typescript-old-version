@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericOfACloduleType1.ts ===
 Line 0 col 6 IdentifierName "G" = G<T>
-Line 0 col 8 IdentifierName "T" = any
+Line 0 col 8 IdentifierName "T" = T
 Line 0 col 12 IdentifierName "bar" = (x: T) => T
 Line 0 col 16 IdentifierName "x" = T
 Line 0 col 19 IdentifierName "T" = T
@@ -25,4 +25,4 @@ Line 11 col 4 IdentifierName "g2" = G<M.C>
 Line 11 col 9 ObjectCreationExpression "new G<M.C>() // was: error Type reference cannot refer to container 'M.C'." = G<M.C>
 Line 11 col 13 IdentifierName "G" = new<T>() => G<T>
 Line 11 col 15 IdentifierName "M" = M
-Line 11 col 17 IdentifierName "C" = any
+Line 11 col 17 IdentifierName "C" = M.C

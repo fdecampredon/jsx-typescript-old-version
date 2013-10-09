@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-///<reference path='typescript.ts' />
+///<reference path='references.ts' />
 
 module TypeScript {
     interface IIndexable<T> {
@@ -136,6 +136,13 @@ module TypeScript {
         public lookup(key: string) : T {
             var data = this.table[key];
             return data === undefined ? null : data;
+        }
+
+        public remove(key: string): void {
+            if (this.table[key] !== undefined) {
+                this.table[key] = undefined;
+                this.itemCount--;
+            }
         }
     }
 

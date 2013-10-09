@@ -23,27 +23,19 @@ class PositionalWalker extends TypeScript.SyntaxWalker {
 }
 
 class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
-    private resolver: TypeScript.PullTypeResolver;
-
+    private document: TypeScript.Document;
     private syntaxTree: TypeScript.SyntaxTree;
     private currentPosition = 0;
 
-    private ast: TypeScript.Script;
-    private lineMap: TypeScript.LineMap;
-
     public results: string[] = [];
 
-    constructor(public filename: string, public host: Services.ILanguageServiceHost, public compilerState: Services.CompilerState) {
+    constructor(public filename: string, public compiler: TypeScript.TypeScriptCompiler) {
         super();
 
-        var compSettings = host.getCompilationSettings();
-        var snapshot = host.getScriptSnapshot(this.filename);
-        this.syntaxTree = TypeScript.Parser.parse(this.filename, TypeScript.SimpleText.fromScriptSnapshot(snapshot), false, new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
-        this.ast = <TypeScript.Script>TypeScript.SyntaxTreeToAstVisitor.visit(this.syntaxTree, this.filename, compSettings, false);
-        this.lineMap = TypeScript.LineMap.fromScriptSnapshot(snapshot);
+        this.document = compiler.getDocument(filename);
+        this.syntaxTree = this.document.syntaxTree();
 
-        var infoChain = this.compilerState.getSemanticInfoChain();
-        this.resolver = new TypeScript.PullTypeResolver(compSettings, infoChain, this.filename);
+        compiler.setUnit(filename);
     }
 
     public run() {
@@ -84,30 +76,12 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         return super.visitSourceUnit(node);
     }
 
-    private getEnclosingDecl(element: TypeScript.ISyntaxElement) {
-        this.resolver.setUnitPath(this.filename);
-
-        var pos = this.position();
-        var node = TypeScript.getAstAtPosition(this.compilerState.getDocument(this.filename).script, pos, false, false);
-        while (node) {
-            if (node.nodeType() !== TypeScript.NodeType.Comment) {
-                var decl = this.resolver.getDeclForAST(node);
-                if (decl) {
-                    return decl;
-                }
-            }
-
-            node = node.parent;
-        }
-        return null;
-    }
-
     private getAstForElement(element: TypeScript.ISyntaxElement) {
         var candidates: string[] = [];
 
-        var s = this.host.getScriptSnapshot(this.filename);
+        var s = this.document.scriptSnapshot;
         for (var i = 0; i < element.fullWidth(); i++) {
-            var ast = TypeScript.getAstAtPosition(this.compilerState.getDocument(this.filename).script, (<PositionedNode>element).position + i, false, false);
+            var ast = TypeScript.getAstAtPosition(this.document.script, (<PositionedNode>element).position + i, false, false);
             while (ast) {
                 candidates.push(s.getText(ast.minChar, ast.limChar));
                 if (ast.limChar - ast.minChar === element.width()) {
@@ -126,10 +100,11 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
 
     private getTypeOfElement(element: TypeScript.ISyntaxElement) {
         var ast = this.getAstForElement(element);
-        var decl = this.getEnclosingDecl(element);
-        if (decl && ast) {
-            var result = this.resolver.resolveAST(ast, false, decl, new TypeScript.PullTypeResolutionContext(this.resolver, false));
-            return result.type.toString();
+        if (ast) {
+            var typeInfo = this.compiler.pullGetSymbolInformationFromAST(ast, this.document);
+            if (typeInfo.symbol && typeInfo.symbol.type) {
+                return typeInfo.symbol.type.toString();
+            }
         }
 
         return "<unknown>";
@@ -213,70 +188,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     }
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
-        var pos = this.lineMap.getLineAndCharacterFromPosition(this.position());
+        var pos = this.document.lineMap.getLineAndCharacterFromPosition(this.position());
         this.results.push('Line ' + pos.line() + ' col ' + pos.character() + ' ' + TypeScript.SyntaxKind[node.kind()] + ' "' + node.fullText().trim() + '" = ' + this.getTypeOfElement(node));
     }
-}
-
-class TypeWriterHost implements Services.ILanguageServiceHost {
-    private scriptNames: string[] = [];
-    private scriptTexts: string[] = [];
-    private snapshots: TypeScript.IScriptSnapshot[] = [];
-
-    public addScript(name: string, content: string) {
-        this.scriptNames.push(name);
-        this.scriptTexts.push(content);
-        this.snapshots.push(TypeScript.ScriptSnapshot.fromString(content));
-    }
-
-    getLocalizedDiagnosticMessages(): any {
-        return null;
-    }
-
-    getScriptByteOrderMark() {
-        return ByteOrderMark.None;
-    }
-
-    getCompilationSettings(): TypeScript.CompilationSettings {
-        return new TypeScript.CompilationSettings();
-    }
-
-    getScriptFileNames(): string[] {
-        return this.scriptNames;
-    }
-    getScriptVersion(fileName: string): number {
-        return 0;
-    }
-
-    getScriptIsOpen(fileName: string): boolean {
-        return this.scriptNames.indexOf(fileName) >= 0;
-    }
-
-    getScriptSnapshot(fileName: string): TypeScript.IScriptSnapshot {
-        return this.snapshots[this.scriptNames.indexOf(fileName)];
-    }
-
-    getDiagnosticsObject(): Services.ILanguageServicesDiagnostics {
-        return this;
-    }
-
-    resolveRelativePath(path: string, directory: string): string {
-        throw new Error('NYI: resolveRelativePath');
-    }
-    fileExists(path: string): boolean {
-        return this.scriptNames.indexOf(path) >= 0;
-    }
-    directoryExists(path: string): boolean {
-        return false;
-    }
-    getParentDirectory(path: string): string {
-        return null;
-    }
-
-    information(): boolean { return false; }
-    debug(): boolean { return false; }
-    warning(): boolean { return false; }
-    error(): boolean { return false; }
-    fatal(): boolean { return false; }
-    log(s: string): void { }
 }

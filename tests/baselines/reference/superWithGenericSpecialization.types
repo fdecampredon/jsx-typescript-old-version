@@ -1,10 +1,10 @@
 === tests/cases/compiler/superWithGenericSpecialization.ts ===
 Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = any
+Line 0 col 8 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "x" = T
 Line 1 col 7 IdentifierName "T" = T
 Line 4 col 6 IdentifierName "D" = D<T>
-Line 4 col 8 IdentifierName "T" = any
+Line 4 col 8 IdentifierName "T" = T
 Line 4 col 19 IdentifierName "C" = C<T>
 Line 5 col 0 IdentifierName "y" = T
 Line 5 col 7 IdentifierName "T" = T

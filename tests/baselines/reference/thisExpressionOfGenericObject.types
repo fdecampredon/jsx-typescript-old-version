@@ -1,6 +1,6 @@
 === tests/cases/compiler/thisExpressionOfGenericObject.ts ===
 Line 0 col 6 IdentifierName "MyClass1" = MyClass1<T>
-Line 0 col 15 IdentifierName "T" = any
+Line 0 col 15 IdentifierName "T" = T
 Line 1 col 12 IdentifierName "obj" = MyClass1<string>
 Line 1 col 17 IdentifierName "MyClass1" = MyClass1<T>
 Line 3 col 0 ParenthesizedArrowFunctionExpression "() => this" = () => MyClass1<T>

@@ -100,7 +100,7 @@ module Services {
         //
         // State related to compiler instance
         //
-        private compiler: TypeScript.TypeScriptCompiler = null;
+        public compiler: TypeScript.TypeScriptCompiler = null;
         private hostCache: HostCache = null;
         private _compilationSettings: TypeScript.CompilationSettings = null;
 
@@ -122,27 +122,19 @@ module Services {
         }
 
         public getFileNames(): string[] {
-            return this.compiler.fileNameToDocument.getAllKeys();
+            return this.compiler.fileNames();
         }
 
         public getScript(fileName: string): TypeScript.Script {
             return this.compiler.getDocument(fileName).script;
         }
 
-        public getScripts(): TypeScript.Script[] {
-            return this.compiler.getScripts();
-        }
-
         public getScriptVersion(fileName: string) {
             return this.hostCache.getVersion(fileName);
         }
 
-        public getSemanticInfoChain() {
-            return this.compiler.semanticInfoChain;
-        }
-
-        private addCompilerUnit(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
-            compiler.addSourceUnit(fileName,
+        private addFile(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
+            compiler.addFile(fileName,
                 this.hostCache.getScriptSnapshot(fileName),
                 this.hostCache.getByteOrderMark(fileName),
                 this.hostCache.getVersion(fileName),
@@ -174,7 +166,7 @@ module Services {
             // Add unit for all source files
             var fileNames = this.host.getScriptFileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
-                this.addCompilerUnit(this.compiler, fileNames[i]);
+                this.addFile(this.compiler, fileNames[i]);
             }
 
             // Initial typecheck
@@ -231,7 +223,7 @@ module Services {
             // If any file was deleted, we need to create a new compiler, because we are not
             // even close to supporting removing symbols (unitindex will be all over the place
             // if we remove scripts from the list).
-            var fileNames = this.compiler.fileNameToDocument.getAllKeys();
+            var fileNames = this.compiler.fileNames();
             for (var unitIndex = 0, len = fileNames.length; unitIndex < len; unitIndex++) {
                 var fileName = fileNames[unitIndex];
 
@@ -257,10 +249,10 @@ module Services {
                 var fileName = fileNames[i];
 
                 if (this.compiler.getDocument(fileName)) {
-                    this.updateCompilerUnit(this.compiler, fileName);
+                    this.updateFile(this.compiler, fileName);
                 }
                 else {
-                    this.addCompilerUnit(this.compiler, fileName);
+                    this.addFile(this.compiler, fileName);
                     fileAdded = true;
                 }
             }
@@ -285,10 +277,8 @@ module Services {
         private getAllSyntacticDiagnostics(): TypeScript.Diagnostic[]{
             var diagnostics: TypeScript.Diagnostic[] = [];
 
-            this.compiler.fileNameToDocument.map((fileName, value, context) => {
-                var fileDiagnostics = this.compiler.getSyntacticDiagnostics(fileName);
-                diagnostics = diagnostics.concat(fileDiagnostics);
-            }, null);
+            this.compiler.fileNames().map(fileName =>
+                diagnostics.push.apply(diagnostics, this.compiler.getSyntacticDiagnostics(fileName)));
 
             return diagnostics;
         }
@@ -296,39 +286,14 @@ module Services {
         private getAllSemanticDiagnostics(): TypeScript.Diagnostic[]{
             var diagnostics: TypeScript.Diagnostic[] = [];
 
-            this.compiler.fileNameToDocument.map((fileName, value, context) => {
-                var fileDiagnostics = this.compiler.getSemanticDiagnostics(fileName);
-                diagnostics = diagnostics.concat(fileDiagnostics);
-            }, null);
+            this.compiler.fileNames().map(fileName =>
+                diagnostics.push.apply(diagnostics, this.compiler.getSemanticDiagnostics(fileName)));
 
             return diagnostics;
         }
 
-        public getEmitOutput(fileName: string): EmitOutput {
-            var result = new EmitOutput();
-
-            var emitterIOHost: TypeScript.EmitterIOHost = {
-                writeFile: (fileName: string, contents: string, writeByteOrderMark: boolean) => {
-                    result.outputFiles.push({
-                        name: fileName,
-                        text: contents,
-                        writeByteOrderMark: writeByteOrderMark
-                    });
-                },
-                directoryExists: (fileName: string) => this.host.directoryExists(fileName),
-                fileExists: (fileName: string) => this.host.fileExists(fileName),
-                resolvePath: (fileName: string) => this.host.resolveRelativePath(fileName, null)
-            };
-
-            var diagnostics: TypeScript.Diagnostic[];
-
-            // Parse the emit options
-            diagnostics = this.compiler.setEmitOptions(emitterIOHost) || [];
-            result.diagnostics = result.diagnostics.concat(diagnostics);
-            if (this.containErrors(diagnostics)) {
-                result.status = EmitOutputStatus.failedDueToEmitErrors;
-                return result;
-            }
+        public getEmitOutput(fileName: string): TypeScript.EmitOutput {
+            var resolvePath = (fileName: string) => this.host.resolveRelativePath(fileName, null);
 
             var outputMany = this.compiler.emitOptions.outputMany;
 
@@ -336,40 +301,26 @@ module Services {
             var syntacticDiagnostics = outputMany ? this.getSyntacticDiagnostics(fileName) : this.getAllSyntacticDiagnostics();
             if (this.containErrors(syntacticDiagnostics)) {
                 // This file has at least one syntactic error, return and do not emit code.
-                result.status = EmitOutputStatus.failedDueToSyntaxErrors;
-                return result;
+                return new TypeScript.EmitOutput();
             }
 
             // Force a type check before emit to ensure that all symbols have been resolved
+            var document = this.getDocument(fileName);
             var semanticDiagnostics = outputMany ? this.getSemanticDiagnostics(fileName) : this.getAllSemanticDiagnostics();
 
             // Emit output files and source maps
-            diagnostics = this.compiler.emitUnit(fileName, emitterIOHost) || [];
-            result.diagnostics = result.diagnostics.concat(diagnostics);
-            if (this.containErrors(diagnostics)) {
-                result.status = EmitOutputStatus.failedDueToEmitErrors;
-                return result;
+                // Emit declarations, if there are no semantic errors
+            var emitResult = this.compiler.emit(fileName, resolvePath);
+            if (!this.containErrors(emitResult.diagnostics) &&
+                !this.containErrors(semanticDiagnostics)) {
+
+                // Merge the results
+                var declarationEmitOutput = this.compiler.emitDeclarations(fileName, resolvePath);
+                emitResult.outputFiles.push.apply(emitResult.outputFiles, declarationEmitOutput.outputFiles);
+                emitResult.diagnostics.push.apply(emitResult.diagnostics, declarationEmitOutput.diagnostics);
             }
 
-            // Emit declarations, if there are no semantic errors
-            var document = this.getDocument(fileName);
-            if (this.compiler.shouldEmitDeclarations(document.script)) {
-                if (!this.containErrors(semanticDiagnostics)) {
-                    diagnostics = this.compiler.emitUnitDeclarations(fileName) || [];
-                    result.diagnostics = result.diagnostics.concat(diagnostics);
-                    if (this.containErrors(diagnostics)) {
-                        result.status = EmitOutputStatus.failedDueToEmitErrors;
-                        return result;
-                    }
-                }
-                else {
-                    result.status = EmitOutputStatus.noDeclarationsDueToSemanticErrors;
-                    return result;
-                }
-            }
-
-            result.status = EmitOutputStatus.succeeeded;
-            return result;
+            return emitResult;
         }
 
         private containErrors(diagnostics: TypeScript.Diagnostic[]): boolean {
@@ -434,11 +385,7 @@ module Services {
             return this.compiler.getTopLevelDeclaration(fileName);
         }
 
-        public findMatchingValidDecl(decl: TypeScript.PullDecl): TypeScript.PullDecl[]{
-            return this.compiler.semanticInfoChain.findMatchingValidDecl(decl);
-        }
-
-        private updateCompilerUnit(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
+        private updateFile(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
             var document: TypeScript.Document = this.compiler.getDocument(fileName);
 
             //
@@ -451,13 +398,13 @@ module Services {
             }
 
             var textChangeRange = this.getScriptTextChangeRangeSinceVersion(fileName, document.version);
-            compiler.updateSourceUnit(fileName,
+            compiler.updateFile(fileName,
                 this.hostCache.getScriptSnapshot(fileName),
                 version, isOpen, textChangeRange);
         }
 
         private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
-            var ast = this.compiler.semanticInfoChain.getASTForDecl(decl);
+            var ast = decl.ast();
 
             if (ast && (ast.nodeType() != TypeScript.NodeType.ModuleDeclaration ||
                         decl.kind != TypeScript.PullElementKind.Variable)) {
@@ -568,6 +515,10 @@ module Services {
             }
 
             return symbol.docComments;
+        }
+
+        public getDeclForAST(ast: TypeScript.AST): TypeScript.PullDecl {
+            return this.compiler.getDeclForAST(ast);
         }
     }
 }

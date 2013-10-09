@@ -189,10 +189,10 @@ Line 218 col 11 IdentifierName "mAmbient" = { C: new() => mAmbient.C; foo(): mAm
 Line 218 col 20 IdentifierName "aVar" = mAmbient.C
 Line 219 col 4 IdentifierName "bB" = mAmbient.B
 Line 219 col 8 IdentifierName "mAmbient" = mAmbient
-Line 219 col 17 IdentifierName "B" = any
+Line 219 col 17 IdentifierName "B" = mAmbient.B
 Line 220 col 4 IdentifierName "eVar" = mAmbient.e
 Line 220 col 10 IdentifierName "mAmbient" = mAmbient
-Line 220 col 19 IdentifierName "e" = any
+Line 220 col 19 IdentifierName "e" = mAmbient.e
 Line 222 col 9 IdentifierName "m3foo" = () => mAmbient.m3.C
 Line 223 col 11 InvocationExpression "mAmbient.m3.foo()" = mAmbient.m3.C
 Line 223 col 11 MemberAccessExpression "mAmbient.m3.foo" = () => mAmbient.m3.C
@@ -215,9 +215,9 @@ Line 227 col 22 IdentifierName "m3" = { C: new() => mAmbient.m3.C; foo(): mAmbie
 Line 227 col 25 IdentifierName "aVar" = mAmbient.m3.C
 Line 228 col 4 IdentifierName "m3bB" = mAmbient.m3.B
 Line 228 col 10 IdentifierName "mAmbient" = mAmbient
-Line 228 col 19 IdentifierName "m3" = any
-Line 228 col 22 IdentifierName "B" = any
+Line 228 col 19 IdentifierName "m3" = mAmbient.m3
+Line 228 col 22 IdentifierName "B" = mAmbient.m3.B
 Line 229 col 4 IdentifierName "m3eVar" = mAmbient.m3.e
 Line 229 col 12 IdentifierName "mAmbient" = mAmbient
-Line 229 col 21 IdentifierName "m3" = any
-Line 229 col 24 IdentifierName "e" = any
+Line 229 col 21 IdentifierName "m3" = mAmbient.m3
+Line 229 col 24 IdentifierName "e" = mAmbient.m3.e

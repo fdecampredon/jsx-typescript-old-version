@@ -11,11 +11,11 @@ Line 5 col 25 ThisKeyword "this" = MyClass
 Line 5 col 30 IdentifierName "callableThing" = CallableExtention<string>
 === tests/cases/compiler/genericWithCallSignatures_0.ts ===
 Line 0 col 10 IdentifierName "Callable" = Callable<T>
-Line 0 col 19 IdentifierName "T" = any
+Line 0 col 19 IdentifierName "T" = T
 Line 1 col 8 IdentifierName "T" = T
 Line 2 col 5 IdentifierName "value" = T
 Line 2 col 12 IdentifierName "T" = T
 Line 5 col 10 IdentifierName "CallableExtention" = CallableExtention<T>
-Line 5 col 28 IdentifierName "T" = any
+Line 5 col 28 IdentifierName "T" = T
 Line 5 col 39 IdentifierName "Callable" = Callable<T>
 Line 5 col 48 IdentifierName "T" = T

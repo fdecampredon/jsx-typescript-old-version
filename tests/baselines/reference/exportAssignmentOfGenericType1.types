@@ -11,6 +11,6 @@ Line 5 col 18 IdentifierName "foo" = string
 === tests/cases/compiler/exportAssignmentOfGenericType1_0.ts ===
 Line 0 col 9 IdentifierName "T" = new<X>() => T<X>
 Line 1 col 6 IdentifierName "T" = T<X>
-Line 1 col 8 IdentifierName "X" = any
+Line 1 col 8 IdentifierName "X" = X
 Line 1 col 13 IdentifierName "foo" = X
 Line 1 col 18 IdentifierName "X" = X

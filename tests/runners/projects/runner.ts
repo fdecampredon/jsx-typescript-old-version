@@ -74,7 +74,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
                 // Log any bugs associated with the test
                 //Harness.Assert.bugs(sourceText);
 
-                compiler.addSourceUnit(code.path, soruceScriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, code.referencedFiles);
+                compiler.addFile(code.path, soruceScriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, code.referencedFiles);
             }
             catch (err) {
                 // This includes syntax errors thrown from error callback if not in recovery mode
@@ -95,9 +95,8 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
             resolvePath: IO.resolvePath
         };
 
-        var files = compiler.fileNameToDocument.getAllKeys();
-        files.forEach(file => {
-            if (file.indexOf('lib.d.ts') == -1) {
+        compiler.fileNames().forEach(file => {
+            if (file.indexOf('lib.d.ts') < 0) {
                 var syntacticDiagnostics = compiler.getSyntacticDiagnostics(file);
                 syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
 
@@ -107,14 +106,15 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         });
 
         compiler.settings.sourceMapEmitterCallback = sourceMapEmitterCallback;
-        var emitDiagnostics = compiler.emitAll(emitterIOHost);
-        emitDiagnostics.forEach(d => this.addDiagnostic(d));
+        var emitOutput = compiler.emitAll((path: string) => emitterIOHost.resolvePath(path));
+        emitOutput.diagnostics.forEach(d => this.addDiagnostic(d));
+        emitOutput.outputFiles.forEach(o => emitterIOHost.writeFile(o.name, o.text, o.writeByteOrderMark));
 
         emitterIOHost.writeFile = writeDeclareFile;
-        compiler.emitOptions.ioHost = emitterIOHost;
 
-        var emitDeclarationsDiagnostics = compiler.emitAllDeclarations();
-        emitDeclarationsDiagnostics.forEach(d => this.addDiagnostic(d));
+        var emitDeclarationsOutput = compiler.emitAllDeclarations((path: string) => emitterIOHost.resolvePath(path));
+        emitDeclarationsOutput.diagnostics.forEach(d => this.addDiagnostic(d));
+        emitDeclarationsOutput.outputFiles.forEach(o => emitterIOHost.writeFile(o.name, o.text, o.writeByteOrderMark));
 
         if (this.errout) {
             this.errout.Close();

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the Apache License, Version 2.0. 
 // See LICENSE.txt in the project root for complete license information.
 
-///<reference path='..\typescript.ts' />
+///<reference path='..\references.ts' />
 
 module TypeScript {
 
@@ -39,51 +39,25 @@ module TypeScript {
             return this._topLevelDecl;
         }
 
-        public cleanDecls(): void {
-            if (this._topLevelDecl) {
-                this._topLevelDecl.clean();
-            }
-        }
-
         public fileName(): string {
             return this._fileName;
         }
 
         public _getDeclForAST(ast: AST): PullDecl {
-            if (useDirectTypeStorage) {
-                return ast.decl ? ast.decl : null;
-            }
-
             return this.astDeclMap.read(ast.astIDString);
         }
 
         public _setDeclForAST(ast: AST, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this._fileName);
-
-            if (useDirectTypeStorage) {
-                ast.decl = decl;
-                return;
-            }
-
             this.astDeclMap.link(ast.astIDString, decl);
         }
 
         public _getASTForDecl(decl: PullDecl): AST {
-            if (useDirectTypeStorage) {
-                return decl.ast;
-            }
-
             return this.declASTMap.read(decl.declIDString);
         }
 
         public _setASTForDecl(decl: PullDecl, ast: AST): void {
             Debug.assert(decl.fileName() === this._fileName);
-
-            if (useDirectTypeStorage) {
-                decl.ast = ast;
-                return;
-            }
-
             this.declASTMap.link(decl.declIDString, ast);
         }
     }
@@ -106,6 +80,10 @@ module TypeScript {
         private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
         private symbolASTMap = new DataMap<AST>();
         private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> = null;
+
+        private declSymbolMap = new DataMap<PullSymbol>();
+        private declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
+        private declSpecializingSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
 
         private declCache: BlockIntrinsics<PullDecl[]> = null;
         private symbolCache: BlockIntrinsics<PullSymbol> = null;
@@ -159,7 +137,7 @@ module TypeScript {
             this.addPrimitiveValue("undefined", this.undefinedTypeSymbol, globalDecl);
 
             // other decls not reachable from the globalDecl
-            var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, null, span);
+            var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, null, span, this);
             var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType);
             emptyTypeDecl.setSymbol(emptyTypeSymbol);
             emptyTypeSymbol.addDeclaration(emptyTypeDecl);
@@ -195,6 +173,16 @@ module TypeScript {
             // We changed the scripts we're responsible for.  Invalidate all existing cached
             // semantic information.
             this.invalidate();
+        }
+
+        public removeScript(fileName: string): void {
+            Debug.assert(fileName !== "", "Can't remove the semantic info for the global decl.");
+            var index = ArrayUtilities.indexOf(this.units, u => u.fileName() === fileName);
+            if (index > 0) {
+                this.fileNameToSemanticInfo[fileName] = undefined;
+                this.units.splice(index, 1);
+                this.invalidate();
+            }
         }
 
         private getDeclPathCacheID(declPath: string[], declKind: PullElementKind) {
@@ -379,59 +367,7 @@ module TypeScript {
             return this.findDecls(declString, declKind);
         }
 
-        public findMatchingValidDecl(invalidatedDecl: PullDecl): PullDecl[]{
-            var unitPath = invalidatedDecl.fileName();
-            var unit = this.getSemanticInfo(unitPath);
-            if (!unit) {
-                return null;
-            }
-
-            var declsInPath: PullDecl[] = [];
-            var current = invalidatedDecl;
-            while (current) {
-                if (current.kind !== PullElementKind.Script) {
-                    declsInPath.unshift(current);
-                }
-
-                current = current.getParentDecl();
-            }
-
-            // now search for that decl
-            var declsToSearch = [unit.topLevelDecl()];
-            var foundDecls: PullDecl[] = [];
-            var keepSearching = (invalidatedDecl.kind & PullElementKind.Container) || 
-                (invalidatedDecl.kind & PullElementKind.Interface) ||
-                (invalidatedDecl.kind & PullElementKind.Class) ||
-                (invalidatedDecl.kind & PullElementKind.Enum);
-
-            for (var i = 0; i < declsInPath.length; i++) {
-                var declInPath = declsInPath[i];
-                var decls: PullDecl[] = [];
-
-                for (var j = 0; j < declsToSearch.length; j++) {
-                    foundDecls = declsToSearch[j].searchChildDecls(declInPath.name, declInPath.kind);
-
-                    decls.push.apply(decls, foundDecls);
-
-                    // Unless we're searching for an interface or module, we've found the one true
-                    // decl, so don't bother searching the rest of the top-level decls
-                    if (foundDecls.length && !keepSearching) {
-                        break;
-                    }
-                }
-
-                declsToSearch = decls;
-
-                if (declsToSearch.length == 0) {
-                    break;
-                }
-            }
-
-            return declsToSearch;
-        }
-
         public findSymbol(declPath: string[], declType: PullElementKind): PullSymbol {
-
             var cacheID = this.getDeclPathCacheID(declPath, declType);
 
             if (declPath.length) {
@@ -475,15 +411,12 @@ module TypeScript {
             }
         }
 
-        private cleanAllDecls() {
-            // skip the first semantic info, which contains global primitive symbols
-            for (var i = 1, n = this.units.length; i < n; i++) {
-                this.units[i].cleanDecls();
-            }
-        }
-
         private invalidate() {
-            this.logger.log("Cleaning symbols...");
+            // A file has changed, increment the type check phase so that future type chech
+            // operations will proceed.
+            PullTypeResolver.globalTypeCheckPhase++;
+
+            this.logger.log("Invalidating SemanticInfoChain...");
             var cleanStart = new Date().getTime();
 
             this.astSymbolMap = new DataMap<PullSymbol>();
@@ -497,71 +430,69 @@ module TypeScript {
             this.binder = null;
             this._topLevelDecls = null;
 
+            this.declSymbolMap = new DataMap<PullSymbol>();
+            this.declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
+            this.declSpecializingSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
+
             this.units[0] = new SemanticInfo(this, "", /*script:*/ null, this.getGlobalDecl());
-            this.cleanAllDecls();
 
             var cleanEnd = new Date().getTime();
-            this.logger.log("   time to clean: " + (cleanEnd - cleanStart));
+            this.logger.log("   time to invalidate: " + (cleanEnd - cleanStart));
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            if (useDirectTypeStorage) {
-                ast.symbol = symbol;
-                symbol.ast = ast;
-                return;
-            }
-
             this.astSymbolMap.link(ast.astIDString, symbol);
             this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {
-            if (useDirectTypeStorage) {
-                return (<AST>ast).symbol;
-            }
-
             return this.astSymbolMap.read(ast.astIDString);
         }
 
         public getASTForSymbol(symbol: PullSymbol): AST {
-            if (useDirectTypeStorage) {
-                return symbol.ast;
-            }
-
             return this.symbolASTMap.read(symbol.pullSymbolIDString);
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
-            if (useDirectTypeStorage) {
-                ast.aliasSymbol = symbol;
-                return;
-            }
             this.astAliasSymbolMap.link(ast.astIDString, symbol);
         }
 
         public getAliasSymbolForAST(ast: IAST): PullTypeAliasSymbol {
-            if (useDirectTypeStorage) {
-                return <PullTypeAliasSymbol>(<AST>ast).aliasSymbol;
-            }
-
             return this.astAliasSymbolMap.read(ast.astIDString);
         }
 
         public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            if (useDirectTypeStorage) {
-                return (<InvocationExpression>ast).callResolutionData;
-            }
             return <PullAdditionalCallResolutionData>this.astCallResolutionDataMap.get(ast.astID);
         }
 
         public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
             if (callResolutionData) {
-                if (useDirectTypeStorage) {
-                    (<InvocationExpression>ast).callResolutionData = callResolutionData;
-                    return;
-                }
                 this.astCallResolutionDataMap.set(ast.astID, callResolutionData);
             }
+        }
+
+        public setSymbolForDecl(decl: PullDecl, symbol: PullSymbol): void {
+            this.declSymbolMap.link(decl.declIDString, symbol);
+        }
+
+        public getSymbolForDecl(decl: PullDecl): PullSymbol {
+            return this.declSymbolMap.read(decl.declIDString);
+        }
+
+        public setSignatureSymbolForDecl(decl: PullDecl, signatureSymbol: PullSignatureSymbol): void {
+            this.declSignatureSymbolMap.link(decl.declIDString, signatureSymbol);
+        }
+
+        public getSignatureSymbolForDecl(decl: PullDecl): PullSignatureSymbol {
+            return this.declSignatureSymbolMap.read(decl.declIDString);
+        }
+
+        public setSpecializingSignatureSymbolForDecl(decl: PullDecl, signatureSymbol: PullSignatureSymbol): void {
+            this.declSpecializingSignatureSymbolMap.link(decl.declIDString, signatureSymbol);
+        }
+
+        public getSpecializingSignatureSymbolForDecl(decl: PullDecl): PullSignatureSymbol {
+            return this.declSpecializingSignatureSymbolMap.read(decl.declIDString);
         }
 
         public addDiagnostic(diagnostic: Diagnostic): void {
@@ -602,16 +533,14 @@ module TypeScript {
             containingSymbol.addIndexSignature(indexSignature);
 
             var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
-            var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl, span);
-            var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl, span);
+            var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl, span, containingDecl.semanticInfoChain());
+            var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl, span, containingDecl.semanticInfoChain());
             indexSigDecl.setSignatureSymbol(indexSignature);
             indexParamDecl.setSymbol(indexParameterSymbol);
             indexSignature.addDeclaration(indexSigDecl);
             indexParameterSymbol.addDeclaration(indexParamDecl);
             this.setASTForDecl(indexSigDecl, ast);
             this.setASTForDecl(indexParamDecl, ast);
-            indexSigDecl.setIsBound(true);
-            indexParamDecl.setIsBound(true);
         }
 
         public getDeclForAST(ast: AST): PullDecl {
@@ -642,7 +571,12 @@ module TypeScript {
         }
 
         public topLevelDecl(fileName: string): PullDecl {
-            return this.getSemanticInfo(fileName).topLevelDecl();
+            var info = this.getSemanticInfo(fileName);
+            if (info) {
+                return info.topLevelDecl();
+            }
+
+            return null;
         }
 
         public topLevelDecls(): PullDecl[] {

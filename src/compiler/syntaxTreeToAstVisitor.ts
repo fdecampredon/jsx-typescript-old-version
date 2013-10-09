@@ -941,7 +941,12 @@ module TypeScript {
                 
                 var statements = new ASTList([returnStatement]);
 
-                var block = new Block(statements, new ASTSpan());
+                var closeBraceSpan = new ASTSpan();
+                closeBraceSpan.minChar = expression.minChar;
+                closeBraceSpan.limChar = expression.limChar;
+                closeBraceSpan.trailingTriviaWidth = expression.trailingTriviaWidth;
+
+                var block = new Block(statements, closeBraceSpan);
                 return block;
             }
         }

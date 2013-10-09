@@ -354,6 +354,10 @@ module TypeScript {
     "code": 1088,
     "category": DiagnosticCategory.Error
   },
+  "'{0}' modifier cannot appear on a constructor declaration.": {
+    "code": 1089,
+    "category": DiagnosticCategory.Error
+  },
   "Duplicate identifier '{0}'.": {
     "code": 2000,
     "category": DiagnosticCategory.Error
@@ -1384,14 +1388,6 @@ module TypeScript {
   },
   "Execution Failed.{NL}": {
     "code": 5016,
-    "category": DiagnosticCategory.Error
-  },
-  "Should not emit a type query.": {
-    "code": 5017,
-    "category": DiagnosticCategory.Error
-  },
-  "Should not emit a type reference.": {
-    "code": 5018,
     "category": DiagnosticCategory.Error
   },
   "Invalid call to 'up'": {

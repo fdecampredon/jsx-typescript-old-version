@@ -1,26 +1,26 @@
 === tests/cases/compiler/genericCallbacksAndClassHierarchy.ts ===
 Line 0 col 7 IdentifierName "M" = M
 Line 1 col 21 IdentifierName "I" = M.I<T>
-Line 1 col 23 IdentifierName "T" = any
+Line 1 col 23 IdentifierName "T" = T
 Line 2 col 0 IdentifierName "subscribe" = (callback: (newValue: T) => void) => any
 Line 2 col 18 IdentifierName "callback" = (newValue: T) => void
 Line 2 col 29 IdentifierName "newValue" = T
 Line 2 col 39 IdentifierName "T" = T
 Line 4 col 17 IdentifierName "C1" = M.C1<T>
-Line 4 col 20 IdentifierName "T" = any
+Line 4 col 20 IdentifierName "T" = T
 Line 5 col 15 IdentifierName "value" = M.I<T>
 Line 5 col 22 IdentifierName "I" = M.I<T>
 Line 5 col 24 IdentifierName "T" = T
 Line 7 col 17 IdentifierName "A" = M.A<T>
-Line 7 col 19 IdentifierName "T" = any
+Line 7 col 19 IdentifierName "T" = T
 Line 8 col 15 IdentifierName "dummy" = any
 Line 10 col 17 IdentifierName "B" = M.B<T>
-Line 10 col 19 IdentifierName "T" = any
+Line 10 col 19 IdentifierName "T" = T
 Line 10 col 30 IdentifierName "C1" = M.C1<T>
 Line 10 col 33 IdentifierName "A" = M.A<T>
 Line 10 col 35 IdentifierName "T" = T
 Line 11 col 17 IdentifierName "D" = M.D<T>
-Line 11 col 19 IdentifierName "T" = any
+Line 11 col 19 IdentifierName "T" = T
 Line 12 col 0 IdentifierName "_subscribe" = (viewModel: M.B<T>) => void
 Line 12 col 19 IdentifierName "viewModel" = M.B<T>
 Line 12 col 30 IdentifierName "B" = M.B<T>

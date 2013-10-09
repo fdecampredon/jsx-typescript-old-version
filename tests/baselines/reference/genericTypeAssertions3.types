@@ -1,7 +1,7 @@
 === tests/cases/compiler/genericTypeAssertions3.ts ===
 Line 0 col 4 IdentifierName "r" = <T>(x: T) => T
 Line 0 col 8 CastExpression "< <T>(x: T) => T > ((x) => { return null; })" = <T>(x: T) => T
-Line 0 col 11 IdentifierName "T" = any
+Line 0 col 11 IdentifierName "T" = T
 Line 0 col 14 IdentifierName "x" = T
 Line 0 col 17 IdentifierName "T" = T
 Line 0 col 23 IdentifierName "T" = T
@@ -10,7 +10,7 @@ Line 0 col 28 ParenthesizedArrowFunctionExpression "(x) => { return null; }" = (
 Line 0 col 29 IdentifierName "x" = any
 Line 1 col 4 IdentifierName "s" = <T>(x: T) => T
 Line 1 col 8 CastExpression "< <T>(x: T) => T > ((x: any) => { return null; })" = <T>(x: T) => T
-Line 1 col 11 IdentifierName "T" = any
+Line 1 col 11 IdentifierName "T" = T
 Line 1 col 14 IdentifierName "x" = T
 Line 1 col 17 IdentifierName "T" = T
 Line 1 col 23 IdentifierName "T" = T

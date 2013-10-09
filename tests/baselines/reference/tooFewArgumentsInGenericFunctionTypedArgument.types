@@ -1,7 +1,7 @@
 === tests/cases/compiler/tooFewArgumentsInGenericFunctionTypedArgument.ts ===
 Line 0 col 10 IdentifierName "Collection" = Collection<T, U>
-Line 0 col 21 IdentifierName "T" = any
-Line 0 col 24 IdentifierName "U" = any
+Line 0 col 21 IdentifierName "T" = T
+Line 0 col 24 IdentifierName "U" = U
 Line 1 col 0 IdentifierName "length" = number
 Line 2 col 0 IdentifierName "add" = (x: T, y: U) => void
 Line 2 col 8 IdentifierName "x" = T
@@ -15,8 +15,8 @@ Line 3 col 17 IdentifierName "y" = U
 Line 3 col 20 IdentifierName "U" = U
 Line 5 col 10 IdentifierName "Combinators" = Combinators
 Line 6 col 0 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
-Line 6 col 8 IdentifierName "T" = any
-Line 6 col 11 IdentifierName "U" = any
+Line 6 col 8 IdentifierName "T" = T
+Line 6 col 11 IdentifierName "U" = U
 Line 6 col 14 IdentifierName "c" = Collection<T, U>
 Line 6 col 17 IdentifierName "Collection" = Collection<T, U>
 Line 6 col 28 IdentifierName "T" = T
@@ -28,9 +28,9 @@ Line 6 col 44 IdentifierName "y" = U
 Line 6 col 47 IdentifierName "U" = U
 Line 6 col 59 IdentifierName "Collection" = Collection<T, U>
 Line 7 col 0 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
-Line 7 col 8 IdentifierName "T" = any
-Line 7 col 11 IdentifierName "U" = any
-Line 7 col 14 IdentifierName "V" = any
+Line 7 col 8 IdentifierName "T" = T
+Line 7 col 11 IdentifierName "U" = U
+Line 7 col 14 IdentifierName "V" = V
 Line 7 col 17 IdentifierName "c" = Collection<T, U>
 Line 7 col 20 IdentifierName "Collection" = Collection<T, U>
 Line 7 col 31 IdentifierName "T" = T

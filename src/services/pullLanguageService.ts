@@ -67,7 +67,7 @@ module Services {
             if (requireName) {
                 var actualNameAtPosition = (<TypeScript.Identifier>topNode).text();
 
-                if ((symbol.isError() || symbol === this.compilerState.getSemanticInfoChain().anyTypeSymbol) && actualNameAtPosition !== symbolName) {
+                if ((symbol.isError() || symbol.isAny()) && actualNameAtPosition !== symbolName) {
                     this.logger.log("Unknown symbol found at the given position");
                     // only single reference
                     return { symbol: null, containingASTOpt: null };
@@ -205,7 +205,7 @@ module Services {
             var symbolName: string = symbol.getName();
 
             // if we are not looking for any but we get an any symbol, then we ran into a wrong symbol
-            if ((symbol.isError() || symbol === this.compilerState.getSemanticInfoChain().anyTypeSymbol) && actualNameAtPosition !== symbolName) {
+            if ((symbol.isError() || symbol.isAny()) && actualNameAtPosition !== symbolName) {
                 this.logger.log("Unknown symbol found at the given position");
                 return result;
             }
@@ -348,8 +348,7 @@ module Services {
                     if (symbolInfoAtPosition !== null) {
                         var searchSymbol = symbolInfoAtPosition.aliasSymbol || symbolInfoAtPosition.symbol;
 
-                        if (FindReferenceHelpers.compareSymbolsForLexicalIdentity(searchSymbol, symbol, this.compilerState.getSemanticInfoChain())) {
-
+                        if (FindReferenceHelpers.compareSymbolsForLexicalIdentity(searchSymbol, symbol)) {
                             var isWriteAccess = this.isWriteAccess(nameAST);
                             result.push(new ReferenceEntry(this.compilerState.getHostFileName(fileName), nameAST.minChar, nameAST.limChar, isWriteAccess));
                         }
@@ -866,7 +865,7 @@ module Services {
             return this.compilerState.getSemanticDiagnostics(fileName);
         }
 
-        public getEmitOutput(fileName: string): EmitOutput {
+        public getEmitOutput(fileName: string): TypeScript.EmitOutput {
             fileName = TypeScript.switchToForwardSlashes(fileName);
             this.refresh();
 
@@ -970,6 +969,9 @@ module Services {
 
             if (node.isDeclaration()) {
                 var declarationInformation = this.compilerState.getDeclarationSymbolInformation(node, document);
+                if (!declarationInformation) {
+                    return null;
+                }
 
                 ast = declarationInformation.ast;
                 symbol = declarationInformation.symbol;
@@ -980,7 +982,7 @@ module Services {
                     node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
                     var funcDecl = node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
-                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(funcDecl, this.compilerState.getSemanticInfoChain());
+                        var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compilerState.getDeclForAST(funcDecl));
                         _isCallExpression = true;
                         candidateSignature = signatureInfo.signature;
                         resolvedSignatures = signatureInfo.allSignatures;
@@ -997,7 +999,7 @@ module Services {
                 // Get the call expression symbol
                 var callExpressionInformation = this.compilerState.getCallInformationFromAST(node, document);
 
-                if (!callExpressionInformation.targetSymbol) {
+                if (!callExpressionInformation || !callExpressionInformation.targetSymbol) {
                     return null;
                 }
 
@@ -1025,7 +1027,7 @@ module Services {
             else {
                 var symbolInformation = this.compilerState.getSymbolInformationFromAST(node, document);
 
-                if (!symbolInformation.symbol) {
+                if (!symbolInformation || !symbolInformation.symbol) {
                     return null;
                 }
 
@@ -1240,7 +1242,7 @@ module Services {
         }
 
         private getCompletionEntriesFromDecls(decls: TypeScript.PullDecl[], result: TypeScript.IdentiferNameHashTable<CachedCompletionEntryDetails>): void {
-            for (var i = 0, n = decls.length; i < n; i++) {
+            for (var i = 0, n = decls ? decls.length : 0; i < n; i++) {
                 var decl = decls[i];
 
                 var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget);
@@ -1293,7 +1295,7 @@ module Services {
 
                 // If this decl has been invalidated becuase of a user edit, try to find the new decl that matches it
                 if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName) && this.compilerState.getScriptVersion(fileName) !== this.activeCompletionSession.version) {
-                    decl = this.compilerState.findMatchingValidDecl(decl)[0];
+                    decl = this.tryFindDeclFromPreviousCompilerVersion(decl);
 
                     if (decl) {
                         var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget);
@@ -1342,6 +1344,60 @@ module Services {
                 fullSymbolName: entry.fullSymbolName,
                 docComment: entry.docComment
             };
+        }
+
+        // Given a declaration returned from a previous version of the compiler (i.e. prior to 
+        // any mutation operations), attempts to find the same decl in this version.  
+        private tryFindDeclFromPreviousCompilerVersion(invalidatedDecl: TypeScript.PullDecl): TypeScript.PullDecl {
+            var fileName = invalidatedDecl.fileName();
+
+            var declsInPath: TypeScript.PullDecl[] = [];
+            var current = invalidatedDecl;
+            while (current) {
+                if (current.kind !== TypeScript.PullElementKind.Script) {
+                    declsInPath.unshift(current);
+                }
+
+                current = current.getParentDecl();
+            }
+
+            // now search for that decl
+            var topLevelDecl = this.compilerState.compiler.topLevelDecl(fileName);
+            if (!topLevelDecl) {
+                return null;
+            }
+
+            var declsToSearch = [topLevelDecl];
+            var foundDecls: TypeScript.PullDecl[] = [];
+            var keepSearching = (invalidatedDecl.kind & TypeScript.PullElementKind.Container) ||
+                (invalidatedDecl.kind & TypeScript.PullElementKind.Interface) ||
+                (invalidatedDecl.kind & TypeScript.PullElementKind.Class) ||
+                (invalidatedDecl.kind & TypeScript.PullElementKind.Enum);
+
+            for (var i = 0; i < declsInPath.length; i++) {
+                var declInPath = declsInPath[i];
+                var decls: TypeScript.PullDecl[] = [];
+
+                for (var j = 0; j < declsToSearch.length; j++) {
+                    foundDecls = declsToSearch[j].searchChildDecls(declInPath.name, declInPath.kind);
+
+                    decls.push.apply(decls, foundDecls);
+
+                    // Unless we're searching for an interface or module, we've found the one true
+                    // decl, so don't bother searching the rest of the top-level decls
+                    if (foundDecls.length && !keepSearching) {
+                        break;
+                    }
+                }
+
+                declsToSearch = decls;
+
+                if (declsToSearch.length == 0) {
+                    break;
+                }
+            }
+
+            return declsToSearch.length === 0 ? null : declsToSearch[0];
         }
 
         private isLocal(symbol: TypeScript.PullSymbol) {

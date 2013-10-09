@@ -715,8 +715,13 @@ module Harness {
             }
         }
 
+        export interface IEmitterIOHost {
+            writeFile(path: string, contents: string, writeByteOrderMark: boolean): void;
+            resolvePath(path: string): string;
+        }
+
         /** Mimics having multiple files, later concatenated to a single file. */
-        export class EmitterIOHost implements TypeScript.EmitterIOHost {
+        export class EmitterIOHost implements IEmitterIOHost {
             private fileCollection = {};
 
             /** create file gets the whole path to create, so this works as expected with the --out parameter */
@@ -734,8 +739,6 @@ module Harness {
                 writer.Close();
             }
 
-            public directoryExists(s: string) { return false; }
-            public fileExists(s: string) { return typeof this.fileCollection[s] !== 'undefined'; }
             public resolvePath(s: string) { return s; }
 
             public reset() { this.fileCollection = {}; }
@@ -795,7 +798,7 @@ module Harness {
                 this.compiler.emitOptions.compilationSettings.moduleGenTarget = TypeScript.ModuleGenTarget.Unspecified;
                 this.compiler.emitOptions.compilationSettings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
                 var libCode = this.useMinimalDefaultLib ? Compiler.libTextMinimal : Compiler.libText;
-                this.compiler.addSourceUnit("lib.d.ts", TypeScript.ScriptSnapshot.fromString(libCode), ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ false);
+                this.compiler.addFile("lib.d.ts", TypeScript.ScriptSnapshot.fromString(libCode), ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ false);
             }
 
             public resolve() {
@@ -855,7 +858,7 @@ module Harness {
                 var addScriptSnapshot = (path: string, referencedFiles?: string[]) => {
                     if (path.indexOf('lib.d.ts') === -1) {
                         var scriptSnapshot = this.getScriptSnapshot(path);
-                        this.compiler.addSourceUnit(path, scriptSnapshot, /*BOM*/ null, /*version:*/ 0, /*isOpen:*/ false, referencedFiles);
+                        this.compiler.addFile(path, scriptSnapshot, /*BOM*/ null, /*version:*/ 0, /*isOpen:*/ false, referencedFiles);
                     }
                 }
 
@@ -882,7 +885,7 @@ module Harness {
                 }
                 else {
                     this.getAllFilesInCompiler().forEach(file => {
-                        this.compiler.updateSourceUnit(file, this.getScriptSnapshot(file), 0, true, null);
+                        this.compiler.updateFile(file, this.getScriptSnapshot(file), 0, true, null);
                     });
                 }
             }
@@ -947,7 +950,7 @@ module Harness {
                 }
 
                 if (!updatedExistingFile) {
-                    this.compiler.addSourceUnit(justName, TypeScript.ScriptSnapshot.fromString(code), ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true, []);
+                    this.compiler.addFile(justName, TypeScript.ScriptSnapshot.fromString(code), ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true, []);
                     this.needsFullTypeCheck = true;
                 }
 
@@ -961,18 +964,14 @@ module Harness {
             public reset() {
                 this.ioHost.reset();
                 this.errorList = [];
-                var files = this.getAllFilesInCompiler();
-                
-                for (var i = 0; i < files.length; i++) {
-                    // TODO: need to handle paths correctly in the future (ex when projects tests become compiler baselines)
-                    var justName = getFileName(files[i]);
-                    var fname = files[i];
-                    if (justName !== 'lib.d.ts' && justName !== 'fourslash.ts') {
-                        this.updateUnit('', fname);
+
+                var fileNames = this.compiler.fileNames();
+                for (var i = 0, n = fileNames.length; i < n; i++) {
+                    var fileName = fileNames[i];
+                    if (fileName.indexOf("lib.d.ts") < 0) {
+                        this.compiler.removeFile(fileNames[i]);
                     }
                 }
-
-                this.deleteAllUnits();
 
                 this.inputFiles = [];
                 this.resolvedFiles = [];
@@ -982,7 +981,7 @@ module Harness {
             public getAllFilesInCompiler() {
                 // returns what's actually in the compiler, not the contents of this.fileNameToSriptSnapshot because the latter
                 // really means what's 'on the filesystem' not in compiler
-                return this.compiler.fileNameToDocument.getAllKeys().filter(file => file.indexOf('lib.d.ts') === -1);
+                return this.compiler.fileNames().filter(file => file.indexOf('lib.d.ts') === -1);
             }
 
             public getDocumentFromCompiler(documentName: string) {
@@ -990,7 +989,7 @@ module Harness {
             }
 
             public getTypeInfoAtPosition(targetPosition: number, document: TypeScript.Document) {
-                return this.compiler.pullGetTypeInfoAtPosition(targetPosition, document);
+                return this.compiler.getTypeInfoAtPosition(targetPosition, document);
             }
 
             public getContentForFile(fileName: string) {
@@ -1022,28 +1021,10 @@ module Harness {
 
             /** Updates an existing unit in the compiler with new code. */
             public updateUnit(code: string, unitName: string) {
-                this.compiler.updateSourceUnit(unitName, TypeScript.ScriptSnapshot.fromString(code), /*version:*/ 0, /*isOpen:*/ true, null);
+                this.compiler.updateFile(unitName, TypeScript.ScriptSnapshot.fromString(code), /*version:*/ 0, /*isOpen:*/ true, null);
             }
 
-            /** Removes all non-lib.d.ts units of code from the compiler's internal data structures */
-            private deleteAllUnits() {
-                // The compiler uses fileNameToDocument as a map of what currently exists in a compilation session
-                // deleting units just means replacing that table with a new one containing the units we want                
-                var newTable = new TypeScript.StringHashTable<TypeScript.Document>();
-                var document = this.compiler.getDocument('lib.d.ts');
-                newTable.add('lib.d.ts', document);
-                // TODO: Blocked by 712326
-                // This function was original deleteUnit(unitName:string) but the below doesn't work
-                // so we'll just delete all units. Would be nice to have more precision in what's deleted.
-                //this.compiler.fileNameToDocument.map((key: string, doc: TypeScript.Document, ctxt) => {
-                //    if (key !== unitName) {
-                //        newTable.add(key, doc);
-                //    }
-                //});
-                this.compiler.fileNameToDocument = newTable;
-            }
-
-            public emitAll(ioHost?: TypeScript.EmitterIOHost): TypeScript.Diagnostic[]{
+            public emitAll(ioHost?: IEmitterIOHost): TypeScript.Diagnostic[]{
                 var host = typeof ioHost === "undefined" ? this.ioHost : ioHost;
 
                 this.sourcemapRecorder.reset();
@@ -1062,11 +1043,17 @@ module Harness {
                     this.sourcemapRecorder.WriteLine("");
                 };
 
-                return this.compiler.emitAll(host);
+                var output = this.compiler.emitAll((path: string) => host.resolvePath(path));
+                output.outputFiles.forEach(o => host.writeFile(o.name, o.text, o.writeByteOrderMark));
+
+                return output.diagnostics;
             }
 
-            public emitAllDeclarations() {
-                return this.compiler.emitAllDeclarations();
+            public emitAllDeclarations(ioHost: IEmitterIOHost) {
+                var output = this.compiler.emitAllDeclarations((path: string) => ioHost.resolvePath(path));
+                output.outputFiles.forEach(o => ioHost.writeFile(o.name, o.text, o.writeByteOrderMark));
+
+                return output.diagnostics;
             }
 
             /** If the compiler already contains the contents of interest, this will re-emit for AMD without re-adding or recompiling the current compiler units */
@@ -1077,7 +1064,7 @@ module Harness {
                 this.ioHost.reset();
                 this.errorList = [];
                 this.emitAll(this.ioHost);
-                this.compiler.emitAllDeclarations();
+                this.emitAllDeclarations(this.ioHost);
                 var result = new CompilerResult(this.ioHost.toArray(), this.errorList, this.sourcemapRecorder.lines);
 
                 this.compiler.settings.moduleGenTarget = oldModuleType;
@@ -1105,7 +1092,7 @@ module Harness {
                 emitDiagnostics.forEach(d => this.addError(ErrorType.Emit, d));
 
                 // Emit declarations
-                var emitDeclarationsDiagnostics = this.compiler.emitAllDeclarations();
+                var emitDeclarationsDiagnostics = this.emitAllDeclarations(this.ioHost);
                 emitDeclarationsDiagnostics.forEach(d => this.addError(ErrorType.Declaration, d));
 
                 return this.errorList;
@@ -1239,6 +1226,7 @@ module Harness {
             directoryExists(path: string): boolean {
                 return IO.directoryExists(path);
             }
+
             getParentDirectory(path: string): string {
                 return IO.dirName(path);
             }

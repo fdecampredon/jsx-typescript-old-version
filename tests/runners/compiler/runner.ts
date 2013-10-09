@@ -220,24 +220,29 @@ class CompilerBaselineRunner extends RunnerBase {
 
             if (result.errors.length === 0) {
                 Harness.Baseline.runBaseline('Correct expression types for ' + fileName, justName.replace(/\.ts/, '.types'), () => {
-                    var host = new TypeWriterHost();
-                    var compilerState = new Services.CompilerState(host);
+                    var compiler = new TypeScript.TypeScriptCompiler(
+                        new TypeScript.NullLogger(), new TypeScript.CompilationSettings());
 
-                    host.addScript('lib.d.ts', Harness.Compiler.libTextMinimal);
+                    compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal),
+                        ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
+
                     var allFiles = toBeCompiled.concat(otherFiles);
                     allFiles.forEach(file => {
-                        host.addScript(file.unitName, file.content);
+                        compiler.addFile(file.unitName, TypeScript.ScriptSnapshot.fromString(file.content),
+                            ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
                     });
 
-                    compilerState.refresh();
+                    // TODO: we really want to not have to do this call here.
+                    compiler.pullTypeCheck();
+
                     allFiles.forEach(file => {
-                        compilerState.getSemanticDiagnostics(file.unitName);
+                        compiler.getSemanticDiagnostics(file.unitName);
                     });
 
                     var typeLines: string[] = [];
                     allFiles.forEach(file => {
                         typeLines.push('=== ' + file.unitName + ' ===');
-                        var walker = new TypeWriterWalker(file.unitName, host, compilerState);
+                        var walker = new TypeWriterWalker(file.unitName, compiler);
                         walker.run();
                         walker.results.forEach(line => typeLines.push(line));
                     });

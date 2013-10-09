@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericWithCallSignatureReturningSpecialization.ts ===
 Line 0 col 10 IdentifierName "B" = B<T>
-Line 0 col 12 IdentifierName "T" = any
+Line 0 col 12 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "f" = () => B<number>
 Line 1 col 9 IdentifierName "B" = B<T>
 Line 2 col 5 IdentifierName "value" = T

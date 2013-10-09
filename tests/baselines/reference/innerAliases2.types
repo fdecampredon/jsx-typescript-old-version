@@ -7,13 +7,13 @@ Line 8 col 23 IdentifierName "provider" = consumer.provider
 Line 8 col 34 IdentifierName "_provider" = _provider
 Line 10 col 20 IdentifierName "g" = _provider.UsefulClass
 Line 10 col 22 IdentifierName "provider" = consumer.provider
-Line 10 col 31 IdentifierName "UsefulClass" = any
+Line 10 col 31 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 12 col 25 IdentifierName "use" = () => _provider.UsefulClass
 Line 12 col 31 IdentifierName "provider" = consumer.provider
-Line 12 col 40 IdentifierName "UsefulClass" = any
+Line 12 col 40 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 13 col 36 IdentifierName "p2" = _provider.UsefulClass
 Line 13 col 39 IdentifierName "provider" = consumer.provider
-Line 13 col 48 IdentifierName "UsefulClass" = any
+Line 13 col 48 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 13 col 61 ObjectCreationExpression "new provider.UsefulClass()" = _provider.UsefulClass
 Line 13 col 65 MemberAccessExpression "provider.UsefulClass" = new() => _provider.UsefulClass
 Line 13 col 65 IdentifierName "provider" = consumer.provider

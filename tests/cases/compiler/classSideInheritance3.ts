@@ -13,5 +13,6 @@ class C extends A {
     }
 }
 
-var b: typeof A = B; // error
-var c: typeof A = C; // ok
+var r1: typeof A = B; // error
+var r2: new (x: string) => A = B; // error
+var r3: typeof A = C; // ok

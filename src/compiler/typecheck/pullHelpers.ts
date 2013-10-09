@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the Apache License, Version 2.0. 
 // See LICENSE.txt in the project root for complete license information.
 
-///<reference path='..\typescript.ts' />
+///<reference path='..\references.ts' />
 
 module TypeScript {
 
@@ -11,8 +11,8 @@ module TypeScript {
             allSignatures: PullSignatureSymbol[];
         }
 
-        export function getSignatureForFuncDecl(funcDecl: AST, semanticInfoChain: SemanticInfoChain) {
-            var functionDecl = semanticInfoChain.getDeclForAST(funcDecl);
+        export function getSignatureForFuncDecl(functionDecl: PullDecl) {
+            var funcDecl = functionDecl.ast();
             var funcSymbol = functionDecl.getSymbol();
 
             if (!funcSymbol) {

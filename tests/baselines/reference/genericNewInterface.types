@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericNewInterface.ts ===
 Line 2 col 9 IdentifierName "createInstance" = <T>(ctor: new(s: string) => T) => T
-Line 2 col 24 IdentifierName "T" = any
+Line 2 col 24 IdentifierName "T" = T
 Line 2 col 27 IdentifierName "ctor" = new(s: string) => T
 Line 2 col 38 IdentifierName "s" = string
 Line 2 col 52 IdentifierName "T" = T
@@ -8,11 +8,11 @@ Line 2 col 56 IdentifierName "T" = T
 Line 3 col 11 ObjectCreationExpression "new ctor(42)" = any
 Line 3 col 15 IdentifierName "ctor" = new(s: string) => T
 Line 6 col 10 IdentifierName "INewable" = INewable<T>
-Line 6 col 19 IdentifierName "T" = any
+Line 6 col 19 IdentifierName "T" = T
 Line 7 col 9 IdentifierName "param" = string
 Line 7 col 25 IdentifierName "T" = T
 Line 10 col 9 IdentifierName "createInstance2" = <T>(ctor: INewable<T>) => T
-Line 10 col 25 IdentifierName "T" = any
+Line 10 col 25 IdentifierName "T" = T
 Line 10 col 28 IdentifierName "ctor" = INewable<T>
 Line 10 col 34 IdentifierName "INewable" = INewable<T>
 Line 10 col 43 IdentifierName "T" = T

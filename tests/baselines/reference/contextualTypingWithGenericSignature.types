@@ -1,7 +1,7 @@
 === tests/cases/compiler/contextualTypingWithGenericSignature.ts ===
 Line 2 col 4 IdentifierName "f2" = <T, U>(x: T, y: U) => T
-Line 3 col 5 IdentifierName "T" = any
-Line 3 col 8 IdentifierName "U" = any
+Line 3 col 5 IdentifierName "T" = T
+Line 3 col 8 IdentifierName "U" = U
 Line 3 col 11 IdentifierName "x" = T
 Line 3 col 14 IdentifierName "T" = T
 Line 3 col 17 IdentifierName "y" = U
