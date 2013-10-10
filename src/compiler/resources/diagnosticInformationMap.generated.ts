@@ -1226,6 +1226,10 @@ module TypeScript {
     "code": 2223,
     "category": DiagnosticCategory.Error
   },
+  "Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.": {
+    "code": 2224,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix

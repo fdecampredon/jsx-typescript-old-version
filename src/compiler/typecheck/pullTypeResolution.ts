@@ -37,7 +37,7 @@ module TypeScript {
         static typeCheckCallBacks: { (context: PullTypeResolutionContext): void; }[] = [];
         private static postTypeCheckWorkitems: { ast: AST; enclosingDecl: PullDecl; }[] = [];
 
-        private cachedFunctionArgumentsSymbol: PullSymbol = null;
+        private _cachedFunctionArgumentsSymbol: PullSymbol = null;
 
         private assignableCache: any[] = <any>{};
         private subtypeCache: any[] = <any>{};
@@ -153,16 +153,21 @@ module TypeScript {
             return this._cachedRegExpInterfaceType;
         }
 
+        private cachedFunctionArgumentsSymbol(): PullSymbol {
+            if (!this._cachedFunctionArgumentsSymbol) {
+                this._cachedFunctionArgumentsSymbol = new PullSymbol("arguments", PullElementKind.Variable);
+                this._cachedFunctionArgumentsSymbol.type = this.cachedIArgumentsInterfaceType() ? this.cachedIArgumentsInterfaceType() : this.semanticInfoChain.anyTypeSymbol;
+                this._cachedFunctionArgumentsSymbol.setResolved();
+
+                var functionArgumentsDecl = new PullSynthesizedDecl("arguments", "arguments", PullElementKind.Parameter, PullElementFlags.None, /*parentDecl*/ null, new TextSpan(0, 0), this.semanticInfoChain);
+                functionArgumentsDecl.setSymbol(this._cachedFunctionArgumentsSymbol);
+                this._cachedFunctionArgumentsSymbol.addDeclaration(functionArgumentsDecl);
+            }
+
+            return this._cachedFunctionArgumentsSymbol;
+        }
+
         constructor(private compilationSettings: CompilationSettings, public semanticInfoChain: SemanticInfoChain, private unitPath: string, inTypeCheck: boolean = false) {
-
-            // Note: why is this here, and not on the global unit?
-            this.cachedFunctionArgumentsSymbol = new PullSymbol("arguments", PullElementKind.Variable);
-            this.cachedFunctionArgumentsSymbol.type = this.cachedIArgumentsInterfaceType() ? this.cachedIArgumentsInterfaceType() : this.semanticInfoChain.anyTypeSymbol;
-            this.cachedFunctionArgumentsSymbol.setResolved();
-
-            var functionArgumentsDecl = new PullSynthesizedDecl("arguments", "arguments", PullElementKind.Parameter, PullElementFlags.None, /*parentDecl*/ null, new TextSpan(0, 0), semanticInfoChain);
-            functionArgumentsDecl.setSymbol(this.cachedFunctionArgumentsSymbol);
-            this.cachedFunctionArgumentsSymbol.addDeclaration(functionArgumentsDecl);
         }
 
         public getUnitPath() { return this.unitPath; }
@@ -1893,12 +1898,7 @@ module TypeScript {
             if (!functionDecl.hasSymbol()) {
                 var binder = this.semanticInfoChain.getBinder();
 
-                if (functionDecl.kind === PullElementKind.ConstructorType) {
-                    binder.bindConstructorTypeDeclarationToPullSymbol(functionDecl);
-                }
-                else {
-                    binder.bindFunctionTypeDeclarationToPullSymbol(functionDecl);
-                }
+                binder.bindDeclToPullSymbol(functionDecl);
             }
 
             funcDeclSymbol = <PullTypeSymbol>functionDecl.getSymbol();
@@ -2097,6 +2097,39 @@ module TypeScript {
                 PullTypeResolver.postTypeCheckWorkitems.push({ ast: astWithName, enclosingDecl: enclosingDecl });
             } else if (nameText == "_super") {
                 this.checkSuperCaptureVariableCollides(astWithName, isDeclaration, enclosingDecl, context);
+            } else if (isDeclaration && nameText == "_i") {
+                this.checkIndexOfRestArgumentInitializationCollides(astWithName, enclosingDecl, context);
+            }
+        }
+
+        private checkIndexOfRestArgumentInitializationCollides(ast: AST, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            if (ast.nodeType() == NodeType.Parameter
+                && (enclosingDecl.kind == PullElementKind.Function // Function
+                || enclosingDecl.kind == PullElementKind.FunctionExpression // Function expression
+                || enclosingDecl.kind == PullElementKind.ConstructorMethod // constructor of a class
+                || (enclosingDecl.kind == PullElementKind.Method && enclosingDecl.getParentDecl().kind == PullElementKind.Class))) { // Method of a class
+                var enclosingAST = this.getASTForDecl(enclosingDecl);
+                var nodeType = enclosingAST.nodeType();
+                var hasRestParameterCodeGen = false;
+                if (nodeType == NodeType.FunctionDeclaration) {
+                    var functionDeclaration = <FunctionDeclaration>enclosingAST;
+                    hasRestParameterCodeGen = !hasFlag(enclosingDecl.kind == PullElementKind.Method ? enclosingDecl.getParentDecl().flags : enclosingDecl.flags, PullElementFlags.Ambient)
+                        && functionDeclaration.block
+                        && lastParameterIsRest(functionDeclaration.parameterList);
+                } else if (nodeType == NodeType.ConstructorDeclaration) {
+                    var constructorDeclaration = <ConstructorDeclaration>enclosingAST;
+                    hasRestParameterCodeGen = !hasFlag(enclosingDecl.getParentDecl().flags, PullElementFlags.Ambient)
+                        && constructorDeclaration.block
+                        && lastParameterIsRest(constructorDeclaration.parameterList);
+                } else if (nodeType == NodeType.ArrowFunctionExpression) {
+                    var arrowFunctionExpression = <ArrowFunctionExpression>enclosingAST;
+                    hasRestParameterCodeGen = lastParameterIsRest((<ArrowFunctionExpression>enclosingAST).parameterList);
+                }
+
+                if (hasRestParameterCodeGen) {
+                    // It is error to use the _i varible name
+                    context.postDiagnostic(diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_i_Compiler_uses_i_to_initialize_rest_parameter));
+                }
             }
         }
 
@@ -2397,7 +2430,7 @@ module TypeScript {
             var hasTypeExpr = typeExpr !== null || varDeclOrParameter.nodeType() === NodeType.EnumElement;
             var decl = this.getDeclForAST(varDeclOrParameter);
 
-            // if the enlosing decl is a lambda, we may not have bound the parent symbol
+            // if the enclosing decl is a lambda, we may not have bound the parent symbol
             if (enclosingDecl && decl.kind == PullElementKind.Parameter) {
                 enclosingDecl.ensureSymbolIsBound();
             }
@@ -2794,7 +2827,7 @@ module TypeScript {
                     this.variablePrivacyErrorReporter(declSymbol, symbol, context));
             }
 
-            if (declSymbol.kind != PullElementKind.Property) {
+            if (declSymbol.kind != PullElementKind.Property || declSymbol.hasFlag(PullElementFlags.PropertyParameter)) {
                 // Non property variable with _this name, we need to verify if this would be ok
                 this.checkNameForCompilerGeneratedDeclarationCollision(varDeclOrParameter, /*isDeclaration*/ true, name, enclosingDecl, context);
             }
@@ -2805,7 +2838,15 @@ module TypeScript {
 
             var classSymbol = this.getContextualClassSymbolForEnclosingDecl(enclosingDecl, context);
 
-            if (classSymbol) {
+            if (classSymbol && !classSymbol.hasFlag(PullElementFlags.Ambient)) {
+                if (superAST.nodeType() == NodeType.Parameter) {
+                    var enclosingAST = this.getASTForDecl(enclosingDecl);
+                    var block = enclosingDecl.kind == PullElementKind.Method ? (<FunctionDeclaration>enclosingAST).block : (<ConstructorDeclaration>enclosingAST).block;
+                    if (!block) {
+                        return; // just a overload signature - no code gen
+                    }
+                }
+
                 this.resolveDeclaredSymbol(classSymbol, context);
 
                 var parents = classSymbol.getExtendedTypes();
@@ -2818,6 +2859,13 @@ module TypeScript {
         }
 
         private checkThisCaptureVariableCollides(_thisAST: AST, isDeclaration: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+            if (isDeclaration) {
+                var decl = this.getDeclForAST(_thisAST);
+                if (hasFlag(decl.flags, PullElementFlags.Ambient)) { // ambient declarations do not generate the code
+                    return;
+                }
+            }
+
             // Verify if this variable name conflicts with the _this that would be emitted to capture this in any of the enclosing context
             var declPath = enclosingDecl.getParentPath();
 
@@ -5697,6 +5745,7 @@ module TypeScript {
         }
 
         private resolveNameExpression(nameAST: Identifier, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
+            enclosingDecl.ensureSymbolIsBound();
             var nameSymbol = this.getSymbolForAST(nameAST, context);
             var foundCached = nameSymbol != null;
 
@@ -5732,7 +5781,7 @@ module TypeScript {
             var nameSymbol = this.getSymbolFromDeclPath(id, declPath, PullElementKind.SomeValue);
 
             if (!nameSymbol && id === "arguments" && enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction)) {
-                nameSymbol = this.cachedFunctionArgumentsSymbol;
+                nameSymbol = this.cachedFunctionArgumentsSymbol();
 
                 this.resolveDeclaredSymbol(this.cachedIArgumentsInterfaceType(), context);
             }
@@ -6947,16 +6996,8 @@ module TypeScript {
                     var functionDeclaration = this.getDeclForAST(funcDeclAST);
                     Debug.assert(functionDeclaration);
 
-                    if (!isUsingExistingSymbol) {
-                        var binder = this.semanticInfoChain.getBinder();
-
-                        if (funcDeclAST.isGetAccessor()) {
-                            binder.bindGetAccessorDeclarationToPullSymbol(functionDeclaration);
-                        }
-                        else {
-                            binder.bindSetAccessorDeclarationToPullSymbol(functionDeclaration);
-                        }
-                    }
+                    var binder = this.semanticInfoChain.getBinder();
+                    binder.bindDeclToPullSymbol(functionDeclaration);
 
                     memberSymbol = objectLiteralTypeSymbol.findMember(assignmentText.memberName);
                 }
@@ -10371,6 +10412,8 @@ module TypeScript {
             var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, scriptName);
 
             if (resolver.canTypeCheckAST(script, context)) {
+                PullTypeResolver.typeCheckCallBacks.length = 0;
+
                 resolver.resolveAST(script, /*inContextuallyTypedAssignment:*/ false, scriptDecl, context);
                 resolver.validateVariableDeclarationGroups(scriptDecl, context);
 
@@ -10407,7 +10450,7 @@ module TypeScript {
                 // If we are in a script context, we need to check more than just the current file. We need to check var type identity between files as well.
                 if (enclosingDecl.kind === PullElementKind.Script && declGroups[i].length) {
                     var name = declGroups[i][0].name;
-                    var candidateSymbol = this.semanticInfoChain.findTopLevelSymbol(name, PullElementKind.Variable, enclosingDecl.fileName());
+                    var candidateSymbol = this.semanticInfoChain.findTopLevelSymbol(name, PullElementKind.Variable, enclosingDecl);
                     if (candidateSymbol && candidateSymbol.isResolved) {
                         if (!candidateSymbol.hasFlag(PullElementFlags.ImplicitVariable)) {
                             firstSymbol = candidateSymbol;

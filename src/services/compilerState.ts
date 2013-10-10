@@ -126,7 +126,7 @@ module Services {
         }
 
         public getScript(fileName: string): TypeScript.Script {
-            return this.compiler.getDocument(fileName).script;
+            return this.compiler.getDocument(fileName).script();
         }
 
         public getScriptVersion(fileName: string) {
@@ -168,16 +168,9 @@ module Services {
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 this.addFile(this.compiler, fileNames[i]);
             }
-
-            // Initial typecheck
-            this.compiler.pullTypeCheck();
         }
 
-        public getResolver() {
-            if (this.compiler) {
-                return this.compiler.resolver;
-            }
-
+        public getResolver(): TypeScript.PullTypeResolver {
             return null;
         }
 
@@ -242,8 +235,6 @@ module Services {
         private partialRefresh(): void {
             this.logger.log("Updating files...");
 
-            var fileAdded: boolean = false;
-
             var fileNames = this.host.getScriptFileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var fileName = fileNames[i];
@@ -253,12 +244,7 @@ module Services {
                 }
                 else {
                     this.addFile(this.compiler, fileName);
-                    fileAdded = true;
                 }
-            }
-
-            if (fileAdded) {
-                this.compiler.pullTypeCheck();
             }
         }
 

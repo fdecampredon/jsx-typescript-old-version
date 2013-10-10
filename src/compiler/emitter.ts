@@ -47,7 +47,7 @@ module TypeScript {
         }
 
         public mapOutputFileName(document: Document, extensionChanger: (fname: string, wholeFileNameReplaced: boolean) => string) {
-            if (this.outputMany || document.script.isExternalModule) {
+            if (this.outputMany || document.script().isExternalModule) {
                 var updatedFileName = document.fileName;
                 if (this.compilationSettings.outDirOption !== "") {
                     // Replace the common directory path with the option specified
@@ -493,9 +493,6 @@ module TypeScript {
         }
 
         public tryEmitConstant(dotExpr: MemberAccessExpression) {
-            if (!this.emitOptions.compilationSettings.propagateEnumConstants) {
-                return false;
-            }
             var propertyName = dotExpr.name;
             var boundDecl = this.getConstantDecl(dotExpr);
             if (boundDecl) {
@@ -1582,7 +1579,7 @@ module TypeScript {
                 sourceMapping.start.emittedColumn = this.emitState.column;
                 sourceMapping.start.emittedLine = this.emitState.line;
                 // REVIEW: check time consumed by this binary search (about two per leaf statement)
-                var lineMap = this.document.lineMap;
+                var lineMap = this.document.lineMap();
                 lineMap.fillLineAndCharacterFromPosition(ast.minChar, lineCol);
                 sourceMapping.start.sourceColumn = lineCol.character;
                 sourceMapping.start.sourceLine = lineCol.line + 1;
@@ -1727,7 +1724,7 @@ module TypeScript {
                 return;
             }
 
-            var lineMap = this.document.lineMap;
+            var lineMap = this.document.lineMap();
             var node1EndLine = lineMap.getLineNumberFromPosition(node1.limChar);
             var node2StartLine = lineMap.getLineNumberFromPosition(node2.minChar);
 
@@ -1742,7 +1739,7 @@ module TypeScript {
         private getCopyrightComments(): Comment[] {
             var preComments = this.copyrightElement.preComments();
             if (preComments) {
-                var lineMap = this.document.lineMap;
+                var lineMap = this.document.lineMap();
 
                 var copyrightComments: Comment[] = [];
                 var lastComment: Comment = null;

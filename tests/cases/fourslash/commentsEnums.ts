@@ -9,7 +9,7 @@
 ////}
 ////var /*4*/x = /*5*/Colors./*6*/Cornflower;
 ////x = Colors./*7*/FancyPink;
-
+debugger;
 goTo.marker('1');
 verify.quickInfoIs("Colors", "Enum of colors", "Colors", "enum");
 

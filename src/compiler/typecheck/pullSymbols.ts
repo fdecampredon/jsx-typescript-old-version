@@ -1764,8 +1764,8 @@ module TypeScript {
         }
 
         public getTypesThatExtendThisType(): PullTypeSymbol[]{
-            if (!this._typesThatExplicitlyImplementThisType) {
-                this._typesThatExplicitlyImplementThisType = [];
+            if (!this._typesThatExtendThisType) {
+                this._typesThatExtendThisType = [];
             }
 
             return this._typesThatExtendThisType;

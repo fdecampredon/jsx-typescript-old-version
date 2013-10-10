@@ -26,8 +26,8 @@ var E;
     E[E["A"] = 0] = "A";
 })(E || (E = {}));
 
-x = E.A;
-var f = E.A;
+x = 0 /* A */;
+var f = 0 /* A */;
 x = f;
 
 var g;

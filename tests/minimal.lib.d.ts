@@ -437,7 +437,7 @@ interface Number {
     toString(radix?: number): string;
     toFixed(fractionDigits?: number): string;
     toExponential(fractionDigits?: number): string;
-    toPrecision(precision: number): string;
+    toPrecision(precision?: number): string;
 }
 /** An object that represents a number of any kind. All JavaScript numbers are 64-bit floating-point numbers. */
 declare var Number: {

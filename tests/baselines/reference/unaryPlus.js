@@ -7,7 +7,7 @@ var E;
     E[E["thing"] = 1] = "thing";
 })(E || (E = {}));
 ;
-var c = +E.some;
+var c = +0 /* some */;
 
 // also allowed, used to be errors
 var x = +"3";

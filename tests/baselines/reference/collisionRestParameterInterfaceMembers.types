@@ -1,0 +1,17 @@
+=== tests/cases/compiler/collisionRestParameterInterfaceMembers.ts ===
+Line 1 col 10 IdentifierName "i1" = i1
+Line 2 col 5 IdentifierName "_i" = number
+Line 2 col 20 IdentifierName "restParameters" = any[]
+Line 4 col 10 IdentifierName "i1NoError" = i1NoError
+Line 5 col 5 IdentifierName "_i" = number
+Line 9 col 10 IdentifierName "i2" = i2
+Line 10 col 9 IdentifierName "_i" = number
+Line 10 col 24 IdentifierName "restParameters" = any[]
+Line 12 col 10 IdentifierName "i2NoError" = i2NoError
+Line 13 col 9 IdentifierName "_i" = number
+Line 17 col 10 IdentifierName "i3" = i3
+Line 18 col 0 IdentifierName "foo" = (_i: number, ...restParameters: any[]) => any
+Line 18 col 9 IdentifierName "_i" = number
+Line 18 col 24 IdentifierName "restParameters" = any[]
+Line 19 col 0 IdentifierName "fooNoError" = (_i: number) => any
+Line 19 col 16 IdentifierName "_i" = number

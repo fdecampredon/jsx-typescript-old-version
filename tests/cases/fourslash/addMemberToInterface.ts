@@ -11,6 +11,7 @@
 edit.disableFormatting();
 diagnostics.setEditValidation(IncrementalEditValidation.SyntacticOnly);
 
+debugger;
 goTo.marker('check');
 verify.quickInfoSymbolNameIs('Mod');
 

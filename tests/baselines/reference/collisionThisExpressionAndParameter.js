@@ -42,3 +42,52 @@ var Foo = (function () {
     };
     return Foo;
 })();
+var Foo1 = (function () {
+    function Foo1(_this) {
+        var _this = this;
+        var x2 = {
+            doStuff: function (callback) {
+                return function () {
+                    return callback(_this);
+                };
+            }
+        };
+    }
+    return Foo1;
+})();
+
+function f1(_this) {
+    var _this = this;
+    (function (x) {
+        console.log(_this.x);
+    });
+}
+
+var Foo3 = (function () {
+    function Foo3(_this) {
+        var _this = this;
+        var x2 = {
+            doStuff: function (callback) {
+                return function () {
+                    return callback(_this);
+                };
+            }
+        };
+    }
+    Foo3.prototype.z = function (_this) {
+        var _this = this;
+        var lambda = function () {
+            return function (x) {
+                return _this;
+            };
+        };
+    };
+    return Foo3;
+})();
+
+function f3(_this) {
+    var _this = this;
+    (function (x) {
+        console.log(_this.x);
+    });
+}

@@ -41,7 +41,7 @@ module Services {
 
         private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.AST } {
             var document = this.compilerState.getDocument(fileName);
-            var script = document.script;
+            var script = document.script();
 
             /// TODO: this does not allow getting references on "constructor"
 
@@ -163,7 +163,7 @@ module Services {
 
         private getSingleNodeReferenceAtPosition(fileName: string, position: number): ReferenceEntry[] {
             var document = this.compilerState.getDocument(fileName);
-            var script = document.script;
+            var script = document.script();
 
             var node = TypeScript.getAstAtPosition(script, position);
             if (node === null || node.nodeType() !== TypeScript.NodeType.Name) {
@@ -183,7 +183,7 @@ module Services {
             var result: ReferenceEntry[] = [];
 
             var document = this.compilerState.getDocument(fileName);
-            var script = document.script;
+            var script = document.script();
 
             var ast = TypeScript.getAstAtPosition(script, pos);
             if (ast === null || ast.nodeType() !== TypeScript.NodeType.Name) {
@@ -240,7 +240,7 @@ module Services {
                 });
             }
 
-            if (typesToSearch !== undefined) {
+            if (typesToSearch) {
                 var fileNames = this.compilerState.getFileNames();
                 for (var i = 0, len = fileNames.length; i < len; i++) {
                     var tempFileName = fileNames[i];
@@ -290,7 +290,7 @@ module Services {
             var possiblePositions = this.getPossibleSymbolReferencePositions(fileName, symbolName);
             if (possiblePositions && possiblePositions.length > 0) {
                 var document = this.compilerState.getDocument(fileName);
-                var script = document.script;
+                var script = document.script();
 
                 possiblePositions.forEach(p => {
                     var nameAST = TypeScript.getAstAtPosition(script, p);
@@ -329,7 +329,7 @@ module Services {
             var possiblePositions = this.getPossibleSymbolReferencePositions(fileName, symbolName);
             if (possiblePositions && possiblePositions.length > 0) {
                 var document = this.compilerState.getDocument(fileName);
-                var script = document.script;
+                var script = document.script();
 
                 possiblePositions.forEach(p => {
                     // If it's not in the bounds of the AST we're asking for, then this can't possibly be a hit.
@@ -478,7 +478,7 @@ module Services {
             }
 
             // Third set the path to find ask the type system about the call expression
-            var script = document.script;
+            var script = document.script();
             var node = TypeScript.getAstAtPosition(script, position);
             if (!node) {
                 return null;
@@ -536,7 +536,7 @@ module Services {
         }
 
         private getTypeParameterSignatureFromPartiallyWrittenExpression(document: TypeScript.Document, position: number, genericTypeArgumentListInfo: IPartiallyWrittenTypeArgumentListInformation): SignatureInfo {
-            var script = document.script;
+            var script = document.script();
 
             // Get the identifier information
             var ast = TypeScript.getAstAtPosition(script, genericTypeArgumentListInfo.genericIdentifer.start());
@@ -910,7 +910,7 @@ module Services {
             this.refresh();
 
             var document = this.compilerState.getDocument(fileName);
-            var script = document.script;
+            var script = document.script();
 
             var ast = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
             if (ast === null) {
@@ -962,7 +962,7 @@ module Services {
             var candidateSignature: TypeScript.PullSignatureSymbol;
             var isConstructorCall: boolean;
 
-            if (isNameOfClass(node) || isNameOfInterface(node) || isNameOfFunction(node) || isNameOfVariable(node)) {
+            if (isNameOfClass(node) || isNameOfInterface(node) || isNameOfFunction(node) || isNameOfVariable(node) || isNameOfEnum(node) || isNameOfModule(node)) {
                 // Skip the name and get to the declaration
                 node = node.parent;
             }
@@ -1073,7 +1073,7 @@ module Services {
             this.refresh();
 
             var document = this.compilerState.getDocument(fileName);
-            var script = document.script;
+            var script = document.script();
 
             if (CompletionHelpers.isCompletionListBlocker(document.syntaxTree().sourceUnit(), position)) {
                 this.logger.log("Returning an empty list because completion was blocked.");
@@ -1312,7 +1312,7 @@ module Services {
                 // This entry has not been resolved yet. Resolve it.
                 if (decl) {
                     var document = this.compilerState.getDocument(fileName);
-                    var node = TypeScript.getAstAtPosition(document.script, position);
+                    var node = TypeScript.getAstAtPosition(document.script(), position);
                     var symbolInfo = this.compilerState.pullGetDeclInformation(decl, node, document);
 
                     if (!symbolInfo) {
@@ -1869,6 +1869,23 @@ module Services {
         return ast.nodeType() === TypeScript.NodeType.Name &&
             ast.parent.nodeType() === TypeScript.NodeType.ClassDeclaration &&
             (<TypeScript.ClassDeclaration>ast.parent).identifier === ast;
+    }
+
+    function isNameOfEnum(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.nodeType() === TypeScript.NodeType.Name &&
+            ast.parent.nodeType() === TypeScript.NodeType.EnumDeclaration &&
+            (<TypeScript.EnumDeclaration>ast.parent).identifier === ast;
+    }
+
+    function isNameOfModule(ast: TypeScript.AST): boolean {
+        if (ast === null || ast.parent === null)
+            return false;
+
+        return ast.parent.nodeType() === TypeScript.NodeType.ModuleDeclaration &&
+            (<TypeScript.ModuleDeclaration>ast.parent).name === ast;
     }
 
     function isNameOfFunction(ast: TypeScript.AST): boolean {

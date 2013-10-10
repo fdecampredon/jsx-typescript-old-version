@@ -927,8 +927,6 @@ module FourSlash {
                 }
 
                 compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal), ByteOrderMark.None, 0, true);
-                compiler.pullTypeCheck();
-
 
                 for (var i = 0; i < this.testData.files.length; i++) {
                     var refSemanticErrs = JSON.stringify(compiler.getSemanticDiagnostics(this.testData.files[i].fileName));

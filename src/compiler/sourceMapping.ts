@@ -83,7 +83,7 @@ module TypeScript {
             if (emitOptions.compilationSettings.mapRoot) {
                 // Get the sourceMap Directory
                 this.sourceMapDirectory = emitOptions.compilationSettings.mapRoot;
-                if (emitOptions.outputMany || document.script.isExternalModule) {
+                if (emitOptions.outputMany || document.script().isExternalModule) {
                     // For modules or multiple emit files the mapRoot will have directory structure like the sources
                     // So if src\a.ts and src\lib\b.ts are compiled together user would be moving the maps into mapRoot\a.js.map and mapRoot\lib\b.js.map
                     this.sourceMapDirectory = this.sourceMapDirectory + switchToForwardSlashes(getRootFilePath((document.fileName)).replace(emitOptions.commonDirectoryPath, ""));

@@ -10,6 +10,6 @@ module.exports = E;
 //// [exportAssignmentEnum_B.js]
 var EnumE = require("exportAssignmentEnum_A");
 
-var a = EnumE.A;
-var b = EnumE.B;
-var c = EnumE.C;
+var a = 0 /* A */;
+var b = 1 /* B */;
+var c = 2 /* C */;

@@ -15,7 +15,7 @@ var E;
 })(E || (E = {}));
 
 var g = x;
-var g2 = E.A;
+var g2 = 0 /* A */;
 g2 = x;
 
 var C = (function () {

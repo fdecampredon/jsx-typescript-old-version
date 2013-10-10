@@ -1,10 +1,2 @@
-assignFromNumberInterface2.ts line 20 col 1: error TS2012: Cannot convert 'Number' to 'NotNumber':
-	Types of property 'toPrecision' of types 'Number' and 'NotNumber' are incompatible:
-		Call signatures of types '(precision: number) => string' and '(precision?: number) => string' are incompatible:
-			Call signature expects 0 or fewer parameters.
-assignFromNumberInterface2.ts line 21 col 1: error TS2012: Cannot convert 'number' to 'NotNumber':
-	Types of property 'toPrecision' of types 'Number' and 'NotNumber' are incompatible:
-		Call signatures of types '(precision: number) => string' and '(precision?: number) => string' are incompatible:
-			Call signature expects 0 or fewer parameters.
 assignFromNumberInterface2.ts line 23 col 1: error TS2011: Cannot convert 'Number' to 'number'.
 assignFromNumberInterface2.ts line 24 col 1: error TS2011: Cannot convert 'NotNumber' to 'number'.

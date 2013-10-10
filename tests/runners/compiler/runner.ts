@@ -232,9 +232,6 @@ class CompilerBaselineRunner extends RunnerBase {
                             ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
                     });
 
-                    // TODO: we really want to not have to do this call here.
-                    compiler.pullTypeCheck();
-
                     allFiles.forEach(file => {
                         compiler.getSemanticDiagnostics(file.unitName);
                     });

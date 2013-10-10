@@ -23,32 +23,35 @@ module TypeScript {
         private astDeclMap = new DataMap<PullDecl>();
 
         constructor(private _semanticInfoChain: SemanticInfoChain,
-                    private _fileName: string,
-                    private _script: Script,
+                    public document: Document,
                     private _topLevelDecl: PullDecl = null) {
+        }
+
+        private script(): Script {
+            return this.document.script();
         }
 
         public topLevelDecl(): PullDecl {
             if (this._topLevelDecl === null) {
-                this._topLevelDecl = PullDeclWalker.create(this._script, this._semanticInfoChain);
-
-                // Now that we've computed the decls, there's no need to hold onto the script.
-                this._script = null;
+                this._topLevelDecl = PullDeclWalker.create(this.script(), this._semanticInfoChain);
             }
 
             return this._topLevelDecl;
         }
 
         public fileName(): string {
-            return this._fileName;
+            return this.document.fileName;
         }
 
         public _getDeclForAST(ast: AST): PullDecl {
+            // Ensure we actually have created all our decls before we try to find a mathcing decl
+            // for this ast.
+            this.topLevelDecl();
             return this.astDeclMap.read(ast.astIDString);
         }
 
         public _setDeclForAST(ast: AST, decl: PullDecl): void {
-            Debug.assert(decl.fileName() === this._fileName);
+            Debug.assert(decl.fileName() === this.fileName());
             this.astDeclMap.link(ast.astIDString, decl);
         }
 
@@ -57,7 +60,7 @@ module TypeScript {
         }
 
         public _setASTForDecl(decl: PullDecl, ast: AST): void {
-            Debug.assert(decl.fileName() === this._fileName);
+            Debug.assert(decl.fileName() === this.fileName());
             this.declASTMap.link(decl.declIDString, ast);
         }
     }
@@ -91,6 +94,25 @@ module TypeScript {
         private binder: PullSymbolBinder = null;
 
         private _topLevelDecls: PullDecl[] = null;
+        private _fileNames: string[] = null;
+
+        constructor(private logger: ILogger) {
+            this.invalidate();
+        }
+
+        public getDocument(fileName: string): Document {
+            var info = this.getSemanticInfo(fileName);
+            return info ? info.document : null;
+        }
+
+        public fileNames(): string[] {
+            if (this._fileNames === null) {
+                // Skip the first semantic info (the synthesized one for the global decls).
+                this._fileNames = this.units.slice(1).map(s => s.fileName());
+            }
+
+            return this._fileNames;
+        }
 
         private addPrimitiveType(name: string, globalDecl: PullDecl) {
             var span = new TextSpan(0, 0);
@@ -147,17 +169,13 @@ module TypeScript {
             return globalDecl;
         }
 
-        constructor(private logger: ILogger) {
-            this.invalidate();
-        }
-
         private getSemanticInfo(fileName: string): SemanticInfo {
             return this.fileNameToSemanticInfo[fileName];
         }
 
-        public addScript(script: Script): void {
-            var fileName = script.fileName();
-            var semanticInfo = new SemanticInfo(this, fileName, script);
+        public addDocument(document: Document): void {
+            var fileName = document.fileName;
+            var semanticInfo = new SemanticInfo(this, document);
 
             var existingIndex = ArrayUtilities.indexOf(this.units, u => u.fileName() === fileName);
             if (existingIndex < 0) {
@@ -175,7 +193,7 @@ module TypeScript {
             this.invalidate();
         }
 
-        public removeScript(fileName: string): void {
+        public removeDocument(fileName: string): void {
             Debug.assert(fileName !== "", "Can't remove the semantic info for the global decl.");
             var index = ArrayUtilities.indexOf(this.units, u => u.fileName() === fileName);
             if (index > 0) {
@@ -195,27 +213,41 @@ module TypeScript {
             return cacheID + "#" + declKind.toString();
         }
 
-        public findTopLevelSymbol(name: string, kind: PullElementKind, stopAtFile: string): PullSymbol {
+        // Looks for a top level decl matching the name/kind pair passed in.  This should be used
+        // by methods in the binder to see if there is an existing symbol that a declaration should
+        // merge into, or if the declaration should create a new symbol.  
+        //
+        // The doNotGoPastThisDecl argument is important.  it should be the declaration that the
+        // binder is currently creating a symbol for.  The chain will search itself from first to
+        // last semantic info, and will not go past the file that that decl is declared in.  
+        // Furthermore, while searching hte file that that decl is declared in, it will also not
+        // consider any decls at a later position in the file.
+        //
+        // In this manner, it will only find symbols declared 'before' the decl currently being
+        // bound.  This gives us a nice ordering guarantee for open ended symbols.  Specifically
+        // we'll create a symbol for the first file (in compiler order) that it was found it,
+        // and we'll merge all later declarations into that symbol.  This means, for example, that
+        // if a consumer tries to augment a lib.d.ts type, that the symbol will be created for
+        // lib.d.ts (as that is in the chain prior to all user files).
+        public findTopLevelSymbol(name: string, kind: PullElementKind, doNotGoPastThisDecl: PullDecl): PullSymbol {
             var cacheID = this.getDeclPathCacheID([name], kind);
 
             var symbol = this.symbolCache[cacheID];
 
             if (!symbol) {
-                var topLevelDecls = this.topLevelDecls();
-                var foundDecls: PullDecl[] = null;
 
-                for (var i = 0; i < topLevelDecls.length; i++) {
+                for (var i = 0, n = this.units.length; i < n; i++) {
+                    var topLevelDecl = this.units[i].topLevelDecl();
 
-                    foundDecls = topLevelDecls[i].searchChildDecls(name, kind);
-
-                    for (var j = 0; j < foundDecls.length; j++) {
-                        if (foundDecls[j].hasSymbol()) {
-                            symbol = foundDecls[j].getSymbol();
-                            break;
-                        }
-                    }
-                    if (symbol || topLevelDecls[i].name == stopAtFile) {
+                    var symbol = this.findTopLevelSymbolInDecl(topLevelDecl, name, kind, doNotGoPastThisDecl);
+                    if (symbol) {
                         break;
+                    }
+
+                    // We finished searching up to the file that included the stopping point decl.  
+                    // no need to continue.
+                    if (doNotGoPastThisDecl && topLevelDecl.name == doNotGoPastThisDecl.fileName()) {
+                        return null;
                     }
                 }
 
@@ -225,6 +257,36 @@ module TypeScript {
             }
 
             return symbol;
+        }
+
+        private findTopLevelSymbolInDecl(topLevelDecl: PullDecl, name: string, kind: PullElementKind, doNotGoPastThisDecl: PullDecl): PullSymbol {
+            // If we're currently searching the file that includes the decl we don't want to go 
+            // past, then we have to stop searching at the position of that decl.  Otherwise, we
+            // search the entire file.
+            var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName()
+                ? doNotGoPastThisDecl.ast().minChar
+                : -1
+
+            var foundDecls = topLevelDecl.searchChildDecls(name, kind);
+
+            for (var j = 0; j < foundDecls.length; j++) {
+                var foundDecl = foundDecls[j];
+
+                // This decl was at or past the stopping point.  Don't search any further.
+                if (doNotGoPastThisPosition !== -1 &&
+                    foundDecl.ast() &&
+                    foundDecl.ast().minChar > doNotGoPastThisPosition) {
+
+                    break;
+                }
+
+                var symbol = foundDecls[j].getSymbol();
+                if (symbol) {
+                    return symbol;
+                }
+            }
+
+            return null;
         }
 
         public findExternalModule(id: string) {
@@ -429,12 +491,14 @@ module TypeScript {
             this.fileNameToDiagnostics = new BlockIntrinsics();
             this.binder = null;
             this._topLevelDecls = null;
+            this._fileNames = null;
 
             this.declSymbolMap = new DataMap<PullSymbol>();
             this.declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
             this.declSpecializingSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
 
-            this.units[0] = new SemanticInfo(this, "", /*script:*/ null, this.getGlobalDecl());
+            var globalDocument = new Document(/*fileName:*/ "", /*referencedFiles:*/[], /*settings:*/null, /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null);
+            this.units[0] = new SemanticInfo(this, globalDocument, this.getGlobalDecl());
 
             var cleanEnd = new Date().getTime();
             this.logger.log("   time to invalidate: " + (cleanEnd - cleanStart));

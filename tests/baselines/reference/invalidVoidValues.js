@@ -8,7 +8,7 @@ var E;
     E[E["A"] = 0] = "A";
 })(E || (E = {}));
 x = E;
-x = E.A;
+x = 0 /* A */;
 
 var C = (function () {
     function C() {

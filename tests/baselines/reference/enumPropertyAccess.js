@@ -4,7 +4,7 @@ var Colors;
     Colors[Colors["Green"] = 1] = "Green";
 })(Colors || (Colors = {}));
 
-var x = Colors.Red;
+var x = 0 /* Red */;
 var p = x.Green;
 x.toFixed(); // ok
 

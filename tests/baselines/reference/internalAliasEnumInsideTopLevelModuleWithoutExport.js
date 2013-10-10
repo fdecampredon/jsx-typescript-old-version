@@ -11,7 +11,7 @@ define(["require", "exports"], function(require, exports) {
     var a = exports.a;
 
     var b = a.weekend;
-    exports.bVal = b.Sunday;
+    exports.bVal = 2 /* Sunday */;
 });
 
 

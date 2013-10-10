@@ -877,7 +877,6 @@ module Harness {
                 }
 
                 if (this.needsFullTypeCheck) {
-                    this.compiler.pullTypeCheck();
                     if (!resolve) {
                         this.compiler.resolveAllFiles();
                     }

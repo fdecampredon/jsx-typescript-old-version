@@ -142,7 +142,7 @@ module TypeScript {
             else {
                 var parentDecl = decl.getParentDecl();
                 if (parentDecl && parentDecl.kind === PullElementKind.Script) {
-                    return this.semanticInfoChain.findTopLevelSymbol(name, searchKind, decl.fileName());
+                    return this.semanticInfoChain.findTopLevelSymbol(name, searchKind, decl);
                 }
                 else {
                     // The decl is in a control block (catch/with) that has no parent symbol. Luckily this type of parent can only have one decl.
@@ -812,7 +812,7 @@ module TypeScript {
             }
         }
 
-        public bindObjectTypeDeclarationToPullSymbol(objectDecl: PullDecl) {
+        private bindObjectTypeDeclarationToPullSymbol(objectDecl: PullDecl) {
             var objectSymbolAST: AST = this.semanticInfoChain.getASTForDecl(objectDecl);
 
             var objectSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
@@ -850,7 +850,7 @@ module TypeScript {
             }
         }
 
-        public bindConstructorTypeDeclarationToPullSymbol(constructorTypeDeclaration: PullDecl) {
+        private bindConstructorTypeDeclarationToPullSymbol(constructorTypeDeclaration: PullDecl) {
             var declKind = constructorTypeDeclaration.kind;
             var declFlags = constructorTypeDeclaration.flags;
             var constructorTypeAST = this.semanticInfoChain.getASTForDecl(constructorTypeDeclaration);
@@ -992,7 +992,7 @@ module TypeScript {
             if ((declFlags & PullElementFlags.ImplicitVariable) === 0) {
                 if (!variableSymbol) {
                     variableSymbol = new PullSymbol(declName, declKind);
-                    if (!parent) {
+                    if (!parent && parentDecl.kind === PullElementKind.Script) {
                         this.semanticInfoChain.cacheGlobalSymbol(variableSymbol, declKind);
                     }
                 }
@@ -1041,7 +1041,7 @@ module TypeScript {
                         }
 
                         if (!classTypeSymbol) {
-                            classTypeSymbol = <PullTypeSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeType, variableDeclaration.fileName());
+                            classTypeSymbol = <PullTypeSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeType, variableDeclaration);
                         }
                     }
 
@@ -1116,10 +1116,10 @@ module TypeScript {
                             }
                         }
                         if (!moduleContainerTypeSymbol) {
-                            moduleContainerTypeSymbol = <PullContainerSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeContainer, variableDeclaration.fileName());
+                            moduleContainerTypeSymbol = <PullContainerSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeContainer, variableDeclaration);
 
                             if (!moduleContainerTypeSymbol) {
-                                moduleContainerTypeSymbol = <PullContainerSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.Enum, variableDeclaration.fileName());
+                                moduleContainerTypeSymbol = <PullContainerSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.Enum, variableDeclaration);
                             }
                         }
                     }
@@ -1518,7 +1518,7 @@ module TypeScript {
             functionTypeSymbol.addCallSignature(signature);
         }
 
-        public bindFunctionTypeDeclarationToPullSymbol(functionTypeDeclaration: PullDecl) {
+        private bindFunctionTypeDeclarationToPullSymbol(functionTypeDeclaration: PullDecl) {
             var declKind = functionTypeDeclaration.kind;
             var declFlags = functionTypeDeclaration.flags;
             var funcTypeAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionTypeDeclaration);
@@ -1919,8 +1919,7 @@ module TypeScript {
         }
 
         // getters and setters
-
-        public bindGetAccessorDeclarationToPullSymbol(getAccessorDeclaration: PullDecl) {
+        private bindGetAccessorDeclarationToPullSymbol(getAccessorDeclaration: PullDecl) {
             var declKind = getAccessorDeclaration.kind;
             var declFlags = getAccessorDeclaration.flags;
             var funcDeclAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(getAccessorDeclaration);
@@ -2021,7 +2020,7 @@ module TypeScript {
             getterTypeSymbol.addCallSignature(signature);
         }
 
-        public bindSetAccessorDeclarationToPullSymbol(setAccessorDeclaration: PullDecl) {
+        private bindSetAccessorDeclarationToPullSymbol(setAccessorDeclaration: PullDecl) {
             var declKind = setAccessorDeclaration.kind;
             var declFlags = setAccessorDeclaration.flags;
             var funcDeclAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(setAccessorDeclaration);

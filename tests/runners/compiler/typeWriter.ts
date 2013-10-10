@@ -34,8 +34,6 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
 
         this.document = compiler.getDocument(filename);
         this.syntaxTree = this.document.syntaxTree();
-
-        compiler.setUnit(filename);
     }
 
     public run() {
@@ -79,11 +77,9 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     private getAstForElement(element: TypeScript.ISyntaxElement) {
         var candidates: string[] = [];
 
-        var s = this.document.scriptSnapshot;
         for (var i = 0; i < element.fullWidth(); i++) {
-            var ast = TypeScript.getAstAtPosition(this.document.script, (<PositionedNode>element).position + i, false, false);
+            var ast = TypeScript.getAstAtPosition(this.document.script(), (<PositionedNode>element).position + i, false, false);
             while (ast) {
-                candidates.push(s.getText(ast.minChar, ast.limChar));
                 if (ast.limChar - ast.minChar === element.width()) {
                     return ast;
                 }
@@ -92,8 +88,6 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         }
 
         var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + element.fullText() + ', width = ' + element.width() + ', pos = ' + (<PositionedNode>element).position;
-        errorText = errorText + '\n' + 'Candidate list follows, kind = ' + TypeScript.SyntaxKind[element.kind()];
-        errorText = errorText + '\n' + candidates.map(s => s.substr(0, 10)).join('\n');
 
         throw new Error(errorText);
     }
@@ -188,7 +182,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     }
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
-        var pos = this.document.lineMap.getLineAndCharacterFromPosition(this.position());
+        var pos = this.document.lineMap().getLineAndCharacterFromPosition(this.position());
         this.results.push('Line ' + pos.line() + ' col ' + pos.character() + ' ' + TypeScript.SyntaxKind[node.kind()] + ' "' + node.fullText().trim() + '" = ' + this.getTypeOfElement(node));
     }
 }

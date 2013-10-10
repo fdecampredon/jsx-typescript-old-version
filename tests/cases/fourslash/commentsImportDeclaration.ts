@@ -23,7 +23,7 @@
 ////import extMod/*3*/ = require("commentsImportDeclaration_file0/*4*/");
 ////extMod./*6*/m1./*7*/fooEx/*8q*/port(/*8*/);
 ////var new/*9*/Var = new extMod.m1.m2./*10*/c();
-
+debugger;
 goTo.marker('2');
 verify.quickInfoIs("m1", "ModuleComment", "m1", "module");
 

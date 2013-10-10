@@ -7,4 +7,4 @@ var Mode = exports.Mode;
 ///<reference path='enumFromExternalModule_0.ts'/>
 var f = require('enumFromExternalModule_0');
 
-var x = f.Mode.Open;
+var x = 0 /* Open */;

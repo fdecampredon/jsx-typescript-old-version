@@ -68,48 +68,43 @@ module TypeScript {
                 // Resolve the compilation environemnt
                 this.resolve();
 
-                if (!this.compilationSettings.updateTC) {
-                    this.compile();
+                this.compile();
 
-                    if (this.compilationSettings.gatherDiagnostics) {
-                        this.logger.log("");
-                        this.logger.log("File resolution time:                     " + TypeScript.fileResolutionTime);
-                        this.logger.log("SyntaxTree parse time:                    " + TypeScript.syntaxTreeParseTime);
-                        this.logger.log("Syntax Diagnostics time:                  " + TypeScript.syntaxDiagnosticsTime);
-                        this.logger.log("AST translation time:                     " + TypeScript.astTranslationTime);
-                        this.logger.log("");
-                        this.logger.log("Type check time:                          " + TypeScript.typeCheckTime);
-                        this.logger.log("");
-                        this.logger.log("Emit time:                                " + TypeScript.emitTime);
-                        this.logger.log("Declaration emit time:                    " + TypeScript.declarationEmitTime);
+                if (this.compilationSettings.gatherDiagnostics) {
+                    this.logger.log("");
+                    this.logger.log("File resolution time:                     " + TypeScript.fileResolutionTime);
+                    this.logger.log("SyntaxTree parse time:                    " + TypeScript.syntaxTreeParseTime);
+                    this.logger.log("Syntax Diagnostics time:                  " + TypeScript.syntaxDiagnosticsTime);
+                    this.logger.log("AST translation time:                     " + TypeScript.astTranslationTime);
+                    this.logger.log("");
+                    this.logger.log("Type check time:                          " + TypeScript.typeCheckTime);
+                    this.logger.log("");
+                    this.logger.log("Emit time:                                " + TypeScript.emitTime);
+                    this.logger.log("Declaration emit time:                    " + TypeScript.declarationEmitTime);
 
-                        this.logger.log("  IsExternallyVisibleTime:                " + TypeScript.declarationEmitIsExternallyVisibleTime);
-                        this.logger.log("  TypeSignatureTime:                      " + TypeScript.declarationEmitTypeSignatureTime);
-                        this.logger.log("  GetBoundDeclTypeTime:                   " + TypeScript.declarationEmitGetBoundDeclTypeTime);
-                        this.logger.log("  IsOverloadedCallSignatureTime:          " + TypeScript.declarationEmitIsOverloadedCallSignatureTime);
-                        this.logger.log("  FunctionDeclarationGetSymbolTime:       " + TypeScript.declarationEmitFunctionDeclarationGetSymbolTime);
-                        this.logger.log("  GetBaseTypeTime:                        " + TypeScript.declarationEmitGetBaseTypeTime);
-                        this.logger.log("  GetAccessorFunctionTime:                " + TypeScript.declarationEmitGetAccessorFunctionTime);
-                        this.logger.log("  GetTypeParameterSymbolTime:             " + TypeScript.declarationEmitGetTypeParameterSymbolTime);
-                        this.logger.log("  GetImportDeclarationSymbolTime:         " + TypeScript.declarationEmitGetImportDeclarationSymbolTime);
+                    this.logger.log("  IsExternallyVisibleTime:                " + TypeScript.declarationEmitIsExternallyVisibleTime);
+                    this.logger.log("  TypeSignatureTime:                      " + TypeScript.declarationEmitTypeSignatureTime);
+                    this.logger.log("  GetBoundDeclTypeTime:                   " + TypeScript.declarationEmitGetBoundDeclTypeTime);
+                    this.logger.log("  IsOverloadedCallSignatureTime:          " + TypeScript.declarationEmitIsOverloadedCallSignatureTime);
+                    this.logger.log("  FunctionDeclarationGetSymbolTime:       " + TypeScript.declarationEmitFunctionDeclarationGetSymbolTime);
+                    this.logger.log("  GetBaseTypeTime:                        " + TypeScript.declarationEmitGetBaseTypeTime);
+                    this.logger.log("  GetAccessorFunctionTime:                " + TypeScript.declarationEmitGetAccessorFunctionTime);
+                    this.logger.log("  GetTypeParameterSymbolTime:             " + TypeScript.declarationEmitGetTypeParameterSymbolTime);
+                    this.logger.log("  GetImportDeclarationSymbolTime:         " + TypeScript.declarationEmitGetImportDeclarationSymbolTime);
 
-                        this.logger.log("Emit write file time:                     " + TypeScript.emitWriteFileTime);
-                        this.logger.log("Emit directory exists time:               " + TypeScript.emitDirectoryExistsTime);
-                        this.logger.log("Emit file exists time:                    " + TypeScript.emitFileExistsTime);
-                        this.logger.log("Emit resolve path time:                   " + TypeScript.emitResolvePathTime);
+                    this.logger.log("Emit write file time:                     " + TypeScript.emitWriteFileTime);
+                    this.logger.log("Emit directory exists time:               " + TypeScript.emitDirectoryExistsTime);
+                    this.logger.log("Emit file exists time:                    " + TypeScript.emitFileExistsTime);
+                    this.logger.log("Emit resolve path time:                   " + TypeScript.emitResolvePathTime);
 
-                        this.logger.log("IO host resolve path time:                " + TypeScript.ioHostResolvePathTime);
-                        this.logger.log("IO host directory name time:              " + TypeScript.ioHostDirectoryNameTime);
-                        this.logger.log("IO host create directory structure time:  " + TypeScript.ioHostCreateDirectoryStructureTime);
-                        this.logger.log("IO host write file time:                  " + TypeScript.ioHostWriteFileTime);
+                    this.logger.log("IO host resolve path time:                " + TypeScript.ioHostResolvePathTime);
+                    this.logger.log("IO host directory name time:              " + TypeScript.ioHostDirectoryNameTime);
+                    this.logger.log("IO host create directory structure time:  " + TypeScript.ioHostCreateDirectoryStructureTime);
+                    this.logger.log("IO host write file time:                  " + TypeScript.ioHostWriteFileTime);
 
-                        this.logger.log("Node make directory time:                 " + TypeScript.nodeMakeDirectoryTime);
-                        this.logger.log("Node writeFileSync time:                  " + TypeScript.nodeWriteFileSyncTime);
-                        this.logger.log("Node createBuffer time:                   " + TypeScript.nodeCreateBufferTime);
-                    }
-                }
-                else {
-                    this.updateCompile();
+                    this.logger.log("Node make directory time:                 " + TypeScript.nodeMakeDirectoryTime);
+                    this.logger.log("Node writeFileSync time:                  " + TypeScript.nodeWriteFileSyncTime);
+                    this.logger.log("Node createBuffer time:                   " + TypeScript.nodeCreateBufferTime);
                 }
             }
 
@@ -188,120 +183,16 @@ module TypeScript {
                 var resolvedFile = this.resolvedFiles[i];
                 var sourceFile = this.getSourceFile(resolvedFile.path);
                 compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
+            }
 
-                var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
+            for (var it = compiler.compile((path: string) => this.resolvePath(path)); it.moveNext();) {
+                var result = it.current();
 
-                if (syntacticDiagnostics.length > 0) {
-                    anySyntacticErrors = true;
+                result.diagnostics.forEach(d => this.addDiagnostic(d));
+                if (!this.tryWriteOutputFiles(result.outputFiles)) {
+                    return;
                 }
             }
-
-            if (anySyntacticErrors) {
-                return;
-            }
-
-            compiler.pullTypeCheck();
-            var fileNames = compiler.fileNames();
-            for (var i = 0, n = fileNames.length; i < n; i++) {
-                var fileName = fileNames[i];
-                var semanticDiagnostics = compiler.getSemanticDiagnostics(fileName);
-                if (semanticDiagnostics.length > 0) {
-                    anySemanticErrors = true;
-                    semanticDiagnostics.forEach(d => this.addDiagnostic(d));
-                }
-            }
-
-            var emitOutput = compiler.emitAll((path: string) => this.resolvePath(path));
-            emitOutput.diagnostics.forEach(d => this.addDiagnostic(d));
-            if (emitOutput.diagnostics.length > 0) {
-                return;
-            }
-
-            if (!this.tryWriteOutputFiles(emitOutput)) {
-                return;
-            }
-
-            // Don't emit declarations if we have any semantic diagnostics.
-            if (anySemanticErrors) {
-                return;
-            }
-
-            var emitDeclarationsOutput = compiler.emitAllDeclarations((path: string) => this.resolvePath(path));
-            emitDeclarationsOutput.diagnostics.forEach(d => this.addDiagnostic(d));
-            if (emitDeclarationsOutput.diagnostics.length > 0) {
-                return;
-            }
-
-            this.tryWriteOutputFiles(emitDeclarationsOutput);
-        }
-
-        public updateCompile(): boolean {
-            var compiler = new TypeScript.TypeScriptCompiler(this.logger, this.compilationSettings);
-
-            var anySyntacticErrors = false;
-            var foundLib = false;
-
-            for (var iCode = 0, n = this.resolvedFiles.length; iCode < n; iCode++) {
-                var resolvedFile = this.resolvedFiles[iCode];
-
-                if (resolvedFile.path.indexOf("lib.d.ts") != -1) {
-                    foundLib = true;
-                }
-                else if ((foundLib && iCode > 1) || (!foundLib && iCode > 0)) {
-                    break;
-                }
-
-                this.ioHost.stdout.WriteLine("Consuming " + resolvedFile.path + "...");
-
-                // if file resolving is disabled, the file's content will not yet be loaded
-
-                var sourceFile = this.getSourceFile(resolvedFile.path);
-                compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ true, resolvedFile.referencedFiles);
-
-                var syntacticDiagnostics = compiler.getSyntacticDiagnostics(resolvedFile.path);
-                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
-
-                if (syntacticDiagnostics.length > 0) {
-                    anySyntacticErrors = true;
-                }
-            }
-
-            //if (anySyntacticErrors) {
-            //    return true;
-            //}
-
-            this.ioHost.stdout.WriteLine("**** Initial type check errors:");
-            compiler.pullTypeCheck();
-
-            var semanticDiagnostics: TypeScript.Diagnostic[];
-
-            for (var i = 0; i < iCode; i++) {
-                semanticDiagnostics = compiler.getSemanticDiagnostics(this.resolvedFiles[i].path);
-                semanticDiagnostics.forEach(d => this.addDiagnostic(d));
-            }
-
-            // Note: we continue even if there were type check warnings.
-
-            // ok, now we got through the remaining files, 1-by-1, substituting the new code in for the old
-            if (iCode && iCode <= this.resolvedFiles.length - 1) {
-                var lastTypecheckedFileName = this.resolvedFiles[iCode - 1].path;
-                var snapshot: TypeScript.IScriptSnapshot;
-
-                for (; iCode < this.resolvedFiles.length; iCode++) {
-                    var resolvedFile = this.resolvedFiles[iCode];
-                    var sourceFile = this.getSourceFile(resolvedFile.path);
-                    this.ioHost.stdout.WriteLine("**** Update type check and errors for " + resolvedFile.path + ":");
-
-                    compiler.updateFile(lastTypecheckedFileName, sourceFile.scriptSnapshot, /*version:*/ 0, /*isOpen:*/ true, null);
-
-                    // resolve the file to simulate an IDE-driven pull
-                    semanticDiagnostics = compiler.getSemanticDiagnostics(lastTypecheckedFileName);
-                    semanticDiagnostics.forEach(d => this.addDiagnostic(d));
-                }
-            }
-
-            return false;
         }
 
         // Parse command line options
@@ -420,13 +311,6 @@ module TypeScript {
                 experimental: true,
                 set: () => {
                     this.compilationSettings.gatherDiagnostics = true;
-                }
-            });
-
-            opts.flag('update', {
-                experimental: true,
-                set: () => {
-                    this.compilationSettings.updateTC = true;
                 }
             });
 
@@ -789,9 +673,9 @@ module TypeScript {
             this.ioHost.stderr.WriteLine(diagnostic.message());
         }
 
-        private tryWriteOutputFiles(emitOutput: EmitOutput): boolean {
-            for (var i = 0, n = emitOutput.outputFiles.length; i < n; i++) {
-                var outputFile = emitOutput.outputFiles[i];
+        private tryWriteOutputFiles(outputFiles: OutputFile[]): boolean {
+            for (var i = 0, n = outputFiles.length; i < n; i++) {
+                var outputFile = outputFiles[i];
 
                 try {
                     this.writeFile(outputFile.name, outputFile.text, outputFile.writeByteOrderMark);

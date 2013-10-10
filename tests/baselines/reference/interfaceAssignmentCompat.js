@@ -21,9 +21,9 @@ var M;
         var x = [];
         var result = "";
 
-        x[0] = { color: Color.Brown };
-        x[1] = { color: Color.Blue };
-        x[2] = { color: Color.Green };
+        x[0] = { color: 2 /* Brown */ };
+        x[1] = { color: 1 /* Blue */ };
+        x[2] = { color: 0 /* Green */ };
 
         x = x.sort(CompareYeux); // parameter mismatch
 

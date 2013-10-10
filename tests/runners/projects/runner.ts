@@ -61,6 +61,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
 
         compiler = new TypeScript.TypeScriptCompiler();
         compiler.settings = this.compilationSettings;
+        compiler.settings.sourceMapEmitterCallback = sourceMapEmitterCallback;
         compiler.emitOptions.compilationSettings = this.compilationSettings;
 
         for (var iCode = 0; iCode < this.resolvedFiles.length; iCode++) {
@@ -86,35 +87,15 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
             }
         }
 
-        compiler.pullTypeCheck();
+        for (var i = compiler.compile((path: string) => IO.resolvePath(path)); i.moveNext();) {
+            var result = i.current();
 
-        var emitterIOHost = {
-            writeFile: writeEmitFile,
-            directoryExists: IO.directoryExists,
-            fileExists: IO.fileExists,
-            resolvePath: IO.resolvePath
-        };
-
-        compiler.fileNames().forEach(file => {
-            if (file.indexOf('lib.d.ts') < 0) {
-                var syntacticDiagnostics = compiler.getSyntacticDiagnostics(file);
-                syntacticDiagnostics.forEach(d => this.addDiagnostic(d));
-
-                var semanticDiagnostics = compiler.getSemanticDiagnostics(file);
-                semanticDiagnostics.forEach(d => this.addDiagnostic(d));
-            }
-        });
-
-        compiler.settings.sourceMapEmitterCallback = sourceMapEmitterCallback;
-        var emitOutput = compiler.emitAll((path: string) => emitterIOHost.resolvePath(path));
-        emitOutput.diagnostics.forEach(d => this.addDiagnostic(d));
-        emitOutput.outputFiles.forEach(o => emitterIOHost.writeFile(o.name, o.text, o.writeByteOrderMark));
-
-        emitterIOHost.writeFile = writeDeclareFile;
-
-        var emitDeclarationsOutput = compiler.emitAllDeclarations((path: string) => emitterIOHost.resolvePath(path));
-        emitDeclarationsOutput.diagnostics.forEach(d => this.addDiagnostic(d));
-        emitDeclarationsOutput.outputFiles.forEach(o => emitterIOHost.writeFile(o.name, o.text, o.writeByteOrderMark));
+            result.diagnostics.forEach(d => this.addDiagnostic(d));
+            result.outputFiles.forEach(o => {
+                var write = o.fileType === TypeScript.OutputFileType.Declaration ? writeDeclareFile : writeEmitFile;
+                write(o.name, o.text, o.writeByteOrderMark);
+            });
+        }
 
         if (this.errout) {
             this.errout.Close();

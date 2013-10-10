@@ -3,55 +3,89 @@
 module TypeScript {
     export class Document {
         private _diagnostics: Diagnostic[] = null;
-        private _syntaxTree: SyntaxTree = null;
         private _bloomFilter: BloomFilter = null;
-        public script: Script;
-        public lineMap: LineMap;
+        private _script: Script = null;
+        private _lineMap: LineMap;
 
         constructor(public fileName: string,
                     public referencedFiles: string[],
                     private compilationSettings: CompilationSettings,
-                    public scriptSnapshot: IScriptSnapshot,
+                    private scriptSnapshot: IScriptSnapshot,
                     public byteOrderMark: ByteOrderMark,
                     public version: number,
                     public isOpen: boolean,
-                    syntaxTree: SyntaxTree) {
+                    private _syntaxTree: SyntaxTree) {
+        }
 
-            if (isOpen) {
-                this._syntaxTree = syntaxTree;
-            }
-            else {
-                // Don't store the syntax tree for a closed file.
-                var start = new Date().getTime();
-                this._diagnostics = syntaxTree.diagnostics();
-                TypeScript.syntaxDiagnosticsTime += new Date().getTime() - start;
-            }
-
-            this.lineMap = syntaxTree.lineMap();
-
+        private cacheSyntaxTreeInfo(syntaxTree: SyntaxTree): void {
+            // If we're not keeping around the syntax tree, store the diagnostics and line
+            // map so they don't have to be recomputed.
             var start = new Date().getTime();
-            this.script = SyntaxTreeToAstVisitor.visit(syntaxTree, fileName, compilationSettings, isOpen);
-            TypeScript.astTranslationTime += new Date().getTime() - start;
+            this._diagnostics = syntaxTree.diagnostics();
+            TypeScript.syntaxDiagnosticsTime += new Date().getTime() - start;
+
+            this._lineMap = syntaxTree.lineMap();
+        }
+
+        public script(): Script {
+            // If we don't have a script, create one from our parse tree.
+            if (!this._script) {
+                var start = new Date().getTime();
+                var syntaxTree = this.syntaxTree();
+                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this.compilationSettings, /*incrementalAST:*/ this.isOpen);
+                TypeScript.astTranslationTime += new Date().getTime() - start;
+
+                // If we're not open, then we can throw away our syntax tree.  We don't need it from
+                // now on.
+                if (!this.isOpen) {
+                    this._syntaxTree = null;
+                }
+            }
+
+            return this._script;
         }
 
         public diagnostics(): Diagnostic[] {
             if (this._diagnostics === null) {
-                this._diagnostics = this._syntaxTree.diagnostics();
+                // force the diagnostics to get created.
+                this.syntaxTree();
+                Debug.assert(this._diagnostics);
             }
 
             return this._diagnostics;
         }
 
-        public syntaxTree(): SyntaxTree {
-            if (this._syntaxTree) {
-                return this._syntaxTree;
+        public lineMap(): LineMap {
+            if (this._lineMap === null) {
+                // force the line map to get created.
+                this.syntaxTree();
+                Debug.assert(this._lineMap);
             }
 
-            return Parser.parse(
-                this.fileName,
-                SimpleText.fromScriptSnapshot(this.scriptSnapshot),
-                TypeScript.isDTSFile(this.fileName),
-                getParseOptions(this.compilationSettings));
+            return this._lineMap;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            var result = this._syntaxTree;
+            if (!result) {
+                var start = new Date().getTime();
+
+                result = Parser.parse(
+                    this.fileName,
+                    SimpleText.fromScriptSnapshot(this.scriptSnapshot),
+                    TypeScript.isDTSFile(this.fileName),
+                    getParseOptions(this.compilationSettings));
+
+                TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
+
+                // If the document is open, store the syntax tree for fast incremental updates.
+                if (this.isOpen) {
+                    this._syntaxTree = result;
+                }
+            }
+
+            this.cacheSyntaxTreeInfo(result);
+            return result;
         }
 
         public bloomFilter(): BloomFilter {
@@ -67,7 +101,7 @@ module TypeScript {
                     }
                 };
 
-                TypeScript.getAstWalkerFactory().walk(this.script, pre, null, null, identifiers);
+                TypeScript.getAstWalkerFactory().walk(this.script(), pre, null, null, identifiers);
 
                 var identifierCount = 0;
                 for (var name in identifiers) {
@@ -83,8 +117,10 @@ module TypeScript {
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange, settings: CompilationSettings): Document {
-
-            var oldScript = this.script;
+            // See if we are currently holding onto a syntax tree.  We may not be because we're 
+            // either a closed file, or we've just been lazy and haven't had to create the syntax
+            // tree yet.  Access the field instead of the method so we don't accidently realize
+            // the old syntax tree.
             var oldSyntaxTree = this._syntaxTree;
 
             var text = SimpleText.fromScriptSnapshot(scriptSnapshot);
@@ -99,14 +135,7 @@ module TypeScript {
         }
 
         public static create(fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[], compilationSettings: CompilationSettings): Document {
-            // for an open file, make a syntax tree and a script, and store both around.
-            var start = new Date().getTime();
-            var syntaxTree = Parser.parse(fileName, SimpleText.fromScriptSnapshot(scriptSnapshot), TypeScript.isDTSFile(fileName), getParseOptions(compilationSettings));
-            TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
-
-            var document = new Document(fileName, referencedFiles, compilationSettings, scriptSnapshot, byteOrderMark, version, isOpen, syntaxTree);
-
-            return document;
+            return new Document(fileName, referencedFiles, compilationSettings, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null);
         }
     }
 }

@@ -23,12 +23,22 @@ var Foo = (function () {
             };
         };
     };
+    Object.defineProperty(Foo.prototype, "c", {
+        set: function (_super) {
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Foo;
 })();
 var Foo2 = (function (_super) {
     __extends(Foo2, _super);
-    function Foo2() {
-        _super.apply(this, arguments);
+    function Foo2(_super) {
+        _super.call(this);
+        this.prop4 = {
+            doStuff: function (_super) {
+            }
+        };
     }
     Foo2.prototype.x = function () {
         var _this = this;
@@ -46,5 +56,27 @@ var Foo2 = (function (_super) {
             };
         };
     };
+    Object.defineProperty(Foo2.prototype, "z", {
+        set: function (_super) {
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Foo2;
+})(Foo);
+
+var Foo4 = (function (_super) {
+    __extends(Foo4, _super);
+    function Foo4(_super) {
+        _super.call(this);
+    }
+    Foo4.prototype.y = function (_super) {
+        var _this = this;
+        var lambda = function () {
+            return function (x) {
+                return _this;
+            };
+        };
+    };
+    return Foo4;
 })(Foo);

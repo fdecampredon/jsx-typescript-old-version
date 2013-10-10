@@ -15,7 +15,7 @@ var E;
 
 // BUG 767030
 e = null;
-E.A = null;
+0 /* A */ = null;
 
 var C = (function () {
     function C() {

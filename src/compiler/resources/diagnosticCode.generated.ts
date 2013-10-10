@@ -307,6 +307,7 @@ module TypeScript {
         TypeParameter_0_of_exported_interface_has_or_is_using_private_type_1: "TypeParameter '{0}' of exported interface has or is using private type '{1}'.",
         TypeParameter_0_of_exported_class_is_using_inaccessible_module_1: "TypeParameter '{0}' of exported class is using inaccessible module {1}.",
         TypeParameter_0_of_exported_interface_is_using_inaccessible_module_1: "TypeParameter '{0}' of exported interface is using inaccessible module {1}.",
+        Duplicate_identifier_i_Compiler_uses_i_to_initialize_rest_parameter: "Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.",
         Type_0_is_missing_property_1_from_type_2: "Type '{0}' is missing property '{1}' from type '{2}'.",
         Types_of_property_0_of_types_1_and_2_are_incompatible: "Types of property '{0}' of types '{1}' and '{2}' are incompatible.",
         Types_of_property_0_of_types_1_and_2_are_incompatible_NL_3: "Types of property '{0}' of types '{1}' and '{2}' are incompatible:{NL}{3}",

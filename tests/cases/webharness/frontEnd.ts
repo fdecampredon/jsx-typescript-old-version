@@ -48,18 +48,6 @@ class BatchCompiler implements Services.ILanguageServiceHost {
 
         this.compiler.addFile("lib.d.ts", this.libScriptSnapshot, ByteOrderMark.None, 0, false, []);
         this.compiler.addFile("compiler.ts", this.compilerScriptSnapshot, ByteOrderMark.None, 0, false, []);
-
-        this.compiler.pullTypeCheck();
-
-        //var emitterIOHost = {
-        //    writeFile: (fileName: string, contents: string, writeByteOrderMark: boolean) => { },
-        //    resolvePath: (a: string) => a,
-        //};
-
-        //// TODO: if there are any emit diagnostics.  Don't proceed.
-        //var emitDiagnostics = this.compiler.emitAll(emitterIOHost);
-
-        //var emitDeclarationsDiagnostics = this.compiler.emitAllDeclarations();
     }
 
     public information(): boolean {

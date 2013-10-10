@@ -13,6 +13,7 @@
 ///<reference path='diagnostic.ts' />
 ///<reference path='environment.ts' />
 ///<reference path='integerUtilities.ts' />
+///<reference path='iterator.ts' />
 ///<reference path='mathPrototype.ts' />
 ///<reference path='stringTable.ts' />
 ///<reference path='stringUtilities.ts' />
