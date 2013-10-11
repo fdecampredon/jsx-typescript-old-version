@@ -117,7 +117,7 @@ module FourSlash {
         private languageService: Services.ILanguageService = null;
 
         // A reference to the language service's compiler state's compiler instance
-        private compiler: { getSyntaxTree(fileName: string): TypeScript.SyntaxTree; getScript(fileName: string): TypeScript.Script; };
+        private compiler: () => { getSyntaxTree(fileName: string): TypeScript.SyntaxTree; getScript(fileName: string): TypeScript.Script; };
 
         // The current caret position in the active file
         public currentCaretPosition = 0;
@@ -180,7 +180,7 @@ module FourSlash {
             // Sneak into the language service and get its compiler so we can examine the syntax trees
             this.languageService = this.languageServiceShimHost.getLanguageService().languageService;
             var compilerState = (<any>this.languageService).compilerState;
-            this.compiler = (<any>compilerState).compiler;
+            this.compiler = () => (<any>compilerState).compiler;
 
             this.formatCodeOptions = new Services.FormatCodeOptions();
 
@@ -465,6 +465,29 @@ module FourSlash {
             }
         }
 
+        public verifyImplementorsCountIs(count: number, localFilesOnly: boolean = true) {
+            var implementors = this.getImplementorsAtCaret();
+            var implementorsCount = 0;
+
+            if (localFilesOnly) {
+                var localFiles = this.testData.files.map<string>(file => file.fileName);
+                // Count only the references in local files. Filter the ones in lib and other files.
+                implementors.forEach((entry) => {
+                    if (localFiles.some((filename) => filename === entry.fileName)) {
+                        ++implementorsCount;
+                    }
+                });
+            }
+            else {
+                implementorsCount = implementors.length;
+            }
+
+            if (implementorsCount !== count) {
+                var condition = localFilesOnly ? "excluding libs" : "including libs";
+                throw new Error("Expected implementors count (" + condition + ") to be " + count + ", but is actually " + implementors.length);
+            }
+        }
+
         private getMemberListAtCaret() {
             return this.languageService.getCompletionsAtPosition(this.activeFile.fileName, this.currentCaretPosition, true);
         }
@@ -479,6 +502,10 @@ module FourSlash {
 
         private getReferencesAtCaret() {
             return this.languageService.getReferencesAtPosition(this.activeFile.fileName, this.currentCaretPosition);
+        }
+
+        private getImplementorsAtCaret() {
+            return this.languageService.getImplementorsAtPosition(this.activeFile.fileName, this.currentCaretPosition);
         }
 
         public verifyQuickInfo(negative: boolean, expectedTypeName?: string, docComment?: string, symbolName?: string, kind?: string) {
@@ -899,19 +926,20 @@ module FourSlash {
             // Check syntactic structure
             var compilationSettings = new TypeScript.CompilationSettings();
             compilationSettings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
+            var immutableSettings = TypeScript.ImmutableCompilationSettings.fromCompilationSettings(compilationSettings);
 
-            var parseOptions = TypeScript.getParseOptions(compilationSettings);
+            var parseOptions = TypeScript.getParseOptions(immutableSettings);
             var snapshot = this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName);
             var content = snapshot.getText(0, snapshot.getLength());
             var refSyntaxTree = TypeScript.Parser.parse(this.activeFile.fileName, TypeScript.SimpleText.fromString(content), TypeScript.isDTSFile(this.activeFile.fileName), parseOptions);
             var fullSyntaxErrs = JSON.stringify(refSyntaxTree.diagnostics());
-            var refAST = TypeScript.SyntaxTreeToAstVisitor.visit(refSyntaxTree, this.activeFile.fileName, compilationSettings, /*incrementalAST:*/ true);
+            var refAST = TypeScript.SyntaxTreeToAstVisitor.visit(refSyntaxTree, this.activeFile.fileName, immutableSettings, /*incrementalAST:*/ true);
 
-            if (!refSyntaxTree.structuralEquals(this.compiler.getSyntaxTree(this.activeFile.fileName))) {
+            if (!refSyntaxTree.structuralEquals(this.compiler().getSyntaxTree(this.activeFile.fileName))) {
                 throw new Error('Incrementally-parsed and full-parsed syntax trees were not equal');
             }
 
-            if (!TypeScript.structuralEqualsIncludingPosition(refAST, this.compiler.getScript(this.activeFile.fileName))) {
+            if (!TypeScript.structuralEqualsIncludingPosition(refAST, this.compiler().getScript(this.activeFile.fileName))) {
                 throw new Error('Incrementally-parsed and full-parsed ASTs were not equal');
             }
 
@@ -1201,7 +1229,6 @@ module FourSlash {
                 var content = snapshot.getText(0, snapshot.getLength());
                 referenceLanguageServiceShimHost.addScript(this.testData.files[i].fileName, content);
             }
-            referenceLanguageServiceShim.refresh(true);
 
             for (i = 0; i < positions.length; i++) {
                 var nameOf = (type: Services.TypeInfo) => type ? type.fullSymbolName : '(none)';

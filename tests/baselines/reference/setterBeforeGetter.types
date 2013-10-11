@@ -2,7 +2,7 @@
 Line 0 col 6 IdentifierName "Foo" = Foo
 Line 2 col 12 IdentifierName "_bar" = { a: string; }
 Line 2 col 20 IdentifierName "a" = string
-Line 4 col 8 IdentifierName "bar" = (thing: { a: string; }) => void
+Line 4 col 8 IdentifierName "bar" = { a: string; }
 Line 4 col 12 IdentifierName "thing" = { a: string; }
 Line 4 col 21 IdentifierName "a" = string
 Line 5 col 0 AssignmentExpression "this._bar = thing" = { a: string; }
@@ -10,7 +10,7 @@ Line 5 col 0 MemberAccessExpression "this._bar" = { a: string; }
 Line 5 col 0 ThisKeyword "this" = Foo
 Line 5 col 13 IdentifierName "_bar" = { a: string; }
 Line 5 col 20 IdentifierName "thing" = { a: string; }
-Line 7 col 8 IdentifierName "bar" = () => { a: string; }
+Line 7 col 8 IdentifierName "bar" = { a: string; }
 Line 7 col 17 IdentifierName "a" = string
 Line 8 col 15 MemberAccessExpression "this._bar" = { a: string; }
 Line 8 col 15 ThisKeyword "this" = Foo

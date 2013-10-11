@@ -13,4 +13,4 @@ invalidVoidAssignments.ts line 21 col 5: error TS2011: Cannot convert 'void' to 
 invalidVoidAssignments.ts line 23 col 1: error TS2011: Cannot convert 'void' to '<T>(a: T) => void'.
 invalidVoidAssignments.ts line 26 col 1: error TS2011: Cannot convert '{ A: E; [x: number]: string; }' to 'void'.
 invalidVoidAssignments.ts line 27 col 1: error TS2011: Cannot convert 'E' to 'void'.
-invalidVoidAssignments.ts line 29 col 1: error TS2011: Cannot convert '{ f: () => void; }' to 'void'.
+invalidVoidAssignments.ts line 29 col 1: error TS2011: Cannot convert '{ f(): void; }' to 'void'.

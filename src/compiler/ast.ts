@@ -135,7 +135,7 @@ module TypeScript {
             return this.limChar - this.minChar;
         }
 
-        public isDeclaration() { return false; }
+        public _isDeclaration() { return false; }
 
         public emit(emitter: Emitter) {
             emitter.emitComments(this, true);
@@ -148,7 +148,7 @@ module TypeScript {
         }
 
         public docComments(): Comment[] {
-            if (!this.isDeclaration() || !this.preComments() || this.preComments().length === 0) {
+            if (!this._isDeclaration() || !this.preComments() || this.preComments().length === 0) {
                 return [];
             }
 
@@ -259,7 +259,7 @@ module TypeScript {
             return NodeType.ImportDeclaration;
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public getVarFlags(): VariableFlags {
             return this._varFlags;
@@ -343,7 +343,7 @@ module TypeScript {
                 classElements && (classElements.parent = this);
         }
 
-        public isDeclaration() {
+        public _isDeclaration() {
             return true;
         }
 
@@ -396,7 +396,7 @@ module TypeScript {
             return NodeType.InterfaceDeclaration;
         }
 
-        public isDeclaration() {
+        public _isDeclaration() {
             return true;
         }
 
@@ -607,6 +607,10 @@ module TypeScript {
             return NodeType.SimplePropertyAssignment;
         }
 
+        public _isDeclaration() {
+            return true;
+        }
+
         public emitWorker(emitter: Emitter): void {
             emitter.emitSimplePropertyAssignment(this);
         }
@@ -628,6 +632,10 @@ module TypeScript {
 
         public nodeType(): NodeType {
             return NodeType.FunctionPropertyAssignment;
+        }
+
+        public _isDeclaration() {
+            return true;
         }
 
         public emitWorker(emitter: Emitter): void {
@@ -1134,7 +1142,7 @@ module TypeScript {
             emitter.emitVariableDeclarator(this);
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public getVarFlags(): VariableFlags {
             return this._varFlags;
@@ -1166,7 +1174,7 @@ module TypeScript {
             init && (init.parent = this);
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public getVarFlags(): VariableFlags {
             return this._varFlags;
@@ -1208,7 +1216,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public nodeType(): NodeType {
             return NodeType.ArrowFunctionExpression;
@@ -1240,7 +1248,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public getFunctionFlags(): FunctionFlags {
             return this._functionFlags;
@@ -1281,7 +1289,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public isDeclaration() { return true; }
+        public _isDeclaration() { return true; }
 
         public nodeType(): NodeType {
             return NodeType.FunctionDeclaration;
@@ -1344,7 +1352,7 @@ module TypeScript {
             members && (members.parent = this);
         }
 
-        public isDeclaration() {
+        public _isDeclaration() {
             return true;
         }
 
@@ -1387,7 +1395,7 @@ module TypeScript {
             return NodeType.ArrayType;
         }
 
-        public isDeclaration() {
+        public _isDeclaration() {
             return true;
         }
 
@@ -1411,7 +1419,7 @@ module TypeScript {
             return NodeType.ObjectType;
         }
 
-        public isDeclaration() {
+        public _isDeclaration() {
             return true;
         }
 
@@ -1807,7 +1815,7 @@ module TypeScript {
             this._moduleFlags = flags;
         }
 
-        public isDeclaration(): boolean {
+        public _isDeclaration(): boolean {
             return true;
         }
 
@@ -1833,7 +1841,7 @@ module TypeScript {
             return NodeType.EnumElement;
         }
 
-        public isDeclaration(): boolean {
+        public _isDeclaration(): boolean {
             return true;
         }
 
@@ -1919,6 +1927,10 @@ module TypeScript {
 
         public nodeType(): NodeType {
             return NodeType.TypeParameter;
+        }
+
+        public _isDeclaration() {
+            return true;
         }
 
         public structuralEquals(ast: TypeParameter, includingPosition: boolean): boolean {
@@ -2398,7 +2410,7 @@ module TypeScript {
         return a <= b ? a : b;
     }
 
-    export function isValidAstNode(ast: TypeScript.IASTSpan): boolean {
+    export function isValidAstNode(ast: IASTSpan): boolean {
         if (!ast)
             return false;
 
@@ -2411,12 +2423,12 @@ module TypeScript {
     ///
     /// Return the AST containing "position"
     ///
-    export function getAstAtPosition(script: TypeScript.AST, pos: number, useTrailingTriviaAsLimChar: boolean = true, forceInclusive: boolean = false): TypeScript.AST {
-        var top: TypeScript.AST = null;
+    export function getAstAtPosition(script: AST, pos: number, useTrailingTriviaAsLimChar: boolean = true, forceInclusive: boolean = false): AST {
+        var top: AST = null;
 
-        var pre = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
-            if (TypeScript.isValidAstNode(cur)) {
-                var isInvalid1 = cur.nodeType() === TypeScript.NodeType.ExpressionStatement && cur.getLength() === 0;
+        var pre = function (cur: AST, walker: IAstWalker) {
+            if (isValidAstNode(cur)) {
+                var isInvalid1 = cur.nodeType() === NodeType.ExpressionStatement && cur.getLength() === 0;
 
                 if (isInvalid1) {
                     walker.options.goChildren = false;
@@ -2431,13 +2443,13 @@ module TypeScript {
                     // If "position === 3", the caret is at the "right" of the "r" character, which should be considered valid
                     var inclusive =
                         forceInclusive ||
-                        cur.nodeType() === TypeScript.NodeType.Name ||
-                        cur.nodeType() === TypeScript.NodeType.MemberAccessExpression ||
-                        cur.nodeType() === TypeScript.NodeType.QualifiedName ||
-                        cur.nodeType() === TypeScript.NodeType.TypeRef ||
-                        cur.nodeType() === TypeScript.NodeType.VariableDeclaration ||
-                        cur.nodeType() === TypeScript.NodeType.VariableDeclarator ||
-                        cur.nodeType() === TypeScript.NodeType.InvocationExpression ||
+                        cur.nodeType() === NodeType.Name ||
+                        cur.nodeType() === NodeType.MemberAccessExpression ||
+                        cur.nodeType() === NodeType.QualifiedName ||
+                        cur.nodeType() === NodeType.TypeRef ||
+                        cur.nodeType() === NodeType.VariableDeclaration ||
+                        cur.nodeType() === NodeType.VariableDeclarator ||
+                        cur.nodeType() === NodeType.InvocationExpression ||
                         pos === script.limChar + script.trailingTriviaWidth; // Special "EOF" case
 
                     var minChar = cur.minChar;
@@ -2445,7 +2457,7 @@ module TypeScript {
                     if (pos >= minChar && pos < limChar) {
 
                         // Ignore empty lists
-                        if (cur.nodeType() !== TypeScript.NodeType.List || cur.limChar > cur.minChar) {
+                        if (cur.nodeType() !== NodeType.List || cur.limChar > cur.minChar) {
                             // TODO: Since AST is sometimes not correct wrt to position, only add "cur" if it's better
                             //       than top of the stack.
                             if (top === null) {
@@ -2473,7 +2485,7 @@ module TypeScript {
             }
         };
 
-        TypeScript.getAstWalkerFactory().walk(script, pre);
+        getAstWalkerFactory().walk(script, pre);
         return top;
     }
 
@@ -2493,5 +2505,110 @@ module TypeScript {
 
         return ArrayUtilities.firstOrDefault(<HeritageClause[]>clauses.members,
             c => c.typeNames.members.length > 0 && c.nodeType() === NodeType.ImplementsHeritageClause);
+    }
+
+    export function isCallExpression(ast: AST): boolean {
+        return (ast && ast.nodeType() === NodeType.InvocationExpression) ||
+            (ast && ast.nodeType() === NodeType.ObjectCreationExpression);
+    }
+
+    export function isCallExpressionTarget(ast: AST): boolean {
+        if (!ast) {
+            return false;
+        }
+
+        var current = ast;
+
+        while (current && current.parent) {
+            if (current.parent.nodeType() === NodeType.MemberAccessExpression &&
+                (<MemberAccessExpression>current.parent).name === current) {
+                current = current.parent;
+                continue;
+            }
+
+            break;
+        }
+
+        if (current && current.parent) {
+            if (current.parent.nodeType() === NodeType.InvocationExpression || current.parent.nodeType() === NodeType.ObjectCreationExpression) {
+                return current === (<InvocationExpression>current.parent).target;
+            }
+        }
+
+        return false;
+    }
+
+    function isNameOfSomeDeclaration(ast: AST) {
+        if (ast === null || ast.parent === null) {
+            return false;
+        }
+        if (ast.nodeType() !== NodeType.Name) {
+            return false;
+        }
+
+        switch (ast.parent.nodeType()) {
+            case NodeType.ClassDeclaration:
+                return (<ClassDeclaration>ast.parent).identifier === ast;
+            case NodeType.InterfaceDeclaration:
+                return (<InterfaceDeclaration>ast.parent).identifier === ast;
+            case NodeType.EnumDeclaration:
+                return (<EnumDeclaration>ast.parent).identifier === ast;
+            case NodeType.ModuleDeclaration:
+                return (<ModuleDeclaration>ast.parent).name === ast;
+            case NodeType.VariableDeclarator:
+                return (<VariableDeclarator>ast.parent).id === ast;
+            case NodeType.FunctionDeclaration:
+                return (<FunctionDeclaration>ast.parent).name === ast;
+            case NodeType.Parameter:
+                return (<Parameter>ast.parent).id === ast;
+            case NodeType.TypeParameter:
+                return (<TypeParameter>ast.parent).name === ast;
+            case NodeType.SimplePropertyAssignment:
+                return (<SimplePropertyAssignment>ast.parent).propertyName === ast;
+            case NodeType.FunctionPropertyAssignment:
+                return (<FunctionPropertyAssignment>ast.parent).propertyName === ast;
+            case NodeType.EnumElement:
+                return (<EnumElement>ast.parent).identifier === ast;
+            case NodeType.ImportDeclaration:
+                return (<ImportDeclaration>ast.parent).identifier === ast;
+        }
+
+        return false;
+    }
+
+    export function isDeclarationASTOrDeclarationNameAST(ast: AST) {
+        return isNameOfSomeDeclaration(ast) || ast._isDeclaration();
+    }
+
+    export function isNameOfFunction(ast: AST) {
+        return ast
+            && ast.parent
+            && ast.nodeType() === NodeType.Name
+            && ast.parent.nodeType() === NodeType.FunctionDeclaration
+            && (<FunctionDeclaration>ast.parent).name === ast;
+    }
+
+    export function isNameOfMemberAccessExpression(ast: AST) {
+        if (ast &&
+            ast.parent &&
+            ast.parent.nodeType() === NodeType.MemberAccessExpression &&
+            (<MemberAccessExpression>ast.parent).name === ast) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    export function isRightSideOfQualifiedName(ast: AST) {
+        if (ast &&
+            ast.parent &&
+            ast.parent.nodeType() === NodeType.QualifiedName &&
+            (<QualifiedName>ast.parent).right === ast) {
+
+            return true;
+        }
+
+        return false;
     }
 }

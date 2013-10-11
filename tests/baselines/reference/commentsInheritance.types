@@ -43,16 +43,16 @@ Line 48 col 7 IdentifierName "c1_i" = c1
 Line 49 col 6 IdentifierName "c2" = c2
 Line 51 col 11 IdentifierName "c2_p1" = number
 Line 53 col 11 IdentifierName "c2_f1" = () => void
-Line 56 col 15 IdentifierName "c2_prop" = () => number
+Line 56 col 15 IdentifierName "c2_prop" = number
 Line 59 col 11 IdentifierName "c2_nc_p1" = number
 Line 60 col 11 IdentifierName "c2_nc_f1" = () => void
-Line 62 col 15 IdentifierName "c2_nc_prop" = () => number
+Line 62 col 15 IdentifierName "c2_nc_prop" = number
 Line 66 col 11 IdentifierName "p1" = number
 Line 68 col 11 IdentifierName "f1" = () => void
-Line 71 col 15 IdentifierName "prop" = () => number
+Line 71 col 15 IdentifierName "prop" = number
 Line 74 col 11 IdentifierName "nc_p1" = number
 Line 75 col 11 IdentifierName "nc_f1" = () => void
-Line 77 col 15 IdentifierName "nc_prop" = () => number
+Line 77 col 15 IdentifierName "nc_prop" = number
 Line 81 col 16 IdentifierName "a" = number
 Line 82 col 0 AssignmentExpression "this.c2_p1 = a" = number
 Line 82 col 0 MemberAccessExpression "this.c2_p1" = number
@@ -64,10 +64,10 @@ Line 85 col 17 IdentifierName "c2" = c2
 Line 87 col 0 InvocationExpression "super(10)" = void
 Line 90 col 11 IdentifierName "p1" = number
 Line 92 col 11 IdentifierName "f1" = () => void
-Line 95 col 15 IdentifierName "prop" = () => number
+Line 95 col 15 IdentifierName "prop" = number
 Line 98 col 11 IdentifierName "nc_p1" = number
 Line 99 col 11 IdentifierName "nc_f1" = () => void
-Line 101 col 15 IdentifierName "nc_prop" = () => number
+Line 101 col 15 IdentifierName "nc_prop" = number
 Line 105 col 4 IdentifierName "c2_i" = c2
 Line 105 col 11 ObjectCreationExpression "new c2(10)" = c2
 Line 105 col 15 IdentifierName "c2" = new(a: number) => c2

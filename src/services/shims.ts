@@ -83,7 +83,7 @@ module Services {
         dispose(dummy: any): void;
 
         refresh(throwOnError: boolean): void;
-        
+
         getSyntacticDiagnostics(fileName: string): string;
         getSemanticDiagnostics(fileName: string): string;
 

@@ -6,7 +6,7 @@ Line 2 col 11 ObjectLiteralExpression "{
         set x(a: number) { this.b = a; }
     }" = { b: number; x: number; }
 Line 3 col 0 IdentifierName "b" = number
-Line 4 col 12 IdentifierName "x" = (a: number) => void
+Line 4 col 12 IdentifierName "x" = number
 Line 4 col 14 IdentifierName "a" = number
 Line 4 col 27 AssignmentExpression "this.b = a" = number
 Line 4 col 27 MemberAccessExpression "this.b" = any

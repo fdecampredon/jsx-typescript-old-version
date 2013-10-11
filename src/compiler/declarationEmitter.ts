@@ -50,8 +50,8 @@ module TypeScript {
         constructor(private emittingFileName: string,
                     public document: Document,
                     private compiler: TypeScriptCompiler,
-                    private semanticInfoChain: SemanticInfoChain,
-                    private resolvePath: (path: string) => string) {
+                    private emitOptions: EmitOptions,
+                    private semanticInfoChain: SemanticInfoChain) {
             this.declFile = new TextWriter(emittingFileName, this.document.byteOrderMark !== ByteOrderMark.None, OutputFileType.Declaration);
         }
 
@@ -286,7 +286,7 @@ module TypeScript {
 
         private emitDeclarationComments(ast: AST, endLine?: boolean): void;
         private emitDeclarationComments(astOrSymbol: any, endLine = true) {
-            if (this.compiler.emitOptions.compilationSettings.removeComments) {
+            if (this.emitOptions.compilationSettings().removeComments()) {
                 return;
             }
 
@@ -612,7 +612,7 @@ module TypeScript {
         }
 
         private emitAccessorDeclarationComments(funcDecl: FunctionDeclaration) {
-            if (this.compiler.emitOptions.compilationSettings.removeComments) {
+            if (this.emitOptions.compilationSettings().removeComments()) {
                 return;
             }
 
@@ -893,12 +893,12 @@ module TypeScript {
         }
 
         private resolveScriptReference(document: Document, reference: string) {
-            if (!this.compiler.settings.noResolve || isRooted(reference)) {
+            if (!this.emitOptions.compilationSettings().noResolve() || isRooted(reference)) {
                 return reference;
             }
 
             var documentDir = convertToDirectoryPath(switchToForwardSlashes(getRootFilePath(document.fileName)));
-            var resolvedReferencePath = this.resolvePath(documentDir + reference);
+            var resolvedReferencePath = this.emitOptions.resolvePath(documentDir + reference);
             return resolvedReferencePath;
         }
 
@@ -910,7 +910,7 @@ module TypeScript {
 
             // Collect all the documents that need to be emitted as reference
             var documents: Document[] = [];
-            if (this.compiler.emitOptions.outputMany || script.isExternalModule) {
+            if (this.document.emitToOwnOutputFile()) {
                 // Emit only from this file
                 var scriptReferences = this.document.referencedFiles;
                 var addedGlobalDocument = false;
@@ -920,7 +920,7 @@ module TypeScript {
                     // All the references that are not going to be part of same file
 
                     if (document &&
-                        (this.compiler.emitOptions.outputMany || document.script().isDeclareFile() || document.script().isExternalModule || !addedGlobalDocument)) {
+                        (document.emitToOwnOutputFile() || document.script().isDeclareFile() || !addedGlobalDocument)) {
 
                         documents = documents.concat(document);
 
@@ -966,7 +966,7 @@ module TypeScript {
                 if (document.script().isDeclareFile()) {
                     declFileName = document.fileName;
                 } else {
-                    declFileName = this.compiler.emitOptions.mapOutputFileName(document, TypeScriptCompiler.mapToDTSFileName);
+                    declFileName = this.compiler.mapOutputFileName(document, this.emitOptions, TypeScriptCompiler.mapToDTSFileName);
                 }
 
                 // Get the relative path

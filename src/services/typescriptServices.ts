@@ -46,20 +46,6 @@ module Services {
         return dst;
     }
 
-    export function compareDataObjects(dst: any, src: any): boolean {
-        for (var e in dst) {
-            if (typeof dst[e] == "object") {
-                if (!compareDataObjects(dst[e], src[e]))
-                    return false;
-            }
-            else if (typeof dst[e] != "function") {
-                if (dst[e] !== src[e])
-                    return false;
-            }
-        }
-        return true;
-    }
-
     export class TypeScriptServicesFactory implements IShimFactory {
         private _shims: IShim[] = [];
 

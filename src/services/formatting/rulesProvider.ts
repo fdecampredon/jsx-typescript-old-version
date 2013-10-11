@@ -39,7 +39,7 @@ module TypeScript.Formatting {
         }
 
         public ensureUpToDate(options: Services.FormatCodeOptions) {
-            if (this.options == null || !Services.compareDataObjects(this.options, options)) {
+            if (this.options == null || !TypeScript.compareDataObjects(this.options, options)) {
                 var activeRules: Rule[] = TypeScript.timeFunction(this.logger, "RulesProvider: createActiveRules()", () => { return this.createActiveRules(options); });
                 var rulesMap: RulesMap = TypeScript.timeFunction(this.logger, "RulesProvider: RulesMap.create()", () => { return RulesMap.create(activeRules); });
 

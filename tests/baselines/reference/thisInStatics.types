@@ -3,7 +3,7 @@ Line 0 col 6 IdentifierName "C" = C
 Line 1 col 11 IdentifierName "f" = () => void
 Line 2 col 12 IdentifierName "y/*1*/" = { f(): void; x: typeof C; new(): C; }
 Line 2 col 21 ThisKeyword "this" = { f(): void; x: typeof C; new(): C; }
-Line 5 col 15 IdentifierName "x" = () => { f(): void; x: typeof C; new(): C; }
+Line 5 col 15 IdentifierName "x" = { f(): void; x: typeof C; new(): C; }
 Line 6 col 12 IdentifierName "y/*2*/" = { f(): void; x: typeof C; new(): C; }
 Line 6 col 21 ThisKeyword "this" = { f(): void; x: typeof C; new(): C; }
 Line 7 col 15 IdentifierName "y" = { f(): void; x: typeof C; new(): C; }

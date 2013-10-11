@@ -13,7 +13,7 @@ describe('Compiling samples', function ()
         return IO.readFile(Harness.userSpecifiedroot + 'samples/' + path, /*codepage:*/null).contents;
     }
 
-    function addUnitsAndCompile(units: string[], includeWin8Libs = false, moduleTarget = TypeScript.ModuleGenTarget.Unspecified) {
+    function addUnitsAndCompile(units: string[], includeWin8Libs = false) {
         var filesToAdd = units.map(unit => {
             return {
                 unitName: 'tests/cases/unittests/samples/' + unit,
@@ -25,7 +25,7 @@ describe('Compiling samples', function ()
         }
 
         var result: Harness.Compiler.CompilerResult;
-        harnessCompiler.compileFiles(filesToAdd, [], moduleTarget, res => result = res, undefined, /*noResolve*/ includeWin8Libs);
+        harnessCompiler.compileFiles(filesToAdd, [], res => result = res, undefined, /*noResolve*/ includeWin8Libs);
 
         assert.arrayLengthIs(result.errors, 0);
     }
@@ -52,7 +52,7 @@ describe('Compiling samples', function ()
     {
         var units = ["node\\node.d.ts", "imageboard\\app.ts", "imageboard\\db.ts", "imageboard\\express.d.ts", "imageboard\\mongodb.ts", "imageboard\\routes\\index.ts"];
     
-        addUnitsAndCompile(units, undefined, TypeScript.ModuleGenTarget.Synchronous);
+        addUnitsAndCompile(units, undefined);
     });
 
     //// interfaces
@@ -85,13 +85,13 @@ describe('Compiling samples', function ()
     it('compiles the node sample-1 without error', function ()
     {
         var units = ["node/HttpServer.ts", "node/node.d.ts"];
-        addUnitsAndCompile(units, undefined, TypeScript.ModuleGenTarget.Synchronous);
+        addUnitsAndCompile(units, undefined);
     });
 
     it('compiles the node sample-2 without error', function ()
     {
         var units = ["node/TcpServer.ts", "node/node.d.ts"];
-        addUnitsAndCompile(units, undefined, TypeScript.ModuleGenTarget.Synchronous);
+        addUnitsAndCompile(units, undefined);
     });
 
     // raytracer

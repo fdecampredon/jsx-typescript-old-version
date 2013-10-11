@@ -11,9 +11,9 @@ Line 1 col 11 ObjectLiteralExpression "{
 			return Math.sqrt(x*x+y*y); // shouldn't be picking up "x" and "y" from the object lit
 		}
 	}" = { x: number; y: number; dist: () => number; }
-Line 2 col 12 IdentifierName "x" = () => number
+Line 2 col 12 IdentifierName "x" = number
 Line 2 col 25 IdentifierName "x" = number
-Line 3 col 12 IdentifierName "y" = () => number
+Line 3 col 12 IdentifierName "y" = number
 Line 3 col 25 IdentifierName "y" = number
 Line 4 col 0 IdentifierName "//x: "yo",
         //y: "boo",
@@ -33,7 +33,7 @@ Line 7 col 24 MultiplyExpression "y*y" = number
 Line 7 col 24 IdentifierName "y" = number
 Line 7 col 26 IdentifierName "y" = number
 Line 12 col 6 IdentifierName "C" = C
-Line 13 col 8 IdentifierName "x" = () => number
+Line 13 col 8 IdentifierName "x" = number
 Line 18 col 9 IdentifierName "foo" = (test: string) => void
 Line 18 col 13 IdentifierName "test" = string
 Line 20 col 4 IdentifierName "x" = any

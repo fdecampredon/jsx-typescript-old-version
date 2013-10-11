@@ -137,8 +137,6 @@ module TypeScript {
 
         public getSpan(): TextSpan { return this.span; }
 
-        public setSpan(span: TextSpan) { this.span = span; }
-
         public setValueDecl(valDecl: PullDecl) { this.synthesizedValDecl = valDecl; }
 
         public getValueDecl() { return this.synthesizedValDecl; }

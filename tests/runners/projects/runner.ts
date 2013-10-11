@@ -14,18 +14,28 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
     private resolvedFiles: TypeScript.IResolvedFile[];
     private fileNameToSourceFile = new TypeScript.StringHashTable();
     public sourcemapRecord = new Harness.Compiler.WriterAggregator();
+    public compilationSettings: TypeScript.ImmutableCompilationSettings;
 
-    constructor(getDeclareFiles: boolean, generateMapFiles: boolean, outFileOption: string, outDirOption: string,
-        mapRoot: string, sourceRoot: string, public compilationSettings: TypeScript.CompilationSettings) {
+    constructor(
+        getDeclareFiles: boolean,
+        generateMapFiles: boolean,
+        outFileOption: string,
+        outDirOption: string,
+        mapRoot: string,
+        sourceRoot: string,
+        compilationSettings: TypeScript.CompilationSettings) {
+
         this.host = IO;
-        this.compilationSettings.generateDeclarationFiles = getDeclareFiles;
-        this.compilationSettings.mapSourceFiles = generateMapFiles;
-        this.compilationSettings.outFileOption = outFileOption;
-        this.compilationSettings.outDirOption = outDirOption;
-        this.compilationSettings.mapRoot = mapRoot;
-        this.compilationSettings.sourceRoot = sourceRoot;
-        //todo: change this and update baselines
-        this.compilationSettings.removeComments = true;
+        compilationSettings.generateDeclarationFiles = getDeclareFiles;
+        compilationSettings.mapSourceFiles = generateMapFiles;
+        compilationSettings.outFileOption = outFileOption;
+        compilationSettings.outDirOption = outDirOption;
+        compilationSettings.mapRoot = mapRoot;
+        compilationSettings.sourceRoot = sourceRoot;
+        // todo: change this and update baselines
+        compilationSettings.removeComments = true;
+
+        this.compilationSettings = TypeScript.ImmutableCompilationSettings.fromCompilationSettings(compilationSettings);
         this.errout = new Harness.Compiler.WriterAggregator();
     }
 
@@ -42,7 +52,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         }
 
         // Add the library file if needed
-        if (!this.compilationSettings.noLib && !resolutionResults.seenNoDefaultLibTag) {
+        if (!this.compilationSettings.noLib() && !resolutionResults.seenNoDefaultLibTag) {
             var libraryPath = Harness.userSpecifiedroot + 'tests/minimal.lib.d.ts';
             resolvedFiles.unshift({ path: libraryPath, referencedFiles: [], importedFiles: [] });
         }
@@ -60,9 +70,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         var compiler: TypeScript.TypeScriptCompiler;
 
         compiler = new TypeScript.TypeScriptCompiler();
-        compiler.settings = this.compilationSettings;
-        compiler.settings.sourceMapEmitterCallback = sourceMapEmitterCallback;
-        compiler.emitOptions.compilationSettings = this.compilationSettings;
+        compiler.setCompilationSettings(this.compilationSettings);
 
         for (var iCode = 0; iCode < this.resolvedFiles.length; iCode++) {
             var code = this.resolvedFiles[iCode];
@@ -87,7 +95,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
             }
         }
 
-        for (var i = compiler.compile((path: string) => IO.resolvePath(path)); i.moveNext();) {
+        for (var i = compiler.compile((path: string) => IO.resolvePath(path), sourceMapEmitterCallback); i.moveNext();) {
             var result = i.current();
 
             result.diagnostics.forEach(d => this.addDiagnostic(d));

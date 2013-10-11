@@ -38,8 +38,7 @@ module Services {
     // with a language service host instance
     //
     export interface ILanguageService {
-        // TODO: This should be removed.  We should not be publicly exposing a way to refresh the 
-        // language service.
+        // Note: refresh is a no-op now.  It is only around for back compat purposes.
         refresh(): void;
 
         getSyntacticDiagnostics(fileName: string): TypeScript.Diagnostic[];

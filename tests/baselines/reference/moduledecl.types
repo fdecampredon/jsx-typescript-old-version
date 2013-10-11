@@ -131,7 +131,7 @@ Line 159 col 23 IdentifierName "C2_private" = new() => exportTests.C2_private
 Line 161 col 16 IdentifierName "setC2_private" = (arg: exportTests.C2_private) => void
 Line 161 col 30 IdentifierName "arg" = exportTests.C2_private
 Line 161 col 35 IdentifierName "C2_private" = exportTests.C2_private
-Line 163 col 20 IdentifierName "c2" = () => exportTests.C2_private
+Line 163 col 20 IdentifierName "c2" = exportTests.C2_private
 Line 164 col 19 ObjectCreationExpression "new C2_private()" = exportTests.C2_private
 Line 164 col 23 IdentifierName "C2_private" = new() => exportTests.C2_private
 Line 166 col 15 IdentifierName "getC1_public" = () => exportTests.C1_public
@@ -140,7 +140,7 @@ Line 167 col 23 IdentifierName "C1_public" = new() => exportTests.C1_public
 Line 169 col 15 IdentifierName "setC1_public" = (arg: exportTests.C1_public) => void
 Line 169 col 28 IdentifierName "arg" = exportTests.C1_public
 Line 169 col 33 IdentifierName "C1_public" = exportTests.C1_public
-Line 171 col 19 IdentifierName "c1" = () => exportTests.C1_public
+Line 171 col 19 IdentifierName "c1" = exportTests.C1_public
 Line 172 col 19 ObjectCreationExpression "new C1_public()" = exportTests.C1_public
 Line 172 col 23 IdentifierName "C1_public" = new() => exportTests.C1_public
 Line 177 col 15 IdentifierName "mAmbient" = mAmbient

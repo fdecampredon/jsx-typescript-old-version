@@ -177,82 +177,82 @@ module TypeScript {
         // decl binding
         //
 
-        private bindEnumDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
+        private bindEnumDeclarationToPullSymbol(enumContainerDecl: PullDecl) {
             // 1. Test for existing decl - if it exists, use its symbol
             // 2. If no other decl exists, create a new symbol and use that one
 
-            var modName = moduleContainerDecl.name;
+            var enumName = enumContainerDecl.name;
 
-            var moduleContainerTypeSymbol: PullContainerSymbol = null;
-            var moduleInstanceSymbol: PullSymbol = null;
+            var enumContainerSymbol: PullContainerSymbol = null;
+            var enumInstanceSymbol: PullSymbol = null;
             var moduleInstanceTypeSymbol: PullTypeSymbol = null;
 
-            var moduleInstanceDecl: PullDecl = moduleContainerDecl.getValueDecl();
+            var enumInstanceDecl: PullDecl = enumContainerDecl.getValueDecl();
 
-            var moduleKind = moduleContainerDecl.kind;
+            var enumDeclKind = enumContainerDecl.kind;
 
-            var parent = this.getParent(moduleContainerDecl);
-            var parentInstanceSymbol = this.getParent(moduleContainerDecl, true);
-            var parentDecl = moduleContainerDecl.getParentDecl();
-            var moduleAST = <EnumDeclaration>this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
+            var parent = this.getParent(enumContainerDecl);
+            var parentInstanceSymbol = this.getParent(enumContainerDecl, true);
+            var parentDecl = enumContainerDecl.getParentDecl();
+            var enumAST = <EnumDeclaration>this.semanticInfoChain.getASTForDecl(enumContainerDecl);
 
-            var isExported = moduleContainerDecl.flags & PullElementFlags.Exported;
-            var isInitializedModule = (moduleContainerDecl.flags & PullElementFlags.SomeInitializedModule) != 0;
+            var isExported = enumContainerDecl.flags & PullElementFlags.Exported;
+            var isInitializedModule = (enumContainerDecl.flags & PullElementFlags.SomeInitializedModule) != 0;
 
             var createdNewSymbol = false;
 
-            moduleContainerTypeSymbol = <PullContainerSymbol>this.getExistingSymbol(moduleContainerDecl, PullElementKind.Enum, parent);
+            enumContainerSymbol = <PullContainerSymbol>this.getExistingSymbol(enumContainerDecl, PullElementKind.Enum, parent);
 
-            if (moduleContainerTypeSymbol) {
-                if (moduleContainerTypeSymbol.kind !== moduleKind) {
+            if (enumContainerSymbol) {
+                if (enumContainerSymbol.kind !== enumDeclKind) {
                     // duplicate symbol error
                     if (isInitializedModule) {
                         this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(moduleAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]));
+                            diagnosticFromAST(enumAST, DiagnosticCode.Duplicate_identifier_0, [enumContainerDecl.getDisplayName()]));
                     }
-                    moduleContainerTypeSymbol = null;
+                    enumContainerSymbol = null;
                 }
-                else if (!this.checkThatExportsMatch(moduleContainerDecl, moduleContainerTypeSymbol)) {
-                    moduleContainerTypeSymbol = null;
+                else if (!this.checkThatExportsMatch(enumContainerDecl, enumContainerSymbol)) {
+                    enumContainerSymbol = null;
                 }
             }
 
-            if (moduleContainerTypeSymbol) {
-                moduleInstanceSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
+            if (enumContainerSymbol) {
+                enumInstanceSymbol = enumContainerSymbol.getInstanceSymbol();
             }
             else {
-                moduleContainerTypeSymbol = new PullContainerSymbol(modName, moduleKind);
+                enumContainerSymbol = new PullContainerSymbol(enumName, enumDeclKind);
                 createdNewSymbol = true;
 
                 if (!parent) {
-                    this.semanticInfoChain.cacheGlobalSymbol(moduleContainerTypeSymbol, PullElementKind.Enum);
+                    this.semanticInfoChain.cacheGlobalSymbol(enumContainerSymbol, PullElementKind.Enum);
                 }
             }
 
             // We add the declaration early so that during any recursive binding of other module decls with the same name, this declaration is present.
-            moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
-            moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
+            enumContainerSymbol.addDeclaration(enumContainerDecl);
+            enumContainerDecl.setSymbol(enumContainerSymbol);
 
-            this.semanticInfoChain.setSymbolForAST(moduleAST.identifier, moduleContainerTypeSymbol);
-            this.semanticInfoChain.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
+            this.semanticInfoChain.setSymbolForAST(enumAST.identifier, enumContainerSymbol);
+            this.semanticInfoChain.setSymbolForAST(enumAST, enumContainerSymbol);
 
-            if (!moduleInstanceSymbol && isInitializedModule) {
+            if (!enumInstanceSymbol && isInitializedModule) {
                 // search for a complementary instance symbol first
                 var variableSymbol: PullSymbol = null;
                 if (parentInstanceSymbol) {
                     if (isExported) {
                         // We search twice because export visibility does not need to agree
-                        variableSymbol = parentInstanceSymbol.findMember(modName, false);
+                        variableSymbol = parentInstanceSymbol.findMember(enumName, false);
 
                         if (!variableSymbol) {
-                            variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+                            variableSymbol = parentInstanceSymbol.findContainedNonMember(enumName);
                         }
                     }
                     else {
-                        variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+                        variableSymbol = parentInstanceSymbol.findContainedNonMember(enumName);
 
                         if (!variableSymbol) {
-                            variableSymbol = parentInstanceSymbol.findMember(modName, false);
+                            variableSymbol = parentInstanceSymbol.findMember(enumName, false);
                         }
                     }
 
@@ -268,17 +268,17 @@ module TypeScript {
                         }
                     }
                 }
-                else if (!(moduleContainerDecl.flags & PullElementFlags.Exported)) {
+                else if (!(enumContainerDecl.flags & PullElementFlags.Exported)) {
                     // Search locally to this file for a previous declaration that's suitable for augmentation
                     var siblingDecls = parentDecl.getChildDecls();
                     var augmentedDecl: PullDecl = null;
 
                     for (var i = 0; i < siblingDecls.length; i++) {
-                        if (siblingDecls[i] == moduleContainerDecl) {
+                        if (siblingDecls[i] == enumContainerDecl) {
                             break;
                         }
 
-                        if ((siblingDecls[i].name == modName) && (siblingDecls[i].kind & PullElementKind.SomeValue)) {
+                        if ((siblingDecls[i].name == enumName) && (siblingDecls[i].kind & PullElementKind.SomeValue)) {
                             augmentedDecl = siblingDecls[i];
                             break;
                         }
@@ -300,35 +300,35 @@ module TypeScript {
 
                 // The instance symbol is further set up in bindVariableDeclaration
                 if (variableSymbol) {
-                    moduleInstanceSymbol = variableSymbol;
+                    enumInstanceSymbol = variableSymbol;
                     moduleInstanceTypeSymbol = variableSymbol.type;
                 }
                 else {
-                    moduleInstanceSymbol = new PullSymbol(modName, PullElementKind.Variable);
+                    enumInstanceSymbol = new PullSymbol(enumName, PullElementKind.Variable);
                 }
 
-                moduleContainerTypeSymbol.setInstanceSymbol(moduleInstanceSymbol);
+                enumContainerSymbol.setInstanceSymbol(enumInstanceSymbol);
 
                 if (!moduleInstanceTypeSymbol) {
                     moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
-                    moduleInstanceSymbol.type = moduleInstanceTypeSymbol;
+                    enumInstanceSymbol.type = moduleInstanceTypeSymbol;
                 }
 
-                moduleInstanceTypeSymbol.addDeclaration(moduleContainerDecl);
+                moduleInstanceTypeSymbol.addDeclaration(enumContainerDecl);
 
                 if (!moduleInstanceTypeSymbol.getAssociatedContainerType()) {
-                    moduleInstanceTypeSymbol.setAssociatedContainerType(moduleContainerTypeSymbol);
+                    moduleInstanceTypeSymbol.setAssociatedContainerType(enumContainerSymbol);
                 }
             }
 
             // If we have an enum with more than one declaration, then this enum's first element
             // must have an initializer.
-            var moduleDeclarations = moduleContainerTypeSymbol.getDeclarations();
+            var moduleDeclarations = enumContainerSymbol.getDeclarations();
 
-            if (moduleDeclarations.length > 1 && moduleAST.enumElements.members.length > 0) {
+            if (moduleDeclarations.length > 1 && enumAST.enumElements.members.length > 0) {
                 var multipleEnums = ArrayUtilities.where(moduleDeclarations, d => d.kind === PullElementKind.Enum).length > 1;
                 if (multipleEnums) {
-                    var firstVariable = <EnumElement>moduleAST.enumElements.members[0];
+                    var firstVariable = <EnumElement>enumAST.enumElements.members[0];
                     if (!firstVariable.value) {
                         this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
                             firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null));
@@ -336,34 +336,55 @@ module TypeScript {
                 }
             }
 
-            if (createdNewSymbol) {
-                if (parent) {
-                    if (moduleContainerDecl.flags & PullElementFlags.Exported) {
-                        parent.addEnclosedMemberType(moduleContainerTypeSymbol);
-                    }
-                    else {
-                        parent.addEnclosedNonMemberType(moduleContainerTypeSymbol);
-                    }
+            if (createdNewSymbol && parent) {
+                if (enumContainerDecl.flags & PullElementFlags.Exported) {
+                    parent.addEnclosedMemberType(enumContainerSymbol);
+                }
+                else {
+                    parent.addEnclosedNonMemberType(enumContainerSymbol);
                 }
             }
 
-            // if it's an enum, create an index signature and a decl for it
-            this.semanticInfoChain.addSyntheticIndexSignature(moduleContainerDecl, moduleContainerTypeSymbol.getInstanceSymbol().type, moduleAST.identifier, "x",
-                /*indexParamType*/ this.semanticInfoChain.numberTypeSymbol, /*returnType*/ this.semanticInfoChain.stringTypeSymbol);
+            this.bindEnumIndexerDeclsToPullSymbols(enumContainerDecl, enumContainerSymbol);
 
-            var valueDecl = moduleContainerDecl.getValueDecl();
+            var valueDecl = enumContainerDecl.getValueDecl();
 
             if (valueDecl) {
                 valueDecl.ensureSymbolIsBound();
             }
 
-            var otherDecls = this.findDeclsInContext(moduleContainerDecl, moduleContainerDecl.kind, true);
+            var otherDecls = this.findDeclsInContext(enumContainerDecl, enumContainerDecl.kind, true);
 
             if (otherDecls && otherDecls.length) {
                 for (var i = 0; i < otherDecls.length; i++) {
                     otherDecls[i].ensureSymbolIsBound();
                 }
             }
+        }
+
+        private bindEnumIndexerDeclsToPullSymbols(enumContainerDecl: PullDecl, enumContainerSymbol: PullContainerSymbol): void
+        {
+            var indexSigDecl = enumContainerDecl.getChildDecls().filter(decl => decl.kind == PullElementKind.IndexSignature)[0];
+            var indexParamDecl = indexSigDecl.getChildDecls()[0];
+
+            var syntheticIndexerParameterSymbol = new PullSymbol(indexParamDecl.name, PullElementKind.Parameter);
+
+            syntheticIndexerParameterSymbol.type = this.semanticInfoChain.numberTypeSymbol;
+            syntheticIndexerParameterSymbol.setResolved();
+
+            var syntheticIndexerSignatureSymbol = new PullSignatureSymbol(PullElementKind.IndexSignature);
+            syntheticIndexerSignatureSymbol.addParameter(syntheticIndexerParameterSymbol);
+            syntheticIndexerSignatureSymbol.returnType = this.semanticInfoChain.stringTypeSymbol;
+            syntheticIndexerSignatureSymbol.setResolved();
+
+            var enumContainerInstanceTypeSymbol = enumContainerSymbol.getInstanceSymbol().type;
+            enumContainerInstanceTypeSymbol.addIndexSignature(syntheticIndexerSignatureSymbol);
+
+            indexSigDecl.setSignatureSymbol(syntheticIndexerSignatureSymbol);
+            indexParamDecl.setSymbol(syntheticIndexerParameterSymbol);
+
+            syntheticIndexerSignatureSymbol.addDeclaration(indexSigDecl);
+            syntheticIndexerParameterSymbol.addDeclaration(indexParamDecl);
         }
 
         private bindModuleDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
@@ -1454,7 +1475,7 @@ module TypeScript {
             }
         }
 
-        public bindFunctionExpressionToPullSymbol(functionExpressionDeclaration: PullDecl) {
+        private bindFunctionExpressionToPullSymbol(functionExpressionDeclaration: PullDecl) {
             var declKind = functionExpressionDeclaration.kind;
             var declFlags = functionExpressionDeclaration.flags;
             var funcExpAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration);
@@ -1993,7 +2014,12 @@ module TypeScript {
             accessorSymbol.addDeclaration(getAccessorDeclaration);
             getterSymbol.addDeclaration(getAccessorDeclaration);
 
-            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, getterSymbol);
+            // Note that the name AST binds to the full accessor symbol, whereas the declaration AST
+            // binds to just the getter symbol. This is because when the resolver resolves an
+            // accessor declaration AST, it just expects the getter/setter symbol. But when
+            // the language service looks up the name of an accessor, it should treat it as a
+            // property and display it to the user as such.
+            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, accessorSymbol);
             this.semanticInfoChain.setSymbolForAST(funcDeclAST, getterSymbol);
 
             if (!parentHadSymbol) {
@@ -2094,7 +2120,12 @@ module TypeScript {
             accessorSymbol.addDeclaration(setAccessorDeclaration);
             setterSymbol.addDeclaration(setAccessorDeclaration);
 
-            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, setterSymbol);
+            // Note that the name AST binds to the full accessor symbol, whereas the declaration AST
+            // binds to just the setter symbol. This is because when the resolver resolves an
+            // accessor declaration AST, it just expects the getter/setter symbol. But when
+            // the language service looks up the name of an accessor, it should treat it as a
+            // property and display it to the user as such.
+            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, accessorSymbol);
             this.semanticInfoChain.setSymbolForAST(funcDeclAST, setterSymbol);
 
             if (!parentHadSymbol) {

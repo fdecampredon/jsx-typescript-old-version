@@ -1,11 +1,11 @@
 === tests/cases/compiler/inheritanceMemberPropertyOverridingAccessor.ts ===
 Line 0 col 6 IdentifierName "a" = a
 Line 1 col 12 IdentifierName "__x" = () => string
-Line 2 col 8 IdentifierName "x" = () => () => string
+Line 2 col 8 IdentifierName "x" = () => string
 Line 3 col 15 MemberAccessExpression "this.__x" = () => string
 Line 3 col 15 ThisKeyword "this" = a
 Line 3 col 20 IdentifierName "__x" = () => string
-Line 5 col 8 IdentifierName "x" = (aValue: () => string) => void
+Line 5 col 8 IdentifierName "x" = () => string
 Line 5 col 10 IdentifierName "aValue" = () => string
 Line 6 col 0 AssignmentExpression "this.__x = aValue" = () => string
 Line 6 col 0 MemberAccessExpression "this.__x" = () => string

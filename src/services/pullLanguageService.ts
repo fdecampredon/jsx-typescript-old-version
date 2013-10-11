@@ -27,16 +27,14 @@ module Services {
             }
         }
 
-        public refresh(): void {
+        public synchronizeHostData(updateCompiler: boolean): void {
             TypeScript.timeFunction(this.logger, "refresh()", () => {
-                this.compilerState.refresh();
+                this.compilerState.synchronizeHostData(updateCompiler);
             });
         }
 
-        private minimalRefresh(): void {
-            TypeScript.timeFunction(this.logger, "minimalRefresh()", () => {
-                this.compilerState.minimalRefresh();
-            });
+        public refresh(): void {
+            // No-op.  Only kept around for compatability with the interface we shipped.
         }
 
         private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.AST } {
@@ -81,7 +79,7 @@ module Services {
 
         public getReferencesAtPosition(fileName: string, pos: number): ReferenceEntry[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var symbolAndContainingAST = this.getSymbolInfoAtPosition(fileName, pos, /*requireName:*/ true);
             if (symbolAndContainingAST === null) {
@@ -142,7 +140,7 @@ module Services {
 
         public getOccurrencesAtPosition(fileName: string, pos: number): ReferenceEntry[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var symbolAndContainingAST = this.getSymbolInfoAtPosition(fileName, pos, /*requireName:*/ true);
             if (symbolAndContainingAST === null) {
@@ -178,7 +176,7 @@ module Services {
 
         public getImplementorsAtPosition(fileName: string, pos: number): ReferenceEntry[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var result: ReferenceEntry[] = [];
 
@@ -454,7 +452,7 @@ module Services {
 
         public getSignatureAtPosition(fileName: string, position: number): SignatureInfo {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var document = this.compilerState.getDocument(fileName);
 
@@ -593,7 +591,7 @@ module Services {
 
         public getDefinitionAtPosition(fileName: string, position: number): DefinitionInfo[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var symbolInfo = this.getSymbolInfoAtPosition(fileName, position, /*requireName:*/ false);
             if (symbolInfo === null || symbolInfo.symbol === null) {
@@ -679,7 +677,7 @@ module Services {
         // Return array of NavigateToItems in which each item has matched name with searchValue. If none is found, return an empty array.
         // The function will search all files (both close and open) in the solutions. SearchValue can be either one search term or multiple terms separated by comma.
         public getNavigateToItems(searchValue: string): NavigateToItem[] {
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             // Split search value in terms array
             var terms = searchValue.split(" ");
@@ -853,21 +851,21 @@ module Services {
 
         public getSyntacticDiagnostics(fileName: string): TypeScript.Diagnostic[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             return this.compilerState.getSyntacticDiagnostics(fileName);
         }
 
         public getSemanticDiagnostics(fileName: string): TypeScript.Diagnostic[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             return this.compilerState.getSemanticDiagnostics(fileName);
         }
 
         public getEmitOutput(fileName: string): TypeScript.EmitOutput {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             return this.compilerState.getEmitOutput(fileName);
         }
@@ -907,7 +905,7 @@ module Services {
         //
 
         private getTypeInfoEligiblePath(fileName: string, position: number, isConstructorValidPosition: boolean) {
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var document = this.compilerState.getDocument(fileName);
             var script = document.script();
@@ -945,7 +943,7 @@ module Services {
 
         public getTypeAtPosition(fileName: string, position: number): TypeInfo {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var node = this.getTypeInfoEligiblePath(fileName, position, true);
             if (!node) {
@@ -962,13 +960,8 @@ module Services {
             var candidateSignature: TypeScript.PullSignatureSymbol;
             var isConstructorCall: boolean;
 
-            if (isNameOfClass(node) || isNameOfInterface(node) || isNameOfFunction(node) || isNameOfVariable(node) || isNameOfEnum(node) || isNameOfModule(node)) {
-                // Skip the name and get to the declaration
-                node = node.parent;
-            }
-
-            if (node.isDeclaration()) {
-                var declarationInformation = this.compilerState.getDeclarationSymbolInformation(node, document);
+            if (TypeScript.isDeclarationASTOrDeclarationNameAST(node)) {
+                var declarationInformation = this.compilerState.getSymbolInformationFromAST(node, document);
                 if (!declarationInformation) {
                     return null;
                 }
@@ -979,8 +972,9 @@ module Services {
 
                 if (node.nodeType() === TypeScript.NodeType.ConstructorDeclaration ||
                     node.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
-                    node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression) {
-                    var funcDecl = node;
+                    node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression ||
+                    TypeScript.isNameOfFunction(node)) {
+                    var funcDecl = node.nodeType() === TypeScript.NodeType.Name ? node.parent : node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
                         var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compilerState.getDeclForAST(funcDecl));
                         _isCallExpression = true;
@@ -989,10 +983,10 @@ module Services {
                     }
                 }
             }
-            else if (isCallExpression(node) || isCallExpressionTarget(node)) {
+            else if (TypeScript.isCallExpression(node) || TypeScript.isCallExpressionTarget(node)) {
                 // If this is a call we need to get the call singuatures as well
                 // Move the cursor to point to the call expression
-                while (!isCallExpression(node)) {
+                while (!TypeScript.isCallExpression(node)) {
                     node = node.parent;
                 }
 
@@ -1060,7 +1054,9 @@ module Services {
                 ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, resolver, enclosingScopeSymbol)
                 : symbol.getTypeNameEx(resolver, enclosingScopeSymbol, /*useConstraintInName*/ true);
             var kind = this.mapPullElementKind(symbol.kind, symbol, !_isCallExpression, _isCallExpression, isConstructorCall);
-            var docComment = this.compilerState.getDocComments(candidateSignature || symbol, !_isCallExpression);
+
+            var docCommentSymbol = candidateSignature || symbol;
+            var docComment = docCommentSymbol.docComments(!_isCallExpression);
             var symbolName = this.getFullNameOfSymbol(symbol, enclosingScopeSymbol);
             var minChar = ast ? ast.minChar : -1;
             var limChar = ast ? ast.limChar : -1;
@@ -1070,7 +1066,7 @@ module Services {
 
         public getCompletionsAtPosition(fileName: string, position: number, isMemberCompletion: boolean): CompletionInfo {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var document = this.compilerState.getDocument(fileName);
             var script = document.script();
@@ -1200,7 +1196,7 @@ module Services {
             for (var i = 0, n = symbolInfo.symbols.length; i < n; i++) {
                 var symbol = symbolInfo.symbols[i];
 
-                var symbolDisplayName = CompletionHelpers.getValidCompletionEntryDisplayName(symbol.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget);
+                var symbolDisplayName = CompletionHelpers.getValidCompletionEntryDisplayName(symbol.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget());
                 if (!symbolDisplayName) {
                     continue;
                 }
@@ -1229,7 +1225,7 @@ module Services {
                         symbolForDocComments = type.getCallSignatures()[0];
                     }
 
-                    var docComments = this.compilerState.getDocComments(symbolForDocComments, true);
+                    var docComments = symbolForDocComments.docComments(/*useConstructorAsClass:*/ true);
 
                     entry = new ResolvedCompletionEntry(symbolDisplayName, kindName, kindModifiersName, typeName, fullSymbolName, docComments);
                 }
@@ -1245,7 +1241,7 @@ module Services {
             for (var i = 0, n = decls ? decls.length : 0; i < n; i++) {
                 var decl = decls[i];
 
-                var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget);
+                var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget());
                 if (!declDisplaylName) {
                     continue;
                 }
@@ -1298,7 +1294,7 @@ module Services {
                     decl = this.tryFindDeclFromPreviousCompilerVersion(decl);
 
                     if (decl) {
-                        var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget);
+                        var declDisplaylName = CompletionHelpers.getValidCompletionEntryDisplayName(decl.getDisplayName(), this.compilerState.compilationSettings().codeGenTarget());
                         var declKind = decl.kind;
                         var kindName = this.mapPullElementKind(declKind, /*symbol*/ null, true);
                         var kindModifiersName = this.getScriptElementKindModifiersFromFlags(decl.flags);
@@ -1329,7 +1325,7 @@ module Services {
                         symbolForDocComments = type.getCallSignatures()[0];
                     }
 
-                    var docComment = this.compilerState.getDocComments(symbolForDocComments, true);
+                    var docComment = symbolForDocComments.docComments(/*useConstructorAsClass:*/ true);
 
                     // Store the information for next lookup
                     (<DeclReferenceCompletionEntry>entry).resolve(typeName, fullSymbolName, docComment);
@@ -1587,7 +1583,7 @@ module Services {
 
         public getNameOrDottedNameSpan(fileName: string, startPos: number, endPos: number): SpanInfo {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.refresh();
+            this.synchronizeHostData(/*updateCompiler:*/ true);
 
             var node = this.getTypeInfoEligiblePath(fileName, startPos, false);
 
@@ -1596,8 +1592,8 @@ module Services {
             }
 
             while (node) {
-                if (isNameOfMemberAccessExpression(node) ||
-                    isRightSideOfQualifiedName(node)) {
+                if (TypeScript.isNameOfMemberAccessExpression(node) ||
+                    TypeScript.isRightSideOfQualifiedName(node)) {
                     node = node.parent;
                 } else {
                     break;
@@ -1610,7 +1606,7 @@ module Services {
 
         public getBreakpointStatementAtPosition(fileName: string, pos: number): SpanInfo {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var syntaxtree = this.getSyntaxTreeInternal(fileName);
             return Services.Breakpoints.getBreakpointLocation(syntaxtree, pos);
@@ -1618,7 +1614,7 @@ module Services {
 
         public getFormattingEditsForRange(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var manager = this.getFormattingManager(fileName, options);
 
@@ -1627,7 +1623,7 @@ module Services {
 
         public getFormattingEditsForDocument(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var manager = this.getFormattingManager(fileName, options);
 
@@ -1636,7 +1632,7 @@ module Services {
 
         public getFormattingEditsOnPaste(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var manager = this.getFormattingManager(fileName, options);
 
@@ -1645,7 +1641,7 @@ module Services {
 
         public getFormattingEditsAfterKeystroke(fileName: string, position: number, key: string, options: FormatCodeOptions): TextEdit[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var manager = this.getFormattingManager(fileName, options);
 
@@ -1685,7 +1681,7 @@ module Services {
 
         public getOutliningRegions(fileName: string): TypeScript.TextSpan[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var syntaxTree = this.getSyntaxTree(fileName);
 
@@ -1697,7 +1693,7 @@ module Services {
         // Return "null" in case the smart indent cannot be determined.
         public getIndentationAtPosition(fileName: string, position: number, editorOptions: EditorOptions): number {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var syntaxTree = this.getSyntaxTree(fileName);
 
@@ -1714,7 +1710,7 @@ module Services {
         // If the position is not on any range, return "null".
         public getBraceMatchingAtPosition(fileName: string, position: number): TypeScript.TextSpan[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var syntaxTree = this.getSyntaxTreeInternal(fileName);
 
@@ -1723,7 +1719,7 @@ module Services {
 
         public getScriptLexicalStructure(fileName: string): NavigateToItem[] {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             var syntaxTree = this.getSyntaxTreeInternal(fileName);
             var items: NavigateToItem[] = [];
@@ -1734,7 +1730,7 @@ module Services {
 
         public getSyntaxTree(fileName: string): TypeScript.SyntaxTree {
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            this.minimalRefresh();
+            this.synchronizeHostData(/*updateCompiler:*/ false);
 
             return this.getSyntaxTreeInternal(fileName);
         }
@@ -1769,7 +1765,7 @@ module Services {
             var text = TypeScript.SimpleText.fromScriptSnapshot(scriptSnapshot);
 
             var syntaxTree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName),
-                TypeScript.getParseOptions(this.compilerState.getHostCompilationSettings()));
+                TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.fromCompilationSettings(this.compilerState.getHostCompilationSettings())));
 
             return syntaxTree;
         }
@@ -1829,114 +1825,6 @@ module Services {
             var actualSnapshotText = newScriptSnapshot.getText(0, newScriptSnapshot.getLength());
             TypeScript.Debug.assert(incrementalTreeText === actualSnapshotText);
         }
-    }
-
-    function isCallExpression(ast: TypeScript.AST): boolean {
-        return (ast && ast.nodeType() === TypeScript.NodeType.InvocationExpression) ||
-            (ast && ast.nodeType() === TypeScript.NodeType.ObjectCreationExpression);
-    }
-
-    function isCallExpressionTarget(ast: TypeScript.AST): boolean {
-        if (!ast) {
-            return false;
-        }
-
-        var current = ast;
-
-        while (current && current.parent) {
-            if (current.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-                (<TypeScript.MemberAccessExpression>current.parent).name === current) {
-                current = current.parent;
-                continue;
-            }
-
-            break;
-        }
-
-        if (current && current.parent) {
-            if (current.parent.nodeType() === TypeScript.NodeType.InvocationExpression || current.parent.nodeType() === TypeScript.NodeType.ObjectCreationExpression) {
-                return current === (<TypeScript.InvocationExpression>current.parent).target;
-            }
-        }
-
-        return false;
-    }
-
-    function isNameOfClass(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.nodeType() === TypeScript.NodeType.Name &&
-            ast.parent.nodeType() === TypeScript.NodeType.ClassDeclaration &&
-            (<TypeScript.ClassDeclaration>ast.parent).identifier === ast;
-    }
-
-    function isNameOfEnum(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.nodeType() === TypeScript.NodeType.Name &&
-            ast.parent.nodeType() === TypeScript.NodeType.EnumDeclaration &&
-            (<TypeScript.EnumDeclaration>ast.parent).identifier === ast;
-    }
-
-    function isNameOfModule(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.parent.nodeType() === TypeScript.NodeType.ModuleDeclaration &&
-            (<TypeScript.ModuleDeclaration>ast.parent).name === ast;
-    }
-
-    function isNameOfFunction(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.nodeType() === TypeScript.NodeType.Name &&
-            ast.parent.nodeType() === TypeScript.NodeType.FunctionDeclaration &&
-            (<TypeScript.FunctionDeclaration>ast.parent).name === ast;
-    }
-
-    function isNameOfInterface(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.nodeType() === TypeScript.NodeType.Name &&
-            ast.parent.nodeType() === TypeScript.NodeType.InterfaceDeclaration &&
-            (<TypeScript.InterfaceDeclaration>ast.parent).identifier === ast;
-    }
-
-    function isNameOfVariable(ast: TypeScript.AST): boolean {
-        if (ast === null || ast.parent === null)
-            return false;
-
-        return ast.nodeType() === TypeScript.NodeType.Name &&
-            ast.parent.nodeType() === TypeScript.NodeType.VariableDeclarator &&
-            (<TypeScript.VariableDeclarator>ast.parent).id === ast;
-    }
-
-    function isNameOfMemberAccessExpression(ast: TypeScript.AST) {
-        if (ast &&
-            ast.parent &&
-            ast.parent.nodeType() === TypeScript.NodeType.MemberAccessExpression &&
-            (<TypeScript.MemberAccessExpression>ast.parent).name === ast) {
-
-            return true;
-        }
-
-        return false;
-    }
-
-    function isRightSideOfQualifiedName(ast: TypeScript.AST) {
-        if (ast &&
-            ast.parent &&
-            ast.parent.nodeType() === TypeScript.NodeType.QualifiedName &&
-            (<TypeScript.QualifiedName>ast.parent).right === ast) {
-
-            return true;
-        }
-
-        return false;
     }
 
     function isSignatureHelpBlocker(ast: TypeScript.AST): boolean {

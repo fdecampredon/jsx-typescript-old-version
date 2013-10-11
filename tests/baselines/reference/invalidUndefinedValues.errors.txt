@@ -7,7 +7,7 @@ invalidUndefinedValues.ts line 12 col 1: error TS2011: Cannot convert 'new() => 
 invalidUndefinedValues.ts line 13 col 1: error TS2011: Cannot convert 'C' to 'undefined'.
 invalidUndefinedValues.ts line 17 col 1: error TS2011: Cannot convert 'I' to 'undefined'.
 invalidUndefinedValues.ts line 20 col 1: error TS2011: Cannot convert '{ x: number; }' to 'undefined'.
-invalidUndefinedValues.ts line 22 col 1: error TS2011: Cannot convert '{ f: () => void; }' to 'undefined'.
+invalidUndefinedValues.ts line 22 col 1: error TS2011: Cannot convert '{ f(): void; }' to 'undefined'.
 invalidUndefinedValues.ts line 25 col 5: error TS2011: Cannot convert 'T' to 'undefined'.
 invalidUndefinedValues.ts line 27 col 1: error TS2011: Cannot convert '<T>(a: T) => void' to 'undefined'.
 invalidUndefinedValues.ts line 30 col 1: error TS2011: Cannot convert '{ A: E; [x: number]: string; }' to 'undefined'.

@@ -51,7 +51,12 @@ module TypeScript {
         public currentMappings: SourceMapping[][];
         public currentNameIndex: number[];
 
-        constructor(private jsFile: TextWriter, private sourceMapOut: TextWriter, document: Document, jsFilePath: string, emitOptions: EmitOptions, resolvePath: (path: string) => string) {
+        constructor(private jsFile: TextWriter,
+                    private sourceMapOut: TextWriter,
+                    document: Document,
+                    jsFilePath: string,
+                    emitOptions: EmitOptions,
+                    resolvePath: (path: string) => string) {
             this.setSourceMapOptions(document, jsFilePath, emitOptions, resolvePath);
             this.setNewSourceFile(document, emitOptions);
         }
@@ -80,18 +85,18 @@ module TypeScript {
             this.jsFileName = prettyJsFileName;
 
             // Figure out sourceMapPath and sourceMapDirectory
-            if (emitOptions.compilationSettings.mapRoot) {
+            if (emitOptions.sourceMapRootDirectory()) {
                 // Get the sourceMap Directory
-                this.sourceMapDirectory = emitOptions.compilationSettings.mapRoot;
-                if (emitOptions.outputMany || document.script().isExternalModule) {
+                this.sourceMapDirectory = emitOptions.sourceMapRootDirectory();
+                if (document.emitToOwnOutputFile()) {
                     // For modules or multiple emit files the mapRoot will have directory structure like the sources
                     // So if src\a.ts and src\lib\b.ts are compiled together user would be moving the maps into mapRoot\a.js.map and mapRoot\lib\b.js.map
-                    this.sourceMapDirectory = this.sourceMapDirectory + switchToForwardSlashes(getRootFilePath((document.fileName)).replace(emitOptions.commonDirectoryPath, ""));
+                    this.sourceMapDirectory = this.sourceMapDirectory + switchToForwardSlashes(getRootFilePath((document.fileName)).replace(emitOptions.commonDirectoryPath(), ""));
                 }
 
                 if (isRelative(this.sourceMapDirectory)) {
                     // The relative paths are relative to the common directory
-                    this.sourceMapDirectory = emitOptions.commonDirectoryPath + this.sourceMapDirectory;
+                    this.sourceMapDirectory = emitOptions.commonDirectoryPath() + this.sourceMapDirectory;
                     this.sourceMapDirectory = convertToDirectoryPath(switchToForwardSlashes(resolvePath(this.sourceMapDirectory)));
                     this.sourceMapPath = getRelativePathToFixedPath(getRootFilePath(jsFilePath), this.sourceMapDirectory + prettyMapFileName);
                 } else {
@@ -101,14 +106,14 @@ module TypeScript {
                 this.sourceMapPath = prettyMapFileName;
                 this.sourceMapDirectory = getRootFilePath(jsFilePath);
             }
-            this.sourceRoot = emitOptions.compilationSettings.sourceRoot;
+            this.sourceRoot = emitOptions.sourceRootDirectory();
         }
 
         private setNewSourceFilePath(document: Document, emitOptions: EmitOptions) {
             var tsFilePath = switchToForwardSlashes(document.fileName);
-            if (emitOptions.compilationSettings.sourceRoot) {
+            if (emitOptions.sourceRootDirectory()) {
                 // Use the relative path corresponding to the common directory path
-                tsFilePath = getRelativePathToFixedPath(emitOptions.commonDirectoryPath, tsFilePath);
+                tsFilePath = getRelativePathToFixedPath(emitOptions.commonDirectoryPath(), tsFilePath);
             } else {
                 // Source locations relative to map file location
                 tsFilePath = getRelativePathToFixedPath(this.sourceMapDirectory, tsFilePath);

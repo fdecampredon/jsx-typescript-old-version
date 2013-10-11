@@ -237,7 +237,7 @@ class RWCRunner extends RunnerBase {
                 it("correct expression types check", () => {
                     if (!hasCrashed && !spec.skipTypeCheck && errors.length == 0) {
                         var compiler = new TypeScript.TypeScriptCompiler(
-                            new TypeScript.NullLogger(), new TypeScript.CompilationSettings());
+                            new TypeScript.NullLogger());
 
                         compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libText),
                             ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);

@@ -70,16 +70,16 @@ module TypeScript {
         context.pushParent(decl);
     }
 
-    function preCollectEnumDecls(moduleDecl: EnumDeclaration, context: DeclCollectionContext): void {
+    function preCollectEnumDecls(enumDecl: EnumDeclaration, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
-        var modName = moduleDecl.identifier.text();
+        var enumName = enumDecl.identifier.text();
         var kind: PullElementKind = PullElementKind.Container;
 
-        if (!context.containingModuleHasExportAssignment() && (hasFlag(moduleDecl.getModuleFlags(), ModuleFlags.Exported) || context.isParsingAmbientModule())) {
+        if (!context.containingModuleHasExportAssignment() && (hasFlag(enumDecl.getModuleFlags(), ModuleFlags.Exported) || context.isParsingAmbientModule())) {
             declFlags |= PullElementFlags.Exported;
         }
 
-        if (hasFlag(moduleDecl.getModuleFlags(), ModuleFlags.Ambient) || context.isParsingAmbientModule() || context.isDeclareFile) {
+        if (hasFlag(enumDecl.getModuleFlags(), ModuleFlags.Ambient) || context.isParsingAmbientModule() || context.isDeclareFile) {
             declFlags |= PullElementFlags.Ambient;
         }
 
@@ -87,13 +87,16 @@ module TypeScript {
         declFlags |= (PullElementFlags.Enum | PullElementFlags.InitializedEnum);
         kind = PullElementKind.Enum;
 
-        var span = TextSpan.fromBounds(moduleDecl.minChar, moduleDecl.limChar);
+        var span = TextSpan.fromBounds(enumDecl.minChar, enumDecl.limChar);
 
-        var decl = new NormalPullDecl(modName, moduleDecl.identifier.actualText, kind, declFlags, context.getParent(), span);
-        context.semanticInfoChain.setDeclForAST(moduleDecl, decl);
-        context.semanticInfoChain.setASTForDecl(decl, moduleDecl);
+        var enumDeclaration = new NormalPullDecl(enumName, enumDecl.identifier.actualText, kind, declFlags, context.getParent(), span);
+        context.semanticInfoChain.setDeclForAST(enumDecl, enumDeclaration);
+        context.semanticInfoChain.setASTForDecl(enumDeclaration, enumDecl);
 
-        context.pushParent(decl);
+        var enumIndexerDecl = new NormalPullDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, enumDeclaration, span);
+        var enumIndexerParameter = new NormalPullDecl("x", "x", PullElementKind.Parameter, PullElementFlags.None, enumIndexerDecl, span);
+
+        context.pushParent(enumDeclaration);
     }
 
     function createEnumElementDecls(propertyDecl: EnumElement, context: DeclCollectionContext): void {

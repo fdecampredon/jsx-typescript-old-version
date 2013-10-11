@@ -16,43 +16,10 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-
-    /// Compiler settings
-    export class CompilationSettings {
-        public propagateEnumConstants = false;
-        public removeComments = false;
-        public watch = false;
-        public noResolve = false;
-        public allowAutomaticSemicolonInsertion = true;
-        public noImplicitAny = false;
-
-        public noLib = false;
-
-        public codeGenTarget = LanguageVersion.EcmaScript3;
-        public moduleGenTarget = ModuleGenTarget.Unspecified;
-
-        // --out option passed. 
-        // Default is the "" which leads to multiple files generated next to the.ts files
-        public outFileOption: string = "";
-        public outDirOption: string = "";
-        public mapSourceFiles = false;
-        public mapRoot: string = ""; 
-        public sourceRoot: string = "";
-        public generateDeclarationFiles = false;
-
-        public useCaseSensitiveFileResolution = false;
-        public gatherDiagnostics = false;
-
-        public sourceMapEmitterCallback: SourceMapEmitterCallback;
-
-        public codepage: number = null;
-    }
-
     ///
     /// Preprocessing
     ///
     export interface IPreProcessedFileInfo {
-        settings: CompilationSettings;
         referencedFiles: IFileReference[];
         importedFiles: IFileReference[];
         diagnostics: Diagnostic[];
@@ -175,7 +142,7 @@ module TypeScript {
         }
     }
 
-    function processTripleSlashDirectives(fileName: string, lineMap: LineMap, firstToken: ISyntaxToken, settings: CompilationSettings): ITripleSlashDirectiveProperties {
+    function processTripleSlashDirectives(fileName: string, lineMap: LineMap, firstToken: ISyntaxToken): ITripleSlashDirectiveProperties {
         var leadingTrivia = firstToken.leadingTrivia();
 
         var position = 0;
@@ -201,12 +168,10 @@ module TypeScript {
                     referencedFiles.push(referencedCode);
                 }
 
-                if (settings) {
-                    // is it a lib file?
-                    var isNoDefaultLib = isNoDefaultLibMatch(triviaText);
-                    if (isNoDefaultLib) {
-                        noDefaultLib = isNoDefaultLib[3] === "true";
-                    }
+                // is it a lib file?
+                var isNoDefaultLib = isNoDefaultLibMatch(triviaText);
+                if (isNoDefaultLib) {
+                    noDefaultLib = isNoDefaultLib[3] === "true";
                 }
             }
 
@@ -216,11 +181,9 @@ module TypeScript {
         return { noDefaultLib: noDefaultLib, diagnostics: diagnostics, referencedFiles: referencedFiles };
     }
 
-    export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, settings?: CompilationSettings, readImportFiles = true): IPreProcessedFileInfo {
-        settings = settings || new CompilationSettings();
-        
+    export function preProcessFile(fileName: string, sourceText: IScriptSnapshot, readImportFiles = true): IPreProcessedFileInfo {
         var text = SimpleText.fromScriptSnapshot(sourceText);
-        var scanner = new Scanner(fileName, text, settings.codeGenTarget, scannerWindow);
+        var scanner = new Scanner(fileName, text, LanguageVersion.EcmaScript5, scannerWindow);
 
         var firstToken = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
 
@@ -233,17 +196,17 @@ module TypeScript {
             processImports(text.lineMap(), scanner, firstToken, importedFiles);
         }
 
-        var properties = processTripleSlashDirectives(fileName, text.lineMap(), firstToken, settings);
+        var properties = processTripleSlashDirectives(fileName, text.lineMap(), firstToken);
 
         scannerDiagnostics.length = 0;
-        return { settings:settings, referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };
+        return { referencedFiles: properties.referencedFiles, importedFiles: importedFiles, isLibFile: properties.noDefaultLib, diagnostics: properties.diagnostics };
     }
 
-    export function getParseOptions(settings: CompilationSettings): ParseOptions {
-        return new ParseOptions(settings.codeGenTarget, settings.allowAutomaticSemicolonInsertion);
+    export function getParseOptions(settings: ImmutableCompilationSettings): ParseOptions {
+        return new ParseOptions(settings.codeGenTarget(), settings.allowAutomaticSemicolonInsertion());
     }
 
     export function getReferencedFiles(fileName: string, sourceText: IScriptSnapshot): IFileReference[] {
-        return preProcessFile(fileName, sourceText, null, false).referencedFiles;
+        return preProcessFile(fileName, sourceText, false).referencedFiles;
     }
 } // Tools

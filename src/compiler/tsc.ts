@@ -39,14 +39,13 @@ module TypeScript {
     export class BatchCompiler implements IReferenceResolverHost {
         public compilerVersion = "0.9.1.1";
         private inputFiles: string[] = [];
-        private compilationSettings: CompilationSettings;
+        private compilationSettings: ImmutableCompilationSettings;
         private resolvedFiles: IResolvedFile[] = [];
         private fileNameToSourceFile = new StringHashTable();
         private hasErrors: boolean = false;
         private logger: ILogger = null;
 
         constructor(private ioHost: IIO) {
-            this.compilationSettings = new CompilationSettings();
         }
 
         // Begin batch compilation
@@ -57,9 +56,9 @@ module TypeScript {
 
             // Parse command line options
             if (this.parseOptions()) {
-                this.logger = this.compilationSettings.gatherDiagnostics ? <ILogger>new DiagnosticsLogger(this.ioHost) : new NullLogger();
+                this.logger = this.compilationSettings.gatherDiagnostics() ? <ILogger>new DiagnosticsLogger(this.ioHost) : new NullLogger();
 
-                if (this.compilationSettings.watch) {
+                if (this.compilationSettings.watch()) {
                     // Watch will cause the program to stick around as long as the files exist
                     this.watchFiles();
                     return;
@@ -70,7 +69,7 @@ module TypeScript {
 
                 this.compile();
 
-                if (this.compilationSettings.gatherDiagnostics) {
+                if (this.compilationSettings.gatherDiagnostics()) {
                     this.logger.log("");
                     this.logger.log("File resolution time:                     " + TypeScript.fileResolutionTime);
                     this.logger.log("SyntaxTree parse time:                    " + TypeScript.syntaxTreeParseTime);
@@ -114,18 +113,18 @@ module TypeScript {
 
         private resolve() {
             // Resolve file dependencies, if requested
-            var includeDefaultLibrary = !this.compilationSettings.noLib;
+            var includeDefaultLibrary = !this.compilationSettings.noLib();
             var resolvedFiles: IResolvedFile[] = [];
 
             var start = new Date().getTime();
 
-            if (!this.compilationSettings.noResolve) {
+            if (!this.compilationSettings.noResolve()) {
                 // Resolve references
                 var resolutionResults = ReferenceResolver.resolve(this.inputFiles, this, this.compilationSettings);
                 resolvedFiles = resolutionResults.resolvedFiles;
 
                 // Only include the library if useDefaultLib is set to true and did not see any 'no-default-lib' comments
-                includeDefaultLibrary = !this.compilationSettings.noLib && !resolutionResults.seenNoDefaultLibTag;
+                includeDefaultLibrary = !this.compilationSettings.noLib() && !resolutionResults.seenNoDefaultLibTag;
 
                 // Populate any diagnostic messages generated during resolution
                 for (var i = 0, n = resolutionResults.diagnostics.length; i < n; i++) {
@@ -139,7 +138,7 @@ module TypeScript {
                     var importedFiles: string[] = [];
 
                     // If declaration files are going to be emitted, preprocess the file contents and add in referenced files as well
-                    if (this.compilationSettings.generateDeclarationFiles) {
+                    if (this.compilationSettings.generateDeclarationFiles()) {
                         var references = getReferencedFiles(inputFile, this.getScriptSnapshot(inputFile));
                         for (var j = 0; j < references.length; j++) {
                             referencedFiles.push(references[j].path);
@@ -199,6 +198,7 @@ module TypeScript {
         private parseOptions() {
             var opts = new OptionsParser(this.ioHost, this.compilerVersion);
 
+            var mutableSettings = new CompilationSettings();
             opts.option('out', {
                 usage: {
                     locCode: DiagnosticCode.Concatenate_and_emit_output_to_single_file, 
@@ -206,7 +206,7 @@ module TypeScript {
                 },
                 type: DiagnosticCode.file2,
                 set: (str) => {
-                    this.compilationSettings.outFileOption = str;
+                    mutableSettings.outFileOption = str;
                 }
             });
 
@@ -217,7 +217,7 @@ module TypeScript {
                 },
                 type: DiagnosticCode.DIRECTORY,
                 set: (str) => {
-                    this.compilationSettings.outDirOption = str;
+                    mutableSettings.outDirOption = str;
                 }
             });
 
@@ -227,7 +227,7 @@ module TypeScript {
                     args: ['.map']
                 },
                 set: () => {
-                    this.compilationSettings.mapSourceFiles = true;
+                    mutableSettings.mapSourceFiles = true;
                 }
             });
 
@@ -238,7 +238,7 @@ module TypeScript {
                 },
                 type: DiagnosticCode.LOCATION,
                 set: (str) => {
-                    this.compilationSettings.mapRoot = str;
+                    mutableSettings.mapRoot = str;
                 }
             });
 
@@ -249,7 +249,7 @@ module TypeScript {
                 },
                 type: DiagnosticCode.LOCATION,
                 set: (str) => {
-                    this.compilationSettings.sourceRoot = str;
+                    mutableSettings.sourceRoot = str;
                 }
             });
 
@@ -259,7 +259,7 @@ module TypeScript {
                     args: ['.d.ts']
                 },
                 set: () => {
-                    this.compilationSettings.generateDeclarationFiles = true;
+                    mutableSettings.generateDeclarationFiles = true;
                 }
             }, 'd');
 
@@ -270,14 +270,14 @@ module TypeScript {
                         args: null
                     },
                     set: () => {
-                        this.compilationSettings.watch = true;
+                        mutableSettings.watch = true;
                     }
                 }, 'w');
             }
 
             opts.flag('propagateEnumConstants', {
                 experimental: true,
-                set: () => { this.compilationSettings.propagateEnumConstants = true; }
+                set: () => { mutableSettings.propagateEnumConstants = true; }
             });
 
             opts.flag('removeComments', {
@@ -286,7 +286,7 @@ module TypeScript {
                     args: null
                 },
                 set: () => {
-                    this.compilationSettings.removeComments = true;
+                    mutableSettings.removeComments = true;
                 }
             });
 
@@ -296,21 +296,21 @@ module TypeScript {
                     args: null
                 },
                 set: () => {
-                    this.compilationSettings.noResolve = true;
+                    mutableSettings.noResolve = true;
                 }
             });
 
             opts.flag('noLib', {
                 experimental: true,
                 set: () => {
-                    this.compilationSettings.noLib = true;
+                    mutableSettings.noLib = true;
                 }
             });
 
             opts.flag('diagnostics', {
                 experimental: true,
                 set: () => {
-                    this.compilationSettings.gatherDiagnostics = true;
+                    mutableSettings.gatherDiagnostics = true;
                 }
             });
 
@@ -324,10 +324,10 @@ module TypeScript {
                     type = type.toLowerCase();
 
                     if (type === 'es3') {
-                        this.compilationSettings.codeGenTarget = LanguageVersion.EcmaScript3;
+                        mutableSettings.codeGenTarget = LanguageVersion.EcmaScript3;
                     }
                     else if (type === 'es5') {
-                        this.compilationSettings.codeGenTarget = LanguageVersion.EcmaScript5;
+                        mutableSettings.codeGenTarget = LanguageVersion.EcmaScript5;
                     }
                     else {
                         this.addDiagnostic(
@@ -346,10 +346,10 @@ module TypeScript {
                     type = type.toLowerCase();
 
                     if (type === 'commonjs') {
-                        this.compilationSettings.moduleGenTarget = ModuleGenTarget.Synchronous;
+                        mutableSettings.moduleGenTarget = ModuleGenTarget.Synchronous;
                     }
                     else if (type === 'amd') {
-                        this.compilationSettings.moduleGenTarget = ModuleGenTarget.Asynchronous;
+                        mutableSettings.moduleGenTarget = ModuleGenTarget.Asynchronous;
                     }
                     else {
                         this.addDiagnostic(
@@ -372,7 +372,7 @@ module TypeScript {
             opts.flag('useCaseSensitiveFileResolution', {
                 experimental: true,
                 set: () => {
-                    this.compilationSettings.useCaseSensitiveFileResolution = true;
+                    mutableSettings.useCaseSensitiveFileResolution = true;
                 }
             });
             var shouldPrintVersionOnly = false;
@@ -405,7 +405,7 @@ module TypeScript {
                     args: null
                 },
                 set: () => {
-                    this.compilationSettings.noImplicitAny = true;
+                    mutableSettings.noImplicitAny = true;
                 }
             });
 
@@ -417,12 +417,14 @@ module TypeScript {
                     },
                     type: DiagnosticCode.NUMBER,
                     set: (arg) => {
-                        this.compilationSettings.codepage = parseInt(arg, 10);
+                        mutableSettings.codepage = parseInt(arg, 10);
                     }
                 });
             }
 
             opts.parse(this.ioHost.arguments);
+
+            this.compilationSettings = ImmutableCompilationSettings.fromCompilationSettings(mutableSettings);
 
             if (locale) {
                 if (!this.setLocale(locale)) {
@@ -483,7 +485,7 @@ module TypeScript {
                 return false;
             }
 
-            var fileContents = this.ioHost.readFile(filePath, this.compilationSettings.codepage);
+            var fileContents = this.ioHost.readFile(filePath, this.compilationSettings.codepage());
             TypeScript.LocalizedDiagnosticMessages = JSON.parse(fileContents.contents);
             return true;
         }
@@ -597,7 +599,7 @@ module TypeScript {
                 var fileInformation: FileInformation;
 
                 try {
-                    fileInformation = this.ioHost.readFile(fileName, this.compilationSettings.codepage);
+                    fileInformation = this.ioHost.readFile(fileName, this.compilationSettings.codepage());
                 }
                 catch (e) {
                     this.addDiagnostic(new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_read_file_0_1, [fileName, e.message]));

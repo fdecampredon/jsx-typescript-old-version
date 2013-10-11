@@ -43,13 +43,14 @@ module TypeScript {
     // unavoidable.  If it does decrease an investigation 
     function compareTrees(oldText: IText, newText: IText, textChangeRange: TextChangeRange, reusedElements: number = -1): void {
         var oldTree = Parser.parse("", oldText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
-        var oldAST = SyntaxTreeToAstVisitor.visit(oldTree, "", new CompilationSettings(), /*incrementalAST:*/ true);
+        var settings = ImmutableCompilationSettings.defaultSettings();
+        var oldAST = SyntaxTreeToAstVisitor.visit(oldTree, "", settings, /*incrementalAST:*/ true);
 
         var newTree = Parser.parse("", newText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
-        var newAST = SyntaxTreeToAstVisitor.visit(newTree, "", new CompilationSettings(), /*incrementalAST:*/ true);
+        var newAST = SyntaxTreeToAstVisitor.visit(newTree, "", settings, /*incrementalAST:*/ true);
 
         var incrementalNewTree = Parser.incrementalParse(oldTree, textChangeRange, newText);
-        var incrementalNewAST = SyntaxTreeToAstVisitor.visit(incrementalNewTree, "", new CompilationSettings(), /*incrementalAST:*/ true);
+        var incrementalNewAST = SyntaxTreeToAstVisitor.visit(incrementalNewTree, "", settings, /*incrementalAST:*/ true);
 
         // We should get the same tree when doign a full or incremental parse.
         Debug.assert(newTree.structuralEquals(incrementalNewTree));

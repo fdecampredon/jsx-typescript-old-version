@@ -1,6 +1,6 @@
 === tests/cases/compiler/noCollisionThisExpressionAndLocalVarInAccessors.ts ===
 Line 0 col 6 IdentifierName "class1" = class1
-Line 1 col 8 IdentifierName "a" = () => number
+Line 1 col 8 IdentifierName "a" = number
 Line 2 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }
 Line 2 col 17 ObjectLiteralExpression "{
             doStuff: (callback) => () => {
@@ -22,7 +22,7 @@ Line 4 col 20 IdentifierName "_this" = number
 Line 5 col 23 InvocationExpression "callback(_this)" = any
 Line 5 col 23 IdentifierName "callback" = any
 Line 5 col 32 IdentifierName "_this" = number
-Line 11 col 8 IdentifierName "a" = (val: number) => void
+Line 11 col 8 IdentifierName "a" = number
 Line 11 col 10 IdentifierName "val" = number
 Line 12 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }
 Line 12 col 17 ObjectLiteralExpression "{
@@ -46,7 +46,7 @@ Line 15 col 23 InvocationExpression "callback(_this)" = any
 Line 15 col 23 IdentifierName "callback" = any
 Line 15 col 32 IdentifierName "_this" = number
 Line 22 col 6 IdentifierName "class2" = class2
-Line 23 col 8 IdentifierName "a" = () => number
+Line 23 col 8 IdentifierName "a" = number
 Line 24 col 12 IdentifierName "_this" = number
 Line 25 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }
 Line 25 col 17 ObjectLiteralExpression "{
@@ -65,7 +65,7 @@ Line 26 col 35 ParenthesizedArrowFunctionExpression "() => {
 Line 27 col 23 InvocationExpression "callback(_this)" = any
 Line 27 col 23 IdentifierName "callback" = any
 Line 27 col 32 IdentifierName "_this" = number
-Line 33 col 8 IdentifierName "a" = (val: number) => void
+Line 33 col 8 IdentifierName "a" = number
 Line 33 col 10 IdentifierName "val" = number
 Line 34 col 12 IdentifierName "_this" = number
 Line 35 col 12 IdentifierName "x2" = { doStuff: (callback: any) => () => any; }

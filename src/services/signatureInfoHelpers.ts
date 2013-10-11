@@ -161,7 +161,7 @@ module Services {
 
                 var signatureMemberName = signature.getSignatureTypeNameEx(functionName, /*shortform*/ false, /*brackets*/ false, resolver, enclosingScopeSymbol, /*getParamMarkerInfo*/ true, /*getTypeParameterMarkerInfo*/ true);
                 signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(signatureMemberName, paramIndexInfo);
-                signatureGroupInfo.docComment = compilerState.getDocComments(signature);
+                signatureGroupInfo.docComment = signature.docComments();
 
                 var parameterMarkerIndex = 0;
 
@@ -171,7 +171,7 @@ module Services {
                         var typeParameter = typeParameters[j];
                         var signatureTypeParameterInfo = new FormalTypeParameterInfo();
                         signatureTypeParameterInfo.name = typeParameter.getDisplayName();
-                        signatureTypeParameterInfo.docComment = compilerState.getDocComments(typeParameter);
+                        signatureTypeParameterInfo.docComment = typeParameter.docComments();
                         signatureTypeParameterInfo.minChar = paramIndexInfo[2 * parameterMarkerIndex];
                         signatureTypeParameterInfo.limChar = paramIndexInfo[2 * parameterMarkerIndex + 1];
                         parameterMarkerIndex++;
@@ -185,7 +185,7 @@ module Services {
                     var signatureParameterInfo = new FormalParameterInfo();
                     signatureParameterInfo.isVariable = signature.hasVarArgs && (j === parameters.length - 1);
                     signatureParameterInfo.name = parameter.getDisplayName();
-                    signatureParameterInfo.docComment = compilerState.getDocComments(parameter);
+                    signatureParameterInfo.docComment = parameter.docComments();
                     signatureParameterInfo.minChar = paramIndexInfo[2 * parameterMarkerIndex];
                     signatureParameterInfo.limChar = paramIndexInfo[2 * parameterMarkerIndex + 1];
                     parameterMarkerIndex++;
@@ -205,7 +205,7 @@ module Services {
             var symbolName = symbol.getScopedNameEx(compilerState.getResolver(), enclosingScopeSymbol, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
 
             signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(symbolName, paramIndexInfo);
-            signatureGroupInfo.docComment = compilerState.getDocComments(symbol);
+            signatureGroupInfo.docComment = symbol.docComments();
 
             var parameterMarkerIndex = 0;
 
@@ -216,7 +216,7 @@ module Services {
                 var typeParameter = typeParameters[i];
                 var signatureTypeParameterInfo = new FormalTypeParameterInfo();
                 signatureTypeParameterInfo.name = typeParameter.getDisplayName();
-                signatureTypeParameterInfo.docComment = compilerState.getDocComments(typeParameter);
+                signatureTypeParameterInfo.docComment = typeParameter.docComments();
                 signatureTypeParameterInfo.minChar = paramIndexInfo[2 * i];
                 signatureTypeParameterInfo.limChar = paramIndexInfo[2 * i + 1];
                 signatureGroupInfo.typeParameters.push(signatureTypeParameterInfo);

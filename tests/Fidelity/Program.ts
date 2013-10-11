@@ -142,7 +142,7 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
         var originalTree = tree;
-        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
+        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
         var totalIncrementalTime = 0;
         var totalIncrementalASTTime = 0;
@@ -159,7 +159,7 @@ class Program {
             TypeScript.Debug.assert(tree.structuralEquals(tree2));
 
             timer.start();
-            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
+            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
             timer.end();
             totalIncrementalASTTime += timer.time;
 
@@ -203,7 +203,7 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
         var originalTree = tree;
-        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
+        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
         var totalIncrementalTime = 0;
         var totalIncrementalASTTime = 0;
@@ -239,7 +239,7 @@ class Program {
             totalIncrementalTime += timer.time;
 
             timer.start();
-            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
+            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
             timer.end();
             totalIncrementalASTTime += timer.time;
 
@@ -442,7 +442,7 @@ class Program {
         TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
         tree.sourceUnit().accept(new PositionValidatingWalker());
 
-        TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", new TypeScript.CompilationSettings(), /*incrementalAST:*/ true);
+        TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
         this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
 

@@ -5,7 +5,7 @@ invalidVoidValues.ts line 7 col 1: error TS2011: Cannot convert '{ A: E; [x: num
 invalidVoidValues.ts line 8 col 1: error TS2011: Cannot convert 'E' to 'void'.
 invalidVoidValues.ts line 12 col 1: error TS2011: Cannot convert 'C' to 'void'.
 invalidVoidValues.ts line 16 col 1: error TS2011: Cannot convert 'I' to 'void'.
-invalidVoidValues.ts line 18 col 1: error TS2011: Cannot convert '{ f: () => void; }' to 'void'.
+invalidVoidValues.ts line 18 col 1: error TS2011: Cannot convert '{ f(): void; }' to 'void'.
 invalidVoidValues.ts line 21 col 1: error TS2011: Cannot convert '{ x: number; }' to 'void'.
 invalidVoidValues.ts line 24 col 5: error TS2011: Cannot convert 'T' to 'void'.
 invalidVoidValues.ts line 26 col 1: error TS2011: Cannot convert '<T>(a: T) => void' to 'void'.

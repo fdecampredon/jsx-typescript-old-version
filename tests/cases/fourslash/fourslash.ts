@@ -181,7 +181,11 @@ module FourSlashInterface {
 
 		public referencesCountIs(count: number) {
 			FourSlash.currentTestState.verifyReferencesCountIs(count);
-		}
+        }
+
+        public implementorsCountIs(count: number) {
+            FourSlash.currentTestState.verifyImplementorsCountIs(count);
+        }
 
         public currentParameterIsVariable() {
             FourSlash.currentTestState.verifyCurrentParameterIsVariable(!this.negative);

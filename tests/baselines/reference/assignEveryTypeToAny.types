@@ -64,13 +64,13 @@ Line 45 col 4 IdentifierName "i" = () => string
 Line 46 col 0 AssignmentExpression "x = i" = () => string
 Line 46 col 0 IdentifierName "x" = any
 Line 46 col 4 IdentifierName "i" = () => string
-Line 47 col 0 AssignmentExpression "x = { f() { return 1; } }" = { f: () => number; }
+Line 47 col 0 AssignmentExpression "x = { f() { return 1; } }" = { f(): number; }
 Line 47 col 0 IdentifierName "x" = any
-Line 47 col 4 ObjectLiteralExpression "{ f() { return 1; } }" = { f: () => number; }
+Line 47 col 4 ObjectLiteralExpression "{ f() { return 1; } }" = { f(): number; }
 Line 47 col 6 IdentifierName "f" = () => number
-Line 48 col 0 AssignmentExpression "x = { f<T>(x: T) { return x; } }" = { f: <T>(x: T) => T; }
+Line 48 col 0 AssignmentExpression "x = { f<T>(x: T) { return x; } }" = { f<T>(x: T): T; }
 Line 48 col 0 IdentifierName "x" = any
-Line 48 col 4 ObjectLiteralExpression "{ f<T>(x: T) { return x; } }" = { f: <T>(x: T) => T; }
+Line 48 col 4 ObjectLiteralExpression "{ f<T>(x: T) { return x; } }" = { f<T>(x: T): T; }
 Line 48 col 6 IdentifierName "f" = <T>(x: T) => T
 Line 48 col 8 IdentifierName "T" = T
 Line 48 col 11 IdentifierName "x" = T

@@ -1,6 +1,6 @@
 === tests/cases/compiler/recursiveGetterAccess.ts ===
 Line 0 col 6 IdentifierName "MyClass" = MyClass
-Line 1 col 4 IdentifierName "testProp" = () => any
+Line 1 col 4 IdentifierName "testProp" = any
 Line 1 col 24 MemberAccessExpression "this.testProp" = any
 Line 1 col 24 ThisKeyword "this" = MyClass
 Line 1 col 29 IdentifierName "testProp" = any

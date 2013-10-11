@@ -43,7 +43,7 @@ module TypeScript {
 
         private _parentAccessorSymbol: PullSymbol = null;
         private _enclosingSignature: PullSignatureSymbol = null;
-        public docComments: string = null;
+        private _docComments: string = null;
 
         public isPrinting = false;
 
@@ -684,6 +684,117 @@ module TypeScript {
 
             // Visible if parent is visible
             return PullSymbol.getIsExternallyVisible(container, this, inIsExternallyVisibleSymbols);
+        }
+
+        private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
+            var ast = decl.ast();
+
+            if (ast && (ast.nodeType() != TypeScript.NodeType.ModuleDeclaration ||
+                decl.kind != TypeScript.PullElementKind.Variable)) {
+                return ast.docComments();
+            }
+
+            return [];
+        }
+
+        private getDocCommentArray(symbol: TypeScript.PullSymbol) {
+            var docComments: TypeScript.Comment[] = [];
+            if (!symbol) {
+                return docComments;
+            }
+
+            var isParameter = symbol.kind == TypeScript.PullElementKind.Parameter;
+            var decls = symbol.getDeclarations();
+            for (var i = 0; i < decls.length; i++) {
+                if (isParameter && decls[i].kind == TypeScript.PullElementKind.Property) {
+                    // Ignore declaration for property that was defined as parameter because they both 
+                    // point to same doc comment
+                    continue;
+                }
+                docComments = docComments.concat(this.getDocCommentsOfDecl(decls[i]));
+            }
+            return docComments;
+        }
+
+        private static getDefaultConstructorSymbolForDocComments(classSymbol: TypeScript.PullTypeSymbol) {
+            if (classSymbol.getHasDefaultConstructor()) {
+                // get from parent if possible
+                var extendedTypes = classSymbol.getExtendedTypes();
+                if (extendedTypes.length) {
+                    return PullSymbol.getDefaultConstructorSymbolForDocComments(extendedTypes[0]);
+                }
+            }
+
+            return classSymbol.type.getConstructSignatures()[0];
+        }
+
+        public docComments(useConstructorAsClass?: boolean): string {
+            var decls = this.getDeclarations();
+            if (useConstructorAsClass && decls.length && decls[0].kind == TypeScript.PullElementKind.ConstructorMethod) {
+                var classDecl = decls[0].getParentDecl();
+                return TypeScript.Comment.getDocCommentText(this.getDocCommentsOfDecl(classDecl));
+            }
+
+            if (this._docComments === null) {
+                var docComments: string = "";
+                if (!useConstructorAsClass && this.kind == TypeScript.PullElementKind.ConstructSignature &&
+                    decls.length && decls[0].kind == TypeScript.PullElementKind.Class) {
+                        var classSymbol = (<TypeScript.PullSignatureSymbol>this).returnType;
+                    var extendedTypes = classSymbol.getExtendedTypes();
+                    if (extendedTypes.length) {
+                        docComments = extendedTypes[0].getConstructorMethod().docComments();
+                    } else {
+                        docComments = "";
+                    }
+                } else if (this.kind == TypeScript.PullElementKind.Parameter) {
+                    var parameterComments: string[] = [];
+
+                    var funcContainer = this.getEnclosingSignature();
+                    var funcDocComments = this.getDocCommentArray(funcContainer);
+                    var paramComment = TypeScript.Comment.getParameterDocCommentText(this.getDisplayName(), funcDocComments);
+                    if (paramComment != "") {
+                        parameterComments.push(paramComment);
+                    }
+
+                    var paramSelfComment = TypeScript.Comment.getDocCommentText(this.getDocCommentArray(this));
+                    if (paramSelfComment != "") {
+                        parameterComments.push(paramSelfComment);
+                    }
+                    docComments = parameterComments.join("\n");
+                } else {
+                    var getSymbolComments = true;
+                    if (this.kind == TypeScript.PullElementKind.FunctionType) {
+                        var functionSymbol = (<TypeScript.PullTypeSymbol>this).getFunctionSymbol();
+
+                        if (functionSymbol) {
+                            docComments = functionSymbol._docComments || "";
+                            getSymbolComments = false;
+                        }
+                        else {
+                            var declarationList = this.getDeclarations();
+                            if (declarationList.length > 0) {
+                                docComments = declarationList[0].getSymbol()._docComments || "";
+                                getSymbolComments = false;
+                            }
+                        }
+                    }
+                    if (getSymbolComments) {
+                        docComments = TypeScript.Comment.getDocCommentText(this.getDocCommentArray(this));
+                        if (docComments == "") {
+                            if (this.kind == TypeScript.PullElementKind.CallSignature) {
+                                var callTypeSymbol = (<TypeScript.PullSignatureSymbol>this).functionType;
+                                if (callTypeSymbol && callTypeSymbol.getCallSignatures().length == 1) {
+                                    docComments = callTypeSymbol.docComments();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                this._docComments = docComments;
+            }
+
+            return this._docComments;
         }
     }
 

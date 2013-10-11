@@ -40,24 +40,125 @@ module TypeScript {
     }
 
     export class EmitOptions {
-        public outputMany: boolean = true;
-        public commonDirectoryPath = "";
+        private _diagnostic: Diagnostic = null;
 
-        constructor(public compilationSettings: CompilationSettings) {
+        private _settings: ImmutableCompilationSettings = null;
+        private _commonDirectoryPath = "";
+        private _sharedOutputFile = "";
+        private _sourceRootDirectory = "";
+        private _sourceMapRootDirectory = "";
+        private _outputDirectory = "";
+
+        public diagnostic(): Diagnostic { return this._diagnostic; }
+
+        public commonDirectoryPath() { return this._commonDirectoryPath; }
+        public sharedOutputFile() { return this._sharedOutputFile; }
+        public sourceRootDirectory() { return this._sourceRootDirectory; }
+        public sourceMapRootDirectory() { return this._sourceMapRootDirectory; }
+        public outputDirectory() { return this._outputDirectory; }
+
+        public compilationSettings() { return this._settings; }
+
+        constructor(compiler: TypeScriptCompiler,
+            public resolvePath: (path: string) => string,
+            public sourceMapEmitterCallback: SourceMapEmitterCallback) {
+
+            var settings = compiler.compilationSettings();
+            this._settings = settings;
+
+            if (settings.moduleGenTarget() === ModuleGenTarget.Unspecified && compiler._isDynamicModuleCompilation()) {
+                this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided, null);
+                return;
+            }
+
+            if (!settings.mapSourceFiles()) {
+                // Error to specify --mapRoot or --sourceRoot without mapSourceFiles
+                if (settings.mapRoot()) {
+                    if (settings.sourceRoot()) {
+                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Options_mapRoot_and_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                        return;
+                    } else {
+                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Option_mapRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                        return;
+                    }
+                }
+                else if (settings.sourceRoot()) {
+                    this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Option_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                    return;
+                }
+            }
+
+            this._sourceMapRootDirectory = convertToDirectoryPath(switchToForwardSlashes(settings.mapRoot()));
+            this._sourceRootDirectory = convertToDirectoryPath(switchToForwardSlashes(settings.sourceRoot()));
+
+            if (settings.outFileOption() ||
+                settings.outDirOption() ||
+                settings.mapRoot() ||
+                settings.sourceRoot()) {
+
+                if (settings.outFileOption()) {
+                    this._sharedOutputFile = switchToForwardSlashes(resolvePath(settings.outFileOption()));
+                }
+
+                if (settings.outDirOption()) {
+                    this._outputDirectory = convertToDirectoryPath(switchToForwardSlashes(resolvePath(settings.outDirOption())));
+                }
+
+                // Parse the directory structure
+                if (this._outputDirectory || this._sourceMapRootDirectory || this.sourceRootDirectory) {
+                    this.determineCommonDirectoryPath(compiler);
+                }
+            }
         }
 
-        public mapOutputFileName(document: Document, extensionChanger: (fname: string, wholeFileNameReplaced: boolean) => string) {
-            if (this.outputMany || document.script().isExternalModule) {
-                var updatedFileName = document.fileName;
-                if (this.compilationSettings.outDirOption !== "") {
-                    // Replace the common directory path with the option specified
-                    updatedFileName = document.fileName.replace(this.commonDirectoryPath, "");
-                    updatedFileName = this.compilationSettings.outDirOption + updatedFileName;
+        private determineCommonDirectoryPath(compiler: TypeScriptCompiler): void {
+            var commonComponents: string[] = [];
+            var commonComponentsLength = -1;
+
+            var fileNames = compiler.fileNames();
+            for (var i = 0, len = fileNames.length; i < len; i++) {
+                var fileName = fileNames[i];
+                var document = compiler.getDocument(fileNames[i]);
+                var script = document.script();
+
+                if (!script.isDeclareFile()) {
+                    var fileComponents = filePathComponents(fileName);
+                    if (commonComponentsLength === -1) {
+                        // First time at finding common path
+                        // So common path = directory of file
+                        commonComponents = fileComponents;
+                        commonComponentsLength = commonComponents.length;
+                    } else {
+                        var updatedPath = false;
+                        for (var j = 0; j < commonComponentsLength && j < fileComponents.length; j++) {
+                            if (commonComponents[j] !== fileComponents[j]) {
+                                // The new components = 0 ... j -1
+                                commonComponentsLength = j;
+                                updatedPath = true;
+
+                                if (j === 0) {
+                                    if (this._outputDirectory || this._sourceMapRootDirectory) {
+                                        // Its error to not have common path
+                                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_find_the_common_subdirectory_path_for_the_input_files, null);
+                                        return;
+                                    }
+
+                                    return;
+                                }
+
+                                break;
+                            }
+                        }
+
+                        // If the fileComponent path completely matched and less than already found update the length
+                        if (!updatedPath && fileComponents.length < commonComponentsLength) {
+                            commonComponentsLength = fileComponents.length;
+                        }
+                    }
                 }
-                return extensionChanger(updatedFileName, false);
-            } else {
-                return extensionChanger(this.compilationSettings.outFileOption, true);
             }
+
+            this._commonDirectoryPath = commonComponents.slice(0, commonComponentsLength).join("/") + "/";
         }
     }
 
@@ -151,7 +252,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.isExternalImportDeclaration();
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings.moduleGenTarget == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
 
             if (!isExternalModuleReference || // Any internal reference needs to check if the emit can happen
                 isExported || // External module reference with export modifier always needs to be emitted
@@ -177,7 +278,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.isExternalImportDeclaration();
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings.moduleGenTarget == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
 
             this.emitComments(importDeclAST, true);
 
@@ -319,7 +420,7 @@ module TypeScript {
         }
 
         public emitComment(comment: Comment, trailing: boolean, first: boolean) {
-            if (this.emitOptions.compilationSettings.removeComments) {
+            if (this.emitOptions.compilationSettings().removeComments()) {
                 return;
             }
 
@@ -391,7 +492,7 @@ module TypeScript {
         }
 
         public emitCommentsArray(comments: Comment[], trailing: boolean): void {
-            if (!this.emitOptions.compilationSettings.removeComments && comments) {
+            if (!this.emitOptions.compilationSettings().removeComments() && comments) {
                 for (var i = 0, n = comments.length; i < n; i++) {
                     this.emitComment(comments[i], trailing, /*first:*/ i === 0);
                 }
@@ -924,7 +1025,7 @@ module TypeScript {
             }
 
             // body - don't indent for Node
-            if (!isExternalModule || this.emitOptions.compilationSettings.moduleGenTarget === ModuleGenTarget.Asynchronous) {
+            if (!isExternalModule || this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) {
                 this.indenter.increaseIndent();
             }
 
@@ -933,7 +1034,7 @@ module TypeScript {
             }
 
             this.emitList(moduleDecl.members);
-            if (!isExternalModule || this.emitOptions.compilationSettings.moduleGenTarget === ModuleGenTarget.Asynchronous) {
+            if (!isExternalModule || this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) {
                 this.indenter.decreaseIndent();
             }
             this.emitIndent();
@@ -943,7 +1044,7 @@ module TypeScript {
                 var exportAssignmentIdentifier = this.getExportAssignmentIdentifier();
                 var exportAssignmentValueSymbol = (<PullContainerSymbol>pullDecl.getSymbol()).getExportAssignedValueSymbol();
 
-                if (this.emitOptions.compilationSettings.moduleGenTarget === ModuleGenTarget.Asynchronous) { // AMD
+                if (this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) { // AMD
                     if (exportAssignmentIdentifier && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {
                         // indent was decreased for AMD above
                         this.indenter.increaseIndent();
@@ -1615,7 +1716,7 @@ module TypeScript {
             // Output a source mapping.  As long as we haven't gotten any errors yet.
             var result: OutputFile[] = [];
             if (this.sourceMapper !== null) {
-                this.sourceMapper.emitSourceMapping(this.emitOptions.compilationSettings.sourceMapEmitterCallback);
+                this.sourceMapper.emitSourceMapping(this.emitOptions.sourceMapEmitterCallback);
                 result.push(this.sourceMapper.getOutputFile());
             }
 
@@ -1817,7 +1918,7 @@ module TypeScript {
             if (isNonElidedExternalModule) {
                 this.recordSourceMappingStart(script);
 
-                if (this.emitOptions.compilationSettings.moduleGenTarget === ModuleGenTarget.Asynchronous) { // AMD
+                if (this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) { // AMD
                     var dependencyList = "[\"require\", \"exports\"";
                     var importList = "require, exports";
 

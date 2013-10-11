@@ -31,7 +31,7 @@ goTo.marker('signatureC');
 verify.currentSignatureHelpIs('x(a: number): void');
 
 goTo.marker('completionA');
-verify.completionListContains("x", "(a: number) => void");
+verify.completionListContains("x", "(a: number): void");
 
 goTo.marker('completionB');
 verify.completionListContains("x", "(a: number) => void");
@@ -40,7 +40,7 @@ goTo.marker('completionC');
 verify.completionListContains("x", "(a: number) => void");
 
 goTo.marker('quickInfoA');
-verify.quickInfoIs("(a: number) => void", undefined, "x", "property");
+verify.quickInfoIs("(a: number): void", undefined, "x", "function");
 
 goTo.marker('quickInfoB');
 verify.quickInfoIs("(a: number) => void", undefined, "x", "property");

@@ -44,7 +44,8 @@ class BatchCompiler implements Services.ILanguageServiceHost {
         settings.generateDeclarationFiles = true;
         settings.outFileOption = "Output.ts";
 
-        this.compiler = new TypeScript.TypeScriptCompiler(new DiagnosticsLogger(), settings);
+        this.compiler = new TypeScript.TypeScriptCompiler(new DiagnosticsLogger(),
+            TypeScript.ImmutableCompilationSettings.fromCompilationSettings(settings));
 
         this.compiler.addFile("lib.d.ts", this.libScriptSnapshot, ByteOrderMark.None, 0, false, []);
         this.compiler.addFile("compiler.ts", this.compilerScriptSnapshot, ByteOrderMark.None, 0, false, []);
@@ -117,7 +118,7 @@ class BatchCompiler implements Services.ILanguageServiceHost {
 
     public newParse(): TypeScript.SyntaxTree {
         return TypeScript.Parser.parse(compilerFileName, this.simpleText, false,
-            TypeScript.getParseOptions(new TypeScript.CompilationSettings()));
+            TypeScript.getParseOptions(TypeScript.ImmutableCompilationSettings.defaultSettings()));
     }
 
     public newIncrementalParse(tree: TypeScript.SyntaxTree): TypeScript.SyntaxTree {

@@ -11,10 +11,10 @@ module TypeScript {
 
         constructor(private fileName: string,
                     public lineMap: LineMap,
-                    private compilationSettings: CompilationSettings) {
+                    private compilationSettings: ImmutableCompilationSettings) {
         }
 
-        public static visit(syntaxTree: SyntaxTree, fileName: string, compilationSettings: CompilationSettings, incrementalAST: boolean): Script {
+        public static visit(syntaxTree: SyntaxTree, fileName: string, compilationSettings: ImmutableCompilationSettings, incrementalAST: boolean): Script {
             var visitor = incrementalAST
                 ? new SyntaxTreeToIncrementalAstVisitor(fileName, syntaxTree.lineMap(), compilationSettings)
                 : new SyntaxTreeToAstVisitor(fileName, syntaxTree.lineMap(), compilationSettings);
@@ -677,7 +677,7 @@ module TypeScript {
                 var value = token.value();
                 return value && expression.kind() === SyntaxKind.NegateExpression ? -value : value;
             }
-            else if (this.compilationSettings.propagateEnumConstants) {
+            else if (this.compilationSettings.propagateEnumConstants()) {
                 switch (expression.kind()) {
                     case SyntaxKind.IdentifierName:
                         // If it's a name, see if we already had an enum value named this.  If so,

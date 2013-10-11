@@ -5,16 +5,25 @@ module TypeScript {
         private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
         private _script: Script = null;
-        private _lineMap: LineMap;
+        private _lineMap: LineMap = null;
 
-        constructor(public fileName: string,
+        constructor(private compiler: TypeScriptCompiler,
+                    public fileName: string,
                     public referencedFiles: string[],
-                    private compilationSettings: CompilationSettings,
                     private scriptSnapshot: IScriptSnapshot,
                     public byteOrderMark: ByteOrderMark,
                     public version: number,
                     public isOpen: boolean,
                     private _syntaxTree: SyntaxTree) {
+        }
+
+        // Only for use by the semantic info chain.
+        public invalidate(): void {
+            // Dump all information related to syntax.  We'll have to recompute it when asked.
+            this._syntaxTree = null;
+            this._script = null;
+            this._diagnostics = null;
+            this._bloomFilter = null;
         }
 
         private cacheSyntaxTreeInfo(syntaxTree: SyntaxTree): void {
@@ -32,7 +41,7 @@ module TypeScript {
             if (!this._script) {
                 var start = new Date().getTime();
                 var syntaxTree = this.syntaxTree();
-                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this.compilationSettings, /*incrementalAST:*/ this.isOpen);
+                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this.compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
                 TypeScript.astTranslationTime += new Date().getTime() - start;
 
                 // If we're not open, then we can throw away our syntax tree.  We don't need it from
@@ -74,7 +83,7 @@ module TypeScript {
                     this.fileName,
                     SimpleText.fromScriptSnapshot(this.scriptSnapshot),
                     TypeScript.isDTSFile(this.fileName),
-                    getParseOptions(this.compilationSettings));
+                    getParseOptions(this.compiler.compilationSettings()));
 
                 TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
 
@@ -116,7 +125,17 @@ module TypeScript {
             return this._bloomFilter;
         }
 
-        public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange, settings: CompilationSettings): Document {
+        // Returns true if this file should get emitted into its own unique output file.  
+        // Otherwise, it should be written into a single output file along with the rest of hte
+        // documents in the compilation.
+        public emitToOwnOutputFile(): boolean {
+            // If we haven't specified an output file in our settings, then we're definitely 
+            // emitting to our own file.  Also, if we're an external module, then we're 
+            // definitely emitting to our own file.
+            return !this.compiler.compilationSettings().outFileOption() || this.script().isExternalModule;
+        }
+
+        public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
             // See if we are currently holding onto a syntax tree.  We may not be because we're 
             // either a closed file, or we've just been lazy and haven't had to create the syntax
             // tree yet.  Access the field instead of the method so we don't accidently realize
@@ -128,14 +147,14 @@ module TypeScript {
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
             var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
-                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this.compilationSettings))
+                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this.compiler.compilationSettings()))
                 : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
-            return new Document(this.fileName, this.referencedFiles, this.compilationSettings, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree);
+            return new Document(this.compiler, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree);
         }
 
-        public static create(fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[], compilationSettings: CompilationSettings): Document {
-            return new Document(fileName, referencedFiles, compilationSettings, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null);
+        public static create(compiler: TypeScriptCompiler, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
+            return new Document(compiler, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null);
         }
     }
 }

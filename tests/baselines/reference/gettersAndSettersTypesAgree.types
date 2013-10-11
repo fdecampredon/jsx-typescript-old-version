@@ -1,18 +1,18 @@
 === tests/cases/compiler/gettersAndSettersTypesAgree.ts ===
 Line 0 col 6 IdentifierName "C" = C
-Line 1 col 15 IdentifierName "Foo" = () => string
-Line 2 col 15 IdentifierName "Foo" = (foo: string) => void
+Line 1 col 15 IdentifierName "Foo" = string
+Line 2 col 15 IdentifierName "Foo" = string
 Line 2 col 19 IdentifierName "foo" = string
-Line 4 col 15 IdentifierName "Bar" = () => string
-Line 5 col 15 IdentifierName "Bar" = (bar: string) => void
+Line 4 col 15 IdentifierName "Bar" = string
+Line 5 col 15 IdentifierName "Bar" = string
 Line 5 col 19 IdentifierName "bar" = string
 Line 8 col 4 IdentifierName "o1" = { Foo: number; }
 Line 8 col 9 ObjectLiteralExpression "{get Foo(){return 0;}, set Foo(val){}}" = { Foo: number; }
-Line 8 col 14 IdentifierName "Foo" = () => number
-Line 8 col 36 IdentifierName "Foo" = (val: number) => void
+Line 8 col 14 IdentifierName "Foo" = number
+Line 8 col 36 IdentifierName "Foo" = number
 Line 8 col 40 IdentifierName "val" = number
 Line 9 col 4 IdentifierName "o2" = { Foo: number; }
 Line 9 col 9 ObjectLiteralExpression "{get Foo(){return 0;}, set Foo(val:number){}}" = { Foo: number; }
-Line 9 col 14 IdentifierName "Foo" = () => number
-Line 9 col 36 IdentifierName "Foo" = (val: number) => void
+Line 9 col 14 IdentifierName "Foo" = number
+Line 9 col 36 IdentifierName "Foo" = number
 Line 9 col 40 IdentifierName "val" = number
