@@ -108,10 +108,8 @@ module Services {
 
                 case TypeScript.SyntaxKind.FunctionDeclaration:
                 case TypeScript.SyntaxKind.MemberFunctionDeclaration:
-                case TypeScript.SyntaxKind.GetMemberAccessorDeclaration:
-                case TypeScript.SyntaxKind.SetMemberAccessorDeclaration:
-                case TypeScript.SyntaxKind.GetAccessorPropertyAssignment:
-                case TypeScript.SyntaxKind.SetAccessorPropertyAssignment:
+                case TypeScript.SyntaxKind.GetAccessor:
+                case TypeScript.SyntaxKind.SetAccessor:
                 case TypeScript.SyntaxKind.FunctionExpression:
                 case TypeScript.SyntaxKind.CatchClause:
                 case TypeScript.SyntaxKind.FinallyClause:

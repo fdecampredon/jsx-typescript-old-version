@@ -39,7 +39,7 @@ module TypeScript {
 
     export var tripleSlashReferenceRegExp = /^(\/\/\/\s*<reference\s+path=)('|")(.+?)\2\s*(static=('|")(.+?)\2\s*)*\/>/;
 
-    function getFileReferenceFromReferencePath(fileName: string, position: number, comment: string, diagnostics: Diagnostic[]): IFileReference {
+    function getFileReferenceFromReferencePath(fileName: string, lineMap: LineMap, position: number, comment: string, diagnostics: Diagnostic[]): IFileReference {
         // First, just see if they've written: /// <reference\s+
         // If so, then we'll consider this a reference directive and we'll report errors if it's
         // malformed.  Otherwise, we'll completely ignore this.
@@ -55,7 +55,7 @@ module TypeScript {
                 if (!fullReference) {
                     // It matched the start of a reference directive, but wasn't well formed.  Report
                     // an appropriate error to the user.
-                    diagnostics.push(new Diagnostic(fileName, position, comment.length, DiagnosticCode.Invalid_reference_directive_syntax));
+                    diagnostics.push(new Diagnostic(fileName, lineMap, position, comment.length, DiagnosticCode.Invalid_reference_directive_syntax));
                 }
                 else {
                     var path: string = normalizePath(fullReference[3]);
@@ -156,7 +156,7 @@ module TypeScript {
 
             if (trivia.kind() === SyntaxKind.SingleLineCommentTrivia) {
                 var triviaText = trivia.fullText();
-                var referencedCode = getFileReferenceFromReferencePath(fileName, position, triviaText, diagnostics);
+                var referencedCode = getFileReferenceFromReferencePath(fileName, lineMap, position, triviaText, diagnostics);
 
                 if (referencedCode) {
                     lineMap.fillLineAndCharacterFromPosition(position, lineChar);

@@ -120,16 +120,14 @@ module TypeScript {
 
             if (!this.compilationSettings.noResolve()) {
                 // Resolve references
-                var resolutionResults = ReferenceResolver.resolve(this.inputFiles, this, this.compilationSettings);
+                var resolutionResults = ReferenceResolver.resolve(this.inputFiles, this, this.compilationSettings.useCaseSensitiveFileResolution());
                 resolvedFiles = resolutionResults.resolvedFiles;
 
                 // Only include the library if useDefaultLib is set to true and did not see any 'no-default-lib' comments
                 includeDefaultLibrary = !this.compilationSettings.noLib() && !resolutionResults.seenNoDefaultLibTag;
 
                 // Populate any diagnostic messages generated during resolution
-                for (var i = 0, n = resolutionResults.diagnostics.length; i < n; i++) {
-                    this.addDiagnostic(resolutionResults.diagnostics[i]);
-                }
+                resolutionResults.diagnostics.forEach(d => this.addDiagnostic(d));
             }
             else {
                 for (var i = 0, n = this.inputFiles.length; i < n; i++) {
@@ -175,14 +173,10 @@ module TypeScript {
         private compile(): void {
             var compiler = new TypeScriptCompiler(this.logger, this.compilationSettings);
 
-            var anySyntacticErrors = false;
-            var anySemanticErrors = false;
-
-            for (var i = 0, n = this.resolvedFiles.length; i < n; i++) {
-                var resolvedFile = this.resolvedFiles[i];
+            this.resolvedFiles.forEach(resolvedFile => {
                 var sourceFile = this.getSourceFile(resolvedFile.path);
                 compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
-            }
+            });
 
             for (var it = compiler.compile((path: string) => this.resolvePath(path)); it.moveNext();) {
                 var result = it.current();
@@ -331,7 +325,7 @@ module TypeScript {
                     }
                     else {
                         this.addDiagnostic(
-                            new Diagnostic(null, 0, 0, DiagnosticCode.ECMAScript_target_version_0_not_supported_Specify_a_valid_target_version_1_default_or_2, [type, "ES3", "ES5"]));
+                            new Diagnostic(null, null, 0, 0, DiagnosticCode.ECMAScript_target_version_0_not_supported_Specify_a_valid_target_version_1_default_or_2, [type, "ES3", "ES5"]));
                     }
                 }
             }, 't');
@@ -353,7 +347,7 @@ module TypeScript {
                     }
                     else {
                         this.addDiagnostic(
-                            new Diagnostic(null, 0, 0, DiagnosticCode.Module_code_generation_0_not_supported, [type]));
+                            new Diagnostic(null, null, 0, 0, DiagnosticCode.Module_code_generation_0_not_supported, [type]));
                     }
                 }
             }, 'm');
@@ -432,9 +426,7 @@ module TypeScript {
                 }
             }
 
-            for (var i = 0, n = opts.unnamed.length; i < n; i++) {
-                this.inputFiles.push(opts.unnamed[i]);
-            }
+            this.inputFiles.push.apply(this.inputFiles, opts.unnamed);
 
             // If no source files provided to compiler - print usage information
             if (this.inputFiles.length === 0 || needsHelp) {
@@ -451,7 +443,7 @@ module TypeScript {
         private setLocale(locale: string): boolean {
             var matchResult = /^([a-z]+)([_\-]([a-z]+))?$/.exec(locale.toLowerCase());
             if (!matchResult) {
-                this.addDiagnostic(new Diagnostic(null, 0, 0, DiagnosticCode.Locale_must_be_of_the_form_language_or_language_territory_For_example_0_or_1, ['en', 'ja-jp']));
+                this.addDiagnostic(new Diagnostic(null, null, 0, 0, DiagnosticCode.Locale_must_be_of_the_form_language_or_language_territory_For_example_0_or_1, ['en', 'ja-jp']));
                 return false;
             }
 
@@ -462,7 +454,7 @@ module TypeScript {
             if (!this.setLanguageAndTerritory(language, territory) &&
                 !this.setLanguageAndTerritory(language, null)) {
 
-                this.addDiagnostic(new Diagnostic(null, 0, 0, DiagnosticCode.Unsupported_locale_0, [locale]));
+                this.addDiagnostic(new Diagnostic(null, null, 0, 0, DiagnosticCode.Unsupported_locale_0, [locale]));
                 return false;
             }
 
@@ -494,7 +486,7 @@ module TypeScript {
         private watchFiles() {
             if (!this.ioHost.watchFile) {
                 this.addDiagnostic(
-                    new Diagnostic(null, 0, 0, DiagnosticCode.Current_host_does_not_support_0_option, ['-w[atch]']));
+                    new Diagnostic(null, null, 0, 0, DiagnosticCode.Current_host_does_not_support_0_option, ['-w[atch]']));
                 return;
             }
 
@@ -602,7 +594,7 @@ module TypeScript {
                     fileInformation = this.ioHost.readFile(fileName, this.compilationSettings.codepage());
                 }
                 catch (e) {
-                    this.addDiagnostic(new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_read_file_0_1, [fileName, e.message]));
+                    this.addDiagnostic(new Diagnostic(null, null, 0, 0, DiagnosticCode.Cannot_read_file_0_1, [fileName, e.message]));
                     fileInformation = new FileInformation("", ByteOrderMark.None);
                 }
 
@@ -658,18 +650,13 @@ module TypeScript {
         }
 
         private addDiagnostic(diagnostic: Diagnostic) {
-            var diagnosticInfo = TypeScript.getDiagnosticInfoFromKey(diagnostic.diagnosticKey());
+            var diagnosticInfo = diagnostic.info();
             if (diagnosticInfo.category === DiagnosticCategory.Error) {
                 this.hasErrors = true;
             }
 
             if (diagnostic.fileName()) {
-                var scriptSnapshot = this.getScriptSnapshot(diagnostic.fileName());
-                var lineMap = new LineMap(scriptSnapshot.getLineStartPositions(), scriptSnapshot.getLength());
-                var lineCol = { line: -1, character: -1 };
-                lineMap.fillLineAndCharacterFromPosition(diagnostic.start(), lineCol);
-
-                this.ioHost.stderr.Write(diagnostic.fileName() + "(" + (lineCol.line + 1) + "," + (lineCol.character + 1) + "): ");
+                this.ioHost.stderr.Write(diagnostic.fileName() + "(" + (diagnostic.line() + 1) + "," + (diagnostic.character() + 1) + "): ");
             }
 
             this.ioHost.stderr.WriteLine(diagnostic.message());
@@ -684,7 +671,7 @@ module TypeScript {
                 }
                 catch (e) {
                     this.addDiagnostic(
-                        new Diagnostic(outputFile.name, 0, 0, DiagnosticCode.Emit_Error_0, [e.message]));
+                        new Diagnostic(outputFile.name, null, 0, 0, DiagnosticCode.Emit_Error_0, [e.message]));
                     return false;
                 }
             }

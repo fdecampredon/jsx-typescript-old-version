@@ -179,8 +179,8 @@ module FourSlash {
 
             // Sneak into the language service and get its compiler so we can examine the syntax trees
             this.languageService = this.languageServiceShimHost.getLanguageService().languageService;
-            var compilerState = (<any>this.languageService).compilerState;
-            this.compiler = () => (<any>compilerState).compiler;
+            var compilerState = (<any>this.languageService).compiler;
+            this.compiler = () => compilerState.compiler;
 
             this.formatCodeOptions = new Services.FormatCodeOptions();
 

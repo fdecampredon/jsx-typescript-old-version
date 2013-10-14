@@ -432,14 +432,19 @@
                                                         ]
                                                     },
                                                     {
+<<<<<<< HEAD
                                                         "kind": "GetAccessorPropertyAssignment",
                                                         "fullStart": 669,
                                                         "fullEnd": 689,
                                                         "start": 669,
                                                         "end": 689,
+=======
+                                                        "kind": "GetAccessor",
+>>>>>>> develop
                                                         "fullWidth": 20,
                                                         "width": 20,
                                                         "parsedInStrictMode": true,
+                                                        "modifiers": [],
                                                         "getKeyword": {
                                                             "kind": "GetKeyword",
                                                             "fullStart": 669,
@@ -471,6 +476,7 @@
                                                             "value": "y",
                                                             "valueText": "y"
                                                         },
+<<<<<<< HEAD
                                                         "openParenToken": {
                                                             "kind": "OpenParenToken",
                                                             "fullStart": 674,
@@ -501,6 +507,35 @@
                                                                     "text": " "
                                                                 }
                                                             ]
+=======
+                                                        "parameterList": {
+                                                            "kind": "ParameterList",
+                                                            "fullWidth": 3,
+                                                            "parsedInStrictMode": true,
+                                                            "openParenToken": {
+                                                                "kind": "OpenParenToken",
+                                                                "width": 1,
+                                                                "text": "(",
+                                                                "value": "(",
+                                                                "valueText": "("
+                                                            },
+                                                            "parameters": [],
+                                                            "closeParenToken": {
+                                                                "kind": "CloseParenToken",
+                                                                "width": 1,
+                                                                "fullWidth": 2,
+                                                                "text": ")",
+                                                                "value": ")",
+                                                                "valueText": ")",
+                                                                "hasTrailingTrivia": true,
+                                                                "trailingTrivia": [
+                                                                    {
+                                                                        "kind": "WhitespaceTrivia",
+                                                                        "text": " "
+                                                                    }
+                                                                ]
+                                                            }
+>>>>>>> develop
                                                         },
                                                         "block": {
                                                             "kind": "Block",

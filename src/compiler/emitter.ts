@@ -67,7 +67,7 @@ module TypeScript {
             this._settings = settings;
 
             if (settings.moduleGenTarget() === ModuleGenTarget.Unspecified && compiler._isDynamicModuleCompilation()) {
-                this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided, null);
+                this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided, null);
                 return;
             }
 
@@ -75,15 +75,15 @@ module TypeScript {
                 // Error to specify --mapRoot or --sourceRoot without mapSourceFiles
                 if (settings.mapRoot()) {
                     if (settings.sourceRoot()) {
-                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Options_mapRoot_and_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                        this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Options_mapRoot_and_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
                         return;
                     } else {
-                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Option_mapRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                        this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Option_mapRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
                         return;
                     }
                 }
                 else if (settings.sourceRoot()) {
-                    this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Option_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
+                    this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Option_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
                     return;
                 }
             }
@@ -139,7 +139,7 @@ module TypeScript {
                                 if (j === 0) {
                                     if (this._outputDirectory || this._sourceMapRootDirectory) {
                                         // Its error to not have common path
-                                        this._diagnostic = new Diagnostic(null, 0, 0, DiagnosticCode.Cannot_find_the_common_subdirectory_path_for_the_input_files, null);
+                                        this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Cannot_find_the_common_subdirectory_path_for_the_input_files, null);
                                         return;
                                     }
 
@@ -213,9 +213,9 @@ module TypeScript {
         private copyrightElement: AST = null;
 
         constructor(public emittingFileName: string,
-                    public outfile: TextWriter,
-                    public emitOptions: EmitOptions,
-                    private semanticInfoChain: SemanticInfoChain) {
+            public outfile: TextWriter,
+            public emitOptions: EmitOptions,
+            private semanticInfoChain: SemanticInfoChain) {
         }
 
         private pushDecl(decl: PullDecl) {
@@ -682,45 +682,19 @@ module TypeScript {
         }
 
         public emitInnerFunction(funcDecl: FunctionDeclaration, printName: boolean, includePreComments = true) {
-
-            /// REVIEW: The code below causes functions to get pushed to a newline in cases where they shouldn't
-            /// such as: 
-            ///     Foo.prototype.bar = 
-            ///         function() {
-            ///         };
-            /// Once we start emitting comments, we should pull this code out to place on the outer context where the function
-            /// is used.
-            //if (funcDecl.preComments!=null && funcDecl.preComments.length>0) {
-            //    this.writeLineToOutput("");
-            //    this.increaseIndent();
-            //    emitIndent();
-            //}
-
             var pullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
             this.pushDecl(pullDecl);
-
-            // We have no way of knowing if the current function is used as an expression or a statement, so as to enusre that the emitted
-            // JavaScript is always valid, add an extra parentheses for unparenthesized function expressions
-            var shouldParenthesize = false;// hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.IsFunctionExpression) && !funcDecl.isAccessor() && (hasFlag(funcDecl.getFlags(), ASTFlags.ExplicitSemicolon) || hasFlag(funcDecl.getFlags(), ASTFlags.AutomaticSemicolon));
 
             if (includePreComments) {
                 this.emitComments(funcDecl, true);
             }
 
-            if (shouldParenthesize) {
-                this.writeToOutput("(");
-            }
             this.recordSourceMappingStart(funcDecl);
-            var accessorSymbol = funcDecl.isAccessor() ? PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain) : null;
-            var container = accessorSymbol ? accessorSymbol.getContainer() : null;
-            var containerKind = container ? container.kind : PullElementKind.None;
-            if (!(funcDecl.isAccessor() && containerKind !== PullElementKind.Class && containerKind !== PullElementKind.ConstructorType)) {
-                this.writeToOutput("function ");
-            }
+            this.writeToOutput("function ");
 
             if (printName) {
                 var id = funcDecl.getNameText();
-                if (id && !funcDecl.isAccessor()) {
+                if (id) {
                     if (funcDecl.name) {
                         this.recordSourceMappingStart(funcDecl.name);
                     }
@@ -733,38 +707,11 @@ module TypeScript {
 
             this.writeToOutput("(");
             this.emitFunctionParameters(funcDecl.parameterList);
-            this.writeLineToOutput(") {");
+            this.writeToOutput(")");
 
-            if (funcDecl.isGetAccessor()) {
-                this.recordSourceMappingNameStart("get_" + funcDecl.getNameText());
-            } else if (funcDecl.isSetAccessor()) {
-                this.recordSourceMappingNameStart("set_" + funcDecl.getNameText());
-            } else {
-                this.recordSourceMappingNameStart(funcDecl.getNameText());
-            }
-            this.indenter.increaseIndent();
+            this.emitFunctionBodyStatements(funcDecl.getNameText(), funcDecl, funcDecl.parameterList, funcDecl.block);
 
-            this.emitDefaultValueAssignments(funcDecl.parameterList);
-            this.emitRestParameterInitializer(funcDecl.parameterList);
-
-            if (this.shouldCaptureThis(funcDecl)) {
-                this.writeCaptureThisStatement(funcDecl);
-            }
-
-            this.emitList(funcDecl.block.statements);
-
-            this.emitCommentsArray(funcDecl.block.closeBraceLeadingComments, /*trailing:*/ false);
-
-            this.indenter.decreaseIndent();
-            this.emitIndent();
-            this.writeToOutputWithSourceMapRecord("}", funcDecl.block.closeBraceSpan);
-
-            this.recordSourceMappingNameEnd();
             this.recordSourceMappingEnd(funcDecl);
-
-            if (shouldParenthesize) {
-                this.writeToOutput(")");
-            }
 
             // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
             this.recordSourceMappingEnd(funcDecl);
@@ -772,6 +719,36 @@ module TypeScript {
             this.emitComments(funcDecl, false);
 
             this.popDecl(pullDecl);
+        }
+
+        private emitFunctionBodyStatements(name: string, funcDecl: AST, parameterList: ASTList, block: Block): void {
+            this.writeLineToOutput(" {");
+            if (name) {
+                this.recordSourceMappingNameStart(name);
+            }
+
+            this.indenter.increaseIndent();
+
+            if (parameterList) {
+                this.emitDefaultValueAssignments(parameterList);
+                this.emitRestParameterInitializer(parameterList);
+            }
+
+            if (this.shouldCaptureThis(funcDecl)) {
+                this.writeCaptureThisStatement(funcDecl);
+            }
+
+            this.emitList(block.statements);
+
+            this.emitCommentsArray(block.closeBraceLeadingComments, /*trailing:*/ false);
+
+            this.indenter.decreaseIndent();
+            this.emitIndent();
+            this.writeToOutputWithSourceMapRecord("}", block.closeBraceSpan);
+
+            if (name) {
+                this.recordSourceMappingNameEnd();
+            }
         }
 
         private emitDefaultValueAssignments(parameters: ASTList): void {
@@ -1171,28 +1148,10 @@ module TypeScript {
             this.writeToOutput("function ");
             this.writeToOutput("(");
             this.emitFunctionParameters(arrowFunction.parameterList);
-            this.writeLineToOutput(") {");
+            this.writeToOutput(")");
 
-            this.recordSourceMappingNameStart(arrowFunction.getNameText());
+            this.emitFunctionBodyStatements(arrowFunction.getNameText(), arrowFunction, arrowFunction.parameterList, arrowFunction.block);
 
-            this.indenter.increaseIndent();
-
-            this.emitDefaultValueAssignments(arrowFunction.parameterList);
-            this.emitRestParameterInitializer(arrowFunction.parameterList);
-
-            if (this.shouldCaptureThis(arrowFunction)) {
-                this.writeCaptureThisStatement(arrowFunction);
-            }
-
-            this.emitList(arrowFunction.block.statements);
-
-            this.emitCommentsArray(arrowFunction.block.closeBraceLeadingComments, /*trailing:*/ false);
-
-            this.indenter.decreaseIndent();
-            this.emitIndent();
-            this.writeToOutputWithSourceMapRecord("}", arrowFunction.block.closeBraceSpan);
-
-            this.recordSourceMappingNameEnd();
             this.recordSourceMappingEnd(arrowFunction);
 
             // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
@@ -1216,7 +1175,7 @@ module TypeScript {
             var pullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
             this.pushDecl(pullDecl);
 
-                this.emitComments(funcDecl, true);
+            this.emitComments(funcDecl, true);
 
             this.recordSourceMappingStart(funcDecl);
             this.writeToOutput("function ");
@@ -1235,7 +1194,6 @@ module TypeScript {
                 this.writeCaptureThisStatement(funcDecl);
             }
 
-
             this.emitConstructorStatements(funcDecl);
             this.emitCommentsArray(funcDecl.block.closeBraceLeadingComments, /*trailing:*/ false);
 
@@ -1253,6 +1211,117 @@ module TypeScript {
 
             this.popDecl(pullDecl);
             this.setContainer(temp);
+        }
+
+        public emitGetAccessor(accessor: GetAccessor): void {
+            this.recordSourceMappingStart(accessor);
+            this.writeToOutput("get ");
+
+            var temp = this.setContainer(EmitContainer.Function);
+
+            this.recordSourceMappingStart(accessor);
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(accessor);
+            this.pushDecl(pullDecl);
+
+            this.recordSourceMappingStart(accessor);
+
+            var accessorSymbol = PullHelpers.getAccessorSymbol(accessor, this.semanticInfoChain);
+            var container = accessorSymbol.getContainer();
+            var containerKind = container.kind;
+
+            this.recordSourceMappingNameStart(accessor.propertyName.actualText);
+            this.writeToOutput(accessor.propertyName.actualText);
+            this.writeToOutput("(");
+            this.writeToOutput(")");
+
+            this.emitFunctionBodyStatements(null, accessor, accessor.parameterList, accessor.block);
+
+            this.recordSourceMappingEnd(accessor);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(accessor);
+
+            this.popDecl(pullDecl);
+            this.setContainer(temp);
+            this.recordSourceMappingEnd(accessor);
+        }
+
+        public emitSetAccessor(accessor: SetAccessor): void {
+            this.recordSourceMappingStart(accessor);
+            this.writeToOutput("set ");
+
+            var temp = this.setContainer(EmitContainer.Function);
+
+            this.recordSourceMappingStart(accessor);
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(accessor);
+            this.pushDecl(pullDecl);
+
+            this.recordSourceMappingStart(accessor);
+
+            var accessorSymbol = PullHelpers.getAccessorSymbol(accessor, this.semanticInfoChain);
+            var container = accessorSymbol.getContainer();
+            var containerKind = container.kind;
+
+            this.recordSourceMappingNameStart(accessor.propertyName.actualText);
+            this.writeToOutput(accessor.propertyName.actualText);
+            this.writeToOutput("(");
+            this.emitFunctionParameters(accessor.parameterList);
+            this.writeToOutput(")");
+
+            this.emitFunctionBodyStatements(null, accessor, accessor.parameterList, accessor.block);
+
+            this.recordSourceMappingEnd(accessor);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(accessor);
+
+            this.popDecl(pullDecl);
+            this.setContainer(temp);
+            this.recordSourceMappingEnd(accessor);
+        }
+
+        public emitFunctionExpression(funcDecl: FunctionExpression): void {
+            var savedInArrowFunction = this.inArrowFunction;
+            this.inArrowFunction = false;
+
+            var temp = this.setContainer(EmitContainer.Function);
+
+            var funcName = funcDecl.getNameText();
+
+            this.recordSourceMappingStart(funcDecl);
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
+            this.pushDecl(pullDecl);
+
+            this.recordSourceMappingStart(funcDecl);
+            this.writeToOutput("function ");
+
+            //var id = funcDecl.getNameText();
+            if (funcDecl.name) {
+                this.recordSourceMappingStart(funcDecl.name);
+                this.writeToOutput(funcDecl.name.actualText);
+                this.recordSourceMappingEnd(funcDecl.name);
+            }
+
+            this.writeToOutput("(");
+            this.emitFunctionParameters(funcDecl.parameterList);
+            this.writeToOutput(")");
+
+            this.emitFunctionBodyStatements(funcDecl.getNameText(), funcDecl, funcDecl.parameterList, funcDecl.block);
+
+            this.recordSourceMappingEnd(funcDecl);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(funcDecl);
+
+            this.emitComments(funcDecl, false);
+
+            this.popDecl(pullDecl);
+
+            this.setContainer(temp);
+            this.inArrowFunction = savedInArrowFunction;
         }
 
         public emitFunction(funcDecl: FunctionDeclaration) {
@@ -1274,23 +1343,10 @@ module TypeScript {
             this.setContainer(temp);
             this.inArrowFunction = savedInArrowFunction;
 
-            if (!hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Signature)) {
+            var functionFlags = funcDecl.getFunctionFlags();
+            if (!hasFlag(functionFlags, FunctionFlags.Signature)) {
                 var pullFunctionDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
-                if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Static)) {
-                    if (this.thisClassNode) {
-                        this.writeLineToOutput("");
-                        if (funcDecl.isAccessor()) {
-                            this.emitPropertyAccessor(funcDecl, this.thisClassNode.identifier.actualText, false);
-                        }
-                        else {
-                            this.emitIndent();
-                            this.recordSourceMappingStart(funcDecl);
-                            this.writeToOutput(this.thisClassNode.identifier.actualText + "." + funcName + " = " + funcName + ";");
-                            this.recordSourceMappingEnd(funcDecl);
-                        }
-                    }
-                }
-                else if ((this.emitState.container === EmitContainer.Module || this.emitState.container === EmitContainer.DynamicModule) && pullFunctionDecl && hasFlag(pullFunctionDecl.flags, PullElementFlags.Exported)) {
+                if ((this.emitState.container === EmitContainer.Module || this.emitState.container === EmitContainer.DynamicModule) && pullFunctionDecl && hasFlag(pullFunctionDecl.flags, PullElementFlags.Exported)) {
                     this.writeLineToOutput("");
                     this.emitIndent();
                     var modName = this.emitState.container === EmitContainer.Module ? this.moduleName : "exports";
@@ -1328,7 +1384,6 @@ module TypeScript {
 
             var parentSymbol = symbol ? symbol.getContainer() : null;
             var parentKind = parentSymbol ? parentSymbol.kind : PullElementKind.None;
-            var inClass = parentKind === PullElementKind.Class;
 
             this.emitComments(declaration, true);
 
@@ -1342,12 +1397,7 @@ module TypeScript {
                     var declarator = declaration.declarators.members[i];
 
                     if (i > 0) {
-                        if (inClass) {
-                            this.writeToOutput(";");
-                        }
-                        else {
-                            this.writeToOutput(", ");
-                        }
+                        this.writeToOutput(", ");
                     }
 
                     declarator.emit(this);
@@ -1359,6 +1409,57 @@ module TypeScript {
             }
 
             this.emitComments(declaration, false);
+        }
+
+        private emitMemberVariableDeclaration(varDecl: MemberVariableDeclaration) {
+            Debug.assert(!hasFlag(varDecl.getVarFlags(), VariableFlags.Static) && varDecl.init);
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(varDecl);
+            this.pushDecl(pullDecl);
+
+            this.emitComments(varDecl, true);
+            this.recordSourceMappingStart(varDecl);
+
+            var varDeclName = varDecl.id.actualText;
+            var quotedOrNumber = isQuoted(varDeclName) || varDecl.id.isNumber;
+
+            var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
+            var parentSymbol = symbol ? symbol.getContainer() : null;
+            var parentDecl = pullDecl && pullDecl.getParentDecl();
+
+            if (quotedOrNumber) {
+                this.writeToOutput("this[");
+            }
+            else {
+                this.writeToOutput("this.");
+            }
+
+            this.writeToOutputWithSourceMapRecord(varDecl.id.actualText, varDecl.id);
+
+            if (quotedOrNumber) {
+                this.writeToOutput("]");
+            }
+
+            if (varDecl.init) {
+                this.writeToOutput(" = ");
+
+                // Ensure we have a fresh var list count when recursing into the variable 
+                // initializer.  We don't want our current list of variables to affect how we
+                // emit nested variable lists.
+                var prevVariableDeclaration = this.currentVariableDeclaration;
+                varDecl.init.emit(this);
+                this.currentVariableDeclaration = prevVariableDeclaration;
+            }
+
+            // class
+            if (this.emitState.container !== EmitContainer.Args) {
+                this.writeToOutput(";");
+            }
+
+            this.recordSourceMappingEnd(varDecl);
+            this.emitComments(varDecl, false);
+
+            this.popDecl(pullDecl);
         }
 
         public emitVariableDeclarator(varDecl: VariableDeclarator) {
@@ -1378,30 +1479,9 @@ module TypeScript {
                 var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
                 var parentSymbol = symbol ? symbol.getContainer() : null;
                 var parentDecl = pullDecl && pullDecl.getParentDecl();
-                var parentIsClass = parentDecl && parentDecl.kind === PullElementKind.Class;
                 var parentIsModule = parentDecl && (parentDecl.flags & PullElementFlags.SomeInitializedModule);
-                if (parentIsClass) {
-                    // class
-                    if (this.emitState.container !== EmitContainer.Args) {
-                        if (varDecl.isStatic()) {
-                            if (quotedOrNumber) {
-                                this.writeToOutput(parentSymbol.getName() + "[");
-                            }
-                            else {
-                                this.writeToOutput(parentSymbol.getName() + ".");
-                            }
-                        }
-                        else {
-                            if (quotedOrNumber) {
-                                this.writeToOutput("this[");
-                            }
-                            else {
-                                this.writeToOutput("this.");
-                            }
-                        }
-                    }
-                }
-                else if (parentIsModule) {
+
+                if (parentIsModule) {
                     // module
                     if (!hasFlag(pullDecl.flags, PullElementFlags.Exported) && !varDecl.isProperty()) {
                         this.emitVarDeclVar();
@@ -1444,13 +1524,6 @@ module TypeScript {
                     var prevVariableDeclaration = this.currentVariableDeclaration;
                     varDecl.init.emit(this);
                     this.currentVariableDeclaration = prevVariableDeclaration;
-                }
-
-                if (parentIsClass) {
-                    // class
-                    if (this.emitState.container !== EmitContainer.Args) {
-                        this.writeToOutput(";");
-                    }
                 }
 
                 this.recordSourceMappingEnd(varDecl);
@@ -1745,11 +1818,11 @@ module TypeScript {
             }
 
             for (var i = 0, n = this.thisClassNode.classElements.members.length; i < n; i++) {
-                if (this.thisClassNode.classElements.members[i].nodeType() === NodeType.VariableDeclarator) {
-                    var varDecl = <VariableDeclarator>this.thisClassNode.classElements.members[i];
+                if (this.thisClassNode.classElements.members[i].nodeType() === NodeType.MemberVariableDeclaration) {
+                    var varDecl = <MemberVariableDeclaration>this.thisClassNode.classElements.members[i];
                     if (!hasFlag(varDecl.getVarFlags(), VariableFlags.Static) && varDecl.init) {
                         this.emitIndent();
-                        this.emitVariableDeclarator(varDecl);
+                        this.emitMemberVariableDeclaration(varDecl);
                         this.writeLineToOutput("");
                     }
                 }
@@ -1987,8 +2060,8 @@ module TypeScript {
             ast.emit(this);
         }
 
-        public emitPropertyAccessor(funcDecl: FunctionDeclaration, className: string, isProto: boolean) {
-            if (!hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.GetAccessor)) {
+        public emitAccessorMemberDeclaration(funcDecl: AST, name: Identifier, className: string, isProto: boolean) {
+            if (funcDecl.nodeType() !== NodeType.GetAccessor) {
                 var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain);
                 if (accessorSymbol.getGetter()) {
                     return;
@@ -2006,7 +2079,7 @@ module TypeScript {
                 this.writeToOutput(", ");
             }
 
-            var functionName = funcDecl.name.actualText;
+            var functionName = name.actualText;
             if (isQuoted(functionName)) {
                 this.writeToOutput(functionName);
             }
@@ -2023,7 +2096,8 @@ module TypeScript {
                 this.emitIndent();
                 this.recordSourceMappingStart(accessors.getter);
                 this.writeToOutput("get: ");
-                this.emitInnerFunction(accessors.getter, false);
+                this.emitComments(accessors.getter, true);
+                this.emitAccessorBody(accessors.getter, accessors.getter.parameterList, accessors.getter.block);
                 this.writeLineToOutput(",");
             }
 
@@ -2031,7 +2105,8 @@ module TypeScript {
                 this.emitIndent();
                 this.recordSourceMappingStart(accessors.setter);
                 this.writeToOutput("set: ");
-                this.emitInnerFunction(accessors.setter, false);
+                this.emitComments(accessors.setter, true);
+                this.emitAccessorBody(accessors.setter, accessors.setter.parameterList, accessors.setter.block);
                 this.writeLineToOutput(",");
             }
 
@@ -2045,26 +2120,24 @@ module TypeScript {
             this.recordSourceMappingEnd(funcDecl);
         }
 
-        public emitPrototypeMember(funcDecl: FunctionDeclaration, className: string) {
-            if (funcDecl.isAccessor()) {
-                this.emitPropertyAccessor(funcDecl, className, true);
-            }
-            else {
-                this.emitIndent();
-                this.recordSourceMappingStart(funcDecl);
-                this.emitComments(funcDecl, true);
+        private emitAccessorBody(funcDecl: AST, parameterList: ASTList, block: Block): void {
+            var pullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
+            this.pushDecl(pullDecl);
 
-                var functionName = funcDecl.getNameText();
-                if (isQuoted(functionName) || funcDecl.name.isNumber) {
-                    this.writeToOutput(className + ".prototype[" + functionName + "] = ");
-                }
-                else {
-                    this.writeToOutput(className + ".prototype." + functionName + " = ");
-                }
+            this.recordSourceMappingStart(funcDecl);
+            this.writeToOutput("function ");
 
-                this.emitInnerFunction(funcDecl, /*printName:*/ false, /*includePreComments:*/ false);
-                this.writeLineToOutput(";");
-            }
+            this.writeToOutput("(");
+            this.emitFunctionParameters(parameterList);
+            this.writeToOutput(")");
+
+            this.emitFunctionBodyStatements(null, funcDecl, parameterList, block);
+
+            this.recordSourceMappingEnd(funcDecl);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(funcDecl);
+            this.popDecl(pullDecl);
         }
 
         public emitClass(classDecl: ClassDeclaration) {
@@ -2175,40 +2248,30 @@ module TypeScript {
             for (var i = 0, n = classDecl.classElements.members.length; i < n; i++) {
                 var memberDecl = classDecl.classElements.members[i];
 
-                if (memberDecl.nodeType() === NodeType.FunctionDeclaration) {
-                    var functionDeclaration = <FunctionDeclaration>memberDecl;
+                if (memberDecl.nodeType() === NodeType.GetAccessor) {
+                    this.emitSpaceBetweenConstructs(lastEmittedMember, memberDecl);
+                    var getter = <GetAccessor>memberDecl;
+                    this.emitAccessorMemberDeclaration(getter, getter.propertyName, classDecl.identifier.actualText,
+                        !hasFlag(getter.getFunctionFlags(), FunctionFlags.Static));
+                    lastEmittedMember = memberDecl;
+                }
+                else if (memberDecl.nodeType() === NodeType.SetAccessor) {
+                    this.emitSpaceBetweenConstructs(lastEmittedMember, memberDecl);
+                    var setter = <SetAccessor>memberDecl;
+                    this.emitAccessorMemberDeclaration(setter, setter.propertyName, classDecl.identifier.actualText,
+                        !hasFlag(setter.getFunctionFlags(), FunctionFlags.Static));
+                    lastEmittedMember = memberDecl;
+                }
+                else if (memberDecl.nodeType() === NodeType.MemberFunctionDeclaration) {
 
-                    if (hasFlag(functionDeclaration.getFunctionFlags(), FunctionFlags.Method) &&
-                        !hasFlag(functionDeclaration.getFunctionFlags(), FunctionFlags.Signature)) {
-                        this.emitSpaceBetweenConstructs(lastEmittedMember, functionDeclaration);
+                    var memberFunction = <MemberFunctionDeclaration>memberDecl;
 
-                        if (!hasFlag(functionDeclaration.getFunctionFlags(), FunctionFlags.Static)) {
-                            this.emitPrototypeMember(functionDeclaration, classDecl.identifier.actualText);
-                        }
-                        else {
-                            // static functions
-                            if (functionDeclaration.isAccessor()) {
-                                this.emitPropertyAccessor(functionDeclaration, this.thisClassNode.identifier.actualText, false);
-                            }
-                            else {
-                                this.emitIndent();
-                                this.recordSourceMappingStart(functionDeclaration);
-                                this.emitComments(functionDeclaration, true);
+                    var functionFlags = memberFunction.getFunctionFlags();
+                    if (!hasFlag(functionFlags, FunctionFlags.Signature)) {
+                        this.emitSpaceBetweenConstructs(lastEmittedMember, memberDecl);
 
-                                var functionName = functionDeclaration.name.actualText;
-                                if (isQuoted(functionName) || functionDeclaration.name.isNumber) {
-                                    this.writeToOutput(classDecl.identifier.actualText + "[" + functionName + "] = ");
-                                }
-                                else {
-                                    this.writeToOutput(classDecl.identifier.actualText + "." + functionName + " = ");
-                                }
-
-                                this.emitInnerFunction(functionDeclaration, /*printName:*/ false, /*includePreComments:*/ false);
-                                this.writeLineToOutput(";");
-                            }
-                        }
-
-                        lastEmittedMember = functionDeclaration;
+                        this.emitClassMemberFunctionDeclaration(classDecl, memberFunction);
+                        lastEmittedMember = memberDecl;
                     }
                 }
             }
@@ -2217,8 +2280,8 @@ module TypeScript {
             for (var i = 0, n = classDecl.classElements.members.length; i < n; i++) {
                 var memberDecl = classDecl.classElements.members[i];
 
-                if (memberDecl.nodeType() === NodeType.VariableDeclarator) {
-                    var varDecl = <VariableDeclarator>memberDecl;
+                if (memberDecl.nodeType() === NodeType.MemberVariableDeclaration) {
+                    var varDecl = <MemberVariableDeclaration>memberDecl;
 
                     if (hasFlag(varDecl.getVarFlags(), VariableFlags.Static) && varDecl.init) {
                         this.emitSpaceBetweenConstructs(lastEmittedMember, varDecl);
@@ -2243,6 +2306,51 @@ module TypeScript {
                     }
                 }
             }
+        }
+
+        private emitClassMemberFunctionDeclaration(classDecl: ClassDeclaration, funcDecl: MemberFunctionDeclaration): void {
+            var functionFlags = funcDecl.getFunctionFlags();
+
+            this.emitIndent();
+            this.recordSourceMappingStart(funcDecl);
+            this.emitComments(funcDecl, true);
+            var functionName = funcDecl.name.actualText;
+
+            this.writeToOutput(classDecl.identifier.actualText);
+
+            if (!hasFlag(functionFlags, FunctionFlags.Static)) {
+                this.writeToOutput(".prototype");
+            }
+
+            if (isQuoted(functionName) || funcDecl.name.isNumber) {
+                this.writeToOutput("[" + functionName + "] = ");
+            }
+            else {
+                this.writeToOutput("." + functionName + " = ");
+            }
+
+            var pullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
+            this.pushDecl(pullDecl);
+
+            this.recordSourceMappingStart(funcDecl);
+            this.writeToOutput("function ");
+
+            this.writeToOutput("(");
+            this.emitFunctionParameters(funcDecl.parameterList);
+            this.writeToOutput(")");
+
+            this.emitFunctionBodyStatements(funcDecl.name.actualText, funcDecl, funcDecl.parameterList, funcDecl.block);
+
+            this.recordSourceMappingEnd(funcDecl);
+
+            // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it
+            this.recordSourceMappingEnd(funcDecl);
+
+            this.emitComments(funcDecl, false);
+
+            this.popDecl(pullDecl);
+
+            this.writeLineToOutput(";");
         }
 
         private requiresExtendsBlock(moduleElements: ASTList): boolean {
@@ -2466,23 +2574,6 @@ module TypeScript {
         public emitBinaryExpression(expression: BinaryExpression): void {
             this.recordSourceMappingStart(expression);
             switch (expression.nodeType()) {
-                case NodeType.Member:
-                    if (expression.operand2.nodeType() === NodeType.FunctionDeclaration && (<FunctionDeclaration>expression.operand2).isAccessor()) {
-                        var funcDecl = <FunctionDeclaration>expression.operand2;
-                        if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.GetAccessor)) {
-                            this.writeToOutput("get ");
-                        }
-                        else {
-                            this.writeToOutput("set ");
-                        }
-                        expression.operand1.emit(this);
-                    }
-                    else {
-                        expression.operand1.emit(this);
-                        this.writeToOutput(": ");
-                    }
-                    expression.operand2.emit(this);
-                    break;
                 case NodeType.CommaExpression:
                     expression.operand1.emit(this);
                     this.writeToOutput(", ");
@@ -2541,26 +2632,10 @@ module TypeScript {
 
             this.writeToOutput("(");
             this.emitFunctionParameters(funcProp.parameterList);
-            this.writeLineToOutput(") {");
+            this.writeToOutput(")");
 
-            this.recordSourceMappingNameStart(funcProp.propertyName.actualText);
-            this.indenter.increaseIndent();
+            this.emitFunctionBodyStatements(funcProp.propertyName.actualText, funcProp, funcProp.parameterList, funcProp.block);
 
-            this.emitDefaultValueAssignments(funcProp.parameterList);
-            this.emitRestParameterInitializer(funcProp.parameterList);
-
-            if (this.shouldCaptureThis(funcProp)) {
-                this.writeCaptureThisStatement(funcProp);
-            }
-
-            this.emitList(funcProp.block.statements);
-            this.emitCommentsArray(funcProp.block.closeBraceLeadingComments, /*trailing:*/ false);
-
-            this.indenter.decreaseIndent();
-            this.emitIndent();
-            this.writeToOutputWithSourceMapRecord("}", funcProp.block.closeBraceSpan);
-
-            this.recordSourceMappingNameEnd();
             this.recordSourceMappingEnd(funcProp);
 
             // The extra call is to make sure the caller's funcDecl end is recorded, since caller wont be able to record it

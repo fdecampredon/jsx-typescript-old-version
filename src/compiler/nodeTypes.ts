@@ -42,6 +42,8 @@ module TypeScript {
         ConstructorDeclaration,
         ClassDeclaration,
         InterfaceDeclaration,
+        GetAccessor,
+        SetAccessor,
         ObjectType,
         ArrayType,
         ModuleDeclaration,
@@ -53,6 +55,8 @@ module TypeScript {
         FunctionPropertyAssignment,
         EnumDeclaration,
         EnumElement,
+        MemberVariableDeclaration,
+        MemberFunctionDeclaration,
 
         // Expressions
         Name,
@@ -116,7 +120,7 @@ module TypeScript {
         CastExpression,
         ParenthesizedExpression,
         ArrowFunctionExpression,
-        Member,
+        FunctionExpression,
 
         // Statements
         Block,

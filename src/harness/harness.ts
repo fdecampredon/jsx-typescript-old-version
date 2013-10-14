@@ -811,7 +811,8 @@ module Harness {
                 // This is the branch that we want to use to ensure proper testing of file resolution, though there is an alternative
                 if (!this.compiler.compilationSettings().noResolve()) {
                     // Resolve references
-                    var resolutionResults = TypeScript.ReferenceResolver.resolve(this.inputFiles, this, this.compiler.compilationSettings());
+                    var resolutionResults = TypeScript.ReferenceResolver.resolve(this.inputFiles, this,
+                        this.compiler.compilationSettings().useCaseSensitiveFileResolution());
                     resolvedFiles = resolutionResults.resolvedFiles;
 
                     resolutionResults.diagnostics.forEach(diag => this.addError(ErrorType.Resolution, diag));
@@ -1172,7 +1173,7 @@ module Harness {
                 var fixedPath = this.fixFilename(filename);
                 var snapshot = this.fileNameToScriptSnapshot.lookup(fixedPath);
                 if (!snapshot) {
-                    this.addError(ErrorType.Resolution, new TypeScript.Diagnostic(null, 0, 0, TypeScript.DiagnosticCode.Cannot_read_file_0_1, [filename, '']));
+                    this.addError(ErrorType.Resolution, new TypeScript.Diagnostic(null, null, 0, 0, TypeScript.DiagnosticCode.Cannot_read_file_0_1, [filename, '']));
                 }
 
                 return snapshot;
@@ -1226,15 +1227,9 @@ module Harness {
                 var line = -1, col = -1, length = -1;
 
                 if (diagnostic.fileName()) {
-                    var scriptSnapshot = this.getScriptSnapshot(diagnostic.fileName());
-                    if (scriptSnapshot) {
-                        var lineMap = new TypeScript.LineMap(scriptSnapshot.getLineStartPositions(), scriptSnapshot.getLength());
-                        var lineCol = { line: -1, character: -1 };
-                        lineMap.fillLineAndCharacterFromPosition(diagnostic.start(), lineCol);
-                        line = lineCol.line + 1; // We use 1-based numbers in tests, but these are 0-based
-                        col = lineCol.character + 1; // Same as above
-                        length = diagnostic.length();
-                    }
+                    line = diagnostic.line() + 1; // We use 1-based numbers in tests, but these are 0-based
+                    col = diagnostic.character() + 1; // Same as above
+                    length = diagnostic.length();
                 }
 
                 this.errorList.push({
@@ -1721,7 +1716,7 @@ module Harness {
 
         private setContent(content: string): void {
             this.content = content;
-            this.lineMap = TypeScript.LineMap.fromString(content);
+            this.lineMap = TypeScript.LineMap1.fromString(content);
         }
 
         public updateContent(content: string): void {
@@ -1782,7 +1777,7 @@ module Harness {
 
         public getLineStartPositions(): string {
             if (this.lineMap === null) {
-                this.lineMap = TypeScript.LineMap.fromString(this.textSnapshot);
+                this.lineMap = TypeScript.LineMap1.fromString(this.textSnapshot);
             }
 
             return JSON.stringify(this.lineMap.lineStarts());

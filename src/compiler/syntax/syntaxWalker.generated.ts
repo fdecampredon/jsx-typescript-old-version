@@ -385,7 +385,7 @@ module TypeScript {
             this.visitOptionalToken(node.semicolonToken);
         }
 
-        public visitGetMemberAccessorDeclaration(node: GetMemberAccessorDeclarationSyntax): void {
+        public visitGetAccessor(node: GetAccessorSyntax): void {
             this.visitList(node.modifiers);
             this.visitToken(node.getKeyword);
             this.visitToken(node.propertyName);
@@ -394,7 +394,7 @@ module TypeScript {
             this.visitNode(node.block);
         }
 
-        public visitSetMemberAccessorDeclaration(node: SetMemberAccessorDeclarationSyntax): void {
+        public visitSetAccessor(node: SetAccessorSyntax): void {
             this.visitList(node.modifiers);
             this.visitToken(node.setKeyword);
             this.visitToken(node.propertyName);
@@ -543,24 +543,6 @@ module TypeScript {
         public visitFunctionPropertyAssignment(node: FunctionPropertyAssignmentSyntax): void {
             this.visitToken(node.propertyName);
             this.visitNode(node.callSignature);
-            this.visitNode(node.block);
-        }
-
-        public visitGetAccessorPropertyAssignment(node: GetAccessorPropertyAssignmentSyntax): void {
-            this.visitToken(node.getKeyword);
-            this.visitToken(node.propertyName);
-            this.visitToken(node.openParenToken);
-            this.visitToken(node.closeParenToken);
-            this.visitOptionalNode(node.typeAnnotation);
-            this.visitNode(node.block);
-        }
-
-        public visitSetAccessorPropertyAssignment(node: SetAccessorPropertyAssignmentSyntax): void {
-            this.visitToken(node.setKeyword);
-            this.visitToken(node.propertyName);
-            this.visitToken(node.openParenToken);
-            this.visitNode(node.parameter);
-            this.visitToken(node.closeParenToken);
             this.visitNode(node.block);
         }
 

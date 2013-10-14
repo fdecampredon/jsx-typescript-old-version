@@ -142,15 +142,16 @@ module Services {
             return false;
         }
 
-        public static getValidCompletionEntryDisplayName(displayName: string, languageVersion: TypeScript.LanguageVersion): string {
+        public static getValidCompletionEntryDisplayName(displayName: string): string {
             if (displayName && displayName.length > 0) {
                 var firstChar = displayName.charCodeAt(0);
                 if (firstChar === TypeScript.CharacterCodes.singleQuote || firstChar === TypeScript.CharacterCodes.doubleQuote) {
                     // If the user entered name for the symbol was quoted, removing the quotes is not enough, as the name could be an
-                    // invalid identifer name. We need to check if whatever was inside the qouates is actually a valid identifier name.
+                    // invalid identifer name. We need to check if whatever was inside the quotes is actually a valid identifier name.
                     displayName = TypeScript.stripStartAndEndQuotes(displayName);
 
-                    if (TypeScript.Scanner.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), languageVersion)) {
+                    if (TypeScript.Scanner.isValidIdentifier(
+                        TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
                         return displayName;
                     }
                 }

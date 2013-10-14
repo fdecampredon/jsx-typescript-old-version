@@ -5,10 +5,10 @@ var C = (function () {
             var x = 1;
             return _this.x;
         })();
-        this.x = (function () {
+        this.x = function () {
             var x = 1;
             return this.x;
-        })();
+        }();
     }
     return C;
 })();

@@ -653,7 +653,7 @@ module TypeScript.PrettyPrinter {
             this.appendBlockOrSemicolon(node.block, node.semicolonToken);
         }
 
-        public visitGetMemberAccessorDeclaration(node: GetMemberAccessorDeclarationSyntax): void {
+        public visitGetAccessor(node: GetAccessorSyntax): void {
             this.appendSpaceList(node.modifiers);
             this.ensureSpace();
             this.appendToken(node.getKeyword);
@@ -665,7 +665,7 @@ module TypeScript.PrettyPrinter {
             node.block.accept(this);
         }
 
-        public visitSetMemberAccessorDeclaration(node: SetMemberAccessorDeclarationSyntax): void {
+        public visitSetAccessor(node: SetAccessorSyntax): void {
             this.appendSpaceList(node.modifiers);
             this.ensureSpace();
             this.appendToken(node.setKeyword);
@@ -901,28 +901,6 @@ module TypeScript.PrettyPrinter {
         public visitFunctionPropertyAssignment(node: FunctionPropertyAssignmentSyntax): void {
             this.appendToken(node.propertyName);
             node.callSignature.accept(this);
-            this.ensureSpace();
-            node.block.accept(this);
-        }
-
-        public visitGetAccessorPropertyAssignment(node: GetAccessorPropertyAssignmentSyntax): void {
-            this.appendToken(node.getKeyword);
-            this.ensureSpace();
-            this.appendToken(node.propertyName);
-            this.appendToken(node.openParenToken);
-            this.appendToken(node.closeParenToken);
-            this.appendNode(node.typeAnnotation);
-            this.ensureSpace();
-            node.block.accept(this);
-        }
-
-        public visitSetAccessorPropertyAssignment(node: SetAccessorPropertyAssignmentSyntax): void {
-            this.appendToken(node.setKeyword);
-            this.ensureSpace();
-            this.appendToken(node.propertyName);
-            this.appendToken(node.openParenToken);
-            node.parameter.accept(this);
-            this.appendToken(node.closeParenToken);
             this.ensureSpace();
             node.block.accept(this);
         }

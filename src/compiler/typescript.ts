@@ -155,7 +155,7 @@ module TypeScript {
 
             TypeScript.sourceCharactersCompiled += scriptSnapshot.getLength();
 
-            var document = Document.create(this, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+            var document = Document.create(this, this.semanticInfoChain, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
 
             this.semanticInfoChain.addDocument(document);
         }
@@ -572,7 +572,7 @@ module TypeScript {
             }
 
             var enclosingDecl = resolver.getEnclosingDecl(decl);
-            if (ast.nodeType() === NodeType.Member) {
+            if (ast.nodeType() === NodeType.GetAccessor || ast.nodeType() === NodeType.SetAccessor) {
                 return this.getSymbolOfDeclaration(enclosingDecl);
             }
 
@@ -620,10 +620,7 @@ module TypeScript {
                                 lastDeclAST = cur;
                             }
 
-                            if (cur.nodeType() === NodeType.FunctionDeclaration && hasFlag((<FunctionDeclaration>cur).getFunctionFlags(), FunctionFlags.IsFunctionExpression)) {
-                                lambdaAST = cur;
-                            }
-                            else if (cur.nodeType() === NodeType.ArrowFunctionExpression) {
+                            if (cur.nodeType() === NodeType.FunctionExpression || cur.nodeType() === NodeType.ArrowFunctionExpression) {
                                 lambdaAST = cur;
                             }
                             else if (cur.nodeType() === NodeType.VariableDeclarator) {
@@ -685,6 +682,12 @@ module TypeScript {
                                 foundAST = previousAST;
                             }
                             break;
+
+                        case NodeType.MemberFunctionDeclaration:
+                            if (foundAST === (<MemberFunctionDeclaration>previousAST).name) {
+                                foundAST = previousAST;
+                            }
+                            break;
                     }
                 }
 
@@ -696,6 +699,7 @@ module TypeScript {
                     symbol.setUnresolved();
                     enclosingDecl = declStack[declStack.length - 1].getParentDecl();
                     if (foundAST.nodeType() === NodeType.FunctionDeclaration ||
+                        foundAST.nodeType() === NodeType.MemberFunctionDeclaration ||
                         foundAST.nodeType() === NodeType.ArrowFunctionExpression) {
                         funcDecl = <FunctionDeclaration>foundAST;
                     }
@@ -729,10 +733,16 @@ module TypeScript {
                                 (<InvocationExpression>resultASTs[i]).target === resultASTs[i + 1]) {
                                 callExpression = <ICallExpression><any>resultASTs[i];
                                 break;
-                            } else if (resultASTs[i].nodeType() === NodeType.FunctionDeclaration && (<FunctionDeclaration>resultASTs[i]).name === resultASTs[i + 1]) {
+                            }
+                            else if (resultASTs[i].nodeType() === NodeType.MemberFunctionDeclaration && (<MemberFunctionDeclaration>resultASTs[i]).name === resultASTs[i + 1]) {
                                 funcDecl = <FunctionDeclaration>resultASTs[i];
                                 break;
-                            } else {
+                            }
+                            else if (resultASTs[i].nodeType() === NodeType.FunctionDeclaration && (<FunctionDeclaration>resultASTs[i]).name === resultASTs[i + 1]) {
+                                funcDecl = <FunctionDeclaration>resultASTs[i];
+                                break;
+                            }
+                            else {
                                 break;
                             }
                         }
@@ -879,40 +889,30 @@ module TypeScript {
                 var current = path[i];
 
                 switch (current.nodeType()) {
-                    case NodeType.FunctionDeclaration:
-                        // A function expression does not have a decl, so we need to resolve it first to get the decl created.
-                        if (hasFlag((<FunctionDeclaration>current).getFunctionFlags(), FunctionFlags.IsFunctionExpression)) {
-                            resolver.resolveAST(current, true, enclosingDecl, resolutionContext);
-                        }
-
-                        break;
-
+                    case NodeType.FunctionExpression:
                     case NodeType.ArrowFunctionExpression:
                         resolver.resolveAST(current, true, enclosingDecl, resolutionContext);
                         break;
 
+                    //case NodeType.Parameter:
+                    //    var parameter = <Parameter> current;
+                    //    inContextuallyTypedAssignment = parameter.typeExpr !== null;
+
+                    //    this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, parameter, parameter.init);
+                    //    break;
+
+                    case NodeType.MemberVariableDeclaration:
+                        var memberVariable = <MemberVariableDeclaration> current;
+                        inContextuallyTypedAssignment = memberVariable.typeExpr !== null;
+
+                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, memberVariable, memberVariable.init);
+                        break;
+
                     case NodeType.VariableDeclarator:
-                        var assigningAST = <VariableDeclarator> current;
-                        inContextuallyTypedAssignment = (assigningAST.typeExpr !== null);
+                        var variableDeclarator = <VariableDeclarator> current;
+                        inContextuallyTypedAssignment = variableDeclarator.typeExpr !== null;
 
-                        if (inContextuallyTypedAssignment) {
-                            if (propagateContextualTypes) {
-                                resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment*/false, null, resolutionContext);
-                                var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
-
-                                var contextualType: PullTypeSymbol = null;
-                                if (varSymbol && inContextuallyTypedAssignment) {
-                                    contextualType = varSymbol.type;
-                                }
-
-                                resolutionContext.pushContextualType(contextualType, false, null);
-
-                                if (assigningAST.init) {
-                                    resolver.resolveAST(assigningAST.init, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                                }
-                            }
-                        }
-
+                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, variableDeclarator, variableDeclarator.init);
                         break;
 
                     case NodeType.InvocationExpression:
@@ -1158,6 +1158,33 @@ module TypeScript {
             };
         }
 
+        private extractResolutionContextForVariable(
+            inContextuallyTypedAssignment: boolean,
+            propagateContextualTypes: boolean,
+            resolver: PullTypeResolver,
+            resolutionContext: PullTypeResolutionContext,
+            enclosingDecl: PullDecl,
+            assigningAST: AST,
+            init: AST): void {
+            if (inContextuallyTypedAssignment) {
+                if (propagateContextualTypes) {
+                    resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment*/false, null, resolutionContext);
+                    var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
+
+                    var contextualType: PullTypeSymbol = null;
+                    if (varSymbol && inContextuallyTypedAssignment) {
+                        contextualType = varSymbol.type;
+                    }
+
+                    resolutionContext.pushContextualType(contextualType, false, null);
+
+                    if (init) {
+                        resolver.resolveAST(init, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
+                    }
+                }
+            }
+        }
+
         private getASTPath(ast: AST): AST[] {
             var result: AST[] = [];
 
@@ -1288,7 +1315,7 @@ module TypeScript {
             };
         }
 
-        public getTopLevelDeclaration(fileName: string) : PullDecl {
+        public topLevelDeclaration(fileName: string) : PullDecl {
             return this.semanticInfoChain.topLevelDecl(fileName);
         }
 

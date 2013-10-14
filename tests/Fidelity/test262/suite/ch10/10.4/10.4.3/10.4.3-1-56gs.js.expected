@@ -370,14 +370,19 @@
                                     },
                                     "propertyAssignments": [
                                         {
+<<<<<<< HEAD
                                             "kind": "SetAccessorPropertyAssignment",
                                             "fullStart": 595,
                                             "fullEnd": 622,
                                             "start": 595,
                                             "end": 621,
+=======
+                                            "kind": "SetAccessor",
+>>>>>>> develop
                                             "fullWidth": 27,
                                             "width": 26,
                                             "parsedInStrictMode": true,
+                                            "modifiers": [],
                                             "setKeyword": {
                                                 "kind": "SetKeyword",
                                                 "fullStart": 595,
@@ -409,6 +414,7 @@
                                                 "value": "foo",
                                                 "valueText": "foo"
                                             },
+<<<<<<< HEAD
                                             "openParenToken": {
                                                 "kind": "OpenParenToken",
                                                 "fullStart": 602,
@@ -456,11 +462,48 @@
                                                 "valueText": ")",
                                                 "hasTrailingTrivia": true,
                                                 "trailingTrivia": [
+=======
+                                            "parameterList": {
+                                                "kind": "ParameterList",
+                                                "fullWidth": 8,
+                                                "parsedInStrictMode": true,
+                                                "openParenToken": {
+                                                    "kind": "OpenParenToken",
+                                                    "width": 1,
+                                                    "text": "(",
+                                                    "value": "(",
+                                                    "valueText": "("
+                                                },
+                                                "parameters": [
+>>>>>>> develop
                                                     {
-                                                        "kind": "WhitespaceTrivia",
-                                                        "text": " "
+                                                        "kind": "Parameter",
+                                                        "fullWidth": 5,
+                                                        "parsedInStrictMode": true,
+                                                        "identifier": {
+                                                            "kind": "IdentifierName",
+                                                            "width": 5,
+                                                            "text": "stuff",
+                                                            "value": "stuff",
+                                                            "valueText": "stuff"
+                                                        }
                                                     }
-                                                ]
+                                                ],
+                                                "closeParenToken": {
+                                                    "kind": "CloseParenToken",
+                                                    "width": 1,
+                                                    "fullWidth": 2,
+                                                    "text": ")",
+                                                    "value": ")",
+                                                    "valueText": ")",
+                                                    "hasTrailingTrivia": true,
+                                                    "trailingTrivia": [
+                                                        {
+                                                            "kind": "WhitespaceTrivia",
+                                                            "text": " "
+                                                        }
+                                                    ]
+                                                }
                                             },
                                             "block": {
                                                 "kind": "Block",

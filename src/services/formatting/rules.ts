@@ -564,10 +564,8 @@ module TypeScript.Formatting {
             switch (context.contextNode.kind()) {
                 case SyntaxKind.FunctionDeclaration:
                 case SyntaxKind.MemberFunctionDeclaration:
-                case SyntaxKind.GetMemberAccessorDeclaration:
-                case SyntaxKind.GetAccessorPropertyAssignment:
-                case SyntaxKind.SetMemberAccessorDeclaration:
-                case SyntaxKind.SetAccessorPropertyAssignment:
+                case SyntaxKind.GetAccessor:
+                case SyntaxKind.SetAccessor:
                 case SyntaxKind.MethodSignature:
                 case SyntaxKind.CallSignature:
                 case SyntaxKind.FunctionExpression:

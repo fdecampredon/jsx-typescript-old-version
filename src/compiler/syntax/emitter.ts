@@ -727,11 +727,11 @@ module TypeScript.Emitter1 {
                         Syntax.list(blockStatements))))).withTrailingTrivia(blockTrailingTrivia);
         }
 
-        private convertMemberAccessor(memberAccessor: MemberAccessorDeclarationSyntax): PropertyAssignmentSyntax {
-            var propertyName = memberAccessor.kind() === SyntaxKind.GetMemberAccessorDeclaration
+        private convertMemberAccessor(memberAccessor: SyntaxNode): SimplePropertyAssignmentSyntax {
+            var propertyName = memberAccessor.kind() === SyntaxKind.GetAccessor
                 ? "get" : "set";
 
-            var parameterList = <ParameterListSyntax>memberAccessor.parameterList.accept(this);
+            var parameterList = <ParameterListSyntax>(<any>memberAccessor).parameterList.accept(this);
             if (!parameterList.hasTrailingTrivia()) {
                 parameterList = parameterList.withTrailingTrivia(Syntax.spaceTriviaList);
             }
@@ -742,27 +742,27 @@ module TypeScript.Emitter1 {
                 FunctionExpressionSyntax.create(
                     Syntax.token(SyntaxKind.FunctionKeyword),
                     CallSignatureSyntax.create(parameterList),
-                    memberAccessor.block.accept(this).withTrailingTrivia(Syntax.emptyTriviaList)))
+                    (<any>memberAccessor).block.accept(this).withTrailingTrivia(Syntax.emptyTriviaList)))
                         .withLeadingTrivia(this.indentationTriviaForStartOfNode(memberAccessor));
         }
 
         private convertMemberAccessorDeclaration(classDeclaration: ClassDeclarationSyntax,
-                                                 memberAccessor: MemberAccessorDeclarationSyntax,
+                                                 memberAccessor: SyntaxNode,
                                                  classElements: IClassElementSyntax[]): IStatementSyntax {
-            var name = <string>memberAccessor.propertyName.value();
+            var name = (<any>memberAccessor).propertyName.valueText();
             var i: number;
 
             // Find all the accessors with that name.
-            var accessors: MemberAccessorDeclarationSyntax[] = [memberAccessor];
+            var accessors: any[] = [memberAccessor];
 
             for (i = classElements.length - 1; i >= 0; i--) {
                 var element = classElements[i];
-                if (element.kind() === SyntaxKind.GetMemberAccessorDeclaration ||
-                    element.kind() === SyntaxKind.SetMemberAccessorDeclaration) {
+                if (element.kind() === SyntaxKind.GetAccessor ||
+                    element.kind() === SyntaxKind.SetAccessor) {
 
-                    var otherAccessor = <MemberAccessorDeclarationSyntax>element;
-                    if (otherAccessor.propertyName.value() === name &&
-                        otherAccessor.block !== null) {
+                    var otherAccessor = <SyntaxNode>element;
+                    if ((<any>otherAccessor).propertyName.value() === name &&
+                        (<any>otherAccessor).block !== null) {
                         accessors.push(otherAccessor);
                         classElements.splice(i, 1);
                     }
@@ -773,14 +773,14 @@ module TypeScript.Emitter1 {
                 <any>MemberAccessExpressionSyntax.create1(
                     this.withNoTrivia(classDeclaration.identifier), Syntax.identifierName("prototype")),
                 Syntax.token(SyntaxKind.CommaToken).withTrailingTrivia(this.space),
-                Syntax.stringLiteralExpression('"' + memberAccessor.propertyName.text() + '"'),
+                Syntax.stringLiteralExpression('"' + (<any>memberAccessor).propertyName.text() + '"'),
                 Syntax.token(SyntaxKind.CommaToken).withTrailingTrivia(this.space)
             ];
 
             var propertyAssignments: ISyntaxNodeOrToken[] = [];
             for (i = 0; i < accessors.length; i++) {
                 var converted = this.convertMemberAccessor(accessors[i]);
-                converted = <PropertyAssignmentSyntax>this.changeIndentation(
+                converted = <SimplePropertyAssignmentSyntax>this.changeIndentation(
                     converted, /*changeFirstToken:*/ true, this.options.indentSpaces);
                 propertyAssignments.push(converted);
                 propertyAssignments.push(
@@ -828,9 +828,9 @@ module TypeScript.Emitter1 {
                 else if (classElement.kind() === SyntaxKind.MemberVariableDeclaration) {
                     converted = this.generatePropertyAssignment(classDeclaration, /*static:*/ true, <MemberVariableDeclarationSyntax>classElement);
                 }
-                else if (classElement.kind() === SyntaxKind.GetMemberAccessorDeclaration ||
-                         classElement.kind() === SyntaxKind.SetMemberAccessorDeclaration) {
-                    converted = this.convertMemberAccessorDeclaration(classDeclaration, <MemberAccessorDeclarationSyntax>classElement, classElements);
+                else if (classElement.kind() === SyntaxKind.GetAccessor ||
+                         classElement.kind() === SyntaxKind.SetAccessor) {
+                    converted = this.convertMemberAccessorDeclaration(classDeclaration, <SyntaxNode>classElement, classElements);
                 }
 
                 if (converted !== null) {

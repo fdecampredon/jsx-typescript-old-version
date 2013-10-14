@@ -138,7 +138,7 @@ module Services {
             return null;
         }
 
-        public static getSignatureInfoFromSignatureSymbol(symbol: TypeScript.PullSymbol, signatures: TypeScript.PullSignatureSymbol[], enclosingScopeSymbol: TypeScript.PullSymbol, compilerState: CompilerState) {
+        public static getSignatureInfoFromSignatureSymbol(symbol: TypeScript.PullSymbol, signatures: TypeScript.PullSignatureSymbol[], enclosingScopeSymbol: TypeScript.PullSymbol, compilerState: LanguageServiceCompiler) {
             var signatureGroup: FormalSignatureItemInfo[] = [];
 
             var hasOverloads = signatures.length > 1;
@@ -198,7 +198,7 @@ module Services {
             return signatureGroup;
         }
 
-        public static getSignatureInfoFromGenericSymbol(symbol: TypeScript.PullSymbol, enclosingScopeSymbol: TypeScript.PullSymbol, compilerState: CompilerState) {
+        public static getSignatureInfoFromGenericSymbol(symbol: TypeScript.PullSymbol, enclosingScopeSymbol: TypeScript.PullSymbol, compilerState: LanguageServiceCompiler) {
             var signatureGroupInfo = new FormalSignatureItemInfo();
 
             var paramIndexInfo: number[] = [];

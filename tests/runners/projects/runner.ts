@@ -43,7 +43,8 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         var resolvedFiles: TypeScript.IResolvedFile[];
 
         // Resolve references
-        var resolutionResults = TypeScript.ReferenceResolver.resolve(this.inputFiles, this, this.compilationSettings);
+        var resolutionResults = TypeScript.ReferenceResolver.resolve(this.inputFiles, this,
+            this.compilationSettings.useCaseSensitiveFileResolution());
         resolvedFiles = resolutionResults.resolvedFiles;
 
         // Populate any diagnostic messages generated during resolution
@@ -199,12 +200,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
     /// TypeScript.IDiagnosticReporter methods
     addDiagnostic(diagnostic: TypeScript.Diagnostic) {
         if (diagnostic.fileName()) {
-            var scriptSnapshot = this.getScriptSnapshot(diagnostic.fileName());
-            var lineMap = new TypeScript.LineMap(scriptSnapshot.getLineStartPositions(), scriptSnapshot.getLength());
-            var lineCol = { line: -1, character: -1 };
-            lineMap.fillLineAndCharacterFromPosition(diagnostic.start(), lineCol);
-
-            this.errout.Write(diagnostic.fileName() + "(" + (lineCol.line + 1) + "," + (lineCol.character + 1) + "): ");
+            this.errout.Write(diagnostic.fileName() + "(" + (diagnostic.line() + 1) + "," + (diagnostic.character() + 1) + "): ");
         }
 
         this.errout.WriteLine(diagnostic.message());

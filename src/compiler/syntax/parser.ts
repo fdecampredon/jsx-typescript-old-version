@@ -1397,7 +1397,7 @@ module TypeScript.Parser {
                     // Report the missing semicolon at the end of the *previous* token.
 
                     this.addDiagnostic(
-                        new Diagnostic(this.fileName, this.previousTokenEnd(), 0, DiagnosticCode.Automatic_semicolon_insertion_not_allowed, null));
+                        new Diagnostic(this.fileName, this.lineMap, this.previousTokenEnd(), 0, DiagnosticCode.Automatic_semicolon_insertion_not_allowed, null));
                 }
 
                 return semicolonToken;
@@ -1436,18 +1436,18 @@ module TypeScript.Parser {
 
             // They wanted something specific, just report that that token was missing.
             if (SyntaxFacts.isAnyKeyword(expectedKind) || SyntaxFacts.isAnyPunctuation(expectedKind)) {
-                return new Diagnostic(this.fileName, this.currentTokenStart(), token.width(), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
+                return new Diagnostic(this.fileName, this.lineMap, this.currentTokenStart(), token.width(), DiagnosticCode._0_expected, [SyntaxFacts.getText(expectedKind)]);
             }
             else {
                 // They wanted an identifier.
 
                 // If the user supplied a keyword, give them a specialized message.
                 if (actual !== null && SyntaxFacts.isAnyKeyword(actual.tokenKind)) {
-                    return new Diagnostic(this.fileName, this.currentTokenStart(), token.width(), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.tokenKind)]);
+                    return new Diagnostic(this.fileName, this.lineMap, this.currentTokenStart(), token.width(), DiagnosticCode.Identifier_expected_0_is_a_keyword, [SyntaxFacts.getText(actual.tokenKind)]);
                 }
                 else {
                     // Otherwise just report that an identifier was expected.
-                    return new Diagnostic(this.fileName, this.currentTokenStart(), token.width(), DiagnosticCode.Identifier_expected, null);
+                    return new Diagnostic(this.fileName, this.lineMap,this.currentTokenStart(), token.width(), DiagnosticCode.Identifier_expected, null);
                 }
             }
 
@@ -2119,7 +2119,7 @@ module TypeScript.Parser {
             return token.tokenKind === SyntaxKind.PublicKeyword || token.tokenKind === SyntaxKind.PrivateKeyword;
         }
 
-        private isMemberAccessorDeclaration(inErrorRecovery: boolean): boolean {
+        private isAccessor(inErrorRecovery: boolean): boolean {
             var index = this.modifierCount();
 
             if (this.peekToken(index).tokenKind !== SyntaxKind.GetKeyword &&
@@ -2131,44 +2131,44 @@ module TypeScript.Parser {
             return this.isPropertyName(this.peekToken(index), inErrorRecovery);
         }
 
-        private parseMemberAccessorDeclaration(): MemberAccessorDeclarationSyntax {
+        private parseAccessor(checkForStrictMode: boolean): SyntaxNode {
             // Debug.assert(this.isMemberAccessorDeclaration());
 
             var modifiers = this.parseModifiers();
 
             if (this.currentToken().tokenKind === SyntaxKind.GetKeyword) {
-                return this.parseGetMemberAccessorDeclaration(modifiers);
+                return this.parseGetMemberAccessorDeclaration(modifiers, checkForStrictMode);
             }
             else if (this.currentToken().tokenKind === SyntaxKind.SetKeyword) {
-                return this.parseSetMemberAccessorDeclaration(modifiers);
+                return this.parseSetMemberAccessorDeclaration(modifiers, checkForStrictMode);
             }
             else {
                 throw Errors.invalidOperation();
             }
         }
 
-        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxList): GetMemberAccessorDeclarationSyntax {
+        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxList, checkForStrictMode: boolean): GetAccessorSyntax {
             // Debug.assert(this.currentToken().tokenKind === SyntaxKind.GetKeyword);
 
             var getKeyword = this.eatKeyword(SyntaxKind.GetKeyword);
             var propertyName = this.eatPropertyName();
             var parameterList = this.parseParameterList();
             var typeAnnotation = this.parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false);
-            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
+            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode);
 
-            return this.factory.getMemberAccessorDeclaration(
+            return this.factory.getAccessor(
                 modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block);
         }
 
-        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxList): SetMemberAccessorDeclarationSyntax {
+        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxList, checkForStrictMode: boolean): SetAccessorSyntax {
             // Debug.assert(this.currentToken().tokenKind === SyntaxKind.SetKeyword);
 
             var setKeyword = this.eatKeyword(SyntaxKind.SetKeyword);
             var propertyName = this.eatPropertyName();
             var parameterList = this.parseParameterList();
-            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
+            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, checkForStrictMode);
 
-            return this.factory.setMemberAccessorDeclaration(
+            return this.factory.setAccessor(
                 modifiers, setKeyword, propertyName, parameterList, block);
         }
 
@@ -2181,7 +2181,7 @@ module TypeScript.Parser {
             // checks for a subset of the conditions of the previous two calls.
             return this.isConstructorDeclaration() ||
                    this.isMemberFunctionDeclaration(inErrorRecovery) ||
-                   this.isMemberAccessorDeclaration(inErrorRecovery) ||
+                   this.isAccessor(inErrorRecovery) ||
                    this.isMemberVariableDeclaration(inErrorRecovery) ||
                    this.isIndexMemberDeclaration();
         }
@@ -2199,8 +2199,8 @@ module TypeScript.Parser {
             else if (this.isMemberFunctionDeclaration(inErrorRecovery)) {
                 return this.parseMemberFunctionDeclaration();
             }
-            else if (this.isMemberAccessorDeclaration(inErrorRecovery)) {
-                return this.parseMemberAccessorDeclaration();
+            else if (this.isAccessor(inErrorRecovery)) {
+                return this.parseAccessor(/*checkForStrictMode:*/ false);
             }
             else if (this.isMemberVariableDeclaration(inErrorRecovery)) {
                 return this.parseMemberVariableDeclaration();
@@ -2426,7 +2426,7 @@ module TypeScript.Parser {
                     // "function f() { return expr; }.
                     // 
                     // Detect if the user is typing this and attempt recovery.
-                    var diagnostic = new Diagnostic(this.fileName,
+                    var diagnostic = new Diagnostic(this.fileName, this.lineMap,
                         this.currentTokenStart(), token0.width(), DiagnosticCode.Unexpected_token_0_expected, [SyntaxFacts.getText(SyntaxKind.OpenBraceToken)]);
                     this.addDiagnostic(diagnostic);
 
@@ -3970,7 +3970,7 @@ module TypeScript.Parser {
                     // as an arithmetic expression.
                     if (isDot) {
                         // A parameter list must follow a generic type argument list.
-                        var diagnostic = new Diagnostic(this.fileName, this.currentTokenStart(), token0.width(),
+                        var diagnostic = new Diagnostic(this.fileName, this.lineMap, this.currentTokenStart(), token0.width(),
                             DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
                         this.addDiagnostic(diagnostic);
 
@@ -4018,7 +4018,7 @@ module TypeScript.Parser {
                 inObjectCreation) {
 
                 var end = this.currentTokenStart() + this.currentToken().width();
-                var diagnostic = new Diagnostic(this.fileName, start, end - start,
+                var diagnostic = new Diagnostic(this.fileName, this.lineMap,start, end - start,
                     DiagnosticCode.new_T_cannot_be_used_to_create_an_array_Use_new_Array_T_instead, null);
                 this.addDiagnostic(diagnostic);
 
@@ -4539,14 +4539,11 @@ module TypeScript.Parser {
                 openBraceToken, propertyAssignments, closeBraceToken);
         }
 
-        private parsePropertyAssignment(inErrorRecovery: boolean): PropertyAssignmentSyntax {
+        private parsePropertyAssignment(inErrorRecovery: boolean): IPropertyAssignmentSyntax {
             // Debug.assert(this.isPropertyAssignment(/*inErrorRecovery:*/ false));
 
-            if (this.isGetAccessorPropertyAssignment(inErrorRecovery)) {
-                return this.parseGetAccessorPropertyAssignment();
-            }
-            else if (this.isSetAccessorPropertyAssignment(inErrorRecovery)) {
-                return this.parseSetAccessorPropertyAssignment();
+            if (this.isAccessor(inErrorRecovery)) {
+                return this.parseAccessor(/*checkForStrictMode:*/ true);
             }
             else if (this.isFunctionPropertyAssignment(inErrorRecovery)) {
                 return this.parseFunctionPropertyAssignment();
@@ -4560,46 +4557,9 @@ module TypeScript.Parser {
         }
 
         private isPropertyAssignment(inErrorRecovery: boolean): boolean {
-            return this.isGetAccessorPropertyAssignment(inErrorRecovery) ||
-                   this.isSetAccessorPropertyAssignment(inErrorRecovery) ||
+            return this.isAccessor(inErrorRecovery) ||
                    this.isFunctionPropertyAssignment(inErrorRecovery) ||
                    this.isSimplePropertyAssignment(inErrorRecovery);
-        }
-
-        private isGetAccessorPropertyAssignment(inErrorRecovery: boolean): boolean {
-            return this.currentToken().tokenKind === SyntaxKind.GetKeyword &&
-                   this.isPropertyName(this.peekToken(1), inErrorRecovery);
-        }
-
-        private parseGetAccessorPropertyAssignment(): GetAccessorPropertyAssignmentSyntax {
-            // Debug.assert(this.isGetAccessorPropertyAssignment());
-
-            var getKeyword = this.eatKeyword(SyntaxKind.GetKeyword);
-            var propertyName = this.eatPropertyName();
-            var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
-            var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
-            var typeAnnotation = this.parseOptionalTypeAnnotation(/*allowStringLiteral:*/ false);
-            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ true);
-
-            return this.factory.getAccessorPropertyAssignment(getKeyword, propertyName, openParenToken, closeParenToken, typeAnnotation, block);
-        }
-
-        private isSetAccessorPropertyAssignment(inErrorRecovery: boolean): boolean {
-            return this.currentToken().tokenKind === SyntaxKind.SetKeyword &&
-                   this.isPropertyName(this.peekToken(1), inErrorRecovery);
-        }
-
-        private parseSetAccessorPropertyAssignment(): SetAccessorPropertyAssignmentSyntax {
-            // Debug.assert(this.isSetAccessorPropertyAssignment());
-
-            var setKeyword = this.eatKeyword(SyntaxKind.SetKeyword);
-            var propertyName = this.eatPropertyName();
-            var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
-            var parameter = this.parseParameter();
-            var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
-            var block = this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ true);
-
-            return this.factory.setAccessorPropertyAssignment(setKeyword, propertyName, openParenToken, parameter, closeParenToken, block);
         }
 
         private eatPropertyName(): ISyntaxToken {
@@ -5296,7 +5256,7 @@ module TypeScript.Parser {
         private reportUnexpectedTokenDiagnostic(listType: ListParsingState): void {
             var token = this.currentToken();
 
-            var diagnostic = new Diagnostic(this.fileName,
+            var diagnostic = new Diagnostic(this.fileName, this.lineMap,
                 this.currentTokenStart(), token.width(), DiagnosticCode.Unexpected_token_0_expected, [this.getExpectedListElementType(listType)]);
             this.addDiagnostic(diagnostic);
         }

@@ -173,7 +173,6 @@ module TypeScript {
         private contextStack: PullContextualTypeContext[] = [];
         private typeSpecializationStack: any[] = [];
         private genericASTResolutionStack: AST[] = [];
-        private enclosingFunctionParameterIndexStack: IParameterIndexContext[] = [];
 
         public resolvingTypeReference = false;
         public resolvingNamespaceMemberAccess = false;
@@ -184,7 +183,6 @@ module TypeScript {
         public isSpecializingSignatureTypeParameters = false;
         public isSpecializingConstructorMethod = false;
         public isComparingSpecializedSignatures = false;
-        public isInStaticInitializer = false;
         public resolvingTypeNameAsNameExpression = false;
         public recursiveMemberSpecializationDepth = 0;
         public recursiveSignatureSpecializationDepth = 0;
@@ -348,31 +346,6 @@ module TypeScript {
             this.genericASTResolutionStack.length--;
         }
 
-        public pushParameterIndexContext(enclosingFunction: AST) {
-            this.enclosingFunctionParameterIndexStack.push({
-                enclosingFunction: enclosingFunction,
-                index: 0
-            });
-        }
-
-        public popParameterIndexContext() {
-            this.enclosingFunctionParameterIndexStack.pop();
-        }
-
-        public incrementParameterIndex() {
-            this.enclosingFunctionParameterIndexStack[this.enclosingFunctionParameterIndexStack.length - 1].index++;
-        }
-
-        public getCurrentParameterIndexForFunction(enclosingFunction: FunctionDeclaration): number {
-            for (var i = this.enclosingFunctionParameterIndexStack.length - 1; i >= 0; i--) {
-                if (this.enclosingFunctionParameterIndexStack[i].enclosingFunction === enclosingFunction) {
-                    return this.enclosingFunctionParameterIndexStack[i].index;
-                }
-            }
-            // If we didn't find it, return -1 (which signals that we are in the function body
-            return -1;
-        }
-
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
             this.contextStack[this.contextStack.length - 1].setSymbolForAST(ast, symbol);
         }
@@ -410,10 +383,5 @@ module TypeScript {
 
             return null;
         }
-    }
-
-    interface IParameterIndexContext {
-        enclosingFunction: AST;
-        index: number;
     }
 }

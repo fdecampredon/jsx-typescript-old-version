@@ -436,7 +436,7 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            return LineMap.fromSimpleText(this);
+            return LineMap1.fromSimpleText(this);
         }
     }
 
@@ -476,7 +476,7 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            return LineMap.fromSimpleText(this);
+            return LineMap1.fromSimpleText(this);
         }
     }
 

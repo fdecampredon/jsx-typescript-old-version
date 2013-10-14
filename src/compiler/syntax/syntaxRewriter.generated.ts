@@ -445,7 +445,7 @@ module TypeScript {
                 node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }
 
-        public visitGetMemberAccessorDeclaration(node: GetMemberAccessorDeclarationSyntax): any {
+        public visitGetAccessor(node: GetAccessorSyntax): any {
             return node.update(
                 this.visitList(node.modifiers),
                 this.visitToken(node.getKeyword),
@@ -455,7 +455,7 @@ module TypeScript {
                 <BlockSyntax>this.visitNode(node.block));
         }
 
-        public visitSetMemberAccessorDeclaration(node: SetMemberAccessorDeclarationSyntax): any {
+        public visitSetAccessor(node: SetAccessorSyntax): any {
             return node.update(
                 this.visitList(node.modifiers),
                 this.visitToken(node.setKeyword),
@@ -625,26 +625,6 @@ module TypeScript {
             return node.update(
                 this.visitToken(node.propertyName),
                 <CallSignatureSyntax>this.visitNode(node.callSignature),
-                <BlockSyntax>this.visitNode(node.block));
-        }
-
-        public visitGetAccessorPropertyAssignment(node: GetAccessorPropertyAssignmentSyntax): any {
-            return node.update(
-                this.visitToken(node.getKeyword),
-                this.visitToken(node.propertyName),
-                this.visitToken(node.openParenToken),
-                this.visitToken(node.closeParenToken),
-                node.typeAnnotation === null ? null : <TypeAnnotationSyntax>this.visitNode(node.typeAnnotation),
-                <BlockSyntax>this.visitNode(node.block));
-        }
-
-        public visitSetAccessorPropertyAssignment(node: SetAccessorPropertyAssignmentSyntax): any {
-            return node.update(
-                this.visitToken(node.setKeyword),
-                this.visitToken(node.propertyName),
-                this.visitToken(node.openParenToken),
-                <ParameterSyntax>this.visitNode(node.parameter),
-                this.visitToken(node.closeParenToken),
                 <BlockSyntax>this.visitNode(node.block));
         }
 

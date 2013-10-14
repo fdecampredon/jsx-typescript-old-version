@@ -319,7 +319,7 @@ module TypeScript {
     }
 
     // class member variables
-    function createMemberVariableDeclaration(memberDecl: VariableDeclarator, context: DeclCollectionContext): void {
+    function createMemberVariableDeclaration(memberDecl: MemberVariableDeclaration, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Property;
 
@@ -383,10 +383,7 @@ module TypeScript {
     function preCollectVarDecls(ast: AST, context: DeclCollectionContext): void {
         var varDecl = <VariableDeclarator>ast;
 
-        if (hasFlag(varDecl.getVarFlags(), VariableFlags.ClassProperty)) {
-            createMemberVariableDeclaration(varDecl, context);
-        }
-        else if (hasFlag(varDecl.getVarFlags(), VariableFlags.Property)) {
+        if (hasFlag(varDecl.getVarFlags(), VariableFlags.Property)) {
             createPropertySignature(varDecl, context);
         }
         else {
@@ -470,7 +467,6 @@ module TypeScript {
     function createAnyFunctionExpressionDeclaration(
         functionExpressionDeclAST: AST,
         id: Identifier,
-        returnTypeAnnotation: TypeReference,
         context: DeclCollectionContext,
         displayName: Identifier = null): void {
 
@@ -497,34 +493,38 @@ module TypeScript {
         context.pushParent(decl);
     }
 
+    function createMemberFunctionDeclaration(funcDecl: MemberFunctionDeclaration, context: DeclCollectionContext): void {
+        createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name, funcDecl.block, context);
+    }
+
     // methods
-    function createMemberFunctionDeclaration(memberFunctionDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createAnyMemberFunctionDeclaration(memberFunctionDeclAST: AST, flags: FunctionFlags, name: Identifier, block: Block, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Method;
 
-        if (hasFlag(memberFunctionDeclAST.getFunctionFlags(), FunctionFlags.Static)) {
+        if (hasFlag(flags, FunctionFlags.Static)) {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(memberFunctionDeclAST.getFunctionFlags(), FunctionFlags.Private)) {
+        if (hasFlag(flags, FunctionFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
         }
 
-        if (!memberFunctionDeclAST.block) {
+        if (!block) {
             declFlags |= PullElementFlags.Signature;
         }
 
-        if (hasFlag(memberFunctionDeclAST.name.getFlags(), ASTFlags.OptionalName)) {
+        if (hasFlag(name.getFlags(), ASTFlags.OptionalName)) {
             declFlags |= PullElementFlags.Optional;
         }
 
         var span = TextSpan.fromBounds(memberFunctionDeclAST.minChar, memberFunctionDeclAST.limChar);
         var parent = context.getParent();
 
-        var decl = new NormalPullDecl(memberFunctionDeclAST.name.text(), memberFunctionDeclAST.name.actualText, declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(name.text(), name.actualText, declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(memberFunctionDeclAST, decl);
         context.semanticInfoChain.setASTForDecl(decl, memberFunctionDeclAST);
 
@@ -623,7 +623,7 @@ module TypeScript {
         context.pushParent(decl);
     }
 
-    function createGetAccessorDeclaration(getAccessorDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createGetAccessorDeclaration(getAccessorDeclAST: GetAccessor, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Public;
         var declType = PullElementKind.GetAccessor;
 
@@ -631,16 +631,12 @@ module TypeScript {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(getAccessorDeclAST.name.getFlags(), ASTFlags.OptionalName)) {
-            declFlags |= PullElementFlags.Optional;
-        }
-
         if (hasFlag(getAccessorDeclAST.getFunctionFlags(), FunctionFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
-        }        
+        }
 
         var span = TextSpan.fromBounds(getAccessorDeclAST.minChar, getAccessorDeclAST.limChar);
 
@@ -650,15 +646,18 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(getAccessorDeclAST.name.text(), getAccessorDeclAST.name.actualText, declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(getAccessorDeclAST.propertyName.text(), getAccessorDeclAST.propertyName.actualText, declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(getAccessorDeclAST, decl);
         context.semanticInfoChain.setASTForDecl(decl, getAccessorDeclAST);
 
         context.pushParent(decl);
     }
 
-    // set accessors
-    function createSetAccessorDeclaration(setAccessorDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createFunctionExpressionDeclaration(expression: FunctionExpression, context: DeclCollectionContext): void {
+        createAnyFunctionExpressionDeclaration(expression, expression.name, context);
+    }
+
+    function createSetAccessorDeclaration(setAccessorDeclAST: SetAccessor, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Public;
         var declType = PullElementKind.SetAccessor;
 
@@ -666,16 +665,12 @@ module TypeScript {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(setAccessorDeclAST.name.getFlags(), ASTFlags.OptionalName)) {
-            declFlags |= PullElementFlags.Optional;
-        }
-
         if (hasFlag(setAccessorDeclAST.getFunctionFlags(), FunctionFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
-        }         
+        }
 
         var span = TextSpan.fromBounds(setAccessorDeclAST.minChar, setAccessorDeclAST.limChar);
 
@@ -685,7 +680,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(setAccessorDeclAST.name.actualText, setAccessorDeclAST.name.actualText, declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(setAccessorDeclAST.propertyName.text(), setAccessorDeclAST.propertyName.actualText, declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(setAccessorDeclAST, decl);
         context.semanticInfoChain.setASTForDecl(decl, setAccessorDeclAST);
 
@@ -737,27 +732,6 @@ module TypeScript {
         context.pushParent(decl);
     }
 
-    function preCollectPropertyAssignmentDecls(propertyAssignment: BinaryExpression, context: DeclCollectionContext): void {
-        if (propertyAssignmentIsAccessor(propertyAssignment)) {
-            // If it's a property assignment, then we don't do anything at this level.  When we
-            // recurse down the right side of the AST we'll generate the member.
-        }
-        else {
-            var assignmentText = getPropertyAssignmentNameTextFromIdentifier(propertyAssignment.operand1);
-            var span = TextSpan.fromBounds(propertyAssignment.minChar, propertyAssignment.limChar);
-
-            var decl = new NormalPullDecl(assignmentText.memberName, assignmentText.actualText, PullElementKind.Property, PullElementFlags.Public, context.getParent(), span);
-
-            context.semanticInfoChain.setDeclForAST(propertyAssignment, decl);
-            context.semanticInfoChain.setASTForDecl(decl, propertyAssignment);
-
-            // Note: it is intentional that a property assignment does not get added to hte context 
-            // stack.  A prop assignment does not introduce a new name scope, so it shouldn't be in
-            // the context decl stack.
-            // context.pushParent(decl);
-        }
-    }
-
     function preCollectSimplePropertyAssignmentDecls(propertyAssignment: SimplePropertyAssignment, context: DeclCollectionContext): void {
         var assignmentText = getPropertyAssignmentNameTextFromIdentifier(propertyAssignment.propertyName);
         var span = TextSpan.fromBounds(propertyAssignment.minChar, propertyAssignment.limChar);
@@ -783,7 +757,7 @@ module TypeScript {
         context.semanticInfoChain.setASTForDecl(decl, propertyAssignment);
 
         createAnyFunctionExpressionDeclaration(
-            propertyAssignment, propertyAssignment.propertyName, propertyAssignment.returnTypeAnnotation, context, propertyAssignment.propertyName);
+            propertyAssignment, propertyAssignment.propertyName, context, propertyAssignment.propertyName);
     }
 
     function preCollectDecls(ast: AST, walker: IAstWalker) {
@@ -814,25 +788,32 @@ module TypeScript {
             case NodeType.Parameter:
                 preCollectParameterDecl(<Parameter>ast, context);
                 break;
+            case NodeType.MemberVariableDeclaration:
+                createMemberVariableDeclaration(<MemberVariableDeclaration>ast, context);
+                break;
             case NodeType.VariableDeclarator:
                 preCollectVarDecls(ast, context);
-                break;
-            case NodeType.FunctionPropertyAssignment:
-                preCollectFunctionPropertyAssignmentDecls(<FunctionPropertyAssignment>ast, context);
                 break;
             case NodeType.ConstructorDeclaration:
                 createClassConstructorDeclaration(<ConstructorDeclaration>ast, context);
                 break;
+            case NodeType.GetAccessor:
+                createGetAccessorDeclaration(<GetAccessor>ast, context);
+                break;
+            case NodeType.SetAccessor:
+                createSetAccessorDeclaration(<SetAccessor>ast, context);
+                break;
+            case NodeType.FunctionExpression:
+                createFunctionExpressionDeclaration(<FunctionExpression>ast, context);
+                break;
+            case NodeType.MemberFunctionDeclaration:
+                createMemberFunctionDeclaration(<MemberFunctionDeclaration>ast, context);
+                break;
+
             case NodeType.FunctionDeclaration:
                 var funcDecl = <FunctionDeclaration>ast;
-
-                if (funcDecl.isGetAccessor()) {
-                    createGetAccessorDeclaration(funcDecl, context);
-                }
-                else if (funcDecl.isSetAccessor()) {
-                    createSetAccessorDeclaration(funcDecl, context);
-                }
-                else if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.ConstructMember)) {
+                var functionFlags = funcDecl.getFunctionFlags();
+                if (hasFlag(functionFlags, FunctionFlags.ConstructMember)) {
                     if (hasFlag(funcDecl.getFlags(), ASTFlags.TypeReference)) {
                         createConstructorTypeDeclaration(funcDecl, context);
                     }
@@ -840,20 +821,17 @@ module TypeScript {
                         createConstructSignatureDeclaration(funcDecl, context);
                     }
                 }
-                else if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.CallSignature)) {
+                else if (hasFlag(functionFlags, FunctionFlags.CallSignature)) {
                     createCallSignatureDeclaration(funcDecl, context);
                 }
-                else if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.IndexerMember)) {
+                else if (hasFlag(functionFlags, FunctionFlags.IndexerMember)) {
                     createIndexSignatureDeclaration(funcDecl, context);
                 }
                 else if (hasFlag(funcDecl.getFlags(), ASTFlags.TypeReference)) {
                     createFunctionTypeDeclaration(funcDecl, context);
                 }
-                else if (hasFlag(funcDecl.getFunctionFlags(), FunctionFlags.Method)) {
-                    createMemberFunctionDeclaration(funcDecl, context);
-                }
-                else if (hasFlag(funcDecl.getFunctionFlags(), (FunctionFlags.IsFunctionExpression))) {
-                    createAnyFunctionExpressionDeclaration(funcDecl, funcDecl.name, funcDecl.returnTypeAnnotation, context);
+                else if (hasFlag(functionFlags, FunctionFlags.Method)) {
+                    createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name, funcDecl.block,  context);
                 }
                 else {
                     createFunctionDeclaration(funcDecl, context);
@@ -861,7 +839,7 @@ module TypeScript {
                 break;
             case NodeType.ArrowFunctionExpression:
                 var arrowFunction = <ArrowFunctionExpression>ast;
-                createAnyFunctionExpressionDeclaration(ast, /*id*/null, arrowFunction.returnTypeAnnotation, context);
+                createAnyFunctionExpressionDeclaration(ast, /*id*/null, context);
                 break;
             case NodeType.ImportDeclaration:
                 preCollectImportDecls(ast, context);
@@ -878,11 +856,11 @@ module TypeScript {
             case NodeType.ObjectLiteralExpression:
                 preCollectObjectLiteralDecls(ast, context);
                 break;
-            case NodeType.Member:
-                preCollectPropertyAssignmentDecls(<BinaryExpression>ast, context);
-                break;
             case NodeType.SimplePropertyAssignment:
                 preCollectSimplePropertyAssignmentDecls(<SimplePropertyAssignment>ast, context);
+                break;
+            case NodeType.FunctionPropertyAssignment:
+                preCollectFunctionPropertyAssignmentDecls(<FunctionPropertyAssignment>ast, context);
                 break;
         }
 
@@ -1009,6 +987,18 @@ module TypeScript {
                     parentDecl.setFlags(parentDecl.flags | initFlag);
                 }
                 break;
+            case NodeType.MemberVariableDeclaration:
+                // Note: a variable declarator does not introduce a new decl scope.  So there is no
+                // need to pop a decl here.
+                // context.popParent();
+
+                parentDecl = context.getParent();
+
+                if (parentDecl && isContainer(parentDecl)) {
+                    initFlag = getInitializationFlag(parentDecl);
+                    parentDecl.setFlags(parentDecl.flags | initFlag);
+                }
+                break;
             case NodeType.EnumElement:
                 // Note: a enum element does not introduce a new decl scope.  So there is no
                 // need to pop a decl here.
@@ -1024,6 +1014,10 @@ module TypeScript {
             case NodeType.ConstructorDeclaration:
             case NodeType.FunctionPropertyAssignment:
             case NodeType.FunctionDeclaration:
+            case NodeType.MemberFunctionDeclaration:
+            case NodeType.FunctionExpression:
+            case NodeType.GetAccessor:
+            case NodeType.SetAccessor:
             case NodeType.ArrowFunctionExpression:
                 context.popParent();
 
@@ -1067,11 +1061,6 @@ module TypeScript {
             case NodeType.ObjectLiteralExpression:
                 context.popParent();
                 break;
-            case NodeType.Member:
-                // Note: a property assignment does not introduce a new decl scope.  So there is no
-                // need to pop a decl here.
-                // context.popParent();
-                break;
             case NodeType.SimplePropertyAssignment:
                 // Note: a property assignment does not introduce a new decl scope.  So there is no
                 // need to pop a decl here.
@@ -1080,8 +1069,8 @@ module TypeScript {
         }
     }
 
-    export class PullDeclWalker {
-        public static create(script: Script, semanticInfoChain: SemanticInfoChain): PullDecl {
+    export module DeclarationCreator {
+        export function create(script: Script, semanticInfoChain: SemanticInfoChain): PullDecl {
             var declCollectionContext = new DeclCollectionContext(semanticInfoChain);
 
             // create decls

@@ -407,6 +407,7 @@ module TypeScript {
                     if (diagnostics !== null) {
                         diagnostics.push(new Diagnostic(
                             this.fileName,
+                            this.text.lineMap(),
                             this.slidingWindow.absoluteIndex(), 0, DiagnosticCode.AsteriskSlash_expected, null));
                     }
 
@@ -672,7 +673,7 @@ module TypeScript {
             }
 
             if (this.languageVersion() >= LanguageVersion.EcmaScript5) {
-                diagnostics.push(new Diagnostic(this.fileName,
+                diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
                     position, this.absoluteIndex() - position, DiagnosticCode.Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher, null));
             }
         }
@@ -1042,7 +1043,7 @@ module TypeScript {
 
             var text = String.fromCharCode(character);
             var messageText = this.getErrorMessageText(text);
-            diagnostics.push(new Diagnostic(this.fileName,
+            diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
                 position, 1, DiagnosticCode.Unexpected_character_0, [messageText]));
 
             return SyntaxKind.ErrorToken;
@@ -1130,7 +1131,7 @@ module TypeScript {
                     break;
                 }
                 else if (this.isNewLineCharacter(ch) || this.slidingWindow.isAtEndOfSource()) {
-                    diagnostics.push(new Diagnostic(this.fileName,
+                    diagnostics.push(new Diagnostic(this.fileName, this.text.lineMap(),
                         MathPrototype.min(this.slidingWindow.absoluteIndex(), this.text.length()), 1, DiagnosticCode.Missing_close_quote_character, null));
                     break;
                 }
@@ -1275,7 +1276,7 @@ module TypeScript {
         }
 
         private createIllegalEscapeDiagnostic(start: number, end: number): Diagnostic {
-            return new Diagnostic(this.fileName, start, end - start,
+            return new Diagnostic(this.fileName, this.text.lineMap(),start, end - start,
                 DiagnosticCode.Unrecognized_escape_sequence, null);
         }
 

@@ -164,8 +164,8 @@ module TypeScript {
             if ((isExported !== prevIsExported) && !prevSymbol.isSignature() && (decl.kind & PullElementKind.SomeSignature) == 0) {
                 if (reportError) {
                     var ast = this.semanticInfoChain.getASTForDecl(decl);
-                    this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
-                        ast, DiagnosticCode.All_declarations_of_merged_declaration_0_must_be_exported_or_not_exported, [decl.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(
+                        ast, DiagnosticCode.All_declarations_of_merged_declaration_0_must_be_exported_or_not_exported, [decl.getDisplayName()]);
                 }
                 return false;
             }
@@ -207,8 +207,7 @@ module TypeScript {
                 if (enumContainerSymbol.kind !== enumDeclKind) {
                     // duplicate symbol error
                     if (isInitializedModule) {
-                        this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(enumAST, DiagnosticCode.Duplicate_identifier_0, [enumContainerDecl.getDisplayName()]));
+                        this.semanticInfoChain.addDiagnosticFromAST(enumAST, DiagnosticCode.Duplicate_identifier_0, [enumContainerDecl.getDisplayName()]);
                     }
                     enumContainerSymbol = null;
                 }
@@ -330,8 +329,8 @@ module TypeScript {
                 if (multipleEnums) {
                     var firstVariable = <EnumElement>enumAST.enumElements.members[0];
                     if (!firstVariable.value) {
-                        this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
-                            firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null));
+                        this.semanticInfoChain.addDiagnosticFromAST(
+                            firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null);
                     }
                 }
             }
@@ -412,8 +411,8 @@ module TypeScript {
 
             if (parent && moduleKind == PullElementKind.DynamicModule) {
                 // Dynamic modules cannot be parented
-                this.semanticInfoChain.addDiagnostic(diagnosticFromAST(
-                    moduleAST, DiagnosticCode.Ambient_external_module_declaration_must_be_defined_in_global_context, null));
+                this.semanticInfoChain.addDiagnosticFromAST(
+                    moduleAST, DiagnosticCode.Ambient_external_module_declaration_must_be_defined_in_global_context, null);
             }
 
             var createdNewSymbol = false;
@@ -424,13 +423,12 @@ module TypeScript {
                 if (moduleContainerTypeSymbol.kind !== moduleKind) {
                     // duplicate symbol error
                     if (isInitializedModule) {
-                        this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(moduleAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]));
+                        this.semanticInfoChain.addDiagnosticFromAST(moduleAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]);
                     }
                     moduleContainerTypeSymbol = null;
                 } else if (moduleKind == PullElementKind.DynamicModule) {
                     // Dynamic modules cannot be reopened.
-                    this.semanticInfoChain.addDiagnostic(diagnosticFromAST(moduleAST, DiagnosticCode.Ambient_external_module_declaration_cannot_be_reopened, null));
+                    this.semanticInfoChain.addDiagnosticFromAST(moduleAST, DiagnosticCode.Ambient_external_module_declaration_cannot_be_reopened);
                 } else if (!this.checkThatExportsMatch(moduleContainerDecl, moduleContainerTypeSymbol)) {
                     moduleContainerTypeSymbol = null;
                 }
@@ -589,8 +587,7 @@ module TypeScript {
             }
 
             if (importSymbol) {
-                this.semanticInfoChain.addDiagnostic(
-                    diagnosticFromAST(importDeclAST, DiagnosticCode.Duplicate_identifier_0, [importDeclaration.getDisplayName()]));
+                this.semanticInfoChain.addDiagnosticFromAST(importDeclAST, DiagnosticCode.Duplicate_identifier_0, [importDeclaration.getDisplayName()]);
                 importSymbol = null;
             }
 
@@ -638,8 +635,7 @@ module TypeScript {
 
             // Only error if it is an interface (for classes and enums we will error when we bind the implicit variable)
             if (classSymbol && classSymbol.kind === PullElementKind.Interface) {
-                this.semanticInfoChain.addDiagnostic(
-                    diagnosticFromAST(classAST, DiagnosticCode.Duplicate_identifier_0, [classDecl.getDisplayName()]));
+                this.semanticInfoChain.addDiagnosticFromAST(classAST, DiagnosticCode.Duplicate_identifier_0, [classDecl.getDisplayName()]);
                 classSymbol = null;
             }
 
@@ -722,8 +718,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
             }
 
@@ -753,8 +748,7 @@ module TypeScript {
 
             if (interfaceSymbol) {
                 if (!(interfaceSymbol.kind & acceptableSharedKind)) {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(interfaceAST, DiagnosticCode.Duplicate_identifier_0, [interfaceDecl.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(interfaceAST, DiagnosticCode.Duplicate_identifier_0, [interfaceDecl.getDisplayName()]);
                     interfaceSymbol = null;
                 }
                 else if (!this.checkThatExportsMatch(interfaceDecl, interfaceSymbol)) {
@@ -812,8 +806,7 @@ module TypeScript {
 
                         if (typeParameterDeclParent && typeParameterDeclParent === interfaceDecl) {
                             var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameterDecls[0]);
-                            this.semanticInfoChain.addDiagnostic(
-                                diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                            this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
 
                             break;
                         }
@@ -862,8 +855,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -911,8 +903,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1326,8 +1317,7 @@ module TypeScript {
                     }
 
                     if (params[argDecl.id.text()]) {
-                        this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [argDecl.id.actualText]));
+                        this.semanticInfoChain.addDiagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [argDecl.id.actualText]);
                     }
                     else {
                         params[argDecl.id.text()] = true;
@@ -1391,8 +1381,7 @@ module TypeScript {
                 var acceptableRedeclaration = functionSymbol.kind === PullElementKind.Function && (isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature)) ||
                     functionSymbol.hasFlag(PullElementFlags.InitializedModule) && isAmbient;
                 if (!acceptableRedeclaration) {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [functionDeclaration.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [functionDeclaration.getDisplayName()]);
                     functionSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, funcName);
                 }
             }
@@ -1455,8 +1444,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1521,8 +1509,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1574,8 +1561,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1621,8 +1607,7 @@ module TypeScript {
             if (methodSymbol &&
                 (methodSymbol.kind !== PullElementKind.Method ||
                 (!isSignature && !methodSymbol.allDeclsHaveFlag(PullElementFlags.Signature)))) {
-                    this.semanticInfoChain.addDiagnostic(
-                    diagnosticFromAST(methodAST, DiagnosticCode.Duplicate_identifier_0, [methodDeclaration.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(methodAST, DiagnosticCode.Duplicate_identifier_0, [methodDeclaration.getDisplayName()]);
                 methodSymbol = null;
             }
 
@@ -1692,8 +1677,7 @@ module TypeScript {
                     signature.addTypeParameter(typeParameter);
                 }
                 else {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1752,8 +1736,7 @@ module TypeScript {
                 }
 
                 if (hasDefinitionSignature) {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(constructorAST, DiagnosticCode.Multiple_constructor_implementations_are_not_allowed, null));
+                    this.semanticInfoChain.addDiagnosticFromAST(constructorAST, DiagnosticCode.Multiple_constructor_implementations_are_not_allowed);
 
                     constructorSymbol = null;
                 }
@@ -1832,8 +1815,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1875,8 +1857,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1911,8 +1892,7 @@ module TypeScript {
                 }
                 else {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]));
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.name]);
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
@@ -1943,7 +1923,7 @@ module TypeScript {
         private bindGetAccessorDeclarationToPullSymbol(getAccessorDeclaration: PullDecl) {
             var declKind = getAccessorDeclaration.kind;
             var declFlags = getAccessorDeclaration.flags;
-            var funcDeclAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(getAccessorDeclaration);
+            var funcDeclAST = this.semanticInfoChain.getASTForDecl(getAccessorDeclaration);
 
             var isExported = (declFlags & PullElementFlags.Exported) !== 0;
 
@@ -1971,16 +1951,14 @@ module TypeScript {
 
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [getAccessorDeclaration.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [getAccessorDeclaration.getDisplayName()]);
                     accessorSymbol = null;
                 }
                 else {
                     getterSymbol = accessorSymbol.getGetter();
 
                     if (getterSymbol) {
-                        this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(funcDeclAST, DiagnosticCode.Getter_0_already_declared, [getAccessorDeclaration.getDisplayName()]));
+                        this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Getter_0_already_declared, [getAccessorDeclaration.getDisplayName()]);
                         accessorSymbol = null;
                         getterSymbol = null;
                     }
@@ -2019,7 +1997,8 @@ module TypeScript {
             // accessor declaration AST, it just expects the getter/setter symbol. But when
             // the language service looks up the name of an accessor, it should treat it as a
             // property and display it to the user as such.
-            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, accessorSymbol);
+            var nameAST = this.getNameOfAccessor(funcDeclAST);
+            this.semanticInfoChain.setSymbolForAST(nameAST, accessorSymbol);
             this.semanticInfoChain.setSymbolForAST(funcDeclAST, getterSymbol);
 
             if (!parentHadSymbol) {
@@ -2037,9 +2016,7 @@ module TypeScript {
             var typeParameters = getAccessorDeclaration.getTypeParameters();
 
             if (typeParameters.length) {
-                this.semanticInfoChain.addDiagnostic(
-                    diagnosticFromAST(funcDeclAST,
-                        DiagnosticCode.Accessors_cannot_have_type_parameters, null));
+                this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Accessors_cannot_have_type_parameters);
             }
 
             // add the implicit call member for this function type
@@ -2049,7 +2026,7 @@ module TypeScript {
         private bindSetAccessorDeclarationToPullSymbol(setAccessorDeclaration: PullDecl) {
             var declKind = setAccessorDeclaration.kind;
             var declFlags = setAccessorDeclaration.flags;
-            var funcDeclAST = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(setAccessorDeclaration);
+            var funcDeclAST = this.semanticInfoChain.getASTForDecl(setAccessorDeclaration);
 
             var isExported = (declFlags & PullElementFlags.Exported) !== 0;
 
@@ -2077,16 +2054,14 @@ module TypeScript {
 
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
-                    this.semanticInfoChain.addDiagnostic(
-                        diagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [setAccessorDeclaration.getDisplayName()]));
+                    this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [setAccessorDeclaration.getDisplayName()]);
                     accessorSymbol = null;
                 }
                 else {
                     setterSymbol = accessorSymbol.getSetter();
 
                     if (setterSymbol) {
-                        this.semanticInfoChain.addDiagnostic(
-                            diagnosticFromAST(funcDeclAST, DiagnosticCode.Setter_0_already_declared, [setAccessorDeclaration.getDisplayName()]));
+                        this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Setter_0_already_declared, [setAccessorDeclaration.getDisplayName()]);
                         accessorSymbol = null;
                         setterSymbol = null;
                     }
@@ -2125,7 +2100,9 @@ module TypeScript {
             // accessor declaration AST, it just expects the getter/setter symbol. But when
             // the language service looks up the name of an accessor, it should treat it as a
             // property and display it to the user as such.
-            this.semanticInfoChain.setSymbolForAST(funcDeclAST.name, accessorSymbol);
+
+            var nameAST = this.getNameOfAccessor(funcDeclAST);
+            this.semanticInfoChain.setSymbolForAST(nameAST, accessorSymbol);
             this.semanticInfoChain.setSymbolForAST(funcDeclAST, setterSymbol);
 
             if (!parentHadSymbol) {
@@ -2144,12 +2121,19 @@ module TypeScript {
             var typeParameters = setAccessorDeclaration.getTypeParameters();
 
             if (typeParameters.length) {
-                this.semanticInfoChain.addDiagnostic(
-                    diagnosticFromAST(funcDeclAST, DiagnosticCode.Accessors_cannot_have_type_parameters, null));
+                this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Accessors_cannot_have_type_parameters);
             }
 
             // add the implicit call member for this function type
             setterTypeSymbol.addCallSignature(signature);
+        }
+
+        private getNameOfAccessor(ast: AST): Identifier {
+            return ast.nodeType() === NodeType.FunctionDeclaration
+                ? (<FunctionDeclaration>ast).name
+                : ast.nodeType() === NodeType.GetAccessor
+                    ? (<GetAccessor>ast).propertyName
+                    : (<SetAccessor>ast).propertyName;
         }
 
         // binding

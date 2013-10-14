@@ -7,19 +7,28 @@ module TypeScript {
         private _script: Script = null;
         private _lineMap: LineMap = null;
 
-        constructor(private compiler: TypeScriptCompiler,
+        private _declASTMap = new DataMap<AST>();
+        private _astDeclMap = new DataMap<PullDecl>();
+
+        constructor(private _compiler: TypeScriptCompiler,
+                    private _semanticInfoChain: SemanticInfoChain,
                     public fileName: string,
                     public referencedFiles: string[],
-                    private scriptSnapshot: IScriptSnapshot,
+                    private _scriptSnapshot: IScriptSnapshot,
                     public byteOrderMark: ByteOrderMark,
                     public version: number,
                     public isOpen: boolean,
-                    private _syntaxTree: SyntaxTree) {
+                    private _syntaxTree: SyntaxTree,
+                    private _topLevelDecl: PullDecl) {
         }
 
         // Only for use by the semantic info chain.
         public invalidate(): void {
             // Dump all information related to syntax.  We'll have to recompute it when asked.
+            this._declASTMap = new DataMap<AST>();
+            this._astDeclMap = new DataMap<PullDecl>();
+            this._topLevelDecl = null;
+
             this._syntaxTree = null;
             this._script = null;
             this._diagnostics = null;
@@ -41,7 +50,7 @@ module TypeScript {
             if (!this._script) {
                 var start = new Date().getTime();
                 var syntaxTree = this.syntaxTree();
-                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this.compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
+                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this._compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
                 TypeScript.astTranslationTime += new Date().getTime() - start;
 
                 // If we're not open, then we can throw away our syntax tree.  We don't need it from
@@ -81,9 +90,9 @@ module TypeScript {
 
                 result = Parser.parse(
                     this.fileName,
-                    SimpleText.fromScriptSnapshot(this.scriptSnapshot),
+                    SimpleText.fromScriptSnapshot(this._scriptSnapshot),
                     TypeScript.isDTSFile(this.fileName),
-                    getParseOptions(this.compiler.compilationSettings()));
+                    getParseOptions(this._compiler.compilationSettings()));
 
                 TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
 
@@ -132,7 +141,7 @@ module TypeScript {
             // If we haven't specified an output file in our settings, then we're definitely 
             // emitting to our own file.  Also, if we're an external module, then we're 
             // definitely emitting to our own file.
-            return !this.compiler.compilationSettings().outFileOption() || this.script().isExternalModule;
+            return !this._compiler.compilationSettings().outFileOption() || this.script().isExternalModule;
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
@@ -147,14 +156,43 @@ module TypeScript {
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
             // parse.  Otherwise, do an incremental parse.
             var newSyntaxTree = textChangeRange === null || oldSyntaxTree === null
-                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this.compiler.compilationSettings()))
+                ? TypeScript.Parser.parse(this.fileName, text, TypeScript.isDTSFile(this.fileName), getParseOptions(this._compiler.compilationSettings()))
                 : TypeScript.Parser.incrementalParse(oldSyntaxTree, textChangeRange, text);
 
-            return new Document(this.compiler, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree);
+            return new Document(this._compiler, this._semanticInfoChain, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }
 
-        public static create(compiler: TypeScriptCompiler, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
-            return new Document(compiler, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null);
+        public static create(compiler: TypeScriptCompiler, semanticInfoChain: SemanticInfoChain, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
+            return new Document(compiler, semanticInfoChain, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null, /*topLevelDecl:*/ null);
+        }
+
+        public topLevelDecl(): PullDecl {
+            if (this._topLevelDecl === null) {
+                this._topLevelDecl = DeclarationCreator.create(this.script(), this._semanticInfoChain);
+            }
+
+            return this._topLevelDecl;
+        }
+
+        public _getDeclForAST(ast: AST): PullDecl {
+            // Ensure we actually have created all our decls before we try to find a mathcing decl
+            // for this ast.
+            this.topLevelDecl();
+            return this._astDeclMap.read(ast.astIDString);
+        }
+
+        public _setDeclForAST(ast: AST, decl: PullDecl): void {
+            Debug.assert(decl.fileName() === this.fileName);
+            this._astDeclMap.link(ast.astIDString, decl);
+        }
+
+        public _getASTForDecl(decl: PullDecl): AST {
+            return this._declASTMap.read(decl.declIDString);
+        }
+
+        public _setASTForDecl(decl: PullDecl, ast: AST): void {
+            Debug.assert(decl.fileName() === this.fileName);
+            this._declASTMap.link(decl.declIDString, ast);
         }
     }
 }

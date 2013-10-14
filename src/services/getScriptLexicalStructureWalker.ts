@@ -187,14 +187,14 @@ module Services {
             this.skip(node);
         }
 
-        public visitGetMemberAccessorDeclaration(node: TypeScript.GetMemberAccessorDeclarationSyntax): void {
+        public visitGetAccessor(node: TypeScript.GetAccessorSyntax): void {
             var item = this.createItem(node, node.modifiers, ScriptElementKind.memberGetAccessorElement, node.propertyName.text());
 
             // No need to descend into a member accessor;
             this.skip(node);
         }
 
-        public visitSetMemberAccessorDeclaration(node: TypeScript.SetMemberAccessorDeclarationSyntax): void {
+        public visitSetAccessor(node: TypeScript.SetAccessorSyntax): void {
             var item = this.createItem(node, node.modifiers, ScriptElementKind.memberSetAccessorElement, node.propertyName.text());
 
             // No need to descend into a member accessor;

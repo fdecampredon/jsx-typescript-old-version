@@ -620,16 +620,9 @@ var definitions:ITypeDefinition[] = [
         isTypeScriptSpecific: true
     },
     <any>{
-        name: 'MemberAccessorDeclarationSyntax',
+        name: 'GetAccessorSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberDeclarationSyntax'],
-        isAbstract: true,
-        children: <any>[],
-        isTypeScriptSpecific: true
-    },
-    <any>{
-        name: 'GetMemberAccessorDeclarationSyntax',
-        baseType: 'MemberAccessorDeclarationSyntax',
+        interfaces: ['IMemberDeclarationSyntax', 'IPropertyAssignmentSyntax' ],
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'getKeyword', isToken: true },
@@ -641,8 +634,9 @@ var definitions:ITypeDefinition[] = [
         isTypeScriptSpecific: true
     },
     <any>{
-        name: 'SetMemberAccessorDeclarationSyntax',
-        baseType: 'MemberAccessorDeclarationSyntax',
+        name: 'SetAccessorSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IMemberDeclarationSyntax', 'IPropertyAssignmentSyntax'],
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'setKeyword', isToken: true },
@@ -870,19 +864,14 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IPrimaryExpressionSyntax'],
         children: [
             <any>{ name: 'openBraceToken', isToken: true },
-            <any>{ name: 'propertyAssignments', isSeparatedList: true, elementType: 'PropertyAssignmentSyntax' },
+            <any>{ name: 'propertyAssignments', isSeparatedList: true, elementType: 'IPropertyAssignmentSyntax' },
             <any>{ name: 'closeBraceToken', isToken: true }
         ]
     },
     <any>{
-        name: 'PropertyAssignmentSyntax',
-        baseType: 'SyntaxNode',
-        isAbstract: true,
-        children: <any>[]
-    },
-    <any>{
         name: 'SimplePropertyAssignmentSyntax',
-        baseType: 'PropertyAssignmentSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IPropertyAssignmentSyntax'],
         children: [
             <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName', 'StringLiteral', 'NumericLiteral'] },
             <any>{ name: 'colonToken', isToken: true },
@@ -891,40 +880,13 @@ var definitions:ITypeDefinition[] = [
     },
     <any> {
         name: 'FunctionPropertyAssignmentSyntax',
-        baseType: 'PropertyAssignmentSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IPropertyAssignmentSyntax'],
         children: [
             <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName', 'StringLiteral', 'NumericLiteral'] },
             <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
             <any>{ name: 'block', type: 'BlockSyntax' }
         ]
-    },
-    <any>{
-        name: 'AccessorPropertyAssignmentSyntax',
-        baseType: 'PropertyAssignmentSyntax',
-        isAbstract: true,
-        children: <any>[]
-    },
-    <any>{
-        name: 'GetAccessorPropertyAssignmentSyntax',
-        baseType: 'AccessorPropertyAssignmentSyntax',
-        children: [
-            <any>{ name: 'getKeyword', isToken: true },
-            <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName'] },
-            <any>{ name: 'openParenToken', isToken: true },
-            <any>{ name: 'closeParenToken', isToken: true },
-            <any>{ name: 'typeAnnotation', type: 'TypeAnnotationSyntax', isOptional: true },
-            <any>{ name: 'block', type: 'BlockSyntax' }]
-    },
-    <any>{
-        name: 'SetAccessorPropertyAssignmentSyntax',
-        baseType: 'AccessorPropertyAssignmentSyntax',
-        children: [
-            <any>{ name: 'setKeyword', isToken: true },
-            <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName'] },
-            <any>{ name: 'openParenToken', isToken: true },
-            <any>{ name: 'parameter', type: 'ParameterSyntax' },
-            <any>{ name: 'closeParenToken', isToken: true },
-            <any>{ name: 'block', type: 'BlockSyntax' }]
     },
     <any>{
         name: 'FunctionExpressionSyntax',

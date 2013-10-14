@@ -172,9 +172,11 @@ module TypeScript {
         MemberFunctionDeclaration,
         MemberVariableDeclaration,
         ConstructorDeclaration,
-        GetMemberAccessorDeclaration,
-        SetMemberAccessorDeclaration,
         IndexMemberDeclaration,
+
+        // ClassElement and PropertyAssignment
+        GetAccessor,
+        SetAccessor,
 
         // Type members.
         PropertySignature,
@@ -290,8 +292,8 @@ module TypeScript {
 
         // Property Assignment
         SimplePropertyAssignment,
-        GetAccessorPropertyAssignment,
-        SetAccessorPropertyAssignment,
+        // GetAccessorPropertyAssignment,
+        // SetAccessorPropertyAssignment,
         FunctionPropertyAssignment,
 
         // Misc.
