@@ -638,15 +638,11 @@
                                                 },
                                                 "propertyAssignments": [
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "SetAccessorPropertyAssignment",
+                                                        "kind": "SetAccessor",
                                                         "fullStart": 659,
                                                         "fullEnd": 732,
                                                         "start": 671,
                                                         "end": 732,
-=======
-                                                        "kind": "SetAccessor",
->>>>>>> develop
                                                         "fullWidth": 73,
                                                         "width": 61,
                                                         "isIncrementallyUnusable": true,
@@ -689,58 +685,21 @@
                                                             "value": "in",
                                                             "valueText": "in"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 677,
-                                                            "fullEnd": 678,
-                                                            "start": 677,
-                                                            "end": 678,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "parameter": {
-                                                            "kind": "Parameter",
-                                                            "fullStart": 678,
-                                                            "fullEnd": 683,
-                                                            "start": 678,
-                                                            "end": 683,
-                                                            "fullWidth": 5,
-                                                            "width": 5,
-                                                            "identifier": {
-                                                                "kind": "IdentifierName",
-                                                                "fullStart": 678,
-                                                                "fullEnd": 683,
-                                                                "start": 678,
-                                                                "end": 683,
-                                                                "fullWidth": 5,
-                                                                "width": 5,
-                                                                "text": "value",
-                                                                "value": "value",
-                                                                "valueText": "value"
-                                                            }
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 683,
-                                                            "fullEnd": 684,
-                                                            "start": 683,
-                                                            "end": 684,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-                                                        },
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 677,
+                                                            "fullEnd": 684,
+                                                            "start": 677,
+                                                            "end": 684,
                                                             "fullWidth": 7,
+                                                            "width": 7,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 677,
+                                                                "fullEnd": 678,
+                                                                "start": 677,
+                                                                "end": 678,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -749,9 +708,19 @@
                                                             "parameters": [
                                                                 {
                                                                     "kind": "Parameter",
+                                                                    "fullStart": 678,
+                                                                    "fullEnd": 683,
+                                                                    "start": 678,
+                                                                    "end": 683,
                                                                     "fullWidth": 5,
+                                                                    "width": 5,
                                                                     "identifier": {
                                                                         "kind": "IdentifierName",
+                                                                        "fullStart": 678,
+                                                                        "fullEnd": 683,
+                                                                        "start": 678,
+                                                                        "end": 683,
+                                                                        "fullWidth": 5,
                                                                         "width": 5,
                                                                         "text": "value",
                                                                         "value": "value",
@@ -761,13 +730,17 @@
                                                             ],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 683,
+                                                                "fullEnd": 684,
+                                                                "start": 683,
+                                                                "end": 684,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
                                                         },
->>>>>>> develop
                                                         "block": {
                                                             "kind": "Block",
                                                             "fullStart": 684,
@@ -935,15 +908,11 @@
                                                         ]
                                                     },
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "GetAccessorPropertyAssignment",
+                                                        "kind": "GetAccessor",
                                                         "fullStart": 735,
                                                         "fullEnd": 802,
                                                         "start": 747,
                                                         "end": 802,
-=======
-                                                        "kind": "GetAccessor",
->>>>>>> develop
                                                         "fullWidth": 67,
                                                         "width": 55,
                                                         "isIncrementallyUnusable": true,
@@ -986,36 +955,21 @@
                                                             "value": "in",
                                                             "valueText": "in"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 753,
-                                                            "fullEnd": 754,
-                                                            "start": 753,
-                                                            "end": 754,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 754,
-                                                            "fullEnd": 755,
-                                                            "start": 754,
-                                                            "end": 755,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 753,
+                                                            "fullEnd": 755,
+                                                            "start": 753,
+                                                            "end": 755,
                                                             "fullWidth": 2,
+                                                            "width": 2,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 753,
+                                                                "fullEnd": 754,
+                                                                "start": 753,
+                                                                "end": 754,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -1024,12 +978,16 @@
                                                             "parameters": [],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 754,
+                                                                "fullEnd": 755,
+                                                                "start": 754,
+                                                                "end": 755,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
->>>>>>> develop
                                                         },
                                                         "block": {
                                                             "kind": "Block",
@@ -1170,15 +1128,11 @@
                                                         ]
                                                     },
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "SetAccessorPropertyAssignment",
+                                                        "kind": "SetAccessor",
                                                         "fullStart": 805,
                                                         "fullEnd": 879,
                                                         "start": 817,
                                                         "end": 879,
-=======
-                                                        "kind": "SetAccessor",
->>>>>>> develop
                                                         "fullWidth": 74,
                                                         "width": 62,
                                                         "isIncrementallyUnusable": true,
@@ -1221,58 +1175,21 @@
                                                             "value": "try",
                                                             "valueText": "try"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 824,
-                                                            "fullEnd": 825,
-                                                            "start": 824,
-                                                            "end": 825,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "parameter": {
-                                                            "kind": "Parameter",
-                                                            "fullStart": 825,
-                                                            "fullEnd": 830,
-                                                            "start": 825,
-                                                            "end": 830,
-                                                            "fullWidth": 5,
-                                                            "width": 5,
-                                                            "identifier": {
-                                                                "kind": "IdentifierName",
-                                                                "fullStart": 825,
-                                                                "fullEnd": 830,
-                                                                "start": 825,
-                                                                "end": 830,
-                                                                "fullWidth": 5,
-                                                                "width": 5,
-                                                                "text": "value",
-                                                                "value": "value",
-                                                                "valueText": "value"
-                                                            }
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 830,
-                                                            "fullEnd": 831,
-                                                            "start": 830,
-                                                            "end": 831,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-                                                        },
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 824,
+                                                            "fullEnd": 831,
+                                                            "start": 824,
+                                                            "end": 831,
                                                             "fullWidth": 7,
+                                                            "width": 7,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 824,
+                                                                "fullEnd": 825,
+                                                                "start": 824,
+                                                                "end": 825,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -1281,9 +1198,19 @@
                                                             "parameters": [
                                                                 {
                                                                     "kind": "Parameter",
+                                                                    "fullStart": 825,
+                                                                    "fullEnd": 830,
+                                                                    "start": 825,
+                                                                    "end": 830,
                                                                     "fullWidth": 5,
+                                                                    "width": 5,
                                                                     "identifier": {
                                                                         "kind": "IdentifierName",
+                                                                        "fullStart": 825,
+                                                                        "fullEnd": 830,
+                                                                        "start": 825,
+                                                                        "end": 830,
+                                                                        "fullWidth": 5,
                                                                         "width": 5,
                                                                         "text": "value",
                                                                         "value": "value",
@@ -1293,13 +1220,17 @@
                                                             ],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 830,
+                                                                "fullEnd": 831,
+                                                                "start": 830,
+                                                                "end": 831,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
                                                         },
->>>>>>> develop
                                                         "block": {
                                                             "kind": "Block",
                                                             "fullStart": 831,
@@ -1467,15 +1398,11 @@
                                                         ]
                                                     },
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "GetAccessorPropertyAssignment",
+                                                        "kind": "GetAccessor",
                                                         "fullStart": 882,
                                                         "fullEnd": 949,
                                                         "start": 894,
                                                         "end": 949,
-=======
-                                                        "kind": "GetAccessor",
->>>>>>> develop
                                                         "fullWidth": 67,
                                                         "width": 55,
                                                         "isIncrementallyUnusable": true,
@@ -1518,36 +1445,21 @@
                                                             "value": "try",
                                                             "valueText": "try"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 901,
-                                                            "fullEnd": 902,
-                                                            "start": 901,
-                                                            "end": 902,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 902,
-                                                            "fullEnd": 903,
-                                                            "start": 902,
-                                                            "end": 903,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 901,
+                                                            "fullEnd": 903,
+                                                            "start": 901,
+                                                            "end": 903,
                                                             "fullWidth": 2,
+                                                            "width": 2,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 901,
+                                                                "fullEnd": 902,
+                                                                "start": 901,
+                                                                "end": 902,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -1556,12 +1468,16 @@
                                                             "parameters": [],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 902,
+                                                                "fullEnd": 903,
+                                                                "start": 902,
+                                                                "end": 903,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
->>>>>>> develop
                                                         },
                                                         "block": {
                                                             "kind": "Block",
@@ -1702,15 +1618,11 @@
                                                         ]
                                                     },
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "SetAccessorPropertyAssignment",
+                                                        "kind": "SetAccessor",
                                                         "fullStart": 952,
                                                         "fullEnd": 1028,
                                                         "start": 964,
                                                         "end": 1028,
-=======
-                                                        "kind": "SetAccessor",
->>>>>>> develop
                                                         "fullWidth": 76,
                                                         "width": 64,
                                                         "isIncrementallyUnusable": true,
@@ -1753,58 +1665,21 @@
                                                             "value": "class",
                                                             "valueText": "class"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 973,
-                                                            "fullEnd": 974,
-                                                            "start": 973,
-                                                            "end": 974,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "parameter": {
-                                                            "kind": "Parameter",
-                                                            "fullStart": 974,
-                                                            "fullEnd": 979,
-                                                            "start": 974,
-                                                            "end": 979,
-                                                            "fullWidth": 5,
-                                                            "width": 5,
-                                                            "identifier": {
-                                                                "kind": "IdentifierName",
-                                                                "fullStart": 974,
-                                                                "fullEnd": 979,
-                                                                "start": 974,
-                                                                "end": 979,
-                                                                "fullWidth": 5,
-                                                                "width": 5,
-                                                                "text": "value",
-                                                                "value": "value",
-                                                                "valueText": "value"
-                                                            }
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 979,
-                                                            "fullEnd": 980,
-                                                            "start": 979,
-                                                            "end": 980,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-                                                        },
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 973,
+                                                            "fullEnd": 980,
+                                                            "start": 973,
+                                                            "end": 980,
                                                             "fullWidth": 7,
+                                                            "width": 7,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 973,
+                                                                "fullEnd": 974,
+                                                                "start": 973,
+                                                                "end": 974,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -1813,9 +1688,19 @@
                                                             "parameters": [
                                                                 {
                                                                     "kind": "Parameter",
+                                                                    "fullStart": 974,
+                                                                    "fullEnd": 979,
+                                                                    "start": 974,
+                                                                    "end": 979,
                                                                     "fullWidth": 5,
+                                                                    "width": 5,
                                                                     "identifier": {
                                                                         "kind": "IdentifierName",
+                                                                        "fullStart": 974,
+                                                                        "fullEnd": 979,
+                                                                        "start": 974,
+                                                                        "end": 979,
+                                                                        "fullWidth": 5,
                                                                         "width": 5,
                                                                         "text": "value",
                                                                         "value": "value",
@@ -1825,13 +1710,17 @@
                                                             ],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 979,
+                                                                "fullEnd": 980,
+                                                                "start": 979,
+                                                                "end": 980,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
                                                         },
->>>>>>> develop
                                                         "block": {
                                                             "kind": "Block",
                                                             "fullStart": 980,
@@ -1999,15 +1888,11 @@
                                                         ]
                                                     },
                                                     {
-<<<<<<< HEAD
-                                                        "kind": "GetAccessorPropertyAssignment",
+                                                        "kind": "GetAccessor",
                                                         "fullStart": 1031,
                                                         "fullEnd": 1103,
                                                         "start": 1043,
                                                         "end": 1101,
-=======
-                                                        "kind": "GetAccessor",
->>>>>>> develop
                                                         "fullWidth": 72,
                                                         "width": 58,
                                                         "isIncrementallyUnusable": true,
@@ -2050,36 +1935,21 @@
                                                             "value": "class",
                                                             "valueText": "class"
                                                         },
-<<<<<<< HEAD
-                                                        "openParenToken": {
-                                                            "kind": "OpenParenToken",
-                                                            "fullStart": 1052,
-                                                            "fullEnd": 1053,
-                                                            "start": 1052,
-                                                            "end": 1053,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": "(",
-                                                            "value": "(",
-                                                            "valueText": "("
-                                                        },
-                                                        "closeParenToken": {
-                                                            "kind": "CloseParenToken",
-                                                            "fullStart": 1053,
-                                                            "fullEnd": 1054,
-                                                            "start": 1053,
-                                                            "end": 1054,
-                                                            "fullWidth": 1,
-                                                            "width": 1,
-                                                            "text": ")",
-                                                            "value": ")",
-                                                            "valueText": ")"
-=======
                                                         "parameterList": {
                                                             "kind": "ParameterList",
+                                                            "fullStart": 1052,
+                                                            "fullEnd": 1054,
+                                                            "start": 1052,
+                                                            "end": 1054,
                                                             "fullWidth": 2,
+                                                            "width": 2,
                                                             "openParenToken": {
                                                                 "kind": "OpenParenToken",
+                                                                "fullStart": 1052,
+                                                                "fullEnd": 1053,
+                                                                "start": 1052,
+                                                                "end": 1053,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": "(",
                                                                 "value": "(",
@@ -2088,12 +1958,16 @@
                                                             "parameters": [],
                                                             "closeParenToken": {
                                                                 "kind": "CloseParenToken",
+                                                                "fullStart": 1053,
+                                                                "fullEnd": 1054,
+                                                                "start": 1053,
+                                                                "end": 1054,
+                                                                "fullWidth": 1,
                                                                 "width": 1,
                                                                 "text": ")",
                                                                 "value": ")",
                                                                 "valueText": ")"
                                                             }
->>>>>>> develop
                                                         },
                                                         "block": {
                                                             "kind": "Block",

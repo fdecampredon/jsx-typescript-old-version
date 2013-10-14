@@ -2324,6 +2324,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     }
 
     result +=
+"        public isShared(): boolean { return false; }\r\n" +
 "        public isNode(): boolean { return false; }\r\n" +
 "        public isToken(): boolean { return true; }\r\n" +
 "        public isList(): boolean { return false; }\r\n" +
@@ -2331,7 +2332,6 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     result += "        public kind(): SyntaxKind { return this.tokenKind; }\r\n\r\n";
 
-    result += "        public isSingleton(): boolean { return false; }\r\n";
     result += "        public childCount(): number { return 0; }\r\n";
     result += "        public childAt(index: number): ISyntaxElement { throw Errors.argumentOutOfRange('index'); }\r\n\r\n";
 
