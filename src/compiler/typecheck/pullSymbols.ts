@@ -1154,9 +1154,6 @@ module TypeScript {
         private _enclosedMemberContainers: PullTypeSymbol[] = null;
         private _typeParameters: PullTypeParameterSymbol[] = null;
         private _typeArguments: PullTypeSymbol[] = null;
-        private _containedNonMembers: PullSymbol[] = null;
-        private _containedNonMemberTypes: PullTypeSymbol[] = null;
-        private _containedNonMemberContainers: PullTypeSymbol[] = null;
 
         private _specializedVersionsOfThisType: PullTypeSymbol[] = null;
         private _arrayVersionOfThisType: PullTypeSymbol = null;
@@ -1338,25 +1335,6 @@ module TypeScript {
             }
         }
 
-        public addContainedNonMember(nonMember: PullSymbol) {
-
-            if (!nonMember) {
-                return;
-            }
-
-            if (!this._containedNonMembers) {
-                this._containedNonMembers = [];
-            }
-
-            this._containedNonMembers[this._containedNonMembers.length] = nonMember;
-
-            if (!this._containedNonMemberNameCache) {
-                this._containedNonMemberNameCache = new BlockIntrinsics();
-            }
-
-            this._containedNonMemberNameCache[nonMember.name] = nonMember;
-        }
-
         // TODO: This seems to conflate exposed members with private non-Members
         public findContainedNonMember(name: string): PullSymbol {
             if (!this._containedNonMemberNameCache) {
@@ -1465,11 +1443,6 @@ module TypeScript {
                 this._containedNonMemberNameCache = new BlockIntrinsics();
             }
 
-            if (!this._containedNonMembers) {
-                this._containedNonMembers = [];
-            }
-
-            this._containedNonMembers[this._containedNonMembers.length] = enclosedNonMember;
             this._containedNonMemberNameCache[enclosedNonMember.name] = enclosedNonMember;
         }
 
@@ -1485,11 +1458,6 @@ module TypeScript {
                 this._containedNonMemberTypeNameCache = new BlockIntrinsics();
             }
 
-            if (!this._containedNonMemberTypes) {
-                this._containedNonMemberTypes = [];
-            }
-
-            this._containedNonMemberTypes[this._containedNonMemberTypes.length] = enclosedNonMemberType;
             this._containedNonMemberTypeNameCache[enclosedNonMemberType.name] = enclosedNonMemberType;
         }
 
@@ -1505,11 +1473,6 @@ module TypeScript {
                 this._containedNonMemberContainerCache = new BlockIntrinsics();
             }
 
-            if (!this._containedNonMemberContainers) {
-                this._containedNonMemberContainers = [];
-            }
-
-            this._containedNonMemberContainers[this._containedNonMemberContainers.length] = enclosedNonMemberContainer;
             this._containedNonMemberContainerCache[enclosedNonMemberContainer.name] = enclosedNonMemberContainer;
         }
 
@@ -2315,7 +2278,7 @@ module TypeScript {
         private assignedType: PullTypeSymbol = null;
         private assignedContainer: PullContainerSymbol = null;
 
-        constructor(name: string, kind = PullElementKind.Container) {
+        constructor(name: string, kind: PullElementKind) {
             super(name, kind);
         }
 

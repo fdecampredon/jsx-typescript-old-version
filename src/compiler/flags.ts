@@ -16,13 +16,8 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-
     export function hasFlag(val: number, flag: number): boolean {
         return (val & flag) !== 0;
-    }
-
-    export function withoutFlag(val: number, flag: number): number {
-        return val & ~flag;
     }
 
     export enum ASTFlags {

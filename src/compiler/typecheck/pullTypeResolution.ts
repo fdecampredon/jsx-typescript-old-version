@@ -3332,19 +3332,11 @@ module TypeScript {
 
         private resolveAnyFunctionDeclaration(
             funcDecl: FunctionDeclaration,
-            inContextuallyTypedAssignment: boolean,
             enclosingDecl: PullDecl,
             context: PullTypeResolutionContext): PullSymbol {
 
-            if (inContextuallyTypedAssignment) {
-                return this.resolveAnyFunctionExpression(
-                    funcDecl, funcDecl.typeParameters, funcDecl.parameterList, funcDecl.returnTypeAnnotation, funcDecl.block,
-                    inContextuallyTypedAssignment, enclosingDecl, context);
-            }
-            else {
-                return this.resolveFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name,
-                    funcDecl.typeParameters, funcDecl.parameterList, funcDecl.returnTypeAnnotation, funcDecl.block, context);
-            }
+            return this.resolveFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name,
+                funcDecl.typeParameters, funcDecl.parameterList, funcDecl.returnTypeAnnotation, funcDecl.block, context);
         }
 
         private resolveFunctionExpression(funcDecl: FunctionExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
@@ -5102,9 +5094,6 @@ module TypeScript {
                 case NodeType.FunctionPropertyAssignment:
                     return this.resolveFunctionPropertyAssignment(<FunctionPropertyAssignment>ast, inContextuallyTypedAssignment, enclosingDecl, context);
 
-                case NodeType.GenericType:
-                    return this.resolveGenericTypeReference(<GenericType>ast, enclosingDecl, context);
-
                 case NodeType.Name:
                     if (context.resolvingTypeReference) {
                         return this.resolveTypeNameExpression(<Identifier>ast, enclosingDecl, context);
@@ -5130,7 +5119,7 @@ module TypeScript {
                     return this.resolveMemberFunctionDeclaration(<MemberFunctionDeclaration>ast, enclosingDecl, context);
 
                 case NodeType.FunctionDeclaration:
-                    return this.resolveAnyFunctionDeclaration(<FunctionDeclaration>ast, inContextuallyTypedAssignment, enclosingDecl, context);
+                    return this.resolveAnyFunctionDeclaration(<FunctionDeclaration>ast, enclosingDecl, context);
 
                 case NodeType.FunctionExpression:
                     return this.resolveFunctionExpression(<FunctionExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
@@ -5370,21 +5359,12 @@ module TypeScript {
                     this.typeCheckParameter(<Parameter>ast, enclosingDecl, context);
                     return;
 
-                case NodeType.TypeParameter:
-                    this.typeCheckTypeParameterDeclaration(<TypeParameter>ast, context);
-                    return;
-
                 case NodeType.ImportDeclaration:
                     this.typeCheckImportDeclaration(<ImportDeclaration>ast, context);
                     return;
 
                 case NodeType.ObjectLiteralExpression:
                     this.resolveObjectLiteralExpression(<ObjectLiteralExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
-                    return;
-
-                case NodeType.GenericType:
-                    // No need to typecheck separately just do resolution again
-                    this.resolveGenericTypeReference(<GenericType>ast, enclosingDecl, context);
                     return;
 
                 case NodeType.Name:
@@ -5404,61 +5384,17 @@ module TypeScript {
                     this.resolveQualifiedName(<QualifiedName>ast, enclosingDecl, context);
                     return;
 
-                case NodeType.FunctionPropertyAssignment:
-                    this.typeCheckFunctionPropertyAssignment(<FunctionPropertyAssignment>ast, context);
-                    return;
-
-                case NodeType.ConstructorDeclaration:
-                    this.typeCheckConstructorDeclaration(<ConstructorDeclaration>ast, context);
-                    return;
-
-                case NodeType.GetAccessor:
-                    var getAccessor = <GetAccessor>ast;
-                    if (getAccessor.parent.nodeType() !== NodeType.ObjectLiteralExpression) {
-                        this.typeCheckGetAccessorDeclaration(
-                            getAccessor, getAccessor.getFunctionFlags(), getAccessor.propertyName, getAccessor.parameterList,
-                            getAccessor.returnTypeAnnotation, getAccessor.block, context);
-                    }
-                    break;
-
-                case NodeType.SetAccessor:
-                    var setAccessor = <SetAccessor>ast;
-                    if (setAccessor.parent.nodeType() !== NodeType.ObjectLiteralExpression) {
-                        this.typeCheckSetAccessorDeclaration(
-                            setAccessor, setAccessor.getFunctionFlags(), setAccessor.propertyName, setAccessor.parameterList,
-                            setAccessor.block, context);
-                    }
-                    break;
-
                 case NodeType.FunctionExpression:
                     this.typeCheckFunctionExpression(<FunctionExpression>ast, context);
-                    break;
-
-                case NodeType.MemberFunctionDeclaration:
-                    var memberFunction = <MemberFunctionDeclaration>ast;
-                    if (inContextuallyTypedAssignment) {
-                        this.typeCheckAnyFunctionExpression(memberFunction, memberFunction.typeParameters, memberFunction.returnTypeAnnotation, memberFunction.block, context);
-                    }
-                    else {
-                        this.typeCheckFunctionDeclaration(
-                            memberFunction, memberFunction.getFunctionFlags(), memberFunction.name,
-                            memberFunction.typeParameters, memberFunction.parameterList,
-                            memberFunction.returnTypeAnnotation, memberFunction.block, context);
-                    }
                     break;
                 
                 case NodeType.FunctionDeclaration:
                     {
                         var funcDecl = <FunctionDeclaration>ast;
-                        if (inContextuallyTypedAssignment) {
-                            this.typeCheckAnyFunctionExpression(funcDecl, funcDecl.typeParameters, funcDecl.returnTypeAnnotation, funcDecl.block, context);
-                        }
-                        else {
-                            this.typeCheckFunctionDeclaration(
-                                funcDecl, funcDecl.getFunctionFlags(), funcDecl.name,
-                                funcDecl.typeParameters, funcDecl.parameterList,
-                                funcDecl.returnTypeAnnotation, funcDecl.block, context);
-                        }
+                        this.typeCheckFunctionDeclaration(
+                            funcDecl, funcDecl.getFunctionFlags(), funcDecl.name,
+                            funcDecl.typeParameters, funcDecl.parameterList,
+                            funcDecl.returnTypeAnnotation, funcDecl.block, context);
                         return;
                     }
 
@@ -5468,10 +5404,6 @@ module TypeScript {
 
                 case NodeType.ArrayLiteralExpression:
                     this.resolveArrayLiteralExpression(<ArrayLiteralExpression>ast, inContextuallyTypedAssignment, enclosingDecl, context);
-                    return;
-
-                case NodeType.ThisExpression:
-                    this.typeCheckThisExpression(ast, enclosingDecl, context);
                     return;
 
                 case NodeType.SuperExpression:
@@ -5486,179 +5418,10 @@ module TypeScript {
                     this.typeCheckObjectCreationExpression(<ObjectCreationExpression>ast, enclosingDecl, context);
                     return;
 
-                case NodeType.CastExpression:
-                    this.typeCheckCastExpression(<CastExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.TypeRef:
-                    this.resolveTypeReference(<TypeReference>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.VoidExpression:
-                    this.typeCheckVoidExpression(<VoidExpression>ast, enclosingDecl, context);
-                    return;
-
-                // boolean operations
-                case NodeType.LogicalNotExpression:
-                    this.typeCheckLogicalNotExpression(<PrefixUnaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.NotEqualsWithTypeConversionExpression:
-                case NodeType.EqualsWithTypeConversionExpression:
-                case NodeType.EqualsExpression:
-                case NodeType.NotEqualsExpression:
-                case NodeType.LessThanExpression:
-                case NodeType.LessThanOrEqualExpression:
-                case NodeType.GreaterThanOrEqualExpression:
-                case NodeType.GreaterThanExpression:
-                    this.typeCheckLogicalOperation(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.PlusExpression:
-                case NodeType.NegateExpression:
-                case NodeType.BitwiseNotExpression:
-                case NodeType.PreIncrementExpression:
-                case NodeType.PreDecrementExpression:
-                    this.typeCheckUnaryArithmeticOperation(<PrefixUnaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.PostIncrementExpression:
-                case NodeType.PostDecrementExpression:
-                    this.typeCheckPostfixUnaryExpression(<PostfixUnaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.SubtractExpression:
-                case NodeType.MultiplyExpression:
-                case NodeType.DivideExpression:
-                case NodeType.ModuloExpression:
-                case NodeType.BitwiseOrExpression:
-                case NodeType.BitwiseAndExpression:
-                case NodeType.LeftShiftExpression:
-                case NodeType.SignedRightShiftExpression:
-                case NodeType.UnsignedRightShiftExpression:
-                case NodeType.BitwiseExclusiveOrExpression:
-                case NodeType.ExclusiveOrAssignmentExpression:
-                case NodeType.LeftShiftAssignmentExpression:
-                case NodeType.SignedRightShiftAssignmentExpression:
-                case NodeType.UnsignedRightShiftAssignmentExpression:
-                case NodeType.SubtractAssignmentExpression:
-                case NodeType.MultiplyAssignmentExpression:
-                case NodeType.DivideAssignmentExpression:
-                case NodeType.ModuloAssignmentExpression:
-                case NodeType.OrAssignmentExpression:
-                case NodeType.AndAssignmentExpression:
-                    this.typeCheckBinaryArithmeticExpression(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ElementAccessExpression:
-                    this.typeCheckElementAccessExpression(<ElementAccessExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.LogicalOrExpression:
-                    this.typeCheckLogicalOrExpression(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.TypeOfExpression:
-                    this.typeCheckTypeOfExpression(<TypeOfExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ThrowStatement:
-                    this.typeCheckThrowStatement(<ThrowStatement>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.DeleteExpression:
-                    this.typeCheckDeleteExpression(<DeleteExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ConditionalExpression:
-                    this.typeCheckConditionalExpression(<ConditionalExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.InstanceOfExpression:
-                    this.typeCheckInstanceOfExpression(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.CommaExpression:
-                    this.typeCheckCommaExpression(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.InExpression:
-                    this.typeCheckInExpression(<BinaryExpression>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ForStatement:
-                    this.typeCheckForStatement(<ForStatement>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ForInStatement:
-                    this.typeCheckForInStatement(ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.WhileStatement:
-                    this.typeCheckWhileStatement(<WhileStatement>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.DoStatement:
-                    this.typeCheckDoStatement(<DoStatement>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.IfStatement:
-                    this.typeCheckIfStatement(<IfStatement>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.ElseClause:
-                    this.typeCheckElseClause(<ElseClause>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.WithStatement:
-                    this.typeCheckWithStatement(ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.TryStatement:
-                    this.typeCheckTryStatement(ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.CatchClause:
-                    this.typeCheckCatchClause(ast, enclosingDecl, context);
-                    return;
-
                 case NodeType.ReturnStatement:
                     // Since we want to resolve the return expression to traverse parents, resolve will take care of typeChecking
                     this.resolveReturnStatement(ast, enclosingDecl, context);
                     return;
-
-                case NodeType.SwitchStatement:
-                    this.typeCheckSwitchStatement(ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.CaseSwitchClause:
-                    this.typeCheckCaseSwitchClause(<CaseSwitchClause>ast, enclosingDecl, context);
-                    return;
-
-                case NodeType.DefaultSwitchClause:
-                    this.typeCheckDefaultSwitchClause(<DefaultSwitchClause>ast, enclosingDecl, context);
-                    return;
-
-                // Below ones should never reach because we never cache these symbols
-
-                //case NodeType.List:
-                //case NodeType.VariableDeclaration:
-                //case NodeType.Block:
-                //case NodeType.VariableStatement:
-                //case NodeType.NumericLiteral:
-                //case NodeType.StringLiteral:
-                //case NodeType.NullLiteral:
-                //case NodeType.TrueLiteral:
-                //case NodeType.FalseLiteral:
-                //case NodeType.LabeledStatement: 
-                //case NodeType.ParenthesizedExpression:
-                //case NodeType.ExpressionStatement:
-                //case NodeType.LogicalAndExpression:
-                //case NodeType.RegularExpressionLiteral:
-                //case NodeType.AddExpression:
-                //case NodeType.AddAssignmentExpression:
-                //case NodeType.AssignmentExpression:
-                //case NodeType.ExportAssignment:
 
                 default:
                     Debug.assert(false, "Implement typeCheck clause if symbol is cached");
@@ -6607,11 +6370,6 @@ module TypeScript {
                 arrowFunction, arrowFunction.typeParameters, arrowFunction.returnTypeAnnotation, arrowFunction.block, context);
         }
 
-        private typeCheckFunctionPropertyAssignment(funcProp: FunctionPropertyAssignment, context: PullTypeResolutionContext): void {
-            this.typeCheckAnyFunctionExpression(
-                funcProp, funcProp.typeParameters, funcProp.returnTypeAnnotation, funcProp.block, context);
-        }
-
         private typeCheckAnyFunctionExpression(
             funcDeclAST: AST,
             typeParameters: ASTList,
@@ -6976,24 +6734,19 @@ module TypeScript {
             return symbol;
         }
 
-        private tryBindObjectLiteralMembers(
+        private bindObjectLiteralMembers(
             objectLiteralDeclaration: PullDecl,
             objectLiteralTypeSymbol: PullTypeSymbol,
             objectLiteralMembers: ASTList,
             isUsingExistingSymbol: boolean,
-            boundMemberSymbols: PullSymbol[],
-            pullTypeContext: PullTypeResolutionContext): boolean {
-
+            pullTypeContext: PullTypeResolutionContext): PullSymbol[] {
+            var boundMemberSymbols: PullSymbol[] = [];
             var memberSymbol: PullSymbol;
             for (var i = 0, len = objectLiteralMembers.members.length; i < len; i++) {
                 var propertyAssignment = objectLiteralMembers.members[i];
 
                 var id = this.getPropertyAssignmentName(propertyAssignment);
                 var assignmentText = getPropertyAssignmentNameTextFromIdentifier(id);
-
-                if (!assignmentText) {
-                    return false;
-                }
 
                 var isAccessor = propertyAssignment.nodeType() === NodeType.GetAccessor || propertyAssignment.nodeType() === NodeType.SetAccessor;
                 var decl = this.semanticInfoChain.getDeclForAST(propertyAssignment);
@@ -7025,10 +6778,10 @@ module TypeScript {
                     objectLiteralTypeSymbol.addMember(memberSymbol);
                 }
 
-                boundMemberSymbols[i] = memberSymbol;
+                boundMemberSymbols.push(memberSymbol);
             }
 
-            return true;
+            return boundMemberSymbols;
         }
 
         private resolveObjectLiteralMembers(
@@ -7181,12 +6934,8 @@ module TypeScript {
                 }
 
                 // first bind decls and symbols
-                var boundMemberSymbols: PullSymbol[] = [];
-
-                if (!this.tryBindObjectLiteralMembers(objectLitDecl, typeSymbol, propertyAssignments, isUsingExistingSymbol, boundMemberSymbols, context)) {
-                    // TODO: no error for this?
-                    return this.semanticInfoChain.anyTypeSymbol;
-                }
+                var boundMemberSymbols = this.bindObjectLiteralMembers(
+                    objectLitDecl, typeSymbol, propertyAssignments, isUsingExistingSymbol, context);
 
                 // now perform member symbol resolution
                 this.resolveObjectLiteralMembers(
@@ -7359,10 +7108,8 @@ module TypeScript {
             return symbolAndDiagnostic.symbol;
         }
 
-        private typeCheckElementAccessExpression(callEx: ElementAccessExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, symbolAndDiagnostic: { symbol: PullSymbol; diagnostic?: Diagnostic } = null): void {
+        private typeCheckElementAccessExpression(callEx: ElementAccessExpression, enclosingDecl: PullDecl, context: PullTypeResolutionContext, symbolAndDiagnostic: { symbol: PullSymbol; diagnostic?: Diagnostic }): void {
             this.setTypeChecked(callEx, context);
-            var symbolAndDiagnostic = symbolAndDiagnostic || this.computeElementAccessExpressionSymbolAndDiagnostic(callEx, enclosingDecl, context);
-
             context.postDiagnostic(symbolAndDiagnostic.diagnostic);
         }
 
@@ -8528,16 +8275,6 @@ module TypeScript {
             }
         }
 
-        private computeAssignmentStatementSymbol(binex: BinaryExpression, inContextuallyTypedAssignment: boolean, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullSymbol {
-            var leftType = this.resolveAST(binex.operand1, inContextuallyTypedAssignment, enclosingDecl, context).type;
-
-            context.pushContextualType(leftType, context.inProvisionalResolution(), null);
-            this.resolveAST(binex.operand2, true, enclosingDecl, context);
-            context.popContextualType();
-
-            return leftType;
-        }
-
         private getInstanceTypeForAssignment(lhs: AST, type: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
             var typeToReturn = type;
             if (typeToReturn && typeToReturn.isAlias()) {
@@ -8638,11 +8375,6 @@ module TypeScript {
             }
 
             return type;
-        }
-
-        private isNullOrUndefinedType(type: PullTypeSymbol) {
-            return type === this.semanticInfoChain.nullTypeSymbol ||
-                type === this.semanticInfoChain.undefinedTypeSymbol;
         }
 
         public findBestCommonType(initialType: PullTypeSymbol, collection: IPullTypeCollection, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
@@ -9035,10 +8767,6 @@ module TypeScript {
                 this.sourceIsSubtypeOfTarget(source, this.cachedFunctionInterfaceType(), context);
         }
 
-        private signatureGroupIsSubtypeOfTarget(sg1: PullSignatureSymbol[], sg2: PullSignatureSymbol[], context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
-            return this.signatureGroupIsRelatableToTarget(sg1, sg2, false, this.subtypeCache, context, comparisonInfo);
-        }
-
         private signatureIsSubtypeOfTarget(s1: PullSignatureSymbol, s2: PullSignatureSymbol, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
             return this.signatureIsRelatableToTarget(s1, s2, false, this.subtypeCache, context, comparisonInfo);
         }
@@ -9046,10 +8774,6 @@ module TypeScript {
         private sourceIsAssignableToTarget(source: PullTypeSymbol, target: PullTypeSymbol, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo, isInProvisionalResolution: boolean = false): boolean {
             var cache = isInProvisionalResolution ? {} : this.assignableCache;
             return this.sourceIsRelatableToTarget(source, target, true, cache, context, comparisonInfo);
-        }
-
-        private signatureGroupIsAssignableToTarget(sg1: PullSignatureSymbol[], sg2: PullSignatureSymbol[], context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo): boolean {
-            return this.signatureGroupIsRelatableToTarget(sg1, sg2, true, this.assignableCache, context, comparisonInfo);
         }
 
         private signatureIsAssignableToTarget(s1: PullSignatureSymbol, s2: PullSignatureSymbol, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo): boolean {
@@ -9824,12 +9548,6 @@ module TypeScript {
                     arg, functionExpression.typeParameters, functionExpression.parameterList, functionExpression.returnTypeAnnotation, functionExpression.block,
                     argIndex, enclosingDecl, context, comparisonInfo);
             }
-            else if (arg.nodeType() === NodeType.FunctionDeclaration) {
-                var funcDecl = <FunctionDeclaration>arg;
-                return this.overloadIsApplicableForAnyFunctionExpressionArgument(paramType,
-                    arg, funcDecl.typeParameters, funcDecl.parameterList, funcDecl.returnTypeAnnotation, funcDecl.block,
-                    argIndex, enclosingDecl, context, comparisonInfo);
-            }
             else if (arg.nodeType() === NodeType.ObjectLiteralExpression) {
                 return this.overloadIsApplicableForObjectLiteralArgument(paramType, <ObjectLiteralExpression>arg, argIndex, enclosingDecl, context, comparisonInfo);
             }
@@ -10344,19 +10062,6 @@ module TypeScript {
                     this.relateFunctionSignatureToTypeParameters(objectSignatures[j], parameterSignature, argContext, enclosingDecl, context);
                 }
             }
-        }
-
-        private relateArrayTypeToTypeParameters(argArrayType: PullTypeSymbol,
-            parameterArrayType: PullTypeSymbol,
-            shouldFix: boolean,
-            argContext: ArgumentInferenceContext,
-            enclosingDecl: PullDecl,
-            context: PullTypeResolutionContext): void {
-
-            var argElement = argArrayType.getElementType();
-            var paramElement = parameterArrayType.getElementType();
-
-            this.relateTypeToTypeParameters(argElement, paramElement, shouldFix, argContext, enclosingDecl, context);
         }
 
         private specializeTypeToAny(typeToSpecialize: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext): PullTypeSymbol {
@@ -11964,35 +11669,24 @@ module TypeScript {
                 this.message = this.indentString() + message;
             }
         }
-
-        private setMessage(message: string) {
-            this.message = this.indentString() + message;
-        }
     }
 
     //    return false;
     //}
 
     export function getPropertyAssignmentNameTextFromIdentifier(identifier: AST): { actualText: string; memberName: string } {
-        var actualText: string;
-        var text: string;
-
         if (identifier.nodeType() === NodeType.Name) {
-            actualText = (<Identifier>identifier).actualText;
-            text = (<Identifier>identifier).text();
+            return { actualText: (<Identifier>identifier).actualText, memberName: (<Identifier>identifier).text() };
         }
         else if (identifier.nodeType() === NodeType.StringLiteral) {
-            actualText = (<StringLiteral>identifier).actualText;
-            text = (<StringLiteral>identifier).text();
+            return { actualText: (<StringLiteral>identifier).actualText, memberName: (<StringLiteral>identifier).text() };
         }
         else if (identifier.nodeType() === NodeType.NumericLiteral) {
-            actualText = text = (<NumericLiteral>identifier).text();
+            return { actualText: (<NumericLiteral>identifier).text(), memberName: (<NumericLiteral>identifier).text() };
         }
         else {
-            return null;
+            throw Errors.invalidOperation();
         }
-
-        return { actualText: actualText, memberName: text };
     }
 
     enum OverloadApplicabilityStatus {

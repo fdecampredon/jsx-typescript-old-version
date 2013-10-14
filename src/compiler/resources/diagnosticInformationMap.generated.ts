@@ -426,10 +426,6 @@ module TypeScript {
     "code": 2016,
     "category": DiagnosticCategory.Error
   },
-  "Accessors cannot have type parameters.": {
-    "code": 2017,
-    "category": DiagnosticCategory.Error
-  },
   "Exported class '{0}' extends private class '{1}'.": {
     "code": 2018,
     "category": DiagnosticCategory.Error

@@ -107,7 +107,6 @@ module TypeScript {
         Operator_0_cannot_be_applied_to_type_1: "Operator '{0}' cannot be applied to type '{1}'.",
         Getter_0_already_declared: "Getter '{0}' already declared.",
         Setter_0_already_declared: "Setter '{0}' already declared.",
-        Accessors_cannot_have_type_parameters: "Accessors cannot have type parameters.",
         Exported_class_0_extends_private_class_1: "Exported class '{0}' extends private class '{1}'.",
         Exported_class_0_implements_private_interface_1: "Exported class '{0}' implements private interface '{1}'.",
         Exported_interface_0_extends_private_interface_1: "Exported interface '{0}' extends private interface '{1}'.",

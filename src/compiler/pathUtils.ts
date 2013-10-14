@@ -41,20 +41,6 @@ module TypeScript {
         return "\"" + str + "\"";
     }
 
-    export function swapQuotes(str: string) {
-        var firstCharCode = str && str.charCodeAt(0);
-        if (str && str.length >= 2 && firstCharCode === str.charCodeAt(str.length - 1)) {
-            if (firstCharCode === CharacterCodes.doubleQuote) {
-                return '\'' + str.substring(1, str.length - 1) + '\'';
-            }
-            else if (firstCharCode === CharacterCodes.singleQuote) {
-                return '\"' + str.substring(1, str.length - 1) + '\"';
-            }
-        }
-
-        return str;
-    }
-
     var switchToForwardSlashesRegEx = /\\/g;
     export function switchToForwardSlashes(path: string) {
         return path.replace(switchToForwardSlashesRegEx, "/");
@@ -141,19 +127,6 @@ module TypeScript {
         }
 
         return absoluteModPath;
-    }
-
-    export function quoteBaseName(modPath: string) {
-        var modName = trimModName(stripStartAndEndQuotes(modPath));
-        var path = getRootFilePath(modName);
-        if (path === "") {
-            return modPath;
-        }
-        else {
-            var components = modName.split(path);
-            var fileIndex = components.length > 1 ? 1 : 0;
-            return quoteStr(components[fileIndex]);
-        }
     }
 
     export function changePathToDTS(modPath: string) {

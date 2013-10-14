@@ -17,7 +17,6 @@
 ///<reference path='..\compiler\io.ts'/>
 ///<reference path='..\compiler\typescript.ts'/>
 ///<reference path='harness.ts'/>
-///<reference path='dumpAST-baselining.ts'/>
 ///<reference path='exec.ts'/>
 ///<reference path='diff.ts'/>
 ///<reference path='..\..\tests\runners\runnerfactory.ts' />

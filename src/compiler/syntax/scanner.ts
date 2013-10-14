@@ -1143,10 +1143,6 @@ module TypeScript {
             return SyntaxKind.StringLiteral;
         }
 
-        private isUnicodeOrHexEscape(character: number): boolean {
-            return this.isUnicodeEscape(character) || this.isHexEscape(character);
-        }
-
         private isUnicodeEscape(character: number): boolean {
             if (character === CharacterCodes.backslash) {
                 var ch2 = this.slidingWindow.peekItemN(1);
@@ -1156,27 +1152,6 @@ module TypeScript {
             }
 
             return false;
-        }
-
-        private isHexEscape(character: number): boolean {
-            if (character === CharacterCodes.backslash) {
-                var ch2 = this.slidingWindow.peekItemN(1);
-                if (ch2 === CharacterCodes.x) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private peekCharOrUnicodeOrHexEscape(): number {
-            var character = this.currentCharCode();
-            if (this.isUnicodeOrHexEscape(character)) {
-                return this.peekUnicodeOrHexEscape();
-            }
-            else {
-                return character;
-            }
         }
 
         private peekCharOrUnicodeEscape(): number {
@@ -1214,19 +1189,6 @@ module TypeScript {
 
             this.slidingWindow.moveToNextItem();
             return false;
-        }
-
-        private scanCharOrUnicodeOrHexEscape(errors: Diagnostic[]): number {
-            var ch = this.currentCharCode();
-            if (ch === CharacterCodes.backslash) {
-                var ch2 = this.slidingWindow.peekItemN(1);
-                if (ch2 === CharacterCodes.u || ch2 === CharacterCodes.x) {
-                    return this.scanUnicodeOrHexEscape(errors);
-                }
-            }
-
-            this.slidingWindow.moveToNextItem();
-            return ch;
         }
 
         private scanUnicodeOrHexEscape(errors: Diagnostic[]): number {

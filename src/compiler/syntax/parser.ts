@@ -1253,15 +1253,6 @@ module TypeScript.Parser {
             return null;
         }
 
-        // Eats the keyword if it is there.  Otherwise does nothing.  Will not report errors.
-        private tryEatKeyword(kind: SyntaxKind): ISyntaxToken {
-            if (this.currentToken().tokenKind === kind) {
-                return this.eatKeyword(kind);
-            }
-
-            return null;
-        }
-
         private eatKeyword(kind: SyntaxKind): ISyntaxToken {
             // Debug.assert(SyntaxFacts.isTokenKind(kind))
 
@@ -4193,13 +4184,6 @@ module TypeScript.Parser {
             var expression = this.parseUnaryExpressionOrLower();
 
             return this.factory.voidExpression(voidKeyword, expression);
-        }
-
-        private parseSuperExpression(): IUnaryExpressionSyntax {
-            // Debug.assert(this.currentToken().tokenKind === SyntaxKind.SuperKeyword);
-
-            var superKeyword = this.eatKeyword(SyntaxKind.SuperKeyword);
-            return superKeyword;
         }
 
         private parseFunctionExpression(): FunctionExpressionSyntax {

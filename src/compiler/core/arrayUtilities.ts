@@ -143,18 +143,6 @@ module TypeScript {
             return result;
         }
 
-        public static whereNotNull<T>(array: T[]): T[] {
-            var result: T[] = [];
-            for (var i = 0; i < array.length; i++) {
-                var value: T = array[i];
-                if (value !== null) {
-                    result.push(value);
-                }
-            }
-
-            return result;
-        }
-
         public static select<T,S>(values: T[], func: (v: T) => S): S[] {
             var result: S[] = new Array(values.length);
 

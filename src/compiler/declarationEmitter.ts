@@ -550,17 +550,6 @@ module TypeScript {
                     return;
                 }
             }
-            else if (!isInterfaceMember && hasFlag(functionFlags, FunctionFlags.Private) && this.isOverloadedCallSignature(funcDecl)) {
-                // Print only first overload of private function
-                var callSignatures = funcTypeSymbol.getCallSignatures();
-                Debug.assert(callSignatures && callSignatures.length > 1);
-                var firstSignature = callSignatures[0].isDefinition() ? callSignatures[1] : callSignatures[0];
-                var firstSignatureDecl = firstSignature.getDeclarations()[0];
-                var firstFuncDecl = <FunctionDeclaration>this.semanticInfoChain.getASTForDecl(firstSignatureDecl);
-                if (firstFuncDecl !== funcDecl) {
-                    return;
-                }
-            }
 
             if (!this.canEmitDeclarations(ToDeclFlags(functionFlags), funcDecl)) {
                 return;

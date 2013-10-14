@@ -437,10 +437,6 @@ module TypeScript {
             return this._nodeType;
         }
 
-        public shouldEmit(emitter: Emitter): boolean {
-            return false;
-        }
-
         public structuralEquals(ast: HeritageClause, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                 structuralEquals(this.typeNames, ast.typeNames, includingPosition);
@@ -1229,8 +1225,6 @@ module TypeScript {
         public nodeType(): NodeType {
             return NodeType.VariableDeclarator;
         }
-
-        public isStatic() { return hasFlag(this.getVarFlags(), VariableFlags.Static); }
 
         public emit(emitter: Emitter) {
             emitter.emitVariableDeclarator(this);

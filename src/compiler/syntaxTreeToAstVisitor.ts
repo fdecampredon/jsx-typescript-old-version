@@ -536,16 +536,6 @@ module TypeScript {
             return result;
         }
 
-        private hasDotDotDotParameter(parameters: ISeparatedSyntaxList): boolean {
-            for (var i = 0, n = parameters.nonSeparatorCount(); i < n; i++) {
-                if ((<ParameterSyntax>parameters.nonSeparatorAt(i)).dotDotDotToken) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public visitFunctionDeclaration(node: FunctionDeclarationSyntax): FunctionDeclaration {
             var start = this.position;
 
@@ -814,11 +804,7 @@ module TypeScript {
             this.setSpan(result, start, node);
 
             if (init) {
-                if (init.nodeType() === NodeType.FunctionDeclaration) {
-                    var funcDecl = <FunctionDeclaration>init;
-                    funcDecl.hint = name.actualText;
-                }
-                else if (init.nodeType() === NodeType.ArrowFunctionExpression) {
+                if (init.nodeType() === NodeType.ArrowFunctionExpression) {
                     var arrowFunction = <ArrowFunctionExpression>init;
                     arrowFunction.hint = name.actualText;
                 }

@@ -43,10 +43,6 @@ module TypeScript {
             declFlags |= PullElementFlags.Exported;
         }
 
-        if (parent && (parent.kind === PullElementKind.WithBlock || (parent.flags & PullElementFlags.DeclaredInAWithBlock))) {
-            declFlags |= PullElementFlags.DeclaredInAWithBlock;
-        }
-
         var decl = new NormalPullDecl(importDecl.identifier.text(), importDecl.identifier.actualText, PullElementKind.TypeAlias, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(ast, decl);
         context.semanticInfoChain.setASTForDecl(decl, ast);
@@ -991,13 +987,6 @@ module TypeScript {
                 // Note: a variable declarator does not introduce a new decl scope.  So there is no
                 // need to pop a decl here.
                 // context.popParent();
-
-                parentDecl = context.getParent();
-
-                if (parentDecl && isContainer(parentDecl)) {
-                    initFlag = getInitializationFlag(parentDecl);
-                    parentDecl.setFlags(parentDecl.flags | initFlag);
-                }
                 break;
             case NodeType.EnumElement:
                 // Note: a enum element does not introduce a new decl scope.  So there is no
