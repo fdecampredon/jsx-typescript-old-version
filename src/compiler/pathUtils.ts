@@ -73,10 +73,6 @@ module TypeScript {
         return invariantFname.length > extLength && invariantFname.substring(invariantFname.length - extLength, invariantFname.length) === invariantExt;
     }
 
-    export function isJSFile(fname: string) {
-        return isFileOfExtension(fname, ".js");
-    }
-
     export function isTSFile(fname: string) {
         return isFileOfExtension(fname, ".ts");
     }

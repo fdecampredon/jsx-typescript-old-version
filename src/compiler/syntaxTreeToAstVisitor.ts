@@ -416,12 +416,9 @@ module TypeScript {
             var typeParameters = node.typeParameterList === null ? null : node.typeParameterList.accept(this);
             var heritageClauses = node.heritageClauses ? this.visitSyntaxList(node.heritageClauses) : null;
 
-            this.movePast(node.body.openBraceToken);
-            var members = this.visitSeparatedSyntaxList(node.body.typeMembers);
+            var body = this.visitObjectTypeWorker(node.body);
 
-            this.movePast(node.body.closeBraceToken);
-
-            var result = new InterfaceDeclaration(name, typeParameters, heritageClauses, members);
+            var result = new InterfaceDeclaration(name, typeParameters, heritageClauses, body);
             this.setCommentsAndSpan(result, start, node);
 
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.ExportKeyword)) {
@@ -1089,6 +1086,18 @@ module TypeScript {
         public visitObjectType(node: ObjectTypeSyntax): TypeReference {
             var start = this.position;
 
+            var objectType = this.visitObjectTypeWorker(node);
+            objectType.setFlags(objectType.getFlags() | ASTFlags.TypeReference);
+
+            var result = new TypeReference(objectType);
+            this.copySpan(objectType, result);
+
+            return result;
+        }
+
+        private visitObjectTypeWorker(node: ObjectTypeSyntax): ObjectType {
+            var start = this.position;
+
             this.movePast(node.openBraceToken);
             var typeMembers = this.visitSeparatedSyntaxList(node.typeMembers);
             this.movePast(node.closeBraceToken);
@@ -1096,12 +1105,7 @@ module TypeScript {
             var objectType = new ObjectType(typeMembers);
             this.setSpan(objectType, start, node);
 
-            objectType.setFlags(objectType.getFlags() | ASTFlags.TypeReference);
-
-            var result = new TypeReference(objectType);
-            this.copySpan(objectType, result);
-
-            return result;
+            return objectType;
         }
 
         public visitArrayType(node: ArrayTypeSyntax): TypeReference {

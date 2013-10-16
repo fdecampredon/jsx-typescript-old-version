@@ -1,0 +1,25 @@
+=== tests/cases/compiler/extendedInterfaceGenericType.ts ===
+Line 0 col 10 IdentifierName "Alpha" = Alpha<T>
+Line 0 col 16 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "takesArgOfT" = (arg: T) => Alpha<T>
+Line 1 col 16 IdentifierName "arg" = T
+Line 1 col 21 IdentifierName "T" = T
+Line 1 col 25 IdentifierName "Alpha" = Alpha<T>
+Line 1 col 31 IdentifierName "T" = T
+Line 2 col 0 IdentifierName "makeBetaOfNumber" = () => Beta<number>
+Line 2 col 24 IdentifierName "Beta" = Beta<T>
+Line 4 col 10 IdentifierName "Beta" = Beta<T>
+Line 4 col 15 IdentifierName "T" = T
+Line 4 col 26 IdentifierName "Alpha" = Alpha<T>
+Line 4 col 32 IdentifierName "T" = T
+Line 7 col 4 IdentifierName "alpha" = Alpha<number>
+Line 7 col 11 IdentifierName "Alpha" = Alpha<T>
+Line 8 col 4 IdentifierName "betaOfNumber" = Beta<number>
+Line 8 col 19 InvocationExpression "alpha.makeBetaOfNumber()" = Beta<number>
+Line 8 col 19 MemberAccessExpression "alpha.makeBetaOfNumber" = () => Beta<number>
+Line 8 col 19 IdentifierName "alpha" = Alpha<number>
+Line 8 col 25 IdentifierName "makeBetaOfNumber" = () => Beta<number>
+Line 9 col 0 InvocationExpression "betaOfNumber.takesArgOfT(5)" = Alpha<number>
+Line 9 col 0 MemberAccessExpression "betaOfNumber.takesArgOfT" = (arg: number) => Alpha<number>
+Line 9 col 0 IdentifierName "betaOfNumber" = Beta<number>
+Line 9 col 13 IdentifierName "takesArgOfT" = (arg: number) => Alpha<number>

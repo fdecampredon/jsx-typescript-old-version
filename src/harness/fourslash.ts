@@ -46,6 +46,12 @@ module FourSlash {
         ranges: Range[];
     }
 
+    export interface TestXmlData {
+        invalidReason: string;
+        originalName: string;
+        actions: string[];
+    }
+
     interface MemberListData {
         result: {
             maybeInaccurate: boolean;
@@ -105,6 +111,19 @@ module FourSlash {
         High
     }
 
+     var entityMap = {
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#47;',
+        '<': '&lt;',
+        '>': '&gt;'
+    };
+
+    export function escapeXmlAttributeValue(s: string) {
+        return s.replace(/[&<>"'\/]/g, ch => entityMap[ch]);
+    }
+
     // List of allowed metadata names
     var fileMetadataNames = ['Filename'];
     var globalMetadataNames = ['Module', 'Target', 'BaselineFile']; // Note: Only BaselineFile is actually supported at the moment
@@ -134,8 +153,10 @@ module FourSlash {
         public editValidation = IncrementalEditValidation.Complete;
         public typingFidelity = TypingFidelity.Low;
 
-        constructor(public testData: FourSlashData) {
+        private scenarioActions: string[] = [];
+        private taoInvalidReason: string = null;
 
+        constructor(public testData: FourSlashData) {
             // Initialize the language service with all the scripts
             this.languageServiceShimHost = new Harness.TypeScriptLS();
 
@@ -184,6 +205,11 @@ module FourSlash {
 
             this.formatCodeOptions = new Services.FormatCodeOptions();
 
+            this.testData.files.forEach(file => {
+                var filename = file.fileName.replace(IO.dirName(file.fileName), '').substr(1);
+                this.scenarioActions.push('<LoadFile LoadedFileId="' + filename + '" FileName="' + filename + '"><![CDATA[' + file.content + ']]></LoadFile>');
+            });
+
             // Open the first file by default
             this.openFile(0);
         }
@@ -200,16 +226,24 @@ module FourSlash {
                 throw new Error('Marker "' + name + '" has been invalidated by unrecoverable edits to the file.');
             }
             this.lastKnownMarker = name;
-            this.currentCaretPosition = marker.position;
+            this.goToPosition(marker.position);
         }
 
         public goToPosition(pos: number) {
             this.currentCaretPosition = pos;
+
+            var lineCharPos = TypeScript.LineMap1.fromString(this.getCurrentFileContent()).getLineAndCharacterFromPosition(pos);
+            this.scenarioActions.push('<MoveCaretToLineAndChar LineNumber="' + (lineCharPos.line() + 1) + '" CharNumber="' + (lineCharPos.character() + 1) + '" />');
         }
 
         public moveCaretRight(count = 1) {
             this.currentCaretPosition += count;
             this.currentCaretPosition = Math.min(this.currentCaretPosition, this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName).getLength());
+            if (count > 0) {
+                this.scenarioActions.push('<MoveCaretRight NumberOfChars="' + count + '" />');
+            } else {
+                this.scenarioActions.push('<MoveCaretLeft NumberOfChars="' + (-count) + '" />');
+            }
         }
 
         // Opens a file given its 0-based index or fileName
@@ -219,6 +253,7 @@ module FourSlash {
             var fileToOpen: FourSlashFile = this.findFile(indexOrName);
             fileToOpen.fileName = switchToForwardSlashes(fileToOpen.fileName);
             this.activeFile = fileToOpen;
+            this.scenarioActions.push('<OpenFile LoadedFileId="' + fileToOpen.fileName.replace(IO.dirName(fileToOpen.fileName), '').substr(1) + '" />');
         }
 
         public verifyErrorExistsBetweenMarkers(startMarkerName: string, endMarkerName: string, negative: boolean) {
@@ -229,6 +264,8 @@ module FourSlash {
             };
 
             var exists = this.anyErrorInRange(predicate, startMarker, endMarker);
+
+            this.taoInvalidReason = 'verifyErrorExistsBetweenMarkers NYI';
 
             if (exists !== negative) {
                 this.printErrorLog(negative, this.getAllDiagnostics());
@@ -271,6 +308,8 @@ module FourSlash {
                     return ((errorMinChar <= startPos) && (errorLimChar <= startPos)) ? true : false;
                 };
             }
+
+            this.taoInvalidReason = 'verifyErrorExistsAfterMarker NYI';
 
             var exists = this.anyErrorInRange(predicate, marker);
             var diagnostics = this.getAllDiagnostics();
@@ -315,6 +354,9 @@ module FourSlash {
         public verifyNumberOfErrorsInCurrentFile(expected: number) {
             var errors = this.getDiagnostics(this.activeFile.fileName);
             var actual = errors.length;
+
+            this.scenarioActions.push('<CheckErrorList ExpectedNumOfWarnings="' + expected + '" />');
+
             if (actual !== expected) {
                 var errorMsg = "Actual number of errors (" + actual + ") does not match expected number (" + expected + ")";
                 IO.printLine(errorMsg);
@@ -328,6 +370,8 @@ module FourSlash {
                 throw new Error("Expected exactly one output from emit of " + this.activeFile.fileName);
             }
 
+            this.taoInvalidReason = 'verifyEval impossible';
+
             var evaluation = new Function(emit.outputFiles[0].text + ';\r\nreturn (' + expr + ');')();
             if (evaluation !== value) {
                 throw new Error('Expected evaluation of expression "' + expr + '" to equal "' + value + '", but got "' + evaluation + '"');
@@ -335,8 +379,14 @@ module FourSlash {
         }
 
         public verifyMemberListContains(symbol: string, type?: string, docComment?: string, fullSymbolName?: string, kind?: string) {
-            var members = this.getMemberListAtCaret();
+            this.scenarioActions.push('<ShowCompletionList />');
+            this.scenarioActions.push('<VerifyCompletionContainsItem ItemName="' + symbol + '"/>');
 
+            if (type || docComment || fullSymbolName || kind) {
+                this.taoInvalidReason = 'verifyMemberListContains only supports the "symbol" parameter';
+            }
+
+            var members = this.getMemberListAtCaret();
             if (members) {
                 this.assertItemInCompletionList(members.entries, symbol, type, docComment, fullSymbolName, kind);
             }
@@ -346,6 +396,9 @@ module FourSlash {
         }
 
         public verifyMemberListCount(expectedCount: number, negative: boolean) {
+            this.scenarioActions.push('<ShowCompletionList />');
+            this.scenarioActions.push('<VerifyCompletionItemsCount Count="' + expectedCount + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
+
             var members = this.getMemberListAtCaret();
 
             if (members) {
@@ -361,6 +414,9 @@ module FourSlash {
         }
 
         public verifyMemberListDoesNotContain(symbol: string) {
+            this.scenarioActions.push('<ShowCompletionList />');
+            this.scenarioActions.push('<VerifyCompletionDoesNotContainItem ItemName="' + escapeXmlAttributeValue(symbol) + '" />');
+
             var members = this.getMemberListAtCaret();
             if (members.entries.filter(e => e.name === symbol).length !== 0) {
                 throw new Error('Member list did contain ' + symbol);
@@ -368,6 +424,8 @@ module FourSlash {
         }
 
         public verifyCompletionListItemsCountIsGreaterThan(count: number) {
+            this.taoInvalidReason = 'verifyCompletionListItemsCountIsGreaterThan NYI';
+
             var completions = this.getCompletionListAtCaret();
             var itemsCount = completions.entries.length;
 
@@ -377,6 +435,8 @@ module FourSlash {
         }
 
         public verifyMemberListIsEmpty(negative: boolean) {
+            this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+
             var members = this.getMemberListAtCaret();
             if ((!members || members.entries.length === 0) && negative) {
                 throw new Error("Member list is empty at Caret");
@@ -395,6 +455,8 @@ module FourSlash {
         }
 
         public verifyCompletionListIsEmpty(negative: boolean) {
+            this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+
             var completions = this.getCompletionListAtCaret();
             if ((!completions || completions.entries.length === 0) && negative) {
                 throw new Error("Completion list is empty at Caret");
@@ -418,6 +480,9 @@ module FourSlash {
         }
 
         public verifyCompletionListDoesNotContain(symbol: string) {
+            this.scenarioActions.push('<ShowCompletionList />');
+            this.scenarioActions.push('<VerifyCompletionDoesNotContainItem ItemName="' + escapeXmlAttributeValue(symbol) + '" />');
+
             var completions = this.getCompletionListAtCaret();
             if (completions && completions.entries && completions.entries.filter(e => e.name === symbol).length !== 0) {
                 throw new Error('Completion list did contain ' + symbol);
@@ -425,6 +490,8 @@ module FourSlash {
         }
 
         public verifyCompletionEntryDetails(entryName: string, type: string, docComment?: string, fullSymbolName?: string, kind?: string) {
+            this.taoInvalidReason = 'verifyCompletionEntryDetails NYI';
+
             var details = this.getCompletionEntryDetails(entryName);
 
             assert.equal(details.type, type);
@@ -443,6 +510,8 @@ module FourSlash {
         }
 
         public verifyReferencesCountIs(count: number, localFilesOnly: boolean = true) {
+            this.taoInvalidReason = 'verifyReferences NYI';
+
             var references = this.getReferencesAtCaret();
             var referencesCount = 0;
 
@@ -509,6 +578,13 @@ module FourSlash {
         }
 
         public verifyQuickInfo(negative: boolean, expectedTypeName?: string, docComment?: string, symbolName?: string, kind?: string) {
+            [expectedTypeName, docComment, symbolName, kind].forEach(str => {
+                if (str) {
+                    this.scenarioActions.push('<ShowQuickInfo />');
+                    this.scenarioActions.push('<VerifyQuickInfoTextContains IgnoreWhitespace="true" Text="' + escapeXmlAttributeValue(str) + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
+                }
+            });
+
             var actualQuickInfo = this.languageService.getTypeAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             var actualQuickInfoMemberName = actualQuickInfo ? actualQuickInfo.memberName.toString() : "";
             var actualQuickInfoDocComment = actualQuickInfo ? actualQuickInfo.docComment : "";
@@ -544,6 +620,8 @@ module FourSlash {
         }
 
         public verifyQuickInfoExists(negative: number) {
+            this.taoInvalidReason = 'verifyQuickInfoExists NYI';
+
             var actualQuickInfo = this.languageService.getTypeAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             if (negative) {
                 if (actualQuickInfo) {
@@ -558,23 +636,31 @@ module FourSlash {
         }
 
         public verifyCurrentSignatureHelpIs(expected: string) {
+            this.taoInvalidReason = 'verifyCurrentSignatureHelpIs NYI';
+
             var help = this.getActiveSignatureHelp();
             assert.equal(help.signatureInfo, expected);
         }
 
         public verifyCurrentParameterIsVariable(isVariable: boolean) {
+            this.taoInvalidReason = 'verifyCurrentParameterIsVariable NYI';
+
             var activeParameter = this.getActiveParameter();
             assert.notNull(activeParameter.parameter);
             assert.equal(isVariable, activeParameter.parameter.isVariable);
         }
 
         public verifyCurrentParameterHelpName(name: string) {
+            this.taoInvalidReason = 'verifyCurrentParameterHelpName NYI';
+
             var activeParameter = this.getActiveParameter();
             var activeParameterName = activeParameter.parameter ? activeParameter.parameter.name : activeParameter.typeParameter.name;
             assert.equal(activeParameterName, name);
         }
 
         public verifyCurrentParameterSpanIs(parameter: string) {
+            this.taoInvalidReason = 'verifyCurrentParameterSpanIs NYI';
+
             var activeSignature = this.getActiveSignatureHelp();
             var activeParameter = this.getActiveParameter();
             var activeParameterMinChar = activeParameter.parameter ? activeParameter.parameter.minChar : activeParameter.typeParameter.minChar;
@@ -583,31 +669,43 @@ module FourSlash {
         }
 
         public verifyCurrentParameterHelpDocComment(docComment: string) {
+            this.taoInvalidReason = 'verifyCurrentParameterHelpDocComment NYI';
+
             var activeParameter = this.getActiveParameter();
             var activeParameterDocComment = activeParameter.parameter ? activeParameter.parameter.docComment : activeParameter.typeParameter.docComment;
             assert.equal(activeParameterDocComment, docComment);
         }
 
         public verifyCurrentSignatureHelpParameterCount(expectedCount: number) {
+            this.taoInvalidReason = 'verifyCurrentSignatureHelpParameterCount NYI';
+
             assert.equal(this.getActiveSignatureHelp().parameters.length, expectedCount);
         }
 
         public verifyCurrentSignatureHelpTypeParameterCount(expectedCount: number) {
+            this.taoInvalidReason = 'verifyCurrentSignatureHelpTypeParameterCount NYI';
+
             assert.equal(this.getActiveSignatureHelp().typeParameters.length, expectedCount);
         }
 
         public verifyCurrentSignatureHelpDocComment(docComment: string) {
+            this.taoInvalidReason = 'verifyCurrentSignatureHelpDocComment NYI';
+
             var actualDocComment = this.getActiveSignatureHelp().docComment;
             assert.equal(actualDocComment, docComment);
         }
 
         public verifySignatureHelpCount(expected: number) {
+            this.scenarioActions.push('<VerifySignatureHelpOverloadCountEquals Count="' + expected + '" />');
+
             var help = this.languageService.getSignatureAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             var actual = help && help.formal ? help.formal.length : 0;
             assert.equal(actual, expected);
         }
 
         public verifySignatureHelpPresent(shouldBePresent = true) {
+            this.taoInvalidReason = 'verifySignatureHelpPresent NYI';
+
             var actual = this.languageService.getSignatureAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             if (shouldBePresent) {
                 if (!actual) {
@@ -662,6 +760,8 @@ module FourSlash {
         }
 
         public getBreakpointStatementLocation(pos: number) {
+            this.taoInvalidReason = 'getBreakpointStatementLocation NYI';
+
             var spanInfo = this.languageService.getBreakpointStatementAtPosition(this.activeFile.fileName, pos);
             var resultString = "\n**Pos: " + pos + " SpanInfo: " + JSON.stringify(spanInfo) + "\n** Statement: ";
             if (spanInfo !== null) {
@@ -671,6 +771,8 @@ module FourSlash {
         }
 
         public baselineCurrentFileBreakpointLocations() {
+            this.taoInvalidReason = 'baselineCurrentFileBreakpointLocations impossible';
+
             Harness.Baseline.runBaseline(
                 "Breakpoint Locations for " + this.activeFile.fileName,
                 this.testData.globalOptions['BaselineFile'],
@@ -756,6 +858,8 @@ module FourSlash {
         }
 
         public deleteChar(count = 1) {
+            this.scenarioActions.push('<DeleteCharNext Count="' + count + '" />');
+
             var offset = this.currentCaretPosition;
             var ch = "";
 
@@ -780,6 +884,8 @@ module FourSlash {
         }
 
         public replace(start: number, length: number, text: string) {
+            this.taoInvalidReason = 'replace NYI';
+
             this.languageServiceShimHost.editScript(this.activeFile.fileName, start, start + length, text);
             this.updateMarkersForEdit(this.activeFile.fileName, start, start + length, text);
             this.editCheckpoint(this.activeFile.fileName);
@@ -788,6 +894,8 @@ module FourSlash {
         }
 
         public deleteCharBehindMarker(count = 1) {
+            this.scenarioActions.push('<DeleteCharPrevious Count="' + count + '" />');
+
             var offset = this.currentCaretPosition;
             var ch = "";
 
@@ -816,6 +924,8 @@ module FourSlash {
 
         // Enters lines of text at the current caret position
         public type(text: string) {
+            this.scenarioActions.push('<TypeCode><![CDATA[' + text + ']]></TypeCode>');
+
             if (this.typingFidelity === TypingFidelity.Low) {
                 return this.typeLowFidelity(text);
             } else {
@@ -894,6 +1004,8 @@ module FourSlash {
 
         // Enters text as if the user had pasted it
         public paste(text: string) {
+            this.scenarioActions.push('<InsertText><![CDATA[' + text + ']]></InsertText>');
+
             var start = this.currentCaretPosition;
             var offset = this.currentCaretPosition;
             this.languageServiceShimHost.editScript(this.activeFile.fileName, offset, offset, text);
@@ -1007,12 +1119,16 @@ module FourSlash {
         }
 
         public formatDocument() {
+            this.scenarioActions.push('<FormatDocument />');
+
             var edits = this.languageService.getFormattingEditsForDocument(this.activeFile.fileName, 0, this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName).getLength(), this.formatCodeOptions);
             this.currentCaretPosition += this.applyEdits(this.activeFile.fileName, edits, true);
             this.fixCaretPosition();
         }
 
         public formatSelection(start: number, end: number) {
+            this.taoInvalidReason = 'formatSelection NYI';
+
             var edits = this.languageService.getFormattingEditsForRange(this.activeFile.fileName, start, end, this.formatCodeOptions);
             this.currentCaretPosition += this.applyEdits(this.activeFile.fileName, edits, true);
             this.fixCaretPosition();
@@ -1036,14 +1152,21 @@ module FourSlash {
         }
 
         public goToBOF() {
-            this.currentCaretPosition = 0;
+            this.goToPosition(0);
         }
 
         public goToEOF() {
-            this.currentCaretPosition = this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName).getLength();
+            var len = this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName).getLength();
+            this.goToPosition(len);
         }
 
         public goToDefinition(definitionIndex: number) {
+            if (definitionIndex === 0) {
+                this.scenarioActions.push('<GoToDefinition />');
+            } else {
+                this.taoInvalidReason = 'GoToDefinition not supported for non-zero definition indices';
+            }
+
             var definitions = this.languageService.getDefinitionAtPosition(this.activeFile.fileName, this.currentCaretPosition);
             if (!definitions || !definitions.length) {
                 throw new Error('goToDefinition failed - expected to at least one defintion location but got 0');
@@ -1069,6 +1192,8 @@ module FourSlash {
         }
 
         public verifyCaretAtMarker(markerName = '') {
+            this.taoInvalidReason = 'verifyCaretAtMarker NYI';
+
             var pos = this.getMarkerByName(markerName);
             if (pos.fileName !== this.activeFile.fileName) {
                 throw new Error('verifyCaretAtMarker failed - expected to be in file "' + pos.fileName + '", but was in file "' + this.activeFile.fileName + '"');
@@ -1083,6 +1208,8 @@ module FourSlash {
         }
 
         public verifyIndentationAtCurrentPosition(numberOfSpaces: number) {
+            this.taoInvalidReason = 'verifyIndentationAtCurrentPosition NYI';
+
             var actual = this.getIndentation(this.activeFile.fileName, this.currentCaretPosition);
             if (actual != numberOfSpaces) {
                 throw new Error('verifyIndentationAtCurrentPosition failed - expected: ' + numberOfSpaces + ', actual: ' + actual);
@@ -1090,6 +1217,8 @@ module FourSlash {
         }
 
         public verifyIndentationAtPosition(fileName: string, position: number, numberOfSpaces: number) {
+            this.taoInvalidReason = 'verifyIndentationAtPosition NYI';
+
             var actual = this.getIndentation(fileName, position);
             if (actual !== numberOfSpaces) {
                 throw new Error('verifyIndentationAtPosition failed - expected: ' + numberOfSpaces + ', actual: ' + actual);
@@ -1097,6 +1226,8 @@ module FourSlash {
         }
 
         public verifyCurrentLineContent(text: string) {
+            this.taoInvalidReason = 'verifyCurrentLineContent NYI';
+
             var actual = this.getCurrentLineContent();
             if (actual !== text) {
                 throw new Error('verifyCurrentLineContent\n' +
@@ -1106,6 +1237,8 @@ module FourSlash {
         }
 
         public verifyCurrentFileContent(text: string) {
+            this.taoInvalidReason = 'verifyCurrentFileContent NYI';
+
             var actual = this.getCurrentFileContent();
             var replaceNewlines = (str: string) => str.replace(/\r\n/g, "\n");
             if (replaceNewlines(actual) !== replaceNewlines(text)) {
@@ -1116,6 +1249,8 @@ module FourSlash {
         }
 
         public verifyTextAtCaretIs(text: string) {
+            this.taoInvalidReason = 'verifyCurrentFileContent NYI';
+
             var actual = this.languageServiceShimHost.getScriptSnapshot(this.activeFile.fileName).getText(this.currentCaretPosition, this.currentCaretPosition + text.length);
             if (actual !== text) {
                 throw new Error('verifyTextAtCaretIs\n' +
@@ -1125,6 +1260,8 @@ module FourSlash {
         }
 
         public verifyCurrentNameOrDottedNameSpanText(text: string) {
+            this.taoInvalidReason = 'verifyCurrentNameOrDottedNameSpanText NYI';
+
             var span = this.languageService.getNameOrDottedNameSpan(this.activeFile.fileName, this.currentCaretPosition, this.currentCaretPosition);
             if (span === null) {
                 throw new Error('verifyCurrentNameOrDottedNameSpanText\n' +
@@ -1150,6 +1287,8 @@ module FourSlash {
         }
 
         public baselineCurrentFileNameOrDottedNameSpans() {
+            this.taoInvalidReason = 'baselineCurrentFileNameOrDottedNameSpans impossible';
+
             Harness.Baseline.runBaseline(
                 "Name OrDottedNameSpans for " + this.activeFile.fileName,
                 this.testData.globalOptions['BaselineFile'],
@@ -1169,6 +1308,8 @@ module FourSlash {
         }
 
         public verifyOutliningSpans(spans: TextSpan[]) {
+            this.taoInvalidReason = 'verifyOutliningSpans NYI';
+
             var actual = this.languageService.getOutliningRegions(this.activeFile.fileName);
 
             if (actual.length !== spans.length) {
@@ -1185,6 +1326,8 @@ module FourSlash {
         }
 
         public verifyMatchingBracePosition(bracePosition: number, expectedMatchPosition: number) {
+            this.taoInvalidReason = 'verifyMatchingBracePosition NYI';
+
             var actual = this.languageService.getBraceMatchingAtPosition(this.activeFile.fileName, bracePosition);
 
             if (actual.length !== 2) {
@@ -1206,6 +1349,8 @@ module FourSlash {
         }
 
         public verifyNoMatchingBracePosition(bracePosition: number) {
+            this.taoInvalidReason = 'verifyNoMatchingBracePosition NYI';
+
             var actual = this.languageService.getBraceMatchingAtPosition(this.activeFile.fileName, bracePosition);
 
             if (actual.length !== 0) {
@@ -1214,6 +1359,8 @@ module FourSlash {
         }
 
         public verifyTypesAgainstFullCheckAtPositions(positions: number[]) {
+            this.taoInvalidReason = 'verifyTypesAgainstFullCheckAtPositions impossible';
+
             // Create a from-scratch LS to check against
             var referenceLanguageServiceShimHost = new Harness.TypeScriptLS();
             var referenceLanguageServiceShim = referenceLanguageServiceShimHost.getLanguageService();
@@ -1279,6 +1426,8 @@ module FourSlash {
             Report an error if expected value and actual value do not match.
         */
         public verifyNavigationItemsCount(expected: number, searchValue: string, matchKind: string) {
+            this.taoInvalidReason = 'verifyNavigationItemsCount NYI';
+
             var items = this.languageService.getNavigateToItems(searchValue);
             var actual = 0;
             var item: Services.NavigateToItem = null;
@@ -1301,6 +1450,8 @@ module FourSlash {
             Report an error if getNavigateToItems does not find any matched searchValue.
         */
         public verifyNavigationItemsListContains(name: string, kind: string, searchValue: string, matchKind: string, fileName?: string, parentName?: string) {
+            this.taoInvalidReason = 'verifyNavigationItemsListContains NYI';
+
             var items = this.languageService.getNavigateToItems(searchValue);
 
             if (!items || items.length === 0) {
@@ -1318,6 +1469,8 @@ module FourSlash {
         }
 
         public verifyGetScriptLexicalStructureListCount(expected: number) {
+            this.taoInvalidReason = 'verifyNavigationItemsListContains impossible';
+
             var items = this.languageService.getScriptLexicalStructure(this.activeFile.fileName);
             var actual = (items && items.length) || 0;
             if (expected != actual) {
@@ -1326,6 +1479,8 @@ module FourSlash {
         }
 
         public verifGetScriptLexicalStructureListContains(name: string, kind: string, fileName?: string, parentName?: string) {
+            this.taoInvalidReason = 'verifGetScriptLexicalStructureListContains impossible';
+
             var items = this.languageService.getScriptLexicalStructure(this.activeFile.fileName);
 
             if (!items || items.length === 0) {
@@ -1375,6 +1530,8 @@ module FourSlash {
         }
 
         public verifyOccurrencesAtPositionListContains(fileName: string, start: number, end: number, isWriteAccess?: boolean) {
+            this.taoInvalidReason = 'verifyOccurrencesAtPositionListContains NYI';
+
             var occurances = this.getOccurancesAtCurrentPosition();
 
             if (!occurances || occurances.length === 0) {
@@ -1396,6 +1553,8 @@ module FourSlash {
         }
 
         public verifyOccurrencesAtPositionListCount(expectedCount: number) {
+            this.taoInvalidReason = 'verifyOccurrencesAtPositionListCount NYI';
+
             var occurances = this.getOccurancesAtCurrentPosition();
             var actualCount = occurances ? occurances.length : 0;
             if (expectedCount !== actualCount) {
@@ -1454,6 +1613,13 @@ module FourSlash {
         }
 
         private assertItemInCompletionList(items: Services.CompletionEntry[], name: string, type?: string, docComment?: string, fullSymbolName?: string, kind?: string) {
+            this.scenarioActions.push('<ShowCompletionList />');
+            this.scenarioActions.push('<VerifyCompletionContainsItem ItemName="' + name  + '"/>');
+
+            if (type || docComment || fullSymbolName || kind) {
+                this.taoInvalidReason = 'assertItemInCompletionList only supports the "name" parameter';
+            }
+
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 if (item.name == name) {
@@ -1548,17 +1714,27 @@ module FourSlash {
         private static makeWhitespaceVisible(text: string) {
             return text.replace(/ /g, '\u00B7').replace(/\r/g, '\u00B6').replace(/\n/g, '\u2193\n').replace(/\t/g, '\u2192\   ');
         }
+
+        public getTestXmlData(): TestXmlData {
+            return {
+                actions: this.scenarioActions,
+                invalidReason: this.taoInvalidReason,
+                originalName: ''
+            };
+        }
     }
 
     // TOOD: should these just use the Harness's stdout/stderr?
     var fsOutput = new Harness.Compiler.WriterAggregator();
     var fsErrors = new Harness.Compiler.WriterAggregator();
+    export var xmlData: TestXmlData[] = [];
     export function runFourSlashTest(fileName: string) {
         var content = IO.readFile(fileName, /*codepage:*/ null);
-        runFourSlashTestContent(content.contents, fileName)
+        var xml = runFourSlashTestContent(content.contents, fileName);
+        xmlData.push(xml);
     }
 
-    export function runFourSlashTestContent(content: string, fileName: string) {
+    export function runFourSlashTestContent(content: string, fileName: string): TestXmlData {
         // Parse out the files and their metadata
         var testData = parseTestData(content, fileName);
 
@@ -1612,6 +1788,10 @@ module FourSlash {
             assert.throwAssertError = oldThrowAssertError;
             harnessCompiler.reset();
         }
+
+        var xmlData = currentTestState.getTestXmlData();
+        xmlData.originalName = fileName;
+        return xmlData;
     }
 
     function chompLeadingSpace(content: string) {

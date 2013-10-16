@@ -33,31 +33,31 @@ Line 4 col 8 IdentifierName "TResult" = TResult
 Line 4 col 20 IdentifierName "params" = any[]
 Line 4 col 36 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 4 col 48 IdentifierName "TResult" = TResult
-Line 5 col 0 IdentifierName "merge" = { <TResult>(...params: IEnumerable<T>[]): IEnumerable<any>; <TResult>(...params: T[][]): IEnumerable<any>; }
+Line 5 col 0 IdentifierName "merge" = { <TResult>(...params: IEnumerable<T>[]): IEnumerable<T>; <TResult>(...params: T[][]): IEnumerable<T>; }
 Line 6 col 10 IdentifierName "TResult" = TResult
 Line 6 col 22 IdentifierName "params" = IEnumerable<T>[]
 Line 6 col 30 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 6 col 42 IdentifierName "T" = T
 Line 6 col 49 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 6 col 61 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "merge" = { <TResult>(...params: IEnumerable<T>[]): IEnumerable<any>; <TResult>(...params: T[][]): IEnumerable<any>; }
+Line 7 col 0 IdentifierName "merge" = { <TResult>(...params: IEnumerable<T>[]): IEnumerable<T>; <TResult>(...params: T[][]): IEnumerable<T>; }
 Line 7 col 10 IdentifierName "TResult" = TResult
 Line 7 col 22 IdentifierName "params" = T[][]
 Line 7 col 30 IdentifierName "T" = T
 Line 7 col 38 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 7 col 50 IdentifierName "T" = T
-Line 8 col 0 IdentifierName "concat" = { (...sequences: IEnumerable<T>[]): IEnumerable<any>; (...sequences: T[]): IEnumerable<any>; }
+Line 8 col 0 IdentifierName "concat" = { (...sequences: IEnumerable<T>[]): IEnumerable<T>; (...sequences: T[]): IEnumerable<T>; }
 Line 10 col 14 IdentifierName "sequences" = IEnumerable<T>[]
 Line 10 col 25 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 10 col 37 IdentifierName "T" = T
 Line 10 col 44 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 10 col 56 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "concat" = { (...sequences: IEnumerable<T>[]): IEnumerable<any>; (...sequences: T[]): IEnumerable<any>; }
+Line 11 col 0 IdentifierName "concat" = { (...sequences: IEnumerable<T>[]): IEnumerable<T>; (...sequences: T[]): IEnumerable<T>; }
 Line 11 col 14 IdentifierName "sequences" = T[]
 Line 11 col 25 IdentifierName "T" = T
 Line 11 col 31 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 11 col 43 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "insert" = (index: number, second: IEnumerable<T>) => IEnumerable<any>
+Line 12 col 0 IdentifierName "insert" = (index: number, second: IEnumerable<T>) => IEnumerable<T>
 Line 13 col 11 IdentifierName "index" = number
 Line 13 col 26 IdentifierName "second" = IEnumerable<T>
 Line 13 col 34 IdentifierName "IEnumerable" = IEnumerable<T>
@@ -88,7 +88,7 @@ Line 18 col 41 IdentifierName "compareSelector" = (element: T) => TCompare
 Line 18 col 59 IdentifierName "element" = T
 Line 18 col 68 IdentifierName "T" = T
 Line 18 col 74 IdentifierName "TCompare" = TCompare
-Line 19 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<any, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<any, any>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<any, any>; }
+Line 19 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<TKey, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<TKey, TValue>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<TKey, TValue>; }
 Line 20 col 17 IdentifierName "TKey" = TKey
 Line 20 col 23 IdentifierName "keySelector" = (element: T) => TKey
 Line 20 col 37 IdentifierName "element" = T
@@ -96,7 +96,7 @@ Line 20 col 46 IdentifierName "T" = T
 Line 20 col 52 IdentifierName "TKey" = TKey
 Line 20 col 59 IdentifierName "IDictionary" = IDictionary<TKey, TValue>
 Line 20 col 71 IdentifierName "TKey" = TKey
-Line 21 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<any, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<any, any>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<any, any>; }
+Line 21 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<TKey, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<TKey, TValue>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<TKey, TValue>; }
 Line 21 col 17 IdentifierName "TKey" = TKey
 Line 21 col 23 IdentifierName "TValue" = TValue
 Line 21 col 31 IdentifierName "keySelector" = (element: T) => TKey
@@ -110,7 +110,7 @@ Line 21 col 99 IdentifierName "TValue" = TValue
 Line 21 col 108 IdentifierName "IDictionary" = IDictionary<TKey, TValue>
 Line 21 col 120 IdentifierName "TKey" = TKey
 Line 21 col 126 IdentifierName "TValue" = TValue
-Line 22 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<any, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<any, any>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<any, any>; }
+Line 22 col 0 IdentifierName "toDictionary" = { <TKey>(keySelector: (element: T) => TKey): IDictionary<TKey, any>; <TKey, TValue>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue): IDictionary<TKey, TValue>; <TKey, TValue, TCompare>(keySelector: (element: T) => TKey, elementSelector: (element: T) => TValue, compareSelector: (key: TKey) => TCompare): IDictionary<TKey, TValue>; }
 Line 22 col 17 IdentifierName "TKey" = TKey
 Line 22 col 23 IdentifierName "TValue" = TValue
 Line 22 col 31 IdentifierName "TCompare" = TCompare
@@ -132,7 +132,7 @@ Line 22 col 178 IdentifierName "TValue" = TValue
 Line 25 col 10 IdentifierName "IDictionary" = IDictionary<TKey, TValue>
 Line 25 col 22 IdentifierName "TKey" = TKey
 Line 25 col 28 IdentifierName "TValue" = TValue
-Line 26 col 0 IdentifierName "toEnumerable" = () => IEnumerable<any>
+Line 26 col 0 IdentifierName "toEnumerable" = () => IEnumerable<{ key: TKey; value: TValue; }>
 Line 26 col 20 IdentifierName "IEnumerable" = IEnumerable<T>
 Line 26 col 34 IdentifierName "key" = TKey
 Line 26 col 39 IdentifierName "TKey" = TKey

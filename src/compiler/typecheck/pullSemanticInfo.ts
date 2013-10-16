@@ -29,17 +29,17 @@ module TypeScript {
         // <-- Data to clear when we get invalidated
         private astSymbolMap: DataMap<PullSymbol> = null;
         private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-        private symbolASTMap = new DataMap<AST>();
         private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> = null;
 
         private declSymbolMap = new DataMap<PullSymbol>();
         private declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
-        private declSpecializingSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
 
         private declCache: BlockIntrinsics<PullDecl[]> = null;
         private symbolCache: BlockIntrinsics<PullSymbol> = null;
         private fileNameToDiagnostics: BlockIntrinsics<Diagnostic[]> = null;
-        private binder: PullSymbolBinder = null;
+
+        private _binder: PullSymbolBinder = null;
+        private _resolver: PullTypeResolver = null;
 
         private _topLevelDecls: PullDecl[] = null;
         private _fileNames: string[] = null;
@@ -430,19 +430,18 @@ module TypeScript {
 
             this.astSymbolMap = new DataMap<PullSymbol>();
             this.astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-            this.symbolASTMap = new DataMap<AST>();
             this.astCallResolutionDataMap = Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
 
             this.declCache = new BlockIntrinsics();
             this.symbolCache = new BlockIntrinsics();
             this.fileNameToDiagnostics = new BlockIntrinsics();
-            this.binder = null;
+            this._binder = null;
+            this._resolver = null;
             this._topLevelDecls = null;
             this._fileNames = null;
 
             this.declSymbolMap = new DataMap<PullSymbol>();
             this.declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
-            this.declSpecializingSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
 
             if (oldSettings && newSettings) {
                 // Depending on which options changed, our cached syntactic data may not be valid
@@ -477,15 +476,10 @@ module TypeScript {
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
             this.astSymbolMap.link(ast.astIDString, symbol);
-            this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {
             return this.astSymbolMap.read(ast.astIDString);
-        }
-
-        public getASTForSymbol(symbol: PullSymbol): AST {
-            return this.symbolASTMap.read(symbol.pullSymbolIDString);
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
@@ -522,14 +516,6 @@ module TypeScript {
             return this.declSignatureSymbolMap.read(decl.declIDString);
         }
 
-        public setSpecializingSignatureSymbolForDecl(decl: PullDecl, signatureSymbol: PullSignatureSymbol): void {
-            this.declSpecializingSignatureSymbolMap.link(decl.declIDString, signatureSymbol);
-        }
-
-        public getSpecializingSignatureSymbolForDecl(decl: PullDecl): PullSignatureSymbol {
-            return this.declSpecializingSignatureSymbolMap.read(decl.declIDString);
-        }
-
         public addDiagnostic(diagnostic: Diagnostic): void {
             var fileName = diagnostic.fileName();
             var diagnostics = this.fileNameToDiagnostics[fileName];
@@ -547,11 +533,19 @@ module TypeScript {
         }
 
         public getBinder(): PullSymbolBinder {
-            if (!this.binder) {
-                this.binder = new PullSymbolBinder(this);
+            if (!this._binder) {
+                this._binder = new PullSymbolBinder(this);
             }
 
-            return this.binder;
+            return this._binder;
+        }
+
+        public getResolver(): PullTypeResolver {
+            if (!this._resolver) {
+                this._resolver = new PullTypeResolver(this.compiler.compilationSettings(), this);
+            }
+
+            return this._resolver;
         }
 
         public addSyntheticIndexSignature(containingDecl: PullDecl, containingSymbol: PullTypeSymbol, ast: AST,

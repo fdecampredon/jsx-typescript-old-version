@@ -119,8 +119,8 @@ Line 35 col 19 InvocationExpression "f(ay, by)" = C
 Line 35 col 19 IdentifierName "f" = (a: A, b: B) => C
 Line 35 col 21 IdentifierName "ay" = A
 Line 35 col 25 IdentifierName "by" = B
-Line 40 col 4 IdentifierName "cfilter" = (ax: (a: any) => boolean) => (bx: any[]) => any[]
-Line 40 col 14 InvocationExpression "curry1(filter)" = (ax: (a: any) => boolean) => (bx: any[]) => any[]
+Line 40 col 4 IdentifierName "cfilter" = (ax: (a: A) => boolean) => (bx: any[]) => any[]
+Line 40 col 14 InvocationExpression "curry1(filter)" = (ax: (a: A) => boolean) => (bx: any[]) => any[]
 Line 40 col 14 IdentifierName "curry1" = <A, B, C>(f: (a: A, b: B) => C) => (ax: A) => (bx: B) => C
 Line 40 col 21 IdentifierName "filter" = <A>(f: (a: A) => boolean, ar: A[]) => A[]
 Line 48 col 9 IdentifierName "countWhere_1" = <A>(pred: (a: A) => boolean) => (a: A[]) => number
@@ -134,7 +134,7 @@ Line 49 col 11 InvocationExpression "compose(length2, cfilter(pred))" = (a: any[
 Line 49 col 11 IdentifierName "compose" = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => C
 Line 49 col 19 IdentifierName "length2" = <A>(ar: A[]) => number
 Line 49 col 28 InvocationExpression "cfilter(pred)" = (bx: any[]) => any[]
-Line 49 col 28 IdentifierName "cfilter" = (ax: (a: any) => boolean) => (bx: any[]) => any[]
+Line 49 col 28 IdentifierName "cfilter" = (ax: (a: A) => boolean) => (bx: any[]) => any[]
 Line 49 col 36 IdentifierName "pred" = (a: A) => boolean
 Line 52 col 9 IdentifierName "countWhere_2" = <A>(pred: (a: A) => boolean) => (a: A[]) => number
 Line 52 col 22 IdentifierName "A" = A
@@ -145,7 +145,7 @@ Line 52 col 52 IdentifierName "a" = A[]
 Line 52 col 55 IdentifierName "A" = A
 Line 53 col 8 IdentifierName "where" = (bx: any[]) => any[]
 Line 53 col 16 InvocationExpression "cfilter(pred)" = (bx: any[]) => any[]
-Line 53 col 16 IdentifierName "cfilter" = (ax: (a: any) => boolean) => (bx: any[]) => any[]
+Line 53 col 16 IdentifierName "cfilter" = (ax: (a: A) => boolean) => (bx: any[]) => any[]
 Line 53 col 24 IdentifierName "pred" = (a: A) => boolean
 Line 54 col 11 InvocationExpression "compose(length2, where)" = (a: any[]) => number
 Line 54 col 11 IdentifierName "compose" = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => C

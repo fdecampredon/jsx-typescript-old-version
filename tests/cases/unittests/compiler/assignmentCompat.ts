@@ -284,7 +284,7 @@ describe("Assignment compatibility", function() {
                 classWithTwoPublic.assertNotAssignmentCompatibleWith(AnyObjectBut(these2));
             });
 
-            var these3 = [emptyObj, emptySig, singleNumObj1, singleNumSig, interfaceOne, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithOptional, classWithPublicAndOptional];
+            var these3 = [emptyObj, emptySig, interfaceWithOptional, classWithOptional];
 
             it("Class with optional property assignable to", function () {
                 classWithOptional.assertAssignmentCompatibleWith(these3);
@@ -294,7 +294,7 @@ describe("Assignment compatibility", function() {
                 classWithOptional.assertNotAssignmentCompatibleWith(AnyObjectBut(these3));
             });            
 
-            var these4 = [emptyObj, emptySig, singleNumObj1, singleNumSig, singleStringObj2, singleStringSig2, interfaceOne, interfaceTwo, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithTwoPublic, classWithOptional, classWithPublicAndOptional];
+            var these4 = [emptyObj, emptySig, singleNumObj1, singleNumSig, interfaceOne, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithOptional, classWithPublicAndOptional];
 
             it("Class with public and optional property assignable to", function () {
                 classWithPublicAndOptional.assertAssignmentCompatibleWith(these4);
@@ -358,7 +358,7 @@ describe("Assignment compatibility", function() {
                 interfaceTwo.assertNotAssignmentCompatibleWith(AnyObjectBut(these2));
             });
 
-            var these3 = [emptyObj, emptySig, singleNumObj1, singleNumSig, interfaceOne, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithOptional, classWithPublicAndOptional];
+            var these3 = [emptyObj, emptySig, interfaceWithOptional, classWithOptional];
             
             it("Interface with optional property assignable to", function () {
                 interfaceWithOptional.assertAssignmentCompatibleWith(these3);
@@ -368,7 +368,7 @@ describe("Assignment compatibility", function() {
                 interfaceWithOptional.assertNotAssignmentCompatibleWith(AnyObjectBut(these3));
             });
 
-            var these4 = [emptyObj, emptySig, singleNumObj1, singleNumSig, singleStringObj2, singleStringSig2, interfaceOne, interfaceTwo, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithTwoPublic, classWithOptional, classWithPublicAndOptional];
+            var these4 = [emptyObj, emptySig, singleNumObj1, singleNumSig, interfaceOne, interfaceWithOptional, interfaceWithPublicAndOptional, classWithPublic, classWithOptional, classWithPublicAndOptional];
 
             it("Interface with public and optional property assignable to", function () {
                 interfaceWithPublicAndOptional.assertAssignmentCompatibleWith(these4);

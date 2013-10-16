@@ -35,7 +35,7 @@ verify.not.completionListContains('bar');
 verify.not.completionListContains('bar2');
 verify.not.completionListContains('baz');
 verify.not.completionListContains('x');
-debugger;
+
 edit.insert('foo()');
 
 goTo.marker('2');

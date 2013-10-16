@@ -1,0 +1,52 @@
+=== tests/cases/compiler/collisionCodeGenModuleWithModuleReopening.ts ===
+Line 0 col 7 IdentifierName "m1" = m1
+Line 1 col 17 IdentifierName "m1" = m1.m1
+Line 4 col 4 IdentifierName "foo" = m1.m1
+Line 4 col 10 ObjectCreationExpression "new m1.m1()" = m1.m1
+Line 4 col 14 MemberAccessExpression "m1.m1" = new() => m1.m1
+Line 4 col 14 IdentifierName "m1" = { m1: new() => m1.m1; c1: new() => m1.c1; }
+Line 4 col 17 IdentifierName "m1" = new() => m1.m1
+Line 5 col 7 IdentifierName "m1" = m1
+Line 6 col 17 IdentifierName "c1" = m1.c1
+Line 8 col 8 IdentifierName "b" = m1.c1
+Line 8 col 12 ObjectCreationExpression "new c1()" = m1.c1
+Line 8 col 16 IdentifierName "c1" = new() => m1.c1
+Line 9 col 8 IdentifierName "c" = m1.m1
+Line 9 col 12 ObjectCreationExpression "new m1()" = m1.m1
+Line 9 col 16 IdentifierName "m1" = new() => m1.m1
+Line 11 col 4 IdentifierName "foo2" = m1.c1
+Line 11 col 11 ObjectCreationExpression "new m1.c1()" = m1.c1
+Line 11 col 15 MemberAccessExpression "m1.c1" = new() => m1.c1
+Line 11 col 15 IdentifierName "m1" = { m1: new() => m1.m1; c1: new() => m1.c1; }
+Line 11 col 18 IdentifierName "c1" = new() => m1.c1
+Line 13 col 7 IdentifierName "m2" = m2
+Line 14 col 17 IdentifierName "c1" = m2.c1
+Line 16 col 15 IdentifierName "b10" = number
+Line 17 col 8 IdentifierName "x" = m2.c1
+Line 17 col 12 ObjectCreationExpression "new c1()" = m2.c1
+Line 17 col 16 IdentifierName "c1" = new() => m2.c1
+Line 19 col 4 IdentifierName "foo3" = m2.c1
+Line 19 col 11 ObjectCreationExpression "new m2.c1()" = m2.c1
+Line 19 col 15 MemberAccessExpression "m2.c1" = new() => m2.c1
+Line 19 col 15 IdentifierName "m2" = { c1: new() => m2.c1; b10: number; m2: new() => m2.m2; }
+Line 19 col 18 IdentifierName "c1" = new() => m2.c1
+Line 20 col 7 IdentifierName "m2" = m2
+Line 21 col 17 IdentifierName "m2" = m2.m2
+Line 23 col 8 IdentifierName "b" = m2.m2
+Line 23 col 12 ObjectCreationExpression "new m2()" = m2.m2
+Line 23 col 16 IdentifierName "m2" = new() => m2.m2
+Line 24 col 8 IdentifierName "d" = number
+Line 24 col 12 IdentifierName "b10" = number
+Line 25 col 8 IdentifierName "c" = m2.c1
+Line 25 col 12 ObjectCreationExpression "new c1()" = m2.c1
+Line 25 col 16 IdentifierName "c1" = new() => m2.c1
+Line 27 col 4 IdentifierName "foo3" = m2.c1
+Line 27 col 11 ObjectCreationExpression "new m2.c1()" = m2.c1
+Line 27 col 15 MemberAccessExpression "m2.c1" = new() => m2.c1
+Line 27 col 15 IdentifierName "m2" = { c1: new() => m2.c1; b10: number; m2: new() => m2.m2; }
+Line 27 col 18 IdentifierName "c1" = new() => m2.c1
+Line 28 col 4 IdentifierName "foo2" = m2.m2
+Line 28 col 11 ObjectCreationExpression "new m2.m2()" = m2.m2
+Line 28 col 15 MemberAccessExpression "m2.m2" = new() => m2.m2
+Line 28 col 15 IdentifierName "m2" = { c1: new() => m2.c1; b10: number; m2: new() => m2.m2; }
+Line 28 col 18 IdentifierName "m2" = new() => m2.m2

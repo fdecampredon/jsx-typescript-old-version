@@ -24,13 +24,13 @@ Line 12 col 36 IdentifierName "italic" = boolean
 Line 14 col 0 IdentifierName "shouldBeOK" = () => void
 Line 15 col 0 AssignmentExpression "this.values = {
             comments: { italic: true }
-        }" = { comments: { italic: boolean; }; [s: string]: { italic: boolean; }; }
+        }" = { comments: { italic: boolean; }; [s: string]: IOptions; }
 Line 15 col 0 MemberAccessExpression "this.values" = IMap
 Line 15 col 0 ThisKeyword "this" = Bug
 Line 15 col 13 IdentifierName "values" = IMap
 Line 15 col 22 ObjectLiteralExpression "{
             comments: { italic: true }
-        }" = { comments: { italic: boolean; }; [s: string]: { italic: boolean; }; }
+        }" = { comments: { italic: boolean; }; [s: string]: IOptions; }
 Line 16 col 0 IdentifierName "comments" = { italic: boolean; }
 Line 16 col 22 ObjectLiteralExpression "{ italic: true }" = { italic: boolean; }
 Line 16 col 24 IdentifierName "italic" = boolean

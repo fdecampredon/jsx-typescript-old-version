@@ -14,45 +14,45 @@ Line 3 col 14 IdentifierName "T" = T
 Line 3 col 17 IdentifierName "y" = U
 Line 3 col 20 IdentifierName "U" = U
 Line 5 col 10 IdentifierName "Combinators" = Combinators
-Line 6 col 0 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 6 col 0 IdentifierName "map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 6 col 8 IdentifierName "T" = T
 Line 6 col 11 IdentifierName "U" = U
-Line 6 col 14 IdentifierName "c" = Collection<T, U>
-Line 6 col 17 IdentifierName "Collection" = Collection<T, U>
-Line 6 col 28 IdentifierName "T" = T
-Line 6 col 30 IdentifierName "U" = U
-Line 6 col 34 IdentifierName "f" = (x: T, y: U) => any
-Line 6 col 38 IdentifierName "x" = T
-Line 6 col 41 IdentifierName "T" = T
-Line 6 col 44 IdentifierName "y" = U
-Line 6 col 47 IdentifierName "U" = U
-Line 6 col 59 IdentifierName "Collection" = Collection<T, U>
-Line 7 col 0 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 6 col 14 IdentifierName "V" = V
+Line 6 col 17 IdentifierName "c" = Collection<T, U>
+Line 6 col 20 IdentifierName "Collection" = Collection<T, U>
+Line 6 col 31 IdentifierName "T" = T
+Line 6 col 33 IdentifierName "U" = U
+Line 6 col 37 IdentifierName "f" = (x: T, y: U) => V
+Line 6 col 41 IdentifierName "x" = T
+Line 6 col 44 IdentifierName "T" = T
+Line 6 col 47 IdentifierName "y" = U
+Line 6 col 50 IdentifierName "U" = U
+Line 6 col 56 IdentifierName "V" = V
+Line 6 col 60 IdentifierName "Collection" = Collection<T, U>
+Line 6 col 71 IdentifierName "T" = T
+Line 6 col 74 IdentifierName "V" = V
+Line 7 col 0 IdentifierName "map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 7 col 8 IdentifierName "T" = T
 Line 7 col 11 IdentifierName "U" = U
-Line 7 col 14 IdentifierName "V" = V
-Line 7 col 17 IdentifierName "c" = Collection<T, U>
-Line 7 col 20 IdentifierName "Collection" = Collection<T, U>
-Line 7 col 31 IdentifierName "T" = T
-Line 7 col 33 IdentifierName "U" = U
-Line 7 col 37 IdentifierName "f" = (x: T, y: U) => V
-Line 7 col 41 IdentifierName "x" = T
-Line 7 col 44 IdentifierName "T" = T
-Line 7 col 47 IdentifierName "y" = U
-Line 7 col 50 IdentifierName "U" = U
-Line 7 col 56 IdentifierName "V" = V
-Line 7 col 60 IdentifierName "Collection" = Collection<T, U>
-Line 7 col 71 IdentifierName "T" = T
-Line 7 col 74 IdentifierName "V" = V
+Line 7 col 14 IdentifierName "c" = Collection<T, U>
+Line 7 col 17 IdentifierName "Collection" = Collection<T, U>
+Line 7 col 28 IdentifierName "T" = T
+Line 7 col 30 IdentifierName "U" = U
+Line 7 col 34 IdentifierName "f" = (x: T, y: U) => any
+Line 7 col 38 IdentifierName "x" = T
+Line 7 col 41 IdentifierName "T" = T
+Line 7 col 44 IdentifierName "y" = U
+Line 7 col 47 IdentifierName "U" = U
+Line 7 col 59 IdentifierName "Collection" = Collection<T, U>
 Line 9 col 4 IdentifierName "c2" = Collection<number, string>
 Line 9 col 8 IdentifierName "Collection" = Collection<T, U>
 Line 10 col 4 IdentifierName "_" = Combinators
 Line 10 col 7 IdentifierName "Combinators" = Combinators
 Line 11 col 4 IdentifierName "r1a" = Collection<number, string>
 Line 11 col 10 InvocationExpression "_.map(c2, (x) => { return x.toFixed() })" = Collection<number, string>
-Line 11 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 11 col 10 MemberAccessExpression "_.map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 11 col 10 IdentifierName "_" = Combinators
-Line 11 col 12 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 11 col 12 IdentifierName "map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 11 col 16 IdentifierName "c2" = Collection<number, string>
 Line 11 col 20 ParenthesizedArrowFunctionExpression "(x) => { return x.toFixed() }" = (x: number) => string
 Line 11 col 21 IdentifierName "x" = number
@@ -69,8 +69,8 @@ Line 12 col 34 IdentifierName "x" = number
 Line 12 col 36 IdentifierName "toFixed" = (fractionDigits?: number) => string
 Line 13 col 4 IdentifierName "r1b" = Collection<number, string>
 Line 13 col 10 InvocationExpression "_.map(c2, rf1)" = Collection<number, string>
-Line 13 col 10 MemberAccessExpression "_.map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 13 col 10 MemberAccessExpression "_.map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 13 col 10 IdentifierName "_" = Combinators
-Line 13 col 12 IdentifierName "map" = { <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; }
+Line 13 col 12 IdentifierName "map" = { <T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>; <T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>; }
 Line 13 col 16 IdentifierName "c2" = Collection<number, string>
 Line 13 col 20 IdentifierName "rf1" = (x: number) => string

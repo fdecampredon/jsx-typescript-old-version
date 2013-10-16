@@ -23,5 +23,4 @@ recursiveFunctionTypes.ts line 42 col 1: error TS2081: Supplied parameters do no
 recursiveFunctionTypes.ts line 42 col 1: error TS2087: Could not select overload for 'call' expression.
 recursiveFunctionTypes.ts line 43 col 1: error TS2082: Supplied parameters do not match any signature of call target:
 	Type '{ (): any; (a: any): () => number; (a: number): number; (a?: any): any; }' requires a call signature, but type 'String' lacks one.
-	Type '{ (): any; (a: any): () => number; (a: number): number; (a?: any): any; }' requires a call signature, but type 'String' lacks one.
 recursiveFunctionTypes.ts line 43 col 1: error TS2087: Could not select overload for 'call' expression.

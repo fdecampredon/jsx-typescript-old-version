@@ -7,5 +7,9 @@ module TypeScript {
                 throw new Error("Debug Failure. False expression: " + (message ? message : ""));
             }
         }
+
+        public static fail(message?: string): void {
+            Debug.assert(false, message);
+        }
     }
 }

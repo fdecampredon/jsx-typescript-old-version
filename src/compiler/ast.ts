@@ -384,11 +384,11 @@ module TypeScript {
         constructor(public identifier: Identifier,
             public typeParameterList: ASTList,
             public heritageClauses: ASTList,
-            public members: ASTList) {
+            public body: ObjectType) {
             super();
                 identifier && (identifier.parent = this);
                 typeParameterList && (typeParameterList.parent = this);
-            members && (members.parent = this);
+                body && (body.parent = this);
             heritageClauses && (heritageClauses.parent = this);
         }
 
@@ -421,7 +421,7 @@ module TypeScript {
             return super.structuralEquals(ast, includingPosition) &&
                 this._varFlags === ast._varFlags &&
                 structuralEquals(this.identifier, ast.identifier, includingPosition) &&
-                structuralEquals(this.members, ast.members, includingPosition) &&
+                structuralEquals(this.body, ast.body, includingPosition) &&
                 structuralEquals(this.typeParameterList, ast.typeParameterList, includingPosition) &&
                 structuralEquals(this.heritageClauses, ast.heritageClauses, includingPosition);
         }
@@ -1025,12 +1025,10 @@ module TypeScript {
     }
 
     export class BinaryExpression extends AST {
-        constructor(private _nodeType: NodeType,
-                    public operand1: AST,
-                    public operand2: AST) {
+        constructor(private _nodeType: NodeType, public left: AST, public right: AST) {
             super();
-            operand1 && (operand1.parent = this);
-            operand2 && (operand2.parent = this);
+            left && (left.parent = this);
+            right && (right.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1086,19 +1084,17 @@ module TypeScript {
 
         public structuralEquals(ast: BinaryExpression, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.operand1, ast.operand1, includingPosition) &&
-                   structuralEquals(this.operand2, ast.operand2, includingPosition);
+                   structuralEquals(this.left, ast.left, includingPosition) &&
+                   structuralEquals(this.right, ast.right, includingPosition);
         }
     }
 
     export class ConditionalExpression extends AST {
-        constructor(public operand1: AST,
-                    public operand2: AST,
-                    public operand3: AST) {
+        constructor(public condition: AST, public whenTrue: AST, public whenFalse: AST) {
             super();
-            operand1 && (operand1.parent = this);
-            operand2 && (operand2.parent = this);
-            operand3 && (operand3.parent = this);
+            condition && (condition.parent = this);
+            whenTrue && (whenTrue.parent = this);
+            whenFalse && (whenFalse.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1111,9 +1107,9 @@ module TypeScript {
 
         public structuralEquals(ast: ConditionalExpression, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.operand1, ast.operand1, includingPosition) &&
-                   structuralEquals(this.operand2, ast.operand2, includingPosition) &&
-                   structuralEquals(this.operand3, ast.operand3, includingPosition);
+                   structuralEquals(this.condition, ast.condition, includingPosition) &&
+                   structuralEquals(this.whenTrue, ast.whenTrue, includingPosition) &&
+                   structuralEquals(this.whenFalse, ast.whenFalse, includingPosition);
         }
     }
 
@@ -1724,10 +1720,10 @@ module TypeScript {
     }
 
     export class WhileStatement extends AST {
-        constructor(public cond: AST, public body: AST) {
+        constructor(public condition: AST, public statement: AST) {
             super();
-            cond && (cond.parent = this);
-            body && (body.parent = this);
+            condition && (condition.parent = this);
+            statement && (statement.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1744,16 +1740,16 @@ module TypeScript {
 
         public structuralEquals(ast: WhileStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.cond, ast.cond, includingPosition) &&
-                   structuralEquals(this.body, ast.body, includingPosition);
+                   structuralEquals(this.condition, ast.condition, includingPosition) &&
+                   structuralEquals(this.statement, ast.statement, includingPosition);
         }
     }
 
     export class DoStatement extends AST {
-        constructor(public body: AST, public cond: AST, public whileSpan: ASTSpan) {
+        constructor(public statement: AST, public condition: AST, public whileSpan: ASTSpan) {
             super();
-            body && (body.parent = this);
-            cond && (cond.parent = this);
+            statement && (statement.parent = this);
+            condition && (condition.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1770,8 +1766,8 @@ module TypeScript {
 
         public structuralEquals(ast: DoStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.body, ast.body, includingPosition) &&
-                   structuralEquals(this.cond, ast.cond, includingPosition);
+                   structuralEquals(this.statement, ast.statement, includingPosition) &&
+                   structuralEquals(this.condition, ast.condition, includingPosition);
         }
     }
 
@@ -1826,9 +1822,9 @@ module TypeScript {
     }
 
     export class ReturnStatement extends AST {
-        constructor(public returnExpression: AST) {
+        constructor(public expression: AST) {
             super();
-            returnExpression && (returnExpression.parent = this);
+            expression && (expression.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1845,16 +1841,16 @@ module TypeScript {
 
         public structuralEquals(ast: ReturnStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.returnExpression, ast.returnExpression, includingPosition);
+                   structuralEquals(this.expression, ast.expression, includingPosition);
         }
     }
 
     export class ForInStatement extends AST {
-        constructor(public lval: AST, public obj: AST, public body: AST) {
+        constructor(public variableDeclaration: VariableDeclaration, public expression: AST, public statement: AST) {
             super();
-            lval && (lval.parent = this);
-            obj && (obj.parent = this);
-            body && (body.parent = this);
+            variableDeclaration && (variableDeclaration.parent = this);
+            expression && (expression.parent = this);
+            statement && (statement.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1871,9 +1867,9 @@ module TypeScript {
 
         public structuralEquals(ast: ForInStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.lval, ast.lval, includingPosition) &&
-                   structuralEquals(this.obj, ast.obj, includingPosition) &&
-                   structuralEquals(this.body, ast.body, includingPosition);
+                   structuralEquals(this.variableDeclaration, ast.variableDeclaration, includingPosition) &&
+                   structuralEquals(this.expression, ast.expression, includingPosition) &&
+                   structuralEquals(this.statement, ast.statement, includingPosition);
         }
     }
 
@@ -1911,10 +1907,10 @@ module TypeScript {
     }
 
     export class WithStatement extends AST {
-        constructor(public expr: AST, public body: AST) {
+        constructor(public condition: AST, public statement: AST) {
             super();
-            expr && (expr.parent = this);
-            body && (body.parent = this);
+            condition && (condition.parent = this);
+            statement && (statement.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -1931,8 +1927,8 @@ module TypeScript {
 
         public structuralEquals(ast: WithStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.expr, ast.expr, includingPosition) &&
-                   structuralEquals(this.body, ast.body, includingPosition);
+                   structuralEquals(this.condition, ast.condition, includingPosition) &&
+                   structuralEquals(this.statement, ast.statement, includingPosition);
         }
     }
 
@@ -1993,9 +1989,9 @@ module TypeScript {
     }
 
     export class SwitchStatement extends AST {
-        constructor(public val: AST, public caseList: ASTList, public statement: ASTSpan) {
+        constructor(public expression: AST, public caseList: ASTList, public statement: ASTSpan) {
             super();
-            val && (val.parent = this);
+            expression && (expression.parent = this);
             caseList && (caseList.parent = this);
         }
 
@@ -2014,7 +2010,7 @@ module TypeScript {
         public structuralEquals(ast: SwitchStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                    structuralEquals(this.caseList, ast.caseList, includingPosition) &&
-                   structuralEquals(this.val, ast.val, includingPosition);
+                   structuralEquals(this.expression, ast.expression, includingPosition);
         }
     }
 
@@ -2148,9 +2144,9 @@ module TypeScript {
     }
 
     export class TryStatement extends AST {
-        constructor(public tryBody: Block, public catchClause: CatchClause, public finallyBody: Block) {
+        constructor(public block: Block, public catchClause: CatchClause, public finallyBody: Block) {
             super();
-            tryBody && (tryBody.parent = this);
+            block && (block.parent = this);
             catchClause && (catchClause.parent = this);
             finallyBody && (finallyBody.parent = this);
         }
@@ -2169,17 +2165,17 @@ module TypeScript {
 
         public structuralEquals(ast: TryStatement, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   structuralEquals(this.tryBody, ast.tryBody, includingPosition) &&
+                   structuralEquals(this.block, ast.block, includingPosition) &&
                    structuralEquals(this.catchClause, ast.catchClause, includingPosition) &&
                    structuralEquals(this.finallyBody, ast.finallyBody, includingPosition);
         }
     }
 
     export class CatchClause extends AST {
-        constructor(public param: VariableDeclarator, public body: Block) {
+        constructor(public param: VariableDeclarator, public block: Block) {
             super();
             param && (param.parent = this);
-            body && (body.parent = this);
+            block && (block.parent = this);
         }
 
         public nodeType(): NodeType {
@@ -2193,7 +2189,7 @@ module TypeScript {
         public structuralEquals(ast: CatchClause, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                    structuralEquals(this.param, ast.param, includingPosition) &&
-                   structuralEquals(this.body, ast.body, includingPosition);
+                   structuralEquals(this.block, ast.block, includingPosition);
         }
     }
 

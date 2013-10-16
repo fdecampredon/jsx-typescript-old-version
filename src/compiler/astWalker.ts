@@ -336,8 +336,8 @@ module TypeScript {
         }
 
         export function walkBinaryExpressionChildren(preAst: BinaryExpression, walker: IAstWalker): void {
-            walker.walk(preAst.operand1);
-            walker.walk(preAst.operand2);
+            walker.walk(preAst.left);
+            walker.walk(preAst.right);
         }
 
         export function walkTypeParameterChildren(preAst: TypeParameter, walker: IAstWalker): void {
@@ -372,9 +372,9 @@ module TypeScript {
         }
 
         export function walkTrinaryExpressionChildren(preAst: ConditionalExpression, walker: IAstWalker): void {
-            walker.walk(preAst.operand1);
-            walker.walk(preAst.operand2);
-            walker.walk(preAst.operand3);
+            walker.walk(preAst.condition);
+            walker.walk(preAst.whenTrue);
+            walker.walk(preAst.whenFalse);
         }
 
         export function walkFunctionExpressionChildren(preAst: FunctionExpression, walker: IAstWalker): void {
@@ -432,7 +432,7 @@ module TypeScript {
         }
 
         export function walkReturnStatementChildren(preAst: ReturnStatement, walker: IAstWalker): void {
-            walker.walk(preAst.returnExpression);
+            walker.walk(preAst.expression);
         }
 
         export function walkForStatementChildren(preAst: ForStatement, walker: IAstWalker): void {
@@ -443,9 +443,9 @@ module TypeScript {
         }
 
         export function walkForInStatementChildren(preAst: ForInStatement, walker: IAstWalker): void {
-            walker.walk(preAst.lval);
-            walker.walk(preAst.obj);
-            walker.walk(preAst.body);
+            walker.walk(preAst.variableDeclaration);
+            walker.walk(preAst.expression);
+            walker.walk(preAst.statement);
         }
 
         export function walkIfStatementChildren(preAst: IfStatement, walker: IAstWalker): void {
@@ -459,13 +459,13 @@ module TypeScript {
         }
 
         export function walkWhileStatementChildren(preAst: WhileStatement, walker: IAstWalker): void {
-            walker.walk(preAst.cond);
-            walker.walk(preAst.body);
+            walker.walk(preAst.condition);
+            walker.walk(preAst.statement);
         }
 
         export function walkDoStatementChildren(preAst: DoStatement, walker: IAstWalker): void {
-            walker.walk(preAst.cond);
-            walker.walk(preAst.body);
+            walker.walk(preAst.condition);
+            walker.walk(preAst.statement);
         }
 
         export function walkBlockChildren(preAst: Block, walker: IAstWalker): void {
@@ -486,19 +486,19 @@ module TypeScript {
         }
 
         export function walkSwitchStatementChildren(preAst: SwitchStatement, walker: IAstWalker): void {
-            walker.walk(preAst.val);
+            walker.walk(preAst.expression);
             walker.walk(preAst.caseList);
         }
 
         export function walkTryStatementChildren(preAst: TryStatement, walker: IAstWalker): void {
-            walker.walk(preAst.tryBody);
+            walker.walk(preAst.block);
             walker.walk(preAst.catchClause);
             walker.walk(preAst.finallyBody);
         }
 
         export function walkCatchClauseChildren(preAst: CatchClause, walker: IAstWalker): void {
             walker.walk(preAst.param);
-            walker.walk(preAst.body);
+            walker.walk(preAst.block);
         }
 
         export function walkClassDeclChildren(preAst: ClassDeclaration, walker: IAstWalker): void {
@@ -520,7 +520,7 @@ module TypeScript {
             walker.walk(preAst.identifier);
             walker.walk(preAst.typeParameterList);
             walker.walk(preAst.heritageClauses);
-            walker.walk(preAst.members);
+            walker.walk(preAst.body);
         }
 
         export function walkObjectTypeChildren(preAst: ObjectType, walker: IAstWalker): void {
@@ -556,8 +556,8 @@ module TypeScript {
         }
 
         export function walkWithStatementChildren(preAst: WithStatement, walker: IAstWalker): void {
-            walker.walk(preAst.expr);
-            walker.walk(preAst.body);
+            walker.walk(preAst.condition);
+            walker.walk(preAst.statement);
         }
 
         export function walkExpressionStatementChildren(preAst: ExpressionStatement, walker: IAstWalker): void {

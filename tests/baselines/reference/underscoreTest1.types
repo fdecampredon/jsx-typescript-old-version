@@ -81,9 +81,9 @@ Line 14 col 31 ParenthesizedArrowFunctionExpression "(a, b) => a.concat(b)" = (a
 Line 14 col 32 IdentifierName "a" = number[]
 Line 14 col 35 IdentifierName "b" = number[]
 Line 14 col 41 InvocationExpression "a.concat(b)" = number[]
-Line 14 col 41 MemberAccessExpression "a.concat" = { <U extends Array<T>>(...items: U[]): number[]; (...items: number[]): number[]; }
+Line 14 col 41 MemberAccessExpression "a.concat" = { <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }
 Line 14 col 41 IdentifierName "a" = number[]
-Line 14 col 43 IdentifierName "concat" = { <U extends Array<T>>(...items: U[]): number[]; (...items: number[]): number[]; }
+Line 14 col 43 IdentifierName "concat" = { <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }
 Line 14 col 50 IdentifierName "b" = number[]
 Line 14 col 54 ArrayLiteralExpression "[]" = number[]
 Line 16 col 4 IdentifierName "even" = number
@@ -727,12 +727,12 @@ Line 155 col 0 InvocationExpression "_.chain([1, 2, 3, 200])
     .filter(function (num) { return num % 2 == 0; })
     .tap(<any>alert)
     .map(function (num) { return num * num })
-    .value()" = T[]
+    .value()" = number[]
 Line 155 col 0 MemberAccessExpression "_.chain([1, 2, 3, 200])
     .filter(function (num) { return num % 2 == 0; })
     .tap(<any>alert)
     .map(function (num) { return num * num })
-    .value" = () => T[]
+    .value" = () => number[]
 Line 155 col 0 InvocationExpression "_.chain([1, 2, 3, 200])
     .filter(function (num) { return num % 2 == 0; })
     .tap(<any>alert)
@@ -771,7 +771,7 @@ Line 159 col 19 IdentifierName "num" = number
 Line 159 col 33 MultiplyExpression "num * num" = number
 Line 159 col 33 IdentifierName "num" = number
 Line 159 col 39 IdentifierName "num" = number
-Line 160 col 5 IdentifierName "value" = () => T[]
+Line 160 col 5 IdentifierName "value" = () => number[]
 Line 161 col 0 InvocationExpression "_.has({ a: 1, b: 2, c: 3 }, "b")" = boolean
 Line 161 col 0 MemberAccessExpression "_.has" = (object: any, key: string) => boolean
 Line 161 col 0 IdentifierName "_" = Underscore.Static

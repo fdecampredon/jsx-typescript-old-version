@@ -77,7 +77,7 @@ verify.quickInfoIs('C<any>');
 goTo.marker('b1');
 verify.quickInfoIs('Foo<number>');
 goTo.marker('b2');
-verify.quickInfoIs('Foo<number>'); 
+verify.quickInfoIs('Foo<Foo<number>>'); 
 goTo.marker('b3');
 verify.quickInfoIs('IG<number>');
 goTo.marker('b5');

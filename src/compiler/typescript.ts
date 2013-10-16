@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+
 ///<reference path='references.ts' />
 
 module TypeScript {
@@ -565,7 +566,7 @@ module TypeScript {
                 return null;
             }
 
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, decl.fileName());
+            var resolver = this.semanticInfoChain.getResolver();
             var ast = this.semanticInfoChain.getASTForDecl(decl);
             if (!ast) {
                 return null;
@@ -599,9 +600,8 @@ module TypeScript {
             var asgAST: BinaryExpression = null;
             var typeAssertionASTs: CastExpression[] = [];
 
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var resolutionContext = new PullTypeResolutionContext(resolver);
-            var inTypeReference = false;
             var enclosingDecl: PullDecl = null;
             var isConstructorCall = false;
 
@@ -634,9 +634,6 @@ module TypeScript {
                             }
                             else if (cur.nodeType() === NodeType.AssignmentExpression) {
                                 asgAST = <BinaryExpression>cur;
-                            }
-                            else if (cur.nodeType() === NodeType.TypeRef) {
-                                inTypeReference = true;
                             }
 
                             resultASTs[resultASTs.length] = cur;
@@ -757,8 +754,6 @@ module TypeScript {
                             }
                         }
                     }
-
-                    resolutionContext.resolvingTypeReference = inTypeReference;
 
                     var inContextuallyTypedAssignment = false;
 
@@ -1012,9 +1007,9 @@ module TypeScript {
                             var assignmentExpression = <BinaryExpression>current;
                             var contextualType: PullTypeSymbol = null;
 
-                            if (path[i + 1] && path[i + 1] === assignmentExpression.operand2) {
+                            if (path[i + 1] && path[i + 1] === assignmentExpression.right) {
                                 // propagate the left hand side type as a contextual type
-                                var leftType = resolver.resolveAST(assignmentExpression.operand1, inContextuallyTypedAssignment, enclosingDecl, resolutionContext).type;
+                                var leftType = resolver.resolveAST(assignmentExpression.left, inContextuallyTypedAssignment, enclosingDecl, resolutionContext).type;
                                 if (leftType) {
                                     inContextuallyTypedAssignment = true;
                                     contextualType = leftType;
@@ -1035,10 +1030,7 @@ module TypeScript {
                                 var functionDeclaration = <FunctionDeclaration>enclosingDeclAST;
                                 if (functionDeclaration.returnTypeAnnotation) {
                                     // The containing function has a type annotation, propagate it as the contextual type
-                                    var currentResolvingTypeReference = resolutionContext.resolvingTypeReference;
-                                    resolutionContext.resolvingTypeReference = true;
                                     var returnTypeSymbol = resolver.resolveTypeReference(functionDeclaration.returnTypeAnnotation, enclosingDecl, resolutionContext);
-                                    resolutionContext.resolvingTypeReference = currentResolvingTypeReference;
                                     if (returnTypeSymbol) {
                                         inContextuallyTypedAssignment = true;
                                         contextualType = returnTypeSymbol;
@@ -1063,10 +1055,6 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.TypeQuery:
-                        resolutionContext.resolvingTypeReference = false;
-                        break;
-
                     case NodeType.TypeRef:
                         var typeExpressionNode = path[i + 1];
 
@@ -1074,49 +1062,6 @@ module TypeScript {
                         // resolved before descending into it.
                         if (typeExpressionNode && typeExpressionNode.nodeType() === NodeType.ObjectType) {
                             resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ false, enclosingDecl, resolutionContext);
-                        }
-
-                        // Set the resolvingTypeReference to true if this a name (e.g. var x: Type) but not 
-                        // when we are looking at a function type (e.g. var y : (a) => void)
-                        if (!typeExpressionNode ||
-                            typeExpressionNode.nodeType() === NodeType.Name ||
-                            typeExpressionNode.nodeType() === NodeType.QualifiedName ||
-                            typeExpressionNode.nodeType() === NodeType.MemberAccessExpression) {
-                            resolutionContext.resolvingTypeReference = true;
-                        }
-
-                        break;
-
-                    case NodeType.TypeParameter:
-                        // Set the resolvingTypeReference to true if this a name (e.g. var x: Type) but not 
-                        // when we are looking at a function type (e.g. var y : (a) => void)
-                        var typeExpressionNode = path[i + 1];
-                        if (!typeExpressionNode ||
-                            typeExpressionNode.nodeType() === NodeType.Name ||
-                            typeExpressionNode.nodeType() === NodeType.QualifiedName ||
-                            typeExpressionNode.nodeType() === NodeType.MemberAccessExpression) {
-                            resolutionContext.resolvingTypeReference = true;
-                        }
-
-                        break;
-
-                    case NodeType.ClassDeclaration:
-                        var classDeclaration = <ClassDeclaration>current;
-                        if (path[i + 1]) {
-                            if (path[i + 1] === classDeclaration.heritageClauses) {
-                                resolutionContext.resolvingTypeReference = true;
-                            }
-                        }
-
-                        break;
-
-                    case NodeType.InterfaceDeclaration:
-                        var interfaceDeclaration = <InterfaceDeclaration>current;
-                        if (path[i + 1]) {
-                            if (path[i + 1] === interfaceDeclaration.heritageClauses ||
-                                path[i + 1] === interfaceDeclaration.identifier) {
-                                resolutionContext.resolvingTypeReference = true;
-                            }
                         }
 
                         break;
@@ -1197,7 +1142,7 @@ module TypeScript {
         }
 
         public pullGetSymbolInformationFromAST(ast: AST, document: Document): PullSymbolInfo {
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
                 return null;
@@ -1205,6 +1150,11 @@ module TypeScript {
 
             ast = context.ast;
             var symbol = resolver.resolveAST(ast, context.inContextuallyTypedAssignment, context.enclosingDecl, context.resolutionContext);
+
+            if (symbol.isTypeReference()) {
+                symbol = (<PullTypeReferenceSymbol>symbol).getReferencedTypeSymbol();
+            }
+
             var aliasSymbol = this.semanticInfoChain.getAliasSymbolForAST(ast);
 
             return {
@@ -1223,7 +1173,7 @@ module TypeScript {
 
             var isNew = ast.nodeType() === NodeType.ObjectCreationExpression;
 
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
                 return null;
@@ -1249,7 +1199,7 @@ module TypeScript {
         }
 
         public pullGetVisibleMemberSymbolsFromAST(ast: AST, document: Document): PullVisibleSymbolsInfo {
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
                 return null;
@@ -1266,8 +1216,8 @@ module TypeScript {
             };
         }
 
-        public pullGetVisibleDeclsFromAST(ast: AST, document: Document): PullDecl[]{
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+        public pullGetVisibleDeclsFromAST(ast: AST, document: Document): PullDecl[] {
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ false);
             if (!context || context.inWithBlock) {
                 return null;
@@ -1282,7 +1232,7 @@ module TypeScript {
                 return null;
             }
 
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
                 return null;
@@ -1297,7 +1247,7 @@ module TypeScript {
         }
 
         public pullGetDeclInformation(decl: PullDecl, ast: AST, document: Document): PullSymbolInfo {
-            var resolver = new PullTypeResolver(this.compilationSettings(), this.semanticInfoChain, document.fileName);
+            var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
                 return null;

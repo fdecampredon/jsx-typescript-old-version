@@ -203,7 +203,7 @@ describe('Compiling unittests\\compiler\\functionOverloads.ts', function() {
             code += "function foo(bar:string):{a:number; b:string;}[];";
             code += 'function foo(bar:any):{a:any;b?:any;}[] { return [{a:""}] }';
         Harness.Compiler.compileString(code, 'overload', function(result) {     
-            assert.equal(result.errors.length, 0);
+            assert.equal(result.errors.length, 1);
         });
     }); 
 

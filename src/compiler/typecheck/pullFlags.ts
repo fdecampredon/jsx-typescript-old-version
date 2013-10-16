@@ -20,7 +20,6 @@ module TypeScript {
         ClassConstructorVariable = 1 << 14,
         InitializedModule = 1 << 15,
         InitializedDynamicModule = 1 << 16,
-        InitializedEnum = 1 << 17,
 
         MustCaptureThis = 1 << 18,
         Constant = 1 << 19,
@@ -37,8 +36,8 @@ module TypeScript {
 
         ConstructorParameter = 1 << 26,
 
-        ImplicitVariable = ClassConstructorVariable | InitializedModule | InitializedDynamicModule | InitializedEnum,
-        SomeInitializedModule = InitializedModule | InitializedDynamicModule | InitializedEnum,
+        ImplicitVariable = ClassConstructorVariable | InitializedModule | InitializedDynamicModule | Enum,
+        SomeInitializedModule = InitializedModule | InitializedDynamicModule | Enum,
     }
 
     export enum PullElementKind {
@@ -105,5 +104,7 @@ module TypeScript {
         SomeSignature = CallSignature | ConstructSignature | IndexSignature,
 
         SomeTypeReference = Interface | ObjectType | FunctionType | ConstructorType,
+
+        SomeInstantiatableType = Class | Interface | TypeParameter,
     }
 }

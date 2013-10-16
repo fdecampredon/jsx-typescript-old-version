@@ -1226,6 +1226,10 @@ module TypeScript {
     "code": 2224,
     "category": DiagnosticCategory.Error
   },
+  "Duplicate identifier 'arguments'. Compiler uses 'arguments' to initialize rest parameters.": {
+    "code": 2225,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix
@@ -1337,6 +1341,10 @@ module TypeScript {
   "Signature expected {0} type arguments, got {1} instead.": {
     "code": 4027,
     "category": DiagnosticCategory.Error
+  },
+  "Property '{0}' defined as optional in type '{1}', but is required in type '{2}'.": {
+    "code": 4028,
+    "category": DiagnosticCategory.NoPrefix
   },
   "Current host does not support '{0}' option.": {
     "code": 5001,

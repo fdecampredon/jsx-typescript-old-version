@@ -81,6 +81,10 @@ module TypeScript {
                     this.logger.log("Emit time:                                " + TypeScript.emitTime);
                     this.logger.log("Declaration emit time:                    " + TypeScript.declarationEmitTime);
 
+                    this.logger.log("Total number of symbols created:          " + TypeScript.pullSymbolID);
+                    this.logger.log("Specialized types created:                " + TypeScript.nSpecializationsCreated);
+                    this.logger.log("Specialized signatures created:           " + TypeScript.nSpecializedSignaturesCreated);                    
+
                     this.logger.log("  IsExternallyVisibleTime:                " + TypeScript.declarationEmitIsExternallyVisibleTime);
                     this.logger.log("  TypeSignatureTime:                      " + TypeScript.declarationEmitTypeSignatureTime);
                     this.logger.log("  GetBoundDeclTypeTime:                   " + TypeScript.declarationEmitGetBoundDeclTypeTime);

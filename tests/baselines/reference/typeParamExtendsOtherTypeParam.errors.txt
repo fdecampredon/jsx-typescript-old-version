@@ -1,8 +1,8 @@
-typeParamExtendsOtherTypeParam.ts line 12 col 9: error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends { a: string; }'.
-typeParamExtendsOtherTypeParam.ts line 13 col 9: error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends { a: string; }'.
-typeParamExtendsOtherTypeParam.ts line 14 col 9: error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends { a: string; }'.
-typeParamExtendsOtherTypeParam.ts line 15 col 9: error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends { a: string; }'.
-typeParamExtendsOtherTypeParam.ts line 16 col 9: error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends { a: string; b: number; }'.
-typeParamExtendsOtherTypeParam.ts line 17 col 9: error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends { a: string; b: number; }'.
-typeParamExtendsOtherTypeParam.ts line 28 col 9: error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends I2'.
-typeParamExtendsOtherTypeParam.ts line 29 col 9: error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends I2'.
+typeParamExtendsOtherTypeParam.ts line 12 col 9: error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 13 col 9: error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 14 col 9: error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 15 col 9: error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 16 col 9: error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 17 col 9: error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 28 col 9: error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.
+typeParamExtendsOtherTypeParam.ts line 29 col 9: error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.

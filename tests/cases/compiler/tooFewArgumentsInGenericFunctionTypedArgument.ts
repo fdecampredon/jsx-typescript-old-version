@@ -4,8 +4,8 @@ interface Collection<T, U> {
     remove(x: T, y: U): boolean;
 }
 interface Combinators {
-    map<T, U>(c: Collection<T,U>, f: (x: T, y: U) => any): Collection<any, any>;
     map<T, U, V>(c: Collection<T,U>, f: (x: T, y: U) => V): Collection<T, V>;
+    map<T, U>(c: Collection<T,U>, f: (x: T, y: U) => any): Collection<any, any>;
 }
 var c2: Collection<number, string>;
 var _: Combinators;

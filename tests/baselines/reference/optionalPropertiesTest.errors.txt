@@ -4,3 +4,5 @@ optionalPropertiesTest.ts line 25 col 5: error TS2012: Cannot convert '{}' to 'i
 	Type '{}' is missing property 'M' from type 'i1'.
 optionalPropertiesTest.ts line 26 col 5: error TS2012: Cannot convert '{}' to 'i3':
 	Type '{}' is missing property 'M' from type 'i3'.
+optionalPropertiesTest.ts line 40 col 1: error TS2012: Cannot convert 'i2' to 'i1':
+	Property 'M' defined as optional in type 'i2', but is required in type 'i1'.

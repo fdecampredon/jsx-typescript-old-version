@@ -900,7 +900,7 @@ module Harness {
              * due to how we write multi-file tests in a single source file.
             */
             public compileFiles(
-                inputFiles: { unitName: string; content?: string }[],
+                inputFiles: { unitName: string; content: string }[],
                 otherFiles: { unitName: string; content?: string }[],
                 onComplete: (result: CompilerResult) => void,
                 settingsCallback?: (settings: TypeScript.ImmutableCompilationSettings) => void,

@@ -126,6 +126,7 @@ var compilerSources = [
 	"typecheck/pullSymbols.ts",
 	"typecheck/pullTypeResolution.ts",
 	"typecheck/pullTypeResolutionContext.ts",
+	"typecheck/pullTypeInstantiation.ts",
 	"typescript.ts"
 ].map(function (f) {
 	return path.join(compilerDirectory, f);

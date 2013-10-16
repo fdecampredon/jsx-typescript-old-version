@@ -134,7 +134,6 @@ module TypeScript {
     export class PullContextualTypeContext {
         public provisionallyTypedSymbols: PullSymbol[] = [];
         public hasProvisionalErrors = false;
-        private symbolASTMap = new DataMap<AST>();
         private astSymbolMap = new DataMap<PullSymbol>();
 
         constructor(public contextualType: PullTypeSymbol,
@@ -147,17 +146,12 @@ module TypeScript {
 
         public invalidateProvisionallyTypedSymbols() {
             for (var i = 0; i < this.provisionallyTypedSymbols.length; i++) {
-                this.provisionallyTypedSymbols[i].invalidate();
+                this.provisionallyTypedSymbols[i].setUnresolved();
             }
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
             this.astSymbolMap.link(ast.astIDString, symbol);
-            this.symbolASTMap.link(symbol.pullSymbolIDString, ast);
-        }
-
-        public getASTForSymbol(symbol: PullSymbol): AST {
-            return this.symbolASTMap.read(symbol.pullSymbolIDString);
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {
@@ -165,30 +159,12 @@ module TypeScript {
         }
     }
 
-    export var maxRecursiveMemberSpecializationDepth = 32;
-    export var maxRecursiveSignatureSpecializationDepth = 8;
-    export var maxRecursiveConstraintSpecializationDepth = 32;
-
     export class PullTypeResolutionContext {
         private contextStack: PullContextualTypeContext[] = [];
-        private typeSpecializationStack: any[] = [];
-        private genericASTResolutionStack: AST[] = [];
 
-        public resolvingTypeReference = false;
-        public resolvingNamespaceMemberAccess = false;
+        public instantiatingTypesToAny = false;
 
-        public canUseTypeSymbol = false;
-
-        public specializingToAny = false;
-        public isSpecializingSignatureTypeParameters = false;
-        public isSpecializingConstructorMethod = false;
-        public isComparingSpecializedSignatures = false;
-        public resolvingTypeNameAsNameExpression = false;
-        public recursiveMemberSpecializationDepth = 0;
-        public recursiveSignatureSpecializationDepth = 0;
-        public recursiveConstraintSpecializationDepth = 0;
-
-        constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public typeCheckUnitPath?: string) { }
+        constructor(private resolver: PullTypeResolver, public inTypeCheck = false) { }
 
         public pushContextualType(type: PullTypeSymbol, provisional: boolean, substitutions: any) {
             this.contextStack.push(new PullContextualTypeContext(type, provisional, substitutions));
@@ -207,6 +183,10 @@ module TypeScript {
             }
 
             return tc;
+        }
+
+        public hasProvisionalErrors() {
+            return this.contextStack.length ? this.contextStack[this.contextStack.length - 1].hasProvisionalErrors : false;
         }
 
         public findSubstitution(type: PullTypeSymbol) {
@@ -254,7 +234,6 @@ module TypeScript {
             return (!this.contextStack.length ? false : this.contextStack[this.contextStack.length - 1].provisional);
         }
 
-        public inSpecialization = false;
         private inBaseTypeResolution = false;
 
         public isInBaseTypeResolution() { return this.inBaseTypeResolution; }
@@ -279,92 +258,23 @@ module TypeScript {
             }
         }
 
-        public getTypeSpecializationStack() {
-            return this.typeSpecializationStack;
-        }
-
-        public setTypeSpecializationStack(newStack: any[]) {
-            this.typeSpecializationStack = newStack;
-        }
-
-        public pushTypeSpecializationCache(cache: any) {
-            this.typeSpecializationStack[this.typeSpecializationStack.length] = cache;
-        }
-
-        public popTypeSpecializationCache() {
-            if (this.typeSpecializationStack.length) {
-                this.typeSpecializationStack.length--;
-            }
-        }
-
-        public findSpecializationForType(type: PullTypeSymbol) {
-            var specialization: PullTypeSymbol = null;
-
-            for (var i = this.typeSpecializationStack.length - 1; i >= 0; i--) {
-                specialization = (this.typeSpecializationStack[i])[type.pullSymbolIDString];
-
-                if (specialization) {
-                    return specialization;
-                }
-            }
-
-            return type;
-        }
-
         public postDiagnostic(diagnostic: Diagnostic): void {
             if (diagnostic) {
-                if (!this.inSpecialization) { // Do not report errors if in specialization resolutions, its not a typeCheckMode
-                    if (this.inProvisionalResolution()) {
-                        (this.contextStack[this.contextStack.length - 1]).hasProvisionalErrors = true;
-                    }
-                    else if (this.inTypeCheck && this.resolver) {
-                        this.resolver.semanticInfoChain.addDiagnostic(diagnostic);
-                    }
+                if (this.inProvisionalResolution()) {
+                    (this.contextStack[this.contextStack.length - 1]).hasProvisionalErrors = true;
+                }
+                else if (this.inTypeCheck && this.resolver) {
+                    this.resolver.semanticInfoChain.addDiagnostic(diagnostic);
                 }
             }
         }
 
         public typeCheck() {
-            return this.inTypeCheck && !this.inSpecialization && !this.inProvisionalResolution();
-        }
-
-        public startResolvingTypeArguments(ast: AST) {
-            this.genericASTResolutionStack[this.genericASTResolutionStack.length] = ast;
-        }
-
-        public isResolvingTypeArguments(ast: AST): boolean {
-            for (var i = 0; i < this.genericASTResolutionStack.length; i++) {
-                if (this.genericASTResolutionStack[i].astID === ast.astID) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public doneResolvingTypeArguments() {
-            this.genericASTResolutionStack.length--;
+            return this.inTypeCheck && !this.inProvisionalResolution();
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
             this.contextStack[this.contextStack.length - 1].setSymbolForAST(ast, symbol);
-        }
-
-        public getASTForSymbol(symbol: PullSymbol): AST {
-            for (var i = this.contextStack.length - 1; i >= 0; i--) {
-                var typeContext = this.contextStack[i];
-                if (!typeContext.provisional) {
-                    // Only provisional contexts have caches
-                    break;
-                }
-
-                var ast = typeContext.getASTForSymbol(symbol);
-                if (ast) {
-                    return ast;
-                }
-            }
-
-            return null;
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {

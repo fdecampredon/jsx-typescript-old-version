@@ -50,7 +50,7 @@ describe('Compiling samples', function ()
     // imageboard
     it('compiles the imageboard sample without error', function ()
     {
-        var units = ["node\\node.d.ts", "imageboard\\app.ts", "imageboard\\db.ts", "imageboard\\express.d.ts", "imageboard\\mongodb.ts", "imageboard\\routes\\index.ts"];
+        var units = ["node/node.d.ts", "imageboard/app.ts", "imageboard/db.ts", "imageboard/express.d.ts", "imageboard/mongodb.ts", "imageboard/routes/index.ts"];
     
         addUnitsAndCompile(units, undefined);
     });

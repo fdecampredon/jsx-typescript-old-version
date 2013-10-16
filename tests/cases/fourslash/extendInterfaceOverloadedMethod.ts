@@ -15,8 +15,5 @@
 edit.insert('');
 
 goTo.marker();
-// Bug 778445: Wrong error here
-// verify.quickInfoIs('void');
-// verify.numberOfErrorsInCurrentFile(0);
-verify.quickInfoIs('any');
-verify.numberOfErrorsInCurrentFile(2);
+verify.quickInfoIs('void');
+verify.numberOfErrorsInCurrentFile(0);

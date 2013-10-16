@@ -790,7 +790,7 @@ module TypeScript {
 
             this.indenter.increaseIndent();
 
-            this.emitDeclarationsForList(interfaceDecl.members);
+            this.emitDeclarationsForList(interfaceDecl.body.typeMembers);
 
             this.indenter.decreaseIndent();
             this.popDeclarationContainer(interfaceDecl);

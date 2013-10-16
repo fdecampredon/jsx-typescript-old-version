@@ -28,7 +28,7 @@ class CompilerBaselineRunner extends RunnerBase {
 
     /** Replaces instances of full paths with filenames only */
     static removeFullPaths(text: string) {
-        var fullPath = /\w+:(\/|\\)([\w+\-\.]|\/)*\.ts/g;
+        var fullPath = /(\w+:)?(\/|\\)([\w+\-\.]|\/)*\.ts/g;
         var fullPathList = text.match(fullPath);
         if (fullPathList) {
             fullPathList.forEach((match: string) => text = text.replace(match, Harness.getFileName(match)));

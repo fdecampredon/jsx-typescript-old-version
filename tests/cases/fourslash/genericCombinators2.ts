@@ -7,8 +7,8 @@
 ////}
 ////}
 ////interface Combinators {
-////    map<T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>;
 ////    map<T, U, V>(c: Collection<T, U>, f: (x: T, y: U) => V): Collection<T, V>;
+////    map<T, U>(c: Collection<T, U>, f: (x: T, y: U) => any): Collection<any, any>;
 ////}
 ////}
 ////class A {
@@ -99,15 +99,15 @@ verify.quickInfoIs('Collection<number, string>');
 goTo.marker('10');
 verify.quickInfoIs('Collection<number, string>');
 goTo.marker('11');
-verify.quickInfoIs('Collection<any, any>');
+verify.quickInfoIs('Collection<Collection<number, number>, any>');
 goTo.marker('12');
 verify.quickInfoIs('Collection<Collection<number, number>, number>');
 goTo.marker('13');
-verify.quickInfoIs('Collection<any, any>');
+verify.quickInfoIs('Collection<number, any>');
 goTo.marker('14');
-verify.quickInfoIs('Collection<any, any>');
+verify.quickInfoIs('Collection<number, any>');
 goTo.marker('15');
-verify.quickInfoIs('Collection<any, any>');
+verify.quickInfoIs('Collection<number, any>');
 
 goTo.marker('17');
 verify.quickInfoIs('any');

@@ -7,18 +7,6 @@ module TypeScript {
     export class PullSymbolBinder {
         private static functionTypeParameterCache = new BlockIntrinsics<PullTypeParameterSymbol>();
 
-        private static findTypeParameterInCache(name: string) {
-            return this.functionTypeParameterCache[name];
-        }
-
-        private static addTypeParameterToCache(typeParameter: PullTypeParameterSymbol) {
-            this.functionTypeParameterCache[typeParameter.getName()] = typeParameter;
-        }
-
-        public static resetTypeParameterCache() {
-            this.functionTypeParameterCache = new BlockIntrinsics();
-        }
-
         private declsBeingBound: BlockIntrinsics<boolean> = new BlockIntrinsics<boolean>();
 
         constructor(private semanticInfoChain: SemanticInfoChain) {
@@ -663,8 +651,6 @@ module TypeScript {
                 }
             }
 
-            PullSymbolBinder.resetTypeParameterCache();
-
             constructorSymbol = classSymbol.getConstructorMethod();
             constructorTypeSymbol = constructorSymbol ? constructorSymbol.type : null;
 
@@ -779,8 +765,6 @@ module TypeScript {
                     }
                 }
             }
-
-            PullSymbolBinder.resetTypeParameterCache();
 
             var typeParameters = interfaceDecl.getTypeParameters();
             var typeParameter: PullTypeParameterSymbol;
@@ -911,7 +895,7 @@ module TypeScript {
 
             var isImplicit = (declFlags & PullElementFlags.ImplicitVariable) !== 0;
             var isModuleValue = (declFlags & (PullElementFlags.InitializedModule)) != 0;
-            var isEnumValue = (declFlags & PullElementFlags.InitializedEnum) != 0;
+            var isEnumValue = (declFlags & PullElementFlags.Enum) != 0;
             var isClassConstructorVariable = (declFlags & PullElementFlags.ClassConstructorVariable) != 0;
 
             variableSymbol = this.getExistingSymbol(variableDeclaration, PullElementKind.SomeValue, parent);
@@ -929,7 +913,7 @@ module TypeScript {
 
                 var prevKind = variableSymbol.kind;
                 var prevIsAmbient = variableSymbol.hasFlag(PullElementFlags.Ambient);
-                var prevIsEnum = variableSymbol.hasFlag(PullElementFlags.InitializedEnum);
+                var prevIsEnum = variableSymbol.hasFlag(PullElementFlags.Enum);
                 var prevIsClassConstructorVariable = variableSymbol.hasFlag(PullElementFlags.ClassConstructorVariable);
                 var prevIsModuleValue = variableSymbol.hasFlag(PullElementFlags.InitializedModule);
                 var prevIsImplicit = variableSymbol.hasFlag(PullElementFlags.ImplicitVariable);
@@ -1641,19 +1625,7 @@ module TypeScript {
                 typeParameter = signature.findTypeParameter(typeParameterName);
 
                 if (!typeParameter) {
-
-                    if (!typeParameterAST.constraint) {
-                        typeParameter = PullSymbolBinder.findTypeParameterInCache(typeParameterName);
-                    }
-
-                    if (!typeParameter) {
-                        typeParameter = new PullTypeParameterSymbol(typeParameterName, true);
-
-                        if (!typeParameterAST.constraint) {
-                            PullSymbolBinder.addTypeParameterToCache(typeParameter);
-                        }
-                    }
-
+                    typeParameter = new PullTypeParameterSymbol(typeParameterName, true);
                     signature.addTypeParameter(typeParameter);
                 }
                 else {
