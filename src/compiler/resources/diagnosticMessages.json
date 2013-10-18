@@ -707,10 +707,6 @@
         "category": "Error",
         "code": 2090
     },
-    "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.": {
-        "category": "Error",
-        "code": 2091
-    },
     "Type of array literal cannot be determined. Best common type could not be found for array elements.": {
         "category": "Error",
         "code": 2092
@@ -1218,6 +1214,14 @@
     "Duplicate identifier 'arguments'. Compiler uses 'arguments' to initialize rest parameters.": {
         "category": "Error",
         "code": 2225
+    },
+    "Type of conditional '{0}' must be identical to '{1}' or '{2}'.": {
+        "category": "Error",
+        "code": 2226
+    },
+    "Type of conditional '{0}' must be identical to '{1}', '{2}' or '{3}'.": {
+        "category": "Error",
+        "code": 2227
     },
     "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",

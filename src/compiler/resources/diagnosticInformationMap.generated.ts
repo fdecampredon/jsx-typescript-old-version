@@ -710,10 +710,6 @@ module TypeScript {
     "code": 2090,
     "category": DiagnosticCategory.Error
   },
-  "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.": {
-    "code": 2091,
-    "category": DiagnosticCategory.Error
-  },
   "Type of array literal cannot be determined. Best common type could not be found for array elements.": {
     "code": 2092,
     "category": DiagnosticCategory.Error
@@ -1220,6 +1216,14 @@ module TypeScript {
   },
   "Duplicate identifier 'arguments'. Compiler uses 'arguments' to initialize rest parameters.": {
     "code": 2225,
+    "category": DiagnosticCategory.Error
+  },
+  "Type of conditional '{0}' must be identical to '{1}' or '{2}'.": {
+    "code": 2226,
+    "category": DiagnosticCategory.Error
+  },
+  "Type of conditional '{0}' must be identical to '{1}', '{2}' or '{3}'.": {
+    "code": 2227,
     "category": DiagnosticCategory.Error
   },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {

@@ -5055,7 +5055,7 @@ module TypeScript {
                     return this.resolveDeleteExpression(<DeleteExpression>ast, context);
 
                 case NodeType.ConditionalExpression:
-                    return this.resolveConditionalExpression(<ConditionalExpression>ast, context);
+                    return this.resolveConditionalExpression(<ConditionalExpression>ast, inContextuallyTypedAssignment, context);
 
                 case NodeType.RegularExpressionLiteral:
                     return this.resolveRegularExpressionLiteral();
@@ -7026,8 +7026,17 @@ module TypeScript {
         private bestCommonTypeOfTwoTypes(type1: PullTypeSymbol, type2: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
             // findBestCommonType skips the first type (since it is explicitly provided as an 
             // argument).  So we simply return the second type when asked.
-            var collection = { getLength: () => 2, getTypeAtIndex: (index: number) => type2 };
-            return this.findBestCommonType(type1, collection, context);
+            return this.findBestCommonType(type1, {
+                getLength() {
+                    return 2;
+                },
+                getTypeAtIndex(index: number) {
+                    switch (index) {
+                        case 0: return type1;
+                        case 1: return type2;
+                    }
+                }
+            }, context);
         }
 
         private typeCheckLogicalOrExpression(binex: BinaryExpression, context: PullTypeResolutionContext) {
@@ -7056,48 +7065,103 @@ module TypeScript {
             this.resolveAST(binex.right, /*inContextuallyTypedAssignment:*/ false, context);
         }
 
-        private resolveConditionalExpression(trinex: ConditionalExpression, context: PullTypeResolutionContext): PullSymbol {
+        private computeTypeOfConditionalExpression(leftType: PullTypeSymbol, rightType: PullTypeSymbol, inContextuallyTypedAssignment: boolean, context: PullTypeResolutionContext): PullTypeSymbol {
+            // October 11, 2013
+            // the result is of the best common type
+            // (section 3.10) of the contextual type and the types of Expr1 and Expr2.
+            if (inContextuallyTypedAssignment) {
+                var contextualType = context.getContextualType();
+                return this.findBestCommonType(contextualType, {
+                    getLength() {
+                        return 3;
+                    },
+                    getTypeAtIndex(index: number) {
+                        switch (index) {
+                            case 0: return contextualType;
+                            case 1: return leftType;
+                            case 2: return rightType;
+                        }
+                    }
+                }, context);
+            }
+            else {
+                return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
+            }
+        }
+
+        private resolveConditionalExpression(trinex: ConditionalExpression, inContextuallyTypedAssignment: boolean, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(trinex, context)) {
-                this.typeCheckConditionalExpression(trinex, context);
+                this.typeCheckConditionalExpression(trinex, inContextuallyTypedAssignment, context);
             }
 
-            var leftType = this.resolveAST(trinex.whenTrue, /*inContextuallyTypedAssignment:*/ false, context).type;
-            var rightType = this.resolveAST(trinex.whenFalse, /*inContextuallyTypedAssignment:*/ false, context).type;
+            // October 11, 2013
+            // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
+            // are contextually typed by the same type and the result is of the best common type
+            // (section 3.10) of the contextual type and the types of Expr1 and Expr2.  An error 
+            // occurs if the best common type is not identical to at least one of the three 
+            // candidate types.
+            var leftType = this.resolveAST(trinex.whenTrue, inContextuallyTypedAssignment, context).type;
+            var rightType = this.resolveAST(trinex.whenFalse, inContextuallyTypedAssignment, context).type;
 
-            // September 17, 2013: In a conditional expression of the form
-            //      Cond ? Expr1 : Expr2
-            // the Cond expression may be of any type, and Expr1 and Expr2 expressions must be of 
-            // identical types or the type of one must be a subtype of the other. 
-
-            // Note: we don't need to check if leftType and rightType are identical.  That is 
-            // already handled by the subtyping check.
-            if (!this.sourceIsSubtypeOfTarget(leftType, rightType, context) && !this.sourceIsSubtypeOfTarget(rightType, leftType, context)) {
+            var expressionType = this.computeTypeOfConditionalExpression(leftType, rightType, inContextuallyTypedAssignment, context);
+            
+            // If the conditional is not valid, then return an error symbol.  That way we won't 
+            // report further errors higher up the stack.
+            if (!this.conditionExpressionTypesAreValid(leftType, rightType, expressionType, inContextuallyTypedAssignment, context)) {
                 return this.getNewErrorTypeSymbol();
             }
 
-            // September 17, 2013: The result is of the best common type (section 3.10) of the two 
-            // expression types.
-            return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
+            return expressionType;
         }
 
-        private typeCheckConditionalExpression(trinex: ConditionalExpression, context: PullTypeResolutionContext): void {
+        private conditionExpressionTypesAreValid(leftType: PullTypeSymbol, rightType: PullTypeSymbol, expressionType: PullTypeSymbol, inContextuallyTypedAssignment: boolean, context: PullTypeResolutionContext): boolean {
+            if (inContextuallyTypedAssignment) {
+                var contextualType = context.getContextualType();
+                if (this.typesAreIdentical(expressionType, leftType) ||
+                    this.typesAreIdentical(expressionType, rightType) ||
+                    this.typesAreIdentical(expressionType, contextualType)) {
+
+                    return true;
+                }
+            }
+            else {
+                if (this.typesAreIdentical(expressionType, leftType) ||
+                    this.typesAreIdentical(expressionType, rightType)) {
+
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        private typeCheckConditionalExpression(trinex: ConditionalExpression, inContextuallyTypedAssignment: boolean, context: PullTypeResolutionContext): void {
             this.setTypeChecked(trinex, context);
 
+            // October 11, 2013
+            // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
+            // are contextually typed by the same type and the result is of the best common type
+            // (section 3.10) of the contextual type and the types of Expr1 and Expr2.  An error 
+            // occurs if the best common type is not identical to at least one of the three 
+            // candidate types.
             this.resolveAST(trinex.condition, /*inContextuallyTypedAssignment:*/ false, context);
-            var leftType = this.resolveAST(trinex.whenTrue, /*inContextuallyTypedAssignment:*/ false, context).type;
-            var rightType = this.resolveAST(trinex.whenFalse, /*inContextuallyTypedAssignment:*/ false, context).type;
+            var leftType = this.resolveAST(trinex.whenTrue, inContextuallyTypedAssignment, context).type;
+            var rightType = this.resolveAST(trinex.whenFalse, inContextuallyTypedAssignment, context).type;
 
-            // September 17, 2013: In a conditional expression of the form
-            //      Cond ? Expr1 : Expr2
-            // the Cond expression may be of any type, and Expr1 and Expr2 expressions must be of 
-            // identical types or the type of one must be a subtype of the other. 
+            var expressionType = this.computeTypeOfConditionalExpression(leftType, rightType, inContextuallyTypedAssignment, context);
 
-            // Note: we don't need to check if leftType and rightType are identical.  That is 
-            // already handled by the subtyping check.
-            if (!this.sourceIsSubtypeOfTarget(leftType, rightType, context) && !this.sourceIsSubtypeOfTarget(rightType, leftType, context)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex.whenTrue,
-                    DiagnosticCode.Type_of_conditional_expression_cannot_be_determined_0_is_not_identical_to_a_supertype_of_or_a_subtype_of_1,
-                    [leftType.toString(), rightType.toString()]));
+            if (!this.conditionExpressionTypesAreValid(leftType, rightType, expressionType, inContextuallyTypedAssignment, context)) {
+                if (inContextuallyTypedAssignment) {
+                    var contextualType = context.getContextualType();
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
+                        DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_or_2,
+                        [expressionType.toString(), leftType.toString(), rightType.toString(), contextualType.toString()]));
+                }
+                else {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
+                        DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_or_2,
+                        [expressionType.toString(), leftType.toString(), rightType.toString()]));
+                }
             }
         }
 
