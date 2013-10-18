@@ -5040,7 +5040,7 @@ module TypeScript {
                     return this.resolveElementAccessExpression(<ElementAccessExpression>ast, context);
 
                 case NodeType.LogicalOrExpression:
-                    return this.resolveLogicalOrExpression(<BinaryExpression>ast, context);
+                    return this.resolveLogicalOrExpression(<BinaryExpression>ast, isContextuallyTyped, context);
 
                 case NodeType.LogicalAndExpression:
                     return this.resolveLogicalAndExpression(<BinaryExpression>ast, context);
@@ -7007,22 +7007,6 @@ module TypeScript {
             return exprType;
         }
 
-        private resolveLogicalOrExpression(binex: BinaryExpression, context: PullTypeResolutionContext): PullSymbol {
-            // September 17, 2013:  The || operator permits the operands to be of any type and 
-            // produces a result that is of the best common type(section 3.10) of the two operand
-            // types.
-            var leftType = this.resolveAST(binex.left, /*isContextuallyTyped:*/ false, context).type;
-            var rightType = this.resolveAST(binex.right, /*isContextuallyTyped:*/ false, context).type;
-
-            var bestCommonType = this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
-
-            if (this.canTypeCheckAST(binex, context)) {
-                this.typeCheckLogicalOrExpression(binex, context);
-            }
-
-            return bestCommonType;
-        }
-
         private bestCommonTypeOfTwoTypes(type1: PullTypeSymbol, type2: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
             // findBestCommonType skips the first type (since it is explicitly provided as an 
             // argument).  So we simply return the second type when asked.
@@ -7039,11 +7023,63 @@ module TypeScript {
             }, context);
         }
 
-        private typeCheckLogicalOrExpression(binex: BinaryExpression, context: PullTypeResolutionContext) {
+        private bestCommonTypeOfThreeTypes(type1: PullTypeSymbol, type2: PullTypeSymbol, type3: PullTypeSymbol, context: PullTypeResolutionContext): PullTypeSymbol {
+            // findBestCommonType skips the first type (since it is explicitly provided as an 
+            // argument).  So we simply return the second type when asked.
+            return this.findBestCommonType(type1, {
+                getLength() {
+                    return 3;
+                },
+                getTypeAtIndex(index: number) {
+                    switch (index) {
+                        case 0: return type1;
+                        case 1: return type2;
+                        case 2: return type3;
+                    }
+                }
+            }, context);
+        }
+
+        private computeLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
+            // October 11, 2013:  
+            // The || operator permits the operands to be of any type.
+            if (isContextuallyTyped) {
+                // If the || expression is contextually typed(section 4.19), the operands are 
+                // contextually typed by the same type and the result is of the best common type 
+                // (section 3.10) of the contextual type and the two operand types.
+
+                var contextualType = context.getContextualType();
+                var leftType = this.resolveAST(binex.left, isContextuallyTyped, context).type;
+                var rightType = this.resolveAST(binex.right, isContextuallyTyped, context).type;
+
+                return this.bestCommonTypeOfThreeTypes(contextualType, leftType, rightType, context);
+            }
+            else {
+                // If the || expression is not contextually typed, the right operand is contextually 
+                // typed by the type of the left operand and the result is of the best common type of 
+                // the two operand types.
+                var leftType = this.resolveAST(binex.left, /*isContextuallyTyped:*/ false, context).type;
+
+                context.pushContextualType(leftType, context.inProvisionalResolution(), null);
+                var rightType = this.resolveAST(binex.right, /*isContextuallyTyped:*/  true, context).type;
+                context.popContextualType();
+
+                return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
+            }
+        }
+
+        private resolveLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
+            if (this.canTypeCheckAST(binex, context)) {
+                this.typeCheckLogicalOrExpression(binex, isContextuallyTyped, context);
+            }
+
+            return this.computeLogicalOrExpression(binex, isContextuallyTyped, context);
+        }
+
+        private typeCheckLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext) {
             this.setTypeChecked(binex, context);
 
-            this.resolveAST(binex.left, /*isContextuallyTyped:*/ false, context);
-            this.resolveAST(binex.right, /*isContextuallyTyped:*/ false, context);
+            this.computeLogicalOrExpression(binex, isContextuallyTyped, context);
         }
 
         private resolveLogicalAndExpression(binex: BinaryExpression, context: PullTypeResolutionContext): PullSymbol {
@@ -7066,25 +7102,18 @@ module TypeScript {
         }
 
         private computeTypeOfConditionalExpression(leftType: PullTypeSymbol, rightType: PullTypeSymbol, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullTypeSymbol {
-            // October 11, 2013
-            // the result is of the best common type
-            // (section 3.10) of the contextual type and the types of Expr1 and Expr2.
             if (isContextuallyTyped) {
+                // October 11, 2013
+                // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
+                // are contextually typed by the same type and the result is of the best common type 
+                // (section 3.10) of the contextual type and the types of Expr1 and Expr2. 
                 var contextualType = context.getContextualType();
-                return this.findBestCommonType(contextualType, {
-                    getLength() {
-                        return 3;
-                    },
-                    getTypeAtIndex(index: number) {
-                        switch (index) {
-                            case 0: return contextualType;
-                            case 1: return leftType;
-                            case 2: return rightType;
-                        }
-                    }
-                }, context);
+                return this.bestCommonTypeOfThreeTypes(contextualType, leftType, rightType, context);
             }
             else {
+                // October 11, 2013
+                // If the conditional expression is not contextually typed, the result is of the 
+                // best common type of the types of Expr1 and Expr2. 
                 return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
             }
         }
