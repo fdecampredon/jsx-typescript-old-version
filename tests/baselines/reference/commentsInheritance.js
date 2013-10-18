@@ -39,8 +39,8 @@ var c2 = (function () {
     };
 
     Object.defineProperty(c2.prototype, "c2_prop", {
-        get: /** c2 c2_prop*/
-        function () {
+        /** c2 c2_prop*/
+        get: function () {
             return 10;
         },
         enumerable: true,
@@ -62,8 +62,8 @@ var c2 = (function () {
     };
 
     Object.defineProperty(c2.prototype, "prop", {
-        get: /** c2 prop*/
-        function () {
+        /** c2 prop*/
+        get: function () {
             return 10;
         },
         enumerable: true,
@@ -91,8 +91,8 @@ var c3 = (function (_super) {
     };
 
     Object.defineProperty(c3.prototype, "prop", {
-        get: /** c3 prop*/
-        function () {
+        /** c3 prop*/
+        get: function () {
             return 10;
         },
         enumerable: true,

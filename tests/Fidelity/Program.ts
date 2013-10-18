@@ -218,7 +218,7 @@ class Program {
             var contentsToReplace = contents.substr(changeSpan.start(), changeSpan.length());
 
             var first = true;
-            var updatedText = contentsToReplace.replace(/[^a-zA-Z0-9][a-z]+[^a-zA-Z0-9]/, (sub, args) => {
+            var updatedText = contentsToReplace.replace(/[^a-zA-Z0-9][a-z]+[^a-zA-Z0-9]/, (sub) => {
                 if (first && TypeScript.SyntaxFacts.getTokenKind(sub.substr(1, sub.length - 2)) === TypeScript.SyntaxKind.None) {
                     first = false;
                     return sub.substr(0, sub.length - 1) + "a" + sub.substr(sub.length - 1);

@@ -5,8 +5,8 @@ var Foo = (function () {
         get: function () {
             return this._bar;
         },
-        set: // should not be an error to order them this way
-        function (thing) {
+        // should not be an error to order them this way
+        set: function (thing) {
             this._bar = thing;
         },
         enumerable: true,

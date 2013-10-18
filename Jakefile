@@ -118,7 +118,6 @@ var compilerSources = [
 	"text/textLine.ts",
 	"text/textSpan.ts",
 	"text/textUtilities.ts",
-	"typecheck/dataMap.ts",
 	"typecheck/pullDeclCollection.ts",
 	"typecheck/pullDecls.ts",
 	"typecheck/pullFlags.ts",

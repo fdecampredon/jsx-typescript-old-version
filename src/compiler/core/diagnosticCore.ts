@@ -150,7 +150,7 @@ module TypeScript {
             throw new Error(getLocalizedText(DiagnosticCode.Expected_the_message_0_to_have_1_arguments_but_it_had_2, [diagnosticMessageText, expectedCount, valueCount]));
         }
 
-        diagnosticMessageText = diagnosticMessageText.replace(/{(\d+)}/g, function (match, num) {
+        diagnosticMessageText = diagnosticMessageText.replace(/{(\d+)}/g, function (match, num?) {
             return typeof args[num] !== 'undefined'
                 ? args[num]
                 : match;

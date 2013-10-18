@@ -617,6 +617,17 @@ module TypeScript {
                 lhsType = (<PullTypeAliasSymbol>lhsType).getExportAssignedTypeSymbol();
             }
 
+            // Check if the type is a type parameter. Memebers of the type parameter will be these of its constraint 
+            // if one exits. 
+            // Also, handle the case where a constraint is itself a type parameter e.g.: foo<T extends Date, U extends T>
+            while (lhsType.isTypeParameter()) {
+                lhsType = (<PullTypeParameterSymbol>lhsType).getConstraint();
+                if (!lhsType) {
+                    // Nothing to look up at this point, no constraint found
+                    return null;
+                }
+            }
+
             if (this.isAnyOrEquivalent(lhsType)) {
                 return null;
             }
@@ -2958,9 +2969,8 @@ module TypeScript {
             }
 
             this.resolveAST(funcDeclAST.block, false, context);
-            var enclosingDecl = this.getEnclosingDecl(funcDecl);
 
-            if (funcDecl.getSignatureSymbol() && funcDecl.getSignatureSymbol().isDefinition() && this.enclosingClassIsDerived(funcDecl)) {
+            if (funcDecl.getSignatureSymbol() && funcDecl.getSignatureSymbol().isDefinition() && this.enclosingClassIsDerived(funcDecl.getParentDecl())) {
                 // Constructors for derived classes must contain a call to the class's 'super' constructor
                 if (!this.constructorHasSuperCall(funcDeclAST)) {
                     context.postDiagnostic(new Diagnostic(funcDeclAST.fileName(), this.semanticInfoChain.lineMap(funcDeclAST.fileName()), funcDeclAST.minChar, 11 /* "constructor" */,
@@ -2969,7 +2979,7 @@ module TypeScript {
                 // The first statement in the body of a constructor must be a super call if both of the following are true:
                 //  - The containing class is a derived class.
                 //  - The constructor declares parameter properties or the containing class declares instance member variables with initializers.
-                else if (this.superCallMustBeFirstStatementInConstructor(funcDecl, enclosingDecl)) {
+                else if (this.superCallMustBeFirstStatementInConstructor(funcDecl)) {
                     var firstStatement = this.getFirstStatementOfBlockOrNull(funcDeclAST.block);
                     if (!firstStatement || !this.isSuperInvocationExpressionStatement(firstStatement)) {
                         context.postDiagnostic(new Diagnostic(funcDeclAST.fileName(), this.semanticInfoChain.lineMap(funcDeclAST.fileName()), funcDeclAST.minChar, 11 /* "constructor" */,
@@ -6266,34 +6276,92 @@ module TypeScript {
             return false;
         }
 
-        private typeCheckThisExpression(thisExpression: ThisExpression, context: PullTypeResolutionContext): void {
-            var enclosingDecl = this.getEnclosingDeclForAST(thisExpression);
-            var enclosingNonLambdaDecl = this.getEnclosingNonLambdaDecl(enclosingDecl);
-
-            var thisTypeSymbol = this.computeThisTypeSymbol(thisExpression);
-            var decls = thisTypeSymbol.getDeclarations();
-            var classDecl = decls && decls[0] ? decls[0] : null;
-
-            if (this.inArgumentListOfSuperInvocation(thisExpression) &&
-                this.superCallMustBeFirstStatementInConstructor(enclosingDecl, classDecl)) {
-
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_current_location));
+        private isFunctionOrNonArrowFunctionExpression(decl: PullDecl): boolean {
+            if (decl.kind === PullElementKind.Function) {
+                return true;
             }
-            else if (enclosingNonLambdaDecl) {
-                if (enclosingNonLambdaDecl.kind === PullElementKind.Container || enclosingNonLambdaDecl.kind === PullElementKind.DynamicModule) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_within_module_bodies));
+            else if (decl.kind === PullElementKind.FunctionExpression && !hasFlag(decl.flags, PullElementFlags.FatArrow)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private typeCheckThisExpression(thisExpression: ThisExpression, context: PullTypeResolutionContext): void {
+            this.checkForThisCaptureInArrowFunction(thisExpression);
+
+            var enclosingDecl = this.getEnclosingDeclForAST(thisExpression);
+
+            if (this.inConstructorParameterList(thisExpression)) {
+                // October 11, 2013
+                // Similar to functions, only the constructor implementation (and not 
+                // constructor overloads) can specify default value expressions for optional
+                // parameters.It is a compile - time error for such default value expressions
+                //  to reference this. 
+                //
+                // Note: this applies for constructor parameters and constructor parameter 
+                // properties.
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_constructor_arguments));
+                return;
+            }
+
+            // October 11, 2013
+            // The type of this in an expression depends on the location in which the reference 
+            // takes place:
+            //      In a constructor, member function, member accessor, or member variable 
+            //      initializer, this is of the class instance type of the containing class.
+            //
+            //      In a static function or static accessor, the type of this is the constructor 
+            //      function type of the containing class.
+            //
+            //      In a function declaration or a standard function expression, this is of type Any.
+            //
+            //      In the global module, this is of type Any.
+            //
+            // In all other contexts it is a compile - time error to reference this.
+
+            for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
+                if (this.isFunctionOrNonArrowFunctionExpression(currentDecl)) {
+                    // 'this' is always ok in a function.
+                    return;
                 }
-                else if (this.inConstructorParameterList(thisExpression)) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_constructor_arguments));
+                else if (currentDecl.kind === PullElementKind.Container || currentDecl.kind === PullElementKind.DynamicModule) {
+                    if (currentDecl.getParentDecl() === null) {
+                        // Legal in the global module.
+                        return;
+                    }
+                    else {
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_within_module_bodies));
+                        return;
+                    }
                 }
-                else if (enclosingNonLambdaDecl.kind === PullElementKind.Property || enclosingNonLambdaDecl.kind === PullElementKind.Class) {
+                else if (currentDecl.kind === PullElementKind.ConstructorMethod) {
+                    // October 11, 2013
+                    // The first statement in the body of a constructor must be a super call if 
+                    // both of the following are true:
+                    //      The containing class is a derived class.
+                    //      The constructor declares parameter properties or the containing class 
+                    //      declares instance member variables with initializers.
+                    // In such a required super call, it is a compile - time error for argument
+                    // expressions to reference this.
+                    if (this.inArgumentListOfSuperInvocation(thisExpression) &&
+                        this.superCallMustBeFirstStatementInConstructor(currentDecl)) {
+
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_current_location));
+                    }
+
+                    // Otherwise, it's ok to access 'this' in a constructor.
+                    return;
+                }
+                else if (currentDecl.kind === PullElementKind.Class) {
                     if (this.inStaticMemberVariableDeclaration(thisExpression)) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_static_initializers_in_a_class_body));
                     }
+
+                    // Legal use of 'this'.  
+                    return;
                 }
             }
-
-            this.checkForThisCaptureInArrowFunction(thisExpression);
         }
 
         private getContextualClassSymbolForEnclosingDecl(ast: AST): PullTypeSymbol {
@@ -6351,15 +6419,17 @@ module TypeScript {
             return false;
         }
 
-        private getEnclosingNonLambdaDecl(enclosingDecl: PullDecl) {
+        private getEnclosingClassMemberDeclaration(enclosingDecl: PullDecl) {
             var declPath = enclosingDecl.getParentPath();
 
-                for (var i = declPath.length - 1; i >= 0; i--) {
-                    var decl = declPath[i];
-                    if (!(decl.kind === PullElementKind.FunctionExpression && (decl.flags & PullElementFlags.FatArrow))) {
-                        return decl;
-                    }
+            for (var i = declPath.length - 1; i > 0; i--) {
+                var decl = declPath[i];
+                var parentDecl = declPath[i - 1];
+
+                if (parentDecl.kind === PullElementKind.Class) {
+                    return decl;
                 }
+            }
 
             return null;
         }
@@ -6398,37 +6468,82 @@ module TypeScript {
 
             this.checkForThisCaptureInArrowFunction(ast);
 
+            var isSuperCall = ast.parent.nodeType() === NodeType.InvocationExpression;
+            var isSuperPropertyAccess = ast.parent.nodeType() === NodeType.MemberAccessExpression;
+            Debug.assert(isSuperCall || isSuperPropertyAccess);
+
             var enclosingDecl = this.getEnclosingDeclForAST(ast);
-            if (!enclosingDecl) {
+
+            if (isSuperPropertyAccess) {
+                // October 11, 2013
+                // Super property accesses are permitted as follows:
+                //      In a constructor, instance member function, or instance member accessor of a 
+                //      derived class, a super property access must specify a public instance member
+                //      function of the base class.
+                //
+                //      In a static member function or static member accessor of a derived class, a 
+                //      super property access must specify a public static member function of the base
+                //      class.
+                for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
+                    if (currentDecl.kind === PullElementKind.Class) {
+                        // We're in some class member.  That's good.
+
+                        if (!this.enclosingClassIsDerived(currentDecl)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            return;
+                        }
+                        else if (this.inConstructorParameterList(ast)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
+                            return;
+                        }
+                        else if (this.inStaticMemberVariableDeclaration(ast)) {
+                            break;
+                        }
+
+                        // We've checked the bad cases, at this point we're good.
+                        return;
+                    }
+                }
+
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_property_access_is_permitted_only_in_a_constructor_member_function_or_member_accessor_of_a_derived_class));
                 return;
             }
+            else {
+                // October 11, 2013
+                // Constructors of classes with no extends clause may not contain super calls, 
+                // whereas constructors of derived classes must contain at least one super call 
+                // somewhere in their function body. Super calls are not permitted outside 
+                // constructors or in local functions inside constructors.
+                // 
+                // The first statement in the body of a constructor must be a super call if both 
+                // of the following are true:
+                //      The containing class is a derived class.
+                //      The constructor declares parameter properties or the containing class 
+                //      declares instance member variables with initializers.
+                for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
+                    if (this.isFunctionOrNonArrowFunctionExpression(currentDecl)) {
+                        break;
+                    }
+                    else if (currentDecl.kind === PullElementKind.ConstructorMethod) {
+                        // We were in a constructor.  That's good.
+                        var classDecl = currentDecl.getParentDecl();
 
-            var nonLambdaEnclosingDecl = this.getEnclosingNonLambdaDecl(enclosingDecl);
+                        if (!this.enclosingClassIsDerived(classDecl)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            return;
+                        }
+                        else if (this.inConstructorParameterList(ast)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
+                            return;
+                        }
 
-            if (nonLambdaEnclosingDecl) {
-
-                var nonLambdaEnclosingDeclKind = nonLambdaEnclosingDecl.kind;
-                var inSuperConstructorTarget = this.inArgumentListOfSuperInvocation(ast);
-
-                // October 1, 2013.
-                // Super calls are not permitted outside constructors or in local functions inside 
-                // constructors.
-                if (inSuperConstructorTarget && enclosingDecl.kind !== PullElementKind.ConstructorMethod) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_local_functions_inside_constructors));
+                        // Nothing wrong with how we were referenced.  Note: the check if we're the
+                        // first statement in the constructor happens in typeCheckConstructorDeclaration.
+                        return;
+                    }
                 }
-                // A super property access is permitted only in a constructor, instance member function, or instance member accessor
-                else if ((nonLambdaEnclosingDeclKind !== PullElementKind.Property && nonLambdaEnclosingDeclKind !== PullElementKind.Method && nonLambdaEnclosingDeclKind !== PullElementKind.GetAccessor && nonLambdaEnclosingDeclKind !== PullElementKind.SetAccessor && nonLambdaEnclosingDeclKind !== PullElementKind.ConstructorMethod) ||
-                    this.inStaticMemberVariableDeclaration(ast)) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_property_access_is_permitted_only_in_a_constructor_member_function_or_member_accessor_of_a_derived_class));
-                }
-                // A super is permitted only in a derived class 
-                else if (!this.enclosingClassIsDerived(enclosingDecl)) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
-                }
-                // Cannot be referenced in constructor arguments
-                else if (this.inConstructorParameterList(ast)) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
-                }
+                
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_local_functions_inside_constructors));
             }
         }
 
@@ -7040,9 +7155,14 @@ module TypeScript {
             }, context);
         }
 
-        private computeLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
+        private resolveLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
             // October 11, 2013:  
             // The || operator permits the operands to be of any type.
+            if (this.canTypeCheckAST(binex, context)) {
+                // So there's no type checking we actually have to do.
+                this.setTypeChecked(binex, context);
+            }
+
             if (isContextuallyTyped) {
                 // If the || expression is contextually typed(section 4.19), the operands are 
                 // contextually typed by the same type and the result is of the best common type 
@@ -7066,20 +7186,6 @@ module TypeScript {
 
                 return this.bestCommonTypeOfTwoTypes(leftType, rightType, context);
             }
-        }
-
-        private resolveLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
-            if (this.canTypeCheckAST(binex, context)) {
-                this.typeCheckLogicalOrExpression(binex, isContextuallyTyped, context);
-            }
-
-            return this.computeLogicalOrExpression(binex, isContextuallyTyped, context);
-        }
-
-        private typeCheckLogicalOrExpression(binex: BinaryExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext) {
-            this.setTypeChecked(binex, context);
-
-            this.computeLogicalOrExpression(binex, isContextuallyTyped, context);
         }
 
         private resolveLogicalAndExpression(binex: BinaryExpression, context: PullTypeResolutionContext): PullSymbol {
@@ -7119,10 +7225,6 @@ module TypeScript {
         }
 
         private resolveConditionalExpression(trinex: ConditionalExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
-            if (this.canTypeCheckAST(trinex, context)) {
-                this.typeCheckConditionalExpression(trinex, isContextuallyTyped, context);
-            }
-
             // October 11, 2013
             // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
             // are contextually typed by the same type and the result is of the best common type
@@ -7133,7 +7235,11 @@ module TypeScript {
             var rightType = this.resolveAST(trinex.whenFalse, isContextuallyTyped, context).type;
 
             var expressionType = this.computeTypeOfConditionalExpression(leftType, rightType, isContextuallyTyped, context);
-            
+
+            if (this.canTypeCheckAST(trinex, context)) {
+                this.typeCheckConditionalExpression(trinex, isContextuallyTyped, context, leftType, rightType, expressionType);
+            }
+
             // If the conditional is not valid, then return an error symbol.  That way we won't 
             // report further errors higher up the stack.
             if (!this.conditionExpressionTypesAreValid(leftType, rightType, expressionType, isContextuallyTyped, context)) {
@@ -7160,30 +7266,21 @@ module TypeScript {
                     return true;
                 }
             }
-            
+
             return false;
         }
 
-        private typeCheckConditionalExpression(trinex: ConditionalExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext): void {
+        private typeCheckConditionalExpression(trinex: ConditionalExpression, isContextuallyTyped: boolean, context: PullTypeResolutionContext,
+            leftType: PullTypeSymbol, rightType: PullTypeSymbol, expressionType: PullTypeSymbol): void {
+
             this.setTypeChecked(trinex, context);
-
-            // October 11, 2013
-            // If the conditional expression is contextually typed (section 4.19), Expr1 and Expr2 
-            // are contextually typed by the same type and the result is of the best common type
-            // (section 3.10) of the contextual type and the types of Expr1 and Expr2.  An error 
-            // occurs if the best common type is not identical to at least one of the three 
-            // candidate types.
             this.resolveAST(trinex.condition, /*isContextuallyTyped:*/ false, context);
-            var leftType = this.resolveAST(trinex.whenTrue, isContextuallyTyped, context).type;
-            var rightType = this.resolveAST(trinex.whenFalse, isContextuallyTyped, context).type;
-
-            var expressionType = this.computeTypeOfConditionalExpression(leftType, rightType, isContextuallyTyped, context);
 
             if (!this.conditionExpressionTypesAreValid(leftType, rightType, expressionType, isContextuallyTyped, context)) {
                 if (isContextuallyTyped) {
                     var contextualType = context.getContextualType();
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(trinex,
-                        DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_or_2,
+                        DiagnosticCode.Type_of_conditional_0_must_be_identical_to_1_2_or_3,
                         [expressionType.toString(), leftType.toString(), rightType.toString(), contextualType.toString()]));
                 }
                 else {
@@ -7454,7 +7551,7 @@ module TypeScript {
 
                             // specialize to any
                             for (var j = 0; j < typeParameters.length; j++) {
-                                typeReplacementMap[typeParameters[i].pullSymbolID] = this.semanticInfoChain.anyTypeSymbol;
+                                typeReplacementMap[typeParameters[j].pullSymbolID] = this.semanticInfoChain.anyTypeSymbol;
                             }
                         }
 
@@ -8747,21 +8844,32 @@ module TypeScript {
             // We instead report:
             // Cannot convert 'A[]' to 'B[]':
             //   Type 'A' is missing property 'C' from type 'B'.
-            if (source.isArrayNamedTypeReference() && target.isArrayNamedTypeReference()) {
-                comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, false);
 
-                var sourceElementType = source.getTypeArguments()[0];
-                var targetElementType = target.getTypeArguments()[0];
-                var ret = this.sourceIsRelatableToTarget(sourceElementType, targetElementType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures);
+            if (source.getIsSpecialized() && target.getIsSpecialized()) {
+                if (PullHelpers.getRootType(source) == PullHelpers.getRootType(target)) {
 
-                if (ret) {
-                    comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, true);
+                    var sourceTypeArguments = source.getTypeArguments();
+                    var targetTypeArguments = target.getTypeArguments();
+
+                    if (sourceTypeArguments && targetTypeArguments) {
+                        comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, false);
+
+                        for (var i = 0; i < sourceTypeArguments.length; i++) {
+                            if (!this.sourceIsRelatableToTarget(sourceTypeArguments[i], targetTypeArguments[i], assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures)) {
+                                break;
+                            }
+                        }
+
+                        if (i == sourceTypeArguments.length) {
+                            comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, true);
+                            return true;
+                        }
+                        else {
+                            comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, undefined);
+                            return false;
+                        }
+                    }
                 }
-                else {
-                    comparisonCache.setValueAt(source.pullSymbolID, target.pullSymbolID, undefined);
-                }
-
-                return ret;
             }
 
             // this check ensures that we only operate on object types from this point forward,
@@ -8952,13 +9060,14 @@ module TypeScript {
             //  if either type originates in an infinitely expanding type reference, S and T are not compared by the rules in the preceding sections.Instead, for the relationship to be considered true,
             //  -	S and T must both be type references to the same named type, and
             //  -	the relationship in question must be true for each corresponding pair of type arguments in the type argument lists of S and T.
-            var sourcePropGenerativeTypeKind = sourcePropType.getGenerativeTypeClassification(source);
-            var targetPropGenerativeTypeKind = targetPropType.getGenerativeTypeClassification(target);
-            var widenedTargetPropType = this.widenType(null, targetPropType, context);
-            var widenedSourcePropType = this.widenType(null, sourcePropType, context);
+            if ((comparisonCache.valueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID) == undefined)) {
+                var sourcePropGenerativeTypeKind = sourcePropType.getGenerativeTypeClassification(source);
+                var targetPropGenerativeTypeKind = targetPropType.getGenerativeTypeClassification(target);
+                var widenedTargetPropType = this.widenType(null, targetPropType, context);
+                var widenedSourcePropType = this.widenType(null, sourcePropType, context);
 
-            if (sourcePropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
-                targetPropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
+                if (sourcePropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
+                    targetPropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
 
                     if ((widenedSourcePropType != this.semanticInfoChain.anyTypeSymbol) &&
                         (widenedTargetPropType != this.semanticInfoChain.anyTypeSymbol)) {
@@ -8966,29 +9075,49 @@ module TypeScript {
                         var sourceDecl = sourceProp.getDeclarations()[0];
 
                         if (!targetDecl.isEqual(sourceDecl)) {
+                            comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, false);
+                            if (comparisonInfo) {
+                                comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Types_of_property_0_of_types_1_and_2_are_incompatible,
+                                    [targetProp.getScopedNameEx().toString(), source.toString(), target.toString()]));
+                            }
                             return false;
                         }
 
                         var sourcePropTypeArguments = sourcePropType.getTypeArguments();
                         var targetPropTypeArguments = targetPropType.getTypeArguments();
 
+                        if (!sourcePropTypeArguments && !targetPropTypeArguments) {
+                            comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, true);
+                            return true;
+                        }
+
                         if (!(sourcePropTypeArguments && targetPropTypeArguments) ||
                             sourcePropTypeArguments.length != targetPropTypeArguments.length) {
+                            comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, false);
+                            if (comparisonInfo) {
+                                comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Types_of_property_0_of_types_1_and_2_are_incompatible,
+                                    [targetProp.getScopedNameEx().toString(), source.toString(), target.toString()]));
+                            }
                             return false;
                         }
 
                         for (var i = 0; i < sourcePropTypeArguments.length; i++) {
                             if (!this.sourceIsRelatableToTarget(sourcePropTypeArguments[i], targetPropTypeArguments[i], assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures)) {
+                                comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, false);
+                                if (comparisonInfo) {
+                                    comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Types_of_property_0_of_types_1_and_2_are_incompatible,
+                                        [targetProp.getScopedNameEx().toString(), source.toString(), target.toString()]));
+                                }
                                 return false;
                             }
                         }
                     }
 
+                    comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, true);
                     return true;
+                }
             }
-
-            // catch the mutually recursive or cached cases
-            if (targetPropType && sourcePropType && (comparisonCache.valueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID) != undefined)) {
+            else {
                 return true; // GTODO: should this be true?
             }
 
@@ -9217,7 +9346,7 @@ module TypeScript {
             var targetVarArgCount = targetSig.nonOptionalParamCount;
             var sourceVarArgCount = sourceSig.nonOptionalParamCount;
 
-            if (sourceVarArgCount > targetVarArgCount && !targetSig.hasVarArgs) {
+            if (sourceVarArgCount > targetVarArgCount) {
                 if (comparisonInfo) {
                     comparisonInfo.flags |= TypeRelationshipFlags.SourceSignatureHasTooManyParameters;
                     comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Call_signature_expects_0_or_fewer_parameters, [targetVarArgCount]));
@@ -9806,6 +9935,15 @@ module TypeScript {
                 objectMember = this.getMemberSymbol(parameterTypeMembers[i].name, PullElementKind.SomeValue, objectType);
 
                 if (objectMember) {
+
+                    var objectMemberGenerativeTypeKind = objectMember.type.getGenerativeTypeClassification(objectType);
+                    var parameterMemberGenerativeTypeKind = parameterTypeMembers[i].type.getGenerativeTypeClassification(parameterType);
+
+                    if ((objectMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) ||
+                        (parameterMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding)) {
+                            continue;
+                    }
+
                     this.relateTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);
                 }
             }
@@ -10761,24 +10899,11 @@ module TypeScript {
             }
         }
 
-        private enclosingClassIsDerived(decl: PullDecl): boolean {
-            if (decl) {
-                var classSymbol: PullTypeSymbol = null;
+        private enclosingClassIsDerived(classDecl: PullDecl): boolean {
+            Debug.assert(classDecl.kind === PullElementKind.Class);
 
-                while (decl) {
-                    if (decl.kind == PullElementKind.Class) {
-                        classSymbol = <PullTypeSymbol>decl.getSymbol();
-                        if (classSymbol.getExtendedTypes().length > 0) {
-                            return true;
-                        }
-
-                        break;
-                    }
-                    decl = decl.getParentDecl();
-                }
-            }
-
-            return false;
+            var classSymbol = <PullTypeSymbol>classDecl.getSymbol();
+            return classSymbol.getExtendedTypes().length > 0;
         }
 
         private isSuperInvocationExpression(ast: AST): boolean {
@@ -10810,14 +10935,18 @@ module TypeScript {
             return null;
         }
 
-        private superCallMustBeFirstStatementInConstructor(enclosingConstructor: PullDecl, enclosingClass: PullDecl): boolean {
+        private superCallMustBeFirstStatementInConstructor(constructorDecl: PullDecl): boolean {
+            Debug.assert(constructorDecl.kind === PullElementKind.ConstructorMethod);
+
             /*
             The first statement in the body of a constructor must be a super call if both of the following are true:
                 •   The containing class is a derived class.
                 •   The constructor declares parameter properties or the containing class declares instance member variables with initializers.
             In such a required super call, it is a compile-time error for argument expressions to reference this.
             */
-            if (enclosingConstructor && enclosingClass) {
+            if (constructorDecl) {
+                var enclosingClass = constructorDecl.getParentDecl();
+
                 var classSymbol = <PullTypeSymbol>enclosingClass.getSymbol();
                 if (classSymbol.getExtendedTypes().length === 0) {
                     return false;
@@ -11000,8 +11129,10 @@ module TypeScript {
 
             var typeMembers = typeSymbol.getMembers();
 
-            var comparisonInfo = new TypeComparisonInfo();
-            var foundError = false;
+                var comparisonInfo = new TypeComparisonInfo();
+                var foundError = false;
+                var foundError1 = false;
+                var foundError2 = false;
 
             // Check members
             for (var i = 0; i < typeMembers.length; i++) {
@@ -11009,13 +11140,14 @@ module TypeScript {
                 var extendedTypeProp = extendedType.findMember(propName);
                 if (extendedTypeProp) {
                     this.resolveDeclaredSymbol(extendedTypeProp, context);
-                    foundError = !this.typeCheckIfTypeMemberPropertyOkToOverride(typeSymbol, extendedType, typeMembers[i], extendedTypeProp, enclosingDecl, comparisonInfo);
+                    foundError1 = !this.typeCheckIfTypeMemberPropertyOkToOverride(typeSymbol, extendedType, typeMembers[i], extendedTypeProp, enclosingDecl, comparisonInfo);
 
-                    if (!foundError) {
-                        foundError = !this.sourcePropertyIsSubtypeOfTargetProperty(typeSymbol, extendedType, typeMembers[i], extendedTypeProp, context, comparisonInfo);
+                    if (!foundError1) {
+                        foundError2 = !this.sourcePropertyIsSubtypeOfTargetProperty(typeSymbol, extendedType, typeMembers[i], extendedTypeProp, context, comparisonInfo);
                     }
 
-                    if (foundError) {
+                    if (foundError1 || foundError2) {
+                        foundError = true;
                         break;
                     }
                 }

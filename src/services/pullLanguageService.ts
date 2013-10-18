@@ -1222,7 +1222,7 @@ module Services {
             }, null);
 
             // Store this completion list as the active completion list
-            this.activeCompletionSession = new CompletionSession(fileName, position, document.version, entries);
+            this.activeCompletionSession = new CompletionSession(fileName, position, entries);
 
             return completions;
         }
@@ -1324,9 +1324,13 @@ module Services {
             if (!entry.isResolved()) {
                 var decl = (<DeclReferenceCompletionEntry>entry).decl;
 
-                // If this decl has been invalidated becuase of a user edit, try to find the new decl that matches it
+                // If this decl has been invalidated becuase of a user edit, try to find the new
+                // decl that matches it
+                // Theoretically, this corrective measure should just fix decls if the completion
+                // session is older than the file, but we are being defensive, so always correct
+                // the decl.
                 var document = this.compiler.getDocument(fileName);
-                if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName) && document.version !== this.activeCompletionSession.version) {
+                if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName)) {
                     decl = this.tryFindDeclFromPreviousCompilerVersion(decl);
 
                     if (decl) {

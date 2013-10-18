@@ -2136,8 +2136,8 @@ module TypeScript {
             if (accessors.getter) {
                 this.emitIndent();
                 this.recordSourceMappingStart(accessors.getter);
-                this.writeToOutput("get: ");
                 this.emitComments(accessors.getter, true);
+                this.writeToOutput("get: ");
                 this.emitAccessorBody(accessors.getter, accessors.getter.parameterList, accessors.getter.block);
                 this.writeLineToOutput(",");
             }
@@ -2145,8 +2145,8 @@ module TypeScript {
             if (accessors.setter) {
                 this.emitIndent();
                 this.recordSourceMappingStart(accessors.setter);
-                this.writeToOutput("set: ");
                 this.emitComments(accessors.setter, true);
+                this.writeToOutput("set: ");
                 this.emitAccessorBody(accessors.setter, accessors.setter.parameterList, accessors.setter.block);
                 this.writeLineToOutput(",");
             }

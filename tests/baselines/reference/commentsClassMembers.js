@@ -10,12 +10,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "p3", {
-        get: /** getter property*/
-        function () {
+        /** getter property*/
+        get: function () {
             return this.p2(this.p1);
         },
-        set: /** setter property*/
-        function (/** this is value*/ value) {
+        /** setter property*/
+        set: function (/** this is value*/ value) {
             this.p1 = this.p2(value);
         },
         enumerable: true,
@@ -29,12 +29,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "pp3", {
-        get: /** getter property*/
-        function () {
+        /** getter property*/
+        get: function () {
             return this.pp2(this.pp1);
         },
-        set: /** setter property*/
-        function (/** this is value*/ value) {
+        /** setter property*/
+        set: function (/** this is value*/ value) {
             this.pp1 = this.pp2(value);
         },
         enumerable: true,
@@ -48,12 +48,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1, "s3", {
-        get: /** static getter property*/
-        function () {
+        /** static getter property*/
+        get: function () {
             return c1.s2(c1.s1);
         },
-        set: /** setter property*/
-        function (/** this is value*/ value) {
+        /** setter property*/
+        set: function (/** this is value*/ value) {
             c1.s1 = c1.s2(value);
         },
         enumerable: true,
@@ -109,12 +109,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "a_p3", {
-        get: // getter property
-        function () {
+        // getter property
+        get: function () {
             return this.a_p2(this.a_p1);
         },
-        set: // setter property
-        function (value) {
+        // setter property
+        set: function (value) {
             this.a_p1 = this.a_p2(value);
         },
         enumerable: true,
@@ -128,12 +128,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "a_pp3", {
-        get: // getter property
-        function () {
+        // getter property
+        get: function () {
             return this.a_pp2(this.a_pp1);
         },
-        set: // setter property
-        function (value) {
+        // setter property
+        set: function (value) {
             this.a_pp1 = this.a_pp2(value);
         },
         enumerable: true,
@@ -147,12 +147,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1, "a_s3", {
-        get: // static getter property
-        function () {
+        // static getter property
+        get: function () {
             return c1.s2(c1.s1);
         },
-        set: // setter property
-        function (value) {
+        // setter property
+        set: function (value) {
             c1.a_s1 = c1.a_s2(value);
         },
         enumerable: true,
@@ -166,12 +166,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "b_p3", {
-        get: /** getter property */
-        function () {
+        /** getter property */
+        get: function () {
             return this.b_p2(this.b_p1);
         },
-        set: /** setter property */
-        function (value) {
+        /** setter property */
+        set: function (value) {
             this.b_p1 = this.b_p2(value);
         },
         enumerable: true,
@@ -185,12 +185,12 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1.prototype, "b_pp3", {
-        get: /** getter property */
-        function () {
+        /** getter property */
+        get: function () {
             return this.b_pp2(this.b_pp1);
         },
-        set: /** setter property */
-        function (value) {
+        /** setter property */
+        set: function (value) {
             this.b_pp1 = this.b_pp2(value);
         },
         enumerable: true,
@@ -204,14 +204,14 @@ var c1 = (function () {
     };
 
     Object.defineProperty(c1, "b_s3", {
-        get: /** static getter property
+        /** static getter property
         */
-        function () {
+        get: function () {
             return c1.s2(c1.s1);
         },
-        set: /** setter property
+        /** setter property
         */
-        function (value) {
+        set: function (value) {
             /** setter */
             c1.b_s1 = c1.b_s2(value);
         },
@@ -247,8 +247,8 @@ var cProperties = (function () {
     function cProperties() {
     }
     Object.defineProperty(cProperties.prototype, "p1", {
-        get: /** getter only property*/
-        function () {
+        /** getter only property*/
+        get: function () {
             return this.val;
         },
         enumerable: true,
@@ -263,8 +263,8 @@ var cProperties = (function () {
     });
 
     Object.defineProperty(cProperties.prototype, "p2", {
-        set: /**setter only property*/
-        function (value) {
+        /**setter only property*/
+        set: function (value) {
             this.val = value;
         },
         enumerable: true,

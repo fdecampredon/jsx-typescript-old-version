@@ -21,7 +21,6 @@
 ///<reference path='bloomFilter.ts' />
 ///<reference path='identifierWalker.ts' />
 ///<reference path='settings.ts' />
-///<reference path='typecheck\dataMap.ts' />
 ///<reference path='typecheck\pullFlags.ts' />
 ///<reference path='typecheck\pullDecls.ts' />
 ///<reference path='typecheck\pullSymbols.ts' />

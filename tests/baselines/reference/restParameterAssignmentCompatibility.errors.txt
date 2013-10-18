@@ -1,0 +1,8 @@
+restParameterAssignmentCompatibility.ts line 17 col 1: error TS2012: Cannot convert 'S' to 'T':
+	Types of property 'm' of types 'S' and 'T' are incompatible:
+		Call signatures of types '(p1: any, p2: any) => void' and '(...p3: any[]) => void' are incompatible:
+			Call signature expects 0 or fewer parameters.
+restParameterAssignmentCompatibility.ts line 26 col 1: error TS2012: Cannot convert 'S' to 'T1':
+	Types of property 'm' of types 'S' and 'T1' are incompatible:
+		Call signatures of types '(p1: any, p2: any) => void' and '(p1?: any, p2?: any) => void' are incompatible:
+			Call signature expects 0 or fewer parameters.

@@ -9,10 +9,17 @@ module Services {
         public static compareSymbolsForLexicalIdentity(firstSymbol: TypeScript.PullSymbol, secondSymbol: TypeScript.PullSymbol): boolean {
             // Unwrap modules so that we're always referring to the variable.
             if (!firstSymbol.isAlias() && firstSymbol.isContainer()) {
-                firstSymbol = (<TypeScript.PullContainerSymbol>firstSymbol).getInstanceSymbol();
+                var containerForFirstSymbol = (<TypeScript.PullContainerSymbol>firstSymbol);
+                if (containerForFirstSymbol.getInstanceSymbol()) {
+                    firstSymbol = containerForFirstSymbol.getInstanceSymbol();
+                }
             }
+
             if (!secondSymbol.isAlias() && secondSymbol.isContainer()) {
-                secondSymbol = (<TypeScript.PullContainerSymbol>secondSymbol).getInstanceSymbol();
+                var containerForSecondSymbol = (<TypeScript.PullContainerSymbol>secondSymbol);
+                if (containerForSecondSymbol.getInstanceSymbol()) {
+                    secondSymbol = containerForSecondSymbol.getInstanceSymbol();
+                }
             }
 
             if (firstSymbol.kind === secondSymbol.kind) {

@@ -113,5 +113,18 @@ module TypeScript {
 
             return a == b;
         }
+
+        export function getRootType(type: PullTypeSymbol): PullTypeSymbol {
+            var rootType: PullTypeSymbol = <PullTypeSymbol>type.getRootSymbol();
+
+            while (true) {
+                if (type == rootType) {
+                    return type;
+                }
+
+                type = rootType;
+                rootType = <PullTypeSymbol>type.getRootSymbol();
+            }
+        }
     }
 }

@@ -7,8 +7,8 @@ var GetAndSet = (function () {
         get: function () {
             return this.getAndSet;
         },
-        set: // this shouldn't be an error
-        function (value) {
+        // this shouldn't be an error
+        set: function (value) {
             this.getAndSet = value;
         },
         enumerable: true,

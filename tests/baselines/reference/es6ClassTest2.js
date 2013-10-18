@@ -32,10 +32,10 @@ var GetSetMonster = (function () {
     };
 
     Object.defineProperty(GetSetMonster.prototype, "isAlive", {
-        get: // The contextual keyword "get" followed by an identifier and
+        // The contextual keyword "get" followed by an identifier and
         // a curly body defines a getter in the same way that "get"
         // defines one in an object literal.
-        function () {
+        get: function () {
             return this._health > 0;
         },
         enumerable: true,
@@ -43,8 +43,8 @@ var GetSetMonster = (function () {
     });
 
     Object.defineProperty(GetSetMonster.prototype, "health", {
-        set: // Likewise, "set" can be used to define setters.
-        function (value) {
+        // Likewise, "set" can be used to define setters.
+        set: function (value) {
             if (value < 0) {
                 throw new Error('Health must be non-negative.');
             }

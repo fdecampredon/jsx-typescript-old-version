@@ -24,12 +24,12 @@ var c = (function () {
     };
 
     Object.defineProperty(c.prototype, "prop1", {
-        get: /** getter comment*/
-        function () {
+        /** getter comment*/
+        get: function () {
             return this.b;
         },
-        set: /** setter comment*/
-        function (val) {
+        /** setter comment*/
+        set: function (val) {
             this.b = val;
         },
         enumerable: true,

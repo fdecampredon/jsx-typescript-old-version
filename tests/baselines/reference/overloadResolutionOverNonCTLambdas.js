@@ -12,7 +12,11 @@ var Bugs;
         for (var _i = 0; _i < (arguments.length - 1); _i++) {
             args[_i] = arguments[_i + 1];
         }
-        var result = message.replace(/\{(\d+)\}/g, function (match, rest) {
+        var result = message.replace(/\{(\d+)\}/g, function (match) {
+            var rest = [];
+            for (var _i = 0; _i < (arguments.length - 1); _i++) {
+                rest[_i] = arguments[_i + 1];
+            }
             var index = rest[0];
             return typeof args[index] !== 'undefined' ? args[index] : match;
         });

@@ -1,0 +1,29 @@
+=== tests/cases/compiler/infinitelyGenerativeInheritance1.ts ===
+Line 0 col 10 IdentifierName "Stack" = Stack<T>
+Line 0 col 16 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "pop" = () => T
+Line 1 col 13 IdentifierName "T" = T
+Line 2 col 0 IdentifierName "zip" = <S>(a: Stack<S>) => Stack<{ x: T; y: S; }>
+Line 2 col 10 IdentifierName "S" = S
+Line 2 col 13 IdentifierName "a" = Stack<S>
+Line 2 col 16 IdentifierName "Stack" = Stack<T>
+Line 2 col 22 IdentifierName "S" = S
+Line 2 col 27 IdentifierName "Stack" = Stack<T>
+Line 2 col 35 IdentifierName "x" = T
+Line 2 col 38 IdentifierName "T" = T
+Line 2 col 41 IdentifierName "y" = S
+Line 2 col 44 IdentifierName "S" = S
+Line 5 col 10 IdentifierName "MyStack" = MyStack<T>
+Line 5 col 18 IdentifierName "T" = T
+Line 5 col 29 IdentifierName "Stack" = Stack<T>
+Line 5 col 35 IdentifierName "T" = T
+Line 6 col 0 IdentifierName "zip" = <S>(a: Stack<S>) => Stack<{ x: T; y: S; }>
+Line 6 col 10 IdentifierName "S" = S
+Line 6 col 13 IdentifierName "a" = Stack<S>
+Line 6 col 16 IdentifierName "Stack" = Stack<T>
+Line 6 col 22 IdentifierName "S" = S
+Line 6 col 27 IdentifierName "Stack" = Stack<T>
+Line 6 col 35 IdentifierName "x" = T
+Line 6 col 38 IdentifierName "T" = T
+Line 6 col 41 IdentifierName "y" = S
+Line 6 col 44 IdentifierName "S" = S
