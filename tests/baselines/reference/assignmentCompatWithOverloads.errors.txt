@@ -4,5 +4,5 @@ assignmentCompatWithOverloads.ts line 19 col 1: error TS2012: Cannot convert '(x
 	Call signatures of types '(x: number) => number' and '(s1: string) => number' are incompatible.
 assignmentCompatWithOverloads.ts line 21 col 1: error TS2012: Cannot convert '{ (x: string): string; (x: number): number; }' to '(s1: string) => number':
 	Call signatures of types '{ (x: string): string; (x: number): number; }' and '(s1: string) => number' are incompatible.
-assignmentCompatWithOverloads.ts line 30 col 1: error TS2012: Cannot convert '{ new(x: string): C; }' to 'new(x: number) => void':
-	Construct signatures of types '{ new(x: string): C; }' and 'new(x: number) => void' are incompatible.
+assignmentCompatWithOverloads.ts line 30 col 1: error TS2012: Cannot convert '{ prototype: C; new(x: string): C; }' to 'new(x: number) => void':
+	Construct signatures of types '{ prototype: C; new(x: string): C; }' and 'new(x: number) => void' are incompatible.

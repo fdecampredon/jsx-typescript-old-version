@@ -7,7 +7,7 @@ module TypeScript {
     export class PullSymbolBinder {
         private static functionTypeParameterCache = new BlockIntrinsics<PullTypeParameterSymbol>();
 
-        private declsBeingBound: BlockIntrinsics<boolean> = new BlockIntrinsics<boolean>();
+        private declsBeingBound: boolean[] = [];
 
         constructor(private semanticInfoChain: SemanticInfoChain) {
         }
@@ -580,7 +580,7 @@ module TypeScript {
             }
 
             if (!importSymbol) {
-                importSymbol = new PullTypeAliasSymbol(declName);
+                importSymbol = new PullTypeAliasSymbol(declName, this.semanticInfoChain.getResolver());
 
                 if (!parent) {
                     this.semanticInfoChain.cacheGlobalSymbol(importSymbol, PullElementKind.SomeContainer);
@@ -665,14 +665,16 @@ module TypeScript {
                     }
                 }
 
-                constructorSymbol = constructorSymbol || new PullSymbol(className, PullElementKind.ConstructorMethod);
-                constructorTypeSymbol = constructorSymbol.type || new PullTypeSymbol("", PullElementKind.ConstructorType);
+                if (constructorSymbol) {
+                    constructorTypeSymbol = constructorSymbol.type;
+                } else {
+                    constructorSymbol = new PullSymbol(className, PullElementKind.ConstructorMethod);
+                    constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType);
+                    constructorSymbol.setIsSynthesized();
+                    constructorSymbol.type = constructorTypeSymbol;
+                }
 
-                constructorSymbol.setIsSynthesized();
-
-                constructorSymbol.type = constructorTypeSymbol;
                 classSymbol.setConstructorMethod(constructorSymbol);
-
                 classSymbol.setHasDefaultConstructor();
             }
 
@@ -713,6 +715,9 @@ module TypeScript {
             if (valueDecl) {
                 valueDecl.ensureSymbolIsBound();
             }
+
+            // Create the constructorTypeSymbol
+            this.bindStaticPrototypePropertyOfClass(classSymbol, constructorTypeSymbol);
         }
 
         // interfaces
@@ -1042,10 +1047,6 @@ module TypeScript {
 
                             decl = decls[decls.length - 1];
                             ast = this.semanticInfoChain.getASTForDecl(decl);
-
-                            if (ast) {
-                                this.semanticInfoChain.setASTForDecl(variableDeclaration, ast);
-                            }
                         }
                     }
                     else {
@@ -1117,10 +1118,6 @@ module TypeScript {
 
                             decl = decls[decls.length - 1];
                             ast = this.semanticInfoChain.getASTForDecl(decl);
-
-                            if (ast) {
-                                this.semanticInfoChain.setASTForDecl(variableDeclaration, ast);
-                            }
                         }
 
                         // we added the variable to the parent when binding the module
@@ -1270,7 +1267,7 @@ module TypeScript {
                     argDecl = <Parameter>parameterList.members[i];
                     decl = this.semanticInfoChain.getDeclForAST(argDecl);
                     isProperty = hasFlag(decl.flags, PullElementFlags.PropertyParameter);
-                    parameterSymbol = new PullSymbol(argDecl.id.text(), PullElementKind.Parameter);
+                    parameterSymbol = new PullSymbol(argDecl.id.valueText(), PullElementKind.Parameter);
 
                     if (argDecl.isRest) {
                         parameterSymbol.isVarArg = true;
@@ -1280,11 +1277,11 @@ module TypeScript {
                         parameterSymbol.isOptional = true;
                     }
 
-                    if (params[argDecl.id.text()]) {
-                        this.semanticInfoChain.addDiagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [argDecl.id.actualText]);
+                    if (params[argDecl.id.valueText()]) {
+                        this.semanticInfoChain.addDiagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [argDecl.id.text()]);
                     }
                     else {
-                        params[argDecl.id.text()] = true;
+                        params[argDecl.id.valueText()] = true;
                     }
                     if (decl) {
 
@@ -1654,6 +1651,37 @@ module TypeScript {
             }
         }
 
+        private bindStaticPrototypePropertyOfClass(classTypeSymbol: PullTypeSymbol, constructorTypeSymbol: PullTypeSymbol) {
+            var prototypeStr = "prototype";
+
+            var prototypeSymbol = constructorTypeSymbol.findMember(prototypeStr, /*lookInParent*/ false);
+            if (prototypeSymbol && !prototypeSymbol.getIsSynthesized()) {
+                // Report duplicate symbol error on existing prototype symbol since class has explicit prototype symbol
+                // This kind of scenario can happen with augmented module and class with module member named prototype
+                this.semanticInfoChain.addDiagnostic(
+                    diagnosticFromDecl(prototypeSymbol.getDeclarations()[0], DiagnosticCode.Duplicate_identifier_0, [prototypeSymbol.getDisplayName()]));
+            }
+
+            // Add synthetic prototype decl and symbol
+            if (!prototypeSymbol || !prototypeSymbol.getIsSynthesized()) {
+                var prototypeDecl = new PullSynthesizedDecl(prototypeStr, prototypeStr, PullElementKind.Property,
+                    PullElementFlags.Public | PullElementFlags.Static, constructorTypeSymbol.getDeclarations()[0],
+                    classTypeSymbol.getDeclarations()[0].getSpan(), this.semanticInfoChain);
+
+                prototypeSymbol = new PullSymbol(prototypeStr, PullElementKind.Property);
+                prototypeSymbol.setIsSynthesized();
+                prototypeSymbol.addDeclaration(prototypeDecl);
+                prototypeSymbol.type = classTypeSymbol;
+                constructorTypeSymbol.addMember(prototypeSymbol);
+
+                if (prototypeSymbol.type && prototypeSymbol.type.isGeneric()) {
+                    var resolver = this.semanticInfoChain.getResolver();
+                    prototypeSymbol.type = resolver.instantiateTypeToAny(prototypeSymbol.type, new PullTypeResolutionContext(resolver));
+                }
+                prototypeSymbol.setResolved();
+            }
+        }
+
         // class constructor declarations
         private bindConstructorDeclarationToPullSymbol(constructorDeclaration: PullDecl) {
             var declKind = constructorDeclaration.kind;
@@ -1741,6 +1769,9 @@ module TypeScript {
                     otherDecls[i].ensureSymbolIsBound();
                 }
             }
+
+            // Create the constructorTypeSymbol
+            this.bindStaticPrototypePropertyOfClass(parent, constructorTypeSymbol);
         }
 
         private bindConstructSignatureDeclarationToPullSymbol(constructSignatureDeclaration: PullDecl) {
@@ -1839,13 +1870,6 @@ module TypeScript {
             this.semanticInfoChain.setSymbolForAST(this.semanticInfoChain.getASTForDecl(indexSignatureDeclaration), indexSignature);
 
             var parent = this.getParent(indexSignatureDeclaration);
-
-            var isStatic = hasFlag(indexSignatureDeclaration.flags, PullElementFlags.Static);
-            if (isStatic) {
-                // Add to the constructor type instead of the instance type
-                parent = parent.getConstructorMethod().type;
-            }
-
             parent.addIndexSignature(indexSignature);
             indexSignature.setContainer(parent);
         }
@@ -2062,13 +2086,13 @@ module TypeScript {
                 return;
             }
 
-            if (this.declsBeingBound[decl.declIDString]) {
+            if (this.declsBeingBound[decl.declID]) {
                 // We are already binding it now
                 return;
             }
 
             // Add it to the list in case we revisit it during binding
-            this.declsBeingBound[decl.declIDString] = true;
+            this.declsBeingBound[decl.declID] = true;
 
             try {
                 switch (decl.kind) {
@@ -2178,7 +2202,7 @@ module TypeScript {
             }
             finally {
                 // Rremove the decl from the list
-                delete this.declsBeingBound[decl.declIDString];
+                delete this.declsBeingBound[decl.declID];
             }
         }
 

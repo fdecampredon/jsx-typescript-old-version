@@ -3,10 +3,10 @@ Line 0 col 6 IdentifierName "Shape" = Shape
 Line 1 col 11 IdentifierName "create" = () => Shape
 Line 1 col 21 IdentifierName "Shape" = Shape
 Line 2 col 15 ObjectCreationExpression "new Shape()" = Shape
-Line 2 col 19 IdentifierName "Shape" = { create(): Shape; new(): Shape; }
+Line 2 col 19 IdentifierName "Shape" = { prototype: Shape; create(): Shape; new(): Shape; }
 Line 6 col 10 IdentifierName "ShapeFactory" = ShapeFactory
 Line 7 col 0 IdentifierName "create" = () => Shape
 Line 7 col 14 IdentifierName "Shape" = Shape
 Line 10 col 4 IdentifierName "x" = ShapeFactory
 Line 10 col 7 IdentifierName "ShapeFactory" = ShapeFactory
-Line 10 col 22 IdentifierName "Shape" = { create(): Shape; new(): Shape; }
+Line 10 col 22 IdentifierName "Shape" = { prototype: Shape; create(): Shape; new(): Shape; }

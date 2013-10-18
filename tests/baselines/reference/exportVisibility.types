@@ -2,7 +2,7 @@
 Line 0 col 13 IdentifierName "Foo" = Foo
 Line 3 col 11 IdentifierName "foo" = Foo
 Line 3 col 17 ObjectCreationExpression "new Foo()" = Foo
-Line 3 col 21 IdentifierName "Foo" = new() => Foo
+Line 3 col 21 IdentifierName "Foo" = { prototype: Foo; new(): Foo; }
 Line 5 col 16 IdentifierName "test" = (foo: Foo) => boolean
 Line 5 col 21 IdentifierName "foo" = Foo
 Line 5 col 26 IdentifierName "Foo" = Foo

@@ -11,7 +11,7 @@ Line 1 col 37 IdentifierName "U" = U
 Line 1 col 41 IdentifierName "T" = T
 Line 6 col 4 IdentifierName "x" = C<number>
 Line 6 col 8 ObjectCreationExpression "new C<number>()" = C<number>
-Line 6 col 12 IdentifierName "C" = new<T>() => C<T>
+Line 6 col 12 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 7 col 0 InvocationExpression "x.bar2(2, "")" = number
 Line 7 col 0 MemberAccessExpression "x.bar2" = <U extends T>(x: number, y: U) => number
 Line 7 col 0 IdentifierName "x" = C<number>

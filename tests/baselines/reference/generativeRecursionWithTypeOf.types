@@ -6,9 +6,9 @@ Line 1 col 15 IdentifierName "x" = number
 Line 2 col 0 IdentifierName "type" = T
 Line 2 col 10 IdentifierName "T" = T
 Line 5 col 7 IdentifierName "M" = M
-Line 6 col 20 IdentifierName "f" = (x: { foo(x: number): void; new<T>(): C<T>; }) => C<{ foo(x: number): void; new<T>(): C<T>; }>
-Line 6 col 22 IdentifierName "x" = { foo(x: number): void; new<T>(): C<T>; }
-Line 6 col 32 IdentifierName "C" = { foo(x: number): void; new<T>(): C<T>; }
-Line 7 col 15 ObjectCreationExpression "new x<typeof x>()" = C<{ foo(x: number): void; new<T>(): C<T>; }>
-Line 7 col 19 IdentifierName "x" = { foo(x: number): void; new<T>(): C<T>; }
-Line 7 col 28 IdentifierName "x" = { foo(x: number): void; new<T>(): C<T>; }
+Line 6 col 20 IdentifierName "f" = (x: { prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }) => C<{ prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }>
+Line 6 col 22 IdentifierName "x" = { prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }
+Line 6 col 32 IdentifierName "C" = { prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }
+Line 7 col 15 ObjectCreationExpression "new x<typeof x>()" = C<{ prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }>
+Line 7 col 19 IdentifierName "x" = { prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }
+Line 7 col 28 IdentifierName "x" = { prototype: C<any>; foo(x: number): void; new<T>(): C<T>; }

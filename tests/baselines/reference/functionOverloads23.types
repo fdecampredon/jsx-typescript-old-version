@@ -1,0 +1,10 @@
+=== tests/cases/compiler/functionOverloads23.ts ===
+Line 0 col 9 IdentifierName "foo" = { (bar: (b: string) => void): any; (bar: (a: number) => void): any; }
+Line 0 col 13 IdentifierName "bar" = (b: string) => void
+Line 0 col 18 IdentifierName "b" = string
+Line 1 col 9 IdentifierName "foo" = { (bar: (b: string) => void): any; (bar: (a: number) => void): any; }
+Line 1 col 13 IdentifierName "bar" = (a: number) => void
+Line 1 col 18 IdentifierName "a" = number
+Line 2 col 9 IdentifierName "foo" = { (bar: (b: string) => void): any; (bar: (a: number) => void): any; }
+Line 2 col 13 IdentifierName "bar" = (a?: any) => void
+Line 2 col 18 IdentifierName "a" = any

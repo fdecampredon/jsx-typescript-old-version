@@ -12,14 +12,14 @@ Line 12 col 20 IdentifierName "foo" = () => void
 Line 13 col 13 IdentifierName "baz" = () => string
 Line 16 col 4 IdentifierName "c" = C
 Line 16 col 8 ObjectCreationExpression "new C(C.x)" = C
-Line 16 col 12 IdentifierName "C" = { boo(): void; x: number; foo(): void; new(x: number): C; }
+Line 16 col 12 IdentifierName "C" = { prototype: C; boo(): void; x: number; foo(): void; new(x: number): C; }
 Line 16 col 14 MemberAccessExpression "C.x" = number
-Line 16 col 14 IdentifierName "C" = { boo(): void; x: number; foo(): void; new(x: number): C; }
+Line 16 col 14 IdentifierName "C" = { prototype: C; boo(): void; x: number; foo(): void; new(x: number): C; }
 Line 16 col 16 IdentifierName "x" = number
 Line 17 col 0 AssignmentExpression "c.foo = C.foo" = () => void
 Line 17 col 0 MemberAccessExpression "c.foo" = () => void
 Line 17 col 0 IdentifierName "c" = C
 Line 17 col 2 IdentifierName "foo" = () => void
 Line 17 col 8 MemberAccessExpression "C.foo" = () => void
-Line 17 col 8 IdentifierName "C" = { boo(): void; x: number; foo(): void; new(x: number): C; }
+Line 17 col 8 IdentifierName "C" = { prototype: C; boo(): void; x: number; foo(): void; new(x: number): C; }
 Line 17 col 10 IdentifierName "foo" = () => void

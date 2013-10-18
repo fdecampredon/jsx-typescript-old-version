@@ -41,7 +41,7 @@ Line 7 col 4 IdentifierName "utils" = Utils
 Line 7 col 11 IdentifierName "Utils" = Utils
 Line 8 col 4 IdentifierName "c" = Collection<string>
 Line 8 col 8 ObjectCreationExpression "new Collection<string>()" = Collection<string>
-Line 8 col 12 IdentifierName "Collection" = new<T>() => Collection<T>
+Line 8 col 12 IdentifierName "Collection" = { prototype: Collection<any>; new<T>(): Collection<T>; }
 Line 9 col 4 IdentifierName "r3" = Collection<Date>
 Line 9 col 9 InvocationExpression "utils.mapReduce(c, (x) => { return 1 }, (y) => { return new Date() })" = Collection<Date>
 Line 9 col 9 MemberAccessExpression "utils.mapReduce" = <T, U, V>(c: Collection<T>, mapper: (x: T) => U, reducer: (y: U) => V) => Collection<V>

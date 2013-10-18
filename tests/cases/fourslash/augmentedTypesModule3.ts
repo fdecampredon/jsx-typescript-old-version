@@ -14,7 +14,7 @@ edit.backspace(1);
 
 debugger;
 goTo.marker('2');
-verify.quickInfoIs("{ C: new() => m2g.C; (): void; }", undefined, "r", "var");
+verify.quickInfoIs("{ C: { prototype: m2g.C; new(): m2g.C; }; (): void; }", undefined, "r", "var");
 
 goTo.marker('3');
 edit.insert('(');

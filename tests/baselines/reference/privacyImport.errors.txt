@@ -27,6 +27,7 @@ privacyImport.ts line 59 col 5: error TS2071: Unable to resolve external module 
 privacyImport.ts line 59 col 5: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 69 col 5: error TS2071: Unable to resolve external module '"m1_M4_private"'.
 privacyImport.ts line 69 col 5: error TS2072: Module cannot be aliased to a non-module type.
+privacyImport.ts line 80 col 5: error TS2181: Exported import declaration 'm1_im2_public' is assigned value with type that has or is using private type 'm1_M2_private.c1'.
 privacyImport.ts line 80 col 5: error TS2185: Exported import declaration 'm1_im2_public' is assigned container that is or is using inaccessible module 'm1_M2_private'.
 privacyImport.ts line 81 col 5: error TS2071: Unable to resolve external module '"m1_M3_public"'.
 privacyImport.ts line 81 col 5: error TS2072: Module cannot be aliased to a non-module type.

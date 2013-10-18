@@ -1,2 +1,2 @@
 typeofClass.ts line 8 col 4: error TS2094: The property 'bar' does not exist on value of type 'K'.
-typeofClass.ts line 10 col 4: error TS2094: The property 'foo' does not exist on value of type '{ bar: string; new(): K; }'.
+typeofClass.ts line 10 col 4: error TS2094: The property 'foo' does not exist on value of type '{ prototype: K; bar: string; new(): K; }'.

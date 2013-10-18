@@ -234,10 +234,6 @@ module Services {
             this.logger = this.host;
         }
 
-        public getResolver(): TypeScript.PullTypeResolver {
-            return null;
-        }
-
         private synchronizeHostData(): void {
             TypeScript.timeFunction(this.logger, "refresh()", () => {
                 this.synchronizeHostDataWorker();
@@ -316,11 +312,6 @@ module Services {
             return this.hostCache.getHostFileName(fileName);
         }
 
-        public getScriptVersion(fileName: string) {
-            this.synchronizeHostData();
-            return this.hostCache.getVersion(fileName);
-        }
-
         // Methods that defer to the compiler to get the result.
 
         public compilationSettings(): TypeScript.ImmutableCompilationSettings {
@@ -388,14 +379,14 @@ module Services {
             return this.compiler.getDeclForAST(ast);
         }
 
-        public emit(fileName: string, resolvePath: (path: string) => string, sourceMapEmitterCallback: TypeScript.SourceMapEmitterCallback = null): TypeScript.EmitOutput {
+        public emit(fileName: string, resolvePath: (path: string) => string): TypeScript.EmitOutput {
             this.synchronizeHostData();
-            return this.compiler.emit(fileName, resolvePath, sourceMapEmitterCallback);
+            return this.compiler.emit(fileName, resolvePath);
         }
 
-        public emitDeclarations(fileName: string, resolvePath: (path: string) => string, sourceMapEmitterCallback: TypeScript.SourceMapEmitterCallback = null): TypeScript.EmitOutput {
+        public emitDeclarations(fileName: string, resolvePath: (path: string) => string): TypeScript.EmitOutput {
             this.synchronizeHostData();
-            return this.compiler.emitDeclarations(fileName, resolvePath, sourceMapEmitterCallback);
+            return this.compiler.emitDeclarations(fileName, resolvePath);
         }
     }
 }

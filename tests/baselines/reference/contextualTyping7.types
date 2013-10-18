@@ -1,0 +1,8 @@
+=== tests/cases/compiler/contextualTyping7.ts ===
+Line 0 col 4 IdentifierName "foo" = { id: number; }[]
+Line 0 col 9 IdentifierName "id" = number
+Line 0 col 25 ArrayLiteralExpression "[<{id:number;}>({})]" = { id: number; }[]
+Line 0 col 26 CastExpression "<{id:number;}>({})" = { id: number; }
+Line 0 col 28 IdentifierName "id" = number
+Line 0 col 40 ParenthesizedExpression "({})" = {}
+Line 0 col 41 ObjectLiteralExpression "{}" = {}

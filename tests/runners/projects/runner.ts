@@ -66,7 +66,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
     private compile(
         writeEmitFile: (path: string, contents: string, writeByteOrderMark: boolean) => void,
         writeDeclareFile: (path: string, contents: string, writeByteOrderMark: boolean) => void,
-        sourceMapEmitterCallback: TypeScript.SourceMapEmitterCallback) {
+        sourceMapEmitterCallback: Harness.SourceMapEmitterCallback) {
 
         var compiler: TypeScript.TypeScriptCompiler;
 
@@ -96,13 +96,16 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
             }
         }
 
-        for (var i = compiler.compile((path: string) => IO.resolvePath(path), sourceMapEmitterCallback); i.moveNext();) {
+        for (var i = compiler.compile(path => IO.resolvePath(path)); i.moveNext();) {
             var result = i.current();
 
             result.diagnostics.forEach(d => this.addDiagnostic(d));
             result.outputFiles.forEach(o => {
                 var write = o.fileType === TypeScript.OutputFileType.Declaration ? writeDeclareFile : writeEmitFile;
                 write(o.name, o.text, o.writeByteOrderMark);
+
+                o.sourceMapEntries.forEach(s => sourceMapEmitterCallback(
+                    s.emittedFile, s.emittedLine, s.emittedColumn, s.sourceFile, s.sourceLine, s.sourceColumn, s.sourceName));
             });
         }
 
@@ -126,7 +129,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         files: string[],
         writeEmitFiles: (path: string, contents: string, writeByteOrderMark: boolean) => void,
         writeDeclareFile: (path: string, contents: string, writeByteOrderMark: boolean) => void,
-        sourceMapEmitterCallback: TypeScript.SourceMapEmitterCallback) {
+        sourceMapEmitterCallback: Harness.SourceMapEmitterCallback) {
 
         TypeScript.CompilerDiagnostics.diagnosticWriter = { Alert: function (s: string) { this.host.printLine(s); } };
 

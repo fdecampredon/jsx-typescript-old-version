@@ -1,12 +1,12 @@
 === tests/cases/compiler/getAccessorWithImpliedReturnTypeAndFunctionClassMerge.ts ===
-Line 0 col 17 IdentifierName "_" = { each<T>(context?: any): void; <T>(value: T[]): _<T>; <T>(value: T): _<T>; new<T>(): _<T>; }
+Line 0 col 17 IdentifierName "_" = { prototype: _<any>; each<T>(context?: any): void; <T>(value: T[]): _<T>; <T>(value: T): _<T>; new<T>(): _<T>; }
 Line 0 col 19 IdentifierName "T" = T
 Line 0 col 22 IdentifierName "value" = T[]
 Line 0 col 29 IdentifierName "Array" = Array<T>
 Line 0 col 35 IdentifierName "T" = T
 Line 0 col 40 IdentifierName "_" = _<T>
 Line 0 col 42 IdentifierName "T" = T
-Line 1 col 17 IdentifierName "_" = { each<T>(context?: any): void; <T>(value: T[]): _<T>; <T>(value: T): _<T>; new<T>(): _<T>; }
+Line 1 col 17 IdentifierName "_" = { prototype: _<any>; each<T>(context?: any): void; <T>(value: T[]): _<T>; <T>(value: T): _<T>; new<T>(): _<T>; }
 Line 1 col 19 IdentifierName "T" = T
 Line 1 col 22 IdentifierName "value" = T
 Line 1 col 29 IdentifierName "T" = T

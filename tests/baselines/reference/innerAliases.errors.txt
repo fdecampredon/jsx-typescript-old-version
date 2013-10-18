@@ -1,2 +1,2 @@
 innerAliases.ts line 19 col 10: error TS2094: The property 'inner' does not exist on value of type 'D'.
-innerAliases.ts line 21 col 11: error TS2094: The property 'inner' does not exist on value of type '{ E: { Class2: new() => D.E.Class2; }; }'.
+innerAliases.ts line 21 col 11: error TS2094: The property 'inner' does not exist on value of type '{ E: { Class2: { prototype: D.E.Class2; new(): D.E.Class2; }; }; }'.

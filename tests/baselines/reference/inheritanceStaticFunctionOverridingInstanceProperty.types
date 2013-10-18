@@ -6,5 +6,5 @@ Line 4 col 16 IdentifierName "a" = a
 Line 5 col 11 IdentifierName "x" = () => string
 Line 6 col 15 MemberAccessExpression "new b().x" = string
 Line 6 col 15 ObjectCreationExpression "new b()" = b
-Line 6 col 19 IdentifierName "b" = { x(): string; new(): b; }
+Line 6 col 19 IdentifierName "b" = { prototype: b; x(): string; new(): b; }
 Line 6 col 23 IdentifierName "x" = string

@@ -10,4 +10,4 @@ Line 9 col 19 IdentifierName "A" = A
 Line 10 col 4 ObjectLiteralExpression "{ data: new B() }" = { data: B; [idx: number]: A; }
 Line 10 col 6 IdentifierName "data" = B
 Line 10 col 12 ObjectCreationExpression "new B()" = B
-Line 10 col 16 IdentifierName "B" = new() => B
+Line 10 col 16 IdentifierName "B" = { prototype: B; new(): B; }

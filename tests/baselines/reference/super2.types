@@ -28,10 +28,10 @@ Line 41 col 15 MemberAccessExpression "super.y" = () => string
 Line 41 col 21 IdentifierName "y" = () => string
 Line 46 col 4 IdentifierName "results1" = SubSub5
 Line 46 col 15 ObjectCreationExpression "new SubSub5()" = SubSub5
-Line 46 col 19 IdentifierName "SubSub5" = new() => SubSub5
+Line 46 col 19 IdentifierName "SubSub5" = { prototype: SubSub5; new(): SubSub5; }
 Line 47 col 4 IdentifierName "results2" = SubSub6
 Line 47 col 15 ObjectCreationExpression "new SubSub6()" = SubSub6
-Line 47 col 19 IdentifierName "SubSub6" = new() => SubSub6
+Line 47 col 19 IdentifierName "SubSub6" = { prototype: SubSub6; new(): SubSub6; }
 Line 48 col 0 AddExpression "results1.x() + results1.y() + results2.y()" = string
 Line 48 col 0 AddExpression "results1.x() + results1.y()" = string
 Line 48 col 0 InvocationExpression "results1.x()" = string

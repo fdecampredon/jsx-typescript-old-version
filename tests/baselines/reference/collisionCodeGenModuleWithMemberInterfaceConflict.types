@@ -5,6 +5,6 @@ Line 3 col 17 IdentifierName "m2" = m1.m2
 Line 3 col 31 IdentifierName "m1" = m1.m1
 Line 6 col 4 IdentifierName "foo" = m1.m2
 Line 6 col 10 ObjectCreationExpression "new m1.m2()" = m1.m2
-Line 6 col 14 MemberAccessExpression "m1.m2" = new() => m1.m2
-Line 6 col 14 IdentifierName "m1" = { m2: new() => m1.m2; }
-Line 6 col 17 IdentifierName "m2" = new() => m1.m2
+Line 6 col 14 MemberAccessExpression "m1.m2" = { prototype: m1.m2; new(): m1.m2; }
+Line 6 col 14 IdentifierName "m1" = { m2: { prototype: m1.m2; new(): m1.m2; }; }
+Line 6 col 17 IdentifierName "m2" = { prototype: m1.m2; new(): m1.m2; }

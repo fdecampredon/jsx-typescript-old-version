@@ -29,9 +29,9 @@ Line 29 col 20 IdentifierName "foo" = () => string
 Line 34 col 7 IdentifierName "m3" = m3
 Line 36 col 4 IdentifierName "b" = A
 Line 36 col 8 ObjectCreationExpression "new m3.A()" = A
-Line 36 col 12 MemberAccessExpression "m3.A" = new() => A
+Line 36 col 12 MemberAccessExpression "m3.A" = { prototype: A; new(): A; }
 Line 36 col 12 IdentifierName "m3" = m3
-Line 36 col 15 IdentifierName "A" = new() => A
+Line 36 col 15 IdentifierName "A" = { prototype: A; new(): A; }
 Line 37 col 0 MemberAccessExpression "b.foo" = string
 Line 37 col 0 IdentifierName "b" = A
 Line 37 col 2 IdentifierName "foo" = string

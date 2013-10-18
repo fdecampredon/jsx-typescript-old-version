@@ -4,6 +4,6 @@ Line 2 col 13 IdentifierName "C" = M.C<T>
 Line 2 col 15 IdentifierName "T" = T
 Line 6 col 4 IdentifierName "x" = M.C<string>
 Line 6 col 8 ObjectCreationExpression "new M.C<string>()" = M.C<string>
-Line 6 col 12 MemberAccessExpression "M.C" = new<T>() => M.C<T>
-Line 6 col 12 IdentifierName "M" = { C: new<T>() => M.C<T>; }
-Line 6 col 14 IdentifierName "C" = new<T>() => M.C<T>
+Line 6 col 12 MemberAccessExpression "M.C" = { prototype: M.C<any>; new<T>(): M.C<T>; }
+Line 6 col 12 IdentifierName "M" = { C: { prototype: M.C<any>; new<T>(): M.C<T>; }; }
+Line 6 col 14 IdentifierName "C" = { prototype: M.C<any>; new<T>(): M.C<T>; }

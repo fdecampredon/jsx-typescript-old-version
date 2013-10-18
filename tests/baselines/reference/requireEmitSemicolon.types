@@ -8,11 +8,11 @@ Line 5 col 36 IdentifierName "P" = P
 Line 5 col 38 IdentifierName "Models" = Models
 Line 5 col 45 IdentifierName "Person" = Models.Person
 Line 6 col 16 ObjectCreationExpression "new P.Models.Person("Rock")" = Models.Person
-Line 6 col 20 MemberAccessExpression "P.Models.Person" = new(name: string) => Models.Person
-Line 6 col 20 MemberAccessExpression "P.Models" = { Person: new(name: string) => Models.Person; }
+Line 6 col 20 MemberAccessExpression "P.Models.Person" = { prototype: Models.Person; new(name: string): Models.Person; }
+Line 6 col 20 MemberAccessExpression "P.Models" = { Person: { prototype: Models.Person; new(name: string): Models.Person; }; }
 Line 6 col 20 IdentifierName "P" = P
-Line 6 col 22 IdentifierName "Models" = { Person: new(name: string) => Models.Person; }
-Line 6 col 29 IdentifierName "Person" = new(name: string) => Models.Person
+Line 6 col 22 IdentifierName "Models" = { Person: { prototype: Models.Person; new(name: string): Models.Person; }; }
+Line 6 col 29 IdentifierName "Person" = { prototype: Models.Person; new(name: string): Models.Person; }
 === tests/cases/compiler/requireEmitSemicolon_0.ts ===
 Line 0 col 14 IdentifierName "Models" = Models
 Line 1 col 14 IdentifierName "Person" = Models.Person

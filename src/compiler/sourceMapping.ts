@@ -30,8 +30,16 @@ module TypeScript {
         public childMappings: SourceMapping[] = [];
     }
 
-    export interface SourceMapEmitterCallback {
-        (emittedFile: string, emittedLine: number, emittedColumn: number, sourceFile: string, sourceLine: number, sourceColumn: number, sourceName: string): void;
+    export class SourceMapEntry {
+        constructor(
+            public emittedFile: string,
+            public emittedLine: number,
+            public emittedColumn: number,
+            public sourceFile: string,
+            public sourceLine: number,
+            public sourceColumn: number,
+            public sourceName: string) {
+        }
     }
 
     export class SourceMapper {
@@ -51,6 +59,8 @@ module TypeScript {
         public currentMappings: SourceMapping[][];
         public currentNameIndex: number[];
 
+        private sourceMapEntries: SourceMapEntry[] = [];
+
         constructor(private jsFile: TextWriter,
                     private sourceMapOut: TextWriter,
                     document: Document,
@@ -62,7 +72,10 @@ module TypeScript {
         }
 
         public getOutputFile(): OutputFile {
-            return this.sourceMapOut.getOutputFile();
+            var result = this.sourceMapOut.getOutputFile();
+            result.sourceMapEntries = this.sourceMapEntries;
+
+            return result;
         }
 
         public setNewSourceFile(document: Document, emitOptions: EmitOptions) {
@@ -123,7 +136,7 @@ module TypeScript {
         
         // Generate source mapping.
         // Creating files can cause exceptions, they will be caught higher up in TypeScriptCompiler.emit
-        public emitSourceMapping(sourceMapEmitterCallback: SourceMapEmitterCallback): void {
+        public emitSourceMapping(): void {
             // Output map file name into the js file
             this.jsFile.WriteLine("//# sourceMappingURL=" + this.sourceMapPath);
 
@@ -161,16 +174,14 @@ module TypeScript {
                         mappingsString = mappingsString + ",";
                     }
 
-                    if (sourceMapEmitterCallback) {
-                        sourceMapEmitterCallback(
-                            this.jsFileName,
-                            mappedPosition.emittedLine + 1,
-                            mappedPosition.emittedColumn + 1,
-                            this.tsFilePaths[sourceIndex],
-                            mappedPosition.sourceLine,
-                            mappedPosition.sourceColumn + 1,
-                            nameIndex >= 0 ? this.names[nameIndex] : undefined);
-                    }
+                    this.sourceMapEntries.push(new SourceMapEntry(
+                        this.jsFileName,
+                        mappedPosition.emittedLine + 1,
+                        mappedPosition.emittedColumn + 1,
+                        this.tsFilePaths[sourceIndex],
+                        mappedPosition.sourceLine,
+                        mappedPosition.sourceColumn + 1,
+                        nameIndex >= 0 ? this.names[nameIndex] : undefined));
 
                     // 1. Relative Column
                     mappingsString = mappingsString + Base64VLQFormat.encode(mappedPosition.emittedColumn - prevEmittedColumn);

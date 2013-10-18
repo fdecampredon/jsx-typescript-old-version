@@ -98,6 +98,7 @@ module TypeScript {
         var position = 0;
         var lineChar = { line: -1, character: -1 };
 
+        var start = new Date().getTime();
         // Look for: 
         // import foo = module("foo")
         while (token.tokenKind !== SyntaxKind.EndOfFileToken) {
@@ -140,6 +141,9 @@ module TypeScript {
             position = scanner.absoluteIndex();
             token = scanner.scan(scannerDiagnostics, /*allowRegularExpression:*/ false);
         }
+
+        var totalTime = new Date().getTime() - start;
+        TypeScript.fileResolutionScanImportsTime += totalTime;
     }
 
     function processTripleSlashDirectives(fileName: string, lineMap: LineMap, firstToken: ISyntaxToken): ITripleSlashDirectiveProperties {

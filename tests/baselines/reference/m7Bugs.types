@@ -23,13 +23,13 @@ Line 19 col 17 IdentifierName "C1" = C1
 Line 21 col 4 IdentifierName "y1" = C1
 Line 21 col 8 IdentifierName "C1" = C1
 Line 21 col 13 ObjectCreationExpression "new C2()" = C2
-Line 21 col 17 IdentifierName "C2" = new() => C2
+Line 21 col 17 IdentifierName "C2" = { prototype: C2; new(): C2; }
 Line 22 col 4 IdentifierName "y2" = C1
 Line 22 col 8 IdentifierName "C1" = C1
 Line 22 col 13 CastExpression "<C1> new C2()" = C1
 Line 22 col 14 IdentifierName "C1" = C1
 Line 22 col 18 ObjectCreationExpression "new C2()" = C2
-Line 22 col 22 IdentifierName "C2" = new() => C2
+Line 22 col 22 IdentifierName "C2" = { prototype: C2; new(): C2; }
 Line 23 col 4 IdentifierName "y3" = C1
 Line 23 col 8 IdentifierName "C1" = C1
 Line 23 col 13 CastExpression "<C1> {}" = C1

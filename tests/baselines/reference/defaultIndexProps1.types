@@ -3,7 +3,7 @@ Line 0 col 6 IdentifierName "Foo" = Foo
 Line 1 col 8 IdentifierName "v" = string
 Line 4 col 4 IdentifierName "f" = Foo
 Line 4 col 8 ObjectCreationExpression "new Foo()" = Foo
-Line 4 col 12 IdentifierName "Foo" = new() => Foo
+Line 4 col 12 IdentifierName "Foo" = { prototype: Foo; new(): Foo; }
 Line 6 col 4 IdentifierName "q" = string
 Line 6 col 8 ElementAccessExpression "f["v"]" = string
 Line 6 col 8 IdentifierName "f" = Foo

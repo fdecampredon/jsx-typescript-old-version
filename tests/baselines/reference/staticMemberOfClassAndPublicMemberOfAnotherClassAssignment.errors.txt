@@ -1,8 +1,8 @@
 staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 12 col 1: error TS2012: Cannot convert 'C' to 'A':
 	Type 'C' is missing property 'name' from type 'A'.
-staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 13 col 1: error TS2012: Cannot convert 'new() => B' to 'A':
-	Type 'new() => B' is missing property 'name' from type 'A'.
+staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 13 col 1: error TS2012: Cannot convert '{ prototype: B; new(): B; }' to 'A':
+	Type '{ prototype: B; new(): B; }' is missing property 'name' from type 'A'.
 staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 16 col 5: error TS2012: Cannot convert 'C' to 'B':
 	Type 'C' is missing property 'name' from type 'B'.
-staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 17 col 1: error TS2012: Cannot convert 'new() => B' to 'B':
-	Type 'new() => B' is missing property 'name' from type 'B'.
+staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.ts line 17 col 1: error TS2012: Cannot convert '{ prototype: B; new(): B; }' to 'B':
+	Type '{ prototype: B; new(): B; }' is missing property 'name' from type 'B'.

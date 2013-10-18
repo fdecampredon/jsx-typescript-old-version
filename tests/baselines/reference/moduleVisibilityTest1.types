@@ -54,7 +54,7 @@ Line 55 col 16 IdentifierName "x" = number
 Line 56 col 12 IdentifierName "meb" = M.E
 Line 56 col 18 MemberAccessExpression "M.E.B" = M.E
 Line 56 col 18 MemberAccessExpression "M.E" = { A: M.E; B: M.E; C: M.E; [x: number]: string; }
-Line 56 col 18 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: new() => M.C; c: number; meb: M.E; }
+Line 56 col 18 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: { prototype: M.C; new(): M.C; }; c: number; meb: M.E; }
 Line 56 col 20 IdentifierName "E" = { A: M.E; B: M.E; C: M.E; [x: number]: string; }
 Line 56 col 22 IdentifierName "B" = M.E
 Line 59 col 4 IdentifierName "cprime" = M.I
@@ -65,22 +65,22 @@ Line 59 col 20 IdentifierName "M" = M
 Line 59 col 22 IdentifierName "I" = M.I
 Line 61 col 4 IdentifierName "c" = M.C
 Line 61 col 8 ObjectCreationExpression "new M.C()" = M.C
-Line 61 col 12 MemberAccessExpression "M.C" = new() => M.C
-Line 61 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: new() => M.C; c: number; meb: M.E; }
-Line 61 col 14 IdentifierName "C" = new() => M.C
+Line 61 col 12 MemberAccessExpression "M.C" = { prototype: M.C; new(): M.C; }
+Line 61 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: { prototype: M.C; new(): M.C; }; c: number; meb: M.E; }
+Line 61 col 14 IdentifierName "C" = { prototype: M.C; new(): M.C; }
 Line 62 col 4 IdentifierName "z" = number
 Line 62 col 8 MemberAccessExpression "M.x" = number
-Line 62 col 8 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: new() => M.C; c: number; meb: M.E; }
+Line 62 col 8 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: { prototype: M.C; new(): M.C; }; c: number; meb: M.E; }
 Line 62 col 10 IdentifierName "x" = number
 Line 63 col 4 IdentifierName "alpha" = M.E
 Line 63 col 12 MemberAccessExpression "M.E.A" = M.E
 Line 63 col 12 MemberAccessExpression "M.E" = { A: M.E; B: M.E; C: M.E; [x: number]: string; }
-Line 63 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: new() => M.C; c: number; meb: M.E; }
+Line 63 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: { prototype: M.C; new(): M.C; }; c: number; meb: M.E; }
 Line 63 col 14 IdentifierName "E" = { A: M.E; B: M.E; C: M.E; [x: number]: string; }
 Line 63 col 16 IdentifierName "A" = M.E
 Line 64 col 4 IdentifierName "omega" = any
 Line 64 col 12 MemberAccessExpression "M.exported_var" = any
-Line 64 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: new() => M.C; c: number; meb: M.E; }
+Line 64 col 12 IdentifierName "M" = { InnerMod: { someExportedInnerFunc(): number; }; E: { A: M.E; B: M.E; C: M.E; [x: number]: string; }; x: number; exported_var: any; C: { prototype: M.C; new(): M.C; }; c: number; meb: M.E; }
 Line 64 col 14 IdentifierName "exported_var" = any
 Line 65 col 0 InvocationExpression "c.someMethodThatCallsAnOuterMethod()" = string
 Line 65 col 0 MemberAccessExpression "c.someMethodThatCallsAnOuterMethod" = () => string

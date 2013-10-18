@@ -5,14 +5,14 @@ Line 1 col 12 IdentifierName "objects" = { [objectId: string]: T; }
 Line 1 col 22 CastExpression "<{ [objectId: string]: T; }>{}" = { [objectId: string]: T; }
 Line 1 col 26 IdentifierName "objectId" = string
 Line 1 col 45 IdentifierName "T" = T
-Line 1 col 50 ObjectLiteralExpression "{}" = {}
+Line 1 col 50 ObjectLiteralExpression "{}" = { [objectId: string]: T; }
 Line 2 col 0 IdentifierName "array" = () => { [objectId: string]: T; }
 Line 3 col 15 MemberAccessExpression "this.objects" = { [objectId: string]: T; }
 Line 3 col 15 ThisKeyword "this" = LazyArray<T>
 Line 3 col 20 IdentifierName "objects" = { [objectId: string]: T; }
 Line 6 col 4 IdentifierName "lazyArray" = LazyArray<string>
 Line 6 col 16 ObjectCreationExpression "new LazyArray<string>()" = LazyArray<string>
-Line 6 col 20 IdentifierName "LazyArray" = new<T>() => LazyArray<T>
+Line 6 col 20 IdentifierName "LazyArray" = { prototype: LazyArray<any>; new<T>(): LazyArray<T>; }
 Line 7 col 4 IdentifierName "value" = string
 Line 7 col 20 ElementAccessExpression "lazyArray.array()["test"]" = string
 Line 7 col 20 InvocationExpression "lazyArray.array()" = { [objectId: string]: string; }

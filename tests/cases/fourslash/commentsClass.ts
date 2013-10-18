@@ -71,7 +71,7 @@ goTo.marker('3');
 verify.currentSignatureHelpDocCommentIs("");
 
 goTo.marker('4');
-verify.quickInfoIs("new() => c2", "", "i2_c", "var");
+verify.quickInfoIs("{ prototype: c2; new(): c2; }", "", "i2_c", "var");
 
 goTo.marker('5');
 verify.quickInfoIs(undefined, "This is class c2 without constuctor", "c2", "class");
@@ -86,7 +86,7 @@ goTo.marker('8');
 verify.currentSignatureHelpDocCommentIs("Constructor comment");
 
 goTo.marker('9');
-verify.quickInfoIs("new() => c3", "", "i3_c", "var");
+verify.quickInfoIs("{ prototype: c3; new(): c3; }", "", "i3_c", "var");
 
 goTo.marker('10');
 verify.quickInfoIs(undefined, "Constructor comment", "c3", "class");
@@ -101,7 +101,7 @@ goTo.marker('13');
 verify.currentSignatureHelpDocCommentIs("Constructor comment");
 
 goTo.marker('14');
-verify.quickInfoIs("new() => c4", "", "i4_c", "var");
+verify.quickInfoIs("{ prototype: c4; new(): c4; }", "", "i4_c", "var");
 
 goTo.marker('15');
 verify.quickInfoIs(undefined, "Class comment\nConstructor comment", "c4", "class");
@@ -116,7 +116,7 @@ goTo.marker('18');
 verify.currentSignatureHelpDocCommentIs("");
 
 goTo.marker('19');
-verify.quickInfoIs("{ s1: number; new(): c5; }", "", "i5_c", "var");
+verify.quickInfoIs("{ prototype: c5; s1: number; new(): c5; }", "", "i5_c", "var");
 
 goTo.marker('20');
 verify.quickInfoIs(undefined, "Class with statics", "c5", "class");
@@ -131,7 +131,7 @@ goTo.marker('23');
 verify.currentSignatureHelpDocCommentIs("constructor comment");
 
 goTo.marker('24');
-verify.quickInfoIs("{ s1: number; new(): c6; }", "", "i6_c", "var");
+verify.quickInfoIs("{ prototype: c6; s1: number; new(): c6; }", "", "i6_c", "var");
 
 goTo.marker('25');
 verify.quickInfoIs(undefined, "class with statics and constructor\nconstructor comment", "c6", "class");
@@ -139,19 +139,19 @@ verify.quickInfoIs(undefined, "class with statics and constructor\nconstructor c
 goTo.marker('26');
 verify.completionListContains("c2", undefined, "This is class c2 without constuctor",  "c2", "class");
 verify.completionListContains("i2", "c2", "", "i2", "var");
-verify.completionListContains("i2_c", "new() => c2", "", "i2_c", "var");
+verify.completionListContains("i2_c", "{ prototype: c2; new(): c2; }", "", "i2_c", "var");
 verify.completionListContains("c3", undefined, "", "c3", "class");
 verify.completionListContains("i3", "c3", "", "i3", "var");
-verify.completionListContains("i3_c", "new() => c3", "", "i3_c", "var");
+verify.completionListContains("i3_c", "{ prototype: c3; new(): c3; }", "", "i3_c", "var");
 verify.completionListContains("c4", undefined, "Class comment", "c4", "class");
 verify.completionListContains("i4", "c4", "", "i4", "var");
-verify.completionListContains("i4_c", "new() => c4", "", "i4_c", "var");
+verify.completionListContains("i4_c", "{ prototype: c4; new(): c4; }", "", "i4_c", "var");
 verify.completionListContains("c5", undefined, "Class with statics", "c5", "class");
 verify.completionListContains("i5", "c5", "","i5", "var");
-verify.completionListContains("i5_c", "{ s1: number; new(): c5; }", "", "i5_c", "var");
+verify.completionListContains("i5_c", "{ prototype: c5; s1: number; new(): c5; }", "", "i5_c", "var");
 verify.completionListContains("c6", undefined, "class with statics and constructor", "c6", "class");
 verify.completionListContains("i6", "c6", "", "i6", "var");
-verify.completionListContains("i6_c", "{ s1: number; new(): c6; }", "", "i6_c", "var");
+verify.completionListContains("i6_c", "{ prototype: c6; s1: number; new(): c6; }", "", "i6_c", "var");
 
 goTo.marker('27');
 verify.currentSignatureHelpDocCommentIs("constructor for a");

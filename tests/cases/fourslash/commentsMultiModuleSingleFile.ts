@@ -29,7 +29,7 @@ goTo.marker('3');
 verify.quickInfoIs("multiM", "this is multi declare module\nthi is multi module 2", "multiM", "module");
 
 goTo.marker('4');
-verify.quickInfoIs("{ b: new() => multiM.b; c: new() => multiM.c; }");
+verify.quickInfoIs("{ b: { prototype: multiM.b; new(): multiM.b; }; c: { prototype: multiM.c; new(): multiM.c; }; }");
 
 goTo.marker('5');
-verify.quickInfoIs("{ b: new() => multiM.b; c: new() => multiM.c; }");
+verify.quickInfoIs("{ b: { prototype: multiM.b; new(): multiM.b; }; c: { prototype: multiM.c; new(): multiM.c; }; }");

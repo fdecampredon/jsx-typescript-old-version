@@ -1,0 +1,13 @@
+=== tests/cases/compiler/contextualTyping19.ts ===
+Line 0 col 4 IdentifierName "foo" = { id: number; }[]
+Line 0 col 9 IdentifierName "id" = number
+Line 0 col 25 ArrayLiteralExpression "[{id:1}]" = { id: number; }[]
+Line 0 col 26 ObjectLiteralExpression "{id:1}" = { id: number; }
+Line 0 col 27 IdentifierName "id" = number
+Line 0 col 35 AssignmentExpression "foo = [{id:1}, {id:2}]" = { id: number; }[]
+Line 0 col 35 IdentifierName "foo" = { id: number; }[]
+Line 0 col 41 ArrayLiteralExpression "[{id:1}, {id:2}]" = { id: number; }[]
+Line 0 col 42 ObjectLiteralExpression "{id:1}" = { id: number; }
+Line 0 col 43 IdentifierName "id" = number
+Line 0 col 50 ObjectLiteralExpression "{id:2}" = { id: number; }
+Line 0 col 51 IdentifierName "id" = number

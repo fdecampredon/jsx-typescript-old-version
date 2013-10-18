@@ -5,7 +5,7 @@ Line 1 col 8 IdentifierName "x" = T
 Line 1 col 11 IdentifierName "T" = T
 Line 4 col 4 IdentifierName "v1" = C<string>
 Line 4 col 9 ObjectCreationExpression "new C<string>()" = C<string>
-Line 4 col 13 IdentifierName "C" = new<T>() => C<T>
+Line 4 col 13 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 6 col 4 IdentifierName "y" = string
 Line 6 col 8 MemberAccessExpression "v1.x" = string
 Line 6 col 8 IdentifierName "v1" = C<string>

@@ -64,7 +64,7 @@ Line 40 col 0 IdentifierName "valueOf" = () => void
 Line 40 col 13 ParenthesizedArrowFunctionExpression "() => { }" = () => void
 Line 41 col 0 IdentifierName "data" = B
 Line 41 col 10 ObjectCreationExpression "new B()" = B
-Line 41 col 14 IdentifierName "B" = new() => B
+Line 41 col 14 IdentifierName "B" = { prototype: B; new(): B; }
 Line 44 col 4 IdentifierName "r3" = void
 Line 44 col 15 InvocationExpression "a.valueOf()" = void
 Line 44 col 15 MemberAccessExpression "a.valueOf" = () => void

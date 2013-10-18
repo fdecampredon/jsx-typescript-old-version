@@ -1,0 +1,5 @@
+=== tests/cases/compiler/contextualTyping1.ts ===
+Line 0 col 4 IdentifierName "foo" = { id: number; }
+Line 0 col 10 IdentifierName "id" = number
+Line 0 col 24 ObjectLiteralExpression "{id:4}" = { id: number; }
+Line 0 col 25 IdentifierName "id" = number

@@ -1,11 +1,11 @@
 === tests/cases/compiler/missingImportAfterModuleImport_1.ts ===
-Line 1 col 7 IdentifierName "SubModule" = { StaticVar: number; new(): "SubModule".SubModule; }
+Line 1 col 7 IdentifierName "SubModule" = { prototype: "SubModule".SubModule; StaticVar: number; new(): "SubModule".SubModule; }
 Line 2 col 6 IdentifierName "MainModule" = MainModule
 Line 4 col 11 IdentifierName "SubModule" = "SubModule".SubModule
 Line 4 col 22 IdentifierName "SubModule" = SubModule
-Line 7 col 9 IdentifierName "MainModule" = new() => MainModule
+Line 7 col 9 IdentifierName "MainModule" = { prototype: MainModule; new(): MainModule; }
 === tests/cases/compiler/missingImportAfterModuleImport_0.ts ===
 Line 2 col 10 IdentifierName "SubModule" = "SubModule".SubModule
 Line 3 col 22 IdentifierName "StaticVar" = number
 Line 4 col 15 IdentifierName "InstanceVar" = number
-Line 7 col 13 IdentifierName "SubModule" = { StaticVar: number; new(): "SubModule".SubModule; }
+Line 7 col 13 IdentifierName "SubModule" = { prototype: "SubModule".SubModule; StaticVar: number; new(): "SubModule".SubModule; }

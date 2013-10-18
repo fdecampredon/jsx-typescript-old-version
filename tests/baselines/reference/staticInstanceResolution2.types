@@ -2,10 +2,10 @@
 Line 0 col 6 IdentifierName "A" = A
 Line 1 col 0 InvocationExpression "A.hasOwnProperty('foo')" = boolean
 Line 1 col 0 MemberAccessExpression "A.hasOwnProperty" = (v: string) => boolean
-Line 1 col 0 IdentifierName "A" = new() => A
+Line 1 col 0 IdentifierName "A" = { prototype: A; new(): A; }
 Line 1 col 2 IdentifierName "hasOwnProperty" = (v: string) => boolean
 Line 3 col 6 IdentifierName "B" = B
 Line 6 col 0 InvocationExpression "B.hasOwnProperty('foo')" = boolean
 Line 6 col 0 MemberAccessExpression "B.hasOwnProperty" = (v: string) => boolean
-Line 6 col 0 IdentifierName "B" = new() => B
+Line 6 col 0 IdentifierName "B" = { prototype: B; new(): B; }
 Line 6 col 2 IdentifierName "hasOwnProperty" = (v: string) => boolean

@@ -130,11 +130,11 @@ verify.memberListContains("i", "m1.m2.c", "i", "m1.m2.i", "var");
 
 goTo.marker('9');
 verify.completionListContains("m2", "m2", "", "m2", "module");
-verify.quickInfoIs("{ m3: { c: new() => m2.m3.c; }; }", "", "m2", "module");
+verify.quickInfoIs("{ m3: { c: { prototype: m2.m3.c; new(): m2.m3.c; }; }; }", "", "m2", "module");
 
 goTo.marker('10');
 verify.memberListContains("m3", "m2.m3");
-verify.quickInfoIs("{ c: new() => m2.m3.c; }");
+verify.quickInfoIs("{ c: { prototype: m2.m3.c; new(): m2.m3.c; }; }");
 
 goTo.marker('11');
 verify.quickInfoIs("(): m2.m3.c", "", "m2.m3.c", "constructor");
@@ -142,15 +142,15 @@ verify.memberListContains("c", undefined, "Exported class comment", "m2.m3.c", "
 
 goTo.marker('12');
 verify.completionListContains("m3", "m3", "", "m3", "module");
-verify.quickInfoIs("{ m4: { m5: { c: new() => m3.m4.m5.c; }; }; }", "", "m3", "module");
+verify.quickInfoIs("{ m4: { m5: { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }; }; }", "", "m3", "module");
 
 goTo.marker('13');
 verify.memberListContains("m4", "m3.m4", "", "m3.m4", "module");
-verify.quickInfoIs("{ m5: { c: new() => m3.m4.m5.c; }; }", "", "m3.m4", "module");
+verify.quickInfoIs("{ m5: { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }; }", "", "m3.m4", "module");
 
 goTo.marker('14');
 verify.memberListContains("m5", "m3.m4.m5");
-verify.quickInfoIs("{ c: new() => m3.m4.m5.c; }");
+verify.quickInfoIs("{ c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }");
 
 goTo.marker('15');
 verify.memberListContains("c", undefined, "Exported class comment", "m3.m4.m5.c", "class");
@@ -158,19 +158,19 @@ verify.quickInfoIs("(): m3.m4.m5.c", "", "m3.m4.m5.c", "constructor");
 
 goTo.marker('16');
 verify.completionListContains("m4", "m4", "", "m4", "module");
-verify.quickInfoIs("{ m5: { m6: { m7: { c: new() => m4.m5.m6.m7.c; }; }; }; }");
+verify.quickInfoIs("{ m5: { m6: { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }; }; }");
 
 goTo.marker('17');
 verify.memberListContains("m5", "m4.m5", "", "m4.m5");
-verify.quickInfoIs("{ m6: { m7: { c: new() => m4.m5.m6.m7.c; }; }; }");
+verify.quickInfoIs("{ m6: { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }; }");
 
 goTo.marker('18');
 verify.memberListContains("m6", "m4.m5.m6");
-verify.quickInfoIs("{ m7: { c: new() => m4.m5.m6.m7.c; }; }");
+verify.quickInfoIs("{ m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }");
 
 goTo.marker('19');
 verify.memberListContains("m7", "m4.m5.m6.m7");
-verify.quickInfoIs("{ c: new() => m4.m5.m6.m7.c; }");
+verify.quickInfoIs("{ c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }");
 
 goTo.marker('20');
 verify.memberListContains("c", undefined, "Exported class comment", "m4.m5.m6.m7.c", "class");
@@ -178,19 +178,19 @@ verify.quickInfoIs("(): m4.m5.m6.m7.c", "", "m4.m5.m6.m7.c", "constructor");
 
 goTo.marker('21');
 verify.completionListContains("m5", "m5");
-verify.quickInfoIs("{ m6: { m7: { m8: { c: new() => m5.m6.m7.m8.c; }; }; }; }");
+verify.quickInfoIs("{ m6: { m7: { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }; }; }");
 
 goTo.marker('22');
 verify.memberListContains("m6", "m5.m6");
-verify.quickInfoIs("{ m7: { m8: { c: new() => m5.m6.m7.m8.c; }; }; }");
+verify.quickInfoIs("{ m7: { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }; }");
 
 goTo.marker('23');
 verify.memberListContains("m7", "m5.m6.m7");
-verify.quickInfoIs("{ m8: { c: new() => m5.m6.m7.m8.c; }; }");
+verify.quickInfoIs("{ m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }");
 
 goTo.marker('24');
 verify.memberListContains("m8", "m5.m6.m7.m8");
-verify.quickInfoIs("{ c: new() => m5.m6.m7.m8.c; }");
+verify.quickInfoIs("{ c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }");
 
 goTo.marker('25');
 verify.memberListContains("c", undefined, "Exported class comment", "m5.m6.m7.m8.c", "class");
@@ -198,15 +198,15 @@ verify.quickInfoIs("(): m5.m6.m7.m8.c", "", "m5.m6.m7.m8.c", "constructor");
 
 goTo.marker('26');
 verify.completionListContains("m6", "m6");
-verify.quickInfoIs("{ m7: { m8: { c: new() => m6.m7.m8.c; }; }; }");
+verify.quickInfoIs("{ m7: { m8: { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }; }; }");
 
 goTo.marker('27');
 verify.memberListContains("m7", "m6.m7");
-verify.quickInfoIs("{ m8: { c: new() => m6.m7.m8.c; }; }");
+verify.quickInfoIs("{ m8: { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }; }");
 
 goTo.marker('28');
 verify.memberListContains("m8", "m6.m7.m8");
-verify.quickInfoIs("{ c: new() => m6.m7.m8.c; }");
+verify.quickInfoIs("{ c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }");
 
 goTo.marker('29');
 verify.memberListContains("c", undefined, "Exported class comment", "m6.m7.m8.c", "class");
@@ -214,15 +214,15 @@ verify.quickInfoIs("(): m6.m7.m8.c", "", "m6.m7.m8.c", "constructor");
 
 goTo.marker('30');
 verify.completionListContains("m7", "m7");
-verify.quickInfoIs("{ m8: { m9: { c: new() => m7.m8.m9.c; }; }; }");
+verify.quickInfoIs("{ m8: { m9: { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; }; }; }");
 
 goTo.marker('31');
 verify.memberListContains("m8", "m7.m8");
-verify.quickInfoIs("{ m9: { c: new() => m7.m8.m9.c; }; }");
+verify.quickInfoIs("{ m9: { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; }; }");
 
 goTo.marker('32');
 verify.memberListContains("m9", "m7.m8.m9");
-verify.quickInfoIs("{ c: new() => m7.m8.m9.c; }");
+verify.quickInfoIs("{ c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; }");
 
 goTo.marker('33');
 verify.memberListContains("c", undefined, "Exported class comment", "m7.m8.m9.c", "class");
@@ -236,10 +236,10 @@ goTo.marker('35');
 verify.quickInfoIs("number", "", 'myComplexVal', "var");
 
 goTo.marker('36');
-verify.quickInfoIs("{ m1: { c: new() => complexM.m1.c; }; m2: { c: new() => complexM.m2.c; }; }");
+verify.quickInfoIs("{ m1: { c: { prototype: complexM.m1.c; new(): complexM.m1.c; }; }; m2: { c: { prototype: complexM.m2.c; new(): complexM.m2.c; }; }; }");
 
 goTo.marker('37');
-verify.quickInfoIs("{ c: new() => complexM.m2.c; }");
+verify.quickInfoIs("{ c: { prototype: complexM.m2.c; new(): complexM.m2.c; }; }");
 
 goTo.marker('38');
 verify.quickInfoIs("(): complexM.m2.c", "", 'complexM.m2.c', "constructor");

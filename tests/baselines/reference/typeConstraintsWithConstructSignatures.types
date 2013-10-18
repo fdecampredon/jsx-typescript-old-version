@@ -1,0 +1,20 @@
+=== tests/cases/compiler/typeConstraintsWithConstructSignatures.ts ===
+Line 0 col 10 IdentifierName "Constructable" = Constructable
+Line 4 col 6 IdentifierName "C" = C<T>
+Line 4 col 8 IdentifierName "T" = T
+Line 4 col 18 IdentifierName "Constructable" = Constructable
+Line 5 col 23 IdentifierName "data" = T
+Line 5 col 29 IdentifierName "T" = T
+Line 5 col 39 IdentifierName "data2" = Constructable
+Line 5 col 46 IdentifierName "Constructable" = Constructable
+Line 6 col 0 IdentifierName "create" = () => void
+Line 7 col 12 IdentifierName "x" = any
+Line 7 col 16 ObjectCreationExpression "new this.data()" = any
+Line 7 col 20 MemberAccessExpression "this.data" = T
+Line 7 col 20 ThisKeyword "this" = C<T>
+Line 7 col 25 IdentifierName "data" = T
+Line 8 col 12 IdentifierName "x2" = any
+Line 8 col 17 ObjectCreationExpression "new this.data2()" = any
+Line 8 col 21 MemberAccessExpression "this.data2" = Constructable
+Line 8 col 21 ThisKeyword "this" = C<T>
+Line 8 col 26 IdentifierName "data2" = Constructable

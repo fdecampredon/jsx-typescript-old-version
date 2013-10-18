@@ -7,8 +7,8 @@ Line 6 col 7 IdentifierName "A" = A
 Line 6 col 9 IdentifierName "B" = A.B
 Line 6 col 11 IdentifierName "C" = A.B.C
 Line 6 col 15 ObjectCreationExpression "new A.B.C()" = A.B.C
-Line 6 col 19 MemberAccessExpression "A.B.C" = new() => A.B.C
-Line 6 col 19 MemberAccessExpression "A.B" = { C: new() => A.B.C; }
-Line 6 col 19 IdentifierName "A" = { B: { C: new() => A.B.C; }; }
-Line 6 col 21 IdentifierName "B" = { C: new() => A.B.C; }
-Line 6 col 23 IdentifierName "C" = new() => A.B.C
+Line 6 col 19 MemberAccessExpression "A.B.C" = { prototype: A.B.C; new(): A.B.C; }
+Line 6 col 19 MemberAccessExpression "A.B" = { C: { prototype: A.B.C; new(): A.B.C; }; }
+Line 6 col 19 IdentifierName "A" = { B: { C: { prototype: A.B.C; new(): A.B.C; }; }; }
+Line 6 col 21 IdentifierName "B" = { C: { prototype: A.B.C; new(): A.B.C; }; }
+Line 6 col 23 IdentifierName "C" = { prototype: A.B.C; new(): A.B.C; }

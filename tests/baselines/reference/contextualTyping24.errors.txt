@@ -1,0 +1,3 @@
+contextualTyping24.ts line 1 col 55: error TS2012: Cannot convert '(a: string) => number' to '(a: { (): number; (i: number): number; }) => number':
+	Call signatures of types '(a: string) => number' and '(a: { (): number; (i: number): number; }) => number' are incompatible:
+		Type '{ (): number; (i: number): number; }' requires a call signature, but type 'String' lacks one.

@@ -5,7 +5,7 @@ Line 2 col 11 IdentifierName "bar" = string
 Line 4 col 0 AssignmentExpression "Foo.prototype.bar = undefined" = undefined
 Line 4 col 0 MemberAccessExpression "Foo.prototype.bar" = number
 Line 4 col 0 MemberAccessExpression "Foo.prototype" = Foo
-Line 4 col 0 IdentifierName "Foo" = { bar: string; new(): Foo; }
+Line 4 col 0 IdentifierName "Foo" = { prototype: Foo; bar: string; new(): Foo; }
 Line 4 col 4 IdentifierName "prototype" = Foo
 Line 4 col 14 IdentifierName "bar" = number
 Line 4 col 20 IdentifierName "undefined" = undefined

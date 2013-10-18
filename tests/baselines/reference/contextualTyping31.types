@@ -1,0 +1,6 @@
+=== tests/cases/compiler/contextualTyping31.ts ===
+Line 0 col 9 IdentifierName "foo" = (param: number[]) => void
+Line 0 col 13 IdentifierName "param" = number[]
+Line 0 col 32 InvocationExpression "foo([1])" = void
+Line 0 col 32 IdentifierName "foo" = (param: number[]) => void
+Line 0 col 36 ArrayLiteralExpression "[1]" = number[]

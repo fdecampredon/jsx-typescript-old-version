@@ -17,22 +17,32 @@ module TypeScript {
         private documents: Document[] = [];
         private fileNameToDocument = new BlockIntrinsics<Document>();
 
-        public anyTypeSymbol: PullTypeSymbol = null;
-        public booleanTypeSymbol: PullTypeSymbol = null;
-        public numberTypeSymbol: PullTypeSymbol = null;
-        public stringTypeSymbol: PullTypeSymbol = null;
-        public nullTypeSymbol: PullTypeSymbol = null;
-        public undefinedTypeSymbol: PullTypeSymbol = null;
-        public voidTypeSymbol: PullTypeSymbol = null;
+        public anyTypeDecl: PullDecl = null;
+        public booleanTypeDecl: PullDecl = null;
+        public numberTypeDecl: PullDecl = null;
+        public stringTypeDecl: PullDecl = null;
+        public nullTypeDecl: PullDecl = null;
+        public undefinedTypeDecl: PullDecl = null;
+        public voidTypeDecl: PullDecl = null;
+        public undefinedValueDecl: PullDecl = null;
+
+        public anyTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public booleanTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public numberTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public stringTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public nullTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public undefinedTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public voidTypeSymbol: PullPrimitiveTypeSymbol = null;
+        public undefinedValueSymbol: PullSymbol = null;
         public emptyTypeSymbol: PullTypeSymbol = null;
 
         // <-- Data to clear when we get invalidated
-        private astSymbolMap: DataMap<PullSymbol> = null;
-        private astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-        private astCallResolutionDataMap: Collections.HashTable<number, PullAdditionalCallResolutionData> = null;
+        private astSymbolMap: PullSymbol[] = [];
+        private astAliasSymbolMap: PullTypeAliasSymbol[] = [];
+        private astCallResolutionDataMap: PullAdditionalCallResolutionData[] = [];
 
-        private declSymbolMap = new DataMap<PullSymbol>();
-        private declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
+        private declSymbolMap: PullSymbol[] = [];
+        private declSignatureSymbolMap: PullSignatureSymbol[] = [];
 
         private declCache: BlockIntrinsics<PullDecl[]> = null;
         private symbolCache: BlockIntrinsics<PullSymbol> = null;
@@ -45,6 +55,22 @@ module TypeScript {
         private _fileNames: string[] = null;
 
         constructor(private compiler: TypeScriptCompiler, private logger: ILogger) {
+            var span = new TextSpan(0, 0);
+            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
+            this.documents[0] = new Document(this.compiler, this, /*fileName:*/ "", /*referencedFiles:*/[], /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null, globalDecl);
+
+            this.anyTypeDecl = new NormalPullDecl("any", "any", PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+            this.booleanTypeDecl = new NormalPullDecl("boolean", "boolean", PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+            this.numberTypeDecl = new NormalPullDecl("number", "number", PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+            this.stringTypeDecl = new NormalPullDecl("string", "string", PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+            this.voidTypeDecl = new NormalPullDecl("void", "void", PullElementKind.Primitive, PullElementFlags.None, globalDecl, span);
+            
+            // add the global primitive values for "null" and "undefined"
+            // Because you cannot reference them by name, they're not parented by any actual decl.
+            this.nullTypeDecl = new RootPullDecl("null", "", PullElementKind.Primitive, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
+            this.undefinedTypeDecl = new RootPullDecl("undefined", "", PullElementKind.Primitive, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
+            this.undefinedValueDecl = new NormalPullDecl("undefined", "undefined", PullElementKind.Variable, PullElementFlags.Ambient, globalDecl, span);
+
             this.invalidate();
         }
 
@@ -67,59 +93,49 @@ module TypeScript {
             return this._fileNames;
         }
 
-        private addPrimitiveType(name: string, globalDecl: PullDecl) {
-            var span = new TextSpan(0, 0);
+        // Must pass in a new decl, or an old symbol that has a decl available for ownership transfer
+        private bindPrimitiveSymbol(decl: PullDecl, newSymbol: PullSymbol): PullSymbol {
+            newSymbol.addDeclaration(decl);
+            decl.setSymbol(newSymbol);
+            newSymbol.setResolved();
 
-            var decl = globalDecl
-                ? <PullDecl>new NormalPullDecl(name, name, PullElementKind.Primitive, PullElementFlags.None, globalDecl, span)
-                : new RootPullDecl(name, "", PullElementKind.Primitive, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
-            var symbol = new PullPrimitiveTypeSymbol(name);
-
-            symbol.addDeclaration(decl);
-            decl.setSymbol(symbol);
-
-            symbol.setResolved();
-
-            return symbol;
+            return newSymbol;
         }
 
-        private addPrimitiveValue(name: string, type: PullTypeSymbol, globalDecl: PullDecl) {
-            var span = new TextSpan(0, 0);
-            var decl = new NormalPullDecl(name, name, PullElementKind.Variable, PullElementFlags.Ambient, globalDecl, span);
-            var symbol = new PullSymbol(name, PullElementKind.Variable);
-
-            symbol.addDeclaration(decl);
-            decl.setSymbol(symbol);
-            symbol.type = type;
-            symbol.setResolved();
+        // Creates a new type symbol to be bound to this decl. Must be called during
+        // invalidation after every edit.
+        private addPrimitiveTypeSymbol(decl: PullDecl): PullPrimitiveTypeSymbol {
+            var newSymbol = new PullPrimitiveTypeSymbol(decl.name);
+            return <PullPrimitiveTypeSymbol>this.bindPrimitiveSymbol(decl, newSymbol);
         }
 
-        private getGlobalDecl() {
-            var span = new TextSpan(0, 0);
-            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, span, this, /*isExternalModule:*/ false);
+        // Creates a new value symbol to be bound to this decl, and has the specified type.
+        // Must be called during invalidation after every edit.
+        private addPrimitiveValueSymbol(decl: PullDecl, type: PullTypeSymbol): PullSymbol {
+            var newSymbol = new PullSymbol(decl.name, PullElementKind.Variable);
+            newSymbol.type = type;
+            return this.bindPrimitiveSymbol(decl, newSymbol);
+        }
 
+        private resetGlobalSymbols(): void {
             // add primitive types
-            this.anyTypeSymbol = this.addPrimitiveType("any", globalDecl);
-            this.booleanTypeSymbol = this.addPrimitiveType("boolean", globalDecl);
-            this.numberTypeSymbol = this.addPrimitiveType("number", globalDecl);
-            this.stringTypeSymbol = this.addPrimitiveType("string", globalDecl);
-            this.voidTypeSymbol = this.addPrimitiveType("void", globalDecl);
-
-            // add the global primitive values for "null" and "undefined"
-            // Because you cannot reference them by name, they're not parented by any actual decl.
-            this.nullTypeSymbol = this.addPrimitiveType("null", null);
-            this.undefinedTypeSymbol = this.addPrimitiveType("undefined", null);
-            this.addPrimitiveValue("undefined", this.undefinedTypeSymbol, globalDecl);
+            this.anyTypeSymbol = this.addPrimitiveTypeSymbol(this.anyTypeDecl);
+            this.booleanTypeSymbol = this.addPrimitiveTypeSymbol(this.booleanTypeDecl);
+            this.numberTypeSymbol = this.addPrimitiveTypeSymbol(this.numberTypeDecl);
+            this.stringTypeSymbol = this.addPrimitiveTypeSymbol(this.stringTypeDecl);
+            this.voidTypeSymbol = this.addPrimitiveTypeSymbol(this.voidTypeDecl);
+            this.nullTypeSymbol = this.addPrimitiveTypeSymbol(this.nullTypeDecl);
+            this.undefinedTypeSymbol = this.addPrimitiveTypeSymbol(this.undefinedTypeDecl);
+            this.undefinedValueSymbol = this.addPrimitiveValueSymbol(this.undefinedValueDecl, this.undefinedTypeSymbol);
 
             // other decls not reachable from the globalDecl
+            var span = new TextSpan(0, 0);
             var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, null, span, this);
             var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType);
             emptyTypeDecl.setSymbol(emptyTypeSymbol);
             emptyTypeSymbol.addDeclaration(emptyTypeDecl);
             emptyTypeSymbol.setResolved();
             this.emptyTypeSymbol = emptyTypeSymbol;
-
-            return globalDecl;
         }
 
         public addDocument(document: Document): void {
@@ -425,12 +441,12 @@ module TypeScript {
             // operations will proceed.
             PullTypeResolver.globalTypeCheckPhase++;
 
-            this.logger.log("Invalidating SemanticInfoChain...");
+            // this.logger.log("Invalidating SemanticInfoChain...");
             var cleanStart = new Date().getTime();
 
-            this.astSymbolMap = new DataMap<PullSymbol>();
-            this.astAliasSymbolMap = new DataMap<PullTypeAliasSymbol>();
-            this.astCallResolutionDataMap = Collections.createHashTable<number, PullAdditionalCallResolutionData>(Collections.DefaultHashTableCapacity, k => k);
+            this.astSymbolMap.length = 0;
+            this.astAliasSymbolMap.length = 0;
+            this.astCallResolutionDataMap.length = 0;
 
             this.declCache = new BlockIntrinsics();
             this.symbolCache = new BlockIntrinsics();
@@ -440,24 +456,32 @@ module TypeScript {
             this._topLevelDecls = null;
             this._fileNames = null;
 
-            this.declSymbolMap = new DataMap<PullSymbol>();
-            this.declSignatureSymbolMap = new DataMap<PullSignatureSymbol>();
+            this.declSymbolMap.length = 0;
+            this.declSignatureSymbolMap.length = 0;
 
             if (oldSettings && newSettings) {
                 // Depending on which options changed, our cached syntactic data may not be valid
                 // anymore.
+                // Note: It is important to start at 1 in this loop because documents[0] is the
+                // global decl with the primitive decls in it. Since documents[0] is the only
+                // document that does not represent an editable file, there is no reason to ever
+                // invalidate its decls. Doing this would break the invariant that all decls of
+                // unedited files should persist across edits.
                 if (this.settingsChangeAffectsSyntax(oldSettings, newSettings)) {
-                    for (var i = 0, n = this.documents.length; i < n; i++) {
+                    for (var i = 1, n = this.documents.length; i < n; i++) {
                         this.documents[i].invalidate();
                     }
                 }
             }
 
-            var globalDocument = new Document(this.compiler, this, /*fileName:*/ "", /*referencedFiles:*/[], /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null, this.getGlobalDecl());
-            this.documents[0] = globalDocument;
+            // Reset global counters
+            TypeScript.pullSymbolID = 0;
+            TypeScript.globalTyvarID = 0;
+
+            this.resetGlobalSymbols();
 
             var cleanEnd = new Date().getTime();
-            this.logger.log("   time to invalidate: " + (cleanEnd - cleanStart));
+            // this.logger.log("   time to invalidate: " + (cleanEnd - cleanStart));
         }
 
         private settingsChangeAffectsSyntax(before: ImmutableCompilationSettings, after: ImmutableCompilationSettings): boolean {
@@ -475,45 +499,45 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap.link(ast.astIDString, symbol);
+            this.astSymbolMap[ast.astID] = symbol;
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {
-            return this.astSymbolMap.read(ast.astIDString);
+            return this.astSymbolMap[ast.astID];
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
-            this.astAliasSymbolMap.link(ast.astIDString, symbol);
+            this.astAliasSymbolMap[ast.astID] = symbol;
         }
 
         public getAliasSymbolForAST(ast: IAST): PullTypeAliasSymbol {
-            return this.astAliasSymbolMap.read(ast.astIDString);
+            return this.astAliasSymbolMap[ast.astID];
         }
 
         public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            return <PullAdditionalCallResolutionData>this.astCallResolutionDataMap.get(ast.astID);
+            return this.astCallResolutionDataMap[ast.astID];
         }
 
         public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
             if (callResolutionData) {
-                this.astCallResolutionDataMap.set(ast.astID, callResolutionData);
+                this.astCallResolutionDataMap[ast.astID] = callResolutionData;
             }
         }
 
         public setSymbolForDecl(decl: PullDecl, symbol: PullSymbol): void {
-            this.declSymbolMap.link(decl.declIDString, symbol);
+            this.declSymbolMap[decl.declID] = symbol;
         }
 
         public getSymbolForDecl(decl: PullDecl): PullSymbol {
-            return this.declSymbolMap.read(decl.declIDString);
+            return this.declSymbolMap[decl.declID];
         }
 
         public setSignatureSymbolForDecl(decl: PullDecl, signatureSymbol: PullSignatureSymbol): void {
-            this.declSignatureSymbolMap.link(decl.declIDString, signatureSymbol);
+            this.declSignatureSymbolMap[decl.declID] = signatureSymbol;
         }
 
         public getSignatureSymbolForDecl(decl: PullDecl): PullSignatureSymbol {
-            return this.declSignatureSymbolMap.read(decl.declIDString);
+            return this.declSignatureSymbolMap[decl.declID];
         }
 
         public addDiagnostic(diagnostic: Diagnostic): void {
@@ -578,6 +602,10 @@ module TypeScript {
             }
 
             return null;
+        }
+
+        public getEnclosingDecl(ast: AST): PullDecl {
+            return this.getDocument(ast.fileName()).getEnclosingDecl(ast);
         }
 
         public setDeclForAST(ast: AST, decl: PullDecl): void {

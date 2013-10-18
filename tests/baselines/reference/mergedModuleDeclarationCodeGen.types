@@ -4,7 +4,7 @@ Line 1 col 18 IdentifierName "Y" = X.Y
 Line 2 col 14 IdentifierName "A" = X.Y.A
 Line 3 col 24 IdentifierName "Y" = any
 Line 4 col 0 ObjectCreationExpression "new B()" = X.Y.B
-Line 4 col 20 IdentifierName "B" = new() => X.Y.B
+Line 4 col 20 IdentifierName "B" = { prototype: X.Y.B; new(): X.Y.B; }
 Line 9 col 14 IdentifierName "X" = X
 Line 10 col 18 IdentifierName "Y" = X.Y
 Line 11 col 21 IdentifierName "B" = X.Y.B

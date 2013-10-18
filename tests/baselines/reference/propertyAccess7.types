@@ -1,0 +1,6 @@
+=== tests/cases/compiler/propertyAccess7.ts ===
+Line 0 col 4 IdentifierName "foo" = string
+Line 1 col 0 InvocationExpression "foo.toUpperCase()" = string
+Line 1 col 0 MemberAccessExpression "foo.toUpperCase" = () => string
+Line 1 col 0 IdentifierName "foo" = string
+Line 1 col 4 IdentifierName "toUpperCase" = () => string

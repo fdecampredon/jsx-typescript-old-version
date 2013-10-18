@@ -1,0 +1,4 @@
+assignmentCompat1.ts line 4 col 1: error TS2012: Cannot convert '{ [index: string]: any; }' to '{ one: number; }':
+	Type '{ [index: string]: any; }' is missing property 'one' from type '{ one: number; }'.
+assignmentCompat1.ts line 5 col 1: error TS2012: Cannot convert '{ one: number; }' to '{ [index: string]: any; }':
+	Index signatures of types '{ one: number; }' and '{ [index: string]: any; }' are incompatible.

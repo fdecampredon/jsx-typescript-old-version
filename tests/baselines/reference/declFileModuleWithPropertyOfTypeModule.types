@@ -1,5 +1,5 @@
 === tests/cases/compiler/declFileModuleWithPropertyOfTypeModule.ts ===
 Line 1 col 7 IdentifierName "m" = m
 Line 2 col 17 IdentifierName "c" = m.c
-Line 5 col 15 IdentifierName "a" = { c: new() => m.c; a: typeof m; }
-Line 5 col 19 IdentifierName "m" = { c: new() => m.c; a: typeof m; }
+Line 5 col 15 IdentifierName "a" = { c: { prototype: m.c; new(): m.c; }; a: typeof m; }
+Line 5 col 19 IdentifierName "m" = { c: { prototype: m.c; new(): m.c; }; a: typeof m; }

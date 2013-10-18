@@ -347,10 +347,6 @@
         "category": "Error",
         "code": 1086
     },
-    "Index member declaration can only have the 'static' modifier.": {
-        "category": "Error",
-        "code": 1088
-    },
     "'{0}' modifier cannot appear on a constructor declaration.": {
         "category": "Error",
         "code": 1089
@@ -711,10 +707,6 @@
         "category": "Error",
         "code": 2090
     },
-    "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.": {
-        "category": "Error",
-        "code": 2091
-    },
     "Type of array literal cannot be determined. Best common type could not be found for array elements.": {
         "category": "Error",
         "code": 2092
@@ -807,7 +799,7 @@
         "category": "Error",
         "code": 2117
     },
-    "The left-hand side of an 'in' expression must be of types 'string' or 'any'.": {
+    "The left-hand side of an 'in' expression must be of types 'any', 'string' or 'number'.": {
         "category": "Error",
         "code": 2118
     },
@@ -951,10 +943,6 @@
         "category": "Error",
         "code": 2155
     },
-    "Static member cannot be accessed off an instance variable.": {
-        "category": "Error",
-        "code": 2156
-    },
     "Instance member cannot be accessed off a class.": {
         "category": "Error",
         "code": 2157
@@ -1067,11 +1055,11 @@
         "category": "Error",
         "code": 2185
     },
-    "Type reference '{0}' in extends clause doesn't reference constructor function for '{1}'.": {
+    "Type reference '{0}' in extends clause does not reference constructor function for '{1}'.": {
         "category": "Error",
         "code": 2186
     },
-    "Internal module reference '{0}' in import declaration doesn't reference module instance for '{1}'.": {
+    "Internal module reference '{0}' in import declaration does not reference module instance for '{1}'.": {
         "category": "Error",
         "code": 2187
     },
@@ -1226,6 +1214,14 @@
     "Duplicate identifier 'arguments'. Compiler uses 'arguments' to initialize rest parameters.": {
         "category": "Error",
         "code": 2225
+    },
+    "Type of conditional '{0}' must be identical to '{1}' or '{2}'.": {
+        "category": "Error",
+        "code": 2226
+    },
+    "Type of conditional '{0}' must be identical to '{1}', '{2}' or '{3}'.": {
+        "category": "Error",
+        "code": 2227
     },
     "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",

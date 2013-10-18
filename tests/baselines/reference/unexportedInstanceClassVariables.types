@@ -6,4 +6,4 @@ Line 6 col 7 IdentifierName "M" = M
 Line 7 col 7 IdentifierName "A" = M.A
 Line 9 col 6 IdentifierName "a" = M.A
 Line 9 col 10 ObjectCreationExpression "new A()" = M.A
-Line 9 col 14 IdentifierName "A" = new() => M.A
+Line 9 col 14 IdentifierName "A" = { prototype: M.A; new(): M.A; }

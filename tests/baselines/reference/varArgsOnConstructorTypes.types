@@ -34,4 +34,4 @@ Line 22 col 0 InvocationExpression "reg.register(B)" = any
 Line 22 col 0 MemberAccessExpression "reg.register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
 Line 22 col 0 IdentifierName "reg" = I1
 Line 22 col 4 IdentifierName "register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
-Line 22 col 13 IdentifierName "B" = new(element: any, url: string) => B
+Line 22 col 13 IdentifierName "B" = { prototype: B; new(element: any, url: string): B; }

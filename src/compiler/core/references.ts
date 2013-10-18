@@ -3,6 +3,8 @@
 ///<reference path='..\resources\references.ts' />
 
 ///<reference path='arrayUtilities.ts' />
+///<reference path='bitVector.ts' />
+///<reference path='bitMatrix.ts' />
 ///<reference path='constants.ts' />
 ///<reference path='debug.ts' />
 ///<reference path='diagnosticCategory.ts' />

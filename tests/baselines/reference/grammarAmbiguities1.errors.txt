@@ -1,8 +1,8 @@
 grammarAmbiguities1.ts line 8 col 1: error TS2081: Supplied parameters do not match any signature of call target.
 grammarAmbiguities1.ts line 8 col 1: error TS2087: Could not select overload for 'call' expression.
-grammarAmbiguities1.ts line 8 col 3: error TS2009: Operator '<' cannot be applied to types '<T, U>(x: any) => any' and 'new() => A'.
-grammarAmbiguities1.ts line 8 col 10: error TS2009: Operator '>' cannot be applied to types 'new() => B' and 'number'.
+grammarAmbiguities1.ts line 8 col 3: error TS2009: Operator '<' cannot be applied to types '<T, U>(x: any) => any' and '{ prototype: A; new(): A; }'.
+grammarAmbiguities1.ts line 8 col 10: error TS2009: Operator '>' cannot be applied to types '{ prototype: B; new(): B; }' and 'number'.
 grammarAmbiguities1.ts line 9 col 1: error TS2081: Supplied parameters do not match any signature of call target.
 grammarAmbiguities1.ts line 9 col 1: error TS2087: Could not select overload for 'call' expression.
-grammarAmbiguities1.ts line 9 col 3: error TS2009: Operator '<' cannot be applied to types '<T, U>(x: any) => any' and 'new() => A'.
-grammarAmbiguities1.ts line 9 col 10: error TS2009: Operator '>' cannot be applied to types 'new() => B' and 'number'.
+grammarAmbiguities1.ts line 9 col 3: error TS2009: Operator '<' cannot be applied to types '<T, U>(x: any) => any' and '{ prototype: A; new(): A; }'.
+grammarAmbiguities1.ts line 9 col 10: error TS2009: Operator '>' cannot be applied to types '{ prototype: B; new(): B; }' and 'number'.

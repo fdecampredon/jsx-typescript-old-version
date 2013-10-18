@@ -56,7 +56,6 @@ module TypeScript {
     export interface IAST extends IASTSpan {
         nodeType(): NodeType;
         astID: number;
-        astIDString: string;
         getLength(): number;
     }
 
@@ -70,7 +69,6 @@ module TypeScript {
 
         public typeCheckPhase = -1;
 
-        public astIDString: string = astID.toString();
         public astID: number = astID++;
 
         private _preComments: Comment[] = null;
@@ -272,7 +270,7 @@ module TypeScript {
 
         public isExternalImportDeclaration() {
             if (this.moduleReference.nodeType() == NodeType.Name) {
-                var text = (<Identifier>this.moduleReference).actualText;
+                var text = (<Identifier>this.moduleReference).text();
                 return isQuoted(text);
             }
 
@@ -293,7 +291,7 @@ module TypeScript {
             }
 
             if (aliasAST.nodeType() === NodeType.Name) {
-                return (<Identifier>aliasAST).actualText;
+                return (<Identifier>aliasAST).text();
             } else {
                 var dotExpr = <QualifiedName>aliasAST;
                 return this.getAliasName(dotExpr.left) + "." + this.getAliasName(dotExpr.right);
@@ -324,7 +322,7 @@ module TypeScript {
         }
 
         public emit(emitter: Emitter) {
-            emitter.setExportAssignmentIdentifier(this.identifier.actualText);
+            emitter.setExportAssignmentIdentifier(this.identifier.text());
         }
     }
 
@@ -445,8 +443,6 @@ module TypeScript {
     }
 
     export class Identifier extends AST {
-        private _text: string;
-
         // 'actualText' is the text that the user has entered for the identifier. the text might 
         // include any Unicode escape sequences (e.g.: \u0041 for 'A'). 'text', however, contains 
         // the resolved value of any escape sequences in the actual text; so in the previous 
@@ -457,17 +453,20 @@ module TypeScript {
         // For purposes of finding a symbol, use text, as this will allow you to match all 
         // variations of the variable text. For full-fidelity translation of the user input, such
         // as emitting, use the actualText field.
-        constructor(public actualText: string, text: string, public isNumber: boolean = false) {
+        constructor(private _text: string, private _valueText: string, public isStringOrNumericLiteral: boolean = false) {
             super();
-            this._text = text;
         }
 
         public text(): string {
-            if (!this._text) {
-                this._text = Syntax.massageEscapes(this.actualText);
+            return this._text;
+        }
+
+        public valueText(): string {
+            if (!this._valueText) {
+                this._valueText = Syntax.massageEscapes(this.text());
             }
 
-            return this._text;
+            return this._valueText;
         }
 
         public nodeType(): NodeType {
@@ -482,7 +481,7 @@ module TypeScript {
 
         public structuralEquals(ast: Identifier, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   this.actualText === ast.actualText &&
+                   this._text === ast._text &&
                    this.isMissing() === ast.isMissing();
         }
     }
@@ -1114,15 +1113,14 @@ module TypeScript {
     }
 
     export class NumericLiteral extends AST {
-        private _text: string;
-
         constructor(public value: number,
-                    text: string) {
+                    private _text: string,
+                    private _valueText: string) {
             super();
-            this._text = text;
         }
 
         public text(): string { return this._text; }
+        public valueText(): string { return this._valueText; }
 
         public nodeType(): NodeType {
             return NodeType.NumericLiteral;
@@ -1159,14 +1157,12 @@ module TypeScript {
     }
 
     export class StringLiteral extends AST {
-        private _text: string;
-
-        constructor(public actualText: string, text: string) {
+        constructor(private _text: string, private _valueText: string) {
             super();
-            this._text = text;
         }
 
         public text(): string { return this._text; }
+        public valueText(): string { return this._valueText; }
 
         public nodeType(): NodeType {
             return NodeType.StringLiteral;
@@ -1178,7 +1174,7 @@ module TypeScript {
 
         public structuralEquals(ast: StringLiteral, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   this.actualText === ast.actualText;
+                   this._text === ast._text;
         }
     }
 
@@ -1350,7 +1346,7 @@ module TypeScript {
         }
 
         public getNameText() {
-            return this.name ? this.name.actualText : this.hint;
+            return this.name ? this.name.text() : this.hint;
         }
     }
 
@@ -1471,7 +1467,7 @@ module TypeScript {
 
         public getNameText() {
             if (this.name) {
-                return this.name.actualText;
+                return this.name.text();
             }
             else {
                 return this.hint;

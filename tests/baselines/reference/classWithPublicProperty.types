@@ -12,7 +12,7 @@ Line 8 col 18 IdentifierName "g" = () => string
 Line 8 col 22 ParenthesizedArrowFunctionExpression "() => ''" = () => string
 Line 11 col 4 IdentifierName "c" = C
 Line 11 col 8 ObjectCreationExpression "new C()" = C
-Line 11 col 12 IdentifierName "C" = { e: any; f(): string; g: () => string; new(): C; }
+Line 11 col 12 IdentifierName "C" = { prototype: C; e: any; f(): string; g: () => string; new(): C; }
 Line 12 col 4 IdentifierName "r1" = string
 Line 12 col 17 MemberAccessExpression "c.x" = any
 Line 12 col 17 IdentifierName "c" = C
@@ -37,15 +37,15 @@ Line 16 col 17 IdentifierName "c" = C
 Line 16 col 19 IdentifierName "d" = () => string
 Line 17 col 4 IdentifierName "r6" = string
 Line 17 col 17 MemberAccessExpression "C.e" = any
-Line 17 col 17 IdentifierName "C" = { e: any; f(): string; g: () => string; new(): C; }
+Line 17 col 17 IdentifierName "C" = { prototype: C; e: any; f(): string; g: () => string; new(): C; }
 Line 17 col 19 IdentifierName "e" = any
 Line 18 col 4 IdentifierName "r7" = string
 Line 18 col 17 InvocationExpression "C.f()" = string
 Line 18 col 17 MemberAccessExpression "C.f" = () => string
-Line 18 col 17 IdentifierName "C" = { e: any; f(): string; g: () => string; new(): C; }
+Line 18 col 17 IdentifierName "C" = { prototype: C; e: any; f(): string; g: () => string; new(): C; }
 Line 18 col 19 IdentifierName "f" = () => string
 Line 19 col 4 IdentifierName "r8" = string
 Line 19 col 17 InvocationExpression "C.g()" = string
 Line 19 col 17 MemberAccessExpression "C.g" = () => string
-Line 19 col 17 IdentifierName "C" = { e: any; f(): string; g: () => string; new(): C; }
+Line 19 col 17 IdentifierName "C" = { prototype: C; e: any; f(): string; g: () => string; new(): C; }
 Line 19 col 19 IdentifierName "g" = () => string

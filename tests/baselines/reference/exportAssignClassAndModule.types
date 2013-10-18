@@ -1,5 +1,5 @@
 === tests/cases/compiler/exportAssignClassAndModule_1.ts ===
-Line 1 col 7 IdentifierName "Foo" = new() => Foo
+Line 1 col 7 IdentifierName "Foo" = { prototype: Foo; new(): Foo; }
 Line 3 col 4 IdentifierName "z" = Foo.Bar
 Line 3 col 7 IdentifierName "Foo" = Foo
 Line 3 col 11 IdentifierName "Bar" = Foo.Bar
@@ -15,4 +15,4 @@ Line 1 col 7 IdentifierName "Foo" = Foo
 Line 1 col 11 IdentifierName "Bar" = Foo.Bar
 Line 3 col 7 IdentifierName "Foo" = Foo
 Line 4 col 21 IdentifierName "Bar" = Foo.Bar
-Line 7 col 9 IdentifierName "Foo" = new() => Foo
+Line 7 col 9 IdentifierName "Foo" = { prototype: Foo; new(): Foo; }

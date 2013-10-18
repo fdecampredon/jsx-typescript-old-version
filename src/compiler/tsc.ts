@@ -72,6 +72,11 @@ module TypeScript {
                 if (this.compilationSettings.gatherDiagnostics()) {
                     this.logger.log("");
                     this.logger.log("File resolution time:                     " + TypeScript.fileResolutionTime);
+                    this.logger.log("           file read:                     " + TypeScript.fileResolutionIOTime);
+                    this.logger.log("        scan imports:                     " + TypeScript.fileResolutionScanImportsTime);
+                    this.logger.log("       import search:                     " + TypeScript.fileResolutionImportFileSearchTime);
+                    this.logger.log("        get lib.d.ts:                     " + TypeScript.fileResolutionGetDefaultLibraryTime);
+                    
                     this.logger.log("SyntaxTree parse time:                    " + TypeScript.syntaxTreeParseTime);
                     this.logger.log("Syntax Diagnostics time:                  " + TypeScript.syntaxDiagnosticsTime);
                     this.logger.log("AST translation time:                     " + TypeScript.astTranslationTime);
@@ -96,9 +101,11 @@ module TypeScript {
                     this.logger.log("  GetImportDeclarationSymbolTime:         " + TypeScript.declarationEmitGetImportDeclarationSymbolTime);
 
                     this.logger.log("Emit write file time:                     " + TypeScript.emitWriteFileTime);
-                    this.logger.log("Emit directory exists time:               " + TypeScript.emitDirectoryExistsTime);
-                    this.logger.log("Emit file exists time:                    " + TypeScript.emitFileExistsTime);
-                    this.logger.log("Emit resolve path time:                   " + TypeScript.emitResolvePathTime);
+
+                    this.logger.log("Compiler resolve path time:               " + TypeScript.compilerResolvePathTime);
+                    this.logger.log("Compiler directory name time:             " + TypeScript.compilerDirectoryNameTime);
+                    this.logger.log("Compiler directory exists time:           " + TypeScript.compilerDirectoryExistsTime);
+                    this.logger.log("Compiler file exists time:                " + TypeScript.compilerFileExistsTime);
 
                     this.logger.log("IO host resolve path time:                " + TypeScript.ioHostResolvePathTime);
                     this.logger.log("IO host directory name time:              " + TypeScript.ioHostDirectoryNameTime);
@@ -146,7 +153,7 @@ module TypeScript {
                             referencedFiles.push(references[j].path);
                         }
 
-                        inputFile = this.ioHost.resolvePath(inputFile);
+                        inputFile = this.resolvePath(inputFile);
                     }
 
                     resolvedFiles.push({
@@ -157,6 +164,7 @@ module TypeScript {
                 }
             }
 
+            var defaultLibStart = new Date().getTime();
             if (includeDefaultLibrary) {
                 var libraryResolvedFile: IResolvedFile = {
                     path: this.getDefaultLibraryFilePath(),
@@ -167,6 +175,7 @@ module TypeScript {
                 // Prepend the library to the resolved list
                 resolvedFiles = [libraryResolvedFile].concat(resolvedFiles);
             }
+            TypeScript.fileResolutionGetDefaultLibraryTime += new Date().getTime() - defaultLibStart;
 
             this.resolvedFiles = resolvedFiles;
 
@@ -475,9 +484,9 @@ module TypeScript {
                 filePath = filePath + "-" + territory;
             }
 
-            filePath = this.ioHost.resolvePath(IOUtils.combine(filePath, "diagnosticMessages.generated.json"));
+            filePath = this.resolvePath(IOUtils.combine(filePath, "diagnosticMessages.generated.json"));
 
-            if (!this.ioHost.fileExists(filePath)) {
+            if (!this.fileExists(filePath)) {
                 return false;
             }
 
@@ -613,7 +622,7 @@ module TypeScript {
         private getDefaultLibraryFilePath(): string {
             var compilerFilePath = this.ioHost.getExecutingFilePath();
             var containingDirectoryPath = this.ioHost.dirName(compilerFilePath);
-            var libraryFilePath = this.ioHost.resolvePath(IOUtils.combine(containingDirectoryPath, "lib.d.ts"));
+            var libraryFilePath = this.resolvePath(IOUtils.combine(containingDirectoryPath, "lib.d.ts"));
 
             return libraryFilePath;
         }
@@ -622,8 +631,10 @@ module TypeScript {
         getScriptSnapshot(fileName: string): IScriptSnapshot {
             return this.getSourceFile(fileName).scriptSnapshot;
         }
-        
+
         resolveRelativePath(path: string, directory: string): string {
+            var start = new Date().getTime();
+
             var unQuotedPath = stripStartAndEndQuotes(path);
             var normalizedPath: string;
 
@@ -642,15 +653,26 @@ module TypeScript {
             return normalizedPath;
         }
 
+        private fileExistsCache = new BlockIntrinsics<boolean>();
+
         fileExists(path: string): boolean {
-            var start = new Date().getTime();
-            var result = this.ioHost.fileExists(path);
-            TypeScript.emitFileExistsTime += new Date().getTime() - start;
-            return result;
+            var exists = this.fileExistsCache[path];
+            if (exists === undefined) {
+                var start = new Date().getTime();
+                exists = this.ioHost.fileExists(path);
+                this.fileExistsCache[path] = exists;
+                TypeScript.compilerFileExistsTime += new Date().getTime() - start;
+            }
+
+            return exists;
         }
 
         getParentDirectory(path: string): string {
-            return this.ioHost.dirName(path);
+            var start = new Date().getTime();
+            var result = this.ioHost.dirName(path);
+            TypeScript.compilerDirectoryNameTime += new Date().getTime() - start;
+
+            return result;
         }
 
         private addDiagnostic(diagnostic: Diagnostic) {
@@ -692,15 +714,24 @@ module TypeScript {
         directoryExists(path: string): boolean {
             var start = new Date().getTime();
             var result = this.ioHost.directoryExists(path);
-            TypeScript.emitDirectoryExistsTime += new Date().getTime() - start;
+            TypeScript.compilerDirectoryExistsTime += new Date().getTime() - start;
             return result;
         }
 
+        // For performance reasons we cache the results of resolvePath.  This avoids costly lookup
+        // on the disk once we've already resolved a path once.
+        private resolvePathCache = new BlockIntrinsics<string>();
+
         resolvePath(path: string): string {
-            var start = new Date().getTime();
-            var result = this.ioHost.resolvePath(path);
-            TypeScript.emitResolvePathTime += new Date().getTime() - start;
-            return result;
+            var cachedValue = this.resolvePathCache[path];
+            if (!cachedValue) {
+                var start = new Date().getTime();
+                cachedValue = this.ioHost.resolvePath(path);
+                this.resolvePathCache[path] = cachedValue;
+                TypeScript.compilerResolvePathTime += new Date().getTime() - start;
+            }
+
+            return cachedValue;
         }
     }
 }

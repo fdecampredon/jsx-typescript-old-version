@@ -2,7 +2,7 @@ super1.ts line 14 col 7: error TS2141: Class 'SubSub1' cannot extend class 'Sub1
 	Types of property 'bar' of types 'SubSub1' and 'Sub1' are incompatible:
 		Call signatures of types '() => any' and '() => string' are incompatible.
 super1.ts line 16 col 22: error TS2094: The property 'super' does not exist on value of type 'Sub1'.
-super1.ts line 29 col 22: error TS2156: Static member cannot be accessed off an instance variable.
+super1.ts line 29 col 22: error TS2094: The property 'prototype' does not exist on value of type 'Base2'.
 super1.ts line 42 col 22: error TS2094: The property 'bar' does not exist on value of type 'Base3'.
 super1.ts line 54 col 34: error TS2018: Exported class 'SubSub4' extends private class 'Sub4'.
 super1.ts line 62 col 20: error TS2103: 'super' cannot be referenced in non-derived classes.

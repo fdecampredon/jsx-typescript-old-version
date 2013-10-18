@@ -15,22 +15,30 @@
 
 ///<reference path='references.ts' />
 
+if (Error) (<any>Error).stackTraceLimit = 1000;
+
 module TypeScript {
 
     declare var IO: any;
 
     export var fileResolutionTime = 0;
+    export var fileResolutionIOTime = 0;
+    export var fileResolutionScanImportsTime = 0;
+    export var fileResolutionImportFileSearchTime = 0;
+    export var fileResolutionGetDefaultLibraryTime = 0;
     export var sourceCharactersCompiled = 0;
     export var syntaxTreeParseTime = 0;
     export var syntaxDiagnosticsTime = 0;
     export var astTranslationTime = 0;
     export var typeCheckTime = 0;
 
+    export var compilerResolvePathTime = 0;
+    export var compilerDirectoryNameTime = 0;
+    export var compilerDirectoryExistsTime = 0;
+    export var compilerFileExistsTime = 0;
+
     export var emitTime = 0;
     export var emitWriteFileTime = 0;
-    export var emitDirectoryExistsTime = 0;
-    export var emitFileExistsTime = 0;
-    export var emitResolvePathTime = 0;
 
     export var declarationEmitTime = 0;
     export var declarationEmitIsExternallyVisibleTime = 0;
@@ -47,15 +55,6 @@ module TypeScript {
     export var ioHostDirectoryNameTime = 0;
     export var ioHostCreateDirectoryStructureTime = 0;
     export var ioHostWriteFileTime = 0;
-
-    export interface PullTypeInfoAtPositionInfo {
-        symbol: PullSymbol;
-        ast: IAST;
-        enclosingScopeSymbol: PullSymbol;
-        candidateSignature: PullSignatureSymbol;
-        callSignatures: PullSignatureSymbol[];
-        isConstructorCall: boolean;
-    }
 
     export interface PullSymbolInfo {
         symbol: PullSymbol;
@@ -93,7 +92,8 @@ module TypeScript {
         constructor(public name: string,
             public writeByteOrderMark: boolean,
             public text: string,
-            public fileType: OutputFileType) {
+            public fileType: OutputFileType,
+            public sourceMapEntries: SourceMapEntry[] = []) {
         }
     }
 
@@ -290,11 +290,11 @@ module TypeScript {
         }
 
         // Will not throw exceptions.
-        public emitAllDeclarations(resolvePath: (path: string) => string, sourceMapEmitterCallback: SourceMapEmitterCallback = null): EmitOutput {
+        public emitAllDeclarations(resolvePath: (path: string) => string): EmitOutput {
             var start = new Date().getTime();
             var emitOutput = new EmitOutput();
 
-            var emitOptions = new EmitOptions(this, resolvePath, sourceMapEmitterCallback);
+            var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
                 emitOutput.diagnostics.push(emitOptions.diagnostic());
                 return emitOutput;
@@ -322,11 +322,11 @@ module TypeScript {
         }
 
         // Will not throw exceptions.
-        public emitDeclarations(fileName: string, resolvePath: (path: string) => string, sourceMapEmitterCallback: SourceMapEmitterCallback = null): EmitOutput {
+        public emitDeclarations(fileName: string, resolvePath: (path: string) => string): EmitOutput {
             fileName = TypeScript.switchToForwardSlashes(fileName);
             var emitOutput = new EmitOutput();
 
-            var emitOptions = new EmitOptions(this, resolvePath, sourceMapEmitterCallback);
+            var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
                 emitOutput.diagnostics.push(emitOptions.diagnostic());
                 return emitOutput;
@@ -421,11 +421,11 @@ module TypeScript {
         }
 
         // Will not throw exceptions.
-        public emitAll(resolvePath: (path: string) => string, sourceMapEmitterCallback: SourceMapEmitterCallback = null): EmitOutput {
+        public emitAll(resolvePath: (path: string) => string): EmitOutput {
             var start = new Date().getTime();
             var emitOutput = new EmitOutput();
 
-            var emitOptions = new EmitOptions(this, resolvePath, sourceMapEmitterCallback);
+            var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
                 emitOutput.diagnostics.push(emitOptions.diagnostic());
                 return emitOutput;
@@ -455,11 +455,11 @@ module TypeScript {
 
         // Emit single file if outputMany is specified, else emit all
         // Will not throw exceptions.
-        public emit(fileName: string, resolvePath: (path: string) => string, sourceMapEmitterCallback: SourceMapEmitterCallback = null): EmitOutput {
+        public emit(fileName: string, resolvePath: (path: string) => string): EmitOutput {
             fileName = TypeScript.switchToForwardSlashes(fileName);
             var emitOutput = new EmitOutput();
 
-            var emitOptions = new EmitOptions(this, resolvePath, sourceMapEmitterCallback);
+            var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
                 emitOutput.diagnostics.push(emitOptions.diagnostic());
                 return emitOutput;
@@ -486,8 +486,8 @@ module TypeScript {
         // logic and doesn't perform further analysis once diagnostics are produced.  For example,
         // in batch compilation nothing is done if there are any syntactic diagnostics.  Clients
         // can override this if they still want to procede in those cases.
-        public compile(resolvePath: (path: string) => string, sourceMapEmitterCallback: SourceMapEmitterCallback = null, continueOnDiagnostics = false): Iterator<CompileResult> {
-            return new CompilerIterator(this, resolvePath, sourceMapEmitterCallback, continueOnDiagnostics);
+        public compile(resolvePath: (path: string) => string, continueOnDiagnostics = false): Iterator<CompileResult> {
+            return new CompilerIterator(this, resolvePath, continueOnDiagnostics);
         }
 
         //
@@ -515,7 +515,7 @@ module TypeScript {
             var script = document.script();
 
             var startTime = (new Date()).getTime();
-            PullTypeResolver.typeCheck(this.compilationSettings(), this.semanticInfoChain, fileName, script)
+            PullTypeResolver.typeCheck(this.compilationSettings(), this.semanticInfoChain, script)
             var endTime = (new Date()).getTime();
 
             typeCheckTime += endTime - startTime;
@@ -577,289 +577,7 @@ module TypeScript {
                 return this.getSymbolOfDeclaration(enclosingDecl);
             }
 
-            return resolver.resolveAST(ast, /*inContextuallyTypedAssignment:*/false, enclosingDecl, new PullTypeResolutionContext(resolver));
-        }
-
-        public getTypeInfoAtPosition(pos: number, document: Document): PullTypeInfoAtPositionInfo {
-            // find the enclosing decl
-            var declStack: PullDecl[] = [];
-            var resultASTs: AST[] = [];
-            var script = document.script();
-            var scriptName = document.fileName;
-
-            var lastDeclAST: AST = null;
-            var foundAST: AST = null;
-            var symbol: PullSymbol = null;
-            var candidateSignature: PullSignatureSymbol = null;
-            var callSignatures: PullSignatureSymbol[] = null;
-
-            // these are used to track intermediate nodes so that we can properly apply contextual types
-            var lambdaAST: AST = null;
-            var declarationInitASTs: VariableDeclarator[] = [];
-            var objectLitAST: ObjectLiteralExpression = null;
-            var asgAST: BinaryExpression = null;
-            var typeAssertionASTs: CastExpression[] = [];
-
-            var resolver = this.semanticInfoChain.getResolver();
-            var resolutionContext = new PullTypeResolutionContext(resolver);
-            var enclosingDecl: PullDecl = null;
-            var isConstructorCall = false;
-
-            var pre = (cur: AST) => {
-                if (isValidAstNode(cur)) {
-                    if (pos >= cur.minChar && pos <= cur.limChar) {
-
-                        var previous = resultASTs[resultASTs.length - 1];
-
-                        if (previous === undefined || (cur.minChar >= previous.minChar && cur.limChar <= previous.limChar)) {
-
-                            var decl = this.semanticInfoChain.getDeclForAST(cur);
-
-                            if (decl) {
-                                declStack[declStack.length] = decl;
-                                lastDeclAST = cur;
-                            }
-
-                            if (cur.nodeType() === NodeType.FunctionExpression || cur.nodeType() === NodeType.ArrowFunctionExpression) {
-                                lambdaAST = cur;
-                            }
-                            else if (cur.nodeType() === NodeType.VariableDeclarator) {
-                                declarationInitASTs[declarationInitASTs.length] = <VariableDeclarator>cur;
-                            }
-                            else if (cur.nodeType() === NodeType.ObjectLiteralExpression) {
-                                objectLitAST = <ObjectLiteralExpression>cur;
-                            }
-                            else if (cur.nodeType() === NodeType.CastExpression) {
-                                typeAssertionASTs.push(<CastExpression>cur);
-                            }
-                            else if (cur.nodeType() === NodeType.AssignmentExpression) {
-                                asgAST = <BinaryExpression>cur;
-                            }
-
-                            resultASTs[resultASTs.length] = cur;
-                        }
-                    }
-                }
-            };
-
-            getAstWalkerFactory().walk(script, pre);
-
-            if (resultASTs.length) {
-
-                foundAST = resultASTs[resultASTs.length - 1];
-
-                // Check if is a name of a container
-                if (foundAST.nodeType() === NodeType.Name && resultASTs.length > 1) {
-                    var previousAST = resultASTs[resultASTs.length - 2];
-                    switch (previousAST.nodeType()) {
-                        case NodeType.InterfaceDeclaration:
-                            if (foundAST === (<InterfaceDeclaration>previousAST).identifier) {
-                                foundAST = previousAST;
-                            }
-                            break;
-                        case NodeType.ClassDeclaration:
-                            if (foundAST === (<ClassDeclaration>previousAST).identifier) {
-                                foundAST = previousAST;
-                            }
-                            break;
-                        case NodeType.ModuleDeclaration:
-                            if (foundAST === (<ModuleDeclaration>previousAST).name) {
-                                foundAST = previousAST;
-                            }
-                            break;
-
-                        case NodeType.VariableDeclarator:
-                            if (foundAST === (<VariableDeclarator>previousAST).id) {
-                                foundAST = previousAST;
-                            }
-                            break;
-
-                        case NodeType.FunctionDeclaration:
-                            if (foundAST === (<FunctionDeclaration>previousAST).name) {
-                                foundAST = previousAST;
-                            }
-                            break;
-
-                        case NodeType.MemberFunctionDeclaration:
-                            if (foundAST === (<MemberFunctionDeclaration>previousAST).name) {
-                                foundAST = previousAST;
-                            }
-                            break;
-                    }
-                }
-
-                // are we within a decl?  if so, just grab its symbol
-                var funcDecl: FunctionDeclaration = null;
-                if (lastDeclAST === foundAST) {
-                    symbol = declStack[declStack.length - 1].getSymbol();
-                    resolver.resolveDeclaredSymbol(symbol, resolutionContext);
-                    symbol.setUnresolved();
-                    enclosingDecl = declStack[declStack.length - 1].getParentDecl();
-                    if (foundAST.nodeType() === NodeType.FunctionDeclaration ||
-                        foundAST.nodeType() === NodeType.MemberFunctionDeclaration ||
-                        foundAST.nodeType() === NodeType.ArrowFunctionExpression) {
-                        funcDecl = <FunctionDeclaration>foundAST;
-                    }
-                }
-                else {
-                    // otherwise, it's an expression that needs to be resolved, so we must pull...
-
-                    // first, find the enclosing decl
-                    for (var i = declStack.length - 1; i >= 0; i--) {
-                        if (!(declStack[i].kind & (PullElementKind.Variable | PullElementKind.Parameter))) {
-                            enclosingDecl = declStack[i];
-                            break;
-                        }
-                    }
-
-                    // next, obtain the assigning AST, if applicable
-                    // (this would be the ast for the last decl on the decl stack)
-
-                    // if the found AST is a named, we want to check for previous dotted expressions,
-                    // since those will give us the right typing
-                    var callExpression: ICallExpression = null;
-                    if ((foundAST.nodeType() === NodeType.SuperExpression || foundAST.nodeType() === NodeType.ThisExpression || foundAST.nodeType() === NodeType.Name) &&
-                        resultASTs.length > 1) {
-
-                        for (var i = resultASTs.length - 2; i >= 0; i--) {
-                            if (resultASTs[i].nodeType() === NodeType.MemberAccessExpression &&
-                                (<MemberAccessExpression>resultASTs[i]).name === resultASTs[i + 1]) {
-                                foundAST = resultASTs[i];
-                            }
-                            else if ((resultASTs[i].nodeType() === NodeType.InvocationExpression || resultASTs[i].nodeType() === NodeType.ObjectCreationExpression) &&
-                                (<InvocationExpression>resultASTs[i]).target === resultASTs[i + 1]) {
-                                callExpression = <ICallExpression><any>resultASTs[i];
-                                break;
-                            }
-                            else if (resultASTs[i].nodeType() === NodeType.MemberFunctionDeclaration && (<MemberFunctionDeclaration>resultASTs[i]).name === resultASTs[i + 1]) {
-                                funcDecl = <FunctionDeclaration>resultASTs[i];
-                                break;
-                            }
-                            else if (resultASTs[i].nodeType() === NodeType.FunctionDeclaration && (<FunctionDeclaration>resultASTs[i]).name === resultASTs[i + 1]) {
-                                funcDecl = <FunctionDeclaration>resultASTs[i];
-                                break;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                    }
-
-                    // if it's a list, we may not have an exact AST, so find the next nearest one
-                    if (foundAST.nodeType() === NodeType.List) {
-                        for (var i = 0; i < (<ASTList>foundAST).members.length; i++) {
-                            if ((<ASTList>foundAST).members[i].minChar > pos) {
-                                foundAST = (<ASTList>foundAST).members[i];
-                                break;
-                            }
-                        }
-                    }
-
-                    var inContextuallyTypedAssignment = false;
-
-                    if (declarationInitASTs.length) {
-                        var assigningAST: VariableDeclarator;
-
-                        for (var i = 0; i < declarationInitASTs.length; i++) {
-
-                            assigningAST = declarationInitASTs[i];
-                            inContextuallyTypedAssignment = (assigningAST !== null) && (assigningAST.typeExpr !== null);
-
-                            resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment:*/false, null, resolutionContext);
-                            var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
-
-                            if (varSymbol && inContextuallyTypedAssignment) {
-                                var contextualType = varSymbol.type;
-                                resolutionContext.pushContextualType(contextualType, false, null);
-                            }
-
-                            if (assigningAST.init) {
-                                resolver.resolveAST(assigningAST.init, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                            }
-                        }
-                    }
-
-                    if (typeAssertionASTs.length) {
-                        for (var i = 0; i < typeAssertionASTs.length; i++) {
-                            resolver.resolveAST(typeAssertionASTs[i], inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                        }
-                    }
-
-                    if (asgAST) {
-                        resolver.resolveAST(asgAST, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                    }
-
-                    if (objectLitAST) {
-                        resolver.resolveAST(objectLitAST, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                    }
-
-                    if (lambdaAST) {
-                        resolver.resolveAST(lambdaAST, true, enclosingDecl, resolutionContext);
-                        enclosingDecl = this.semanticInfoChain.getDeclForAST(lambdaAST);
-                    }
-
-                    symbol = resolver.resolveAST(foundAST, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
-                    if (callExpression) {
-                        var isPropertyOrVar = symbol.kind === PullElementKind.Property || symbol.kind === PullElementKind.Variable;
-                        var typeSymbol = symbol.type;
-                        if (isPropertyOrVar) {
-                            isPropertyOrVar = (typeSymbol.kind !== PullElementKind.Interface && typeSymbol.kind !== PullElementKind.ObjectType) || typeSymbol.name === "";
-                        }
-
-                        if (!isPropertyOrVar) {
-                            isConstructorCall = foundAST.nodeType() === NodeType.SuperExpression || callExpression.nodeType() === NodeType.ObjectCreationExpression;
-
-                            if (foundAST.nodeType() === NodeType.SuperExpression) {
-                                if (symbol.kind === PullElementKind.Class) {
-                                    callSignatures = (<PullTypeSymbol>symbol).getConstructorMethod().type.getConstructSignatures();
-                                }
-                            } else {
-                                callSignatures = callExpression.nodeType() === NodeType.InvocationExpression ? typeSymbol.getCallSignatures() : typeSymbol.getConstructSignatures();
-                            }
-
-                            var callResolutionResults = new PullAdditionalCallResolutionData();
-                            if (callExpression.nodeType() === NodeType.InvocationExpression) {
-                                resolver.resolveInvocationExpression(<InvocationExpression>callExpression, enclosingDecl, resolutionContext, callResolutionResults);
-                            } else {
-                                resolver.resolveObjectCreationExpression(<ObjectCreationExpression>callExpression, enclosingDecl, resolutionContext, callResolutionResults);
-                            }
-
-                            if (callResolutionResults.candidateSignature) {
-                                candidateSignature = callResolutionResults.candidateSignature;
-                            }
-                            if (callResolutionResults.targetSymbol && callResolutionResults.targetSymbol.name !== "") {
-                                symbol = callResolutionResults.targetSymbol;
-                            }
-                            foundAST = <AST><any>callExpression;
-                        }
-                    }
-                }
-
-                if (funcDecl) {
-                    if (symbol && symbol.kind !== PullElementKind.Property) {
-                        var signatureInfo = PullHelpers.getSignatureForFuncDecl(this.getDeclForAST(funcDecl));
-                        candidateSignature = signatureInfo.signature;
-                        callSignatures = signatureInfo.allSignatures;
-                    }
-                } else if (!callSignatures && symbol &&
-                (symbol.kind === PullElementKind.Method || symbol.kind === PullElementKind.Function)) {
-                    var typeSym = symbol.type;
-                    if (typeSym) {
-                        callSignatures = typeSym.getCallSignatures();
-                    }
-                }
-            }
-
-            var enclosingScopeSymbol = this.getSymbolOfDeclaration(enclosingDecl);
-
-            return {
-                symbol: symbol,
-                ast: foundAST,
-                enclosingScopeSymbol: enclosingScopeSymbol,
-                candidateSignature: candidateSignature,
-                callSignatures: callSignatures,
-                isConstructorCall: isConstructorCall
-            };
+            return resolver.resolveAST(ast, /*inContextuallyTypedAssignment:*/false, new PullTypeResolutionContext(resolver));
         }
 
         private extractResolutionContextFromAST(resolver: PullTypeResolver, ast: AST, document: Document, propagateContextualTypes: boolean): { ast: AST; enclosingDecl: PullDecl; resolutionContext: PullTypeResolutionContext; inContextuallyTypedAssignment: boolean; inWithBlock: boolean; } {
@@ -886,7 +604,7 @@ module TypeScript {
                 switch (current.nodeType()) {
                     case NodeType.FunctionExpression:
                     case NodeType.ArrowFunctionExpression:
-                        resolver.resolveAST(current, true, enclosingDecl, resolutionContext);
+                        resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ true, resolutionContext);
                         break;
 
                     //case NodeType.Parameter:
@@ -921,10 +639,10 @@ module TypeScript {
                             if ((i + 1 < n) && callExpression.arguments === path[i + 1]) {
                                 var callResolutionResults = new PullAdditionalCallResolutionData();
                                 if (isNew) {
-                                    resolver.resolveObjectCreationExpression(callExpression, enclosingDecl, resolutionContext, callResolutionResults);
+                                    resolver.resolveObjectCreationExpression(callExpression, resolutionContext, callResolutionResults);
                                 }
                                 else {
-                                    resolver.resolveInvocationExpression(callExpression, enclosingDecl, resolutionContext, callResolutionResults);
+                                    resolver.resolveInvocationExpression(callExpression, resolutionContext, callResolutionResults);
                                 }
 
                                 // Find the index in the arguments list
@@ -946,10 +664,10 @@ module TypeScript {
                             else {
                                 // Just resolve the call expression
                                 if (isNew) {
-                                    resolver.resolveObjectCreationExpression(callExpression, enclosingDecl, resolutionContext);
+                                    resolver.resolveObjectCreationExpression(callExpression, resolutionContext);
                                 }
                                 else {
-                                    resolver.resolveInvocationExpression(callExpression, enclosingDecl, resolutionContext);
+                                    resolver.resolveInvocationExpression(callExpression, resolutionContext);
                                 }
                             }
 
@@ -976,7 +694,7 @@ module TypeScript {
                         if (propagateContextualTypes) {
                             var objectLiteralExpression = <ObjectLiteralExpression>current;
                             var objectLiteralResolutionContext = new PullAdditionalObjectLiteralResolutionData();
-                            resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, enclosingDecl, resolutionContext, objectLiteralResolutionContext);
+                            resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, resolutionContext, objectLiteralResolutionContext);
 
                             // find the member in the path
                             var memeberAST = (path[i + 1] && path[i + 1].nodeType() === NodeType.List) ? path[i + 2] : path[i + 1];
@@ -1009,7 +727,7 @@ module TypeScript {
 
                             if (path[i + 1] && path[i + 1] === assignmentExpression.right) {
                                 // propagate the left hand side type as a contextual type
-                                var leftType = resolver.resolveAST(assignmentExpression.left, inContextuallyTypedAssignment, enclosingDecl, resolutionContext).type;
+                                var leftType = resolver.resolveAST(assignmentExpression.left, inContextuallyTypedAssignment, resolutionContext).type;
                                 if (leftType) {
                                     inContextuallyTypedAssignment = true;
                                     contextualType = leftType;
@@ -1030,7 +748,7 @@ module TypeScript {
                                 var functionDeclaration = <FunctionDeclaration>enclosingDeclAST;
                                 if (functionDeclaration.returnTypeAnnotation) {
                                     // The containing function has a type annotation, propagate it as the contextual type
-                                    var returnTypeSymbol = resolver.resolveTypeReference(functionDeclaration.returnTypeAnnotation, enclosingDecl, resolutionContext);
+                                    var returnTypeSymbol = resolver.resolveTypeReference(functionDeclaration.returnTypeAnnotation, resolutionContext);
                                     if (returnTypeSymbol) {
                                         inContextuallyTypedAssignment = true;
                                         contextualType = returnTypeSymbol;
@@ -1061,7 +779,7 @@ module TypeScript {
                         // ObjectType are just like Object Literals are bound when needed, ensure we have a decl, by forcing it to be 
                         // resolved before descending into it.
                         if (typeExpressionNode && typeExpressionNode.nodeType() === NodeType.ObjectType) {
-                            resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ false, enclosingDecl, resolutionContext);
+                            resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ false, resolutionContext);
                         }
 
                         break;
@@ -1113,7 +831,7 @@ module TypeScript {
             init: AST): void {
             if (inContextuallyTypedAssignment) {
                 if (propagateContextualTypes) {
-                    resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment*/false, null, resolutionContext);
+                    resolver.resolveAST(assigningAST, /*inContextuallyTypedAssignment*/false, resolutionContext);
                     var varSymbol = this.semanticInfoChain.getSymbolForAST(assigningAST);
 
                     var contextualType: PullTypeSymbol = null;
@@ -1124,7 +842,7 @@ module TypeScript {
                     resolutionContext.pushContextualType(contextualType, false, null);
 
                     if (init) {
-                        resolver.resolveAST(init, inContextuallyTypedAssignment, enclosingDecl, resolutionContext);
+                        resolver.resolveAST(init, inContextuallyTypedAssignment, resolutionContext);
                     }
                 }
             }
@@ -1149,7 +867,7 @@ module TypeScript {
             }
 
             ast = context.ast;
-            var symbol = resolver.resolveAST(ast, context.inContextuallyTypedAssignment, context.enclosingDecl, context.resolutionContext);
+            var symbol = resolver.resolveAST(ast, context.inContextuallyTypedAssignment, context.resolutionContext);
 
             if (symbol.isTypeReference()) {
                 symbol = (<PullTypeReferenceSymbol>symbol).getReferencedTypeSymbol();
@@ -1182,10 +900,10 @@ module TypeScript {
             var callResolutionResults = new PullAdditionalCallResolutionData();
 
             if (isNew) {
-                resolver.resolveObjectCreationExpression(<ObjectCreationExpression>ast, context.enclosingDecl, context.resolutionContext, callResolutionResults);
+                resolver.resolveObjectCreationExpression(<ObjectCreationExpression>ast, context.resolutionContext, callResolutionResults);
             }
             else {
-                resolver.resolveInvocationExpression(<InvocationExpression>ast, context.enclosingDecl, context.resolutionContext, callResolutionResults);
+                resolver.resolveInvocationExpression(<InvocationExpression>ast, context.resolutionContext, callResolutionResults);
             }
 
             return {
@@ -1303,13 +1021,11 @@ module TypeScript {
         private hadEmitDiagnostics: boolean = false;
 
         constructor(private compiler: TypeScriptCompiler,
-                    resolvePath: (path: string) => string,
-                    sourceMapEmitterCallback: SourceMapEmitterCallback,
+                    private resolvePath: (path: string) => string,
                     private continueOnDiagnostics: boolean,
                     startingPhase = CompilerPhase.Syntax) {
             this.fileNames = compiler.fileNames();
             this.compilerPhase = startingPhase;
-            this._emitOptions = new EmitOptions(compiler, resolvePath, sourceMapEmitterCallback);
         }
 
         public current(): CompileResult {
@@ -1419,6 +1135,10 @@ module TypeScript {
 
         private moveNextEmitOptionsValidationPhase(): boolean {
             Debug.assert(!this.hadSyntacticDiagnostics);
+
+            if (!this._emitOptions) {
+                this._emitOptions = new EmitOptions(this.compiler, this.resolvePath);
+            }
 
             if (this._emitOptions.diagnostic()) {
                 if (!this.continueOnDiagnostics) {

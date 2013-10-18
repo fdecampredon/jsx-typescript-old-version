@@ -28,7 +28,7 @@ Line 13 col 20 CastExpression "<T>null" = T
 Line 13 col 21 IdentifierName "T" = T
 Line 17 col 4 IdentifierName "c" = C<number>
 Line 17 col 8 ObjectCreationExpression "new C<number>()" = C<number>
-Line 17 col 12 IdentifierName "C" = new<T>() => C<T>
+Line 17 col 12 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 18 col 0 AssignmentExpression "c.data = c.x(null)" = number
 Line 18 col 0 MemberAccessExpression "c.data" = number
 Line 18 col 0 IdentifierName "c" = C<number>

@@ -75,23 +75,42 @@ module TypeScript {
             if (token.fullWidth() === 0) {
                 result = new MissingIdentifier();
             }
-            else if (token.tokenKind === SyntaxKind.IdentifierName) {
-                // In the case where actualText is "__proto__", we substitute "#__proto__" as the _text
-                // so that we can safely use it as a key in a javascript object.
-                var tokenText = token.text();
-                var text = tokenText === SyntaxTreeToAstVisitor.protoString
-                    ? SyntaxTreeToAstVisitor.protoSubstitutionString
-                    : null;
-
-                result = new Identifier(tokenText, text);
-            }
             else {
-                var tokenText = token.text();
-                var text = token.tokenKind === SyntaxKind.StringLiteral ? <string>token.value() : null;
-                if (stringLiteralIsTextOfIdentifier && text) {
-                    text = quoteStr(text);
+                switch (token.tokenKind) {
+                    case SyntaxKind.AnyKeyword:
+                    case SyntaxKind.BooleanKeyword:
+                    case SyntaxKind.NumberKeyword:
+                    case SyntaxKind.StringKeyword:
+                    case SyntaxKind.VoidKeyword:
+                        // TODO: there's no reason to use an identifier node for these.  We 
+                        // can just have specialized nodes for these primitives.
+                        result = new Identifier(token.text(), token.text());
+                        break;
+
+                    case SyntaxKind.IdentifierName:
+                        // In the case where actualText is "__proto__", we substitute "#__proto__" as the _text
+                        // so that we can safely use it as a key in a javascript object.
+                        var tokenText = token.text();
+                        var text = tokenText === SyntaxTreeToAstVisitor.protoString
+                            ? SyntaxTreeToAstVisitor.protoSubstitutionString
+                            : null;
+
+                        result = new Identifier(tokenText, text);
+                        break;
+
+                    case SyntaxKind.NumericLiteral:
+                    case SyntaxKind.StringLiteral:
+                        var tokenText = token.text();
+                        var text = token.valueText();
+                        if (stringLiteralIsTextOfIdentifier && text) {
+                            text = quoteStr(text);
+                        }
+                        result = new Identifier(tokenText, text, /*isStringOrNumericLiteral:*/ true);
+                        break;
+
+                    default:
+                        throw Errors.invalidOperation();
                 }
-                result = new Identifier(tokenText, text, /*isNumber:*/ token.tokenKind === SyntaxKind.NumericLiteral);
             }
 
             if (isOptional) {
@@ -242,8 +261,7 @@ module TypeScript {
             else if (token.tokenKind === SyntaxKind.NumericLiteral) {
                 var preComments = this.convertTokenLeadingComments(token, fullStart);
 
-                var value = token.text().indexOf(".") > 0 ? parseFloat(token.text()) : parseInt(token.text());
-                result = new NumericLiteral(value, token.text());
+                result = new NumericLiteral(token.value(), token.text(), token.valueText());
 
                 result.setPreComments(preComments);
             }
@@ -669,7 +687,7 @@ module TypeScript {
                     case SyntaxKind.IdentifierName:
                         // If it's a name, see if we already had an enum value named this.  If so,
                         // return that value.
-                        var variableDeclarator = ArrayUtilities.firstOrDefault(declarators, d => d.identifier.text() === (<ISyntaxToken>expression).valueText());
+                        var variableDeclarator = ArrayUtilities.firstOrDefault(declarators, d => d.identifier.valueText() === (<ISyntaxToken>expression).valueText());
                         return variableDeclarator ? variableDeclarator.constantValue : null;
 
                     case SyntaxKind.LeftShiftExpression:
@@ -803,11 +821,11 @@ module TypeScript {
             if (init) {
                 if (init.nodeType() === NodeType.ArrowFunctionExpression) {
                     var arrowFunction = <ArrowFunctionExpression>init;
-                    arrowFunction.hint = name.actualText;
+                    arrowFunction.hint = name.text();
                 }
                 else if (init.nodeType() === NodeType.FunctionExpression) {
                     var expression = <FunctionExpression>init;
-                    expression.hint = name.actualText;
+                    expression.hint = name.text();
                 }
             }
 
@@ -1579,10 +1597,6 @@ module TypeScript {
 
             this.movePast(node.semicolonToken);
 
-            if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.StaticKeyword)) {
-                result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.Static);
-            }
-
             return result;
         }
 
@@ -1953,7 +1967,7 @@ module TypeScript {
             var preComments = this.convertTokenLeadingComments(node.firstToken(), start);
             var postComments = this.convertNodeTrailingComments(node, node.lastToken(), start);
 
-            var propertyName = node.propertyName.accept(this);
+            var propertyName: Identifier = node.propertyName.accept(this);
 
             var afterColonComments = this.convertTokenTrailingComments(
                 node.colonToken, this.position + node.colonToken.leadingTriviaWidth() + node.colonToken.width());
@@ -1972,7 +1986,7 @@ module TypeScript {
                 expression.nodeType() === NodeType.ArrowFunctionExpression ||
                 expression.nodeType() === NodeType.FunctionExpression) {
                 var funcDecl = <FunctionDeclaration>expression;
-                    funcDecl.hint = propertyName.text();
+                    funcDecl.hint = propertyName.valueText();
             }
 
             return result;

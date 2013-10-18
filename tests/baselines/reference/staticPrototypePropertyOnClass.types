@@ -1,0 +1,17 @@
+=== tests/cases/compiler/staticPrototypePropertyOnClass.ts ===
+Line 0 col 6 IdentifierName "c1" = c1
+Line 2 col 6 IdentifierName "c2" = c2<T>
+Line 2 col 9 IdentifierName "T" = T
+Line 4 col 6 IdentifierName "c3" = c3
+Line 8 col 6 IdentifierName "c4" = c4
+Line 9 col 16 IdentifierName "param" = string
+Line 10 col 16 IdentifierName "param" = number
+Line 11 col 16 IdentifierName "param" = any
+Line 14 col 4 IdentifierName "a" = { prototype: c1; new(): c1; }
+Line 14 col 8 IdentifierName "c1" = { prototype: c1; new(): c1; }
+Line 15 col 4 IdentifierName "b" = { prototype: c2<any>; new<T>(): c2<T>; }
+Line 15 col 8 IdentifierName "c2" = { prototype: c2<any>; new<T>(): c2<T>; }
+Line 16 col 4 IdentifierName "c" = { prototype: c3; new(): c3; }
+Line 16 col 8 IdentifierName "c3" = { prototype: c3; new(): c3; }
+Line 17 col 4 IdentifierName "d" = { prototype: c4; new(param: string): c4; new(param: number): c4; }
+Line 17 col 8 IdentifierName "c4" = { prototype: c4; new(param: string): c4; new(param: number): c4; }

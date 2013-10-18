@@ -1,13 +1,13 @@
 === tests/cases/compiler/cyclicModuleImport.ts ===
-Line 1 col 11 IdentifierName "MainModule" = new() => "MainModule".MainModule
+Line 1 col 11 IdentifierName "MainModule" = { prototype: "MainModule".MainModule; new(): "MainModule".MainModule; }
 Line 2 col 10 IdentifierName "SubModule" = "SubModule".SubModule
 Line 3 col 22 IdentifierName "StaticVar" = number
 Line 4 col 15 IdentifierName "InstanceVar" = number
 Line 5 col 15 IdentifierName "main" = "MainModule".MainModule
 Line 5 col 21 IdentifierName "MainModule" = "SubModule".MainModule
-Line 8 col 13 IdentifierName "SubModule" = { StaticVar: number; new(): "SubModule".SubModule; }
-Line 11 col 11 IdentifierName "SubModule" = { StaticVar: number; new(): "SubModule".SubModule; }
+Line 8 col 13 IdentifierName "SubModule" = { prototype: "SubModule".SubModule; StaticVar: number; new(): "SubModule".SubModule; }
+Line 11 col 11 IdentifierName "SubModule" = { prototype: "SubModule".SubModule; StaticVar: number; new(): "SubModule".SubModule; }
 Line 12 col 10 IdentifierName "MainModule" = "MainModule".MainModule
 Line 13 col 15 IdentifierName "SubModule" = "SubModule".SubModule
 Line 13 col 26 IdentifierName "SubModule" = "MainModule".SubModule
-Line 16 col 13 IdentifierName "MainModule" = new() => "MainModule".MainModule
+Line 16 col 13 IdentifierName "MainModule" = { prototype: "MainModule".MainModule; new(): "MainModule".MainModule; }

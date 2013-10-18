@@ -34,7 +34,7 @@ Line 7 col 35 IdentifierName "dy" = number
 Line 7 col 40 IdentifierName "dy" = number
 Line 9 col 11 IdentifierName "origin" = Point
 Line 9 col 20 ObjectCreationExpression "new Point(0, 0)" = Point
-Line 9 col 24 IdentifierName "Point" = { distance(p1: Point, p2: Point): number; origin: Point; new(x: number, y: number): Point; }
+Line 9 col 24 IdentifierName "Point" = { prototype: Point; distance(p1: Point, p2: Point): number; origin: Point; new(x: number, y: number): Point; }
 Line 10 col 11 IdentifierName "distance" = (p1: Point, p2: Point) => number
 Line 10 col 20 IdentifierName "p1" = Point
 Line 10 col 24 IdentifierName "Point" = Point

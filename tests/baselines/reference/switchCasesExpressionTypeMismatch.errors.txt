@@ -1,4 +1,4 @@
-switchCasesExpressionTypeMismatch.ts line 4 col 10: error TS2012: Cannot convert 'new() => Foo' to 'number':
-	Type 'new() => Foo' requires a construct signature, but type 'Number' lacks one.
+switchCasesExpressionTypeMismatch.ts line 4 col 10: error TS2012: Cannot convert '{ prototype: Foo; new(): Foo; }' to 'number':
+	Type 'Number' is missing property 'prototype' from type '{ prototype: Foo; new(): Foo; }'.
 switchCasesExpressionTypeMismatch.ts line 5 col 10: error TS2011: Cannot convert 'string' to 'number'.
 switchCasesExpressionTypeMismatch.ts line 7 col 10: error TS2011: Cannot convert 'boolean' to 'number'.

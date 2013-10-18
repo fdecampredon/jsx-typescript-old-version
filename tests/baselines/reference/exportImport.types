@@ -1,15 +1,15 @@
 === tests/cases/compiler/consumer.ts ===
 Line 0 col 7 IdentifierName "e" = e
-Line 2 col 16 IdentifierName "w" = () => Widget1
+Line 2 col 16 IdentifierName "w" = () => any
 Line 2 col 21 IdentifierName "e" = e
-Line 2 col 23 IdentifierName "w" = Widget1
+Line 2 col 23 IdentifierName "w" = any
 Line 3 col 11 ObjectCreationExpression "new e.w()" = Widget1
-Line 3 col 15 MemberAccessExpression "e.w" = new() => Widget1
+Line 3 col 15 MemberAccessExpression "e.w" = { prototype: Widget1; new(): Widget1; }
 Line 3 col 15 IdentifierName "e" = e
-Line 3 col 17 IdentifierName "w" = new() => Widget1
+Line 3 col 17 IdentifierName "w" = { prototype: Widget1; new(): Widget1; }
 === tests/cases/compiler/w1.ts ===
-Line 1 col 9 IdentifierName "Widget1" = new() => Widget1
+Line 1 col 9 IdentifierName "Widget1" = { prototype: Widget1; new(): Widget1; }
 Line 2 col 6 IdentifierName "Widget1" = Widget1
 Line 2 col 16 IdentifierName "name" = string
 === tests/cases/compiler/exporter.ts ===
-Line 0 col 14 IdentifierName "w" = new() => Widget1
+Line 0 col 14 IdentifierName "w" = { prototype: Widget1; new(): Widget1; }

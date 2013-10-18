@@ -10,9 +10,9 @@ Line 3 col 19 IdentifierName "fn" = (n: number) => string
 Line 3 col 22 IdentifierName "n2" = number
 Line 8 col 4 IdentifierName "c" = M.C
 Line 8 col 6 ObjectCreationExpression "new M.C()" = M.C
-Line 8 col 10 MemberAccessExpression "M.C" = new() => M.C
-Line 8 col 10 IdentifierName "M" = { C: new() => M.C; }
-Line 8 col 12 IdentifierName "C" = new() => M.C
+Line 8 col 10 MemberAccessExpression "M.C" = { prototype: M.C; new(): M.C; }
+Line 8 col 10 IdentifierName "M" = { C: { prototype: M.C; new(): M.C; }; }
+Line 8 col 12 IdentifierName "C" = { prototype: M.C; new(): M.C; }
 Line 9 col 0 InvocationExpression "c.m(function(n) { return "hello: "+n; },18)" = string
 Line 9 col 0 MemberAccessExpression "c.m" = (fn: (n: number) => string, n2: number) => string
 Line 9 col 0 IdentifierName "c" = M.C

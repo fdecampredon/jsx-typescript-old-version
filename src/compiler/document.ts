@@ -7,8 +7,8 @@ module TypeScript {
         private _script: Script = null;
         private _lineMap: LineMap = null;
 
-        private _declASTMap = new DataMap<AST>();
-        private _astDeclMap = new DataMap<PullDecl>();
+        private _declASTMap: AST[] = [];
+        private _astDeclMap: PullDecl[] = [];
 
         constructor(private _compiler: TypeScriptCompiler,
                     private _semanticInfoChain: SemanticInfoChain,
@@ -25,8 +25,8 @@ module TypeScript {
         // Only for use by the semantic info chain.
         public invalidate(): void {
             // Dump all information related to syntax.  We'll have to recompute it when asked.
-            this._declASTMap = new DataMap<AST>();
-            this._astDeclMap = new DataMap<PullDecl>();
+            this._declASTMap.length = 0;
+            this._astDeclMap.length = 0;
             this._topLevelDecl = null;
 
             this._syntaxTree = null;
@@ -112,7 +112,7 @@ module TypeScript {
                 var pre = function (cur: TypeScript.AST, walker: IAstWalker) {
                     if (isValidAstNode(cur)) {
                         if (cur.nodeType() === NodeType.Name) {
-                            var nodeText = (<TypeScript.Identifier>cur).text();
+                            var nodeText = (<TypeScript.Identifier>cur).valueText();
 
                             identifiers[nodeText] = true;
                         }
@@ -178,21 +178,59 @@ module TypeScript {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
             this.topLevelDecl();
-            return this._astDeclMap.read(ast.astIDString);
+            return this._astDeclMap[ast.astID];
+        }
+
+        public getEnclosingDecl(ast: AST): PullDecl {
+            if (ast.nodeType() === NodeType.Script) {
+                return this._getDeclForAST(ast);
+            }
+
+            // First, walk up the AST, looking for a decl corresponding to that AST node.
+            ast = ast.parent;
+            var decl: PullDecl = null;
+            while (ast) {
+                decl = this._getDeclForAST(ast);
+                if (decl) {
+                    break;
+                }
+
+                ast = ast.parent;
+            }
+
+            // Now, skip over certain decls.  The resolver never considers these the 'enclosing' 
+            // decl for an AST node.
+            while (decl) {
+                switch (decl.kind) {
+                    default:
+                        return decl;
+                    case PullElementKind.Variable:
+                    case PullElementKind.TypeParameter:
+                    case PullElementKind.Parameter:
+                    case PullElementKind.TypeAlias:
+                    case PullElementKind.EnumMember:
+                }
+
+                decl = decl.getParentDecl();
+            }
+
+            Debug.fail();
+            //Debug.assert(decl);
+            //return decl;
         }
 
         public _setDeclForAST(ast: AST, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this.fileName);
-            this._astDeclMap.link(ast.astIDString, decl);
+            this._astDeclMap[ast.astID] = decl;
         }
 
         public _getASTForDecl(decl: PullDecl): AST {
-            return this._declASTMap.read(decl.declIDString);
+            return this._declASTMap[decl.declID];
         }
 
         public _setASTForDecl(decl: PullDecl, ast: AST): void {
             Debug.assert(decl.fileName() === this.fileName);
-            this._declASTMap.link(decl.declIDString, ast);
+            this._declASTMap[decl.declID] = ast;
         }
     }
 }

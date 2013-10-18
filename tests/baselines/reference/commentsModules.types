@@ -7,7 +7,7 @@ Line 9 col 18 IdentifierName "m2" = m1.m2
 Line 11 col 21 IdentifierName "c" = m1.m2.c
 Line 14 col 19 IdentifierName "i" = m1.m2.c
 Line 14 col 23 ObjectCreationExpression "new c()" = m1.m2.c
-Line 14 col 27 IdentifierName "c" = new() => m1.m2.c
+Line 14 col 27 IdentifierName "c" = { prototype: m1.m2.c; new(): m1.m2.c; }
 Line 17 col 20 IdentifierName "fooExport" = () => number
 Line 18 col 15 InvocationExpression "foo()" = number
 Line 18 col 15 IdentifierName "foo" = () => number
@@ -17,78 +17,78 @@ Line 28 col 20 IdentifierName "foo3Export" = () => void
 Line 34 col 13 IdentifierName "foo4Export" = () => void
 Line 37 col 0 InvocationExpression "m1.fooExport()" = number
 Line 37 col 0 MemberAccessExpression "m1.fooExport" = () => number
-Line 37 col 0 IdentifierName "m1" = { b: number; m2: { c: new() => m1.m2.c; i: m1.m2.c; }; fooExport(): number; foo2Export(a: string): void; foo3Export(): void; }
+Line 37 col 0 IdentifierName "m1" = { b: number; m2: { c: { prototype: m1.m2.c; new(): m1.m2.c; }; i: m1.m2.c; }; fooExport(): number; foo2Export(a: string): void; foo3Export(): void; }
 Line 37 col 3 IdentifierName "fooExport" = () => number
 Line 38 col 4 IdentifierName "myvar" = m1.m2.c
 Line 38 col 12 ObjectCreationExpression "new m1.m2.c()" = m1.m2.c
-Line 38 col 16 MemberAccessExpression "m1.m2.c" = new() => m1.m2.c
-Line 38 col 16 MemberAccessExpression "m1.m2" = { c: new() => m1.m2.c; i: m1.m2.c; }
-Line 38 col 16 IdentifierName "m1" = { b: number; m2: { c: new() => m1.m2.c; i: m1.m2.c; }; fooExport(): number; foo2Export(a: string): void; foo3Export(): void; }
-Line 38 col 19 IdentifierName "m2" = { c: new() => m1.m2.c; i: m1.m2.c; }
-Line 38 col 22 IdentifierName "c" = new() => m1.m2.c
+Line 38 col 16 MemberAccessExpression "m1.m2.c" = { prototype: m1.m2.c; new(): m1.m2.c; }
+Line 38 col 16 MemberAccessExpression "m1.m2" = { c: { prototype: m1.m2.c; new(): m1.m2.c; }; i: m1.m2.c; }
+Line 38 col 16 IdentifierName "m1" = { b: number; m2: { c: { prototype: m1.m2.c; new(): m1.m2.c; }; i: m1.m2.c; }; fooExport(): number; foo2Export(a: string): void; foo3Export(): void; }
+Line 38 col 19 IdentifierName "m2" = { c: { prototype: m1.m2.c; new(): m1.m2.c; }; i: m1.m2.c; }
+Line 38 col 22 IdentifierName "c" = { prototype: m1.m2.c; new(): m1.m2.c; }
 Line 40 col 7 IdentifierName "m2" = m2
 Line 40 col 10 IdentifierName "m3" = m2.m3
 Line 42 col 17 IdentifierName "c" = m2.m3.c
 Line 45 col 0 ObjectCreationExpression "new m2.m3.c()" = m2.m3.c
-Line 45 col 4 MemberAccessExpression "m2.m3.c" = new() => m2.m3.c
-Line 45 col 4 MemberAccessExpression "m2.m3" = { c: new() => m2.m3.c; }
-Line 45 col 4 IdentifierName "m2" = { m3: { c: new() => m2.m3.c; }; }
-Line 45 col 7 IdentifierName "m3" = { c: new() => m2.m3.c; }
-Line 45 col 10 IdentifierName "c" = new() => m2.m3.c
+Line 45 col 4 MemberAccessExpression "m2.m3.c" = { prototype: m2.m3.c; new(): m2.m3.c; }
+Line 45 col 4 MemberAccessExpression "m2.m3" = { c: { prototype: m2.m3.c; new(): m2.m3.c; }; }
+Line 45 col 4 IdentifierName "m2" = { m3: { c: { prototype: m2.m3.c; new(): m2.m3.c; }; }; }
+Line 45 col 7 IdentifierName "m3" = { c: { prototype: m2.m3.c; new(): m2.m3.c; }; }
+Line 45 col 10 IdentifierName "c" = { prototype: m2.m3.c; new(): m2.m3.c; }
 Line 47 col 7 IdentifierName "m3" = m3
 Line 47 col 10 IdentifierName "m4" = m3.m4
 Line 47 col 13 IdentifierName "m5" = m3.m4.m5
 Line 49 col 17 IdentifierName "c" = m3.m4.m5.c
 Line 52 col 0 ObjectCreationExpression "new m3.m4.m5.c()" = m3.m4.m5.c
-Line 52 col 4 MemberAccessExpression "m3.m4.m5.c" = new() => m3.m4.m5.c
-Line 52 col 4 MemberAccessExpression "m3.m4.m5" = { c: new() => m3.m4.m5.c; }
-Line 52 col 4 MemberAccessExpression "m3.m4" = { m5: { c: new() => m3.m4.m5.c; }; }
-Line 52 col 4 IdentifierName "m3" = { m4: { m5: { c: new() => m3.m4.m5.c; }; }; }
-Line 52 col 7 IdentifierName "m4" = { m5: { c: new() => m3.m4.m5.c; }; }
-Line 52 col 10 IdentifierName "m5" = { c: new() => m3.m4.m5.c; }
-Line 52 col 13 IdentifierName "c" = new() => m3.m4.m5.c
+Line 52 col 4 MemberAccessExpression "m3.m4.m5.c" = { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }
+Line 52 col 4 MemberAccessExpression "m3.m4.m5" = { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }
+Line 52 col 4 MemberAccessExpression "m3.m4" = { m5: { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }; }
+Line 52 col 4 IdentifierName "m3" = { m4: { m5: { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }; }; }
+Line 52 col 7 IdentifierName "m4" = { m5: { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }; }
+Line 52 col 10 IdentifierName "m5" = { c: { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }; }
+Line 52 col 13 IdentifierName "c" = { prototype: m3.m4.m5.c; new(): m3.m4.m5.c; }
 Line 54 col 7 IdentifierName "m4" = m4
 Line 54 col 10 IdentifierName "m5" = m4.m5
 Line 54 col 13 IdentifierName "m6" = m4.m5.m6
 Line 55 col 18 IdentifierName "m7" = m4.m5.m6.m7
 Line 57 col 21 IdentifierName "c" = m4.m5.m6.m7.c
 Line 61 col 0 ObjectCreationExpression "new m4.m5.m6.m7.c()" = m4.m5.m6.m7.c
-Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7.c" = new() => m4.m5.m6.m7.c
-Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7" = { c: new() => m4.m5.m6.m7.c; }
-Line 61 col 4 MemberAccessExpression "m4.m5.m6" = { m7: { c: new() => m4.m5.m6.m7.c; }; }
-Line 61 col 4 MemberAccessExpression "m4.m5" = { m6: { m7: { c: new() => m4.m5.m6.m7.c; }; }; }
-Line 61 col 4 IdentifierName "m4" = { m5: { m6: { m7: { c: new() => m4.m5.m6.m7.c; }; }; }; }
-Line 61 col 7 IdentifierName "m5" = { m6: { m7: { c: new() => m4.m5.m6.m7.c; }; }; }
-Line 61 col 10 IdentifierName "m6" = { m7: { c: new() => m4.m5.m6.m7.c; }; }
-Line 61 col 13 IdentifierName "m7" = { c: new() => m4.m5.m6.m7.c; }
-Line 61 col 16 IdentifierName "c" = new() => m4.m5.m6.m7.c
+Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7.c" = { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }
+Line 61 col 4 MemberAccessExpression "m4.m5.m6.m7" = { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }
+Line 61 col 4 MemberAccessExpression "m4.m5.m6" = { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }
+Line 61 col 4 MemberAccessExpression "m4.m5" = { m6: { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }; }
+Line 61 col 4 IdentifierName "m4" = { m5: { m6: { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }; }; }
+Line 61 col 7 IdentifierName "m5" = { m6: { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }; }
+Line 61 col 10 IdentifierName "m6" = { m7: { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }; }
+Line 61 col 13 IdentifierName "m7" = { c: { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }; }
+Line 61 col 16 IdentifierName "c" = { prototype: m4.m5.m6.m7.c; new(): m4.m5.m6.m7.c; }
 Line 63 col 7 IdentifierName "m5" = m5
 Line 63 col 10 IdentifierName "m6" = m5.m6
 Line 63 col 13 IdentifierName "m7" = m5.m6.m7
 Line 65 col 18 IdentifierName "m8" = m5.m6.m7.m8
 Line 67 col 21 IdentifierName "c" = m5.m6.m7.m8.c
 Line 71 col 0 ObjectCreationExpression "new m5.m6.m7.m8.c()" = m5.m6.m7.m8.c
-Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8.c" = new() => m5.m6.m7.m8.c
-Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8" = { c: new() => m5.m6.m7.m8.c; }
-Line 71 col 4 MemberAccessExpression "m5.m6.m7" = { m8: { c: new() => m5.m6.m7.m8.c; }; }
-Line 71 col 4 MemberAccessExpression "m5.m6" = { m7: { m8: { c: new() => m5.m6.m7.m8.c; }; }; }
-Line 71 col 4 IdentifierName "m5" = { m6: { m7: { m8: { c: new() => m5.m6.m7.m8.c; }; }; }; }
-Line 71 col 7 IdentifierName "m6" = { m7: { m8: { c: new() => m5.m6.m7.m8.c; }; }; }
-Line 71 col 10 IdentifierName "m7" = { m8: { c: new() => m5.m6.m7.m8.c; }; }
-Line 71 col 13 IdentifierName "m8" = { c: new() => m5.m6.m7.m8.c; }
-Line 71 col 16 IdentifierName "c" = new() => m5.m6.m7.m8.c
+Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8.c" = { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }
+Line 71 col 4 MemberAccessExpression "m5.m6.m7.m8" = { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }
+Line 71 col 4 MemberAccessExpression "m5.m6.m7" = { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }
+Line 71 col 4 MemberAccessExpression "m5.m6" = { m7: { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }; }
+Line 71 col 4 IdentifierName "m5" = { m6: { m7: { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }; }; }
+Line 71 col 7 IdentifierName "m6" = { m7: { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }; }
+Line 71 col 10 IdentifierName "m7" = { m8: { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }; }
+Line 71 col 13 IdentifierName "m8" = { c: { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }; }
+Line 71 col 16 IdentifierName "c" = { prototype: m5.m6.m7.m8.c; new(): m5.m6.m7.m8.c; }
 Line 72 col 7 IdentifierName "m6" = m6
 Line 72 col 10 IdentifierName "m7" = m6.m7
 Line 73 col 18 IdentifierName "m8" = m6.m7.m8
 Line 75 col 21 IdentifierName "c" = m6.m7.m8.c
 Line 79 col 0 ObjectCreationExpression "new m6.m7.m8.c()" = m6.m7.m8.c
-Line 79 col 4 MemberAccessExpression "m6.m7.m8.c" = new() => m6.m7.m8.c
-Line 79 col 4 MemberAccessExpression "m6.m7.m8" = { c: new() => m6.m7.m8.c; }
-Line 79 col 4 MemberAccessExpression "m6.m7" = { m8: { c: new() => m6.m7.m8.c; }; }
-Line 79 col 4 IdentifierName "m6" = { m7: { m8: { c: new() => m6.m7.m8.c; }; }; }
-Line 79 col 7 IdentifierName "m7" = { m8: { c: new() => m6.m7.m8.c; }; }
-Line 79 col 10 IdentifierName "m8" = { c: new() => m6.m7.m8.c; }
-Line 79 col 13 IdentifierName "c" = new() => m6.m7.m8.c
+Line 79 col 4 MemberAccessExpression "m6.m7.m8.c" = { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }
+Line 79 col 4 MemberAccessExpression "m6.m7.m8" = { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }
+Line 79 col 4 MemberAccessExpression "m6.m7" = { m8: { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }; }
+Line 79 col 4 IdentifierName "m6" = { m7: { m8: { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }; }; }
+Line 79 col 7 IdentifierName "m7" = { m8: { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }; }
+Line 79 col 10 IdentifierName "m8" = { c: { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }; }
+Line 79 col 13 IdentifierName "c" = { prototype: m6.m7.m8.c; new(): m6.m7.m8.c; }
 Line 80 col 7 IdentifierName "m7" = m7
 Line 80 col 10 IdentifierName "m8" = m7.m8
 Line 82 col 18 IdentifierName "m9" = m7.m8.m9
@@ -96,10 +96,10 @@ Line 84 col 21 IdentifierName "c" = m7.m8.m9.c
 Line 88 col 14 IdentifierName "d" = m7.m8.m9.d
 Line 92 col 21 IdentifierName "e" = m7.m8.m9.e
 Line 96 col 0 ObjectCreationExpression "new m7.m8.m9.c()" = m7.m8.m9.c
-Line 96 col 4 MemberAccessExpression "m7.m8.m9.c" = new() => m7.m8.m9.c
-Line 96 col 4 MemberAccessExpression "m7.m8.m9" = { c: new() => m7.m8.m9.c; e: new() => m7.m8.m9.e; }
-Line 96 col 4 MemberAccessExpression "m7.m8" = { m9: { c: new() => m7.m8.m9.c; e: new() => m7.m8.m9.e; }; }
-Line 96 col 4 IdentifierName "m7" = { m8: { m9: { c: new() => m7.m8.m9.c; e: new() => m7.m8.m9.e; }; }; }
-Line 96 col 7 IdentifierName "m8" = { m9: { c: new() => m7.m8.m9.c; e: new() => m7.m8.m9.e; }; }
-Line 96 col 10 IdentifierName "m9" = { c: new() => m7.m8.m9.c; e: new() => m7.m8.m9.e; }
-Line 96 col 13 IdentifierName "c" = new() => m7.m8.m9.c
+Line 96 col 4 MemberAccessExpression "m7.m8.m9.c" = { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }
+Line 96 col 4 MemberAccessExpression "m7.m8.m9" = { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; e: { prototype: m7.m8.m9.e; new(): m7.m8.m9.e; }; }
+Line 96 col 4 MemberAccessExpression "m7.m8" = { m9: { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; e: { prototype: m7.m8.m9.e; new(): m7.m8.m9.e; }; }; }
+Line 96 col 4 IdentifierName "m7" = { m8: { m9: { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; e: { prototype: m7.m8.m9.e; new(): m7.m8.m9.e; }; }; }; }
+Line 96 col 7 IdentifierName "m8" = { m9: { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; e: { prototype: m7.m8.m9.e; new(): m7.m8.m9.e; }; }; }
+Line 96 col 10 IdentifierName "m9" = { c: { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }; e: { prototype: m7.m8.m9.e; new(): m7.m8.m9.e; }; }
+Line 96 col 13 IdentifierName "c" = { prototype: m7.m8.m9.c; new(): m7.m8.m9.c; }

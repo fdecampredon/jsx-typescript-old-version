@@ -1,2 +1,2 @@
-switchAssignmentCompat.ts line 4 col 10: error TS2012: Cannot convert 'new() => Foo' to 'number':
-	Type 'new() => Foo' requires a construct signature, but type 'Number' lacks one.
+switchAssignmentCompat.ts line 4 col 10: error TS2012: Cannot convert '{ prototype: Foo; new(): Foo; }' to 'number':
+	Type 'Number' is missing property 'prototype' from type '{ prototype: Foo; new(): Foo; }'.

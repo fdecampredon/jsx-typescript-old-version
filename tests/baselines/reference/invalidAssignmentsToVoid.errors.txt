@@ -2,7 +2,7 @@ invalidAssignmentsToVoid.ts line 2 col 1: error TS2011: Cannot convert 'number' 
 invalidAssignmentsToVoid.ts line 3 col 1: error TS2011: Cannot convert 'boolean' to 'void'.
 invalidAssignmentsToVoid.ts line 4 col 1: error TS2011: Cannot convert 'string' to 'void'.
 invalidAssignmentsToVoid.ts line 5 col 1: error TS2011: Cannot convert '{}' to 'void'.
-invalidAssignmentsToVoid.ts line 9 col 1: error TS2011: Cannot convert 'new() => C' to 'void'.
+invalidAssignmentsToVoid.ts line 9 col 1: error TS2011: Cannot convert '{ prototype: C; new(): C; }' to 'void'.
 invalidAssignmentsToVoid.ts line 10 col 1: error TS2011: Cannot convert 'C' to 'void'.
 invalidAssignmentsToVoid.ts line 14 col 1: error TS2011: Cannot convert 'I' to 'void'.
 invalidAssignmentsToVoid.ts line 17 col 1: error TS2011: Cannot convert '{ x: number; }' to 'void'.

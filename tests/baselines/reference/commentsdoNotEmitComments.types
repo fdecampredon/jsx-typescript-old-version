@@ -36,7 +36,7 @@ Line 43 col 15 IdentifierName "aOrb" = any
 Line 43 col 20 IdentifierName "toString" = any
 Line 48 col 4 IdentifierName "i" = c
 Line 48 col 8 ObjectCreationExpression "new c()" = c
-Line 48 col 12 IdentifierName "c" = new() => c
+Line 48 col 12 IdentifierName "c" = { prototype: c; new(): c; }
 Line 51 col 10 IdentifierName "i1" = i1
 Line 53 col 5 IdentifierName "a" = number
 Line 56 col 9 IdentifierName "b" = string

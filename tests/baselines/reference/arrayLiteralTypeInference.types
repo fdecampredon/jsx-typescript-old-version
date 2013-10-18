@@ -26,9 +26,9 @@ Line 17 col 19 ArrayLiteralExpression "[
     new ActionB()
 ]" = Action[]
 Line 18 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 18 col 8 IdentifierName "ActionA" = new() => ActionA
+Line 18 col 8 IdentifierName "ActionA" = { prototype: ActionA; new(): ActionA; }
 Line 19 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 19 col 8 IdentifierName "ActionB" = new() => ActionB
+Line 19 col 8 IdentifierName "ActionB" = { prototype: ActionB; new(): ActionB; }
 Line 22 col 4 IdentifierName "x3" = Action[]
 Line 22 col 8 IdentifierName "Action" = Action
 Line 22 col 19 ArrayLiteralExpression "[
@@ -37,11 +37,11 @@ Line 22 col 19 ArrayLiteralExpression "[
     new ActionB()
 ]" = Action[]
 Line 23 col 0 ObjectCreationExpression "new Action()" = Action
-Line 23 col 8 IdentifierName "Action" = new() => Action
+Line 23 col 8 IdentifierName "Action" = { prototype: Action; new(): Action; }
 Line 24 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 24 col 8 IdentifierName "ActionA" = new() => ActionA
+Line 24 col 8 IdentifierName "ActionA" = { prototype: ActionA; new(): ActionA; }
 Line 25 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 25 col 8 IdentifierName "ActionB" = new() => ActionB
+Line 25 col 8 IdentifierName "ActionB" = { prototype: ActionB; new(): ActionB; }
 Line 28 col 4 IdentifierName "z1" = { id: number; }[]
 Line 28 col 10 IdentifierName "id" = number
 Line 29 col 0 ArrayLiteralExpression "[
@@ -61,9 +61,9 @@ Line 35 col 0 ArrayLiteralExpression "[
         new ActionB()
     ]" = { id: number; }[]
 Line 36 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 36 col 12 IdentifierName "ActionA" = new() => ActionA
+Line 36 col 12 IdentifierName "ActionA" = { prototype: ActionA; new(): ActionA; }
 Line 37 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 37 col 12 IdentifierName "ActionB" = new() => ActionB
+Line 37 col 12 IdentifierName "ActionB" = { prototype: ActionB; new(): ActionB; }
 Line 40 col 4 IdentifierName "z3" = { id: number; }[]
 Line 40 col 10 IdentifierName "id" = number
 Line 41 col 0 ArrayLiteralExpression "[
@@ -72,8 +72,8 @@ Line 41 col 0 ArrayLiteralExpression "[
         new ActionB()
     ]" = { id: number; }[]
 Line 42 col 0 ObjectCreationExpression "new Action()" = Action
-Line 42 col 12 IdentifierName "Action" = new() => Action
+Line 42 col 12 IdentifierName "Action" = { prototype: Action; new(): Action; }
 Line 43 col 0 ObjectCreationExpression "new ActionA()" = ActionA
-Line 43 col 12 IdentifierName "ActionA" = new() => ActionA
+Line 43 col 12 IdentifierName "ActionA" = { prototype: ActionA; new(): ActionA; }
 Line 44 col 0 ObjectCreationExpression "new ActionB()" = ActionB
-Line 44 col 12 IdentifierName "ActionB" = new() => ActionB
+Line 44 col 12 IdentifierName "ActionB" = { prototype: ActionB; new(): ActionB; }

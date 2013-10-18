@@ -1,0 +1,3 @@
+assignmentCompatability16.ts line 9 col 1: error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: any[]; }':
+	Types of property 'one' of types '__test1__.interfaceWithPublicAndOptional<number, string>' and '{ one: any[]; }' are incompatible:
+		Type 'Number' is missing property 'concat' from type 'any[]'.

@@ -51,6 +51,10 @@ declare module process {
 }
 
 module Harness {
+    export interface SourceMapEmitterCallback {
+        (emittedFile: string, emittedLine: number, emittedColumn: number, sourceFile: string, sourceLine: number, sourceColumn: number, sourceName: string): void;
+    }
+
     // Settings 
     export var userSpecifiedroot = "";
     var global = <any>Function("return this").call(null);
@@ -989,10 +993,6 @@ module Harness {
                 return this.compiler.getDocument(documentName);
             }
 
-            public getTypeInfoAtPosition(targetPosition: number, document: TypeScript.Document) {
-                return this.compiler.getTypeInfoAtPosition(targetPosition, document);
-            }
-
             public getContentForFile(fileName: string) {
                 var snapshot: TypeScript.IScriptSnapshot = this.fileNameToScriptSnapshot.lookup(fileName)
                 return snapshot.getText(0, snapshot.getLength());
@@ -1044,8 +1044,12 @@ module Harness {
                     this.sourcemapRecorder.WriteLine("");
                 };
 
-                var output = this.compiler.emitAll((path: string) => host.resolvePath(path), sourceMapEmitterCallback);
-                output.outputFiles.forEach(o => host.writeFile(o.name, o.text, o.writeByteOrderMark));
+                var output = this.compiler.emitAll(path => host.resolvePath(path));
+                output.outputFiles.forEach(o => {
+                    host.writeFile(o.name, o.text, o.writeByteOrderMark);
+
+                    o.sourceMapEntries.forEach(s => sourceMapEmitterCallback(s.emittedFile, s.emittedLine, s.emittedColumn, s.sourceFile, s.sourceLine, s.sourceColumn, s.sourceName));
+                });
 
                 return output.diagnostics;
             }
@@ -1283,258 +1287,6 @@ module Harness {
         export function compileString(code: string, unitName: string, callback: (result: CompilerResult) => void) {
             var harnessCompiler = Harness.Compiler.getCompiler(Harness.Compiler.CompilerInstance.RunTime);
             harnessCompiler.compileString(code, unitName, callback);
-        }
-
-        // Types
-        export class Type {
-            constructor(public type: any, public code: any, public identifier: any) { }
-
-            public normalizeToArray(arg: any) {
-                if ((Array.isArray && Array.isArray(arg)) || arg instanceof Array)
-                    return arg;
-                
-                return [arg];
-            }
-
-            public compilesOk(testCode: string): boolean {
-                var errors: any = null;
-                var harnessCompiler = Harness.Compiler.getCompiler(Harness.Compiler.CompilerInstance.RunTime);
-                harnessCompiler.compileString(testCode, '0.ts', function (compilerResult) {
-                    errors = compilerResult.errors;
-                })
-
-                return errors.length === 0;
-            }
-
-            public isSubtypeOf(other: Type) {
-                var testCode = 'class __test1__ {\n';
-                testCode += '    public test() {\n';
-                testCode += '        ' + other.code + ';\n';
-                testCode += '        return ' + other.identifier + ';\n';
-                testCode += '    }\n';
-                testCode += '}\n';
-                testCode += 'class __test2__ extends __test1__ {\n';
-                testCode += '    public test() {\n';
-                testCode += '        ' + this.code + ';\n';
-                testCode += '        return ' + other.identifier + ';\n';
-                testCode += '    }\n';
-                testCode += '}\n';
-
-                return this.compilesOk(testCode);
-            }
-
-            // TODO: Find an implementation of isIdenticalTo that works.
-            //public isIdenticalTo(other: Type) {
-            //    var testCode = 'module __test1__ {\n';
-            //    testCode += '    ' + this.code + ';\n';
-            //    testCode += '    export var __val__ = ' + this.identifier + ';\n';
-            //    testCode += '}\n';
-            //    testCode += 'var __test1__val__ = __test1__.__val__;\n';
-
-            //    testCode += 'module __test2__ {\n';
-            //    testCode += '    ' + other.code + ';\n';
-            //    testCode += '    export var __val__ = ' + other.identifier + ';\n';
-            //    testCode += '}\n';
-            //    testCode += 'var __test2__val__ = __test2__.__val__;\n';
-
-            //    testCode += 'function __test__function__() { if(true) { return __test1__val__ }; return __test2__val__; }';
-
-            //    return this.compilesOk(testCode);
-            //}
-
-            public assertSubtypeOf(others: any) {
-                others = this.normalizeToArray(others);
-
-                for (var i = 0; i < others.length; i++) {
-                    if (!this.isSubtypeOf(others[i])) {
-                        throw new Error("Expected " + this.type + " to be a subtype of " + others[i].type);
-                    }
-                }
-            }
-
-            public assertNotSubtypeOf(others: any) {
-                others = this.normalizeToArray(others);
-
-                for (var i = 0; i < others.length; i++) {
-                    if (this.isSubtypeOf(others[i])) {
-                        throw new Error("Expected " + this.type + " to be a subtype of " + others[i].type);
-                    }
-                }
-            }
-
-            //public assertIdenticalTo(other: Type) {
-            //    if (!this.isIdenticalTo(other)) {
-            //        throw new Error("Expected " + this.type + " to be identical to " + other.type);
-            //    }
-            //}
-
-            //public assertNotIdenticalTo(other: Type) {
-            //    if (!this.isIdenticalTo(other)) {
-            //        throw new Error("Expected " + this.type + " to not be identical to " + other.type);
-            //    }
-            //}
-
-            public isAssignmentCompatibleWith(other: Type) {
-                var thisValName = '__val__' + this.identifier;
-                var otherValName = '__val__' + other.identifier;
-                var testCode = 'module __test1__ {\n';
-                testCode += '    export ' + this.code + ';\n';
-                testCode += '    export var ' + thisValName + ' = ' + this.identifier + ';\n';
-                testCode += '}\n';
-
-                testCode += 'module __test2__ {\n';
-                testCode += '    export ' + other.code + ';\n';
-                testCode += '    export var ' + otherValName + ' = ' + other.identifier + ';\n';
-                testCode += '}\n';
-
-                testCode += '__test2__.' + otherValName + ' = __test1__.' + thisValName;
-
-                return this.compilesOk(testCode);
-            }
-
-            /** Throws if this type object cannot be assigned to all of the given other types */
-            public assertAssignmentCompatibleWith(others: any) {
-                others = this.normalizeToArray(others);
-
-                for (var i = 0; i < others.length; i++) {
-                    var other = others[i];
-
-                    if (!this.isAssignmentCompatibleWith(other)) {
-                        throw new Error("Expected " + this.type + " to be assignment compatible with " + other.type);
-                    }
-                }
-            }
-
-            /** Throws if this type object can be assigned to any of the given other types */
-            public assertNotAssignmentCompatibleWith(others: any) {
-                others = this.normalizeToArray(others);
-
-                for (var i = 0; i < others.length; i++) {
-                    var other = others[i];
-
-                    if (this.isAssignmentCompatibleWith(other)) {
-                        throw new Error("Expected " + this.type + " to not be assignment compatible with " + other.type);
-                    }
-                }
-            }
-
-            public assertThisCanBeAssignedTo(desc: string, these: any[], notThese: any[]) {
-                it(desc + " is assignable to ", () => {
-                    this.assertAssignmentCompatibleWith(these);
-                });
-                
-                it(desc + " not assignable to ", () => {
-                    this.assertNotAssignmentCompatibleWith(notThese);
-                });
-            }
-
-        }
-
-        export class TypeFactory {
-            public any: Type;
-            public number: Type;
-            public string: Type;
-            public boolean: Type;
-
-            constructor() {
-                this.any = this.get('var x : any', 'x');
-                this.number = this.get('var x : number', 'x');
-                this.string = this.get('var x : string', 'x');
-                this.boolean = this.get('var x : boolean', 'x');
-            }
-
-            public get(code: string, target: any) {
-                var targetIdentifier = '';
-                var targetPosition = -1;
-                if (typeof target === "string") {
-                    targetIdentifier = target;
-                    targetPosition = code.indexOf(target);
-                }
-                else if (typeof target === "number") {
-                    targetPosition = target;
-                }
-                else {
-                    throw new Error("Expected string or number not " + (typeof target));
-                }
-
-                var errors: any = null;
-                var harnessCompiler = getCompiler(CompilerInstance.RunTime);
-                harnessCompiler.compileString(code, 'test.ts', function (compilerResult) {
-                    errors = compilerResult.errors;
-                });
-
-                if (errors.length > 0)
-                    throw new Error("Type definition contains errors: " + errors.join(","));
-
-                var matchingIdentifiers: Type[] = [];
-                
-                var fileNames = harnessCompiler.getAllFilesInCompiler();
-                for (var m = 0; m < fileNames.length; m++) {
-                    var document2 = harnessCompiler.getDocumentFromCompiler(fileNames[m]);
-                    if (document2.fileName !== 'lib.d.ts') {
-                        if (targetPosition > -1) {
-                            var tyInfo = harnessCompiler.getTypeInfoAtPosition(targetPosition, document2);
-                            var name = this.getTypeInfoName(tyInfo.ast);
-                            var foundValue = new Type(tyInfo.symbol.getTypeName(), code, name);
-                            if (!matchingIdentifiers.some(value => (value.identifier === foundValue.identifier) && (value.code === foundValue.code) && (value.type === foundValue.type))) {
-                                matchingIdentifiers.push(foundValue);
-                            }
-                        }
-                        else {
-                            for (var pos = 0; pos < code.length; pos++) {
-                                tyInfo = harnessCompiler.getTypeInfoAtPosition(targetPosition, document2);
-                                name = this.getTypeInfoName(tyInfo.ast);
-                                if (name === targetIdentifier) {
-                                    foundValue = new Type(tyInfo.symbol.getTypeName(), code, targetIdentifier);
-                                    if (!matchingIdentifiers.some(value => (value.identifier === foundValue.identifier) && (value.code === foundValue.code) && (value.type === foundValue.type))) {
-                                        matchingIdentifiers.push(foundValue);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (matchingIdentifiers.length === 0) {
-                    if (targetPosition > -1) {
-                        throw new Error("Could not find an identifier at position " + targetPosition);
-                    }
-                    else {
-                        throw new Error("Could not find an identifier " + targetIdentifier + " in any known scopes");
-                    }
-                }
-                else if (matchingIdentifiers.length > 1) {
-                    throw new Error("Found multiple matching identifiers for " + target);
-                }
-                else {
-                    return matchingIdentifiers[0];
-                }
-            }
-
-            private getTypeInfoName(ast: TypeScript.IAST) {
-                var name = '';
-                // Depending on the node type one of these properties will be there and have the value we care about
-                var a = <any>ast;
-                name = a.id
-                    ? a.id.actualText
-                    : a.name
-                        ? a.name.actualText
-                        : a.text
-                            ? a.text
-                            : a.identifier
-                                ? a.identifier.actualText
-                                : '';
-
-                return name;
-            }
-
-            public isOfType(expr: string, expectedType: string) {
-                var actualType = this.get('var _v_a_r_ = ' + expr, '_v_a_r_');
-
-                it('Expression "' + expr + '" is of type "' + expectedType + '"', function () {
-                    assert.equal(actualType.type, expectedType);
-                });
-            }
         }
 
         export interface GeneratedFile {

@@ -6,5 +6,5 @@ Line 5 col 16 IdentifierName "SomeBase" = SomeBase
 Line 6 col 11 IdentifierName "SomeNumber" = number
 Line 6 col 24 InvocationExpression "P.GetNumber()" = number
 Line 6 col 24 MemberAccessExpression "P.GetNumber" = () => number
-Line 6 col 24 IdentifierName "P" = { SomeNumber: number; new(): P; }
+Line 6 col 24 IdentifierName "P" = { prototype: P; SomeNumber: number; new(): P; }
 Line 6 col 26 IdentifierName "GetNumber" = () => number

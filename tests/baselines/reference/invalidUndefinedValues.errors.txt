@@ -3,7 +3,7 @@ invalidUndefinedValues.ts line 4 col 1: error TS2011: Cannot convert 'string' to
 invalidUndefinedValues.ts line 5 col 1: error TS2011: Cannot convert 'boolean' to 'undefined'.
 invalidUndefinedValues.ts line 7 col 1: error TS2011: Cannot convert 'void' to 'undefined'.
 invalidUndefinedValues.ts line 8 col 1: error TS2011: Cannot convert 'null' to 'undefined'.
-invalidUndefinedValues.ts line 12 col 1: error TS2011: Cannot convert 'new() => C' to 'undefined'.
+invalidUndefinedValues.ts line 12 col 1: error TS2011: Cannot convert '{ prototype: C; new(): C; }' to 'undefined'.
 invalidUndefinedValues.ts line 13 col 1: error TS2011: Cannot convert 'C' to 'undefined'.
 invalidUndefinedValues.ts line 17 col 1: error TS2011: Cannot convert 'I' to 'undefined'.
 invalidUndefinedValues.ts line 20 col 1: error TS2011: Cannot convert '{ x: number; }' to 'undefined'.

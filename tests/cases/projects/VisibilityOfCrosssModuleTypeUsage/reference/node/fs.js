@@ -15,4 +15,3 @@ var RM = (function () {
     return RM;
 })();
 exports.RM = RM;
-

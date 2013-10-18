@@ -42,6 +42,8 @@ var compilerSources = [
 	"syntaxTreeToAstVisitor.ts",
 	"types.ts",
 	"core/arrayUtilities.ts",
+	"core/bitVector.ts",
+	"core/bitMatrix.ts",
 	"core/constants.ts",
 	"core/debug.ts",
 	"core/diagnosticCore.ts",

@@ -75,26 +75,36 @@ var i8_c = c8;
 declare class c2 {
 }
 declare var i2: c2;
-declare var i2_c: new() => c2;
+declare var i2_c: {
+    prototype: c2;
+    new(): c2;
+};
 declare class c3 {
     /** Constructor comment*/
     constructor();
 }
 declare var i3: c3;
-declare var i3_c: new() => c3;
+declare var i3_c: {
+    prototype: c3;
+    new(): c3;
+};
 /** Class comment*/
 declare class c4 {
     /** Constructor comment*/
     constructor();
 }
 declare var i4: c4;
-declare var i4_c: new() => c4;
+declare var i4_c: {
+    prototype: c4;
+    new(): c4;
+};
 /** Class with statics*/
 declare class c5 {
     static s1: number;
 }
 declare var i5: c5;
 declare var i5_c: {
+    prototype: c5;
     s1: number;
     new(): c5;
 };
@@ -104,6 +114,7 @@ declare class c6 {
 }
 declare var i6: c6;
 declare var i6_c: {
+    prototype: c6;
     s1: number;
     new(): c6;
 };
@@ -113,6 +124,7 @@ declare class c7 {
 }
 declare var i7: c7;
 declare var i7_c: {
+    prototype: c7;
     s1: number;
     new(): c7;
 };
@@ -127,6 +139,7 @@ declare class c8 {
 }
 declare var i8: c8;
 declare var i8_c: {
+    prototype: c8;
     s1: number;
     new(): c8;
 };

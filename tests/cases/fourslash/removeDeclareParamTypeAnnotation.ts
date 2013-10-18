@@ -5,5 +5,4 @@
 //// parseInt('2');
 
 goTo.marker();
-// Bug 761080
-// edit.deleteAtCaret('s:T'.length);
+edit.deleteAtCaret('s:T'.length);

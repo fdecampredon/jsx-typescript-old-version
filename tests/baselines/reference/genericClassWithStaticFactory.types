@@ -19,7 +19,7 @@ Line 8 col 0 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
 Line 8 col 0 ThisKeyword "this" = Editor.List<T>
 Line 8 col 17 IdentifierName "listFactory" = Editor.ListFactory<T>
 Line 8 col 31 ObjectCreationExpression "new ListFactory<T>()" = Editor.ListFactory<T>
-Line 8 col 35 IdentifierName "ListFactory" = new<T>() => Editor.ListFactory<T>
+Line 8 col 35 IdentifierName "ListFactory" = { prototype: Editor.ListFactory<any>; new<T>(): Editor.ListFactory<T>; }
 Line 8 col 47 IdentifierName "T" = T
 Line 12 col 15 IdentifierName "add" = (data: T) => Editor.List<T>
 Line 12 col 19 IdentifierName "data" = T
@@ -333,7 +333,7 @@ Line 111 col 16 IdentifierName "entry" = Editor.List<T>
 Line 111 col 23 IdentifierName "List" = Editor.List<T>
 Line 111 col 28 IdentifierName "T" = T
 Line 111 col 33 ObjectCreationExpression "new List<T>(true, null)" = Editor.List<T>
-Line 111 col 37 IdentifierName "List" = new<T>(isHead: boolean, data: T) => Editor.List<T>
+Line 111 col 37 IdentifierName "List" = { prototype: Editor.List<any>; new<T>(isHead: boolean, data: T): Editor.List<T>; }
 Line 111 col 42 IdentifierName "T" = T
 Line 112 col 0 AssignmentExpression "entry.prev = entry" = Editor.List<T>
 Line 112 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
@@ -356,7 +356,7 @@ Line 118 col 16 IdentifierName "entry" = Editor.List<T>
 Line 118 col 23 IdentifierName "List" = Editor.List<T>
 Line 118 col 28 IdentifierName "T" = T
 Line 118 col 33 ObjectCreationExpression "new List<T>(false, data)" = Editor.List<T>
-Line 118 col 37 IdentifierName "List" = new<T>(isHead: boolean, data: T) => Editor.List<T>
+Line 118 col 37 IdentifierName "List" = { prototype: Editor.List<any>; new<T>(isHead: boolean, data: T): Editor.List<T>; }
 Line 118 col 42 IdentifierName "T" = T
 Line 118 col 52 IdentifierName "data" = T
 Line 119 col 0 AssignmentExpression "entry.prev = entry" = Editor.List<T>

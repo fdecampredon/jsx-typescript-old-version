@@ -17,38 +17,36 @@ module TypeScript {
     }
 
     export class ArgumentInferenceContext {
-        public inferenceCache: any = {};
-        public candidateCache: any = {};
-
+        public inferenceCache: IBitMatrix = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ false);
+        public candidateCache: CandidateInferenceInfo[] = [];
 
         public alreadyRelatingTypes(objectType: PullTypeSymbol, parameterType: PullTypeSymbol) {
-            var comboID = objectType.pullSymbolIDString + "#" + parameterType.pullSymbolIDString;
-
-            if (this.inferenceCache[comboID]) {
+            if (this.inferenceCache.valueAt(objectType.pullSymbolID, parameterType.pullSymbolID)) {
                 return true;
             }
             else {
-                this.inferenceCache[comboID] = true;
+                this.inferenceCache.setValueAt(objectType.pullSymbolID, parameterType.pullSymbolID, true);
                 return false;
-            }            
+            }
         }
 
         public resetRelationshipCache() {
-            this.inferenceCache = {};
+            this.inferenceCache.release();
+            this.inferenceCache = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ false);
         }
 
         public addInferenceRoot(param: PullTypeParameterSymbol) {
-            var info = <CandidateInferenceInfo>this.candidateCache[param.pullSymbolIDString];
+            var info = this.candidateCache[param.pullSymbolID];
 
             if (!info) {
                 info = new CandidateInferenceInfo();
                 info.typeParameter = param;
-                this.candidateCache[param.pullSymbolIDString] = info;
-            }        
+                this.candidateCache[param.pullSymbolID] = info;
+            }
         }
 
-        public getInferenceInfo(param: PullTypeParameterSymbol) {
-            return <CandidateInferenceInfo>this.candidateCache[param.pullSymbolIDString];
+        public getInferenceInfo(param: PullTypeParameterSymbol): CandidateInferenceInfo {
+            return this.candidateCache[param.pullSymbolID];
         }
 
         public addCandidateForInference(param: PullTypeParameterSymbol, candidate: PullTypeSymbol, fix: boolean) {
@@ -66,27 +64,25 @@ module TypeScript {
             }
         }
 
-        public getInferenceCandidates(): any[] {
-            var inferenceCandidates: any[] = [];
-            var info: CandidateInferenceInfo;
-            var val: any;
+        public getInferenceCandidates(): PullTypeSymbol[][] {
+            var inferenceCandidates: PullTypeSymbol[][] = [];
 
             for (var infoKey in this.candidateCache) {
-                info = <CandidateInferenceInfo>this.candidateCache[infoKey];
+                if (this.candidateCache.hasOwnProperty(infoKey)) {
+                    var info = this.candidateCache[infoKey];
 
-                for (var i = 0; i < info.inferenceCandidates.length; i++) {
-                    val = {};
-                    val[info.typeParameter.pullSymbolIDString] = info.inferenceCandidates[i];
-                    inferenceCandidates[inferenceCandidates.length] = val;
+                    for (var i = 0; i < info.inferenceCandidates.length; i++) {
+                        var val: PullTypeSymbol[] = [];
+                        val[info.typeParameter.pullSymbolID] = info.inferenceCandidates[i];
+                        inferenceCandidates.push(val);
+                    }
                 }
             }
 
             return inferenceCandidates;
         }
 
-        public inferArgumentTypes(resolver: PullTypeResolver, enclosingDecl: PullDecl, context: PullTypeResolutionContext): { results: { param: PullTypeParameterSymbol; type: PullTypeSymbol; }[]; unfit: boolean; } {
-            var info: CandidateInferenceInfo = null;
-
+        public inferArgumentTypes(resolver: PullTypeResolver, context: PullTypeResolutionContext): { results: { param: PullTypeParameterSymbol; type: PullTypeSymbol; }[]; unfit: boolean; } {
             var collection: IPullTypeCollection;
 
             var bestCommonType: PullTypeSymbol;
@@ -96,35 +92,37 @@ module TypeScript {
             var unfit = false;
 
             for (var infoKey in this.candidateCache) {
-                info = <CandidateInferenceInfo>this.candidateCache[infoKey];
+                if (this.candidateCache.hasOwnProperty(infoKey)) {
+                    var info = this.candidateCache[infoKey];
 
-                if (!info.inferenceCandidates.length) {
-                    results[results.length] = { param: info.typeParameter, type: resolver.semanticInfoChain.anyTypeSymbol };
-                    continue;
-                }
-
-                collection = {
-                    getLength: () => { return info.inferenceCandidates.length; },
-                    getTypeAtIndex: (index: number) => {
-                        return info.inferenceCandidates[index].type;
+                    if (!info.inferenceCandidates.length) {
+                        results[results.length] = { param: info.typeParameter, type: resolver.semanticInfoChain.anyTypeSymbol };
+                        continue;
                     }
-                };
 
-                bestCommonType = resolver.widenType(null, resolver.findBestCommonType(info.inferenceCandidates[0], collection, context, new TypeComparisonInfo()), enclosingDecl, context);
+                    collection = {
+                        getLength: () => { return info.inferenceCandidates.length; },
+                        getTypeAtIndex: (index: number) => {
+                            return info.inferenceCandidates[index].type;
+                        }
+                    };
 
-                if (!bestCommonType) {
-                    unfit = true;
-                }
-                else {
-                    // is there already a substitution for this type?
-                    for (var i = 0; i < results.length; i++) {
-                        if (results[i].type == info.typeParameter) {
-                            results[i].type = bestCommonType;
+                    bestCommonType = resolver.widenType(null, resolver.findBestCommonType(info.inferenceCandidates[0], collection, context, new TypeComparisonInfo()), context);
+
+                    if (!bestCommonType) {
+                        unfit = true;
+                    }
+                    else {
+                        // is there already a substitution for this type?
+                        for (var i = 0; i < results.length; i++) {
+                            if (results[i].type == info.typeParameter) {
+                                results[i].type = bestCommonType;
+                            }
                         }
                     }
-                }
 
-                results[results.length] = { param: info.typeParameter, type: bestCommonType };
+                    results[results.length] = { param: info.typeParameter, type: bestCommonType };
+                }
             }
 
             return { results: results, unfit: unfit };
@@ -134,11 +132,11 @@ module TypeScript {
     export class PullContextualTypeContext {
         public provisionallyTypedSymbols: PullSymbol[] = [];
         public hasProvisionalErrors = false;
-        private astSymbolMap = new DataMap<PullSymbol>();
+        private astSymbolMap: PullSymbol[] = []
 
         constructor(public contextualType: PullTypeSymbol,
                     public provisional: boolean,
-                    public substitutions: any) { }
+                    public substitutions: PullTypeSymbol[]) { }
 
         public recordProvisionallyTypedSymbol(symbol: PullSymbol) {
             this.provisionallyTypedSymbols[this.provisionallyTypedSymbols.length] = symbol;
@@ -151,11 +149,11 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap.link(ast.astIDString, symbol);
+            this.astSymbolMap[ast.astID] = symbol;
         }
 
         public getSymbolForAST(ast: IAST): PullSymbol {
-            return this.astSymbolMap.read(ast.astIDString);
+            return this.astSymbolMap[ast.astID];
         }
     }
 
@@ -164,9 +162,13 @@ module TypeScript {
 
         public instantiatingTypesToAny = false;
 
-        constructor(private resolver: PullTypeResolver, public inTypeCheck = false) { }
+        constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public fileName: string = null) {
+            if (inTypeCheck) {
+                Debug.assert(fileName, "A file name must be provided if you are typechecking");
+            }
+        }
 
-        public pushContextualType(type: PullTypeSymbol, provisional: boolean, substitutions: any) {
+        public pushContextualType(type: PullTypeSymbol, provisional: boolean, substitutions: PullTypeSymbol[]) {
             this.contextStack.push(new PullContextualTypeContext(type, provisional, substitutions));
         }
 
@@ -195,7 +197,7 @@ module TypeScript {
             if (this.contextStack.length) {
                 for (var i = this.contextStack.length - 1; i >= 0; i--) {
                     if (this.contextStack[i].substitutions) {
-                        substitution = this.contextStack[i].substitutions[type.pullSymbolIDString];
+                        substitution = this.contextStack[i].substitutions[type.pullSymbolID];
 
                         if (substitution) {
                             break;

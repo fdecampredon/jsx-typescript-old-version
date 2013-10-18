@@ -14,8 +14,6 @@ module TypeScript {
         private declDisplayName: string;
 
         public declID = pullDeclID++;
-        public declIDString: string = null;
-        public hashCode = -1;
         public flags: PullElementFlags = PullElementFlags.None;
         private span: TextSpan;
 
@@ -45,9 +43,6 @@ module TypeScript {
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
             }
-
-            this.hashCode = this.declID ^ this.kind;
-            this.declIDString = this.declID.toString();
         }
 
         public fileName(): string {

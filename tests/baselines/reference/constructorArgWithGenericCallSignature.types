@@ -16,12 +16,12 @@ Line 10 col 10 IdentifierName "Test" = Test
 Line 10 col 15 IdentifierName "MyFunc" = Test.MyFunc
 Line 11 col 0 InvocationExpression "Test.F(func)" = void
 Line 11 col 0 MemberAccessExpression "Test.F" = (func: Test.MyFunc) => void
-Line 11 col 0 IdentifierName "Test" = { MyClass: new(func: Test.MyFunc) => Test.MyClass; F(func: Test.MyFunc): void; }
+Line 11 col 0 IdentifierName "Test" = { MyClass: { prototype: Test.MyClass; new(func: Test.MyFunc): Test.MyClass; }; F(func: Test.MyFunc): void; }
 Line 11 col 5 IdentifierName "F" = (func: Test.MyFunc) => void
 Line 11 col 7 IdentifierName "func" = Test.MyFunc
 Line 12 col 4 IdentifierName "test" = Test.MyClass
 Line 12 col 11 ObjectCreationExpression "new Test.MyClass(func)" = Test.MyClass
-Line 12 col 15 MemberAccessExpression "Test.MyClass" = new(func: Test.MyFunc) => Test.MyClass
-Line 12 col 15 IdentifierName "Test" = { MyClass: new(func: Test.MyFunc) => Test.MyClass; F(func: Test.MyFunc): void; }
-Line 12 col 20 IdentifierName "MyClass" = new(func: Test.MyFunc) => Test.MyClass
+Line 12 col 15 MemberAccessExpression "Test.MyClass" = { prototype: Test.MyClass; new(func: Test.MyFunc): Test.MyClass; }
+Line 12 col 15 IdentifierName "Test" = { MyClass: { prototype: Test.MyClass; new(func: Test.MyFunc): Test.MyClass; }; F(func: Test.MyFunc): void; }
+Line 12 col 20 IdentifierName "MyClass" = { prototype: Test.MyClass; new(func: Test.MyFunc): Test.MyClass; }
 Line 12 col 28 IdentifierName "func" = Test.MyFunc

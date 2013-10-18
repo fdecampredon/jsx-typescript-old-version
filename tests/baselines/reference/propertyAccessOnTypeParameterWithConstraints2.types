@@ -40,7 +40,7 @@ Line 23 col 9 InvocationExpression "(new C<B, A>()).f()" = string
 Line 23 col 9 MemberAccessExpression "(new C<B, A>()).f" = () => string
 Line 23 col 9 ParenthesizedExpression "(new C<B, A>())" = C<B, A>
 Line 23 col 10 ObjectCreationExpression "new C<B, A>()" = C<B, A>
-Line 23 col 14 IdentifierName "C" = new<U extends T, T extends A>() => C<U, T>
+Line 23 col 14 IdentifierName "C" = { prototype: C<any, any>; new<U extends T, T extends A>(): C<U, T>; }
 Line 23 col 16 IdentifierName "B" = B
 Line 23 col 19 IdentifierName "A" = A
 Line 23 col 25 IdentifierName "f" = () => string
@@ -49,12 +49,12 @@ Line 24 col 10 InvocationExpression "(new C<B, A>()).g(new B())" = string
 Line 24 col 10 MemberAccessExpression "(new C<B, A>()).g" = (x: B) => string
 Line 24 col 10 ParenthesizedExpression "(new C<B, A>())" = C<B, A>
 Line 24 col 11 ObjectCreationExpression "new C<B, A>()" = C<B, A>
-Line 24 col 15 IdentifierName "C" = new<U extends T, T extends A>() => C<U, T>
+Line 24 col 15 IdentifierName "C" = { prototype: C<any, any>; new<U extends T, T extends A>(): C<U, T>; }
 Line 24 col 17 IdentifierName "B" = B
 Line 24 col 20 IdentifierName "A" = A
 Line 24 col 26 IdentifierName "g" = (x: B) => string
 Line 24 col 28 ObjectCreationExpression "new B()" = B
-Line 24 col 32 IdentifierName "B" = new() => B
+Line 24 col 32 IdentifierName "B" = { prototype: B; new(): B; }
 Line 26 col 10 IdentifierName "I" = I<U, T>
 Line 26 col 12 IdentifierName "U" = U
 Line 26 col 22 IdentifierName "T" = T
@@ -109,7 +109,7 @@ Line 40 col 18 MemberAccessExpression "a(new B()).foo" = () => string
 Line 40 col 18 InvocationExpression "a(new B())" = B
 Line 40 col 18 IdentifierName "a" = { <U extends T, T extends A>(): U; <U extends T, T extends A>(x: U): U; }
 Line 40 col 20 ObjectCreationExpression "new B()" = B
-Line 40 col 24 IdentifierName "B" = new() => B
+Line 40 col 24 IdentifierName "B" = { prototype: B; new(): B; }
 Line 40 col 29 IdentifierName "foo" = () => string
 Line 41 col 4 IdentifierName "r3d" = string
 Line 41 col 18 InvocationExpression "a(new B())['foo']()" = string
@@ -117,7 +117,7 @@ Line 41 col 18 ElementAccessExpression "a(new B())['foo']" = () => string
 Line 41 col 18 InvocationExpression "a(new B())" = B
 Line 41 col 18 IdentifierName "a" = { <U extends T, T extends A>(): U; <U extends T, T extends A>(x: U): U; }
 Line 41 col 20 ObjectCreationExpression "new B()" = B
-Line 41 col 24 IdentifierName "B" = new() => B
+Line 41 col 24 IdentifierName "B" = { prototype: B; new(): B; }
 Line 43 col 4 IdentifierName "b" = { foo: <U extends T, T extends A>(x: U) => string; }
 Line 43 col 8 ObjectLiteralExpression "{
     foo: <U extends T, T extends A>(x: U) => {
@@ -152,4 +152,4 @@ Line 50 col 9 MemberAccessExpression "b.foo" = <U extends T, T extends A>(x: U) 
 Line 50 col 9 IdentifierName "b" = { foo: <U extends T, T extends A>(x: U) => string; }
 Line 50 col 11 IdentifierName "foo" = <U extends T, T extends A>(x: U) => string
 Line 50 col 15 ObjectCreationExpression "new B()" = B
-Line 50 col 19 IdentifierName "B" = new() => B
+Line 50 col 19 IdentifierName "B" = { prototype: B; new(): B; }

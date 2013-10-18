@@ -128,6 +128,8 @@ module TypeScript {
                 var dtsFileName = path + ".d.ts";
                 var tsFilePath = path + ".ts";
 
+                var start = new Date().getTime();
+
                 do {
                     // Search for ".d.ts" file firs
                     var currentFilePath = this.host.resolveRelativePath(dtsFileName, parentDirectory);
@@ -146,8 +148,10 @@ module TypeScript {
                     }
 
                     parentDirectory = this.host.getParentDirectory(parentDirectory);
-                } while (parentDirectory);
+                }
+                while (parentDirectory);
 
+                TypeScript.fileResolutionImportFileSearchTime += new Date().getTime() - start;
 
                 if (!searchFilePath) {
                     // Cannot find file import, do not reprot an error, the typeChecker will report it later on
@@ -167,7 +171,11 @@ module TypeScript {
                 this.recordVisitedFile(normalizedPath);
 
                 // Preprocess the file
+                var start = new Date().getTime();
                 var scriptSnapshot = this.host.getScriptSnapshot(normalizedPath);
+                var totalTime = new Date().getTime() - start;
+                TypeScript.fileResolutionIOTime += totalTime;
+
                 var lineMap = LineMap1.fromScriptSnapshot(scriptSnapshot);
                 var preprocessedFileInformation = TypeScript.preProcessFile(normalizedPath, scriptSnapshot);
                 resolutionResult.diagnostics.push.apply(resolutionResult.diagnostics, preprocessedFileInformation.diagnostics);

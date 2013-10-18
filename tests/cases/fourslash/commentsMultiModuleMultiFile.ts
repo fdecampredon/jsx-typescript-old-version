@@ -39,10 +39,10 @@ goTo.marker('3');
 verify.quickInfoIs("multiM", "this is multi declare module\nthi is multi module 2\nthis is multi module 3 comment", "multiM", "module");
 
 goTo.marker('4');
-verify.quickInfoIs("{ b: new() => multiM.b; c: new() => multiM.c; d: new() => multiM.d; }");
+verify.quickInfoIs("{ b: { prototype: multiM.b; new(): multiM.b; }; c: { prototype: multiM.c; new(): multiM.c; }; d: { prototype: multiM.d; new(): multiM.d; }; }");
 
 goTo.marker('5');
-verify.quickInfoIs("{ b: new() => multiM.b; c: new() => multiM.c; d: new() => multiM.d; }");
+verify.quickInfoIs("{ b: { prototype: multiM.b; new(): multiM.b; }; c: { prototype: multiM.c; new(): multiM.c; }; d: { prototype: multiM.d; new(): multiM.d; }; }");
 
 goTo.marker('6');
 verify.quickInfoIs("multiM", "this is multi declare module\nthi is multi module 2\nthis is multi module 3 comment", "multiM", "module");
@@ -51,4 +51,4 @@ goTo.marker('7');
 verify.completionListContains("multiM");
 
 goTo.marker('8');
-verify.quickInfoIs("{ b: new() => multiM.b; c: new() => multiM.c; d: new() => multiM.d; }");
+verify.quickInfoIs("{ b: { prototype: multiM.b; new(): multiM.b; }; c: { prototype: multiM.c; new(): multiM.c; }; d: { prototype: multiM.d; new(): multiM.d; }; }");

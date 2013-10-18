@@ -1,0 +1,13 @@
+=== tests/cases/compiler/ambientExternalModuleWithInternalImportDeclaration_1.ts ===
+Line 1 col 7 IdentifierName "A" = { prototype: 'M'.C; f: number; new(): 'M'.C; }
+Line 2 col 4 IdentifierName "c" = 'M'.C
+Line 2 col 8 ObjectCreationExpression "new A()" = 'M'.C
+Line 2 col 12 IdentifierName "A" = { prototype: 'M'.C; f: number; new(): 'M'.C; }
+=== tests/cases/compiler/ambientExternalModuleWithInternalImportDeclaration_0.ts ===
+Line 1 col 11 IdentifierName "C" = 'M'.C
+Line 2 col 19 IdentifierName "f" = number
+Line 4 col 10 IdentifierName "C" = 'M'.C
+Line 5 col 0 IdentifierName "foo" = () => void
+Line 7 col 11 IdentifierName "X" = { prototype: 'M'.C; f: number; new(): 'M'.C; }
+Line 7 col 15 IdentifierName "C" = 'M'.C
+Line 8 col 13 IdentifierName "X" = { prototype: 'M'.C; f: number; new(): 'M'.C; }

@@ -16,4 +16,4 @@ Line 12 col 0 InvocationExpression "// BUG 773665
             super()" = void
 Line 18 col 4 IdentifierName "d" = D
 Line 18 col 8 ObjectCreationExpression "new D()" = D
-Line 18 col 12 IdentifierName "D" = new() => D
+Line 18 col 12 IdentifierName "D" = { prototype: D; new(): D; }

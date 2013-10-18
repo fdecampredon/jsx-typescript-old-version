@@ -8,32 +8,32 @@ Line 5 col 50 IdentifierName "a" = A
 Line 5 col 53 IdentifierName "A" = A
 Line 6 col 15 IdentifierName "InferredGetterFromSetterAnnotation" = A
 Line 6 col 61 ObjectCreationExpression "new B()" = B
-Line 6 col 65 IdentifierName "B" = new() => B
+Line 6 col 65 IdentifierName "B" = { prototype: B; new(): B; }
 Line 8 col 15 IdentifierName "InferredGetterFromSetterAnnotation_GetterFirst" = A
 Line 8 col 73 ObjectCreationExpression "new B()" = B
-Line 8 col 77 IdentifierName "B" = new() => B
+Line 8 col 77 IdentifierName "B" = { prototype: B; new(): B; }
 Line 9 col 15 IdentifierName "InferredGetterFromSetterAnnotation_GetterFirst" = A
 Line 9 col 62 IdentifierName "a" = A
 Line 9 col 65 IdentifierName "A" = A
 Line 12 col 15 IdentifierName "InferredFromGetter" = B
 Line 12 col 45 ObjectCreationExpression "new B()" = B
-Line 12 col 49 IdentifierName "B" = new() => B
+Line 12 col 49 IdentifierName "B" = { prototype: B; new(): B; }
 Line 13 col 15 IdentifierName "InferredFromGetter" = B
 Line 13 col 34 IdentifierName "a" = B
 Line 15 col 15 IdentifierName "InferredFromGetter_SetterFirst" = B
 Line 15 col 46 IdentifierName "a" = B
 Line 16 col 15 IdentifierName "InferredFromGetter_SetterFirst" = B
 Line 16 col 57 ObjectCreationExpression "new B()" = B
-Line 16 col 61 IdentifierName "B" = new() => B
+Line 16 col 61 IdentifierName "B" = { prototype: B; new(): B; }
 Line 18 col 15 IdentifierName "InferredSetterFromGetterAnnotation" = A
 Line 18 col 50 IdentifierName "a" = A
 Line 19 col 15 IdentifierName "InferredSetterFromGetterAnnotation" = A
 Line 19 col 54 IdentifierName "A" = A
 Line 19 col 65 ObjectCreationExpression "new B()" = B
-Line 19 col 69 IdentifierName "B" = new() => B
+Line 19 col 69 IdentifierName "B" = { prototype: B; new(): B; }
 Line 21 col 15 IdentifierName "InferredSetterFromGetterAnnotation_GetterFirst" = A
 Line 21 col 66 IdentifierName "A" = A
 Line 21 col 77 ObjectCreationExpression "new B()" = B
-Line 21 col 81 IdentifierName "B" = new() => B
+Line 21 col 81 IdentifierName "B" = { prototype: B; new(): B; }
 Line 22 col 15 IdentifierName "InferredSetterFromGetterAnnotation_GetterFirst" = A
 Line 22 col 62 IdentifierName "a" = A

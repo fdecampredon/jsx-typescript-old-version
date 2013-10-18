@@ -1,4 +1,4 @@
-typeofAmbientExternalModules_2.ts line 7 col 1: error TS2012: Cannot convert 'new() => D' to '{ C: new() => C; }':
-	Type 'new() => D' is missing property 'C' from type '{ C: new() => C; }'.
-typeofAmbientExternalModules_2.ts line 9 col 1: error TS2012: Cannot convert '{ C: new() => C; }' to 'new() => D':
-	Type 'new() => D' requires a construct signature, but type '{ C: new() => C; }' lacks one.
+typeofAmbientExternalModules_2.ts line 7 col 1: error TS2012: Cannot convert '{ prototype: D; new(): D; }' to '{ C: { prototype: C; new(): C; }; }':
+	Type '{ prototype: D; new(): D; }' is missing property 'C' from type '{ C: { prototype: C; new(): C; }; }'.
+typeofAmbientExternalModules_2.ts line 9 col 1: error TS2012: Cannot convert '{ C: { prototype: C; new(): C; }; }' to '{ prototype: D; new(): D; }':
+	Type '{ C: { prototype: C; new(): C; }; }' is missing property 'prototype' from type '{ prototype: D; new(): D; }'.

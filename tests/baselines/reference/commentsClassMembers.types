@@ -59,26 +59,26 @@ Line 37 col 11 IdentifierName "s2" = (b: number) => number
 Line 37 col 33 IdentifierName "b" = number
 Line 38 col 15 AddExpression "c1.s1 + b" = number
 Line 38 col 15 MemberAccessExpression "c1.s1" = number
-Line 38 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 38 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 38 col 18 IdentifierName "s1" = number
 Line 38 col 23 IdentifierName "b" = number
 Line 41 col 15 IdentifierName "s3" = number
 Line 42 col 15 InvocationExpression "c1.s2(c1.s1)" = number
 Line 42 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 42 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 42 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 42 col 18 IdentifierName "s2" = (b: number) => number
 Line 42 col 21 MemberAccessExpression "c1.s1" = number
-Line 42 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 42 col 21 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 42 col 24 IdentifierName "s1" = number
 Line 45 col 15 IdentifierName "s3" = number
 Line 45 col 38 IdentifierName "value" = number
 Line 46 col 0 AssignmentExpression "c1.s1 = c1.s2(value)" = number
 Line 46 col 0 MemberAccessExpression "c1.s1" = number
-Line 46 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 46 col 0 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 46 col 11 IdentifierName "s1" = number
 Line 46 col 16 InvocationExpression "c1.s2(value)" = number
 Line 46 col 16 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 46 col 16 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 46 col 16 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 46 col 19 IdentifierName "s2" = (b: number) => number
 Line 46 col 22 IdentifierName "value" = number
 Line 48 col 11 IdentifierName "nc_p1" = number
@@ -140,26 +140,26 @@ Line 69 col 11 IdentifierName "nc_s2" = (b: number) => number
 Line 69 col 17 IdentifierName "b" = number
 Line 70 col 15 AddExpression "c1.nc_s1 + b" = number
 Line 70 col 15 MemberAccessExpression "c1.nc_s1" = number
-Line 70 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 70 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 70 col 18 IdentifierName "nc_s1" = number
 Line 70 col 26 IdentifierName "b" = number
 Line 72 col 15 IdentifierName "nc_s3" = number
 Line 73 col 15 InvocationExpression "c1.nc_s2(c1.nc_s1)" = number
 Line 73 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 73 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 73 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 73 col 18 IdentifierName "nc_s2" = (b: number) => number
 Line 73 col 24 MemberAccessExpression "c1.nc_s1" = number
-Line 73 col 24 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 73 col 24 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 73 col 27 IdentifierName "nc_s1" = number
 Line 75 col 15 IdentifierName "nc_s3" = number
 Line 75 col 21 IdentifierName "value" = number
 Line 76 col 0 AssignmentExpression "c1.nc_s1 = c1.nc_s2(value)" = number
 Line 76 col 0 MemberAccessExpression "c1.nc_s1" = number
-Line 76 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 76 col 0 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 76 col 11 IdentifierName "nc_s1" = number
 Line 76 col 19 InvocationExpression "c1.nc_s2(value)" = number
 Line 76 col 19 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 76 col 19 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 76 col 19 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 76 col 22 IdentifierName "nc_s2" = (b: number) => number
 Line 76 col 28 IdentifierName "value" = number
 Line 80 col 11 IdentifierName "a_p1" = number
@@ -221,26 +221,26 @@ Line 111 col 11 IdentifierName "a_s2" = (b: number) => number
 Line 111 col 16 IdentifierName "b" = number
 Line 112 col 15 AddExpression "c1.a_s1 + b" = number
 Line 112 col 15 MemberAccessExpression "c1.a_s1" = number
-Line 112 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 112 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 112 col 18 IdentifierName "a_s1" = number
 Line 112 col 25 IdentifierName "b" = number
 Line 115 col 15 IdentifierName "a_s3" = number
 Line 116 col 15 InvocationExpression "c1.s2(c1.s1)" = number
 Line 116 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 116 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 116 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 116 col 18 IdentifierName "s2" = (b: number) => number
 Line 116 col 21 MemberAccessExpression "c1.s1" = number
-Line 116 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 116 col 21 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 116 col 24 IdentifierName "s1" = number
 Line 120 col 15 IdentifierName "a_s3" = number
 Line 120 col 20 IdentifierName "value" = number
 Line 121 col 0 AssignmentExpression "c1.a_s1 = c1.a_s2(value)" = number
 Line 121 col 0 MemberAccessExpression "c1.a_s1" = number
-Line 121 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 121 col 0 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 121 col 11 IdentifierName "a_s1" = number
 Line 121 col 18 InvocationExpression "c1.a_s2(value)" = number
 Line 121 col 18 MemberAccessExpression "c1.a_s2" = (b: number) => number
-Line 121 col 18 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 121 col 18 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 121 col 21 IdentifierName "a_s2" = (b: number) => number
 Line 121 col 26 IdentifierName "value" = number
 Line 125 col 11 IdentifierName "b_p1" = number
@@ -302,16 +302,16 @@ Line 156 col 11 IdentifierName "b_s2" = (b: number) => number
 Line 156 col 16 IdentifierName "b" = number
 Line 157 col 15 AddExpression "c1.b_s1 + b" = number
 Line 157 col 15 MemberAccessExpression "c1.b_s1" = number
-Line 157 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 157 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 157 col 18 IdentifierName "b_s1" = number
 Line 157 col 25 IdentifierName "b" = number
 Line 161 col 15 IdentifierName "b_s3" = number
 Line 162 col 15 InvocationExpression "c1.s2(c1.s1)" = number
 Line 162 col 15 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 162 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 162 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 162 col 18 IdentifierName "s2" = (b: number) => number
 Line 162 col 21 MemberAccessExpression "c1.s1" = number
-Line 162 col 21 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 162 col 21 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 162 col 24 IdentifierName "s1" = number
 Line 167 col 15 IdentifierName "b_s3" = number
 Line 167 col 20 IdentifierName "value" = number
@@ -320,16 +320,16 @@ Line 168 col 0 AssignmentExpression "/** setter */
 Line 168 col 0 MemberAccessExpression "/** setter */
         c1.b_s1" = number
 Line 168 col 0 IdentifierName "/** setter */
-        c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+        c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 169 col 11 IdentifierName "b_s1" = number
 Line 169 col 18 InvocationExpression "c1.b_s2(value)" = number
 Line 169 col 18 MemberAccessExpression "c1.b_s2" = (b: number) => number
-Line 169 col 18 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 169 col 18 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 169 col 21 IdentifierName "b_s2" = (b: number) => number
 Line 169 col 26 IdentifierName "value" = number
 Line 172 col 4 IdentifierName "i1" = c1
 Line 172 col 9 ObjectCreationExpression "new c1()" = c1
-Line 172 col 13 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 172 col 13 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 173 col 4 IdentifierName "i1_p" = number
 Line 173 col 11 MemberAccessExpression "i1.p1" = number
 Line 173 col 11 IdentifierName "i1" = c1
@@ -376,50 +376,50 @@ Line 182 col 3 IdentifierName "nc_p3" = number
 Line 182 col 11 IdentifierName "i1_ncprop" = number
 Line 183 col 4 IdentifierName "i1_s_p" = number
 Line 183 col 13 MemberAccessExpression "c1.s1" = number
-Line 183 col 13 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 183 col 13 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 183 col 16 IdentifierName "s1" = number
 Line 184 col 4 IdentifierName "i1_s_f" = (b: number) => number
 Line 184 col 13 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 184 col 13 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 184 col 13 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 184 col 16 IdentifierName "s2" = (b: number) => number
 Line 185 col 4 IdentifierName "i1_s_r" = number
 Line 185 col 13 InvocationExpression "c1.s2(20)" = number
 Line 185 col 13 MemberAccessExpression "c1.s2" = (b: number) => number
-Line 185 col 13 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 185 col 13 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 185 col 16 IdentifierName "s2" = (b: number) => number
 Line 186 col 4 IdentifierName "i1_s_prop" = number
 Line 186 col 16 MemberAccessExpression "c1.s3" = number
-Line 186 col 16 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 186 col 16 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 186 col 19 IdentifierName "s3" = number
 Line 187 col 0 AssignmentExpression "c1.s3 = i1_s_prop" = number
 Line 187 col 0 MemberAccessExpression "c1.s3" = number
-Line 187 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 187 col 0 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 187 col 3 IdentifierName "s3" = number
 Line 187 col 8 IdentifierName "i1_s_prop" = number
 Line 188 col 4 IdentifierName "i1_s_nc_p" = number
 Line 188 col 16 MemberAccessExpression "c1.nc_s1" = number
-Line 188 col 16 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 188 col 16 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 188 col 19 IdentifierName "nc_s1" = number
 Line 189 col 4 IdentifierName "i1_s_ncf" = (b: number) => number
 Line 189 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 189 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 189 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 189 col 18 IdentifierName "nc_s2" = (b: number) => number
 Line 190 col 4 IdentifierName "i1_s_ncr" = number
 Line 190 col 15 InvocationExpression "c1.nc_s2(20)" = number
 Line 190 col 15 MemberAccessExpression "c1.nc_s2" = (b: number) => number
-Line 190 col 15 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 190 col 15 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 190 col 18 IdentifierName "nc_s2" = (b: number) => number
 Line 191 col 4 IdentifierName "i1_s_ncprop" = number
 Line 191 col 18 MemberAccessExpression "c1.nc_s3" = number
-Line 191 col 18 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 191 col 18 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 191 col 21 IdentifierName "nc_s3" = number
 Line 192 col 0 AssignmentExpression "c1.nc_s3 = i1_s_ncprop" = number
 Line 192 col 0 MemberAccessExpression "c1.nc_s3" = number
-Line 192 col 0 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 192 col 0 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 192 col 3 IdentifierName "nc_s3" = number
 Line 192 col 11 IdentifierName "i1_s_ncprop" = number
-Line 193 col 4 IdentifierName "i1_c" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
-Line 193 col 11 IdentifierName "c1" = { s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 193 col 4 IdentifierName "i1_c" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
+Line 193 col 11 IdentifierName "c1" = { prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; a_s1: number; a_s2(b: number): number; a_s3: number; b_s1: number; b_s2(b: number): number; b_s3: number; new(): c1; }
 Line 194 col 6 IdentifierName "cProperties" = cProperties
 Line 195 col 12 IdentifierName "val" = number
 Line 197 col 15 IdentifierName "p1" = number
@@ -446,7 +446,7 @@ Line 208 col 13 IdentifierName "val" = number
 Line 208 col 19 IdentifierName "value" = number
 Line 211 col 4 IdentifierName "cProperties_i" = cProperties
 Line 211 col 20 ObjectCreationExpression "new cProperties()" = cProperties
-Line 211 col 24 IdentifierName "cProperties" = new() => cProperties
+Line 211 col 24 IdentifierName "cProperties" = { prototype: cProperties; new(): cProperties; }
 Line 212 col 0 AssignmentExpression "cProperties_i.p2 = cProperties_i.p1" = number
 Line 212 col 0 MemberAccessExpression "cProperties_i.p2" = number
 Line 212 col 0 IdentifierName "cProperties_i" = cProperties

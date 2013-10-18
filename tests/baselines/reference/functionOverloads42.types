@@ -1,0 +1,17 @@
+=== tests/cases/compiler/functionOverloads42.ts ===
+Line 0 col 9 IdentifierName "foo" = { (bar: { a: number; }[]): string; (bar: { a: any; }[]): number; }
+Line 0 col 13 IdentifierName "bar" = { a: number; }[]
+Line 0 col 18 IdentifierName "a" = number
+Line 1 col 9 IdentifierName "foo" = { (bar: { a: number; }[]): string; (bar: { a: any; }[]): number; }
+Line 1 col 13 IdentifierName "bar" = { a: any; }[]
+Line 1 col 18 IdentifierName "a" = any
+Line 2 col 9 IdentifierName "foo" = { (bar: { a: number; }[]): string; (bar: { a: any; }[]): number; }
+Line 2 col 13 IdentifierName "bar" = { a: any; }[]
+Line 2 col 18 IdentifierName "a" = any
+Line 2 col 41 IdentifierName "bar" = { a: any; }[]
+Line 3 col 4 IdentifierName "x" = number
+Line 3 col 8 InvocationExpression "foo([{a:'s'}])" = number
+Line 3 col 8 IdentifierName "foo" = { (bar: { a: number; }[]): string; (bar: { a: any; }[]): number; }
+Line 3 col 12 ArrayLiteralExpression "[{a:'s'}]" = { a: any; }[]
+Line 3 col 13 ObjectLiteralExpression "{a:'s'}" = { a: string; }
+Line 3 col 14 IdentifierName "a" = string

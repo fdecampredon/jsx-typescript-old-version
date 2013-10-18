@@ -1,6 +1,6 @@
 === tests/cases/compiler/declareExternalModuleWithExportAssignedFundule.ts ===
-Line 2 col 13 IdentifierName "express" = { ExpressServerRequest: new() => "express".express.ExpressServerRequest; (): "express".express.ExpressServer; }
-Line 4 col 13 IdentifierName "express" = { ExpressServerRequest: new() => "express".express.ExpressServerRequest; (): "express".express.ExpressServer; }
+Line 2 col 13 IdentifierName "express" = { ExpressServerRequest: { prototype: "express".express.ExpressServerRequest; new(): "express".express.ExpressServerRequest; }; (): "express".express.ExpressServer; }
+Line 4 col 13 IdentifierName "express" = { ExpressServerRequest: { prototype: "express".express.ExpressServerRequest; new(): "express".express.ExpressServerRequest; }; (): "express".express.ExpressServer; }
 Line 4 col 24 IdentifierName "express" = "express".express
 Line 4 col 32 IdentifierName "ExpressServer" = "express".express.ExpressServer
 Line 6 col 11 IdentifierName "express" = "express".express

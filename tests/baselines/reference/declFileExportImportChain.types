@@ -10,9 +10,9 @@ Line 1 col 24 IdentifierName "c1" = m1.m2.c1
 Line 1 col 7 IdentifierName "m1" = m1
 Line 2 col 18 IdentifierName "m2" = m1.m2
 Line 3 col 21 IdentifierName "c1" = m1.m2.c1
-Line 7 col 9 IdentifierName "m1" = { m2: { c1: new() => m1.m2.c1; }; }
+Line 7 col 9 IdentifierName "m1" = { m2: { c1: { prototype: m1.m2.c1; new(): m1.m2.c1; }; }; }
 === tests/cases/compiler/declFileExportImportChain_b.ts ===
-Line 0 col 14 IdentifierName "a" = { m2: { c1: new() => m1.m2.c1; }; }
+Line 0 col 14 IdentifierName "a" = { m2: { c1: { prototype: m1.m2.c1; new(): m1.m2.c1; }; }; }
 === tests/cases/compiler/declFileExportImportChain_b1.ts ===
 Line 0 col 7 IdentifierName "b" = b
 Line 1 col 9 IdentifierName "b" = b

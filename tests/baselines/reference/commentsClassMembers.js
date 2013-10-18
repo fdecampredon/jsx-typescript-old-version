@@ -370,6 +370,7 @@ declare var i1_s_ncf: (b: number) => number;
 declare var i1_s_ncr: number;
 declare var i1_s_ncprop: number;
 declare var i1_c: {
+    prototype: c1;
     s1: number;
     s2(b: number): number;
     s3: number;

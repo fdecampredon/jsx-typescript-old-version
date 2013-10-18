@@ -20,7 +20,7 @@ Line 8 col 8 InvocationExpression "(new C<Date>()).f()" = any
 Line 8 col 8 MemberAccessExpression "(new C<Date>()).f" = () => any
 Line 8 col 8 ParenthesizedExpression "(new C<Date>())" = C<Date>
 Line 8 col 9 ObjectCreationExpression "new C<Date>()" = C<Date>
-Line 8 col 13 IdentifierName "C" = new<T extends Date>() => C<T>
+Line 8 col 13 IdentifierName "C" = { prototype: C<any>; new<T extends Date>(): C<T>; }
 Line 8 col 15 IdentifierName "Date" = Date
 Line 8 col 24 IdentifierName "f" = () => any
 Line 10 col 10 IdentifierName "I" = I<T>

@@ -5,7 +5,7 @@ Line 1 col 0 IdentifierName "x" = T
 Line 1 col 7 IdentifierName "T" = T
 Line 4 col 4 IdentifierName "c" = C<any>
 Line 4 col 8 ObjectCreationExpression "new C()" = C<any>
-Line 4 col 12 IdentifierName "C" = new<T>() => C<T>
+Line 4 col 12 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 6 col 6 IdentifierName "D" = D<T, U>
 Line 6 col 8 IdentifierName "T" = T
 Line 6 col 11 IdentifierName "U" = U
@@ -15,4 +15,4 @@ Line 8 col 0 IdentifierName "y" = U
 Line 8 col 7 IdentifierName "U" = U
 Line 11 col 4 IdentifierName "d" = D<any, any>
 Line 11 col 8 ObjectCreationExpression "new D()" = D<any, any>
-Line 11 col 12 IdentifierName "D" = new<T, U>() => D<T, U>
+Line 11 col 12 IdentifierName "D" = { prototype: D<any, any>; new<T, U>(): D<T, U>; }

@@ -1,0 +1,9 @@
+=== tests/cases/compiler/thisInModuleFunction1.ts ===
+Line 0 col 7 IdentifierName "bar" = bar
+Line 1 col 17 IdentifierName "bar" = () => any
+Line 2 col 9 ThisKeyword "this" = any
+Line 5 col 4 IdentifierName "z" = any
+Line 5 col 8 InvocationExpression "bar.bar()" = any
+Line 5 col 8 MemberAccessExpression "bar.bar" = () => any
+Line 5 col 8 IdentifierName "bar" = { bar(): any; }
+Line 5 col 12 IdentifierName "bar" = () => any

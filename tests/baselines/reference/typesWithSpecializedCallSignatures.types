@@ -22,7 +22,7 @@ Line 8 col 8 IdentifierName "x" = any
 Line 9 col 15 IdentifierName "x" = any
 Line 12 col 4 IdentifierName "c" = C
 Line 12 col 8 ObjectCreationExpression "new C()" = C
-Line 12 col 12 IdentifierName "C" = new() => C
+Line 12 col 12 IdentifierName "C" = { prototype: C; new(): C; }
 Line 14 col 10 IdentifierName "I" = I
 Line 15 col 0 IdentifierName "foo" = { (x: 'hi'): Derived1; (x: 'bye'): Derived2; (x: string): Base; }
 Line 15 col 8 IdentifierName "x" = 'hi'

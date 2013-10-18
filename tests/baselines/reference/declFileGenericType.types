@@ -57,35 +57,35 @@ Line 20 col 18 IdentifierName "C" = C
 Line 20 col 20 IdentifierName "B" = C.B
 Line 22 col 11 IdentifierName "b" = <T>(x: T) => C.A<C.B>
 Line 22 col 15 MemberAccessExpression "C.F" = <T>(x: T) => C.A<C.B>
-Line 22 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 22 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 22 col 17 IdentifierName "F" = <T>(x: T) => C.A<C.B>
 Line 23 col 11 IdentifierName "c" = <T>(x: T) => C.A<C.B>
 Line 23 col 15 MemberAccessExpression "C.F2" = <T>(x: T) => C.A<C.B>
-Line 23 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 23 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 23 col 17 IdentifierName "F2" = <T>(x: T) => C.A<C.B>
 Line 24 col 11 IdentifierName "d" = <T>(x: T) => C.A<C.B>[]
 Line 24 col 15 MemberAccessExpression "C.F3" = <T>(x: T) => C.A<C.B>[]
-Line 24 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 24 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 24 col 17 IdentifierName "F3" = <T>(x: T) => C.A<C.B>[]
 Line 25 col 11 IdentifierName "e" = <T extends C.A<C.B>>(x: T) => C.A<C.B>[]
 Line 25 col 15 MemberAccessExpression "C.F4" = <T extends C.A<C.B>>(x: T) => C.A<C.B>[]
-Line 25 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 25 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 25 col 17 IdentifierName "F4" = <T extends C.A<C.B>>(x: T) => C.A<C.B>[]
 Line 27 col 11 IdentifierName "x" = C.A<C.B>
 Line 27 col 15 MemberAccessExpression "(new C.D<C.A<C.B>>(new C.A<C.B>())).val" = C.A<C.B>
 Line 27 col 15 ParenthesizedExpression "(new C.D<C.A<C.B>>(new C.A<C.B>()))" = C.D<C.A<C.B>>
 Line 27 col 16 ObjectCreationExpression "new C.D<C.A<C.B>>(new C.A<C.B>())" = C.D<C.A<C.B>>
-Line 27 col 20 MemberAccessExpression "C.D" = new<T>(val: T) => C.D<T>
-Line 27 col 20 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
-Line 27 col 22 IdentifierName "D" = new<T>(val: T) => C.D<T>
+Line 27 col 20 MemberAccessExpression "C.D" = { prototype: C.D<any>; new<T>(val: T): C.D<T>; }
+Line 27 col 20 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
+Line 27 col 22 IdentifierName "D" = { prototype: C.D<any>; new<T>(val: T): C.D<T>; }
 Line 27 col 24 IdentifierName "C" = C
 Line 27 col 26 IdentifierName "A" = C.A<T>
 Line 27 col 28 IdentifierName "C" = C
 Line 27 col 30 IdentifierName "B" = C.B
 Line 27 col 34 ObjectCreationExpression "new C.A<C.B>()" = C.A<C.B>
-Line 27 col 38 MemberAccessExpression "C.A" = new<T>() => C.A<T>
-Line 27 col 38 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
-Line 27 col 40 IdentifierName "A" = new<T>() => C.A<T>
+Line 27 col 38 MemberAccessExpression "C.A" = { prototype: C.A<any>; new<T>(): C.A<T>; }
+Line 27 col 38 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
+Line 27 col 40 IdentifierName "A" = { prototype: C.A<any>; new<T>(): C.A<T>; }
 Line 27 col 42 IdentifierName "C" = C
 Line 27 col 44 IdentifierName "B" = C.B
 Line 27 col 51 IdentifierName "val" = C.A<C.B>
@@ -98,7 +98,7 @@ Line 29 col 34 IdentifierName "B" = C.B
 Line 31 col 11 IdentifierName "g" = C.A<C.B>
 Line 31 col 15 InvocationExpression "C.F5<C.A<C.B>>()" = C.A<C.B>
 Line 31 col 15 MemberAccessExpression "C.F5" = <T>() => T
-Line 31 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 31 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 31 col 17 IdentifierName "F5" = <T>() => T
 Line 31 col 20 IdentifierName "C" = C
 Line 31 col 22 IdentifierName "A" = C.A<T>
@@ -116,5 +116,5 @@ Line 35 col 31 IdentifierName "C" = C
 Line 35 col 33 IdentifierName "B" = C.B
 Line 37 col 11 IdentifierName "j" = <T extends C.A<C.B>>(x: T) => T
 Line 37 col 15 MemberAccessExpression "C.F6" = <T extends C.A<C.B>>(x: T) => T
-Line 37 col 15 IdentifierName "C" = { A: new<T>() => C.A<T>; B: new() => C.B; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: new<T>(val: T) => C.D<T>; }
+Line 37 col 15 IdentifierName "C" = { A: { prototype: C.A<any>; new<T>(): C.A<T>; }; B: { prototype: C.B; new(): C.B; }; F<T>(x: T): C.A<C.B>; F2<T>(x: T): C.A<C.B>; F3<T>(x: T): C.A<C.B>[]; F4<T extends C.A<C.B>>(x: T): C.A<C.B>[]; F5<T>(): T; F6<T extends C.A<C.B>>(x: T): T; D: { prototype: C.D<any>; new<T>(val: T): C.D<T>; }; }
 Line 37 col 17 IdentifierName "F6" = <T extends C.A<C.B>>(x: T) => T

@@ -5,8 +5,8 @@ Line 3 col 19 IdentifierName "T" = T
 Line 5 col 17 IdentifierName "A" = Foo.A
 Line 8 col 4 IdentifierName "a" = Foo.B<Foo.A>
 Line 8 col 8 ObjectCreationExpression "new Foo.B<Foo.A>()" = Foo.B<Foo.A>
-Line 8 col 12 MemberAccessExpression "Foo.B" = new<T>() => Foo.B<T>
-Line 8 col 12 IdentifierName "Foo" = { B: new<T>() => Foo.B<T>; A: new() => Foo.A; }
-Line 8 col 16 IdentifierName "B" = new<T>() => Foo.B<T>
+Line 8 col 12 MemberAccessExpression "Foo.B" = { prototype: Foo.B<any>; new<T>(): Foo.B<T>; }
+Line 8 col 12 IdentifierName "Foo" = { B: { prototype: Foo.B<any>; new<T>(): Foo.B<T>; }; A: { prototype: Foo.A; new(): Foo.A; }; }
+Line 8 col 16 IdentifierName "B" = { prototype: Foo.B<any>; new<T>(): Foo.B<T>; }
 Line 8 col 18 IdentifierName "Foo" = Foo
 Line 8 col 22 IdentifierName "A" = Foo.A

@@ -18,7 +18,7 @@ Line 15 col 4 IdentifierName "z" = void
 Line 15 col 6 InvocationExpression "new C().g()" = void
 Line 15 col 6 MemberAccessExpression "new C().g" = () => void
 Line 15 col 6 ObjectCreationExpression "new C()" = C
-Line 15 col 10 IdentifierName "C" = new() => C
+Line 15 col 10 IdentifierName "C" = { prototype: C; new(): C; }
 Line 15 col 14 IdentifierName "g" = () => void
 Line 16 col 4 IdentifierName "N" = any
 Line 16 col 6 ObjectCreationExpression "new f()" = any

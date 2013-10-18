@@ -3,7 +3,7 @@ Line 0 col 6 IdentifierName "WorkItemToolbar" = WorkItemToolbar
 Line 1 col 11 IdentifierName "onToolbarItemClick" = () => void
 Line 2 col 0 InvocationExpression "WITDialogs.createCopyOfWorkItem()" = void
 Line 2 col 0 MemberAccessExpression "WITDialogs.createCopyOfWorkItem" = () => void
-Line 2 col 0 IdentifierName "WITDialogs" = { createCopyOfWorkItem(): void; new(): WITDialogs; }
+Line 2 col 0 IdentifierName "WITDialogs" = { prototype: WITDialogs; createCopyOfWorkItem(): void; new(): WITDialogs; }
 Line 2 col 19 IdentifierName "createCopyOfWorkItem" = () => void
 Line 5 col 6 IdentifierName "CreateCopyOfWorkItemDialog" = CreateCopyOfWorkItemDialog
 Line 6 col 11 IdentifierName "getDialogResult" = () => any
@@ -15,4 +15,4 @@ Line 12 col 6 IdentifierName "WITDialogs" = WITDialogs
 Line 13 col 18 IdentifierName "createCopyOfWorkItem" = () => void
 Line 14 col 0 InvocationExpression "createWorkItemDialog(CreateCopyOfWorkItemDialog)" = void
 Line 14 col 0 IdentifierName "createWorkItemDialog" = <P0>(dialogType: P0) => void
-Line 14 col 29 IdentifierName "CreateCopyOfWorkItemDialog" = new() => CreateCopyOfWorkItemDialog
+Line 14 col 29 IdentifierName "CreateCopyOfWorkItemDialog" = { prototype: CreateCopyOfWorkItemDialog; new(): CreateCopyOfWorkItemDialog; }

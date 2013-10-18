@@ -2,10 +2,13 @@
 ///<reference path="..\typescript.ts" />
 
 module TypeScript {
-
-    export interface PullTypeSubstitutionMap {
-        [pullSymbolID: string]: PullTypeSymbol;
+    export enum GenerativeTypeClassification {
+        Unknown,
+        Open,
+        Closed,
+        InfinitelyExpanding
     }
+
 
     // Type references and instantiated type references
     export class PullTypeReferenceSymbol extends PullTypeSymbol {
@@ -61,6 +64,7 @@ module TypeScript {
             return this.referencedTypeSymbol;
         }
 
+        // type symbol shims
         public hasMembers(): boolean {
             // no need to resolve first - members are collected during binding
 
@@ -68,7 +72,7 @@ module TypeScript {
         }
 
         public setAssociatedContainerType(type: PullTypeSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": setAssociatedContainerType");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": setAssociatedContainerType");
         }
 
         public getAssociatedContainerType(): PullTypeSymbol {
@@ -83,11 +87,11 @@ module TypeScript {
             return this.referencedTypeSymbol.getFunctionSymbol();
         }
         public setFunctionSymbol(symbol: PullSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": setFunctionSymbol");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": setFunctionSymbol");
         }
 
         public addContainedNonMember(nonMember: PullSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addContainedNonMember");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addContainedNonMember");
         }
         public findContainedNonMemberContainer(containerName: string, kind = PullElementKind.None): PullTypeSymbol {
             this.ensureReferencedTypeIsResolved();
@@ -95,28 +99,28 @@ module TypeScript {
         }
 
         public addMember(memberSymbol: PullSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addMember");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addMember");
         }
         public addEnclosedMemberType(enclosedType: PullTypeSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addEnclosedMemberType");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addEnclosedMemberType");
         }
         public addEnclosedMemberContainer(enclosedContainer: PullTypeSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addEnclosedMemberContainer");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addEnclosedMemberContainer");
         }
         public addEnclosedNonMember(enclosedNonMember: PullSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addEnclosedNonMember");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addEnclosedNonMember");
         }
         public addEnclosedNonMemberType(enclosedNonMemberType: PullTypeSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addEnclosedNonMemberType");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addEnclosedNonMemberType");
         }
         public addEnclosedNonMemberContainer(enclosedNonMemberContainer: PullTypeSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addEnclosedNonMemberContainer");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addEnclosedNonMemberContainer");
         }
         public addTypeParameter(typeParameter: PullTypeParameterSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addTypeParameter");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addTypeParameter");
         }
         public addConstructorTypeParameter(typeParameter: PullTypeParameterSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addConstructorTypeParameter");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addConstructorTypeParameter");
         }
 
         public findContainedNonMember(name: string): PullSymbol {
@@ -142,7 +146,7 @@ module TypeScript {
         }
 
         public setHasDefaultConstructor(hasOne= true): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ":setHasDefaultConstructor");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ":setHasDefaultConstructor");
         }
         public getHasDefaultConstructor(): boolean {
             this.ensureReferencedTypeIsResolved();
@@ -154,7 +158,7 @@ module TypeScript {
             return this.referencedTypeSymbol.getConstructorMethod();
         }
         public setConstructorMethod(constructorMethod: PullSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": setConstructorMethod");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": setConstructorMethod");
         }
         public getTypeParameters(): PullTypeParameterSymbol[]{
             this.ensureReferencedTypeIsResolved();
@@ -189,13 +193,13 @@ module TypeScript {
         }
 
         public addCallSignature(callSignature: PullSignatureSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addCallSignature");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addCallSignature");
         }
         public addConstructSignature(constructSignature: PullSignatureSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addConstructSignature");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addConstructSignature");
         }
         public addIndexSignature(indexSignature: PullSignatureSymbol): void {
-            Debug.fail("Reference symbol " + this.pullSymbolIDString + ": addIndexSignature");
+            Debug.fail("Reference symbol " + this.pullSymbolID + ": addIndexSignature");
         }
 
         public hasOwnCallSignatures(): boolean {
@@ -319,13 +323,6 @@ module TypeScript {
         }
     }
 
-    export enum GenerativeTypeClassification {
-        Unknown,
-        Open,
-        Closed,
-        InfinitelyExpanding
-    }
-
     export var nSpecializationsCreated = 0;
     export var nSpecializedSignaturesCreated = 0;    
 
@@ -345,6 +342,120 @@ module TypeScript {
         public isInstanceReferenceType: boolean = false;
 
         public getIsSpecialized() { return !this.isInstanceReferenceType; }
+
+        private _generativeTypeClassification: GenerativeTypeClassification = GenerativeTypeClassification.Unknown;
+
+        public getGenerativeTypeClassification(enclosingType: PullTypeSymbol): GenerativeTypeClassification {
+
+            if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
+
+                var rootType: PullTypeSymbol = <PullTypeSymbol>enclosingType.getRootSymbol();
+                var rootThis: PullTypeSymbol = <PullTypeReferenceSymbol>this.getRootSymbol();
+
+                var prevRootType: PullTypeSymbol = null;
+                var prevRootThis: PullTypeSymbol = null;
+
+                while (true) {
+                    prevRootType = rootType;
+                    rootType = <PullTypeSymbol>rootType.getRootSymbol();
+
+                    if (prevRootType == rootType) {
+                        break;
+                    }
+                }
+
+                // With respect to the enclosing type, is this type reference open, closed or 
+                // infinitely expanding?
+
+                var typeParameters = enclosingType.getTypeParameters();
+                var typeReferenceTypeArguments = rootThis.getTypeArguments();
+                var referenceTypeArgument: PullTypeSymbol = null;
+
+                // may have an object literal or a function signature
+                if (!typeReferenceTypeArguments) {
+
+                    while (true) {
+                        prevRootThis = rootThis;
+                        rootThis = <PullTypeSymbol>rootThis.getRootSymbol();
+
+                        if (prevRootThis == rootThis) {
+                            break;
+                        }
+                    }
+
+                    // create a new type map with just the type parameter
+                    var typeParametersMap: PullTypeSymbol[] = [];
+
+                    for (var i = 0; i < typeParameters.length; i++) {
+                        typeParametersMap[typeParameters[i].pullSymbolID] = typeParameters[i];
+                    }
+
+                    var wrapsSomeTypeParameters = rootThis.wrapsSomeTypeParameter(typeParametersMap);
+
+                    // It's a wrap of a wrap
+                    if (wrapsSomeTypeParameters && rootThis.wrapsSomeNestedType(rootType, /*isCheckingNestedType:*/ false)) {
+                        this._generativeTypeClassification = GenerativeTypeClassification.InfinitelyExpanding;
+                    }
+                    else if (wrapsSomeTypeParameters) {
+                        this._generativeTypeClassification = GenerativeTypeClassification.Open;
+                    }
+                    else {
+                        this._generativeTypeClassification = GenerativeTypeClassification.Closed;
+                    }
+                }
+                else {
+                    var i = 0;
+
+                    while (i < typeReferenceTypeArguments.length) {
+                        referenceTypeArgument = <PullTypeSymbol>typeReferenceTypeArguments[i].getRootSymbol();
+
+                        if (referenceTypeArgument.isGeneric() &&
+                            referenceTypeArgument.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                            break;
+                        }
+
+                        i++;
+                    }
+
+                    // if none of the type parameters are wrapped, the type reference is closed
+                    if (i == typeParameters.length) {
+                        this._generativeTypeClassification = GenerativeTypeClassification.Closed;
+                    }
+
+                    // If the type reference is not closed, it's either open or infinitely expanding
+                    if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
+
+                        // A type reference that references any of this type's type parameters in a type
+                        // argument position is 'open'
+
+                        var i = 0;
+
+                        while ((this._generativeTypeClassification == GenerativeTypeClassification.Unknown) &&
+                            (i < typeReferenceTypeArguments.length)) {
+
+                                for (var j = 0; j < typeParameters.length; j++) {
+                                    if (typeParameters[j] == typeReferenceTypeArguments[i]) {
+                                        this._generativeTypeClassification = GenerativeTypeClassification.Open;
+                                        break;
+                                    }
+                                }
+
+                                i++;
+                        }
+
+                        // if it's not open, then it's infinitely expanding (given that the 'wrap' check above
+                        // returned true
+                        if (this._generativeTypeClassification != GenerativeTypeClassification.Open) {
+                            this._generativeTypeClassification = GenerativeTypeClassification.InfinitelyExpanding;
+                        }
+                    }
+                }
+            }
+
+            return this._generativeTypeClassification;
+        }
+
+        // shims
 
         public isArrayNamedTypeReference(): boolean {
             if (this._isArray === undefined) {
@@ -376,7 +487,7 @@ module TypeScript {
         // The typeParameterArgumentMap parameter represents a mapping of PUllSymbolID strings of type parameters to type argument symbols
         // The instantiateFunctionTypeParameters parameter is set to true when a signature is being specialized at a call site, or if its
         // type parameters need to otherwise be specialized (say, during a type relationship check)
-        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterArgumentMap: { [pullSymbolID: string]: PullTypeSymbol; }, instantiateFunctionTypeParameters = false): PullInstantiatedTypeReferenceSymbol {
+        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterArgumentMap: PullTypeSymbol[], instantiateFunctionTypeParameters = false): PullInstantiatedTypeReferenceSymbol {
             Debug.assert(resolver);
 
             // check for an existing instantiation
@@ -394,17 +505,19 @@ module TypeScript {
                 }
                 
                 for (var i = 0; i < typeArguments.length; i++) {
-                    typeParameterArgumentMap[typeArguments[i].pullSymbolIDString] = reconstructedTypeArgumentList[i];
+                    typeParameterArgumentMap[typeArguments[i].pullSymbolID] = reconstructedTypeArgumentList[i];
                 }
             }
             else {
                 var tyArg: PullTypeSymbol = null;
 
                 for (var typeParameterID in typeParameterArgumentMap) {
-                    tyArg = typeParameterArgumentMap[typeParameterID];
+                    if (typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
+                        tyArg = typeParameterArgumentMap[typeParameterID];
 
-                    if (tyArg) {
-                        reconstructedTypeArgumentList[reconstructedTypeArgumentList.length] = tyArg;
+                        if (tyArg) {
+                            reconstructedTypeArgumentList[reconstructedTypeArgumentList.length] = tyArg;
+                        }
                     }
                 }
             }
@@ -433,7 +546,7 @@ module TypeScript {
                         }
 
                         if (isReferencedType) {
-                            typeParameterArgumentMap = {};
+                            typeParameterArgumentMap = [];
                         }
                     }
                     else {
@@ -446,17 +559,22 @@ module TypeScript {
             // from 'Array<S>' to 'Array<foo>', then we'll need to create a new initialization map.  This helps
             // us get the type argument list right when it's requested via getTypeArguments
             if (type.isTypeReference() && type.isGeneric()) {
-                var initializationMap: PullTypeSubstitutionMap = {};
+                var initializationMap: PullTypeSymbol[] = [];
 
                 // first, initialize the argument map
                 for (var typeParameterID in typeParameterArgumentMap) {
-                    initializationMap[typeParameterID] = typeParameterArgumentMap[typeParameterID];
+                    if (typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
+                        initializationMap[typeParameterID] = typeParameterArgumentMap[typeParameterID];
+                    }
                 }
 
                 // next, overwrite any entries that should be re-directed to new type parameters
-                for (var typeParameterID in (<PullInstantiatedTypeReferenceSymbol>type)._typeParameterArgumentMap) {
-                    if (typeParameterArgumentMap[(<PullInstantiatedTypeReferenceSymbol>type)._typeParameterArgumentMap[typeParameterID].pullSymbolIDString]) {
-                        initializationMap[typeParameterID] = typeParameterArgumentMap[(<PullInstantiatedTypeReferenceSymbol>type)._typeParameterArgumentMap[typeParameterID].pullSymbolIDString];
+                var outerTypeMap = (<PullInstantiatedTypeReferenceSymbol>type)._typeParameterArgumentMap;
+                for (var typeParameterID in outerTypeMap) {
+                    if (outerTypeMap.hasOwnProperty(typeParameterID)) {
+                        if (typeParameterArgumentMap[outerTypeMap[typeParameterID].pullSymbolID]) {
+                            initializationMap[typeParameterID] = typeParameterArgumentMap[outerTypeMap[typeParameterID].pullSymbolID];
+                        }
                     }
                 }
 
@@ -476,7 +594,7 @@ module TypeScript {
             return instantiation;
         }
 
-        constructor(resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: { [name: string]: PullTypeSymbol; }) {
+        constructor(resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: PullTypeSymbol[]) {
             super(resolver, referencedTypeSymbol);
 
             nSpecializationsCreated++;
@@ -486,7 +604,9 @@ module TypeScript {
             return !!this.referencedTypeSymbol.getTypeParameters().length;
         }
 
-        public generativeTypeClassification: GenerativeTypeClassification = GenerativeTypeClassification.Unknown;
+        public getTypeParameterArgumentMap(): PullTypeSymbol[] {
+            return this._typeParameterArgumentMap;
+        }
 
         public getTypeArguments(): PullTypeSymbol[]{
 
@@ -502,7 +622,7 @@ module TypeScript {
                     var typeArguments: PullTypeSymbol[] = [];
 
                     for (var i = 0; i < typeParameters.length; i++) {
-                        typeArgument = <PullTypeSymbol>this._typeParameterArgumentMap[typeParameters[i].pullSymbolIDString];
+                        typeArgument = <PullTypeSymbol>this._typeParameterArgumentMap[typeParameters[i].pullSymbolID];
 
                         if (!typeArgument) {
                             Debug.fail("type argument count mismatch");
@@ -552,7 +672,7 @@ module TypeScript {
                     if (!this._instantiatedMemberNameCache[referencedMember.name]) {
 
                         // if the member does not require further specialization, re-use the referenced symbol
-                        if (!referencedMember.type.typeWrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                        if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                             instantiatedMember = referencedMember;
                         }
                         else {
@@ -648,7 +768,7 @@ module TypeScript {
                     requestedMembers[requestedMembers.length] = this._allInstantiatedMemberNameCache[referencedMember.name];
                 }
                 else {
-                    if (!referencedMember.type.typeWrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                    if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                         this._allInstantiatedMemberNameCache[referencedMember.name] = referencedMember;
                         requestedMembers[requestedMembers.length] = referencedMember;
                     }
@@ -718,7 +838,7 @@ module TypeScript {
             for (var i = 0; i < referencedCallSignatures.length; i++) {
                 this.resolver.resolveDeclaredSymbol(referencedCallSignatures[i]);
 
-                if (!referencedCallSignatures[i].signatureWrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedCallSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedCallSignatures[i];
                 }
                 else {
@@ -746,7 +866,7 @@ module TypeScript {
             for (var i = 0; i < referencedConstructSignatures.length; i++) {
                 this.resolver.resolveDeclaredSymbol(referencedConstructSignatures[i]);
 
-                if (!referencedConstructSignatures[i].signatureWrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedConstructSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedConstructSignatures[i];
                 }
                 else {
@@ -774,7 +894,7 @@ module TypeScript {
             for (var i = 0; i < referencedIndexSignatures.length; i++) {
                 this.resolver.resolveDeclaredSymbol(referencedIndexSignatures[i]);
 
-                if (!referencedIndexSignatures[i].signatureWrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedIndexSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = referencedIndexSignatures[i];
                 }
                 else {
@@ -788,24 +908,5 @@ module TypeScript {
         public hasBase(potentialBase: PullTypeSymbol, visited: PullSymbol[]= []): boolean {
             return this.referencedTypeSymbol.hasBase(potentialBase, visited);
         }
-    }
-
-    export function computeGenerativeTypeClassification(type: PullTypeSymbol, typeArguments: PullTypeSymbol[]): GenerativeTypeClassification {
-
-        // a type reference without type arguments
-        if (!type.isGeneric()) {
-            return GenerativeTypeClassification.Closed;
-        }
-
-        // does not reference any of G's type parameters - closed
-
-        // references  any of G's type parameters in a type argument - open
-
-        // directly or indirectly references G through open type references and which 
-        // contains a wrapped form of any of G'ts type parameters in one or more
-        // type arguments - infinitely expanding
-
-
-        return GenerativeTypeClassification.Unknown;
     }
 }

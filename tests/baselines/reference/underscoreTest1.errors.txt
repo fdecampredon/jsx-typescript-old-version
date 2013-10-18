@@ -1,0 +1,12 @@
+underscoreTest1_underscore.ts line 239 col 22: error TS2143: Interface 'Underscore.ChainedArray<T>' cannot extend interface 'Underscore.ChainedObject<T[]>':
+	Types of property 'extend' of types 'Underscore.ChainedArray<T>' and 'Underscore.ChainedObject<T[]>' are incompatible:
+		Call signatures of types '(...sources: any[]) => Underscore.ChainedArray<T>' and '(...sources: any[]) => Underscore.ChainedObject<T>' are incompatible:
+			Types of property 'tap' of types 'Underscore.ChainedArray<T>' and 'Underscore.ChainedObject<T>' are incompatible:
+				Call signatures of types '(interceptor: (object: T[]) => void) => Underscore.ChainedArray<T>' and '(interceptor: (object: T) => void) => Underscore.ChainedObject<T>' are incompatible:
+					Call signatures of types '(object: T[]) => void' and '(object: T) => void' are incompatible:
+						Type 'T' is missing property 'concat' from type 'T[]'.
+					Call signatures of types '(object: T) => void' and '(object: T[]) => void' are incompatible:
+						Type 'T' is missing property 'concat' from type 'T[]'.
+underscoreTest1_underscore.ts line 330 col 22: error TS2143: Interface 'Underscore.ChainedDictionary<T>' cannot extend interface 'Underscore.ChainedObject<Dictionary<T>>':
+	Types of property 'extend' of types 'Underscore.ChainedDictionary<T>' and 'Underscore.ChainedObject<Dictionary<T>>' are incompatible:
+		Call signatures of types '(...sources: any[]) => Underscore.ChainedDictionary<T>' and '(...sources: any[]) => Underscore.ChainedObject<Dictionary<T>>' are incompatible.

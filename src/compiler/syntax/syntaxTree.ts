@@ -782,8 +782,7 @@ module TypeScript {
         }
 
         public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): void {
-            if (this.checkClassElementModifiers(node.modifiers) ||
-                this.checkIndexMemberModifiers(node)) {
+            if (this.checkIndexMemberModifiers(node)) {
                 this.skip(node);
                 return;
             }
@@ -792,16 +791,10 @@ module TypeScript {
         }
 
         private checkIndexMemberModifiers(node: IndexMemberDeclarationSyntax): boolean {
-            var modifierFullStart = this.position();
-
-            for (var i = 0, n = node.modifiers.childCount(); i < n; i++) {
-                var modifier = <ISyntaxToken>node.modifiers.childAt(i);
-                if (modifier.tokenKind !== SyntaxKind.StaticKeyword) {
-
-                    this.pushDiagnostic1(modifierFullStart, modifier,
-                        DiagnosticCode.Index_member_declaration_can_only_have_the_static_modifier);
-                    return true;
-                }
+            if (node.modifiers.childCount() > 0) {
+                var modifierFullStart = this.childFullStart(node, node.modifiers);
+                this.pushDiagnostic1(modifierFullStart, node.modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
+                return true;
             }
 
             return false;

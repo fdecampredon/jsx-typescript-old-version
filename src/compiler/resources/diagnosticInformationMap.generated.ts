@@ -350,10 +350,6 @@ module TypeScript {
     "code": 1086,
     "category": DiagnosticCategory.Error
   },
-  "Index member declaration can only have the 'static' modifier.": {
-    "code": 1088,
-    "category": DiagnosticCategory.Error
-  },
   "'{0}' modifier cannot appear on a constructor declaration.": {
     "code": 1089,
     "category": DiagnosticCategory.Error
@@ -714,10 +710,6 @@ module TypeScript {
     "code": 2090,
     "category": DiagnosticCategory.Error
   },
-  "Type of conditional expression cannot be determined . '{0}' is not identical to, a supertype of, or a subtype of '{1}'.": {
-    "code": 2091,
-    "category": DiagnosticCategory.Error
-  },
   "Type of array literal cannot be determined. Best common type could not be found for array elements.": {
     "code": 2092,
     "category": DiagnosticCategory.Error
@@ -810,7 +802,7 @@ module TypeScript {
     "code": 2117,
     "category": DiagnosticCategory.Error
   },
-  "The left-hand side of an 'in' expression must be of types 'string' or 'any'.": {
+  "The left-hand side of an 'in' expression must be of types 'any', 'string' or 'number'.": {
     "code": 2118,
     "category": DiagnosticCategory.Error
   },
@@ -954,10 +946,6 @@ module TypeScript {
     "code": 2155,
     "category": DiagnosticCategory.Error
   },
-  "Static member cannot be accessed off an instance variable.": {
-    "code": 2156,
-    "category": DiagnosticCategory.Error
-  },
   "Instance member cannot be accessed off a class.": {
     "code": 2157,
     "category": DiagnosticCategory.Error
@@ -1070,11 +1058,11 @@ module TypeScript {
     "code": 2185,
     "category": DiagnosticCategory.Error
   },
-  "Type reference '{0}' in extends clause doesn't reference constructor function for '{1}'.": {
+  "Type reference '{0}' in extends clause does not reference constructor function for '{1}'.": {
     "code": 2186,
     "category": DiagnosticCategory.Error
   },
-  "Internal module reference '{0}' in import declaration doesn't reference module instance for '{1}'.": {
+  "Internal module reference '{0}' in import declaration does not reference module instance for '{1}'.": {
     "code": 2187,
     "category": DiagnosticCategory.Error
   },
@@ -1228,6 +1216,14 @@ module TypeScript {
   },
   "Duplicate identifier 'arguments'. Compiler uses 'arguments' to initialize rest parameters.": {
     "code": 2225,
+    "category": DiagnosticCategory.Error
+  },
+  "Type of conditional '{0}' must be identical to '{1}' or '{2}'.": {
+    "code": 2226,
+    "category": DiagnosticCategory.Error
+  },
+  "Type of conditional '{0}' must be identical to '{1}', '{2}' or '{3}'.": {
+    "code": 2227,
     "category": DiagnosticCategory.Error
   },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {

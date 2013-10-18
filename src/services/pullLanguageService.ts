@@ -54,7 +54,7 @@ module Services {
 
             // if we are not looking for any but we get an any symbol, then we ran into a wrong symbol
             if (requireName) {
-                var actualNameAtPosition = (<TypeScript.Identifier>topNode).text();
+                var actualNameAtPosition = (<TypeScript.Identifier>topNode).valueText();
 
                 if ((symbol.isError() || symbol.isAny()) && actualNameAtPosition !== symbolName) {
                     this.logger.log("Unknown symbol found at the given position");
@@ -178,7 +178,7 @@ module Services {
             }
 
             // Store the actual name before calling getSymbolInformationFromPath
-            var actualNameAtPosition = (<TypeScript.Identifier>ast).text();
+            var actualNameAtPosition = (<TypeScript.Identifier>ast).valueText();
 
             var symbolInfoAtPosition = this.compiler.getSymbolInformationFromAST(ast, document);
             var symbol = symbolInfoAtPosition.symbol;
@@ -917,7 +917,7 @@ module Services {
             if (this.isLocal(symbol) ||
                 symbol.kind == TypeScript.PullElementKind.Parameter) {
                 // Local var
-                return symbol.getScopedName(this.compiler.getResolver(), enclosingScopeSymbol, /*useConstraintInName*/ true);
+                return symbol.getScopedName(enclosingScopeSymbol, /*useConstraintInName*/ true);
             }
 
             var symbolKind = symbol.kind;
@@ -936,10 +936,10 @@ module Services {
                 symbolKind != TypeScript.PullElementKind.TypeParameter &&
                 !symbol.hasFlag(TypeScript.PullElementFlags.Exported)) {
                 // Non exported variable/function
-                return symbol.getScopedName(this.compiler.getResolver(), enclosingScopeSymbol,  /*useConstraintInName*/true);
+                return symbol.getScopedName(enclosingScopeSymbol,  /*useConstraintInName*/true);
             }
 
-            return symbol.fullName(this.compiler.getResolver(), enclosingScopeSymbol);
+            return symbol.fullName(enclosingScopeSymbol);
         }
 
         private getTypeInfoEligiblePath(fileName: string, position: number, isConstructorValidPosition: boolean) {
@@ -1086,10 +1086,9 @@ module Services {
                 }
             }
 
-            var resolver = this.compiler.getResolver();
             var memberName = _isCallExpression
-                ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, resolver, enclosingScopeSymbol)
-                : symbol.getTypeNameEx(resolver, enclosingScopeSymbol, /*useConstraintInName*/ true);
+                ? TypeScript.PullSignatureSymbol.getSignatureTypeMemberName(candidateSignature, resolvedSignatures, enclosingScopeSymbol)
+                : symbol.getTypeNameEx(enclosingScopeSymbol, /*useConstraintInName*/ true);
             var kind = this.mapPullElementKind(symbol.kind, symbol, !_isCallExpression, _isCallExpression, isConstructorCall);
 
             var docCommentSymbol = candidateSignature || symbol;
@@ -1223,7 +1222,7 @@ module Services {
             }, null);
 
             // Store this completion list as the active completion list
-            this.activeCompletionSession = new CompletionSession(fileName, position, this.compiler.getScriptVersion(fileName), entries);
+            this.activeCompletionSession = new CompletionSession(fileName, position, document.version, entries);
 
             return completions;
         }
@@ -1252,7 +1251,7 @@ module Services {
 
                 if (symbol.isResolved) {
                     // If the symbol has already been resolved, cache the needed information for completion details.
-                    var typeName = symbol.getTypeName(this.compiler.getResolver(), symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
+                    var typeName = symbol.getTypeName(symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
                     var fullSymbolName = this.getFullNameOfSymbol(symbol, symbolInfo.enclosingScopeSymbol);
 
                     var type = symbol.type;
@@ -1326,7 +1325,8 @@ module Services {
                 var decl = (<DeclReferenceCompletionEntry>entry).decl;
 
                 // If this decl has been invalidated becuase of a user edit, try to find the new decl that matches it
-                if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName) && this.compiler.getScriptVersion(fileName) !== this.activeCompletionSession.version) {
+                var document = this.compiler.getDocument(fileName);
+                if (decl.fileName() === TypeScript.switchToForwardSlashes(fileName) && document.version !== this.activeCompletionSession.version) {
                     decl = this.tryFindDeclFromPreviousCompilerVersion(decl);
 
                     if (decl) {
@@ -1343,7 +1343,6 @@ module Services {
 
                 // This entry has not been resolved yet. Resolve it.
                 if (decl) {
-                    var document = this.compiler.getDocument(fileName);
                     var node = TypeScript.getAstAtPosition(document.script(), position);
                     var symbolInfo = this.compiler.pullGetDeclInformation(decl, node, document);
 
@@ -1352,7 +1351,7 @@ module Services {
                     }
 
                     var symbol = symbolInfo.symbol;
-                    var typeName = symbol.getTypeName(this.compiler.getResolver(), symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
+                    var typeName = symbol.getTypeName(symbolInfo.enclosingScopeSymbol, /*useConstraintInName*/ true);
                     var fullSymbolName = this.getFullNameOfSymbol(symbol, symbolInfo.enclosingScopeSymbol);
 
                     var type = symbol.type;

@@ -7,7 +7,7 @@ Line 4 col 6 IdentifierName "Derived" = Derived
 Line 4 col 22 IdentifierName "Base" = Base
 Line 6 col 4 IdentifierName "d" = Derived
 Line 6 col 8 ObjectCreationExpression "new Derived()" = Derived
-Line 6 col 12 IdentifierName "Derived" = new(opt?: any) => Derived
+Line 6 col 12 IdentifierName "Derived" = { prototype: Derived; new(opt?: any): Derived; }
 Line 7 col 4 IdentifierName "d2" = Derived
 Line 7 col 8 IdentifierName "Derived" = Derived
 Line 8 col 0 InvocationExpression "d2.foo()" = void

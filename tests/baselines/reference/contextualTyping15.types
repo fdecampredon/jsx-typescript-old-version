@@ -1,0 +1,5 @@
+=== tests/cases/compiler/contextualTyping15.ts ===
+Line 0 col 6 IdentifierName "foo" = foo
+Line 0 col 19 IdentifierName "bar" = { (): number; (i: number): number; }
+Line 0 col 39 IdentifierName "i" = number
+Line 0 col 63 FunctionExpression "function() { return 1 }" = () => number

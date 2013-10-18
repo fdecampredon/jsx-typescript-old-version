@@ -153,13 +153,12 @@ module Services {
 
                 var signatureGroupInfo = new FormalSignatureItemInfo();
                 var paramIndexInfo: number[] = [];
-                var resolver = compilerState.getResolver();
-                var functionName = signature.getScopedNameEx(resolver, enclosingScopeSymbol).toString();
+                var functionName = signature.getScopedNameEx(enclosingScopeSymbol).toString();
                 if (!functionName && (!symbol.isType() || (<TypeScript.PullTypeSymbol>symbol).isNamedTypeSymbol())) {
-                    functionName = symbol.getScopedNameEx(resolver, enclosingScopeSymbol).toString();
+                    functionName = symbol.getScopedNameEx(enclosingScopeSymbol).toString();
                 }
 
-                var signatureMemberName = signature.getSignatureTypeNameEx(functionName, /*shortform*/ false, /*brackets*/ false, resolver, enclosingScopeSymbol, /*getParamMarkerInfo*/ true, /*getTypeParameterMarkerInfo*/ true);
+                var signatureMemberName = signature.getSignatureTypeNameEx(functionName, /*shortform*/ false, /*brackets*/ false, enclosingScopeSymbol, /*getParamMarkerInfo*/ true, /*getTypeParameterMarkerInfo*/ true);
                 signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(signatureMemberName, paramIndexInfo);
                 signatureGroupInfo.docComment = signature.docComments();
 
@@ -202,7 +201,7 @@ module Services {
             var signatureGroupInfo = new FormalSignatureItemInfo();
 
             var paramIndexInfo: number[] = [];
-            var symbolName = symbol.getScopedNameEx(compilerState.getResolver(), enclosingScopeSymbol, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
+            var symbolName = symbol.getScopedNameEx(enclosingScopeSymbol, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
 
             signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(symbolName, paramIndexInfo);
             signatureGroupInfo.docComment = symbol.docComments();
