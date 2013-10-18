@@ -5,7 +5,7 @@ Line 1 col 12 IdentifierName "objects" = { [objectId: string]: T; }
 Line 1 col 22 CastExpression "<{ [objectId: string]: T; }>{}" = { [objectId: string]: T; }
 Line 1 col 26 IdentifierName "objectId" = string
 Line 1 col 45 IdentifierName "T" = T
-Line 1 col 50 ObjectLiteralExpression "{}" = {}
+Line 1 col 50 ObjectLiteralExpression "{}" = { [objectId: string]: T; }
 Line 2 col 0 IdentifierName "array" = () => { [objectId: string]: T; }
 Line 3 col 15 MemberAccessExpression "this.objects" = { [objectId: string]: T; }
 Line 3 col 15 ThisKeyword "this" = LazyArray<T>

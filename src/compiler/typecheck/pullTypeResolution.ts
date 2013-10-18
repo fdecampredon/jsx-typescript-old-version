@@ -7999,31 +7999,41 @@ module TypeScript {
         }
 
         private resolveCastExpression(assertionExpression: CastExpression, context: PullTypeResolutionContext): PullTypeSymbol {
-            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*isContextuallyTyped:*/ false, context).type;
-
             if (this.canTypeCheckAST(assertionExpression, context)) {
                 this.typeCheckCastExpression(assertionExpression, context);
             }
 
-            // September 17, 2013: 
-            // A type assertion expression of the form < T > e requires the type of e to be 
-            // assignable to T or T to be assignable to the type of e, or otherwise a compilew - 
-            // time error occurs.The type of the result is T.
+            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*isContextuallyTyped:*/ false, context).type;
+
+            // October 11, 2013: 
+            // In a type assertion expression of the form < T > e, e is contextually typed (section 
+            // 4.19) by T and the resulting type of e is required to be assignable to or from T, or
+            // otherwise a compile - time error occurs.
+            //
+            // The type of the result is T.
             return typeAssertionType;
         }
 
         private typeCheckCastExpression(assertionExpression: CastExpression, context: PullTypeResolutionContext): void {
             this.setTypeChecked(assertionExpression, context);
 
-            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*isContextuallyTyped:*/ false, context).type;
-            var exprType = this.resolveAST(assertionExpression.operand, /*isContextuallyTyped:*/ false, context).type;
+            // October 11, 2013: 
+            // In a type assertion expression of the form < T > e, e is contextually typed (section 
+            // 4.19) by T and the resulting type of e is required to be assignable to or from T, or
+            // otherwise a compile - time error occurs.
+            //
+            // The type of the result is T.
 
+            var typeAssertionType = this.resolveAST(assertionExpression.castType, /*isContextuallyTyped:*/ false, context).type;
+
+            context.pushContextualType(typeAssertionType, context.inProvisionalResolution(), null);
+            var exprType = this.resolveAST(assertionExpression.operand, /*isContextuallyTyped:*/ true, context).type;
+            context.popContextualType();
+
+            // TODO: why are we resolving these symbols here?
             this.resolveDeclaredSymbol(typeAssertionType, context);
             this.resolveDeclaredSymbol(exprType, context);
 
-            // September 17, 2013: A type assertion expression of the form < T > e requires the 
-            // type of e to be assignable to T or T to be assignable to the type of e, or otherwise
-            // a compile - time error occurs. 
             var comparisonInfo = new TypeComparisonInfo();
 
             var isAssignable =
