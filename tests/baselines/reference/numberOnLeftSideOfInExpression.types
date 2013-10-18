@@ -1,0 +1,6 @@
+=== tests/cases/compiler/numberOnLeftSideOfInExpression.ts ===
+Line 0 col 4 IdentifierName "left" = number
+Line 1 col 4 IdentifierName "right" = any
+Line 2 col 0 InExpression "left in right" = boolean
+Line 2 col 0 IdentifierName "left" = number
+Line 2 col 8 IdentifierName "right" = any

@@ -4185,26 +4185,34 @@ module TypeScript {
                 this.typeCheckInExpression(ast, context);
             }
 
-            // September 17, 2013: The result is always of the Boolean primitive type.
+            // October 11, 2013: 
+            // The in operator requires the left operand to be of type Any, the String primitive 
+            // type, or the Number primitive type, and the right operand to be of type Any, an 
+            // object type, or a type parameter type. 
+            //
+            // The result is always of the Boolean primitive type.
             return this.semanticInfoChain.booleanTypeSymbol;
         }
 
         private typeCheckInExpression(binaryExpression: BinaryExpression, context: PullTypeResolutionContext) {
             this.setTypeChecked(binaryExpression, context);
-
-            // September 17, 2013: The in operator requires the left operand to be of type Any or 
-            // the String primitive type, and the right operand to be of type Any, an object type,
-            // or a type parameter type. 
+            
+            // October 11, 2013: 
+            // The in operator requires the left operand to be of type Any, the String primitive 
+            // type, or the Number primitive type, and the right operand to be of type Any, an 
+            // object type, or a type parameter type. 
             var lhsType = this.resolveAST(binaryExpression.left, /*inContextuallyTypedAssignment:*/ false, context).type;
             var rhsType = this.resolveAST(binaryExpression.right, /*inContextuallyTypedAssignment:*/ false, context).type;
 
-            var isStringAnyOrNumber =
+            var isValidLHS =
+                this.isAnyOrEquivalent(lhsType.type) ||
                 lhsType.type === this.semanticInfoChain.stringTypeSymbol ||
-                this.isAnyOrEquivalent(lhsType.type)
+                lhsType.type === this.semanticInfoChain.numberTypeSymbol;
+
             var isValidRHS = this.isAnyOrEquivalent(rhsType) || rhsType.isObject() || rhsType.isTypeParameter();
 
-            if (!isStringAnyOrNumber) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(binaryExpression.left, DiagnosticCode.The_left_hand_side_of_an_in_expression_must_be_of_types_string_or_any));
+            if (!isValidLHS) {
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(binaryExpression.left, DiagnosticCode.The_left_hand_side_of_an_in_expression_must_be_of_types_any_string_or_number));
             }
 
             if (!isValidRHS) {

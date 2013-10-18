@@ -806,7 +806,7 @@ module TypeScript {
     "code": 2117,
     "category": DiagnosticCategory.Error
   },
-  "The left-hand side of an 'in' expression must be of types 'string' or 'any'.": {
+  "The left-hand side of an 'in' expression must be of types 'any', 'string' or 'number'.": {
     "code": 2118,
     "category": DiagnosticCategory.Error
   },

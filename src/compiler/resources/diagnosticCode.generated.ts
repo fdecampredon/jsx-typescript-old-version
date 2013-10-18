@@ -202,7 +202,7 @@ module TypeScript {
         Variable_declarations_of_a_for_statement_cannot_use_a_type_annotation: "Variable declarations of a 'for' statement cannot use a type annotation.",
         Variable_declarations_of_a_for_statement_must_be_of_types_string_or_any: "Variable declarations of a 'for' statement must be of types 'string' or 'any'.",
         The_right_hand_side_of_a_for_in_statement_must_be_of_type_any_an_object_type_or_a_type_parameter: "The right-hand side of a 'for...in' statement must be of type 'any', an object type or a type parameter.",
-        The_left_hand_side_of_an_in_expression_must_be_of_types_string_or_any: "The left-hand side of an 'in' expression must be of types 'string' or 'any'.",
+        The_left_hand_side_of_an_in_expression_must_be_of_types_any_string_or_number: "The left-hand side of an 'in' expression must be of types 'any', 'string' or 'number'.",
         The_right_hand_side_of_an_in_expression_must_be_of_type_any_an_object_type_or_a_type_parameter: "The right-hand side of an 'in' expression must be of type 'any', an object type or a type parameter.",
         The_left_hand_side_of_an_instanceof_expression_must_be_of_type_any_an_object_type_or_a_type_parameter: "The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.",
         The_right_hand_side_of_an_instanceof_expression_must_be_of_type_any_or_a_subtype_of_the_Function_interface_type: "The right-hand side of an 'instanceof' expression must be of type 'any' or a subtype of the 'Function' interface type.",
