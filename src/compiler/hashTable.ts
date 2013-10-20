@@ -16,7 +16,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    interface IIndexable<T> {
+    export interface IIndexable<T> {
         [s: string]: T;
     }
 
@@ -43,6 +43,16 @@ module TypeScript {
         }
     }
 
+    // If Object.create exists, then we can just use that.  Otherwise, we need a workaround
+    // that creates an Object but deletes all existing members on it first.
+    var createEmptyObject = Object.create ? Object.create : function (arg: any) {
+        return new BlockIntrinsics();
+    };
+
+    export function createIntrinsicsObject<T>(): IIndexable<T> {
+        return createEmptyObject(null);
+    }
+
     export interface IHashTable<T> {
         getAllKeys(): string[];
         add(key: string, data: T): boolean;
@@ -56,7 +66,7 @@ module TypeScript {
 
     export class StringHashTable<T> implements IHashTable<T> {
         private itemCount = 0;
-        private table: IIndexable<T> = new BlockIntrinsics<T>();
+        private table: IIndexable<T> = createIntrinsicsObject<T>();
 
         public getAllKeys(): string[] {
             var result: string[] = [];

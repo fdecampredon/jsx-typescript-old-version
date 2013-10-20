@@ -1,7 +1,6 @@
 module TypeScript {    
     export class IdentifierWalker extends SyntaxWalker {
-
-        constructor(public list: BlockIntrinsics<boolean>) {
+        constructor(public list: IIndexable<boolean>) {
             super();
         }
 

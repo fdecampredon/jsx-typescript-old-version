@@ -11,7 +11,7 @@ module Services {
             }
 
             var existingMemberSymbols = existingMembers.symbols;
-            var existingMemberNames: { [s: string]: boolean; } = {};
+            var existingMemberNames = TypeScript.createIntrinsicsObject<boolean>();
             for (var i = 0, n = existingMemberSymbols.length; i < n; i++) {
                 existingMemberNames[TypeScript.stripStartAndEndQuotes(existingMemberSymbols[i].getDisplayName())] = true;
             }

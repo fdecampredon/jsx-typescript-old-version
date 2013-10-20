@@ -204,7 +204,6 @@ module TypeScript {
         public captureThisStmtString = "var _this = this;";
         private currentVariableDeclaration: VariableDeclaration;
         private declStack: PullDecl[] = [];
-        private resolvingContext = new PullTypeResolutionContext(null);
         private exportAssignmentIdentifier: string = null;
         private inWithBlock = false;
 
@@ -433,7 +432,7 @@ module TypeScript {
                 this.writeToOutput(" ");
             }
 
-            if (comment.isBlockComment) {
+            if (comment.isBlockComment()) {
                 this.recordSourceMappingStart(comment);
                 this.writeToOutput(text[0]);
 

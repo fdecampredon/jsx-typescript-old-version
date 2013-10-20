@@ -97,7 +97,9 @@ module TypeScript {
                 TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
 
                 // If the document is open, store the syntax tree for fast incremental updates.
-                if (this.isOpen) {
+                // Or, if we don't have a script, then store the syntax tree around so we won't
+                // have to immediately regenerate it when we need the script.
+                if (this.isOpen || !this._script) {
                     this._syntaxTree = result;
                 }
             }
@@ -108,7 +110,7 @@ module TypeScript {
 
         public bloomFilter(): BloomFilter {
             if (!this._bloomFilter) {
-                var identifiers = new BlockIntrinsics<boolean>();
+                var identifiers = createIntrinsicsObject<boolean>();
                 var pre = function (cur: TypeScript.AST, walker: IAstWalker) {
                     if (isValidAstNode(cur)) {
                         if (cur.nodeType() === NodeType.Name) {

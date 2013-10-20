@@ -63,7 +63,10 @@ module TypeScript {
 
             if (this.options.goChildren) {
                 // Call the "walkChildren" function corresponding to "nodeType".
-                this.childrenWalkers[ast.nodeType()](ast, this);
+                var walker = this.childrenWalkers[ast.nodeType()];
+                if (walker) {
+                    walker(ast, this);
+                }
             }
             else {
                 // no go only applies to children of node issuing it
@@ -100,16 +103,16 @@ module TypeScript {
         }
 
         private initChildrenWalkers(): void {
-            this.childrenWalkers[NodeType.None] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.EmptyStatement] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.OmittedExpression] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.TrueLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.FalseLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.ThisExpression] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.SuperExpression] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.StringLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.RegularExpressionLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.NullLiteral] = ChildrenWalkers.walkNone;
+            this.childrenWalkers[NodeType.None] = null;
+            this.childrenWalkers[NodeType.EmptyStatement] = null;
+            this.childrenWalkers[NodeType.OmittedExpression] = null;
+            this.childrenWalkers[NodeType.TrueLiteral] = null;
+            this.childrenWalkers[NodeType.FalseLiteral] = null;
+            this.childrenWalkers[NodeType.ThisExpression] = null;
+            this.childrenWalkers[NodeType.SuperExpression] = null;
+            this.childrenWalkers[NodeType.StringLiteral] = null;
+            this.childrenWalkers[NodeType.RegularExpressionLiteral] = null;
+            this.childrenWalkers[NodeType.NullLiteral] = null;
             this.childrenWalkers[NodeType.ArrayLiteralExpression] = ChildrenWalkers.walkArrayLiteralExpressionChildren;
             this.childrenWalkers[NodeType.ObjectLiteralExpression] = ChildrenWalkers.walkObjectLiteralExpressionChildren;
             this.childrenWalkers[NodeType.SimplePropertyAssignment] = ChildrenWalkers.walkSimplePropertyAssignmentChildren;
@@ -126,8 +129,8 @@ module TypeScript {
             this.childrenWalkers[NodeType.QualifiedName] = ChildrenWalkers.walkQualifiedNameChildren;
             this.childrenWalkers[NodeType.InstanceOfExpression] = ChildrenWalkers.walkBinaryExpressionChildren;
             this.childrenWalkers[NodeType.TypeOfExpression] = ChildrenWalkers.walkTypeOfExpressionChildren;
-            this.childrenWalkers[NodeType.NumericLiteral] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.Name] = ChildrenWalkers.walkNone;
+            this.childrenWalkers[NodeType.NumericLiteral] = null;
+            this.childrenWalkers[NodeType.Name] = null;
             this.childrenWalkers[NodeType.TypeParameter] = ChildrenWalkers.walkTypeParameterChildren;
             this.childrenWalkers[NodeType.GenericType] = ChildrenWalkers.walkGenericTypeChildren;
             this.childrenWalkers[NodeType.TypeRef] = ChildrenWalkers.walkTypeReferenceChildren;
@@ -187,8 +190,8 @@ module TypeScript {
             this.childrenWalkers[NodeType.VariableDeclaration] = ChildrenWalkers.walkVariableDeclarationChildren;
             this.childrenWalkers[NodeType.Parameter] = ChildrenWalkers.walkParameterChildren;
             this.childrenWalkers[NodeType.ReturnStatement] = ChildrenWalkers.walkReturnStatementChildren;
-            this.childrenWalkers[NodeType.BreakStatement] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.ContinueStatement] = ChildrenWalkers.walkNone;
+            this.childrenWalkers[NodeType.BreakStatement] = null;
+            this.childrenWalkers[NodeType.ContinueStatement] = null;
             this.childrenWalkers[NodeType.ThrowStatement] = ChildrenWalkers.walkThrowStatementChildren;
             this.childrenWalkers[NodeType.ForStatement] = ChildrenWalkers.walkForStatementChildren;
             this.childrenWalkers[NodeType.ForInStatement] = ChildrenWalkers.walkForInStatementChildren;
@@ -219,8 +222,7 @@ module TypeScript {
             this.childrenWalkers[NodeType.ExpressionStatement] = ChildrenWalkers.walkExpressionStatementChildren;
             this.childrenWalkers[NodeType.LabeledStatement] = ChildrenWalkers.walkLabeledStatementChildren;
             this.childrenWalkers[NodeType.VariableStatement] = ChildrenWalkers.walkVariableStatementChildren;
-            this.childrenWalkers[NodeType.Comment] = ChildrenWalkers.walkNone;
-            this.childrenWalkers[NodeType.DebuggerStatement] = ChildrenWalkers.walkNone;
+            this.childrenWalkers[NodeType.DebuggerStatement] = null;
 
             // Verify the code is up to date with the enum
             for (var e in NodeType) {
@@ -241,15 +243,10 @@ module TypeScript {
     }
 
     module ChildrenWalkers {
-        export function walkNone(preAst: ASTList, walker: IAstWalker): void {
-            // Nothing to do
-        }
-
         export function walkListChildren(preAst: ASTList, walker: IAstWalker): void {
-            var len = preAst.members.length;
-
-            for (var i = 0; i < len; i++) {
-                walker.walk(preAst.members[i]);
+            var members = preAst.members;
+            for (var i = 0, n = members.length; i < n; i++) {
+                walker.walk(members[i]);
             }
         }
 

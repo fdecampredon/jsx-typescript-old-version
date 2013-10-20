@@ -19,5 +19,4 @@ goTo.marker('insert');
 edit.insert("x: number;\n");
 
 goTo.marker('check');
-// Bug 771749: Mismatched full/incremental info here
-// verify.quickInfoSymbolNameIs('Mod');
+verify.quickInfoSymbolNameIs('Mod');

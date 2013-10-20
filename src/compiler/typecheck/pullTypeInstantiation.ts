@@ -330,7 +330,7 @@ module TypeScript {
 
         private _instantiatedMembers: PullSymbol[] = null;
         private _allInstantiatedMemberNameCache: { [name: string]: PullSymbol; } = null;
-        private _instantiatedMemberNameCache: { [name: string]: PullSymbol; } = new BlockIntrinsics(); // cache from member names to pull symbols
+        private _instantiatedMemberNameCache = createIntrinsicsObject<PullSymbol>(); // cache from member names to pull symbols
         private _instantiatedCallSignatures: PullSignatureSymbol[] = null;
         private _instantiatedConstructSignatures: PullSignatureSymbol[] = null;
         private _instantiatedIndexSignatures: PullSignatureSymbol[] = null;
@@ -745,7 +745,7 @@ module TypeScript {
             var allReferencedMembers = this.referencedTypeSymbol.getAllMembers(searchDeclKind, memberVisiblity);
 
             if (!this._allInstantiatedMemberNameCache) {
-                this._allInstantiatedMemberNameCache = new BlockIntrinsics();
+                this._allInstantiatedMemberNameCache = createIntrinsicsObject();
 
                 // first, seed with this type's members
                 var members = this.getMembers();

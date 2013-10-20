@@ -15,7 +15,7 @@ module TypeScript {
 
     export class SemanticInfoChain {
         private documents: Document[] = [];
-        private fileNameToDocument = new BlockIntrinsics<Document>();
+        private fileNameToDocument = createIntrinsicsObject<Document>();
 
         public anyTypeDecl: PullDecl = null;
         public booleanTypeDecl: PullDecl = null;
@@ -44,9 +44,9 @@ module TypeScript {
         private declSymbolMap: PullSymbol[] = [];
         private declSignatureSymbolMap: PullSignatureSymbol[] = [];
 
-        private declCache: BlockIntrinsics<PullDecl[]> = null;
-        private symbolCache: BlockIntrinsics<PullSymbol> = null;
-        private fileNameToDiagnostics: BlockIntrinsics<Diagnostic[]> = null;
+        private declCache: IIndexable<PullDecl[]> = null;
+        private symbolCache: IIndexable<PullSymbol> = null;
+        private fileNameToDiagnostics: IIndexable<Diagnostic[]> = null;
 
         private _binder: PullSymbolBinder = null;
         private _resolver: PullTypeResolver = null;
@@ -448,9 +448,9 @@ module TypeScript {
             this.astAliasSymbolMap.length = 0;
             this.astCallResolutionDataMap.length = 0;
 
-            this.declCache = new BlockIntrinsics();
-            this.symbolCache = new BlockIntrinsics();
-            this.fileNameToDiagnostics = new BlockIntrinsics();
+            this.declCache = createIntrinsicsObject();
+            this.symbolCache = createIntrinsicsObject();
+            this.fileNameToDiagnostics = createIntrinsicsObject();
             this._binder = null;
             this._resolver = null;
             this._topLevelDecls = null;

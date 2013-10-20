@@ -150,7 +150,5 @@ module TypeScript {
         ExtendsHeritageClause,
         ImplementsHeritageClause,
         ElseClause,
-
-        Comment,
     }
 }

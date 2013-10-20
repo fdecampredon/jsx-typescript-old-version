@@ -278,21 +278,25 @@ module TypeScript.Syntax {
             }
         }
         else if (kind === SyntaxKind.RegularExpressionLiteral) {
-            try {
-                var lastSlash = text.lastIndexOf("/");
-                var body = text.substring(1, lastSlash);
-                var flags = text.substring(lastSlash + 1);
-                return new RegExp(body, flags);
-            }
-            catch (e) {
-                return null;
-            }
+            return regularExpressionValue(text);
         }
         else if (kind === SyntaxKind.EndOfFileToken || kind === SyntaxKind.ErrorToken) {
             return null;
         }
         else {
             throw Errors.invalidOperation();
+        }
+    }
+
+    function regularExpressionValue(text: string): RegExp {
+        try {
+            var lastSlash = text.lastIndexOf("/");
+            var body = text.substring(1, lastSlash);
+            var flags = text.substring(lastSlash + 1);
+            return new RegExp(body, flags);
+        }
+        catch (e) {
+            return null;
         }
     }
 

@@ -5,8 +5,6 @@
 
 module TypeScript {
     export class PullSymbolBinder {
-        private static functionTypeParameterCache = new BlockIntrinsics<PullTypeParameterSymbol>();
-
         private declsBeingBound: boolean[] = [];
 
         constructor(private semanticInfoChain: SemanticInfoChain) {
@@ -1259,7 +1257,7 @@ module TypeScript {
             var argDecl: Parameter = null;
             var parameterSymbol: PullSymbol = null;
             var isProperty = false;
-            var params = new BlockIntrinsics<boolean>();
+            var params = createIntrinsicsObject<boolean>();
             var funcDecl = this.semanticInfoChain.getDeclForAST(functionDeclaration);
 
             if (parameterList) {
@@ -2094,116 +2092,113 @@ module TypeScript {
             // Add it to the list in case we revisit it during binding
             this.declsBeingBound[decl.declID] = true;
 
-            try {
-                switch (decl.kind) {
-                    case PullElementKind.Script:
-                        var childDecls = decl.getChildDecls();
-                        for (var i = 0; i < childDecls.length; i++) {
-                            this.bindDeclToPullSymbol(childDecls[i]);
-                        }
-                        break;
+            switch (decl.kind) {
+                case PullElementKind.Script:
+                    var childDecls = decl.getChildDecls();
+                    for (var i = 0; i < childDecls.length; i++) {
+                        this.bindDeclToPullSymbol(childDecls[i]);
+                    }
+                    break;
 
-                    case PullElementKind.Enum:
-                        this.bindEnumDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Enum:
+                    this.bindEnumDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.DynamicModule:
-                    case PullElementKind.Container:
-                        this.bindModuleDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.DynamicModule:
+                case PullElementKind.Container:
+                    this.bindModuleDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Interface:
-                        this.bindInterfaceDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Interface:
+                    this.bindInterfaceDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Class:
-                        this.bindClassDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Class:
+                    this.bindClassDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Function:
-                        this.bindFunctionDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Function:
+                    this.bindFunctionDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Variable:
-                        this.bindVariableDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Variable:
+                    this.bindVariableDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.EnumMember:
-                        this.bindEnumMemberDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.EnumMember:
+                    this.bindEnumMemberDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Property:
-                        this.bindPropertyDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Property:
+                    this.bindPropertyDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.Method:
-                        this.bindMethodDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.Method:
+                    this.bindMethodDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.ConstructorMethod:
-                        this.bindConstructorDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.ConstructorMethod:
+                    this.bindConstructorDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.CallSignature:
-                        this.bindCallSignatureDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.CallSignature:
+                    this.bindCallSignatureDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.ConstructSignature:
-                        this.bindConstructSignatureDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.ConstructSignature:
+                    this.bindConstructSignatureDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.IndexSignature:
-                        this.bindIndexSignatureDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.IndexSignature:
+                    this.bindIndexSignatureDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.GetAccessor:
-                        this.bindGetAccessorDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.GetAccessor:
+                    this.bindGetAccessorDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.SetAccessor:
-                        this.bindSetAccessorDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.SetAccessor:
+                    this.bindSetAccessorDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.ObjectType:
-                        this.bindObjectTypeDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.ObjectType:
+                    this.bindObjectTypeDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.FunctionType:
-                        this.bindFunctionTypeDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.FunctionType:
+                    this.bindFunctionTypeDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.ConstructorType:
-                        this.bindConstructorTypeDeclarationToPullSymbol(decl);
-                        break;
+                case PullElementKind.ConstructorType:
+                    this.bindConstructorTypeDeclarationToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.FunctionExpression:
-                        this.bindFunctionExpressionToPullSymbol(decl);
-                        break;
+                case PullElementKind.FunctionExpression:
+                    this.bindFunctionExpressionToPullSymbol(decl);
+                    break;
 
-                    case PullElementKind.TypeAlias:
-                        this.bindImportDeclaration(decl);
-                        break;
+                case PullElementKind.TypeAlias:
+                    this.bindImportDeclaration(decl);
+                    break;
 
-                    case PullElementKind.Parameter:
-                    case PullElementKind.TypeParameter:
-                        // parameters are bound by their enclosing function or type.  Ensure that that
-                        // decl is bound.
-                        decl.getParentDecl().getSymbol();
-                        break;
+                case PullElementKind.Parameter:
+                case PullElementKind.TypeParameter:
+                    // parameters are bound by their enclosing function or type.  Ensure that that
+                    // decl is bound.
+                    decl.getParentDecl().getSymbol();
+                    break;
 
-                    case PullElementKind.CatchBlock:
-                    case PullElementKind.WithBlock:
-                        // since we don't bind eagerly, there's nothing to do here
-                        break;
+                case PullElementKind.CatchBlock:
+                case PullElementKind.WithBlock:
+                    // since we don't bind eagerly, there's nothing to do here
+                    break;
 
-                    default:
-                        CompilerDiagnostics.assert(false, "Unrecognized type declaration");
-                }
+                default:
+                    CompilerDiagnostics.assert(false, "Unrecognized type declaration");
             }
-            finally {
-                // Rremove the decl from the list
-                delete this.declsBeingBound[decl.declID];
-            }
+
+            // Rremove the decl from the list
+            delete this.declsBeingBound[decl.declID];
         }
 
         //public bindTopLevelDecl() {

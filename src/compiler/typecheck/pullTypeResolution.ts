@@ -2326,40 +2326,38 @@ module TypeScript {
                     return declSymbol;
                 }
 
-                if (declSymbol.type && declSymbol.type.isError()) {
-                    return declSymbol;
-                }
+                if (!declSymbol.type || !declSymbol.type.isError()) {
+                    declSymbol.startResolving();
 
-                declSymbol.startResolving();
+                    // Does this have a type expression? If so, that's the type
+                    var typeExprSymbol = this.resolveAndTypeCheckVariableDeclarationTypeExpr(
+                        varDeclOrParameter, name, typeExpr, context);
 
-                // Does this have a type expression? If so, that's the type
-                var typeExprSymbol = this.resolveAndTypeCheckVariableDeclarationTypeExpr(
-                    varDeclOrParameter, name, typeExpr, context);
-
-                // If we're not type checking, and have a type expression, don't bother looking at the initializer expression
-                if (!hasTypeExpr) {
-                    this.resolveAndTypeCheckVariableDeclaratorOrParameterInitExpr(
-                        varDeclOrParameter, name, typeExpr, init, context, typeExprSymbol);
-                }
-
-                // if we're lacking both a type annotation and an initialization expression, the type is 'any'
-                if (!(hasTypeExpr || init)) {
-                    var defaultType: PullTypeSymbol = this.semanticInfoChain.anyTypeSymbol;
-
-                    if (declSymbol.isVarArg) {
-                        defaultType = this.createInstantiatedType(this.cachedArrayInterfaceType(), [defaultType]);
+                    // If we're not type checking, and have a type expression, don't bother looking at the initializer expression
+                    if (!hasTypeExpr) {
+                        this.resolveAndTypeCheckVariableDeclaratorOrParameterInitExpr(
+                            varDeclOrParameter, name, typeExpr, init, context, typeExprSymbol);
                     }
 
-                    context.setTypeInContext(declSymbol, defaultType);
+                    // if we're lacking both a type annotation and an initialization expression, the type is 'any'
+                    if (!(hasTypeExpr || init)) {
+                        var defaultType: PullTypeSymbol = this.semanticInfoChain.anyTypeSymbol;
+
+                        if (declSymbol.isVarArg) {
+                            defaultType = this.createInstantiatedType(this.cachedArrayInterfaceType(), [defaultType]);
+                        }
+
+                        context.setTypeInContext(declSymbol, defaultType);
+
+                        if (declParameterSymbol) {
+                            declParameterSymbol.type = defaultType;
+                        }
+                    }
+                    declSymbol.setResolved();
 
                     if (declParameterSymbol) {
-                        declParameterSymbol.type = defaultType;
+                        declParameterSymbol.setResolved();
                     }
-                }
-                declSymbol.setResolved();
-
-                if (declParameterSymbol) {
-                    declParameterSymbol.setResolved();
                 }
             }
 
@@ -3182,6 +3180,18 @@ module TypeScript {
 
             return this.resolveFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name,
                 funcDecl.typeParameters, funcDecl.parameterList, funcDecl.returnTypeAnnotation, funcDecl.block, context);
+        }
+
+        private typeCheckMemberFunctionDeclaration(
+            funcDeclAST: AST,
+            flags: FunctionFlags,
+            name: Identifier,
+            typeParameters: ASTList,
+            parameters: ASTList,
+            returnTypeAnnotation: TypeReference,
+            block: Block,
+            context: PullTypeResolutionContext) {
+                this.typeCheckFunctionDeclaration(funcDeclAST, flags, name, typeParameters, parameters, returnTypeAnnotation, block, context);
         }
 
         private resolveAnyFunctionDeclaration(funcDecl: FunctionDeclaration, context: PullTypeResolutionContext): PullSymbol {
@@ -5224,6 +5234,16 @@ module TypeScript {
                         return;
                     }
 
+                case NodeType.MemberFunctionDeclaration:
+                    {
+                        var memberFuncDecl = <MemberFunctionDeclaration>ast;
+                        this.typeCheckMemberFunctionDeclaration(
+                            memberFuncDecl, memberFuncDecl.getFunctionFlags(), memberFuncDecl.name,
+                            memberFuncDecl.typeParameters, memberFuncDecl.parameterList,
+                            memberFuncDecl.returnTypeAnnotation, memberFuncDecl.block, context);
+                        return;
+                    }
+
                 case NodeType.ArrowFunctionExpression:
                     this.typeCheckArrowFunctionExpression(<ArrowFunctionExpression>ast, context);
                     return;
@@ -5502,7 +5522,6 @@ module TypeScript {
             }
 
             // assemble the dotted name path
-            var enclosingDecl = this.getEnclosingDeclForAST(expression);
             var rhsName = name.valueText();
             var lhs = this.resolveAST(expression, /*isContextuallyTyped*/false, context);
             var lhsType = lhs.type;
@@ -5598,6 +5617,7 @@ module TypeScript {
                 }
 
                 if (!nameSymbol) {
+                    var enclosingDecl = this.getEnclosingDeclForAST(expression);
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode.The_property_0_does_not_exist_on_value_of_type_1, [name.text(), lhsType.toString(enclosingDecl ? enclosingDecl.getSymbol() : null)]));
                     return this.getNewErrorTypeSymbol(rhsName);
                 }
@@ -6322,7 +6342,7 @@ module TypeScript {
 
             for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
                 if (this.isFunctionOrNonArrowFunctionExpression(currentDecl)) {
-                    // 'this' is always ok in a function.
+                    // 'this' is always ok in a function.  It just has the 'any' type.
                     return;
                 }
                 else if (currentDecl.kind === PullElementKind.Container || currentDecl.kind === PullElementKind.DynamicModule) {
@@ -6485,7 +6505,13 @@ module TypeScript {
                 //      super property access must specify a public static member function of the base
                 //      class.
                 for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
-                    if (currentDecl.kind === PullElementKind.Class) {
+                    if (this.isFunctionOrNonArrowFunctionExpression(currentDecl)) {
+                        // TODO: quote relevant spec section once it is in place.
+                        // you can only access 'super' in places where 'this' is strongly typed 
+                        // and of a derived class type
+                        break;
+                    }
+                    else if (currentDecl.kind === PullElementKind.Class) {
                         // We're in some class member.  That's good.
 
                         if (!this.enclosingClassIsDerived(currentDecl)) {
@@ -6873,15 +6899,15 @@ module TypeScript {
 
             // Resolve element types
             if (elements) {
-                if (isContextuallyTyped) {
+                if (contextualElementType) {
                     context.pushContextualType(contextualElementType, context.inProvisionalResolution(), null);
                 }
 
-                for (var i = 0; i < elements.members.length; i++) {
-                    elementTypes[elementTypes.length] = this.resolveAST(elements.members[i], isContextuallyTyped, context).type;
+                for (var i = 0, n = elements.members.length; i < n; i++) {
+                    elementTypes.push(this.resolveAST(elements.members[i], contextualElementType !== null, context).type);
                 }
 
-                if (isContextuallyTyped) {
+                if (contextualElementType) {
                     context.popContextualType();
                 }
             }
@@ -9060,7 +9086,7 @@ module TypeScript {
             //  if either type originates in an infinitely expanding type reference, S and T are not compared by the rules in the preceding sections.Instead, for the relationship to be considered true,
             //  -	S and T must both be type references to the same named type, and
             //  -	the relationship in question must be true for each corresponding pair of type arguments in the type argument lists of S and T.
-            if ((comparisonCache.valueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID) == undefined)) {
+            if (!comparisonCache.valueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID)) {
                 var sourcePropGenerativeTypeKind = sourcePropType.getGenerativeTypeClassification(source);
                 var targetPropGenerativeTypeKind = targetPropType.getGenerativeTypeClassification(target);
                 var widenedTargetPropType = this.widenType(null, targetPropType, context);
@@ -9074,6 +9100,14 @@ module TypeScript {
                         var targetDecl = targetProp.getDeclarations()[0];
                         var sourceDecl = sourceProp.getDeclarations()[0];
 
+                        var sourcePropTypeArguments = sourcePropType.getTypeArguments();
+                        var targetPropTypeArguments = targetPropType.getTypeArguments();
+
+                        if (!sourcePropTypeArguments && !targetPropTypeArguments) {
+                            comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, true);
+                            return true;
+                        }
+
                         if (!targetDecl.isEqual(sourceDecl)) {
                             comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, false);
                             if (comparisonInfo) {
@@ -9081,14 +9115,6 @@ module TypeScript {
                                     [targetProp.getScopedNameEx().toString(), source.toString(), target.toString()]));
                             }
                             return false;
-                        }
-
-                        var sourcePropTypeArguments = sourcePropType.getTypeArguments();
-                        var targetPropTypeArguments = targetPropType.getTypeArguments();
-
-                        if (!sourcePropTypeArguments && !targetPropTypeArguments) {
-                            comparisonCache.setValueAt(sourcePropType.pullSymbolID, targetPropType.pullSymbolID, true);
-                            return true;
                         }
 
                         if (!(sourcePropTypeArguments && targetPropTypeArguments) ||
@@ -9118,7 +9144,7 @@ module TypeScript {
                 }
             }
             else {
-                return true; // GTODO: should this be true?
+                return true;
             }
 
             var comparisonInfoPropertyTypeCheck: TypeComparisonInfo = null;
@@ -9934,7 +9960,7 @@ module TypeScript {
             for (var i = 0; i < parameterTypeMembers.length; i++) {
                 objectMember = this.getMemberSymbol(parameterTypeMembers[i].name, PullElementKind.SomeValue, objectType);
 
-                if (objectMember) {
+                if (objectMember && objectMember.type) {
 
                     var objectMemberGenerativeTypeKind = objectMember.type.getGenerativeTypeClassification(objectType);
                     var parameterMemberGenerativeTypeKind = parameterTypeMembers[i].type.getGenerativeTypeClassification(parameterType);
@@ -10074,13 +10100,13 @@ module TypeScript {
         private validateVariableDeclarationGroups(enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             // If we're inside a module, collect the names of imports so we can ensure they don't 
             // conflict with any variable declaration names.
-            var importDeclarationNames: BlockIntrinsics<boolean> = null;
+            var importDeclarationNames: IIndexable<boolean> = null;
             if (enclosingDecl.kind & (PullElementKind.Container | PullElementKind.DynamicModule | PullElementKind.Script)) {
                 var childDecls = enclosingDecl.getChildDecls();
                 for (var i = 0, n = childDecls.length; i < n; i++) {
                     var childDecl = childDecls[i];
                     if (childDecl.kind === PullElementKind.TypeAlias) {
-                        importDeclarationNames = importDeclarationNames || new BlockIntrinsics();
+                        importDeclarationNames = importDeclarationNames || createIntrinsicsObject<boolean>();
                         importDeclarationNames[childDecl.name] = true;
                     }
                 }
@@ -10106,7 +10132,7 @@ module TypeScript {
                     // Also collect any imports with this name (throughout any of the files)
                     var importSymbol = this.semanticInfoChain.findTopLevelSymbol(name, PullElementKind.TypeAlias, null);
                     if (importSymbol && importSymbol.isAlias()) {
-                        importDeclarationNames = importDeclarationNames || new BlockIntrinsics();
+                        importDeclarationNames = importDeclarationNames || createIntrinsicsObject<boolean>();
                         importDeclarationNames[name] = true;
                     }
                 }
@@ -11391,7 +11417,7 @@ module TypeScript {
 
             // Check that all the extended base types have compatible members (members of the same name must have identical types)
             var allMembers = typeSymbol.getAllMembers(PullElementKind.Property | PullElementKind.Method, GetAllMembersVisiblity.externallyVisible);
-            var membersBag = new BlockIntrinsics<PullSymbol>();
+            var membersBag = createIntrinsicsObject<PullSymbol>();
             for (var i = 0; i < allMembers.length; i++) {
                 var member = allMembers[i];
                 var memberName = member.name;
@@ -11492,7 +11518,6 @@ module TypeScript {
             expressionType: PullTypeSymbol,
             resolvedName: PullSymbol,
             context: PullTypeResolutionContext): boolean {
-            var enclosingDecl = this.getEnclosingDeclForAST(name);
 
             if (resolvedName) {
                 if (resolvedName.hasFlag(PullElementFlags.Private)) {
@@ -11504,13 +11529,14 @@ module TypeScript {
                     if (memberContainer && memberContainer.isClass()) {
                         // We're accessing a private member of a class.  We can only do that if we're 
                         // actually contained within that class.
-                        var containingClass = enclosingDecl;
+                        var memberClass = memberContainer.getDeclarations()[0].ast();
+                        Debug.assert(memberClass);
 
-                        while (containingClass && containingClass.kind != PullElementKind.Class) {
-                            containingClass = containingClass.getParentDecl();
-                        }
+                        var containingClass = this.getEnclosingClassDeclaration(name);
 
-                        if (!containingClass || containingClass.getSymbol() !== memberContainer) {
+                        var enclosingDecl = this.getEnclosingDeclForAST(name);
+
+                        if (!containingClass || containingClass !== memberClass) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name, DiagnosticCode._0_1_is_inaccessible, [memberContainer.toString(/*scopeSymbol*/ null, /*useConstraintInName*/ false), name.text()]));
                             return true;
                         }

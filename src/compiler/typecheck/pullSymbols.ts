@@ -776,7 +776,7 @@ module TypeScript {
     }
 
     export class PullSignatureSymbol extends PullSymbol {
-        private _memberTypeParameterNameCache: BlockIntrinsics<PullTypeParameterSymbol> = null;
+        private _memberTypeParameterNameCache: IIndexable<PullTypeParameterSymbol> = null;
         private _stringConstantOverload: boolean = undefined;
 
         public parameters: PullSymbol[] = sentinelEmptyArray;
@@ -829,7 +829,7 @@ module TypeScript {
             }
 
             if (!this._memberTypeParameterNameCache) {
-                this._memberTypeParameterNameCache = new BlockIntrinsics();
+                this._memberTypeParameterNameCache = createIntrinsicsObject<PullTypeParameterSymbol>();
             }
 
             this.typeParameters[this.typeParameters.length] = typeParameter;
@@ -850,7 +850,7 @@ module TypeScript {
             var memberSymbol: PullTypeParameterSymbol;
 
             if (!this._memberTypeParameterNameCache) {
-                this._memberTypeParameterNameCache = new BlockIntrinsics();
+                this._memberTypeParameterNameCache = createIntrinsicsObject();
 
                 if (this.typeParameters) {
                     for (var i = 0; i < this.typeParameters.length; i++) {
@@ -1106,13 +1106,13 @@ module TypeScript {
         private _indexSignatures: PullSignatureSymbol[] = null;
         private _allIndexSignatures: PullSignatureSymbol[] = null;
 
-        private _memberNameCache: BlockIntrinsics<PullSymbol> = null;
-        private _enclosedTypeNameCache: BlockIntrinsics<PullTypeSymbol> = null;
-        private _enclosedContainerCache: BlockIntrinsics<PullTypeSymbol> = null;
-        private _typeParameterNameCache: BlockIntrinsics<PullTypeParameterSymbol> = null;
-        private _containedNonMemberNameCache: BlockIntrinsics<PullSymbol> = null;
-        private _containedNonMemberTypeNameCache: BlockIntrinsics<PullTypeSymbol> = null;
-        private _containedNonMemberContainerCache: BlockIntrinsics<PullTypeSymbol> = null;
+        private _memberNameCache: IIndexable<PullSymbol> = null;
+        private _enclosedTypeNameCache: IIndexable<PullTypeSymbol> = null;
+        private _enclosedContainerCache: IIndexable<PullTypeSymbol> = null;
+        private _typeParameterNameCache: IIndexable<PullTypeParameterSymbol> = null;
+        private _containedNonMemberNameCache: IIndexable<PullSymbol> = null;
+        private _containedNonMemberTypeNameCache: IIndexable<PullTypeSymbol> = null;
+        private _containedNonMemberContainerCache: IIndexable<PullTypeSymbol> = null;
 
         // The instanatiation cache we use when we are instantiating this type with a single 
         // non-object type.
@@ -1120,7 +1120,7 @@ module TypeScript {
 
         // The instantiation cache we use in all other circumstances.  i.e. instantiating with
         // multiple types, or instantiating with object types.
-        private _complexSpecializationCache: BlockIntrinsics<PullTypeSymbol> = null;
+        private _complexSpecializationCache: IIndexable<PullTypeSymbol> = null;
 
 
         // GTODO
@@ -1312,14 +1312,14 @@ module TypeScript {
             memberSymbol.setContainer(this);
 
             if (!this._memberNameCache) {
-                this._memberNameCache = new BlockIntrinsics();
+                this._memberNameCache = createIntrinsicsObject<PullSymbol>();
             }
 
-            if (this._members == sentinelEmptyArray) {
+            if (this._members === sentinelEmptyArray) {
                 this._members = [];
             }
 
-            this._members[this._members.length] = memberSymbol;
+            this._members.push(memberSymbol);
             this._memberNameCache[memberSymbol.name] = memberSymbol;
         }
 
@@ -1332,7 +1332,7 @@ module TypeScript {
             enclosedType.setContainer(this);
 
             if (!this._enclosedTypeNameCache) {
-                this._enclosedTypeNameCache = new BlockIntrinsics();
+                this._enclosedTypeNameCache = createIntrinsicsObject<PullTypeSymbol>();
             }
 
             if (!this._enclosedMemberTypes) {
@@ -1352,7 +1352,7 @@ module TypeScript {
             enclosedContainer.setContainer(this);
 
             if (!this._enclosedContainerCache) {
-                this._enclosedContainerCache = new BlockIntrinsics();
+                this._enclosedContainerCache = createIntrinsicsObject<PullTypeSymbol>();
             }
 
             if (!this._enclosedMemberContainers) {
@@ -1372,7 +1372,7 @@ module TypeScript {
             enclosedNonMember.setContainer(this);
 
             if (!this._containedNonMemberNameCache) {
-                this._containedNonMemberNameCache = new BlockIntrinsics();
+                this._containedNonMemberNameCache = createIntrinsicsObject<PullSymbol>();
             }
 
             this._containedNonMemberNameCache[enclosedNonMember.name] = enclosedNonMember;
@@ -1387,7 +1387,7 @@ module TypeScript {
             enclosedNonMemberType.setContainer(this);
 
             if (!this._containedNonMemberTypeNameCache) {
-                this._containedNonMemberTypeNameCache = new BlockIntrinsics();
+                this._containedNonMemberTypeNameCache = createIntrinsicsObject<PullTypeSymbol>();
             }
 
             this._containedNonMemberTypeNameCache[enclosedNonMemberType.name] = enclosedNonMemberType;
@@ -1402,7 +1402,7 @@ module TypeScript {
             enclosedNonMemberContainer.setContainer(this);
 
             if (!this._containedNonMemberContainerCache) {
-                this._containedNonMemberContainerCache = new BlockIntrinsics();
+                this._containedNonMemberContainerCache = createIntrinsicsObject();
             }
 
             this._containedNonMemberContainerCache[enclosedNonMemberContainer.name] = enclosedNonMemberContainer;
@@ -1418,7 +1418,7 @@ module TypeScript {
             }
 
             if (!this._typeParameterNameCache) {
-                this._typeParameterNameCache = new BlockIntrinsics();
+                this._typeParameterNameCache = createIntrinsicsObject();
             }
 
             if (!this._typeParameters) {
@@ -1496,7 +1496,7 @@ module TypeScript {
             }
             else {
                 if (!this._complexSpecializationCache) {
-                    this._complexSpecializationCache = new BlockIntrinsics<PullTypeSymbol>();
+                    this._complexSpecializationCache = createIntrinsicsObject();
                 }
 
                 this._complexSpecializationCache[getIDForTypeSubstitutions(substitutingTypes)] = specializedVersionOfThisType;

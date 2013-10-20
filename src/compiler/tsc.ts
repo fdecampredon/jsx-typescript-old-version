@@ -653,7 +653,7 @@ module TypeScript {
             return normalizedPath;
         }
 
-        private fileExistsCache = new BlockIntrinsics<boolean>();
+        private fileExistsCache = createIntrinsicsObject<boolean>();
 
         fileExists(path: string): boolean {
             var exists = this.fileExistsCache[path];
@@ -720,7 +720,7 @@ module TypeScript {
 
         // For performance reasons we cache the results of resolvePath.  This avoids costly lookup
         // on the disk once we've already resolved a path once.
-        private resolvePathCache = new BlockIntrinsics<string>();
+        private resolvePathCache = createIntrinsicsObject<string>();
 
         resolvePath(path: string): string {
             var cachedValue = this.resolvePathCache[path];

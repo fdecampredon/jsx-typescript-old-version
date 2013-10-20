@@ -13,9 +13,6 @@
             batch = new BatchCompiler();
         }
 
-        var languageService = batch.createLanguageService();
-        languageService.refresh();
-
         function appendTime(message, time) {
             var res = message + ": " + time;
             var div = document.createElement('div');
@@ -96,88 +93,12 @@
             });
         }
 
-        function memberCompletion() {
-            //run(function () {
-            var start = new Date().getTime();
-
-            var index = compilerString.indexOf("walker.options.goChildren = AstWalkerCallback(true, cur, callback);");
-            var index2 = compilerString.indexOf(".", index) + 1;
-            
-            run(function () {
-                var start = new Date().getTime();
-                languageService.compilerState.compiler.semanticInfoChain.update();
-                var info = languageService.getCompletionsAtPosition(compilerFileName, index2, /*isMemberCompletion:*/ true);
-                var end = new Date().getTime();
-
-                // Verify
-                if (!containsCompletionEntry(info.entries, "options")) {
-                    throw new Error("Could not find completion entry for: " + "walker");
-                }
-
-                appendTime("Member Completions " + info.entries.length, end - start);
-            });
-            //});
-        }
-
-        function globalCompletion() {
-            //run(function () {
-            var start = new Date().getTime();
-
-            var index = compilerString.indexOf("walker.options.goChildren = AstWalkerCallback(true, cur, callback);");
-
-            run(function() {
-                var start = new Date().getTime();
-                languageService.compilerState.compiler.semanticInfoChain.update();
-                var info = languageService.getCompletionsAtPosition(compilerFileName, index, /*isMemberCompletion:*/ true);
-                var end = new Date().getTime();
-
-                // Verify
-                if (!containsCompletionEntry(info.entries, "walker")) {
-                    throw new Error("Could not find completion entry for: " + "walker");
-                }
-
-                appendTime("Global Completions " + info.entries.length, end - start);
-            });
-            //});
-        }
-
-        function containsCompletionEntry(list, entryName) {
-            if (list && list.length) {
-                for (var i = 0; i < list.length; i++) {
-                    var entry = list[i];
-                    if (entry.name === entryName) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        function typeCheck() {
-            if (!self.tcBatch) {
-                self.tcBatch = new BatchCompiler();
-            }
-            var start = new Date().getTime();
-            self.tcBatch.reTypeCheck();
-            var end = new Date().getTime();
-            appendTime("Type Check", end - start);
-        }
-
         function fullCompile() {
             var start = new Date().getTime();
             compile();
             var end = new Date().getTime();
             appendTime("Compile", end - start);
         }
-
-        //    for (var i = 0; i < 500; i++) {
-        //        service.refresh();
-        //        var res = service.getTypeAtPosition(5);
-        //        document.write(res); // bug: nothing printed here
-        //        document.write("<br>");
-        //        document.write("<br>");
-        //    }
 
     </script>
 </head>
@@ -187,10 +108,7 @@
     <button onclick="newParseAndAST()">Parse + AST</button>
     <button onclick="newIncrementalParse()">Incremental Parse</button>
     <button onclick="newIncrementalParseAndAST()">Incremental Parse + AST</button>
-    <button onclick="typeCheck()">Type Check</button>
     <button onclick="fullCompile()">Compile</button>
-    <button onclick="memberCompletion()">Member Completion</button>
-    <button onclick="globalCompletion()">Global Completion</button>
     <button onclick="clear1()">Clear</button>
 </body>
 </html>

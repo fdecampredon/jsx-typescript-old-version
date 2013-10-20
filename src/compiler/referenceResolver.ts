@@ -44,7 +44,7 @@ module TypeScript {
     export class ReferenceResolver {
         private inputFileNames: string[];
         private host: IReferenceResolverHost;
-        private visited: { [s: string]: string };
+        private visited: IIndexable<string>;
 
         constructor(inputFileNames: string[], host: IReferenceResolverHost, private useCaseSensitiveFileResolution: boolean) {
             this.inputFileNames = inputFileNames;

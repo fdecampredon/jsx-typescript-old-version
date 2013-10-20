@@ -288,6 +288,11 @@ module TypeScript.TextFactory {
             this.text.copyTo(span.start(), destination, destinationIndex, span.length());
         }
 
+        public substr(start: number, length: number, intern: boolean): string {
+            var startInOriginalText = this.span.start() + start;
+            return this.text.substr(startInOriginalText, length, intern);
+        }
+
         private getCompositeSpan(start: number, length: number): TextSpan {
             var compositeStart = MathPrototype.min(this.text.length(), this.span.start() + start);
             var compositeEnd = MathPrototype.min(this.text.length(), compositeStart + length);

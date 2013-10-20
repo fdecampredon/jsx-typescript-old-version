@@ -279,18 +279,17 @@ module TypeScript.Parser {
         public peekToken(n: number): ISyntaxToken {
             this.moveToFirstToken();
             var pin = this.getAndPinCursorIndex();
-            try {
-                for (var i = 0; i < n; i++) {
-                    this.moveToNextSibling();
-                    this.moveToFirstToken();
-                }
 
-                return this.currentToken();
+            for (var i = 0; i < n; i++) {
+                this.moveToNextSibling();
+                this.moveToFirstToken();
             }
-            finally {
-                this.rewindToPinnedCursorIndex(pin);
-                this.releaseAndUnpinCursorIndex(pin);
-            }
+
+            var result = this.currentToken();
+            this.rewindToPinnedCursorIndex(pin);
+            this.releaseAndUnpinCursorIndex(pin);
+
+            return result;
         }
     }
     
@@ -1835,29 +1834,31 @@ module TypeScript.Parser {
             // if we're sure that it's a type arg list and not an arithmetic expression.
 
             var rewindPoint = this.getRewindPoint();
-            try {
-                // We've seen a '<'.  Try to parse it out as a type argument list.
-                lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
-                // Debug.assert(lessThanToken.fullWidth() > 0);
 
-                result = this.parseSeparatedSyntaxList(ListParsingState.TypeArgumentList_Types);
-                typeArguments = result.list;
-                lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
+            // We've seen a '<'.  Try to parse it out as a type argument list.
+            lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
+            // Debug.assert(lessThanToken.fullWidth() > 0);
 
-                greaterThanToken = this.eatToken(SyntaxKind.GreaterThanToken);
+            result = this.parseSeparatedSyntaxList(ListParsingState.TypeArgumentList_Types);
+            typeArguments = result.list;
+            lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
-                // We're in a context where '<' could be the start of a type argument list, or part
-                // of an arithmetic expression.  We'll presume it's the latter unless we see the '>'
-                // and a following token that guarantees that it's supposed to be a type argument list.
-                if (greaterThanToken.fullWidth() === 0 || !this.canFollowTypeArgumentListInExpression(this.currentToken().kind())) {
-                    this.rewind(rewindPoint);
-                    return null;
-                }
+            greaterThanToken = this.eatToken(SyntaxKind.GreaterThanToken);
 
-                return this.factory.typeArgumentList(lessThanToken, typeArguments, greaterThanToken);
-            }
-            finally {
+            // We're in a context where '<' could be the start of a type argument list, or part
+            // of an arithmetic expression.  We'll presume it's the latter unless we see the '>'
+            // and a following token that guarantees that it's supposed to be a type argument list.
+            if (greaterThanToken.fullWidth() === 0 || !this.canFollowTypeArgumentListInExpression(this.currentToken().kind())) {
+                this.rewind(rewindPoint);
+
                 this.releaseRewindPoint(rewindPoint);
+                return null;
+            }
+            else {
+                this.releaseRewindPoint(rewindPoint);
+                var typeArgumentList = this.factory.typeArgumentList(lessThanToken, typeArguments, greaterThanToken);
+
+                return typeArgumentList;
             }
         }
 
@@ -3934,48 +3935,57 @@ module TypeScript.Parser {
             return expression;
         }
 
+        private tryParseGenericArgumentList(): ArgumentListSyntax {
+            // Debug.assert(this.currentToken().tokenKind === SyntaxKind.LessThanToken);
+            // If we have a '<', then only parse this as a arugment list if the type arguments
+            // are complete and we have an open paren.  if we don't, rewind and return nothing.
+            var rewindPoint = this.getRewindPoint();
+
+            var typeArgumentList = this.tryParseTypeArgumentList(/*inExpression:*/ true);
+            var token0 = this.currentToken();
+
+            var isOpenParen = token0.tokenKind === SyntaxKind.OpenParenToken;
+            var isDot = token0.tokenKind === SyntaxKind.DotToken;
+            var isOpenParenOrDot = isOpenParen || isDot;
+
+            var argumentList: ArgumentListSyntax = null;
+            if (typeArgumentList === null || !isOpenParenOrDot) {
+                // Wasn't generic.  Rewind to where we started so this can be parsed as an 
+                // arithmetic expression.
+                this.rewind(rewindPoint);
+                this.releaseRewindPoint(rewindPoint);
+                return null;
+            }
+            else {
+                this.releaseRewindPoint(rewindPoint);
+                // It's not uncommon for a user to type: "Foo<T>."
+                //
+                // This is not legal in typescript (as an parameter list must follow the type
+                // arguments).  We want to give a good error message for this as otherwise
+                // we'll bail out here and give a poor error message when we try to parse this
+                // as an arithmetic expression.
+                if (isDot) {
+                    // A parameter list must follow a generic type argument list.
+                    var diagnostic = new Diagnostic(this.fileName, this.lineMap, this.currentTokenStart(), token0.width(),
+                        DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
+                    this.addDiagnostic(diagnostic);
+
+                    return this.factory.argumentList(typeArgumentList,
+                        Syntax.emptyToken(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList, Syntax.emptyToken(SyntaxKind.CloseParenToken));
+                }
+                else {
+                    return this.parseArgumentList(typeArgumentList);
+                }
+            }
+        }
+
         private tryParseArgumentList(): ArgumentListSyntax {
-            var typeArgumentList: TypeArgumentListSyntax = null;
-
             if (this.currentToken().tokenKind === SyntaxKind.LessThanToken) {
-                // If we have a '<', then only parse this as a arugment list if the type arguments
-                // are complete and we have an open paren.  if we don't, rewind and return nothing.
-                var rewindPoint = this.getRewindPoint();
-                try {
-                    typeArgumentList = this.tryParseTypeArgumentList(/*inExpression:*/ true);
-                    var token0 = this.currentToken();
-
-                    var isOpenParen = token0.tokenKind === SyntaxKind.OpenParenToken;
-                    var isDot = token0.tokenKind === SyntaxKind.DotToken;
-                    var isOpenParenOrDot = isOpenParen || isDot;
-                    if (typeArgumentList === null || !isOpenParenOrDot) {
-                        this.rewind(rewindPoint);
-                        return null;
-                    }
-
-                    // It's not uncommon for a user to type: "Foo<T>."
-                    //
-                    // This is not legal in typescript (as an parameter list must follow the type
-                    // arguments).  We want to give a good error message for this as otherwise
-                    // we'll bail out here and give a poor error message when we try to parse this
-                    // as an arithmetic expression.
-                    if (isDot) {
-                        // A parameter list must follow a generic type argument list.
-                        var diagnostic = new Diagnostic(this.fileName, this.lineMap, this.currentTokenStart(), token0.width(),
-                            DiagnosticCode.A_parameter_list_must_follow_a_generic_type_argument_list_expected, null);
-                        this.addDiagnostic(diagnostic);
-
-                        return this.factory.argumentList(typeArgumentList,
-                            Syntax.emptyToken(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList, Syntax.emptyToken(SyntaxKind.CloseParenToken));
-                    }
-                }
-                finally {
-                    this.releaseRewindPoint(rewindPoint);
-                }
+                return this.tryParseGenericArgumentList();
             }
 
             if (this.currentToken().tokenKind === SyntaxKind.OpenParenToken) {
-                return this.parseArgumentList(typeArgumentList);
+                return this.parseArgumentList(null);
             }
 
             return null;
@@ -3983,17 +3993,19 @@ module TypeScript.Parser {
 
         private parseArgumentList(typeArgumentList: TypeArgumentListSyntax): ArgumentListSyntax {
             var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
-            var arguments = Syntax.emptySeparatedList;
+
+            // Don't use the name 'arguments' it prevents V8 from optimizing this method.
+            var _arguments = Syntax.emptySeparatedList;
 
             if (openParenToken.fullWidth() > 0) {
                 var result = this.parseSeparatedSyntaxList(ListParsingState.ArgumentList_AssignmentExpressions);
-                arguments = result.list;
+                _arguments = result.list;
                 openParenToken = this.addSkippedTokensAfterToken(openParenToken, result.skippedTokens);
             }
 
             var closeParenToken = this.eatToken(SyntaxKind.CloseParenToken);
 
-            return this.factory.argumentList(typeArgumentList, openParenToken, arguments, closeParenToken);
+            return this.factory.argumentList(typeArgumentList, openParenToken, _arguments, closeParenToken);
         }
 
         private parseElementAccessExpression(expression: IExpressionSyntax, inObjectCreation: boolean): ElementAccessExpressionSyntax {
@@ -4272,16 +4284,14 @@ module TypeScript.Parser {
 
             // Then, try to actually parse it as a arrow function, and only return if we see an => 
             var rewindPoint = this.getRewindPoint();
-            try {
-                var arrowFunction = this.parseParenthesizedArrowFunctionExpression(/*requiresArrow:*/ true);
-                if (arrowFunction === null) {
-                    this.rewind(rewindPoint);
-                }
-                return arrowFunction;
+
+            var arrowFunction = this.parseParenthesizedArrowFunctionExpression(/*requiresArrow:*/ true);
+            if (arrowFunction === null) {
+                this.rewind(rewindPoint);
             }
-            finally {
-                this.releaseRewindPoint(rewindPoint);
-            }
+
+            this.releaseRewindPoint(rewindPoint);
+            return arrowFunction;
         }
 
         private parseParenthesizedArrowFunctionExpression(requireArrow: boolean): ParenthesizedArrowFunctionExpressionSyntax {
@@ -4670,26 +4680,27 @@ module TypeScript.Parser {
             }
 
             var rewindPoint = this.getRewindPoint();
-            try {
-                var lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
-                // Debug.assert(lessThanToken.fullWidth() > 0);
-                
-                var result = this.parseSeparatedSyntaxList(ListParsingState.TypeParameterList_TypeParameters);
-                var typeParameterList = result.list;
-                lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
-                var greaterThanToken = this.eatToken(SyntaxKind.GreaterThanToken);
+            var lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
+            // Debug.assert(lessThanToken.fullWidth() > 0);
 
-                // return null if we were required to have a '>' token and we did not  have one.
-                if (requireCompleteTypeParameterList && greaterThanToken.fullWidth() === 0) {
-                    this.rewind(rewindPoint);
-                    return null;
-                }
+            var result = this.parseSeparatedSyntaxList(ListParsingState.TypeParameterList_TypeParameters);
+            var typeParameters = result.list;
+            lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
-                return this.factory.typeParameterList(lessThanToken, typeParameterList, greaterThanToken);
-            }
-            finally {
+            var greaterThanToken = this.eatToken(SyntaxKind.GreaterThanToken);
+
+            // return null if we were required to have a '>' token and we did not  have one.
+            if (requireCompleteTypeParameterList && greaterThanToken.fullWidth() === 0) {
+                this.rewind(rewindPoint);
                 this.releaseRewindPoint(rewindPoint);
+                return null;
+            }
+            else {
+                this.releaseRewindPoint(rewindPoint);
+                var typeParameterList = this.factory.typeParameterList(lessThanToken, typeParameters, greaterThanToken);
+
+                return typeParameterList;
             }
         }
 

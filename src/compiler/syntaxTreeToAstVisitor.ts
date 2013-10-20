@@ -164,10 +164,7 @@ module TypeScript {
         }
 
         private convertComment(trivia: ISyntaxTrivia, commentStartPosition: number, hasTrailingNewLine: boolean): Comment {
-            var comment = new Comment(trivia.fullText(), trivia.kind() === SyntaxKind.MultiLineCommentTrivia, hasTrailingNewLine);
-
-            comment.minChar = commentStartPosition;
-            comment.limChar = commentStartPosition + trivia.fullWidth();
+            var comment = new Comment(trivia, hasTrailingNewLine, commentStartPosition, commentStartPosition + trivia.fullWidth());
 
             return comment;
         }

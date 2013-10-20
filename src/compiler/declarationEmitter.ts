@@ -259,7 +259,7 @@ module TypeScript {
             if (this.declFile.onNewLine) {
                 this.emitIndent();
             }
-            else if (!comment.isBlockComment) {
+            else if (!comment.isBlockComment()) {
                 this.declFile.WriteLine("");
                 this.emitIndent();
             }
@@ -272,7 +272,7 @@ module TypeScript {
                 this.declFile.Write(text[i]);
             }
 
-            if (comment.endsLine || !comment.isBlockComment) {
+            if (comment.endsLine || !comment.isBlockComment()) {
                 this.declFile.WriteLine("");
             }
             else {

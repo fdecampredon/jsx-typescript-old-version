@@ -38,6 +38,14 @@ module TypeScript {
         return structuralEquals(ast1, ast2, true);
     }
 
+    function commentStructuralEqualsNotIncludingPosition(ast1: Comment, ast2: Comment): boolean {
+        return commentStructuralEquals(ast1, ast2, false);
+    }
+
+    function commentStructuralEqualsIncludingPosition(ast1: Comment, ast2: Comment): boolean {
+        return commentStructuralEquals(ast1, ast2, true);
+    }
+
     function structuralEquals(ast1: AST, ast2: AST, includingPosition: boolean): boolean {
         if (ast1 === ast2) {
             return true;
@@ -48,9 +56,23 @@ module TypeScript {
                ast1.structuralEquals(ast2, includingPosition);
     }
 
+    function commentStructuralEquals(ast1: Comment, ast2: Comment, includingPosition: boolean): boolean {
+        if (ast1 === ast2) {
+            return true;
+        }
+
+        return ast1 !== null && ast2 !== null &&
+            ast1.structuralEquals(ast2, includingPosition);
+    }
+
     function astArrayStructuralEquals(array1: AST[], array2: AST[], includingPosition: boolean): boolean {
         return ArrayUtilities.sequenceEquals(array1, array2,
             includingPosition ? structuralEqualsIncludingPosition : structuralEqualsNotIncludingPosition);
+    }
+
+    function commentArrayStructuralEquals(array1: Comment[], array2: Comment[], includingPosition: boolean): boolean {
+        return ArrayUtilities.sequenceEquals(array1, array2,
+            includingPosition ? commentStructuralEqualsIncludingPosition : commentStructuralEqualsNotIncludingPosition);
     }
 
     export interface IAST extends IASTSpan {
@@ -176,8 +198,8 @@ module TypeScript {
             }
 
             return this._flags === ast._flags &&
-                astArrayStructuralEquals(this.preComments(), ast.preComments(), includingPosition) &&
-                astArrayStructuralEquals(this.postComments(), ast.postComments(), includingPosition);
+                commentArrayStructuralEquals(this.preComments(), ast.preComments(), includingPosition) &&
+                commentArrayStructuralEquals(this.postComments(), ast.postComments(), includingPosition);
         }
     }
 
@@ -2234,46 +2256,56 @@ module TypeScript {
         }
     }
 
-    export class Comment extends AST {
+    export class Comment {
         public text: string[] = null;
         private docCommentText: string = null;
+        public trailingTriviaWidth = 0;
 
-        constructor(public content: string,
-                    public isBlockComment: boolean,
-                    public endsLine: boolean) {
-            super();
+        constructor(private _trivia: ISyntaxTrivia,
+                    public endsLine: boolean,
+                    public minChar: number,
+                    public limChar: number) {
+            // super();
         }
 
-        public nodeType(): NodeType {
-            return NodeType.Comment;
+        public fullText(): string {
+            return this._trivia.fullText();
+        }
+
+        public isBlockComment(): boolean {
+            return this._trivia.kind() === SyntaxKind.MultiLineCommentTrivia;
         }
 
         public structuralEquals(ast: Comment, includingPosition: boolean): boolean {
-            return super.structuralEquals(ast, includingPosition) &&
-                   this.content === ast.content &&
-                   this.isBlockComment === ast.isBlockComment &&
+            if (includingPosition) {
+                if (this.minChar !== ast.minChar || this.limChar !== ast.limChar) {
+                    return false;
+                }
+            }
+
+            return this._trivia.fullText() === ast._trivia.fullText() &&
                    this.endsLine === ast.endsLine;
         }
 
         public isPinnedOrTripleSlash(): boolean {
-            if (this.content.match(tripleSlashReferenceRegExp)) {
+            if (this.fullText().match(tripleSlashReferenceRegExp)) {
                 return true;
             }
             else {
-                return this.content.indexOf("/*!") === 0;
+                return this.fullText().indexOf("/*!") === 0;
             }
         }
 
         public getText(): string[] {
             if (this.text === null) {
-                if (this.isBlockComment) {
-                    this.text = this.content.split("\n");
+                if (this.isBlockComment()) {
+                    this.text = this.fullText().split("\n");
                     for (var i = 0; i < this.text.length; i++) {
                         this.text[i] = this.text[i].replace(/^\s+|\s+$/g, '');
                     }
                 }
                 else {
-                    this.text = [(this.content.replace(/^\s+|\s+$/g, ''))];
+                    this.text = [(this.fullText().replace(/^\s+|\s+$/g, ''))];
                 }
             }
 
@@ -2281,8 +2313,8 @@ module TypeScript {
         }
 
         public isDocComment() {
-            if (this.isBlockComment) {
-                return this.content.charAt(2) === "*" && this.content.charAt(3) !== "/";
+            if (this.isBlockComment()) {
+                return this.fullText().charAt(2) === "*" && this.fullText().charAt(3) !== "/";
             }
 
             return false;
@@ -2290,7 +2322,7 @@ module TypeScript {
 
         public getDocCommentTextValue() {
             if (this.docCommentText === null) {
-                this.docCommentText = Comment.cleanJSDocComment(this.content);
+                this.docCommentText = Comment.cleanJSDocComment(this.fullText());
             }
 
             return this.docCommentText;
@@ -2426,14 +2458,14 @@ module TypeScript {
         }
 
         static getParameterDocCommentText(param: string, fncDocComments: Comment[]) {
-            if (fncDocComments.length === 0 || !fncDocComments[0].isBlockComment) {
+            if (fncDocComments.length === 0 || !fncDocComments[0].isBlockComment()) {
                 // there were no fnc doc comments and the comment is not block comment then it cannot have 
                 // @param comment that can be parsed
                 return "";
             }
 
             for (var i = 0; i < fncDocComments.length; i++) {
-                var commentContents = fncDocComments[i].content;
+                var commentContents = fncDocComments[i].fullText();
                 for (var j = commentContents.indexOf("@param", 0); 0 <= j; j = commentContents.indexOf("@param", j)) {
                     j += 6;
                     if (!Comment.isSpaceChar(commentContents, j)) {
