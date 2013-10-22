@@ -363,7 +363,7 @@ module TypeScript {
         }
 
         private updateLineAndColumn(s: string) {
-            var lineNumbers = TextUtilities.parseLineStarts(TextFactory.createText(s));
+            var lineNumbers = TextUtilities.parseLineStarts(s);
             if (lineNumbers.length > 1) {
                 // There are new lines in the string, update the line and column number accordingly
                 this.emitState.line += lineNumbers.length - 1;

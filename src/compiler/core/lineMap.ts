@@ -2,13 +2,14 @@
 
 module TypeScript {
     export class LineMap {
-        public static empty = new LineMap([0], 0);
+        public static empty = new LineMap(() => [0], 0);
+        private _lineStarts: number[] = null;
 
-        constructor(private _lineStarts: number[], private length: number) {
+        constructor(private _computeLineStarts: () => number[], private length: number) {
         }
 
         public toJSON(key: any) {
-            return { lineStarts: this._lineStarts, length: this.length };
+            return { lineStarts: this.lineStarts(), length: this.length };
         }
 
         public equals(other: LineMap): boolean {
@@ -17,6 +18,10 @@ module TypeScript {
         }
 
         public lineStarts(): number[] {
+            if (this._lineStarts === null) {
+                this._lineStarts = this._computeLineStarts();
+            }
+
             return this._lineStarts;
         }
 

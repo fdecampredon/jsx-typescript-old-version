@@ -346,9 +346,9 @@ module TypeScript {
                 parentDecl.addChildDecl(this);
             }
 
-            if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Global && kind !== PullElementKind.Script && kind !== PullElementKind.Primitive) {
-                throw Errors.invalidOperation("Orphaned decl " + PullElementKind[kind]);
-            }
+            //if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Global && kind !== PullElementKind.Script && kind !== PullElementKind.Primitive) {
+            //    throw Errors.invalidOperation("Orphaned decl " + PullElementKind[kind]);
+            //}
         }
 
         public fileName(): string {

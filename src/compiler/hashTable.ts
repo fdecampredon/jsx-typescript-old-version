@@ -22,7 +22,7 @@ module TypeScript {
 
     var proto = "__proto__"
 
-    export class BlockIntrinsics<T> {
+    class BlockIntrinsics<T> {
         public prototype: T = undefined;
         public toString: T = undefined;
         public toLocaleString: T = undefined;
@@ -43,14 +43,8 @@ module TypeScript {
         }
     }
 
-    // If Object.create exists, then we can just use that.  Otherwise, we need a workaround
-    // that creates an Object but deletes all existing members on it first.
-    var createEmptyObject = Object.create ? Object.create : function (arg: any) {
-        return new BlockIntrinsics();
-    };
-
     export function createIntrinsicsObject<T>(): IIndexable<T> {
-        return createEmptyObject(null);
+        return new BlockIntrinsics<T>();
     }
 
     export interface IHashTable<T> {

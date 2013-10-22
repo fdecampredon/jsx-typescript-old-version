@@ -86,11 +86,6 @@ module TypeScript.TextFactory {
 
     class TextBase implements IText {
         /**
-         * The line start position of each line.
-         */
-        private lazyLineStarts: number[] = null;
-
-        /**
          * The length of the text represented by StringText.
          */
         public length(): number {
@@ -140,7 +135,7 @@ module TypeScript.TextFactory {
          * The length of the text represented by StringText.
          */
         public lineCount(): number {
-            return this.lineStarts().length;
+            return this._lineStarts().length;
         }
 
         /**
@@ -158,20 +153,16 @@ module TypeScript.TextFactory {
         }
 
         public lineMap(): LineMap {
-            return new LineMap(this.lineStarts(), this.length());
+            return new LineMap(() => this._lineStarts(), this.length());
         }
 
-        private lineStarts(): number[] {
-            if (this.lazyLineStarts === null) {
-                this.lazyLineStarts = TextUtilities.parseLineStarts(this);
-            }
-
-            return this.lazyLineStarts;
+        public _lineStarts(): number[]{
+            throw Errors.abstract();
         }
 
         private linebreakInfo = new LinebreakInfo(0, 0);
         public getLineFromLineNumber(lineNumber: number): ITextLine {
-            var lineStarts = this.lineStarts();
+            var lineStarts = this._lineStarts();
 
             if (lineNumber < 0 || lineNumber >= lineStarts.length) {
                 throw Errors.argumentOutOfRange("lineNumber");
@@ -221,7 +212,7 @@ module TypeScript.TextFactory {
             }
 
             // Binary search to find the right line
-            var lineNumber = ArrayUtilities.binarySearch(this.lineStarts(), position);
+            var lineNumber = ArrayUtilities.binarySearch(this._lineStarts(), position);
             if (lineNumber < 0) {
                 lineNumber = (~lineNumber) - 1;
             }
@@ -236,7 +227,7 @@ module TypeScript.TextFactory {
 
             var lineNumber = this.getLineNumberFromPosition(position);
 
-            return new LineAndCharacter(lineNumber, position - this.lineStarts()[lineNumber]);
+            return new LineAndCharacter(lineNumber, position - this._lineStarts()[lineNumber]);
         }
     }
 
@@ -246,6 +237,11 @@ module TypeScript.TextFactory {
     class SubText extends TextBase {
         private text: IText;
         private span: TextSpan;
+
+        /**
+         * The line start position of each line.
+         */
+        private _lazyLineStarts: number[] = null;
 
         constructor(text: IText, span: TextSpan) {
             super();
@@ -298,6 +294,14 @@ module TypeScript.TextFactory {
             var compositeEnd = MathPrototype.min(this.text.length(), compositeStart + length);
             return new TextSpan(compositeStart, compositeEnd - compositeStart);
         }
+
+        public _lineStarts(): number[] {
+            if (!this._lazyLineStarts) {
+                this._lazyLineStarts = TextUtilities.parseLineStarts({ charCodeAt: index => this.charCodeAt(index), length: this.length() });
+            }
+
+            return this._lazyLineStarts;
+        }
     }
 
     /**
@@ -308,6 +312,11 @@ module TypeScript.TextFactory {
          * Underlying string on which this IText instance is based
          */
         private source: string = null;
+
+        /**
+         * The line start position of each line.
+         */
+        private _lazyLineStarts: number[] = null;
 
         /**
          * Initializes an instance of StringText with provided data.
@@ -365,6 +374,14 @@ module TypeScript.TextFactory {
 
         public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
             StringUtilities.copyTo(this.source, sourceIndex, destination, destinationIndex, count);
+        }
+
+        public _lineStarts(): number[] {
+            if (this._lazyLineStarts === null) {
+                this._lazyLineStarts = TextUtilities.parseLineStarts(this.source);
+            }
+
+            return this._lazyLineStarts;
         }
     }
 
@@ -446,6 +463,8 @@ module TypeScript.SimpleText {
     }
 
     class SimpleStringText implements ISimpleText {
+        private _lineMap: LineMap = null;
+
         constructor(private value: string) {
         }
 
@@ -481,7 +500,11 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            return LineMap1.fromSimpleText(this);
+            if (!this._lineMap) {
+                this._lineMap = LineMap1.fromString(this.value);
+            }
+
+            return this._lineMap;
         }
     }
 
@@ -513,8 +536,7 @@ module TypeScript.SimpleText {
         }
 
         public lineMap(): LineMap {
-            var lineStartPositions = this.scriptSnapshot.getLineStartPositions();
-            return new LineMap(lineStartPositions, this.length());
+            return new LineMap(() => this.scriptSnapshot.getLineStartPositions(), this.length());
         }
     }
 

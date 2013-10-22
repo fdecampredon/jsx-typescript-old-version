@@ -131,7 +131,7 @@ module TypeScript {
                 array[i] = node.childAt(i).accept(this);
             }
             
-            var result = new ASTList(array);
+            var result = new ASTList(this.fileName, array);
             this.setSpan(result, start, node);
 
             return result;
@@ -154,7 +154,7 @@ module TypeScript {
                 }
             }
 
-            var result = new ASTList(array, list.separatorCount());
+            var result = new ASTList(this.fileName, array, list.separatorCount());
             this.setSpan(result, start, list);
 
             result.setPostComments(this.previousTokenTrailingComments);
@@ -363,7 +363,7 @@ module TypeScript {
                     }
                 }
 
-                bod = new ASTList([topLevelMod]);
+                bod = new ASTList(this.fileName, [topLevelMod]);
                 this.setSpanExplicit(bod, start, this.position);
             }
 
@@ -458,7 +458,7 @@ module TypeScript {
                 }
             }
 
-            var result = new ASTList(array);
+            var result = new ASTList(this.fileName, array);
             this.setSpan(result, start, node);
 
             var heritageClause = new HeritageClause(
@@ -536,7 +536,7 @@ module TypeScript {
 
                 // REVIEW: will also possibly need to re-parent comments as well
 
-                members = new ASTList([result]);
+                members = new ASTList(this.fileName, [result]);
             }
 
             // mark ambient if declare keyword or parsing ambient module or parsing declare file
@@ -622,7 +622,7 @@ module TypeScript {
 
             this.movePast(node.closeBraceToken);
 
-            var result = new EnumDeclaration(identifier, new ASTList(enumElements));
+            var result = new EnumDeclaration(identifier, new ASTList(this.fileName, enumElements));
             this.setCommentsAndSpan(result, start, node);
 
             var flags = ModuleFlags.None;
@@ -941,7 +941,7 @@ module TypeScript {
                     expression.setPreComments(null);
                 }
                 
-                var statements = new ASTList([returnStatement]);
+                var statements = new ASTList(this.fileName, [returnStatement]);
 
                 var closeBraceSpan = new ASTSpan();
                 closeBraceSpan.minChar = expression.minChar;
@@ -963,7 +963,7 @@ module TypeScript {
             var parameter = new Parameter(identifier, null, null, false, /*isRest:*/ false);
             this.setSpanExplicit(parameter, identifier.minChar, identifier.limChar);
 
-            var parameters = new ASTList([parameter]);
+            var parameters = new ASTList(this.fileName, [parameter]);
 
             var statements = this.getArrowFunctionStatements(node.body);
 
@@ -1050,7 +1050,7 @@ module TypeScript {
             }
             this.movePast(node.greaterThanToken);
             
-            var result = new ASTList(array);
+            var result = new ASTList(this.fileName, array);
             this.setSpan(result, start, node.typeArguments);
 
             return result;
@@ -1435,7 +1435,7 @@ module TypeScript {
             var name = new Identifier("__item", "__item");
             this.setSpanExplicit(name, start, start);   // 0 length name.
 
-            var parameters = new ASTList([parameter]);
+            var parameters = new ASTList(this.fileName, [parameter]);
 
             var result = new FunctionDeclaration(name, null, parameters, returnType, null);
             this.setCommentsAndSpan(result, start, node);
@@ -1786,7 +1786,7 @@ module TypeScript {
 
             this.movePast(node.closeBraceToken);
 
-            var result = new SwitchStatement(expression, new ASTList(array), span);
+            var result = new SwitchStatement(expression, new ASTList(this.fileName, array), span);
             this.setSpan(result, start, node);
 
             return result;
