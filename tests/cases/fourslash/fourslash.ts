@@ -135,7 +135,7 @@ module FourSlashInterface {
     export class verifyNegatable {
         public not: verifyNegatable;
 
-        constructor (private negative = false) {
+        constructor(private negative = false) {
             if (!negative) {
                 this.not = new verifyNegatable(true);
             }
@@ -165,11 +165,11 @@ module FourSlashInterface {
             }
         }
 
-		// Verifies the completion list items count to be greater than the specified amount. The
-		// completion list is brought up if necessary
-		public completionListItemsCountIsGreaterThan(count: number) {
-			FourSlash.currentTestState.verifyCompletionListItemsCountIsGreaterThan(count);
-		}
+        // Verifies the completion list items count to be greater than the specified amount. The
+        // completion list is brought up if necessary
+        public completionListItemsCountIsGreaterThan(count: number) {
+            FourSlash.currentTestState.verifyCompletionListItemsCountIsGreaterThan(count);
+        }
 
         public completionListIsEmpty() {
             FourSlash.currentTestState.verifyCompletionListIsEmpty(this.negative);
@@ -179,8 +179,8 @@ module FourSlashInterface {
             FourSlash.currentTestState.verifyMemberListIsEmpty(this.negative);
         }
 
-		public referencesCountIs(count: number) {
-			FourSlash.currentTestState.verifyReferencesCountIs(count);
+        public referencesCountIs(count: number) {
+            FourSlash.currentTestState.verifyReferencesCountIs(count);
         }
 
         public implementorsCountIs(count: number) {
@@ -217,6 +217,10 @@ module FourSlashInterface {
 
         public quickInfoExists() {
             FourSlash.currentTestState.verifyQuickInfoExists(this.negative);
+        }
+
+        public definitionLocationExists() {
+            FourSlash.currentTestState.verifyDefinitionLocationExists(this.negative);
         }
     }
 
@@ -282,7 +286,7 @@ module FourSlashInterface {
         public currentSignatureTypeParamterCountIs(expected: number) {
             FourSlash.currentTestState.verifyCurrentSignatureHelpTypeParameterCount(expected);
         }
- 
+
         public currentSignatureHelpIs(expected: string) {
             FourSlash.currentTestState.verifyCurrentSignatureHelpIs(expected);
         }
@@ -310,7 +314,7 @@ module FourSlashInterface {
         public matchingBracePositionInCurrentFile(bracePosition: number, expectedMatchPosition: number) {
             FourSlash.currentTestState.verifyMatchingBracePosition(bracePosition, expectedMatchPosition);
         }
-    
+
         public noMatchingBracePositionInCurrentFile(bracePosition: number) {
             FourSlash.currentTestState.verifyNoMatchingBracePosition(bracePosition);
         }
@@ -382,10 +386,10 @@ module FourSlashInterface {
         }
 
         public moveLeft(count?: number) {
-            if(typeof count === 'undefined') {
+            if (typeof count === 'undefined') {
                 count = 1;
             }
-            FourSlash.currentTestState.moveCaretRight(count*-1);
+            FourSlash.currentTestState.moveCaretRight(count * -1);
         }
 
         public enableFormatting() {
@@ -422,13 +426,13 @@ module FourSlashInterface {
             FourSlash.currentTestState.printCurrentSignatureHelp();
         }
 
-        public printMemberListMembers() { 
+        public printMemberListMembers() {
             FourSlash.currentTestState.printMemberListMembers();
         }
 
         public printCompletionListMembers() {
             FourSlash.currentTestState.printCompletionListMembers();
-         }
+        }
 
         public printBreakpointLocation(pos: number) {
             FourSlash.currentTestState.printBreakpointLocation(pos);

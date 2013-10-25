@@ -24,7 +24,7 @@ goTo.marker('2');
 verify.quickInfoIs('boolean');
 
 goTo.marker('3');
-verify.quickInfoIs('any');
+verify.quickInfoIs('{}');
 
 goTo.marker('4');
 verify.quickInfoIs('any');

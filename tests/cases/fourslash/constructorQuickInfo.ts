@@ -10,7 +10,7 @@ goTo.marker('1');
 verify.quickInfoIs('SS<number>');
 
 goTo.marker('2');
-verify.quickInfoIs('SS<any>');
+verify.quickInfoIs('SS<{}>');
 
 goTo.marker('3');
-verify.quickInfoIs('SS<any>');
+verify.quickInfoIs('SS<{}>');

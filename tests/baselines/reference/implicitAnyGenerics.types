@@ -3,8 +3,8 @@ Line 1 col 6 IdentifierName "C" = C<T>
 Line 1 col 8 IdentifierName "T" = T
 Line 2 col 0 IdentifierName "x" = T
 Line 2 col 7 IdentifierName "T" = T
-Line 5 col 4 IdentifierName "c" = C<any>
-Line 5 col 8 ObjectCreationExpression "new C()" = C<any>
+Line 5 col 4 IdentifierName "c" = C<{}>
+Line 5 col 8 ObjectCreationExpression "new C()" = C<{}>
 Line 5 col 12 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 6 col 4 IdentifierName "c2" = C<any>
 Line 6 col 9 ObjectCreationExpression "new C<any>()" = C<any>
@@ -14,7 +14,7 @@ Line 7 col 9 ObjectCreationExpression "new C<number>()" = C<number>
 Line 7 col 13 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 8 col 4 IdentifierName "c4" = C<any>
 Line 8 col 8 IdentifierName "C" = C<T>
-Line 8 col 17 ObjectCreationExpression "new C()" = C<any>
+Line 8 col 17 ObjectCreationExpression "new C()" = C<{}>
 Line 8 col 21 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
 Line 10 col 6 IdentifierName "D" = D<T>
 Line 10 col 8 IdentifierName "T" = T
@@ -40,7 +40,7 @@ Line 18 col 21 IdentifierName "D" = { prototype: D<any>; new<T>(x: T): D<T>; }
 Line 20 col 9 IdentifierName "foo" = <T>() => T
 Line 20 col 13 IdentifierName "T" = T
 Line 20 col 19 IdentifierName "T" = T
-Line 21 col 0 InvocationExpression "foo()" = any
+Line 21 col 0 InvocationExpression "foo()" = {}
 Line 21 col 0 IdentifierName "foo" = <T>() => T
 Line 22 col 0 InvocationExpression "foo<any>()" = any
 Line 22 col 0 IdentifierName "foo" = <T>() => T

@@ -37,7 +37,7 @@ goTo.marker('Bsig');
 verify.quickInfoIs("<T>(val: string): B<string>", null, B, 'constructor');
 
 goTo.marker('Csig');
-verify.quickInfoIs("<T>(): C<any>", null, C, 'constructor');
+verify.quickInfoIs("<T>(): C<{}>", null, C, 'constructor');
 
 goTo.marker('Dsig');
 verify.quickInfoIs("<T>(val: string): D<string>", null, D, 'constructor');
@@ -51,7 +51,7 @@ goTo.marker('Bsig');
 verify.quickInfoIs("<T>(val: string): B<string>", null, B, 'constructor');
 
 goTo.marker('Csig');
-verify.quickInfoIs("<T>(): C<any>", null, C, 'constructor');
+verify.quickInfoIs("<T>(): C<{}>", null, C, 'constructor');
 
 goTo.marker('Dsig');
 verify.quickInfoIs("<T>(): D<string>", null, D, 'constructor');

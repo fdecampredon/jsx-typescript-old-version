@@ -183,7 +183,7 @@ verify.referencesCountIs(0);
 
 // References to type.
 goTo.marker("2");
-verify.referencesCountIs(9);
+verify.referencesCountIs(0);
 
 // References to a variable declared in global.
 goTo.marker("3");

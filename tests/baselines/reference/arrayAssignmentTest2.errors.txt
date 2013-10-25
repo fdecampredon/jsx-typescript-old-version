@@ -1,9 +1,27 @@
 arrayAssignmentTest2.ts line 47 col 1: error TS2012: Cannot convert 'C2[]' to 'C3[]':
 	Type 'C2' is missing property 'CM3M1' from type 'C3'.
+	Types of property 'concat' of types 'C2[]' and 'C3[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): C2[]; (...items: C2[]): C2[]; }' and '{ <U extends T[]>(...items: U[]): C3[]; (...items: C3[]): C3[]; }' are incompatible:
+			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
+				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
+					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
+						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
+							Types of property 'pop' of types '{}[]' and 'U[]' are incompatible:
+								Call signatures of types '() => {}' and '() => U' are incompatible.
+			Type 'C2' is missing property 'CM3M1' from type 'C3'.
+			Types of property 'pop' of types 'C2[]' and 'C3[]' are incompatible:
+				Call signatures of types '() => C2' and '() => C3' are incompatible:
+					Type 'C2' is missing property 'CM3M1' from type 'C3'.
 arrayAssignmentTest2.ts line 48 col 1: error TS2012: Cannot convert 'C1[]' to 'C3[]':
 	Type 'C1' is missing property 'CM3M1' from type 'C3'.
+	Types of property 'pop' of types 'C1[]' and 'C3[]' are incompatible:
+		Call signatures of types '() => C1' and '() => C3' are incompatible:
+			Type 'C1' is missing property 'CM3M1' from type 'C3'.
 arrayAssignmentTest2.ts line 49 col 1: error TS2012: Cannot convert 'I1[]' to 'C3[]':
 	Type 'I1' is missing property 'CM3M1' from type 'C3'.
+	Types of property 'pop' of types 'I1[]' and 'C3[]' are incompatible:
+		Call signatures of types '() => I1' and '() => C3' are incompatible:
+			Type 'I1' is missing property 'CM3M1' from type 'C3'.
 arrayAssignmentTest2.ts line 51 col 1: error TS2012: Cannot convert '() => C1' to 'any[]':
 	Type '() => C1' is missing property 'concat' from type 'any[]'.
 arrayAssignmentTest2.ts line 52 col 1: error TS2012: Cannot convert '() => any' to 'any[]':

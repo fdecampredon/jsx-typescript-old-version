@@ -18,7 +18,7 @@ var CCC = (function () {
 })();
 
 var a = (x ?  = 0 : );
-(function (__missing) {
+(function () {
     return 1;
 });
 var b = function (x, y) {

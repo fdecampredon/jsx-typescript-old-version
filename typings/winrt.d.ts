@@ -3253,7 +3253,7 @@ declare module Windows {
                 done<U>(success?: (value: Windows.Foundation.Collections.IVectorView<Windows.Devices.Sms.ISmsMessage>) => any, error?: (error: any) => any, progress?: (progress: any) => void ): void;
                 operation: {
                     progress: Windows.Foundation.AsyncOperationProgressHandler<Windows.Foundation.Collections.IVectorView<Windows.Devices.Sms.ISmsMessage>, number>;
-                    completed: Windows.Foundation.AsyncOperationCompletedHandler<Windows.Foundation.Collections.IVectorView<Windows.Devices.Sms.ISmsMessage>>;
+                    completed: Windows.Foundation.AsyncOperationWithProgressCompletedHandler<Windows.Foundation.Collections.IVectorView<Windows.Devices.Sms.ISmsMessage>, number>;
                     getResults(): Windows.Foundation.Collections.IVectorView<Windows.Devices.Sms.ISmsMessage>;
                 }
             }

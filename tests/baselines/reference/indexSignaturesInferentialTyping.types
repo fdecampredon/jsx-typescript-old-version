@@ -17,10 +17,10 @@ Line 3 col 4 IdentifierName "x1" = number
 Line 3 col 9 InvocationExpression "foo({ 0: 0, 1: 1 })" = number
 Line 3 col 9 IdentifierName "foo" = <T>(items: { [index: number]: T; }) => T
 Line 3 col 13 ObjectLiteralExpression "{ 0: 0, 1: 1 }" = { 0: number; 1: number; [index: number]: number; }
-Line 4 col 4 IdentifierName "x2" = any
-Line 4 col 9 InvocationExpression "foo({ zero: 0, one: 1 })" = any
+Line 4 col 4 IdentifierName "x2" = {}
+Line 4 col 9 InvocationExpression "foo({ zero: 0, one: 1 })" = {}
 Line 4 col 9 IdentifierName "foo" = <T>(items: { [index: number]: T; }) => T
-Line 4 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: number]: any; }
+Line 4 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: number]: {}; }
 Line 4 col 15 IdentifierName "zero" = number
 Line 4 col 24 IdentifierName "one" = number
 Line 5 col 4 IdentifierName "x3" = number

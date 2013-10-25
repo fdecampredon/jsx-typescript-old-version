@@ -563,7 +563,7 @@ module TypeScript {
                 var id = funcDecl.getNameText();
                 if (!isInterfaceMember) {
                     this.emitDeclFlags(ToDeclFlags(functionFlags), funcPullDecl, "function");
-                    if (id !== "__missing" || !funcDecl.name || !funcDecl.name.isMissing()) {
+                    if (id !== "" || !funcDecl.name || funcDecl.name.text().length > 0) {
                         this.declFile.Write(id);
                     }
                     else if (funcPullDecl.kind === PullElementKind.ConstructSignature) {
@@ -593,7 +593,12 @@ module TypeScript {
                 if (this.canEmitTypeAnnotationSignature(ToDeclFlags(functionFlags))) {
                     var returnType = funcSignature.returnType;
                     this.declFile.Write(": ");
-                    this.emitTypeSignature(returnType);
+                    if (returnType) {
+                        this.emitTypeSignature(returnType);
+                    }
+                    else {
+                        this.declFile.Write("any");
+                    }
                 }
 
                 this.declFile.WriteLine(";");

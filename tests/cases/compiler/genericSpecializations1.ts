@@ -3,11 +3,11 @@ interface IFoo<T> {
 }
 
 class IntFooBad implements IFoo<number> {
-    foo<string>(x: string): string { return null; }
+    foo(x: string): string { return null; }
 }
 
 class StringFoo2 implements IFoo<string> {
-    foo<string>(x: string): string { return null; }
+    foo(x: string): string { return null; }
 }
 
 class StringFoo3 implements IFoo<string> {

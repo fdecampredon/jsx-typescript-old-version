@@ -144,7 +144,7 @@ module TypeScript {
         }
 
         public static select<T,S>(values: T[], func: (v: T) => S): S[] {
-            var result: S[] = new Array(values.length);
+            var result: S[] = new Array<S>(values.length);
 
             for (var i = 0; i < values.length; i++) {
                 result[i] = func(values[i]);

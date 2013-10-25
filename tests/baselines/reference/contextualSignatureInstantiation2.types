@@ -44,9 +44,9 @@ Line 3 col 9 IdentifierName "T" = T
 Line 3 col 12 IdentifierName "x" = T
 Line 3 col 14 IdentifierName "T" = T
 Line 3 col 20 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "r23" = (_: T) => T
-Line 4 col 10 InvocationExpression "dot(id)(id)" = (_: T) => T
-Line 4 col 10 InvocationExpression "dot(id)" = <U>(g: (_: U) => T) => (_: U) => T
+Line 4 col 4 IdentifierName "r23" = (_: {}) => {}
+Line 4 col 10 InvocationExpression "dot(id)(id)" = (_: {}) => {}
+Line 4 col 10 InvocationExpression "dot(id)" = <U>(g: (_: U) => {}) => (_: U) => {}
 Line 4 col 10 IdentifierName "dot" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
 Line 4 col 14 IdentifierName "id" = <T>(x: T) => T
 Line 4 col 18 IdentifierName "id" = <T>(x: T) => T

@@ -15,7 +15,7 @@ module TypeScript.Parser {
 
         // Information used by the parser itself.
 
-        // As we speculatively parser, we may build up diagnostics.  When we rewind we want to 
+        // As we speculatively parse, we may build up diagnostics.  When we rewind we want to 
         // 'forget' that information.In order to do that we store the count of diagnostics and 
         // when we start speculating, and we reset to that count when we're done.  That way the
         // speculative parse does not affect any further results.
@@ -885,9 +885,7 @@ module TypeScript.Parser {
             //  b) it does not contain skipped text.
             //  c) it does not have any zero width tokens in it.
             //  d) it does not have a regex token in it.
-            //
-            // TODO: we should also only be able to get a node if we're in the same 'strict' 
-            // context we were in when we parsed the node.
+            //  e) we are still in the same strict or non-strict state that the node was originally parsed in.
             while (true) {
                 var node = this._oldSourceUnitCursor.currentNode();
                 if (node === null) {

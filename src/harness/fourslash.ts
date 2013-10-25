@@ -1181,6 +1181,21 @@ module FourSlash {
             this.currentCaretPosition = definition.minChar;
         }
 
+        public verifyDefinitionLocationExists(negative: boolean) {
+            this.taoInvalidReason = 'verifyDefinitionLocationExists NYI';
+
+            var definitions = this.languageService.getDefinitionAtPosition(this.activeFile.fileName, this.currentCaretPosition);
+
+            var foundDefinitions = definitions && definitions.length;
+
+            if (foundDefinitions && negative) {
+                throw new Error('goToDefinition - expected to 0 defintion locations but got ' + definitions.length);
+            }
+            else if (!foundDefinitions && !negative) {
+                throw new Error('goToDefinition - expected to at least one defintion location but got 0');
+            }
+        }
+
         public getMarkers(): Marker[] {
             //  Return a copy of the list
             return this.testData.markers.slice(0);

@@ -5,7 +5,7 @@ foo(function () {
     }
     return 0;
 });
-foo((1), function (__missing) {
+foo((1), function () {
     return 0;
 });
 foo(function (x) {
@@ -16,7 +16,7 @@ foo(function (x) {
     return x;
 });
 var y = x, number;
-(function (__missing) {
+(function () {
     return x * x;
 });
 false ? (function () {

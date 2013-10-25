@@ -48,7 +48,7 @@ module Mankala {
         private isInteractive = false;
 
         private features = new Features();
-        private nextSeedCounts: number[] = new Array(14);
+        private nextSeedCounts: number[] = new Array<number>(14);
         private bod: Element;
         private boardElm: Element = null;
 
@@ -168,7 +168,7 @@ module Mankala {
             pushPosition(this.position, this.q);
             var deltaTime = 0;
             var moves = homeSpaces[this.position.turn];
-            var nextSeedCounts: number[] = new Array(14);
+            var nextSeedCounts: number[] = new Array<number>(14);
             var movePossible = false;
             while ((!this.q.empty()) && (deltaTime < 500)) {
                 var firstPos = popPosition(this.q);
@@ -203,7 +203,7 @@ module Mankala {
 
         public test() {
             var features = new Features();
-            var nextSeedCounts: number[] = new Array(14);
+            var nextSeedCounts: number[] = new Array<number>(14);
             WScript.Echo("position: ")
             WScript.Echo(this.position.seedCounts.slice(0, 7));
             WScript.Echo(this.position.seedCounts.slice(7));

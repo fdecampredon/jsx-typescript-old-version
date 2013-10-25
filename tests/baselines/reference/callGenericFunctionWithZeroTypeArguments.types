@@ -56,13 +56,13 @@ Line 23 col 0 IdentifierName "f" = (x: T) => T
 Line 23 col 6 IdentifierName "x" = T
 Line 23 col 9 IdentifierName "T" = T
 Line 23 col 13 IdentifierName "T" = T
-Line 27 col 4 IdentifierName "r6" = any
-Line 27 col 9 InvocationExpression "(new C2()).f(1)" = any
-Line 27 col 9 MemberAccessExpression "(new C2()).f" = (x: any) => any
-Line 27 col 9 ParenthesizedExpression "(new C2())" = C2<any>
-Line 27 col 10 ObjectCreationExpression "new C2()" = C2<any>
+Line 27 col 4 IdentifierName "r6" = {}
+Line 27 col 9 InvocationExpression "(new C2()).f(1)" = {}
+Line 27 col 9 MemberAccessExpression "(new C2()).f" = (x: {}) => {}
+Line 27 col 9 ParenthesizedExpression "(new C2())" = C2<{}>
+Line 27 col 10 ObjectCreationExpression "new C2()" = C2<{}>
 Line 27 col 14 IdentifierName "C2" = { prototype: C2<any>; new<T>(): C2<T>; }
-Line 27 col 20 IdentifierName "f" = (x: any) => any
+Line 27 col 20 IdentifierName "f" = (x: {}) => {}
 Line 29 col 10 IdentifierName "I2" = I2<T>
 Line 29 col 13 IdentifierName "T" = T
 Line 30 col 0 IdentifierName "f" = (x: T) => T

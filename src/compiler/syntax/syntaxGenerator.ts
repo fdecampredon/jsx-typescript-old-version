@@ -163,7 +163,7 @@ var definitions:ITypeDefinition[] = [
         baseType: 'SyntaxNode',
         interfaces: ['IStatementSyntax'],
         children: [
-            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
+            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken', isTypeScriptSpecific: true },
             <any>{ name: 'functionKeyword', isToken: true },
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
@@ -176,7 +176,7 @@ var definitions:ITypeDefinition[] = [
         baseType: 'SyntaxNode',
         interfaces: ['IStatementSyntax'],
         children: [
-            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
+            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken', isTypeScriptSpecific: true },
             <any>{ name: 'variableDeclaration', type: 'VariableDeclarationSyntax' },
             <any>{ name: 'semicolonToken', isToken: true }
         ]
@@ -624,21 +624,20 @@ var definitions:ITypeDefinition[] = [
         baseType: 'SyntaxNode',
         interfaces: ['IMemberDeclarationSyntax', 'IPropertyAssignmentSyntax' ],
         children: [
-            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
+            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken', isTypeScriptSpecific: true },
             <any>{ name: 'getKeyword', isToken: true },
             <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName', 'StringLiteral', 'NumericLiteral'] },
             <any>{ name: 'parameterList', type: 'ParameterListSyntax' },
-            <any>{ name: 'typeAnnotation', type: 'TypeAnnotationSyntax', isOptional: true },
+            <any>{ name: 'typeAnnotation', type: 'TypeAnnotationSyntax', isOptional: true, isTypeScriptSpecific: true },
             <any>{ name: 'block', type: 'BlockSyntax' }
-        ],
-        isTypeScriptSpecific: true
+        ]
     },
     <any>{
         name: 'SetAccessorSyntax',
         baseType: 'SyntaxNode',
         interfaces: ['IMemberDeclarationSyntax', 'IPropertyAssignmentSyntax'],
         children: [
-            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
+            <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken', isTypeScriptSpecific: true },
             <any>{ name: 'setKeyword', isToken: true },
             <any>{ name: 'propertyName', isToken: true, tokenKinds: ['IdentifierName', 'StringLiteral', 'NumericLiteral'] },
             <any>{ name: 'parameterList', type: 'ParameterListSyntax' },
@@ -1941,14 +1940,19 @@ function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string
             }
 
             if (child.isTypeScriptSpecific) {
-                result += "        if (" + getPropertyAccess(child) + " !== null) { return true; }\r\n";
+                if (child.isList) {
+                    result += "        if (" + getPropertyAccess(child) + ".childCount() > 0) { return true; }\r\n";
+                }
+                else {
+                    result += "        if (" + getPropertyAccess(child) + " !== null) { return true; }\r\n";
+                }
                 continue;
             }
 
             if (child.isToken) {
                 continue;
             }
-            
+
             if (child.isOptional) {
                 result += "        if (" + getPropertyAccess(child) + " !== null && " + getPropertyAccess(child) + ".isTypeScriptSpecific()) { return true; }\r\n";
             }

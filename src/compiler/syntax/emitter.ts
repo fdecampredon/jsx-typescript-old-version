@@ -630,7 +630,7 @@ module TypeScript.Emitter1 {
             var block = constructorDeclaration.block;
             var allStatements = <SyntaxNode[]>block.statements.toArray();
 
-            var normalStatements: IStatementSyntax[] = ArrayUtilities.select(ArrayUtilities.where(allStatements,
+            var normalStatements: IStatementSyntax[] = ArrayUtilities.select<any, any>(ArrayUtilities.where(allStatements,
                 s => !Syntax.isSuperInvocationExpressionStatement(s)), s => s.accept(this));
 
             var instanceAssignments = this.generatePropertyAssignments(classDeclaration, /*static:*/ false);
@@ -649,7 +649,7 @@ module TypeScript.Emitter1 {
                     parameterPropertyAssignments[i], /*changeFirstToken:*/ true, this.options.indentSpaces + constructorIndentationColumn));
             }
 
-            var superStatements: IStatementSyntax[] = ArrayUtilities.select(ArrayUtilities.where(allStatements,
+            var superStatements: IStatementSyntax[] = ArrayUtilities.select<any, any>(ArrayUtilities.where(allStatements,
                 s => Syntax.isSuperInvocationExpressionStatement(s)), s => s.accept(this));
 
             normalStatements.unshift.apply(normalStatements, superStatements);

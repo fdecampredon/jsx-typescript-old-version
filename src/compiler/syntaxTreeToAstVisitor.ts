@@ -6,9 +6,6 @@ module TypeScript {
 
         public previousTokenTrailingComments: Comment[] = null;
 
-        private static protoString = "__proto__";
-        private static protoSubstitutionString = "#__proto__";
-
         constructor(private fileName: string,
                     public lineMap: LineMap,
                     private compilationSettings: ImmutableCompilationSettings) {
@@ -37,22 +34,22 @@ module TypeScript {
             var firstToken = node.firstToken();
             var lastToken = node.lastToken();
 
-            this.setSpan2(ast, fullStart, node, firstToken, lastToken);
+            this.setSpan(ast, fullStart, node, firstToken, lastToken);
             ast.setPreComments(this.convertTokenLeadingComments(firstToken, fullStart));
             ast.setPostComments(this.convertNodeTrailingComments(node, lastToken, fullStart));
         }
 
-        private copySpan(from: IASTSpan, to: IASTSpan): void {
-            to.minChar = from.minChar;
-            to.limChar = from.limChar;
-            to.trailingTriviaWidth = from.trailingTriviaWidth;
+        public setTokenSpan(span: IASTSpan, fullStart: number, element: ISyntaxToken): void {
+            var leadingTriviaWidth = element.leadingTriviaWidth();
+            var trailingTriviaWidth = element.trailingTriviaWidth();
+
+            var desiredMinChar = fullStart + leadingTriviaWidth;
+            var desiredLimChar = fullStart + element.fullWidth() - trailingTriviaWidth;
+
+            this.setSpanExplicit(span, desiredMinChar, desiredLimChar);
         }
 
-        public setSpan(span: IASTSpan, fullStart: number, element: ISyntaxElement): void {
-            this.setSpan2(span, fullStart, element, element.firstToken(), element.lastToken());
-        }
-
-        public setSpan2(span: IASTSpan, fullStart: number, element: ISyntaxElement, firstToken: ISyntaxToken, lastToken: ISyntaxToken): void {
+        public setSpan(span: AST, fullStart: number, element: ISyntaxElement, firstToken = element.firstToken(), lastToken = element.lastToken()): void {
             var leadingTriviaWidth = firstToken ? firstToken.leadingTriviaWidth() : 0;
             var trailingTriviaWidth = lastToken ? lastToken.trailingTriviaWidth() : 0;
 
@@ -72,45 +69,24 @@ module TypeScript {
 
         public identifierFromToken(token: ISyntaxToken, isOptional: boolean, stringLiteralIsTextOfIdentifier?: boolean): Identifier {
             var result: Identifier = null;
-            if (token.fullWidth() === 0) {
-                result = new MissingIdentifier();
-            }
-            else {
-                switch (token.tokenKind) {
-                    case SyntaxKind.AnyKeyword:
-                    case SyntaxKind.BooleanKeyword:
-                    case SyntaxKind.NumberKeyword:
-                    case SyntaxKind.StringKeyword:
-                    case SyntaxKind.VoidKeyword:
-                        // TODO: there's no reason to use an identifier node for these.  We 
-                        // can just have specialized nodes for these primitives.
-                        result = new Identifier(token.text(), token.text());
-                        break;
 
-                    case SyntaxKind.IdentifierName:
-                        // In the case where actualText is "__proto__", we substitute "#__proto__" as the _text
-                        // so that we can safely use it as a key in a javascript object.
-                        var tokenText = token.text();
-                        var text = tokenText === SyntaxTreeToAstVisitor.protoString
-                            ? SyntaxTreeToAstVisitor.protoSubstitutionString
-                            : null;
+            switch (token.tokenKind) {
+                case SyntaxKind.IdentifierName:
+                    result = new Identifier(token.text(), null, /*isStringOrNumericLiteral:*/ false);
+                    break;
 
-                        result = new Identifier(tokenText, text);
-                        break;
+                case SyntaxKind.NumericLiteral:
+                case SyntaxKind.StringLiteral:
+                    var tokenText = token.text();
+                    var text = token.valueText();
+                    if (stringLiteralIsTextOfIdentifier && text) {
+                        text = quoteStr(text);
+                    }
+                    result = new Identifier(tokenText, text, /*isStringOrNumericLiteral:*/ true);
+                    break;
 
-                    case SyntaxKind.NumericLiteral:
-                    case SyntaxKind.StringLiteral:
-                        var tokenText = token.text();
-                        var text = token.valueText();
-                        if (stringLiteralIsTextOfIdentifier && text) {
-                            text = quoteStr(text);
-                        }
-                        result = new Identifier(tokenText, text, /*isStringOrNumericLiteral:*/ true);
-                        break;
-
-                    default:
-                        throw Errors.invalidOperation();
-                }
+                default:
+                    throw Errors.invalidOperation();
             }
 
             if (isOptional) {
@@ -125,7 +101,7 @@ module TypeScript {
 
         public visitSyntaxList(node: ISyntaxList): ASTList {
             var start = this.position;
-            var array = new Array(node.childCount());
+            var array = new Array<any>(node.childCount());
 
             for (var i = 0, n = node.childCount(); i < n; i++) {
                 array[i] = node.childAt(i).accept(this);
@@ -139,7 +115,7 @@ module TypeScript {
 
         public visitSeparatedSyntaxList(list: ISeparatedSyntaxList): ASTList {
             var start = this.position;
-            var array = new Array(list.nonSeparatorCount());
+            var array = new Array<any>(list.nonSeparatorCount());
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (i % 2 === 0) {
@@ -233,44 +209,52 @@ module TypeScript {
         public visitToken(token: ISyntaxToken): AST {
             var fullStart = this.position;
 
-            var result: AST;
-            if (token.tokenKind === SyntaxKind.ThisKeyword) {
-                result = new ThisExpression();
-            }
-            else if (token.tokenKind === SyntaxKind.SuperKeyword) {
-                result = new SuperExpression();
-            }
-            else if (token.tokenKind === SyntaxKind.TrueKeyword) {
-                result = new LiteralExpression(NodeType.TrueLiteral);
-            }
-            else if (token.tokenKind === SyntaxKind.FalseKeyword) {
-                result = new LiteralExpression(NodeType.FalseLiteral);
-            }
-            else if (token.tokenKind === SyntaxKind.NullKeyword) {
-                result = new LiteralExpression(NodeType.NullLiteral);
-            }
-            else if (token.tokenKind === SyntaxKind.StringLiteral) {
-                result = new StringLiteral(token.text(), token.valueText());
-            }
-            else if (token.tokenKind === SyntaxKind.RegularExpressionLiteral) {
-                result = new RegularExpressionLiteral(token.text());
-            }
-            else if (token.tokenKind === SyntaxKind.NumericLiteral) {
-                var preComments = this.convertTokenLeadingComments(token, fullStart);
-
-                result = new NumericLiteral(token.value(), token.text(), token.valueText());
-
-                result.setPreComments(preComments);
-            }
-            else {
-                result = this.identifierFromToken(token, /*isOptional:*/ false);
-            }
+            var result = this.visitTokenWorker(token);
 
             this.movePast(token);
 
             var start = fullStart + token.leadingTriviaWidth();
             this.setSpanExplicit(result, start, start + token.width());
             return result;
+        }
+
+        public visitTokenWorker(token: ISyntaxToken): AST {
+            switch (token.tokenKind) {
+                case SyntaxKind.AnyKeyword:
+                    return new BuiltInType(NodeType.AnyType);
+                case SyntaxKind.BooleanKeyword:
+                    return new BuiltInType(NodeType.BooleanType);
+                case SyntaxKind.NumberKeyword:
+                    return new BuiltInType(NodeType.NumberType);
+                case SyntaxKind.StringKeyword:
+                    return new BuiltInType(NodeType.StringType);
+                case SyntaxKind.VoidKeyword:
+                    return new BuiltInType(NodeType.VoidType);
+                case SyntaxKind.ThisKeyword:
+                    return new ThisExpression();
+                case SyntaxKind.SuperKeyword:
+                    return new SuperExpression();
+                case SyntaxKind.TrueKeyword:
+                    return new LiteralExpression(NodeType.TrueLiteral);
+                case SyntaxKind.FalseKeyword:
+                    return new LiteralExpression(NodeType.FalseLiteral);
+                case SyntaxKind.NullKeyword:
+                    return new LiteralExpression(NodeType.NullLiteral);
+                case SyntaxKind.StringLiteral:
+                    return new StringLiteral(token.text(), token.valueText());
+                case SyntaxKind.RegularExpressionLiteral:
+                    return new RegularExpressionLiteral(token.text());
+                case SyntaxKind.NumericLiteral:
+                    var fullStart = this.position;
+                    var preComments = this.convertTokenLeadingComments(token, fullStart);
+
+                    var result = new NumericLiteral(token.value(), token.text(), token.valueText());
+
+                    result.setPreComments(preComments);
+                    return result;
+                default:
+                    return this.identifierFromToken(token, /*isOptional:*/ false);
+            }
         }
 
         private getLeadingComments(node: SyntaxNode): ISyntaxTrivia[] {
@@ -343,7 +327,7 @@ module TypeScript {
                 isExternalModule = true;
 
                 var correctedFileName = switchToForwardSlashes(this.fileName);
-                var id: Identifier = new Identifier(correctedFileName, correctedFileName);
+                var id: Identifier = new Identifier(correctedFileName, correctedFileName, /*isStringOrNumericLiteral:*/ false);
                 var topLevelMod = new ModuleDeclaration(id, bod, null);
                 this.setSpanExplicit(topLevelMod, start, this.position);
 
@@ -403,7 +387,7 @@ module TypeScript {
             var closeBracePosition = this.position;
             this.movePast(node.closeBraceToken);
             var closeBraceSpan = new ASTSpan();
-            this.setSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
+            this.setTokenSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
 
             var result = new ClassDeclaration(name, typeParameters, heritageClauses, members, closeBraceSpan);
             this.setCommentsAndSpan(result, start, node);
@@ -445,7 +429,7 @@ module TypeScript {
 
         public visitHeritageClause(node: HeritageClauseSyntax): HeritageClause {
             var start = this.position;
-            var array = new Array(node.typeNames.nonSeparatorCount());
+            var array = new Array<any>(node.typeNames.nonSeparatorCount());
 
             this.movePast(node.extendsOrImplementsKeyword);
             for (var i = 0, n = node.typeNames.childCount(); i < n; i++) {
@@ -514,7 +498,7 @@ module TypeScript {
             var closeBracePosition = this.position;
             this.movePast(node.closeBraceToken);
             var closeBraceSpan = new ASTSpan();
-            this.setSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
+            this.setTokenSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
 
             for (var i = names.length - 1; i >= 0; i--) {
                 var innerName = names[i];
@@ -865,10 +849,6 @@ module TypeScript {
             return result;
         }
 
-        private isOnSingleLine(start: number, end: number): boolean {
-            return this.lineMap.getLineNumberFromPosition(start) === this.lineMap.getLineNumberFromPosition(end);
-        }
-
         public visitArrayLiteralExpression(node: ArrayLiteralExpressionSyntax): ArrayLiteralExpression {
             var start = this.position;
             var openStart = this.position + node.openBracketToken.leadingTriviaWidth();
@@ -882,8 +862,13 @@ module TypeScript {
             var result = new ArrayLiteralExpression(expressions);
             this.setSpan(result, start, node);
 
-            if (this.isOnSingleLine(openStart, closeStart)) {
-                result.setFlags(result.getFlags() | ASTFlags.SingleLine);
+            if (!node.openBracketToken.hasTrailingNewLine()) {
+                var childCount = node.expressions.childCount();
+                if (childCount === 0 ||
+                    !node.expressions.childAt(childCount - 1).lastToken().hasTrailingNewLine()) {
+
+                    result.setFlags(result.getFlags() | ASTFlags.SingleLine);
+                }
             }
 
             return result;
@@ -990,17 +975,12 @@ module TypeScript {
         }
 
         public visitType(type: ITypeSyntax): TypeReference {
-            var result: TypeReference;
             if (type.isToken()) {
-                var start = this.position;
-                result = new TypeReference(type.accept(this));
-                this.setSpan(result, start, type);
+                return new TypeReference(type.accept(this));
             }
             else {
-                result = type.accept(this);
+                return type.accept(this);
             }
-
-            return result;
         }
 
         public visitTypeQuery(node: TypeQuerySyntax): TypeReference {
@@ -1011,10 +991,7 @@ module TypeScript {
             var typeQuery = new TypeQuery(name);
             this.setSpan(typeQuery, start, node);
 
-            var result = new TypeReference(typeQuery);
-            this.copySpan(typeQuery, result);
-
-            return result;
+            return new TypeReference(typeQuery);
         }
 
         public visitQualifiedName(node: QualifiedNameSyntax): TypeReference {
@@ -1027,14 +1004,11 @@ module TypeScript {
             var term = new QualifiedName(left, right);
             this.setSpan(term, start, node);
 
-            var result = new TypeReference(term);
-            this.copySpan(term, result);
-
-            return result;
+            return new TypeReference(term);
         }
 
         public visitTypeArgumentList(node: TypeArgumentListSyntax): ASTList {
-            var array = new Array(node.typeArguments.nonSeparatorCount());
+            var array = new Array<any>(node.typeArguments.nonSeparatorCount());
 
             this.movePast(node.lessThanToken);
 
@@ -1073,10 +1047,7 @@ module TypeScript {
             funcDecl.setFlags(funcDecl.getFlags() | ASTFlags.TypeReference);
             funcDecl.hint = "_construct";
 
-            var result = new TypeReference(funcDecl);
-            this.copySpan(funcDecl, result);
-
-            return result;
+            return new TypeReference(funcDecl);
         }
 
         public visitFunctionType(node: FunctionTypeSyntax): TypeReference {
@@ -1092,10 +1063,7 @@ module TypeScript {
             funcDecl.setFlags(funcDecl.getFunctionFlags() | FunctionFlags.Signature);
             funcDecl.setFlags(funcDecl.getFlags() | ASTFlags.TypeReference);
 
-            var result = new TypeReference(funcDecl);
-            this.copySpan(funcDecl, result);
-
-            return result;
+            return new TypeReference(funcDecl);
         }
 
         public visitObjectType(node: ObjectTypeSyntax): TypeReference {
@@ -1104,10 +1072,7 @@ module TypeScript {
             var objectType = this.visitObjectTypeWorker(node);
             objectType.setFlags(objectType.getFlags() | ASTFlags.TypeReference);
 
-            var result = new TypeReference(objectType);
-            this.copySpan(objectType, result);
-
-            return result;
+            return new TypeReference(objectType);
         }
 
         private visitObjectTypeWorker(node: ObjectTypeSyntax): ObjectType {
@@ -1140,7 +1105,6 @@ module TypeScript {
             var result = new TypeReference(arrayType);
             result.setFlags(result.getFlags() | ASTFlags.TypeReference);
 
-            this.setSpan(result, start, node);
             return result;
         }
 
@@ -1155,10 +1119,7 @@ module TypeScript {
 
             genericType.setFlags(genericType.getFlags() | ASTFlags.TypeReference);
 
-            var result = new TypeReference(genericType);
-            this.copySpan(genericType, result);
-
-            return result;
+            return new TypeReference(genericType);
         }
 
         public visitTypeAnnotation(node: TypeAnnotationSyntax): TypeReference {
@@ -1176,7 +1137,7 @@ module TypeScript {
             var closeBraceLeadingComments = this.convertTokenLeadingComments(node.closeBraceToken, this.position);
             this.movePast(node.closeBraceToken);
             var closeBraceSpan = new ASTSpan();
-            this.setSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
+            this.setTokenSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
 
             var result = new Block(statements, closeBraceSpan);
             this.setSpan(result, start, node);
@@ -1275,7 +1236,7 @@ module TypeScript {
             var closeParenPos = this.position;
             this.movePast(node.closeParenToken);
             var closeParenSpan = new ASTSpan();
-            this.setSpan(closeParenSpan, closeParenPos, node.closeParenToken);
+            this.setTokenSpan(closeParenSpan, closeParenPos, node.closeParenToken);
             
             return {
                 argumentList: result,
@@ -1432,7 +1393,7 @@ module TypeScript {
             this.movePast(node.closeBracketToken);
             var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
 
-            var name = new Identifier("__item", "__item");
+            var name = new Identifier("__item", "__item", /*isStringOrNumericLiteral:*/ false);
             this.setSpanExplicit(name, start, start);   // 0 length name.
 
             var parameters = new ASTList(this.fileName, [parameter]);
@@ -1771,7 +1732,7 @@ module TypeScript {
             var closeParenPosition = this.position;
             this.movePast(node.openBraceToken);
 
-            var array = new Array(node.switchClauses.childCount());
+            var array = new Array<any>(node.switchClauses.childCount());
 
             for (var i = 0, n = node.switchClauses.childCount(); i < n; i++) {
                 var switchClause = node.switchClauses.childAt(i);
@@ -1951,8 +1912,13 @@ module TypeScript {
             var result = new ObjectLiteralExpression(propertyAssignments);
             this.setCommentsAndSpan(result, start, node);
 
-            if (this.isOnSingleLine(openStart, closeStart)) {
-                result.setFlags(result.getFlags() | ASTFlags.SingleLine);
+            if (!node.openBraceToken.hasTrailingNewLine()) {
+                var childCount = node.propertyAssignments.childCount();
+                if (childCount === 0 ||
+                    !node.propertyAssignments.childAt(childCount - 1).lastToken().hasTrailingNewLine()) {
+
+                    result.setFlags(result.getFlags() | ASTFlags.SingleLine);
+                }
             }
 
             return result;
@@ -2104,7 +2070,7 @@ module TypeScript {
             this.movePast(node.doKeyword);
             var statement = node.statement.accept(this);
             var whileSpan = new ASTSpan();
-            this.setSpan(whileSpan, this.position, node.whileKeyword);
+            this.setTokenSpan(whileSpan, this.position, node.whileKeyword);
 
             this.movePast(node.whileKeyword);
             this.movePast(node.openParenToken);
@@ -2167,7 +2133,7 @@ module TypeScript {
         }
     }
 
-    function applyDelta(ast: TypeScript.ASTSpan, delta: number) {
+    function applyDelta(ast: TypeScript.IASTSpan, delta: number) {
         if (ast) {
             if (ast.minChar !== -1) {
                 ast.minChar += delta;
@@ -2194,7 +2160,7 @@ module TypeScript {
                 return;
             }
 
-            var pre = function (cur: TypeScript.AST, walker: TypeScript.IAstWalker) {
+            var pre = function (cur: TypeScript.AST) {
                 // Apply delta to this node
                 applyDelta(cur, delta);
                 applyDeltaToComments(cur.preComments(), delta);
@@ -2232,7 +2198,7 @@ module TypeScript {
                 }
             };
 
-            TypeScript.getAstWalkerFactory().walk(ast, pre);
+            TypeScript.getAstWalkerFactory().simpleWalk(ast, pre);
         }
 
         public setSpanExplicit(span: IASTSpan, start: number, end: number): void {

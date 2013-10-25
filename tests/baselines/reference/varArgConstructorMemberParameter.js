@@ -16,12 +16,12 @@ var Foo2 = (function () {
 })();
 
 var Foo3 = (function () {
-    function Foo3(__missing) {
+    function Foo3() {
         var args = [];
         for (var _i = 0; _i < (arguments.length - 1); _i++) {
             args[_i] = arguments[_i + 1];
         }
-        this.__missing = __missing;
+        this. = ;
     }
     return Foo3;
 })();

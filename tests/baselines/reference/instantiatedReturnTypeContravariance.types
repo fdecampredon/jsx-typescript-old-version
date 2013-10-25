@@ -1,0 +1,13 @@
+=== tests/cases/compiler/instantiatedReturnTypeContravariance.ts ===
+Line 0 col 10 IdentifierName "B" = B<T>
+Line 0 col 12 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "name" = string
+Line 3 col 0 IdentifierName "x" = () => T
+Line 4 col 5 IdentifierName "T" = T
+Line 8 col 6 IdentifierName "c" = c
+Line 9 col 0 IdentifierName "foo" = () => B<void>
+Line 10 col 7 IdentifierName "B" = B<T>
+Line 18 col 6 IdentifierName "d" = d
+Line 18 col 16 IdentifierName "c" = c
+Line 19 col 0 IdentifierName "foo" = () => B<number>
+Line 20 col 7 IdentifierName "B" = B<T>

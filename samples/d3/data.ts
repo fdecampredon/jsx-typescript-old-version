@@ -56,7 +56,7 @@ module Chart {
             var stackData = stackLayout(data);
 
             // Maximum measurement in the dataset
-            var maxY = d3.max(stackData, (d) => d3.max(d.data, (d) => d.y0 + d.y));
+            var maxY = d3.max(stackData, (d) => d3.max<any, any>(d.data, (d) => d.y0 + d.y));
 
             // Earliest day in the dataset
             var minX = d3.min(data, (d) => d3.min(d.data, (d) => d.x));

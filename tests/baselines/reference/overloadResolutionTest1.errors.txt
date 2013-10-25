@@ -1,5 +1,8 @@
 overloadResolutionTest1.ts line 8 col 12: error TS2082: Supplied parameters do not match any signature of call target:
 	Type '{}' is missing property 'a' from type '{ a: number; }'.
+	Types of property 'pop' of types '{}[]' and '{ a: number; }[]' are incompatible:
+		Call signatures of types '() => {}' and '() => { a: number; }' are incompatible:
+			Type '{}' is missing property 'a' from type '{ a: number; }'.
 overloadResolutionTest1.ts line 8 col 12: error TS2087: Could not select overload for 'call' expression.
 overloadResolutionTest1.ts line 19 col 10: error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'a' of types '{ a: string; }' and '{ a: number; }' are incompatible.

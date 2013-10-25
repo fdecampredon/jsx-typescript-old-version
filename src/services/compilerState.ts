@@ -235,7 +235,7 @@ module Services {
         }
 
         private synchronizeHostData(): void {
-            TypeScript.timeFunction(this.logger, "refresh()", () => {
+            TypeScript.timeFunction(this.logger, "synchronizeHostData()", () => {
                 this.synchronizeHostDataWorker();
             });
         }

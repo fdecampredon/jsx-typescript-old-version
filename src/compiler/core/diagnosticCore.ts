@@ -133,7 +133,7 @@ module TypeScript {
         }
 
         var diagnosticMessageText: string = LocalizedDiagnosticMessages ? LocalizedDiagnosticMessages[diagnosticKey] : diagnosticKey;
-        //Debug.assert(diagnosticMessageText !== undefined && diagnosticMessageText !== null);
+        Debug.assert(diagnosticMessageText !== undefined && diagnosticMessageText !== null);
 
         var actualCount = args ? args.length : 0;
         // We have a string like "foo_0_bar_1".  We want to find the largest integer there.

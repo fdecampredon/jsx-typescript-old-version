@@ -1548,7 +1548,7 @@ module Harness {
     export class TypeScriptLS implements Services.ILanguageServiceShimHost {
         private ls: Services.ILanguageServiceShim = null;
 
-        private fileNameToScript = new TypeScript.StringHashTable();
+        private fileNameToScript = new TypeScript.StringHashTable<ScriptInfo>();
 
         public addDefaultLibrary() {
             this.addScript("lib.d.ts", Harness.Compiler.libText);
@@ -1994,7 +1994,7 @@ module Harness {
         }
     }
 
-    if (Error) (<any>Error).stackTraceLimit = 100;
+    if (Error) (<any>Error).stackTraceLimit = 0;
 
     var currentRun = new Run();
 

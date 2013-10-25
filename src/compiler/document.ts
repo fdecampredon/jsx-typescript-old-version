@@ -111,7 +111,7 @@ module TypeScript {
         public bloomFilter(): BloomFilter {
             if (!this._bloomFilter) {
                 var identifiers = createIntrinsicsObject<boolean>();
-                var pre = function (cur: TypeScript.AST, walker: IAstWalker) {
+                var pre = function (cur: TypeScript.AST) {
                     if (isValidAstNode(cur)) {
                         if (cur.nodeType() === NodeType.Name) {
                             var nodeText = (<TypeScript.Identifier>cur).valueText();
@@ -121,7 +121,7 @@ module TypeScript {
                     }
                 };
 
-                TypeScript.getAstWalkerFactory().walk(this.script(), pre, null, null, identifiers);
+                TypeScript.getAstWalkerFactory().simpleWalk(this.script(), pre, null, identifiers);
 
                 var identifierCount = 0;
                 for (var name in identifiers) {
@@ -180,7 +180,7 @@ module TypeScript {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
             this.topLevelDecl();
-            return this._astDeclMap[ast.astID];
+            return this._astDeclMap[ast.astID()];
         }
 
         public getEnclosingDecl(ast: AST): PullDecl {
@@ -202,28 +202,12 @@ module TypeScript {
 
             // Now, skip over certain decls.  The resolver never considers these the 'enclosing' 
             // decl for an AST node.
-            while (decl) {
-                switch (decl.kind) {
-                    default:
-                        return decl;
-                    case PullElementKind.Variable:
-                    case PullElementKind.TypeParameter:
-                    case PullElementKind.Parameter:
-                    case PullElementKind.TypeAlias:
-                    case PullElementKind.EnumMember:
-                }
-
-                decl = decl.getParentDecl();
-            }
-
-            Debug.fail();
-            //Debug.assert(decl);
-            //return decl;
+            return decl._getEnclosingDeclFromParentDecl();
         }
 
         public _setDeclForAST(ast: AST, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this.fileName);
-            this._astDeclMap[ast.astID] = decl;
+            this._astDeclMap[ast.astID()] = decl;
         }
 
         public _getASTForDecl(decl: PullDecl): AST {

@@ -65,6 +65,36 @@ module TypeScript {
             throw Errors.abstract();
         }
 
+        // The enclosing decl is different from the parent decl. It is a syntactic ancestor decl
+        // that introduces the scope in which this decl is defined.
+        // Call this to get the enclosing decl of *this* decl
+        public getEnclosingDecl(): PullDecl {
+            throw Errors.abstract();
+        }
+
+        // Note: Call this on the *parent* decl of the decl whose enclosing decl you want.
+        // This will assume you have already skipped the current decl on your way to the
+        // enclosing decl.
+        public _getEnclosingDeclFromParentDecl(): PullDecl {
+            // Skip over the decls that cannot introduce a scope
+            var decl = this;
+            while (decl) {
+                switch (decl.kind) {
+                    default:
+                        return decl;
+                    case PullElementKind.Variable:
+                    case PullElementKind.TypeParameter:
+                    case PullElementKind.Parameter:
+                    case PullElementKind.TypeAlias:
+                    case PullElementKind.EnumMember:
+                }
+
+                decl = decl.getParentDecl();
+            }
+
+            Debug.fail();
+        }
+
         /** Use getName for type checking purposes, and getDisplayName to report an error or display info to the user.
          * They will differ when the identifier is an escaped unicode character or the identifier "__proto__".
          */
@@ -244,7 +274,7 @@ module TypeScript {
             return this.childDecls ? this.childDecls : sentinelEmptyPullDeclArray;
         }
 
-        public getTypeParameters() { return this.typeParameters ? this.typeParameters : sentinelEmptyPullDeclArray; }
+        public getTypeParameters(): PullDecl[] { return this.typeParameters ? this.typeParameters : sentinelEmptyPullDeclArray; }
 
         public addVariableDeclToGroup(decl: PullDecl) {
             if (!this.declGroups) {
@@ -331,6 +361,11 @@ module TypeScript {
         public isExternalModule(): boolean {
             return this._isExternalModule;
         }
+
+        // We never want the enclosing decl to be null, so if we are at a top level decl, return it
+        public getEnclosingDecl() {
+            return this;
+        }
     }
 
     export class NormalPullDecl extends PullDecl {
@@ -346,7 +381,7 @@ module TypeScript {
                 parentDecl.addChildDecl(this);
             }
 
-            //if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Global && kind !== PullElementKind.Script && kind !== PullElementKind.Primitive) {
+            //if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Primitive) {
             //    throw Errors.invalidOperation("Orphaned decl " + PullElementKind[kind]);
             //}
         }
@@ -385,6 +420,10 @@ module TypeScript {
 
         public isExternalModule(): boolean {
             return false;
+        }
+
+        public getEnclosingDecl(): PullDecl {
+            return this.parentDecl && this.parentDecl._getEnclosingDeclFromParentDecl();
         }
     }
 

@@ -12,7 +12,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
     public errout: Harness.Compiler.WriterAggregator;
     private inputFiles: string[];
     private resolvedFiles: TypeScript.IResolvedFile[];
-    private fileNameToSourceFile = new TypeScript.StringHashTable();
+    private fileNameToSourceFile = new TypeScript.StringHashTable<SourceFile>();
     public sourcemapRecord = new Harness.Compiler.WriterAggregator();
     public compilationSettings: TypeScript.ImmutableCompilationSettings;
 

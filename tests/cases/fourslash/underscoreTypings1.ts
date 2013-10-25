@@ -43,17 +43,17 @@ goTo.marker('6');
 verify.quickInfoIs('string');
 
 goTo.marker('7');
-verify.quickInfoIs('any[]');
+verify.quickInfoIs('{}[]');
 goTo.marker('8');
 verify.quickInfoIs('any');
 
 goTo.marker('9');
-verify.quickInfoIs('any[]');
+verify.quickInfoIs('{}[]');
 goTo.marker('10');
 verify.quickInfoIs('any');
 
 goTo.marker('11');
-verify.quickInfoIs('any[]');
+verify.quickInfoIs('{}[]');
 goTo.marker('12');
 verify.quickInfoIs('any');
 

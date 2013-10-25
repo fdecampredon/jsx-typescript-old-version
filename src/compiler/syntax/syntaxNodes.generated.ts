@@ -945,7 +945,7 @@ module TypeScript {
     }
 
     public isTypeScriptSpecific(): boolean {
-        if (this.modifiers.isTypeScriptSpecific()) { return true; }
+        if (this.modifiers.childCount() > 0) { return true; }
         if (this.callSignature.isTypeScriptSpecific()) { return true; }
         if (this.block !== null && this.block.isTypeScriptSpecific()) { return true; }
         return false;
@@ -1036,7 +1036,7 @@ module TypeScript {
     }
 
     public isTypeScriptSpecific(): boolean {
-        if (this.modifiers.isTypeScriptSpecific()) { return true; }
+        if (this.modifiers.childCount() > 0) { return true; }
         if (this.variableDeclaration.isTypeScriptSpecific()) { return true; }
         return false;
     }
@@ -4496,7 +4496,11 @@ module TypeScript {
     }
 
     public isTypeScriptSpecific(): boolean {
-        return true;
+        if (this.modifiers.childCount() > 0) { return true; }
+        if (this.parameterList.isTypeScriptSpecific()) { return true; }
+        if (this.typeAnnotation !== null) { return true; }
+        if (this.block.isTypeScriptSpecific()) { return true; }
+        return false;
     }
     }
 

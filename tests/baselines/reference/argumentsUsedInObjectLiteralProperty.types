@@ -1,0 +1,12 @@
+=== tests/cases/compiler/argumentsUsedInObjectLiteralProperty.ts ===
+Line 0 col 6 IdentifierName "A" = A
+Line 1 col 18 IdentifierName "createSelectableViewModel" = (initialState?: any, selectedValue?: any) => { selectedValue: number; }
+Line 1 col 44 IdentifierName "initialState" = any
+Line 1 col 64 IdentifierName "selectedValue" = any
+Line 2 col 15 ObjectLiteralExpression "{
+            selectedValue: arguments.length
+        }" = { selectedValue: number; }
+Line 3 col 0 IdentifierName "selectedValue" = number
+Line 3 col 27 MemberAccessExpression "arguments.length" = number
+Line 3 col 27 IdentifierName "arguments" = IArguments
+Line 3 col 37 IdentifierName "length" = number

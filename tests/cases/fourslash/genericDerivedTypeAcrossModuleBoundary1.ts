@@ -20,4 +20,4 @@ goTo.marker('1');
 verify.quickInfoIs('N.D2<number>');
 
 goTo.marker('2')
-verify.quickInfoIs('N.D2<any>');
+verify.quickInfoIs('N.D2<{}>');

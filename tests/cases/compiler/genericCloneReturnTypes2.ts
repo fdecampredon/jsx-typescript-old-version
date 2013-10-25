@@ -3,7 +3,7 @@ class MyList<T> {
     public data: T[];
     constructor(n: number) {
         this.size = n;
-        this.data = new Array(this.size);
+        this.data = new Array<T>(this.size);
     }
     public clone() {
         return new MyList<T>(this.size);

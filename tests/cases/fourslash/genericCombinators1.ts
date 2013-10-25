@@ -82,7 +82,7 @@ verify.quickInfoIs('Collection<A>');
 goTo.marker('14');
 verify.quickInfoIs('Collection<A>');
 goTo.marker('15');
-verify.quickInfoIs('Collection<any>');
+verify.quickInfoIs('Collection<{}>');
 goTo.marker('17');
 verify.quickInfoIs('Collection<string>');
 goTo.marker('18');

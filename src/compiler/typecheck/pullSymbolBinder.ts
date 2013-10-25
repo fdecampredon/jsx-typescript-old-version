@@ -5,7 +5,8 @@
 
 module TypeScript {
     export class PullSymbolBinder {
-        private declsBeingBound: boolean[] = [];
+    
+        private declsBeingBound: number[] = [];
 
         constructor(private semanticInfoChain: SemanticInfoChain) {
         }
@@ -391,7 +392,7 @@ module TypeScript {
             var parentDecl = moduleContainerDecl.getParentDecl();
             var moduleAST = <ModuleDeclaration>this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
 
-            var isExported = moduleContainerDecl.flags & PullElementFlags.Exported;
+            var isExported = hasFlag(moduleContainerDecl.flags, PullElementFlags.Exported);
             var searchKind = PullElementKind.SomeContainer;
             var isInitializedModule = (moduleContainerDecl.flags & PullElementFlags.SomeInitializedModule) != 0;
 
@@ -471,31 +472,31 @@ module TypeScript {
                         }
                     }
                 }
-                else if (!(moduleContainerDecl.flags & PullElementFlags.Exported)) {
-                    // Search locally to this file for a previous declaration that's suitable for augmentation
+                else if (!isExported) {
+                    // Search locally to this file for a declaration that's suitable for augmentation.
+                    // Note: we have to check all declarations because it may be hte case (due to
+                    // recursive binding), that a later module gets bound before us.  
                     var siblingDecls = parentDecl.getChildDecls();
-                    var augmentedDecl: PullDecl = null;
 
                     for (var i = 0; i < siblingDecls.length; i++) {
-                        if (siblingDecls[i] == moduleContainerDecl) {
-                            break;
-                        }
+                        var sibling = siblingDecls[i];
+                        if (sibling !== moduleContainerDecl &&
+                            sibling.name === modName &&
+                            hasFlag(sibling.kind, PullElementKind.SomeValue)) {
 
-                        if ((siblingDecls[i].name == modName) && (siblingDecls[i].kind & PullElementKind.SomeValue)) {
-                            augmentedDecl = siblingDecls[i];
-                            break;
-                        }
-                    }
+                            // IMPORTANT: We don't want to just call sibling.getSymbol() here.  
+                            // That would force the sibling to get bound.  Something we don't want
+                            // to do while binding ourselves (to avoid recursion issues).
+                            if (sibling.hasSymbol()) {
+                                variableSymbol = sibling.getSymbol();
+                                if (variableSymbol.isContainer()) {
+                                    variableSymbol = (<PullContainerSymbol>variableSymbol).getInstanceSymbol();
+                                }
+                                else if (variableSymbol && variableSymbol.isType()) {
+                                    variableSymbol = (<PullTypeSymbol>variableSymbol).getConstructorMethod();
+                                }
 
-                    if (augmentedDecl) {
-                        variableSymbol = augmentedDecl.getSymbol();
-
-                        if (variableSymbol) {
-                            if (variableSymbol.isContainer()) {
-                                variableSymbol = (<PullContainerSymbol>variableSymbol).getInstanceSymbol();
-                            }
-                            else if (variableSymbol && variableSymbol.isType()) {
-                                variableSymbol = (<PullTypeSymbol>variableSymbol).getConstructorMethod();
+                                break;
                             }
                         }
                     }
@@ -915,13 +916,13 @@ module TypeScript {
             if (variableSymbol) {
 
                 var prevKind = variableSymbol.kind;
-                var prevIsAmbient = variableSymbol.hasFlag(PullElementFlags.Ambient);
-                var prevIsEnum = variableSymbol.hasFlag(PullElementFlags.Enum);
-                var prevIsClassConstructorVariable = variableSymbol.hasFlag(PullElementFlags.ClassConstructorVariable);
-                var prevIsModuleValue = variableSymbol.hasFlag(PullElementFlags.InitializedModule);
-                var prevIsImplicit = variableSymbol.hasFlag(PullElementFlags.ImplicitVariable);
+                var prevIsEnum = variableSymbol.anyDeclHasFlag(PullElementFlags.Enum);
+                var prevIsClassConstructorVariable = variableSymbol.anyDeclHasFlag(PullElementFlags.ClassConstructorVariable);
+                var prevIsModuleValue = variableSymbol.allDeclsHaveFlag(PullElementFlags.InitializedModule);
+                var prevIsImplicit = variableSymbol.anyDeclHasFlag(PullElementFlags.ImplicitVariable);
                 var prevIsFunction = prevKind == PullElementKind.Function;
-                var isAmbient = (variableDeclaration.flags & PullElementFlags.Ambient) != 0;
+                var prevIsAmbient = variableSymbol.allDeclsHaveFlag(PullElementFlags.Ambient);
+                var isAmbientOrPrevIsAmbient = prevIsAmbient || (variableDeclaration.flags & PullElementFlags.Ambient) != 0;
                 var prevDecl = variableSymbol.getDeclarations()[0];
                 var prevParentDecl = prevDecl.getParentDecl();
                 var bothAreGlobal = parentDecl && (parentDecl.kind == PullElementKind.Script) && (prevParentDecl.kind == PullElementKind.Script);
@@ -932,11 +933,11 @@ module TypeScript {
                     (isImplicit &&
                     ((!isEnumValue && !isClassConstructorVariable && prevIsFunction) || // Enums can't mix with functions
                     ((isModuleValue || isEnumValue) && (prevIsModuleValue || prevIsEnum)) || // modules and enums can mix freely
-                    (isClassConstructorVariable && prevIsModuleValue && isAmbient) || // an ambient class can be declared after a module
+                    (isClassConstructorVariable && prevIsModuleValue && isAmbientOrPrevIsAmbient) || // an ambient class can be declared after a module
                     (isModuleValue && prevIsClassConstructorVariable))); // the module variable can come after the class constructor variable
 
                 // if the previous declaration is a non-ambient class, it must be located in the same file as this declaration
-                if (acceptableRedeclaration && (prevIsClassConstructorVariable || prevIsFunction) && !prevIsAmbient) {
+                if (acceptableRedeclaration && (prevIsClassConstructorVariable || prevIsFunction) && !isAmbientOrPrevIsAmbient) {
                     if (prevDecl.fileName() != variableDeclaration.fileName()) {
                         this.semanticInfoChain.addDiagnostic(diagnosticFromDecl(variableDeclaration,
                             DiagnosticCode.Module_0_cannot_merge_with_previous_declaration_of_1_in_a_different_file_2, [declName, declName, prevDecl.fileName()]));
@@ -1108,18 +1109,6 @@ module TypeScript {
 
                         variableSymbol.addDeclaration(variableDeclaration);
                         variableDeclaration.setSymbol(variableSymbol);
-
-                        // set the AST to the constructor method's if possible
-                        decls = moduleContainerTypeSymbol.getDeclarations();
-
-                        if (decls.length) {
-
-                            decl = decls[decls.length - 1];
-                            ast = this.semanticInfoChain.getASTForDecl(decl);
-                        }
-
-                        // we added the variable to the parent when binding the module
-                        //parentHadSymbol = true;
                     }
                     else {
                         Debug.assert(false, "Attempted to bind invalid implicit variable symbol");
@@ -1336,9 +1325,10 @@ module TypeScript {
 
             if (functionSymbol) {
                 // Duplicate is acceptable if it is another signature (not a duplicate implementation), or an ambient fundule
-                var isAmbient = functionDeclaration.flags & PullElementFlags.Ambient;
+                var previousIsAmbient = functionSymbol.allDeclsHaveFlag(PullElementFlags.Ambient);
+                var isAmbientOrPreviousIsAmbient = previousIsAmbient || functionDeclaration.flags & PullElementFlags.Ambient;
                 var acceptableRedeclaration = functionSymbol.kind === PullElementKind.Function && (isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature)) ||
-                    functionSymbol.hasFlag(PullElementFlags.InitializedModule) && isAmbient;
+                    functionSymbol.allDeclsHaveFlag(PullElementFlags.InitializedModule) && isAmbientOrPreviousIsAmbient;
                 if (!acceptableRedeclaration) {
                     this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [functionDeclaration.getDisplayName()]);
                     functionSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, funcName);
@@ -1707,7 +1697,7 @@ module TypeScript {
                 var constructorSigs = constructorSymbol.type.getConstructSignatures();
 
                 for (var i = 0; i < constructorSigs.length; i++) {
-                    if (!constructorSigs[i].hasFlag(PullElementFlags.Signature)) {
+                    if (!constructorSigs[i].anyDeclHasFlag(PullElementFlags.Signature)) {
                         hasDefinitionSignature = true;
                         break;
                     }
@@ -2084,13 +2074,13 @@ module TypeScript {
                 return;
             }
 
-            if (this.declsBeingBound[decl.declID]) {
+            if (this.declsBeingBound.indexOf(decl.declID) >= 0) {
                 // We are already binding it now
                 return;
             }
 
             // Add it to the list in case we revisit it during binding
-            this.declsBeingBound[decl.declID] = true;
+            this.declsBeingBound.push(decl.declID);
 
             switch (decl.kind) {
                 case PullElementKind.Script:
@@ -2198,7 +2188,8 @@ module TypeScript {
             }
 
             // Rremove the decl from the list
-            delete this.declsBeingBound[decl.declID];
+            Debug.assert(ArrayUtilities.last(this.declsBeingBound) === decl.declID);
+            this.declsBeingBound.pop();
         }
 
         //public bindTopLevelDecl() {

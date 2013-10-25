@@ -91,7 +91,7 @@ module TypeScript {
         return false;
     }
 
-    var scannerWindow = ArrayUtilities.createArray(2048, 0);
+    var scannerWindow = ArrayUtilities.createArray<number>(2048, 0);
     var scannerDiagnostics: any[] = [];
 
     function processImports(lineMap: LineMap, scanner: Scanner, token: ISyntaxToken, importedFiles: IFileReference[]): void {

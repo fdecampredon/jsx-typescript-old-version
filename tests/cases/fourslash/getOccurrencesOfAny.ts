@@ -9,4 +9,4 @@
 ////};
 
 goTo.marker();
-verify.occurrencesAtPositionCount(9);
+verify.occurrencesAtPositionCount(0);

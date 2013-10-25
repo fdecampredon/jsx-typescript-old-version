@@ -96,7 +96,7 @@ module TypeScript {
                     var info = this.candidateCache[infoKey];
 
                     if (!info.inferenceCandidates.length) {
-                        results[results.length] = { param: info.typeParameter, type: resolver.semanticInfoChain.anyTypeSymbol };
+                        results[results.length] = { param: info.typeParameter, type: null };
                         continue;
                     }
 
@@ -107,7 +107,7 @@ module TypeScript {
                         }
                     };
 
-                    bestCommonType = resolver.widenType(null, resolver.findBestCommonType(info.inferenceCandidates[0], collection, context, new TypeComparisonInfo()), context);
+                    bestCommonType = resolver.widenType(resolver.findBestCommonType(collection, context, new TypeComparisonInfo()));
 
                     if (!bestCommonType) {
                         unfit = true;
@@ -149,18 +149,16 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap[ast.astID] = symbol;
+            this.astSymbolMap[ast.astID()] = symbol;
         }
 
-        public getSymbolForAST(ast: IAST): PullSymbol {
-            return this.astSymbolMap[ast.astID];
+        public getSymbolForAST(ast: AST): PullSymbol {
+            return this.astSymbolMap[ast.astID()];
         }
     }
 
     export class PullTypeResolutionContext {
         private contextStack: PullContextualTypeContext[] = [];
-
-        public instantiatingTypesToAny = false;
 
         constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public fileName: string = null) {
             if (inTypeCheck) {
@@ -279,7 +277,7 @@ module TypeScript {
             this.contextStack[this.contextStack.length - 1].setSymbolForAST(ast, symbol);
         }
 
-        public getSymbolForAST(ast: IAST): PullSymbol {
+        public getSymbolForAST(ast: AST): PullSymbol {
             for (var i = this.contextStack.length - 1; i >= 0; i--) {
                 var typeContext = this.contextStack[i];
                 if (!typeContext.provisional) {

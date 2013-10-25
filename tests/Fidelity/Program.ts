@@ -439,13 +439,14 @@ class Program {
             }
         }
 
-        TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
-        tree.sourceUnit().accept(new PositionValidatingWalker());
+        if (verify) {
+            TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
+            tree.sourceUnit().accept(new PositionValidatingWalker());
 
-        TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
+            TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
-        this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
-
+            this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
+        }
         totalTime += timer.time;
     }
 
@@ -605,10 +606,6 @@ class Program {
     }
 
     parseArguments(): void {
-        if (true) {
-            return;
-        }
-
         Environment.standardOut.WriteLine("Testing input files.");
         for (var index in Environment.arguments) {
             var fileName: string = Environment.arguments[index];
@@ -699,7 +696,7 @@ for (var d in TypeScript.LocalizedDiagnosticMessages) {
         diagnostics[info.message] = { category: TypeScript.DiagnosticCategory[info.category], code: info.code };
     }
 }
-
+ 
 var whatever = JSON.stringify(diagnostics, null, 4);
 
 var totalTime = 0;
@@ -707,22 +704,15 @@ var totalSize = 0;
 var program = new Program();
 
 // New parser.
-if (true) {
-    totalTime = 0;
-    totalSize = 0;
-    program.runAllTests(true);
-    program.parseArguments();
-    Environment.standardOut.WriteLine("Total time: " + totalTime);
-    Environment.standardOut.WriteLine("Total size: " + totalSize);
-}
+totalTime = 0;
+totalSize = 0;
+program.runAllTests(true);
 
-// Test 262.
-if (false) {
-    totalTime = 0;
-    totalSize = 0;
-    program.run262();
-    Environment.standardOut.WriteLine("Total time: " + totalTime);
-    Environment.standardOut.WriteLine("Total size: " + totalSize);
-}
+var count = 1;
 
-// Test
+//for (var i = 0; i < count; i++) {
+//    program.parseArguments();
+//}
+
+Environment.standardOut.WriteLine("Total time: " + (totalTime / count));
+Environment.standardOut.WriteLine("Total size: " + (totalSize / count));

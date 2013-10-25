@@ -11,12 +11,12 @@ Line 5 col 51 IdentifierName "Iterator" = Iterator<T>
 Line 5 col 60 IdentifierName "T" = T
 Line 5 col 77 IdentifierName "Iterator" = Iterator<T>
 Line 5 col 86 IdentifierName "T" = T
-Line 9 col 13 IdentifierName "fromOrderBy" = () => Iterator<any>
+Line 9 col 13 IdentifierName "fromOrderBy" = () => Iterator<{}>
 Line 10 col 15 InvocationExpression "fromDoWhile(test => {
             return true;
-        })" = Iterator<any>
+        })" = Iterator<{}>
 Line 10 col 15 IdentifierName "fromDoWhile" = <T>(doWhile: (test: Iterator<T>) => boolean) => Iterator<T>
 Line 10 col 27 SimpleArrowFunctionExpression "test => {
             return true;
-        }" = (test: Iterator<any>) => boolean
-Line 10 col 27 IdentifierName "test" = Iterator<any>
+        }" = (test: Iterator<{}>) => boolean
+Line 10 col 27 IdentifierName "test" = Iterator<{}>

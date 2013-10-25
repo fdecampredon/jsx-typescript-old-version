@@ -19,7 +19,6 @@ module TypeScript {
     export interface IASTSpan {
         minChar: number;
         limChar: number;
-        trailingTriviaWidth: number;
     }
 
     export class ASTSpan implements IASTSpan {
@@ -75,13 +74,7 @@ module TypeScript {
             includingPosition ? commentStructuralEqualsIncludingPosition : commentStructuralEqualsNotIncludingPosition);
     }
 
-    export interface IAST extends IASTSpan {
-        nodeType(): NodeType;
-        astID: number;
-        getLength(): number;
-    }
-
-    export class AST implements IAST {
+    export class AST implements IASTSpan {
         public parent: AST = null;
         public minChar: number = -1;  // -1 = "undefined" or "compiler generated"
         public limChar: number = -1;  // -1 = "undefined" or "compiler generated"
@@ -91,13 +84,17 @@ module TypeScript {
 
         public typeCheckPhase = -1;
 
-        public astID: number = astID++;
+        private _astID: number = astID++;
 
         private _preComments: Comment[] = null;
         private _postComments: Comment[] = null;
         private _docComments: Comment[] = null;
 
         constructor() {
+        }
+
+        public astID(): number {
+            return this._astID;
         }
 
         public fileName(): string {
@@ -479,7 +476,7 @@ module TypeScript {
         // For purposes of finding a symbol, use text, as this will allow you to match all 
         // variations of the variable text. For full-fidelity translation of the user input, such
         // as emitting, use the actualText field.
-        constructor(private _text: string, private _valueText: string, public isStringOrNumericLiteral: boolean = false) {
+        constructor(private _text: string, private _valueText: string, public isStringOrNumericLiteral: boolean) {
             super();
         }
 
@@ -489,7 +486,15 @@ module TypeScript {
 
         public valueText(): string {
             if (!this._valueText) {
-                this._valueText = Syntax.massageEscapes(this.text());
+                // In the case where actualText is "__proto__", we substitute "#__proto__" as the _text
+                // so that we can safely use it as a key in a javascript object.
+                var text = this._text;
+                if (text === "__proto__") {
+                    this._valueText = "#__proto__";
+                }
+                else {
+                    this._valueText = Syntax.massageEscapes(text);
+                }
             }
 
             return this._valueText;
@@ -499,30 +504,13 @@ module TypeScript {
             return NodeType.Name;
         }
 
-        public isMissing() { return false; }
-
         public emit(emitter: Emitter) {
             emitter.emitName(this, true);
         }
 
         public structuralEquals(ast: Identifier, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                   this._text === ast._text &&
-                   this.isMissing() === ast.isMissing();
-        }
-    }
-
-    export class MissingIdentifier extends Identifier {
-        constructor() {
-            super("__missing", "__missing");
-        }
-
-        public isMissing() {
-            return true;
-        }
-
-        public emit(emitter: Emitter) {
-            // Emit nothing for a missing ID
+                   this._text === ast._text;
         }
     }
 
@@ -916,7 +904,7 @@ module TypeScript {
         }
     }
 
-    export interface ICallExpression extends IAST {
+    export interface ICallExpression extends IASTSpan {
         target: AST;
         typeArguments: ASTList;
         arguments: ASTList;
@@ -2149,6 +2137,7 @@ module TypeScript {
             Debug.assert(term !== null && term !== undefined);
             this.minChar = term.minChar;
             this.limChar = term.limChar;
+            this.trailingTriviaWidth = term.trailingTriviaWidth;
         }
 
         public nodeType(): NodeType {
@@ -2162,6 +2151,20 @@ module TypeScript {
         public structuralEquals(ast: TypeReference, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                 structuralEquals(this.term, ast.term, includingPosition);
+        }
+    }
+
+    export class BuiltInType extends AST {
+        constructor(private _nodeType: NodeType) {
+            super();
+        }
+
+        public nodeType(): NodeType {
+            return this._nodeType;
+        }
+
+        public emit(emitter: Emitter) {
+            throw Errors.invalidOperation("Should not emit a builtin type.");
         }
     }
 

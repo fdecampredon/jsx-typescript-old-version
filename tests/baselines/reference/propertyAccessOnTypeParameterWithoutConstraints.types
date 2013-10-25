@@ -44,15 +44,15 @@ Line 17 col 4 IdentifierName "a" = <T>() => T
 Line 18 col 5 IdentifierName "T" = T
 Line 18 col 11 IdentifierName "T" = T
 Line 20 col 4 IdentifierName "r3" = string
-Line 20 col 17 InvocationExpression "a().toString()" = any
-Line 20 col 17 MemberAccessExpression "a().toString" = any
-Line 20 col 17 InvocationExpression "a()" = any
+Line 20 col 17 InvocationExpression "a().toString()" = string
+Line 20 col 17 MemberAccessExpression "a().toString" = () => string
+Line 20 col 17 InvocationExpression "a()" = {}
 Line 20 col 17 IdentifierName "a" = <T>() => T
-Line 20 col 21 IdentifierName "toString" = any
+Line 20 col 21 IdentifierName "toString" = () => string
 Line 21 col 4 IdentifierName "r3b" = string
 Line 21 col 18 InvocationExpression "a()['toString']()" = any
 Line 21 col 18 ElementAccessExpression "a()['toString']" = any
-Line 21 col 18 InvocationExpression "a()" = any
+Line 21 col 18 InvocationExpression "a()" = {}
 Line 21 col 18 IdentifierName "a" = <T>() => T
 Line 23 col 4 IdentifierName "b" = { foo: <T>(x: T) => string; }
 Line 23 col 8 ObjectLiteralExpression "{

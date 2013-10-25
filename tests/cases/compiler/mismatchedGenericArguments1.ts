@@ -8,7 +8,7 @@ class C<T> implements IFoo<T> {
 }
 
 class C2<T> implements IFoo<T> {
-   foo<string>(x: string): number {
+   foo<U>(x: string): number {
      return null;
    }
 }

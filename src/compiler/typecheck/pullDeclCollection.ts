@@ -811,9 +811,7 @@ module TypeScript {
             propertyAssignment, propertyAssignment.propertyName, context, propertyAssignment.propertyName);
     }
 
-    function preCollectDecls(ast: AST, walker: IAstWalker) {
-        var context: DeclCollectionContext = walker.state;
-
+    function preCollectDecls(ast: AST, context: DeclCollectionContext) {
         switch (ast.nodeType()) {
             case NodeType.Script:
                 preCollectScriptDecls(<Script>ast, context);
@@ -914,8 +912,6 @@ module TypeScript {
                 preCollectFunctionPropertyAssignmentDecls(<FunctionPropertyAssignment>ast, context);
                 break;
         }
-
-        walker.options.goChildren = true;
     }
 
     function isContainer(decl: PullDecl): boolean {
@@ -946,8 +942,7 @@ module TypeScript {
         return false;
     }
 
-    function postCollectDecls(ast: AST, walker: IAstWalker) {
-        var context: DeclCollectionContext = walker.state;
+    function postCollectDecls(ast: AST, context: DeclCollectionContext) {
         var currentDecl = context.getParent();
 
         // Don't pop the topmost decl.  We return that out at the end.
@@ -961,7 +956,7 @@ module TypeScript {
             var declCollectionContext = new DeclCollectionContext(semanticInfoChain);
 
             // create decls
-            getAstWalkerFactory().walk(script, preCollectDecls, postCollectDecls, null, declCollectionContext);
+            getAstWalkerFactory().simpleWalk(script, preCollectDecls, postCollectDecls, declCollectionContext);
 
             return declCollectionContext.getParent();
         }

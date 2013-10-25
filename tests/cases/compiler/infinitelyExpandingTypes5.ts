@@ -8,6 +8,6 @@ interface Enumerator<T> {
 
 function from<T>(array: T[]): Query<T>;
 function from<T>(enumerator: Enumerator<T>): Query<T>;
-function from<T>(arg: any): Query<T> {
+function from(arg: any): any {
     return undefined;
 }

@@ -1,0 +1,14 @@
+arrayConstructors1.ts line 2 col 1: error TS2012: Cannot convert '{}[]' to 'string[]':
+	Types of property 'concat' of types '{}[]' and 'string[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
+				Call signatures of types '() => {}' and '() => string' are incompatible.
+			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
+				Call signatures of types '() => {}' and '() => string' are incompatible.
+arrayConstructors1.ts line 7 col 1: error TS2012: Cannot convert '{}[]' to 'number[]':
+	Types of property 'concat' of types '{}[]' and 'number[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
+				Call signatures of types '() => {}' and '() => number' are incompatible.
+			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
+				Call signatures of types '() => {}' and '() => number' are incompatible.

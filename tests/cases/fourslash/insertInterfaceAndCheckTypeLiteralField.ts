@@ -2,7 +2,7 @@
 
 //// /*addC*/
 //// interface G<T, U> { }
-//// var v2: G<{ a: /*checkParam*/string }, C>;
+//// var v2: G<{ a: /*checkParam*/C }, C>;
 
 goTo.marker('addC');
 edit.insert('interface C { }');

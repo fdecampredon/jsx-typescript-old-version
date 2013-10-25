@@ -18,7 +18,7 @@ var r2b = i.foo['getDate']();
 var a: {
     <T extends Date>(): T;
 }
-var r3: string = a().getDate();
+var r3: string = a<Date>().getDate();
 var r3b: string = a()['getDate']();
 
 var b = {

@@ -1,10 +1,10 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray(CharacterCodes.maxAsciiCharacter, false);
-    var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray(CharacterCodes.maxAsciiCharacter, false);
-    var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray(CharacterCodes.maxAsciiCharacter, false);
-    var isNumericLiteralStart: boolean[] = ArrayUtilities.createArray(CharacterCodes.maxAsciiCharacter, false);
+    var isKeywordStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
+    var isIdentifierStartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
+    var isIdentifierPartCharacter: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
+    var isNumericLiteralStart: boolean[] = ArrayUtilities.createArray<boolean>(CharacterCodes.maxAsciiCharacter, false);
 
     for (var character = 0; character < CharacterCodes.maxAsciiCharacter; character++) {
         if (character >= CharacterCodes.a && character <= CharacterCodes.z) {
@@ -40,7 +40,7 @@ module TypeScript {
         constructor(fileName: string,
                     text: ISimpleText,
                     languageVersion: LanguageVersion,
-                    window: number[] = ArrayUtilities.createArray(2048, 0)) {
+                    window: number[] = ArrayUtilities.createArray<number>(2048, 0)) {
             this.slidingWindow = new SlidingWindow(this, window, 0, text.length());
             this.fileName = fileName;
             this.text = text;

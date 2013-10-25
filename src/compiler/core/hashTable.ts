@@ -18,7 +18,7 @@ module TypeScript.Collections {
         constructor(capacity: number,
                     private hash: (k: TKey) => number) {
             var size = Hash.getPrime(capacity);
-            this.entries = ArrayUtilities.createArray(size, null);
+            this.entries = ArrayUtilities.createArray<HashTableEntry<TKey, TValue>>(size, null);
         }
 
         // Maps 'key' to 'value' in this table.  Does not throw if 'key' is already in the table.
@@ -126,7 +126,7 @@ module TypeScript.Collections {
             var newSize = Hash.expandPrime(this.entries.length);
 
             var oldEntries = this.entries;
-            var newEntries: HashTableEntry<TKey,TValue>[] = ArrayUtilities.createArray(newSize, null);
+            var newEntries: HashTableEntry<TKey, TValue>[] = ArrayUtilities.createArray<HashTableEntry<TKey, TValue>>(newSize, null);
 
             this.entries = newEntries;
 

@@ -476,14 +476,14 @@ module TypeScript.SimpleText {
             StringUtilities.copyTo(this.value, sourceIndex, destination, destinationIndex, count);
         }
 
-        private static charArray: number[] = ArrayUtilities.createArray(1024, 0);
+        private static charArray: number[] = ArrayUtilities.createArray<number>(1024, 0);
 
         public substr(start: number, length: number, intern: boolean): string {
             if (intern) {
                 // use a shared array instance of the length of this substring isn't too large.
                 var array: number[] = length <= SimpleStringText.charArray.length
                     ? SimpleStringText.charArray
-                    : ArrayUtilities.createArray(length, /*defaultValue:*/0);
+                    : ArrayUtilities.createArray<number>(length, /*defaultValue:*/0);
                 this.copyTo(start, array, 0, length);
                 return Collections.DefaultStringTable.addCharArray(array, 0, length);
             }

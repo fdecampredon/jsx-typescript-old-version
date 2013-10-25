@@ -31,6 +31,11 @@ module TypeScript {
         NullLiteral,
 
         // Types
+        AnyType,
+        BooleanType,
+        NumberType,
+        StringType,
+        VoidType,
         TypeParameter,
         GenericType,
         TypeRef,
@@ -150,5 +155,7 @@ module TypeScript {
         ExtendsHeritageClause,
         ImplementsHeritageClause,
         ElseClause,
+
+        LastNodeType = ElseClause
     }
 }

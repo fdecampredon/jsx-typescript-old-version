@@ -6,19 +6,19 @@ var iFoo: IFoo<number>;
 iFoo.foo(1);
 
 class IntFooBad implements IFoo<number> { // error
-    foo<string>(x: string): string { return null; }
+    foo(x: string): string { return null; }
 }
 
 var intFooBad: IntFooBad;
 
 class IntFoo implements IFoo<number> {
-    foo<number>(x: number): number { return null; }
+    foo(x: number): number { return null; }
 }
 
 var intFoo: IntFoo;
 
 class StringFoo2 implements IFoo<string> {
-    foo<string>(x: string): string { return null; }
+    foo(x: string): string { return null; }
 }
 
 var stringFoo2: StringFoo2;

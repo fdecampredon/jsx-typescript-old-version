@@ -1,0 +1,41 @@
+=== tests/cases/compiler/optionalFunctionArgAssignability.ts ===
+Line 0 col 10 IdentifierName "Promise" = Promise<T>
+Line 0 col 18 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "then" = <U>(onFulfill?: (value: T) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 1 col 9 IdentifierName "U" = U
+Line 1 col 12 IdentifierName "onFulfill" = (value: T) => U
+Line 1 col 25 IdentifierName "value" = T
+Line 1 col 32 IdentifierName "T" = T
+Line 1 col 38 IdentifierName "U" = U
+Line 1 col 41 IdentifierName "onReject" = (reason: any) => U
+Line 1 col 53 IdentifierName "reason" = any
+Line 1 col 69 IdentifierName "U" = U
+Line 1 col 73 IdentifierName "Promise" = Promise<T>
+Line 1 col 81 IdentifierName "U" = U
+Line 4 col 4 IdentifierName "a" = <U>(onFulfill?: (value: string) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 4 col 8 FunctionExpression "function then<U>(onFulfill?: (value: string) => U, onReject?: (reason: any) => U): Promise<U> { return null }" = <U>(onFulfill?: (value: string) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 4 col 17 IdentifierName "then" = <U>(onFulfill?: (value: string) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 4 col 22 IdentifierName "U" = U
+Line 4 col 25 IdentifierName "onFulfill" = (value: string) => U
+Line 4 col 38 IdentifierName "value" = string
+Line 4 col 56 IdentifierName "U" = U
+Line 4 col 59 IdentifierName "onReject" = (reason: any) => U
+Line 4 col 71 IdentifierName "reason" = any
+Line 4 col 87 IdentifierName "U" = U
+Line 4 col 91 IdentifierName "Promise" = Promise<T>
+Line 4 col 99 IdentifierName "U" = U
+Line 5 col 4 IdentifierName "b" = <U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 5 col 8 FunctionExpression "function then<U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U): Promise<U> { return null }" = <U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 5 col 17 IdentifierName "then" = <U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 5 col 22 IdentifierName "U" = U
+Line 5 col 25 IdentifierName "onFulFill" = (value: number) => U
+Line 5 col 38 IdentifierName "value" = number
+Line 5 col 56 IdentifierName "U" = U
+Line 5 col 59 IdentifierName "onReject" = (reason: any) => U
+Line 5 col 71 IdentifierName "reason" = any
+Line 5 col 87 IdentifierName "U" = U
+Line 5 col 91 IdentifierName "Promise" = Promise<T>
+Line 5 col 99 IdentifierName "U" = U
+Line 6 col 0 AssignmentExpression "a = b" = <U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 6 col 0 IdentifierName "a" = <U>(onFulfill?: (value: string) => U, onReject?: (reason: any) => U) => Promise<U>
+Line 6 col 4 IdentifierName "b" = <U>(onFulFill?: (value: number) => U, onReject?: (reason: any) => U) => Promise<U>

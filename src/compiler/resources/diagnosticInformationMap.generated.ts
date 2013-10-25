@@ -1641,6 +1641,10 @@ module TypeScript {
   "Array Literal implicitly has an 'any' type from widening.": {
     "code": 7015,
     "category": DiagnosticCategory.Error
+  },
+  "'{0}', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.": {
+    "code": 7016,
+    "category": DiagnosticCategory.Error
   }
 };
 }

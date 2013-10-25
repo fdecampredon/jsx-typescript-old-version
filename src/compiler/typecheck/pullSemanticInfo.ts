@@ -448,9 +448,9 @@ module TypeScript {
             this.astAliasSymbolMap.length = 0;
             this.astCallResolutionDataMap.length = 0;
 
-            this.declCache = createIntrinsicsObject();
-            this.symbolCache = createIntrinsicsObject();
-            this.fileNameToDiagnostics = createIntrinsicsObject();
+            this.declCache = createIntrinsicsObject<PullDecl[]>();
+            this.symbolCache = createIntrinsicsObject<PullSymbol>();
+            this.fileNameToDiagnostics = createIntrinsicsObject<Diagnostic[]>();
             this._binder = null;
             this._resolver = null;
             this._topLevelDecls = null;
@@ -499,28 +499,28 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap[ast.astID] = symbol;
+            this.astSymbolMap[ast.astID()] = symbol;
         }
 
-        public getSymbolForAST(ast: IAST): PullSymbol {
-            return this.astSymbolMap[ast.astID];
+        public getSymbolForAST(ast: AST): PullSymbol {
+            return this.astSymbolMap[ast.astID()];
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
-            this.astAliasSymbolMap[ast.astID] = symbol;
+            this.astAliasSymbolMap[ast.astID()] = symbol;
         }
 
-        public getAliasSymbolForAST(ast: IAST): PullTypeAliasSymbol {
-            return this.astAliasSymbolMap[ast.astID];
+        public getAliasSymbolForAST(ast: AST): PullTypeAliasSymbol {
+            return this.astAliasSymbolMap[ast.astID()];
         }
 
         public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            return this.astCallResolutionDataMap[ast.astID];
+            return this.astCallResolutionDataMap[ast.astID()];
         }
 
         public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
             if (callResolutionData) {
-                this.astCallResolutionDataMap[ast.astID] = callResolutionData;
+                this.astCallResolutionDataMap[ast.astID()] = callResolutionData;
             }
         }
 

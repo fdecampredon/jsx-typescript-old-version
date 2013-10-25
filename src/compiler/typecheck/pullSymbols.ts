@@ -216,7 +216,10 @@ module TypeScript {
 
             // Get the actual name associated with a declaration for this symbol
             var decls = this.getDeclarations();
-            return decls.length ? this.getDeclarations()[0].getDisplayName() : this.name;
+            var name = decls.length && decls[0].getDisplayName();
+
+            // In case the decl does not have a name like in the case of named function expression
+            return (name && name.length) ? name : this.name;
         }
 
         public getIsSpecialized() { return false; }
@@ -232,6 +235,7 @@ module TypeScript {
         public setIsSynthesized(value = true) {
             this.isSynthesized = value;
         }
+
         public getIsSynthesized() { return this.isSynthesized; }
 
         public setEnclosingSignature(signature: PullSignatureSymbol) {
@@ -302,10 +306,10 @@ module TypeScript {
             this.inResolution = false;
         }
 
-        public hasFlag(flag: PullElementFlags): boolean {
+        public anyDeclHasFlag(flag: PullElementFlags): boolean {
             var declarations = this.getDeclarations();
             for (var i = 0, n = declarations.length; i < n; i++) {
-                if ((declarations[i].flags & flag) !== PullElementFlags.None) {
+                if (hasFlag(declarations[i].flags, flag)) {
                     return true;
                 }
             }
@@ -315,7 +319,7 @@ module TypeScript {
         public allDeclsHaveFlag(flag: PullElementFlags): boolean {
             var declarations = this.getDeclarations();
             for (var i = 0, n = declarations.length; i < n; i++) {
-                if (!((declarations[i].flags & flag) !== PullElementFlags.None)) {
+                if (!hasFlag(declarations[i].flags, flag)) {
                     return false;
                 }
             }
@@ -588,16 +592,23 @@ module TypeScript {
                         return true;
                     }
                 }
-            } else {
+            }
+            else {
                 inIsExternallyVisibleSymbols = [];
             }
 
             if (fromIsExternallyVisibleSymbol === symbol) {
                 return true;
             }
-            inIsExternallyVisibleSymbols = inIsExternallyVisibleSymbols.concat(<any>fromIsExternallyVisibleSymbol);
 
-            return symbol.isExternallyVisible(inIsExternallyVisibleSymbols);
+            inIsExternallyVisibleSymbols.push(fromIsExternallyVisibleSymbol);
+
+            var result = symbol.isExternallyVisible(inIsExternallyVisibleSymbols);
+
+            Debug.assert(ArrayUtilities.last(inIsExternallyVisibleSymbols) === fromIsExternallyVisibleSymbol);
+            inIsExternallyVisibleSymbols.pop();
+
+            return result;
         }
 
         public isExternallyVisible(inIsExternallyVisibleSymbols?: PullSymbol[]): boolean {
@@ -620,7 +631,7 @@ module TypeScript {
             }
 
             // Private member
-            if (this.hasFlag(PullElementFlags.Private)) {
+            if (this.anyDeclHasFlag(PullElementFlags.Private)) {
                 return false;
             }
 
@@ -655,7 +666,7 @@ module TypeScript {
             }
 
             // If non exported member and is not class properties and method, it is not visible
-            if (!this.hasFlag(PullElementFlags.Exported) && kind != PullElementKind.Property && kind != PullElementKind.Method) {
+            if (!this.anyDeclHasFlag(PullElementFlags.Exported) && kind != PullElementKind.Property && kind != PullElementKind.Method) {
                 return false;
             }
 
@@ -789,8 +800,6 @@ module TypeScript {
 
         public hasVarArgs = false;
 
-        public cachedObjectSpecialization: PullSignatureSymbol = null;
-
         // GTODO
         public hasAGenericParameter = false;
 
@@ -850,7 +859,8 @@ module TypeScript {
             var memberSymbol: PullTypeParameterSymbol;
 
             if (!this._memberTypeParameterNameCache) {
-                this._memberTypeParameterNameCache = createIntrinsicsObject();
+
+                this._memberTypeParameterNameCache = createIntrinsicsObject<PullTypeParameterSymbol>();
 
                 if (this.typeParameters) {
                     for (var i = 0; i < this.typeParameters.length; i++) {
@@ -1402,7 +1412,7 @@ module TypeScript {
             enclosedNonMemberContainer.setContainer(this);
 
             if (!this._containedNonMemberContainerCache) {
-                this._containedNonMemberContainerCache = createIntrinsicsObject();
+                this._containedNonMemberContainerCache = createIntrinsicsObject<PullTypeSymbol>();
             }
 
             this._containedNonMemberContainerCache[enclosedNonMemberContainer.name] = enclosedNonMemberContainer;
@@ -1418,7 +1428,7 @@ module TypeScript {
             }
 
             if (!this._typeParameterNameCache) {
-                this._typeParameterNameCache = createIntrinsicsObject();
+                this._typeParameterNameCache = createIntrinsicsObject<PullTypeParameterSymbol>();
             }
 
             if (!this._typeParameters) {
@@ -1496,7 +1506,7 @@ module TypeScript {
             }
             else {
                 if (!this._complexSpecializationCache) {
-                    this._complexSpecializationCache = createIntrinsicsObject();
+                    this._complexSpecializationCache = createIntrinsicsObject<PullTypeSymbol>();
                 }
 
                 this._complexSpecializationCache[getIDForTypeSubstitutions(substitutingTypes)] = specializedVersionOfThisType;
@@ -1912,7 +1922,7 @@ module TypeScript {
 
                 for (var i = 0, n = this._members.length; i < n; i++) {
                     var member = this._members[i];
-                    if ((member.kind & searchDeclKind) && (memberVisiblity !== GetAllMembersVisiblity.externallyVisible || !member.hasFlag(PullElementFlags.Private))) {
+                    if ((member.kind & searchDeclKind) && (memberVisiblity !== GetAllMembersVisiblity.externallyVisible || !member.anyDeclHasFlag(PullElementFlags.Private))) {
                         allMembers[allMembers.length] = member;
                     }
                 }

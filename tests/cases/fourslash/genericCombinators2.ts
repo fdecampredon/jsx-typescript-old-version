@@ -43,7 +43,7 @@
 ////}
 ////var r4a/*15*/ = _.map(c5, (x/*4a*/, y/*4b*/) => { return y.foo() });
 ////}
-////var r5a/*17*/ = _.map<number, string, Date>(c2, (x/*5a*/, y/*5b*/) => { return x.toFixed() }); 
+////var r5a/*17*/ = _./*17error1*/map/*17error2*/<number, string, Date>(c2, (x/*5a*/, y/*5b*/) => { return x.toFixed() }); 
 ////var rf1b = (x: number, y: string) => { return new Date() };
 ////var r5b/*18*/ = _.map<number, string, Date>(c2, rf1b);
 ////
@@ -51,8 +51,8 @@
 ////var rf2b = (x: Collection<number, number>, y: string) => { return new Date(); };
 ////var r6b/*20*/ = _.map<Collection<number, number>, string, Date>(c3, rf2b);
 ////
-////var r7a/*21*/ = _.map<number, A, string>(c4, (x/*7a*/,y/*7b*/) => { return y.foo() });
-////var r7b/*22*/ = _.map<number, A, string>(c4, rf3);
+////var r7a/*21*/ = _./*21error1*/map/*21error2*/<number, A, string>(c4, (x/*7a*/,y/*7b*/) => { return y.foo() });
+////var r7b/*22*/ = _./*22error1*/map/*22error2*/<number, A, string>(c4, rf3);
 ////
 ////var r8a/*23*/ = _.map<number, /*error1*/B/*error2*/, string>(c5, (x/*8a*/,y/*8b*/) => { return y.foo() }); 
 
@@ -103,14 +103,14 @@ verify.quickInfoIs('Collection<Collection<number, number>, any>');
 goTo.marker('12');
 verify.quickInfoIs('Collection<Collection<number, number>, number>');
 goTo.marker('13');
-verify.quickInfoIs('Collection<number, any>');
+verify.quickInfoIs('Collection<number, {}>');
 goTo.marker('14');
-verify.quickInfoIs('Collection<number, any>');
+verify.quickInfoIs('Collection<number, {}>');
 goTo.marker('15');
 verify.quickInfoIs('Collection<number, any>');
 
 goTo.marker('17');
-verify.quickInfoIs('any');
+verify.quickInfoIs('any'); // This is actually due to an error because toFixed does not return a Date
 
 goTo.marker('18');
 verify.quickInfoIs('Collection<number, Date>');
@@ -122,12 +122,15 @@ goTo.marker('20');
 verify.quickInfoIs('Collection<Collection<number, number>, Date>');
 
 goTo.marker('21');
-verify.quickInfoIs('Collection<number, string>');
+verify.quickInfoIs('any'); // This call is an error because y.foo() does not return a string
 
 goTo.marker('22');
-verify.quickInfoIs('Collection<number, string>');
+verify.quickInfoIs('any'); // This call is an error because y.foo() does not return a string
 
 goTo.marker('23');
 verify.quickInfoIs('Collection<number, string>');
 
 verify.errorExistsBetweenMarkers('error1', 'error2');
+verify.errorExistsBetweenMarkers('17error1', '17error2');
+verify.errorExistsBetweenMarkers('21error1', '21error2');
+verify.errorExistsBetweenMarkers('22error1', '22error2');
