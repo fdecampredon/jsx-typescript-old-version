@@ -47,6 +47,11 @@ module TypeScript {
         walker.walk(preAst.expression);
     }
 
+    function walkArgumentListChildren(preAst: ArgumentList, walker: AstWalker): void {
+        walker.walk(preAst.typeArguments);
+        walker.walk(preAst.arguments);
+    }
+
     function walkArrayLiteralExpressionChildren(preAst: ArrayLiteralExpression, walker: AstWalker): void {
         walker.walk(preAst.expressions);
     }
@@ -82,8 +87,8 @@ module TypeScript {
     }
 
     function walkCastExpressionChildren(preAst: CastExpression, walker: AstWalker): void {
-        walker.walk(preAst.castType);
-        walker.walk(preAst.operand);
+        walker.walk(preAst.type);
+        walker.walk(preAst.expression);
     }
 
     function walkParenthesizedExpressionChildren(preAst: ParenthesizedExpression, walker: AstWalker): void {
@@ -110,6 +115,10 @@ module TypeScript {
         walker.walk(preAst.right);
     }
 
+    function walkEqualsValueClauseChildren(preAst: EqualsValueClause, walker: AstWalker): void {
+        walker.walk(preAst.value);
+    }
+
     function walkTypeParameterChildren(preAst: TypeParameter, walker: AstWalker): void {
         walker.walk(preAst.name);
         walker.walk(preAst.constraint);
@@ -129,16 +138,13 @@ module TypeScript {
     }
 
     function walkInvocationExpressionChildren(preAst: InvocationExpression, walker: AstWalker): void {
-        walker.walk(preAst.target);
-        walker.walk(preAst.typeArguments);
-        walker.walk(preAst.arguments);
+        walker.walk(preAst.expression);
+        walker.walk(preAst.argumentList);
     }
 
     function walkObjectCreationExpressionChildren(preAst: ObjectCreationExpression, walker: AstWalker): void {
-        walker.walk(preAst.target);
-
-        walker.walk(preAst.typeArguments);
-        walker.walk(preAst.arguments);
+        walker.walk(preAst.expression);
+        walker.walk(preAst.argumentList);
     }
 
     function walkTrinaryExpressionChildren(preAst: ConditionalExpression, walker: AstWalker): void {
@@ -155,15 +161,20 @@ module TypeScript {
         walker.walk(preAst.block);
     }
 
-    function walkArrowFunctionExpressionChildren(preAst: ArrowFunctionExpression, walker: AstWalker): void {
+    function walkParenthesizedArrowFunctionExpressionChildren(preAst: ParenthesizedArrowFunctionExpression, walker: AstWalker): void {
         walker.walk(preAst.typeParameters);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.returnTypeAnnotation);
         walker.walk(preAst.block);
     }
 
+    function walkSimpleArrowFunctionExpressionChildren(preAst: SimpleArrowFunctionExpression, walker: AstWalker): void {
+        walker.walk(preAst.identifier);
+        walker.walk(preAst.block);
+    }
+
     function walkMemberFunctionDeclarationChildren(preAst: MemberFunctionDeclaration, walker: AstWalker): void {
-        walker.walk(preAst.name);
+        walker.walk(preAst.propertyName);
         walker.walk(preAst.typeParameters);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.returnTypeAnnotation);
@@ -178,6 +189,19 @@ module TypeScript {
         walker.walk(preAst.block);
     }
 
+    function walkIndexMemberDeclarationChildren(preAst: IndexMemberDeclaration, walker: AstWalker): void {
+        walker.walk(preAst.indexSignature);
+    }
+
+    function walkIndexSignatureChildren(preAst: IndexSignature, walker: AstWalker): void {
+        walker.walk(preAst.parameterList);
+        walker.walk(preAst.returnTypeAnnotation);
+    }
+
+    function walkConstraintChildren(preAst: Constraint, walker: AstWalker): void {
+        walker.walk(preAst.type);
+    }
+
     function walkConstructorDeclarationChildren(preAst: ConstructorDeclaration, walker: AstWalker): void {
         walker.walk(preAst.parameterList);
         walker.walk(preAst.block);
@@ -186,19 +210,17 @@ module TypeScript {
     function walkParameterChildren(preAst: Parameter, walker: AstWalker): void {
         walker.walk(preAst.id);
         walker.walk(preAst.typeExpr);
-        walker.walk(preAst.init);
+        walker.walk(preAst.equalsValueClause);
     }
 
     function walkVariableDeclaratorChildren(preAst: VariableDeclarator, walker: AstWalker): void {
         walker.walk(preAst.id);
         walker.walk(preAst.typeExpr);
-        walker.walk(preAst.init);
+        walker.walk(preAst.equalsValueClause);
     }
 
     function walkMemberVariableDeclarationChildren(preAst: MemberVariableDeclaration, walker: AstWalker): void {
-        walker.walk(preAst.id);
-        walker.walk(preAst.typeExpr);
-        walker.walk(preAst.init);
+        walker.walk(preAst.variableDeclarator);
     }
 
     function walkReturnStatementChildren(preAst: ReturnStatement, walker: AstWalker): void {
@@ -206,14 +228,16 @@ module TypeScript {
     }
 
     function walkForStatementChildren(preAst: ForStatement, walker: AstWalker): void {
-        walker.walk(preAst.init);
-        walker.walk(preAst.cond);
-        walker.walk(preAst.incr);
-        walker.walk(preAst.body);
+        walker.walk(preAst.variableDeclaration);
+        walker.walk(preAst.initializer);
+        walker.walk(preAst.condition);
+        walker.walk(preAst.incrementor);
+        walker.walk(preAst.statement);
     }
 
     function walkForInStatementChildren(preAst: ForInStatement, walker: AstWalker): void {
         walker.walk(preAst.variableDeclaration);
+        walker.walk(preAst.left);
         walker.walk(preAst.expression);
         walker.walk(preAst.statement);
     }
@@ -247,27 +271,32 @@ module TypeScript {
     }
 
     function walkCaseSwitchClauseChildren(preAst: CaseSwitchClause, walker: AstWalker): void {
-        walker.walk(preAst.expr);
-        walker.walk(preAst.body);
+        walker.walk(preAst.expression);
+        walker.walk(preAst.statements);
     }
 
     function walkDefaultSwitchClauseChildren(preAst: DefaultSwitchClause, walker: AstWalker): void {
-        walker.walk(preAst.body);
+        walker.walk(preAst.statements);
     }
 
     function walkSwitchStatementChildren(preAst: SwitchStatement, walker: AstWalker): void {
         walker.walk(preAst.expression);
-        walker.walk(preAst.caseList);
+        walker.walk(preAst.switchClauses);
     }
 
     function walkTryStatementChildren(preAst: TryStatement, walker: AstWalker): void {
         walker.walk(preAst.block);
         walker.walk(preAst.catchClause);
-        walker.walk(preAst.finallyBody);
+        walker.walk(preAst.finallyClause);
     }
 
     function walkCatchClauseChildren(preAst: CatchClause, walker: AstWalker): void {
-        walker.walk(preAst.param);
+        walker.walk(preAst.identifier);
+        walker.walk(preAst.typeAnnotation);
+        walker.walk(preAst.block);
+    }
+
+    function walkFinallyClauseChildren(preAst: FinallyClause, walker: AstWalker): void {
         walker.walk(preAst.block);
     }
 
@@ -312,8 +341,8 @@ module TypeScript {
     }
 
     function walkEnumElementChildren(preAst: EnumElement, walker: AstWalker): void {
-        walker.walk(preAst.identifier);
-        walker.walk(preAst.value);
+        walker.walk(preAst.propertyName);
+        walker.walk(preAst.equalsValueClause);
     }
 
     function walkImportDeclChildren(preAst: ImportDeclaration, walker: AstWalker): void {
@@ -345,131 +374,143 @@ module TypeScript {
 
     var childrenWalkers: IAstWalkChildren[] = new Array<IAstWalkChildren>(NodeType.LastNodeType + 1);
 
-    childrenWalkers[NodeType.None] = null;
-    childrenWalkers[NodeType.EmptyStatement] = null;
-    childrenWalkers[NodeType.OmittedExpression] = null;
-    childrenWalkers[NodeType.TrueLiteral] = null;
-    childrenWalkers[NodeType.FalseLiteral] = null;
-    childrenWalkers[NodeType.ThisExpression] = null;
-    childrenWalkers[NodeType.SuperExpression] = null;
-    childrenWalkers[NodeType.StringLiteral] = null;
-    childrenWalkers[NodeType.RegularExpressionLiteral] = null;
-    childrenWalkers[NodeType.NullLiteral] = null;
-    childrenWalkers[NodeType.ArrayLiteralExpression] = walkArrayLiteralExpressionChildren;
-    childrenWalkers[NodeType.ObjectLiteralExpression] = walkObjectLiteralExpressionChildren;
-    childrenWalkers[NodeType.SimplePropertyAssignment] = walkSimplePropertyAssignmentChildren;
-    childrenWalkers[NodeType.FunctionPropertyAssignment] = walkFunctionPropertyAssignmentChildren;
-    childrenWalkers[NodeType.GetAccessor] = walkGetAccessorChildren;
-    childrenWalkers[NodeType.SetAccessor] = walkSetAccessorChildren;
-    childrenWalkers[NodeType.VoidExpression] = walkVoidExpressionChildren;
-    childrenWalkers[NodeType.CommaExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.PlusExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.NegateExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.DeleteExpression] = walkDeleteExpressionChildren;
-    childrenWalkers[NodeType.InExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.MemberAccessExpression] = walkMemberAccessExpressionChildren;
-    childrenWalkers[NodeType.QualifiedName] = walkQualifiedNameChildren;
-    childrenWalkers[NodeType.InstanceOfExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.TypeOfExpression] = walkTypeOfExpressionChildren;
-    childrenWalkers[NodeType.NumericLiteral] = null;
-    childrenWalkers[NodeType.Name] = null;
-    childrenWalkers[NodeType.TypeParameter] = walkTypeParameterChildren;
-    childrenWalkers[NodeType.GenericType] = walkGenericTypeChildren;
-    childrenWalkers[NodeType.TypeRef] = walkTypeReferenceChildren;
-    childrenWalkers[NodeType.TypeQuery] = walkTypeQueryChildren;
-    childrenWalkers[NodeType.ElementAccessExpression] = walkElementAccessExpressionChildren;
-    childrenWalkers[NodeType.InvocationExpression] = walkInvocationExpressionChildren;
-    childrenWalkers[NodeType.ObjectCreationExpression] = walkObjectCreationExpressionChildren;
-    childrenWalkers[NodeType.AssignmentExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.AddAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.SubtractAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.DivideAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.MultiplyAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.ModuloAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.AndAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.ExclusiveOrAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.OrAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.LeftShiftAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.SignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.UnsignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.ConditionalExpression] = walkTrinaryExpressionChildren;
-    childrenWalkers[NodeType.LogicalOrExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.LogicalAndExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.BitwiseOrExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.BitwiseExclusiveOrExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.BitwiseAndExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.EqualsWithTypeConversionExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.NotEqualsWithTypeConversionExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.EqualsExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.NotEqualsExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.LessThanExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.LessThanOrEqualExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.GreaterThanExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.GreaterThanOrEqualExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.AddExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.SubtractExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.MultiplyExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.DivideExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.ModuloExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.LeftShiftExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.SignedRightShiftExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.UnsignedRightShiftExpression] = walkBinaryExpressionChildren;
-    childrenWalkers[NodeType.BitwiseNotExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.LogicalNotExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.PreIncrementExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.PreDecrementExpression] = walkPrefixUnaryExpressionChildren;
-    childrenWalkers[NodeType.PostIncrementExpression] = walkPostfixUnaryExpressionChildren;
-    childrenWalkers[NodeType.PostDecrementExpression] = walkPostfixUnaryExpressionChildren;
-    childrenWalkers[NodeType.CastExpression] = walkCastExpressionChildren;
-    childrenWalkers[NodeType.ParenthesizedExpression] = walkParenthesizedExpressionChildren;
-    childrenWalkers[NodeType.ArrowFunctionExpression] = walkArrowFunctionExpressionChildren;
-    childrenWalkers[NodeType.FunctionExpression] = walkFunctionExpressionChildren;
-    childrenWalkers[NodeType.FunctionDeclaration] = walkFuncDeclChildren;
-    childrenWalkers[NodeType.MemberFunctionDeclaration] = walkMemberFunctionDeclarationChildren;
-    childrenWalkers[NodeType.ConstructorDeclaration] = walkConstructorDeclarationChildren;
-    childrenWalkers[NodeType.VariableDeclarator] = walkVariableDeclaratorChildren;
-    childrenWalkers[NodeType.MemberVariableDeclaration] = walkMemberVariableDeclarationChildren;
-    childrenWalkers[NodeType.VariableDeclaration] = walkVariableDeclarationChildren;
-    childrenWalkers[NodeType.Parameter] = walkParameterChildren;
-    childrenWalkers[NodeType.ReturnStatement] = walkReturnStatementChildren;
-    childrenWalkers[NodeType.BreakStatement] = null;
-    childrenWalkers[NodeType.ContinueStatement] = null;
-    childrenWalkers[NodeType.ThrowStatement] = walkThrowStatementChildren;
-    childrenWalkers[NodeType.ForStatement] = walkForStatementChildren;
-    childrenWalkers[NodeType.ForInStatement] = walkForInStatementChildren;
-    childrenWalkers[NodeType.IfStatement] = walkIfStatementChildren;
-    childrenWalkers[NodeType.ElseClause] = walkElseClauseChildren;
-    childrenWalkers[NodeType.WhileStatement] = walkWhileStatementChildren;
-    childrenWalkers[NodeType.DoStatement] = walkDoStatementChildren;
-    childrenWalkers[NodeType.Block] = walkBlockChildren;
-    childrenWalkers[NodeType.CaseSwitchClause] = walkCaseSwitchClauseChildren;
-    childrenWalkers[NodeType.DefaultSwitchClause] = walkDefaultSwitchClauseChildren;
-    childrenWalkers[NodeType.SwitchStatement] = walkSwitchStatementChildren;
-    childrenWalkers[NodeType.TryStatement] = walkTryStatementChildren;
-    childrenWalkers[NodeType.CatchClause] = walkCatchClauseChildren;
-    childrenWalkers[NodeType.List] = walkListChildren;
-    childrenWalkers[NodeType.Script] = walkScriptChildren;
-    childrenWalkers[NodeType.ClassDeclaration] = walkClassDeclChildren;
-    childrenWalkers[NodeType.InterfaceDeclaration] = walkInterfaceDeclerationChildren;
-    childrenWalkers[NodeType.ExtendsHeritageClause] = walkHeritageClauseChildren;
-    childrenWalkers[NodeType.ImplementsHeritageClause] = walkHeritageClauseChildren;
-    childrenWalkers[NodeType.ObjectType] = walkObjectTypeChildren;
+    childrenWalkers[NodeType.AndAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.AnyType] = null;
+    childrenWalkers[NodeType.ArgumentList] = walkArgumentListChildren;
+    childrenWalkers[NodeType.ArrayLiteralExpression] = walkArrayLiteralExpressionChildren;
     childrenWalkers[NodeType.ArrayType] = walkArrayTypeChildren;
-    childrenWalkers[NodeType.ModuleDeclaration] = walkModuleDeclChildren;
+    childrenWalkers[NodeType.SimpleArrowFunctionExpression] = walkSimpleArrowFunctionExpressionChildren;
+    childrenWalkers[NodeType.ParenthesizedArrowFunctionExpression] = walkParenthesizedArrowFunctionExpressionChildren;
+    childrenWalkers[NodeType.AssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.BitwiseAndExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.BitwiseExclusiveOrExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.BitwiseNotExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.BitwiseOrExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.Block] = walkBlockChildren;
+    childrenWalkers[NodeType.BooleanType] = null;
+    childrenWalkers[NodeType.BreakStatement] = null;
+    childrenWalkers[NodeType.CaseSwitchClause] = walkCaseSwitchClauseChildren;
+    childrenWalkers[NodeType.CastExpression] = walkCastExpressionChildren;
+    childrenWalkers[NodeType.CatchClause] = walkCatchClauseChildren;
+    childrenWalkers[NodeType.ClassDeclaration] = walkClassDeclChildren;
+    childrenWalkers[NodeType.CommaExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.ConditionalExpression] = walkTrinaryExpressionChildren;
+    childrenWalkers[NodeType.Constraint] = walkConstraintChildren;
+    childrenWalkers[NodeType.ConstructorDeclaration] = walkConstructorDeclarationChildren;
+    childrenWalkers[NodeType.ContinueStatement] = null;
+    childrenWalkers[NodeType.DebuggerStatement] = null;
+    childrenWalkers[NodeType.DefaultSwitchClause] = walkDefaultSwitchClauseChildren;
+    childrenWalkers[NodeType.DeleteExpression] = walkDeleteExpressionChildren;
+    childrenWalkers[NodeType.DivideAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.DivideExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.DoStatement] = walkDoStatementChildren;
+    childrenWalkers[NodeType.ElementAccessExpression] = walkElementAccessExpressionChildren;
+    childrenWalkers[NodeType.ElseClause] = walkElseClauseChildren;
+    childrenWalkers[NodeType.EmptyStatement] = null;
     childrenWalkers[NodeType.EnumDeclaration] = walkEnumDeclarationChildren;
     childrenWalkers[NodeType.EnumElement] = walkEnumElementChildren;
-    childrenWalkers[NodeType.ImportDeclaration] = walkImportDeclChildren;
+    childrenWalkers[NodeType.EqualsExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.EqualsValueClause] = walkEqualsValueClauseChildren;
+    childrenWalkers[NodeType.EqualsWithTypeConversionExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.ExclusiveOrAssignmentExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.ExportAssignment] = walkExportAssignmentChildren;
-    childrenWalkers[NodeType.WithStatement] = walkWithStatementChildren;
     childrenWalkers[NodeType.ExpressionStatement] = walkExpressionStatementChildren;
+    childrenWalkers[NodeType.ExtendsHeritageClause] = walkHeritageClauseChildren;
+    childrenWalkers[NodeType.FalseLiteral] = null;
+    childrenWalkers[NodeType.FinallyClause] = walkFinallyClauseChildren;
+    childrenWalkers[NodeType.ForInStatement] = walkForInStatementChildren;
+    childrenWalkers[NodeType.ForStatement] = walkForStatementChildren;
+    childrenWalkers[NodeType.FunctionDeclaration] = walkFuncDeclChildren;
+    childrenWalkers[NodeType.FunctionExpression] = walkFunctionExpressionChildren;
+    childrenWalkers[NodeType.FunctionPropertyAssignment] = walkFunctionPropertyAssignmentChildren;
+    childrenWalkers[NodeType.GenericType] = walkGenericTypeChildren;
+    childrenWalkers[NodeType.GetAccessor] = walkGetAccessorChildren;
+    childrenWalkers[NodeType.GreaterThanExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.GreaterThanOrEqualExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.IfStatement] = walkIfStatementChildren;
+    childrenWalkers[NodeType.ImplementsHeritageClause] = walkHeritageClauseChildren;
+    childrenWalkers[NodeType.ImportDeclaration] = walkImportDeclChildren;
+    childrenWalkers[NodeType.IndexMemberDeclaration] = walkIndexMemberDeclarationChildren;
+    childrenWalkers[NodeType.IndexSignature] = walkIndexSignatureChildren;
+    childrenWalkers[NodeType.InExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.InstanceOfExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.InterfaceDeclaration] = walkInterfaceDeclerationChildren;
+    childrenWalkers[NodeType.InvocationExpression] = walkInvocationExpressionChildren;
     childrenWalkers[NodeType.LabeledStatement] = walkLabeledStatementChildren;
+    childrenWalkers[NodeType.LeftShiftAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.LeftShiftExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.LessThanExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.LessThanOrEqualExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.List] = walkListChildren;
+    childrenWalkers[NodeType.LogicalAndExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.LogicalNotExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.LogicalOrExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.MemberAccessExpression] = walkMemberAccessExpressionChildren;
+    childrenWalkers[NodeType.MemberFunctionDeclaration] = walkMemberFunctionDeclarationChildren;
+    childrenWalkers[NodeType.MemberVariableDeclaration] = walkMemberVariableDeclarationChildren;
+    childrenWalkers[NodeType.ModuleDeclaration] = walkModuleDeclChildren;
+    childrenWalkers[NodeType.ModuloAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.ModuloExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.MultiplyAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.MultiplyExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.Name] = null;
+    childrenWalkers[NodeType.NegateExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.None] = null;
+    childrenWalkers[NodeType.NotEqualsExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.NotEqualsWithTypeConversionExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.NullLiteral] = null;
+    childrenWalkers[NodeType.NumberType] = null;
+    childrenWalkers[NodeType.NumericLiteral] = null;
+    childrenWalkers[NodeType.ObjectCreationExpression] = walkObjectCreationExpressionChildren;
+    childrenWalkers[NodeType.ObjectLiteralExpression] = walkObjectLiteralExpressionChildren;
+    childrenWalkers[NodeType.ObjectType] = walkObjectTypeChildren;
+    childrenWalkers[NodeType.OmittedExpression] = null;
+    childrenWalkers[NodeType.OrAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.Parameter] = walkParameterChildren;
+    childrenWalkers[NodeType.ParenthesizedExpression] = walkParenthesizedExpressionChildren;
+    childrenWalkers[NodeType.PlusExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.PostDecrementExpression] = walkPostfixUnaryExpressionChildren;
+    childrenWalkers[NodeType.PostIncrementExpression] = walkPostfixUnaryExpressionChildren;
+    childrenWalkers[NodeType.PreDecrementExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.PreIncrementExpression] = walkPrefixUnaryExpressionChildren;
+    childrenWalkers[NodeType.QualifiedName] = walkQualifiedNameChildren;
+    childrenWalkers[NodeType.RegularExpressionLiteral] = null;
+    childrenWalkers[NodeType.ReturnStatement] = walkReturnStatementChildren;
+    childrenWalkers[NodeType.Script] = walkScriptChildren;
+    childrenWalkers[NodeType.SetAccessor] = walkSetAccessorChildren;
+    childrenWalkers[NodeType.SignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.SignedRightShiftExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.SimplePropertyAssignment] = walkSimplePropertyAssignmentChildren;
+    childrenWalkers[NodeType.StringLiteral] = null;
+    childrenWalkers[NodeType.StringType] = null;
+    childrenWalkers[NodeType.SubtractAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.SubtractExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.SuperExpression] = null;
+    childrenWalkers[NodeType.SwitchStatement] = walkSwitchStatementChildren;
+    childrenWalkers[NodeType.ThisExpression] = null;
+    childrenWalkers[NodeType.ThrowStatement] = walkThrowStatementChildren;
+    childrenWalkers[NodeType.TrueLiteral] = null;
+    childrenWalkers[NodeType.TryStatement] = walkTryStatementChildren;
+    childrenWalkers[NodeType.TypeOfExpression] = walkTypeOfExpressionChildren;
+    childrenWalkers[NodeType.TypeParameter] = walkTypeParameterChildren;
+    childrenWalkers[NodeType.TypeQuery] = walkTypeQueryChildren;
+    childrenWalkers[NodeType.TypeRef] = walkTypeReferenceChildren;
+    childrenWalkers[NodeType.UnsignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.UnsignedRightShiftExpression] = walkBinaryExpressionChildren;
+    childrenWalkers[NodeType.VariableDeclaration] = walkVariableDeclarationChildren;
+    childrenWalkers[NodeType.VariableDeclarator] = walkVariableDeclaratorChildren;
     childrenWalkers[NodeType.VariableStatement] = walkVariableStatementChildren;
-    childrenWalkers[NodeType.DebuggerStatement] = null;
+    childrenWalkers[NodeType.VoidExpression] = walkVoidExpressionChildren;
+    childrenWalkers[NodeType.VoidType] = null;
+    childrenWalkers[NodeType.WhileStatement] = walkWhileStatementChildren;
+    childrenWalkers[NodeType.WithStatement] = walkWithStatementChildren;
 
     // Verify the code is up to date with the enum
     for (var e in NodeType) {
         if (NodeType.hasOwnProperty(e) && StringUtilities.isString(NodeType[e])) {
-            CompilerDiagnostics.assert(childrenWalkers[e] !== undefined, "initWalkers function is not up to date with enum content!");
+            TypeScript.Debug.assert(childrenWalkers[e] !== undefined, "initWalkers function is not up to date with enum content!");
         }
     }
 

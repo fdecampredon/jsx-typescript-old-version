@@ -1,7 +1,8 @@
 ///<reference path="..\..\..\..\src\harness\harness.ts" />
 
+var samplesCompilerOptions = { useMinimalDefaultLib: false, noImplicitAny: false }
 describe("Setup compiler for samples", () => {
-    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, false);
+    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, samplesCompilerOptions);
 });
 
 describe('Compiling samples', function ()
@@ -25,7 +26,7 @@ describe('Compiling samples', function ()
         }
 
         var result: Harness.Compiler.CompilerResult;
-        harnessCompiler.compileFiles(filesToAdd, [], res => result = res, undefined, /*noResolve*/ includeWin8Libs);
+        harnessCompiler.compileFiles(filesToAdd, [], res => result = res, null, { noResolve: includeWin8Libs });
 
         assert.arrayLengthIs(result.errors, 0);
     }
@@ -69,7 +70,7 @@ describe('Compiling samples', function ()
     // jquery
     it('compiles the jquery sample without error', function ()
     {
-        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, false);
+        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, samplesCompilerOptions);
         var units = ["jquery/parallax.ts", "jquery/jquery.d.ts"];
         addUnitsAndCompile(units);
     });
@@ -85,13 +86,13 @@ describe('Compiling samples', function ()
     it('compiles the node sample-1 without error', function ()
     {
         var units = ["node/HttpServer.ts", "node/node.d.ts"];
-        addUnitsAndCompile(units, undefined);
+        addUnitsAndCompile(units);
     });
 
     it('compiles the node sample-2 without error', function ()
     {
         var units = ["node/TcpServer.ts", "node/node.d.ts"];
-        addUnitsAndCompile(units, undefined);
+        addUnitsAndCompile(units);
     });
 
     // raytracer
@@ -124,7 +125,7 @@ describe('Compiling samples', function ()
         });
 
         // Necessary because both todomvc and warship declare var $
-        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, false);
+        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, samplesCompilerOptions);
         harnessCompiler.reset();
     });  
 
@@ -149,12 +150,12 @@ describe('Compiling samples', function ()
            "win8/encyclopedia/Encyclopedia/js/win.ts"
        ]
 
-       Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, false);
+       Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, samplesCompilerOptions);
        harnessCompiler.reset();       
        addUnitsAndCompile(units, true);
     });
 });
 
 describe("Clean up samples", () => {
-    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, true);
+    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, { useMinimalDefaultLib: true, noImplicitAny: false });
 });

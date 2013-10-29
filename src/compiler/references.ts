@@ -8,6 +8,7 @@
 ///<reference path='nodeTypes.ts' />
 ///<reference path='hashTable.ts' />
 ///<reference path='ast.ts' />
+///<reference path='astHelpers.ts' />
 ///<reference path='astWalker.ts' />
 ///<reference path='base64.ts' />
 ///<reference path='sourceMapping.ts' />

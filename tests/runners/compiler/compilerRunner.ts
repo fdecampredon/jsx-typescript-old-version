@@ -1,7 +1,12 @@
 /// <reference path='..\..\..\src\harness\harness.ts' />
 /// <reference path='..\..\..\src\compiler\diagnostics.ts' />
-/// <reference path='..\runnerbase.ts' />
+/// <reference path='..\runnerBase.ts' />
 /// <reference path='typeWriter.ts' />
+
+enum CompilerTestType {
+    Conformance,
+    Regressions
+}
 
 class CompilerBaselineRunner extends RunnerBase {
     private basePath = 'tests/cases';
@@ -12,17 +17,19 @@ class CompilerBaselineRunner extends RunnerBase {
 
     public options: string;
 
-    constructor(public testType?: string) {
-        super(testType);
+    constructor(public testType?: CompilerTestType) {
+        super();
         this.errors = true;
         this.emit = true;
         this.decl = true;
         this.output = true;
-        if (testType === 'conformance') {
+        if (testType === CompilerTestType.Conformance) {
             this.basePath += '/conformance';
         }
-        else {
+        else if (testType === CompilerTestType.Regressions) {
             this.basePath += '/compiler';
+        } else {
+            this.basePath += '/compiler'; // default to this for historical reasons
         }
     }    
 
@@ -65,8 +72,8 @@ class CompilerBaselineRunner extends RunnerBase {
                 // The compiler doesn't handle certain flags flipping during a single compilation setting. Tests on these flags will need 
                 // a fresh compiler instance for themselves and then create a fresh one for the next test. Would be nice to get dev fixes
                 // eventually to remove this limitation.
-                if (!createNewInstance && (tcSettings[i].flag == "noimplicitany" || tcSettings[i].flag === 'target')) {
-                    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, true /*minimalDefaultLife */, tcSettings[i].flag == "noimplicitany" /*noImplicitAny*/);
+                if (!createNewInstance && (tcSettings[i].flag == "noimplicitany" || tcSettings[i].flag === 'target')) {                    
+                    Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, { useMinimalDefaultLib: true, noImplicitAny: tcSettings[i].flag == "noimplicitany" });
                     harnessCompiler.setCompilerSettings(tcSettings);
                     createNewInstance = true;
                 }
@@ -210,7 +217,7 @@ class CompilerBaselineRunner extends RunnerBase {
             }
 
             if (createNewInstance) {
-                Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, true);
+                Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, { useMinimalDefaultLib: true, noImplicitAny: false });
                 createNewInstance = false;
             }
         });
@@ -219,12 +226,12 @@ class CompilerBaselineRunner extends RunnerBase {
     public initializeTests() {       
         describe("Setup compiler for compiler baselines", () => {
             // REVIEW: would like to use the minimal lib.d.ts but a bunch of tests need to be converted to use non-DOM APIs
-            Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, true);
+            Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, { useMinimalDefaultLib: true, noImplicitAny: false });
             this.parseOptions();
         });
 
         if (this.tests.length === 0) {
-            var testFiles = this.enumerateFiles(this.basePath, true);
+            var testFiles = this.enumerateFiles(this.basePath, { recursive: true });
             testFiles.forEach(fn => {
                 fn = fn.replace(/\\/g, "/");
                 this.checkTestCodeOutput(fn);

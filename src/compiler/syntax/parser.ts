@@ -2977,7 +2977,7 @@ module TypeScript.Parser {
             }
             else if (currentToken.tokenKind === SyntaxKind.SemicolonToken) {
                 // for ( ; Expressionopt ; Expressionopt ) Statement
-                return this.parseForStatement(forKeyword, openParenToken);
+                return this.parseForStatementWithNoVariableDeclarationOrInitializer(forKeyword, openParenToken);
             }
             else {
                 // for ( ExpressionNoInopt; Expressionopt ; Expressionopt ) Statement
@@ -3034,19 +3034,12 @@ module TypeScript.Parser {
             }
         }
 
-        private parseForStatement(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): ForStatementSyntax {
+        private parseForStatementWithNoVariableDeclarationOrInitializer(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): ForStatementSyntax {
             // Debug.assert(forKeyword.tokenKind === SyntaxKind.ForKeyword && openParenToken.tokenKind === SyntaxKind.OpenParenToken);
+            // Debug.assert(this.currentToken().tokenKind === SyntaxKind.SemicolonToken);
+            // for ( ; Expressionopt ; Expressionopt ) Statement
 
-            // for ( ExpressionNoInopt; Expressionopt ; Expressionopt ) Statement
-            var initializer: IExpressionSyntax = null;
-
-            if (this.currentToken().tokenKind !== SyntaxKind.SemicolonToken &&
-                this.currentToken().tokenKind !== SyntaxKind.CloseParenToken &&
-                this.currentToken().tokenKind !== SyntaxKind.EndOfFileToken) {
-                initializer = this.parseExpression(/*allowIn:*/ false);
-            }
-
-            return this.parseForStatementWithVariableDeclarationOrInitializer(forKeyword, openParenToken, null, initializer);
+            return this.parseForStatementWithVariableDeclarationOrInitializer(forKeyword, openParenToken, /*variableDeclaration:*/ null, /*initializer:*/ null);
         }
 
         private parseForStatementWithVariableDeclarationOrInitializer(

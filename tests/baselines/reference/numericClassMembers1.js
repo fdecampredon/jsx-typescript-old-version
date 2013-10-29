@@ -13,3 +13,11 @@ var C235 = (function () {
     }
     return C235;
 })();
+
+var C236 = (function () {
+    function C236() {
+        this['0.0'] = 1;
+        this['0'] = 2;
+    }
+    return C236;
+})();

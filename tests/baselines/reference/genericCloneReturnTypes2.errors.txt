@@ -2,9 +2,4 @@ genericCloneReturnTypes2.ts line 15 col 5: error TS2012: Cannot convert 'MyList<
 	Types of property 'data' of types 'MyList<string>' and 'MyList<number>' are incompatible:
 		Types of property 'concat' of types 'string[]' and 'number[]' are incompatible:
 			Call signatures of types '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:
-				Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-					Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-						Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-							Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-								Types of property 'pop' of types '{}[]' and 'U[]' are incompatible:
-									Call signatures of types '() => {}' and '() => U' are incompatible.
+				Type 'Number' is missing property 'concat' from type 'any[]'.

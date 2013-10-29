@@ -1,0 +1,13 @@
+=== tests/cases/compiler/genericTypeWithCallableMembers2.ts ===
+Line 0 col 9 IdentifierName "foo1" = <T extends () => string>(f: T) => string
+Line 0 col 14 IdentifierName "T" = T
+Line 0 col 41 IdentifierName "f" = T
+Line 0 col 44 IdentifierName "T" = T
+Line 1 col 11 InvocationExpression "f()" = string
+Line 1 col 11 IdentifierName "f" = T
+Line 4 col 9 IdentifierName "foo2" = <T extends new() => string>(f: T) => string
+Line 4 col 14 IdentifierName "T" = T
+Line 4 col 45 IdentifierName "f" = T
+Line 4 col 48 IdentifierName "T" = T
+Line 5 col 11 ObjectCreationExpression "new f()" = string
+Line 5 col 15 IdentifierName "f" = T

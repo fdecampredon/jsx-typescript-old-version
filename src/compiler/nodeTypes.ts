@@ -21,6 +21,7 @@ module TypeScript {
         None,
         List,
         Script,
+        ArgumentList,
 
         // Literals
         TrueLiteral,
@@ -37,6 +38,7 @@ module TypeScript {
         StringType,
         VoidType,
         TypeParameter,
+        Constraint,
         GenericType,
         TypeRef,
         TypeQuery,
@@ -62,6 +64,8 @@ module TypeScript {
         EnumElement,
         MemberVariableDeclaration,
         MemberFunctionDeclaration,
+        IndexSignature,
+        IndexMemberDeclaration,
 
         // Expressions
         Name,
@@ -124,7 +128,8 @@ module TypeScript {
         PostDecrementExpression,
         CastExpression,
         ParenthesizedExpression,
-        ArrowFunctionExpression,
+        SimpleArrowFunctionExpression,
+        ParenthesizedArrowFunctionExpression,
         FunctionExpression,
 
         // Statements
@@ -152,10 +157,12 @@ module TypeScript {
         CaseSwitchClause,
         DefaultSwitchClause,
         CatchClause,
+        FinallyClause,
         ExtendsHeritageClause,
         ImplementsHeritageClause,
         ElseClause,
+        EqualsValueClause,
 
-        LastNodeType = ElseClause
+        LastNodeType = EqualsValueClause
     }
 }

@@ -1,0 +1,11 @@
+=== tests/cases/compiler/collisionExportsRequireAndUninstantiatedModule.ts ===
+Line 0 col 14 IdentifierName "require" = require
+Line 1 col 21 IdentifierName "I" = require.I
+Line 4 col 16 IdentifierName "foo" = () => require.I
+Line 4 col 23 IdentifierName "require" = require
+Line 4 col 31 IdentifierName "I" = require.I
+Line 7 col 14 IdentifierName "exports" = exports
+Line 8 col 21 IdentifierName "I" = exports.I
+Line 11 col 16 IdentifierName "foo2" = () => exports.I
+Line 11 col 24 IdentifierName "exports" = exports
+Line 11 col 32 IdentifierName "I" = exports.I

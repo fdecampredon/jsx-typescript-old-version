@@ -594,7 +594,7 @@ module TypeScript {
                     var memberName = this.identifierFromToken(enumElementSyntax.propertyName, /*isOptional:*/ false);
                     this.movePast(enumElementSyntax.propertyName);
 
-                    var value = enumElementSyntax.equalsValueClause !== null ? enumElementSyntax.equalsValueClause.accept(this) : null;
+                    var value: EqualsValueClause = enumElementSyntax.equalsValueClause !== null ? enumElementSyntax.equalsValueClause.accept(this) : null;
 
                     var enumElement = new EnumElement(memberName, value);
                     this.setCommentsAndSpan(enumElement, enumElementFullStart, enumElementSyntax);
@@ -668,7 +668,7 @@ module TypeScript {
                     case SyntaxKind.IdentifierName:
                         // If it's a name, see if we already had an enum value named this.  If so,
                         // return that value.
-                        var variableDeclarator = ArrayUtilities.firstOrDefault(declarators, d => d.identifier.valueText() === (<ISyntaxToken>expression).valueText());
+                        var variableDeclarator = ArrayUtilities.firstOrDefault(declarators, d => d.propertyName.valueText() === (<ISyntaxToken>expression).valueText());
                         return variableDeclarator ? variableDeclarator.constantValue : null;
 
                     case SyntaxKind.LeftShiftExpression:
@@ -794,18 +794,22 @@ module TypeScript {
             var name = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
             var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
-            var init = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
+            var init: EqualsValueClause = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
 
             var result = new VariableDeclarator(name, typeExpr, init);
             this.setSpan(result, start, node);
 
             if (init) {
-                if (init.nodeType() === NodeType.ArrowFunctionExpression) {
-                    var arrowFunction = <ArrowFunctionExpression>init;
+                if (init.value.nodeType() === NodeType.SimpleArrowFunctionExpression) {
+                    var simpleArrowFunction = <SimpleArrowFunctionExpression>init.value;
+                    simpleArrowFunction.hint = name.text();
+                }
+                else if (init.value.nodeType() === NodeType.ParenthesizedArrowFunctionExpression) {
+                    var arrowFunction = <ParenthesizedArrowFunctionExpression>init.value;
                     arrowFunction.hint = name.text();
                 }
-                else if (init.nodeType() === NodeType.FunctionExpression) {
-                    var expression = <FunctionExpression>init;
+                else if (init.value.nodeType() === NodeType.FunctionExpression) {
+                    var expression = <FunctionExpression>init.value;
                     expression.hint = name.text();
                 }
             }
@@ -814,12 +818,16 @@ module TypeScript {
         }
 
         public visitEqualsValueClause(node: EqualsValueClauseSyntax): AST {
+            var start = this.position;
             var afterEqualsComments = this.convertTokenTrailingComments(node.equalsToken,
                 this.position + node.equalsToken.leadingTriviaWidth() + node.equalsToken.width());
 
             this.movePast(node.equalsToken);
-            var result: AST = node.value.accept(this);
-            result.setPreComments(this.mergeComments(afterEqualsComments, result.preComments()));
+            var value: AST = node.value.accept(this);
+            value.setPreComments(this.mergeComments(afterEqualsComments, value.preComments()));
+
+            var result = new EqualsValueClause(value);
+            this.setSpan(result, start, node);
 
             return result;
         }
@@ -938,27 +946,21 @@ module TypeScript {
             }
         }
 
-        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): ArrowFunctionExpression {
+        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): SimpleArrowFunctionExpression {
             var start = this.position;
 
-            var identifier = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
-            this.movePast(node.identifier);
+            var identifier = node.identifier.accept(this);
             this.movePast(node.equalsGreaterThanToken);
-
-            var parameter = new Parameter(identifier, null, null, false, /*isRest:*/ false);
-            this.setSpanExplicit(parameter, identifier.minChar, identifier.limChar);
-
-            var parameters = new ASTList(this.fileName, [parameter]);
 
             var statements = this.getArrowFunctionStatements(node.body);
 
-            var result = new ArrowFunctionExpression(null, parameters, null, statements);
+            var result = new SimpleArrowFunctionExpression(identifier, statements);
             this.setSpan(result, start, node);
 
             return result;
         }
 
-        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ArrowFunctionExpression {
+        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ParenthesizedArrowFunctionExpression {
             var start = this.position;
 
             var typeParameters = node.callSignature.typeParameterList === null ? null : node.callSignature.typeParameterList.accept(this);
@@ -968,7 +970,7 @@ module TypeScript {
 
             var block = this.getArrowFunctionStatements(node.body);
 
-            var result = new ArrowFunctionExpression(typeParameters, parameters, returnType, block);
+            var result = new ParenthesizedArrowFunctionExpression(typeParameters, parameters, returnType, block);
             this.setCommentsAndSpan(result, start, node);
 
             return result;
@@ -1155,7 +1157,7 @@ module TypeScript {
             this.movePast(node.identifier);
             this.movePast(node.questionToken);
             var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
-            var init = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
+            var init: EqualsValueClause = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
 
             var result = new Parameter(identifier, typeExpr, init, !!node.questionToken, node.dotDotDotToken !== null);
             this.setCommentsAndSpan(result, start, node);
@@ -1216,28 +1218,33 @@ module TypeScript {
             return result;
         }
 
-        private convertArgumentListArguments(node: ArgumentListSyntax) {
+        private convertArgumentListArguments(node: ArgumentListSyntax): { argumentList: ArgumentList; closeParenSpan: ASTSpan } {
             if (node === null) {
                 return null;
             }
 
             var start = this.position;
 
+            var typeArguments: ASTList = node.typeArgumentList ? node.typeArgumentList.accept(this) : null;
+
             this.movePast(node.openParenToken);
 
-            var result = this.visitSeparatedSyntaxList(node.arguments);
+            var arguments = this.visitSeparatedSyntaxList(node.arguments);
 
             if (node.arguments.fullWidth() === 0 && node.closeParenToken.fullWidth() === 0) {
                 // If the argument list was empty, and closing paren is missing, set the argument ofsets to be the open paren trivia
                 var openParenTokenEnd = start + node.openParenToken.leadingTriviaWidth() + node.openParenToken.width();
-                this.setSpanExplicit(result, openParenTokenEnd, openParenTokenEnd + node.openParenToken.trailingTriviaWidth());
+                this.setSpanExplicit(arguments, openParenTokenEnd, openParenTokenEnd + node.openParenToken.trailingTriviaWidth());
             }
 
             var closeParenPos = this.position;
             this.movePast(node.closeParenToken);
             var closeParenSpan = new ASTSpan();
             this.setTokenSpan(closeParenSpan, closeParenPos, node.closeParenToken);
-            
+
+            var result = new ArgumentList(typeArguments, arguments);
+            this.setSpan(result, start, node);
+
             return {
                 argumentList: result,
                 closeParenSpan: closeParenSpan
@@ -1248,13 +1255,10 @@ module TypeScript {
             var start = this.position;
 
             var expression = node.expression.accept(this);
-            var typeArguments = node.argumentList.typeArgumentList !== null
-                ? node.argumentList.typeArgumentList.accept(this)
-                : null;
             var argumentList = this.convertArgumentListArguments(node.argumentList);
 
-            var result = new InvocationExpression(expression, typeArguments,
-                argumentList ? argumentList.argumentList : null, argumentList ? argumentList.closeParenSpan : null);
+            var result = new InvocationExpression(
+                expression, argumentList.argumentList, argumentList.closeParenSpan);
             this.setSpan(result, start, node);
 
             return result;
@@ -1321,7 +1325,8 @@ module TypeScript {
             this.setSpan(result, start, node);
 
             if (right.nodeType() === NodeType.FunctionDeclaration ||
-                right.nodeType() === NodeType.ArrowFunctionExpression) {
+                right.nodeType() === NodeType.SimpleArrowFunctionExpression ||
+                right.nodeType() === NodeType.ParenthesizedArrowFunctionExpression) {
                 var id = left.nodeType() === NodeType.MemberAccessExpression ? (<MemberAccessExpression>left).name : left;
                 var idHint: string = id.nodeType() === NodeType.Name ? id.actualText : null;
 
@@ -1383,7 +1388,7 @@ module TypeScript {
             return result;
         }
 
-        public visitIndexSignature(node: IndexSignatureSyntax): FunctionDeclaration {
+        public visitIndexSignature(node: IndexSignatureSyntax): IndexSignature {
             var start = this.position;
 
             this.movePast(node.openBracketToken);
@@ -1393,15 +1398,12 @@ module TypeScript {
             this.movePast(node.closeBracketToken);
             var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
 
-            var name = new Identifier("__item", "__item", /*isStringOrNumericLiteral:*/ false);
-            this.setSpanExplicit(name, start, start);   // 0 length name.
-
             var parameters = new ASTList(this.fileName, [parameter]);
 
-            var result = new FunctionDeclaration(name, null, parameters, returnType, null);
+            var result = new IndexSignature(parameters, returnType);
             this.setCommentsAndSpan(result, start, node);
 
-            result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IndexerMember | FunctionFlags.Method | FunctionFlags.Signature);
+            // result.setFunctionFlags(result.getFunctionFlags() | FunctionFlags.IndexerMember | FunctionFlags.Method | FunctionFlags.Signature);
 
             return result;
         }
@@ -1465,7 +1467,7 @@ module TypeScript {
 
             var identifier = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
-            var constraint = node.constraint ? node.constraint.accept(this) : null;
+            var constraint: Constraint = node.constraint ? node.constraint.accept(this) : null;
 
             var result = new TypeParameter(identifier, constraint);
             this.setSpan(result, start, node);
@@ -1473,9 +1475,15 @@ module TypeScript {
             return result;
         }
 
-        public visitConstraint(node: ConstraintSyntax): TypeReference {
+        public visitConstraint(node: ConstraintSyntax): Constraint {
+            var start = this.position;
             this.movePast(node.extendsKeyword);
-            return this.visitType(node.type);
+            var type = this.visitType(node.type);
+
+            var result = new Constraint(type);
+            this.setSpan(result, start, node);
+
+            return result;
         }
 
         public visitIfStatement(node: IfStatementSyntax): IfStatement {
@@ -1546,14 +1554,16 @@ module TypeScript {
             return result;
         }
 
-        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): FunctionDeclaration {
+        public visitIndexMemberDeclaration(node: IndexMemberDeclarationSyntax): IndexMemberDeclaration {
             var start = this.position;
 
             this.moveTo(node, node.indexSignature);
-            var result = node.indexSignature.accept(this);
-            this.setCommentsAndSpan(result, start, node);
+            var indexSignature: IndexSignature = node.indexSignature.accept(this);
 
             this.movePast(node.semicolonToken);
+
+            var result = new IndexMemberDeclaration(indexSignature);
+            this.setSpan(result, start, node);
 
             return result;
         }
@@ -1656,15 +1666,10 @@ module TypeScript {
             var start = this.position;
 
             this.moveTo(node, node.variableDeclarator);
-            this.moveTo(node.variableDeclarator, node.variableDeclarator.identifier);
-
-            var name = this.identifierFromToken(node.variableDeclarator.identifier, /*isOptional:*/ false);
-            this.movePast(node.variableDeclarator.identifier);
-            var typeExpr = node.variableDeclarator.typeAnnotation ? node.variableDeclarator.typeAnnotation.accept(this) : null;
-            var init = node.variableDeclarator.equalsValueClause ? node.variableDeclarator.equalsValueClause.accept(this) : null;
+            var variableDeclarator: VariableDeclarator = node.variableDeclarator.accept(this);
             this.movePast(node.semicolonToken);
 
-            var result = new MemberVariableDeclaration(name, typeExpr, init);
+            var result = new MemberVariableDeclaration(variableDeclarator);
             this.setCommentsAndSpan(result, start, node);
 
             if (SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.StaticKeyword)) {
@@ -1712,10 +1717,9 @@ module TypeScript {
 
             this.movePast(node.newKeyword);
             var expression = node.expression.accept(this);
-            var typeArgumentList = node.argumentList === null || node.argumentList.typeArgumentList === null ? null : node.argumentList.typeArgumentList.accept(this);
             var argumentList = this.convertArgumentListArguments(node.argumentList);
 
-            var result = new ObjectCreationExpression(expression, typeArgumentList,
+            var result = new ObjectCreationExpression(expression,
                 argumentList ? argumentList.argumentList : null, argumentList ? argumentList.closeParenSpan : null);
             this.setSpan(result, start, node);
 
@@ -1784,9 +1788,8 @@ module TypeScript {
             var start = this.position;
 
             this.movePast(node.breakKeyword);
-            this.movePast(node.identifier);
+            var identifier: Identifier = node.identifier ? node.identifier.accept(this) : null;
             this.movePast(node.semicolonToken);
-            var identifier = node.identifier ? node.identifier.valueText() : null;
 
             var result = new BreakStatement(identifier);
             this.setSpan(result, start, node);
@@ -1798,10 +1801,9 @@ module TypeScript {
             var start = this.position;
 
             this.movePast(node.continueKeyword);
-            this.movePast(node.identifier);
+            var identifier = node.identifier ? node.identifier.accept(this) : null;
             this.movePast(node.semicolonToken);
 
-            var identifier = node.identifier ? node.identifier.valueText() : null;
             var result = new ContinueStatement(identifier);
             this.setSpan(result, start, node);
 
@@ -1813,11 +1815,9 @@ module TypeScript {
 
             this.movePast(node.forKeyword);
             this.movePast(node.openParenToken);
-            var init = node.variableDeclaration
-                ? node.variableDeclaration.accept(this)
-                : node.initializer
-                ? node.initializer.accept(this)
-                : null;
+            var variableDeclaration: VariableDeclaration = node.variableDeclaration ? node.variableDeclaration.accept(this) : null;
+            var initializer: AST = node.initializer ? node.initializer.accept(this) : null;
+
             this.movePast(node.firstSemicolonToken);
             var cond = node.condition ? node.condition.accept(this) : null;
             this.movePast(node.secondSemicolonToken);
@@ -1825,7 +1825,7 @@ module TypeScript {
             this.movePast(node.closeParenToken);
             var body = node.statement.accept(this);
 
-            var result = new ForStatement(init, cond, incr, body);
+            var result = new ForStatement(variableDeclaration, initializer, cond, incr, body);
             this.setSpan(result, start, node);
 
             return result;
@@ -1836,21 +1836,15 @@ module TypeScript {
 
             this.movePast(node.forKeyword);
             this.movePast(node.openParenToken);
-            var init = node.variableDeclaration ? node.variableDeclaration.accept(this) : node.left.accept(this);
-            if (node.variableDeclaration) {
-                var variableDeclaration: VariableDeclaration = init;
-                for (var i = 0, n = variableDeclaration.declarators.members.length; i < n; i++) {
-                    var boundDecl = <VariableDeclarator>variableDeclaration.declarators.members[i];
-                    boundDecl.setVarFlags(boundDecl.getVarFlags() | VariableFlags.ForInVariable);
-                }
-            }
+            var variableDeclaration: VariableDeclaration = node.variableDeclaration ? node.variableDeclaration.accept(this) : null;
+            var left: AST = node.left ? node.left.accept(this) : null;
 
             this.movePast(node.inKeyword);
             var expression = node.expression.accept(this);
             this.movePast(node.closeParenToken);
             var body = node.statement.accept(this);
 
-            var result = new ForInStatement(init, expression, body);
+            var result = new ForInStatement(variableDeclaration, left, expression, body);
             this.setSpan(result, start, node);
 
             return result;
@@ -1946,7 +1940,8 @@ module TypeScript {
             result.setPostComments(postComments);
 
             if (expression.nodeType() === NodeType.FunctionDeclaration ||
-                expression.nodeType() === NodeType.ArrowFunctionExpression ||
+                expression.nodeType() === NodeType.SimpleArrowFunctionExpression ||
+                expression.nodeType() === NodeType.ParenthesizedArrowFunctionExpression ||
                 expression.nodeType() === NodeType.FunctionExpression) {
                 var funcDecl = <FunctionDeclaration>expression;
                     funcDecl.hint = propertyName.valueText();
@@ -2014,7 +2009,7 @@ module TypeScript {
                 catchClause = node.catchClause.accept(this);
             }
 
-            var finallyBody: Block = null;
+            var finallyBody: FinallyClause = null;
             if (node.finallyClause !== null) {
                 finallyBody = node.finallyClause.accept(this);
             }
@@ -2032,22 +2027,25 @@ module TypeScript {
             this.movePast(node.openParenToken);
             var identifier = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
-            var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var typeAnnotation = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
             this.movePast(node.closeParenToken);
             var block = node.block.accept(this);
 
-            var varDecl = new VariableDeclarator(identifier, typeExpr, null);
-            this.setSpanExplicit(varDecl, identifier.minChar, identifier.limChar);
-
-            var result = new CatchClause(varDecl, block);
+            var result = new CatchClause(identifier, typeAnnotation, block);
             this.setSpan(result, start, node);
 
             return result;
         }
 
-        public visitFinallyClause(node: FinallyClauseSyntax): Block {
+        public visitFinallyClause(node: FinallyClauseSyntax): FinallyClause {
+            var start = this.position;
             this.movePast(node.finallyKeyword);
-            return node.block.accept(this);
+            var block: Block = node.block.accept(this);
+
+            var result = new FinallyClause(block);
+            this.setSpan(result, start, node);
+
+            return result;
         }
 
         public visitLabeledStatement(node: LabeledStatementSyntax): LabeledStatement {
@@ -2068,17 +2066,17 @@ module TypeScript {
             var start = this.position;
 
             this.movePast(node.doKeyword);
-            var statement = node.statement.accept(this);
+            var statement: AST = node.statement.accept(this);
             var whileSpan = new ASTSpan();
             this.setTokenSpan(whileSpan, this.position, node.whileKeyword);
 
             this.movePast(node.whileKeyword);
             this.movePast(node.openParenToken);
-            var condition = node.condition.accept(this);
+            var condition: AST = node.condition.accept(this);
             this.movePast(node.closeParenToken);
             this.movePast(node.semicolonToken);
 
-            var result = new DoStatement(statement, condition, whileSpan);
+            var result = new DoStatement(statement, whileSpan, condition);
             this.setSpan(result, start, node);
 
             return result;
@@ -2189,7 +2187,7 @@ module TypeScript {
                         break;
 
                     case NodeType.DoStatement:
-                        applyDelta((<DoStatement>cur).whileSpan, delta);
+                        applyDelta((<DoStatement>cur).whileKeyword, delta);
                         break;
 
                     case NodeType.SwitchStatement:
@@ -2387,8 +2385,8 @@ module TypeScript {
             return result;
         }
 
-        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): ArrowFunctionExpression {
-            var result: ArrowFunctionExpression = this.getAndMovePastAST(node);
+        public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): SimpleArrowFunctionExpression {
+            var result: SimpleArrowFunctionExpression = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitSimpleArrowFunctionExpression(node);
                 this.setAST(node, result);
@@ -2397,8 +2395,8 @@ module TypeScript {
             return result;
         }
 
-        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ArrowFunctionExpression {
-            var result: ArrowFunctionExpression = this.getAndMovePastAST(node);
+        public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): ParenthesizedArrowFunctionExpression {
+            var result: ParenthesizedArrowFunctionExpression = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitParenthesizedArrowFunctionExpression(node);
                 this.setAST(node, result);
@@ -2568,8 +2566,8 @@ module TypeScript {
             return result;
         }
 
-        public visitIndexSignature(node: IndexSignatureSyntax): FunctionDeclaration {
-            var result: FunctionDeclaration = this.getAndMovePastAST(node);
+        public visitIndexSignature(node: IndexSignatureSyntax): IndexSignature {
+            var result: IndexSignature = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitIndexSignature(node);
                 this.setAST(node, result);

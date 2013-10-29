@@ -207,7 +207,8 @@ module FourSlash {
 
             this.testData.files.forEach(file => {
                 var filename = file.fileName.replace(IO.dirName(file.fileName), '').substr(1);
-                this.scenarioActions.push('<LoadFile LoadedFileId="' + filename + '" FileName="' + filename + '"><![CDATA[' + file.content + ']]></LoadFile>');
+                var filenameWithoutExtension = filename.substr(0, filename.lastIndexOf("."));
+                this.scenarioActions.push('<CreateFileOnDisk FileId="' + filename + '" FileNameWithoutExtension="' + filenameWithoutExtension + '" FileExtension=".ts"><![CDATA[' + file.content + ']]></CreateFileOnDisk>');
             });
 
             // Open the first file by default
@@ -253,7 +254,8 @@ module FourSlash {
             var fileToOpen: FourSlashFile = this.findFile(indexOrName);
             fileToOpen.fileName = switchToForwardSlashes(fileToOpen.fileName);
             this.activeFile = fileToOpen;
-            this.scenarioActions.push('<OpenFile LoadedFileId="' + fileToOpen.fileName.replace(IO.dirName(fileToOpen.fileName), '').substr(1) + '" />');
+            var filename = fileToOpen.fileName.replace(IO.dirName(fileToOpen.fileName), '').substr(1);
+            this.scenarioActions.push('<OpenFile FileName="" SrcFileId="' + filename + '" FileId="' + filename + '" />');
         }
 
         public verifyErrorExistsBetweenMarkers(startMarkerName: string, endMarkerName: string, negative: boolean) {
@@ -355,7 +357,7 @@ module FourSlash {
             var errors = this.getDiagnostics(this.activeFile.fileName);
             var actual = errors.length;
 
-            this.scenarioActions.push('<CheckErrorList ExpectedNumOfWarnings="' + expected + '" />');
+            this.scenarioActions.push('<CheckErrorList ExpectedNumOfErrors="' + expected + '" />');
 
             if (actual !== expected) {
                 var errorMsg = "Actual number of errors (" + actual + ") does not match expected number (" + expected + ")";
@@ -581,7 +583,7 @@ module FourSlash {
             [expectedTypeName, docComment, symbolName, kind].forEach(str => {
                 if (str) {
                     this.scenarioActions.push('<ShowQuickInfo />');
-                    this.scenarioActions.push('<VerifyQuickInfoTextContains IgnoreWhitespace="true" Text="' + escapeXmlAttributeValue(str) + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
+                    this.scenarioActions.push('<VerifyQuickInfoTextContains IgnoreSpacing="true" Text="' + escapeXmlAttributeValue(str) + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
                 }
             });
 
@@ -924,7 +926,7 @@ module FourSlash {
 
         // Enters lines of text at the current caret position
         public type(text: string) {
-            this.scenarioActions.push('<TypeCode><![CDATA[' + text + ']]></TypeCode>');
+            this.scenarioActions.push('<InsertText><![CDATA[' + text + ']]></InsertText>');
 
             if (this.typingFidelity === TypingFidelity.Low) {
                 return this.typeLowFidelity(text);

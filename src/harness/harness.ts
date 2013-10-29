@@ -788,18 +788,17 @@ module Harness {
             private inputFiles: string[] = [];
             private resolvedFiles: TypeScript.IResolvedFile[] = [];
             private compiler: TypeScript.TypeScriptCompiler;
-            // updateSourceUnit is sufficient if an existing unit is updated, if a new unit is added we need to do a full typecheck
-            private needsFullTypeCheck = true;
             private fileNameToScriptSnapshot = new TypeScript.StringHashTable<TypeScript.IScriptSnapshot>();
             public ioHost = new Harness.Compiler.EmitterIOHost();
             private sourcemapRecorder = new WriterAggregator();
 
             private errorList: ReportedError[] = [];
-            
-            constructor(private useMinimalDefaultLib = true, noImplicitAny = false) {
-                this.compiler = new TypeScript.TypeScriptCompiler();
+            private useMinimalDefaultLib: boolean;
 
-                var settings = makeDefaultCompilerSettings(this.useMinimalDefaultLib, noImplicitAny);
+            constructor(options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
+                this.compiler = new TypeScript.TypeScriptCompiler();
+                this.useMinimalDefaultLib = options ? options.useMinimalDefaultLib : true;
+                var settings = makeDefaultCompilerSettings(options);
                 //settings.moduleGenTarget = TypeScript.ModuleGenTarget.Unspecified;
                 settings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
                 this.compiler.setCompilationSettings(
@@ -815,10 +814,12 @@ module Harness {
                 // This is the branch that we want to use to ensure proper testing of file resolution, though there is an alternative
                 if (!this.compiler.compilationSettings().noResolve()) {
                     // Resolve references
-                    var resolutionResults = TypeScript.ReferenceResolver.resolve(this.inputFiles, this,
-                        this.compiler.compilationSettings().useCaseSensitiveFileResolution());
+                    var resolutionResults = TypeScript.ReferenceResolver.resolve(
+                        this.inputFiles,
+                        this,
+                        this.compiler.compilationSettings().useCaseSensitiveFileResolution()
+                    );
                     resolvedFiles = resolutionResults.resolvedFiles;
-
                     resolutionResults.diagnostics.forEach(diag => this.addError(ErrorType.Resolution, diag));
                 }
                 else {
@@ -862,7 +863,7 @@ module Harness {
             }
 
             /* Compile the current set of input files (if resolve = false) or trigger resolution and compile the resulting set of files */
-            public compile(resolve = true) {
+            public compile(options?: { noResolve: boolean }) {
                 // TODO: unsure I actually need resolve = false for unit tests
                 var addScriptSnapshot = (path: string, referencedFiles?: string[]) => {
                     if (path.indexOf('lib.d.ts') === -1) {
@@ -871,30 +872,18 @@ module Harness {
                     }
                 }
 
-                if (resolve) {
-                    this.resolvedFiles = this.resolve();
-                    for (var i = 0, n = this.resolvedFiles.length; i < n; i++) {
-                        var resolvedFile = this.resolvedFiles[i];
-                        addScriptSnapshot(resolvedFile.path, resolvedFile.referencedFiles);
-                    }
-                }
-                else {
+                if (options && options.noResolve) {
                     for (var i = 0, n = this.inputFiles.length; i < n; i++) {
                         var inputFile = this.inputFiles[i];
                         addScriptSnapshot(inputFile, []);
                     }
                 }
-
-                if (this.needsFullTypeCheck) {
-                    if (!resolve) {
-                        this.compiler.resolveAllFiles();
+                else {                    
+                    this.resolvedFiles = this.resolve();
+                    for (var i = 0, n = this.resolvedFiles.length; i < n; i++) {
+                        var resolvedFile = this.resolvedFiles[i];
+                        addScriptSnapshot(resolvedFile.path, resolvedFile.referencedFiles);
                     }
-                    this.needsFullTypeCheck = false;
-                }
-                else {
-                    this.getAllFilesInCompiler().forEach(file => {
-                        this.compiler.updateFile(file, this.getScriptSnapshot(file), 0, true, null);
-                    });
                 }
             }
 
@@ -908,7 +897,7 @@ module Harness {
                 otherFiles: { unitName: string; content?: string }[],
                 onComplete: (result: CompilerResult) => void,
                 settingsCallback?: (settings: TypeScript.ImmutableCompilationSettings) => void,
-                noResolve = false) {
+                options?: { noResolve: boolean }) {
 
                 var restoreSavedCompilerSettings = this.saveCompilerSettings();
                 this.reset();
@@ -921,11 +910,11 @@ module Harness {
                 }
 
                 try {
-                    this.compile(/*resolve?*/ !noResolve);
+                    this.compile(options);
 
                     this.reportCompilationErrors();
                     var result = new CompilerResult(this.ioHost.toArray(), this.errorList.slice(0), this.sourcemapRecorder.lines);
-                    
+
                     onComplete(result);
                 } finally {
                     if (settingsCallback) {
@@ -956,10 +945,9 @@ module Harness {
 
                 if (!updatedExistingFile) {
                     this.compiler.addFile(justName, TypeScript.ScriptSnapshot.fromString(code), ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true, []);
-                    this.needsFullTypeCheck = true;
                 }
 
-                this.compile(false);
+                this.compile({ noResolve: true });
 
                 this.reportCompilationErrors();
 
@@ -1009,7 +997,6 @@ module Harness {
 
             /** The primary way to add test content. Functionally equivalent to adding files to the command line for a tsc invocation. */
             public addInputFile(file: { unitName: string; content: string }) {
-                this.needsFullTypeCheck = true;
                 var normalizedName = this.fixFilename(switchToForwardSlashes(file.unitName));
                 this.inputFiles.push(normalizedName);
                 this.fileNameToScriptSnapshot.add(normalizedName, TypeScript.ScriptSnapshot.fromString(file.content));
@@ -1018,14 +1005,14 @@ module Harness {
             /** The primary way to add test content. Functionally equivalent to adding files to the command line for a tsc invocation. */
             public addInputFiles(files: { unitName: string; content: string }[]) {
                 files.forEach(file => this.addInputFile(file));
-            }           
+            }
 
             /** Updates an existing unit in the compiler with new code. */
             public updateUnit(code: string, unitName: string) {
                 this.compiler.updateFile(unitName, TypeScript.ScriptSnapshot.fromString(code), /*version:*/ 0, /*isOpen:*/ true, null);
             }
 
-            public emitAll(ioHost?: IEmitterIOHost): TypeScript.Diagnostic[]{
+            public emitAll(ioHost?: IEmitterIOHost): TypeScript.Diagnostic[] {
                 var host = typeof ioHost === "undefined" ? this.ioHost : ioHost;
 
                 this.sourcemapRecorder.reset();
@@ -1104,7 +1091,7 @@ module Harness {
                 emitDeclarationsDiagnostics.forEach(d => this.addError(ErrorType.Declaration, d));
 
                 return this.errorList;
-            }           
+            }
 
 
             /** Modify the given compiler's settings as specified in the test case settings.
@@ -1128,7 +1115,7 @@ module Harness {
             /** The compiler flags which tests are allowed to change and functions that can change them appropriately.
              *  Every flag here needs to also be present in the fileMetadataNames array in the TestCaseParser class in harness.ts. They must be all lowercase in both places.
              */
-            private supportedFlags: { flag: string; setFlag: (x: TypeScript.CompilationSettings, value: string) => void ; }[] = [
+            private supportedFlags: { flag: string; setFlag: (x: TypeScript.CompilationSettings, value: string) => void; }[] = [
                 { flag: 'comments', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.removeComments = value.toLowerCase() === 'true' ? false : true; } },
                 { flag: 'declaration', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.generateDeclarationFiles = value.toLowerCase() === 'true' ? true : false; } },
                 {
@@ -1151,8 +1138,8 @@ module Harness {
                 { flag: 'out', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.outFileOption = value; } },
                 { flag: 'outDir', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.outDirOption = value; } },
                 { flag: 'filename', setFlag: (x: TypeScript.CompilationSettings, value: string) => { /* used for multifile tests, doesn't change any compiler settings */; } },
-                { flag: 'noimplicitany', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.noImplicitAny = value.toLowerCase() === 'true' ? true : false; } }, 
-                { flag: 'noresolve', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.noResolve = value.toLowerCase() === 'true' ? true : false; } }, 
+                { flag: 'noimplicitany', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.noImplicitAny = value.toLowerCase() === 'true' ? true : false; } },
+                { flag: 'noresolve', setFlag: (x: TypeScript.CompilationSettings, value: string) => { x.noResolve = value.toLowerCase() === 'true' ? true : false; } },
             ];
 
             /** Does a deep copy of the given compiler's settings and emit options and returns
@@ -1248,7 +1235,9 @@ module Harness {
 
         }
 
-        export function makeDefaultCompilerSettings(useMinimalDefaultLib = true, noImplicitAny = false) {
+        export function makeDefaultCompilerSettings(options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
+            var useMinimalDefaultLib = options ? options.useMinimalDefaultLib : true;
+            var noImplicitAny = options ? options.noImplicitAny : false;
             var settings = new TypeScript.CompilationSettings();
             settings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
             settings.moduleGenTarget = TypeScript.ModuleGenTarget.Synchronous;
@@ -1259,12 +1248,14 @@ module Harness {
         }
 
         /** Recreate the appropriate compiler instance to its default settings */
-        export function recreate(compilerInstance: CompilerInstance, useMinimalDefaultLib = true, noImplicitAny = false) {
+        export function recreate(compilerInstance: CompilerInstance, options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
+            var useMinimalDefaultLibValue = options ? options.useMinimalDefaultLib : true;
+            var noImplicitAnyValue = options ? options.noImplicitAny : false;
+            var optionsWithDefaults = { useMinimalDefaultLib: useMinimalDefaultLibValue, noImplicitAny: noImplicitAnyValue };
             if (compilerInstance === CompilerInstance.RunTime) {
-                runTimeCompiler = new HarnessCompiler(useMinimalDefaultLib, noImplicitAny);
-            }
-            else {
-                designTimeCompiler = new HarnessCompiler(useMinimalDefaultLib, noImplicitAny);
+                runTimeCompiler = new HarnessCompiler(optionsWithDefaults);
+            } else {
+                designTimeCompiler = new HarnessCompiler(optionsWithDefaults);
             }
         }
 
@@ -2003,3 +1994,6 @@ module Harness {
     global.it = it;
     global.assert = Harness.Assert;
 }
+
+import assert = Harness.Assert;
+

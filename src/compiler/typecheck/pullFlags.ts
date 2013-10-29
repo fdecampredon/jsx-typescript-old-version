@@ -15,7 +15,7 @@ module TypeScript {
         Optional = 1 << 7,
         Signature = 1 << 11,
         Enum = 1 << 12,
-        FatArrow = 1 << 13,
+        ArrowFunction = 1 << 13,
 
         ClassConstructorVariable = 1 << 14,
         InitializedModule = 1 << 15,
@@ -52,10 +52,11 @@ module TypeScript {
         Interface = 1 << 4,
         DynamicModule = 1 << 5,
         Enum = 1 << 6,
-        TypeAlias = 1 << 8,
-        ObjectLiteral = 1 << 9,
+        TypeAlias = 1 << 7,
+        ObjectLiteral = 1 << 8,
 
-        Variable = 1 << 10,
+        Variable = 1 << 9,
+        CatchVariable = 1 << 10,
         Parameter = 1 << 11,
         Property = 1 << 12,
         TypeParameter = 1 << 13,

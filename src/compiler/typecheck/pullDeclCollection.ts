@@ -126,7 +126,7 @@ module TypeScript {
 
         var span = TextSpan.fromBounds(propertyDecl.minChar, propertyDecl.limChar);
 
-        var decl = new NormalPullDecl(propertyDecl.identifier.valueText(), propertyDecl.identifier.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(propertyDecl.propertyName.valueText(), propertyDecl.propertyName.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(propertyDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, propertyDecl);
 
@@ -295,7 +295,7 @@ module TypeScript {
         var decl = new NormalPullDecl(argDecl.id.valueText(), argDecl.id.text(), PullElementKind.Parameter, declFlags, parent, span);
 
         // If it has a default arg, record the fact that the parent has default args (we will need this during resolution)
-        if (argDecl.init) {
+        if (argDecl.equalsValueClause) {
             parent.flags |= PullElementFlags.HasDefaultArgs;
         }
 
@@ -395,8 +395,9 @@ module TypeScript {
         var span = TextSpan.fromBounds(memberDecl.minChar, memberDecl.limChar);
         var parent = context.getParent();
 
-        var decl = new NormalPullDecl(memberDecl.id.valueText(), memberDecl.id.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(memberDecl.variableDeclarator.id.valueText(), memberDecl.variableDeclarator.id.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(memberDecl, decl);
+        context.semanticInfoChain.setDeclForAST(memberDecl.variableDeclarator, decl);
         context.semanticInfoChain.setASTForDecl(decl, memberDecl);
 
         // Note: it is intentional that a var decl does not get added to hte context stack.  A var
@@ -439,6 +440,11 @@ module TypeScript {
     }
 
     function preCollectVarDecls(ast: AST, context: DeclCollectionContext): void {
+        if (ast.parent.nodeType() === NodeType.MemberVariableDeclaration) {
+            // Already handled this node.
+            return;
+        }
+
         var varDecl = <VariableDeclarator>ast;
 
         if (hasFlag(varDecl.getVarFlags(), VariableFlags.Property)) {
@@ -530,8 +536,9 @@ module TypeScript {
 
         var declFlags = PullElementFlags.None;
 
-        if (functionExpressionDeclAST.nodeType() === NodeType.ArrowFunctionExpression) {
-            declFlags |= PullElementFlags.FatArrow;
+        if (functionExpressionDeclAST.nodeType() === NodeType.SimpleArrowFunctionExpression ||
+            functionExpressionDeclAST.nodeType() === NodeType.ParenthesizedArrowFunctionExpression) {
+            declFlags |= PullElementFlags.ArrowFunction;
         }
 
         var span = TextSpan.fromBounds(functionExpressionDeclAST.minChar, functionExpressionDeclAST.limChar);
@@ -544,15 +551,36 @@ module TypeScript {
 
         var name = id ? id.text() : "";
         var displayNameText = displayName ? displayName.text() : "";
-        var decl = new PullFunctionExpressionDecl(name, declFlags, parent, span, displayNameText);
+        var decl: PullDecl = new PullFunctionExpressionDecl(name, declFlags, parent, span, displayNameText);
         context.semanticInfoChain.setDeclForAST(functionExpressionDeclAST, decl);
         context.semanticInfoChain.setASTForDecl(decl, functionExpressionDeclAST);
 
         context.pushParent(decl);
+
+        if (functionExpressionDeclAST.nodeType() === NodeType.SimpleArrowFunctionExpression) {
+            var simpleArrow = <SimpleArrowFunctionExpression>functionExpressionDeclAST;
+            var declFlags = PullElementFlags.Public;
+
+            var parent = context.getParent();
+
+            if (hasFlag(parent.flags, PullElementFlags.DeclaredInAWithBlock)) {
+                declFlags |= PullElementFlags.DeclaredInAWithBlock;
+            }
+
+            var span = TextSpan.fromBounds(simpleArrow.identifier.minChar, simpleArrow.identifier.limChar);
+
+            var decl: PullDecl = new NormalPullDecl(simpleArrow.identifier.valueText(), simpleArrow.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
+
+            context.semanticInfoChain.setASTForDecl(decl, simpleArrow.identifier);
+            context.semanticInfoChain.setDeclForAST(simpleArrow.identifier, decl);
+
+            // Record this decl in its parent in the declGroup with the corresponding name
+            parent.addVariableDeclToGroup(decl);
+        }
     }
 
     function createMemberFunctionDeclaration(funcDecl: MemberFunctionDeclaration, context: DeclCollectionContext): void {
-        createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name, funcDecl.block, context);
+        createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.propertyName, funcDecl.block, context);
     }
 
     // methods
@@ -590,7 +618,7 @@ module TypeScript {
     }
 
     // index signatures
-    function createIndexSignatureDeclaration(indexSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createIndexSignatureDeclaration(indexSignatureDeclAST: IndexSignature, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.IndexSignature;
 
@@ -738,7 +766,7 @@ module TypeScript {
         context.pushParent(decl);
     }
 
-    function preCollectCatchDecls(ast: AST, context: DeclCollectionContext): void {
+    function preCollectCatchDecls(ast: CatchClause, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.CatchBlock;
 
@@ -755,6 +783,27 @@ module TypeScript {
         context.semanticInfoChain.setASTForDecl(decl, ast);
 
         context.pushParent(decl);
+
+        var declFlags = PullElementFlags.None;
+        var declType = PullElementKind.CatchVariable;
+
+        // Create a decl for the catch clause variable.
+        var span = TextSpan.fromBounds(ast.identifier.minChar, ast.identifier.limChar);
+
+        var parent = context.getParent();
+
+        if (hasFlag(parent.flags, PullElementFlags.DeclaredInAWithBlock)) {
+            declFlags |= PullElementFlags.DeclaredInAWithBlock;
+        }
+
+        var decl = new NormalPullDecl(ast.identifier.valueText(), ast.identifier.text(), declType, declFlags, parent, span);
+        context.semanticInfoChain.setDeclForAST(ast.identifier, decl);
+        context.semanticInfoChain.setASTForDecl(decl, ast.identifier);
+
+        if (parent) {
+            // Record this decl in its parent in the declGroup with the corresponding name
+            parent.addVariableDeclToGroup(decl);
+        }
     }
 
     function preCollectWithDecls(ast: AST, context: DeclCollectionContext): void {
@@ -858,7 +907,9 @@ module TypeScript {
             case NodeType.MemberFunctionDeclaration:
                 createMemberFunctionDeclaration(<MemberFunctionDeclaration>ast, context);
                 break;
-
+            case NodeType.IndexSignature:
+                createIndexSignatureDeclaration(<IndexSignature>ast, context);
+                break;
             case NodeType.FunctionDeclaration:
                 var funcDecl = <FunctionDeclaration>ast;
                 var functionFlags = funcDecl.getFunctionFlags();
@@ -873,9 +924,6 @@ module TypeScript {
                 else if (hasFlag(functionFlags, FunctionFlags.CallSignature)) {
                     createCallSignatureDeclaration(funcDecl, context);
                 }
-                else if (hasFlag(functionFlags, FunctionFlags.IndexerMember)) {
-                    createIndexSignatureDeclaration(funcDecl, context);
-                }
                 else if (hasFlag(funcDecl.getFlags(), ASTFlags.TypeReference)) {
                     createFunctionTypeDeclaration(funcDecl, context);
                 }
@@ -886,8 +934,8 @@ module TypeScript {
                     createFunctionDeclaration(funcDecl, context);
                 }
                 break;
-            case NodeType.ArrowFunctionExpression:
-                var arrowFunction = <ArrowFunctionExpression>ast;
+            case NodeType.SimpleArrowFunctionExpression:
+            case NodeType.ParenthesizedArrowFunctionExpression:
                 createAnyFunctionExpressionDeclaration(ast, /*id*/null, context);
                 break;
             case NodeType.ImportDeclaration:
@@ -897,7 +945,7 @@ module TypeScript {
                 preCollectTypeParameterDecl(<TypeParameter>ast, context);
                 break;
             case NodeType.CatchClause:
-                preCollectCatchDecls(ast, context);
+                preCollectCatchDecls(<CatchClause>ast, context);
                 break;
             case NodeType.WithStatement:
                 preCollectWithDecls(ast, context);

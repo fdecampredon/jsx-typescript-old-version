@@ -1,0 +1,9 @@
+=== tests/cases/compiler/assignmentToObject.ts ===
+Line 0 col 4 IdentifierName "a" = { toString: number; }
+Line 0 col 8 ObjectLiteralExpression "{ toString: 5 }" = { toString: number; }
+Line 0 col 10 IdentifierName "toString" = number
+Line 1 col 4 IdentifierName "b" = {}
+Line 1 col 12 IdentifierName "a" = { toString: number; }
+Line 3 col 4 IdentifierName "c" = Object
+Line 3 col 7 IdentifierName "Object" = Object
+Line 3 col 16 IdentifierName "a" = { toString: number; }

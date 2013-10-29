@@ -367,7 +367,7 @@ module Services {
 
                     case TypeScript.NodeType.VariableDeclarator:
                         var varDeclarator = <TypeScript.VariableDeclarator>parent;
-                        return !!(varDeclarator.init && varDeclarator.id === current);
+                        return !!(varDeclarator.equalsValueClause && varDeclarator.id === current);
 
                     case TypeScript.NodeType.Parameter:
                         return true;
@@ -498,7 +498,17 @@ module Services {
             var callExpression = <TypeScript.InvocationExpression>node;
             var isNew = (callExpression.nodeType() === TypeScript.NodeType.ObjectCreationExpression);
 
-            if (position <= callExpression.target.limChar + callExpression.target.trailingTriviaWidth || position > callExpression.arguments.limChar + callExpression.arguments.trailingTriviaWidth) {
+            if (isNew && callExpression.argumentList === null) {
+                this.logger.log("No signature help for a object creation expression without arguments");
+                return null;
+            }
+
+            TypeScript.Debug.assert(callExpression.argumentList.arguments !== null, "Expected call expression to have arguments, but it did not");
+
+            var argumentsStart = callExpression.expression.limChar + callExpression.expression.trailingTriviaWidth;
+            var argumentsEnd = callExpression.argumentList.arguments.limChar + callExpression.argumentList.arguments.trailingTriviaWidth
+
+            if (position <= argumentsStart || position > argumentsEnd) {
                 this.logger.log("Outside argument list");
                 return null;
             }
@@ -1023,7 +1033,8 @@ module Services {
 
                 if (node.nodeType() === TypeScript.NodeType.ConstructorDeclaration ||
                     node.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
-                    node.nodeType() === TypeScript.NodeType.ArrowFunctionExpression ||
+                    node.nodeType() === TypeScript.NodeType.ParenthesizedArrowFunctionExpression ||
+                    node.nodeType() === TypeScript.NodeType.SimpleArrowFunctionExpression ||
                     node.nodeType() === TypeScript.NodeType.MemberFunctionDeclaration ||
                     TypeScript.isNameOfFunction(node) ||
                     TypeScript.isNameOfMemberFunction(node)) {
@@ -1798,7 +1809,8 @@ module Services {
                 case TypeScript.NodeType.ConstructorDeclaration:
                 case TypeScript.NodeType.FunctionDeclaration:
                 case TypeScript.NodeType.VariableDeclarator:
-                case TypeScript.NodeType.ArrowFunctionExpression:
+                case TypeScript.NodeType.ParenthesizedArrowFunctionExpression:
+                case TypeScript.NodeType.SimpleArrowFunctionExpression:
                     return true;
             }
         }

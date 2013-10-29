@@ -41,7 +41,7 @@ module TypeScript {
         private inputFiles: string[] = [];
         private compilationSettings: ImmutableCompilationSettings;
         private resolvedFiles: IResolvedFile[] = [];
-        private fileNameToSourceFile = new StringHashTable();
+        private fileNameToSourceFile = new StringHashTable<SourceFile>();
         private hasErrors: boolean = false;
         private logger: ILogger = null;
 
@@ -532,7 +532,7 @@ module TypeScript {
                 this.hasErrors = false;
 
                 // Clear out any source file data we've cached.
-                this.fileNameToSourceFile = new StringHashTable();
+                this.fileNameToSourceFile = new StringHashTable<SourceFile>();
 
                 // Resolve file dependencies, if requested
                 this.resolve();

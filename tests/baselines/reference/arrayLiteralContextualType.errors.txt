@@ -2,14 +2,10 @@ arrayLiteralContextualType.ts line 28 col 1: error TS2082: Supplied parameters d
 	Type '{}' is missing property 'name' from type 'IAnimal'.
 	Types of property 'concat' of types '{}[]' and 'IAnimal[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): IAnimal[]; (...items: IAnimal[]): IAnimal[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Type '{}' is missing property 'name' from type 'IAnimal'.
+			Types of property 'pop' of types '{}[]' and 'IAnimal[]' are incompatible:
+				Call signatures of types '() => {}' and '() => IAnimal' are incompatible:
+					Type '{}' is missing property 'name' from type 'IAnimal'.
 			Type '{}' is missing property 'name' from type 'IAnimal'.
 			Types of property 'pop' of types '{}[]' and 'IAnimal[]' are incompatible:
 				Call signatures of types '() => {}' and '() => IAnimal' are incompatible:

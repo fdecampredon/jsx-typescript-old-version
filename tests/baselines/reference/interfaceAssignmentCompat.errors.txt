@@ -10,14 +10,10 @@ interfaceAssignmentCompat.ts line 44 col 9: error TS2012: Cannot convert 'M.IEye
 	Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
 	Types of property 'concat' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): M.IEye[]; (...items: M.IEye[]): M.IEye[]; }' and '{ <U extends T[]>(...items: U[]): M.IFrenchEye[]; (...items: M.IFrenchEye[]): M.IFrenchEye[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
+			Types of property 'pop' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
+				Call signatures of types '() => M.IEye' and '() => M.IFrenchEye' are incompatible:
+					Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
 			Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
 			Types of property 'pop' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
 				Call signatures of types '() => M.IEye' and '() => M.IFrenchEye' are incompatible:

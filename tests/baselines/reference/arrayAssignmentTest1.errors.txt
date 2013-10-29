@@ -8,18 +8,9 @@ arrayAssignmentTest1.ts line 49 col 5: error TS2012: Cannot convert 'any[]' to '
 	Type 'any[]' is missing property 'CM3M1' from type 'C3'.
 arrayAssignmentTest1.ts line 60 col 1: error TS2012: Cannot convert 'C3[]' to 'I1[]':
 	Type 'C3' is missing property 'IM1' from type 'I1'.
-	Types of property 'concat' of types 'C3[]' and 'I1[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): C3[]; (...items: C3[]): C3[]; }' and '{ <U extends T[]>(...items: U[]): I1[]; (...items: I1[]): I1[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'pop' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '() => {}' and '() => U' are incompatible.
+	Types of property 'pop' of types 'C3[]' and 'I1[]' are incompatible:
+		Call signatures of types '() => C3' and '() => I1' are incompatible:
 			Type 'C3' is missing property 'IM1' from type 'I1'.
-			Types of property 'pop' of types 'C3[]' and 'I1[]' are incompatible:
-				Call signatures of types '() => C3' and '() => I1' are incompatible:
-					Type 'C3' is missing property 'IM1' from type 'I1'.
 arrayAssignmentTest1.ts line 64 col 1: error TS2012: Cannot convert 'I1[]' to 'C1[]':
 	Type 'I1' is missing property 'C1M1' from type 'C1'.
 	Types of property 'pop' of types 'I1[]' and 'C1[]' are incompatible:

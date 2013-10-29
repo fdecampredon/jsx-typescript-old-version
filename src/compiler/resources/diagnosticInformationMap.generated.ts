@@ -1226,6 +1226,10 @@ module TypeScript {
     "code": 2227,
     "category": DiagnosticCategory.Error
   },
+  "Duplicate identifier '{0}'. Compiler reserves name '{1}' in top level scope of an external module.": {
+    "code": 2228,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix
@@ -1340,6 +1344,18 @@ module TypeScript {
   },
   "Property '{0}' defined as optional in type '{1}', but is required in type '{2}'.": {
     "code": 4028,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types '{0}' and '{1}' originating in inifinitely expanding type reference do not refer to same named type.": {
+    "code": 4029,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments.": {
+    "code": 4030,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments:{NL}{2}": {
+    "code": 4031,
     "category": DiagnosticCategory.NoPrefix
   },
   "Current host does not support '{0}' option.": {

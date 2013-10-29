@@ -1,12 +1,12 @@
 ///<reference path='..\..\..\src\harness\fourslash.ts' />
 ///<reference path='..\..\..\src\harness\harness.ts'/>
-///<reference path='..\runnerbase.ts' />
+///<reference path='..\runnerBase.ts' />
 
 class FourslashRunner extends RunnerBase {
     public basePath = 'tests/cases/fourslash';
 
-    constructor(testType?: string) {
-        super(testType);
+    constructor() {
+        super();
     }
 
     public initializeTests() {
@@ -77,7 +77,7 @@ class FourslashRunner extends RunnerBase {
             lines.push('    </ScenarioList>');
             lines.push('    <CleanupScenario>');
             lines.push('        <CloseAllDocuments />');
-            lines.push('        <CleanupLoadedFiles />');
+            lines.push('        <CleanupCreatedFiles />');
             lines.push('    </CleanupScenario>');
             lines.push('    <CleanupTest>');
             lines.push('        <CloseTarget />');
@@ -89,8 +89,8 @@ class FourslashRunner extends RunnerBase {
 }
 
 class GeneratedFourslashRunner extends FourslashRunner {
-    constructor(testType?: string) {
-        super(testType);
+    constructor() {
+        super();
         this.basePath += '/generated/';
     }
 }

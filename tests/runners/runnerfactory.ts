@@ -1,9 +1,9 @@
 ///<reference path="runnerbase.ts" />
-///<reference path="compiler/runner.ts" />
-///<reference path="fourslash/fsrunner.ts" />
-///<reference path="rwc/runner.ts" />
-///<reference path="projects/runner.ts" />
-///<reference path="unittest/unittestrunner.ts" />
+///<reference path="compiler/compilerRunner.ts" />
+///<reference path="fourslash/fourslashRunner.ts" />
+///<reference path="rwc/rwcRunner.ts" />
+///<reference path="projects/projectsRunner.ts" />
+///<reference path="unittest/unittestRunner.ts" />
 
 class RunnerFactory {
     private runners = {};
@@ -11,10 +11,10 @@ class RunnerFactory {
     public addTest(name: string) {
         var normalizedName = name.replace(/\\/g, "/"); // normalize slashes so either kind can be used on the command line
         if (/tests\/cases\/compiler/.test(normalizedName)) {
-            this.runners['compiler'] = this.runners['compiler'] || new CompilerBaselineRunner();
+            this.runners['compiler'] = this.runners['compiler'] || new CompilerBaselineRunner(CompilerTestType.Regressions);
             this.runners['compiler'].addTest(Harness.userSpecifiedroot + name);
         } else if (/tests\/cases\/conformance/.test(normalizedName)) {
-            this.runners['conformance'] = this.runners['conformance'] || new CompilerBaselineRunner();
+            this.runners['conformance'] = this.runners['conformance'] || new CompilerBaselineRunner(CompilerTestType.Conformance);
             this.runners['conformance'].addTest(Harness.userSpecifiedroot + name);
         } else if (/tests\/cases\/fourslash/.test(normalizedName)) {
             this.runners['fourslash'] = this.runners['fourslash'] || new FourslashRunner();

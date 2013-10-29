@@ -1223,6 +1223,10 @@
         "category": "Error",
         "code": 2227
     },
+    "Duplicate identifier '{0}'. Compiler reserves name '{1}' in top level scope of an external module.": {
+        "category": "Error",
+        "code": 2228
+    },
     "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",
         "code": 4000
@@ -1338,6 +1342,18 @@
     "Property '{0}' defined as optional in type '{1}', but is required in type '{2}'.": {
         "category": "NoPrefix",
         "code": 4028
+    },
+    "Types '{0}' and '{1}' originating in inifinitely expanding type reference do not refer to same named type.": {
+        "category": "NoPrefix",
+        "code": 4029
+    },
+    "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments.": {
+        "category": "NoPrefix",
+        "code": 4030
+    },
+    "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments:{NL}{2}": {
+        "category": "NoPrefix",
+        "code": 4031
     },
     "Current host does not support '{0}' option.": {
         "category": "Error",

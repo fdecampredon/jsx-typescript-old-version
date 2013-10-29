@@ -349,40 +349,18 @@ module TypeScript {
 
             if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
 
-                var rootType: PullTypeSymbol = <PullTypeSymbol>enclosingType.getRootSymbol();
-                var rootThis: PullTypeSymbol = <PullTypeReferenceSymbol>this.getRootSymbol();
-
-                var prevRootType: PullTypeSymbol = null;
-                var prevRootThis: PullTypeSymbol = null;
-
-                while (true) {
-                    prevRootType = rootType;
-                    rootType = <PullTypeSymbol>rootType.getRootSymbol();
-
-                    if (prevRootType == rootType) {
-                        break;
-                    }
-                }
+                var rootType = PullHelpers.getRootType(<PullTypeSymbol>enclosingType);
+                var rootThis = PullHelpers.getRootType(this);
 
                 // With respect to the enclosing type, is this type reference open, closed or 
                 // infinitely expanding?
 
                 var typeParameters = enclosingType.getTypeParameters();
-                var typeReferenceTypeArguments = rootThis.getTypeArguments();
+                var typeReferenceTypeArguments = (<PullTypeReferenceSymbol>this.getRootSymbol()).getTypeArguments();
                 var referenceTypeArgument: PullTypeSymbol = null;
 
                 // may have an object literal or a function signature
                 if (!typeReferenceTypeArguments) {
-
-                    while (true) {
-                        prevRootThis = rootThis;
-                        rootThis = <PullTypeSymbol>rootThis.getRootSymbol();
-
-                        if (prevRootThis == rootThis) {
-                            break;
-                        }
-                    }
-
                     // create a new type map with just the type parameter
                     var typeParametersMap: PullTypeSymbol[] = [];
 

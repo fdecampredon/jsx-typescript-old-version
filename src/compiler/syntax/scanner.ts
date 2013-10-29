@@ -575,40 +575,55 @@ module TypeScript {
         }
 
         private tryFastScanIdentifierOrKeyword(firstCharacter: number): SyntaxKind {
-            var startIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+            var slidingWindow = this.slidingWindow;
+            var window: number[] = slidingWindow.window;
 
-            while (true) {
-                var character = this.currentCharCode();
-                if (isIdentifierPartCharacter[character]) {
-                    // Still part of an identifier.  Move to the next caracter.
-                    this.slidingWindow.moveToNextItem();
+            var startIndex = slidingWindow.currentRelativeItemIndex;
+            var endIndex = slidingWindow.windowCount;
+            var currentIndex = startIndex;
+            var character: number = 0;
+
+            // Note that we go up to the windowCount-1 so that we can read the character at the end
+            // of the window and check if it's *not* an identifier part character.
+            while (currentIndex < endIndex) {
+                character = window[currentIndex];
+                if (!isIdentifierPartCharacter[character]) {
+                    break;
                 }
-                else if (character === CharacterCodes.backslash || character > CharacterCodes.maxAsciiCharacter) {
-                    // We saw a \ (which could start a unicode escape), or we saw a unicode character.
-                    // This can't be scanned quickly.  Reset to the beginning and bail out.  We'll 
-                    // go and try the slow path instead.
-                    this.slidingWindow.rewindToPinnedIndex(startIndex);
-                    this.slidingWindow.releaseAndUnpinAbsoluteIndex(startIndex);
-                    return SyntaxKind.None;
+
+                currentIndex++;
+            }
+
+            if (currentIndex === endIndex) {
+                // We reached the end of the characters in the sliding window.  They were all 
+                // identifier characters.  Since we don't know what the next character is, we can't
+                // tell what we've got here.  So just bail out to the slow path.
+                return SyntaxKind.None;
+            }
+            else if (character === CharacterCodes.backslash || character > CharacterCodes.maxAsciiCharacter) {
+                // We saw a \ (which could start a unicode escape), or we saw a unicode character.
+                // This can't be scanned quickly.  Don't update the window position and just bail out
+                // to the slow path.
+                return SyntaxKind.None;
+            }
+            else {
+                // Saw an ascii character that wasn't a backslash and wasn't an identifier 
+                // character.  This identifier is done.
+
+                // Also check if it a keyword if it started with a lowercase letter.
+                var kind: SyntaxKind;
+                var identifierLength = currentIndex - startIndex;
+                if (isKeywordStartCharacter[firstCharacter]) {
+                    kind = ScannerUtilities.identifierKind(window, startIndex, identifierLength);
                 }
                 else {
-                    // Saw an ascii character that wasn't a backslash and wasn't an identifier 
-                    // character.  This identifier is done.
-                    var endIndex = this.slidingWindow.absoluteIndex();
-
-                    // Also check if it a keyword if it started with a lowercase letter.
-                    var kind: SyntaxKind;
-                    if (isKeywordStartCharacter[firstCharacter]) {
-                        var offset = startIndex - this.slidingWindow.windowAbsoluteStartIndex;
-                        kind = ScannerUtilities.identifierKind(this.slidingWindow.window, offset, endIndex - startIndex);
-                    }
-                    else {
-                        kind = SyntaxKind.IdentifierName;
-                    }
-
-                    this.slidingWindow.releaseAndUnpinAbsoluteIndex(startIndex);
-                    return kind;
+                    kind = SyntaxKind.IdentifierName;
                 }
+
+                // Now, update the position of the sliding window so it's pointing at the right place.
+                slidingWindow.setAbsoluteIndex(slidingWindow.absoluteIndex() + identifierLength);
+
+                return kind;
             }
         }
 
@@ -624,21 +639,25 @@ module TypeScript {
             }
             while (this.isIdentifierPart(this.peekCharOrUnicodeEscape()));
 
-            if (sawUnicodeEscape) {
-                // From ES6 specification.
-                // The ReservedWord definitions are specified as literal sequences of Unicode 
-                // characters.However, any Unicode character in a ReservedWord can also be 
-                // expressed by a \ UnicodeEscapeSequence that expresses that same Unicode 
-                // character's code point.Use of such escape sequences does not change the meaning 
-                // of the ReservedWord.
-                //
-                // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.
-                var text = this.text.substr(startIndex, this.slidingWindow.absoluteIndex(), /*intern:*/ false);
-                var valueText = Syntax.massageEscapes(text);
+            // From ES6 specification.
+            // The ReservedWord definitions are specified as literal sequences of Unicode 
+            // characters.However, any Unicode character in a ReservedWord can also be 
+            // expressed by a \ UnicodeEscapeSequence that expresses that same Unicode 
+            // character's code point.Use of such escape sequences does not change the meaning 
+            // of the ReservedWord.
+            //
+            // i.e. "\u0076ar" is the keyword 'var'.  Check for that here.
+            var length = this.slidingWindow.absoluteIndex() - startIndex;
+            var text = this.text.substr(startIndex, length, /*intern:*/ false);
+            var valueText = Syntax.massageEscapes(text);
 
-                var keywordKind = SyntaxFacts.getTokenKind(valueText);
-                if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {
+            var keywordKind = SyntaxFacts.getTokenKind(valueText);
+            if (keywordKind >= SyntaxKind.FirstKeyword && keywordKind <= SyntaxKind.LastKeyword) {
+                if (sawUnicodeEscape) {
                     return keywordKind | SyntaxConstants.IsVariableWidthKeyword;
+                }
+                else {
+                    return keywordKind;
                 }
             }
 

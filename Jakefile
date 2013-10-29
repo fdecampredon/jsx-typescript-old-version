@@ -19,6 +19,7 @@ var copyright = "CopyrightNotice.txt";
 var thirdParty = "ThirdPartyNoticeText.txt";
 var compilerSources = [
 	"ast.ts",
+	"astHelpers.ts",
 	"astWalker.ts",
 	"base64.ts",
 	"bloomFilter.ts",
@@ -201,12 +202,23 @@ var harnessSources = [
 	path.join(harnessDirectory, "fourslash.ts"),
 	path.join(harnessDirectory, "runner.ts"),
 
-	path.join(runnersDirectory, "runnerbase.ts"),
-	path.join(runnersDirectory, "compiler/runner.ts"),
-	path.join(runnersDirectory, "fourslash/fsrunner.ts"),
-	path.join(runnersDirectory, "projects/runner.ts"),
-	path.join(runnersDirectory, "unittest/unittestrunner.ts"),
-	path.join(runnersDirectory, "rwc/runner.ts")
+	path.join(runnersDirectory, "runnerBase.ts"),
+	path.join(runnersDirectory, "compiler/compilerRunner.ts"),
+	path.join(runnersDirectory, "fourslash/fourslashRunner.ts"),
+	path.join(runnersDirectory, "projects/projectsRunner.ts"),
+	path.join(runnersDirectory, "unittest/unittestRunner.ts"),
+	path.join(runnersDirectory, "rwc/rwcRunner.ts"),
+
+	path.join(runnersDirectory, "../cases/unittests/samples/samples.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/callSignatureTests.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/classOverloads.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/constructSignatureTests.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/declarationTests.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/functionSignaturesTests.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/identifiers.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/moduleAlias.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/pathing.ts"),
+	path.join(runnersDirectory, "../cases/unittests/compiler/propertySignatureTests.ts"),
 ];
 
 var libraryFiles = [

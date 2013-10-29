@@ -2,7 +2,7 @@
 /// <reference path="../../src/harness/harness.ts" />
 
 class RunnerBase {
-    constructor(public testType?: string) { }
+    constructor() { }
 
     // contains the tests to run
     public tests: string[] = [];
@@ -12,8 +12,8 @@ class RunnerBase {
         this.tests.push(fileName);
     }
 
-    public enumerateFiles(folder: string, recursive: boolean = false): string[] {
-        return IO.dir(Harness.userSpecifiedroot + folder, /\.ts$/, { recursive: recursive });
+    public enumerateFiles(folder: string, options?: { recursive: boolean }): string[] {
+        return IO.dir(Harness.userSpecifiedroot + folder, /\.ts$/, { recursive: (options ? options.recursive : false) });
     }
 
     /** Setup the runner's tests so that they are ready to be executed by the harness 

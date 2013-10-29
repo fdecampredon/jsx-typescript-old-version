@@ -16,9 +16,9 @@
         {
             "start": 370,
             "length": 1,
-            "diagnosticCode": "'{0}' expected.",
+            "diagnosticCode": "Unexpected token; '{0}' expected.",
             "arguments": [
-                ";"
+                "identifier"
             ]
         }
     ],
@@ -33,110 +33,113 @@
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
-                "kind": "ExpressionStatement",
+                "kind": "VariableStatement",
                 "fullStart": 0,
-                "fullEnd": 371,
+                "fullEnd": 379,
                 "start": 367,
-                "end": 370,
-                "fullWidth": 371,
-                "width": 3,
+                "end": 378,
+                "fullWidth": 379,
+                "width": 11,
                 "isIncrementallyUnusable": true,
-                "expression": {
-                    "kind": "IdentifierName",
+                "modifiers": [],
+                "variableDeclaration": {
+                    "kind": "VariableDeclaration",
                     "fullStart": 0,
-                    "fullEnd": 371,
+                    "fullEnd": 377,
                     "start": 367,
-                    "end": 370,
-                    "fullWidth": 371,
-                    "width": 3,
-                    "text": "var",
-                    "value": "var",
-                    "valueText": "var",
-                    "hasLeadingTrivia": true,
-                    "hasLeadingComment": true,
-                    "hasLeadingNewLine": true,
-                    "hasTrailingTrivia": true,
-                    "hasTrailingSkippedText": true,
-                    "leadingTrivia": [
+                    "end": 377,
+                    "fullWidth": 377,
+                    "width": 10,
+                    "isIncrementallyUnusable": true,
+                    "varKeyword": {
+                        "kind": "VarKeyword",
+                        "fullStart": 0,
+                        "fullEnd": 371,
+                        "start": 367,
+                        "end": 370,
+                        "fullWidth": 371,
+                        "width": 3,
+                        "text": "var",
+                        "value": "var",
+                        "valueText": "var",
+                        "hasLeadingTrivia": true,
+                        "hasLeadingComment": true,
+                        "hasLeadingNewLine": true,
+                        "hasTrailingTrivia": true,
+                        "hasTrailingSkippedText": true,
+                        "leadingTrivia": [
+                            {
+                                "kind": "SingleLineCommentTrivia",
+                                "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
+                            },
+                            {
+                                "kind": "NewLineTrivia",
+                                "text": "\n"
+                            },
+                            {
+                                "kind": "SingleLineCommentTrivia",
+                                "text": "// This code is governed by the BSD license found in the LICENSE file."
+                            },
+                            {
+                                "kind": "NewLineTrivia",
+                                "text": "\n"
+                            },
+                            {
+                                "kind": "NewLineTrivia",
+                                "text": "\n"
+                            },
+                            {
+                                "kind": "MultiLineCommentTrivia",
+                                "text": "/**\n * White space cannot be expressed as a Unicode escape sequence consisting of six characters, namely \\u plus four hexadecimal digits\n *\n * @path ch07/7.2/S7.2_A5_T5.js\n * @description Use NO-BREAK SPACE (U+00A0)\n * @negative\n */"
+                            },
+                            {
+                                "kind": "NewLineTrivia",
+                                "text": "\n"
+                            },
+                            {
+                                "kind": "NewLineTrivia",
+                                "text": "\n"
+                            }
+                        ],
+                        "trailingTrivia": [
+                            {
+                                "kind": "SkippedTokenTrivia",
+                                "skippedToken": {
+                                    "kind": "ErrorToken",
+                                    "fullStart": 370,
+                                    "fullEnd": 371,
+                                    "start": 370,
+                                    "end": 371,
+                                    "fullWidth": 1,
+                                    "width": 1,
+                                    "text": "\\"
+                                }
+                            }
+                        ]
+                    },
+                    "variableDeclarators": [
                         {
-                            "kind": "SingleLineCommentTrivia",
-                            "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
-                        },
-                        {
-                            "kind": "NewLineTrivia",
-                            "text": "\n"
-                        },
-                        {
-                            "kind": "SingleLineCommentTrivia",
-                            "text": "// This code is governed by the BSD license found in the LICENSE file."
-                        },
-                        {
-                            "kind": "NewLineTrivia",
-                            "text": "\n"
-                        },
-                        {
-                            "kind": "NewLineTrivia",
-                            "text": "\n"
-                        },
-                        {
-                            "kind": "MultiLineCommentTrivia",
-                            "text": "/**\n * White space cannot be expressed as a Unicode escape sequence consisting of six characters, namely \\u plus four hexadecimal digits\n *\n * @path ch07/7.2/S7.2_A5_T5.js\n * @description Use NO-BREAK SPACE (U+00A0)\n * @negative\n */"
-                        },
-                        {
-                            "kind": "NewLineTrivia",
-                            "text": "\n"
-                        },
-                        {
-                            "kind": "NewLineTrivia",
-                            "text": "\n"
-                        }
-                    ],
-                    "trailingTrivia": [
-                        {
-                            "kind": "SkippedTokenTrivia",
-                            "skippedToken": {
-                                "kind": "ErrorToken",
-                                "fullStart": 370,
-                                "fullEnd": 371,
-                                "start": 370,
-                                "end": 371,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "\\"
+                            "kind": "VariableDeclarator",
+                            "fullStart": 371,
+                            "fullEnd": 377,
+                            "start": 371,
+                            "end": 377,
+                            "fullWidth": 6,
+                            "width": 6,
+                            "identifier": {
+                                "kind": "IdentifierName",
+                                "fullStart": 371,
+                                "fullEnd": 377,
+                                "start": 371,
+                                "end": 377,
+                                "fullWidth": 6,
+                                "width": 6,
+                                "text": "u00A0x",
+                                "value": "u00A0x",
+                                "valueText": "u00A0x"
                             }
                         }
                     ]
-                },
-                "semicolonToken": {
-                    "kind": "SemicolonToken",
-                    "fullStart": -1,
-                    "fullEnd": -1,
-                    "start": -1,
-                    "end": -1,
-                    "fullWidth": 0,
-                    "width": 0,
-                    "text": ""
-                }
-            },
-            {
-                "kind": "ExpressionStatement",
-                "fullStart": 371,
-                "fullEnd": 379,
-                "start": 371,
-                "end": 378,
-                "fullWidth": 8,
-                "width": 7,
-                "expression": {
-                    "kind": "IdentifierName",
-                    "fullStart": 371,
-                    "fullEnd": 377,
-                    "start": 371,
-                    "end": 377,
-                    "fullWidth": 6,
-                    "width": 6,
-                    "text": "u00A0x",
-                    "value": "u00A0x",
-                    "valueText": "u00A0x"
                 },
                 "semicolonToken": {
                     "kind": "SemicolonToken",

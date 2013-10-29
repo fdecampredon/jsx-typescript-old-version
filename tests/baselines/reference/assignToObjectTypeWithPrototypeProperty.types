@@ -1,0 +1,11 @@
+=== tests/cases/compiler/assignToObjectTypeWithPrototypeProperty.ts ===
+Line 0 col 6 IdentifierName "XEvent" = XEvent
+Line 1 col 4 IdentifierName "p" = XEvent
+Line 1 col 7 IdentifierName "XEvent" = XEvent
+Line 1 col 16 MemberAccessExpression "XEvent.prototype" = XEvent
+Line 1 col 16 IdentifierName "XEvent" = { prototype: XEvent; new(): XEvent; }
+Line 1 col 23 IdentifierName "prototype" = XEvent
+Line 2 col 4 IdentifierName "x" = { prototype: XEvent; }
+Line 2 col 8 IdentifierName "prototype" = XEvent
+Line 2 col 19 IdentifierName "XEvent" = XEvent
+Line 2 col 29 IdentifierName "XEvent" = { prototype: XEvent; new(): XEvent; }

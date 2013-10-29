@@ -20,10 +20,10 @@
 ///<reference path='exec.ts'/>
 ///<reference path='diff.ts'/>
 ///<reference path='..\..\tests\runners\runnerfactory.ts' />
-///<reference path='..\..\tests\runners\compiler\runner.ts' />
-///<reference path='..\..\tests\runners\fourslash\fsrunner.ts' />
-///<reference path='..\..\tests\runners\projects\runner.ts' />
-///<reference path='..\..\tests\runners\unittest\unittestrunner.ts' />
+///<reference path='..\..\tests\runners\compiler\compilerRunner.ts' />
+///<reference path='..\..\tests\runners\fourslash\fourslashRunner.ts' />
+///<reference path='..\..\tests\runners\projects\projectsRunner.ts' />
+///<reference path='..\..\tests\runners\unittest\unittestRunner.ts' />
 
 declare var _inheritsFrom: any; // reference base inheritsFrom in child contexts.
 
@@ -212,16 +212,16 @@ var opts = new TypeScript.OptionsParser(IO, "testCompiler");
 
 opts.flag('compiler', {
     set: function () {
-        runners.push(new CompilerBaselineRunner('conformance'));
-        runners.push(new CompilerBaselineRunner('compiler'));
-        runners.push(new UnitTestRunner('compiler'));
+        runners.push(new CompilerBaselineRunner(CompilerTestType.Conformance));
+        runners.push(new CompilerBaselineRunner(CompilerTestType.Regressions));
+        runners.push(new UnitTestRunner(UnittestTestType.Compiler));
         runners.push(new ProjectRunner());
     }
 });
 
 opts.flag('conformance', {
     set: function () {
-        runners.push(new CompilerBaselineRunner('conformance'));
+        runners.push(new CompilerBaselineRunner(CompilerTestType.Conformance));
     }
 });
 
@@ -245,14 +245,14 @@ opts.flag('fourslash-generated', {
 
 opts.flag('unittests', {
     set: function () {
-        runners.push(new UnitTestRunner('compiler'));
-        runners.push(new UnitTestRunner('samples'));
+        runners.push(new UnitTestRunner(UnittestTestType.Compiler));
+        runners.push(new UnitTestRunner(UnittestTestType.Samples));
     }
 });
 
 opts.flag('samples', {
     set: function () {
-        runners.push(new UnitTestRunner('samples'));
+        runners.push(new UnitTestRunner(UnittestTestType.Samples));
     }
 });
 
@@ -264,19 +264,19 @@ opts.flag('rwc', {
 
 opts.flag('ls', {
     set: function () {
-        runners.push(new UnitTestRunner('ls'));
+        runners.push(new UnitTestRunner(UnittestTestType.LanguageService));
     }
 });
 
 opts.flag('services', {
     set: function () {
-        runners.push(new UnitTestRunner('services'));
+        runners.push(new UnitTestRunner(UnittestTestType.Services));
     }
 });
 
 opts.flag('harness', {
     set: function () {
-        runners.push(new UnitTestRunner('harness'));
+        runners.push(new UnitTestRunner(UnittestTestType.Harness));
     }
 });
 
@@ -313,9 +313,12 @@ opts.option('iterations', {
 // For running only compiler baselines with specific options like emit, decl files, etc
 opts.flag('compiler-baselines', {
     set: function (str) {
-        var runner = new CompilerBaselineRunner();
-        runner.options = str;
-        runners.push(runner);
+        var conformanceRunner = new CompilerBaselineRunner(CompilerTestType.Conformance);
+        var regressionRunner = new CompilerBaselineRunner(CompilerTestType.Regressions);
+        conformanceRunner.options = str;
+        regressionRunner.options = str;
+        runners.push(conformanceRunner);
+        runners.push(regressionRunner);
     }
 });
 
@@ -324,9 +327,9 @@ opts.parse(IO.arguments)
 if (runners.length === 0) {
     if (opts.unnamed.length === 0) {
         // compiler
-        runners.push(new CompilerBaselineRunner('conformance'));
-        runners.push(new CompilerBaselineRunner('compiler'));
-        runners.push(new UnitTestRunner('compiler'));
+        runners.push(new CompilerBaselineRunner(CompilerTestType.Conformance));
+        runners.push(new CompilerBaselineRunner(CompilerTestType.Regressions));
+        runners.push(new UnitTestRunner(UnittestTestType.Compiler));
         runners.push(new ProjectRunner());
 
         // language services
@@ -334,7 +337,7 @@ if (runners.length === 0) {
         runners.push(new GeneratedFourslashRunner());
 
         // samples
-        runners.push(new UnitTestRunner('samples'));
+        runners.push(new UnitTestRunner(UnittestTestType.Samples));
     } else {
         var runnerFactory = new RunnerFactory();
         var tests = opts.unnamed[0].split(' ');

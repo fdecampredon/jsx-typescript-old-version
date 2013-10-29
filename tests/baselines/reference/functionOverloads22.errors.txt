@@ -2,14 +2,10 @@ functionOverloads22.ts line 2 col 1: error TS2149: Overload signature is not com
 	Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
 	Types of property 'concat' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): { a: any; b?: any; }[]; (...items: { a: any; b?: any; }[]): { a: any; b?: any; }[]; }' and '{ <U extends T[]>(...items: U[]): { a: number; b: string; }[]; (...items: { a: number; b: string; }[]): { a: number; b: string; }[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
+			Types of property 'pop' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
+				Call signatures of types '() => { a: any; b?: any; }' and '() => { a: number; b: string; }' are incompatible:
+					Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
 			Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
 			Types of property 'pop' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
 				Call signatures of types '() => { a: any; b?: any; }' and '() => { a: number; b: string; }' are incompatible:

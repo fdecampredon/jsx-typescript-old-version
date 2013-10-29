@@ -603,7 +603,8 @@ module TypeScript {
 
                 switch (current.nodeType()) {
                     case NodeType.FunctionExpression:
-                    case NodeType.ArrowFunctionExpression:
+                    case NodeType.SimpleArrowFunctionExpression:
+                    case NodeType.ParenthesizedArrowFunctionExpression:
                         resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ true, resolutionContext);
                         break;
 
@@ -616,16 +617,16 @@ module TypeScript {
 
                     case NodeType.MemberVariableDeclaration:
                         var memberVariable = <MemberVariableDeclaration> current;
-                        inContextuallyTypedAssignment = memberVariable.typeExpr !== null;
+                        inContextuallyTypedAssignment = memberVariable.variableDeclarator.typeExpr !== null;
 
-                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, memberVariable, memberVariable.init);
+                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, memberVariable, memberVariable.variableDeclarator.equalsValueClause);
                         break;
 
                     case NodeType.VariableDeclarator:
                         var variableDeclarator = <VariableDeclarator> current;
                         inContextuallyTypedAssignment = variableDeclarator.typeExpr !== null;
 
-                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, variableDeclarator, variableDeclarator.init);
+                        this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, variableDeclarator, variableDeclarator.equalsValueClause);
                         break;
 
                     case NodeType.InvocationExpression:
@@ -636,7 +637,9 @@ module TypeScript {
                             var contextualType: PullTypeSymbol = null;
 
                             // Check if we are in an argumnt for a call, propagate the contextual typing
-                            if ((i + 1 < n) && callExpression.arguments === path[i + 1]) {
+                            if ((i + 2 < n) && callExpression.argumentList === path[i + 1] && callExpression.argumentList.arguments === path[i + 2]) {
+                                var arguments = callExpression.argumentList.arguments;
+
                                 var callResolutionResults = new PullAdditionalCallResolutionData();
                                 if (isNew) {
                                     resolver.resolveObjectCreationExpression(callExpression, resolutionContext, callResolutionResults);
@@ -647,10 +650,10 @@ module TypeScript {
 
                                 // Find the index in the arguments list
                                 if (callResolutionResults.actualParametersContextTypeSymbols) {
-                                    var argExpression = (path[i + 1] && path[i + 1].nodeType() === NodeType.List) ? path[i + 2] : path[i + 1];
+                                    var argExpression = path[i + 3];
                                     if (argExpression) {
-                                        for (var j = 0, m = callExpression.arguments.members.length; j < m; j++) {
-                                            if (callExpression.arguments.members[j] === argExpression) {
+                                        for (var j = 0, m = callExpression.argumentList.arguments.members.length; j < m; j++) {
+                                            if (callExpression.argumentList.arguments.members[j] === argExpression) {
                                                 var callContextualType = callResolutionResults.actualParametersContextTypeSymbols[j];
                                                 if (callContextualType) {
                                                     contextualType = callContextualType;

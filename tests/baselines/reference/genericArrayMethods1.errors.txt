@@ -1,13 +1,7 @@
 genericArrayMethods1.ts line 1 col 5: error TS2012: Cannot convert 'number[]' to 'string[]':
 	Types of property 'concat' of types 'number[]' and 'string[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' and '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Types of property 'pop' of types 'number[]' and 'string[]' are incompatible:
+				Call signatures of types '() => number' and '() => string' are incompatible.
 			Types of property 'pop' of types 'number[]' and 'string[]' are incompatible:
 				Call signatures of types '() => number' and '() => string' are incompatible.

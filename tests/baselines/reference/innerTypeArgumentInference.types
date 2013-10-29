@@ -1,0 +1,13 @@
+=== tests/cases/compiler/innerTypeArgumentInference.ts ===
+Line 0 col 10 IdentifierName "Generator" = Generator<T>
+Line 0 col 20 IdentifierName "T" = T
+Line 0 col 29 IdentifierName "T" = T
+Line 1 col 9 IdentifierName "Generate" = <U>(func: Generator<U>) => U
+Line 1 col 18 IdentifierName "U" = U
+Line 1 col 21 IdentifierName "func" = Generator<U>
+Line 1 col 27 IdentifierName "Generator" = Generator<T>
+Line 1 col 37 IdentifierName "U" = U
+Line 1 col 42 IdentifierName "U" = U
+Line 2 col 11 InvocationExpression "Generate(func)" = U
+Line 2 col 11 IdentifierName "Generate" = <U>(func: Generator<U>) => U
+Line 2 col 20 IdentifierName "func" = Generator<U>

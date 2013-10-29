@@ -102,11 +102,13 @@ module TypeScript {
         }
 
         public leadingTrivia(): ISyntaxTriviaList {
-            return this.firstToken().leadingTrivia();
+            var firstToken = this.firstToken();
+            return firstToken ? firstToken.leadingTrivia() : Syntax.emptyTriviaList;
         }
 
         public trailingTrivia(): ISyntaxTriviaList {
-            return this.lastToken().trailingTrivia();
+            var lastToken = this.lastToken();
+            return lastToken ? lastToken.trailingTrivia() : Syntax.emptyTriviaList;
         }
 
         public toJSON(key: any): any {

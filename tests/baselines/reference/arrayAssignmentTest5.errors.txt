@@ -5,14 +5,10 @@ arrayAssignmentTest5.ts line 23 col 17: error TS2012: Cannot convert 'Test.IToke
 	Type 'Test.IToken' is missing property 'state' from type 'Test.IStateToken'.
 	Types of property 'concat' of types 'Test.IToken[]' and 'Test.IStateToken[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): Test.IToken[]; (...items: Test.IToken[]): Test.IToken[]; }' and '{ <U extends T[]>(...items: U[]): Test.IStateToken[]; (...items: Test.IStateToken[]): Test.IStateToken[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Type 'Test.IToken' is missing property 'state' from type 'Test.IStateToken'.
+			Types of property 'pop' of types 'Test.IToken[]' and 'Test.IStateToken[]' are incompatible:
+				Call signatures of types '() => Test.IToken' and '() => Test.IStateToken' are incompatible:
+					Type 'Test.IToken' is missing property 'state' from type 'Test.IStateToken'.
 			Type 'Test.IToken' is missing property 'state' from type 'Test.IStateToken'.
 			Types of property 'pop' of types 'Test.IToken[]' and 'Test.IStateToken[]' are incompatible:
 				Call signatures of types '() => Test.IToken' and '() => Test.IStateToken' are incompatible:

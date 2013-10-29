@@ -1,6 +1,6 @@
 ///<reference path='..\..\..\src\harness\harness.ts'/>
 ///<reference path='..\..\..\src\harness\exec.ts'/>
-///<reference path='..\runnerbase.ts' />
+///<reference path='..\runnerBase.ts' />
 /// <reference path='..\compiler\typeWriter.ts' />
 
 interface testSpec {
@@ -39,7 +39,7 @@ class RWCEmitter implements Harness.Compiler.IEmitterIOHost {
 }
 
 class RWCRunner extends RunnerBase {
-    constructor(public testType?: string) { super(testType); }
+    constructor() { super(); }
 
     public tests: string[] = [];
 
@@ -49,15 +49,6 @@ class RWCRunner extends RunnerBase {
     private referencePath = "tests/baselines/rwc/reference/";
 
     private htmlBaselineReport = new Diff.HtmlBaselineReport('rwc-report.html');
-
-    /** Add a source file to the runner's list of tests that need to be initialized with initializeTests */
-    public addTest(fileName: string) {
-        this.tests.push(fileName);
-    }
-
-    public enumerateFiles(folder: string, recursive: boolean = false): string[] {
-        return IO.dir(Harness.userSpecifiedroot + folder, /\.ts$/);
-    }
 
     /** Setup the runner's tests so that they are ready to be executed by the harness
      *  The first test should be a describe/it block that sets up the harness's compiler instance appropriately
@@ -71,7 +62,7 @@ class RWCRunner extends RunnerBase {
         var exec = Exec.exec;
 
         // Recreate the compiler with the default lib
-        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, false);
+        Harness.Compiler.recreate(Harness.Compiler.CompilerInstance.RunTime, { useMinimalDefaultLib: false, noImplicitAny: false });
         harnessCompiler = Harness.Compiler.getCompiler(Harness.Compiler.CompilerInstance.RunTime);
 
         // reset the report

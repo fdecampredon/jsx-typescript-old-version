@@ -236,14 +236,14 @@ module Services {
             var parameterMinChar = caretPosition;
             var parameterLimChar = caretPosition;
 
-            if (ast.typeArguments) {
-                parameterMinChar = Math.min(ast.typeArguments.minChar);
-                parameterLimChar = Math.max(Math.max(ast.typeArguments.minChar, ast.typeArguments.limChar + ast.typeArguments.trailingTriviaWidth));
+            if (ast.argumentList.typeArguments) {
+                parameterMinChar = Math.min(ast.argumentList.typeArguments.minChar);
+                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArguments.minChar, ast.argumentList.typeArguments.limChar + ast.argumentList.typeArguments.trailingTriviaWidth));
             }
 
-            if (ast.arguments) {
-                parameterMinChar = Math.min(parameterMinChar, ast.arguments.minChar);
-                parameterLimChar = Math.max(parameterLimChar, Math.max(ast.arguments.minChar, ast.arguments.limChar + ast.arguments.trailingTriviaWidth));
+            if (ast.argumentList.arguments) {
+                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.arguments.minChar);
+                parameterLimChar = Math.max(parameterLimChar, Math.max(ast.argumentList.arguments.minChar, ast.argumentList.arguments.limChar + ast.argumentList.arguments.trailingTriviaWidth));
             }
 
             result.parameterMinChar = parameterMinChar;
@@ -255,10 +255,10 @@ module Services {
                 result.currentParameterIsTypeParameter = true;
                 result.currentParameter = typeParameterInformation.argumentIndex;
             }
-            else if (ast.arguments && ast.arguments.members) {
+            else if (ast.argumentList.arguments && ast.argumentList.arguments.members) {
                 result.currentParameter = 0;
-                for (var index = 0; index < ast.arguments.members.length; index++) {
-                    if (caretPosition > ast.arguments.members[index].limChar + ast.arguments.members[index].trailingTriviaWidth) {
+                for (var index = 0; index < ast.argumentList.arguments.members.length; index++) {
+                    if (caretPosition > ast.argumentList.arguments.members[index].limChar + ast.argumentList.arguments.members[index].trailingTriviaWidth) {
                         result.currentParameter++;
                     }
                 }

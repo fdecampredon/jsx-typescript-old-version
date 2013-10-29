@@ -8,14 +8,10 @@ typeMatch2.ts line 18 col 5: error TS2012: Cannot convert 'Animal[]' to 'Giraffe
 	Type 'Animal' is missing property 'g' from type 'Giraffe'.
 	Types of property 'concat' of types 'Animal[]' and 'Giraffe[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): Animal[]; (...items: Animal[]): Animal[]; }' and '{ <U extends T[]>(...items: U[]): Giraffe[]; (...items: Giraffe[]): Giraffe[]; }' are incompatible:
-			Types of property 'reverse' of types 'T[]' and 'any[]' are incompatible:
-				Call signatures of types '() => T[]' and '() => any[]' are incompatible:
-					Types of property 'map' of types 'T[]' and 'any[]' are incompatible:
-						Call signatures of types '<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]' and '<U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]' are incompatible:
-							Types of property 'concat' of types '{}[]' and 'U[]' are incompatible:
-								Call signatures of types '{ <U extends T[]>(...items: any[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
-									Types of property 'pop' of types '{}[]' and 'T[]' are incompatible:
-										Call signatures of types '() => {}' and '() => T' are incompatible.
+			Type 'Animal' is missing property 'g' from type 'Giraffe'.
+			Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
+				Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:
+					Type 'Animal' is missing property 'g' from type 'Giraffe'.
 			Type 'Animal' is missing property 'g' from type 'Giraffe'.
 			Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
 				Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:

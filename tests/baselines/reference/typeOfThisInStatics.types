@@ -1,0 +1,8 @@
+=== tests/cases/compiler/typeOfThisInStatics.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 11 IdentifierName "foo" = () => void
+Line 2 col 12 IdentifierName "r" = { prototype: C; foo(): void; x: number; new(): C; }
+Line 2 col 16 ThisKeyword "this" = { prototype: C; foo(): void; x: number; new(): C; }
+Line 4 col 15 IdentifierName "x" = number
+Line 5 col 12 IdentifierName "r" = { prototype: C; foo(): void; x: number; new(): C; }
+Line 5 col 16 ThisKeyword "this" = { prototype: C; foo(): void; x: number; new(): C; }

@@ -2129,7 +2129,9 @@ module TypeScript {
 
         // The argument map prevents us from accidentally flagging method type parameters, or (if we
         // ever decide to go that route) allows for partial specialization
-        public wrapsSomeTypeParameter(typeParameterArgumentMap: PullTypeSymbol[]): boolean {
+        public wrapsSomeTypeParameter(typeParameterArgumentMap: CandidateInferenceInfo[]): boolean;
+        public wrapsSomeTypeParameter(typeParameterArgumentMap: PullTypeSymbol[]): boolean;
+        public wrapsSomeTypeParameter(typeParameterArgumentMap: any[]): boolean {
             var type = this;
 
             var wrapsSomeTypeParameter = false;
