@@ -677,9 +677,8 @@ module TypeScript {
         private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
             var ast = decl.ast();
 
-            if (ast && (ast.nodeType() != TypeScript.NodeType.ModuleDeclaration ||
-                decl.kind != TypeScript.PullElementKind.Variable)) {
-                return ast.docComments();
+            if (ast && (ast.nodeType() != TypeScript.NodeType.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable)) {
+                return docComments(ast);
             }
 
             return [];
@@ -2254,6 +2253,10 @@ module TypeScript {
 
             if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
+            }
+
+            if (this.isArrayNamedTypeReference()) {
+                return this.getElementType()._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isCheckingNestedType, knownWrapMap);
             }
 
             // if we encounter a type parameter or primitive, nothing is being wrapped

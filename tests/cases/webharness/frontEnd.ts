@@ -33,8 +33,8 @@ class BatchCompiler {
         this.compiler = new TypeScript.TypeScriptCompiler(new DiagnosticsLogger(),
             TypeScript.ImmutableCompilationSettings.fromCompilationSettings(settings));
 
-        this.compiler.addFile("lib.d.ts", this.libScriptSnapshot, ByteOrderMark.None, 0, false, []);
-        this.compiler.addFile("compiler.ts", this.compilerScriptSnapshot, ByteOrderMark.None, 0, false, []);
+        this.compiler.addFile("lib.d.ts", this.libScriptSnapshot, TypeScript.ByteOrderMark.None, 0, false, []);
+        this.compiler.addFile("compiler.ts", this.compilerScriptSnapshot, TypeScript.ByteOrderMark.None, 0, false, []);
 
         this.compiler.getSyntacticDiagnostics("lib.d.ts");
         this.compiler.getSyntacticDiagnostics("compiler.ts");

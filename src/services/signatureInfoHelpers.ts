@@ -3,7 +3,7 @@
 
 ///<reference path='typescriptServices.ts' />
 
-module Services {
+module TypeScript.Services {
 
     export interface IPartiallyWrittenTypeArgumentListInformation {
         genericIdentifer: TypeScript.PositionedToken;
@@ -236,9 +236,9 @@ module Services {
             var parameterMinChar = caretPosition;
             var parameterLimChar = caretPosition;
 
-            if (ast.argumentList.typeArguments) {
-                parameterMinChar = Math.min(ast.argumentList.typeArguments.minChar);
-                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArguments.minChar, ast.argumentList.typeArguments.limChar + ast.argumentList.typeArguments.trailingTriviaWidth));
+            if (ast.argumentList.typeArgumentList) {
+                parameterMinChar = Math.min(ast.argumentList.typeArgumentList.minChar);
+                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.minChar, ast.argumentList.typeArgumentList.limChar + ast.argumentList.typeArgumentList.trailingTriviaWidth));
             }
 
             if (ast.argumentList.arguments) {

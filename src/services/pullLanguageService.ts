@@ -4,12 +4,12 @@
 
 ///<reference path='typescriptServices.ts' />
 
-module Services {
+module TypeScript.Services {
     export class LanguageService implements ILanguageService {
         private logger: TypeScript.ILogger;
         private compiler: LanguageServiceCompiler;
         private _syntaxTreeCache: SyntaxTreeCache;
-        private formattingRulesProvider: TypeScript.Formatting.RulesProvider;
+        private formattingRulesProvider: TypeScript.Services.Formatting.RulesProvider;
 
         private activeCompletionSession: CompletionSession = null;
 
@@ -22,6 +22,10 @@ module Services {
             if (!TypeScript.LocalizedDiagnosticMessages) {
                 TypeScript.LocalizedDiagnosticMessages = this.host.getLocalizedDiagnosticMessages();
             }
+        }
+
+        public cleanupSemanticCache(): void {
+            this.compiler.cleanupSemanticCache();
         }
 
         public refresh(): void {
@@ -115,8 +119,8 @@ module Services {
                 // The compiler shares class method type parameter symbols.  So if we get one, 
                 // scope our search down to the method ast so we don't find other hits elsewhere.
                 while (ast) {
-                    if (ast.nodeType() === TypeScript.NodeType.FunctionDeclaration &&
-                        TypeScript.hasFlag((<TypeScript.FunctionDeclaration>ast).getFunctionFlags(), TypeScript.FunctionFlags.Method)) {
+                    if (ast.nodeType() === TypeScript.NodeType.FunctionDeclaration ||
+                        ast.nodeType() === TypeScript.NodeType.MemberFunctionDeclaration) {
                         return ast;
                     }
 
@@ -360,14 +364,14 @@ module Services {
                         return (<TypeScript.ModuleDeclaration>parent).name === current;
 
                     case TypeScript.NodeType.FunctionDeclaration:
-                        return (<TypeScript.FunctionDeclaration>parent).name === current;
+                        return (<TypeScript.FunctionDeclaration>parent).identifier === current;
 
                     case TypeScript.NodeType.ImportDeclaration:
                         return (<TypeScript.ImportDeclaration>parent).identifier === current;
 
                     case TypeScript.NodeType.VariableDeclarator:
                         var varDeclarator = <TypeScript.VariableDeclarator>parent;
-                        return !!(varDeclarator.equalsValueClause && varDeclarator.id === current);
+                        return !!(varDeclarator.equalsValueClause && varDeclarator.identifier === current);
 
                     case TypeScript.NodeType.Parameter:
                         return true;
@@ -1688,7 +1692,7 @@ module Services {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var syntaxtree = this.getSyntaxTree(fileName);
-            return Services.Breakpoints.getBreakpointLocation(syntaxtree, pos);
+            return TypeScript.Services.Breakpoints.getBreakpointLocation(syntaxtree, pos);
         }
 
         public getFormattingEditsForRange(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[] {
@@ -1733,7 +1737,7 @@ module Services {
         private getFormattingManager(fileName: string, options: FormatCodeOptions) {
             // Ensure rules are initialized and up to date wrt to formatting options
             if (this.formattingRulesProvider == null) {
-                this.formattingRulesProvider = new TypeScript.Formatting.RulesProvider(this.logger);
+                this.formattingRulesProvider = new TypeScript.Services.Formatting.RulesProvider(this.logger);
             }
 
             this.formattingRulesProvider.ensureUpToDate(options);
@@ -1744,9 +1748,9 @@ module Services {
             // Convert IScriptSnapshot to ITextSnapshot
             var scriptSnapshot = this.compiler.getScriptSnapshot(fileName);
             var scriptText = TypeScript.SimpleText.fromScriptSnapshot(scriptSnapshot);
-            var textSnapshot = new TypeScript.Formatting.TextSnapshot(scriptText);
+            var textSnapshot = new TypeScript.Services.Formatting.TextSnapshot(scriptText);
 
-            var manager = new TypeScript.Formatting.FormattingManager(syntaxTree, textSnapshot, this.formattingRulesProvider, options);
+            var manager = new TypeScript.Services.Formatting.FormattingManager(syntaxTree, textSnapshot, this.formattingRulesProvider, options);
 
             return manager;
         }
@@ -1768,10 +1772,10 @@ module Services {
 
             var scriptSnapshot = this.compiler.getScriptSnapshot(fileName);
             var scriptText = TypeScript.SimpleText.fromScriptSnapshot(scriptSnapshot);
-            var textSnapshot = new TypeScript.Formatting.TextSnapshot(scriptText);
+            var textSnapshot = new TypeScript.Services.Formatting.TextSnapshot(scriptText);
             var options = new FormattingOptions(!editorOptions.ConvertTabsToSpaces, editorOptions.TabSize, editorOptions.IndentSize, editorOptions.NewLineCharacter)
 
-            return TypeScript.Formatting.SingleTokenIndenter.getIndentationAmount(position, syntaxTree.sourceUnit(), textSnapshot, options);
+            return TypeScript.Services.Formatting.SingleTokenIndenter.getIndentationAmount(position, syntaxTree.sourceUnit(), textSnapshot, options);
         }
 
         // Given a script name and position in the script, return a pair of text range if the 

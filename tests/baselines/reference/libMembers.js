@@ -11,7 +11,7 @@ var M;
         return C;
     })();
     M.C = C;
-    var a = new C[]();
+    var a = new C[];
     a.length;
     a.push(new C());
     (new C()).prototype;

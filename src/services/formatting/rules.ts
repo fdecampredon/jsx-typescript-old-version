@@ -15,7 +15,7 @@
 
 ///<reference path='formatting.ts' />
 
-module TypeScript.Formatting {
+module TypeScript.Services.Formatting {
     export class Rules {
         public getRuleName(rule: Rule) {
             var o = <any>this;

@@ -15,7 +15,7 @@
 
 ///<reference path='typescriptServices.ts' />
 
-module Services {
+module TypeScript.Services {
     export class OutliningElementsCollector extends TypeScript.DepthLimitedWalker {
         // The maximum depth for collecting spans; this will cause us to miss deeply nested function/modules spans, 
         // but will guarantee performance will not be closely tied to tree depth.

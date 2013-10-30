@@ -62,19 +62,19 @@ class ConsoleLogger extends Harness.Logger {
     }
 
     public start() {
-        IO.printLine("Running tests" + (iterations > 1 ? " " + iterations + " times" : "") + (reverse ? " in reverse." : "."));
+        TypeScript.IO.printLine("Running tests" + (iterations > 1 ? " " + iterations + " times" : "") + (reverse ? " in reverse." : "."));
     }
 
     public end() {
         // Test execution is complete
-        IO.printLine('');
-        IO.printLine('');
-        IO.printLine(this.errorString);
-        IO.printLine('');
+        TypeScript.IO.printLine('');
+        TypeScript.IO.printLine('');
+        TypeScript.IO.printLine(this.errorString);
+        TypeScript.IO.printLine('');
 
-        IO.printLine('Scenarios: ' + (this.passCounts['Scenario'] || 0) + ' passed, ' + (this.failCounts['Scenario'] || 0) + ' failed.');
-        IO.printLine('Testcases: ' + (this.passCounts['Testcase'] || 0) + ' passed, ' + (this.failCounts['Testcase'] || 0) + ' failed.');
-        IO.printLine('  Blocked: ' + this.blockedScenarioCount);
+        TypeScript.IO.printLine('Scenarios: ' + (this.passCounts['Scenario'] || 0) + ' passed, ' + (this.failCounts['Scenario'] || 0) + ' failed.');
+        TypeScript.IO.printLine('Testcases: ' + (this.passCounts['Testcase'] || 0) + ' passed, ' + (this.failCounts['Testcase'] || 0) + ' failed.');
+        TypeScript.IO.printLine('  Blocked: ' + this.blockedScenarioCount);
         return;
     }
 
@@ -84,32 +84,32 @@ class ConsoleLogger extends Harness.Logger {
 
     public pass(test: Harness.ITestMetadata) {
         if (test.perfResults) {
-            IO.printLine(test.desc + ": " + test.perfResults.trials.length + " trials");
-            IO.printLine('    mean: ' + test.perfResults.mean.toFixed(1) + "ms");
-            IO.printLine('     min: ' + test.perfResults.min.toFixed(1) + "ms");
-            IO.printLine('     max: ' + test.perfResults.max.toFixed(1) + "ms");
-            IO.printLine('  stdDev: ' + test.perfResults.stdDev.toFixed(1) + "ms");
-            IO.printLine('');
+            TypeScript.IO.printLine(test.desc + ": " + test.perfResults.trials.length + " trials");
+            TypeScript.IO.printLine('    mean: ' + test.perfResults.mean.toFixed(1) + "ms");
+            TypeScript.IO.printLine('     min: ' + test.perfResults.min.toFixed(1) + "ms");
+            TypeScript.IO.printLine('     max: ' + test.perfResults.max.toFixed(1) + "ms");
+            TypeScript.IO.printLine('  stdDev: ' + test.perfResults.stdDev.toFixed(1) + "ms");
+            TypeScript.IO.printLine('');
             this.descriptionStack.pop();
         } else {
-            IO.print(".");
+            TypeScript.IO.print(".");
             this.passCounts.Testcase++;
             this.descriptionStack.pop();
         }
     }
 
     public bug(test: Harness.ITestMetadata) {
-        IO.print('*');
+        TypeScript.IO.print('*');
     }
 
     public fail(test: Harness.ITestMetadata) {
-        IO.print("F");
+        TypeScript.IO.print("F");
         this.failCounts.Testcase++;
         this.descriptionStack.pop();
     }
 
     public error(test: Harness.ITestMetadata, error: Error) {
-        IO.print("F");
+        TypeScript.IO.print("F");
         this.failCounts.Testcase++;
         this.addError(error);
         this.descriptionStack.pop();
@@ -117,8 +117,8 @@ class ConsoleLogger extends Harness.Logger {
 
     public scenarioStart(scenario: Harness.IScenarioMetadata) {
         this.descriptionStack.push(scenario.desc);
-        //IO.printLine(scenario.id);
-        //IO.printLine(scenario.desc);
+        //TypeScript.IO.printLine(scenario.id);
+        //TypeScript.IO.printLine(scenario.desc);
     }
 
     public scenarioEnd(scenario: Harness.IScenarioMetadata, error?: Error) {
@@ -185,7 +185,7 @@ class JSONLogger extends Harness.Logger {
     }
 
     public end() {
-        IO.writeFile(this.path, JSON.stringify(this.root), /*writeByteOrderMark:*/ false);
+        TypeScript.IO.writeFile(this.path, JSON.stringify(this.root), /*writeByteOrderMark:*/ false);
     }
 }
 
@@ -208,7 +208,7 @@ global.runners = runners;
 var reverse: boolean = false;
 var iterations: number = 1;
 
-var opts = new TypeScript.OptionsParser(IO, "testCompiler");
+var opts = new TypeScript.OptionsParser(TypeScript.IO, "testCompiler");
 
 opts.flag('compiler', {
     set: function () {
@@ -322,7 +322,7 @@ opts.flag('compiler-baselines', {
     }
 });
 
-opts.parse(IO.arguments)
+opts.parse(TypeScript.IO.arguments)
 
 if (runners.length === 0) {
     if (opts.unnamed.length === 0) {

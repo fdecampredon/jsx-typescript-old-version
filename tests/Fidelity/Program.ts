@@ -29,14 +29,14 @@ class PositionValidatingWalker extends TypeScript.PositionTrackingWalker {
 
 class Program {
     runAllTests(verify: boolean): void {
-        Environment.standardOut.WriteLine("");
+        TypeScript.Environment.standardOut.WriteLine("");
 
         if (generate) {
-            Environment.standardOut.WriteLine("!!!!!!!!!! WARNING - GENERATING !!!!!!!!!");
-            Environment.standardOut.WriteLine("");
+            TypeScript.Environment.standardOut.WriteLine("!!!!!!!!!! WARNING - GENERATING !!!!!!!!!");
+            TypeScript.Environment.standardOut.WriteLine("");
         }
 
-        // Environment.standardOut.WriteLine("Testing against fuzz.");
+        // TypeScript.Environment.standardOut.WriteLine("Testing against fuzz.");
         // this.runTests("C:\\temp\\fuzz",
         //    fileName => this.runParser(fileName, LanguageVersion.EcmaScript5, /*verify:*/ false, /*generateBaselines:*/ generate), 2000);
 
@@ -44,60 +44,60 @@ class Program {
             // return;
         }
 
-        //Environment.standardOut.WriteLine("Testing Monoco.");
-        //this.runTests(Environment.currentDirectory() + "c:\\temp\\monoco",
+        //TypeScript.Environment.standardOut.WriteLine("Testing Monoco.");
+        //this.runTests(TypeScript.Environment.currentDirectory() + "c:\\temp\\monoco",
         //    fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, false, /*generateBaselines:*/ generate, /*allowErrors:*/ false));
-        Environment.standardOut.WriteLine("Testing Incremental 1.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing Incremental 1.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
             fileName => this.runIncremental(fileName, TypeScript.LanguageVersion.EcmaScript5));
 
         if (specificFile === undefined) {
-            Environment.standardOut.WriteLine("Testing Incremental 2.");
+            TypeScript.Environment.standardOut.WriteLine("Testing Incremental 2.");
             TypeScript.IncrementalParserTests.runAllTests();
         }
 
-        Environment.standardOut.WriteLine("Testing scanner ES3.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript3",
+        TypeScript.Environment.standardOut.WriteLine("Testing scanner ES3.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript3",
             fileName => this.runScanner(fileName, TypeScript.LanguageVersion.EcmaScript3, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing scanner ES5.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing scanner ES5.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript5",
             fileName => this.runScanner(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing parser ES5.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing parser ES5.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
             fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing parser ES3.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript3",
+        TypeScript.Environment.standardOut.WriteLine("Testing parser ES3.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript3",
             fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript3, verify, /*generateBaselines:*/ generate));
 
         if (specificFile === undefined) {
-            this.testIncrementalSpeed(Environment.currentDirectory() + "\\src\\compiler\\Syntax\\SyntaxNodes.generated.ts");
+            this.testIncrementalSpeed(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\Syntax\\SyntaxNodes.generated.ts");
         }
 
-        Environment.standardOut.WriteLine("Testing emitter 1.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\emitter\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing emitter 1.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\emitter\\ecmascript5",
             fileName => this.runEmitter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate, /*justText:*/ false));
 
-        Environment.standardOut.WriteLine("Testing against 262.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\test262",
+        TypeScript.Environment.standardOut.WriteLine("Testing against 262.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\test262",
             fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, /*verify:*/ true, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing pretty printer.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\prettyPrinter\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing pretty printer.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\prettyPrinter\\ecmascript5",
             fileName => this.runPrettyPrinter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing findToken.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\findToken\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing findToken.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\findToken\\ecmascript5",
             fileName => this.runFindToken(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing trivia.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing trivia.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
             fileName => this.runTrivia(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
 
-        Environment.standardOut.WriteLine("Testing emitter 2.");
-        this.runTests(Environment.currentDirectory() + "\\tests\\Fidelity\\emitter2\\ecmascript5",
+        TypeScript.Environment.standardOut.WriteLine("Testing emitter 2.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\emitter2\\ecmascript5",
             fileName => this.runEmitter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate, /*justText:*/ true));
     }
 
@@ -123,11 +123,11 @@ class Program {
 
     private testIncrementalSpeed(fileName: string): void {
         var repeat = 500;
-        Environment.standardOut.WriteLine("Incremental Perf - Changed Text.");
+        TypeScript.Environment.standardOut.WriteLine("Incremental Perf - Changed Text.");
         this.testIncrementalSpeedChange(fileName, repeat);
 
-        Environment.standardOut.WriteLine("");
-        Environment.standardOut.WriteLine("Incremental Perf - No Changed Text.");
+        TypeScript.Environment.standardOut.WriteLine("");
+        TypeScript.Environment.standardOut.WriteLine("Incremental Perf - No Changed Text.");
         this.testIncrementalSpeedNoChange(fileName, repeat);
     }
 
@@ -136,8 +136,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
@@ -173,15 +173,15 @@ class Program {
         var rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         var rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
 
-        // Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
-        Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
+        // TypeScript.Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
+        TypeScript.Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
 
         rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalASTTime;
         rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
 
-        // Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
-        Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
+        // TypeScript.Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
+        TypeScript.Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
 
         var allOldElements = TypeScript.SyntaxElementsCollector.collectElements(originalTree.sourceUnit());
         var allNewElements = TypeScript.SyntaxElementsCollector.collectElements(tree.sourceUnit());
@@ -189,7 +189,7 @@ class Program {
         var reuse = TypeScript.ArrayUtilities.where(allNewElements,
             v => TypeScript.ArrayUtilities.contains(allOldElements, v)).length;
 
-        Environment.standardOut.WriteLine("Reuse: " + reuse / allNewElements.length);
+        TypeScript.Environment.standardOut.WriteLine("Reuse: " + reuse / allNewElements.length);
     }
 
     private testIncrementalSpeedChange(fileName: string, repeat: number): void {
@@ -197,8 +197,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
@@ -251,15 +251,15 @@ class Program {
         var rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         var rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
 
-        // Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
-        Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
+        // TypeScript.Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
+        TypeScript.Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
 
         rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalASTTime;
         rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
 
-        // Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
-        Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
+        // TypeScript.Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
+        TypeScript.Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
 
         var allOldElements = TypeScript.SyntaxElementsCollector.collectElements(originalTree.sourceUnit());
         var allNewElements = TypeScript.SyntaxElementsCollector.collectElements(tree.sourceUnit());
@@ -267,16 +267,16 @@ class Program {
         var reuse = TypeScript.ArrayUtilities.where(allNewElements,
             v => TypeScript.ArrayUtilities.contains(allOldElements, v)).length;
 
-        Environment.standardOut.WriteLine("Reuse: " + reuse / allNewElements.length);
+        TypeScript.Environment.standardOut.WriteLine("Reuse: " + reuse / allNewElements.length);
     }
 
     private handleException(fileName: string, e: Error): void {
-        Environment.standardOut.WriteLine("");
+        TypeScript.Environment.standardOut.WriteLine("");
         if ((<string>e.message).indexOf(fileName) < 0) {
-            Environment.standardOut.WriteLine("Exception: " + fileName + ": " + e.message);
+            TypeScript.Environment.standardOut.WriteLine("Exception: " + fileName + ": " + e.message);
         }
         else {
-            Environment.standardOut.WriteLine(e.message);
+            TypeScript.Environment.standardOut.WriteLine(e.message);
         }
     }
 
@@ -284,7 +284,7 @@ class Program {
         path: string,
         action: (fileName: string) => void) {
 
-        var testFiles = Environment.listFiles(path, null, { recursive: true });
+        var testFiles = TypeScript.Environment.listFiles(path, null, { recursive: true });
         var indexNum = 0;
 
         testFiles.forEach(fileName => {
@@ -292,7 +292,7 @@ class Program {
                 return;
             }
 
-            // Environment.standardOut.WriteLine(fileName);
+            // TypeScript.Environment.standardOut.WriteLine(fileName);
             try {
                 action(fileName);
             }
@@ -312,27 +312,27 @@ class Program {
             actualResult = justText ? result : JSON.stringify(result, null, 4);
             expectedFile = fileName + ".expected";
 
-            // Environment.standardOut.WriteLine("Generating baseline for: " + fileName);
-            Environment.writeFile(expectedFile, actualResult, /*writeByteOrderMark:*/ false);
+            // TypeScript.Environment.standardOut.WriteLine("Generating baseline for: " + fileName);
+            TypeScript.Environment.writeFile(expectedFile, actualResult, /*writeByteOrderMark:*/ false);
 
-            if (Environment.fileExists(actualFile)) {
-                Environment.deleteFile(actualFile);
+            if (TypeScript.Environment.fileExists(actualFile)) {
+                TypeScript.Environment.deleteFile(actualFile);
             }
         }
         else if (verify) {
             actualResult = justText ? result : JSON.stringify(result, null, 4);
 
             var expectedResult: string = null;
-            if (!Environment.fileExists(expectedFile)) {
-                Environment.writeFile(expectedFile, "", false);
+            if (!TypeScript.Environment.fileExists(expectedFile)) {
+                TypeScript.Environment.writeFile(expectedFile, "", false);
             }
             else {
-                expectedResult = Environment.readFile(expectedFile, /*codepage*/ null).contents;
+                expectedResult = TypeScript.Environment.readFile(expectedFile, /*codepage*/ null).contents;
             }
 
             if (expectedResult !== actualResult) {
-                Environment.standardOut.WriteLine(" ! Fail: " + actualFile);
-                Environment.writeFile(actualFile, actualResult, /*writeByteOrderMark:*/ false);
+                TypeScript.Environment.standardOut.WriteLine(" ! Fail: " + actualFile);
+                TypeScript.Environment.writeFile(actualFile, actualResult, /*writeByteOrderMark:*/ false);
 
                 if (!generate) {
                     var includeUnchangedRegions = expectedResult.length < 10240 && actualResult.length < 10240;
@@ -340,8 +340,8 @@ class Program {
                 }
             }
             else {
-                if (Environment.fileExists(actualFile)) {
-                    Environment.deleteFile(actualFile);
+                if (TypeScript.Environment.fileExists(actualFile)) {
+                    TypeScript.Environment.deleteFile(actualFile);
                 }
             }
         }
@@ -364,8 +364,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         totalSize += contents.length;
 
@@ -392,8 +392,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         totalSize += contents.length;
 
@@ -420,8 +420,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         totalSize += contents.length;
 
@@ -434,8 +434,8 @@ class Program {
         if (!allowErrors) {
             var diagnostics = tree.diagnostics();
             if (diagnostics.length > 0) {
-                Environment.standardOut.WriteLine(fileName);
-                Environment.standardOut.WriteLine("\t" + diagnostics[0].message());
+                TypeScript.Environment.standardOut.WriteLine(fileName);
+                TypeScript.Environment.standardOut.WriteLine("\t" + diagnostics[0].message());
             }
         }
 
@@ -460,8 +460,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         var text = TypeScript.TextFactory.createText(contents);
 
@@ -484,8 +484,8 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
-        // Environment.standardOut.WriteLine(fileName);
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
+        // TypeScript.Environment.standardOut.WriteLine(fileName);
 
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(languageVersion, true));
@@ -545,7 +545,7 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
         var text = TypeScript.TextFactory.createText(contents);
         var scanner = new TypeScript.Scanner(fileName, text, languageVersion);
@@ -571,7 +571,7 @@ class Program {
             return;
         }
 
-        var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
+        var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
         var text = TypeScript.TextFactory.createText(contents);
         var scanner = new TypeScript.Scanner(fileName, text, languageVersion);
@@ -606,9 +606,9 @@ class Program {
     }
 
     parseArguments(): void {
-        Environment.standardOut.WriteLine("Testing input files.");
-        for (var index in Environment.arguments) {
-            var fileName: string = Environment.arguments[index];
+        TypeScript.Environment.standardOut.WriteLine("Testing input files.");
+        for (var index in TypeScript.Environment.arguments) {
+            var fileName: string = TypeScript.Environment.arguments[index];
             if (specificFile !== undefined && fileName.indexOf(specificFile) < 0) {
                 continue;
             }
@@ -619,7 +619,7 @@ class Program {
 
     run262(): void {
         var path = "C:\\temp\\test262\\suite";
-        var testFiles = Environment.listFiles(path, null, { recursive: true });
+        var testFiles = TypeScript.Environment.listFiles(path, null, { recursive: true });
 
         var testCount = 0;
         var failCount = 0;
@@ -634,7 +634,7 @@ class Program {
 
             // All 262 files are utf8.  But they dont' have a BOM.  Force them to be read in
             // as UTF8.
-            var contents = Environment.readFile(fileName, /*codepage*/ null).contents;
+            var contents = TypeScript.Environment.readFile(fileName, /*codepage*/ null).contents;
 
             var isNegative = contents.indexOf("@negative") >= 0
 
@@ -651,14 +651,14 @@ class Program {
                     if (canParseSuccessfully) {
                         // We expected to parse this successfully.  Report an error if we didn't.
                         if (tree.diagnostics() && tree.diagnostics().length > 0) {
-                            Environment.standardOut.WriteLine("Negative test. Unexpected failure: " + fileName);
+                            TypeScript.Environment.standardOut.WriteLine("Negative test. Unexpected failure: " + fileName);
                             failCount++;
                         }
                     }
                     else {
                         // We expected to fail on this.  Report an error if we don't.
                         if (tree.diagnostics() === null || tree.diagnostics().length === 0) {
-                            Environment.standardOut.WriteLine("Negative test. Unexpected success: " + fileName);
+                            TypeScript.Environment.standardOut.WriteLine("Negative test. Unexpected success: " + fileName);
                             failCount++;
                         }
                     }
@@ -666,7 +666,7 @@ class Program {
                 else {
                     // Not a negative test.  We can't have any errors or skipped tokens.
                     if (tree.diagnostics() && tree.diagnostics().length > 0) {
-                        Environment.standardOut.WriteLine("Unexpected failure: " + fileName);
+                        TypeScript.Environment.standardOut.WriteLine("Unexpected failure: " + fileName);
                         failCount++;
                     }
                 }
@@ -677,14 +677,14 @@ class Program {
             }
         }
 
-        Environment.standardOut.WriteLine("");
-        Environment.standardOut.WriteLine("Test 262 results:");
-        Environment.standardOut.WriteLine("Test Count: " + testCount);
-        Environment.standardOut.WriteLine("Skip Count: " + skippedTests.length);
-        Environment.standardOut.WriteLine("Fail Count: " + failCount);
+        TypeScript.Environment.standardOut.WriteLine("");
+        TypeScript.Environment.standardOut.WriteLine("Test 262 results:");
+        TypeScript.Environment.standardOut.WriteLine("Test Count: " + testCount);
+        TypeScript.Environment.standardOut.WriteLine("Skip Count: " + skippedTests.length);
+        TypeScript.Environment.standardOut.WriteLine("Fail Count: " + failCount);
 
         for (var i = 0; i < skippedTests.length; i++) {
-            Environment.standardOut.WriteLine(skippedTests[i]);
+            TypeScript.Environment.standardOut.WriteLine(skippedTests[i]);
         }
     }
 }
@@ -714,5 +714,5 @@ var count = 1;
 //    program.parseArguments();
 //}
 
-Environment.standardOut.WriteLine("Total time: " + (totalTime / count));
-Environment.standardOut.WriteLine("Total size: " + (totalSize / count));
+TypeScript.Environment.standardOut.WriteLine("Total time: " + (totalTime / count));
+TypeScript.Environment.standardOut.WriteLine("Total size: " + (totalSize / count));

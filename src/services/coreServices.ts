@@ -21,7 +21,7 @@
 // Access to "Debug" object 
 var debugObjectHost = (<any>this);
 
-module Services {
+module TypeScript.Services {
 
     export interface ICoreServicesHost {
         logger: TypeScript.ILogger;

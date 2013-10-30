@@ -46,7 +46,7 @@ class CompilerBaselineRunner extends RunnerBase {
     public checkTestCodeOutput(fileName: string) {
         // strips the fileName from the path.
         var justName = fileName.replace(/^.*[\\\/]/, '');
-        var content = IO.readFile(fileName, /*codepage:*/ null).contents;
+        var content = TypeScript.IO.readFile(fileName, /*codepage:*/ null).contents;
         var testCaseContent = Harness.TestCaseParser.makeUnitsFromTest(content, fileName);
 
         var units = testCaseContent.testUnitData;
@@ -192,12 +192,12 @@ class CompilerBaselineRunner extends RunnerBase {
                         new TypeScript.NullLogger(), TypeScript.ImmutableCompilationSettings.defaultSettings());
 
                     compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal),
-                        ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
+                        TypeScript.ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
 
                     var allFiles = toBeCompiled.concat(otherFiles);
                     allFiles.forEach(file => {
                         compiler.addFile(file.unitName, TypeScript.ScriptSnapshot.fromString(file.content),
-                            ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
+                            TypeScript.ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
                     });
 
                     allFiles.forEach(file => {

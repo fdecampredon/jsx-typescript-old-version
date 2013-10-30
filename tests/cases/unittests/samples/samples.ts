@@ -11,7 +11,7 @@ describe('Compiling samples', function ()
 
     function loadSample(path: string): string
     {
-        return IO.readFile(Harness.userSpecifiedroot + 'samples/' + path, /*codepage:*/null).contents;
+        return TypeScript.IO.readFile(Harness.userSpecifiedroot + 'samples/' + path, /*codepage:*/null).contents;
     }
 
     function addUnitsAndCompile(units: string[], includeWin8Libs = false) {
@@ -22,7 +22,7 @@ describe('Compiling samples', function ()
             };
         });
         if (includeWin8Libs) {
-            ['winrt.d.ts', 'winjs.d.ts'].forEach(file => filesToAdd.push({ unitName: file, content: IO.readFile('typings/' + file, null).contents }));
+            ['winrt.d.ts', 'winjs.d.ts'].forEach(file => filesToAdd.push({ unitName: file, content: TypeScript.IO.readFile('typings/' + file, null).contents }));
         }
 
         var result: Harness.Compiler.CompilerResult;

@@ -7,4 +7,4 @@ var C = (function () {
     }
     return C;
 })();
-var c = new C() < number > ;
+var c = new C < number > ;

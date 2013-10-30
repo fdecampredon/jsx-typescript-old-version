@@ -1,5 +1,5 @@
 var myCars = new Array();
-var myCars2 = new []();
+var myCars2 = new [];
 var myCars3 = new Array({});
 var myCars4;
 var myCars5;

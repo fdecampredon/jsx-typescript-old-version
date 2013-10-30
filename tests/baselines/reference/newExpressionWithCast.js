@@ -8,7 +8,7 @@ function Test2() {
 }
 
 // parse error
-var test2 = new () < any > Test2();
+var test2 = new  < any > Test2();
 
 function Test3() {
 }

@@ -133,7 +133,7 @@ module FourSlash {
     export class TestState {
         // Language service instance
         public languageServiceShimHost: Harness.TypeScriptLS = null;
-        private languageService: Services.ILanguageService = null;
+        private languageService: TypeScript.Services.ILanguageService = null;
 
         // A reference to the language service's compiler state's compiler instance
         private compiler: () => { getSyntaxTree(fileName: string): TypeScript.SyntaxTree; getScript(fileName: string): TypeScript.Script; };
@@ -148,7 +148,7 @@ module FourSlash {
         // Whether or not we should format on keystrokes
         public enableFormatting = true;
 
-        public formatCodeOptions: Services.FormatCodeOptions = null;
+        public formatCodeOptions: TypeScript.Services.FormatCodeOptions = null;
 
         public editValidation = IncrementalEditValidation.Complete;
         public typingFidelity = TypingFidelity.Low;
@@ -203,10 +203,10 @@ module FourSlash {
             var compilerState = (<any>this.languageService).compiler;
             this.compiler = () => compilerState.compiler;
 
-            this.formatCodeOptions = new Services.FormatCodeOptions();
+            this.formatCodeOptions = new TypeScript.Services.FormatCodeOptions();
 
             this.testData.files.forEach(file => {
-                var filename = file.fileName.replace(IO.dirName(file.fileName), '').substr(1);
+                var filename = file.fileName.replace(TypeScript.IO.dirName(file.fileName), '').substr(1);
                 var filenameWithoutExtension = filename.substr(0, filename.lastIndexOf("."));
                 this.scenarioActions.push('<CreateFileOnDisk FileId="' + filename + '" FileNameWithoutExtension="' + filenameWithoutExtension + '" FileExtension=".ts"><![CDATA[' + file.content + ']]></CreateFileOnDisk>');
             });
@@ -254,7 +254,7 @@ module FourSlash {
             var fileToOpen: FourSlashFile = this.findFile(indexOrName);
             fileToOpen.fileName = switchToForwardSlashes(fileToOpen.fileName);
             this.activeFile = fileToOpen;
-            var filename = fileToOpen.fileName.replace(IO.dirName(fileToOpen.fileName), '').substr(1);
+            var filename = fileToOpen.fileName.replace(TypeScript.IO.dirName(fileToOpen.fileName), '').substr(1);
             this.scenarioActions.push('<OpenFile FileName="" SrcFileId="' + filename + '" FileId="' + filename + '" />');
         }
 
@@ -343,13 +343,13 @@ module FourSlash {
 
         private printErrorLog(expectErrors: boolean, errors: TypeScript.Diagnostic[]) {
             if (expectErrors) {
-                IO.printLine("Expected error not found.  Error list is:");
+                TypeScript.IO.printLine("Expected error not found.  Error list is:");
             } else {
-                IO.printLine("Unexpected error(s) found.  Error list is:");
+                TypeScript.IO.printLine("Unexpected error(s) found.  Error list is:");
             }
 
             errors.forEach(function (error: TypeScript.Diagnostic) {
-                IO.printLine("  minChar: " + error.start() + ", limChar: " + (error.start() + error.length()) + ", message: " + error.message() + "\n");
+                TypeScript.IO.printLine("  minChar: " + error.start() + ", limChar: " + (error.start() + error.length()) + ", message: " + error.message() + "\n");
             });
         }
 
@@ -361,7 +361,7 @@ module FourSlash {
 
             if (actual !== expected) {
                 var errorMsg = "Actual number of errors (" + actual + ") does not match expected number (" + expected + ")";
-                IO.printLine(errorMsg);
+                TypeScript.IO.printLine(errorMsg);
                 throw new Error(errorMsg);
             }
         }
@@ -450,7 +450,7 @@ module FourSlash {
                 }
                 errorMsg += "]\n";
 
-                IO.printLine(errorMsg);
+                TypeScript.IO.printLine(errorMsg);
                 throw new Error("Member list is not empty at Caret");
 
             }
@@ -470,7 +470,7 @@ module FourSlash {
                 }
                 errorMsg += "]\n";
 
-                IO.printLine(errorMsg);
+                TypeScript.IO.printLine(errorMsg);
                 throw new Error("Completion list is not empty at Caret");
 
             }
@@ -739,7 +739,7 @@ module FourSlash {
             return help.formal[activeFormal];
         }
 
-        private getActiveParameter(): { parameter: Services.FormalParameterInfo; typeParameter: Services.FormalTypeParameterInfo; } {
+        private getActiveParameter(): { parameter: TypeScript.Services.FormalParameterInfo; typeParameter: TypeScript.Services.FormalTypeParameterInfo; } {
             var currentSig = this.getActiveSignatureHelp();
             var help = this.languageService.getSignatureAtPosition(this.activeFile.fileName, this.currentCaretPosition);
 
@@ -790,7 +790,7 @@ module FourSlash {
         }
 
         public printBreakpointLocation(pos: number) {
-            IO.printLine(this.getBreakpointStatementLocation(pos));
+            TypeScript.IO.printLine(this.getBreakpointStatementLocation(pos));
         }
 
         public printBreakpointAtCurrentLocation() {
@@ -799,23 +799,23 @@ module FourSlash {
 
         public printCurrentParameterHelp() {
             var help = this.languageService.getSignatureAtPosition(this.activeFile.fileName, this.currentCaretPosition);
-            IO.printLine(JSON.stringify(help));
+            TypeScript.IO.printLine(JSON.stringify(help));
         }
 
         public printCurrentQuickInfo() {
             var quickInfo = this.languageService.getTypeAtPosition(this.activeFile.fileName, this.currentCaretPosition);
-            IO.printLine(JSON.stringify(quickInfo));
+            TypeScript.IO.printLine(JSON.stringify(quickInfo));
         }
 
         public printErrorList() {
             var syntacticErrors = this.languageService.getSyntacticDiagnostics(this.activeFile.fileName);
             var semanticErrors = this.languageService.getSemanticDiagnostics(this.activeFile.fileName);
             var errorList = syntacticErrors.concat(semanticErrors);
-            IO.printLine('Error list (' + errorList.length + ' errors)');
+            TypeScript.IO.printLine('Error list (' + errorList.length + ' errors)');
 
             if (errorList.length) {
                 errorList.forEach(err => {
-                    IO.printLine("start: " + err.start() + ", length: " + err.length() +
+                    TypeScript.IO.printLine("start: " + err.start() + ", length: " + err.length() +
                         ", message: " + err.message());
                 });
             }
@@ -826,7 +826,7 @@ module FourSlash {
                 var file = this.testData.files[i];
                 var active = (this.activeFile === file);
 
-                IO.printLine('=== Script (' + file.fileName + ') ' + (active ? '(active, cursor at |)' : '') + ' ===');
+                TypeScript.IO.printLine('=== Script (' + file.fileName + ') ' + (active ? '(active, cursor at |)' : '') + ' ===');
                 var snapshot = this.languageServiceShimHost.getScriptSnapshot(file.fileName);
                 var content = snapshot.getText(0, snapshot.getLength());
                 if (active) {
@@ -835,23 +835,23 @@ module FourSlash {
                 if (makeWhitespaceVisible) {
                     content = TestState.makeWhitespaceVisible(content);
                 }
-                IO.printLine(content);
+                TypeScript.IO.printLine(content);
             }
         }
 
         public printCurrentSignatureHelp() {
             var sigHelp = this.getActiveSignatureHelp();
-            IO.printLine(JSON.stringify(sigHelp));
+            TypeScript.IO.printLine(JSON.stringify(sigHelp));
         }
 
         public printMemberListMembers() {
             var members = this.getMemberListAtCaret();
-            IO.printLine(JSON.stringify(members));
+            TypeScript.IO.printLine(JSON.stringify(members));
         }
 
         public printCompletionListMembers() {
             var completions = this.getCompletionListAtCaret();
-            IO.printLine(JSON.stringify(completions));
+            TypeScript.IO.printLine(JSON.stringify(completions));
         }
 
         private editCheckpoint(filename: string) {
@@ -1065,10 +1065,10 @@ module FourSlash {
                 var compiler = new TypeScript.TypeScriptCompiler();
                 for (var i = 0; i < this.testData.files.length; i++) {
                     snapshot = this.languageServiceShimHost.getScriptSnapshot(this.testData.files[i].fileName);
-                    compiler.addFile(this.testData.files[i].fileName, TypeScript.ScriptSnapshot.fromString(snapshot.getText(0, snapshot.getLength())), ByteOrderMark.None, 0, true);
+                    compiler.addFile(this.testData.files[i].fileName, TypeScript.ScriptSnapshot.fromString(snapshot.getText(0, snapshot.getLength())), TypeScript.ByteOrderMark.None, 0, true);
                 }
 
-                compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal), ByteOrderMark.None, 0, true);
+                compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libTextMinimal), TypeScript.ByteOrderMark.None, 0, true);
 
                 for (var i = 0; i < this.testData.files.length; i++) {
                     var refSemanticErrs = JSON.stringify(compiler.getSemanticDiagnostics(this.testData.files[i].fileName));
@@ -1092,7 +1092,7 @@ module FourSlash {
             };
         }
 
-        private applyEdits(fileName: string, edits: Services.TextEdit[], isFormattingEdit = false): number {
+        private applyEdits(fileName: string, edits: TypeScript.Services.TextEdit[], isFormattingEdit = false): number {
             // We get back a set of edits, but langSvc.editScript only accepts one at a time. Use this to keep track
             // of the incremental offest from each edit to the next. Assumption is that these edit ranges don't overlap
             var runningOffset = 0;
@@ -1321,7 +1321,7 @@ module FourSlash {
         }
 
         public printNameOrDottedNameSpans(pos: number) {
-            IO.printLine(this.getNameOrDottedNameSpan(pos));
+            TypeScript.IO.printLine(this.getNameOrDottedNameSpan(pos));
         }
 
         public verifyOutliningSpans(spans: TextSpan[]) {
@@ -1395,7 +1395,7 @@ module FourSlash {
             }
 
             for (i = 0; i < positions.length; i++) {
-                var nameOf = (type: Services.TypeInfo) => type ? type.fullSymbolName : '(none)';
+                var nameOf = (type: TypeScript.Services.TypeInfo) => type ? type.fullSymbolName : '(none)';
 
                 var pullName: string, refName: string;
                 var anyFailed = false;
@@ -1447,7 +1447,7 @@ module FourSlash {
 
             var items = this.languageService.getNavigateToItems(searchValue);
             var actual = 0;
-            var item: Services.NavigateToItem = null;
+            var item: TypeScript.Services.NavigateToItem = null;
 
             // Count only the match that match the same MatchKind
             for (var i = 0; i < items.length; ++i) {
@@ -1522,11 +1522,11 @@ module FourSlash {
             var items = this.languageService.getNavigateToItems(searchValue);
             var length = items && items.length;
 
-            IO.printLine('NavigationItems list (' + length + ' items)');
+            TypeScript.IO.printLine('NavigationItems list (' + length + ' items)');
 
             for (var i = 0; i < length; i++) {
                 var item = items[i];
-                IO.printLine('name: ' + item.name + ', kind: ' + item.kind + ', parentName: ' + item.containerName + ', fileName: ' + item.fileName);
+                TypeScript.IO.printLine('name: ' + item.name + ', kind: ' + item.kind + ', parentName: ' + item.containerName + ', fileName: ' + item.fileName);
             }
         }
 
@@ -1534,11 +1534,11 @@ module FourSlash {
             var items = this.languageService.getScriptLexicalStructure(this.activeFile.fileName);
             var length = items && items.length;
 
-            IO.printLine('NavigationItems list (' + length + ' items)');
+            TypeScript.IO.printLine('NavigationItems list (' + length + ' items)');
 
             for (var i = 0; i < length; i++) {
                 var item = items[i];
-                IO.printLine('name: ' + item.name + ', kind: ' + item.kind + ', parentName: ' + item.containerName + ', fileName: ' + item.fileName);
+                TypeScript.IO.printLine('name: ' + item.name + ', kind: ' + item.kind + ', parentName: ' + item.containerName + ', fileName: ' + item.fileName);
             }
         }
 
@@ -1629,7 +1629,7 @@ module FourSlash {
             return result;
         }
 
-        private assertItemInCompletionList(items: Services.CompletionEntry[], name: string, type?: string, docComment?: string, fullSymbolName?: string, kind?: string) {
+        private assertItemInCompletionList(items: TypeScript.Services.CompletionEntry[], name: string, type?: string, docComment?: string, fullSymbolName?: string, kind?: string) {
             this.scenarioActions.push('<ShowCompletionList />');
             this.scenarioActions.push('<VerifyCompletionContainsItem ItemName="' + name  + '"/>');
 
@@ -1746,7 +1746,7 @@ module FourSlash {
     var fsErrors = new Harness.Compiler.WriterAggregator();
     export var xmlData: TestXmlData[] = [];
     export function runFourSlashTest(fileName: string) {
-        var content = IO.readFile(fileName, /*codepage:*/ null);
+        var content = TypeScript.IO.readFile(fileName, /*codepage:*/ null);
         var xml = runFourSlashTestContent(content.contents, fileName);
         xmlData.push(xml);
     }
@@ -1774,8 +1774,8 @@ module FourSlash {
         harnessCompiler.reset();
 
         var filesToAdd = [
-            { unitName: tsFn, content: IO.readFile(tsFn, /*codepage:*/ null).contents },
-            { unitName: fileName, content: IO.readFile(fileName, /*codepage:*/ null).contents }
+            { unitName: tsFn, content: TypeScript.IO.readFile(tsFn, /*codepage:*/ null).contents },
+            { unitName: fileName, content: TypeScript.IO.readFile(fileName, /*codepage:*/ null).contents }
         ];
         harnessCompiler.addInputFiles(filesToAdd);
         harnessCompiler.compile();

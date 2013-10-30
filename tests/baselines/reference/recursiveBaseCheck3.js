@@ -19,4 +19,4 @@ var C = (function (_super) {
     return C;
 })(A);
 
-(new C()).blah;
+(new C).blah;

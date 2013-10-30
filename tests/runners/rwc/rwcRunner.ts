@@ -69,8 +69,8 @@ class RWCRunner extends RunnerBase {
         this.htmlBaselineReport.reset();
 
         // Create folders if needed
-        IO.createDirectory(IO.dirName(this.outputPath));
-        IO.createDirectory(this.outputPath);
+        TypeScript.IO.createDirectory(TypeScript.IO.dirName(this.outputPath));
+        TypeScript.IO.createDirectory(this.outputPath);
 
         var runner = this;
 
@@ -115,7 +115,7 @@ class RWCRunner extends RunnerBase {
                     try {
                         // Compile the project
                         spec.compileList.forEach((item: string) => {
-                            content = IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
+                            content = TypeScript.IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
                             harnessCompiler.addInputFile({ unitName: spec.projectRoot + "/" + item, content: content });
                         });
 
@@ -137,21 +137,21 @@ class RWCRunner extends RunnerBase {
                         dtsresult = fsDeclOutput.lines.join("\r\n");
 
                         // Delete previous results 
-                        if (IO.fileExists(outputJsFilename))
-                            IO.deleteFile(outputJsFilename);
-                        if (IO.fileExists(outputErrorFilename))
-                            IO.deleteFile(outputErrorFilename);
-                        if (IO.fileExists(outputDeclarationFilename))
-                            IO.deleteFile(outputDeclarationFilename);
+                        if (TypeScript.IO.fileExists(outputJsFilename))
+                            TypeScript.IO.deleteFile(outputJsFilename);
+                        if (TypeScript.IO.fileExists(outputErrorFilename))
+                            TypeScript.IO.deleteFile(outputErrorFilename);
+                        if (TypeScript.IO.fileExists(outputDeclarationFilename))
+                            TypeScript.IO.deleteFile(outputDeclarationFilename);
 
                         // Create the results
-                        IO.writeFile(outputJsFilename, result, /*codepage*/ null);
-                        IO.writeFile(outputErrorFilename, errors, /*codepage*/ null);
-                        IO.writeFile(outputDeclarationFilename, dtsresult, /* codepath */ null);
+                        TypeScript.IO.writeFile(outputJsFilename, result, /*codepage*/ null);
+                        TypeScript.IO.writeFile(outputErrorFilename, errors, /*codepage*/ null);
+                        TypeScript.IO.writeFile(outputDeclarationFilename, dtsresult, /* codepath */ null);
                     } catch (e) {
                         hasCrashed = true;
                         var message = e.message + (e.stack ? '\r\n' + e.stack : '');
-                        IO.writeFile(outputCrashFilename, message, /*codepage*/ null);
+                        TypeScript.IO.writeFile(outputCrashFilename, message, /*codepage*/ null);
                         Harness.Assert.throwAssertError(new Error("Failed compilation"));
                     }
                 });
@@ -164,10 +164,10 @@ class RWCRunner extends RunnerBase {
 
                 it("error baseline check", () => {
                     if (!hasCrashed) {
-                        if (!IO.fileExists(baselineErrorFilename)) {
+                        if (!TypeScript.IO.fileExists(baselineErrorFilename)) {
                             var expected = "<no content>";
                         } else {
-                            var expected = IO.readFile(baselineErrorFilename, null).contents;
+                            var expected = TypeScript.IO.readFile(baselineErrorFilename, null).contents;
                         }
                         // remove line sensitivity
                         expected = expected.replace(/\r\n?/g, '\n');
@@ -185,10 +185,10 @@ class RWCRunner extends RunnerBase {
 
                 it("codegen baseline check", () => {
                     if (!hasCrashed) {
-                        if (!IO.fileExists(baselineJsFilename)) {
+                        if (!TypeScript.IO.fileExists(baselineJsFilename)) {
                             var expected = "<no content >";
                         } else {
-                            var expected = IO.readFile(baselineJsFilename, null).contents;
+                            var expected = TypeScript.IO.readFile(baselineJsFilename, null).contents;
                         }
 
                         // remove line sensitivity
@@ -206,10 +206,10 @@ class RWCRunner extends RunnerBase {
 
                 it(".d.ts baseline check", () => {
                     if (!hasCrashed) {
-                        if (!IO.fileExists(baselineDeclarationFilename)) {
+                        if (!TypeScript.IO.fileExists(baselineDeclarationFilename)) {
                             var expected = "<no content>";
                         } else {
-                            var expected = IO.readFile(baselineDeclarationFilename, null).contents;
+                            var expected = TypeScript.IO.readFile(baselineDeclarationFilename, null).contents;
                         }
 
                         // remove line sensitivity
@@ -231,12 +231,12 @@ class RWCRunner extends RunnerBase {
                             new TypeScript.NullLogger());
 
                         compiler.addFile('lib.d.ts', TypeScript.ScriptSnapshot.fromString(Harness.Compiler.libText),
-                            ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
+                            TypeScript.ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
 
                         spec.compileList.forEach((item: string) => {
-                            content = IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
+                            content = TypeScript.IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
                             compiler.addFile(spec.projectRoot + "/" + item, TypeScript.ScriptSnapshot.fromString(content),
-                                ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
+                                TypeScript.ByteOrderMark.None, /*version:*/ 0, /*isOpen:*/ true);
                         });
 
                         spec.compileList.forEach(file => {
@@ -254,15 +254,15 @@ class RWCRunner extends RunnerBase {
                         var typesResult = typeLines.join('\n');
 
                         // write file for baseline updates
-                        if (IO.fileExists(outputTypesFilename)) {
-                            IO.deleteFile(outputTypesFilename);
+                        if (TypeScript.IO.fileExists(outputTypesFilename)) {
+                            TypeScript.IO.deleteFile(outputTypesFilename);
                         }
-                        IO.writeFile(outputTypesFilename, typesResult, /*codepage*/ null);
+                        TypeScript.IO.writeFile(outputTypesFilename, typesResult, /*codepage*/ null);
                         
-                        if (!IO.fileExists(baselineTypesFilename)) {
+                        if (!TypeScript.IO.fileExists(baselineTypesFilename)) {
                             var expected = "<no content>";
                         } else {
-                            var expected = IO.readFile(baselineTypesFilename, null).contents;
+                            var expected = TypeScript.IO.readFile(baselineTypesFilename, null).contents;
                         }
 
                         expected = expected.replace(/\r\n?/g, '\n');
@@ -297,7 +297,7 @@ class RWCRunner extends RunnerBase {
 
         // Read in and evaluate the test list.
         try {
-            eval(IO.readFile(this.runnerPath + "/TestProjectList.js", null).contents);
+            eval(TypeScript.IO.readFile(this.runnerPath + "/TestProjectList.js", null).contents);
         } catch (ex) {
             Harness.Assert.throwAssertError(new Error("Could not read or evaluate TestProjectList.js!"));
         }

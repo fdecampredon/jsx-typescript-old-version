@@ -3,4 +3,4 @@ var X = (function () {
     }
     return X;
 })();
-(new X()).blah;
+(new X).blah;

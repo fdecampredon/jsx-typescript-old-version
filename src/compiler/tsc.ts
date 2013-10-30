@@ -37,7 +37,7 @@ module TypeScript {
     }
 
     export class BatchCompiler implements IReferenceResolverHost {
-        public compilerVersion = "0.9.1.1";
+        public compilerVersion = "0.9.5.0";
         private inputFiles: string[] = [];
         private compilationSettings: ImmutableCompilationSettings;
         private resolvedFiles: IResolvedFile[] = [];
@@ -76,7 +76,7 @@ module TypeScript {
                     this.logger.log("        scan imports:                     " + TypeScript.fileResolutionScanImportsTime);
                     this.logger.log("       import search:                     " + TypeScript.fileResolutionImportFileSearchTime);
                     this.logger.log("        get lib.d.ts:                     " + TypeScript.fileResolutionGetDefaultLibraryTime);
-                    
+
                     this.logger.log("SyntaxTree parse time:                    " + TypeScript.syntaxTreeParseTime);
                     this.logger.log("Syntax Diagnostics time:                  " + TypeScript.syntaxDiagnosticsTime);
                     this.logger.log("AST translation time:                     " + TypeScript.astTranslationTime);
@@ -88,7 +88,7 @@ module TypeScript {
 
                     this.logger.log("Total number of symbols created:          " + TypeScript.pullSymbolID);
                     this.logger.log("Specialized types created:                " + TypeScript.nSpecializationsCreated);
-                    this.logger.log("Specialized signatures created:           " + TypeScript.nSpecializedSignaturesCreated);                    
+                    this.logger.log("Specialized signatures created:           " + TypeScript.nSpecializedSignaturesCreated);
 
                     this.logger.log("  IsExternallyVisibleTime:                " + TypeScript.declarationEmitIsExternallyVisibleTime);
                     this.logger.log("  TypeSignatureTime:                      " + TypeScript.declarationEmitTypeSignatureTime);
@@ -208,7 +208,7 @@ module TypeScript {
             var mutableSettings = new CompilationSettings();
             opts.option('out', {
                 usage: {
-                    locCode: DiagnosticCode.Concatenate_and_emit_output_to_single_file, 
+                    locCode: DiagnosticCode.Concatenate_and_emit_output_to_single_file,
                     args: null
                 },
                 type: DiagnosticCode.file2,
@@ -734,8 +734,8 @@ module TypeScript {
             return cachedValue;
         }
     }
-}
 
-// Start the batch compilation using the current hosts IO
-var batch = new TypeScript.BatchCompiler(IO);
-batch.batchCompile();
+    // Start the batch compilation using the current hosts IO
+    var batch = new TypeScript.BatchCompiler(IO);
+    batch.batchCompile();
+}

@@ -14,7 +14,7 @@
 //
 ///<reference path='typescriptServices.ts' />
 
-module Services {
+module TypeScript.Services {
     // Information about a specific host file.
     class HostFileInformation {
         private _sourceText: TypeScript.IScriptSnapshot;
@@ -24,7 +24,7 @@ module Services {
             private host: ILanguageServiceHost,
             public version: number,
             public isOpen: boolean,
-            public byteOrderMark: ByteOrderMark) {
+            public byteOrderMark: TypeScript.ByteOrderMark) {
             this._sourceText = null;
         }
         
@@ -93,7 +93,7 @@ module Services {
             return this._fileNameToEntry.lookup(TypeScript.switchToForwardSlashes(fileName)).isOpen;
         }
 
-        public getByteOrderMark(fileName: string): ByteOrderMark {
+        public getByteOrderMark(fileName: string): TypeScript.ByteOrderMark {
             return this._fileNameToEntry.lookup(TypeScript.switchToForwardSlashes(fileName)).byteOrderMark;
         }
 
@@ -322,6 +322,10 @@ module Services {
         public fileNames(): string[] {
             this.synchronizeHostData();
             return this.compiler.fileNames();
+        }
+
+        public cleanupSemanticCache(): void {
+            this.compiler.cleanupSemanticCache();
         }
 
         public getDocument(fileName: string): TypeScript.Document {

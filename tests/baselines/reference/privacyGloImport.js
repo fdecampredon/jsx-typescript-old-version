@@ -8,7 +8,7 @@ var m1;
         })();
         m1_M1_public.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m1_M1_public.f1 = f1;
         m1_M1_public.v1 = c1;
@@ -25,7 +25,7 @@ var m1;
         })();
         m1_M2_private.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m1_M2_private.f1 = f1;
         m1_M2_private.v1 = c1;
@@ -88,7 +88,7 @@ var glo_M1_public;
     })();
     glo_M1_public.c1 = c1;
     function f1() {
-        return new c1();
+        return new c1;
     }
     glo_M1_public.f1 = f1;
     glo_M1_public.v1 = c1;

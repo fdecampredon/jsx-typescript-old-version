@@ -15,7 +15,7 @@
 
 ///<reference path='typescriptServices.ts' />
 
-module Services {
+module TypeScript.Services {
     export enum EndOfLineState {
         Start,
         InMultiLineCommentTrivia,

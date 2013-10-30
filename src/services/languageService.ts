@@ -16,7 +16,7 @@
 ///<reference path='typescriptServices.ts' />
 ///<reference path='diagnosticServices.ts' />
 
-module Services {
+module TypeScript.Services {
 
     //
     // Public interface of the host of a language service instance.
@@ -27,9 +27,9 @@ module Services {
         getScriptFileNames(): string[];
         getScriptVersion(fileName: string): number;
         getScriptIsOpen(fileName: string): boolean;
-        getScriptByteOrderMark(fileName: string): ByteOrderMark;
+        getScriptByteOrderMark(fileName: string): TypeScript.ByteOrderMark;
         getScriptSnapshot(fileName: string): TypeScript.IScriptSnapshot;
-        getDiagnosticsObject(): Services.ILanguageServicesDiagnostics;
+        getDiagnosticsObject(): TypeScript.Services.ILanguageServicesDiagnostics;
         getLocalizedDiagnosticMessages(): any;
     }
 
@@ -40,6 +40,8 @@ module Services {
     export interface ILanguageService {
         // Note: refresh is a no-op now.  It is only around for back compat purposes.
         refresh(): void;
+
+        cleanupSemanticCache(): void;
 
         getSyntacticDiagnostics(fileName: string): TypeScript.Diagnostic[];
         getSemanticDiagnostics(fileName: string): TypeScript.Diagnostic[];
@@ -65,7 +67,7 @@ module Services {
 
         getOutliningRegions(fileName: string): TypeScript.TextSpan[];
         getBraceMatchingAtPosition(fileName: string, position: number): TypeScript.TextSpan[];
-        getIndentationAtPosition(fileName: string, position: number, options: Services.EditorOptions): number;
+        getIndentationAtPosition(fileName: string, position: number, options: TypeScript.Services.EditorOptions): number;
 
         getFormattingEditsForRange(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[];
         getFormattingEditsForDocument(fileName: string, minChar: number, limChar: number, options: FormatCodeOptions): TextEdit[];

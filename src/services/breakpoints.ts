@@ -3,7 +3,7 @@
 
 ///<reference path='typescriptServices.ts' />
 
-module Services.Breakpoints {
+module TypeScript.Services.Breakpoints {
     function createBreakpointSpanInfo(parentElement: TypeScript.PositionedElement, ...childElements: TypeScript.ISyntaxElement[]): SpanInfo {
         if (!parentElement) {
             return null;

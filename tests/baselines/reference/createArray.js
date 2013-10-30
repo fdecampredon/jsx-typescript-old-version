@@ -1,4 +1,4 @@
-var na = new number[]();
+var na = new number[];
 
 var C = (function () {
     function C() {
@@ -6,9 +6,9 @@ var C = (function () {
     return C;
 })();
 
-new C[]();
-var ba = new boolean[]();
-var sa = new string[]();
+new C[];
+var ba = new boolean[];
+var sa = new string[];
 function f(s) {
     return 0;
 }
@@ -16,4 +16,4 @@ if (ba[14]) {
     na[2] = f(sa[3]);
 }
 
-new C[1](); // not an error
+new C[1]; // not an error

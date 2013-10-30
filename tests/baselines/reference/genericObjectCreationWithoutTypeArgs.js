@@ -5,6 +5,6 @@ var SS = (function () {
 })();
 
 var x1 = new SS();
-var x2 = new SS() < number > ;
+var x2 = new SS < number > ;
 var x3 = new SS();
-var x4 = new SS();
+var x4 = new SS;

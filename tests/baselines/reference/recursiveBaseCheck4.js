@@ -11,4 +11,4 @@ var M = (function (_super) {
     }
     return M;
 })(M);
-(new M()).blah;
+(new M).blah;

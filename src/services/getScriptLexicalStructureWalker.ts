@@ -1,4 +1,4 @@
-module Services {
+module TypeScript.Services {
     export class GetScriptLexicalStructureWalker extends TypeScript.PositionTrackingWalker {
         private nameStack: string[] = [];
         private kindStack: string[] = [];

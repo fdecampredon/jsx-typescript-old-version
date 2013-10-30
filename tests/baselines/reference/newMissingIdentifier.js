@@ -1,1 +1,1 @@
-var x = new ()();
+var x = new ();

@@ -3,7 +3,7 @@ var B = (function () {
     }
     return B;
 })();
-var b = new B();
+var b = new B;
 
 var C = (function () {
     function C() {
@@ -11,5 +11,5 @@ var C = (function () {
     return C;
 })();
 
-var c = new C();
-var c2 = new C() < number > ;
+var c = new C;
+var c2 = new C < number > ;

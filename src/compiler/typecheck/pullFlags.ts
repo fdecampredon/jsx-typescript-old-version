@@ -40,6 +40,16 @@ module TypeScript {
         SomeInitializedModule = InitializedModule | InitializedDynamicModule | Enum,
     }
 
+    export function hasModifier(modifiers: PullElementFlags[], flag: PullElementFlags): boolean {
+        for (var i = 0, n = modifiers.length; i < n; i++) {
+            if (hasFlag(modifiers[i], flag)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     export enum PullElementKind {
         None = 0,
         Global = 0,

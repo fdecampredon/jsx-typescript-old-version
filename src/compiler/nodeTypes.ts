@@ -43,6 +43,12 @@ module TypeScript {
         TypeRef,
         TypeQuery,
         QualifiedName,
+        FunctionType,
+        ConstructorType,
+        CallSignature,
+        ConstructSignature,
+        MethodSignature,
+        PropertySignature,
 
         // Declarations
         FunctionDeclaration,

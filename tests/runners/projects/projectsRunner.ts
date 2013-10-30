@@ -3,12 +3,12 @@
 ///<reference path="../runnerBase.ts" />
 
 class SourceFile {
-    constructor(public scriptSnapshot: TypeScript.IScriptSnapshot, public byteOrderMark: ByteOrderMark) {
+    constructor(public scriptSnapshot: TypeScript.IScriptSnapshot, public byteOrderMark: TypeScript.ByteOrderMark) {
     }
 }
 
 class HarnessBatch implements TypeScript.IReferenceResolverHost {
-    private host: IIO;
+    private host: TypeScript.IIO;
     public errout: Harness.Compiler.WriterAggregator;
     private inputFiles: string[];
     private resolvedFiles: TypeScript.IResolvedFile[];
@@ -25,7 +25,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         sourceRoot: string,
         compilationSettings: TypeScript.CompilationSettings) {
 
-        this.host = IO;
+        this.host = TypeScript.IO;
         compilationSettings.generateDeclarationFiles = getDeclareFiles;
         compilationSettings.mapSourceFiles = generateMapFiles;
         compilationSettings.outFileOption = outFileOption;
@@ -96,7 +96,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
             }
         }
 
-        for (var i = compiler.compile(path => IO.resolvePath(path)); i.moveNext();) {
+            for (var i = compiler.compile(path => TypeScript.IO.resolvePath(path)); i.moveNext();) {
             var result = i.current();
 
             result.diagnostics.forEach(d => this.addDiagnostic(d));
@@ -176,7 +176,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
         if (TypeScript.isRooted(unQuotedPath) || !directory) {
             normalizedPath = unQuotedPath;
         } else {
-            normalizedPath = IOUtils.combine(directory, unQuotedPath);
+            normalizedPath = TypeScript.IOUtils.combine(directory, unQuotedPath);
         }
 
         // get the absolute path
@@ -247,8 +247,8 @@ class ProjectRunner extends RunnerBase {
                 var files = outputFiles.concat(declareFiles);
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
-                    if (IO.fileExists(file)) {
-                        IO.deleteFile(file);
+                    if (TypeScript.IO.fileExists(file)) {
+                        TypeScript.IO.deleteFile(file);
                     }
                 }
             }
@@ -274,7 +274,7 @@ class ProjectRunner extends RunnerBase {
 
             function assertAllFilesExist(files: string[]) {
                 for (var i = 0; i < files.length; i++) {
-                    if (!IO.fileExists(files[i])) {
+                    if (!TypeScript.IO.fileExists(files[i])) {
                         throw new Error("Expected the file " + files[i] + " to exist.");
                     }
                 }
@@ -323,7 +323,7 @@ class ProjectRunner extends RunnerBase {
                     return writeGeneratedFile(generatedEmitFiles, fn, contents, writeByteOrderMark);
                 }
 
-                var writeEmitFile = (fileName: string, contents: string, writeByteOrderMark: boolean) => IOUtils.writeFileAndFolderStructure(IO, fileName, contents, writeByteOrderMark);
+                var writeEmitFile = (fileName: string, contents: string, writeByteOrderMark: boolean) => TypeScript.IOUtils.writeFileAndFolderStructure(TypeScript.IO, fileName, contents, writeByteOrderMark);
                 var verifyEmitFiles = false;
                 if (spec.verifyEmitFiles) {
                     verifyEmitFiles = true;
@@ -337,7 +337,7 @@ class ProjectRunner extends RunnerBase {
                     sourcemapDir = "sourcemap/"
                 }
 
-                var baseFileName = TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/" + spec.projectRoot + "/";
+                var baseFileName = TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/" + spec.projectRoot + "/";
                 var outputOption = "";
                 if (spec.outputOption) {
                     outputOption = baseFileName + spec.outputOption;
@@ -372,7 +372,7 @@ class ProjectRunner extends RunnerBase {
                         var expectedfileName = baseFileName + expectedFiles[i];
 
                         var generatedFile = TypeScript.ArrayUtilities.firstOrDefault(
-                            generatedFiles, f => IO.resolvePath(f.fileName) === IO.resolvePath(expectedfileName));
+                            generatedFiles, f => TypeScript.IO.resolvePath(f.fileName) === TypeScript.IO.resolvePath(expectedfileName));
 
                         Harness.Assert.notNull(generatedFile);
                         if (spec.verifyFileNamesOnly) {
@@ -420,9 +420,9 @@ class ProjectRunner extends RunnerBase {
                         }
 
                         var localFileName = baseFileName + "local/" + codeGenType + "/" + sourcemapDir + mapRootDir + sourceRootDir + expectedFiles[i];
-                        var localFile = IOUtils.writeFileAndFolderStructure(IO, localFileName, fileContents, /*writeByteOrderMark:*/ false);
+                        var localFile = TypeScript.IOUtils.writeFileAndFolderStructure(TypeScript.IO, localFileName, fileContents, /*writeByteOrderMark:*/ false);
                         var referenceFileName = baseFileName + "reference/" + codeGenType + "/" + sourcemapDir + mapRootDir + sourceRootDir + expectedFiles[i];
-                        Harness.Assert.noDiff(fileContents, IO.readFile(referenceFileName, /*codepage:*/ null).contents);
+                        Harness.Assert.noDiff(fileContents, TypeScript.IO.readFile(referenceFileName, /*codepage:*/ null).contents);
                     }
                 }
 
@@ -452,9 +452,9 @@ class ProjectRunner extends RunnerBase {
 
                 var verifySourceMapRecord = (sourceMapContents: string, baselineName: string) => {
                     var localFileName = baseFileName + "local/" + codeGenType + "/" + sourcemapDir + mapRootDir + sourceRootDir + baselineName;
-                    var localFile = IOUtils.writeFileAndFolderStructure(IO, localFileName, sourceMapContents, /*writeByteOrderMark:*/ false);
+                    var localFile = TypeScript.IOUtils.writeFileAndFolderStructure(TypeScript.IO, localFileName, sourceMapContents, /*writeByteOrderMark:*/ false);
                     var referenceFileName = baseFileName + "reference/" + codeGenType + "/" + sourcemapDir + mapRootDir + sourceRootDir + baselineName;
-                    Harness.Assert.noDiff(sourceMapContents, IO.readFile(referenceFileName, /*codepage:*/ null).contents);
+                    Harness.Assert.noDiff(sourceMapContents, TypeScript.IO.readFile(referenceFileName, /*codepage:*/ null).contents);
                 }
 
                 /********************************************************
@@ -590,7 +590,7 @@ class ProjectRunner extends RunnerBase {
 
                     if (testExec && !spec.skipRun) {
                         var moduleName = spec.outputFiles[0].replace(/\.js$/, "");
-                        IO.writeFile(spec.projectRoot + '/driver.js', amdDriverTemplate.replace(/\{0}/g, moduleName), /*writeByteOrderMark:*/false);
+                        TypeScript.IO.writeFile(spec.projectRoot + '/driver.js', amdDriverTemplate.replace(/\{0}/g, moduleName), /*writeByteOrderMark:*/false);
 
                         it("runs without error", function (done: any) {
                             Exec.exec("node.exe", ['"' + spec.projectRoot + '/driver.js"'], function (res) {
@@ -669,12 +669,12 @@ class ProjectRunner extends RunnerBase {
                 , negative: true
                 , skipRun: true
                 , errors: [
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(1,1): error TS2071: Unable to resolve external module '\"./foo/bar.js\"'.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(1,1): error TS2072: Module cannot be aliased to a non-module type.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(2,1): error TS2071: Unable to resolve external module '\"baz\"'.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(2,1): error TS2072: Module cannot be aliased to a non-module type.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(3,1): error TS2071: Unable to resolve external module '\"./baz\"'.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(3,1): error TS2072: Module cannot be aliased to a non-module type."]
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(1,1): error TS2071: Unable to resolve external module '\"./foo/bar.js\"'.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(1,1): error TS2072: Module cannot be aliased to a non-module type.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(2,1): error TS2071: Unable to resolve external module '\"baz\"'.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(2,1): error TS2072: Module cannot be aliased to a non-module type.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(3,1): error TS2071: Unable to resolve external module '\"./baz\"'.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NoModule/decl.ts(3,1): error TS2072: Module cannot be aliased to a non-module type."]
             });
 
             tests.push({
@@ -756,7 +756,7 @@ class ProjectRunner extends RunnerBase {
             //        , outputFiles: ['external2.js']
             //        , negative: true
             //        , skipRun: true /* this requires a host which is able to resolve the script in the reference tag */ // TODO: What does this actually mean...
-            //        , errors: ['// ' + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/ext-int-ext/internal2.ts (2,19): Import declaration of external module is permitted only in global or top level dynamic modules']
+            //        , errors: ['// ' + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/ext-int-ext/internal2.ts (2,19): Import declaration of external module is permitted only in global or top level dynamic modules']
             //});
 
             tests.push({
@@ -794,8 +794,8 @@ class ProjectRunner extends RunnerBase {
                 , skipRun: true
                 , negative: true
                 , errors: [
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-WithRecursiveTypecheck/test2.ts(5,5): error TS2136: Import declarations in an internal module cannot reference an external module.",
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-WithRecursiveTypecheck/test1.ts(3,2): error TS2136: Import declarations in an internal module cannot reference an external module."
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-WithRecursiveTypecheck/test2.ts(5,5): error TS2136: Import declarations in an internal module cannot reference an external module.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-WithRecursiveTypecheck/test1.ts(3,2): error TS2136: Import declarations in an internal module cannot reference an external module."
                 ]
             });
 
@@ -808,7 +808,7 @@ class ProjectRunner extends RunnerBase {
                 , skipRun: true
                 , negative: true
                 , errors: [
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-SimpleCase/test1.ts(2,2): error TS2136: Import declarations in an internal module cannot reference an external module.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/NestedLocalModule-SimpleCase/test1.ts(2,2): error TS2136: Import declarations in an internal module cannot reference an external module.",
                 ]
             });
 
@@ -832,7 +832,7 @@ class ProjectRunner extends RunnerBase {
                 , negative: true
                 , skipRun: true
                 , errors: [
-                    TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/privacyCheck-IndirectReference/test.ts(2,12): error TS2031: Exported variable 'x' is using inaccessible module '" + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/privacyCheck-IndirectReference/indirectExternalModule.ts'.",
+                    TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/privacyCheck-IndirectReference/test.ts(2,12): error TS2031: Exported variable 'x' is using inaccessible module '" + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/privacyCheck-IndirectReference/indirectExternalModule.ts'.",
                 ]
             });
 
@@ -845,8 +845,8 @@ class ProjectRunner extends RunnerBase {
             //        , outputFiles: ['test.js', 'mExported.js', 'mNonExported.js']
             //        , negative: true
             //        , skipRun: true
-            //        , errors: [ '// ' + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-InsideModule/test.ts (5,37): Import declaration of external module is permitted only in global or top level dynamic modules'
-            //            , '// ' + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-InsideModule/test.ts (24,33): Import declaration of external module is permitted only in global or top level dynamic modules']
+            //        , errors: [ '// ' + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-InsideModule/test.ts (5,37): Import declaration of external module is permitted only in global or top level dynamic modules'
+            //            , '// ' + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-InsideModule/test.ts (24,33): Import declaration of external module is permitted only in global or top level dynamic modules']
             //});
 
             //Harness.Assert.bug('No error for importing an external module in illegal scope');
@@ -858,16 +858,16 @@ class ProjectRunner extends RunnerBase {
             //        , outputFiles: ['test.js', 'mExported.js', 'mNonExported.js']
             //        , negative: true
             //        , skipRun: true
-            //        , errors: ['// ' + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts (2,37): Import declaration of external module is permitted only in global or top level dynamic modules'
-            //            , '// ' + TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts (42,33): Import declaration of external module is permitted only in global or top level dynamic modules'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(24,8): exported variable \'c1\' is using inaccessible module "mExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(26,12): exported function return type is using inaccessible module "mExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(28,8): exported variable \'x1\' is using inaccessible module "mExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(30,36): exported class \'class1\' extends class from private module "mExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(64,8): exported variable \'c3\' is using inaccessible module "mNonExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(66,12): exported function return type is using inaccessible module "mNonExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(68,8): exported variable \'x3\' is using inaccessible module "mNonExported"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(70,36): exported class \'class3\' extends class from private module "mNonExported"']
+            //        , errors: ['// ' + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts (2,37): Import declaration of external module is permitted only in global or top level dynamic modules'
+            //            , '// ' + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts (42,33): Import declaration of external module is permitted only in global or top level dynamic modules'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(24,8): exported variable \'c1\' is using inaccessible module "mExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(26,12): exported function return type is using inaccessible module "mExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(28,8): exported variable \'x1\' is using inaccessible module "mExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(30,36): exported class \'class1\' extends class from private module "mExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(64,8): exported variable \'c3\' is using inaccessible module "mNonExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(66,12): exported function return type is using inaccessible module "mNonExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(68,8): exported variable \'x3\' is using inaccessible module "mNonExported"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/privacyCheck-ImportInParent/test.ts(70,36): exported class \'class3\' extends class from private module "mNonExported"']
             //});
 
             tests.push({
@@ -901,7 +901,7 @@ class ProjectRunner extends RunnerBase {
                 , negative: true
                 , skipRun: true
                 , bug: '535531'
-                , errors: [TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/declareVariableCollision/in2.d.ts(1,1): error TS2000: Duplicate identifier 'a'."]
+                , errors: [TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/declareVariableCollision/in2.d.ts(1,1): error TS2000: Duplicate identifier 'a'."]
             })
 
             tests.push({
@@ -1005,9 +1005,9 @@ class ProjectRunner extends RunnerBase {
             //        , outputFiles: ['useModule.js', 'm4.js', 'm5.js']
             //        , negative: true
             //        , skipRun: true
-            //        , errors: [TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(3,0): exported variable \'d\' is using inaccessible module "m4"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(4,0): exported variable \'x\' is using inaccessible module "m4"'
-            //            , TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(7,4): exported function return type is using inaccessible module "m4"']
+            //        , errors: [TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(3,0): exported variable \'d\' is using inaccessible module "m4"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(4,0): exported variable \'x\' is using inaccessible module "m4"'
+            //            , TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + '/tests/cases/projects/declarations_IndirectImport/useModule.ts(7,4): exported function return type is using inaccessible module "m4"']
             //});
 
             tests.push({
@@ -1125,7 +1125,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'binMapRootDiskPath/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
-                , mapRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
+                , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
                 , skipRun: true
             });
             tests.push({
@@ -1161,7 +1161,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'binSourceRootDiskPath/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
-                , sourceRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
+                , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
                 , skipRun: true
             });
             tests.push({
@@ -1226,7 +1226,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootDiskPath'
-                , mapRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
+                , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
                 , skipRun: true
             });
 
@@ -1264,7 +1264,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootDiskPath'
-                , sourceRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
+                , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
                 , skipRun: true
             });
 
@@ -1409,7 +1409,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'binMapRootDiskPath/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
-                , mapRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
+                , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
                 , skipRun: true
             });
             tests.push({
@@ -1445,7 +1445,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'binSourceRootDiskPath/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
-                , sourceRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
+                , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
                 , skipRun: true
             });
             tests.push({
@@ -1507,7 +1507,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootDiskPath'
-                , mapRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
+                , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
                 , skipRun: true
             });
             tests.push({
@@ -1543,7 +1543,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootDiskPath'
-                , sourceRoot: TypeScript.switchToForwardSlashes(IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
+                , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
                 , skipRun: true
             });
             tests.push({
@@ -2518,9 +2518,9 @@ class ProjectRunner extends RunnerBase {
                 , skipRun: true
                 , negative: true
                 , errors: [
-                    IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(1,1): error TS5006: A file cannot have a reference to itself.',
-                    IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(2,1): error TS5007: Cannot resolve referenced file: \'nonExistingFile1.ts\'.',
-                    IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(3,1): error TS5007: Cannot resolve referenced file: \'nonExistingFile2.ts\'.']
+                    TypeScript.IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(1,1): error TS5006: A file cannot have a reference to itself.',
+                    TypeScript.IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(2,1): error TS5007: Cannot resolve referenced file: \'nonExistingFile1.ts\'.',
+                    TypeScript.IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\InvalidReferences\\main.ts(3,1): error TS5007: Cannot resolve referenced file: \'nonExistingFile2.ts\'.']
             });
 
 
@@ -2545,7 +2545,7 @@ class ProjectRunner extends RunnerBase {
                 , skipRun: true
                 , negative: true
                 , errors: [
-                    IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\No-default-lib\\test.ts(3,8): error TS2095: Could not find symbol \'Array\'.']
+                    TypeScript.IO.resolvePath(Harness.userSpecifiedroot) + '\\tests\\cases\\projects\\No-default-lib\\test.ts(3,8): error TS2095: Could not find symbol \'Array\'.']
             });
 
             tests.push({

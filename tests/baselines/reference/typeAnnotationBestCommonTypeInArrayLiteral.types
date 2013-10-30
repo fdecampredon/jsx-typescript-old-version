@@ -1,0 +1,35 @@
+=== tests/cases/compiler/typeAnnotationBestCommonTypeInArrayLiteral.ts ===
+Line 0 col 10 IdentifierName "IMenuItem" = IMenuItem
+Line 1 col 0 IdentifierName "id" = string
+Line 2 col 0 IdentifierName "type" = string
+Line 3 col 0 IdentifierName "link" = string
+Line 4 col 0 IdentifierName "classes" = string
+Line 5 col 0 IdentifierName "text" = string
+Line 6 col 0 IdentifierName "icon" = string
+Line 8 col 4 IdentifierName "menuData" = IMenuItem[]
+Line 8 col 14 IdentifierName "IMenuItem" = IMenuItem
+Line 8 col 28 ArrayLiteralExpression "[
+    {
+        "id": "ourLogo",
+        "type": "image",
+        "link": "",
+        "icon": "modules/menu/logo.svg"
+    }, {
+        "id": "productName",
+        "type": "default",
+        "link": "",
+        "text": "Product Name"
+    }
+]" = IMenuItem[]
+Line 9 col 0 ObjectLiteralExpression "{
+        "id": "ourLogo",
+        "type": "image",
+        "link": "",
+        "icon": "modules/menu/logo.svg"
+    }" = { "id": string; "type": string; "link": string; "icon": string; }
+Line 14 col 7 ObjectLiteralExpression "{
+        "id": "productName",
+        "type": "default",
+        "link": "",
+        "text": "Product Name"
+    }" = { "id": string; "type": string; "link": string; "text": string; }

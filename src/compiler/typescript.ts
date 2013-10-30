@@ -145,6 +145,10 @@ module TypeScript {
             return this.semanticInfoChain.getDocument(fileName);
         }
 
+        public cleanupSemanticCache(): void {
+            this.semanticInfoChain.invalidate();
+        }
+
         public addFile(fileName: string,
             scriptSnapshot: IScriptSnapshot,
             byteOrderMark: ByteOrderMark,
@@ -617,14 +621,14 @@ module TypeScript {
 
                     case NodeType.MemberVariableDeclaration:
                         var memberVariable = <MemberVariableDeclaration> current;
-                        inContextuallyTypedAssignment = memberVariable.variableDeclarator.typeExpr !== null;
+                        inContextuallyTypedAssignment = memberVariable.variableDeclarator.typeAnnotation !== null;
 
                         this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, memberVariable, memberVariable.variableDeclarator.equalsValueClause);
                         break;
 
                     case NodeType.VariableDeclarator:
-                        var variableDeclarator = <VariableDeclarator> current;
-                        inContextuallyTypedAssignment = variableDeclarator.typeExpr !== null;
+                        var variableDeclarator = <VariableDeclarator>current;
+                        inContextuallyTypedAssignment = variableDeclarator.typeAnnotation !== null;
 
                         this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, variableDeclarator, variableDeclarator.equalsValueClause);
                         break;
@@ -748,10 +752,10 @@ module TypeScript {
                             var contextualType: PullTypeSymbol = null;
 
                             if (enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction)) {
-                                var functionDeclaration = <FunctionDeclaration>enclosingDeclAST;
-                                if (functionDeclaration.returnTypeAnnotation) {
+                                var typeAnnotation = getTypeAnnotation(enclosingDeclAST);
+                                if (typeAnnotation) {
                                     // The containing function has a type annotation, propagate it as the contextual type
-                                    var returnTypeSymbol = resolver.resolveTypeReference(functionDeclaration.returnTypeAnnotation, resolutionContext);
+                                    var returnTypeSymbol = resolver.resolveTypeReference(typeAnnotation, resolutionContext);
                                     if (returnTypeSymbol) {
                                         inContextuallyTypedAssignment = true;
                                         contextualType = returnTypeSymbol;

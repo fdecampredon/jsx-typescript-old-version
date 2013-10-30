@@ -11,7 +11,7 @@ Line 2 col 15 InvocationExpression "Array.prototype.reduce.apply(ar, e ? [f, e] 
 Line 2 col 15 MemberAccessExpression "Array.prototype.reduce.apply" = (thisArg: any, argArray?: any) => any
 Line 2 col 15 MemberAccessExpression "Array.prototype.reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
 Line 2 col 15 MemberAccessExpression "Array.prototype" = any[]
-Line 2 col 15 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+Line 2 col 15 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
 Line 2 col 21 IdentifierName "prototype" = any[]
 Line 2 col 31 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
 Line 2 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any

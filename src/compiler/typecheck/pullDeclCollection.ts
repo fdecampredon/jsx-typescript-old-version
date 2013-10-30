@@ -23,7 +23,7 @@ module TypeScript {
         while (ast) {
             if (ast.nodeType() === NodeType.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>ast;
-                return ArrayUtilities.any(moduleDecl.members.members, m => m.nodeType() === NodeType.ExportAssignment);
+                return ArrayUtilities.any(moduleDecl.moduleElements.members, m => m.nodeType() === NodeType.ExportAssignment);
             }
 
             ast = ast.parent;
@@ -54,7 +54,7 @@ module TypeScript {
 
         var parent = context.getParent();
 
-        if (hasFlag(importDecl.getVarFlags(), VariableFlags.Exported) && !containingModuleHasExportAssignment(ast)) {
+        if (hasModifier(importDecl.modifiers, PullElementFlags.Exported) && !containingModuleHasExportAssignment(ast)) {
             declFlags |= PullElementFlags.Exported;
         }
 
@@ -157,7 +157,7 @@ module TypeScript {
         context.semanticInfoChain.setASTForDecl(decl, moduleDecl);
 
         // If we contain any code that requires initialization, then mark us as an initialized.
-        if (containsExecutableCode(moduleDecl.members)) {
+        if (containsExecutableCode(moduleDecl.moduleElements)) {
             decl.setFlags(declFlags | getInitializationFlag(decl));
 
             // create the value decl
@@ -187,7 +187,7 @@ module TypeScript {
 
                 // If we have a module in us, and it contains executable code, then we
                 // contain executable code.
-                if (containsExecutableCode(moduleDecl.members)) {
+                if (containsExecutableCode(moduleDecl.moduleElements)) {
                     return true;
                 }
             }
@@ -205,11 +205,11 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var constructorDeclKind = PullElementKind.Variable;
 
-        if ((hasFlag(classDecl.getVarFlags(), VariableFlags.Exported) || isParsingAmbientModule(classDecl, context)) && !containingModuleHasExportAssignment(classDecl)) {
+        if ((hasModifier(classDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(classDecl, context)) && !containingModuleHasExportAssignment(classDecl)) {
             declFlags |= PullElementFlags.Exported;
         }
 
-        if (hasFlag(classDecl.getVarFlags(), VariableFlags.Ambient) || isParsingAmbientModule(classDecl, context) || context.isDeclareFile) {
+        if (hasModifier(classDecl.modifiers, PullElementFlags.Ambient) || isParsingAmbientModule(classDecl, context) || context.isDeclareFile) {
             declFlags |= PullElementFlags.Ambient;
         }
 
@@ -256,7 +256,7 @@ module TypeScript {
     function preCollectInterfaceDecls(interfaceDecl: InterfaceDeclaration, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
 
-        if ((hasFlag(interfaceDecl.getVarFlags(), VariableFlags.Exported) || isParsingAmbientModule(interfaceDecl, context)) && !containingModuleHasExportAssignment(interfaceDecl)) {
+        if ((hasModifier(interfaceDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(interfaceDecl, context)) && !containingModuleHasExportAssignment(interfaceDecl)) {
             declFlags |= PullElementFlags.Exported;
         }
 
@@ -273,14 +273,14 @@ module TypeScript {
     function preCollectParameterDecl(argDecl: Parameter, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
 
-        if (hasFlag(argDecl.getVarFlags(), VariableFlags.Private)) {
+        if (hasModifier(argDecl.modifiers, PullElementFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
         }
 
-        if (hasFlag(argDecl.getFlags(), ASTFlags.OptionalName) || hasFlag(argDecl.id.getFlags(), ASTFlags.OptionalName)) {
+        if (hasFlag(argDecl.getFlags(), ASTFlags.OptionalName) || hasFlag(argDecl.identifier.getFlags(), ASTFlags.OptionalName)) {
             declFlags |= PullElementFlags.Optional;
         }
 
@@ -292,7 +292,7 @@ module TypeScript {
 
         var span = TextSpan.fromBounds(argDecl.minChar, argDecl.limChar);
 
-        var decl = new NormalPullDecl(argDecl.id.valueText(), argDecl.id.text(), PullElementKind.Parameter, declFlags, parent, span);
+        var decl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
 
         // If it has a default arg, record the fact that the parent has default args (we will need this during resolution)
         if (argDecl.equalsValueClause) {
@@ -304,11 +304,11 @@ module TypeScript {
         }
 
         // if it's a property type, we'll need to add it to the parent's parent as well
-        var isPublicOrPrivate = hasFlag(argDecl.getVarFlags(), VariableFlags.Public | VariableFlags.Private);
+        var isPublicOrPrivate = hasModifier(argDecl.modifiers, PullElementFlags.Public | PullElementFlags.Private);
         var isInConstructor = parent.kind === PullElementKind.ConstructorMethod;
         if (isPublicOrPrivate && isInConstructor) {
             var parentsParent = context.parentChain[context.parentChain.length - 2];
-            var propDecl = new NormalPullDecl(argDecl.id.valueText(), argDecl.id.text(), PullElementKind.Property, declFlags, parentsParent, span);
+            var propDecl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Property, declFlags, parentsParent, span);
             propDecl.setValueDecl(decl);
             decl.setFlag(PullElementFlags.PropertyParameter);
             propDecl.setFlag(PullElementFlags.PropertyParameter);
@@ -345,7 +345,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(typeParameterDecl.name.valueText(), typeParameterDecl.name.text(), PullElementKind.TypeParameter, declFlags, parent, span);
+        var decl = new NormalPullDecl(typeParameterDecl.identifier.valueText(), typeParameterDecl.identifier.text(), PullElementKind.TypeParameter, declFlags, parent, span);
         context.semanticInfoChain.setASTForDecl(decl, typeParameterDecl);
         context.semanticInfoChain.setDeclForAST(typeParameterDecl, decl);
 
@@ -356,18 +356,18 @@ module TypeScript {
     }
 
     // interface properties
-    function createPropertySignature(propertyDecl: VariableDeclarator, context: DeclCollectionContext): void {
+    function createPropertySignature(propertyDecl: PropertySignature, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Public;
         var parent = context.getParent();
         var declType = PullElementKind.Property;
 
-        if (hasFlag(propertyDecl.id.getFlags(), ASTFlags.OptionalName)) {
+        if (hasFlag(propertyDecl.propertyName.getFlags(), ASTFlags.OptionalName)) {
             declFlags |= PullElementFlags.Optional;
         }
 
         var span = TextSpan.fromBounds(propertyDecl.minChar, propertyDecl.limChar);
 
-        var decl = new NormalPullDecl(propertyDecl.id.valueText(), propertyDecl.id.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(propertyDecl.propertyName.valueText(), propertyDecl.propertyName.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(propertyDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, propertyDecl);
 
@@ -381,21 +381,21 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Property;
 
-        if (hasFlag(memberDecl.getVarFlags(), VariableFlags.Private)) {
+        if (hasModifier(memberDecl.modifiers, PullElementFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
         }
 
-        if (hasFlag(memberDecl.getVarFlags(), VariableFlags.Static)) {
+        if (hasModifier(memberDecl.modifiers, PullElementFlags.Static)) {
             declFlags |= PullElementFlags.Static;
         }
 
         var span = TextSpan.fromBounds(memberDecl.minChar, memberDecl.limChar);
         var parent = context.getParent();
 
-        var decl = new NormalPullDecl(memberDecl.variableDeclarator.id.valueText(), memberDecl.variableDeclarator.id.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(memberDecl.variableDeclarator.identifier.valueText(), memberDecl.variableDeclarator.identifier.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(memberDecl, decl);
         context.semanticInfoChain.setDeclForAST(memberDecl.variableDeclarator, decl);
         context.semanticInfoChain.setASTForDecl(decl, memberDecl);
@@ -409,11 +409,11 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Variable;
 
-        if ((hasFlag(varDecl.getVarFlags(), VariableFlags.Exported) || isParsingAmbientModule(varDecl, context)) && !containingModuleHasExportAssignment(varDecl)) {
+        if ((hasModifier(varDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(varDecl, context)) && !containingModuleHasExportAssignment(varDecl)) {
             declFlags |= PullElementFlags.Exported;
         }
 
-        if (hasFlag(varDecl.getVarFlags(), VariableFlags.Ambient) || isParsingAmbientModule(varDecl, context) || context.isDeclareFile) {
+        if (hasModifier(varDecl.modifiers, PullElementFlags.Ambient) || isParsingAmbientModule(varDecl, context) || context.isDeclareFile) {
             declFlags |= PullElementFlags.Ambient;
         }
 
@@ -425,7 +425,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(varDecl.id.valueText(), varDecl.id.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(varDecl.identifier.valueText(), varDecl.identifier.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(varDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, varDecl);
 
@@ -446,17 +446,11 @@ module TypeScript {
         }
 
         var varDecl = <VariableDeclarator>ast;
-
-        if (hasFlag(varDecl.getVarFlags(), VariableFlags.Property)) {
-            createPropertySignature(varDecl, context);
-        }
-        else {
-            createVariableDeclaration(varDecl, context);
-        }
+        createVariableDeclaration(varDecl, context);
     }
 
     // function type expressions
-    function createFunctionTypeDeclaration(functionTypeDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createFunctionTypeDeclaration(functionTypeDeclAST: FunctionType, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.FunctionType;
 
@@ -476,7 +470,7 @@ module TypeScript {
     }
 
     // constructor types
-    function createConstructorTypeDeclaration(constructorTypeDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createConstructorTypeDeclaration(constructorTypeDeclAST: ConstructorType, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.ConstructorType;
 
@@ -500,11 +494,11 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Function;
 
-        if ((hasFlag(funcDeclAST.getFunctionFlags(), FunctionFlags.Exported) || isParsingAmbientModule(funcDeclAST, context)) && !containingModuleHasExportAssignment(funcDeclAST)) {
+        if ((hasModifier(funcDeclAST.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(funcDeclAST, context)) && !containingModuleHasExportAssignment(funcDeclAST)) {
             declFlags |= PullElementFlags.Exported;
         }
 
-        if (hasFlag(funcDeclAST.getFunctionFlags(), FunctionFlags.Ambient) || isParsingAmbientModule(funcDeclAST, context) || context.isDeclareFile) {
+        if (hasModifier(funcDeclAST.modifiers, PullElementFlags.Ambient) || isParsingAmbientModule(funcDeclAST, context) || context.isDeclareFile) {
             declFlags |= PullElementFlags.Ambient;
         }
 
@@ -520,7 +514,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(funcDeclAST.name.valueText(), funcDeclAST.name.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(funcDeclAST.identifier.valueText(), funcDeclAST.identifier.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(funcDeclAST, decl);
         context.semanticInfoChain.setASTForDecl(decl, funcDeclAST);
 
@@ -580,39 +574,34 @@ module TypeScript {
     }
 
     function createMemberFunctionDeclaration(funcDecl: MemberFunctionDeclaration, context: DeclCollectionContext): void {
-        createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.propertyName, funcDecl.block, context);
-    }
-
-    // methods
-    function createAnyMemberFunctionDeclaration(memberFunctionDeclAST: AST, flags: FunctionFlags, name: Identifier, block: Block, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Method;
 
-        if (hasFlag(flags, FunctionFlags.Static)) {
+        if (hasModifier(funcDecl.modifiers, PullElementFlags.Static)) {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(flags, FunctionFlags.Private)) {
+        if (hasModifier(funcDecl.modifiers, PullElementFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
             declFlags |= PullElementFlags.Public;
         }
 
-        if (!block) {
+        if (!funcDecl.block) {
             declFlags |= PullElementFlags.Signature;
         }
 
-        if (hasFlag(name.getFlags(), ASTFlags.OptionalName)) {
+        if (hasFlag(funcDecl.propertyName.getFlags(), ASTFlags.OptionalName)) {
             declFlags |= PullElementFlags.Optional;
         }
 
-        var span = TextSpan.fromBounds(memberFunctionDeclAST.minChar, memberFunctionDeclAST.limChar);
+        var span = TextSpan.fromBounds(funcDecl.minChar, funcDecl.limChar);
         var parent = context.getParent();
 
-        var decl = new NormalPullDecl(name.valueText(), name.text(), declType, declFlags, parent, span);
-        context.semanticInfoChain.setDeclForAST(memberFunctionDeclAST, decl);
-        context.semanticInfoChain.setASTForDecl(decl, memberFunctionDeclAST);
+        var decl = new NormalPullDecl(funcDecl.propertyName.valueText(), funcDecl.propertyName.text(), declType, declFlags, parent, span);
+        context.semanticInfoChain.setDeclForAST(funcDecl, decl);
+        context.semanticInfoChain.setASTForDecl(decl, funcDecl);
 
         context.pushParent(decl);
     }
@@ -634,11 +623,24 @@ module TypeScript {
     }
 
     // call signatures
-    function createCallSignatureDeclaration(callSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createCallSignatureDeclaration(callSignature: CallSignature, context: DeclCollectionContext): void {
+        var isChildOfObjectType = callSignature.parent && callSignature.parent.parent &&
+            callSignature.parent.nodeType() === NodeType.List &&
+            callSignature.parent.parent.nodeType() === NodeType.ObjectType;
+
+        if (!isChildOfObjectType) {
+            // This was a call signature that was part of some other entity (like a function 
+            // declaration or construct signature).  Those are already handled specially and
+            // we don't want to end up making another call signature for them.  We only want
+            // to make an actual call signature if we're a standalone call signature in an 
+            // object/interface type.
+            return;
+        }
+
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.CallSignature;
 
-        var span = TextSpan.fromBounds(callSignatureDeclAST.minChar, callSignatureDeclAST.limChar);
+        var span = TextSpan.fromBounds(callSignature.minChar, callSignature.limChar);
 
         var parent = context.getParent();
 
@@ -647,14 +649,35 @@ module TypeScript {
         }
 
         var decl = new NormalPullDecl("", "", declType, declFlags, parent, span);
-        context.semanticInfoChain.setDeclForAST(callSignatureDeclAST, decl);
-        context.semanticInfoChain.setASTForDecl(decl, callSignatureDeclAST);
+        context.semanticInfoChain.setDeclForAST(callSignature, decl);
+        context.semanticInfoChain.setASTForDecl(decl, callSignature);
+
+        context.pushParent(decl);
+    }
+
+    function createMethodSignatureDeclaration(method: MethodSignature, context: DeclCollectionContext): void {
+        var declFlags = PullElementFlags.None;
+        var declType = PullElementKind.Method;
+
+        declFlags |= PullElementFlags.Public;
+        declFlags |= PullElementFlags.Signature;
+
+        if (hasFlag(method.propertyName.getFlags(), ASTFlags.OptionalName)) {
+            declFlags |= PullElementFlags.Optional;
+        }
+
+        var span = TextSpan.fromBounds(method.minChar, method.limChar);
+        var parent = context.getParent();
+
+        var decl = new NormalPullDecl(method.propertyName.valueText(), method.propertyName.text(), declType, declFlags, parent, span);
+        context.semanticInfoChain.setDeclForAST(method, decl);
+        context.semanticInfoChain.setASTForDecl(decl, method);
 
         context.pushParent(decl);
     }
 
     // construct signatures
-    function createConstructSignatureDeclaration(constructSignatureDeclAST: FunctionDeclaration, context: DeclCollectionContext): void {
+    function createConstructSignatureDeclaration(constructSignatureDeclAST: ConstructSignature, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.ConstructSignature;
 
@@ -706,11 +729,11 @@ module TypeScript {
         var declFlags = PullElementFlags.Public;
         var declType = PullElementKind.GetAccessor;
 
-        if (hasFlag(getAccessorDeclAST.getFunctionFlags(), FunctionFlags.Static)) {
+        if (hasModifier(getAccessorDeclAST.modifiers, PullElementFlags.Static)) {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(getAccessorDeclAST.getFunctionFlags(), FunctionFlags.Private)) {
+        if (hasModifier(getAccessorDeclAST.modifiers, PullElementFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
@@ -733,18 +756,18 @@ module TypeScript {
     }
 
     function createFunctionExpressionDeclaration(expression: FunctionExpression, context: DeclCollectionContext): void {
-        createAnyFunctionExpressionDeclaration(expression, expression.name, context);
+        createAnyFunctionExpressionDeclaration(expression, expression.identifier, context);
     }
 
     function createSetAccessorDeclaration(setAccessorDeclAST: SetAccessor, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.Public;
         var declType = PullElementKind.SetAccessor;
 
-        if (hasFlag(setAccessorDeclAST.getFunctionFlags(), FunctionFlags.Static)) {
+        if (hasModifier(setAccessorDeclAST.modifiers, PullElementFlags.Static)) {
             declFlags |= PullElementFlags.Static;
         }
 
-        if (hasFlag(setAccessorDeclAST.getFunctionFlags(), FunctionFlags.Private)) {
+        if (hasModifier(setAccessorDeclAST.modifiers, PullElementFlags.Private)) {
             declFlags |= PullElementFlags.Private;
         }
         else {
@@ -889,6 +912,9 @@ module TypeScript {
             case NodeType.MemberVariableDeclaration:
                 createMemberVariableDeclaration(<MemberVariableDeclaration>ast, context);
                 break;
+            case NodeType.PropertySignature:
+                createPropertySignature(<PropertySignature>ast, context);
+                break;
             case NodeType.VariableDeclarator:
                 preCollectVarDecls(ast, context);
                 break;
@@ -910,29 +936,23 @@ module TypeScript {
             case NodeType.IndexSignature:
                 createIndexSignatureDeclaration(<IndexSignature>ast, context);
                 break;
+            case NodeType.FunctionType:
+                createFunctionTypeDeclaration(<FunctionType>ast, context);
+                break;
+            case NodeType.ConstructorType:
+                createConstructorTypeDeclaration(<ConstructorType>ast, context);
+                break;
+            case NodeType.CallSignature:
+                createCallSignatureDeclaration(<CallSignature>ast, context);
+                break;
+            case NodeType.ConstructSignature:
+                createConstructSignatureDeclaration(<ConstructSignature>ast, context);
+                break;
+            case NodeType.MethodSignature:
+                createMethodSignatureDeclaration(<MethodSignature>ast, context);
+                break;
             case NodeType.FunctionDeclaration:
-                var funcDecl = <FunctionDeclaration>ast;
-                var functionFlags = funcDecl.getFunctionFlags();
-                if (hasFlag(functionFlags, FunctionFlags.ConstructMember)) {
-                    if (hasFlag(funcDecl.getFlags(), ASTFlags.TypeReference)) {
-                        createConstructorTypeDeclaration(funcDecl, context);
-                    }
-                    else {
-                        createConstructSignatureDeclaration(funcDecl, context);
-                    }
-                }
-                else if (hasFlag(functionFlags, FunctionFlags.CallSignature)) {
-                    createCallSignatureDeclaration(funcDecl, context);
-                }
-                else if (hasFlag(funcDecl.getFlags(), ASTFlags.TypeReference)) {
-                    createFunctionTypeDeclaration(funcDecl, context);
-                }
-                else if (hasFlag(functionFlags, FunctionFlags.Method)) {
-                    createAnyMemberFunctionDeclaration(funcDecl, funcDecl.getFunctionFlags(), funcDecl.name, funcDecl.block,  context);
-                }
-                else {
-                    createFunctionDeclaration(funcDecl, context);
-                }
+                createFunctionDeclaration(<FunctionDeclaration>ast, context);
                 break;
             case NodeType.SimpleArrowFunctionExpression:
             case NodeType.ParenthesizedArrowFunctionExpression:

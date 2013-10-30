@@ -7,7 +7,7 @@
         })();
         m1_M1_public.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m1_M1_public.f1 = f1;
         m1_M1_public.v1 = c1;
@@ -24,7 +24,7 @@
         })();
         m1_M2_private.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m1_M2_private.f1 = f1;
         m1_M2_private.v1 = c1;
@@ -88,7 +88,7 @@ var m2;
         })();
         m2_M1_public.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m2_M1_public.f1 = f1;
         m2_M1_public.v1 = c1;
@@ -105,7 +105,7 @@ var m2;
         })();
         m2_M2_private.c1 = c1;
         function f1() {
-            return new c1();
+            return new c1;
         }
         m2_M2_private.f1 = f1;
         m2_M2_private.v1 = c1;
@@ -167,7 +167,7 @@ var m2;
     })();
     glo_M1_public.c1 = c1;
     function f1() {
-        return new c1();
+        return new c1;
     }
     glo_M1_public.f1 = f1;
     glo_M1_public.v1 = c1;
@@ -183,7 +183,7 @@ var glo_M1_public = exports.glo_M1_public;
     })();
     glo_M3_private.c1 = c1;
     function f1() {
-        return new c1();
+        return new c1;
     }
     glo_M3_private.f1 = f1;
     glo_M3_private.v1 = c1;

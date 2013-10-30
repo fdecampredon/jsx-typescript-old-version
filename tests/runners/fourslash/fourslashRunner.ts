@@ -83,7 +83,7 @@ class FourslashRunner extends RunnerBase {
             lines.push('        <CloseTarget />');
             lines.push('    </CleanupTest>');
             lines.push('</TaoTest>');
-            IO.writeFile('built/localtest/fourslash.xml', lines.join('\r\n'), true);
+            TypeScript.IO.writeFile('built/localtest/fourslash.xml', lines.join('\r\n'), true);
         });
     }
 }
