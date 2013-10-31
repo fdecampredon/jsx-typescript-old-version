@@ -58,7 +58,7 @@ class FourslashRunner extends RunnerBase {
                 lines.push(reasonAndCount.count + ' tests blocked by ' + reasonAndCount.reason);
             });
             lines.push('-->');
-            lines.push('<TaoTest>');
+            lines.push('<TaoTest xmlns="http://microsoft.com/schemas/VSLanguages/TAO">');
             lines.push('    <InitTest>');
             lines.push('        <StartTarget />');
             lines.push('    </InitTest>');

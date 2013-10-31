@@ -2533,7 +2533,7 @@ module TypeScript {
     export class ParameterSyntax extends SyntaxNode {
 
         constructor(public dotDotDotToken: ISyntaxToken,
-                    public publicOrPrivateKeyword: ISyntaxToken,
+                    public modifiers: ISyntaxList,
                     public identifier: ISyntaxToken,
                     public questionToken: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
@@ -2559,7 +2559,7 @@ module TypeScript {
     public childAt(slot: number): ISyntaxElement {
         switch (slot) {
             case 0: return this.dotDotDotToken;
-            case 1: return this.publicOrPrivateKeyword;
+            case 1: return this.modifiers;
             case 2: return this.identifier;
             case 3: return this.questionToken;
             case 4: return this.typeAnnotation;
@@ -2569,24 +2569,24 @@ module TypeScript {
     }
 
     public update(dotDotDotToken: ISyntaxToken,
-                  publicOrPrivateKeyword: ISyntaxToken,
+                  modifiers: ISyntaxList,
                   identifier: ISyntaxToken,
                   questionToken: ISyntaxToken,
                   typeAnnotation: TypeAnnotationSyntax,
                   equalsValueClause: EqualsValueClauseSyntax): ParameterSyntax {
-        if (this.dotDotDotToken === dotDotDotToken && this.publicOrPrivateKeyword === publicOrPrivateKeyword && this.identifier === identifier && this.questionToken === questionToken && this.typeAnnotation === typeAnnotation && this.equalsValueClause === equalsValueClause) {
+        if (this.dotDotDotToken === dotDotDotToken && this.modifiers === modifiers && this.identifier === identifier && this.questionToken === questionToken && this.typeAnnotation === typeAnnotation && this.equalsValueClause === equalsValueClause) {
             return this;
         }
 
-        return new ParameterSyntax(dotDotDotToken, publicOrPrivateKeyword, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new ParameterSyntax(dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
     public static create(identifier: ISyntaxToken): ParameterSyntax {
-        return new ParameterSyntax(null, null, identifier, null, null, null, /*parsedInStrictMode:*/ false);
+        return new ParameterSyntax(null, Syntax.emptyList, identifier, null, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): ParameterSyntax {
-        return new ParameterSyntax(null, null, identifier, null, null, null, /*parsedInStrictMode:*/ false);
+        return new ParameterSyntax(null, Syntax.emptyList, identifier, null, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ParameterSyntax {
@@ -2598,32 +2598,36 @@ module TypeScript {
     }
 
     public withDotDotDotToken(dotDotDotToken: ISyntaxToken): ParameterSyntax {
-        return this.update(dotDotDotToken, this.publicOrPrivateKeyword, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
+        return this.update(dotDotDotToken, this.modifiers, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
     }
 
-    public withPublicOrPrivateKeyword(publicOrPrivateKeyword: ISyntaxToken): ParameterSyntax {
-        return this.update(this.dotDotDotToken, publicOrPrivateKeyword, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
+    public withModifiers(modifiers: ISyntaxList): ParameterSyntax {
+        return this.update(this.dotDotDotToken, modifiers, this.identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
+    }
+
+    public withModifier(modifier: ISyntaxToken): ParameterSyntax {
+        return this.withModifiers(Syntax.list([modifier]));
     }
 
     public withIdentifier(identifier: ISyntaxToken): ParameterSyntax {
-        return this.update(this.dotDotDotToken, this.publicOrPrivateKeyword, identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
+        return this.update(this.dotDotDotToken, this.modifiers, identifier, this.questionToken, this.typeAnnotation, this.equalsValueClause);
     }
 
     public withQuestionToken(questionToken: ISyntaxToken): ParameterSyntax {
-        return this.update(this.dotDotDotToken, this.publicOrPrivateKeyword, this.identifier, questionToken, this.typeAnnotation, this.equalsValueClause);
+        return this.update(this.dotDotDotToken, this.modifiers, this.identifier, questionToken, this.typeAnnotation, this.equalsValueClause);
     }
 
     public withTypeAnnotation(typeAnnotation: TypeAnnotationSyntax): ParameterSyntax {
-        return this.update(this.dotDotDotToken, this.publicOrPrivateKeyword, this.identifier, this.questionToken, typeAnnotation, this.equalsValueClause);
+        return this.update(this.dotDotDotToken, this.modifiers, this.identifier, this.questionToken, typeAnnotation, this.equalsValueClause);
     }
 
     public withEqualsValueClause(equalsValueClause: EqualsValueClauseSyntax): ParameterSyntax {
-        return this.update(this.dotDotDotToken, this.publicOrPrivateKeyword, this.identifier, this.questionToken, this.typeAnnotation, equalsValueClause);
+        return this.update(this.dotDotDotToken, this.modifiers, this.identifier, this.questionToken, this.typeAnnotation, equalsValueClause);
     }
 
     public isTypeScriptSpecific(): boolean {
         if (this.dotDotDotToken !== null) { return true; }
-        if (this.publicOrPrivateKeyword !== null) { return true; }
+        if (this.modifiers.isTypeScriptSpecific()) { return true; }
         if (this.questionToken !== null) { return true; }
         if (this.typeAnnotation !== null) { return true; }
         if (this.equalsValueClause !== null) { return true; }

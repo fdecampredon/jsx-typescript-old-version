@@ -36,7 +36,7 @@
 //// try {} catch(/*catchVariable1*/
 //// try {} catch(a/*catchVariable2*/
 
-
+debugger;
 test.markers().forEach((m) => {
     goTo.position(m.position, m.fileName);
     verify.completionListIsEmpty();

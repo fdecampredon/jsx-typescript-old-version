@@ -9,7 +9,7 @@ var v1;
 
 var y = v1.x;
 var w = v1.y.a;
-var z = v1.z.a;
+var z = v1.z.a; // should be 'number'
 
 
 ////[genericClasses2.d.ts]

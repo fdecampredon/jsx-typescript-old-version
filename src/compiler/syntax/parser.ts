@@ -2257,7 +2257,7 @@ module TypeScript.Parser {
 
         private parseMemberFunctionDeclaration(): MemberFunctionDeclarationSyntax {
             // Debug.assert(this.isMemberFunctionDeclaration());
-            
+
             var modifierArray: ISyntaxToken[] = this.getArray();
 
             while (true) {
@@ -3488,7 +3488,6 @@ module TypeScript.Parser {
                 if (token0.tokenKind === SyntaxKind.EqualsGreaterThanToken) {
                     return false;
                 }
-
 
                 // There are two places where we allow equals-value clauses.  The first is in a 
                 // variable declarator.  The second is with a parameter.  For variable declarators
@@ -4802,15 +4801,44 @@ module TypeScript.Parser {
             }
 
             var token = this.currentToken();
-            if (token.tokenKind === SyntaxKind.DotDotDotToken) {
+            var tokenKind = token.tokenKind;
+            if (tokenKind === SyntaxKind.DotDotDotToken) {
                 return true;
             }
 
-            if (ParserImpl.isPublicOrPrivateKeyword(token)) {
+            if (ParserImpl.isModifier(token) && !this.isModifierUsedAsParameterIdentifier(token)) {
                 return true;
             }
 
             return this.isIdentifier(token);
+        }
+
+        // Modifiers are perfectly legal names for parameters.  i.e.  you can have: foo(public: number) { }
+        // Most of the time we want to treat the modifier as a modifier.  However, if we're certain 
+        // it's a parameter identifier, then don't consider it as a modifier.
+        private isModifierUsedAsParameterIdentifier(token: ISyntaxToken): boolean {
+            if (this.isIdentifier(token)) {
+                // Check for:
+                // foo(public)
+                // foo(public: ...
+                // foo(public= ...
+                // foo(public, ...
+                // foo(public? ...
+                //
+                // In all these cases, it's not actually a modifier, but is instead the identifier.
+                // In any other case treat it as the modifier.
+                var nextTokenKind = this.peekToken(1).tokenKind;
+                switch (nextTokenKind) {
+                    case SyntaxKind.CloseParenToken:
+                    case SyntaxKind.ColonToken:
+                    case SyntaxKind.EqualsToken:
+                    case SyntaxKind.CommaToken:
+                    case SyntaxKind.QuestionToken:
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         private parseParameter(): ParameterSyntax {
@@ -4820,10 +4848,20 @@ module TypeScript.Parser {
 
             var dotDotDotToken = this.tryEatToken(SyntaxKind.DotDotDotToken);
 
-            var publicOrPrivateToken: ISyntaxToken = null;
-            if (ParserImpl.isPublicOrPrivateKeyword(this.currentToken())) {
-                publicOrPrivateToken = this.eatAnyToken();
+            var modifierArray: ISyntaxToken[] = this.getArray();
+
+            while (true) {
+                var currentToken = this.currentToken();
+                if (ParserImpl.isModifier(currentToken) && !this.isModifierUsedAsParameterIdentifier(currentToken)) {
+                    modifierArray.push(this.eatAnyToken());
+                    continue;
+                }
+
+                break;
             }
+
+            var modifiers = Syntax.list(modifierArray);
+            this.returnZeroOrOneLengthArray(modifierArray);
 
             var identifier = this.eatIdentifierToken();
             var questionToken = this.tryEatToken(SyntaxKind.QuestionToken);
@@ -4835,7 +4873,7 @@ module TypeScript.Parser {
             }
 
             return this.factory.parameter(
-                dotDotDotToken, publicOrPrivateToken, identifier, questionToken, typeAnnotation, equalsValueClause);
+                dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause);
         }
 
         private parseSyntaxList(currentListType: ListParsingState,

@@ -1,3 +1,5 @@
+//import FileManager = require('filemanager');
+//import App = require('app');
 
 var TestFileDir = ".\\TempTestFiles";
 

@@ -323,6 +323,7 @@
                                             "end": 84,
                                             "fullWidth": 16,
                                             "width": 16,
+                                            "modifiers": [],
                                             "identifier": {
                                                 "kind": "IdentifierName",
                                                 "fullStart": 68,
@@ -731,6 +732,7 @@
                                         "end": 186,
                                         "fullWidth": 13,
                                         "width": 13,
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 173,
@@ -1365,6 +1367,7 @@
                                                     "value": "...",
                                                     "valueText": "..."
                                                 },
+                                                "modifiers": [],
                                                 "identifier": {
                                                     "kind": "IdentifierName",
                                                     "fullStart": 321,
@@ -7641,6 +7644,7 @@
                                                                                             "end": 2121,
                                                                                             "fullWidth": 1,
                                                                                             "width": 1,
+                                                                                            "modifiers": [],
                                                                                             "identifier": {
                                                                                                 "kind": "IdentifierName",
                                                                                                 "fullStart": 2120,
@@ -12626,6 +12630,7 @@
                                                 "end": 3385,
                                                 "fullWidth": 9,
                                                 "width": 9,
+                                                "modifiers": [],
                                                 "identifier": {
                                                     "kind": "IdentifierName",
                                                     "fullStart": 3376,
@@ -24638,6 +24643,7 @@
                                         "end": 6510,
                                         "fullWidth": 10,
                                         "width": 10,
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 6500,
@@ -25972,25 +25978,27 @@
                                     "end": 6856,
                                     "fullWidth": 21,
                                     "width": 21,
-                                    "publicOrPrivateKeyword": {
-                                        "kind": "PrivateKeyword",
-                                        "fullStart": 6835,
-                                        "fullEnd": 6843,
-                                        "start": 6835,
-                                        "end": 6842,
-                                        "fullWidth": 8,
-                                        "width": 7,
-                                        "text": "private",
-                                        "value": "private",
-                                        "valueText": "private",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
+                                    "modifiers": [
+                                        {
+                                            "kind": "PrivateKeyword",
+                                            "fullStart": 6835,
+                                            "fullEnd": 6843,
+                                            "start": 6835,
+                                            "end": 6842,
+                                            "fullWidth": 8,
+                                            "width": 7,
+                                            "text": "private",
+                                            "value": "private",
+                                            "valueText": "private",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": 6843,
@@ -26071,25 +26079,27 @@
                                     "end": 6877,
                                     "fullWidth": 19,
                                     "width": 19,
-                                    "publicOrPrivateKeyword": {
-                                        "kind": "PublicKeyword",
-                                        "fullStart": 6858,
-                                        "fullEnd": 6865,
-                                        "start": 6858,
-                                        "end": 6864,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "public",
-                                        "value": "public",
-                                        "valueText": "public",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
+                                    "modifiers": [
+                                        {
+                                            "kind": "PublicKeyword",
+                                            "fullStart": 6858,
+                                            "fullEnd": 6865,
+                                            "start": 6858,
+                                            "end": 6864,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "public",
+                                            "value": "public",
+                                            "valueText": "public",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": 6865,
@@ -26308,6 +26318,7 @@
                                         "end": 6931,
                                         "fullWidth": 13,
                                         "width": 13,
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 6918,
@@ -26482,6 +26493,7 @@
                                         "end": 6973,
                                         "fullWidth": 13,
                                         "width": 13,
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 6960,
@@ -26574,6 +26586,7 @@
                                             "value": "...",
                                             "valueText": "..."
                                         },
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 6978,
@@ -26822,6 +26835,7 @@
                                         "end": 7053,
                                         "fullWidth": 24,
                                         "width": 24,
+                                        "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
                                             "fullStart": 7029,

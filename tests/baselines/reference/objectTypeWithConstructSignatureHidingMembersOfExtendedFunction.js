@@ -15,4 +15,4 @@ var r2c = x.arguments;
 var r2d = x.data;
 
 // BUG 792592
-var r2e = x['hm'];
+var r2e = x['hm']; // should be Object

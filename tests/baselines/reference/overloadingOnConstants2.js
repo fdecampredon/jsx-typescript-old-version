@@ -38,4 +38,4 @@ function bar(x, items) {
 
 var d = bar("hi", []);
 var e = bar("bye", []);
-var f = bar("um", []);
+var f = bar("um", []); // C

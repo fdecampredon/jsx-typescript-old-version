@@ -49,6 +49,9 @@ module TypeScript {
         ConstructSignature,
         MethodSignature,
         PropertySignature,
+        ParameterList,
+        TypeArgumentList,
+        TypeParameterList,
 
         // Declarations
         FunctionDeclaration,

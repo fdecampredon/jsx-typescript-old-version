@@ -206,10 +206,6 @@ module TypeScript {
     "code": 1049,
     "category": DiagnosticCategory.Error
   },
-  "'set' accessor parameter cannot have accessibility modifier.": {
-    "code": 1050,
-    "category": DiagnosticCategory.Error
-  },
   "'set' accessor parameter cannot be optional.": {
     "code": 1051,
     "category": DiagnosticCategory.Error
@@ -352,6 +348,10 @@ module TypeScript {
   },
   "'{0}' modifier cannot appear on a constructor declaration.": {
     "code": 1089,
+    "category": DiagnosticCategory.Error
+  },
+  "'{0}' modifier cannot appear on a parameter.": {
+    "code": 1090,
     "category": DiagnosticCategory.Error
   },
   "Duplicate identifier '{0}'.": {

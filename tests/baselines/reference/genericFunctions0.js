@@ -3,7 +3,7 @@ function foo(x) {
     return x;
 }
 
-var x = foo(5);
+var x = foo(5); // 'x' should be number
 
 
 ////[genericFunctions0.d.ts]

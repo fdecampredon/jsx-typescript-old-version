@@ -6,4 +6,4 @@ var x = new Sammy();
 var y = Sammy();
 var z;
 var a = new z();
-var b = z();
+var b = z(); // call signature - no error

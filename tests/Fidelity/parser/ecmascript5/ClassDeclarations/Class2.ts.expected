@@ -233,25 +233,27 @@
                                     "end": 100,
                                     "fullWidth": 22,
                                     "width": 22,
-                                    "publicOrPrivateKeyword": {
-                                        "kind": "PublicKeyword",
-                                        "fullStart": 78,
-                                        "fullEnd": 85,
-                                        "start": 78,
-                                        "end": 84,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "public",
-                                        "value": "public",
-                                        "valueText": "public",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
+                                    "modifiers": [
+                                        {
+                                            "kind": "PublicKeyword",
+                                            "fullStart": 78,
+                                            "fullEnd": 85,
+                                            "start": 78,
+                                            "end": 84,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "public",
+                                            "value": "public",
+                                            "valueText": "public",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": 85,

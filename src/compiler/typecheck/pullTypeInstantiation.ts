@@ -31,8 +31,8 @@ module TypeScript {
 
         // use the root symbol to model the actual type
         // do not call this directly!
-        constructor(public resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol) {
-            super(referencedTypeSymbol.name, referencedTypeSymbol.kind);
+        constructor(resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol) {
+            super(referencedTypeSymbol.name, referencedTypeSymbol.kind, resolver);
 
             Debug.assert(resolver);
             Debug.assert(referencedTypeSymbol != null, "Type root symbol may not be null");
@@ -55,7 +55,7 @@ module TypeScript {
         public invalidate(): void { }
 
         public ensureReferencedTypeIsResolved(): void {
-            this.resolver.resolveDeclaredSymbol(this.referencedTypeSymbol);
+            this._resolver.resolveDeclaredSymbol(this.referencedTypeSymbol);
         }
 
         public getReferencedTypeSymbol(): PullTypeSymbol {
@@ -206,25 +206,25 @@ module TypeScript {
             this.ensureReferencedTypeIsResolved();
             return this.referencedTypeSymbol.hasOwnCallSignatures();
         }
-        public getCallSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getCallSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
-            return this.referencedTypeSymbol.getCallSignatures(collectBaseSignatures);
+            return this.referencedTypeSymbol.getCallSignatures();
         }
         public hasOwnConstructSignatures(): boolean {
             this.ensureReferencedTypeIsResolved();
             return this.referencedTypeSymbol.hasOwnConstructSignatures();
         }
-        public getConstructSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getConstructSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
-            return this.referencedTypeSymbol.getConstructSignatures(collectBaseSignatures);
+            return this.referencedTypeSymbol.getConstructSignatures();
         }
         public hasOwnIndexSignatures(): boolean {
             this.ensureReferencedTypeIsResolved();
             return this.referencedTypeSymbol.hasOwnIndexSignatures();
         }
-        public getIndexSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getIndexSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
-            return this.referencedTypeSymbol.getIndexSignatures(collectBaseSignatures);
+            return this.referencedTypeSymbol.getIndexSignatures();
         }
 
         public addImplementedType(implementedType: PullTypeSymbol): void {
@@ -436,7 +436,7 @@ module TypeScript {
 
         public isArrayNamedTypeReference(): boolean {
             if (this._isArray === undefined) {
-                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() == this.resolver.getArrayNamedType());
+                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() == this._resolver.getArrayNamedType());
             }
             return this._isArray;
         }
@@ -644,7 +644,7 @@ module TypeScript {
                 for (var i = 0; i < referencedMembers.length; i++) {
                     referencedMember = referencedMembers[i];
 
-                    this.resolver.resolveDeclaredSymbol(referencedMember);
+                    this._resolver.resolveDeclaredSymbol(referencedMember);
 
                     if (!this._instantiatedMemberNameCache[referencedMember.name]) {
 
@@ -655,7 +655,7 @@ module TypeScript {
                         else {
                             instantiatedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                             instantiatedMember.setRootSymbol(referencedMember);
-                            instantiatedMember.type = this.resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                            instantiatedMember.type = this._resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
                             instantiatedMember.isOptional = referencedMember.isOptional;
                         }
 
@@ -692,9 +692,9 @@ module TypeScript {
                     memberSymbol = new PullSymbol(referencedMemberSymbol.name, referencedMemberSymbol.kind);
                     memberSymbol.setRootSymbol(referencedMemberSymbol);
 
-                    this.resolver.resolveDeclaredSymbol(referencedMemberSymbol);
+                    this._resolver.resolveDeclaredSymbol(referencedMemberSymbol);
 
-                    memberSymbol.type = this.resolver.instantiateType(referencedMemberSymbol.type, this._typeParameterArgumentMap);
+                    memberSymbol.type = this._resolver.instantiateType(referencedMemberSymbol.type, this._typeParameterArgumentMap);
 
                     memberSymbol.isOptional = referencedMemberSymbol.isOptional;
 
@@ -739,7 +739,7 @@ module TypeScript {
             for (var i = 0; i < allReferencedMembers.length; i++) {
                 referencedMember = allReferencedMembers[i];
 
-                this.resolver.resolveDeclaredSymbol(referencedMember);
+                this._resolver.resolveDeclaredSymbol(referencedMember);
 
                 if (this._allInstantiatedMemberNameCache[referencedMember.name]) {
                     requestedMembers[requestedMembers.length] = this._allInstantiatedMemberNameCache[referencedMember.name];
@@ -753,7 +753,7 @@ module TypeScript {
                         requestedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                         requestedMember.setRootSymbol(referencedMember);
 
-                        requestedMember.type = this.resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                        requestedMember.type = this._resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
                         requestedMember.isOptional = referencedMember.isOptional;
 
                         this._allInstantiatedMemberNameCache[requestedMember.name] = requestedMember;
@@ -774,7 +774,7 @@ module TypeScript {
             if (!this._instantiatedConstructorMethod) {
                 var referencedConstructorMethod = this.referencedTypeSymbol.getConstructorMethod();
                 this._instantiatedConstructorMethod = new PullSymbol(referencedConstructorMethod.name, referencedConstructorMethod.kind);
-                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this.resolver, referencedConstructorMethod.type, this._typeParameterArgumentMap);
+                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._resolver, referencedConstructorMethod.type, this._typeParameterArgumentMap);
             }
 
 
@@ -791,35 +791,35 @@ module TypeScript {
                 var referencedAssociatedContainerType = this.referencedTypeSymbol.getAssociatedContainerType();
 
                 if (referencedAssociatedContainerType) {
-                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this.resolver, referencedAssociatedContainerType, this._typeParameterArgumentMap);
+                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this._resolver, referencedAssociatedContainerType, this._typeParameterArgumentMap);
                 }
             }
 
             return this._instantiatedAssociatedContainerType;
         }
 
-        public getCallSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getCallSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
 
             if (this.isInstanceReferenceType) {
-                return this.referencedTypeSymbol.getCallSignatures(collectBaseSignatures);
+                return this.referencedTypeSymbol.getCallSignatures();
             }
 
             if (this._instantiatedCallSignatures) {
                 return this._instantiatedCallSignatures;
             }
 
-            var referencedCallSignatures = this.referencedTypeSymbol.getCallSignatures(collectBaseSignatures);
+            var referencedCallSignatures = this.referencedTypeSymbol.getCallSignatures();
             this._instantiatedCallSignatures = [];
 
             for (var i = 0; i < referencedCallSignatures.length; i++) {
-                this.resolver.resolveDeclaredSymbol(referencedCallSignatures[i]);
+                this._resolver.resolveDeclaredSymbol(referencedCallSignatures[i]);
 
                 if (!referencedCallSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedCallSignatures[i];
                 }
                 else {
-                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this.resolver.instantiateSignature(referencedCallSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._resolver.instantiateSignature(referencedCallSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length - 1].functionType = this;
                 }
             }
@@ -827,28 +827,28 @@ module TypeScript {
             return this._instantiatedCallSignatures;
         }
 
-        public getConstructSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getConstructSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
 
             if (this.isInstanceReferenceType) {
-                return this.referencedTypeSymbol.getConstructSignatures(collectBaseSignatures);
+                return this.referencedTypeSymbol.getConstructSignatures();
             }
 
             if (this._instantiatedConstructSignatures) {
                 return this._instantiatedConstructSignatures;
             }
 
-            var referencedConstructSignatures = this.referencedTypeSymbol.getConstructSignatures(collectBaseSignatures);
+            var referencedConstructSignatures = this.referencedTypeSymbol.getConstructSignatures();
             this._instantiatedConstructSignatures = [];
 
             for (var i = 0; i < referencedConstructSignatures.length; i++) {
-                this.resolver.resolveDeclaredSymbol(referencedConstructSignatures[i]);
+                this._resolver.resolveDeclaredSymbol(referencedConstructSignatures[i]);
 
                 if (!referencedConstructSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedConstructSignatures[i];
                 }
                 else {
-                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this.resolver.instantiateSignature(referencedConstructSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._resolver.instantiateSignature(referencedConstructSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length - 1].functionType = this;
                 }
             }
@@ -856,28 +856,28 @@ module TypeScript {
             return this._instantiatedConstructSignatures;
         }
 
-        public getIndexSignatures(collectBaseSignatures= true): PullSignatureSymbol[]{
+        public getIndexSignatures(): PullSignatureSymbol[]{
             this.ensureReferencedTypeIsResolved();
 
             if (this.isInstanceReferenceType) {
-                return this.referencedTypeSymbol.getIndexSignatures(collectBaseSignatures);
+                return this.referencedTypeSymbol.getIndexSignatures();
             }
 
             if (this._instantiatedIndexSignatures) {
                 return this._instantiatedIndexSignatures;
             }
 
-            var referencedIndexSignatures = this.referencedTypeSymbol.getIndexSignatures(collectBaseSignatures);
+            var referencedIndexSignatures = this.referencedTypeSymbol.getIndexSignatures();
             this._instantiatedIndexSignatures = [];
 
             for (var i = 0; i < referencedIndexSignatures.length; i++) {
-                this.resolver.resolveDeclaredSymbol(referencedIndexSignatures[i]);
+                this._resolver.resolveDeclaredSymbol(referencedIndexSignatures[i]);
 
                 if (!referencedIndexSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = referencedIndexSignatures[i];
                 }
                 else {
-                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this.resolver.instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._resolver.instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length - 1].functionType = this;
                 }
             }

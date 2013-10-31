@@ -208,24 +208,42 @@ module TypeScript {
         }
 
         private writeByteOrderMarkForDocument(document: Document) {
+            // Set this to 'true' if you want to know why the compiler emitted a document with a 
+            // byte order mark.
+            var printReason = false;
+
             // If module its always emitted in its own file
             if (document.emitToOwnOutputFile()) {
-                return document.byteOrderMark !== ByteOrderMark.None;
-            } else {
+                var result = document.byteOrderMark !== ByteOrderMark.None;
+                if (printReason) {
+                    Environment.standardOut.WriteLine("Emitting byte order mark because of: " + document.fileName);
+                }
+                return result;
+            }
+            else {
                 var fileNames = this.fileNames();
 
+                var result = false;
                 for (var i = 0, n = fileNames.length; i < n; i++) {
+                    var document = this.getDocument(fileNames[i]);
+
                     if (document.script().isExternalModule) {
                         // Dynamic module never contributes to the single file
                         continue;
                     }
-                    var document = this.getDocument(fileNames[i]);
+
                     if (document.byteOrderMark !== ByteOrderMark.None) {
-                        return true;
+                        if (printReason) {
+                            Environment.standardOut.WriteLine("Emitting byte order mark because of: " + document.fileName);
+                            result = true;
+                        }
+                        else {
+                            return true;
+                        }
                     }
                 }
 
-                return false;
+                return result;
             }
         }
 

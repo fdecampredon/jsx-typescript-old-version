@@ -247,7 +247,7 @@ module TypeScript {
 
         public visitParameter(node: ParameterSyntax): void {
             this.visitOptionalToken(node.dotDotDotToken);
-            this.visitOptionalToken(node.publicOrPrivateKeyword);
+            this.visitList(node.modifiers);
             this.visitToken(node.identifier);
             this.visitOptionalToken(node.questionToken);
             this.visitOptionalNode(node.typeAnnotation);

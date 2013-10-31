@@ -1,3 +1,3 @@
 var x;
 
-var n = x[''].m();
+var n = x[''].m(); // should not crash compiler

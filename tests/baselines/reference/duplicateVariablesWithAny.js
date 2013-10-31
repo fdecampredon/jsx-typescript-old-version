@@ -15,4 +15,4 @@ var N;
 })(N || (N = {}));
 
 var z;
-var z;
+var z; // ok

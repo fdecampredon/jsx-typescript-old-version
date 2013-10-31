@@ -398,8 +398,16 @@ module FourSlash {
         }
 
         public verifyMemberListCount(expectedCount: number, negative: boolean) {
-            this.scenarioActions.push('<ShowCompletionList />');
-            this.scenarioActions.push('<VerifyCompletionItemsCount Count="' + expectedCount + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
+            if (expectedCount === 0) {
+                if (negative) {
+                    this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+                } else {
+                    this.scenarioActions.push('<ShowCompletionList />');
+                }
+            } else {
+                this.scenarioActions.push('<ShowCompletionList />');
+                this.scenarioActions.push('<VerifyCompletionItemsCount Count="' + expectedCount + '" ' + (negative ? 'ExpectsFailure="true"' : '') + ' />');
+            }
 
             var members = this.getMemberListAtCaret();
 
@@ -437,7 +445,11 @@ module FourSlash {
         }
 
         public verifyMemberListIsEmpty(negative: boolean) {
-            this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+            if (negative) {
+                this.scenarioActions.push('<ShowCompletionList />');
+            } else {
+                this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+            }
 
             var members = this.getMemberListAtCaret();
             if ((!members || members.entries.length === 0) && negative) {
@@ -698,6 +710,7 @@ module FourSlash {
         }
 
         public verifySignatureHelpCount(expected: number) {
+            this.scenarioActions.push('<InvokeSignatureHelp />');
             this.scenarioActions.push('<VerifySignatureHelpOverloadCountEquals Count="' + expected + '" />');
 
             var help = this.languageService.getSignatureAtPosition(this.activeFile.fileName, this.currentCaretPosition);
@@ -926,7 +939,11 @@ module FourSlash {
 
         // Enters lines of text at the current caret position
         public type(text: string) {
-            this.scenarioActions.push('<InsertText><![CDATA[' + text + ']]></InsertText>');
+            if (text === '') {
+                this.taoInvalidReason = 'Test used empty-insert workaround.';
+            } else {
+                this.scenarioActions.push('<InsertText><![CDATA[' + text + ']]></InsertText>');
+            }
 
             if (this.typingFidelity === TypingFidelity.Low) {
                 return this.typeLowFidelity(text);

@@ -41,8 +41,6 @@ class RWCEmitter implements Harness.Compiler.IEmitterIOHost {
 class RWCRunner extends RunnerBase {
     constructor() { super(); }
 
-    public tests: string[] = [];
-
     private runnerPath = "tests/runners/rwc";
     private sourcePath = "tests/cases/rwc/";
     private outputPath = "tests/baselines/rwc/local/";
@@ -186,7 +184,7 @@ class RWCRunner extends RunnerBase {
                 it("codegen baseline check", () => {
                     if (!hasCrashed) {
                         if (!TypeScript.IO.fileExists(baselineJsFilename)) {
-                            var expected = "<no content >";
+                            var expected = "<no content>";
                         } else {
                             var expected = TypeScript.IO.readFile(baselineJsFilename, null).contents;
                         }
@@ -275,7 +273,7 @@ class RWCRunner extends RunnerBase {
                     }
                 });
 
-                it("_this check", (done: any) => {
+                it("_this check", () => {
                     if (!hasCrashed && !spec.skipThisCheck) {
                         exec("node", ["tests/runners/rwc/verifiers/globalVerifier.js", outputJsFilename], (result) => {
                             // If there's a bug in the _this checker, just issue a 'pass'
@@ -285,12 +283,8 @@ class RWCRunner extends RunnerBase {
                             } else {
                                 Harness.Assert.throwAssertError(new Error("This check crashed!"));
                             }
-                            done();
                         });
-                    } else {
-                        // no need to run if crashed
-                        done();
-                    }
+                    } 
                 });
             });
         }

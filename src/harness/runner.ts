@@ -314,10 +314,11 @@ opts.option('iterations', {
 opts.flag('compiler-baselines', {
     set: function (str) {
         var conformanceRunner = new CompilerBaselineRunner(CompilerTestType.Conformance);
-        var regressionRunner = new CompilerBaselineRunner(CompilerTestType.Regressions);
         conformanceRunner.options = str;
-        regressionRunner.options = str;
         runners.push(conformanceRunner);
+
+        var regressionRunner = new CompilerBaselineRunner(CompilerTestType.Regressions);
+        regressionRunner.options = str;
         runners.push(regressionRunner);
     }
 });

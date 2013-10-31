@@ -1,4 +1,4 @@
-﻿/// <reference path='..\..\..\..\src\compiler\typescript.ts' />
+/// <reference path='..\..\..\..\src\compiler\typescript.ts' />
 /// <reference path='..\..\..\..\src\harness\harness.ts' />
 
 //@tags 2.6.2 Subtypes and Supertypes

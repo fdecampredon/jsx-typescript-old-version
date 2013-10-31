@@ -11,4 +11,4 @@ var MyList = (function () {
 var a;
 var b = a.clone();
 var c = a.clone();
-var d = a.clone();
+var d = a.clone(); // error

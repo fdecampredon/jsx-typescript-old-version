@@ -17,15 +17,15 @@
 
 module TypeScript {
     export function scriptIsElided(script: Script): boolean {
-        return scriptOrModuleIsElided(script.getModuleFlags(), script.moduleElements);
+        return scriptOrModuleIsElided(script.modifiers, script.moduleElements);
     }
 
     export function moduleIsElided(declaration: ModuleDeclaration): boolean {
-        return scriptOrModuleIsElided(declaration.getModuleFlags(), declaration.moduleElements);
+        return scriptOrModuleIsElided(declaration.modifiers, declaration.moduleElements);
     }
 
-    function scriptOrModuleIsElided(moduleFlags: ModuleFlags, moduleMembers: ASTList): boolean {
-        if (hasFlag(moduleFlags, ModuleFlags.Ambient)) {
+    function scriptOrModuleIsElided(modifiers: PullElementFlags[], moduleMembers: ASTList): boolean {
+        if (hasModifier(modifiers, PullElementFlags.Ambient)) {
             return true;
         }
 
@@ -53,7 +53,7 @@ module TypeScript {
     }
 
     export function enumIsElided(declaration: EnumDeclaration): boolean {
-        if (hasFlag(declaration.getModuleFlags(), ModuleFlags.Ambient)) {
+        if (hasModifier(declaration.modifiers, PullElementFlags.Ambient)) {
             return true;
         }
 
@@ -326,36 +326,42 @@ module TypeScript {
         export function fromParameter(parameter: Parameter): IParameters {
             return {
                 length: 1,
-                lastParameterIsRest: () => parameter.isRest,
+                lastParameterIsRest: () => parameter.dotDotDotToken !== null,
                 ast: parameter,
                 astAt: (index: number) => parameter,
                 identifierAt: (index: number) => parameter.identifier,
                 typeAt: (index: number) => parameter.typeAnnotation,
                 initializerAt: (index: number) => parameter.equalsValueClause,
-                isOptionalAt: (index: number) => parameter.isOptionalArg(),
+                isOptionalAt: (index: number) => parameterIsOptional(parameter),
             }
         }
 
-        export function fromParameterList(list: ASTList): IParameters {
+        function parameterIsOptional(parameter: Parameter): boolean {
+            return parameter.questionToken !== null || parameter.equalsValueClause !== null;
+        }
+
+        export function fromParameterList(list: ParameterList): IParameters {
             return {
-                length: list.members.length,
+                length: list.parameters.members.length,
                 lastParameterIsRest: () => lastParameterIsRest(list),
-                ast: list,
-                astAt: (index: number) => list.members[index],
-                identifierAt: (index: number) => (<Parameter>list.members[index]).identifier,
-                typeAt: (index: number) => (<Parameter>list.members[index]).typeAnnotation,
-                initializerAt: (index: number) => (<Parameter>list.members[index]).equalsValueClause,
-                isOptionalAt: (index: number) => (<Parameter>list.members[index]).isOptionalArg(),
+                ast: list.parameters,
+                astAt: (index: number) => list.parameters.members[index],
+                identifierAt: (index: number) => (<Parameter>list.parameters.members[index]).identifier,
+                typeAt: (index: number) => (<Parameter>list.parameters.members[index]).typeAnnotation,
+                initializerAt: (index: number) => (<Parameter>list.parameters.members[index]).equalsValueClause,
+                isOptionalAt: (index: number) => parameterIsOptional(<Parameter>list.parameters.members[index]),
             }
         }
     }
 
     export function isDeclarationAST(ast: AST): boolean {
         switch (ast.nodeType()) {
+            case NodeType.VariableDeclarator:
+                return getVariableStatement(<VariableDeclarator>ast) !== null;
+
             case NodeType.ImportDeclaration:
             case NodeType.ClassDeclaration:
             case NodeType.InterfaceDeclaration:
-            case NodeType.VariableDeclarator:
             case NodeType.Parameter:
             case NodeType.SimpleArrowFunctionExpression:
             case NodeType.ParenthesizedArrowFunctionExpression:
@@ -387,23 +393,28 @@ module TypeScript {
     }
 
     export function docComments(ast: AST): Comment[] {
-        if (!isDeclarationAST(ast) || !ast.preComments() || ast.preComments().length === 0) {
-            return [];
-        }
+        if (isDeclarationAST(ast)) {
+            var preComments = ast.nodeType() === NodeType.VariableDeclarator
+                ? getVariableStatement(<VariableDeclarator>ast).preComments()
+                : ast.preComments();
 
-        var preComments = ast.preComments();
-        var preCommentsLength = preComments.length;
-        var docComments = new Array<Comment>();
-        for (var i = preCommentsLength - 1; i >= 0; i--) {
-            if (preComments[i].isDocComment()) {
-                docComments.push(preComments[i]);
-                continue;
+            if (preComments && preComments.length > 0) {
+                var preCommentsLength = preComments.length;
+                var docComments = new Array<Comment>();
+                for (var i = preCommentsLength - 1; i >= 0; i--) {
+                    if (preComments[i].isDocComment()) {
+                        docComments.push(preComments[i]);
+                        continue;
+                    }
+
+                    break;
+                }
+
+                return docComments.reverse();
             }
-
-            break;
         }
 
-        return docComments.reverse();
+        return sentinelEmptyArray;
     }
 
     export function getTextForBinaryToken(nodeType: NodeType): string {
@@ -449,7 +460,7 @@ module TypeScript {
         throw Errors.invalidOperation();
     }
 
-    export function getParameterList(ast: AST): ASTList {
+    export function getParameterList(ast: AST): ParameterList {
         if (ast) {
             switch (ast.nodeType()) {
                 case NodeType.ConstructorDeclaration:
@@ -513,5 +524,44 @@ module TypeScript {
         }
 
         return null;
+    }
+
+    function getVariableStatement(variableDeclarator: VariableDeclarator): VariableStatement {
+        if (variableDeclarator && variableDeclarator.parent && variableDeclarator.parent.parent && variableDeclarator.parent.parent.parent &&
+            variableDeclarator.parent.nodeType() === NodeType.List &&
+            variableDeclarator.parent.parent.nodeType() === NodeType.VariableDeclaration &&
+            variableDeclarator.parent.parent.parent.nodeType() === NodeType.VariableStatement) {
+
+            return <VariableStatement>variableDeclarator.parent.parent.parent;
+        }
+
+        return null;
+    }
+
+    export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclarator): PullElementFlags[]{
+        var variableStatement = getVariableStatement(variableDeclarator);
+        return variableStatement ? variableStatement.modifiers : sentinelEmptyArray;
+    }
+
+    export function isIntegerLiteralAST(expression: AST): boolean {
+        if (expression) {
+            switch (expression.nodeType()) {
+                case NodeType.PlusExpression:
+                case NodeType.NegateExpression:
+                    // Note: if there is a + or - sign, we can only allow a normal integer following
+                    // (and not a hex integer).  i.e. -0xA is a legal expression, but it is not a 
+                    // *literal*.
+                    expression = (<PrefixUnaryExpression>expression).operand;
+                    return expression.nodeType() === NodeType.NumericLiteral && IntegerUtilities.isInteger((<NumericLiteral>expression).text());
+
+                case NodeType.NumericLiteral:
+                    // If it doesn't have a + or -, then either an integer literal or a hex literal
+                    // is acceptable.
+                    var text = (<NumericLiteral>expression).text();
+                    return IntegerUtilities.isInteger(text) || IntegerUtilities.isHexInteger(text);
+            }
+        }
+
+        return false;
     }
 }

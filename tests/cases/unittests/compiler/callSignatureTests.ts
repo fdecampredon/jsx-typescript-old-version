@@ -1,4 +1,4 @@
-﻿///<reference path='..\..\..\..\src\compiler\typescript.ts' />
+///<reference path='..\..\..\..\src\compiler\typescript.ts' />
 ///<reference path='..\..\..\..\src\harness\harness.ts' />
 
 describe('Compiling unittests\\compiler\\callSignatureTests.ts', function() {

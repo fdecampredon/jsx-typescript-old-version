@@ -80,8 +80,6 @@ module TypeScript {
         public limChar: number = -1;  // -1 = "undefined" or "compiler generated"
         public trailingTriviaWidth = 0;
 
-        private _flags = ASTFlags.None;
-
         public typeCheckPhase = -1;
 
         private _astID: number = astID++;
@@ -131,15 +129,6 @@ module TypeScript {
             }
         }
 
-        public getFlags(): ASTFlags {
-            return this._flags;
-        }
-
-        // Must only be called from SyntaxTreeVisitor
-        public setFlags(flags: ASTFlags): void {
-            this._flags = flags;
-        }
-
         public getLength(): number {
             return this.limChar - this.minChar;
         }
@@ -151,9 +140,8 @@ module TypeScript {
                 }
             }
 
-            return this._flags === ast._flags &&
-                commentArrayStructuralEquals(this.preComments(), ast.preComments(), includingPosition) &&
-                commentArrayStructuralEquals(this.postComments(), ast.postComments(), includingPosition);
+            return commentArrayStructuralEquals(this.preComments(), ast.preComments(), includingPosition) &&
+                   commentArrayStructuralEquals(this.postComments(), ast.postComments(), includingPosition);
         }
     }
 
@@ -181,9 +169,8 @@ module TypeScript {
     }
 
     export class Script extends AST {
-        private _moduleFlags = ModuleFlags.None;
-
-        constructor(public moduleElements: ASTList,
+        constructor(public modifiers: PullElementFlags[],
+                    public moduleElements: ASTList,
                     private _fileName: string,
                     public isExternalModule: boolean,
                     public amdDependencies: string[]) {
@@ -201,14 +188,6 @@ module TypeScript {
 
         public nodeType(): NodeType {
             return NodeType.Script;
-        }
-
-        public getModuleFlags(): ModuleFlags {
-            return this._moduleFlags;
-        }
-
-        public setModuleFlags(flags: ModuleFlags): void {
-            this._moduleFlags = flags;
         }
 
         public structuralEquals(ast: Script, includingPosition: boolean): boolean {
@@ -436,10 +415,21 @@ module TypeScript {
         }
     }
 
+    export class TypeParameterList extends AST {
+        constructor(public typeParameters: ASTList) {
+            super();
+            typeParameters && (typeParameters.parent = this);
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.TypeParameterList;
+        }
+    }
+
     export class ClassDeclaration extends AST {
         constructor(public modifiers: PullElementFlags[],
                     public identifier: Identifier,
-                    public typeParameterList: ASTList,
+                    public typeParameterList: TypeParameterList,
                     public heritageClauses: ASTList,
                     public classElements: ASTList,
                     public closeBraceToken: ASTSpan) {
@@ -466,7 +456,7 @@ module TypeScript {
     export class InterfaceDeclaration extends AST {
         constructor(public modifiers: PullElementFlags[],
                     public identifier: Identifier,
-                    public typeParameterList: ASTList,
+                    public typeParameterList: TypeParameterList,
                     public heritageClauses: ASTList,
                     public body: ObjectType) {
             super();
@@ -506,9 +496,7 @@ module TypeScript {
     }
 
     export class ModuleDeclaration extends AST {
-        private _moduleFlags = ModuleFlags.None;
-
-        constructor(public name: Identifier, public moduleElements: ASTList, public endingToken: ASTSpan) {
+        constructor(public modifiers: PullElementFlags[], public name: Identifier, public moduleElements: ASTList, public endingToken: ASTSpan, public isExternalModule: boolean) {
             super();
             name && (name.parent = this);
             moduleElements && (moduleElements.parent = this);
@@ -518,18 +506,8 @@ module TypeScript {
             return NodeType.ModuleDeclaration;
         }
 
-        public getModuleFlags(): ModuleFlags {
-            return this._moduleFlags;
-        }
-
-        // Must only be called from SyntaxTreeVisitor
-        public setModuleFlags(flags: ModuleFlags): void {
-            this._moduleFlags = flags;
-        }
-
         public structuralEquals(ast: ModuleDeclaration, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
-                this._moduleFlags === ast._moduleFlags &&
                 structuralEquals(this.name, ast.name, includingPosition) &&
                 structuralEquals(this.moduleElements, ast.moduleElements, includingPosition);
         }
@@ -556,7 +534,7 @@ module TypeScript {
     }
 
     export class VariableStatement extends AST {
-        constructor(public declaration: VariableDeclaration) {
+        constructor(public modifiers: PullElementFlags[], public declaration: VariableDeclaration) {
             super();
             declaration && (declaration.parent = this);
         }
@@ -588,7 +566,7 @@ module TypeScript {
     }
 
     export class VariableDeclarator extends AST {
-        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeAnnotation: TypeReference, public equalsValueClause: EqualsValueClause) {
+        constructor(public identifier: Identifier, public typeAnnotation: TypeReference, public equalsValueClause: EqualsValueClause) {
             super();
             identifier && (identifier.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
@@ -739,28 +717,39 @@ module TypeScript {
         }
     }
 
+    export class ParameterList extends AST {
+        constructor(public openParenTrailingComments: Comment[], public parameters: ASTList) {
+            super();
+            parameters && (parameters.parent = this);
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.ParameterList;
+        }
+    }
+
     export class ConstructorType extends AST {
-        constructor(public typeParameterList: ASTList, public parameterList: ASTList, public type: TypeReference) {
+        constructor(public typeParameterList: TypeParameterList, public parameterList: ParameterList, public type: TypeReference) {
             super();
             typeParameterList && (typeParameterList.parent = this);
             parameterList && (parameterList.parent = this);
             type && (type.parent = this);
         }
 
-        nodeType(): NodeType {
+        public nodeType(): NodeType {
             return NodeType.ConstructorType;
         }
     }
 
     export class FunctionType extends AST {
-        constructor(public typeParameterList: ASTList, public parameterList: ASTList, public type: TypeReference) {
+        constructor(public typeParameterList: TypeParameterList, public parameterList: ParameterList, public type: TypeReference) {
             super();
             typeParameterList && (typeParameterList.parent = this);
             parameterList && (parameterList.parent = this);
             type && (type.parent = this);
         }
 
-        nodeType(): NodeType {
+        public nodeType(): NodeType {
             return NodeType.FunctionType;
         }
     }
@@ -797,8 +786,19 @@ module TypeScript {
         }
     }
 
+    export class TypeArgumentList extends AST {
+        constructor(public typeArguments: ASTList) {
+            super();
+            typeArguments && (typeArguments.parent = this);
+        }
+
+        public nodeType(): NodeType {
+            return NodeType.TypeArgumentList;
+        }
+    }
+
     export class GenericType extends AST {
-        constructor(public name: AST, public typeArgumentList: ASTList) {
+        constructor(public name: AST, public typeArgumentList: TypeArgumentList) {
             super();
             name && (name.parent = this);
             typeArgumentList && (typeArgumentList.parent = this);
@@ -850,7 +850,7 @@ module TypeScript {
     }
 
     export class Parameter extends AST {
-        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeAnnotation: TypeReference, public equalsValueClause: EqualsValueClause, public isOptional: boolean, public isRest: boolean) {
+        constructor(public dotDotDotToken: ASTSpan, public modifiers: PullElementFlags[], public identifier: Identifier, public questionToken: ASTSpan, public typeAnnotation: TypeReference, public equalsValueClause: EqualsValueClause) {
             super();
             identifier && (identifier.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
@@ -859,14 +859,6 @@ module TypeScript {
 
         public nodeType(): NodeType {
             return NodeType.Parameter;
-        }
-
-        public isOptionalArg(): boolean { return this.isOptional || this.equalsValueClause !== null; }
-
-        public structuralEquals(ast: Parameter, includingPosition: boolean): boolean {
-            return super.structuralEquals(ast, includingPosition) &&
-                this.isOptional === ast.isOptional &&
-                this.isRest === ast.isRest;
         }
     }
 
@@ -944,7 +936,7 @@ module TypeScript {
     }
 
     export class ArgumentList extends AST {
-        constructor(public typeArgumentList: ASTList, public arguments: ASTList, public closeParenToken: ASTSpan) {
+        constructor(public typeArgumentList: TypeArgumentList, public arguments: ASTList, public closeParenToken: ASTSpan) {
             super();
             typeArgumentList && (typeArgumentList.parent = this);
             arguments && (arguments.parent = this);
@@ -999,19 +991,19 @@ module TypeScript {
             callSignature && (callSignature.parent = this);
         }
 
-        nodeType(): NodeType {
+        public nodeType(): NodeType {
             return NodeType.ConstructSignature;
         }
     }
 
     export class MethodSignature extends AST {
-        constructor(public propertyName: Identifier, public callSignature: CallSignature) {
+        constructor(public propertyName: Identifier, public questionToken: ASTSpan, public callSignature: CallSignature) {
             super();
             propertyName && (propertyName.parent = this);
             callSignature && (callSignature.parent = this);
         }
 
-        nodeType(): NodeType {
+        public nodeType(): NodeType {
             return NodeType.MethodSignature;
         }
     }
@@ -1030,7 +1022,7 @@ module TypeScript {
     }
 
     export class PropertySignature extends AST {
-        constructor(public propertyName: Identifier, public typeAnnotation: TypeReference) {
+        constructor(public propertyName: Identifier, public questionToken: ASTSpan, public typeAnnotation: TypeReference) {
             super();
             propertyName && (propertyName.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
@@ -1042,14 +1034,14 @@ module TypeScript {
     }
 
     export class CallSignature extends AST {
-        constructor(public typeParameterList: ASTList, public parameterList: ASTList, public typeAnnotation: TypeReference) {
+        constructor(public typeParameterList: TypeParameterList, public parameterList: ParameterList, public typeAnnotation: TypeReference) {
             super();
             typeParameterList && (typeParameterList.parent = this);
             parameterList && (parameterList.parent = this);
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        nodeType(): NodeType {
+        public nodeType(): NodeType {
             return NodeType.CallSignature;
         }
     }
@@ -1138,7 +1130,7 @@ module TypeScript {
     }
 
     export class ConstructorDeclaration extends AST {
-        constructor(public parameterList: ASTList, public block: Block) {
+        constructor(public parameterList: ParameterList, public block: Block) {
             super();
             parameterList && (parameterList.parent = this);
             block && (block.parent = this);
@@ -1165,7 +1157,7 @@ module TypeScript {
     export class GetAccessor extends AST {
         constructor(public modifiers: PullElementFlags[],
                     public propertyName: Identifier,
-                    public parameterList: ASTList,
+                    public parameterList: ParameterList,
                     public typeAnnotation: TypeReference,
                     public block: Block) {
             super();
@@ -1183,7 +1175,7 @@ module TypeScript {
     export class SetAccessor extends AST {
         constructor(public modifiers: PullElementFlags[],
                     public propertyName: Identifier,
-                    public parameterList: ASTList,
+                    public parameterList: ParameterList,
                     public block: Block) {
             super();
             propertyName && (propertyName.parent = this);
@@ -1270,7 +1262,7 @@ module TypeScript {
     }
 
     export class SwitchStatement extends AST {
-        constructor(public expression: AST, public switchClauses: ASTList, public statement: ASTSpan) {
+        constructor(public expression: AST, public closeParenToken: ASTSpan, public switchClauses: ASTList) {
             super();
             expression && (expression.parent = this);
             switchClauses && (switchClauses.parent = this);
@@ -1434,9 +1426,7 @@ module TypeScript {
     }
 
     export class EnumDeclaration extends AST {
-        private _moduleFlags: ModuleFlags = ModuleFlags.None;
-
-        constructor(public identifier: Identifier, public enumElements: ASTList) {
+        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public enumElements: ASTList) {
             super();
             identifier && (identifier.parent = this);
             enumElements && (enumElements.parent = this);
@@ -1445,19 +1435,9 @@ module TypeScript {
         public nodeType(): NodeType {
             return NodeType.EnumDeclaration;
         }
-
-        public getModuleFlags(): ModuleFlags {
-            return this._moduleFlags;
-        }
-
-        public setModuleFlags(flags: ModuleFlags): void {
-            this._moduleFlags = flags;
-        }
     }
 
     export class EnumElement extends AST {
-        public constantValue: number = null;
-
         constructor(public propertyName: Identifier, public equalsValueClause: EqualsValueClause) {
             super();
             propertyName && (propertyName.parent = this);

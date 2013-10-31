@@ -207,7 +207,7 @@ module TypeScript {
                 enumInstanceSymbol = enumContainerSymbol.getInstanceSymbol();
             }
             else {
-                enumContainerSymbol = new PullContainerSymbol(enumName, enumDeclKind);
+                enumContainerSymbol = new PullContainerSymbol(enumName, enumDeclKind, this.semanticInfoChain.getResolver());
                 createdNewSymbol = true;
 
                 if (!parent) {
@@ -296,7 +296,7 @@ module TypeScript {
                 enumContainerSymbol.setInstanceSymbol(enumInstanceSymbol);
 
                 if (!moduleInstanceTypeSymbol) {
-                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
+                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType, this.semanticInfoChain.getResolver());
                     enumInstanceSymbol.type = moduleInstanceTypeSymbol;
                 }
 
@@ -424,7 +424,7 @@ module TypeScript {
                 moduleInstanceSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
             }
             else {
-                moduleContainerTypeSymbol = new PullContainerSymbol(modName, moduleKind);
+                moduleContainerTypeSymbol = new PullContainerSymbol(modName, moduleKind, this.semanticInfoChain.getResolver());
                 createdNewSymbol = true;
 
                 if (!parent) {
@@ -513,7 +513,7 @@ module TypeScript {
                 moduleContainerTypeSymbol.setInstanceSymbol(moduleInstanceSymbol);
 
                 if (!moduleInstanceTypeSymbol) {
-                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
+                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType, this.semanticInfoChain.getResolver());
                     moduleInstanceSymbol.type = moduleInstanceTypeSymbol;
                 }
 
@@ -627,7 +627,7 @@ module TypeScript {
 
             var decls: PullDecl[];
 
-            classSymbol = new PullTypeSymbol(className, PullElementKind.Class);
+            classSymbol = new PullTypeSymbol(className, PullElementKind.Class, this.semanticInfoChain.getResolver());
 
             if (!parent) {
                 this.semanticInfoChain.cacheGlobalSymbol(classSymbol, PullElementKind.Class);
@@ -667,7 +667,7 @@ module TypeScript {
                     constructorTypeSymbol = constructorSymbol.type;
                 } else {
                     constructorSymbol = new PullSymbol(className, PullElementKind.ConstructorMethod);
-                    constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType);
+                    constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType, this.semanticInfoChain.getResolver());
                     constructorSymbol.setIsSynthesized();
                     constructorSymbol.type = constructorTypeSymbol;
                 }
@@ -695,7 +695,7 @@ module TypeScript {
                 typeParameter = classSymbol.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, false);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ false, this.semanticInfoChain.getResolver());
 
                     classSymbol.addTypeParameter(typeParameter);
                     constructorTypeSymbol.addConstructorTypeParameter(typeParameter);
@@ -746,7 +746,7 @@ module TypeScript {
             }
 
             if (!interfaceSymbol) {
-                interfaceSymbol = new PullTypeSymbol(interfaceName, PullElementKind.Interface);
+                interfaceSymbol = new PullTypeSymbol(interfaceName, PullElementKind.Interface, this.semanticInfoChain.getResolver());
                 createdNewSymbol = true;
 
                 if (!parent) {
@@ -779,7 +779,7 @@ module TypeScript {
                 typeParameter = interfaceSymbol.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, false);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ false, this.semanticInfoChain.getResolver());
 
                     interfaceSymbol.addTypeParameter(typeParameter);
                 }
@@ -816,7 +816,7 @@ module TypeScript {
         private bindObjectTypeDeclarationToPullSymbol(objectDecl: PullDecl) {
             var objectSymbolAST: AST = this.semanticInfoChain.getASTForDecl(objectDecl);
 
-            var objectSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
+            var objectSymbol = new PullTypeSymbol("", PullElementKind.ObjectType, this.semanticInfoChain.getResolver());
 
             objectSymbol.addDeclaration(objectDecl);
             objectDecl.setSymbol(objectSymbol);
@@ -835,7 +835,7 @@ module TypeScript {
             var declFlags = constructorTypeDeclaration.flags;
             var constructorTypeAST = this.semanticInfoChain.getASTForDecl(constructorTypeDeclaration);
 
-            var constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType);
+            var constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType, this.semanticInfoChain.getResolver());
 
             constructorTypeDeclaration.setSymbol(constructorTypeSymbol);
             constructorTypeSymbol.addDeclaration(constructorTypeDeclaration);
@@ -864,7 +864,7 @@ module TypeScript {
                 typeParameter = constructorTypeSymbol.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, false);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ false, this.semanticInfoChain.getResolver());
 
                     constructorTypeSymbol.addConstructorTypeParameter(typeParameter);
                 }
@@ -940,7 +940,7 @@ module TypeScript {
                     if (prevDecl.fileName() != variableDeclaration.fileName()) {
                         this.semanticInfoChain.addDiagnostic(diagnosticFromDecl(variableDeclaration,
                             DiagnosticCode.Module_0_cannot_merge_with_previous_declaration_of_1_in_a_different_file_2, [declName, declName, prevDecl.fileName()]));
-                        variableSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, declName);
+                        variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                     }
                 }
 
@@ -950,7 +950,7 @@ module TypeScript {
                     if (!prevIsParam && (isImplicit || prevIsImplicit || (prevKind & PullElementKind.SomeFunction) !== 0) || !shareParent) {
                         var diagnostic = diagnosticFromDecl(variableDeclaration, DiagnosticCode.Duplicate_identifier_0, [variableDeclaration.getDisplayName()]);
                         this.semanticInfoChain.addDiagnostic(diagnostic);
-                        variableSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, declName);
+                        variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                     }
                     else { // double var declaration (keep them separate so we can verify type sameness during type check)
                         this.checkThatExportsMatch(variableDeclaration, variableSymbol);
@@ -964,7 +964,7 @@ module TypeScript {
                 if (variableSymbol &&
                     !(variableSymbol.type && variableSymbol.type.isError()) &&
                     !this.checkThatExportsMatch(variableDeclaration, variableSymbol, !(isModuleValue && prevIsModuleValue))) {
-                    variableSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, declName);
+                        variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                 }
             }
 
@@ -1372,7 +1372,7 @@ module TypeScript {
                     functionSymbol.allDeclsHaveFlag(PullElementFlags.InitializedModule) && isAmbientOrPreviousIsAmbient;
                 if (!acceptableRedeclaration) {
                     this.semanticInfoChain.addDiagnosticFromAST(funcDeclAST, DiagnosticCode.Duplicate_identifier_0, [functionDeclaration.getDisplayName()]);
-                    functionSymbol.type = new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, funcName);
+                    functionSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(funcName);
                 }
             }
 
@@ -1387,7 +1387,7 @@ module TypeScript {
             }
 
             if (!functionTypeSymbol) {
-                functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+                functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
                 functionSymbol.type = functionTypeSymbol;
                 functionTypeSymbol.setFunctionSymbol(functionSymbol);
             }
@@ -1428,7 +1428,7 @@ module TypeScript {
                 typeParameter = signature.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ true, this.semanticInfoChain.getResolver());
 
                     signature.addTypeParameter(typeParameter);
                 }
@@ -1470,7 +1470,7 @@ module TypeScript {
                 (<PullFunctionExpressionDecl>functionExpressionDeclaration).getFunctionExpressionName() :
                 functionExpressionDeclaration.name;
             var functionSymbol: PullSymbol = new PullSymbol(functionName, PullElementKind.Function);
-            var functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+            var functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
             functionTypeSymbol.setFunctionSymbol(functionSymbol);
 
             functionSymbol.type = functionTypeSymbol;
@@ -1504,7 +1504,7 @@ module TypeScript {
                 typeParameter = signature.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParamter*/ true, this.semanticInfoChain.getResolver());
 
                     signature.addTypeParameter(typeParameter);
                 }
@@ -1534,7 +1534,7 @@ module TypeScript {
             // 1. Test for existing decl - if it exists, use its symbol
             // 2. If no other decl exists, create a new symbol and use that one
 
-            var functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+            var functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
 
             functionTypeDeclaration.setSymbol(functionTypeSymbol);
             functionTypeSymbol.addDeclaration(functionTypeDeclaration);
@@ -1555,7 +1555,7 @@ module TypeScript {
                 typeParameter = signature.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ true, this.semanticInfoChain.getResolver());
 
                     signature.addTypeParameter(typeParameter);
                 }
@@ -1621,7 +1621,7 @@ module TypeScript {
             }
 
             if (!methodTypeSymbol) {
-                methodTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+                methodTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
                 methodSymbol.type = methodTypeSymbol;
                 methodTypeSymbol.setFunctionSymbol(methodSymbol);
             }
@@ -1668,7 +1668,7 @@ module TypeScript {
                 typeParameter = signature.findTypeParameter(typeParameterName);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameterName, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameterName, /*_isFunctionTypeParameter*/ true, this.semanticInfoChain.getResolver());
                     signature.addTypeParameter(typeParameter);
                 }
                 else {
@@ -1773,7 +1773,7 @@ module TypeScript {
             }
             else {
                 constructorSymbol = new PullSymbol(constructorName, PullElementKind.ConstructorMethod);
-                constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType);
+                constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType, this.semanticInfoChain.getResolver());
             }
 
             // Even if we're reusing the symbol, it would have been cleared by the call to invalidate above
@@ -1838,7 +1838,7 @@ module TypeScript {
                 typeParameter = constructSignature.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParamter*/ true, this.semanticInfoChain.getResolver());
 
                     constructSignature.addTypeParameter(typeParameter);
                 }
@@ -1880,7 +1880,7 @@ module TypeScript {
                 typeParameter = callSignature.findTypeParameter(typeParameters[i].name);
 
                 if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, true);
+                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ true, this.semanticInfoChain.getResolver());
 
                     callSignature.addTypeParameter(typeParameter);
                 }
@@ -1981,7 +1981,7 @@ module TypeScript {
 
             if (!getterSymbol) {
                 getterSymbol = new PullSymbol(funcName, PullElementKind.Function);
-                getterTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+                getterTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
                 getterTypeSymbol.setFunctionSymbol(getterSymbol);
 
                 getterSymbol.type = getterTypeSymbol;
@@ -2077,7 +2077,7 @@ module TypeScript {
 
             if (!setterSymbol) {
                 setterSymbol = new PullSymbol(funcName, PullElementKind.Function);
-                setterTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
+                setterTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType, this.semanticInfoChain.getResolver());
                 setterTypeSymbol.setFunctionSymbol(setterSymbol);
 
                 setterSymbol.type = setterTypeSymbol;

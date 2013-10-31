@@ -7,4 +7,4 @@ var age_v = o.age();
 var name_v = o.name("Robert");
 var zz_v = o.name.N;
 var yy_v = o.name.g;
-var rr_v = o.name.r;
+var rr_v = o.name.r; // should be 'string'

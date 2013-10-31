@@ -7,7 +7,7 @@ var C = (function () {
 
 var v1;
 
-var y = v1.x;
+var y = v1.x; // should be 'string'
 
 
 ////[genericClasses0.d.ts]

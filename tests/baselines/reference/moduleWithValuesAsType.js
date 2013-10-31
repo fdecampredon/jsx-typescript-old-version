@@ -3,4 +3,4 @@ var A;
     var b = 1;
 })(A || (A = {}));
 
-var a;
+var a; // no error

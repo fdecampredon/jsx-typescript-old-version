@@ -641,7 +641,7 @@ module TypeScript.Emitter1 {
             }
 
             var parameterPropertyAssignments = <ExpressionStatementSyntax[]>ArrayUtilities.select(
-                ArrayUtilities.where(<ParameterSyntax[]>constructorDeclaration.parameterList.parameters.toNonSeparatorArray(), p => p.publicOrPrivateKeyword !== null),
+                ArrayUtilities.where(<ParameterSyntax[]>constructorDeclaration.parameterList.parameters.toNonSeparatorArray(), p => p.modifiers.childCount() > 0),
                 p => this.generatePropertyAssignmentStatement(p));
 
             for (i = parameterPropertyAssignments.length - 1; i >= 0; i--) {

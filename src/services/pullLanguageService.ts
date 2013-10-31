@@ -981,8 +981,10 @@ module TypeScript.Services {
                 return null;
             }
 
-            var cur = ast;
-            switch (cur.nodeType()) {
+            if (ast.nodeType() === NodeType.ParameterList && ast.parent.nodeType() === NodeType.ConstructorDeclaration) {
+                ast = ast.parent;
+            }
+            switch (ast.nodeType()) {
                 default:
                     return null;
                 case TypeScript.NodeType.ConstructorDeclaration:

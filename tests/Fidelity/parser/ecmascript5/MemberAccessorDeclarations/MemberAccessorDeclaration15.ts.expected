@@ -6,9 +6,9 @@
     },
     "diagnostics": [
         {
-            "start": 21,
-            "length": 16,
-            "diagnosticCode": "'set' accessor parameter cannot have accessibility modifier."
+            "start": 22,
+            "length": 6,
+            "diagnosticCode": "Parameter property declarations can only be used in constructors."
         }
     ],
     "sourceUnit": {
@@ -165,25 +165,27 @@
                                     "end": 38,
                                     "fullWidth": 16,
                                     "width": 16,
-                                    "publicOrPrivateKeyword": {
-                                        "kind": "PublicKeyword",
-                                        "fullStart": 22,
-                                        "fullEnd": 29,
-                                        "start": 22,
-                                        "end": 28,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "public",
-                                        "value": "public",
-                                        "valueText": "public",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
+                                    "modifiers": [
+                                        {
+                                            "kind": "PublicKeyword",
+                                            "fullStart": 22,
+                                            "fullEnd": 29,
+                                            "start": 22,
+                                            "end": 28,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "public",
+                                            "value": "public",
+                                            "valueText": "public",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": 29,

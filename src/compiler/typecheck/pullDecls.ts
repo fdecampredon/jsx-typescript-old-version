@@ -427,6 +427,14 @@ module TypeScript {
         }
     }
 
+    export class PullEnumElementDecl extends NormalPullDecl {
+        public constantValue: number = null;
+
+        constructor(declName: string, displayName: string, parentDecl: PullDecl, span: TextSpan) {
+            super(declName, displayName, PullElementKind.EnumMember, PullElementFlags.Public, parentDecl, span);
+        }
+    }
+
     export class PullFunctionExpressionDecl extends NormalPullDecl {
         private functionExpressionName: string;
 

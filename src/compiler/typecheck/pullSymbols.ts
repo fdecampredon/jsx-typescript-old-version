@@ -1111,7 +1111,6 @@ module TypeScript {
         private _callSignatures: PullSignatureSymbol[] = null;
         private _allCallSignatures: PullSignatureSymbol[] = null;
         private _constructSignatures: PullSignatureSymbol[] = null;
-        private _allConstructSignatures: PullSignatureSymbol[] = null;
         private _indexSignatures: PullSignatureSymbol[] = null;
         private _allIndexSignatures: PullSignatureSymbol[] = null;
 
@@ -1154,7 +1153,7 @@ module TypeScript {
 
         public typeReference: PullTypeReferenceSymbol = null;
 
-        constructor(name: string, kind: PullElementKind) {
+        constructor(name: string, kind: PullElementKind, public _resolver: PullTypeResolver) {
             super(name, kind);
             this.type = this;
         }
@@ -1603,14 +1602,41 @@ module TypeScript {
             indexSignature.functionType = this;
         }
 
-        public hasOwnCallSignatures(): boolean { return !!this._callSignatures; }
-
-        public getCallSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
-
-            if (!collectBaseSignatures) {
-                return this._callSignatures || [];
+        // This method can be called to get unhidden (not shadowed by a signature in derived class)
+        // signatures from a set of base class signatures. Can be used for signatures of any kind.
+        // October 16, 2013: Section 7.1:
+        // A call signature declaration hides a base type call signature that is identical when
+        // return types are ignored.
+        // A construct signature declaration hides a base type construct signature that is
+        // identical when return types are ignored.
+        // A string index signature declaration hides a base type string index signature.
+        // A numeric index signature declaration hides a base type numeric index signature.
+        
+        private addUnhiddenSignaturesFromBaseType(derivedTypeSignatures: PullSignatureSymbol[], baseTypeSignatures: PullSignatureSymbol[], signaturesBeingAggregated: PullSignatureSymbol[]) {
+            // If there are no derived type signatures, none of the base signatures will be hidden.
+            if (!derivedTypeSignatures) {
+                signaturesBeingAggregated.push.apply(signaturesBeingAggregated, baseTypeSignatures);
+                return;
             }
 
+            for (var i = 0; i < baseTypeSignatures.length; i++) {
+                var baseSignature = baseTypeSignatures[i];
+                // If it is different from every signature in the derived type (modulo
+                // return types, add it to the list)
+                var signatureIsHidden = ArrayUtilities.any(derivedTypeSignatures, sig => 
+                    this._resolver.signaturesAreIdentical(baseSignature, sig, /*includingReturnType*/ false));
+
+                if (!signatureIsHidden) {
+                    signaturesBeingAggregated.push(baseSignature);
+                }
+            }
+        }
+
+        public hasOwnCallSignatures(): boolean {
+            return this._callSignatures !== null;
+        }
+
+        public getCallSignatures(): PullSignatureSymbol[] {
             if (this._allCallSignatures) {
                 return this._allCallSignatures;
             }
@@ -1621,13 +1647,18 @@ module TypeScript {
                 signatures = signatures.concat(this._callSignatures);
             }
 
-            if (collectBaseSignatures && this._extendedTypes) {
+            // Check for inherited call signatures
+            // Only interfaces can inherit call signatures
+            if (this._extendedTypes && this.kind === PullElementKind.Interface) {
                 for (var i = 0; i < this._extendedTypes.length; i++) {
                     if (this._extendedTypes[i].hasBase(this)) {
                         continue;
                     }
 
-                    signatures = signatures.concat(this._extendedTypes[i].getCallSignatures());
+                    // October 16, 2013: Section 7.1:
+                    // A call signature declaration hides a base type call signature that is
+                    // identical when return types are ignored.
+                    this.addUnhiddenSignaturesFromBaseType(this._callSignatures, this._extendedTypes[i].getCallSignatures(), signatures);
                 }
             }
 
@@ -1636,14 +1667,11 @@ module TypeScript {
             return signatures;
         }
 
-        public hasOwnConstructSignatures(): boolean { return !!this._constructSignatures; }
+        public hasOwnConstructSignatures(): boolean {
+            return this._constructSignatures !== null;
+        }
 
-        public getConstructSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
-
-            if (!collectBaseSignatures) {
-                return this._constructSignatures || [];
-            }
-
+        public getConstructSignatures(): PullSignatureSymbol[]{
             var signatures: PullSignatureSymbol[] = [];
 
             if (this._constructSignatures) {
@@ -1653,27 +1681,27 @@ module TypeScript {
             // If it's a constructor type, we don't inherit construct signatures
             // (E.g., we'd be looking at the statics on a class, where we want
             // to inherit members, but not construct signatures
-            if (collectBaseSignatures && this._extendedTypes && !(this.kind == PullElementKind.ConstructorType)) {
+            if (this._extendedTypes && this.kind === PullElementKind.Interface) {
                 for (var i = 0; i < this._extendedTypes.length; i++) {
                     if (this._extendedTypes[i].hasBase(this)) {
                         continue;
                     }
 
-                    signatures = signatures.concat(this._extendedTypes[i].getConstructSignatures());
+                    // October 16, 2013: Section 7.1:
+                    // A construct signature declaration hides a base type construct signature that is
+                    // identical when return types are ignored.
+                    this.addUnhiddenSignaturesFromBaseType(this._constructSignatures, this._extendedTypes[i].getConstructSignatures(), signatures);
                 }
             }
 
             return signatures;
         }
 
-        public hasOwnIndexSignatures(): boolean { return !!this._indexSignatures; }
+        public hasOwnIndexSignatures(): boolean {
+            return this._indexSignatures !== null;
+        }
 
-        public getIndexSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
-
-            if (!collectBaseSignatures) {
-                return this._indexSignatures || [];
-            }
-
+        public getIndexSignatures(): PullSignatureSymbol[] {
             if (this._allIndexSignatures) {
                 return this._allIndexSignatures;
             }
@@ -1684,13 +1712,16 @@ module TypeScript {
                 signatures = signatures.concat(this._indexSignatures);
             }
 
-            if (collectBaseSignatures && this._extendedTypes) {
+            if (this._extendedTypes) {
                 for (var i = 0; i < this._extendedTypes.length; i++) {
                     if (this._extendedTypes[i].hasBase(this)) {
                         continue;
                     }
 
-                    signatures = signatures.concat(this._extendedTypes[i].getIndexSignatures());
+                    // October 16, 2013: Section 7.1:
+                    // A string index signature declaration hides a base type string index signature.
+                    // A numeric index signature declaration hides a base type numeric index signature.
+                    this.addUnhiddenSignaturesFromBaseType(this._indexSignatures, this._extendedTypes[i].getIndexSignatures(), signatures);
                 }
             }
 
@@ -2191,7 +2222,7 @@ module TypeScript {
                 }
 
                 if (!wrapsSomeTypeParameter) {
-                    var sigs = type.getCallSignatures(true);
+                    var sigs = type.getCallSignatures();
 
                     for (var i = 0; i < sigs.length; i++) {
                         if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
@@ -2202,7 +2233,7 @@ module TypeScript {
                 }
 
                 if (!wrapsSomeTypeParameter) {
-                    sigs = type.getConstructSignatures(true);
+                    sigs = type.getConstructSignatures();
 
                     for (var i = 0; i < sigs.length; i++) {
                         if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
@@ -2213,7 +2244,7 @@ module TypeScript {
                 }
 
                 if (!wrapsSomeTypeParameter) {
-                    sigs = type.getIndexSignatures(true);
+                    sigs = type.getIndexSignatures();
 
                     for (var i = 0; i < sigs.length; i++) {
                         if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
@@ -2308,7 +2339,7 @@ module TypeScript {
                 }
             }
 
-            var sigs = this.getCallSignatures(true);
+            var sigs = this.getCallSignatures();
 
             for (var i = 0; i < sigs.length; i++) {
                 if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
@@ -2316,7 +2347,7 @@ module TypeScript {
                 }
             }
 
-            sigs = this.getConstructSignatures(true);
+            sigs = this.getConstructSignatures();
 
             for (var i = 0; i < sigs.length; i++) {
                 if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
@@ -2324,7 +2355,7 @@ module TypeScript {
                 }
             }
 
-            sigs = this.getIndexSignatures(true);
+            sigs = this.getIndexSignatures();
 
             for (var i = 0; i < sigs.length; i++) {
                 if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
@@ -2337,8 +2368,8 @@ module TypeScript {
     }
 
     export class PullPrimitiveTypeSymbol extends PullTypeSymbol {
-        constructor(name: string) {
-            super(name, PullElementKind.Primitive);
+        constructor(name: string, resolver: PullTypeResolver) {
+            super(name, PullElementKind.Primitive, resolver);
 
             this.isResolved = true;
         }
@@ -2355,8 +2386,8 @@ module TypeScript {
     }
 
     export class PullStringConstantTypeSymbol extends PullPrimitiveTypeSymbol {
-        constructor(name: string) {
-            super(name);
+        constructor(name: string, resolver: PullTypeResolver) {
+            super(name, resolver);
         }
 
         public isStringConstant() {
@@ -2366,8 +2397,8 @@ module TypeScript {
 
     export class PullErrorTypeSymbol extends PullPrimitiveTypeSymbol {
 
-        constructor(private anyType: PullTypeSymbol, name: string) {
-            super(name);
+        constructor(private anyType: PullTypeSymbol, name: string, resolver: PullTypeResolver) {
+            super(name, resolver);
 
             this.isResolved = true;
         }
@@ -2397,8 +2428,8 @@ module TypeScript {
         private assignedType: PullTypeSymbol = null;
         private assignedContainer: PullContainerSymbol = null;
 
-        constructor(name: string, kind: PullElementKind) {
-            super(name, kind);
+        constructor(name: string, kind: PullElementKind, resolver: PullTypeResolver) {
+            super(name, kind, resolver);
         }
 
         public isContainer() { return true; }
@@ -2473,17 +2504,17 @@ module TypeScript {
         private _typeUsedExternally = false;
         private retrievingExportAssignment = false;
 
-        constructor(name: string, private resolver: PullTypeResolver) {
-            super(name, PullElementKind.TypeAlias);
+        constructor(name: string, resolver: PullTypeResolver) {
+            super(name, PullElementKind.TypeAlias, resolver);
         }
 
         public typeUsedExternally(): boolean {
-            this.resolver.resolveDeclaredSymbol(this);
+            this._resolver.resolveDeclaredSymbol(this);
             return this._typeUsedExternally;
         }
 
         public isUsedAsValue(): boolean {
-            this.resolver.resolveDeclaredSymbol(this);
+            this._resolver.resolveDeclaredSymbol(this);
             return this._isUsedAsValue;
         }
 
@@ -2496,17 +2527,17 @@ module TypeScript {
         }
 
         public assignedValue(): PullSymbol {
-            this.resolver.resolveDeclaredSymbol(this);
+            this._resolver.resolveDeclaredSymbol(this);
             return this._assignedValue;
         }
 
         public assignedType(): PullTypeSymbol {
-            this.resolver.resolveDeclaredSymbol(this);
+            this._resolver.resolveDeclaredSymbol(this);
             return this._assignedType;
         }
 
         public assignedContainer(): PullContainerSymbol {
-            this.resolver.resolveDeclaredSymbol(this);
+            this._resolver.resolveDeclaredSymbol(this);
             return this._assignedContainer;
         }
 
@@ -2660,8 +2691,8 @@ module TypeScript {
     export class PullTypeParameterSymbol extends PullTypeSymbol {
         private _constraint: PullTypeSymbol = null;
 
-        constructor(name: string, private _isFunctionTypeParameter: boolean) {
-            super(name, PullElementKind.TypeParameter);
+        constructor(name: string, private _isFunctionTypeParameter: boolean, resolver: PullTypeResolver) {
+            super(name, PullElementKind.TypeParameter, resolver);
         }
 
         public isTypeParameter() { return true; }
@@ -2675,28 +2706,28 @@ module TypeScript {
             return this._constraint;
         }
 
-        public getCallSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
+        public getCallSignatures(): PullSignatureSymbol[] {
             if (this._constraint) {
                 return this._constraint.getCallSignatures();
             }
 
-            return super.getCallSignatures(collectBaseSignatures);
+            return super.getCallSignatures();
         }
 
-        public getConstructSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
+        public getConstructSignatures(): PullSignatureSymbol[] {
             if (this._constraint) {
                 return this._constraint.getConstructSignatures();
             }
 
-            return super.getConstructSignatures(collectBaseSignatures);
+            return super.getConstructSignatures();
         }
 
-        public getIndexSignatures(collectBaseSignatures= true): PullSignatureSymbol[] {
+        public getIndexSignatures(): PullSignatureSymbol[] {
             if (this._constraint) {
                 return this._constraint.getIndexSignatures();
             }
 
-            return super.getIndexSignatures(collectBaseSignatures);
+            return super.getIndexSignatures();
         }
 
         public isGeneric() { return true; }

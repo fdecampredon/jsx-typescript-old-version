@@ -30,4 +30,4 @@ var o1 = { get Foo() {
 var o2 = { get Foo() {
         return 0;
     }, set Foo(val) {
-    } };
+    } }; // ok - types agree

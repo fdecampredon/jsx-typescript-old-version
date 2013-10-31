@@ -6,12 +6,9 @@
     },
     "diagnostics": [
         {
-            "start": 48,
-            "length": 6,
-            "diagnosticCode": "Unexpected token; '{0}' expected.",
-            "arguments": [
-                "parameter"
-            ]
+            "start": 54,
+            "length": 1,
+            "diagnosticCode": "Identifier expected."
         }
     ],
     "sourceUnit": {
@@ -193,20 +190,28 @@
                             "openParenToken": {
                                 "kind": "OpenParenToken",
                                 "fullStart": 47,
-                                "fullEnd": 54,
+                                "fullEnd": 48,
                                 "start": 47,
                                 "end": 48,
-                                "fullWidth": 7,
+                                "fullWidth": 1,
                                 "width": 1,
                                 "text": "(",
                                 "value": "(",
-                                "valueText": "(",
-                                "hasTrailingTrivia": true,
-                                "hasTrailingSkippedText": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "SkippedTokenTrivia",
-                                        "skippedToken": {
+                                "valueText": "("
+                            },
+                            "parameters": [
+                                {
+                                    "kind": "Parameter",
+                                    "fullStart": 48,
+                                    "fullEnd": 54,
+                                    "start": 48,
+                                    "end": 54,
+                                    "fullWidth": 6,
+                                    "width": 6,
+                                    "isIncrementallyUnusable": true,
+                                    "parsedInStrictMode": true,
+                                    "modifiers": [
+                                        {
                                             "kind": "StaticKeyword",
                                             "fullStart": 48,
                                             "fullEnd": 54,
@@ -218,10 +223,19 @@
                                             "value": "static",
                                             "valueText": "static"
                                         }
+                                    ],
+                                    "identifier": {
+                                        "kind": "IdentifierName",
+                                        "fullStart": -1,
+                                        "fullEnd": -1,
+                                        "start": -1,
+                                        "end": -1,
+                                        "fullWidth": 0,
+                                        "width": 0,
+                                        "text": ""
                                     }
-                                ]
-                            },
-                            "parameters": [],
+                                }
+                            ],
                             "closeParenToken": {
                                 "kind": "CloseParenToken",
                                 "fullStart": 54,

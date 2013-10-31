@@ -8,4 +8,4 @@ var r9 = f10('', function () {
     return (function (a) {
         return a.foo;
     });
-}, 1);
+}, 1); // now a should be any

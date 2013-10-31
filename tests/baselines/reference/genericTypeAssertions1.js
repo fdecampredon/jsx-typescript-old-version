@@ -7,4 +7,4 @@ var A = (function () {
 })();
 var foo = new A();
 var r = new A();
-var r2 = foo;
+var r2 = foo; // error

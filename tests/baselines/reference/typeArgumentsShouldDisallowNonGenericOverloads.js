@@ -6,4 +6,4 @@ var x = foo("hi");
 var y = foo("hi");
 
 var w = foo("hi");
-var z = foo("hi");
+var z = foo("hi"); // should error

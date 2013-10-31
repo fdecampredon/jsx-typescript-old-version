@@ -21,4 +21,4 @@ function foo4(bar) {
     return bar;
 }
 ;
-var x = foo4({ a: true });
+var x = foo4({ a: true }); // error

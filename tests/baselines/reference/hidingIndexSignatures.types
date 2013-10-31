@@ -1,0 +1,14 @@
+=== tests/cases/compiler/hidingIndexSignatures.ts ===
+Line 0 col 10 IdentifierName "A" = A
+Line 1 col 5 IdentifierName "a" = string
+Line 4 col 10 IdentifierName "B" = B
+Line 4 col 20 IdentifierName "A" = A
+Line 5 col 5 IdentifierName "a" = string
+Line 8 col 4 IdentifierName "b" = B
+Line 8 col 7 IdentifierName "B" = B
+Line 9 col 0 ElementAccessExpression "b[""]" = number
+Line 9 col 0 IdentifierName "b" = B
+Line 10 col 4 IdentifierName "a" = A
+Line 10 col 7 IdentifierName "A" = A
+Line 11 col 0 ElementAccessExpression "a[""]" = {}
+Line 11 col 0 IdentifierName "a" = A

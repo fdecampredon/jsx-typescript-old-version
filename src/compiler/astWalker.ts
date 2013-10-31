@@ -39,6 +39,10 @@ module TypeScript {
         walker.walk(preAst.expression);
     }
 
+    function walkTypeArgumentListChildren(preAst: TypeArgumentList, walker: AstWalker): void {
+        walker.walk(preAst.typeArguments);
+    }
+
     function walkTypeOfExpressionChildren(preAst: TypeOfExpression, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
@@ -120,6 +124,10 @@ module TypeScript {
     function walkTypeParameterChildren(preAst: TypeParameter, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.constraint);
+    }
+
+    function walkTypeParameterListChildren(preAst: TypeParameterList, walker: AstWalker): void {
+        walker.walk(preAst.typeParameters);
     }
 
     function walkGenericTypeChildren(preAst: GenericType, walker: AstWalker): void {
@@ -223,6 +231,10 @@ module TypeScript {
         walker.walk(preAst.identifier);
         walker.walk(preAst.typeAnnotation);
         walker.walk(preAst.equalsValueClause);
+    }
+
+    function walkParameterListChildren(preAst: ParameterList, walker: AstWalker): void {
+        walker.walk(preAst.parameters);
     }
 
     function walkPropertySignatureChildren(preAst: PropertySignature, walker: AstWalker): void {
@@ -496,6 +508,7 @@ module TypeScript {
     childrenWalkers[NodeType.OmittedExpression] = null;
     childrenWalkers[NodeType.OrAssignmentExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.Parameter] = walkParameterChildren;
+    childrenWalkers[NodeType.ParameterList] = walkParameterListChildren;
     childrenWalkers[NodeType.ParenthesizedExpression] = walkParenthesizedExpressionChildren;
     childrenWalkers[NodeType.PlusExpression] = walkPrefixUnaryExpressionChildren;
     childrenWalkers[NodeType.PostDecrementExpression] = walkPostfixUnaryExpressionChildren;
@@ -521,8 +534,10 @@ module TypeScript {
     childrenWalkers[NodeType.ThrowStatement] = walkThrowStatementChildren;
     childrenWalkers[NodeType.TrueLiteral] = null;
     childrenWalkers[NodeType.TryStatement] = walkTryStatementChildren;
+    childrenWalkers[NodeType.TypeArgumentList] = walkTypeArgumentListChildren;
     childrenWalkers[NodeType.TypeOfExpression] = walkTypeOfExpressionChildren;
     childrenWalkers[NodeType.TypeParameter] = walkTypeParameterChildren;
+    childrenWalkers[NodeType.TypeParameterList] = walkTypeParameterListChildren;
     childrenWalkers[NodeType.TypeQuery] = walkTypeQueryChildren;
     childrenWalkers[NodeType.TypeRef] = walkTypeReferenceChildren;
     childrenWalkers[NodeType.UnsignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;

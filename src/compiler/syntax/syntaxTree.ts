@@ -188,16 +188,6 @@ module TypeScript {
         }
 
         private checkParameterListAcessibilityModifiers(node: ParameterListSyntax): boolean {
-            // Only constructor parameters can have public/private modifiers.  Also, the constructor
-            // needs to have a body, and it can't be in an ambient context.
-            if (this.currentConstructor !== null &&
-                this.currentConstructor.parameterList === node &&
-                this.currentConstructor.block &&
-                !this.inAmbientDeclaration) {
-
-                return false;
-            }
-
             var parameterFullStart = this.childFullStart(node, node.parameters);
 
             for (var i = 0, n = node.parameters.childCount(); i < n; i++) {
@@ -205,25 +195,63 @@ module TypeScript {
                 if (i % 2 === 0) {
                     var parameter = <ParameterSyntax>node.parameters.childAt(i);
 
-                    if (parameter.publicOrPrivateKeyword) {
-                        var keywordFullStart = parameterFullStart + Syntax.childOffset(parameter, parameter.publicOrPrivateKeyword);
-
-                        if (this.inAmbientDeclaration) {
-                            this.pushDiagnostic1(keywordFullStart, parameter.publicOrPrivateKeyword,
-                                DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_an_ambient_context);
-                        }
-                        else if (this.currentConstructor && !this.currentConstructor.block) {
-                            this.pushDiagnostic1(keywordFullStart, parameter.publicOrPrivateKeyword,
-                                DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
-                        }
-                        else {
-                            this.pushDiagnostic1(keywordFullStart, parameter.publicOrPrivateKeyword,
-                                DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_constructors);
-                        }
+                    if (this.checkParameterAccessibilityModifiers(node, parameter, parameterFullStart)) {
+                        return true;
                     }
                 }
 
                 parameterFullStart += nodeOrToken.fullWidth();
+            }
+
+            return false;
+        }
+
+        private checkParameterAccessibilityModifiers(parameterList: ParameterListSyntax, parameter: ParameterSyntax, parameterFullStart: number): boolean {
+            if (parameter.modifiers.childCount() > 0) {
+                var modifiers = parameter.modifiers;
+                var modifierFullStart = parameterFullStart + Syntax.childOffset(parameter, modifiers);
+
+                for (var i = 0, n = modifiers.childCount(); i < n; i++) {
+                    var modifier = <ISyntaxToken>modifiers.childAt(i);
+
+                    if (this.checkParameterAccessibilityModifier(parameterList, modifier, modifierFullStart, i)) {
+                        return true;
+                    }
+
+                    modifierFullStart += modifier.fullWidth();
+                }
+            }
+
+            return false;
+        }
+
+        private checkParameterAccessibilityModifier(parameterList: ParameterListSyntax, modifier: ISyntaxToken, modifierFullStart: number, modifierIndex: number): boolean {
+            if (modifier.tokenKind !== SyntaxKind.PublicKeyword && modifier.tokenKind !== SyntaxKind.PrivateKeyword) {
+                this.pushDiagnostic1(modifierFullStart, modifier,
+                    DiagnosticCode._0_modifier_cannot_appear_on_a_parameter, [modifier.text()]);
+                return true;
+            }
+            else {
+                if (modifierIndex > 0) {
+                    this.pushDiagnostic1(modifierFullStart, modifier, DiagnosticCode.Accessibility_modifier_already_seen);
+                    return true;
+                }
+
+                if (this.inAmbientDeclaration) {
+                    this.pushDiagnostic1(modifierFullStart, modifier,
+                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_an_ambient_context);
+                    return true;
+                }
+                else if (this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.parameterList === parameterList) {
+                    this.pushDiagnostic1(modifierFullStart, modifier,
+                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
+                    return true;
+                }
+                else if (this.currentConstructor === null || this.currentConstructor.parameterList !== parameterList) {
+                    this.pushDiagnostic1(modifierFullStart, modifier,
+                        DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_constructors);
+                    return true;
+                }
             }
 
             return false;
@@ -334,7 +362,7 @@ module TypeScript {
                     DiagnosticCode.Index_signatures_cannot_have_rest_parameters);
                 return true;
             }
-            else if (parameter.publicOrPrivateKeyword) {
+            else if (parameter.modifiers.childCount() > 0) {
                 this.pushDiagnostic1(
                     parameterFullStart, parameter,
                     DiagnosticCode.Index_signature_parameter_cannot_have_accessibility_modifiers);
@@ -850,12 +878,6 @@ module TypeScript {
             var parameterListFullStart = this.childFullStart(node, parameterList);
             var parameterFullStart = parameterListFullStart + Syntax.childOffset(parameterList, parameterList.openParenToken);
             var parameter = <ParameterSyntax>parameterList.parameters.childAt(0);
-
-            if (parameter.publicOrPrivateKeyword) {
-                this.pushDiagnostic1(parameterFullStart, parameter,
-                    DiagnosticCode.set_accessor_parameter_cannot_have_accessibility_modifier);
-                return true;
-            }
 
             if (parameter.questionToken) {
                 this.pushDiagnostic1(parameterFullStart, parameter,

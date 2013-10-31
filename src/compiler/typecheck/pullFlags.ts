@@ -22,7 +22,6 @@ module TypeScript {
         InitializedDynamicModule = 1 << 16,
 
         MustCaptureThis = 1 << 18,
-        Constant = 1 << 19,
 
         DeclaredInAWithBlock = 1 << 21,
 

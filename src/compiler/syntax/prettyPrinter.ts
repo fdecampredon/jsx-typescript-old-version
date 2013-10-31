@@ -478,6 +478,7 @@ module TypeScript.PrettyPrinter {
 
         public visitParameter(node: ParameterSyntax): void {
             this.appendToken(node.dotDotDotToken);
+            this.appendSpaceList(node.modifiers);
             this.appendToken(node.identifier);
             this.appendToken(node.questionToken);
             this.appendNode(node.typeAnnotation);

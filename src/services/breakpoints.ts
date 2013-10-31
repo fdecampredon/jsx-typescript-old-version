@@ -769,7 +769,7 @@ module TypeScript.Services.Breakpoints {
             }
 
             var parameterSyntax = <TypeScript.ParameterSyntax>parameterNode.node();
-            if (parameterSyntax.dotDotDotToken || parameterSyntax.equalsValueClause || parameterSyntax.publicOrPrivateKeyword) {
+            if (parameterSyntax.dotDotDotToken || parameterSyntax.equalsValueClause || parameterSyntax.modifiers.childCount() > 0) {
                 return createBreakpointSpanInfo(parameterNode);
             } else {
                 return null;

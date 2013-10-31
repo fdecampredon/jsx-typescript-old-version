@@ -49,4 +49,4 @@ var m3d;
 
 var r = new m3d();
 
-var r2 = new m4d();
+var r2 = new m4d(); // error

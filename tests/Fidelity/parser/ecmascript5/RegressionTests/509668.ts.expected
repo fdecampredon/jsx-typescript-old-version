@@ -171,25 +171,27 @@
                                     "fullWidth": 7,
                                     "width": 6,
                                     "isIncrementallyUnusable": true,
-                                    "publicOrPrivateKeyword": {
-                                        "kind": "PublicKeyword",
-                                        "fullStart": 60,
-                                        "fullEnd": 67,
-                                        "start": 60,
-                                        "end": 66,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "public",
-                                        "value": "public",
-                                        "valueText": "public",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
+                                    "modifiers": [
+                                        {
+                                            "kind": "PublicKeyword",
+                                            "fullStart": 60,
+                                            "fullEnd": 67,
+                                            "start": 60,
+                                            "end": 66,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "public",
+                                            "value": "public",
+                                            "valueText": "public",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "text": " "
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": -1,
@@ -231,6 +233,7 @@
                                         "value": "...",
                                         "valueText": "..."
                                     },
+                                    "modifiers": [],
                                     "identifier": {
                                         "kind": "IdentifierName",
                                         "fullStart": 70,

@@ -284,7 +284,7 @@ module TypeScript {
         public visitParameter(node: ParameterSyntax): any {
             return node.update(
                 node.dotDotDotToken === null ? null : this.visitToken(node.dotDotDotToken),
-                node.publicOrPrivateKeyword === null ? null : this.visitToken(node.publicOrPrivateKeyword),
+                this.visitList(node.modifiers),
                 this.visitToken(node.identifier),
                 node.questionToken === null ? null : this.visitToken(node.questionToken),
                 node.typeAnnotation === null ? null : <TypeAnnotationSyntax>this.visitNode(node.typeAnnotation),

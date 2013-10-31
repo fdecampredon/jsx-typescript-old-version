@@ -5,6 +5,5 @@
 ////}
 
 goTo.marker();
+verify.completionListContains('parseInt');
 
-verify.not.memberListContains('btoa');
-//debug.printCompletionListMembers();

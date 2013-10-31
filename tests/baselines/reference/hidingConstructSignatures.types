@@ -1,0 +1,25 @@
+=== tests/cases/compiler/hidingConstructSignatures.ts ===
+Line 0 col 10 IdentifierName "C" = C
+Line 1 col 5 IdentifierName "a" = string
+Line 4 col 10 IdentifierName "D" = D
+Line 4 col 20 IdentifierName "C" = C
+Line 5 col 9 IdentifierName "a" = string
+Line 8 col 10 IdentifierName "E" = E
+Line 9 col 9 IdentifierName "a" = string
+Line 12 col 10 IdentifierName "F" = F
+Line 12 col 20 IdentifierName "E" = E
+Line 13 col 9 IdentifierName "a" = string
+Line 16 col 4 IdentifierName "d" = D
+Line 16 col 7 IdentifierName "D" = D
+Line 17 col 0 InvocationExpression "d("")" = string
+Line 17 col 0 IdentifierName "d" = D
+Line 18 col 0 ObjectCreationExpression "new d("")" = number
+Line 18 col 4 IdentifierName "d" = D
+Line 20 col 4 IdentifierName "f" = F
+Line 20 col 7 IdentifierName "F" = F
+Line 21 col 0 ObjectCreationExpression "new f("")" = string
+Line 21 col 4 IdentifierName "f" = F
+Line 23 col 4 IdentifierName "e" = E
+Line 23 col 7 IdentifierName "E" = E
+Line 24 col 0 ObjectCreationExpression "new e("")" = {}
+Line 24 col 4 IdentifierName "e" = E

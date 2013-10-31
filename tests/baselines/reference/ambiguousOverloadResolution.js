@@ -18,4 +18,4 @@ var B = (function (_super) {
 })(A);
 
 var x;
-var t = f(x, x);
+var t = f(x, x); // Not an error

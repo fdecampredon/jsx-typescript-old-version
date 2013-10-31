@@ -1,2 +1,1 @@
-var y // Error
-;
+var y; // Error

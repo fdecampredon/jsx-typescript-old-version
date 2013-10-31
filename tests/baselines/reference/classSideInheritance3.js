@@ -28,4 +28,4 @@ var C = (function (_super) {
 
 var r1 = B;
 var r2 = B;
-var r3 = C;
+var r3 = C; // ok

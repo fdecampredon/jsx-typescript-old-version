@@ -27,4 +27,4 @@ var r = new B();
 var r2 = new B();
 var r3 = new B();
 var r4 = new A();
-var r5 = [];
+var r5 = []; // error
