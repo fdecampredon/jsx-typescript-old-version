@@ -1699,7 +1699,7 @@ module TypeScript.Parser {
             return this.factory.exportAssignment(exportKeyword, equalsToken, identifier, semicolonToken);
         }
 
-        private parseModuleReference(): ModuleReferenceSyntax {
+        private parseModuleReference(): IModuleReferenceSyntax {
             if (this.isExternalModuleReference()) {
                 return this.parseExternalModuleReference();
             }

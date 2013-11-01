@@ -73,29 +73,7 @@ module TypeScript {
     }
     }
 
-    export class ModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
-        constructor(parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
-        }
-
-    public isModuleReference(): boolean {
-        return true;
-    }
-
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): ModuleReferenceSyntax {
-        return <ModuleReferenceSyntax>super.withLeadingTrivia(trivia);
-    }
-
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): ModuleReferenceSyntax {
-        return <ModuleReferenceSyntax>super.withTrailingTrivia(trivia);
-    }
-
-    public isTypeScriptSpecific(): boolean {
-        return true;
-    }
-    }
-
-    export class ExternalModuleReferenceSyntax extends ModuleReferenceSyntax {
+    export class ExternalModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
 
         constructor(public requireKeyword: ISyntaxToken,
                     public openParenToken: ISyntaxToken,
@@ -126,6 +104,10 @@ module TypeScript {
             case 3: return this.closeParenToken;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isModuleReference(): boolean {
+        return true;
     }
 
     public update(requireKeyword: ISyntaxToken,
@@ -172,7 +154,7 @@ module TypeScript {
     }
     }
 
-    export class ModuleNameModuleReferenceSyntax extends ModuleReferenceSyntax {
+    export class ModuleNameModuleReferenceSyntax extends SyntaxNode implements IModuleReferenceSyntax {
 
         constructor(public moduleName: INameSyntax,
                     parsedInStrictMode: boolean) {
@@ -197,6 +179,10 @@ module TypeScript {
             case 0: return this.moduleName;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isModuleReference(): boolean {
+        return true;
     }
 
     public update(moduleName: INameSyntax): ModuleNameModuleReferenceSyntax {
@@ -230,7 +216,7 @@ module TypeScript {
                     public importKeyword: ISyntaxToken,
                     public identifier: ISyntaxToken,
                     public equalsToken: ISyntaxToken,
-                    public moduleReference: ModuleReferenceSyntax,
+                    public moduleReference: IModuleReferenceSyntax,
                     public semicolonToken: ISyntaxToken,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
@@ -269,7 +255,7 @@ module TypeScript {
                   importKeyword: ISyntaxToken,
                   identifier: ISyntaxToken,
                   equalsToken: ISyntaxToken,
-                  moduleReference: ModuleReferenceSyntax,
+                  moduleReference: IModuleReferenceSyntax,
                   semicolonToken: ISyntaxToken): ImportDeclarationSyntax {
         if (this.modifiers === modifiers && this.importKeyword === importKeyword && this.identifier === identifier && this.equalsToken === equalsToken && this.moduleReference === moduleReference && this.semicolonToken === semicolonToken) {
             return this;
@@ -281,13 +267,13 @@ module TypeScript {
     public static create(importKeyword: ISyntaxToken,
                          identifier: ISyntaxToken,
                          equalsToken: ISyntaxToken,
-                         moduleReference: ModuleReferenceSyntax,
+                         moduleReference: IModuleReferenceSyntax,
                          semicolonToken: ISyntaxToken): ImportDeclarationSyntax {
         return new ImportDeclarationSyntax(Syntax.emptyList, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken,
-                          moduleReference: ModuleReferenceSyntax): ImportDeclarationSyntax {
+                          moduleReference: IModuleReferenceSyntax): ImportDeclarationSyntax {
         return new ImportDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.ImportKeyword), identifier, Syntax.token(SyntaxKind.EqualsToken), moduleReference, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
@@ -319,7 +305,7 @@ module TypeScript {
         return this.update(this.modifiers, this.importKeyword, this.identifier, equalsToken, this.moduleReference, this.semicolonToken);
     }
 
-    public withModuleReference(moduleReference: ModuleReferenceSyntax): ImportDeclarationSyntax {
+    public withModuleReference(moduleReference: IModuleReferenceSyntax): ImportDeclarationSyntax {
         return this.update(this.modifiers, this.importKeyword, this.identifier, this.equalsToken, moduleReference, this.semicolonToken);
     }
 

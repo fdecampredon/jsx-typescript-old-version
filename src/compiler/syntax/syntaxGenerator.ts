@@ -52,16 +52,9 @@ var definitions:ITypeDefinition[] = [
         ]
     },
     <any>{
-        name: 'ModuleReferenceSyntax',
+        name: 'ExternalModuleReferenceSyntax',
         baseType: 'SyntaxNode',
         interfaces: ['IModuleReferenceSyntax'],
-        isAbstract: true,
-        children: <any>[],
-        isTypeScriptSpecific: true
-    },
-    <any>{
-        name: 'ExternalModuleReferenceSyntax',
-        baseType: 'ModuleReferenceSyntax',
         children: [
             <any>{ name: 'requireKeyword', isToken: true, tokenKinds: ['RequireKeyword'] }, 
             <any>{ name: 'openParenToken', isToken: true },
@@ -72,7 +65,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'ModuleNameModuleReferenceSyntax',
-        baseType: 'ModuleReferenceSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IModuleReferenceSyntax'],
         children: [
             <any>{ name: 'moduleName', type: 'INameSyntax' }
         ],
@@ -87,7 +81,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'importKeyword', isToken: true },
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsToken', isToken: true },
-            <any>{ name: 'moduleReference', type: 'ModuleReferenceSyntax' },
+            <any>{ name: 'moduleReference', type: 'IModuleReferenceSyntax' },
             <any>{ name: 'semicolonToken', isToken: true }
         ],
         isTypeScriptSpecific: true

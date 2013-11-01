@@ -85,7 +85,7 @@ module TypeScript {
                 this.visitToken(node.importKeyword),
                 this.visitToken(node.identifier),
                 this.visitToken(node.equalsToken),
-                <ModuleReferenceSyntax>this.visitNode(node.moduleReference),
+                <IModuleReferenceSyntax>this.visitNodeOrToken(node.moduleReference),
                 this.visitToken(node.semicolonToken));
         }
 

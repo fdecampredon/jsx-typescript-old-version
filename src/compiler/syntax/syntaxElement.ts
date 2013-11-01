@@ -65,6 +65,7 @@ module TypeScript {
     }
 
     export interface IModuleReferenceSyntax extends ISyntaxNode {
+        isModuleReference(): boolean;
     }
 
     export interface IModuleElementSyntax extends ISyntaxNode {
