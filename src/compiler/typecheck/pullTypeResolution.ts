@@ -10583,33 +10583,64 @@ module TypeScript {
                 (parameterDeclarations[0].isEqual(expressionDeclarations[0]) || (expressionType.isGeneric() && parameterType.isGeneric() &&
                 this.sourceIsSubtypeOfTarget(this.instantiateTypeToAny(expressionType, context), this.instantiateTypeToAny(parameterType, context), context, null))) &&
                 expressionType.isGeneric()) {
-                var typeParameters: PullTypeSymbol[] = parameterType.getTypeArgumentsOrTypeParameters();
-                var typeArguments: PullTypeSymbol[] = expressionType.getTypeArguments();
-
-                // If we're relating an out-of-order resolution of a function call within the body
-                // of a generic type's method, the relationship will actually be in reverse.
-                if (!typeArguments) {
-                    typeParameters = parameterType.getTypeArguments();
-                    typeArguments = expressionType.getTypeArgumentsOrTypeParameters();
-                }
-
-                if (typeParameters && typeArguments && typeParameters.length === typeArguments.length) {
-                    for (var i = 0; i < typeParameters.length; i++) {
-                        if (typeArguments[i] != typeParameters[i]) {
-                            // relate and fix
-                            this.relateTypeToTypeParameters(typeArguments[i], typeParameters[i], true, argContext, context);
-                        }
-                    }
-                }
+                this.relateTypeArgumentsOfTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
             }
 
             if (expressionType.isArrayNamedTypeReference() && parameterType.isArrayNamedTypeReference()) {
                 this.relateArrayTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
 
                 return;
-            }            
+            }
 
             this.relateObjectTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
+        }
+
+        private relateTypeArgumentsOfTypeToTypeParameters(expressionType: PullTypeSymbol, parameterType: PullTypeSymbol, shouldFix: boolean,
+            argContext: ArgumentInferenceContext, context: PullTypeResolutionContext) {
+            var typeParameters: PullTypeSymbol[] = parameterType.getTypeArgumentsOrTypeParameters();
+            var typeArguments: PullTypeSymbol[] = expressionType.getTypeArguments();
+
+            // If we're relating an out-of-order resolution of a function call within the body
+            // of a generic type's method, the relationship will actually be in reverse.
+            if (!typeArguments) {
+                typeParameters = parameterType.getTypeArguments();
+                typeArguments = expressionType.getTypeArgumentsOrTypeParameters();
+            }
+
+            if (typeParameters && typeArguments && typeParameters.length === typeArguments.length) {
+                for (var i = 0; i < typeParameters.length; i++) {
+                    if (typeArguments[i] != typeParameters[i]) {
+                        // relate and fix
+                        this.relateTypeToTypeParameters(typeArguments[i], typeParameters[i], true, argContext, context);
+                    }
+                }
+            }
+        }
+
+        private relateInifinitelyExpandingTypeToTypeParameters(expressionType: PullTypeSymbol, parameterType: PullTypeSymbol, shouldFix: boolean,
+            argContext: ArgumentInferenceContext, context: PullTypeResolutionContext): void {
+            if (!expressionType || !parameterType) {
+                return;
+            }
+            // Section 3.8.7 - Recursive Types
+            // Likewise, when making type inferences(section 3.8.6) from a type S to a type T, 
+            // if either type originates in an infinitely expanding type reference, then
+            // •	if S and T are type references to the same named type, inferences are made from each type argument in S to each type argument in T,
+            // •	otherwise, no inferences are made.
+            var expressionTypeNamedTypeReference = PullHelpers.getRootType(expressionType);
+            var parameterTypeNamedTypeReference = PullHelpers.getRootType(parameterType);
+            if (expressionTypeNamedTypeReference != parameterTypeNamedTypeReference) {
+                return;
+            }
+
+            var expressionTypeTypeArguments = expressionType.getTypeArguments();
+            var parameterTypeParameters = parameterType.getTypeParameters();
+
+            if (expressionTypeTypeArguments && parameterTypeParameters && expressionTypeTypeArguments.length === parameterTypeParameters.length) {
+                for (var i = 0; i < expressionTypeTypeArguments.length; i++) {
+                    this.relateTypeArgumentsOfTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
+                }
+            }
         }
 
         private relateFunctionSignatureToTypeParameters(expressionSignature: PullSignatureSymbol,
@@ -10626,18 +10657,23 @@ module TypeScript {
             var len = parameterParams.length < expressionParams.length ? parameterParams.length : expressionParams.length;
 
             for (var i = 0; i < len; i++) {
-                if ((expressionParams[i].type && expressionParams[i].type.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) ||
-                    (parameterParams[i].type && parameterParams[i].type.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding)) {
-                    // relateInfinitelyExpandingTypeParameter
-                    continue;
+                if (expressionParams[i].type && parameterParams[i].type) {
+                    if (expressionParams[i].type.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding ||
+                        parameterParams[i].type.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) {
+                        this.relateInifinitelyExpandingTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, /*shouldFix:*/ true, argContext, context);
+                    } else {
+                        this.relateTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, /*shouldFix:*/ true, argContext, context);
+                    }
                 }
-                this.relateTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, true, argContext, context);
             }
 
-            if ((expressionReturnType && expressionReturnType.getGenerativeTypeClassification(expressionSignature.functionType) != GenerativeTypeClassification.InfinitelyExpanding) &&
-                (parameterReturnType && parameterReturnType.getGenerativeTypeClassification(parameterSignature.functionType) != GenerativeTypeClassification.InfinitelyExpanding)) {
-
-                this.relateTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
+            if (expressionReturnType && parameterReturnType) {
+                if (expressionReturnType.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding ||
+                    parameterReturnType.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) {
+                    this.relateInifinitelyExpandingTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
+                } else {
+                    this.relateTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
+                }
             }
         }
 
@@ -10687,10 +10723,10 @@ module TypeScript {
 
                     if ((objectMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) ||
                         (parameterMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding)) {
-                        continue;
+                        this.relateInifinitelyExpandingTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);;
+                    } else {
+                        this.relateTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);
                     }
-
-                    this.relateTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);
                 }
             }
 
