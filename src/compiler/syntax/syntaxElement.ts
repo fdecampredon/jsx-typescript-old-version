@@ -72,6 +72,11 @@ module TypeScript {
     }
 
     export interface IStatementSyntax extends IModuleElementSyntax {
+        isStatement(): boolean;
+    }
+
+    export interface IIterationStatementSyntax extends IStatementSyntax {
+        isIterationStatement(): boolean;
     }
 
     export interface ITypeMemberSyntax extends ISyntaxNode {
@@ -87,13 +92,24 @@ module TypeScript {
     }
 
     export interface ISwitchClauseSyntax extends ISyntaxNode {
+        isSwitchClause(): boolean;
+        statements: ISyntaxList;
     }
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {
+        isExpression(): boolean;
+        withLeadingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
+        withTrailingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
     }
 
     export interface IUnaryExpressionSyntax extends IExpressionSyntax {
         isUnaryExpression(): boolean;
+    }
+
+    export interface IArrowFunctionExpressionSyntax extends IUnaryExpressionSyntax {
+        isArrowFunctionExpression(): boolean;
+        equalsGreaterThanToken: ISyntaxToken;
+        body: ISyntaxNodeOrToken;
     }
 
     export interface IPostfixExpressionSyntax extends IUnaryExpressionSyntax {

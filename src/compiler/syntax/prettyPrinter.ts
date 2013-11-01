@@ -47,7 +47,7 @@ module TypeScript.PrettyPrinter {
             return 1;
         }
 
-        private newLineCountBetweenSwitchClauses(element1: SwitchClauseSyntax, element2: SwitchClauseSyntax): number {
+        private newLineCountBetweenSwitchClauses(element1: ISwitchClauseSyntax, element2: ISwitchClauseSyntax): number {
             if (element1 === null || element2 === null) {
                 return 0;
             }
@@ -723,9 +723,9 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.openBraceToken);
             this.ensureNewLine();
 
-            var lastSwitchClause: SwitchClauseSyntax = null;
+            var lastSwitchClause: ISwitchClauseSyntax = null;
             for (var i = 0, n = node.switchClauses.childCount(); i < n; i++) {
-                var switchClause = <SwitchClauseSyntax>node.switchClauses.childAt(i);
+                var switchClause = <ISwitchClauseSyntax>node.switchClauses.childAt(i);
 
                 var newLineCount = this.newLineCountBetweenSwitchClauses(lastSwitchClause, switchClause);
 
@@ -739,7 +739,7 @@ module TypeScript.PrettyPrinter {
             this.appendToken(node.closeBraceToken);
         }
 
-        private appendSwitchClauseStatements(node: SwitchClauseSyntax): void {
+        private appendSwitchClauseStatements(node: ISwitchClauseSyntax): void {
             if (node.statements.childCount() === 1 && node.statements.childAt(0).kind() === SyntaxKind.Block) {
                 this.ensureSpace();
                 node.statements.childAt(0).accept(this);

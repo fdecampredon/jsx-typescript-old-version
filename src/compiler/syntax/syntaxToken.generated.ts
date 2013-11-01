@@ -101,20 +101,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -221,20 +225,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -341,20 +349,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -464,20 +476,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -546,20 +562,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -640,20 +660,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -734,20 +758,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 
@@ -831,20 +859,24 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 

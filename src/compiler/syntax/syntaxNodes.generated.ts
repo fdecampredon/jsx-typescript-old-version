@@ -1533,41 +1533,13 @@ module TypeScript {
     }
     }
 
-    export class ArrowFunctionExpressionSyntax extends SyntaxNode implements IUnaryExpressionSyntax {
-        constructor(public equalsGreaterThanToken: ISyntaxToken,
+    export class SimpleArrowFunctionExpressionSyntax extends SyntaxNode implements IArrowFunctionExpressionSyntax {
+
+        constructor(public identifier: ISyntaxToken,
+                    public equalsGreaterThanToken: ISyntaxToken,
                     public body: ISyntaxNodeOrToken,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
-        }
-
-    public isUnaryExpression(): boolean {
-        return true;
-    }
-
-    public isExpression(): boolean {
-        return true;
-    }
-
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): ArrowFunctionExpressionSyntax {
-        return <ArrowFunctionExpressionSyntax>super.withLeadingTrivia(trivia);
-    }
-
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): ArrowFunctionExpressionSyntax {
-        return <ArrowFunctionExpressionSyntax>super.withTrailingTrivia(trivia);
-    }
-
-    public isTypeScriptSpecific(): boolean {
-        return true;
-    }
-    }
-
-    export class SimpleArrowFunctionExpressionSyntax extends ArrowFunctionExpressionSyntax {
-
-        constructor(public identifier: ISyntaxToken,
-                    equalsGreaterThanToken: ISyntaxToken,
-                    body: ISyntaxNodeOrToken,
-                    parsedInStrictMode: boolean) {
-            super(equalsGreaterThanToken, body, parsedInStrictMode); 
 
         }
 
@@ -1590,6 +1562,18 @@ module TypeScript {
             case 2: return this.body;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isArrowFunctionExpression(): boolean {
+        return true;
+    }
+
+    public isUnaryExpression(): boolean {
+        return true;
+    }
+
+    public isExpression(): boolean {
+        return true;
     }
 
     public update(identifier: ISyntaxToken,
@@ -1632,13 +1616,13 @@ module TypeScript {
     }
     }
 
-    export class ParenthesizedArrowFunctionExpressionSyntax extends ArrowFunctionExpressionSyntax {
+    export class ParenthesizedArrowFunctionExpressionSyntax extends SyntaxNode implements IArrowFunctionExpressionSyntax {
 
         constructor(public callSignature: CallSignatureSyntax,
-                    equalsGreaterThanToken: ISyntaxToken,
-                    body: ISyntaxNodeOrToken,
+                    public equalsGreaterThanToken: ISyntaxToken,
+                    public body: ISyntaxNodeOrToken,
                     parsedInStrictMode: boolean) {
-            super(equalsGreaterThanToken, body, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -1661,6 +1645,18 @@ module TypeScript {
             case 2: return this.body;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isArrowFunctionExpression(): boolean {
+        return true;
+    }
+
+    public isUnaryExpression(): boolean {
+        return true;
+    }
+
+    public isExpression(): boolean {
+        return true;
     }
 
     public update(callSignature: CallSignatureSyntax,
@@ -5078,7 +5074,7 @@ module TypeScript {
         return this.update(this.switchKeyword, this.openParenToken, this.expression, this.closeParenToken, this.openBraceToken, switchClauses, this.closeBraceToken);
     }
 
-    public withSwitchClause(switchClause: SwitchClauseSyntax): SwitchStatementSyntax {
+    public withSwitchClause(switchClause: ISwitchClauseSyntax): SwitchStatementSyntax {
         return this.withSwitchClauses(Syntax.list([switchClause]));
     }
 
@@ -5093,38 +5089,14 @@ module TypeScript {
     }
     }
 
-    export class SwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
-        constructor(public colonToken: ISyntaxToken,
-                    public statements: ISyntaxList,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
-        }
-
-    public isSwitchClause(): boolean {
-        return true;
-    }
-
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): SwitchClauseSyntax {
-        return <SwitchClauseSyntax>super.withLeadingTrivia(trivia);
-    }
-
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): SwitchClauseSyntax {
-        return <SwitchClauseSyntax>super.withTrailingTrivia(trivia);
-    }
-
-    public isTypeScriptSpecific(): boolean {
-        return false;
-    }
-    }
-
-    export class CaseSwitchClauseSyntax extends SwitchClauseSyntax {
+    export class CaseSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
 
         constructor(public caseKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
-                    colonToken: ISyntaxToken,
-                    statements: ISyntaxList,
+                    public colonToken: ISyntaxToken,
+                    public statements: ISyntaxList,
                     parsedInStrictMode: boolean) {
-            super(colonToken, statements, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -5148,6 +5120,10 @@ module TypeScript {
             case 3: return this.statements;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isSwitchClause(): boolean {
+        return true;
     }
 
     public update(caseKeyword: ISyntaxToken,
@@ -5206,13 +5182,13 @@ module TypeScript {
     }
     }
 
-    export class DefaultSwitchClauseSyntax extends SwitchClauseSyntax {
+    export class DefaultSwitchClauseSyntax extends SyntaxNode implements ISwitchClauseSyntax {
 
         constructor(public defaultKeyword: ISyntaxToken,
-                    colonToken: ISyntaxToken,
-                    statements: ISyntaxList,
+                    public colonToken: ISyntaxToken,
+                    public statements: ISyntaxList,
                     parsedInStrictMode: boolean) {
-            super(colonToken, statements, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -5235,6 +5211,10 @@ module TypeScript {
             case 2: return this.statements;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isSwitchClause(): boolean {
+        return true;
     }
 
     public update(defaultKeyword: ISyntaxToken,
@@ -5452,72 +5432,20 @@ module TypeScript {
     }
     }
 
-    export class IterationStatementSyntax extends SyntaxNode implements IStatementSyntax {
-        constructor(public openParenToken: ISyntaxToken,
-                    public closeParenToken: ISyntaxToken,
-                    public statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(parsedInStrictMode); 
-        }
+    export class ForStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
 
-    public isStatement(): boolean {
-        return true;
-    }
-
-    public isModuleElement(): boolean {
-        return true;
-    }
-
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): IterationStatementSyntax {
-        return <IterationStatementSyntax>super.withLeadingTrivia(trivia);
-    }
-
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): IterationStatementSyntax {
-        return <IterationStatementSyntax>super.withTrailingTrivia(trivia);
-    }
-
-    public isTypeScriptSpecific(): boolean {
-        return false;
-    }
-    }
-
-    export class BaseForStatementSyntax extends IterationStatementSyntax {
         constructor(public forKeyword: ISyntaxToken,
-                    openParenToken: ISyntaxToken,
+                    public openParenToken: ISyntaxToken,
                     public variableDeclaration: VariableDeclarationSyntax,
-                    closeParenToken: ISyntaxToken,
-                    statement: IStatementSyntax,
-                    parsedInStrictMode: boolean) {
-            super(openParenToken, closeParenToken, statement, parsedInStrictMode); 
-        }
-
-    public withLeadingTrivia(trivia: ISyntaxTriviaList): BaseForStatementSyntax {
-        return <BaseForStatementSyntax>super.withLeadingTrivia(trivia);
-    }
-
-    public withTrailingTrivia(trivia: ISyntaxTriviaList): BaseForStatementSyntax {
-        return <BaseForStatementSyntax>super.withTrailingTrivia(trivia);
-    }
-
-    public isTypeScriptSpecific(): boolean {
-        return false;
-    }
-    }
-
-    export class ForStatementSyntax extends BaseForStatementSyntax {
-
-        constructor(forKeyword: ISyntaxToken,
-                    openParenToken: ISyntaxToken,
-                    variableDeclaration: VariableDeclarationSyntax,
                     public initializer: IExpressionSyntax,
                     public firstSemicolonToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
                     public secondSemicolonToken: ISyntaxToken,
                     public incrementor: IExpressionSyntax,
-                    closeParenToken: ISyntaxToken,
-                    statement: IStatementSyntax,
+                    public closeParenToken: ISyntaxToken,
+                    public statement: IStatementSyntax,
                     parsedInStrictMode: boolean) {
-            super(forKeyword, openParenToken, variableDeclaration, closeParenToken, statement, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -5547,6 +5475,18 @@ module TypeScript {
             case 9: return this.statement;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isIterationStatement(): boolean {
+        return true;
+    }
+
+    public isStatement(): boolean {
+        return true;
+    }
+
+    public isModuleElement(): boolean {
+        return true;
     }
 
     public update(forKeyword: ISyntaxToken,
@@ -5637,18 +5577,18 @@ module TypeScript {
     }
     }
 
-    export class ForInStatementSyntax extends BaseForStatementSyntax {
+    export class ForInStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
 
-        constructor(forKeyword: ISyntaxToken,
-                    openParenToken: ISyntaxToken,
-                    variableDeclaration: VariableDeclarationSyntax,
+        constructor(public forKeyword: ISyntaxToken,
+                    public openParenToken: ISyntaxToken,
+                    public variableDeclaration: VariableDeclarationSyntax,
                     public left: IExpressionSyntax,
                     public inKeyword: ISyntaxToken,
                     public expression: IExpressionSyntax,
-                    closeParenToken: ISyntaxToken,
-                    statement: IStatementSyntax,
+                    public closeParenToken: ISyntaxToken,
+                    public statement: IStatementSyntax,
                     parsedInStrictMode: boolean) {
-            super(forKeyword, openParenToken, variableDeclaration, closeParenToken, statement, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -5676,6 +5616,18 @@ module TypeScript {
             case 7: return this.statement;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isIterationStatement(): boolean {
+        return true;
+    }
+
+    public isStatement(): boolean {
+        return true;
+    }
+
+    public isModuleElement(): boolean {
+        return true;
     }
 
     public update(forKeyword: ISyntaxToken,
@@ -5756,15 +5708,15 @@ module TypeScript {
     }
     }
 
-    export class WhileStatementSyntax extends IterationStatementSyntax {
+    export class WhileStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
 
         constructor(public whileKeyword: ISyntaxToken,
-                    openParenToken: ISyntaxToken,
+                    public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
-                    closeParenToken: ISyntaxToken,
-                    statement: IStatementSyntax,
+                    public closeParenToken: ISyntaxToken,
+                    public statement: IStatementSyntax,
                     parsedInStrictMode: boolean) {
-            super(openParenToken, closeParenToken, statement, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -5789,6 +5741,18 @@ module TypeScript {
             case 4: return this.statement;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isIterationStatement(): boolean {
+        return true;
+    }
+
+    public isStatement(): boolean {
+        return true;
+    }
+
+    public isModuleElement(): boolean {
+        return true;
     }
 
     public update(whileKeyword: ISyntaxToken,
@@ -6961,17 +6925,17 @@ module TypeScript {
     }
     }
 
-    export class DoStatementSyntax extends IterationStatementSyntax {
+    export class DoStatementSyntax extends SyntaxNode implements IIterationStatementSyntax {
 
         constructor(public doKeyword: ISyntaxToken,
-                    statement: IStatementSyntax,
+                    public statement: IStatementSyntax,
                     public whileKeyword: ISyntaxToken,
-                    openParenToken: ISyntaxToken,
+                    public openParenToken: ISyntaxToken,
                     public condition: IExpressionSyntax,
-                    closeParenToken: ISyntaxToken,
+                    public closeParenToken: ISyntaxToken,
                     public semicolonToken: ISyntaxToken,
                     parsedInStrictMode: boolean) {
-            super(openParenToken, closeParenToken, statement, parsedInStrictMode); 
+            super(parsedInStrictMode); 
 
         }
 
@@ -6998,6 +6962,18 @@ module TypeScript {
             case 6: return this.semicolonToken;
             default: throw Errors.invalidOperation();
         }
+    }
+
+    public isIterationStatement(): boolean {
+        return true;
+    }
+
+    public isStatement(): boolean {
+        return true;
+    }
+
+    public isModuleElement(): boolean {
+        return true;
     }
 
     public update(doKeyword: ISyntaxToken,
