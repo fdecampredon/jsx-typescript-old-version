@@ -1,6 +1,5 @@
-overEagerReturnTypeSpecialization.ts line 9 col 13: error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '(str: string) => number' and '(value: string) => string' are incompatible.
-overEagerReturnTypeSpecialization.ts line 9 col 13: error TS2087: Could not select overload for 'call' expression.
-overEagerReturnTypeSpecialization.ts line 12 col 13: error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '(str: string) => number' and '(value: string) => string' are incompatible.
-overEagerReturnTypeSpecialization.ts line 12 col 13: error TS2087: Could not select overload for 'call' expression.
+overEagerReturnTypeSpecialization.ts line 8 col 5: error TS2012: Cannot convert 'I1<number>' to 'I1<string>':
+	Types of property 'func' of types 'I1<number>' and 'I1<string>' are incompatible:
+		Call signatures of types '<U>(callback: (value: number) => U) => I1<U>' and '<U>(callback: (value: string) => U) => I1<U>' are incompatible:
+			Call signatures of types '(value: number) => U' and '(value: string) => U' are incompatible.
+			Call signatures of types '(value: string) => U' and '(value: number) => U' are incompatible.

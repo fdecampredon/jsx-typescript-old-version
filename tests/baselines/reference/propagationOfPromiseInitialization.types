@@ -1,0 +1,74 @@
+=== tests/cases/compiler/propagationOfPromiseInitialization.ts ===
+Line 0 col 10 IdentifierName "IPromise" = IPromise<T>
+Line 0 col 19 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "then" = <TResult>(successCallback: (promiseValue: T) => TResult, errorCallback?: (reason: any) => TResult) => IPromise<TResult>
+Line 2 col 9 IdentifierName "TResult" = TResult
+Line 2 col 18 IdentifierName "successCallback" = (promiseValue: T) => TResult
+Line 2 col 36 IdentifierName "promiseValue" = T
+Line 2 col 50 IdentifierName "T" = T
+Line 2 col 56 IdentifierName "TResult" = TResult
+Line 2 col 65 IdentifierName "errorCallback" = (reason: any) => TResult
+Line 2 col 82 IdentifierName "reason" = any
+Line 2 col 98 IdentifierName "TResult" = TResult
+Line 2 col 108 IdentifierName "IPromise" = IPromise<T>
+Line 2 col 117 IdentifierName "TResult" = TResult
+Line 7 col 4 IdentifierName "foo" = IPromise<number>
+Line 7 col 9 IdentifierName "IPromise" = IPromise<T>
+Line 8 col 0 InvocationExpression "foo.then((x) => {
+
+    // x is inferred to be a number
+
+    return "asdf";
+
+}).then((x) => {
+
+    // x is inferred to be string
+
+    x.length;
+
+    return 123;
+
+})" = IPromise<number>
+Line 8 col 0 MemberAccessExpression "foo.then((x) => {
+
+    // x is inferred to be a number
+
+    return "asdf";
+
+}).then" = <TResult>(successCallback: (promiseValue: string) => TResult, errorCallback?: (reason: any) => TResult) => IPromise<TResult>
+Line 8 col 0 InvocationExpression "foo.then((x) => {
+
+    // x is inferred to be a number
+
+    return "asdf";
+
+})" = IPromise<string>
+Line 8 col 0 MemberAccessExpression "foo.then" = <TResult>(successCallback: (promiseValue: number) => TResult, errorCallback?: (reason: any) => TResult) => IPromise<TResult>
+Line 8 col 0 IdentifierName "foo" = IPromise<number>
+Line 9 col 4 IdentifierName "then" = <TResult>(successCallback: (promiseValue: number) => TResult, errorCallback?: (reason: any) => TResult) => IPromise<TResult>
+Line 9 col 9 ParenthesizedArrowFunctionExpression "(x) => {
+
+    // x is inferred to be a number
+
+    return "asdf";
+
+}" = (x: number) => string
+Line 9 col 10 IdentifierName "x" = number
+Line 15 col 3 IdentifierName "then" = <TResult>(successCallback: (promiseValue: string) => TResult, errorCallback?: (reason: any) => TResult) => IPromise<TResult>
+Line 15 col 8 ParenthesizedArrowFunctionExpression "(x) => {
+
+    // x is inferred to be string
+
+    x.length;
+
+    return 123;
+
+}" = (x: string) => number
+Line 15 col 9 IdentifierName "x" = string
+Line 16 col 0 MemberAccessExpression "// x is inferred to be string
+
+    x.length" = number
+Line 16 col 0 IdentifierName "// x is inferred to be string
+
+    x" = string
+Line 19 col 6 IdentifierName "length" = number

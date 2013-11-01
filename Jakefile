@@ -432,9 +432,18 @@ task("tests-debug", ["setDebugMode", "tests"]);
 
 // Makes the test results the new baseline
 desc("Makes the most recent test results the new baseline, overwriting the old baseline");
-task("baseline-accept", function() {
-	jake.rmRf(refBaseline);
-	fs.renameSync(localBaseline, refBaseline);
+task("baseline-accept", function(hardOrSoft) {
+	if (!hardOrSoft || hardOrSoft == "hard") {
+		jake.rmRf(refBaseline);
+		fs.renameSync(localBaseline, refBaseline);
+	}
+	else if (hardOrSoft == "soft") {
+		var files = jake.readdirR(localBaseline);
+		for (var i in files) {
+			jake.cpR(files[i], refBaseline);
+		}
+		jake.rmRf(path.join(refBaseline, "local"));
+	}
 });
 
 desc("Makes the most recent rwc test results the new baseline, overwriting the old baseline");

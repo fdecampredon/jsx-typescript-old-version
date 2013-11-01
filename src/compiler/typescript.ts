@@ -770,7 +770,7 @@ module TypeScript {
                             var contextualType: PullTypeSymbol = null;
 
                             if (enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction)) {
-                                var typeAnnotation = getTypeAnnotation(enclosingDeclAST);
+                                var typeAnnotation = getType(enclosingDeclAST);
                                 if (typeAnnotation) {
                                     // The containing function has a type annotation, propagate it as the contextual type
                                     var returnTypeSymbol = resolver.resolveTypeReference(typeAnnotation, resolutionContext);
@@ -798,12 +798,10 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.TypeRef:
-                        var typeExpressionNode = path[i + 1];
-
+                    case NodeType.ObjectType:
                         // ObjectType are just like Object Literals are bound when needed, ensure we have a decl, by forcing it to be 
                         // resolved before descending into it.
-                        if (typeExpressionNode && typeExpressionNode.nodeType() === NodeType.ObjectType) {
+                        if (TypeScript.isTypesOnlyLocation(current)) {
                             resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ false, resolutionContext);
                         }
 

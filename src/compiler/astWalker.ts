@@ -135,8 +135,8 @@ module TypeScript {
         walker.walk(preAst.typeArgumentList);
     }
 
-    function walkTypeReferenceChildren(preAst: TypeReference, walker: AstWalker): void {
-        walker.walk(preAst.term);
+    function walkTypeAnnotationChildren(preAst: TypeAnnotation, walker: AstWalker): void {
+        walker.walk(preAst.type);
     }
 
     function walkTypeQueryChildren(preAst: TypeQuery, walker: AstWalker): void {
@@ -534,12 +534,12 @@ module TypeScript {
     childrenWalkers[NodeType.ThrowStatement] = walkThrowStatementChildren;
     childrenWalkers[NodeType.TrueLiteral] = null;
     childrenWalkers[NodeType.TryStatement] = walkTryStatementChildren;
+    childrenWalkers[NodeType.TypeAnnotation] = walkTypeAnnotationChildren;
     childrenWalkers[NodeType.TypeArgumentList] = walkTypeArgumentListChildren;
     childrenWalkers[NodeType.TypeOfExpression] = walkTypeOfExpressionChildren;
     childrenWalkers[NodeType.TypeParameter] = walkTypeParameterChildren;
     childrenWalkers[NodeType.TypeParameterList] = walkTypeParameterListChildren;
     childrenWalkers[NodeType.TypeQuery] = walkTypeQueryChildren;
-    childrenWalkers[NodeType.TypeRef] = walkTypeReferenceChildren;
     childrenWalkers[NodeType.UnsignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.UnsignedRightShiftExpression] = walkBinaryExpressionChildren;
     childrenWalkers[NodeType.VariableDeclaration] = walkVariableDeclarationChildren;

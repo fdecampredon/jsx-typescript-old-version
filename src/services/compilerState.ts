@@ -294,10 +294,18 @@ module TypeScript.Services {
                 return;
             }
 
-            var textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
-            compiler.updateFile(fileName,
-                this.hostCache.getScriptSnapshot(fileName),
-                version, isOpen, textChangeRange);
+            // Only perform incremental parsing on open files that are being edited.  If a file was
+            // open, but is now closed, we want to reparse entirely so we don't have any tokens that
+            // are holding onto expensive script snapshot instances on the host.  Similarly, if a 
+            // file was closed, then we always want to reparse.  This is so our tree doesn't keep 
+            // the old buffer alive that represented the file on disk (as the host has moved to a 
+            // new text buffer).
+            var textChangeRange: TextChangeRange = null;
+            if (document.isOpen && isOpen) {
+                textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
+            }
+
+            compiler.updateFile(fileName, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
         }
 
         // Methods that defer to the host cache to get the result.

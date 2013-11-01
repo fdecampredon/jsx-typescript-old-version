@@ -428,7 +428,7 @@ module TypeScript {
             var typeParameters = this.visitTypeParameterList(node.typeParameterList);
             var heritageClauses = node.heritageClauses ? this.visitSyntaxList(node.heritageClauses) : null;
 
-            var body = this.visitObjectTypeWorker(node.body);
+            var body = this.visitObjectType(node.body);
 
             var modifiers = this.visitModifiers(node.modifiers);
             var result = new InterfaceDeclaration(modifiers, name, typeParameters, heritageClauses, body);
@@ -439,28 +439,16 @@ module TypeScript {
 
         public visitHeritageClause(node: HeritageClauseSyntax): HeritageClause {
             var start = this.position;
-            var array = new Array<any>(node.typeNames.nonSeparatorCount());
 
             this.movePast(node.extendsOrImplementsKeyword);
-            for (var i = 0, n = node.typeNames.childCount(); i < n; i++) {
-                if (i % 2 === 1) {
-                    this.movePast(node.typeNames.childAt(i));
-                }
-                else {
-                    var type = this.visitType(node.typeNames.childAt(i));
-                    array[i / 2] = type;
-                }
-            }
+            var typeNames = this.visitSeparatedSyntaxList(node.typeNames);
 
-            var result = new ASTList(this.fileName, array);
+            var result = new HeritageClause(
+                node.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword ? NodeType.ExtendsHeritageClause : NodeType.ImplementsHeritageClause,
+                typeNames);
             this.setSpan(result, start, node);
 
-            var heritageClause = new HeritageClause(
-                node.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword ? NodeType.ExtendsHeritageClause : NodeType.ImplementsHeritageClause,
-                result);
-            this.setSpan(heritageClause, start, node);
-
-            return heritageClause;
+            return result;
         }
 
         private getModuleNames(node: ModuleDeclarationSyntax): Identifier[] {
@@ -657,7 +645,7 @@ module TypeScript {
             var start = this.position;
             var name = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
-            var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var typeExpr = this.visitTypeAnnotation(node.typeAnnotation);
             var init: EqualsValueClause = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
 
             var result = new VariableDeclarator(name, typeExpr, init);
@@ -743,10 +731,9 @@ module TypeScript {
             var expr = node.expression.accept(this);
             this.movePast(node.closeParenToken);
 
-            var result = new ParenthesizedExpression(expr);
+            var result = new ParenthesizedExpression(openParenTrailingComments, expr);
             this.setSpan(result, start, node);
 
-            result.openParenTrailingComments = openParenTrailingComments;
             return result;
         }
 
@@ -773,7 +760,7 @@ module TypeScript {
                     returnStatement.setPreComments(preComments);
                     expression.setPreComments(null);
                 }
-                
+
                 var statements = new ASTList(this.fileName, [returnStatement]);
 
                 var closeBraceSpan = new ASTSpan();
@@ -781,7 +768,7 @@ module TypeScript {
                 closeBraceSpan.limChar = expression.limChar;
                 closeBraceSpan.trailingTriviaWidth = expression.trailingTriviaWidth;
 
-                var block = new Block(statements, closeBraceSpan);
+                var block = new Block(statements, null, closeBraceSpan);
                 return block;
             }
         }
@@ -814,37 +801,32 @@ module TypeScript {
             return result;
         }
 
-        public visitType(type: ITypeSyntax): TypeReference {
-            if (type.isToken()) {
-                return new TypeReference(type.accept(this));
-            }
-            else {
-                return type.accept(this);
-            }
+        public visitType(type: ITypeSyntax): AST {
+            return type ? type.accept(this) : null;
         }
 
-        public visitTypeQuery(node: TypeQuerySyntax): TypeReference {
+        public visitTypeQuery(node: TypeQuerySyntax): TypeQuery {
             var start = this.position;
             this.movePast(node.typeOfKeyword);
             var name = node.name.accept(this);
 
-            var typeQuery = new TypeQuery(name);
-            this.setSpan(typeQuery, start, node);
+            var result = new TypeQuery(name);
+            this.setSpan(result, start, node);
 
-            return new TypeReference(typeQuery);
+            return result;
         }
 
-        public visitQualifiedName(node: QualifiedNameSyntax): TypeReference {
+        public visitQualifiedName(node: QualifiedNameSyntax): QualifiedName {
             var start = this.position;
-            var left = this.visitType(node.left).term;
+            var left = this.visitType(node.left);
             this.movePast(node.dotToken);
             var right = this.identifierFromToken(node.right, /*isOptional:*/ false);
             this.movePast(node.right);
 
-            var term = new QualifiedName(left, right);
-            this.setSpan(term, start, node);
+            var result = new QualifiedName(left, right);
+            this.setSpan(result, start, node);
 
-            return new TypeReference(term);
+            return result;
         }
 
         public visitTypeArgumentList(node: TypeArgumentListSyntax): TypeArgumentList {
@@ -852,24 +834,10 @@ module TypeScript {
                 return null;
             }
 
-            var array = new Array<any>(node.typeArguments.nonSeparatorCount());
-
-            this.movePast(node.lessThanToken);
-
             var start = this.position;
-
-            for (var i = 0, n = node.typeArguments.childCount(); i < n; i++) {
-                if (i % 2 === 1) {
-                    this.movePast(node.typeArguments.childAt(i));
-                }
-                else {
-                    array[i / 2] = this.visitType(node.typeArguments.childAt(i));
-                }
-            }
+            this.movePast(node.lessThanToken);
+            var typeArguments = this.visitSeparatedSyntaxList(node.typeArguments);
             this.movePast(node.greaterThanToken);
-            
-            var typeArguments = new ASTList(this.fileName, array);
-            this.setSpan(typeArguments, start, node.typeArguments);
 
             var result = new TypeArgumentList(typeArguments);
             this.setSpan(result, start, node);
@@ -877,95 +845,85 @@ module TypeScript {
             return result;
         }
 
-        public visitConstructorType(node: ConstructorTypeSyntax): TypeReference {
+        public visitConstructorType(node: ConstructorTypeSyntax): ConstructorType {
             var start = this.position;
 
             this.movePast(node.newKeyword);
             var typeParameters = this.visitTypeParameterList(node.typeParameterList);
             var parameters = this.visitParameterList(node.parameterList);
             this.movePast(node.equalsGreaterThanToken);
-            var returnType = node.type ? this.visitType(node.type) : null;
+            var returnType = this.visitType(node.type);
 
-            var funcDecl = new ConstructorType(typeParameters, parameters, returnType);
-            this.setSpan(funcDecl, start, node);
+            var result = new ConstructorType(typeParameters, parameters, returnType);
+            this.setSpan(result, start, node);
 
-            //funcDecl.setFunctionFlags(funcDecl.getFunctionFlags() | FunctionFlags.Signature | FunctionFlags.ConstructMember);
-
-            //funcDecl.setFlags(funcDecl.getFlags() | ASTFlags.TypeReference);
-            //funcDecl.hint = "_construct";
-
-            return new TypeReference(funcDecl);
+            return result;
         }
 
-        public visitFunctionType(node: FunctionTypeSyntax): TypeReference {
+        public visitFunctionType(node: FunctionTypeSyntax): FunctionType {
             var start = this.position;
             var typeParameters = this.visitTypeParameterList(node.typeParameterList);
             var parameters = this.visitParameterList(node.parameterList);
             this.movePast(node.equalsGreaterThanToken);
-            var returnType = node.type ? this.visitType(node.type) : null;
+            var returnType = this.visitType(node.type);
 
-            var funcDecl = new FunctionType(typeParameters, parameters, returnType);
-            this.setSpan(funcDecl, start, node);
+            var result = new FunctionType(typeParameters, parameters, returnType);
+            this.setSpan(result, start, node);
 
-            //funcDecl.setFlags(funcDecl.getFunctionFlags() | FunctionFlags.Signature);
-            //funcDecl.setFlags(funcDecl.getFlags() | ASTFlags.TypeReference);
-
-            return new TypeReference(funcDecl);
+            return result;
         }
 
-        public visitObjectType(node: ObjectTypeSyntax): TypeReference {
-            var start = this.position;
-
-            var objectType = this.visitObjectTypeWorker(node);
-            return new TypeReference(objectType);
-        }
-
-        private visitObjectTypeWorker(node: ObjectTypeSyntax): ObjectType {
+        public visitObjectType(node: ObjectTypeSyntax): ObjectType {
             var start = this.position;
 
             this.movePast(node.openBraceToken);
             var typeMembers = this.visitSeparatedSyntaxList(node.typeMembers);
             this.movePast(node.closeBraceToken);
 
-            var objectType = new ObjectType(typeMembers);
-            this.setSpan(objectType, start, node);
+            var result = new ObjectType(typeMembers);
+            this.setSpan(result, start, node);
 
-            return objectType;
+            return result;
         }
 
-        public visitArrayType(node: ArrayTypeSyntax): TypeReference {
+        public visitArrayType(node: ArrayTypeSyntax): ArrayType {
             var start = this.position;
 
             var underlying: AST = this.visitType(node.type);
             this.movePast(node.openBracketToken);
             this.movePast(node.closeBracketToken);
 
-            if (underlying.nodeType() === NodeType.TypeRef) {
-                underlying = (<TypeReference>underlying).term;
-            }
+            var result = new ArrayType(underlying);
+            this.setSpan(result, start, node);
 
-            var arrayType = new ArrayType(underlying);
-            this.setSpan(arrayType, start, node);
-
-            var result = new TypeReference(arrayType);
             return result;
         }
 
-        public visitGenericType(node: GenericTypeSyntax): TypeReference {
+        public visitGenericType(node: GenericTypeSyntax): GenericType {
             var start = this.position;
 
-            var underlying = this.visitType(node.name).term;
+            var underlying = this.visitType(node.name);
             var typeArguments = this.visitTypeArgumentList(node.typeArgumentList);
 
-            var genericType = new GenericType(underlying, typeArguments);
-            this.setSpan(genericType, start, node);
+            var result = new GenericType(underlying, typeArguments);
+            this.setSpan(result, start, node);
 
-            return new TypeReference(genericType);
+            return result;
         }
 
-        public visitTypeAnnotation(node: TypeAnnotationSyntax): TypeReference {
+        public visitTypeAnnotation(node: TypeAnnotationSyntax): TypeAnnotation {
+            if (!node) {
+                return null;
+            }
+
+            var start = this.position;
             this.movePast(node.colonToken);
-            return this.visitType(node.type);
+            var type = this.visitType(node.type);
+
+            var result = new TypeAnnotation(type);
+            this.setSpan(result, start, node);
+
+            return result;
         }
 
         public visitBlock(node: BlockSyntax): Block {
@@ -980,10 +938,8 @@ module TypeScript {
             var closeBraceSpan = new ASTSpan();
             this.setTokenSpan(closeBraceSpan, closeBracePosition, node.closeBraceToken);
 
-            var result = new Block(statements, closeBraceSpan);
+            var result = new Block(statements, closeBraceLeadingComments, closeBraceSpan);
             this.setSpan(result, start, node);
-
-            result.closeBraceLeadingComments = closeBraceLeadingComments;
 
             return result;
         }
@@ -995,7 +951,7 @@ module TypeScript {
             var identifier = this.identifierFromToken(node.identifier, !!node.questionToken);
             this.movePast(node.identifier);
             this.movePast(node.questionToken);
-            var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var typeExpr = this.visitTypeAnnotation(node.typeAnnotation);
             var init: EqualsValueClause = node.equalsValueClause ? node.equalsValueClause.accept(this) : null;
 
             var modifiers = this.visitModifiers(node.modifiers);
@@ -1195,7 +1151,7 @@ module TypeScript {
             var parameter = node.parameter.accept(this);
 
             this.movePast(node.closeBracketToken);
-            var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var returnType = this.visitTypeAnnotation(node.typeAnnotation);
 
             var result = new IndexSignature(parameter, returnType);
             this.setCommentsAndSpan(result, start, node);
@@ -1209,7 +1165,7 @@ module TypeScript {
             var name = this.identifierFromToken(node.propertyName, !!node.questionToken);
             this.movePast(node.propertyName);
             this.movePast(node.questionToken);
-            var typeExpr = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var typeExpr = this.visitTypeAnnotation(node.typeAnnotation);
 
             var result = new PropertySignature(name, node.questionToken ? new ASTSpan() : null, typeExpr);
             this.setCommentsAndSpan(result, start, node);
@@ -1248,7 +1204,7 @@ module TypeScript {
 
             var typeParameters = this.visitTypeParameterList(node.typeParameterList);
             var parameters = this.visitParameterList(node.parameterList);
-            var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var returnType = this.visitTypeAnnotation(node.typeAnnotation);
 
             var result = new CallSignature(typeParameters, parameters, returnType);
             this.setCommentsAndSpan(result, start, node);
@@ -1399,7 +1355,7 @@ module TypeScript {
             var name = this.identifierFromToken(node.propertyName, /*isOptional:*/ false);
             this.movePast(node.propertyName);
             var parameters = this.visitParameterList(node.parameterList);
-            var returnType = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var returnType = this.visitTypeAnnotation(node.typeAnnotation);
 
             var block = node.block ? node.block.accept(this) : null;
             var result = new GetAccessor(this.visitModifiers(node.modifiers), name, parameters, returnType, block);
@@ -1744,7 +1700,7 @@ module TypeScript {
             this.movePast(node.openParenToken);
             var identifier = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
-            var typeAnnotation = node.typeAnnotation ? node.typeAnnotation.accept(this) : null;
+            var typeAnnotation = this.visitTypeAnnotation(node.typeAnnotation);
             this.movePast(node.closeParenToken);
             var block = node.block.accept(this);
 
@@ -2118,8 +2074,8 @@ module TypeScript {
             return result;
         }
 
-        public visitQualifiedName(node: QualifiedNameSyntax): TypeReference {
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitQualifiedName(node: QualifiedNameSyntax): QualifiedName {
+            var result: QualifiedName = this.getAndMovePastAST(node);
             if (!result) {
                 var result = super.visitQualifiedName(node);
                 this.setAST(node, result);
@@ -2128,8 +2084,8 @@ module TypeScript {
             return result;
         }
 
-        public visitConstructorType(node: ConstructorTypeSyntax): TypeReference {
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitConstructorType(node: ConstructorTypeSyntax): ConstructorType {
+            var result: ConstructorType = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitConstructorType(node);
                 this.setAST(node, result);
@@ -2138,8 +2094,8 @@ module TypeScript {
             return result;
         }
 
-        public visitFunctionType(node: FunctionTypeSyntax): TypeReference {
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitFunctionType(node: FunctionTypeSyntax): FunctionType {
+            var result: FunctionType = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitFunctionType(node);
                 this.setAST(node, result);
@@ -2148,9 +2104,8 @@ module TypeScript {
             return result;
         }
 
-        public visitObjectType(node: ObjectTypeSyntax): TypeReference {
-            var start = this.position;
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitObjectType(node: ObjectTypeSyntax): ObjectType {
+            var result: ObjectType = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitObjectType(node);
                 this.setAST(node, result);
@@ -2159,8 +2114,8 @@ module TypeScript {
             return result;
         }
 
-        public visitArrayType(node: ArrayTypeSyntax): TypeReference {
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitArrayType(node: ArrayTypeSyntax): ArrayType {
+            var result: ArrayType = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitArrayType(node);
                 this.setAST(node, result);
@@ -2169,8 +2124,8 @@ module TypeScript {
             return result;
         }
 
-        public visitGenericType(node: GenericTypeSyntax): TypeReference {
-            var result: TypeReference = this.getAndMovePastAST(node);
+        public visitGenericType(node: GenericTypeSyntax): GenericType {
+            var result: GenericType = this.getAndMovePastAST(node);
             if (!result) {
                 result = super.visitGenericType(node);
                 this.setAST(node, result);

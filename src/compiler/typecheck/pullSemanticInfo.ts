@@ -105,7 +105,7 @@ module TypeScript {
         // Creates a new type symbol to be bound to this decl. Must be called during
         // invalidation after every edit.
         private addPrimitiveTypeSymbol(decl: PullDecl): PullPrimitiveTypeSymbol {
-            var newSymbol = new PullPrimitiveTypeSymbol(decl.name, this.getResolver());
+            var newSymbol = new PullPrimitiveTypeSymbol(decl.name);
             return <PullPrimitiveTypeSymbol>this.bindPrimitiveSymbol(decl, newSymbol);
         }
 
@@ -131,7 +131,7 @@ module TypeScript {
             // other decls not reachable from the globalDecl
             var span = new TextSpan(0, 0);
             var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, null, span, this);
-            var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType, this.getResolver());
+            var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType);
             emptyTypeDecl.setSymbol(emptyTypeSymbol);
             emptyTypeSymbol.addDeclaration(emptyTypeDecl);
             emptyTypeSymbol.setResolved();

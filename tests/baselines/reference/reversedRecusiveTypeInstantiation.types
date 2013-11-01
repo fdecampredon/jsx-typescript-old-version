@@ -1,0 +1,20 @@
+=== tests/cases/compiler/reversedRecusiveTypeInstantiation.ts ===
+Line 0 col 10 IdentifierName "A" = A<StringArgPos1, NumberArgPos2>
+Line 0 col 12 IdentifierName "StringArgPos1" = StringArgPos1
+Line 0 col 27 IdentifierName "NumberArgPos2" = NumberArgPos2
+Line 1 col 0 IdentifierName "xPos1" = StringArgPos1
+Line 1 col 11 IdentifierName "StringArgPos1" = StringArgPos1
+Line 2 col 0 IdentifierName "yPos2" = NumberArgPos2
+Line 2 col 11 IdentifierName "NumberArgPos2" = NumberArgPos2
+Line 3 col 0 IdentifierName "zPos2Pos1" = A<NumberArgPos2, StringArgPos1>
+Line 3 col 15 IdentifierName "A" = A<StringArgPos1, NumberArgPos2>
+Line 3 col 17 IdentifierName "NumberArgPos2" = NumberArgPos2
+Line 3 col 32 IdentifierName "StringArgPos1" = StringArgPos1
+Line 6 col 4 IdentifierName "a" = A<string, number>
+Line 6 col 8 IdentifierName "A" = A<StringArgPos1, NumberArgPos2>
+Line 7 col 0 AssignmentExpression "a.zPos2Pos1.xPos1 = 1" = number
+Line 7 col 0 MemberAccessExpression "a.zPos2Pos1.xPos1" = number
+Line 7 col 0 MemberAccessExpression "a.zPos2Pos1" = A<string, number>
+Line 7 col 0 IdentifierName "a" = A<string, number>
+Line 7 col 2 IdentifierName "zPos2Pos1" = A<string, number>
+Line 7 col 12 IdentifierName "xPos1" = number

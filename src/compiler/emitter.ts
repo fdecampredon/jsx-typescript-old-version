@@ -308,7 +308,7 @@ module TypeScript {
                     this.writeToOutput("var ");
                 }
                 this.writeToOutput(importDeclAST.identifier.text() + " = ");
-                var aliasAST = importDeclAST.moduleReference.nodeType() === NodeType.TypeRef ? (<TypeReference>importDeclAST.moduleReference).term : importDeclAST.moduleReference;
+                var aliasAST = importDeclAST.moduleReference;
 
                 if (isExternalModuleReference) {
                     this.writeToOutput("require(" + (<Identifier>aliasAST).text() + ")");
@@ -2193,7 +2193,7 @@ module TypeScript {
             this.writeToOutput("var " + className);
 
             var hasBaseClass = getExtendsHeritageClause(classDecl.heritageClauses) !== null;
-            var baseTypeReference: TypeReference = null;
+            var baseTypeReference: AST = null;
             var varDecl: VariableDeclarator = null;
 
             if (hasBaseClass) {
@@ -2206,7 +2206,7 @@ module TypeScript {
             this.indenter.increaseIndent();
 
             if (hasBaseClass) {
-                baseTypeReference = <TypeReference>getExtendsHeritageClause(classDecl.heritageClauses).typeNames.members[0];
+                baseTypeReference = getExtendsHeritageClause(classDecl.heritageClauses).typeNames.members[0];
                 this.emitIndent();
                 this.writeLineToOutput("__extends(" + className + ", _super);");
             }
@@ -2258,7 +2258,7 @@ module TypeScript {
             this.recordSourceMappingStart(classDecl);
             this.writeToOutput(")(");
             if (hasBaseClass) {
-                this.emitJavascript(baseTypeReference.term, /*startLine:*/ false);
+                this.emitJavascript(baseTypeReference, /*startLine:*/ false);
             }
             this.writeToOutput(");");
             this.recordSourceMappingEnd(classDecl);

@@ -2,12 +2,8 @@ assignmentCompatBug5.ts line 2 col 1: error TS2082: Supplied parameters do not m
 	Type '{ b: number; }' is missing property 'a' from type '{ a: number; }'.
 assignmentCompatBug5.ts line 2 col 1: error TS2087: Could not select overload for 'call' expression.
 assignmentCompatBug5.ts line 5 col 1: error TS2082: Supplied parameters do not match any signature of call target:
-	Types of property 'concat' of types '{}[]' and 'number[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:
-			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
-				Call signatures of types '() => {}' and '() => number' are incompatible.
-			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
-				Call signatures of types '() => {}' and '() => number' are incompatible.
+	Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
+		Call signatures of types '() => {}' and '() => number' are incompatible.
 assignmentCompatBug5.ts line 5 col 1: error TS2087: Could not select overload for 'call' expression.
 assignmentCompatBug5.ts line 8 col 1: error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '(s: string) => void' and '(n: number) => number' are incompatible.

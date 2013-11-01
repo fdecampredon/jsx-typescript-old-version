@@ -3,11 +3,11 @@
 module TypeScript.Collections {
     export var DefaultHashTableCapacity = 1024;
 
-    class HashTableEntry<TKey, TValue> {
-        constructor(public Key: TKey,
-                    public Value: TValue,
+    class HashTableEntry<TEntryKey, TEntryValue> {
+        constructor(public Key: TEntryKey,
+                    public Value: TEntryValue,
                     public HashCode: number,
-                    public Next: HashTableEntry<TKey,TValue>) {
+                    public Next: HashTableEntry<TEntryKey,TEntryValue>) {
         }
     }
 
@@ -88,7 +88,7 @@ module TypeScript.Collections {
         private addEntry(key: TKey, value: TValue, hashCode: number): TKey {
             var index = hashCode % this.entries.length;
 
-            var e = new HashTableEntry<TKey,TValue>(key, value, hashCode, this.entries[index]);
+            var e = new HashTableEntry(key, value, hashCode, this.entries[index]);
 
             this.entries[index] = e;
 

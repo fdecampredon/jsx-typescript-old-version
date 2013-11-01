@@ -12,8 +12,7 @@ module TypeScript {
 
     // Type references and instantiated type references
     export class PullTypeReferenceSymbol extends PullTypeSymbol {
-
-        public static createTypeReference(resolver: PullTypeResolver, type: PullTypeSymbol): PullTypeReferenceSymbol {
+        public static createTypeReference(type: PullTypeSymbol): PullTypeReferenceSymbol {
 
             if (type.isTypeReference()) {
                 return <PullTypeReferenceSymbol>type;
@@ -22,7 +21,7 @@ module TypeScript {
             var typeReference = type.typeReference;
 
             if (!typeReference) {
-                typeReference = new PullTypeReferenceSymbol(resolver, type);
+                typeReference = new PullTypeReferenceSymbol(type);
                 type.typeReference = typeReference;
             }
 
@@ -31,10 +30,9 @@ module TypeScript {
 
         // use the root symbol to model the actual type
         // do not call this directly!
-        constructor(resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol) {
-            super(referencedTypeSymbol.name, referencedTypeSymbol.kind, resolver);
+        constructor(public referencedTypeSymbol: PullTypeSymbol) {
+            super(referencedTypeSymbol.name, referencedTypeSymbol.kind);
 
-            Debug.assert(resolver);
             Debug.assert(referencedTypeSymbol != null, "Type root symbol may not be null");
 
             this.setRootSymbol(referencedTypeSymbol);
@@ -55,13 +53,17 @@ module TypeScript {
         public invalidate(): void { }
 
         public ensureReferencedTypeIsResolved(): void {
-            this._resolver.resolveDeclaredSymbol(this.referencedTypeSymbol);
+            this._getResolver().resolveDeclaredSymbol(this.referencedTypeSymbol);
         }
 
         public getReferencedTypeSymbol(): PullTypeSymbol {
             this.ensureReferencedTypeIsResolved();
 
             return this.referencedTypeSymbol;
+        }
+
+        public _getResolver(): PullTypeResolver {
+            return this.referencedTypeSymbol._getResolver();
         }
 
         // type symbol shims
@@ -436,7 +438,7 @@ module TypeScript {
 
         public isArrayNamedTypeReference(): boolean {
             if (this._isArray === undefined) {
-                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() == this._resolver.getArrayNamedType());
+                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() == this._getResolver().getArrayNamedType());
             }
             return this._isArray;
         }
@@ -532,6 +534,8 @@ module TypeScript {
                 }
             }
 
+            var instantiateRoot = isReferencedType;
+
             // if we're re-specializing a generic type (say, if a signature parameter gets specialized
             // from 'Array<S>' to 'Array<foo>', then we'll need to create a new initialization map.  This helps
             // us get the type argument list right when it's requested via getTypeArguments
@@ -545,20 +549,78 @@ module TypeScript {
                     }
                 }
 
-                // next, overwrite any entries that should be re-directed to new type parameters
+                var oldMap = typeParameterArgumentMap;
+
                 var outerTypeMap = (<PullInstantiatedTypeReferenceSymbol>type)._typeParameterArgumentMap;
+                var innerSubstitution: PullTypeSymbol = null;
+                var outerSubstitution: PullTypeSymbol = null;
+                var canRelatePreInstantiatedTypeParametersToRootTypeParameters = true;
+
                 for (var typeParameterID in outerTypeMap) {
                     if (outerTypeMap.hasOwnProperty(typeParameterID)) {
-                        if (typeParameterArgumentMap[outerTypeMap[typeParameterID].pullSymbolID]) {
+
+                        outerSubstitution = outerTypeMap[typeParameterID];
+                        innerSubstitution = typeParameterArgumentMap[outerSubstitution.pullSymbolID];
+
+                        // Consider the following case
+                        //
+                        // interface A<StringArgPos1, NumberArgPos2> {
+                        //    xPos1 : StringArgPos1
+                        //    yPos2 : NumberArgPos2
+                        //    zPos2Pos1 : A<NumberArgPos2, StringArgPos1>
+                        // }
+                        //   
+                        // In such a situation where we want to instantiate A (say, "A<string, number>"),
+                        // we need to be careful that in instantiating zPos2Pos1, we don't improperly 
+                        // condense NumberArgPos2 to StringArgPos1.  Because the type parameters of zPos2Pos1
+                        // are a re-ordering of the type parameters for A, re-specializing one will cause the other
+                        // to be respecialized in the instantiation map.  (So, in this case, zPos2Pos1 would end
+                        // up with a type of 'A<string, number>', when we wanted A<number, string>.
+                        //
+                        // We do the check below to prevent dependent type parameters from being re-instantiated up-front.
+                        // Instead, we preserve the instantiation info, and let substitution occur lazily.
+                       
+                        if (innerSubstitution &&
+                            (!outerSubstitution.isTypeParameter() ||
+                            !outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] ||
+                            (outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] == outerSubstitution))) {
+
                             initializationMap[typeParameterID] = typeParameterArgumentMap[outerTypeMap[typeParameterID].pullSymbolID];
+
+                            // In cases where we're testing for infinitely expanding generic types, a non-type parameter value may
+                            // can be added to the substitution map.  In these cases, we do not want to re-map all type arguments
+                            // to the root's type parameters - doing so would prevent us from properly checking for wrapped nested
+                            // types later on (because the checks depend on wrapped instantiations *not* being an instantiation of
+                            // the root type.  See getGenerativeTypeClassification
+                            if (!outerSubstitution.isTypeParameter()) {
+                                canRelatePreInstantiatedTypeParametersToRootTypeParameters = false;
+                            }
+                        }
+                        else {
+                            canRelatePreInstantiatedTypeParametersToRootTypeParameters = false;
                         }
                     }
                 }
 
-                typeParameterArgumentMap = initializationMap;
+                // If the type being instantiated has takes type parameters, rather than passing in the entire type substitution context,
+                // we limit the substitutions to those that affect the root named type.  This prevents us from over-instantiating types
+                // in a generic function signature
+                if (canRelatePreInstantiatedTypeParametersToRootTypeParameters && typeParameters.length) {
+                    typeParameterArgumentMap = [];
+
+                    for (var i = 0; i < typeParameters.length; i++) {
+                        typeParameterArgumentMap[typeParameters[i].pullSymbolID] = initializationMap[typeParameters[i].pullSymbolID];
+                    }
+
+                    instantiateRoot = true;
+                }
+                else {
+                    typeParameterArgumentMap = initializationMap;
+                }
+                
             }
 
-            instantiation = new PullInstantiatedTypeReferenceSymbol(resolver, isReferencedType ? rootType : type, typeParameterArgumentMap);
+            instantiation = new PullInstantiatedTypeReferenceSymbol(instantiateRoot ? rootType : type, typeParameterArgumentMap);
 
             if (!instantiateFunctionTypeParameters) {
                 rootType.addSpecialization(instantiation, reconstructedTypeArgumentList);
@@ -571,8 +633,8 @@ module TypeScript {
             return instantiation;
         }
 
-        constructor(resolver: PullTypeResolver, public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: PullTypeSymbol[]) {
-            super(resolver, referencedTypeSymbol);
+        constructor(public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: PullTypeSymbol[]) {
+            super(referencedTypeSymbol);
 
             nSpecializationsCreated++;
         }
@@ -644,7 +706,7 @@ module TypeScript {
                 for (var i = 0; i < referencedMembers.length; i++) {
                     referencedMember = referencedMembers[i];
 
-                    this._resolver.resolveDeclaredSymbol(referencedMember);
+                    this._getResolver().resolveDeclaredSymbol(referencedMember);
 
                     if (!this._instantiatedMemberNameCache[referencedMember.name]) {
 
@@ -655,7 +717,7 @@ module TypeScript {
                         else {
                             instantiatedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                             instantiatedMember.setRootSymbol(referencedMember);
-                            instantiatedMember.type = this._resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                            instantiatedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterArgumentMap);
                             instantiatedMember.isOptional = referencedMember.isOptional;
                         }
 
@@ -692,9 +754,9 @@ module TypeScript {
                     memberSymbol = new PullSymbol(referencedMemberSymbol.name, referencedMemberSymbol.kind);
                     memberSymbol.setRootSymbol(referencedMemberSymbol);
 
-                    this._resolver.resolveDeclaredSymbol(referencedMemberSymbol);
+                    this._getResolver().resolveDeclaredSymbol(referencedMemberSymbol);
 
-                    memberSymbol.type = this._resolver.instantiateType(referencedMemberSymbol.type, this._typeParameterArgumentMap);
+                    memberSymbol.type = this._getResolver().instantiateType(referencedMemberSymbol.type, this._typeParameterArgumentMap);
 
                     memberSymbol.isOptional = referencedMemberSymbol.isOptional;
 
@@ -739,7 +801,7 @@ module TypeScript {
             for (var i = 0; i < allReferencedMembers.length; i++) {
                 referencedMember = allReferencedMembers[i];
 
-                this._resolver.resolveDeclaredSymbol(referencedMember);
+                this._getResolver().resolveDeclaredSymbol(referencedMember);
 
                 if (this._allInstantiatedMemberNameCache[referencedMember.name]) {
                     requestedMembers[requestedMembers.length] = this._allInstantiatedMemberNameCache[referencedMember.name];
@@ -753,7 +815,7 @@ module TypeScript {
                         requestedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                         requestedMember.setRootSymbol(referencedMember);
 
-                        requestedMember.type = this._resolver.instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                        requestedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterArgumentMap);
                         requestedMember.isOptional = referencedMember.isOptional;
 
                         this._allInstantiatedMemberNameCache[requestedMember.name] = requestedMember;
@@ -774,7 +836,7 @@ module TypeScript {
             if (!this._instantiatedConstructorMethod) {
                 var referencedConstructorMethod = this.referencedTypeSymbol.getConstructorMethod();
                 this._instantiatedConstructorMethod = new PullSymbol(referencedConstructorMethod.name, referencedConstructorMethod.kind);
-                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._resolver, referencedConstructorMethod.type, this._typeParameterArgumentMap);
+                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedConstructorMethod.type, this._typeParameterArgumentMap);
             }
 
 
@@ -791,7 +853,7 @@ module TypeScript {
                 var referencedAssociatedContainerType = this.referencedTypeSymbol.getAssociatedContainerType();
 
                 if (referencedAssociatedContainerType) {
-                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this._resolver, referencedAssociatedContainerType, this._typeParameterArgumentMap);
+                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedAssociatedContainerType, this._typeParameterArgumentMap);
                 }
             }
 
@@ -813,13 +875,13 @@ module TypeScript {
             this._instantiatedCallSignatures = [];
 
             for (var i = 0; i < referencedCallSignatures.length; i++) {
-                this._resolver.resolveDeclaredSymbol(referencedCallSignatures[i]);
+                this._getResolver().resolveDeclaredSymbol(referencedCallSignatures[i]);
 
                 if (!referencedCallSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedCallSignatures[i];
                 }
                 else {
-                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._resolver.instantiateSignature(referencedCallSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._getResolver().instantiateSignature(referencedCallSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length - 1].functionType = this;
                 }
             }
@@ -842,13 +904,13 @@ module TypeScript {
             this._instantiatedConstructSignatures = [];
 
             for (var i = 0; i < referencedConstructSignatures.length; i++) {
-                this._resolver.resolveDeclaredSymbol(referencedConstructSignatures[i]);
+                this._getResolver().resolveDeclaredSymbol(referencedConstructSignatures[i]);
 
                 if (!referencedConstructSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedConstructSignatures[i];
                 }
                 else {
-                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._resolver.instantiateSignature(referencedConstructSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._getResolver().instantiateSignature(referencedConstructSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length - 1].functionType = this;
                 }
             }
@@ -871,13 +933,13 @@ module TypeScript {
             this._instantiatedIndexSignatures = [];
 
             for (var i = 0; i < referencedIndexSignatures.length; i++) {
-                this._resolver.resolveDeclaredSymbol(referencedIndexSignatures[i]);
+                this._getResolver().resolveDeclaredSymbol(referencedIndexSignatures[i]);
 
                 if (!referencedIndexSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = referencedIndexSignatures[i];
                 }
                 else {
-                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._resolver.instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._getResolver().instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap);
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length - 1].functionType = this;
                 }
             }

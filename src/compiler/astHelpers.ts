@@ -122,7 +122,7 @@ module TypeScript {
                         cur.nodeType() === NodeType.Name ||
                         cur.nodeType() === NodeType.MemberAccessExpression ||
                         cur.nodeType() === NodeType.QualifiedName ||
-                        cur.nodeType() === NodeType.TypeRef ||
+                        //cur.nodeType() === NodeType.TypeRef ||
                         cur.nodeType() === NodeType.VariableDeclaration ||
                         cur.nodeType() === NodeType.VariableDeclarator ||
                         cur.nodeType() === NodeType.InvocationExpression ||
@@ -304,7 +304,7 @@ module TypeScript {
         ast: AST;
         astAt(index: number): AST;
         identifierAt(index: number): Identifier;
-        typeAt(index: number): TypeReference;
+        typeAt(index: number): AST;
         initializerAt(index: number): EqualsValueClause;
         isOptionalAt(index: number): boolean;
     }
@@ -317,7 +317,7 @@ module TypeScript {
                 ast: id,
                 astAt: (index: number) => id,
                 identifierAt: (index: number) => id,
-                typeAt: (index: number): TypeReference => null,
+                typeAt: (index: number): AST => null,
                 initializerAt: (index: number): EqualsValueClause => null,
                 isOptionalAt: (index: number) => false,
             }
@@ -330,7 +330,7 @@ module TypeScript {
                 ast: parameter,
                 astAt: (index: number) => parameter,
                 identifierAt: (index: number) => parameter.identifier,
-                typeAt: (index: number) => parameter.typeAnnotation,
+                typeAt: (index: number) => getType(parameter),
                 initializerAt: (index: number) => parameter.equalsValueClause,
                 isOptionalAt: (index: number) => parameterIsOptional(parameter),
             }
@@ -347,7 +347,7 @@ module TypeScript {
                 ast: list.parameters,
                 astAt: (index: number) => list.parameters.members[index],
                 identifierAt: (index: number) => (<Parameter>list.parameters.members[index]).identifier,
-                typeAt: (index: number) => (<Parameter>list.parameters.members[index]).typeAnnotation,
+                typeAt: (index: number) => getType(list.parameters.members[index]),
                 initializerAt: (index: number) => (<Parameter>list.parameters.members[index]).equalsValueClause,
                 isOptionalAt: (index: number) => parameterIsOptional(<Parameter>list.parameters.members[index]),
             }
@@ -495,31 +495,45 @@ module TypeScript {
         return null;
     }
 
-    export function getTypeAnnotation(ast: AST): TypeReference {
+    export function getType(ast: AST): AST {
         if (ast) {
             switch (ast.nodeType()) {
                 case NodeType.FunctionDeclaration:
-                    return getTypeAnnotation((<FunctionDeclaration>ast).callSignature);
+                    return getType((<FunctionDeclaration>ast).callSignature);
                 case NodeType.ParenthesizedArrowFunctionExpression:
-                    return getTypeAnnotation((<ParenthesizedArrowFunctionExpression>ast).callSignature);
+                    return getType((<ParenthesizedArrowFunctionExpression>ast).callSignature);
                 case NodeType.ConstructSignature:
-                    return getTypeAnnotation((<ConstructSignature>ast).callSignature);
+                    return getType((<ConstructSignature>ast).callSignature);
                 case NodeType.MemberFunctionDeclaration:
-                    return getTypeAnnotation((<MemberFunctionDeclaration>ast).callSignature);
+                    return getType((<MemberFunctionDeclaration>ast).callSignature);
                 case NodeType.FunctionPropertyAssignment:
-                    return getTypeAnnotation((<FunctionPropertyAssignment>ast).callSignature);
+                    return getType((<FunctionPropertyAssignment>ast).callSignature);
                 case NodeType.FunctionExpression:
-                    return getTypeAnnotation((<FunctionExpression>ast).callSignature);
+                    return getType((<FunctionExpression>ast).callSignature);
                 case NodeType.MethodSignature:
-                    return getTypeAnnotation((<MethodSignature>ast).callSignature);
+                    return getType((<MethodSignature>ast).callSignature);
+                case NodeType.CallSignature:
+                    return getType((<CallSignature>ast).typeAnnotation);
+                case NodeType.IndexSignature:
+                    return getType((<IndexSignature>ast).typeAnnotation);
+                case NodeType.PropertySignature:
+                    return getType((<PropertySignature>ast).typeAnnotation);
+                case NodeType.GetAccessor:
+                    return getType((<GetAccessor>ast).typeAnnotation);
+                case NodeType.Parameter:
+                    return getType((<Parameter>ast).typeAnnotation);
+                case NodeType.MemberVariableDeclaration:
+                    return getType((<MemberVariableDeclaration>ast).variableDeclarator);
+                case NodeType.VariableDeclarator:
+                    return getType((<VariableDeclarator>ast).typeAnnotation);
+                case NodeType.CatchClause:
+                    return getType((<CatchClause>ast).typeAnnotation);
                 case NodeType.ConstructorType:
                     return (<ConstructorType>ast).type;
                 case NodeType.FunctionType:
                     return (<FunctionType>ast).type;
-                case NodeType.CallSignature:
-                    return (<CallSignature>ast).typeAnnotation;
-                case NodeType.GetAccessor:
-                    return (<GetAccessor>ast).typeAnnotation;
+                case NodeType.TypeAnnotation:
+                    return (<TypeAnnotation>ast).type;
             }
         }
 

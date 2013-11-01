@@ -9,9 +9,5 @@ widenedTypes.ts line 18 col 1: error TS2011: Cannot convert 'string' to 'number'
 widenedTypes.ts line 21 col 5: error TS2012: Cannot convert '{ x: string; }' to '{ x: undefined; }':
 	Types of property 'x' of types '{ x: string; }' and '{ x: undefined; }' are incompatible.
 widenedTypes.ts line 24 col 5: error TS2012: Cannot convert '{}[]' to 'string[]':
-	Types of property 'concat' of types '{}[]' and 'string[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible:
-			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
-				Call signatures of types '() => {}' and '() => string' are incompatible.
-			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
-				Call signatures of types '() => {}' and '() => string' are incompatible.
+	Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
+		Call signatures of types '() => {}' and '() => string' are incompatible.
