@@ -350,10 +350,6 @@ module TypeScript {
         public getGenerativeTypeClassification(enclosingType: PullTypeSymbol): GenerativeTypeClassification {
 
             if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
-
-                var rootType = PullHelpers.getRootType(<PullTypeSymbol>enclosingType);
-                var rootThis = PullHelpers.getRootType(this);
-
                 // With respect to the enclosing type, is this type reference open, closed or 
                 // infinitely expanding?
 
@@ -370,10 +366,11 @@ module TypeScript {
                         typeParametersMap[typeParameters[i].pullSymbolID] = typeParameters[i];
                     }
 
+                    var rootThis = PullHelpers.getRootType(this);
                     var wrapsSomeTypeParameters = rootThis.wrapsSomeTypeParameter(typeParametersMap);
 
                     // It's a wrap of a wrap
-                    if (wrapsSomeTypeParameters && rootThis.wrapsSomeNestedType(rootType, /*isCheckingNestedType:*/ false)) {
+                    if (wrapsSomeTypeParameters && this.wrapsSomeNestedTypeIntoInfiniteExpansion(enclosingType)) {
                         this._generativeTypeClassification = GenerativeTypeClassification.InfinitelyExpanding;
                     }
                     else if (wrapsSomeTypeParameters) {

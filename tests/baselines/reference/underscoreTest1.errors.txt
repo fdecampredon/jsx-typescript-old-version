@@ -1,12 +1,3 @@
-underscoreTest1_underscore.ts line 239 col 22: error TS2143: Interface 'Underscore.ChainedArray<T>' cannot extend interface 'Underscore.ChainedObject<T[]>':
-	Types of property 'extend' of types 'Underscore.ChainedArray<T>' and 'Underscore.ChainedObject<T[]>' are incompatible:
-		Call signatures of types '(...sources: any[]) => Underscore.ChainedArray<T>' and '(...sources: any[]) => Underscore.ChainedObject<T>' are incompatible:
-			Types of property 'tap' of types 'Underscore.ChainedArray<T>' and 'Underscore.ChainedObject<T>' are incompatible:
-				Call signatures of types '(interceptor: (object: T[]) => void) => Underscore.ChainedArray<T>' and '(interceptor: (object: T) => void) => Underscore.ChainedObject<T>' are incompatible:
-					Call signatures of types '(object: T[]) => void' and '(object: T) => void' are incompatible:
-						Type 'T' is missing property 'concat' from type 'T[]'.
-					Call signatures of types '(object: T) => void' and '(object: T[]) => void' are incompatible:
-						Type 'T' is missing property 'concat' from type 'T[]'.
 underscoreTest1_underscoreTests.ts line 133 col 11: error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '(func: (name: any) => string, arg: any) => string' and '(func: (name: any) => string, ...args: any[]) => any' are incompatible:
 		Call signature expects 1 or fewer parameters.

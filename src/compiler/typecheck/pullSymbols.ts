@@ -1312,39 +1312,45 @@ module TypeScript {
             return wrapsSomeTypeParameter;
         }
 
-        public wrapsSomeNestedType(typeBeingWrapped: PullTypeSymbol, isNested: boolean, knownWrapMap: IBitMatrix): boolean {
-            var signature = this;
-            if (signature.inWrapCheck) {
-                return false;
+        public wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped: PullTypeSymbol, isCheckingTypeArgumentList: boolean, knownWrapMap: IBitMatrix): boolean {
+           if (this.inWrapCheck) {
+                return isCheckingTypeArgumentList;
             }
 
-            signature.inWrapCheck = true;
+            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
+                return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
+            }
+
+            knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, isCheckingTypeArgumentList);
+
+            this.inWrapCheck = true;
 
             var wrapsSomeWrappedTypeParameter = false;
 
-            if (signature.returnType && signature.returnType._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isNested, knownWrapMap)) {
+            if (this.returnType && this.returnType._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
                 wrapsSomeWrappedTypeParameter = true;
             }
 
             if (!wrapsSomeWrappedTypeParameter) {
-                var parameters = signature.parameters;
+                var parameters = this.parameters;
 
                 for (var i = 0; i < parameters.length; i++) {
-                    if (!parameters[i].isVarArg && parameters[i].type && parameters[i].type._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isNested, knownWrapMap)) {
+                    if (parameters[i].type && parameters[i].type._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
                         wrapsSomeWrappedTypeParameter = true;
                         break;
                     }
                 }
             }
 
-            signature.inWrapCheck = false;
+            knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, wrapsSomeWrappedTypeParameter);
+
+            this.inWrapCheck = false;
 
             return wrapsSomeWrappedTypeParameter;
         }
     }
 
     export class PullTypeSymbol extends PullSymbol {
-
         private _members: PullSymbol[] = sentinelEmptyArray;
         private _enclosedMemberTypes: PullTypeSymbol[] = null;
         private _enclosedMemberContainers: PullTypeSymbol[] = null;
@@ -2508,34 +2514,88 @@ module TypeScript {
             return wrapsSomeTypeParameter;
         }
 
-        // Detect if a type parameter is wrapped in a wrapped form.  E.g., for 'T'
+        // Detect if a type parameter is wrapped in a wrapped form that generates infinite expansion.  E.g., for 'T'
         //  class C<T> {
         //      p1: T; <- no
-        //      p2: C<T>; <- yes
+        //      p2: C<T>; <- no
+        //      p3: C<C<T>> <- yes
         //  }
-        public wrapsSomeNestedType(typeBeingWrapped: PullTypeSymbol, isCheckingNestedType: boolean) {
+        public wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped: PullTypeSymbol) {
             var knownWrapMap = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ true);
-            var result = this._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isCheckingNestedType, knownWrapMap);
+            var result = this._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, /*isCheckingTypeArgumentList:*/ false, knownWrapMap);
             knownWrapMap.release();
 
             return result;
         }
 
-        public _wrapsSomeNestedTypeRecurse(typeBeingWrapped: PullTypeSymbol, isCheckingNestedType: boolean, knownWrapMap: IBitMatrix): boolean {
+        private isTypeEquivalentToRootSymbol() {
+            if (this.isTypeReference()) {
+                if (this.getIsSpecialized()) {
+                    // If all the type parameters are typeArguments, the type is equivalent to its declaration - as in the members will be of same type
+                    var typeArguments = this.getTypeArguments();
+                    var rootTypeArguments = (<PullTypeSymbol>this.getRootSymbol()).getTypeArguments();
+                    if (typeArguments) {
+                        for (var i = 0; i < typeArguments.length; i++) {
+                            if (!typeArguments[i].isTypeParameter() && // The typeArgument is not type parameter
+                                !(rootTypeArguments && rootTypeArguments[i] == typeArguments[i].getRootSymbol())) { // Root symbol of the type argument is not same as type argument of rootSymbol
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
 
-            if (this == typeBeingWrapped || this.inWrapCheck || typeBeingWrapped.inWrapCheck) {
-                if (!!isCheckingNestedType) {
-                    knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, true);
+                    return false;
+                } else {
+                    // Just a reference to the declaration
+                    return true;
                 }
-                return !!isCheckingNestedType;
+            }
+
+            return false;
+        }
+
+        private isTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
+            // If this type is already in wrap check or is this is the typeBeingWrapped - it is the wrapping of the type
+            if (this.inWrapCheck || this == typeBeingWrapped) {
+                return true;
+            }
+
+            // If typebeingWrapped is equivalent to the rootSymbol, check with the root
+            if (typeBeingWrapped.isTypeEquivalentToRootSymbol()) {
+                return this.isTypeBeingWrapped(<PullTypeSymbol>typeBeingWrapped.getRootSymbol());
+            }
+
+            return false;
+        }
+
+        private anyRootTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
+            var prevRootType = this;
+            var rootType = <PullTypeSymbol>this.getRootSymbol();
+            while (rootType != prevRootType) {
+                if (rootType.isTypeBeingWrapped(typeBeingWrapped)) {
+                    // members are already being checked - do not iterate
+                    return true;
+                }
+
+                prevRootType = rootType;
+                rootType = <PullTypeSymbol>rootType.getRootSymbol();
+            }
+
+            return false;
+        }
+
+        public _wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped: PullTypeSymbol, isCheckingTypeArgumentList: boolean, knownWrapMap: IBitMatrix): boolean {
+            if (this.isArrayNamedTypeReference()) {
+                return this.getElementType()._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap);
+            }
+
+            // If this type is being wrapped, we have nestedWrapping if we are checking type argument
+            if (this.isTypeBeingWrapped(typeBeingWrapped)) {
+                return isCheckingTypeArgumentList;
             }
 
             if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
-            }
-
-            if (this.isArrayNamedTypeReference()) {
-                return this.getElementType()._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isCheckingNestedType, knownWrapMap);
             }
 
             // if we encounter a type parameter or primitive, nothing is being wrapped
@@ -2543,11 +2603,13 @@ module TypeScript {
                 return false;
             }
 
+            this.inWrapCheck = true;
+
             var wrapsSomeWrappedTypeParameter = false;
 
-            knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, !!isCheckingNestedType);
+            knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, false);
 
-            wrapsSomeWrappedTypeParameter = this._wrapSomeNestedTypeWorker(typeBeingWrapped, isCheckingNestedType, knownWrapMap);
+            wrapsSomeWrappedTypeParameter = this._wrapsSomeNestedTypeIntoInfiniteExpansionWorker(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap);
 
             knownWrapMap.setValueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID, wrapsSomeWrappedTypeParameter);
 
@@ -2556,62 +2618,72 @@ module TypeScript {
             return wrapsSomeWrappedTypeParameter;
         }
 
-        private _wrapSomeNestedTypeWorker(typeBeingWrapped: PullTypeSymbol, isCheckingNestedType: boolean, knownWrapMap: IBitMatrix): boolean {
-
-            this.inWrapCheck = true;
-
-            var typeArguments = this.getTypeArguments();
-
-            // If there are no type arguments, we could be instantiating the 'root' type
-            // declaration
-            if (this.isGeneric() && !typeArguments) {
-                typeArguments = this.getTypeParameters();
-            }
-
+        private _wrapsSomeNestedTypeIntoInfiniteExpansionWorker(typeBeingWrapped: PullTypeSymbol, isCheckingTypeArgumentList: boolean, knownWrapMap: IBitMatrix): boolean {
             // if it's a generic type, test to see if we're wrapping
+            var typeArguments = this.getTypeArguments();
             if (typeArguments) {
                 for (var i = 0; i < typeArguments.length; i++) {
-                    if ((isCheckingNestedType && typeArguments[i].isTypeParameter() && (typeArguments[i].getRootSymbol() == typeBeingWrapped.getRootSymbol())) ||
-                        typeArguments[i]._wrapsSomeNestedTypeRecurse(typeBeingWrapped, true, knownWrapMap)) {
+                    if (typeArguments[i]._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, /*isCheckingTypeArgumentList:*/ true, knownWrapMap)) {
                         return true;
                     }
                 }
             }
 
-            // otherwise, walk the member list and signatures, checking for wraps
-            var members = this.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
-
-            for (var i = 0; i < members.length; i++) {
-                if (members[i].type && members[i].type._wrapsSomeNestedTypeRecurse(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
+            // There is root symbol already in typeCheck, we need not check members 
+            if (this.anyRootTypeBeingWrapped(typeBeingWrapped)) {
+                // If we are checking the type argument list and this type is just a reference to the root type, we have a wrapped type
+                if (isCheckingTypeArgumentList && this.isTypeReference() && !this.getIsSpecialized()) {
+                    // This is just a reference to the root Symbol, return true;
                     return true;
                 }
+
+                return false;
             }
-
-            var sigs = this.getCallSignatures();
-
-            for (var i = 0; i < sigs.length; i++) {
-                if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
-                    return true;
+            // If it is not a named type symbol or this type is a generic type, verify members
+            else if (!this.isNamedTypeSymbol() || this.isGeneric()) {
+                // If this is a type that is specialized only with the type parameters or is just a reference type then checking members of this type 
+                // is equivalent to checking members of the rootSymbol
+                var isTypeEquivalentToRootSymbol = this.isTypeEquivalentToRootSymbol();
+                var rootType = PullHelpers.getRootType(this);
+                if (isTypeEquivalentToRootSymbol) {
+                    rootType.inWrapCheck = true;
                 }
-            }
 
-            sigs = this.getConstructSignatures();
-
-            for (var i = 0; i < sigs.length; i++) {
-                if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
-                    return true;
+                // otherwise, walk the member list and signatures, checking for wraps
+                var members = this.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
+                for (var i = 0; i < members.length; i++) {
+                    if (members[i].type && members[i].type._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
+                        return true;
+                    }
                 }
-            }
 
-            sigs = this.getIndexSignatures();
-
-            for (var i = 0; i < sigs.length; i++) {
-                if (sigs[i].wrapsSomeNestedType(typeBeingWrapped, isCheckingNestedType, knownWrapMap)) {
-                    return true;
+                var sigs = this.getCallSignatures();
+                for (var i = 0; i < sigs.length; i++) {
+                    if (sigs[i].wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
+                        return true;
+                    }
                 }
-            }
 
-            return false;
+                sigs = this.getConstructSignatures();
+                for (var i = 0; i < sigs.length; i++) {
+                    if (sigs[i].wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
+                        return true;
+                    }
+                }
+
+                sigs = this.getIndexSignatures();
+                for (var i = 0; i < sigs.length; i++) {
+                    if (sigs[i].wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped, isCheckingTypeArgumentList, knownWrapMap)) {
+                        return true;
+                    }
+                }
+
+                if (isTypeEquivalentToRootSymbol) {
+                    rootType.inWrapCheck = false;
+                }
+
+                return false;
+            }
         }
     }
 

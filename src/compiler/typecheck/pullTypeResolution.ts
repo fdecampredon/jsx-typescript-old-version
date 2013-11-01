@@ -10626,10 +10626,19 @@ module TypeScript {
             var len = parameterParams.length < expressionParams.length ? parameterParams.length : expressionParams.length;
 
             for (var i = 0; i < len; i++) {
+                if ((expressionParams[i].type && expressionParams[i].type.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) ||
+                    (parameterParams[i].type && parameterParams[i].type.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding)) {
+                    // relateInfinitelyExpandingTypeParameter
+                    continue;
+                }
                 this.relateTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, true, argContext, context);
             }
 
-            this.relateTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
+            if ((expressionReturnType && expressionReturnType.getGenerativeTypeClassification(expressionSignature.functionType) != GenerativeTypeClassification.InfinitelyExpanding) &&
+                (parameterReturnType && parameterReturnType.getGenerativeTypeClassification(parameterSignature.functionType) != GenerativeTypeClassification.InfinitelyExpanding)) {
+
+                this.relateTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
+            }
         }
 
         private relateObjectTypeToTypeParameters(objectType: PullTypeSymbol,
@@ -10652,20 +10661,20 @@ module TypeScript {
             var objectTypeArguments = objectType.getTypeArguments();
             var parameterTypeParameters = parameterType.getTypeParameters();
 
-                if (objectTypeArguments) {
-                    if (objectTypeArguments.length === parameterTypeParameters.length) {
-                        for (var i = 0; i < objectTypeArguments.length; i++) {
-                            // PULLREVIEW: This may lead to duplicate inferences for type argument parameters, if the two are the same
-                            // (which could occur via mutually recursive method calls within a generic class declaration)
-                            argContext.addCandidateForInference(parameterTypeParameters[i], objectTypeArguments[i], shouldFix);
-                        }
-                    }
-                    else if (parameterType == this.semanticInfoChain.anyTypeSymbol) {
-                        for (var i = 0; i < objectTypeArguments.length; i++) {
-                            this.relateTypeToTypeParameters(parameterType, objectTypeArguments[i], shouldFix, argContext, context);
-                        }
+            if (objectTypeArguments) {
+                if (objectTypeArguments.length === parameterTypeParameters.length) {
+                    for (var i = 0; i < objectTypeArguments.length; i++) {
+                        // PULLREVIEW: This may lead to duplicate inferences for type argument parameters, if the two are the same
+                        // (which could occur via mutually recursive method calls within a generic class declaration)
+                        argContext.addCandidateForInference(parameterTypeParameters[i], objectTypeArguments[i], shouldFix);
                     }
                 }
+                else if (parameterType == this.semanticInfoChain.anyTypeSymbol) {
+                    for (var i = 0; i < objectTypeArguments.length; i++) {
+                        this.relateTypeToTypeParameters(parameterType, objectTypeArguments[i], shouldFix, argContext, context);
+                    }
+                }
+            }
 
             // - If M is a property and S contains a property N with the same name as M, inferences are made from the type of N to the type of M.
             for (var i = 0; i < parameterTypeMembers.length; i++) {
@@ -10678,7 +10687,7 @@ module TypeScript {
 
                     if ((objectMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) ||
                         (parameterMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding)) {
-                            continue;
+                        continue;
                     }
 
                     this.relateTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);
