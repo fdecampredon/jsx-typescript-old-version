@@ -1,0 +1,16 @@
+=== tests/cases/compiler/inheritedFunctionAssignmentCompatibility.ts ===
+Line 0 col 10 IdentifierName "IResultCallback" = IResultCallback
+Line 0 col 34 IdentifierName "Function" = Function
+Line 2 col 9 IdentifierName "fn" = (cb: IResultCallback) => void
+Line 2 col 12 IdentifierName "cb" = IResultCallback
+Line 2 col 16 IdentifierName "IResultCallback" = IResultCallback
+Line 3 col 0 InvocationExpression "fn((a, b) => true)" = void
+Line 3 col 0 IdentifierName "fn" = (cb: IResultCallback) => void
+Line 4 col 3 ParenthesizedArrowFunctionExpression "(a, b) => true" = (a: any, b: any) => boolean
+Line 4 col 4 IdentifierName "a" = any
+Line 4 col 7 IdentifierName "b" = any
+Line 5 col 0 InvocationExpression "fn(function (a, b) { return true; })" = void
+Line 5 col 0 IdentifierName "fn" = (cb: IResultCallback) => void
+Line 5 col 3 FunctionExpression "function (a, b) { return true; }" = (a: any, b: any) => boolean
+Line 5 col 13 IdentifierName "a" = any
+Line 5 col 16 IdentifierName "b" = any

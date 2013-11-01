@@ -1569,6 +1569,8 @@ function generateFirstTokenMethod(definition: ITypeDefinition): string {
 
     result += "    }\r\n";
 
+    result += "    }\r\n";
+
     return result;
 }
 

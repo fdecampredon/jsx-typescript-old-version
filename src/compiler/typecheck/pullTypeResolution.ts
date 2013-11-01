@@ -8734,11 +8734,10 @@ module TypeScript {
                 return true;
             }
 
-            if (t1.isTypeParameter()) {
-
-                if (!t2.isTypeParameter()) {
-                    return false;
-                }
+            if (t1.isTypeParameter() != t2.isTypeParameter()) {
+                return false;
+            }
+            else if (t1.isTypeParameter()) {
 
                 // We compare parent declarations instead of container symbols because type parameter symbols are shared
                 // accross overload groups
@@ -9294,7 +9293,7 @@ module TypeScript {
 
             if (this.cachedFunctionInterfaceType() &&
                 (sourceSubstitution.getCallSignatures().length || sourceSubstitution.getConstructSignatures().length) &&
-                target === this.cachedFunctionInterfaceType()) {
+                target.hasBase(this.cachedFunctionInterfaceType())) {
                 return true;
             }
 
@@ -9806,7 +9805,7 @@ module TypeScript {
 
         private signatureIsRelatableToTarget(sourceSig: PullSignatureSymbol, targetSig: PullSignatureSymbol, assignableTo: boolean, comparisonCache: IBitMatrix, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures: boolean) {
 
-            comparisonCache.setValueAt(sourceSig.pullSymbolID, targetSig.pullSymbolID, false);
+            
 
             var sourceParameters = sourceSig.parameters;
             var targetParameters = targetSig.parameters;
@@ -9847,6 +9846,8 @@ module TypeScript {
                     sourceParameters = sourceSig.parameters;
                 }
             }
+
+            comparisonCache.setValueAt(sourceSig.pullSymbolID, targetSig.pullSymbolID, false);
 
             var sourceReturnType = sourceSig.returnType;
             var targetReturnType = targetSig.returnType;

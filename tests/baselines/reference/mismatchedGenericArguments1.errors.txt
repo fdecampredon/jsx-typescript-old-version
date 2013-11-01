@@ -1,3 +1,6 @@
 mismatchedGenericArguments1.ts line 4 col 7: error TS2137: Class C<T> declares interface IFoo<T> but does not implement it:
 	Types of property 'foo' of types 'C<T>' and 'IFoo<T>' are incompatible:
 		Call signatures of types '(x: string) => number' and '<T>(x: T) => T' are incompatible.
+mismatchedGenericArguments1.ts line 10 col 7: error TS2137: Class C2<T> declares interface IFoo<T> but does not implement it:
+	Types of property 'foo' of types 'C2<T>' and 'IFoo<T>' are incompatible:
+		Call signatures of types '<U>(x: string) => number' and '<T>(x: T) => T' are incompatible.

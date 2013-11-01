@@ -1,0 +1,21 @@
+=== tests/cases/compiler/overloadedStaticMethodSpecialization.ts ===
+Line 0 col 6 IdentifierName "A" = A<T>
+Line 0 col 8 IdentifierName "T" = T
+Line 1 col 11 IdentifierName "B" = { <S>(v: A<S>): A<S>; <S>(v: S): A<S>; }
+Line 1 col 13 IdentifierName "S" = S
+Line 1 col 16 IdentifierName "v" = A<S>
+Line 1 col 19 IdentifierName "A" = A<T>
+Line 1 col 21 IdentifierName "S" = S
+Line 1 col 26 IdentifierName "A" = A<T>
+Line 1 col 28 IdentifierName "S" = S
+Line 2 col 11 IdentifierName "B" = { <S>(v: A<S>): A<S>; <S>(v: S): A<S>; }
+Line 2 col 13 IdentifierName "S" = S
+Line 2 col 16 IdentifierName "v" = S
+Line 2 col 19 IdentifierName "S" = S
+Line 2 col 23 IdentifierName "A" = A<T>
+Line 2 col 25 IdentifierName "S" = S
+Line 3 col 11 IdentifierName "B" = { <S>(v: A<S>): A<S>; <S>(v: S): A<S>; }
+Line 3 col 13 IdentifierName "S" = S
+Line 3 col 16 IdentifierName "v" = any
+Line 3 col 25 IdentifierName "A" = A<T>
+Line 3 col 27 IdentifierName "S" = S
