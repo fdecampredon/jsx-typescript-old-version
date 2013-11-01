@@ -1759,7 +1759,7 @@ module TypeScript.Parser {
             return this.factory.exportAssignment(exportKeyword, equalsToken, identifier, semicolonToken);
         }
 
-        private parseModuleReference(): ModuleReferenceSyntax {
+        private parseModuleReference(): IModuleReferenceSyntax {
             if (this.isExternalModuleReference()) {
                 return this.parseExternalModuleReference();
             }
@@ -2963,7 +2963,7 @@ module TypeScript.Parser {
             return this.factory.emptyStatement(semicolonToken);
         }
 
-        private parseForOrForInStatement(): BaseForStatementSyntax {
+        private parseForOrForInStatement(): IIterationStatementSyntax {
             // Debug.assert(this.isForOrForInStatement());
 
             var forKeyword = this.eatKeyword(SyntaxKind.ForKeyword);
@@ -2986,7 +2986,7 @@ module TypeScript.Parser {
             }
         }
 
-        private parseForOrForInStatementWithVariableDeclaration(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): BaseForStatementSyntax {
+        private parseForOrForInStatementWithVariableDeclaration(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IIterationStatementSyntax {
             // Debug.assert(forKeyword.tokenKind === SyntaxKind.ForKeyword && openParenToken.tokenKind === SyntaxKind.OpenParenToken);
             // Debug.assert(this.currentToken().tokenKind === SyntaxKind.VarKeyword);
 
@@ -3019,7 +3019,7 @@ module TypeScript.Parser {
                 initializer, inKeyword, expression, closeParenToken, statement);
         }
 
-        private parseForOrForInStatementWithInitializer(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): BaseForStatementSyntax {
+        private parseForOrForInStatementWithInitializer(forKeyword: ISyntaxToken, openParenToken: ISyntaxToken): IIterationStatementSyntax {
             // Debug.assert(forKeyword.tokenKind === SyntaxKind.ForKeyword && openParenToken.tokenKind === SyntaxKind.OpenParenToken);
 
             // for ( ExpressionNoInopt; Expressionopt ; Expressionopt ) Statement
@@ -3151,10 +3151,10 @@ module TypeScript.Parser {
             return this.isCaseSwitchClause() || this.isDefaultSwitchClause();
         }
 
-        private parseSwitchClause(): SwitchClauseSyntax {
+        private parseSwitchClause(): ISwitchClauseSyntax {
             // Debug.assert(this.isSwitchClause());
             if (this.currentNode() !== null && this.currentNode().isSwitchClause()) {
-                return <SwitchClauseSyntax>this.eatNode();
+                return <ISwitchClauseSyntax><ISyntaxNode>this.eatNode();
             }
 
             if (this.isCaseSwitchClause()) {

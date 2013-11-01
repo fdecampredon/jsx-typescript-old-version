@@ -43,8 +43,20 @@ module TypeScript {
 }
 
 module TypeScript.Syntax {
-    export function isPrimaryExpression(token: ISyntaxToken): boolean {
-        // TODO: implement this.
+    export function isExpression(token: ISyntaxToken): boolean {
+        switch (token.tokenKind) {
+            case SyntaxKind.IdentifierName:
+            case SyntaxKind.RegularExpressionLiteral:
+            case SyntaxKind.NumericLiteral:
+            case SyntaxKind.StringLiteral:
+            case SyntaxKind.FalseKeyword:
+            case SyntaxKind.NullKeyword:
+            case SyntaxKind.ThisKeyword:
+            case SyntaxKind.TrueKeyword:
+            case SyntaxKind.SuperKeyword:
+                return true;
+        }
+
         return false;
     }
 
@@ -397,22 +409,25 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
-
     }
 
     export function emptyToken(kind: SyntaxKind): ISyntaxToken {
@@ -535,20 +550,24 @@ module TypeScript.Syntax {
                 this._fullStart, this.tokenKind,  this._leadingTrivia, this._text, this._value, this._valueText, trailingTrivia);
         }
 
+        public isExpression(): boolean {
+            return isExpression(this);
+        }
+
         public isPrimaryExpression(): boolean {
-            return isPrimaryExpression(this);
+            return this.isExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isPrimaryExpression();
+            return this.isExpression();
         }
     }
 

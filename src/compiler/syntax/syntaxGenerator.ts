@@ -12,7 +12,6 @@ interface ITypeDefinition {
     name: string;
     baseType: string;
     interfaces?: string[];
-    isAbstract?: boolean;
     children: IMemberDefinition[];
     isTypeScriptSpecific: boolean;
 }
@@ -40,6 +39,8 @@ var interfaces = {
     // into IMemberExpression.
     IMemberExpressionSyntax: 'IPostfixExpressionSyntax',
     IPrimaryExpressionSyntax: 'IMemberExpressionSyntax',
+    IArrowFunctionExpressionSyntax: 'IUnaryExpressionSyntax',
+    IIterationStatementSyntax: 'IStatementSyntax',
 };
 
 var definitions:ITypeDefinition[] = [
@@ -52,16 +53,9 @@ var definitions:ITypeDefinition[] = [
         ]
     },
     <any>{
-        name: 'ModuleReferenceSyntax',
+        name: 'ExternalModuleReferenceSyntax',
         baseType: 'SyntaxNode',
         interfaces: ['IModuleReferenceSyntax'],
-        isAbstract: true,
-        children: <any>[],
-        isTypeScriptSpecific: true
-    },
-    <any>{
-        name: 'ExternalModuleReferenceSyntax',
-        baseType: 'ModuleReferenceSyntax',
         children: [
             <any>{ name: 'requireKeyword', isToken: true, tokenKinds: ['RequireKeyword'] }, 
             <any>{ name: 'openParenToken', isToken: true },
@@ -72,7 +66,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'ModuleNameModuleReferenceSyntax',
-        baseType: 'ModuleReferenceSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IModuleReferenceSyntax'],
         children: [
             <any>{ name: 'moduleName', type: 'INameSyntax' }
         ],
@@ -87,7 +82,7 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'importKeyword', isToken: true },
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsToken', isToken: true },
-            <any>{ name: 'moduleReference', type: 'ModuleReferenceSyntax' },
+            <any>{ name: 'moduleReference', type: 'IModuleReferenceSyntax' },
             <any>{ name: 'semicolonToken', isToken: true }
         ],
         isTypeScriptSpecific: true
@@ -243,16 +238,9 @@ var definitions:ITypeDefinition[] = [
         ]
     },
     <any>{
-        name: 'ArrowFunctionExpressionSyntax',
-        baseType: 'SyntaxNode',
-        interfaces: ['IUnaryExpressionSyntax'],
-        isAbstract: true,
-        children: <any>[],
-        isTypeScriptSpecific: true
-    },
-    <any>{
         name: 'SimpleArrowFunctionExpressionSyntax',
-        baseType: 'ArrowFunctionExpressionSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IArrowFunctionExpressionSyntax'],
         children: [
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
@@ -262,7 +250,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'ParenthesizedArrowFunctionExpressionSyntax',
-        baseType: 'ArrowFunctionExpressionSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IArrowFunctionExpressionSyntax'],
         children: [
             <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
@@ -707,20 +696,14 @@ var definitions:ITypeDefinition[] = [
             <any>{ name: 'expression', type: 'IExpressionSyntax' },
             <any>{ name: 'closeParenToken', isToken: true },
             <any>{ name: 'openBraceToken', isToken: true },
-            <any>{ name: 'switchClauses', isList: true, elementType: 'SwitchClauseSyntax' },
+            <any>{ name: 'switchClauses', isList: true, elementType: 'ISwitchClauseSyntax' },
             <any>{ name: 'closeBraceToken', isToken: true }
         ]
     },
     <any>{
-        name: 'SwitchClauseSyntax',
+        name: 'CaseSwitchClauseSyntax',
         baseType: 'SyntaxNode',
         interfaces: ['ISwitchClauseSyntax'],
-        isAbstract: true,
-        children: <any>[]
-    },
-    <any>{
-        name: 'CaseSwitchClauseSyntax',
-        baseType: 'SwitchClauseSyntax',
         children: [
             <any>{ name: 'caseKeyword', isToken: true },
             <any>{ name: 'expression', type: 'IExpressionSyntax' },
@@ -730,7 +713,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'DefaultSwitchClauseSyntax',
-        baseType: 'SwitchClauseSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['ISwitchClauseSyntax'],
         children: [
             <any>{ name: 'defaultKeyword', isToken: true },
             <any>{ name: 'colonToken', isToken: true },
@@ -758,21 +742,9 @@ var definitions:ITypeDefinition[] = [
         ]
     },
     <any>{
-        name: 'IterationStatementSyntax',
-        baseType: 'SyntaxNode',
-        interfaces: ['IStatementSyntax'],
-        isAbstract: true,
-        children: <any>[]
-    },
-    <any>{
-        name: 'BaseForStatementSyntax',
-        baseType: 'IterationStatementSyntax',
-        isAbstract: true,
-        children: <any>[]
-    },
-    <any>{
         name: 'ForStatementSyntax',
-        baseType: 'BaseForStatementSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IIterationStatementSyntax'],
         children: [
             <any>{ name: 'forKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -788,7 +760,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'ForInStatementSyntax',
-        baseType: 'BaseForStatementSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IIterationStatementSyntax'],
         children: [
             <any>{ name: 'forKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -802,7 +775,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'WhileStatementSyntax',
-        baseType: 'IterationStatementSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IIterationStatementSyntax'],
         children: [
             <any>{ name: 'whileKeyword', isToken: true },
             <any>{ name: 'openParenToken', isToken: true },
@@ -943,7 +917,8 @@ var definitions:ITypeDefinition[] = [
     },
     <any>{
         name: 'DoStatementSyntax',
-        baseType: 'IterationStatementSyntax',
+        baseType: 'SyntaxNode',
+        interfaces: ['IIterationStatementSyntax'],
         children: [
             <any>{ name: 'doKeyword', isToken: true },
             <any>{ name: 'statement', type: 'IStatementSyntax' },
@@ -1233,29 +1208,18 @@ function generateArgumentChecks(definition: ITypeDefinition): string {
 }
 
 function generateConstructor(definition: ITypeDefinition): string {
-    if (definition.isAbstract) {
-        // return "";
-    }
-
     var i: number;
     var child: IMemberDefinition;
     var base = baseType(definition);
-    var subchildren = childrenInAllSubclasses(definition);
-    var baseSubchildren = childrenInAllSubclasses(base);
-    var baseSubchildrenNames = TypeScript.ArrayUtilities.select(baseSubchildren, c => c.name);
 
     var result = "";
     result += "        constructor("
 
     var children = definition.children;
-    if (subchildren.length > 0) {
-        children = subchildren;
-    }
-
     for (i = 0; i < children.length; i++) {
         child = children[i];
 
-        if (getType(child) !== "SyntaxKind" && !TypeScript.ArrayUtilities.contains(baseSubchildrenNames, child.name)) {
+        if (getType(child) !== "SyntaxKind") {
             result += "public ";
         }
 
@@ -1265,13 +1229,8 @@ function generateConstructor(definition: ITypeDefinition): string {
 
     result += "parsedInStrictMode: boolean) {\r\n";
     
-    result += "            super(";
+    result += "            super(parsedInStrictMode); \r\n";
 
-    for (i = 0; i < baseSubchildrenNames.length; i++) {
-        result += baseSubchildrenNames[i] + ", ";
-    }
-
-    result += "parsedInStrictMode); \r\n";
     if (definition.children.length > 0) {
         result += "\r\n";
     }
@@ -1373,7 +1332,7 @@ function isKeywordOrPunctuation(kind: string): boolean {
 }
 
 function isDefaultConstructable(definition: ITypeDefinition): boolean {
-    if (definition === null || definition.isAbstract) {
+    if (definition === null) {
         return false;
     }
 
@@ -1473,25 +1432,16 @@ function generateFactoryMethod(definition: ITypeDefinition): string {
 function generateAcceptMethods(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!definition.isAbstract) {
-        result += "\r\n";
-        result += "    public accept(visitor: ISyntaxVisitor): any {\r\n";
-        result += "        return visitor.visit" + getNameWithoutSuffix(definition) + "(this);\r\n";
-        result += "    }\r\n";
-    }
+    result += "\r\n";
+    result += "    public accept(visitor: ISyntaxVisitor): any {\r\n";
+    result += "        return visitor.visit" + getNameWithoutSuffix(definition) + "(this);\r\n";
+    result += "    }\r\n";
 
     return result;
 }
 
 function generateIsMethod(definition: ITypeDefinition): string {
     var result = "";
-
-    //if (definition.isAbstract) {
-    //    result += "\r\n";
-    //    result += "    private is" + getNameWithoutSuffix(definition) + "(): boolean {\r\n";
-    //    result += "        return true;\r\n";
-    //    result += "    }\r\n";
-    //}
 
     if (definition.interfaces) {
         var ifaces = definition.interfaces.slice(0);
@@ -1528,13 +1478,11 @@ function generateIsMethod(definition: ITypeDefinition): string {
 function generateKindMethod(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!definition.isAbstract) {
-        if (!hasKind) {
-            result += "\r\n";
-            result += "    public kind(): SyntaxKind {\r\n";
-            result += "        return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
-            result += "    }\r\n";
-        }
+    if (!hasKind) {
+        result += "\r\n";
+        result += "    public kind(): SyntaxKind {\r\n";
+        result += "        return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
+        result += "    }\r\n";
     }
 
     return result;
@@ -1543,39 +1491,37 @@ function generateKindMethod(definition: ITypeDefinition): string {
 function generateSlotMethods(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!definition.isAbstract) {
-        result += "\r\n";
-        result += "    public childCount(): number {\r\n";
-        var slotCount = hasKind ? (definition.children.length - 1) : definition.children.length;
+    result += "\r\n";
+    result += "    public childCount(): number {\r\n";
+    var slotCount = hasKind ? (definition.children.length - 1) : definition.children.length;
 
-        result += "        return " + slotCount + ";\r\n";
-        result += "    }\r\n\r\n";
+    result += "        return " + slotCount + ";\r\n";
+    result += "    }\r\n\r\n";
 
-        result += "    public childAt(slot: number): ISyntaxElement {\r\n";
+    result += "    public childAt(slot: number): ISyntaxElement {\r\n";
 
-        if (slotCount === 0) {
-            result += "        throw Errors.invalidOperation();\r\n";
-        }
-        else {
-            result += "        switch (slot) {\r\n";
+    if (slotCount === 0) {
+        result += "        throw Errors.invalidOperation();\r\n";
+    }
+    else {
+        result += "        switch (slot) {\r\n";
 
-            var index = 0;
-            for (var i = 0; i < definition.children.length; i++) {
-                var child = definition.children[i];
-                if (child.type === "SyntaxKind") {
-                    continue;
-                }
-
-                result += "            case " + index + ": return this." + definition.children[i].name + ";\r\n";
-                index++;
+        var index = 0;
+        for (var i = 0; i < definition.children.length; i++) {
+            var child = definition.children[i];
+            if (child.type === "SyntaxKind") {
+                continue;
             }
 
-            result += "            default: throw Errors.invalidOperation();\r\n";
-            result += "        }\r\n";
+            result += "            case " + index + ": return this." + definition.children[i].name + ";\r\n";
+            index++;
         }
 
-        result += "    }\r\n";
+        result += "            default: throw Errors.invalidOperation();\r\n";
+        result += "        }\r\n";
     }
+
+    result += "    }\r\n";
 
     return result;
 }
@@ -1583,13 +1529,62 @@ function generateSlotMethods(definition: ITypeDefinition): string {
 function generateFirstTokenMethod(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!definition.isAbstract) {
+    result += "\r\n";
+    result += "    public firstToken(): ISyntaxToken {\r\n";
+    result += "        var token = null;\r\n";
 
-        result += "\r\n";
-        result += "    public firstToken(): ISyntaxToken {\r\n";
+    for (var i = 0; i < definition.children.length; i++) {
+        var child = definition.children[i];
+
+        if (getType(child) === "SyntaxKind") {
+            continue;
+        }
+
+        if (child.name === "endOfFileToken") {
+            continue;
+        }
+
+        result += "        if (";
+
+        if (child.isOptional) {
+            result += getPropertyAccess(child) + " !== null && ";
+        }
+
+        if (child.isToken) {
+            result += getPropertyAccess(child) + ".width() > 0";
+            result += ") { return " + getPropertyAccess(child) + "; }\r\n";
+        }
+        else {
+            result += "(token = " + getPropertyAccess(child) + ".firstToken()) !== null";
+            result += ") { return token; }\r\n";
+        }
+    }
+
+    if (definition.name === "SourceUnitSyntax") {
+        result += "        return this._endOfFileToken;\r\n";
+    }
+    else {
+        result += "        return null;\r\n";
+    }
+
+    result += "    }\r\n";
+
+    return result;
+}
+
+function generateLastTokenMethod(definition: ITypeDefinition): string {
+    var result = "";
+
+    result += "\r\n";
+    result += "    public lastToken(): ISyntaxToken {\r\n";
+
+    if (definition.name === "SourceUnitSyntax") {
+        result += "        return this._endOfFileToken;\r\n";
+    }
+    else {
         result += "        var token = null;\r\n";
 
-        for (var i = 0; i < definition.children.length; i++) {
+        for (var i = definition.children.length - 1; i >= 0; i--) {
             var child = definition.children[i];
 
             if (getType(child) === "SyntaxKind") {
@@ -1611,70 +1606,15 @@ function generateFirstTokenMethod(definition: ITypeDefinition): string {
                 result += ") { return " + getPropertyAccess(child) + "; }\r\n";
             }
             else {
-                result += "(token = " + getPropertyAccess(child) + ".firstToken()) !== null";
+                result += "(token = " + getPropertyAccess(child) + ".lastToken()) !== null";
                 result += ") { return token; }\r\n";
             }
         }
 
-        if (definition.name === "SourceUnitSyntax") {
-            result += "        return this._endOfFileToken;\r\n";
-        }
-        else {
-            result += "        return null;\r\n";
-        }
-
-        result += "    }\r\n";
+        result += "        return null;\r\n";
     }
 
-    return result;
-}
-
-function generateLastTokenMethod(definition: ITypeDefinition): string {
-    var result = "";
-
-    if (!definition.isAbstract) {
-
-        result += "\r\n";
-        result += "    public lastToken(): ISyntaxToken {\r\n";
-        
-        if (definition.name === "SourceUnitSyntax") {
-            result += "        return this._endOfFileToken;\r\n";
-        }
-        else {
-            result += "        var token = null;\r\n";
-
-            for (var i = definition.children.length - 1; i >= 0; i--) {
-                var child = definition.children[i];
-
-                if (getType(child) === "SyntaxKind") {
-                    continue;
-                }
-
-                if (child.name === "endOfFileToken") {
-                    continue;
-                }
-
-                result += "        if (";
-
-                if (child.isOptional) {
-                    result += getPropertyAccess(child) + " !== null && ";
-                }
-
-                if (child.isToken) {
-                    result += getPropertyAccess(child) + ".width() > 0";
-                    result += ") { return " + getPropertyAccess(child) + "; }\r\n";
-                }
-                else {
-                    result += "(token = " + getPropertyAccess(child) + ".lastToken()) !== null";
-                    result += ") { return token; }\r\n";
-                }
-            }
-
-            result += "        return null;\r\n";
-        }
-
-        result += "    }\r\n";
-    }
+    result += "    }\r\n";
 
     return result;
 }
@@ -1682,31 +1622,28 @@ function generateLastTokenMethod(definition: ITypeDefinition): string {
 function generateInsertChildrenIntoMethod(definition: ITypeDefinition): string {
     var result = "";
 
-    if (!definition.isAbstract) {
+    result += "\r\n";
+    result += "    public insertChildrenInto(array: ISyntaxElement[], index: number) {\r\n";
 
-        result += "\r\n";
-        result += "    public insertChildrenInto(array: ISyntaxElement[], index: number) {\r\n";
+    for (var i = definition.children.length - 1; i >= 0; i--) {
+        var child = definition.children[i];
 
-        for (var i = definition.children.length - 1; i >= 0; i--) {
-            var child = definition.children[i];
-
-            if (child.type === "SyntaxKind") {
-                continue;
-            }
-
-            if (child.isList || child.isSeparatedList) {
-                result += "        " + getPropertyAccess(child) + ".insertChildrenInto(array, index);\r\n";
-            }
-            else if (child.isOptional) {
-                result += "        if (" + getPropertyAccess(child) + " !== null) { array.splice(index, 0, " + getPropertyAccess(child) + "); }\r\n";
-            }
-            else {
-                result += "        array.splice(index, 0, " + getPropertyAccess(child) + ");\r\n";
-            }
+        if (child.type === "SyntaxKind") {
+            continue;
         }
 
-        result += "    }\r\n";
+        if (child.isList || child.isSeparatedList) {
+            result += "        " + getPropertyAccess(child) + ".insertChildrenInto(array, index);\r\n";
+        }
+        else if (child.isOptional) {
+            result += "        if (" + getPropertyAccess(child) + " !== null) { array.splice(index, 0, " + getPropertyAccess(child) + "); }\r\n";
+        }
+        else {
+            result += "        array.splice(index, 0, " + getPropertyAccess(child) + ");\r\n";
+        }
     }
+
+    result += "    }\r\n";
 
     return result;
 }
@@ -1741,28 +1678,6 @@ function contains(definition: ITypeDefinition, child: IMemberDefinition) {
              c.isSeparatedList === child.isSeparatedList &&
              c.isToken === child.isToken &&
              c.type === child.type);
-}
-
-function childrenInAllSubclasses(definition: ITypeDefinition): IMemberDefinition[]{
-    var result: IMemberDefinition[] = [];
-
-    if (definition !== null && definition.isAbstract) {
-        var subclasses = TypeScript.ArrayUtilities.where(definitions, d => !d.isAbstract && derivesFrom(d, definition));
-
-        if (subclasses.length > 0) {
-            var firstSubclass = subclasses[0];
-
-            for (var i = 0; i < firstSubclass.children.length; i++) {
-                var child = firstSubclass.children[i];
-
-                if (TypeScript.ArrayUtilities.all(subclasses, s => contains(s, child))) {
-                    result.push(child);
-                }
-            }
-        }
-    }
-
-    return result;
 }
 
 function generateAccessors(definition: ITypeDefinition): string {
@@ -1855,24 +1770,11 @@ function generateTriviaMethods(definition: ITypeDefinition): string {
 }
 
 function generateUpdateMethod(definition: ITypeDefinition): string {
-    if (definition.isAbstract) {
-        return "";
-    }
-
     var result = "";
 
     result += "\r\n";
-    
-    // Don't need an public update method if there's only 1 child.  In that case, just call the
-    // 'withXXX' method.
-    //if (definition.children.length <= 1) {
-    //    result += "    private ";
-    //}
-    //else {
-        result += "    public ";
-    //}
-    
-    result += "update("
+    result += "    public update(";
+
     var i: number;
     var child: IMemberDefinition;
 
@@ -1977,10 +1879,6 @@ function couldBeRegularExpressionToken(child: IMemberDefinition): boolean {
 }
 
 function generateStructuralEqualsMethod(definition: ITypeDefinition): string {
-    if (definition.isAbstract) {
-        return "";
-    }
-
     var result = "\r\n    private structuralEquals(node: SyntaxNode): boolean {\r\n";
     result += "        if (this === node) { return true; }\r\n";
     result += "        if (node === null) { return false; }\r\n";
@@ -2147,7 +2045,6 @@ function generateRewriter(): string {
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
-        if (definition.isAbstract) { continue; }
 
         result += "\r\n";
         result += "        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any {\r\n";
@@ -2459,20 +2356,24 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 "            return this.realize().withTrailingTrivia(trailingTrivia);\r\n" +
 "        }\r\n" +
 "\r\n" +
+"        public isExpression(): boolean {\r\n" +
+"            return isExpression(this);\r\n" +
+"        }\r\n" +
+"\r\n" +
 "        public isPrimaryExpression(): boolean {\r\n" +
-"            return isPrimaryExpression(this);\r\n" +
+"            return this.isExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isMemberExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
+"            return this.isExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isPostfixExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
+"            return this.isExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isUnaryExpression(): boolean {\r\n" +
-"            return this.isPrimaryExpression();\r\n" +
+"            return this.isExpression();\r\n" +
 "        }\r\n"
 
 
@@ -2593,7 +2494,6 @@ function generateWalker(): string {
 
     for (var i = 0; i < definitions.length; i++) {
         var definition = definitions[i];
-        if (definition.isAbstract) { continue; }
 
         result += "\r\n";
         result += "        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): void {\r\n";
@@ -2754,9 +2654,7 @@ function generateVisitor(): string {
 
     for (i = 0; i < definitions.length; i++) {
         definition = definitions[i];
-        if (!definition.isAbstract) {
-            result += "        visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any;\r\n";
-        }
+        result += "        visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any;\r\n";
     }
 
     result += "    }\r\n\r\n";
@@ -2774,11 +2672,9 @@ function generateVisitor(): string {
         for (i = 0; i < definitions.length; i++) {
             definition = definitions[i];
 
-            if (!definition.isAbstract) {
-                result += "\r\n        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any {\r\n";
-                result += "            return this.defaultVisit(node);\r\n";
-                result += "        }\r\n";
-            }
+            result += "\r\n        public visit" + getNameWithoutSuffix(definition) + "(node: " + definition.name + "): any {\r\n";
+            result += "            return this.defaultVisit(node);\r\n";
+            result += "        }\r\n";
         }
 
         result += "    }";
@@ -2802,9 +2698,6 @@ function generateFactory(): string {
 
     for (i = 0; i < definitions.length; i++) {
         definition = definitions[i];
-        if (definition.isAbstract) {
-            continue;
-        }
         result += "        " + camelCase(getNameWithoutSuffix(definition)) + "(";
 
         for (j = 0; j < definition.children.length; j++) {
@@ -2826,9 +2719,6 @@ function generateFactory(): string {
 
     for (i = 0; i < definitions.length; i++) {
         definition = definitions[i];
-        if (definition.isAbstract) {
-            continue;
-        }
         result += "        " + camelCase(getNameWithoutSuffix(definition)) + "(";
 
         for (j = 0; j < definition.children.length; j++) {
@@ -2860,9 +2750,6 @@ function generateFactory(): string {
 
     for (i = 0; i < definitions.length; i++) {
         definition = definitions[i];
-        if (definition.isAbstract) {
-            continue;
-        }
         result += "        " + camelCase(getNameWithoutSuffix(definition)) + "(";
 
         for (j = 0; j < definition.children.length; j++) {

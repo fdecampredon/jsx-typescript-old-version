@@ -325,7 +325,7 @@ module TypeScript.Emitter1 {
                 .withBlock(this.convertArrowFunctionBody(node)).withLeadingTrivia(node.leadingTrivia());
         }
 
-        private convertArrowFunctionBody(arrowFunction: ArrowFunctionExpressionSyntax): BlockSyntax {
+        private convertArrowFunctionBody(arrowFunction: IArrowFunctionExpressionSyntax): BlockSyntax {
             var rewrittenBody = this.visitNodeOrToken(arrowFunction.body);
 
             if (rewrittenBody.kind() === SyntaxKind.Block) {
@@ -1060,20 +1060,20 @@ module TypeScript.Emitter1 {
 
             // Copy existing leading trivia of the enum declaration to this node.
             // var E;
-            var variableStatement = VariableStatementSyntax.create1(this.factory.variableDeclaration(
+            var variableStatement: IStatementSyntax = VariableStatementSyntax.create1(this.factory.variableDeclaration(
                 Syntax.token(SyntaxKind.VarKeyword).withTrailingTrivia(this.space),
                 Syntax.separatedList([VariableDeclaratorSyntax.create(identifier)])))
                     .withLeadingTrivia(node.leadingTrivia()).withTrailingTrivia(this.newLine);
 
             // (function(E) { E[E.e1 = ... })(E||(E={}));
-            var expressionStatement = ExpressionStatementSyntax.create1(
+            var expressionStatement: IStatementSyntax = ExpressionStatementSyntax.create1(
                 this.factory.invocationExpression(
                     ParenthesizedExpressionSyntax.create1(this.generateEnumFunctionExpression(node)),
                     ArgumentListSyntax.create1().withArgument(this.initializedVariable(identifier))))
                         .withLeadingTrivia(this.indentationTriviaForStartOfNode(node))
                         .withTrailingTrivia(this.newLine);
 
-            return [<IModuleElementSyntax>variableStatement, expressionStatement];
+            return [variableStatement, expressionStatement];
         }
 
         private convertSuperInvocationExpression(node: InvocationExpressionSyntax): InvocationExpressionSyntax {
