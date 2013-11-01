@@ -232,6 +232,22 @@ module TypeScript.Syntax {
             return false;
         }
 
+        if (element1.fullStart() !== element2.fullStart()) {
+            return false;
+        }
+
+        if (element1.start() !== element2.start()) {
+            return false;
+        }
+
+        if (element1.end() !== element2.end()) {
+            return false;
+        }
+
+        if (element1.fullEnd() !== element2.fullEnd()) {
+            return false;
+        }
+
         if (element1.isToken()) {
             return tokenStructuralEquals(<ISyntaxToken>element1, <ISyntaxToken>element2);
         }
