@@ -251,7 +251,7 @@ module TypeScript {
         }
 
         public emitImportDeclaration(importDeclAST: ImportDeclaration) {
-            var isExternalModuleReference = importDeclAST.isExternalImportDeclaration();
+            var isExternalModuleReference = importDeclAST.moduleReference.nodeType() === NodeType.ExternalModuleReference;
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
             var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
@@ -311,9 +311,10 @@ module TypeScript {
                 var aliasAST = importDeclAST.moduleReference;
 
                 if (isExternalModuleReference) {
-                    this.writeToOutput("require(" + (<Identifier>aliasAST).text() + ")");
-                } else {
-                    this.emitJavascript(aliasAST, false);
+                    this.writeToOutput("require(" + (<ExternalModuleReference>aliasAST).stringLiteral.text() + ")");
+                }
+                else {
+                    this.emitJavascript((<ModuleNameModuleReference>aliasAST).moduleName, false);
                 }
 
                 this.recordSourceMappingEnd(importDeclAST);
@@ -444,6 +445,14 @@ module TypeScript {
         }
 
         public emitComments(ast: AST, pre: boolean, onlyPinnedOrTripleSlashComments: boolean = false) {
+            // Emitting the comments for the exprssion inside an arrow function is handled specially
+            // in emitFunctionBodyStatements.  We don't want to emit those comments a second time.
+            if (ast && ast.nodeType() !== NodeType.Block) {
+                if (ast.parent.nodeType() === NodeType.SimpleArrowFunctionExpression || ast.parent.nodeType() === NodeType.ParenthesizedArrowFunctionExpression) {
+                    return;
+                }
+            }
+
             if (pre) {
                 var preComments = ast.preComments();
 
@@ -618,7 +627,7 @@ module TypeScript {
             }
         }
 
-        private emitFunctionBodyStatements(name: string, funcDecl: AST, parameterList: IParameters, block: Block): void {
+        private emitFunctionBodyStatements(name: string, funcDecl: AST, parameterList: IParameters, block: Block, bodyExpression: AST): void {
             this.writeLineToOutput(" {");
             if (name) {
                 this.recordSourceMappingNameStart(name);
@@ -635,13 +644,46 @@ module TypeScript {
                 this.writeCaptureThisStatement(funcDecl);
             }
 
-            this.emitList(block.statements);
+            if (block) {
+                this.emitList(block.statements);
+                this.emitCommentsArray(block.closeBraceLeadingComments, /*trailing:*/ false);
+            }
+            else {
+                // Copy any comments before the body of the arrow function to the return statement.
+                // This is necessary for emitting correctness so we don't emit something like this:
+                //
+                //      return
+                //          // foo
+                //          this.foo();
+                //
+                // Because of ASI, this gets parsed as "return;" which is *not* what we want for
+                // proper semantics.  
+                //var preComments = bodyExpression.preComments();
+                //var postComments = bodyExpression.postComments();
 
-            this.emitCommentsArray(block.closeBraceLeadingComments, /*trailing:*/ false);
+                //bodyExpression.setPreComments(null);
+                //bodyExpression.setPostComments(null);
+
+                this.emitIndent();
+                this.emitCommentsArray(bodyExpression.preComments(), /*trailing:*/ false);
+                this.writeToOutput("return ");
+                this.emit(bodyExpression);
+                this.writeLineToOutput(";");
+                this.emitCommentsArray(bodyExpression.postComments(), /*trailing:*/ true);
+
+                //bodyExpression.setPreComments(preComments);
+                //bodyExpression.setPostComments(postComments);
+            }
 
             this.indenter.decreaseIndent();
             this.emitIndent();
-            this.writeToOutputWithSourceMapRecord("}", block.closeBraceToken);
+
+            if (block) {
+                this.writeToOutputWithSourceMapRecord("}", block.closeBraceToken);
+            }
+            else {
+                this.writeToOutputWithSourceMapRecord("}", bodyExpression);
+            }
 
             if (name) {
                 this.recordSourceMappingNameEnd();
@@ -712,7 +754,7 @@ module TypeScript {
 
                 if (decl.kind & PullElementKind.TypeAlias) {
                     var importStatementAST = <ImportDeclaration>this.semanticInfoChain.getASTForDecl(decl);
-                    if (importStatementAST.isExternalImportDeclaration()) { // external module
+                    if (importStatementAST.moduleReference.nodeType() === NodeType.ExternalModuleReference) { // external module
                         var symbol = decl.getSymbol();
                         var typeSymbol = symbol && symbol.type;
                         if (typeSymbol && typeSymbol !== this.semanticInfoChain.anyTypeSymbol && !typeSymbol.isError()) {
@@ -745,7 +787,7 @@ module TypeScript {
                         }
 
                         importList += importStatementDecl.name;
-                        dependencyList += importStatementAST.getAliasName();
+                        dependencyList += (<ExternalModuleReference>importStatementAST.moduleReference).stringLiteral.text();
                     }
                 }
             }
@@ -1095,15 +1137,15 @@ module TypeScript {
 
         public emitSimpleArrowFunctionExpression(arrowFunction: SimpleArrowFunctionExpression): void {
             this.emitAnyArrowFunctionExpression(arrowFunction, null /*arrowFunction.getNameText()*/,
-                Parameters.fromIdentifier(arrowFunction.identifier), arrowFunction.block);
+                Parameters.fromIdentifier(arrowFunction.identifier), arrowFunction.block, arrowFunction.expression);
         }
 
         public emitParenthesizedArrowFunctionExpression(arrowFunction: ParenthesizedArrowFunctionExpression): void {
             this.emitAnyArrowFunctionExpression(arrowFunction, null /* arrowFunction.getNameText() */,
-                Parameters.fromParameterList(arrowFunction.callSignature.parameterList), arrowFunction.block);
+                Parameters.fromParameterList(arrowFunction.callSignature.parameterList), arrowFunction.block, arrowFunction.expression);
         }
 
-        private emitAnyArrowFunctionExpression(arrowFunction: AST, funcName: string, parameters: IParameters, block: Block): void {
+        private emitAnyArrowFunctionExpression(arrowFunction: AST, funcName: string, parameters: IParameters, block: Block, expression: AST): void {
             var savedInArrowFunction = this.inArrowFunction;
             this.inArrowFunction = true;
 
@@ -1123,7 +1165,7 @@ module TypeScript {
             this.emitFunctionParameters(parameters);
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(funcName, arrowFunction, parameters, block);
+            this.emitFunctionBodyStatements(funcName, arrowFunction, parameters, block, expression);
 
             this.recordSourceMappingEnd(arrowFunction);
 
@@ -1209,7 +1251,7 @@ module TypeScript {
             this.writeToOutput("(");
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(null, accessor, Parameters.fromParameterList(accessor.parameterList), accessor.block);
+            this.emitFunctionBodyStatements(null, accessor, Parameters.fromParameterList(accessor.parameterList), accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1246,7 +1288,7 @@ module TypeScript {
             this.emitFunctionParameters(parameters);
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(null, accessor, parameters, accessor.block);
+            this.emitFunctionBodyStatements(null, accessor, parameters, accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1287,7 +1329,7 @@ module TypeScript {
             this.emitFunctionParameters(parameters);
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(funcName, funcDecl, parameters, funcDecl.block);
+            this.emitFunctionBodyStatements(funcName, funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -1340,7 +1382,7 @@ module TypeScript {
             this.emitParameterList(funcDecl.callSignature.parameterList);
 
             var parameters = Parameters.fromParameterList(funcDecl.callSignature.parameterList);
-            this.emitFunctionBodyStatements(funcDecl.identifier.text(), funcDecl, parameters, funcDecl.block);
+            this.emitFunctionBodyStatements(funcDecl.identifier.text(), funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -2170,7 +2212,7 @@ module TypeScript {
             this.emitFunctionParameters(parameters);
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(null, funcDecl, parameters, block);
+            this.emitFunctionBodyStatements(null, funcDecl, parameters, block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -2372,7 +2414,7 @@ module TypeScript {
             this.emitParameterList(funcDecl.callSignature.parameterList);
 
             var parameters = Parameters.fromParameterList(funcDecl.callSignature.parameterList);
-            this.emitFunctionBodyStatements(funcDecl.propertyName.text(), funcDecl, parameters, funcDecl.block);
+            this.emitFunctionBodyStatements(funcDecl.propertyName.text(), funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -2667,7 +2709,7 @@ module TypeScript {
             this.emitFunctionParameters(parameters);
             this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(funcProp.propertyName.text(), funcProp, parameters, funcProp.block);
+            this.emitFunctionBodyStatements(funcProp.propertyName.text(), funcProp, parameters, funcProp.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcProp);
 

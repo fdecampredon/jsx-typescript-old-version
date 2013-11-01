@@ -1085,7 +1085,7 @@ module TypeScript {
                     token = <NumericLiteral>expression;
             }
 
-            var value = token.value;
+            var value = token.value();
             return value && expression.nodeType() === NodeType.NegateExpression ? -value : value;
         }
         else if (context.propagateEnumConstants) {

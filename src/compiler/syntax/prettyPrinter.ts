@@ -377,7 +377,8 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
-            node.body.accept(this);
+            this.appendNode(node.block);
+            this.appendNode(node.expression);
         }
 
         public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): void {
@@ -385,7 +386,8 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.equalsGreaterThanToken);
             this.ensureSpace();
-            node.body.accept(this);
+            this.appendNode(node.block);
+            this.appendNode(node.expression);
         }
 
         public visitQualifiedName(node: QualifiedNameSyntax): void {

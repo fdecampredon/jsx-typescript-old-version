@@ -201,14 +201,16 @@ module TypeScript {
             return node.update(
                 this.visitToken(node.identifier),
                 this.visitToken(node.equalsGreaterThanToken),
-                <ISyntaxNodeOrToken>this.visitNodeOrToken(node.body));
+                node.block === null ? null : <BlockSyntax>this.visitNode(node.block),
+                node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression));
         }
 
         public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): any {
             return node.update(
                 <CallSignatureSyntax>this.visitNode(node.callSignature),
                 this.visitToken(node.equalsGreaterThanToken),
-                <ISyntaxNodeOrToken>this.visitNodeOrToken(node.body));
+                node.block === null ? null : <BlockSyntax>this.visitNode(node.block),
+                node.expression === null ? null : <IExpressionSyntax>this.visitNodeOrToken(node.expression));
         }
 
         public visitQualifiedName(node: QualifiedNameSyntax): any {

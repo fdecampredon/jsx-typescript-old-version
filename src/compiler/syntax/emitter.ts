@@ -326,7 +326,7 @@ module TypeScript.Emitter1 {
         }
 
         private convertArrowFunctionBody(arrowFunction: IArrowFunctionExpressionSyntax): BlockSyntax {
-            var rewrittenBody = this.visitNodeOrToken(arrowFunction.body);
+            var rewrittenBody = arrowFunction.block ? this.visitNode(arrowFunction.block) : this.visitNodeOrToken(arrowFunction.expression);
 
             if (rewrittenBody.kind() === SyntaxKind.Block) {
                 return <BlockSyntax>rewrittenBody;

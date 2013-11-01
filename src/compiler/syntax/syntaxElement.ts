@@ -129,7 +129,8 @@ module TypeScript {
     export interface IArrowFunctionExpressionSyntax extends IUnaryExpressionSyntax {
         isArrowFunctionExpression(): boolean;
         equalsGreaterThanToken: ISyntaxToken;
-        body: ISyntaxNodeOrToken;
+        block: BlockSyntax;
+        expression: IExpressionSyntax;
     }
 
     export interface IPostfixExpressionSyntax extends IUnaryExpressionSyntax {

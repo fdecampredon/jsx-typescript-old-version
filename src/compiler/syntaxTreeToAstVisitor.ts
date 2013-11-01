@@ -352,17 +352,27 @@ module TypeScript {
             return result;
         }
 
-        public visitExternalModuleReference(node: ExternalModuleReferenceSyntax): any {
+        public visitExternalModuleReference(node: ExternalModuleReferenceSyntax): ExternalModuleReference {
+            var start = this.position;
+
             this.moveTo(node, node.stringLiteral);
-            var result = this.identifierFromToken(node.stringLiteral, /*isOptional:*/ false);
-            this.movePast(node.stringLiteral);
+            var stringLiteral: StringLiteral = node.stringLiteral.accept(this);
             this.movePast(node.closeParenToken);
+
+            var result = new ExternalModuleReference(stringLiteral);
+            this.setSpan(result, start, node);
 
             return result;
         }
 
-        public visitModuleNameModuleReference(node: ModuleNameModuleReferenceSyntax): any {
-            return node.moduleName.accept(this);
+        public visitModuleNameModuleReference(node: ModuleNameModuleReferenceSyntax): ModuleNameModuleReference {
+            var start = this.position;
+            var moduleName: AST = node.moduleName.accept(this);
+
+            var result = new ModuleNameModuleReference(moduleName);
+            this.setSpan(result, start, node);
+
+            return result;
         }
 
         public visitClassDeclaration(node: ClassDeclarationSyntax): ClassDeclaration {
@@ -589,7 +599,7 @@ module TypeScript {
             var name = this.identifierFromToken(node.identifier, /*isOptional:*/ false);
             this.movePast(node.identifier);
             this.movePast(node.equalsToken);
-            var alias = node.moduleReference.accept(this);
+            var alias: AST = node.moduleReference.accept(this);
             this.movePast(node.semicolonToken);
 
             var modifiers = this.visitModifiers(node.modifiers);
@@ -737,51 +747,16 @@ module TypeScript {
             return result;
         }
 
-        private getArrowFunctionStatements(body: ISyntaxNodeOrToken): Block {
-            if (body.kind() === SyntaxKind.Block) {
-                return body.accept(this);
-            }
-            else {
-                var expression = body.accept(this);
-                var returnStatement = new ReturnStatement(expression);
-
-                // Copy any comments before the body of the arrow function to the return statement.
-                // This is necessary for emitting correctness so we don't emit something like this:
-                //
-                //      return
-                //          // foo
-                //          this.foo();
-                //
-                // Because of ASI, this gets parsed as "return;" which is *not* what we want for
-                // proper semantics.  Also, we can no longer use this expression incrementally.
-                var preComments = expression.preComments();
-                if (preComments) {
-                    (<any>body)._ast = undefined;
-                    returnStatement.setPreComments(preComments);
-                    expression.setPreComments(null);
-                }
-
-                var statements = new ASTList(this.fileName, [returnStatement]);
-
-                var closeBraceSpan = new ASTSpan();
-                closeBraceSpan.minChar = expression.minChar;
-                closeBraceSpan.limChar = expression.limChar;
-                closeBraceSpan.trailingTriviaWidth = expression.trailingTriviaWidth;
-
-                var block = new Block(statements, null, closeBraceSpan);
-                return block;
-            }
-        }
-
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): SimpleArrowFunctionExpression {
             var start = this.position;
 
             var identifier = node.identifier.accept(this);
             this.movePast(node.equalsGreaterThanToken);
 
-            var statements = this.getArrowFunctionStatements(node.body);
+            var block = node.block ? this.visitBlock(node.block) : null;
+            var expression: AST = node.expression ? node.expression.accept(this) : null;
 
-            var result = new SimpleArrowFunctionExpression(identifier, statements);
+            var result = new SimpleArrowFunctionExpression(identifier, block, expression);
             this.setSpan(result, start, node);
 
             return result;
@@ -793,9 +768,10 @@ module TypeScript {
             var callSignature = this.visitCallSignature(node.callSignature);
             this.movePast(node.equalsGreaterThanToken);
 
-            var block = this.getArrowFunctionStatements(node.body);
+            var block = node.block ? this.visitBlock(node.block) : null;
+            var expression: AST = node.expression ? node.expression.accept(this) : null;
 
-            var result = new ParenthesizedArrowFunctionExpression(callSignature, block);
+            var result = new ParenthesizedArrowFunctionExpression(callSignature, block, expression);
             this.setCommentsAndSpan(result, start, node);
 
             return result;
@@ -927,6 +903,10 @@ module TypeScript {
         }
 
         public visitBlock(node: BlockSyntax): Block {
+            if (!node) {
+                return null;
+            }
+
             var start = this.position;
 
             this.movePast(node.openBraceToken);

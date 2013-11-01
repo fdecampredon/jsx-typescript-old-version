@@ -1555,7 +1555,8 @@ module TypeScript {
 
         constructor(public identifier: ISyntaxToken,
                     public equalsGreaterThanToken: ISyntaxToken,
-                    public body: ISyntaxNodeOrToken,
+                    public block: BlockSyntax,
+                    public expression: IExpressionSyntax,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
 
@@ -1571,14 +1572,15 @@ module TypeScript {
     }
 
     public childCount(): number {
-        return 3;
+        return 4;
     }
 
     public childAt(slot: number): ISyntaxElement {
         switch (slot) {
             case 0: return this.identifier;
             case 1: return this.equalsGreaterThanToken;
-            case 2: return this.body;
+            case 2: return this.block;
+            case 3: return this.expression;
             default: throw Errors.invalidOperation();
         }
     }
@@ -1597,17 +1599,22 @@ module TypeScript {
 
     public update(identifier: ISyntaxToken,
                   equalsGreaterThanToken: ISyntaxToken,
-                  body: ISyntaxNodeOrToken): SimpleArrowFunctionExpressionSyntax {
-        if (this.identifier === identifier && this.equalsGreaterThanToken === equalsGreaterThanToken && this.body === body) {
+                  block: BlockSyntax,
+                  expression: IExpressionSyntax): SimpleArrowFunctionExpressionSyntax {
+        if (this.identifier === identifier && this.equalsGreaterThanToken === equalsGreaterThanToken && this.block === block && this.expression === expression) {
             return this;
         }
 
-        return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, body, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
-    public static create1(identifier: ISyntaxToken,
-                          body: ISyntaxNodeOrToken): SimpleArrowFunctionExpressionSyntax {
-        return new SimpleArrowFunctionExpressionSyntax(identifier, Syntax.token(SyntaxKind.EqualsGreaterThanToken), body, /*parsedInStrictMode:*/ false);
+    public static create(identifier: ISyntaxToken,
+                         equalsGreaterThanToken: ISyntaxToken): SimpleArrowFunctionExpressionSyntax {
+        return new SimpleArrowFunctionExpressionSyntax(identifier, equalsGreaterThanToken, null, null, /*parsedInStrictMode:*/ false);
+    }
+
+    public static create1(identifier: ISyntaxToken): SimpleArrowFunctionExpressionSyntax {
+        return new SimpleArrowFunctionExpressionSyntax(identifier, Syntax.token(SyntaxKind.EqualsGreaterThanToken), null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): SimpleArrowFunctionExpressionSyntax {
@@ -1619,15 +1626,19 @@ module TypeScript {
     }
 
     public withIdentifier(identifier: ISyntaxToken): SimpleArrowFunctionExpressionSyntax {
-        return this.update(identifier, this.equalsGreaterThanToken, this.body);
+        return this.update(identifier, this.equalsGreaterThanToken, this.block, this.expression);
     }
 
     public withEqualsGreaterThanToken(equalsGreaterThanToken: ISyntaxToken): SimpleArrowFunctionExpressionSyntax {
-        return this.update(this.identifier, equalsGreaterThanToken, this.body);
+        return this.update(this.identifier, equalsGreaterThanToken, this.block, this.expression);
     }
 
-    public withBody(body: ISyntaxNodeOrToken): SimpleArrowFunctionExpressionSyntax {
-        return this.update(this.identifier, this.equalsGreaterThanToken, body);
+    public withBlock(block: BlockSyntax): SimpleArrowFunctionExpressionSyntax {
+        return this.update(this.identifier, this.equalsGreaterThanToken, block, this.expression);
+    }
+
+    public withExpression(expression: IExpressionSyntax): SimpleArrowFunctionExpressionSyntax {
+        return this.update(this.identifier, this.equalsGreaterThanToken, this.block, expression);
     }
 
     public isTypeScriptSpecific(): boolean {
@@ -1639,7 +1650,8 @@ module TypeScript {
 
         constructor(public callSignature: CallSignatureSyntax,
                     public equalsGreaterThanToken: ISyntaxToken,
-                    public body: ISyntaxNodeOrToken,
+                    public block: BlockSyntax,
+                    public expression: IExpressionSyntax,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
 
@@ -1655,14 +1667,15 @@ module TypeScript {
     }
 
     public childCount(): number {
-        return 3;
+        return 4;
     }
 
     public childAt(slot: number): ISyntaxElement {
         switch (slot) {
             case 0: return this.callSignature;
             case 1: return this.equalsGreaterThanToken;
-            case 2: return this.body;
+            case 2: return this.block;
+            case 3: return this.expression;
             default: throw Errors.invalidOperation();
         }
     }
@@ -1681,16 +1694,22 @@ module TypeScript {
 
     public update(callSignature: CallSignatureSyntax,
                   equalsGreaterThanToken: ISyntaxToken,
-                  body: ISyntaxNodeOrToken): ParenthesizedArrowFunctionExpressionSyntax {
-        if (this.callSignature === callSignature && this.equalsGreaterThanToken === equalsGreaterThanToken && this.body === body) {
+                  block: BlockSyntax,
+                  expression: IExpressionSyntax): ParenthesizedArrowFunctionExpressionSyntax {
+        if (this.callSignature === callSignature && this.equalsGreaterThanToken === equalsGreaterThanToken && this.block === block && this.expression === expression) {
             return this;
         }
 
-        return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, body, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, block, expression, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
-    public static create1(body: ISyntaxNodeOrToken): ParenthesizedArrowFunctionExpressionSyntax {
-        return new ParenthesizedArrowFunctionExpressionSyntax(CallSignatureSyntax.create1(), Syntax.token(SyntaxKind.EqualsGreaterThanToken), body, /*parsedInStrictMode:*/ false);
+    public static create(callSignature: CallSignatureSyntax,
+                         equalsGreaterThanToken: ISyntaxToken): ParenthesizedArrowFunctionExpressionSyntax {
+        return new ParenthesizedArrowFunctionExpressionSyntax(callSignature, equalsGreaterThanToken, null, null, /*parsedInStrictMode:*/ false);
+    }
+
+    public static create1(): ParenthesizedArrowFunctionExpressionSyntax {
+        return new ParenthesizedArrowFunctionExpressionSyntax(CallSignatureSyntax.create1(), Syntax.token(SyntaxKind.EqualsGreaterThanToken), null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ParenthesizedArrowFunctionExpressionSyntax {
@@ -1702,15 +1721,19 @@ module TypeScript {
     }
 
     public withCallSignature(callSignature: CallSignatureSyntax): ParenthesizedArrowFunctionExpressionSyntax {
-        return this.update(callSignature, this.equalsGreaterThanToken, this.body);
+        return this.update(callSignature, this.equalsGreaterThanToken, this.block, this.expression);
     }
 
     public withEqualsGreaterThanToken(equalsGreaterThanToken: ISyntaxToken): ParenthesizedArrowFunctionExpressionSyntax {
-        return this.update(this.callSignature, equalsGreaterThanToken, this.body);
+        return this.update(this.callSignature, equalsGreaterThanToken, this.block, this.expression);
     }
 
-    public withBody(body: ISyntaxNodeOrToken): ParenthesizedArrowFunctionExpressionSyntax {
-        return this.update(this.callSignature, this.equalsGreaterThanToken, body);
+    public withBlock(block: BlockSyntax): ParenthesizedArrowFunctionExpressionSyntax {
+        return this.update(this.callSignature, this.equalsGreaterThanToken, block, this.expression);
+    }
+
+    public withExpression(expression: IExpressionSyntax): ParenthesizedArrowFunctionExpressionSyntax {
+        return this.update(this.callSignature, this.equalsGreaterThanToken, this.block, expression);
     }
 
     public isTypeScriptSpecific(): boolean {

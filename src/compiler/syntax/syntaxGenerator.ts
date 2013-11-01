@@ -244,7 +244,8 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'identifier', isToken: true, tokenKinds: ['IdentifierName'] },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
-            <any>{ name: 'body', type: 'ISyntaxNodeOrToken' }
+            <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },
+            <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true }
         ],
         isTypeScriptSpecific: true
     },
@@ -255,7 +256,8 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
             <any>{ name: 'equalsGreaterThanToken', isToken: true },
-            <any>{ name: 'body', type: 'ISyntaxNodeOrToken' }
+            <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },
+            <any>{ name: 'expression', type: 'IExpressionSyntax', isOptional: true }
         ],
         isTypeScriptSpecific: true
     },

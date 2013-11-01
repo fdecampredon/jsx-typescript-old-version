@@ -4215,12 +4215,17 @@ module TypeScript.Parser {
             }
 
             var equalsGreaterThanToken = this.eatToken(SyntaxKind.EqualsGreaterThanToken);
-            var body = this.parseArrowFunctionBody();
 
-            return this.factory.parenthesizedArrowFunctionExpression(callSignature, equalsGreaterThanToken, body);
+            var block = this.tryParseArrowFunctionBlock();
+            var expression: IExpressionSyntax = null;
+            if (block === null) {
+                expression = this.parseAssignmentExpression(/*allowIn:*/ true);
+            }
+
+            return this.factory.parenthesizedArrowFunctionExpression(callSignature, equalsGreaterThanToken, block, expression);
         }
 
-        private parseArrowFunctionBody(): ISyntaxNodeOrToken {
+        private tryParseArrowFunctionBlock(): BlockSyntax {
             if (this.isBlock()) {
                 return this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ false, /*checkForStrictMode:*/ false);
             }
@@ -4243,7 +4248,7 @@ module TypeScript.Parser {
                     return this.parseBlock(/*parseStatementsEvenWithNoOpenBrace:*/ true, /*checkForStrictMode:*/ false);
                 }
                 else {
-                    return this.parseAssignmentExpression(/*allowIn:*/ true);
+                    return null;
                 }
             }
         }
@@ -4265,10 +4270,14 @@ module TypeScript.Parser {
 
             var identifier = this.eatIdentifierToken();
             var equalsGreaterThanToken = this.eatToken(SyntaxKind.EqualsGreaterThanToken);
-            var body = this.parseArrowFunctionBody();
 
-            return this.factory.simpleArrowFunctionExpression(
-                identifier, equalsGreaterThanToken, body);
+            var block = this.tryParseArrowFunctionBlock();
+            var expression: IExpressionSyntax = null;
+            if (block === null) {
+                expression = this.parseAssignmentExpression(/*allowIn:*/ true);
+            }
+
+            return this.factory.simpleArrowFunctionExpression(identifier, equalsGreaterThanToken, block, expression);
         }
 
         private isBlock(): boolean {

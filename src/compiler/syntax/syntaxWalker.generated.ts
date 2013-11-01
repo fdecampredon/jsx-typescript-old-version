@@ -176,13 +176,15 @@ module TypeScript {
         public visitSimpleArrowFunctionExpression(node: SimpleArrowFunctionExpressionSyntax): void {
             this.visitToken(node.identifier);
             this.visitToken(node.equalsGreaterThanToken);
-            this.visitNodeOrToken(node.body);
+            this.visitOptionalNode(node.block);
+            this.visitOptionalNodeOrToken(node.expression);
         }
 
         public visitParenthesizedArrowFunctionExpression(node: ParenthesizedArrowFunctionExpressionSyntax): void {
             this.visitNode(node.callSignature);
             this.visitToken(node.equalsGreaterThanToken);
-            this.visitNodeOrToken(node.body);
+            this.visitOptionalNode(node.block);
+            this.visitOptionalNodeOrToken(node.expression);
         }
 
         public visitQualifiedName(node: QualifiedNameSyntax): void {

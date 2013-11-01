@@ -63,6 +63,8 @@ module TypeScript {
         ObjectType,
         ArrayType,
         ModuleDeclaration,
+        ExternalModuleReference,
+        ModuleNameModuleReference,
         ImportDeclaration,
         VariableDeclarator,
         VariableDeclaration,

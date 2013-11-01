@@ -958,12 +958,21 @@ module TypeScript {
                 }
                 this.declFile.Write("import ");
                 this.declFile.Write(importDeclAST.identifier.text() + " = ");
-                if (importDeclAST.isExternalImportDeclaration()) {
-                    this.declFile.WriteLine("require(" + importDeclAST.getAliasName() + ");");
+                if (importDeclAST.moduleReference.nodeType() === NodeType.ExternalModuleReference) {
+                    this.declFile.WriteLine("require(" + (<ExternalModuleReference>importDeclAST.moduleReference).stringLiteral.text() + ");");
                 }
                 else {
-                    this.declFile.WriteLine(importDeclAST.getAliasName() + ";");
+                    this.declFile.WriteLine(this.getAliasName((<ModuleNameModuleReference>importDeclAST.moduleReference).moduleName) + ";");
                 }
+            }
+        }
+
+        public getAliasName(aliasAST: AST): string {
+            if (aliasAST.nodeType() === NodeType.Name) {
+                return (<Identifier>aliasAST).text();
+            } else {
+                var dotExpr = <QualifiedName>aliasAST;
+                return this.getAliasName(dotExpr.left) + "." + this.getAliasName(dotExpr.right);
             }
         }
 

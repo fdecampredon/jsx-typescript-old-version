@@ -61,7 +61,7 @@ module TypeScript {
     }
 
     export function importDeclarationIsElided(importDeclAST: ImportDeclaration, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings = null) {
-        var isExternalModuleReference = importDeclAST.isExternalImportDeclaration();
+        var isExternalModuleReference = importDeclAST.moduleReference.nodeType() === NodeType.ExternalModuleReference;
         var importDecl = semanticInfoChain.getDeclForAST(importDeclAST);
         var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
         var isAmdCodeGen = compilationSettings && compilationSettings.moduleGenTarget() == ModuleGenTarget.Asynchronous;
@@ -70,7 +70,7 @@ module TypeScript {
             isExported || // External module reference with export modifier always needs to be emitted
             !isAmdCodeGen) {// commonjs needs the var declaration for the import declaration
             var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
-            if (!importDeclAST.isExternalImportDeclaration()) {
+            if (importDeclAST.moduleReference.nodeType() !== NodeType.ExternalModuleReference) {
                 if (importSymbol.getExportAssignedValueSymbol()) {
                     return true;
                 }
