@@ -2521,11 +2521,15 @@ module TypeScript {
         //      p3: C<C<T>> <- yes
         //  }
         public wrapsSomeNestedTypeIntoInfiniteExpansion(typeBeingWrapped: PullTypeSymbol) {
-            var knownWrapMap = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ true);
-            var result = this._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, /*isCheckingTypeArgumentList:*/ false, knownWrapMap);
-            knownWrapMap.release();
+            if (!this.isArrayNamedTypeReference() && this.isNamedTypeSymbol()) {
+                var knownWrapMap = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ true);
+                var result = this._wrapsSomeNestedTypeIntoInfiniteExpansionRecurse(typeBeingWrapped, /*isCheckingTypeArgumentList:*/ false, knownWrapMap);
+                knownWrapMap.release();
 
-            return result;
+                return result;
+            }
+
+            return false;
         }
 
         private isTypeEquivalentToRootSymbol() {

@@ -8902,8 +8902,33 @@ module TypeScript {
 
         // Type Identity
 
-        public typesAreIdentical(t1: PullTypeSymbol, t2: PullTypeSymbol, val?: ISyntaxElement) {
+        private typesAreIdenticalInEnclosingTypes(t1: PullTypeSymbol, t2: PullTypeSymbol,
+            t1EnclosingType: PullTypeSymbol, t2EnclosingType: PullTypeSymbol, val?: ISyntaxElement) {
 
+            if (t1 && t2) {
+                // Section 3.8.7 - Recursive Types
+                //  When comparing two types S and T for identity(section 3.8.2), subtype(section 3.8.3), and assignability(section 3.8.4) relationships, 
+                //  if either type originates in an infinitely expanding type reference, S and T are not compared by the rules in the preceding sections.Instead, for the relationship to be considered true,
+                //  -	S and T must both be type references to the same named type, and
+                //  -	the relationship in question must be true for each corresponding pair of type arguments in the type argument lists of S and T.
+
+                var t1GenerativeTypeKind = t1EnclosingType ? t1.getGenerativeTypeClassification(t1EnclosingType) : GenerativeTypeClassification.Unknown;
+                var t2GenerativeTypeKind = t2EnclosingType ? t2.getGenerativeTypeClassification(t2EnclosingType) : GenerativeTypeClassification.Unknown;
+                if (t1GenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
+                    t2GenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
+                    return this.infinitelyExpandingTypesAreIdentical(t1, t2);
+                }
+            }
+
+            if (!this.typesAreIdentical(t1, t2, val)) {
+                //this.identicalCache.setValueAt(t1.pullSymbolID, t2.pullSymbolID, undefined);
+                return false;
+            }
+
+            return true;
+        }
+
+        public typesAreIdentical(t1: PullTypeSymbol, t2: PullTypeSymbol, val?: ISyntaxElement) {
             if (t1 && t1.isTypeReference()) {
                 t1 = (<PullTypeReferenceSymbol>t1).getReferencedTypeSymbol();
             }
@@ -8961,8 +8986,9 @@ module TypeScript {
                 }
             }
 
-            if (this.identicalCache.valueAt(t1.pullSymbolID, t2.pullSymbolID) != undefined) {
-                return true;
+            var isIdentical = this.identicalCache.valueAt(t1.pullSymbolID, t2.pullSymbolID);
+            if (isIdentical != undefined) {
+                return isIdentical;
             }
 
             // If one is an enum, and they're not the same type, they're not identical
@@ -9005,25 +9031,7 @@ module TypeScript {
                     t1MemberType = t1MemberSymbol.type;
                     t2MemberType = t2MemberSymbol.type;
 
-
-                    // catch the mutually recursive or cached cases
-                    if (t1MemberType && t2MemberType) {
-
-                        if (this.identicalCache.valueAt(t1MemberType.pullSymbolID, t2MemberType.pullSymbolID) != undefined) {
-                            continue;
-                        }
-
-                        var t1PropGenerativeTypeKind = t1MemberType.getGenerativeTypeClassification(t1);
-                        var t2PropGenerativeTypeKind = t2MemberType.getGenerativeTypeClassification(t2);
-
-                        if (t1PropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
-                            t2PropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
-                            return this.infinitelyExpandingTypesAreIdentical(t1MemberType, t2MemberType);
-                        }
-                    }
-
-                    if (!this.typesAreIdentical(t1MemberType, t2MemberType)) {
-                        this.identicalCache.setValueAt(t1.pullSymbolID, t2.pullSymbolID, undefined);
+                    if (!this.typesAreIdenticalInEnclosingTypes(t1MemberType, t2MemberType, t1, t2)) {
                         return false;
                     }
                 }
@@ -9139,12 +9147,12 @@ module TypeScript {
             var s1Params = s1.parameters;
             var s2Params = s2.parameters;
 
-            if (includingReturnType && !this.typesAreIdentical(s1.returnType, s2.returnType)) {
+            if (includingReturnType && !this.typesAreIdenticalInEnclosingTypes(s1.returnType, s2.returnType, s1.functionType, s2.functionType)) {
                 return false;
             }
 
             for (var iParam = 0; iParam < s1Params.length; iParam++) {
-                if (!this.typesAreIdentical(s1Params[iParam].type, s2Params[iParam].type)) {
+                if (!this.typesAreIdenticalInEnclosingTypes(s1Params[iParam].type, s2Params[iParam].type, s1.functionType, s2.functionType)) {
                     return false;
                 }
             }
@@ -9289,6 +9297,28 @@ module TypeScript {
 
         private signatureIsAssignableToTarget(s1: PullSignatureSymbol, s2: PullSignatureSymbol, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean): boolean {
             return this.signatureIsRelatableToTarget(s1, s2, true, this.assignableCache, context, comparisonInfo, isComparingInstantiatedSignatures);
+        }
+
+        private sourceIsRelatableToTargetInEnclosingTypes(source: PullTypeSymbol, target: PullTypeSymbol,
+            sourceEnclosingType: PullTypeSymbol, targetEnclosingType: PullTypeSymbol, assignableTo: boolean,
+            comparisonCache: IBitMatrix, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo,
+            isComparingInstantiatedSignatures: boolean): boolean {
+                if (source && target) {
+                    // Section 3.8.7 - Recursive Types
+                    //  When comparing two types S and T for identity(section 3.8.2), subtype(section 3.8.3), and assignability(section 3.8.4) relationships, 
+                    //  if either type originates in an infinitely expanding type reference, S and T are not compared by the rules in the preceding sections.Instead, for the relationship to be considered true,
+                    //  -	S and T must both be type references to the same named type, and
+                    //  -	the relationship in question must be true for each corresponding pair of type arguments in the type argument lists of S and T.
+
+                    var sourceGenerativeTypeKind = sourceEnclosingType ? source.getGenerativeTypeClassification(sourceEnclosingType) : GenerativeTypeClassification.Unknown;
+                    var targetGenerativeTypeKind = targetEnclosingType ? target.getGenerativeTypeClassification(targetEnclosingType) : GenerativeTypeClassification.Unknown;
+                    if (sourceGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
+                        targetGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
+                        return this.infinitelyExpandingSourceTypeIsRelatableToTargetType(source, target, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures);
+                    }
+                }
+
+            return this.sourceIsRelatableToTarget(source, target, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures);
         }
 
         private sourceIsRelatableToTarget(source: PullTypeSymbol, target: PullTypeSymbol, assignableTo: boolean, comparisonCache: IBitMatrix, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures: boolean): boolean {
@@ -9791,22 +9821,7 @@ module TypeScript {
                 comparisonInfoPropertyTypeCheck = new TypeComparisonInfo(comparisonInfo);
             }
 
-            // Section 3.8.7 - Recursive Types
-            //  When comparing two types S and T for identity(section 3.8.2), subtype(section 3.8.3), and assignability(section 3.8.4) relationships, 
-            //  if either type originates in an infinitely expanding type reference, S and T are not compared by the rules in the preceding sections.Instead, for the relationship to be considered true,
-            //  -	S and T must both be type references to the same named type, and
-            //  -	the relationship in question must be true for each corresponding pair of type arguments in the type argument lists of S and T.
-
-            var sourcePropGenerativeTypeKind = sourcePropType.getGenerativeTypeClassification(source);
-            var targetPropGenerativeTypeKind = targetPropType.getGenerativeTypeClassification(target);
-
-            if (sourcePropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding ||
-                targetPropGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) {
-                if (this.infinitelyExpandingSourceTypeIsRelatableToTargetType(sourcePropType, targetPropType, assignableTo, comparisonCache, context, comparisonInfoPropertyTypeCheck, isComparingInstantiatedSignatures)) {
-                    return true;
-                }
-            }
-            else if (this.sourceIsRelatableToTarget(sourcePropType, targetPropType, assignableTo, comparisonCache, context, comparisonInfoPropertyTypeCheck, isComparingInstantiatedSignatures)) {
+            if (this.sourceIsRelatableToTargetInEnclosingTypes(sourcePropType, targetPropType, source, target, assignableTo, comparisonCache, context, comparisonInfoPropertyTypeCheck, isComparingInstantiatedSignatures)) {
                 return true;
             }
 
@@ -10062,7 +10077,7 @@ module TypeScript {
             var targetReturnType = targetSig.returnType;
 
             if (targetReturnType != this.semanticInfoChain.voidTypeSymbol) {
-                if (!this.sourceIsRelatableToTarget(sourceReturnType, targetReturnType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures)) {
+                if (!this.sourceIsRelatableToTargetInEnclosingTypes(sourceReturnType, targetReturnType, sourceSig.functionType, targetSig.functionType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures)) {
                     if (comparisonInfo) {
                         comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleReturnTypes;
                         // No need to print this one here - it's printed as part of the signature error in sourceIsRelatableToTarget
@@ -10113,8 +10128,8 @@ module TypeScript {
                     targetParamName = targetParameters[iTarget].name;
                 }
 
-                if (!(this.sourceIsRelatableToTarget(sourceParamType, targetParamType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures) ||
-                    this.sourceIsRelatableToTarget(targetParamType, sourceParamType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures))) {
+                if (!(this.sourceIsRelatableToTargetInEnclosingTypes(sourceParamType, targetParamType, sourceSig.functionType, targetSig.functionType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures) ||
+                    this.sourceIsRelatableToTargetInEnclosingTypes(targetParamType, sourceParamType, targetSig.functionType, sourceSig.functionType, assignableTo, comparisonCache, context, comparisonInfo, isComparingInstantiatedSignatures))) {
 
                     if (comparisonInfo) {
                         comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleParameterTypes;
@@ -10551,6 +10566,21 @@ module TypeScript {
             return enclosingDecl.getParentPath().indexOf(typeParameterParentDecl) > -1;
         }
 
+        private relateTypeToTypeParametersInEnclosingType(expressionType: PullTypeSymbol, parameterType: PullTypeSymbol,
+            expressionTypeEnclosingType: PullTypeSymbol, parameterTypeEnclosingType: PullTypeSymbol, shouldFix: boolean,
+            argContext: ArgumentInferenceContext, context: PullTypeResolutionContext) {
+            if (expressionType && parameterType) {
+                var expressionTypeGenerativeTypeClassification = expressionTypeEnclosingType ? expressionType.getGenerativeTypeClassification(expressionTypeEnclosingType) : GenerativeTypeClassification.Unknown;
+                var parameterTypeGenerativeTypeClassification = parameterTypeEnclosingType ? parameterType.getGenerativeTypeClassification(parameterTypeEnclosingType) : GenerativeTypeClassification.Unknown;
+                if (expressionTypeGenerativeTypeClassification == GenerativeTypeClassification.InfinitelyExpanding ||
+                    parameterTypeGenerativeTypeClassification == GenerativeTypeClassification.InfinitelyExpanding) {
+                    this.relateInifinitelyExpandingTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
+                    return;
+                }
+            }
+            this.relateTypeToTypeParameters(expressionType, parameterType, shouldFix, argContext, context);
+        }
+
         private relateTypeToTypeParameters(expressionType: PullTypeSymbol,
             parameterType: PullTypeSymbol,
             shouldFix: boolean,
@@ -10657,24 +10687,12 @@ module TypeScript {
             var len = parameterParams.length < expressionParams.length ? parameterParams.length : expressionParams.length;
 
             for (var i = 0; i < len; i++) {
-                if (expressionParams[i].type && parameterParams[i].type) {
-                    if (expressionParams[i].type.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding ||
-                        parameterParams[i].type.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) {
-                        this.relateInifinitelyExpandingTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, /*shouldFix:*/ true, argContext, context);
-                    } else {
-                        this.relateTypeToTypeParameters(expressionParams[i].type, parameterParams[i].type, /*shouldFix:*/ true, argContext, context);
-                    }
-                }
+                this.relateTypeToTypeParametersInEnclosingType(expressionParams[i].type, parameterParams[i].type,
+                    expressionSignature.functionType, parameterSignature.functionType, /*shouldFix:*/ true, argContext, context);
             }
 
-            if (expressionReturnType && parameterReturnType) {
-                if (expressionReturnType.getGenerativeTypeClassification(expressionSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding ||
-                    parameterReturnType.getGenerativeTypeClassification(parameterSignature.functionType) == GenerativeTypeClassification.InfinitelyExpanding) {
-                    this.relateInifinitelyExpandingTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
-                } else {
-                    this.relateTypeToTypeParameters(expressionReturnType, parameterReturnType, false, argContext, context);
-                }
-            }
+            this.relateTypeToTypeParametersInEnclosingType(expressionReturnType, parameterReturnType,
+                expressionSignature.functionType, parameterSignature.functionType, /*shouldFix:*/ false, argContext, context);
         }
 
         private relateObjectTypeToTypeParameters(objectType: PullTypeSymbol,
@@ -10715,18 +10733,9 @@ module TypeScript {
             // - If M is a property and S contains a property N with the same name as M, inferences are made from the type of N to the type of M.
             for (var i = 0; i < parameterTypeMembers.length; i++) {
                 objectMember = this.getMemberSymbol(parameterTypeMembers[i].name, PullElementKind.SomeValue, objectType);
-
-                if (objectMember && objectMember.type && parameterTypeMembers[i].type) {
-
-                    var objectMemberGenerativeTypeKind = objectMember.type.getGenerativeTypeClassification(objectType);
-                    var parameterMemberGenerativeTypeKind = parameterTypeMembers[i].type.getGenerativeTypeClassification(parameterType);
-
-                    if ((objectMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding) ||
-                        (parameterMemberGenerativeTypeKind == GenerativeTypeClassification.InfinitelyExpanding)) {
-                        this.relateInifinitelyExpandingTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);;
-                    } else {
-                        this.relateTypeToTypeParameters(objectMember.type, parameterTypeMembers[i].type, shouldFix, argContext, context);
-                    }
+                if (objectMember) {
+                    this.relateTypeToTypeParametersInEnclosingType(objectMember.type, parameterTypeMembers[i].type, objectType, parameterType,
+                        shouldFix, argContext, context);
                 }
             }
 
@@ -12622,6 +12631,11 @@ module TypeScript {
 
             // if the instantiation occurred via a recursive funciton invocation, the return type may be null so we should set it to any
             instantiatedSignature.returnType = this.instantiateType((signature.returnType || this.semanticInfoChain.anyTypeSymbol), typeParameterArgumentMap, instantiateFunctionTypeParameters);
+            
+            // If we are instantiating function type parameters, thats the only time, caller wont know what functionType would be to set the right one, so just instantiate here.
+            if (instantiateFunctionTypeParameters) {
+                instantiatedSignature.functionType = this.instantiateType(signature.functionType, typeParameterArgumentMap, instantiateFunctionTypeParameters);
+            }
 
             var parameters = signature.parameters;
             var parameter: PullSymbol = null;
