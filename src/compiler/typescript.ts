@@ -595,7 +595,7 @@ module TypeScript {
             }
 
             var enclosingDecl = resolver.getEnclosingDecl(decl);
-            if (ast.nodeType() === NodeType.GetAccessor || ast.nodeType() === NodeType.SetAccessor) {
+            if (ast.nodeType() === SyntaxKind.GetAccessor || ast.nodeType() === SyntaxKind.SetAccessor) {
                 return this.getSymbolOfDeclaration(enclosingDecl);
             }
 
@@ -624,37 +624,37 @@ module TypeScript {
                 var current = path[i];
 
                 switch (current.nodeType()) {
-                    case NodeType.FunctionExpression:
-                    case NodeType.SimpleArrowFunctionExpression:
-                    case NodeType.ParenthesizedArrowFunctionExpression:
+                    case SyntaxKind.FunctionExpression:
+                    case SyntaxKind.SimpleArrowFunctionExpression:
+                    case SyntaxKind.ParenthesizedArrowFunctionExpression:
                         resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ true, resolutionContext);
                         break;
 
-                    //case NodeType.Parameter:
+                    //case SyntaxKind.Parameter:
                     //    var parameter = <Parameter> current;
                     //    inContextuallyTypedAssignment = parameter.typeExpr !== null;
 
                     //    this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, parameter, parameter.init);
                     //    break;
 
-                    case NodeType.MemberVariableDeclaration:
+                    case SyntaxKind.MemberVariableDeclaration:
                         var memberVariable = <MemberVariableDeclaration> current;
                         inContextuallyTypedAssignment = memberVariable.variableDeclarator.typeAnnotation !== null;
 
                         this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, memberVariable, memberVariable.variableDeclarator.equalsValueClause);
                         break;
 
-                    case NodeType.VariableDeclarator:
+                    case SyntaxKind.VariableDeclarator:
                         var variableDeclarator = <VariableDeclarator>current;
                         inContextuallyTypedAssignment = variableDeclarator.typeAnnotation !== null;
 
                         this.extractResolutionContextForVariable(inContextuallyTypedAssignment, propagateContextualTypes, resolver, resolutionContext, enclosingDecl, variableDeclarator, variableDeclarator.equalsValueClause);
                         break;
 
-                    case NodeType.InvocationExpression:
-                    case NodeType.ObjectCreationExpression:
+                    case SyntaxKind.InvocationExpression:
+                    case SyntaxKind.ObjectCreationExpression:
                         if (propagateContextualTypes) {
-                            var isNew = current.nodeType() === NodeType.ObjectCreationExpression;
+                            var isNew = current.nodeType() === SyntaxKind.ObjectCreationExpression;
                             var callExpression = <InvocationExpression>current;
                             var contextualType: PullTypeSymbol = null;
 
@@ -674,8 +674,8 @@ module TypeScript {
                                 if (callResolutionResults.actualParametersContextTypeSymbols) {
                                     var argExpression = path[i + 3];
                                     if (argExpression) {
-                                        for (var j = 0, m = callExpression.argumentList.arguments.members.length; j < m; j++) {
-                                            if (callExpression.argumentList.arguments.members[j] === argExpression) {
+                                        for (var j = 0, m = callExpression.argumentList.arguments.nonSeparatorCount(); j < m; j++) {
+                                            if (callExpression.argumentList.arguments.nonSeparatorAt(j) === argExpression) {
                                                 var callContextualType = callResolutionResults.actualParametersContextTypeSymbols[j];
                                                 if (callContextualType) {
                                                     contextualType = callContextualType;
@@ -701,7 +701,7 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.ArrayLiteralExpression:
+                    case SyntaxKind.ArrayLiteralExpression:
                         if (propagateContextualTypes) {
                             // Propagate the child element type
                             var contextualType: PullTypeSymbol = null;
@@ -715,21 +715,21 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.ObjectLiteralExpression:
+                    case SyntaxKind.ObjectLiteralExpression:
                         if (propagateContextualTypes) {
                             var objectLiteralExpression = <ObjectLiteralExpression>current;
                             var objectLiteralResolutionContext = new PullAdditionalObjectLiteralResolutionData();
                             resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, resolutionContext, objectLiteralResolutionContext);
 
                             // find the member in the path
-                            var memeberAST = (path[i + 1] && path[i + 1].nodeType() === NodeType.List) ? path[i + 2] : path[i + 1];
+                            var memeberAST = (path[i + 1] && path[i + 1].nodeType() === SyntaxKind.SeparatedList) ? path[i + 2] : path[i + 1];
                             if (memeberAST) {
                                 // Propagate the member contextual type
                                 var contextualType: PullTypeSymbol = null;
                                 var memberDecls = objectLiteralExpression.propertyAssignments;
                                 if (memberDecls && objectLiteralResolutionContext.membersContextTypeSymbols) {
-                                    for (var j = 0, m = memberDecls.members.length; j < m; j++) {
-                                        if (memberDecls.members[j] === memeberAST) {
+                                    for (var j = 0, m = memberDecls.nonSeparatorCount(); j < m; j++) {
+                                        if (memberDecls.nonSeparatorAt(j) === memeberAST) {
                                             var memberContextualType = objectLiteralResolutionContext.membersContextTypeSymbols[j];
                                             if (memberContextualType) {
                                                 contextualType = memberContextualType;
@@ -745,7 +745,7 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.AssignmentExpression:
+                    case SyntaxKind.AssignmentExpression:
                         if (propagateContextualTypes) {
                             var assignmentExpression = <BinaryExpression>current;
                             var contextualType: PullTypeSymbol = null;
@@ -764,7 +764,7 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.ReturnStatement:
+                    case SyntaxKind.ReturnStatement:
                         if (propagateContextualTypes) {
                             var returnStatement = <ReturnStatement>current;
                             var contextualType: PullTypeSymbol = null;
@@ -798,7 +798,7 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.ObjectType:
+                    case SyntaxKind.ObjectType:
                         // ObjectType are just like Object Literals are bound when needed, ensure we have a decl, by forcing it to be 
                         // resolved before descending into it.
                         if (TypeScript.isTypesOnlyLocation(current)) {
@@ -807,7 +807,7 @@ module TypeScript {
 
                         break;
 
-                    case NodeType.WithStatement:
+                    case SyntaxKind.WithStatement:
                         inWithBlock = true;
                         break;
                 }
@@ -822,13 +822,13 @@ module TypeScript {
 
             // if the found AST is a named, we want to check for previous dotted expressions,
             // since those will give us the right typing
-            if (ast && ast.parent && ast.nodeType() === NodeType.Name) {
-                if (ast.parent.nodeType() === NodeType.MemberAccessExpression) {
+            if (ast && ast.parent && ast.nodeType() === SyntaxKind.IdentifierName) {
+                if (ast.parent.nodeType() === SyntaxKind.MemberAccessExpression) {
                     if ((<MemberAccessExpression>ast.parent).name === ast) {
                         ast = ast.parent;
                     }
                 }
-                else if (ast.parent.nodeType() === NodeType.QualifiedName) {
+                else if (ast.parent.nodeType() === SyntaxKind.QualifiedName) {
                     if ((<QualifiedName>ast.parent).right === ast) {
                         ast = ast.parent;
                     }
@@ -908,11 +908,11 @@ module TypeScript {
 
         public pullGetCallInformationFromAST(ast: AST, document: Document): PullCallSymbolInfo {
             // AST has to be a call expression
-            if (ast.nodeType() !== NodeType.InvocationExpression && ast.nodeType() !== NodeType.ObjectCreationExpression) {
+            if (ast.nodeType() !== SyntaxKind.InvocationExpression && ast.nodeType() !== SyntaxKind.ObjectCreationExpression) {
                 return null;
             }
 
-            var isNew = ast.nodeType() === NodeType.ObjectCreationExpression;
+            var isNew = ast.nodeType() === SyntaxKind.ObjectCreationExpression;
 
             var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
@@ -969,7 +969,7 @@ module TypeScript {
 
         public pullGetContextualMembersFromAST(ast: AST, document: Document): PullVisibleSymbolsInfo {
             // Input has to be an object literal
-            if (ast.nodeType() !== NodeType.ObjectLiteralExpression) {
+            if (ast.nodeType() !== SyntaxKind.ObjectLiteralExpression) {
                 return null;
             }
 

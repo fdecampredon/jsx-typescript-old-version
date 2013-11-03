@@ -39,7 +39,13 @@ module TypeScript.Syntax {
 
         public toJSON(key: any): any {
             var result: any = {};
-            result.kind = SyntaxKind[this._kind];
+
+            for (var name in SyntaxKind) {
+                if (<any>SyntaxKind[name] === this._kind) {
+                    result.kind = name;
+                    break;
+                }
+            }
 
             if (this.isSkippedToken()) {
                 result.skippedToken = this.skippedToken();

@@ -682,7 +682,7 @@ module TypeScript {
         private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
             var ast = decl.ast();
 
-            if (ast && (ast.nodeType() != TypeScript.NodeType.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable)) {
+            if (ast && (ast.nodeType() != TypeScript.SyntaxKind.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable)) {
                 return docComments(ast);
             }
 
@@ -2522,6 +2522,15 @@ module TypeScript {
 
         public setIsUsedAsValue(value: boolean): void {
             this._isUsedAsValue = value;
+
+            // Set the alias as used as value if this alias comes from the another alias
+            var resolver = this._getResolver();
+            resolver.resolveDeclaredSymbol(this);
+            var importDeclStatement = <ImportDeclaration>resolver.semanticInfoChain.getASTForDecl(this.getDeclarations()[0]);
+            var aliasSymbol = <PullTypeAliasSymbol>resolver.semanticInfoChain.getAliasSymbolForAST(importDeclStatement.moduleReference);
+            if (aliasSymbol) {
+                aliasSymbol.setIsUsedAsValue(value);
+            }
         }
 
         public assignedValue(): PullSymbol {

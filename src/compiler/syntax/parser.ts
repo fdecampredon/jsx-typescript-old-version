@@ -634,9 +634,7 @@ module TypeScript.Parser {
         // The cursor we use to navigate through and retrieve nodes and tokens from the old tree.
         private _oldSourceUnitCursor: SyntaxCursor;
 
-        constructor(oldSyntaxTree: SyntaxTree,
-                    textChangeRange: TextChangeRange,
-                    newText: ISimpleText) {
+        constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText) {
             this._newText = newText;
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
             this._oldSourceUnitCursor = new SyntaxCursor(oldSourceUnit);
@@ -648,9 +646,11 @@ module TypeScript.Parser {
             // problem, we can always update this code to handle multiple changes.
             this._changeRange = IncrementalParserSource.extendToAffectedRange(textChangeRange, oldSourceUnit);
 
-            // The old tree's length, plus whatever length change was caused by the edit better 
-            // equal the new text's length!
-            // Debug.assert((oldSourceUnit.fullWidth() - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
+            // The old tree's length, plus whatever length change was caused by the edit
+            // Had better equal the new text's length!
+            if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
+                Debug.assert((oldSourceUnit.fullWidth() - this._changeRange.span().length() + this._changeRange.newLength()) === newText.length());
+            }
 
             // Set up a scanner so that we can scan tokens out of the new text.
             this._normalParserSource = new NormalParserSource(oldSyntaxTree.fileName(), newText, oldSyntaxTree.parseOptions().languageVersion());
@@ -1651,6 +1651,14 @@ module TypeScript.Parser {
 
             var sourceUnit = this.factory.sourceUnit(moduleElements, this.currentToken());
             sourceUnit = <SourceUnitSyntax>this.addSkippedTokensBeforeNode(sourceUnit, result.skippedTokens);
+
+            if (Debug.shouldAssert(AssertionLevel.Aggressive)) {
+                Debug.assert(sourceUnit.fullWidth() === this.text.length());
+
+                if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
+                    Debug.assert(sourceUnit.fullText() === this.text.substr(0, this.text.length(), /*intern:*/ false));
+                }
+            }
 
             return sourceUnit;
         }
@@ -2724,7 +2732,9 @@ module TypeScript.Parser {
             var typeNames = result.list;
             extendsOrImplementsKeyword = this.addSkippedTokensAfterToken(extendsOrImplementsKeyword, result.skippedTokens);
 
-            return this.factory.heritageClause(extendsOrImplementsKeyword, typeNames);
+            return this.factory.heritageClause(
+                extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword ? SyntaxKind.ExtendsHeritageClause : SyntaxKind.ImplementsHeritageClause,
+                extendsOrImplementsKeyword, typeNames);
         }
 
         private isStatement(inErrorRecovery: boolean): boolean {
@@ -5670,7 +5680,7 @@ module TypeScript.Parser {
         if (textChangeRange.isUnchanged()) {
             return oldSyntaxTree;
         }
-        
+
         var source = new IncrementalParserSource(oldSyntaxTree, textChangeRange, newText);
 
         return new ParserImpl(oldSyntaxTree.fileName(), newText.lineMap(), source, oldSyntaxTree.parseOptions(), newText).parseSyntaxTree(oldSyntaxTree.isDeclaration());

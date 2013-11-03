@@ -220,7 +220,7 @@ module TypeScript.Services {
             var kind = this.currentMemberVariableDeclaration
                 ? ScriptElementKind.memberVariableElement
                 : ScriptElementKind.variableElement;
-            var item = this.createItem(node, modifiers, kind, node.identifier.text());
+            var item = this.createItem(node, modifiers, kind, node.propertyName.text());
 
             // No need to descend into a variable declarator;
             this.skip(node);

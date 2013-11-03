@@ -176,7 +176,7 @@ module TypeScript.Emitter1 {
                     var declarators = variableStatement.variableDeclaration.variableDeclarators;
                     for (var i = 0, n = declarators.nonSeparatorCount(); i < n; i++) {
                         var declarator = <VariableDeclaratorSyntax>declarators.nonSeparatorAt(i);
-                        elements.push(this.exportModuleElement(parentModule, moduleElement, declarator.identifier));
+                        elements.push(this.exportModuleElement(parentModule, moduleElement, declarator.propertyName));
                     }
                 }
             }
@@ -537,7 +537,7 @@ module TypeScript.Emitter1 {
             var receiver = MemberAccessExpressionSyntax.create1(
                 static ? <IExpressionSyntax>this.withNoTrivia(classDeclaration.identifier)
                        : Syntax.token(SyntaxKind.ThisKeyword),
-                this.withNoTrivia(declarator.identifier)).withTrailingTrivia(Syntax.spaceTriviaList);
+                this.withNoTrivia(declarator.propertyName)).withTrailingTrivia(Syntax.spaceTriviaList);
 
             return ExpressionStatementSyntax.create1(
                 Syntax.assignmentExpression(
@@ -930,10 +930,10 @@ module TypeScript.Emitter1 {
                 return result;
             }
 
-            var newTrailingTrivia = result.identifier.trailingTrivia().concat(result.typeAnnotation.trailingTrivia());
+            var newTrailingTrivia = result.propertyName.trailingTrivia().concat(result.typeAnnotation.trailingTrivia());
 
             return result.withTypeAnnotation(null)
-                         .withIdentifier(result.identifier.withTrailingTrivia(newTrailingTrivia));
+                         .withPropertyName(result.propertyName.withTrailingTrivia(newTrailingTrivia));
         }
 
         public visitCallSignature(node: CallSignatureSyntax): CallSignatureSyntax {

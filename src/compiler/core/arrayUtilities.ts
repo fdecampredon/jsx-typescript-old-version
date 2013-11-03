@@ -111,10 +111,10 @@ module TypeScript {
             return array[array.length - 1];
         }
 
-        public static lastOrDefault<T>(array: T[], predicate: (v: T) => boolean): T {
+        public static lastOrDefault<T>(array: T[], predicate: (v: T, index: number) => boolean): T {
             for (var i = array.length - 1; i >= 0; i--) {
                 var v = array[i];
-                if (predicate(v)) {
+                if (predicate(v, i)) {
                     return v;
                 }
             }

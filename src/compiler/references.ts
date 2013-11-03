@@ -5,7 +5,6 @@
 ///<reference path='diagnostics.ts' />
 ///<reference path='document.ts' />
 ///<reference path='flags.ts' />
-///<reference path='nodeTypes.ts' />
 ///<reference path='hashTable.ts' />
 ///<reference path='ast.ts' />
 ///<reference path='astHelpers.ts' />

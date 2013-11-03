@@ -121,6 +121,7 @@ module TypeScript {
 
         public visitHeritageClause(node: HeritageClauseSyntax): any {
             return node.update(
+                node.kind(),
                 this.visitToken(node.extendsOrImplementsKeyword),
                 this.visitSeparatedList(node.typeNames));
         }
@@ -161,7 +162,7 @@ module TypeScript {
 
         public visitVariableDeclarator(node: VariableDeclaratorSyntax): any {
             return node.update(
-                this.visitToken(node.identifier),
+                this.visitToken(node.propertyName),
                 node.typeAnnotation === null ? null : <TypeAnnotationSyntax>this.visitNode(node.typeAnnotation),
                 node.equalsValueClause === null ? null : <EqualsValueClauseSyntax>this.visitNode(node.equalsValueClause));
         }

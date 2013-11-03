@@ -113,7 +113,7 @@ module TypeScript {
                 var identifiers = createIntrinsicsObject<boolean>();
                 var pre = function (cur: TypeScript.AST) {
                     if (isValidAstNode(cur)) {
-                        if (cur.nodeType() === NodeType.Name) {
+                        if (cur.nodeType() === SyntaxKind.IdentifierName) {
                             var nodeText = (<TypeScript.Identifier>cur).valueText();
 
                             identifiers[nodeText] = true;
@@ -153,6 +153,23 @@ module TypeScript {
             // the old syntax tree.
             var oldSyntaxTree = this._syntaxTree;
 
+            if (textChangeRange !== null && Debug.shouldAssert(AssertionLevel.Normal)) {
+                var oldText = this._scriptSnapshot;
+                var newText = scriptSnapshot;
+
+                TypeScript.Debug.assert((oldText.getLength() - textChangeRange.span().length() + textChangeRange.newLength()) === newText.getLength());
+
+                if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
+                    var oldTextPrefix = oldText.getText(0, textChangeRange.span().start());
+                    var newTextPrefix = newText.getText(0, textChangeRange.span().start());
+                    TypeScript.Debug.assert(oldTextPrefix === newTextPrefix);
+
+                    var oldTextSuffix = oldText.getText(textChangeRange.span().end(), oldText.getLength());
+                    var newTextSuffix = newText.getText(textChangeRange.newSpan().end(), newText.getLength());
+                    TypeScript.Debug.assert(oldTextSuffix === newTextSuffix);
+                }
+            }
+
             var text = SimpleText.fromScriptSnapshot(scriptSnapshot);
 
             // If we don't have a text change, or we don't have an old syntax tree, then do a full
@@ -184,7 +201,7 @@ module TypeScript {
         }
 
         public getEnclosingDecl(ast: AST): PullDecl {
-            if (ast.nodeType() === NodeType.Script) {
+            if (ast.nodeType() === SyntaxKind.SourceUnit) {
                 return this._getDeclForAST(ast);
             }
 

@@ -31,7 +31,6 @@ var compilerSources = [
 	"flags.ts",
 	"hashTable.ts",
 	"identifierWalker.ts",
-	"nodeTypes.ts",
 	"pathUtils.ts",
 	"precompile.ts",
 	"process.ts",

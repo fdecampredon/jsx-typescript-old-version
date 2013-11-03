@@ -237,13 +237,13 @@ module TypeScript.Services {
             var parameterLimChar = caretPosition;
 
             if (ast.argumentList.typeArgumentList) {
-                parameterMinChar = Math.min(ast.argumentList.typeArgumentList.minChar);
-                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.minChar, ast.argumentList.typeArgumentList.limChar + ast.argumentList.typeArgumentList.trailingTriviaWidth));
+                parameterMinChar = Math.min(ast.argumentList.typeArgumentList.start());
+                parameterLimChar = Math.max(Math.max(ast.argumentList.typeArgumentList.start(), ast.argumentList.typeArgumentList.end() + ast.argumentList.typeArgumentList.trailingTriviaWidth()));
             }
 
             if (ast.argumentList.arguments) {
-                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.arguments.minChar);
-                parameterLimChar = Math.max(parameterLimChar, Math.max(ast.argumentList.arguments.minChar, ast.argumentList.arguments.limChar + ast.argumentList.arguments.trailingTriviaWidth));
+                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.arguments.start());
+                parameterLimChar = Math.max(parameterLimChar, Math.max(ast.argumentList.arguments.start(), ast.argumentList.arguments.end() + ast.argumentList.arguments.trailingTriviaWidth()));
             }
 
             result.parameterMinChar = parameterMinChar;
@@ -255,10 +255,10 @@ module TypeScript.Services {
                 result.currentParameterIsTypeParameter = true;
                 result.currentParameter = typeParameterInformation.argumentIndex;
             }
-            else if (ast.argumentList.arguments && ast.argumentList.arguments.members) {
+            else if (ast.argumentList.arguments && ast.argumentList.arguments.nonSeparatorCount() > 0) {
                 result.currentParameter = 0;
-                for (var index = 0; index < ast.argumentList.arguments.members.length; index++) {
-                    if (caretPosition > ast.argumentList.arguments.members[index].limChar + ast.argumentList.arguments.members[index].trailingTriviaWidth) {
+                for (var index = 0; index < ast.argumentList.arguments.nonSeparatorCount(); index++) {
+                    if (caretPosition > ast.argumentList.arguments.nonSeparatorAt(index).end() + ast.argumentList.arguments.nonSeparatorAt(index).trailingTriviaWidth()) {
                         result.currentParameter++;
                     }
                 }

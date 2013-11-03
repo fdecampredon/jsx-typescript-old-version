@@ -311,10 +311,10 @@ module TypeScript {
             // must have an initializer.
             var moduleDeclarations = enumContainerSymbol.getDeclarations();
 
-            if (moduleDeclarations.length > 1 && enumAST.enumElements.members.length > 0) {
+            if (moduleDeclarations.length > 1 && enumAST.enumElements.nonSeparatorCount() > 0) {
                 var multipleEnums = ArrayUtilities.where(moduleDeclarations, d => d.kind === PullElementKind.Enum).length > 1;
                 if (multipleEnums) {
-                    var firstVariable = <EnumElement>enumAST.enumElements.members[0];
+                    var firstVariable = <EnumElement>enumAST.enumElements.nonSeparatorAt(0);
                     if (!firstVariable.equalsValueClause) {
                         this.semanticInfoChain.addDiagnosticFromAST(
                             firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null);
@@ -436,7 +436,13 @@ module TypeScript {
             moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
             moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
 
-            this.semanticInfoChain.setSymbolForAST(moduleAST.name, moduleContainerTypeSymbol);
+            if (moduleAST.name) {
+                this.semanticInfoChain.setSymbolForAST(moduleAST.name, moduleContainerTypeSymbol);
+            }
+            else {
+                this.semanticInfoChain.setSymbolForAST(moduleAST.stringLiteral, moduleContainerTypeSymbol);
+            }
+
             this.semanticInfoChain.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
 
             if (!moduleInstanceSymbol && isInitializedModule) {
@@ -979,7 +985,7 @@ module TypeScript {
                 variableSymbol.addDeclaration(variableDeclaration);
                 variableDeclaration.setSymbol(variableSymbol);
 
-                this.semanticInfoChain.setSymbolForAST(varDeclAST.identifier, variableSymbol);
+                this.semanticInfoChain.setSymbolForAST(varDeclAST.propertyName, variableSymbol);
                 this.semanticInfoChain.setSymbolForAST(varDeclAST, variableSymbol);
             }
             else if (!parentHadSymbol) {
@@ -1220,11 +1226,13 @@ module TypeScript {
             var declKind = propertyDeclaration.kind;
 
             var ast = this.semanticInfoChain.getASTForDecl(propertyDeclaration);
-            var astName = ast.nodeType() === NodeType.MemberVariableDeclaration
-                ? (<MemberVariableDeclaration>ast).variableDeclarator.identifier
-                : ast.nodeType() === NodeType.PropertySignature
+            var astName = ast.nodeType() === SyntaxKind.MemberVariableDeclaration
+                ? (<MemberVariableDeclaration>ast).variableDeclarator.propertyName
+                : ast.nodeType() === SyntaxKind.PropertySignature
                     ? (<PropertySignature>ast).propertyName
-                    : (<VariableDeclarator>ast).identifier;
+                    : ast.nodeType() === SyntaxKind.Parameter
+                        ? (<Parameter>ast).identifier
+                        : (<VariableDeclarator>ast).propertyName;
 
             var isStatic = false;
             var isOptional = false;
@@ -1458,7 +1466,7 @@ module TypeScript {
             var declFlags = functionExpressionDeclaration.flags;
             var ast = this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration);
 
-            var parameters = ast.nodeType() === NodeType.SimpleArrowFunctionExpression
+            var parameters = ast.nodeType() === SyntaxKind.SimpleArrowFunctionExpression
                 ? Parameters.fromIdentifier((<SimpleArrowFunctionExpression>ast).identifier)
                 : Parameters.fromParameterList(getParameterList(ast));
             var funcExpAST = ast;
@@ -1479,9 +1487,9 @@ module TypeScript {
             functionSymbol.addDeclaration(functionExpressionDeclaration);
             functionTypeSymbol.addDeclaration(functionExpressionDeclaration);
 
-            var name = funcExpAST.nodeType() === NodeType.FunctionExpression
+            var name = funcExpAST.nodeType() === SyntaxKind.FunctionExpression
                 ? (<FunctionExpression>funcExpAST).identifier
-                : funcExpAST.nodeType() === NodeType.FunctionPropertyAssignment
+                : funcExpAST.nodeType() === SyntaxKind.FunctionPropertyAssignment
                     ? (<FunctionPropertyAssignment>funcExpAST).propertyName
                     : null;
             if (name) {
@@ -1630,7 +1638,7 @@ module TypeScript {
             methodSymbol.addDeclaration(methodDeclaration);
             methodTypeSymbol.addDeclaration(methodDeclaration);
 
-            var nameAST = methodAST.nodeType() === NodeType.MemberFunctionDeclaration
+            var nameAST = methodAST.nodeType() === SyntaxKind.MemberFunctionDeclaration
                 ? (<MemberFunctionDeclaration>methodAST).propertyName
                 : (<MethodSignature>methodAST).propertyName;
 

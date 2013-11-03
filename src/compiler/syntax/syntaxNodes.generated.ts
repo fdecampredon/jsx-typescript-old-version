@@ -644,21 +644,20 @@ module TypeScript {
     }
 
     export class HeritageClauseSyntax extends SyntaxNode {
+    private _kind: SyntaxKind;
 
-        constructor(public extendsOrImplementsKeyword: ISyntaxToken,
+        constructor(kind: SyntaxKind,
+                    public extendsOrImplementsKeyword: ISyntaxToken,
                     public typeNames: ISeparatedSyntaxList,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
 
+            this._kind = kind;
             Syntax.setParentForChildren(this);
         }
 
     public accept(visitor: ISyntaxVisitor): any {
         return visitor.visitHeritageClause(this);
-    }
-
-    public kind(): SyntaxKind {
-        return SyntaxKind.HeritageClause;
     }
 
     public childCount(): number {
@@ -673,13 +672,18 @@ module TypeScript {
         }
     }
 
-    public update(extendsOrImplementsKeyword: ISyntaxToken,
+    public kind(): SyntaxKind {
+        return this._kind;
+    }
+
+    public update(kind: SyntaxKind,
+                  extendsOrImplementsKeyword: ISyntaxToken,
                   typeNames: ISeparatedSyntaxList): HeritageClauseSyntax {
-        if (this.extendsOrImplementsKeyword === extendsOrImplementsKeyword && this.typeNames === typeNames) {
+        if (this._kind === kind && this.extendsOrImplementsKeyword === extendsOrImplementsKeyword && this.typeNames === typeNames) {
             return this;
         }
 
-        return new HeritageClauseSyntax(extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new HeritageClauseSyntax(kind, extendsOrImplementsKeyword, typeNames, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): HeritageClauseSyntax {
@@ -690,12 +694,16 @@ module TypeScript {
         return <HeritageClauseSyntax>super.withTrailingTrivia(trivia);
     }
 
+    public withKind(kind: SyntaxKind): HeritageClauseSyntax {
+        return this.update(kind, this.extendsOrImplementsKeyword, this.typeNames);
+    }
+
     public withExtendsOrImplementsKeyword(extendsOrImplementsKeyword: ISyntaxToken): HeritageClauseSyntax {
-        return this.update(extendsOrImplementsKeyword, this.typeNames);
+        return this.update(this._kind, extendsOrImplementsKeyword, this.typeNames);
     }
 
     public withTypeNames(typeNames: ISeparatedSyntaxList): HeritageClauseSyntax {
-        return this.update(this.extendsOrImplementsKeyword, typeNames);
+        return this.update(this._kind, this.extendsOrImplementsKeyword, typeNames);
     }
 
     public withTypeName(typeName: INameSyntax): HeritageClauseSyntax {
@@ -1098,7 +1106,7 @@ module TypeScript {
 
     export class VariableDeclaratorSyntax extends SyntaxNode {
 
-        constructor(public identifier: ISyntaxToken,
+        constructor(public propertyName: ISyntaxToken,
                     public typeAnnotation: TypeAnnotationSyntax,
                     public equalsValueClause: EqualsValueClauseSyntax,
                     parsedInStrictMode: boolean) {
@@ -1121,29 +1129,29 @@ module TypeScript {
 
     public childAt(slot: number): ISyntaxElement {
         switch (slot) {
-            case 0: return this.identifier;
+            case 0: return this.propertyName;
             case 1: return this.typeAnnotation;
             case 2: return this.equalsValueClause;
             default: throw Errors.invalidOperation();
         }
     }
 
-    public update(identifier: ISyntaxToken,
+    public update(propertyName: ISyntaxToken,
                   typeAnnotation: TypeAnnotationSyntax,
                   equalsValueClause: EqualsValueClauseSyntax): VariableDeclaratorSyntax {
-        if (this.identifier === identifier && this.typeAnnotation === typeAnnotation && this.equalsValueClause === equalsValueClause) {
+        if (this.propertyName === propertyName && this.typeAnnotation === typeAnnotation && this.equalsValueClause === equalsValueClause) {
             return this;
         }
 
-        return new VariableDeclaratorSyntax(identifier, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new VariableDeclaratorSyntax(propertyName, typeAnnotation, equalsValueClause, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
-    public static create(identifier: ISyntaxToken): VariableDeclaratorSyntax {
-        return new VariableDeclaratorSyntax(identifier, null, null, /*parsedInStrictMode:*/ false);
+    public static create(propertyName: ISyntaxToken): VariableDeclaratorSyntax {
+        return new VariableDeclaratorSyntax(propertyName, null, null, /*parsedInStrictMode:*/ false);
     }
 
-    public static create1(identifier: ISyntaxToken): VariableDeclaratorSyntax {
-        return new VariableDeclaratorSyntax(identifier, null, null, /*parsedInStrictMode:*/ false);
+    public static create1(propertyName: ISyntaxToken): VariableDeclaratorSyntax {
+        return new VariableDeclaratorSyntax(propertyName, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): VariableDeclaratorSyntax {
@@ -1154,16 +1162,16 @@ module TypeScript {
         return <VariableDeclaratorSyntax>super.withTrailingTrivia(trivia);
     }
 
-    public withIdentifier(identifier: ISyntaxToken): VariableDeclaratorSyntax {
-        return this.update(identifier, this.typeAnnotation, this.equalsValueClause);
+    public withPropertyName(propertyName: ISyntaxToken): VariableDeclaratorSyntax {
+        return this.update(propertyName, this.typeAnnotation, this.equalsValueClause);
     }
 
     public withTypeAnnotation(typeAnnotation: TypeAnnotationSyntax): VariableDeclaratorSyntax {
-        return this.update(this.identifier, typeAnnotation, this.equalsValueClause);
+        return this.update(this.propertyName, typeAnnotation, this.equalsValueClause);
     }
 
     public withEqualsValueClause(equalsValueClause: EqualsValueClauseSyntax): VariableDeclaratorSyntax {
-        return this.update(this.identifier, this.typeAnnotation, equalsValueClause);
+        return this.update(this.propertyName, this.typeAnnotation, equalsValueClause);
     }
 
     public isTypeScriptSpecific(): boolean {

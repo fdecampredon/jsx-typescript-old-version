@@ -340,7 +340,7 @@ module TypeScript.PrettyPrinter {
         }
 
         public visitVariableDeclarator(node: VariableDeclaratorSyntax): void {
-            this.appendToken(node.identifier);
+            this.appendToken(node.propertyName);
             this.appendNode(node.equalsValueClause);
         }
 

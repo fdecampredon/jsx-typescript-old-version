@@ -143,7 +143,7 @@ module TypeScript {
         }
 
         public visitVariableDeclarator(node: VariableDeclaratorSyntax): void {
-            this.visitToken(node.identifier);
+            this.visitToken(node.propertyName);
             this.visitOptionalNode(node.typeAnnotation);
             this.visitOptionalNode(node.equalsValueClause);
         }

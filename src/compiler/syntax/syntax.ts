@@ -72,7 +72,8 @@ module TypeScript.Syntax {
                 case SyntaxKind.CastExpression:
                     return (<CastExpressionSyntax>parent).type === nodeOrToken;
                 case SyntaxKind.TypeAnnotation:
-                case SyntaxKind.HeritageClause:
+                case SyntaxKind.ExtendsHeritageClause:
+                case SyntaxKind.ImplementsHeritageClause:
                 case SyntaxKind.TypeArgumentList:
                     return true;
                 // TODO: add more cases if necessary.  This list may not be complete.

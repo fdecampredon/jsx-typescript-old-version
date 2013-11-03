@@ -278,7 +278,8 @@ module TypeScript {
         TypeParameterList,
 
         // Clauses
-        HeritageClause,
+        ExtendsHeritageClause,
+        ImplementsHeritageClause,
         EqualsValueClause,
         CaseSwitchClause,
         DefaultSwitchClause,
@@ -302,6 +303,7 @@ module TypeScript {
         TypeAnnotation,
         ExternalModuleReference,
         ModuleNameModuleReference,
+        Last = ModuleNameModuleReference,
 
         FirstStandardKeyword = BreakKeyword,
         LastStandardKeyword = WithKeyword,
@@ -326,5 +328,8 @@ module TypeScript {
 
         FirstFixedWidth = FirstKeyword,
         LastFixedWidth = LastPunctuation,
+
+        FirstTrivia = WhitespaceTrivia,
+        LastTrivia = SkippedTokenTrivia,
     }
 }

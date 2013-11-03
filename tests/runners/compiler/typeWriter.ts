@@ -80,7 +80,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         for (var i = 0; i < element.fullWidth(); i++) {
             var ast = TypeScript.getAstAtPosition(this.document.script(), (<PositionedNode>element).position + i, false, false);
             while (ast) {
-                if (ast.limChar - ast.minChar === element.width()) {
+                if (ast.end() - ast.start() === element.width()) {
                     return ast;
                 }
                 ast = ast.parent;

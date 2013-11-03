@@ -228,7 +228,7 @@ module TypeScript {
             // past, then we have to stop searching at the position of that decl.  Otherwise, we
             // search the entire file.
             var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName()
-                ? doNotGoPastThisDecl.ast().minChar
+                ? doNotGoPastThisDecl.ast().start()
                 : -1
 
             var foundDecls = topLevelDecl.searchChildDecls(name, kind);
@@ -239,7 +239,7 @@ module TypeScript {
                 // This decl was at or past the stopping point.  Don't search any further.
                 if (doNotGoPastThisPosition !== -1 &&
                     foundDecl.ast() &&
-                    foundDecl.ast().minChar > doNotGoPastThisPosition) {
+                    foundDecl.ast().start() > doNotGoPastThisPosition) {
 
                     break;
                 }
@@ -585,7 +585,7 @@ module TypeScript {
 
             containingSymbol.addIndexSignature(indexSignature);
 
-            var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
+            var span = TextSpan.fromBounds(ast.start(), ast.end());
             var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl, span, containingDecl.semanticInfoChain());
             var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl, span, containingDecl.semanticInfoChain());
             indexSigDecl.setSignatureSymbol(indexSignature);
@@ -647,7 +647,7 @@ module TypeScript {
         }
 
         public diagnosticFromAST(ast: AST, diagnosticKey: string, arguments: any[]= null): Diagnostic {
-            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.minChar, ast.getLength(), diagnosticKey, arguments);
+            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, arguments);
         }
     }
 }

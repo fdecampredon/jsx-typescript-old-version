@@ -21,9 +21,9 @@ module TypeScript {
     function containingModuleHasExportAssignment(ast: AST): boolean {
         ast = ast.parent;
         while (ast) {
-            if (ast.nodeType() === NodeType.ModuleDeclaration) {
+            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>ast;
-                return ArrayUtilities.any(moduleDecl.moduleElements.members, m => m.nodeType() === NodeType.ExportAssignment);
+                return moduleDecl.moduleElements.any(m => m.nodeType() === SyntaxKind.ExportAssignment);
             }
 
             ast = ast.parent;
@@ -35,7 +35,7 @@ module TypeScript {
     function isParsingAmbientModule(ast: AST, context: DeclCollectionContext): boolean {
         ast = ast.parent;
         while (ast) {
-            if (ast.nodeType() === NodeType.ModuleDeclaration) {
+            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
                 if (hasModifier((<ModuleDeclaration>ast).modifiers, PullElementFlags.Ambient)) {
                     return true;
                 }
@@ -50,7 +50,7 @@ module TypeScript {
     function preCollectImportDecls(ast: AST, context: DeclCollectionContext): void {
         var importDecl = <ImportDeclaration>ast;
         var declFlags = PullElementFlags.None;
-        var span = TextSpan.fromBounds(importDecl.minChar, importDecl.limChar);
+        var span = TextSpan.fromBounds(importDecl.start(), importDecl.end());
 
         var parent = context.getParent();
 
@@ -68,7 +68,7 @@ module TypeScript {
     }
 
     function preCollectScriptDecls(script: Script, context: DeclCollectionContext): void {
-        var span = TextSpan.fromBounds(script.minChar, script.limChar);
+        var span = TextSpan.fromBounds(script.start(), script.end());
 
         var fileName = script.fileName();
         var decl = new RootPullDecl(
@@ -98,7 +98,7 @@ module TypeScript {
         declFlags |= PullElementFlags.Enum;
         kind = PullElementKind.Enum;
 
-        var span = TextSpan.fromBounds(enumDecl.minChar, enumDecl.limChar);
+        var span = TextSpan.fromBounds(enumDecl.start(), enumDecl.end());
 
         var enumDeclaration = new NormalPullDecl(enumName, enumDecl.identifier.text(), kind, declFlags, context.getParent(), span);
         context.semanticInfoChain.setDeclForAST(enumDecl, enumDeclaration);
@@ -118,7 +118,7 @@ module TypeScript {
     function createEnumElementDecls(propertyDecl: EnumElement, context: DeclCollectionContext): void {
         var parent = context.getParent();
 
-        var span = TextSpan.fromBounds(propertyDecl.minChar, propertyDecl.limChar);
+        var span = TextSpan.fromBounds(propertyDecl.start(), propertyDecl.end());
 
         var decl = new PullEnumElementDecl(propertyDecl.propertyName.valueText(), propertyDecl.propertyName.text(), parent, span);
         context.semanticInfoChain.setDeclForAST(propertyDecl, decl);
@@ -131,8 +131,7 @@ module TypeScript {
 
     function preCollectModuleDecls(moduleDecl: ModuleDeclaration, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
-        var modName = (<Identifier>moduleDecl.name).valueText();
-        var isDynamic = isQuoted(modName) || moduleDecl.isExternalModule;
+        var isDynamic = moduleDecl.stringLiteral !== null || moduleDecl.isExternalModule;
 
         if ((hasModifier(moduleDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(moduleDecl, context)) && !containingModuleHasExportAssignment(moduleDecl)) {
             declFlags |= PullElementFlags.Exported;
@@ -144,9 +143,12 @@ module TypeScript {
 
         var kind = isDynamic ? PullElementKind.DynamicModule : PullElementKind.Container;
 
-        var span = TextSpan.fromBounds(moduleDecl.minChar, moduleDecl.limChar);
+        var span = TextSpan.fromBounds(moduleDecl.start(), moduleDecl.end());
 
-        var decl = new NormalPullDecl(modName, (<Identifier>moduleDecl.name).text(), kind, declFlags, context.getParent(), span);
+        var valueText = moduleDecl.stringLiteral ? quoteStr(moduleDecl.stringLiteral.valueText()) : moduleDecl.name.valueText();
+        var text = moduleDecl.stringLiteral ? moduleDecl.stringLiteral.text() : moduleDecl.name.text();
+
+        var decl = new NormalPullDecl(valueText, text, kind, declFlags, context.getParent(), span);
         context.semanticInfoChain.setDeclForAST(moduleDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, moduleDecl);
 
@@ -164,8 +166,8 @@ module TypeScript {
     }
 
     function containsExecutableCode(members: ASTList): boolean {
-        for (var i = 0, n = members.members.length; i < n; i++) {
-            var member = members.members[i];
+        for (var i = 0, n = members.childCount(); i < n; i++) {
+            var member = members.childAt(i);
 
             // October 11, 2013
             // Internal modules are either instantiated or non-instantiated. A non-instantiated 
@@ -176,7 +178,7 @@ module TypeScript {
             // consider a module instantiated.  After all, if there is an import, but no actual
             // code that references the imported value, then there's no need to emit the import
             // or the module.
-            if (member.nodeType() === NodeType.ModuleDeclaration) {
+            if (member.nodeType() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>member;
 
                 // If we have a module in us, and it contains executable code, then we
@@ -185,7 +187,7 @@ module TypeScript {
                     return true;
                 }
             }
-            else if (member.nodeType() !== NodeType.InterfaceDeclaration && member.nodeType() !== NodeType.ImportDeclaration) {
+            else if (member.nodeType() !== SyntaxKind.InterfaceDeclaration && member.nodeType() !== SyntaxKind.ImportDeclaration) {
                 // If we contain anything that's not an interface declaration, then we contain
                 // executable code.
                 return true;
@@ -207,7 +209,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Ambient;
         }
 
-        var span = TextSpan.fromBounds(classDecl.minChar, classDecl.limChar);
+        var span = TextSpan.fromBounds(classDecl.start(), classDecl.end());
         var parent = context.getParent();
 
         var decl = new NormalPullDecl(classDecl.identifier.valueText(), classDecl.identifier.text(), PullElementKind.Class, declFlags, parent, span);
@@ -226,13 +228,13 @@ module TypeScript {
     function preCollectObjectTypeDecls(objectType: ObjectType, context: DeclCollectionContext): void {
         // if this is the 'body' of an interface declaration, then we don't want to create a decl 
         // here.  We want the interface decl to be the parent decl of all the members we visit.
-        if (objectType.parent.nodeType() === NodeType.InterfaceDeclaration) {
+        if (objectType.parent.nodeType() === SyntaxKind.InterfaceDeclaration) {
             return;
         }
 
         var declFlags = PullElementFlags.None;
 
-        var span = TextSpan.fromBounds(objectType.minChar, objectType.limChar);
+        var span = TextSpan.fromBounds(objectType.start(), objectType.end());
 
         var parent = context.getParent();
 
@@ -254,7 +256,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Exported;
         }
 
-        var span = TextSpan.fromBounds(interfaceDecl.minChar, interfaceDecl.limChar);
+        var span = TextSpan.fromBounds(interfaceDecl.start(), interfaceDecl.end());
         var parent = context.getParent();
 
         var decl = new NormalPullDecl(interfaceDecl.identifier.valueText(), interfaceDecl.identifier.text(), PullElementKind.Interface, declFlags, parent, span);
@@ -284,7 +286,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var span = TextSpan.fromBounds(argDecl.minChar, argDecl.limChar);
+        var span = TextSpan.fromBounds(argDecl.start(), argDecl.end());
 
         var decl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
 
@@ -331,7 +333,7 @@ module TypeScript {
     function preCollectTypeParameterDecl(typeParameterDecl: TypeParameter, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
 
-        var span = TextSpan.fromBounds(typeParameterDecl.minChar, typeParameterDecl.limChar);
+        var span = TextSpan.fromBounds(typeParameterDecl.start(), typeParameterDecl.end());
 
         var parent = context.getParent();
 
@@ -359,7 +361,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Optional;
         }
 
-        var span = TextSpan.fromBounds(propertyDecl.minChar, propertyDecl.limChar);
+        var span = TextSpan.fromBounds(propertyDecl.start(), propertyDecl.end());
 
         var decl = new NormalPullDecl(propertyDecl.propertyName.valueText(), propertyDecl.propertyName.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(propertyDecl, decl);
@@ -386,10 +388,10 @@ module TypeScript {
             declFlags |= PullElementFlags.Static;
         }
 
-        var span = TextSpan.fromBounds(memberDecl.minChar, memberDecl.limChar);
+        var span = TextSpan.fromBounds(memberDecl.start(), memberDecl.end());
         var parent = context.getParent();
 
-        var decl = new NormalPullDecl(memberDecl.variableDeclarator.identifier.valueText(), memberDecl.variableDeclarator.identifier.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(memberDecl.variableDeclarator.propertyName.valueText(), memberDecl.variableDeclarator.propertyName.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(memberDecl, decl);
         context.semanticInfoChain.setDeclForAST(memberDecl.variableDeclarator, decl);
         context.semanticInfoChain.setASTForDecl(decl, memberDecl);
@@ -412,7 +414,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Ambient;
         }
 
-        var span = TextSpan.fromBounds(varDecl.minChar, varDecl.limChar);
+        var span = TextSpan.fromBounds(varDecl.start(), varDecl.end());
 
         var parent = context.getParent();
 
@@ -420,7 +422,7 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var decl = new NormalPullDecl(varDecl.identifier.valueText(), varDecl.identifier.text(), declType, declFlags, parent, span);
+        var decl = new NormalPullDecl(varDecl.propertyName.valueText(), varDecl.propertyName.text(), declType, declFlags, parent, span);
         context.semanticInfoChain.setDeclForAST(varDecl, decl);
         context.semanticInfoChain.setASTForDecl(decl, varDecl);
 
@@ -435,7 +437,7 @@ module TypeScript {
     }
 
     function preCollectVarDecls(ast: AST, context: DeclCollectionContext): void {
-        if (ast.parent.nodeType() === NodeType.MemberVariableDeclaration) {
+        if (ast.parent.nodeType() === SyntaxKind.MemberVariableDeclaration) {
             // Already handled this node.
             return;
         }
@@ -449,7 +451,7 @@ module TypeScript {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.FunctionType;
 
-        var span = TextSpan.fromBounds(functionTypeDeclAST.minChar, functionTypeDeclAST.limChar);
+        var span = TextSpan.fromBounds(functionTypeDeclAST.start(), functionTypeDeclAST.end());
 
         var parent = context.getParent();
 
@@ -469,7 +471,7 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.ConstructorType;
 
-        var span = TextSpan.fromBounds(constructorTypeDeclAST.minChar, constructorTypeDeclAST.limChar);
+        var span = TextSpan.fromBounds(constructorTypeDeclAST.start(), constructorTypeDeclAST.end());
 
         var parent = context.getParent();
 
@@ -501,7 +503,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Signature;
         }
 
-        var span = TextSpan.fromBounds(funcDeclAST.minChar, funcDeclAST.limChar);
+        var span = TextSpan.fromBounds(funcDeclAST.start(), funcDeclAST.end());
 
         var parent = context.getParent();
 
@@ -525,12 +527,12 @@ module TypeScript {
 
         var declFlags = PullElementFlags.None;
 
-        if (functionExpressionDeclAST.nodeType() === NodeType.SimpleArrowFunctionExpression ||
-            functionExpressionDeclAST.nodeType() === NodeType.ParenthesizedArrowFunctionExpression) {
+        if (functionExpressionDeclAST.nodeType() === SyntaxKind.SimpleArrowFunctionExpression ||
+            functionExpressionDeclAST.nodeType() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
             declFlags |= PullElementFlags.ArrowFunction;
         }
 
-        var span = TextSpan.fromBounds(functionExpressionDeclAST.minChar, functionExpressionDeclAST.limChar);
+        var span = TextSpan.fromBounds(functionExpressionDeclAST.start(), functionExpressionDeclAST.end());
 
         var parent = context.getParent();
 
@@ -546,7 +548,7 @@ module TypeScript {
 
         context.pushParent(decl);
 
-        if (functionExpressionDeclAST.nodeType() === NodeType.SimpleArrowFunctionExpression) {
+        if (functionExpressionDeclAST.nodeType() === SyntaxKind.SimpleArrowFunctionExpression) {
             var simpleArrow = <SimpleArrowFunctionExpression>functionExpressionDeclAST;
             var declFlags = PullElementFlags.Public;
 
@@ -556,7 +558,7 @@ module TypeScript {
                 declFlags |= PullElementFlags.DeclaredInAWithBlock;
             }
 
-            var span = TextSpan.fromBounds(simpleArrow.identifier.minChar, simpleArrow.identifier.limChar);
+            var span = TextSpan.fromBounds(simpleArrow.identifier.start(), simpleArrow.identifier.end());
 
             var decl: PullDecl = new NormalPullDecl(simpleArrow.identifier.valueText(), simpleArrow.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
 
@@ -587,7 +589,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Signature;
         }
 
-        var span = TextSpan.fromBounds(funcDecl.minChar, funcDecl.limChar);
+        var span = TextSpan.fromBounds(funcDecl.start(), funcDecl.end());
         var parent = context.getParent();
 
         var decl = new NormalPullDecl(funcDecl.propertyName.valueText(), funcDecl.propertyName.text(), declType, declFlags, parent, span);
@@ -602,7 +604,7 @@ module TypeScript {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.IndexSignature;
 
-        var span = TextSpan.fromBounds(indexSignatureDeclAST.minChar, indexSignatureDeclAST.limChar);
+        var span = TextSpan.fromBounds(indexSignatureDeclAST.start(), indexSignatureDeclAST.end());
 
         var parent = context.getParent();
 
@@ -616,8 +618,8 @@ module TypeScript {
     // call signatures
     function createCallSignatureDeclaration(callSignature: CallSignature, context: DeclCollectionContext): void {
         var isChildOfObjectType = callSignature.parent && callSignature.parent.parent &&
-            callSignature.parent.nodeType() === NodeType.List &&
-            callSignature.parent.parent.nodeType() === NodeType.ObjectType;
+            callSignature.parent.nodeType() === SyntaxKind.SeparatedList &&
+            callSignature.parent.parent.nodeType() === SyntaxKind.ObjectType;
 
         if (!isChildOfObjectType) {
             // This was a call signature that was part of some other entity (like a function 
@@ -631,7 +633,7 @@ module TypeScript {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.CallSignature;
 
-        var span = TextSpan.fromBounds(callSignature.minChar, callSignature.limChar);
+        var span = TextSpan.fromBounds(callSignature.start(), callSignature.end());
 
         var parent = context.getParent();
 
@@ -657,7 +659,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Optional;
         }
 
-        var span = TextSpan.fromBounds(method.minChar, method.limChar);
+        var span = TextSpan.fromBounds(method.start(), method.end());
         var parent = context.getParent();
 
         var decl = new NormalPullDecl(method.propertyName.valueText(), method.propertyName.text(), declType, declFlags, parent, span);
@@ -672,7 +674,7 @@ module TypeScript {
         var declFlags = PullElementFlags.Signature;
         var declType = PullElementKind.ConstructSignature;
 
-        var span = TextSpan.fromBounds(constructSignatureDeclAST.minChar, constructSignatureDeclAST.limChar);
+        var span = TextSpan.fromBounds(constructSignatureDeclAST.start(), constructSignatureDeclAST.end());
 
         var parent = context.getParent();
 
@@ -696,7 +698,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Signature;
         }
 
-        var span = TextSpan.fromBounds(constructorDeclAST.minChar, constructorDeclAST.limChar);
+        var span = TextSpan.fromBounds(constructorDeclAST.start(), constructorDeclAST.end());
 
         var parent = context.getParent();
 
@@ -731,7 +733,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Public;
         }
 
-        var span = TextSpan.fromBounds(getAccessorDeclAST.minChar, getAccessorDeclAST.limChar);
+        var span = TextSpan.fromBounds(getAccessorDeclAST.start(), getAccessorDeclAST.end());
 
         var parent = context.getParent();
 
@@ -765,7 +767,7 @@ module TypeScript {
             declFlags |= PullElementFlags.Public;
         }
 
-        var span = TextSpan.fromBounds(setAccessorDeclAST.minChar, setAccessorDeclAST.limChar);
+        var span = TextSpan.fromBounds(setAccessorDeclAST.start(), setAccessorDeclAST.end());
 
         var parent = context.getParent();
 
@@ -784,7 +786,7 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.CatchBlock;
 
-        var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
+        var span = TextSpan.fromBounds(ast.start(), ast.end());
 
         var parent = context.getParent();
 
@@ -802,7 +804,7 @@ module TypeScript {
         var declType = PullElementKind.CatchVariable;
 
         // Create a decl for the catch clause variable.
-        var span = TextSpan.fromBounds(ast.identifier.minChar, ast.identifier.limChar);
+        var span = TextSpan.fromBounds(ast.identifier.start(), ast.identifier.end());
 
         var parent = context.getParent();
 
@@ -824,7 +826,7 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.WithBlock;
 
-        var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
+        var span = TextSpan.fromBounds(ast.start(), ast.end());
 
         var parent = context.getParent();
 
@@ -836,7 +838,7 @@ module TypeScript {
     }
 
     function preCollectObjectLiteralDecls(ast: AST, context: DeclCollectionContext): void {
-        var span = TextSpan.fromBounds(ast.minChar, ast.limChar);
+        var span = TextSpan.fromBounds(ast.start(), ast.end());
         var decl = new NormalPullDecl(
             "", "", PullElementKind.ObjectLiteral, PullElementFlags.None, context.getParent(), span);
 
@@ -848,7 +850,7 @@ module TypeScript {
 
     function preCollectSimplePropertyAssignmentDecls(propertyAssignment: SimplePropertyAssignment, context: DeclCollectionContext): void {
         var assignmentText = getPropertyAssignmentNameTextFromIdentifier(propertyAssignment.propertyName);
-        var span = TextSpan.fromBounds(propertyAssignment.minChar, propertyAssignment.limChar);
+        var span = TextSpan.fromBounds(propertyAssignment.start(), propertyAssignment.end());
 
         var decl = new NormalPullDecl(assignmentText.memberName, assignmentText.actualText, PullElementKind.Property, PullElementFlags.Public, context.getParent(), span);
 
@@ -863,7 +865,7 @@ module TypeScript {
 
     function preCollectFunctionPropertyAssignmentDecls(propertyAssignment: FunctionPropertyAssignment, context: DeclCollectionContext): void {
         var assignmentText = getPropertyAssignmentNameTextFromIdentifier(propertyAssignment.propertyName);
-        var span = TextSpan.fromBounds(propertyAssignment.minChar, propertyAssignment.limChar);
+        var span = TextSpan.fromBounds(propertyAssignment.start(), propertyAssignment.end());
 
         var decl = new NormalPullDecl(assignmentText.memberName, assignmentText.actualText, PullElementKind.Property, PullElementFlags.Public, context.getParent(), span);
 
@@ -876,98 +878,98 @@ module TypeScript {
 
     function preCollectDecls(ast: AST, context: DeclCollectionContext) {
         switch (ast.nodeType()) {
-            case NodeType.Script:
+            case SyntaxKind.SourceUnit:
                 preCollectScriptDecls(<Script>ast, context);
                 break;
-            case NodeType.EnumDeclaration:
+            case SyntaxKind.EnumDeclaration:
                 preCollectEnumDecls(<EnumDeclaration>ast, context);
                 break;
-            case NodeType.EnumElement:
+            case SyntaxKind.EnumElement:
                 createEnumElementDecls(<EnumElement>ast, context);
                 break;
-            case NodeType.ModuleDeclaration:
+            case SyntaxKind.ModuleDeclaration:
                 preCollectModuleDecls(<ModuleDeclaration>ast, context);
                 break;
-            case NodeType.ClassDeclaration:
+            case SyntaxKind.ClassDeclaration:
                 preCollectClassDecls(<ClassDeclaration>ast, context);
                 break;
-            case NodeType.InterfaceDeclaration:
+            case SyntaxKind.InterfaceDeclaration:
                 preCollectInterfaceDecls(<InterfaceDeclaration>ast, context);
                 break;
-            case NodeType.ObjectType:
+            case SyntaxKind.ObjectType:
                 preCollectObjectTypeDecls(<ObjectType>ast, context);
                 break;
-            case NodeType.Parameter:
+            case SyntaxKind.Parameter:
                 preCollectParameterDecl(<Parameter>ast, context);
                 break;
-            case NodeType.MemberVariableDeclaration:
+            case SyntaxKind.MemberVariableDeclaration:
                 createMemberVariableDeclaration(<MemberVariableDeclaration>ast, context);
                 break;
-            case NodeType.PropertySignature:
+            case SyntaxKind.PropertySignature:
                 createPropertySignature(<PropertySignature>ast, context);
                 break;
-            case NodeType.VariableDeclarator:
+            case SyntaxKind.VariableDeclarator:
                 preCollectVarDecls(ast, context);
                 break;
-            case NodeType.ConstructorDeclaration:
+            case SyntaxKind.ConstructorDeclaration:
                 createClassConstructorDeclaration(<ConstructorDeclaration>ast, context);
                 break;
-            case NodeType.GetAccessor:
+            case SyntaxKind.GetAccessor:
                 createGetAccessorDeclaration(<GetAccessor>ast, context);
                 break;
-            case NodeType.SetAccessor:
+            case SyntaxKind.SetAccessor:
                 createSetAccessorDeclaration(<SetAccessor>ast, context);
                 break;
-            case NodeType.FunctionExpression:
+            case SyntaxKind.FunctionExpression:
                 createFunctionExpressionDeclaration(<FunctionExpression>ast, context);
                 break;
-            case NodeType.MemberFunctionDeclaration:
+            case SyntaxKind.MemberFunctionDeclaration:
                 createMemberFunctionDeclaration(<MemberFunctionDeclaration>ast, context);
                 break;
-            case NodeType.IndexSignature:
+            case SyntaxKind.IndexSignature:
                 createIndexSignatureDeclaration(<IndexSignature>ast, context);
                 break;
-            case NodeType.FunctionType:
+            case SyntaxKind.FunctionType:
                 createFunctionTypeDeclaration(<FunctionType>ast, context);
                 break;
-            case NodeType.ConstructorType:
+            case SyntaxKind.ConstructorType:
                 createConstructorTypeDeclaration(<ConstructorType>ast, context);
                 break;
-            case NodeType.CallSignature:
+            case SyntaxKind.CallSignature:
                 createCallSignatureDeclaration(<CallSignature>ast, context);
                 break;
-            case NodeType.ConstructSignature:
+            case SyntaxKind.ConstructSignature:
                 createConstructSignatureDeclaration(<ConstructSignature>ast, context);
                 break;
-            case NodeType.MethodSignature:
+            case SyntaxKind.MethodSignature:
                 createMethodSignatureDeclaration(<MethodSignature>ast, context);
                 break;
-            case NodeType.FunctionDeclaration:
+            case SyntaxKind.FunctionDeclaration:
                 createFunctionDeclaration(<FunctionDeclaration>ast, context);
                 break;
-            case NodeType.SimpleArrowFunctionExpression:
-            case NodeType.ParenthesizedArrowFunctionExpression:
+            case SyntaxKind.SimpleArrowFunctionExpression:
+            case SyntaxKind.ParenthesizedArrowFunctionExpression:
                 createAnyFunctionExpressionDeclaration(ast, /*id*/null, context);
                 break;
-            case NodeType.ImportDeclaration:
+            case SyntaxKind.ImportDeclaration:
                 preCollectImportDecls(ast, context);
                 break;
-            case NodeType.TypeParameter:
+            case SyntaxKind.TypeParameter:
                 preCollectTypeParameterDecl(<TypeParameter>ast, context);
                 break;
-            case NodeType.CatchClause:
+            case SyntaxKind.CatchClause:
                 preCollectCatchDecls(<CatchClause>ast, context);
                 break;
-            case NodeType.WithStatement:
+            case SyntaxKind.WithStatement:
                 preCollectWithDecls(ast, context);
                 break;
-            case NodeType.ObjectLiteralExpression:
+            case SyntaxKind.ObjectLiteralExpression:
                 preCollectObjectLiteralDecls(ast, context);
                 break;
-            case NodeType.SimplePropertyAssignment:
+            case SyntaxKind.SimplePropertyAssignment:
                 preCollectSimplePropertyAssignmentDecls(<SimplePropertyAssignment>ast, context);
                 break;
-            case NodeType.FunctionPropertyAssignment:
+            case SyntaxKind.FunctionPropertyAssignment:
                 preCollectFunctionPropertyAssignmentDecls(<FunctionPropertyAssignment>ast, context);
                 break;
         }
@@ -1004,14 +1006,14 @@ module TypeScript {
     function postCollectDecls(ast: AST, context: DeclCollectionContext) {
         var currentDecl = context.getParent();
 
-        if (ast.nodeType() === NodeType.EnumDeclaration) {
+        if (ast.nodeType() === SyntaxKind.EnumDeclaration) {
             // Now that we've created all the child decls for the enum elements, determine what 
             // (if any) their constant values should be.
             computeEnumElementConstantValues(<EnumDeclaration>ast, currentDecl, context);
         }
 
         // Don't pop the topmost decl.  We return that out at the end.
-        if (ast.nodeType() !== NodeType.Script && currentDecl.ast() === ast) {
+        if (ast.nodeType() !== SyntaxKind.SourceUnit && currentDecl.ast() === ast) {
             context.popParent();
         }
     }
@@ -1030,8 +1032,8 @@ module TypeScript {
         var currentConstantValue = 0;
         var enumMemberDecls = <PullEnumElementDecl[]>enumDecl.getChildDecls();
 
-        for (var i = 0, n = ast.enumElements.members.length; i < n; i++) {
-            var enumElement = <EnumElement>ast.enumElements.members[i];
+        for (var i = 0, n = ast.enumElements.nonSeparatorCount(); i < n; i++) {
+            var enumElement = <EnumElement>ast.enumElements.nonSeparatorAt(i);
             var enumElementDecl = ArrayUtilities.first(enumMemberDecls, d =>
                 context.semanticInfoChain.getASTForDecl(d) === enumElement);
 
@@ -1077,8 +1079,8 @@ module TypeScript {
             // Always produce a value for an integer literal.
             var token: NumericLiteral;
             switch (expression.nodeType()) {
-                case NodeType.PlusExpression:
-                case NodeType.NegateExpression:
+                case SyntaxKind.PlusExpression:
+                case SyntaxKind.NegateExpression:
                     token = <NumericLiteral>(<PrefixUnaryExpression>expression).operand;
                     break;
                 default:
@@ -1086,14 +1088,14 @@ module TypeScript {
             }
 
             var value = token.value();
-            return value && expression.nodeType() === NodeType.NegateExpression ? -value : value;
+            return value && expression.nodeType() === SyntaxKind.NegateExpression ? -value : value;
         }
         else if (context.propagateEnumConstants) {
             // It wasn't a numeric literal.  However, the experimental switch to be more aggressive
             // about propogating enum constants is enabled.  See if we can still figure out the
             // constant value for this enum element.
             switch (expression.nodeType()) {
-                case NodeType.Name:
+                case SyntaxKind.IdentifierName:
                     // If it's a name, see if we already had an enum value named this.  If so,
                     // return that value.  Note, only search backward in the enum for a match.
                     var name = <Identifier>expression;
@@ -1101,7 +1103,7 @@ module TypeScript {
 
                     return matchingEnumElement ? matchingEnumElement.constantValue : null;
 
-                case NodeType.LeftShiftExpression:
+                case SyntaxKind.LeftShiftExpression:
                     // Handle the common case of a left shifted value.
                     var binaryExpression = <BinaryExpression>expression;
                     var left = computeEnumElementConstantValue(binaryExpression.left, enumMemberDecls, context);
@@ -1112,7 +1114,7 @@ module TypeScript {
 
                     return left << right;
 
-                case NodeType.BitwiseOrExpression:
+                case SyntaxKind.BitwiseOrExpression:
                     // Handle the common case of an or'ed value.
                     var binaryExpression = <BinaryExpression>expression;
                     var left = computeEnumElementConstantValue(binaryExpression.left, enumMemberDecls, context);
