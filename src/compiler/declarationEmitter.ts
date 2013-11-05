@@ -75,7 +75,7 @@ module TypeScript {
         }
 
         private emitDeclarationsForAST(ast: AST) {
-            switch (ast.nodeType()) {
+            switch (ast.kind()) {
                 case SyntaxKind.VariableStatement:
                     return this.emitDeclarationsForVariableStatement(<VariableStatement>ast);
                 case SyntaxKind.PropertySignature:
@@ -129,7 +129,7 @@ module TypeScript {
 
         private canEmitDeclarations(declAST: AST): boolean {
             var container = this.getEnclosingContainer(declAST);
-            if (container.nodeType() === SyntaxKind.ModuleDeclaration || container.nodeType() === SyntaxKind.SourceUnit) {
+            if (container.kind() === SyntaxKind.ModuleDeclaration || container.kind() === SyntaxKind.SourceUnit) {
                 var pullDecl = this.semanticInfoChain.getDeclForAST(declAST);
                 if (!hasFlag(pullDecl.flags, PullElementFlags.Exported)) {
                     var start = new Date().getTime();
@@ -170,13 +170,13 @@ module TypeScript {
 
                     // We may have been in the 'name' portion of an module declaration.  If so, we want the actual 
                     // container of *that* module declaration.  
-                    if (container.nodeType() === SyntaxKind.ModuleDeclaration &&
+                    if (container.kind() === SyntaxKind.ModuleDeclaration &&
                         isAnyNameOfModule(<ModuleDeclaration>container, declAST)) {
 
                         container = this.getEnclosingContainer(container);
                     }
 
-                    var isExternalModule = container.nodeType() === SyntaxKind.SourceUnit && this.document.isExternalModule();
+                    var isExternalModule = container.kind() === SyntaxKind.SourceUnit && this.document.isExternalModule();
 
                     // Emit export only for global export statements. 
                     // The container for this would be dynamic module which is whole file
@@ -186,7 +186,7 @@ module TypeScript {
                     }
 
                     // Emit declare only in global context
-                    if (isExternalModule || container.nodeType() == SyntaxKind.SourceUnit) {
+                    if (isExternalModule || container.kind() == SyntaxKind.SourceUnit) {
                         // Emit declare if not interface declaration or import declaration && is not from module
                         if (emitDeclare && typeString !== "interface" && typeString != "import") {
                             result += "declare ";
@@ -268,7 +268,7 @@ module TypeScript {
             if (this.declFile.onNewLine) {
                 this.emitIndent();
             }
-            else if (comment.nodeType() !== SyntaxKind.MultiLineCommentTrivia) {
+            else if (comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
                 this.emitIndent();
             }
@@ -281,7 +281,7 @@ module TypeScript {
                 this.declFile.Write(text[i]);
             }
 
-            if (comment.endsLine || comment.nodeType() !== SyntaxKind.MultiLineCommentTrivia) {
+            if (comment.endsLine || comment.kind() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
             }
             else {
@@ -782,7 +782,7 @@ module TypeScript {
             var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain);
             TypeScript.declarationEmitGetAccessorFunctionTime += new Date().getTime();
 
-            if (funcDecl.nodeType() === SyntaxKind.SetAccessor && accessorSymbol.getGetter()) {
+            if (funcDecl.kind() === SyntaxKind.SetAccessor && accessorSymbol.getGetter()) {
                 // Setter is being used to emit the type info. 
                 return;
             }
@@ -864,16 +864,16 @@ module TypeScript {
         }
 
         private emitHeritageClause(clause: HeritageClause) {
-            this.emitBaseList(clause.typeNames, clause.nodeType() === SyntaxKind.ExtendsHeritageClause);
+            this.emitBaseList(clause.typeNames, clause.kind() === SyntaxKind.ExtendsHeritageClause);
         }
 
         private getEnclosingContainer(ast: AST): AST {
             ast = ast.parent;
             while (ast) {
-                if (ast.nodeType() === SyntaxKind.ClassDeclaration ||
-                    ast.nodeType() === SyntaxKind.InterfaceDeclaration ||
-                    ast.nodeType() === SyntaxKind.ModuleDeclaration ||
-                    ast.nodeType() === SyntaxKind.SourceUnit) {
+                if (ast.kind() === SyntaxKind.ClassDeclaration ||
+                    ast.kind() === SyntaxKind.InterfaceDeclaration ||
+                    ast.kind() === SyntaxKind.ModuleDeclaration ||
+                    ast.kind() === SyntaxKind.SourceUnit) {
 
                     return ast;
                 }
@@ -955,7 +955,7 @@ module TypeScript {
                 }
                 this.declFile.Write("import ");
                 this.declFile.Write(importDeclAST.identifier.text() + " = ");
-                if (importDeclAST.moduleReference.nodeType() === SyntaxKind.ExternalModuleReference) {
+                if (importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
                     this.declFile.WriteLine("require(" + (<ExternalModuleReference>importDeclAST.moduleReference).stringLiteral.text() + ");");
                 }
                 else {
@@ -965,7 +965,7 @@ module TypeScript {
         }
 
         public getFullName(name: AST): string {
-            if (name.nodeType() === SyntaxKind.IdentifierName) {
+            if (name.kind() === SyntaxKind.IdentifierName) {
                 return (<Identifier>name).text();
             } else {
                 var dotExpr = <QualifiedName>name;
@@ -991,7 +991,7 @@ module TypeScript {
                 this.emitDeclarationComments(enumElement);
                 this.emitIndent();
                 this.declFile.Write(enumElement.propertyName.text());
-                if (enumElement.equalsValueClause && enumElement.equalsValueClause.value.nodeType() == SyntaxKind.NumericLiteral) {
+                if (enumElement.equalsValueClause && enumElement.equalsValueClause.value.kind() == SyntaxKind.NumericLiteral) {
                     this.declFile.Write(" = " + (<NumericLiteral>enumElement.equalsValueClause.value).text());
                 }
                 this.declFile.WriteLine(",");

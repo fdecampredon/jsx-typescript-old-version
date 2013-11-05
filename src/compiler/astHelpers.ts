@@ -31,12 +31,12 @@ module TypeScript {
             // We should emit *this* module if it contains any non-interface types. 
             // Caveat: if we have contain a module, then we should be emitted *if we want to
             // emit that inner module as well.
-            if (member.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (member.kind() === SyntaxKind.ModuleDeclaration) {
                 if (!moduleIsElided(<ModuleDeclaration>member)) {
                     return false;
                 }
             }
-            else if (member.nodeType() !== SyntaxKind.InterfaceDeclaration) {
+            else if (member.kind() !== SyntaxKind.InterfaceDeclaration) {
                 return false;
             }
         }
@@ -53,7 +53,7 @@ module TypeScript {
     }
 
     export function importDeclarationIsElided(importDeclAST: ImportDeclaration, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings = null) {
-        var isExternalModuleReference = importDeclAST.moduleReference.nodeType() === SyntaxKind.ExternalModuleReference;
+        var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
         var importDecl = semanticInfoChain.getDeclForAST(importDeclAST);
         var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
         var isAmdCodeGen = compilationSettings && compilationSettings.moduleGenTarget() == ModuleGenTarget.Asynchronous;
@@ -62,7 +62,7 @@ module TypeScript {
             isExported || // External module reference with export modifier always needs to be emitted
             !isAmdCodeGen) {// commonjs needs the var declaration for the import declaration
             var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
-            if (importDeclAST.moduleReference.nodeType() !== SyntaxKind.ExternalModuleReference) {
+            if (importDeclAST.moduleReference.kind() !== SyntaxKind.ExternalModuleReference) {
                 if (importSymbol.getExportAssignedValueSymbol()) {
                     return true;
                 }
@@ -96,7 +96,7 @@ module TypeScript {
 
         var pre = function (cur: AST, walker: IAstWalker) {
             if (isValidAstNode(cur)) {
-                var isInvalid1 = cur.nodeType() === SyntaxKind.ExpressionStatement && cur.width() === 0;
+                var isInvalid1 = cur.kind() === SyntaxKind.ExpressionStatement && cur.width() === 0;
 
                 if (isInvalid1) {
                     walker.options.goChildren = false;
@@ -111,13 +111,13 @@ module TypeScript {
                     // If "position === 3", the caret is at the "right" of the "r" character, which should be considered valid
                     var inclusive =
                         forceInclusive ||
-                        cur.nodeType() === SyntaxKind.IdentifierName ||
-                        cur.nodeType() === SyntaxKind.MemberAccessExpression ||
-                        cur.nodeType() === SyntaxKind.QualifiedName ||
-                        //cur.nodeType() === SyntaxKind.TypeRef ||
-                        cur.nodeType() === SyntaxKind.VariableDeclaration ||
-                        cur.nodeType() === SyntaxKind.VariableDeclarator ||
-                        cur.nodeType() === SyntaxKind.InvocationExpression ||
+                        cur.kind() === SyntaxKind.IdentifierName ||
+                        cur.kind() === SyntaxKind.MemberAccessExpression ||
+                        cur.kind() === SyntaxKind.QualifiedName ||
+                        //cur.kind() === SyntaxKind.TypeRef ||
+                        cur.kind() === SyntaxKind.VariableDeclaration ||
+                        cur.kind() === SyntaxKind.VariableDeclarator ||
+                        cur.kind() === SyntaxKind.InvocationExpression ||
                         pos === script.end() + script.trailingTriviaWidth(); // Special "EOF" case
 
                     var minChar = cur.start();
@@ -125,7 +125,7 @@ module TypeScript {
                     if (pos >= minChar && pos < limChar) {
 
                         // Ignore empty lists
-                        if ((cur.nodeType() !== SyntaxKind.List && cur.nodeType() !== SyntaxKind.SeparatedList) || cur.end() > cur.start()) {
+                        if ((cur.kind() !== SyntaxKind.List && cur.kind() !== SyntaxKind.SeparatedList) || cur.end() > cur.start()) {
                             // TODO: Since AST is sometimes not correct wrt to position, only add "cur" if it's better
                             //       than top of the stack.
                             if (top === null) {
@@ -163,7 +163,7 @@ module TypeScript {
         }
 
         return <HeritageClause>clauses.firstOrDefault((c: HeritageClause) =>
-            c.typeNames.nonSeparatorCount() > 0 && c.nodeType() === SyntaxKind.ExtendsHeritageClause);
+            c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ExtendsHeritageClause);
     }
 
     export function getImplementsHeritageClause(clauses: ASTList): HeritageClause {
@@ -172,12 +172,12 @@ module TypeScript {
         }
 
         return <HeritageClause>clauses.firstOrDefault((c: HeritageClause) =>
-            c.typeNames.nonSeparatorCount() > 0 && c.nodeType() === SyntaxKind.ImplementsHeritageClause);
+            c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ImplementsHeritageClause);
     }
 
     export function isCallExpression(ast: AST): boolean {
-        return (ast && ast.nodeType() === SyntaxKind.InvocationExpression) ||
-            (ast && ast.nodeType() === SyntaxKind.ObjectCreationExpression);
+        return (ast && ast.kind() === SyntaxKind.InvocationExpression) ||
+            (ast && ast.kind() === SyntaxKind.ObjectCreationExpression);
     }
 
     export function isCallExpressionTarget(ast: AST): boolean {
@@ -188,7 +188,7 @@ module TypeScript {
         var current = ast;
 
         while (current && current.parent) {
-            if (current.parent.nodeType() === SyntaxKind.MemberAccessExpression &&
+            if (current.parent.kind() === SyntaxKind.MemberAccessExpression &&
                 (<MemberAccessExpression>current.parent).name === current) {
                 current = current.parent;
                 continue;
@@ -198,7 +198,7 @@ module TypeScript {
         }
 
         if (current && current.parent) {
-            if (current.parent.nodeType() === SyntaxKind.InvocationExpression || current.parent.nodeType() === SyntaxKind.ObjectCreationExpression) {
+            if (current.parent.kind() === SyntaxKind.InvocationExpression || current.parent.kind() === SyntaxKind.ObjectCreationExpression) {
                 return current === (<InvocationExpression>current.parent).expression;
             }
         }
@@ -210,11 +210,11 @@ module TypeScript {
         if (ast === null || ast.parent === null) {
             return false;
         }
-        if (ast.nodeType() !== SyntaxKind.IdentifierName) {
+        if (ast.kind() !== SyntaxKind.IdentifierName) {
             return false;
         }
 
-        switch (ast.parent.nodeType()) {
+        switch (ast.parent.kind()) {
             case SyntaxKind.ClassDeclaration:
                 return (<ClassDeclaration>ast.parent).identifier === ast;
             case SyntaxKind.InterfaceDeclaration:
@@ -253,23 +253,23 @@ module TypeScript {
     export function isNameOfFunction(ast: AST) {
         return ast
             && ast.parent
-            && ast.nodeType() === SyntaxKind.IdentifierName
-            && ast.parent.nodeType() === SyntaxKind.FunctionDeclaration
+            && ast.kind() === SyntaxKind.IdentifierName
+            && ast.parent.kind() === SyntaxKind.FunctionDeclaration
             && (<FunctionDeclaration>ast.parent).identifier === ast;
     }
 
     export function isNameOfMemberFunction(ast: AST) {
         return ast
             && ast.parent
-            && ast.nodeType() === SyntaxKind.IdentifierName
-            && ast.parent.nodeType() === SyntaxKind.MemberFunctionDeclaration
+            && ast.kind() === SyntaxKind.IdentifierName
+            && ast.parent.kind() === SyntaxKind.MemberFunctionDeclaration
             && (<MemberFunctionDeclaration>ast.parent).propertyName === ast;
     }
 
     export function isNameOfMemberAccessExpression(ast: AST) {
         if (ast &&
             ast.parent &&
-            ast.parent.nodeType() === SyntaxKind.MemberAccessExpression &&
+            ast.parent.kind() === SyntaxKind.MemberAccessExpression &&
             (<MemberAccessExpression>ast.parent).name === ast) {
 
             return true;
@@ -281,7 +281,7 @@ module TypeScript {
     export function isRightSideOfQualifiedName(ast: AST) {
         if (ast &&
             ast.parent &&
-            ast.parent.nodeType() === SyntaxKind.QualifiedName &&
+            ast.parent.kind() === SyntaxKind.QualifiedName &&
             (<QualifiedName>ast.parent).right === ast) {
 
             return true;
@@ -347,7 +347,7 @@ module TypeScript {
     }
 
     export function isDeclarationAST(ast: AST): boolean {
-        switch (ast.nodeType()) {
+        switch (ast.kind()) {
             case SyntaxKind.VariableDeclarator:
                 return getVariableStatement(<VariableDeclarator>ast) !== null;
 
@@ -386,7 +386,7 @@ module TypeScript {
 
     export function docComments(ast: AST): Comment[] {
         if (isDeclarationAST(ast)) {
-            var preComments = ast.nodeType() === SyntaxKind.VariableDeclarator
+            var preComments = ast.kind() === SyntaxKind.VariableDeclarator
                 ? getVariableStatement(<VariableDeclarator>ast).preComments()
                 : ast.preComments();
 
@@ -412,7 +412,7 @@ module TypeScript {
 
 
     function isDocComment(comment: Comment) {
-        if (comment.nodeType() === SyntaxKind.MultiLineCommentTrivia) {
+        if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
             var fullText = comment.fullText();
             return fullText.charAt(2) === "*" && fullText.charAt(3) !== "/";
         }
@@ -422,7 +422,7 @@ module TypeScript {
 
     export function getParameterList(ast: AST): ParameterList {
         if (ast) {
-            switch (ast.nodeType()) {
+            switch (ast.kind()) {
                 case SyntaxKind.ConstructorDeclaration:
                     return (<ConstructorDeclaration>ast).parameterList;
                 case SyntaxKind.FunctionDeclaration:
@@ -457,7 +457,7 @@ module TypeScript {
 
     export function getType(ast: AST): AST {
         if (ast) {
-            switch (ast.nodeType()) {
+            switch (ast.kind()) {
                 case SyntaxKind.FunctionDeclaration:
                     return getType((<FunctionDeclaration>ast).callSignature);
                 case SyntaxKind.ParenthesizedArrowFunctionExpression:
@@ -502,9 +502,9 @@ module TypeScript {
 
     function getVariableStatement(variableDeclarator: VariableDeclarator): VariableStatement {
         if (variableDeclarator && variableDeclarator.parent && variableDeclarator.parent.parent && variableDeclarator.parent.parent.parent &&
-            variableDeclarator.parent.nodeType() === SyntaxKind.SeparatedList &&
-            variableDeclarator.parent.parent.nodeType() === SyntaxKind.VariableDeclaration &&
-            variableDeclarator.parent.parent.parent.nodeType() === SyntaxKind.VariableStatement) {
+            variableDeclarator.parent.kind() === SyntaxKind.SeparatedList &&
+            variableDeclarator.parent.parent.kind() === SyntaxKind.VariableDeclaration &&
+            variableDeclarator.parent.parent.parent.kind() === SyntaxKind.VariableStatement) {
 
             return <VariableStatement>variableDeclarator.parent.parent.parent;
         }
@@ -519,14 +519,14 @@ module TypeScript {
 
     export function isIntegerLiteralAST(expression: AST): boolean {
         if (expression) {
-            switch (expression.nodeType()) {
+            switch (expression.kind()) {
                 case SyntaxKind.PlusExpression:
                 case SyntaxKind.NegateExpression:
                     // Note: if there is a + or - sign, we can only allow a normal integer following
                     // (and not a hex integer).  i.e. -0xA is a legal expression, but it is not a 
                     // *literal*.
                     expression = (<PrefixUnaryExpression>expression).operand;
-                    return expression.nodeType() === SyntaxKind.NumericLiteral && IntegerUtilities.isInteger((<NumericLiteral>expression).text());
+                    return expression.kind() === SyntaxKind.NumericLiteral && IntegerUtilities.isInteger((<NumericLiteral>expression).text());
 
                 case SyntaxKind.NumericLiteral:
                     // If it doesn't have a + or -, then either an integer literal or a hex literal
@@ -541,7 +541,7 @@ module TypeScript {
 
     export function getEnclosingModuleDeclaration(ast: AST): ModuleDeclaration {
         while (ast) {
-            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (ast.kind() === SyntaxKind.ModuleDeclaration) {
                 return <ModuleDeclaration>ast;
             }
 

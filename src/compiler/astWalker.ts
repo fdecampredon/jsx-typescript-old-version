@@ -618,7 +618,7 @@ module TypeScript {
 
             this.pre(ast, this.state);
 
-            var walker = childrenWalkers[ast.nodeType()];
+            var walker = childrenWalkers[ast.kind()];
             if (walker) {
                 walker(ast, this);
             }
@@ -641,7 +641,7 @@ module TypeScript {
 
             this.pre(ast, this.state);
 
-            var walker = childrenWalkers[ast.nodeType()];
+            var walker = childrenWalkers[ast.kind()];
             if (walker) {
                 walker(ast, this);
             }
@@ -678,7 +678,7 @@ module TypeScript {
 
             if (this.options.goChildren) {
                 // Call the "walkChildren" function corresponding to "nodeType".
-                var walker = childrenWalkers[ast.nodeType()];
+                var walker = childrenWalkers[ast.kind()];
                 if (walker) {
                     walker(ast, this);
                 }

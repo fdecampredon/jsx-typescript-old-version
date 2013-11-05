@@ -61,7 +61,7 @@ module TypeScript {
         }
 
         return ast1 !== null && ast2 !== null &&
-               ast1.nodeType() === ast2.nodeType() &&
+               ast1.kind() === ast2.kind() &&
                ast1.structuralEquals(ast2, includingPosition);
     }
 
@@ -118,7 +118,7 @@ module TypeScript {
             return this.parent.fileName();
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             throw Errors.abstract();
         }
 
@@ -190,7 +190,7 @@ module TypeScript {
             return this._fileName;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.List;
         }
 
@@ -247,7 +247,7 @@ module TypeScript {
             return this._fileName;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SeparatedList;
         }
 
@@ -272,7 +272,7 @@ module TypeScript {
             return isDTSFile(this.fileName());
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SourceUnit;
         }
 
@@ -318,7 +318,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.IdentifierName;
         }
 
@@ -341,7 +341,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
 
@@ -363,7 +363,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ThisKeyword;
         }
 
@@ -385,7 +385,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SuperKeyword;
         }
 
@@ -405,7 +405,7 @@ module TypeScript {
         public valueText(): string { return this._valueText; }
         public value(): any { return this._value; }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.NumericLiteral;
         }
 
@@ -429,7 +429,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.RegularExpressionLiteral;
         }
     }
@@ -444,7 +444,7 @@ module TypeScript {
         public text(): string { return this._text; }
         public valueText(): string { return this._valueText; }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.StringLiteral;
         }
 
@@ -460,7 +460,7 @@ module TypeScript {
             type && (type.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeAnnotation;
         }
     }
@@ -478,7 +478,7 @@ module TypeScript {
             return this._valueText;
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
     }
@@ -489,7 +489,7 @@ module TypeScript {
             stringLiteral && (stringLiteral.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ExternalModuleReference;
         }
     }
@@ -500,7 +500,7 @@ module TypeScript {
             moduleName && (moduleName.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ModuleNameModuleReference;
         }
     }
@@ -512,7 +512,7 @@ module TypeScript {
             moduleReference && (moduleReference.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ImportDeclaration;
         }
 
@@ -529,7 +529,7 @@ module TypeScript {
             identifier && (identifier.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ExportAssignment;
         }
 
@@ -545,7 +545,7 @@ module TypeScript {
             typeParameters && (typeParameters.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeParameterList;
         }
     }
@@ -559,7 +559,7 @@ module TypeScript {
             classElements && (classElements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ClassDeclaration;
         }
 
@@ -581,7 +581,7 @@ module TypeScript {
             heritageClauses && (heritageClauses.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.InterfaceDeclaration;
         }
 
@@ -600,7 +600,7 @@ module TypeScript {
             typeNames && (typeNames.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
 
@@ -618,7 +618,7 @@ module TypeScript {
             moduleElements && (moduleElements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ModuleDeclaration;
         }
 
@@ -637,7 +637,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.FunctionDeclaration;
         }
 
@@ -655,7 +655,7 @@ module TypeScript {
             declaration && (declaration.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.VariableStatement;
         }
 
@@ -671,7 +671,7 @@ module TypeScript {
             declarators && (declarators.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.VariableDeclaration;
         }
 
@@ -689,7 +689,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.VariableDeclarator;
         }
     }
@@ -700,7 +700,7 @@ module TypeScript {
             value && (value.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.EqualsValueClause;
         }
     }
@@ -711,7 +711,7 @@ module TypeScript {
             operand && (operand.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
 
@@ -727,7 +727,7 @@ module TypeScript {
             expressions && (expressions.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ArrayLiteralExpression;
         }
 
@@ -738,7 +738,7 @@ module TypeScript {
     }
 
     export class OmittedExpression extends AST {
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.OmittedExpression;
         }
 
@@ -753,7 +753,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ParenthesizedExpression;
         }
 
@@ -776,7 +776,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SimpleArrowFunctionExpression;
         }
     }
@@ -789,7 +789,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ParenthesizedArrowFunctionExpression;
         }
     }
@@ -801,7 +801,7 @@ module TypeScript {
             right && (right.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.QualifiedName;
         }
 
@@ -818,7 +818,7 @@ module TypeScript {
             parameters && (parameters.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ParameterList;
         }
     }
@@ -831,7 +831,7 @@ module TypeScript {
             type && (type.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ConstructorType;
         }
     }
@@ -844,7 +844,7 @@ module TypeScript {
             type && (type.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.FunctionType;
         }
     }
@@ -855,7 +855,7 @@ module TypeScript {
             typeMembers && (typeMembers.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ObjectType;
         }
 
@@ -871,7 +871,7 @@ module TypeScript {
             type && (type.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ArrayType;
         }
 
@@ -887,7 +887,7 @@ module TypeScript {
             typeArguments && (typeArguments.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeArgumentList;
         }
     }
@@ -899,7 +899,7 @@ module TypeScript {
             typeArgumentList && (typeArgumentList.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.GenericType;
         }
 
@@ -916,7 +916,7 @@ module TypeScript {
             name && (name.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeQuery;
         }
 
@@ -932,7 +932,7 @@ module TypeScript {
             statements && (statements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.Block;
         }
 
@@ -950,7 +950,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.Parameter;
         }
     }
@@ -962,7 +962,7 @@ module TypeScript {
             name && (name.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.MemberAccessExpression;
         }
 
@@ -979,7 +979,7 @@ module TypeScript {
             operand && (operand.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
 
@@ -996,7 +996,7 @@ module TypeScript {
             argumentExpression && (argumentExpression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ElementAccessExpression;
         }
 
@@ -1014,7 +1014,7 @@ module TypeScript {
             argumentList && (argumentList.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.InvocationExpression;
         }
 
@@ -1032,7 +1032,7 @@ module TypeScript {
             arguments && (arguments.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ArgumentList;
         }
     }
@@ -1044,7 +1044,7 @@ module TypeScript {
             right && (right.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._nodeType;
         }
 
@@ -1063,7 +1063,7 @@ module TypeScript {
             whenFalse && (whenFalse.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ConditionalExpression;
         }
 
@@ -1081,7 +1081,7 @@ module TypeScript {
             callSignature && (callSignature.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ConstructSignature;
         }
     }
@@ -1093,7 +1093,7 @@ module TypeScript {
             callSignature && (callSignature.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.MethodSignature;
         }
     }
@@ -1105,7 +1105,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.IndexSignature;
         }
     }
@@ -1117,7 +1117,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.PropertySignature;
         }
     }
@@ -1130,7 +1130,7 @@ module TypeScript {
             typeAnnotation && (typeAnnotation.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.CallSignature;
         }
     }
@@ -1142,7 +1142,7 @@ module TypeScript {
             constraint && (constraint.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeParameter;
         }
 
@@ -1159,7 +1159,7 @@ module TypeScript {
             type && (type.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.Constraint;
         }
     }
@@ -1170,7 +1170,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ElseClause;
         }
 
@@ -1188,7 +1188,7 @@ module TypeScript {
             elseClause && (elseClause.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.IfStatement;
         }
 
@@ -1206,7 +1206,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ExpressionStatement;
         }
 
@@ -1223,7 +1223,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ConstructorDeclaration;
         }
     }
@@ -1236,7 +1236,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.MemberFunctionDeclaration;
         }
     }
@@ -1250,7 +1250,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.GetAccessor;
         }
     }
@@ -1263,7 +1263,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SetAccessor;
         }
     }
@@ -1274,7 +1274,7 @@ module TypeScript {
             variableDeclarator && (variableDeclarator.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.MemberVariableDeclaration;
         }
     }
@@ -1285,7 +1285,7 @@ module TypeScript {
             indexSignature && (indexSignature.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.IndexMemberDeclaration;
         }
     }
@@ -1296,7 +1296,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ThrowStatement;
         }
 
@@ -1312,7 +1312,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ReturnStatement;
         }
 
@@ -1329,7 +1329,7 @@ module TypeScript {
             argumentList && (argumentList.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ObjectCreationExpression;
         }
 
@@ -1347,7 +1347,7 @@ module TypeScript {
             switchClauses && (switchClauses.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SwitchStatement;
         }
 
@@ -1365,7 +1365,7 @@ module TypeScript {
             statements && (statements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.CaseSwitchClause;
         }
 
@@ -1382,7 +1382,7 @@ module TypeScript {
             statements && (statements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.DefaultSwitchClause;
         }
 
@@ -1397,7 +1397,7 @@ module TypeScript {
             super();
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.BreakStatement;
         }
 
@@ -1411,7 +1411,7 @@ module TypeScript {
             super();
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ContinueStatement;
         }
 
@@ -1430,7 +1430,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ForStatement;
         }
 
@@ -1452,7 +1452,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ForInStatement;
         }
 
@@ -1471,7 +1471,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.WhileStatement;
         }
 
@@ -1489,7 +1489,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.WithStatement;
         }
 
@@ -1507,7 +1507,7 @@ module TypeScript {
             enumElements && (enumElements.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.EnumDeclaration;
         }
     }
@@ -1519,7 +1519,7 @@ module TypeScript {
             equalsValueClause && (equalsValueClause.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.EnumElement;
         }
     }
@@ -1531,7 +1531,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.CastExpression;
         }
 
@@ -1548,7 +1548,7 @@ module TypeScript {
             propertyAssignments && (propertyAssignments.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.ObjectLiteralExpression;
         }
 
@@ -1565,7 +1565,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.SimplePropertyAssignment;
         }
     }
@@ -1578,7 +1578,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.FunctionPropertyAssignment;
         }
     }
@@ -1591,13 +1591,13 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.FunctionExpression;
         }
     }
 
     export class EmptyStatement extends AST {
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.EmptyStatement;
         }
 
@@ -1614,7 +1614,7 @@ module TypeScript {
             finallyClause && (finallyClause.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TryStatement;
         }
 
@@ -1634,7 +1634,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.CatchClause;
         }
 
@@ -1652,7 +1652,7 @@ module TypeScript {
             block && (block.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.FinallyClause;
         }
 
@@ -1669,7 +1669,7 @@ module TypeScript {
             statement && (statement.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.LabeledStatement;
         }
 
@@ -1687,7 +1687,7 @@ module TypeScript {
             condition && (condition.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.DoStatement;
         }
 
@@ -1704,7 +1704,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.TypeOfExpression;
         }
 
@@ -1720,7 +1720,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.DeleteExpression;
         }
 
@@ -1736,7 +1736,7 @@ module TypeScript {
             expression && (expression.parent = this);
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.VoidExpression;
         }
 
@@ -1747,7 +1747,7 @@ module TypeScript {
     }
 
     export class DebuggerStatement extends AST {
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return SyntaxKind.DebuggerStatement;
         }
     }
@@ -1771,7 +1771,7 @@ module TypeScript {
             return this._trivia.fullText();
         }
 
-        public nodeType(): SyntaxKind {
+        public kind(): SyntaxKind {
             return this._trivia.kind();
         }
 

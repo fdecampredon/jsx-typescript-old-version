@@ -21,13 +21,13 @@ module TypeScript {
     function containingModuleHasExportAssignment(ast: AST): boolean {
         ast = ast.parent;
         while (ast) {
-            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (ast.kind() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>ast;
-                return moduleDecl.moduleElements.any(m => m.nodeType() === SyntaxKind.ExportAssignment);
+                return moduleDecl.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
-            else if (ast.nodeType() === SyntaxKind.SourceUnit) {
+            else if (ast.kind() === SyntaxKind.SourceUnit) {
                 var sourceUnit = <Script>ast;
-                return sourceUnit.moduleElements.any(m => m.nodeType() === SyntaxKind.ExportAssignment);
+                return sourceUnit.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
 
             ast = ast.parent;
@@ -39,7 +39,7 @@ module TypeScript {
     function isParsingAmbientModule(ast: AST, context: DeclCollectionContext): boolean {
         ast = ast.parent;
         while (ast) {
-            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (ast.kind() === SyntaxKind.ModuleDeclaration) {
                 if (hasModifier((<ModuleDeclaration>ast).modifiers, PullElementFlags.Ambient)) {
                     return true;
                 }
@@ -237,7 +237,7 @@ module TypeScript {
     export function getModuleNames(name: AST, result?: Identifier[]): Identifier[] {
         result = result || [];
 
-        if (name.nodeType() === SyntaxKind.QualifiedName) {
+        if (name.kind() === SyntaxKind.QualifiedName) {
             getModuleNames((<QualifiedName>name).left, result);
             result.push((<QualifiedName>name).right);
         }
@@ -270,7 +270,7 @@ module TypeScript {
             // consider a module instantiated.  After all, if there is an import, but no actual
             // code that references the imported value, then there's no need to emit the import
             // or the module.
-            if (member.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (member.kind() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>member;
 
                 // If we have a module in us, and it contains executable code, then we
@@ -279,7 +279,7 @@ module TypeScript {
                     return true;
                 }
             }
-            else if (member.nodeType() !== SyntaxKind.InterfaceDeclaration && member.nodeType() !== SyntaxKind.ImportDeclaration) {
+            else if (member.kind() !== SyntaxKind.InterfaceDeclaration && member.kind() !== SyntaxKind.ImportDeclaration) {
                 // If we contain anything that's not an interface declaration, then we contain
                 // executable code.
                 return true;
@@ -320,7 +320,7 @@ module TypeScript {
     function preCollectObjectTypeDecls(objectType: ObjectType, context: DeclCollectionContext): void {
         // if this is the 'body' of an interface declaration, then we don't want to create a decl 
         // here.  We want the interface decl to be the parent decl of all the members we visit.
-        if (objectType.parent.nodeType() === SyntaxKind.InterfaceDeclaration) {
+        if (objectType.parent.kind() === SyntaxKind.InterfaceDeclaration) {
             return;
         }
 
@@ -529,7 +529,7 @@ module TypeScript {
     }
 
     function preCollectVarDecls(ast: AST, context: DeclCollectionContext): void {
-        if (ast.parent.nodeType() === SyntaxKind.MemberVariableDeclaration) {
+        if (ast.parent.kind() === SyntaxKind.MemberVariableDeclaration) {
             // Already handled this node.
             return;
         }
@@ -619,8 +619,8 @@ module TypeScript {
 
         var declFlags = PullElementFlags.None;
 
-        if (functionExpressionDeclAST.nodeType() === SyntaxKind.SimpleArrowFunctionExpression ||
-            functionExpressionDeclAST.nodeType() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
+        if (functionExpressionDeclAST.kind() === SyntaxKind.SimpleArrowFunctionExpression ||
+            functionExpressionDeclAST.kind() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
             declFlags |= PullElementFlags.ArrowFunction;
         }
 
@@ -640,7 +640,7 @@ module TypeScript {
 
         context.pushParent(decl);
 
-        if (functionExpressionDeclAST.nodeType() === SyntaxKind.SimpleArrowFunctionExpression) {
+        if (functionExpressionDeclAST.kind() === SyntaxKind.SimpleArrowFunctionExpression) {
             var simpleArrow = <SimpleArrowFunctionExpression>functionExpressionDeclAST;
             var declFlags = PullElementFlags.Public;
 
@@ -710,8 +710,8 @@ module TypeScript {
     // call signatures
     function createCallSignatureDeclaration(callSignature: CallSignature, context: DeclCollectionContext): void {
         var isChildOfObjectType = callSignature.parent && callSignature.parent.parent &&
-            callSignature.parent.nodeType() === SyntaxKind.SeparatedList &&
-            callSignature.parent.parent.nodeType() === SyntaxKind.ObjectType;
+            callSignature.parent.kind() === SyntaxKind.SeparatedList &&
+            callSignature.parent.parent.kind() === SyntaxKind.ObjectType;
 
         if (!isChildOfObjectType) {
             // This was a call signature that was part of some other entity (like a function 
@@ -969,7 +969,7 @@ module TypeScript {
     }
 
     function preCollectDecls(ast: AST, context: DeclCollectionContext) {
-        switch (ast.nodeType()) {
+        switch (ast.kind()) {
             case SyntaxKind.SourceUnit:
                 preCollectScriptDecls(<Script>ast, context);
                 break;
@@ -1100,13 +1100,13 @@ module TypeScript {
 
         // We only want to pop the module decls when we're done with the module itself, and not 
         // when we are done with the module names.
-        if (ast.nodeType() === SyntaxKind.IdentifierName || ast.nodeType() === SyntaxKind.StringLiteral) {
+        if (ast.kind() === SyntaxKind.IdentifierName || ast.kind() === SyntaxKind.StringLiteral) {
             if (currentDecl.kind === PullElementKind.Container || currentDecl.kind === PullElementKind.DynamicModule) {
                 return;
             }
         }
 
-        if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
+        if (ast.kind() === SyntaxKind.ModuleDeclaration) {
             var moduleDeclaration = <ModuleDeclaration>ast;
             if (moduleDeclaration.stringLiteral) {
                 Debug.assert(currentDecl.ast() === moduleDeclaration.stringLiteral);
@@ -1123,7 +1123,7 @@ module TypeScript {
             }
         }
 
-        if (ast.nodeType() === SyntaxKind.EnumDeclaration) {
+        if (ast.kind() === SyntaxKind.EnumDeclaration) {
             // Now that we've created all the child decls for the enum elements, determine what 
             // (if any) their constant values should be.
             computeEnumElementConstantValues(<EnumDeclaration>ast, currentDecl, context);
@@ -1196,7 +1196,7 @@ module TypeScript {
         if (isIntegerLiteralAST(expression)) {
             // Always produce a value for an integer literal.
             var token: NumericLiteral;
-            switch (expression.nodeType()) {
+            switch (expression.kind()) {
                 case SyntaxKind.PlusExpression:
                 case SyntaxKind.NegateExpression:
                     token = <NumericLiteral>(<PrefixUnaryExpression>expression).operand;
@@ -1206,13 +1206,13 @@ module TypeScript {
             }
 
             var value = token.value();
-            return value && expression.nodeType() === SyntaxKind.NegateExpression ? -value : value;
+            return value && expression.kind() === SyntaxKind.NegateExpression ? -value : value;
         }
         else if (context.propagateEnumConstants) {
             // It wasn't a numeric literal.  However, the experimental switch to be more aggressive
             // about propogating enum constants is enabled.  See if we can still figure out the
             // constant value for this enum element.
-            switch (expression.nodeType()) {
+            switch (expression.kind()) {
                 case SyntaxKind.IdentifierName:
                     // If it's a name, see if we already had an enum value named this.  If so,
                     // return that value.  Note, only search backward in the enum for a match.

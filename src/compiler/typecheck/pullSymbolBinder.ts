@@ -393,7 +393,7 @@ module TypeScript {
             var moduleDeclAST: AST = getEnclosingModuleDeclaration(moduleNameAST);
             if (!moduleDeclAST) {
                 Debug.assert(moduleContainerDecl.kind === PullElementKind.DynamicModule);
-                Debug.assert(moduleNameAST.nodeType() === SyntaxKind.SourceUnit);
+                Debug.assert(moduleNameAST.kind() === SyntaxKind.SourceUnit);
                 // This is the module decl for the top level synthesized external module.
                 moduleDeclAST = moduleNameAST;
             }
@@ -1230,11 +1230,11 @@ module TypeScript {
             var declKind = propertyDeclaration.kind;
 
             var ast = this.semanticInfoChain.getASTForDecl(propertyDeclaration);
-            var astName = ast.nodeType() === SyntaxKind.MemberVariableDeclaration
+            var astName = ast.kind() === SyntaxKind.MemberVariableDeclaration
                 ? (<MemberVariableDeclaration>ast).variableDeclarator.propertyName
-                : ast.nodeType() === SyntaxKind.PropertySignature
+                : ast.kind() === SyntaxKind.PropertySignature
                     ? (<PropertySignature>ast).propertyName
-                    : ast.nodeType() === SyntaxKind.Parameter
+                    : ast.kind() === SyntaxKind.Parameter
                         ? (<Parameter>ast).identifier
                         : (<VariableDeclarator>ast).propertyName;
 
@@ -1470,7 +1470,7 @@ module TypeScript {
             var declFlags = functionExpressionDeclaration.flags;
             var ast = this.semanticInfoChain.getASTForDecl(functionExpressionDeclaration);
 
-            var parameters = ast.nodeType() === SyntaxKind.SimpleArrowFunctionExpression
+            var parameters = ast.kind() === SyntaxKind.SimpleArrowFunctionExpression
                 ? Parameters.fromIdentifier((<SimpleArrowFunctionExpression>ast).identifier)
                 : Parameters.fromParameterList(getParameterList(ast));
             var funcExpAST = ast;
@@ -1491,9 +1491,9 @@ module TypeScript {
             functionSymbol.addDeclaration(functionExpressionDeclaration);
             functionTypeSymbol.addDeclaration(functionExpressionDeclaration);
 
-            var name = funcExpAST.nodeType() === SyntaxKind.FunctionExpression
+            var name = funcExpAST.kind() === SyntaxKind.FunctionExpression
                 ? (<FunctionExpression>funcExpAST).identifier
-                : funcExpAST.nodeType() === SyntaxKind.FunctionPropertyAssignment
+                : funcExpAST.kind() === SyntaxKind.FunctionPropertyAssignment
                     ? (<FunctionPropertyAssignment>funcExpAST).propertyName
                     : null;
             if (name) {
@@ -1642,7 +1642,7 @@ module TypeScript {
             methodSymbol.addDeclaration(methodDeclaration);
             methodTypeSymbol.addDeclaration(methodDeclaration);
 
-            var nameAST = methodAST.nodeType() === SyntaxKind.MemberFunctionDeclaration
+            var nameAST = methodAST.kind() === SyntaxKind.MemberFunctionDeclaration
                 ? (<MemberFunctionDeclaration>methodAST).propertyName
                 : (<MethodSignature>methodAST).propertyName;
 

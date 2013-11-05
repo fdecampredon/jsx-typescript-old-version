@@ -39,7 +39,7 @@ module TypeScript.Services {
             /// TODO: this does not allow getting references on "constructor"
 
             var topNode = TypeScript.getAstAtPosition(script, pos);
-            if (topNode === null || (requireName && topNode.nodeType() !== TypeScript.SyntaxKind.IdentifierName)) {
+            if (topNode === null || (requireName && topNode.kind() !== TypeScript.SyntaxKind.IdentifierName)) {
                 this.logger.log("No name found at the given position");
                 return null;
             }
@@ -119,8 +119,8 @@ module TypeScript.Services {
                 // The compiler shares class method type parameter symbols.  So if we get one, 
                 // scope our search down to the method ast so we don't find other hits elsewhere.
                 while (ast) {
-                    if (ast.nodeType() === TypeScript.SyntaxKind.FunctionDeclaration ||
-                        ast.nodeType() === TypeScript.SyntaxKind.MemberFunctionDeclaration) {
+                    if (ast.kind() === TypeScript.SyntaxKind.FunctionDeclaration ||
+                        ast.kind() === TypeScript.SyntaxKind.MemberFunctionDeclaration) {
                         return ast;
                     }
 
@@ -157,7 +157,7 @@ module TypeScript.Services {
             var script = document.script();
 
             var node = TypeScript.getAstAtPosition(script, position);
-            if (node === null || node.nodeType() !== TypeScript.SyntaxKind.IdentifierName) {
+            if (node === null || node.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 return [];
             }
 
@@ -174,7 +174,7 @@ module TypeScript.Services {
             var script = document.script();
 
             var ast = TypeScript.getAstAtPosition(script, pos);
-            if (ast === null || ast.nodeType() !== TypeScript.SyntaxKind.IdentifierName) {
+            if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 this.logger.log("No identifier at the specified location.");
                 return result;
             }
@@ -282,7 +282,7 @@ module TypeScript.Services {
 
                 possiblePositions.forEach(p => {
                     var nameAST = TypeScript.getAstAtPosition(script, p);
-                    if (nameAST === null || nameAST.nodeType() !== TypeScript.SyntaxKind.IdentifierName) {
+                    if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                         return;
                     }
                     var searchSymbolInfoAtPosition = this.compiler.getSymbolInformationFromAST(nameAST, document);
@@ -328,7 +328,7 @@ module TypeScript.Services {
                     var nameAST = TypeScript.getAstAtPosition(script, p);
 
                     // Compare the length so we filter out strict superstrings of the symbol we are looking for
-                    if (nameAST === null || nameAST.nodeType() !== TypeScript.SyntaxKind.IdentifierName || (nameAST.end() - nameAST.start() !== symbolName.length)) {
+                    if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName || (nameAST.end() - nameAST.start() !== symbolName.length)) {
                         return;
                     }
 
@@ -350,7 +350,7 @@ module TypeScript.Services {
         private isWriteAccess(current: TypeScript.AST): boolean {
             var parent = current.parent;
             if (parent !== null) {
-                var parentNodeType = parent.nodeType();
+                var parentNodeType = parent.kind();
                 switch (parentNodeType) {
                     case TypeScript.SyntaxKind.ClassDeclaration:
                         return (<TypeScript.ClassDeclaration>parent).identifier === current;
@@ -478,8 +478,8 @@ module TypeScript.Services {
 
             // Find call expression
             while (node) {
-                if (node.nodeType() === TypeScript.SyntaxKind.InvocationExpression ||
-                    node.nodeType() === TypeScript.SyntaxKind.ObjectCreationExpression ||  // Valid call or new expressions
+                if (node.kind() === TypeScript.SyntaxKind.InvocationExpression ||
+                    node.kind() === TypeScript.SyntaxKind.ObjectCreationExpression ||  // Valid call or new expressions
                     (isSignatureHelpBlocker(node) && position > node.start())) // Its a declaration node - call expression cannot be in parent scope
                 {
                     break;
@@ -492,13 +492,13 @@ module TypeScript.Services {
                 return null;
             }
 
-            if (node.nodeType() !== TypeScript.SyntaxKind.InvocationExpression && node.nodeType() !== TypeScript.SyntaxKind.ObjectCreationExpression) {
+            if (node.kind() !== TypeScript.SyntaxKind.InvocationExpression && node.kind() !== TypeScript.SyntaxKind.ObjectCreationExpression) {
                 this.logger.log("No call expression or generic arguments found for the given position");
                 return null;
             }
 
             var callExpression = <TypeScript.InvocationExpression>node;
-            var isNew = (callExpression.nodeType() === TypeScript.SyntaxKind.ObjectCreationExpression);
+            var isNew = (callExpression.kind() === TypeScript.SyntaxKind.ObjectCreationExpression);
 
             if (isNew && callExpression.argumentList === null) {
                 this.logger.log("No signature help for a object creation expression without arguments");
@@ -542,7 +542,7 @@ module TypeScript.Services {
 
             // Get the identifier information
             var ast = TypeScript.getAstAtPosition(script, genericTypeArgumentListInfo.genericIdentifer.start());
-            if (ast === null || ast.nodeType() !== TypeScript.SyntaxKind.IdentifierName) {
+            if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 throw new Error("getTypeParameterSignatureAtPosition: " + TypeScript.getLocalizedText(TypeScript.DiagnosticCode.Looking_up_path_for_identifier_token_did_not_result_in_an_identifer, null));
             }
 
@@ -979,10 +979,10 @@ module TypeScript.Services {
                 return null;
             }
 
-            if (ast.nodeType() === SyntaxKind.ParameterList && ast.parent.nodeType() === SyntaxKind.ConstructorDeclaration) {
+            if (ast.kind() === SyntaxKind.ParameterList && ast.parent.kind() === SyntaxKind.ConstructorDeclaration) {
                 ast = ast.parent;
             }
-            switch (ast.nodeType()) {
+            switch (ast.kind()) {
                 default:
                     return null;
                 case TypeScript.SyntaxKind.ConstructorDeclaration:
@@ -1035,14 +1035,14 @@ module TypeScript.Services {
                 symbol = declarationInformation.symbol;
                 enclosingScopeSymbol = declarationInformation.enclosingScopeSymbol;
 
-                if (node.nodeType() === TypeScript.SyntaxKind.ConstructorDeclaration ||
-                    node.nodeType() === TypeScript.SyntaxKind.FunctionDeclaration ||
-                    node.nodeType() === TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression ||
-                    node.nodeType() === TypeScript.SyntaxKind.SimpleArrowFunctionExpression ||
-                    node.nodeType() === TypeScript.SyntaxKind.MemberFunctionDeclaration ||
+                if (node.kind() === TypeScript.SyntaxKind.ConstructorDeclaration ||
+                    node.kind() === TypeScript.SyntaxKind.FunctionDeclaration ||
+                    node.kind() === TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression ||
+                    node.kind() === TypeScript.SyntaxKind.SimpleArrowFunctionExpression ||
+                    node.kind() === TypeScript.SyntaxKind.MemberFunctionDeclaration ||
                     TypeScript.isNameOfFunction(node) ||
                     TypeScript.isNameOfMemberFunction(node)) {
-                    var funcDecl = node.nodeType() === TypeScript.SyntaxKind.IdentifierName ? node.parent : node;
+                    var funcDecl = node.kind() === TypeScript.SyntaxKind.IdentifierName ? node.parent : node;
                     if (symbol && symbol.kind != TypeScript.PullElementKind.Property) {
                         var signatureInfo = TypeScript.PullHelpers.getSignatureForFuncDecl(this.compiler.getDeclForAST(funcDecl));
                         _isCallExpression = true;
@@ -1144,7 +1144,7 @@ module TypeScript.Services {
 
             var node = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
 
-            if (node && node.nodeType() === TypeScript.SyntaxKind.IdentifierName &&
+            if (node && node.kind() === TypeScript.SyntaxKind.IdentifierName &&
                 node.start() === node.end()) {
                 // Ignore missing name nodes
                 node = node.parent;
@@ -1152,30 +1152,30 @@ module TypeScript.Services {
 
             var isRightOfDot = false;
             if (node &&
-                node.nodeType() === TypeScript.SyntaxKind.MemberAccessExpression &&
+                node.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
                 (<TypeScript.MemberAccessExpression>node).expression.end() < position) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.MemberAccessExpression>node).expression;
             }
             else if (node &&
-                node.nodeType() === TypeScript.SyntaxKind.QualifiedName &&
+                node.kind() === TypeScript.SyntaxKind.QualifiedName &&
                 (<TypeScript.QualifiedName>node).left.end() < position) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.QualifiedName>node).left;
             }
             else if (node && node.parent &&
-                node.nodeType() === TypeScript.SyntaxKind.IdentifierName &&
-                node.parent.nodeType() === TypeScript.SyntaxKind.MemberAccessExpression &&
+                node.kind() === TypeScript.SyntaxKind.IdentifierName &&
+                node.parent.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
                 (<TypeScript.MemberAccessExpression>node.parent).name === node) {
 
                 isRightOfDot = true;
                 node = (<TypeScript.MemberAccessExpression>node.parent).expression;
             }
             else if (node && node.parent &&
-                node.nodeType() === TypeScript.SyntaxKind.IdentifierName &&
-                node.parent.nodeType() === TypeScript.SyntaxKind.QualifiedName &&
+                node.kind() === TypeScript.SyntaxKind.IdentifierName &&
+                node.parent.kind() === TypeScript.SyntaxKind.QualifiedName &&
                 (<TypeScript.QualifiedName>node.parent).right === node) {
 
                 isRightOfDot = true;
@@ -1204,11 +1204,11 @@ module TypeScript.Services {
                     var path = TypeScript.getAstAtPosition(script, searchPosition);
                     // Get the object literal node
 
-                    while (node && node.nodeType() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
+                    while (node && node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
                         node = node.parent;
                     }
 
-                    if (!node || node.nodeType() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
+                    if (!node || node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
                         throw TypeScript.Errors.invalidOperation("AST Path look up did not result in the same node as Fidelity Syntax Tree look up.");
                     }
 
@@ -1806,7 +1806,7 @@ module TypeScript.Services {
 
     function isSignatureHelpBlocker(ast: TypeScript.AST): boolean {
         if (ast) {
-            switch (ast.nodeType()) {
+            switch (ast.kind()) {
                 case TypeScript.SyntaxKind.ClassDeclaration:
                 case TypeScript.SyntaxKind.InterfaceDeclaration:
                 case TypeScript.SyntaxKind.ModuleDeclaration:

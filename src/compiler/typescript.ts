@@ -594,7 +594,7 @@ module TypeScript {
             }
 
             var enclosingDecl = resolver.getEnclosingDecl(decl);
-            if (ast.nodeType() === SyntaxKind.GetAccessor || ast.nodeType() === SyntaxKind.SetAccessor) {
+            if (ast.kind() === SyntaxKind.GetAccessor || ast.kind() === SyntaxKind.SetAccessor) {
                 return this.getSymbolOfDeclaration(enclosingDecl);
             }
 
@@ -622,7 +622,7 @@ module TypeScript {
             for (var i = 0 , n = path.length; i < n; i++) {
                 var current = path[i];
 
-                switch (current.nodeType()) {
+                switch (current.kind()) {
                     case SyntaxKind.FunctionExpression:
                     case SyntaxKind.SimpleArrowFunctionExpression:
                     case SyntaxKind.ParenthesizedArrowFunctionExpression:
@@ -653,7 +653,7 @@ module TypeScript {
                     case SyntaxKind.InvocationExpression:
                     case SyntaxKind.ObjectCreationExpression:
                         if (propagateContextualTypes) {
-                            var isNew = current.nodeType() === SyntaxKind.ObjectCreationExpression;
+                            var isNew = current.kind() === SyntaxKind.ObjectCreationExpression;
                             var callExpression = <InvocationExpression>current;
                             var contextualType: PullTypeSymbol = null;
 
@@ -721,7 +721,7 @@ module TypeScript {
                             resolver.resolveObjectLiteralExpression(objectLiteralExpression, inContextuallyTypedAssignment, resolutionContext, objectLiteralResolutionContext);
 
                             // find the member in the path
-                            var memeberAST = (path[i + 1] && path[i + 1].nodeType() === SyntaxKind.SeparatedList) ? path[i + 2] : path[i + 1];
+                            var memeberAST = (path[i + 1] && path[i + 1].kind() === SyntaxKind.SeparatedList) ? path[i + 2] : path[i + 1];
                             if (memeberAST) {
                                 // Propagate the member contextual type
                                 var contextualType: PullTypeSymbol = null;
@@ -821,13 +821,13 @@ module TypeScript {
 
             // if the found AST is a named, we want to check for previous dotted expressions,
             // since those will give us the right typing
-            if (ast && ast.parent && ast.nodeType() === SyntaxKind.IdentifierName) {
-                if (ast.parent.nodeType() === SyntaxKind.MemberAccessExpression) {
+            if (ast && ast.parent && ast.kind() === SyntaxKind.IdentifierName) {
+                if (ast.parent.kind() === SyntaxKind.MemberAccessExpression) {
                     if ((<MemberAccessExpression>ast.parent).name === ast) {
                         ast = ast.parent;
                     }
                 }
-                else if (ast.parent.nodeType() === SyntaxKind.QualifiedName) {
+                else if (ast.parent.kind() === SyntaxKind.QualifiedName) {
                     if ((<QualifiedName>ast.parent).right === ast) {
                         ast = ast.parent;
                     }
@@ -907,11 +907,11 @@ module TypeScript {
 
         public pullGetCallInformationFromAST(ast: AST, document: Document): PullCallSymbolInfo {
             // AST has to be a call expression
-            if (ast.nodeType() !== SyntaxKind.InvocationExpression && ast.nodeType() !== SyntaxKind.ObjectCreationExpression) {
+            if (ast.kind() !== SyntaxKind.InvocationExpression && ast.kind() !== SyntaxKind.ObjectCreationExpression) {
                 return null;
             }
 
-            var isNew = ast.nodeType() === SyntaxKind.ObjectCreationExpression;
+            var isNew = ast.kind() === SyntaxKind.ObjectCreationExpression;
 
             var resolver = this.semanticInfoChain.getResolver();
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
@@ -968,7 +968,7 @@ module TypeScript {
 
         public pullGetContextualMembersFromAST(ast: AST, document: Document): PullVisibleSymbolsInfo {
             // Input has to be an object literal
-            if (ast.nodeType() !== SyntaxKind.ObjectLiteralExpression) {
+            if (ast.kind() !== SyntaxKind.ObjectLiteralExpression) {
                 return null;
             }
 

@@ -1604,7 +1604,7 @@ module TypeScript {
                 applyDeltaToComments(cur.postComments(), delta);
 
                 // Apply delta to all custom span fields
-                switch (cur.nodeType()) {
+                switch (cur.kind()) {
                     case SyntaxKind.Block:
                         applyDelta((<Block>cur).closeBraceToken, delta);
                         break; 
