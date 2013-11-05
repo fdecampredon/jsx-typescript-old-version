@@ -409,8 +409,6 @@ module TypeScript {
         return sentinelEmptyArray;
     }
 
-
-
     function isDocComment(comment: Comment) {
         if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
             var fullText = comment.fullText();
@@ -581,30 +579,5 @@ module TypeScript {
         }
 
         return false;
-    }
-
-    export function getModifiers(ast: AST): PullElementFlags[] {
-        if (ast) {
-            switch (ast.nodeType()) {
-                case SyntaxKind.VariableStatement:
-                    return (<VariableStatement>ast).modifiers;
-                case SyntaxKind.FunctionDeclaration:
-                    return (<FunctionDeclaration>ast).modifiers;
-                case SyntaxKind.ClassDeclaration:
-                    return (<ClassDeclaration>ast).modifiers;
-                case SyntaxKind.InterfaceDeclaration:
-                    return (<InterfaceDeclaration>ast).modifiers;
-                case SyntaxKind.EnumDeclaration:
-                    return (<EnumDeclaration>ast).modifiers;
-                case SyntaxKind.ModuleDeclaration:
-                    return (<ModuleDeclaration>ast).modifiers;
-                case SyntaxKind.ImportDeclaration:
-                    return (<ImportDeclaration>ast).modifiers;
-                case SyntaxKind.ExportAssignment:
-                    return [PullElementFlags.Exported];
-            }
-        }
-
-        return null;
     }
 }
