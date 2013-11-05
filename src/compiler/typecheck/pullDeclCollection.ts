@@ -8,7 +8,7 @@ module TypeScript {
         public isDeclareFile = false;
         public parentChain: PullDecl[] = [];
 
-        constructor(public semanticInfoChain: SemanticInfoChain, public propagateEnumConstants: boolean) {
+        constructor(public semanticInfoChain: SemanticInfoChain, public propagateEnumConstants: boolean, public isExternalModule: boolean) {
         }
 
         public getParent() { return this.parentChain ? this.parentChain[this.parentChain.length - 1] : null; }
@@ -24,6 +24,10 @@ module TypeScript {
             if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclaration>ast;
                 return moduleDecl.moduleElements.any(m => m.nodeType() === SyntaxKind.ExportAssignment);
+            }
+            else if (ast.nodeType() === SyntaxKind.SourceUnit) {
+                var sourceUnit = <Script>ast;
+                return sourceUnit.moduleElements.any(m => m.nodeType() === SyntaxKind.ExportAssignment);
             }
 
             ast = ast.parent;
@@ -71,14 +75,45 @@ module TypeScript {
         var span = TextSpan.fromBounds(script.start(), script.end());
 
         var fileName = script.fileName();
-        var decl = new RootPullDecl(
-            /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, span, context.semanticInfoChain, script.isExternalModule);
+
+        var isExternalModule = context.isExternalModule;
+
+        var decl: PullDecl = new RootPullDecl(
+            /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, span, context.semanticInfoChain, isExternalModule);
         context.semanticInfoChain.setDeclForAST(script, decl);
         context.semanticInfoChain.setASTForDecl(decl, script);
 
         context.isDeclareFile = script.isDeclareFile();
 
         context.pushParent(decl);
+
+        // if it's an external module, create another decl to represent that module inside the top 
+        // level script module.
+
+        if (isExternalModule) {
+            var declFlags = PullElementFlags.Exported;
+            if (isDTSFile(fileName)) {
+                declFlags |= PullElementFlags.Ambient;
+            }
+
+            var moduleContainsExecutableCode = containsExecutableCode(script.moduleElements);
+            var kind = PullElementKind.DynamicModule;
+            var span = TextSpan.fromBounds(script.start(), script.end());
+            var valueText = quoteStr(fileName);
+
+            var decl: PullDecl = new NormalPullDecl(valueText, fileName, kind, declFlags, context.getParent(), span);
+
+            context.semanticInfoChain.setASTForDecl(decl, script);
+            // Note: we're overring what the script points to.  For files with an external module, 
+            // the script node will point at the external module declaration.
+            context.semanticInfoChain.setDeclForAST(script, decl);
+
+            if (moduleContainsExecutableCode) {
+                createModuleVariableDecl(decl, script, context);
+            }
+
+            context.pushParent(decl);
+        }
     }
 
     function preCollectEnumDecls(enumDecl: EnumDeclaration, context: DeclCollectionContext): void {
@@ -134,7 +169,7 @@ module TypeScript {
 
         var moduleContainsExecutableCode = containsExecutableCode(moduleDecl.moduleElements);
 
-        var isDynamic = moduleDecl.stringLiteral !== null || moduleDecl.isExternalModule;
+        var isDynamic = moduleDecl.stringLiteral !== null;
 
         if ((hasModifier(moduleDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(moduleDecl, context)) && !containingModuleHasExportAssignment(moduleDecl)) {
             declFlags |= PullElementFlags.Exported;
@@ -1095,8 +1130,9 @@ module TypeScript {
         }
 
         // Don't pop the topmost decl.  We return that out at the end.
-        if (ast.nodeType() !== SyntaxKind.SourceUnit && currentDecl.ast() === ast) {
+        while (currentDecl.getParentDecl() && currentDecl.ast() === ast) {
             context.popParent();
+            currentDecl = context.getParent();
         }
     }
 
@@ -1219,11 +1255,11 @@ module TypeScript {
     }
 
     export module DeclarationCreator {
-        export function create(script: Script, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings): PullDecl {
-            var declCollectionContext = new DeclCollectionContext(semanticInfoChain, compilationSettings.propagateEnumConstants());
+        export function create(document: Document, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings): PullDecl {
+            var declCollectionContext = new DeclCollectionContext(semanticInfoChain, compilationSettings.propagateEnumConstants(), document.isExternalModule());
             
             // create decls
-            getAstWalkerFactory().simpleWalk(script, preCollectDecls, postCollectDecls, declCollectionContext);
+            getAstWalkerFactory().simpleWalk(document.script(), preCollectDecls, postCollectDecls, declCollectionContext);
 
             return declCollectionContext.getParent();
         }

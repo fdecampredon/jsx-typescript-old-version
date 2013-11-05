@@ -258,39 +258,6 @@ module TypeScript {
             return result;
         }
 
-        private hasTopLevelImportOrExport(node: SourceUnitSyntax): boolean {
-            // TODO: implement this.
-
-            var firstToken: ISyntaxToken;
-
-            for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
-                var moduleElement = node.moduleElements.childAt(i);
-
-                firstToken = moduleElement.firstToken();
-                if (firstToken !== null && firstToken.tokenKind === SyntaxKind.ExportKeyword) {
-                    return true;
-                }
-
-                if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
-                    var importDecl = <ImportDeclarationSyntax>moduleElement;
-                    if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
-                        return true;
-                    }
-                }
-            }
-
-            var leadingComments = this.getLeadingComments(node);
-            for (var i = 0, n = leadingComments.length; i < n; i++) {
-                var trivia = leadingComments[i];
-
-                if (getImplicitImport(trivia.fullText())) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private getAmdDependency(comment: string): string {
             var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
             var match = amdDependencyRegEx.exec(comment);
@@ -299,43 +266,39 @@ module TypeScript {
 
         public visitSourceUnit(node: SourceUnitSyntax): Script {
             var start = this.position;
+            Debug.assert(start === 0);
 
             var bod = this.visitSyntaxList(node.moduleElements);
 
-            var isExternalModule = false;
             var amdDependencies: string[] = [];
-            var modifiers: PullElementFlags[] = [];
-            if (this.hasTopLevelImportOrExport(node)) {
-                isExternalModule = true;
 
-                var valueText = switchToForwardSlashes(this.fileName);
-                var stringLiteral = new StringLiteral(valueText, valueText);
-
-                modifiers.push(PullElementFlags.Exported);
-                if (isDTSFile(this.fileName)) {
-                    modifiers.push(PullElementFlags.Ambient);
+            var leadingComments = this.getLeadingComments(node);
+            for (var i = 0, n = leadingComments.length; i < n; i++) {
+                var trivia = leadingComments[i];
+                var amdDependency = this.getAmdDependency(trivia.fullText());
+                if (amdDependency) {
+                    amdDependencies.push(amdDependency);
                 }
-
-                var topLevelMod = new ModuleDeclaration(modifiers, /*name:*/ null, stringLiteral, bod, null, /*isExternalModule:*/ true);
-                this.setSpanExplicit(topLevelMod, start, this.position);
-
-                var leadingComments = this.getLeadingComments(node);
-                for (var i = 0, n = leadingComments.length; i < n; i++) {
-                    var trivia = leadingComments[i];
-                    var amdDependency = this.getAmdDependency(trivia.fullText());
-                    if (amdDependency) {
-                        amdDependencies.push(amdDependency);
-                    }
-                }
-
-                bod = new ASTList(this.fileName, [topLevelMod]);
-                this.setSpanExplicit(bod, start, this.position);
             }
 
-            var result = new Script(modifiers, bod, this.fileName, isExternalModule, amdDependencies);
+            var hasImplicitImport = this.hasImplicitImport(leadingComments);
+
+            var result = new Script(bod, this.fileName, amdDependencies, hasImplicitImport);
             this.setSpanExplicit(result, start, start + node.fullWidth());
 
             return result;
+        }
+
+        private hasImplicitImport(sourceUnitLeadingComments: ISyntaxTrivia[]): boolean {
+            for (var i = 0, n = sourceUnitLeadingComments.length; i < n; i++) {
+                var trivia = sourceUnitLeadingComments[i];
+
+                if (getImplicitImport(trivia.fullText())) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public visitExternalModuleReference(node: ExternalModuleReferenceSyntax): ExternalModuleReference {
@@ -462,7 +425,7 @@ module TypeScript {
             var closeBraceToken = this.createTokenSpan(this.position, node.closeBraceToken);
             this.movePast(node.closeBraceToken);
 
-            var result = new ModuleDeclaration(modifiers, moduleName, stringLiteral, moduleElements, closeBraceToken, /*isExternalModule:*/ false);
+            var result = new ModuleDeclaration(modifiers, moduleName, stringLiteral, moduleElements, closeBraceToken);
             this.setCommentsAndSpan(result, start, node);
 
             return result;

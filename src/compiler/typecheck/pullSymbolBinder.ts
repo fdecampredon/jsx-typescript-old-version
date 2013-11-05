@@ -390,7 +390,13 @@ module TypeScript {
             var parentInstanceSymbol = this.getParent(moduleContainerDecl, true);
             var parentDecl = moduleContainerDecl.getParentDecl();
             var moduleNameAST = this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
-            var moduleDeclAST = getEnclosingModuleDeclaration(moduleNameAST);
+            var moduleDeclAST: AST = getEnclosingModuleDeclaration(moduleNameAST);
+            if (!moduleDeclAST) {
+                Debug.assert(moduleContainerDecl.kind === PullElementKind.DynamicModule);
+                Debug.assert(moduleNameAST.nodeType() === SyntaxKind.SourceUnit);
+                // This is the module decl for the top level synthesized external module.
+                moduleDeclAST = moduleNameAST;
+            }
 
             var isExported = hasFlag(moduleContainerDecl.flags, PullElementFlags.Exported);
             var searchKind = PullElementKind.SomeContainer;

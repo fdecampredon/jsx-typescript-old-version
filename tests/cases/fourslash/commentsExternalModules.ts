@@ -34,7 +34,6 @@
 // this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
 edit.insert('');
 
-debugger;
 goTo.file("commentsExternalModules_file0.ts");
 goTo.marker('1');
 verify.quickInfoIs("m1", "Module comment", "m1", "module");
@@ -75,6 +74,7 @@ verify.quickInfoIs(undefined, "This is on import declaration", "extMod", "module
 goTo.marker('10');
 verify.completionListContains("extMod", "extMod", "This is on import declaration", "extMod", "module");
 
+debugger;
 goTo.marker('11');
 verify.memberListContains("m1", "extMod.m1");
 

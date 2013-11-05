@@ -17,19 +17,11 @@
 
 module TypeScript {
     export function scriptIsElided(script: Script): boolean {
-        return scriptOrModuleIsElided(script.modifiers, script.moduleElements);
+        return isDTSFile(script.fileName()) || moduleMembersAreElided(script.moduleElements);
     }
 
     export function moduleIsElided(declaration: ModuleDeclaration): boolean {
-        return scriptOrModuleIsElided(declaration.modifiers, declaration.moduleElements);
-    }
-
-    function scriptOrModuleIsElided(modifiers: PullElementFlags[], moduleMembers: ASTList): boolean {
-        if (hasModifier(modifiers, PullElementFlags.Ambient)) {
-            return true;
-        }
-
-        return moduleMembersAreElided(moduleMembers);
+        return hasModifier(declaration.modifiers, PullElementFlags.Ambient) || moduleMembersAreElided(declaration.moduleElements);
     }
 
     function moduleMembersAreElided(members: ASTList): boolean {
@@ -578,5 +570,30 @@ module TypeScript {
         }
 
         return false;
+    }
+
+    export function getModifiers(ast: AST): PullElementFlags[] {
+        if (ast) {
+            switch (ast.nodeType()) {
+                case SyntaxKind.VariableStatement:
+                    return (<VariableStatement>ast).modifiers;
+                case SyntaxKind.FunctionDeclaration:
+                    return (<FunctionDeclaration>ast).modifiers;
+                case SyntaxKind.ClassDeclaration:
+                    return (<ClassDeclaration>ast).modifiers;
+                case SyntaxKind.InterfaceDeclaration:
+                    return (<InterfaceDeclaration>ast).modifiers;
+                case SyntaxKind.EnumDeclaration:
+                    return (<EnumDeclaration>ast).modifiers;
+                case SyntaxKind.ModuleDeclaration:
+                    return (<ModuleDeclaration>ast).modifiers;
+                case SyntaxKind.ImportDeclaration:
+                    return (<ImportDeclaration>ast).modifiers;
+                case SyntaxKind.ExportAssignment:
+                    return [PullElementFlags.Exported];
+            }
+        }
+
+        return null;
     }
 }

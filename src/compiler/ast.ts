@@ -264,12 +264,11 @@ module TypeScript {
     }
 
     export class Script extends AST {
-        constructor(public modifiers: PullElementFlags[],
-                    public moduleElements: ASTList,
+        constructor(public moduleElements: ASTList,
                     private _fileName: string,
-                    public isExternalModule: boolean,
-                    public amdDependencies: string[]) {
-                        super();
+                    public amdDependencies: string[],
+                    public hasImplicitImport: boolean) {
+            super();
             moduleElements && (moduleElements.parent = this);
         }
 
@@ -620,7 +619,7 @@ module TypeScript {
     }
 
     export class ModuleDeclaration extends AST {
-        constructor(public modifiers: PullElementFlags[], public name: AST, public stringLiteral: StringLiteral, public moduleElements: ASTList, public endingToken: ASTSpan, public isExternalModule: boolean) {
+        constructor(public modifiers: PullElementFlags[], public name: AST, public stringLiteral: StringLiteral, public moduleElements: ASTList, public endingToken: ASTSpan) {
             super();
             name && (name.parent = this);
             stringLiteral && (stringLiteral.parent = this);

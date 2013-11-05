@@ -827,11 +827,16 @@ module TypeScript {
                     return symbol;
                 }
 
-
+                // If our decl points at a single name of a module, then just resolve that individual module.
                 var enclosingModule = getEnclosingModuleDeclaration(ast);
                 var resolvedSymbol: PullSymbol;
                 if (isAnyNameOfModule(enclosingModule, ast)) {
                     resolvedSymbol = this.resolveSingleModuleDeclaration(enclosingModule, ast, context);
+                }
+                else if (ast.nodeType() === SyntaxKind.SourceUnit && decl.kind === PullElementKind.DynamicModule) {
+                    // Otherwise, if we have a decl for the top level external module, then just resolve that
+                    // specific module.
+                    resolvedSymbol = this.resolveModuleSymbol(<PullContainerSymbol>decl.getSymbol(), context, /*moduleDeclAST:*/ null, /*moduleNameAST:*/ null, <Script>ast);
                 }
                 else {
                     // This assert is here to catch potential stack overflows. There have been infinite recursions resulting
@@ -877,19 +882,25 @@ module TypeScript {
         }
 
         private resolveScript(script: Script, context: PullTypeResolutionContext): PullSymbol {
+            // Ensure that any export assignments are resolved before we proceed. 
+            var enclosingDecl = this.getEnclosingDeclForAST(script);
+            var moduleSymbol = enclosingDecl.getSymbol();
+            this.ensureAllSymbolsAreBound(moduleSymbol);
+
+            this.resolveFirstExportAssignmentStatement(script.moduleElements, context);
             this.resolveAST(script.moduleElements, /*isContextuallyTyped:*/ false, context);
 
             if (this.canTypeCheckAST(script, context)) {
                 this.typeCheckScript(script, context);
             }
 
-            return this.semanticInfoChain.voidTypeSymbol;
+            return moduleSymbol;
         }
 
         private typeCheckScript(script: Script, context: PullTypeResolutionContext): void {
             this.setTypeChecked(script, context);
 
-            this.typeCheckAST(script.moduleElements, /*isContextuallyTyped:*/ false, context);
+            this.resolveAST(script.moduleElements, /*isContextuallyTyped:*/ false, context);
         }
 
         private resolveEnumDeclaration(ast: EnumDeclaration, context: PullTypeResolutionContext): PullTypeSymbol {
@@ -964,25 +975,27 @@ module TypeScript {
             return result;
         }
 
-        private resolveSingleModuleDeclaration(ast: ModuleDeclaration, astName: AST, context: PullTypeResolutionContext): PullTypeSymbol {
-            var containerDecl = this.semanticInfoChain.getDeclForAST(astName);
-            var containerSymbol = <PullContainerSymbol>containerDecl.getSymbol();
+        private ensureAllSymbolsAreBound(containerSymbol: PullSymbol): void {
+            if (containerSymbol) {
+                var containerDecls = containerSymbol.getDeclarations();
 
+                for (var i = 0; i < containerDecls.length; i++) {
+                    var childDecls = containerDecls[i].getChildDecls();
+
+                    for (var j = 0; j < childDecls.length; j++) {
+                        childDecls[j].ensureSymbolIsBound();
+                    }
+                }
+            }
+        }
+
+        private resolveModuleSymbol(containerSymbol: PullContainerSymbol, context: PullTypeResolutionContext, moduleDeclAST: ModuleDeclaration, moduleDeclNameAST: AST, sourceUnitAST: Script): PullTypeSymbol {
             if (containerSymbol.isResolved || containerSymbol.inResolution) {
                 return containerSymbol;
             }
 
             containerSymbol.inResolution = true;
-
-            var containerDecls = containerSymbol.getDeclarations();
-
-            for (var i = 0; i < containerDecls.length; i++) {
-                var childDecls = containerDecls[i].getChildDecls();
-
-                for (var j = 0; j < childDecls.length; j++) {
-                    childDecls[j].ensureSymbolIsBound();
-                }
-            }
+            this.ensureAllSymbolsAreBound(containerSymbol);
 
             var instanceSymbol = containerSymbol.getInstanceSymbol();
 
@@ -991,22 +1004,38 @@ module TypeScript {
                 this.resolveDeclaredSymbol(instanceSymbol, context);
             }
 
-            var isLastName = isLastNameOfModule(ast, astName);
+            var isLastName = isLastNameOfModule(moduleDeclAST, moduleDeclNameAST);
             if (isLastName) {
-                for (var i = 0, n = ast.moduleElements.childCount(); i < n; i++) {
-                    var moduleElement = ast.moduleElements.childAt(i);
-                    if (moduleElement.nodeType() == SyntaxKind.ExportAssignment) {
-                        this.resolveExportAssignmentStatement(<ExportAssignment>moduleElement, context);
-                        break;
-                    }
-                }
+                this.resolveFirstExportAssignmentStatement(moduleDeclAST.moduleElements, context);
+            }
+            else if (sourceUnitAST) {
+                this.resolveFirstExportAssignmentStatement(sourceUnitAST.moduleElements, context);
             }
 
             containerSymbol.setResolved();
 
-            this.resolveOtherDeclarations(astName, context);
+            if (moduleDeclNameAST) {
+                this.resolveOtherDeclarations(moduleDeclNameAST, context);
+            }
 
             return containerSymbol;
+        }
+
+        private resolveFirstExportAssignmentStatement(moduleElements: ASTList, context: PullTypeResolutionContext): void {
+            for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
+                var moduleElement = moduleElements.childAt(i);
+                if (moduleElement.nodeType() == SyntaxKind.ExportAssignment) {
+                    this.resolveExportAssignmentStatement(<ExportAssignment>moduleElement, context);
+                    return;
+                }
+            }
+        }
+
+        private resolveSingleModuleDeclaration(ast: ModuleDeclaration, astName: AST, context: PullTypeResolutionContext): PullTypeSymbol {
+            var containerDecl = this.semanticInfoChain.getDeclForAST(astName);
+            var containerSymbol = <PullContainerSymbol>containerDecl.getSymbol();
+
+            return this.resolveModuleSymbol(containerSymbol, context, ast, astName, /*sourceUnit:*/ null);
         }
 
         private typeCheckModuleDeclaration(ast: ModuleDeclaration, context: PullTypeResolutionContext): void {
@@ -1744,7 +1773,7 @@ module TypeScript {
                 var modPath = (<ExternalModuleReference>importStatementAST.moduleReference).stringLiteral.valueText();
                 if (enclosingDecl.kind === PullElementKind.DynamicModule) {
                     var ast = getEnclosingModuleDeclaration(this.getASTForDecl(enclosingDecl));
-                    if (ast.nodeType() === SyntaxKind.ModuleDeclaration && (<ModuleDeclaration>ast).endingToken) {
+                    if (ast && ast.nodeType() === SyntaxKind.ModuleDeclaration) {
                         if (isRelative(modPath)) {
                             context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(importStatementAST,
                                 DiagnosticCode.Import_declaration_in_an_ambient_external_module_declaration_cannot_reference_external_module_through_relative_external_module_name));
@@ -5565,6 +5594,10 @@ module TypeScript {
 
             var nodeType = ast.nodeType();
             switch (nodeType) {
+                case SyntaxKind.SourceUnit:
+                    this.typeCheckScript(<Script>ast, context);
+                    return;
+
                 case SyntaxKind.EnumDeclaration:
                     this.typeCheckEnumDeclaration(<EnumDeclaration>ast, context);
                     return;
@@ -10741,15 +10774,15 @@ module TypeScript {
         public static globalTypeCheckPhase = 0;
 
         // type check infrastructure
-        public static typeCheck(compilationSettings: ImmutableCompilationSettings, semanticInfoChain: SemanticInfoChain, script: Script): void {
-            var scriptDecl = semanticInfoChain.topLevelDecl(script.fileName());
+        public static typeCheck(compilationSettings: ImmutableCompilationSettings, semanticInfoChain: SemanticInfoChain, document: Document): void {
+            var script = document.script();
 
             var resolver = semanticInfoChain.getResolver();
             var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, script.fileName());
 
             if (resolver.canTypeCheckAST(script, context)) {
                 resolver.resolveAST(script, /*isContextuallyTyped:*/ false, context);
-                resolver.validateVariableDeclarationGroups(scriptDecl, context);
+                resolver.validateVariableDeclarationGroups(semanticInfoChain.getDeclForAST(script), context);
 
                 while (resolver.typeCheckCallBacks.length) {
                     var callBack = resolver.typeCheckCallBacks.pop();
@@ -11193,7 +11226,8 @@ module TypeScript {
                     } else {
                         messageCode = DiagnosticCode.Property_0_of_exported_interface_has_or_is_using_private_type_1;
                     }
-                } else {
+                }
+                else {
                     messageCode = DiagnosticCode.Exported_variable_0_has_or_is_using_private_type_1;
                 }
             }

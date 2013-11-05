@@ -129,7 +129,7 @@ module TypeScript {
 
         private canEmitDeclarations(declAST: AST): boolean {
             var container = this.getEnclosingContainer(declAST);
-            if (container.nodeType() === SyntaxKind.ModuleDeclaration) {
+            if (container.nodeType() === SyntaxKind.ModuleDeclaration || container.nodeType() === SyntaxKind.SourceUnit) {
                 var pullDecl = this.semanticInfoChain.getDeclForAST(declAST);
                 if (!hasFlag(pullDecl.flags, PullElementFlags.Exported)) {
                     var start = new Date().getTime();
@@ -176,7 +176,7 @@ module TypeScript {
                         container = this.getEnclosingContainer(container);
                     }
 
-                    var isExternalModule = container.nodeType() === SyntaxKind.ModuleDeclaration && (<ModuleDeclaration>container).isExternalModule;
+                    var isExternalModule = container.nodeType() === SyntaxKind.SourceUnit && this.document.isExternalModule();
 
                     // Emit export only for global export statements. 
                     // The container for this would be dynamic module which is whole file
@@ -255,6 +255,7 @@ module TypeScript {
 
             var start = new Date().getTime();
             var declarationContainerDecl = this.semanticInfoChain.getDeclForAST(declarationContainerAst);
+
             var declarationPullSymbol = declarationContainerDecl.getSymbol();
             TypeScript.declarationEmitTypeSignatureTime += new Date().getTime() - start;
 
@@ -1002,36 +1003,31 @@ module TypeScript {
         }
 
         private emitDeclarationsForModuleDeclaration(moduleDecl: ModuleDeclaration) {
-            var isExternalModule = moduleDecl.isExternalModule;
-            if (!isExternalModule && !this.canEmitDeclarations(moduleDecl)) {
+            if (!this.canEmitDeclarations(moduleDecl)) {
                 return;
             }
 
-            if (!isExternalModule) {
-                var modulePullDecl = this.semanticInfoChain.getDeclForAST(moduleDecl);
-                this.emitDeclarationComments(moduleDecl);
+            var modulePullDecl = this.semanticInfoChain.getDeclForAST(moduleDecl);
+            this.emitDeclarationComments(moduleDecl);
 
-                var name: AST = moduleDecl.stringLiteral || ArrayUtilities.first(getModuleNames(moduleDecl.name));
-                this.emitDeclFlags(name, "module");
+            var name: AST = moduleDecl.stringLiteral || ArrayUtilities.first(getModuleNames(moduleDecl.name));
+            this.emitDeclFlags(name, "module");
 
-                if (moduleDecl.stringLiteral) {
-                    this.declFile.Write(moduleDecl.stringLiteral.text());
-                }
-                else {
-                    this.declFile.Write(this.getFullName(moduleDecl.name));
-                }
-
-                this.declFile.WriteLine(" {");
-                this.indenter.increaseIndent();
+            if (moduleDecl.stringLiteral) {
+                this.declFile.Write(moduleDecl.stringLiteral.text());
             }
+            else {
+                this.declFile.Write(this.getFullName(moduleDecl.name));
+            }
+
+            this.declFile.WriteLine(" {");
+            this.indenter.increaseIndent();
 
             this.emitDeclarationsForList(moduleDecl.moduleElements);
 
-            if (!isExternalModule) {
-                this.indenter.decreaseIndent();
-                this.emitIndent();
-                this.declFile.WriteLine("}");
-            }
+            this.indenter.decreaseIndent();
+            this.emitIndent();
+            this.declFile.WriteLine("}");
         }
 
         private emitDeclarationsForExportAssignment(ast: ExportAssignment) {
@@ -1073,7 +1069,7 @@ module TypeScript {
 
                         documents = documents.concat(document);
 
-                        if (!document.script().isDeclareFile() && document.script().isExternalModule) {
+                        if (!document.script().isDeclareFile() && document.isExternalModule()) {
                             addedGlobalDocument = true;
                         }
                     }
@@ -1083,7 +1079,7 @@ module TypeScript {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; i++) {
                     var doc = this.compiler.getDocument(fileNames[i]);
-                    if (!doc.script().isDeclareFile() && !doc.script().isExternalModule) {
+                    if (!doc.script().isDeclareFile() && !doc.isExternalModule()) {
                         // Check what references need to be added
                         var scriptReferences = doc.referencedFiles;
                         for (var j = 0; j < scriptReferences.length; j++) {
@@ -1091,7 +1087,7 @@ module TypeScript {
                             var document = this.compiler.getDocument(currentReference);
                             // All the references that are not going to be part of same file
                             if (document &&
-                                (document.script().isDeclareFile() || document.script().isExternalModule)) {
+                                (document.script().isDeclareFile() || document.isExternalModule())) {
                                 for (var k = 0; k < documents.length; k++) {
                                     if (documents[k] == document) {
                                         break;

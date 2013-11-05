@@ -9,6 +9,7 @@ module TypeScript {
 
         private _declASTMap: AST[] = [];
         private _astDeclMap: PullDecl[] = [];
+        private _isExternalModule: boolean = undefined;
 
         constructor(private _compiler: TypeScriptCompiler,
                     private _semanticInfoChain: SemanticInfoChain,
@@ -143,7 +144,43 @@ module TypeScript {
             // If we haven't specified an output file in our settings, then we're definitely 
             // emitting to our own file.  Also, if we're an external module, then we're 
             // definitely emitting to our own file.
-            return !this._compiler.compilationSettings().outFileOption() || this.script().isExternalModule;
+            return !this._compiler.compilationSettings().outFileOption() || this.isExternalModule();
+        }
+
+
+        public isExternalModule(): boolean {
+            // October 11, 2013
+            // External modules are written as separate source files that contain at least one 
+            // external import declaration, export assignment, or top-level exported declaration.
+            if (this._isExternalModule === undefined) {
+                this._isExternalModule = this.hasTopLevelImportOrExport(this.script());
+            }
+
+            return this._isExternalModule;
+        }
+
+        private hasTopLevelImportOrExport(script: Script): boolean {
+            if (script.hasImplicitImport) {
+                return true;
+            }
+
+            for (var i = 0, n = script.moduleElements.childCount(); i < n; i++) {
+                var moduleElement = script.moduleElements.childAt(i);
+
+                if (moduleElement.nodeType() === SyntaxKind.ImportDeclaration) {
+                    var importDeclaration = <ImportDeclaration>moduleElement;
+                    if (importDeclaration.moduleReference.nodeType() === SyntaxKind.ExternalModuleReference) {
+                        return true;
+                    }
+                }
+
+                var modifiers = getModifiers(moduleElement);
+                if (modifiers && hasModifier(modifiers, PullElementFlags.Exported)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
@@ -187,7 +224,7 @@ module TypeScript {
 
         public topLevelDecl(): PullDecl {
             if (this._topLevelDecl === null) {
-                this._topLevelDecl = DeclarationCreator.create(this.script(), this._semanticInfoChain, this._compiler.compilationSettings());
+                this._topLevelDecl = DeclarationCreator.create(this, this._semanticInfoChain, this._compiler.compilationSettings());
             }
 
             return this._topLevelDecl;
