@@ -1,0 +1,28 @@
+=== tests/cases/compiler/contextuallyTypingOrOperator2.ts ===
+Line 0 col 4 IdentifierName "v" = { a: (_: string) => number; }
+Line 0 col 9 IdentifierName "a" = (_: string) => number
+Line 0 col 13 IdentifierName "_" = string
+Line 0 col 38 LogicalOrExpression "{ a: s => s.length } || { a: s => 1 }" = { a: (s: string) => number; }
+Line 0 col 38 ObjectLiteralExpression "{ a: s => s.length }" = { a: (s: string) => number; }
+Line 0 col 40 IdentifierName "a" = (s: string) => number
+Line 0 col 43 SimpleArrowFunctionExpression "s => s.length" = (s: string) => number
+Line 0 col 43 IdentifierName "s" = string
+Line 0 col 48 MemberAccessExpression "s.length" = number
+Line 0 col 48 IdentifierName "s" = string
+Line 0 col 50 IdentifierName "length" = number
+Line 0 col 62 ObjectLiteralExpression "{ a: s => 1 }" = { a: (s: string) => number; }
+Line 0 col 64 IdentifierName "a" = (s: string) => number
+Line 0 col 67 SimpleArrowFunctionExpression "s => 1" = (s: string) => number
+Line 0 col 67 IdentifierName "s" = string
+Line 2 col 4 IdentifierName "v2" = (s: string) => {}
+Line 2 col 9 ParenthesizedArrowFunctionExpression "(s: string) => s.length || function (s) { s.aaa }" = (s: string) => {}
+Line 2 col 10 IdentifierName "s" = string
+Line 2 col 24 LogicalOrExpression "s.length || function (s) { s.aaa }" = {}
+Line 2 col 24 MemberAccessExpression "s.length" = number
+Line 2 col 24 IdentifierName "s" = string
+Line 2 col 26 IdentifierName "length" = number
+Line 2 col 36 FunctionExpression "function (s) { s.aaa }" = (s: any) => void
+Line 2 col 46 IdentifierName "s" = any
+Line 2 col 51 MemberAccessExpression "s.aaa" = any
+Line 2 col 51 IdentifierName "s" = any
+Line 2 col 53 IdentifierName "aaa" = any

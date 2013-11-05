@@ -4,13 +4,13 @@
 ////    export interface Iterator<T, U> {
 ////        <T,U>(value: T, index: any, list: any): U;
 ////    }
-
+////
 ////    export interface Static {
 ////        all<T>(list: T[], iterator?: Iterator<T, boolean>, context?: any): T;
 ////        identity<T>(value: T): T;
 ////    }
 ////}
-
+////
 ////declare var _: Underscore.Static;
 ////var r/*1*/ = _.all([true, 1, null, 'yes'], _.identity);
 ////var r2/*2*/ = _.all([true], _.identity);

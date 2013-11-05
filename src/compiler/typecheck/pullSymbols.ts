@@ -682,8 +682,15 @@ module TypeScript {
         private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
             var ast = decl.ast();
 
-            if (ast && (ast.nodeType() != TypeScript.SyntaxKind.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable)) {
-                return docComments(ast);
+            if (ast) {
+                var enclosingModuleDeclaration = getEnclosingModuleDeclaration(ast);
+                if (isLastNameOfModule(enclosingModuleDeclaration, ast)) {
+                    return docComments(enclosingModuleDeclaration);
+                }
+
+                if (ast.nodeType() != TypeScript.SyntaxKind.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable) {
+                    return docComments(ast);
+                }
             }
 
             return [];

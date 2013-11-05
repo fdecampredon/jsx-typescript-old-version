@@ -17,8 +17,8 @@ privacyImport.ts line 341 col 5: error TS2136: Import declarations in an interna
 privacyImport.ts line 344 col 9: error TS2136: Import declarations in an internal module cannot reference an external module.
 privacyImport.ts line 350 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
 privacyImport.ts line 353 col 9: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyImport.ts line 22 col 5: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 30 col 5: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 22 col 27: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 30 col 20: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 50 col 16: error TS2027: Exported variable 'm1_im2_private_v1_public' has or is using private type 'm1_M2_private.c1'.
 privacyImport.ts line 51 col 16: error TS2027: Exported variable 'm1_im2_private_v2_public' has or is using private type 'm1_M2_private.c1'.
 privacyImport.ts line 52 col 16: error TS2027: Exported variable 'm1_im2_private_v3_public' has or is using private type 'm1_M2_private.c1'.
@@ -33,8 +33,8 @@ privacyImport.ts line 81 col 5: error TS2071: Unable to resolve external module 
 privacyImport.ts line 81 col 5: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 82 col 5: error TS2071: Unable to resolve external module '"m1_M4_private"'.
 privacyImport.ts line 82 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyImport.ts line 106 col 5: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 114 col 5: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 106 col 27: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 114 col 20: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 143 col 5: error TS2071: Unable to resolve external module '"m2_M3_public"'.
 privacyImport.ts line 143 col 5: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 153 col 5: error TS2071: Unable to resolve external module '"m2_M4_private"'.
@@ -43,8 +43,8 @@ privacyImport.ts line 166 col 5: error TS2071: Unable to resolve external module
 privacyImport.ts line 166 col 5: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 167 col 5: error TS2071: Unable to resolve external module '"m2_M4_private"'.
 privacyImport.ts line 167 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyImport.ts line 180 col 1: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 198 col 1: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 180 col 23: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 198 col 23: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 218 col 1: error TS2071: Unable to resolve external module '"glo_M2_public"'.
 privacyImport.ts line 218 col 1: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 238 col 1: error TS2071: Unable to resolve external module '"glo_M4_private"'.
@@ -53,7 +53,7 @@ privacyImport.ts line 251 col 1: error TS2071: Unable to resolve external module
 privacyImport.ts line 251 col 1: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 252 col 1: error TS2071: Unable to resolve external module '"glo_M4_private"'.
 privacyImport.ts line 252 col 1: error TS2072: Module cannot be aliased to a non-module type.
-privacyImport.ts line 255 col 1: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 255 col 23: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 258 col 45: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
 privacyImport.ts line 261 col 39: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
 privacyImport.ts line 264 col 5: error TS2071: Unable to resolve external module '"glo_M2_public"'.
@@ -62,7 +62,7 @@ privacyImport.ts line 273 col 9: error TS2071: Unable to resolve external module
 privacyImport.ts line 273 col 9: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 277 col 13: error TS2071: Unable to resolve external module '"glo_M2_public"'.
 privacyImport.ts line 277 col 13: error TS2072: Module cannot be aliased to a non-module type.
-privacyImport.ts line 284 col 1: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 284 col 16: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 287 col 46: error TS4022: Type reference cannot refer to container '"use_glo_M3_private".use_glo_M3_private'.
 privacyImport.ts line 290 col 40: error TS4022: Type reference cannot refer to container '"use_glo_M3_private".use_glo_M3_private'.
 privacyImport.ts line 293 col 5: error TS2071: Unable to resolve external module '"glo_M4_private"'.
@@ -71,14 +71,14 @@ privacyImport.ts line 302 col 9: error TS2071: Unable to resolve external module
 privacyImport.ts line 302 col 9: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 306 col 13: error TS2071: Unable to resolve external module '"glo_M4_private"'.
 privacyImport.ts line 306 col 13: error TS2072: Module cannot be aliased to a non-module type.
-privacyImport.ts line 312 col 1: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 314 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 319 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 322 col 5: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 326 col 1: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 328 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 333 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyImport.ts line 336 col 5: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 312 col 16: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 314 col 24: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 319 col 16: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 322 col 12: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 326 col 23: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 328 col 24: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 333 col 16: error TS2195: Ambient external module declaration must be defined in global context.
+privacyImport.ts line 336 col 12: error TS2195: Ambient external module declaration must be defined in global context.
 privacyImport.ts line 341 col 5: error TS2071: Unable to resolve external module '"use_glo_M1_public"'.
 privacyImport.ts line 341 col 5: error TS2072: Module cannot be aliased to a non-module type.
 privacyImport.ts line 344 col 9: error TS2071: Unable to resolve external module '"use_glo_M1_public"'.

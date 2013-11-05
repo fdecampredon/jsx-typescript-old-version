@@ -146,7 +146,7 @@ define(["require", "exports"], function(require, exports) {
         })();
 
         var M;
-        (function (M) {
+        (function (_M) {
             var V;
             function F() {
             }
@@ -159,17 +159,17 @@ define(["require", "exports"], function(require, exports) {
             ;
             ;
             ;
-            M.eV;
+            _M.eV;
             function eF() {
             }
-            M.eF = eF;
+            _M.eF = eF;
             ;
             var eC = (function () {
                 function eC() {
                 }
                 return eC;
             })();
-            M.eC = eC;
+            _M.eC = eC;
             ;
             ;
             ;
@@ -245,7 +245,7 @@ define(["require", "exports"], function(require, exports) {
         })();
         _M.eC = eC;
 
-        (function (eM) {
+        (function (_eM) {
             var V;
             function F() {
             }
@@ -258,17 +258,17 @@ define(["require", "exports"], function(require, exports) {
             ;
             ;
             ;
-            eM.eV;
+            _eM.eV;
             function eF() {
             }
-            eM.eF = eF;
+            _eM.eF = eF;
             ;
             var eC = (function () {
                 function eC() {
                 }
                 return eC;
             })();
-            eM.eC = eC;
+            _eM.eC = eC;
             ;
             ;
             ;
@@ -415,7 +415,7 @@ define(["require", "exports"], function(require, exports) {
         })();
 
         var M;
-        (function (M) {
+        (function (_M) {
             var V;
             function F() {
             }
@@ -428,17 +428,17 @@ define(["require", "exports"], function(require, exports) {
             ;
             ;
             ;
-            M.eV;
+            _M.eV;
             function eF() {
             }
-            M.eF = eF;
+            _M.eF = eF;
             ;
             var eC = (function () {
                 function eC() {
                 }
                 return eC;
             })();
-            M.eC = eC;
+            _M.eC = eC;
             ;
             ;
             ;
@@ -514,7 +514,7 @@ define(["require", "exports"], function(require, exports) {
         })();
         _eM.eC = eC;
 
-        (function (eM) {
+        (function (_eM) {
             var V;
             function F() {
             }
@@ -527,17 +527,17 @@ define(["require", "exports"], function(require, exports) {
             ;
             ;
             ;
-            eM.eV;
+            _eM.eV;
             function eF() {
             }
-            eM.eF = eF;
+            _eM.eF = eF;
             ;
             var eC = (function () {
                 function eC() {
                 }
                 return eC;
             })();
-            eM.eC = eC;
+            _eM.eC = eC;
             ;
             ;
             ;

@@ -19,8 +19,10 @@ define(["require", "exports"], function(require, exports) {
 
 
 ////[internalAliasInitializedModuleInsideTopLevelModuleWithoutExport.d.ts]
-export declare module a.b {
-    class c {
+export declare module a {
+    module b {
+        class c {
+        }
     }
 }
 export declare var x: a.b.c;

@@ -32,8 +32,10 @@ export declare module x {
         public foo(a: number): number;
     }
 }
-export declare module m2.m3 {
-    export import c = x.c;
-    var cProp: x.c;
+export declare module m2 {
+    module m3 {
+        export import c = x.c;
+        var cProp: x.c;
+    }
 }
 export declare var d: x.c;

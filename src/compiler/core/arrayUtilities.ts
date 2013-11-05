@@ -133,10 +133,10 @@ module TypeScript {
             return null;
         }
 
-        public static first<T>(array: T[], func: (v: T, index: number) => boolean): T {
+        public static first<T>(array: T[], func?: (v: T, index: number) => boolean): T {
             for (var i = 0, n = array.length; i < n; i++) {
                 var value = array[i];
-                if (func(value, i)) {
+                if (!func || func(value, i)) {
                     return value;
                 }
             }

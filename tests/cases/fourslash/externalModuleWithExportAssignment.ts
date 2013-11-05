@@ -28,7 +28,7 @@
 ////var /*14*/r4 = a1(/*13*/);
 ////var v1: a1./*15*/connectExport;
 
-
+debugger;
 goTo.file("externalModuleWithExportAssignment_file1.ts");
 goTo.marker('1');
 verify.quickInfoIs("{ test1: a1.connectModule; test2(): a1.connectModule; (): a1.connectExport; }", undefined, "a1", "var");

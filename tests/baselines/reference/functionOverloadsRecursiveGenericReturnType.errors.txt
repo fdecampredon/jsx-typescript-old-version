@@ -1,0 +1,4 @@
+functionOverloadsRecursiveGenericReturnType.ts line 10 col 1: error TS2149: Overload signature is not compatible with function definition:
+	Types of property 'GetEnumerator' of types 'A<any[]>' and 'A<T>' are incompatible:
+		Call signatures of types '() => B<any[]>' and '() => B<T>' are incompatible:
+			Types of property 'id' of types 'B<any[]>' and 'B<T>' are incompatible.

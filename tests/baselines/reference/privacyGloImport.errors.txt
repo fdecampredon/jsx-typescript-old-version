@@ -8,8 +8,8 @@ privacyGloImport.ts line 126 col 13: error TS2136: Import declarations in an int
 privacyGloImport.ts line 134 col 9: error TS1038: 'declare' modifier not allowed for code already in an ambient context.
 privacyGloImport.ts line 147 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
 privacyGloImport.ts line 150 col 9: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 22 col 5: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 30 col 5: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts line 22 col 27: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts line 30 col 20: error TS2195: Ambient external module declaration must be defined in global context.
 privacyGloImport.ts line 50 col 16: error TS2027: Exported variable 'm1_im2_private_v1_public' has or is using private type 'm1_M2_private.c1'.
 privacyGloImport.ts line 51 col 16: error TS2027: Exported variable 'm1_im2_private_v2_public' has or is using private type 'm1_M2_private.c1'.
 privacyGloImport.ts line 52 col 16: error TS2027: Exported variable 'm1_im2_private_v3_public' has or is using private type 'm1_M2_private.c1'.
@@ -28,6 +28,6 @@ privacyGloImport.ts line 107 col 45: error TS4022: Type reference cannot refer t
 privacyGloImport.ts line 110 col 39: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
 privacyGloImport.ts line 115 col 45: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
 privacyGloImport.ts line 118 col 39: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
-privacyGloImport.ts line 134 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 139 col 9: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 142 col 5: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts line 134 col 24: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts line 139 col 16: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts line 142 col 12: error TS2195: Ambient external module declaration must be defined in global context.

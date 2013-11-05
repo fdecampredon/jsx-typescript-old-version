@@ -31,8 +31,10 @@ define(["require", "exports"], function(require, exports) {
 
 
 ////[declFileExportImportChain2_a.d.ts]
-declare module m1.m2 {
-    class c1 {
+declare module m1 {
+    module m2 {
+        class c1 {
+        }
     }
 }
 export = m1;

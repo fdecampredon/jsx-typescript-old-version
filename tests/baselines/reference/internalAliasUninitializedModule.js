@@ -7,9 +7,11 @@ var c;
 
 
 ////[internalAliasUninitializedModule.d.ts]
-declare module a.b {
-    interface I {
-        foo(): any;
+declare module a {
+    module b {
+        interface I {
+            foo(): any;
+        }
     }
 }
 declare module c {

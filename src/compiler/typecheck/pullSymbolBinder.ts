@@ -389,7 +389,14 @@ module TypeScript {
             var parent = this.getParent(moduleContainerDecl);
             var parentInstanceSymbol = this.getParent(moduleContainerDecl, true);
             var parentDecl = moduleContainerDecl.getParentDecl();
-            var moduleAST = <ModuleDeclaration>this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
+            var moduleNameAST = this.semanticInfoChain.getASTForDecl(moduleContainerDecl);
+            var moduleDeclAST: AST = getEnclosingModuleDeclaration(moduleNameAST);
+            if (!moduleDeclAST) {
+                Debug.assert(moduleContainerDecl.kind === PullElementKind.DynamicModule);
+                Debug.assert(moduleNameAST.nodeType() === SyntaxKind.SourceUnit);
+                // This is the module decl for the top level synthesized external module.
+                moduleDeclAST = moduleNameAST;
+            }
 
             var isExported = hasFlag(moduleContainerDecl.flags, PullElementFlags.Exported);
             var searchKind = PullElementKind.SomeContainer;
@@ -398,7 +405,7 @@ module TypeScript {
             if (parent && moduleKind == PullElementKind.DynamicModule) {
                 // Dynamic modules cannot be parented
                 this.semanticInfoChain.addDiagnosticFromAST(
-                    moduleAST, DiagnosticCode.Ambient_external_module_declaration_must_be_defined_in_global_context, null);
+                    moduleNameAST, DiagnosticCode.Ambient_external_module_declaration_must_be_defined_in_global_context, null);
             }
 
             var createdNewSymbol = false;
@@ -409,13 +416,16 @@ module TypeScript {
                 if (moduleContainerTypeSymbol.kind !== moduleKind) {
                     // duplicate symbol error
                     if (isInitializedModule) {
-                        this.semanticInfoChain.addDiagnosticFromAST(moduleAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]);
+                        this.semanticInfoChain.addDiagnosticFromAST(moduleNameAST, DiagnosticCode.Duplicate_identifier_0, [moduleContainerDecl.getDisplayName()]);
                     }
+
                     moduleContainerTypeSymbol = null;
-                } else if (moduleKind == PullElementKind.DynamicModule) {
+                }
+                else if (moduleKind == PullElementKind.DynamicModule) {
                     // Dynamic modules cannot be reopened.
-                    this.semanticInfoChain.addDiagnosticFromAST(moduleAST, DiagnosticCode.Ambient_external_module_declaration_cannot_be_reopened);
-                } else if (!this.checkThatExportsMatch(moduleContainerDecl, moduleContainerTypeSymbol)) {
+                    this.semanticInfoChain.addDiagnosticFromAST(moduleNameAST, DiagnosticCode.Ambient_external_module_declaration_cannot_be_reopened);
+                }
+                else if (!this.checkThatExportsMatch(moduleContainerDecl, moduleContainerTypeSymbol)) {
                     moduleContainerTypeSymbol = null;
                 }
             }
@@ -436,14 +446,8 @@ module TypeScript {
             moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
             moduleContainerDecl.setSymbol(moduleContainerTypeSymbol);
 
-            if (moduleAST.name) {
-                this.semanticInfoChain.setSymbolForAST(moduleAST.name, moduleContainerTypeSymbol);
-            }
-            else {
-                this.semanticInfoChain.setSymbolForAST(moduleAST.stringLiteral, moduleContainerTypeSymbol);
-            }
-
-            this.semanticInfoChain.setSymbolForAST(moduleAST, moduleContainerTypeSymbol);
+            this.semanticInfoChain.setSymbolForAST(moduleNameAST, moduleContainerTypeSymbol);
+            this.semanticInfoChain.setSymbolForAST(moduleDeclAST, moduleContainerTypeSymbol);
 
             if (!moduleInstanceSymbol && isInitializedModule) {
                 // search for a complementary instance symbol first

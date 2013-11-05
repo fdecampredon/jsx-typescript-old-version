@@ -20,8 +20,10 @@ var c;
 
 
 ////[internalAliasInitializedModule.d.ts]
-declare module a.b {
-    class c {
+declare module a {
+    module b {
+        class c {
+        }
     }
 }
 declare module c {

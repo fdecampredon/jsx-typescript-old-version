@@ -23,8 +23,10 @@ define(["require", "exports"], function(require, exports) {
 
 
 ////[internalAliasInitializedModuleInsideLocalModuleWithExport.d.ts]
-export declare module a.b {
-    class c {
+export declare module a {
+    module b {
+        class c {
+        }
     }
 }
 export declare module c {

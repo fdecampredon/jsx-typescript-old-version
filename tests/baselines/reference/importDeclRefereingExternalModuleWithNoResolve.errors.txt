@@ -1,7 +1,7 @@
 importDeclRefereingExternalModuleWithNoResolve.ts line 1 col 1: error TS2071: Unable to resolve external module '"externalModule"'.
 importDeclRefereingExternalModuleWithNoResolve.ts line 1 col 1: error TS2072: Module cannot be aliased to a non-module type.
 importDeclRefereingExternalModuleWithNoResolve.ts line 1 col 1: error TS2199: Import declaration cannot refer to external module reference when --noResolve option is set.
-importDeclRefereingExternalModuleWithNoResolve.ts line 2 col 1: error TS2195: Ambient external module declaration must be defined in global context.
+importDeclRefereingExternalModuleWithNoResolve.ts line 2 col 16: error TS2195: Ambient external module declaration must be defined in global context.
 importDeclRefereingExternalModuleWithNoResolve.ts line 3 col 5: error TS2071: Unable to resolve external module '"externalModule"'.
 importDeclRefereingExternalModuleWithNoResolve.ts line 3 col 5: error TS2072: Module cannot be aliased to a non-module type.
 importDeclRefereingExternalModuleWithNoResolve.ts line 3 col 5: error TS2199: Import declaration cannot refer to external module reference when --noResolve option is set.

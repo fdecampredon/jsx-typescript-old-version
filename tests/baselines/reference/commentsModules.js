@@ -235,16 +235,20 @@ declare module m5.m6.m7 {
         }
     }
 }
-declare module m6.m7.m8 {
-    /** Exported class comment*/
-    class c {
+declare module m6.m7 {
+    module m8 {
+        /** Exported class comment*/
+        class c {
+        }
     }
 }
-/** module m9 comment*/
-declare module m7.m8.m9 {
-    /** Exported class comment*/
-    class c {
-    }
-    class e {
+declare module m7.m8 {
+    /** module m9 comment*/
+    module m9 {
+        /** Exported class comment*/
+        class c {
+        }
+        class e {
+        }
     }
 }

@@ -220,14 +220,22 @@ declare module m {
         var c: number;
     }
 }
-declare module m.m25.m5 {
-    var c: number;
-}
-declare module m13.m4 {
-    module m2.m3 {
-        var c: number;
+declare module m {
+    module m25 {
+        module m5 {
+            var c: number;
+        }
     }
-    function f(): number;
+}
+declare module m13 {
+    module m4 {
+        module m2 {
+            module m3 {
+                var c: number;
+            }
+        }
+        function f(): number;
+    }
 }
 declare module m4 {
     var b: any;

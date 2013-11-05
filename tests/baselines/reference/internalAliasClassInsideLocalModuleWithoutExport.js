@@ -29,6 +29,8 @@ export declare module x {
         public foo(a: number): number;
     }
 }
-export declare module m2.m3 {
-    var cProp: x.c;
+export declare module m2 {
+    module m3 {
+        var cProp: x.c;
+    }
 }

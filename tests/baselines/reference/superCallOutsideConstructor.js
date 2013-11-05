@@ -17,11 +17,13 @@ var D = (function (_super) {
     function D() {
         var _this = this;
         _super.call(this);
-        // BUG 773665
         this.x = _super.call(this);
 
         var y = function () {
-            // BUG 773665
+            _super.prototype();
+        };
+
+        var y2 = function () {
             _super.prototype();
         };
     }

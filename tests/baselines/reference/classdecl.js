@@ -146,10 +146,12 @@ declare module m1 {
     interface ib {
     }
 }
-declare module m2.m3 {
-    class c extends b {
-    }
-    class ib2 implements m1.ib {
+declare module m2 {
+    module m3 {
+        class c extends b {
+        }
+        class ib2 implements m1.ib {
+        }
     }
 }
 declare class c extends m1.b {

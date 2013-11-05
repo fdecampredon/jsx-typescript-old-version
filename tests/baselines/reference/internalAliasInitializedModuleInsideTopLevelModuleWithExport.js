@@ -18,8 +18,10 @@ exports.x = new exports.b.c();
 
 
 ////[internalAliasInitializedModuleInsideTopLevelModuleWithExport.d.ts]
-export declare module a.b {
-    class c {
+export declare module a {
+    module b {
+        class c {
+        }
     }
 }
 export import b = a.b;

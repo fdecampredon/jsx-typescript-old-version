@@ -186,7 +186,7 @@ module TypeScript {
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var document = this.getDocument(fileNames[i]);
                 var script = document.script();
-                if (!script.isDeclareFile() && script.isExternalModule) {
+                if (!script.isDeclareFile() && document.isExternalModule()) {
                     return true;
                 }
             }
@@ -227,7 +227,7 @@ module TypeScript {
                 for (var i = 0, n = fileNames.length; i < n; i++) {
                     var document = this.getDocument(fileNames[i]);
 
-                    if (document.script().isExternalModule) {
+                    if (document.isExternalModule()) {
                         // Dynamic module never contributes to the single file
                         continue;
                     }
@@ -534,10 +534,9 @@ module TypeScript {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var document = this.getDocument(fileName);
-            var script = document.script();
 
             var startTime = (new Date()).getTime();
-            PullTypeResolver.typeCheck(this.compilationSettings(), this.semanticInfoChain, script)
+            PullTypeResolver.typeCheck(this.compilationSettings(), this.semanticInfoChain, document)
             var endTime = (new Date()).getTime();
 
             typeCheckTime += endTime - startTime;

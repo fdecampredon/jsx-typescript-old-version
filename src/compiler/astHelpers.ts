@@ -17,19 +17,11 @@
 
 module TypeScript {
     export function scriptIsElided(script: Script): boolean {
-        return scriptOrModuleIsElided(script.modifiers, script.moduleElements);
+        return isDTSFile(script.fileName()) || moduleMembersAreElided(script.moduleElements);
     }
 
     export function moduleIsElided(declaration: ModuleDeclaration): boolean {
-        return scriptOrModuleIsElided(declaration.modifiers, declaration.moduleElements);
-    }
-
-    function scriptOrModuleIsElided(modifiers: PullElementFlags[], moduleMembers: ASTList): boolean {
-        if (hasModifier(modifiers, PullElementFlags.Ambient)) {
-            return true;
-        }
-
-        return moduleMembersAreElided(moduleMembers);
+        return hasModifier(declaration.modifiers, PullElementFlags.Ambient) || moduleMembersAreElided(declaration.moduleElements);
     }
 
     function moduleMembersAreElided(members: ASTList): boolean {
@@ -534,5 +526,74 @@ module TypeScript {
         }
 
         return false;
+    }
+
+    export function getEnclosingModuleDeclaration(ast: AST): ModuleDeclaration {
+        while (ast) {
+            if (ast.nodeType() === SyntaxKind.ModuleDeclaration) {
+                return <ModuleDeclaration>ast;
+            }
+
+            ast = ast.parent;
+        }
+
+        return null;
+    }
+
+    export function isLastNameOfModule(ast: ModuleDeclaration, astName: AST): boolean {
+        if (ast) {
+            if (ast.stringLiteral) {
+                return astName === ast.stringLiteral;
+            }
+            else {
+                var moduleNames = getModuleNames(ast.name);
+                var nameIndex = moduleNames.indexOf(<Identifier>astName);
+
+                return nameIndex === (moduleNames.length - 1);
+            }
+        }
+
+        return false;
+    }
+
+    export function isAnyNameOfModule(ast: ModuleDeclaration, astName: AST): boolean {
+        if (ast) {
+            if (ast.stringLiteral) {
+                return ast.stringLiteral === astName;
+            }
+            else {
+                var moduleNames = getModuleNames(ast.name);
+                var nameIndex = moduleNames.indexOf(<Identifier>astName);
+
+                return nameIndex >= 0;
+            }
+        }
+
+        return false;
+    }
+
+    export function getModifiers(ast: AST): PullElementFlags[] {
+        if (ast) {
+            switch (ast.nodeType()) {
+                case SyntaxKind.VariableStatement:
+                    return (<VariableStatement>ast).modifiers;
+                case SyntaxKind.FunctionDeclaration:
+                    return (<FunctionDeclaration>ast).modifiers;
+                case SyntaxKind.ClassDeclaration:
+                    return (<ClassDeclaration>ast).modifiers;
+                case SyntaxKind.InterfaceDeclaration:
+                    return (<InterfaceDeclaration>ast).modifiers;
+                case SyntaxKind.EnumDeclaration:
+                    return (<EnumDeclaration>ast).modifiers;
+                case SyntaxKind.ModuleDeclaration:
+                    return (<ModuleDeclaration>ast).modifiers;
+                case SyntaxKind.ImportDeclaration:
+                    return (<ImportDeclaration>ast).modifiers;
+                case SyntaxKind.ExportAssignment:
+                    return [PullElementFlags.Exported];
+            }
+        }
+
+        return null;
     }
 }

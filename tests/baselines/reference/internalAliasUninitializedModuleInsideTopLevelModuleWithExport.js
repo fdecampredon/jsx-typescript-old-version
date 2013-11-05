@@ -6,9 +6,11 @@ define(["require", "exports"], function(require, exports) {
 
 
 ////[internalAliasUninitializedModuleInsideTopLevelModuleWithExport.d.ts]
-export declare module a.b {
-    interface I {
-        foo(): any;
+export declare module a {
+    module b {
+        interface I {
+            foo(): any;
+        }
     }
 }
 export import b = a.b;

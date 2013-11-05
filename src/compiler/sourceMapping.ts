@@ -39,6 +39,11 @@ module TypeScript {
             public sourceLine: number,
             public sourceColumn: number,
             public sourceName: string) {
+
+            //Debug.assert(!isNaN(emittedLine));
+            //Debug.assert(!isNaN(emittedColumn));
+            //Debug.assert(!isNaN(sourceLine));
+            //Debug.assert(!isNaN(sourceColumn));
         }
     }
 

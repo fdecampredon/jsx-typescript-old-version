@@ -5,8 +5,10 @@ exports.x;
 
 ////[declFileAmbientExternalModuleWithSingleExportedModule_0.d.ts]
 declare module "SubModule" {
-    module m.m3 {
-        interface c {
+    module m {
+        module m3 {
+            interface c {
+            }
         }
     }
 }

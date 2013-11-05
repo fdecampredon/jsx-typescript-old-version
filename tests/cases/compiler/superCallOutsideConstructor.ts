@@ -3,15 +3,17 @@ class C {
 }
  
 class D extends C {
-    // BUG 773665
     x = super(); 
  
     constructor() {
         super();
  
         var y = () => {
-	    // BUG 773665
             super(); 
+        }
+
+        var y2 = function() {
+            super();
         }
     }
 }

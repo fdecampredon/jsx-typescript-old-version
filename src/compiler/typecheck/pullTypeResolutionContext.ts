@@ -159,11 +159,34 @@ module TypeScript {
 
     export class PullTypeResolutionContext {
         private contextStack: PullContextualTypeContext[] = [];
+        private typeCheckedNodes: IBitVector = null;
 
         constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public fileName: string = null) {
             if (inTypeCheck) {
                 Debug.assert(fileName, "A file name must be provided if you are typechecking");
+                this.typeCheckedNodes = BitVector.getBitVector(/*allowUndefinedValues:*/ false);
             }
+        }
+
+        public setTypeChecked(ast: AST): void {
+            if (!this.inProvisionalResolution()) {
+                this.typeCheckedNodes.setValueAt(ast.astID(), true);
+            }
+        }
+
+        public canTypeCheckAST(ast: AST): boolean {
+            // If we're in a context where we're type checking, and the ast we're typechecking
+            // hasn't been typechecked in this phase yet, *and* the ast is from the file we're
+            // currently typechecking, then we can typecheck.
+            //
+            // If the ast has been typechecked in this phase, then there's no need to typecheck
+            // it again.  Also, if it's from another file, there's no need to typecheck it since
+            // whatever host we're in will eventually get around to typechecking it.  This is 
+            // also important as it's very possible to stack overflow when typechecking if we 
+            // keep jumping around to AST nodes all around a large project.
+            return this.typeCheck() &&
+                !this.typeCheckedNodes.valueAt(ast.astID()) &&
+                this.fileName === ast.fileName();
         }
 
         public pushContextualType(type: PullTypeSymbol, provisional: boolean, substitutions: PullTypeSymbol[]) {
