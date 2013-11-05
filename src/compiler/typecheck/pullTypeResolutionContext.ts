@@ -19,6 +19,9 @@ module TypeScript {
     export class ArgumentInferenceContext {
         public inferenceCache: IBitMatrix = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ false);
         public candidateCache: CandidateInferenceInfo[] = [];
+        public fixedParameterTypes: PullTypeSymbol[] = null;
+
+        constructor(public argumentASTs: ISeparatedSyntaxList2) { }
 
         public alreadyRelatingTypes(objectType: PullTypeSymbol, parameterType: PullTypeSymbol) {
             if (this.inferenceCache.valueAt(objectType.pullSymbolID, parameterType.pullSymbolID)) {

@@ -7,6 +7,3 @@ genericSpecializations3.ts line 28 col 1: error TS2012: Cannot convert 'StringFo
 genericSpecializations3.ts line 29 col 1: error TS2012: Cannot convert 'IntFoo' to 'StringFoo2':
 	Types of property 'foo' of types 'IntFoo' and 'StringFoo2' are incompatible:
 		Call signatures of types '(x: number) => number' and '(x: string) => string' are incompatible.
-genericSpecializations3.ts line 32 col 7: error TS2137: Class StringFoo3 declares interface IFoo<string> but does not implement it:
-	Types of property 'foo' of types 'StringFoo3' and 'IFoo<string>' are incompatible:
-		Call signatures of types '<T>(x: T) => T' and '(x: string) => string' are incompatible.

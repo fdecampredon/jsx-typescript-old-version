@@ -1,0 +1,13 @@
+=== tests/cases/compiler/reverseInferenceInContextualInstantiation.ts ===
+Line 0 col 9 IdentifierName "compare" = <T>(a: T, b: T) => number
+Line 0 col 17 IdentifierName "T" = T
+Line 0 col 20 IdentifierName "a" = T
+Line 0 col 23 IdentifierName "T" = T
+Line 0 col 26 IdentifierName "b" = T
+Line 0 col 29 IdentifierName "T" = T
+Line 1 col 4 IdentifierName "x" = number[]
+Line 2 col 0 InvocationExpression "x.sort(compare)" = number[]
+Line 2 col 0 MemberAccessExpression "x.sort" = (compareFn?: (a: number, b: number) => number) => number[]
+Line 2 col 0 IdentifierName "x" = number[]
+Line 2 col 2 IdentifierName "sort" = (compareFn?: (a: number, b: number) => number) => number[]
+Line 2 col 7 IdentifierName "compare" = <T>(a: T, b: T) => number
