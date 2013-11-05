@@ -394,7 +394,7 @@ module TypeScript {
                 var preCommentsLength = preComments.length;
                 var docComments = new Array<Comment>();
                 for (var i = preCommentsLength - 1; i >= 0; i--) {
-                    if (preComments[i].isDocComment()) {
+                    if (isDocComment(preComments[i])) {
                         docComments.push(preComments[i]);
                         continue;
                     }
@@ -407,6 +407,17 @@ module TypeScript {
         }
 
         return sentinelEmptyArray;
+    }
+
+
+
+    function isDocComment(comment: Comment) {
+        if (comment.nodeType() === SyntaxKind.MultiLineCommentTrivia) {
+            var fullText = comment.fullText();
+            return fullText.charAt(2) === "*" && fullText.charAt(3) !== "/";
+        }
+
+        return false;
     }
 
     export function getParameterList(ast: AST): ParameterList {

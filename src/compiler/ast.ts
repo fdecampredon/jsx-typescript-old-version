@@ -19,15 +19,13 @@ module TypeScript {
     export interface IASTSpan {
         _start: number;
         _end: number;
-        _trailingTriviaWidth: number;
 
         start(): number;
-        end(): number;
-        trailingTriviaWidth(): number;
+        end(): number;        //trailingTriviaWidth(): number;
     }
 
     export class ASTSpan implements IASTSpan {
-        constructor(public _start: number, public _end: number, public _trailingTriviaWidth: number) {
+        constructor(public _start: number, public _end: number) {
         }
 
         public start(): number {
@@ -36,10 +34,6 @@ module TypeScript {
 
         public end(): number {
             return this._end;
-        }
-
-        public trailingTriviaWidth(): number {
-            return this._trailingTriviaWidth;
         }
     }
 
@@ -265,9 +259,7 @@ module TypeScript {
 
     export class Script extends AST {
         constructor(public moduleElements: ASTList,
-                    private _fileName: string,
-                    public amdDependencies: string[],
-                    public hasImplicitImport: boolean) {
+                    private _fileName: string) {
             super();
             moduleElements && (moduleElements.parent = this);
         }
@@ -1761,10 +1753,6 @@ module TypeScript {
     }
 
     export class Comment {
-        public text: string[] = null;
-        private docCommentText: string = null;
-        public _trailingTriviaWidth = 0;
-
         constructor(private _trivia: ISyntaxTrivia,
                     public endsLine: boolean,
                     public _start: number,
@@ -1779,16 +1767,12 @@ module TypeScript {
             return this._end;
         }
 
-        public trailingTriviaWidth(): number {
-            return this._trailingTriviaWidth;
-        }
-
         public fullText(): string {
             return this._trivia.fullText();
         }
 
-        public isBlockComment(): boolean {
-            return this._trivia.kind() === SyntaxKind.MultiLineCommentTrivia;
+        public nodeType(): SyntaxKind {
+            return this._trivia.kind();
         }
 
         public structuralEquals(ast: Comment, includingPosition: boolean): boolean {
@@ -1800,281 +1784,6 @@ module TypeScript {
 
             return this._trivia.fullText() === ast._trivia.fullText() &&
                    this.endsLine === ast.endsLine;
-        }
-
-        public isPinnedOrTripleSlash(): boolean {
-            if (this.fullText().match(tripleSlashReferenceRegExp)) {
-                return true;
-            }
-            else {
-                return this.fullText().indexOf("/*!") === 0;
-            }
-        }
-
-        public getText(): string[] {
-            if (this.text === null) {
-                if (this.isBlockComment()) {
-                    this.text = this.fullText().split("\n");
-                    for (var i = 0; i < this.text.length; i++) {
-                        this.text[i] = this.text[i].replace(/^\s+|\s+$/g, '');
-                    }
-                }
-                else {
-                    this.text = [(this.fullText().replace(/^\s+|\s+$/g, ''))];
-                }
-            }
-
-            return this.text;
-        }
-
-        public isDocComment() {
-            if (this.isBlockComment()) {
-                return this.fullText().charAt(2) === "*" && this.fullText().charAt(3) !== "/";
-            }
-
-            return false;
-        }
-
-        public getDocCommentTextValue() {
-            if (this.docCommentText === null) {
-                this.docCommentText = Comment.cleanJSDocComment(this.fullText());
-            }
-
-            return this.docCommentText;
-        }
-
-        static consumeLeadingSpace(line: string, startIndex: number, maxSpacesToRemove?: number) {
-            var endIndex = line.length;
-            if (maxSpacesToRemove !== undefined) {
-                endIndex = min(startIndex + maxSpacesToRemove, endIndex);
-            }
-
-            for (; startIndex < endIndex; startIndex++) {
-                var charCode = line.charCodeAt(startIndex);
-                if (charCode !== CharacterCodes.space && charCode !== CharacterCodes.tab) {
-                    return startIndex;
-                }
-            }
-
-            if (endIndex !== line.length) {
-                return endIndex;
-            }
-
-            return -1;
-        }
-
-        static isSpaceChar(line: string, index: number) {
-            var length = line.length;
-            if (index < length) {
-                var charCode = line.charCodeAt(index);
-                // If the character is space
-                return charCode === CharacterCodes.space || charCode === CharacterCodes.tab;
-            }
-
-            // If the index is end of the line it is space
-            return index === length;
-        }
-
-        static cleanDocCommentLine(line: string, jsDocStyleComment: boolean, jsDocLineSpaceToRemove?: number) {
-            var nonSpaceIndex = Comment.consumeLeadingSpace(line, 0);
-            if (nonSpaceIndex !== -1) {
-                var jsDocSpacesRemoved = nonSpaceIndex;
-                if (jsDocStyleComment && line.charAt(nonSpaceIndex) === '*') { // remove leading * in case of jsDocComment
-                    var startIndex = nonSpaceIndex + 1;
-                    nonSpaceIndex = Comment.consumeLeadingSpace(line, startIndex, jsDocLineSpaceToRemove);
-
-                    if (nonSpaceIndex !== -1) {
-                        jsDocSpacesRemoved = nonSpaceIndex - startIndex;
-                    } else {
-                        return null;
-                    }
-                }
-
-                return {
-                    start: nonSpaceIndex,
-                    end: line.charAt(line.length - 1) === "\r" ? line.length - 1 : line.length,
-                    jsDocSpacesRemoved: jsDocSpacesRemoved
-                };
-            }
-
-            return null;
-        }
-
-        static cleanJSDocComment(content: string, spacesToRemove?: number) {
-
-            var docCommentLines = new Array<string>();
-            content = content.replace("/**", ""); // remove /**
-            if (content.length >= 2 && content.charAt(content.length - 1) === "/" && content.charAt(content.length - 2) === "*") {
-                content = content.substring(0, content.length - 2); // remove last */
-            }
-            var lines = content.split("\n");
-            var inParamTag = false;
-            for (var l = 0; l < lines.length; l++) {
-                var line = lines[l];
-                var cleanLinePos = Comment.cleanDocCommentLine(line, true, spacesToRemove);
-                if (!cleanLinePos) {
-                    // Whole line empty, read next line
-                    continue;
-                }
-
-                var docCommentText = "";
-                var prevPos = cleanLinePos.start;
-                for (var i = line.indexOf("@", cleanLinePos.start); 0 <= i && i < cleanLinePos.end; i = line.indexOf("@", i + 1)) {
-                    // We have encoutered @. 
-                    // If we were omitting param comment, we dont have to do anything
-                    // other wise the content of the text till @ tag goes as doc comment
-                    var wasInParamtag = inParamTag;
-
-                    // Parse contents next to @
-                    if (line.indexOf("param", i + 1) === i + 1 && Comment.isSpaceChar(line, i + 6)) {
-                        // It is param tag. 
-
-                        // If we were not in param tag earlier, push the contents from prev pos of the tag this tag start as docComment
-                        if (!wasInParamtag) {
-                            docCommentText += line.substring(prevPos, i);
-                        }
-
-                        // New start of contents 
-                        prevPos = i;
-                        inParamTag = true;
-                    } else if (wasInParamtag) {
-                        // Non param tag start
-                        prevPos = i;
-                        inParamTag = false;
-                    }
-                }
-
-                if (!inParamTag) {
-                    docCommentText += line.substring(prevPos, cleanLinePos.end);
-                }
-
-                // Add line to comment text if it is not only white space line
-                var newCleanPos = Comment.cleanDocCommentLine(docCommentText, false);
-                if (newCleanPos) {
-                    if (spacesToRemove === undefined) {
-                        spacesToRemove = cleanLinePos.jsDocSpacesRemoved;
-                    }
-                    docCommentLines.push(docCommentText);
-                }
-            }
-
-            return docCommentLines.join("\n");
-        }
-
-        static getDocCommentText(comments: Comment[]) {
-            var docCommentText = new Array<string>();
-            for (var c = 0 ; c < comments.length; c++) {
-                var commentText = comments[c].getDocCommentTextValue();
-                if (commentText !== "") {
-                    docCommentText.push(commentText);
-                }
-            }
-            return docCommentText.join("\n");
-        }
-
-        static getParameterDocCommentText(param: string, fncDocComments: Comment[]) {
-            if (fncDocComments.length === 0 || !fncDocComments[0].isBlockComment()) {
-                // there were no fnc doc comments and the comment is not block comment then it cannot have 
-                // @param comment that can be parsed
-                return "";
-            }
-
-            for (var i = 0; i < fncDocComments.length; i++) {
-                var commentContents = fncDocComments[i].fullText();
-                for (var j = commentContents.indexOf("@param", 0); 0 <= j; j = commentContents.indexOf("@param", j)) {
-                    j += 6;
-                    if (!Comment.isSpaceChar(commentContents, j)) {
-                        // This is not param tag but a tag line @paramxxxxx
-                        continue;
-                    }
-
-                    // This is param tag. Check if it is what we are looking for
-                    j = Comment.consumeLeadingSpace(commentContents, j);
-                    if (j === -1) {
-                        break;
-                    }
-
-                    // Ignore the type expression
-                    if (commentContents.charCodeAt(j) === CharacterCodes.openBrace) {
-                        j++;
-                        // Consume the type
-                        var charCode = 0;
-                        for (var curlies = 1; j < commentContents.length; j++) {
-                            charCode = commentContents.charCodeAt(j);
-                            // { character means we need to find another } to match the found one
-                            if (charCode === CharacterCodes.openBrace) {
-                                curlies++;
-                                continue;
-                            }
-
-                            // } char
-                            if (charCode === CharacterCodes.closeBrace) {
-                                curlies--;
-                                if (curlies === 0) {
-                                    // We do not have any more } to match the type expression is ignored completely
-                                    break;
-                                } else {
-                                    // there are more { to be matched with }
-                                    continue;
-                                }
-                            }
-
-                            // Found start of another tag
-                            if (charCode === CharacterCodes.at) {
-                                break;
-                            }
-                        }
-
-                        // End of the comment
-                        if (j === commentContents.length) {
-                            break;
-                        }
-
-                        // End of the tag, go onto looking for next tag
-                        if (charCode === CharacterCodes.at) {
-                            continue;
-                        }
-
-                        j = Comment.consumeLeadingSpace(commentContents, j + 1);
-                        if (j === -1) {
-                            break;
-                        }
-                    }
-
-                    // Parameter name
-                    if (param !== commentContents.substr(j, param.length) || !Comment.isSpaceChar(commentContents, j + param.length)) {
-                        // this is not the parameter we are looking for
-                        continue;
-                    }
-
-                    // Found the parameter we were looking for
-                    j = Comment.consumeLeadingSpace(commentContents, j + param.length);
-                    if (j === -1) {
-                        return "";
-                    }
-
-                    var endOfParam = commentContents.indexOf("@", j);
-                    var paramHelpString = commentContents.substring(j, endOfParam < 0 ? commentContents.length : endOfParam);
-
-                    // Find alignement spaces to remove
-                    var paramSpacesToRemove: number = undefined;
-                    var paramLineIndex = commentContents.substring(0, j).lastIndexOf("\n") + 1;
-                    if (paramLineIndex !== 0) {
-                        if (paramLineIndex < j && commentContents.charAt(paramLineIndex + 1) === "\r") {
-                            paramLineIndex++;
-                        }
-                    }
-                    var startSpaceRemovalIndex = Comment.consumeLeadingSpace(commentContents, paramLineIndex);
-                    if (startSpaceRemovalIndex !== j && commentContents.charAt(startSpaceRemovalIndex) === "*") {
-                        paramSpacesToRemove = j - startSpaceRemovalIndex - 1;
-                    }
-
-                    // Clean jsDocComment and return
-                    return Comment.cleanJSDocComment(paramHelpString, paramSpacesToRemove);
-                }
-            }
-
-            return "";
         }
     }
 

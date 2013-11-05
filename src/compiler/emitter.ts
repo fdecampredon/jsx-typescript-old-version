@@ -402,7 +402,7 @@ module TypeScript {
                 return;
             }
 
-            var text = comment.getText();
+            var text = getTrimmedTextLines(comment);
             var emitColumn = this.emitState.column;
 
             if (emitColumn === 0) {
@@ -412,7 +412,7 @@ module TypeScript {
                 this.writeToOutput(" ");
             }
 
-            if (comment.isBlockComment()) {
+            if (comment.nodeType() === SyntaxKind.MultiLineCommentTrivia) {
                 this.recordSourceMappingStart(comment);
                 this.writeToOutput(text[0]);
 
@@ -467,13 +467,23 @@ module TypeScript {
                 // We're emitting comments on an elided element.  Only keep the comment if it is
                 // a triple slash or pinned comment.
                 if (onlyPinnedOrTripleSlashComments) {
-                    preComments = ArrayUtilities.where(preComments, c => c.isPinnedOrTripleSlash());
+                    preComments = ArrayUtilities.where(preComments, c => this.isPinnedOrTripleSlash(c));
                 }
 
                 this.emitCommentsArray(preComments, /*trailing:*/ false);
             }
             else {
                 this.emitCommentsArray(ast.postComments(), /*trailing:*/ true);
+            }
+        }
+
+        private isPinnedOrTripleSlash(comment: Comment): boolean {
+            var fullText = comment.fullText();
+            if (fullText.match(tripleSlashReferenceRegExp)) {
+                return true;
+            }
+            else {
+                return fullText.indexOf("/*!") === 0;
             }
         }
 
@@ -794,8 +804,9 @@ module TypeScript {
             }
 
             // emit any potential amd dependencies
-            for (var i = 0; i < script.amdDependencies.length; i++) {
-                dependencyList += ", \"" + script.amdDependencies[i] + "\"";
+            var amdDependencies = this.document.amdDependencies();
+            for (var i = 0; i < amdDependencies.length; i++) {
+                dependencyList += ", \"" + amdDependencies[i] + "\"";
             }
 
             return {
@@ -3466,5 +3477,14 @@ module TypeScript {
 
     export function getLastConstructor(classDecl: ClassDeclaration): ConstructorDeclaration {
         return <ConstructorDeclaration>classDecl.classElements.lastOrDefault(e => e.nodeType() === SyntaxKind.ConstructorDeclaration);
+    }
+
+    export function getTrimmedTextLines(comment: Comment): string[] {
+        if (comment.nodeType() === SyntaxKind.MultiLineCommentTrivia) {
+            return comment.fullText().split("\n").map(s => s.trim());
+        }
+        else {
+            return [comment.fullText().trim()];
+        }
     }
 }

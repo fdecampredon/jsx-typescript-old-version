@@ -10,6 +10,7 @@ module TypeScript {
         private _declASTMap: AST[] = [];
         private _astDeclMap: PullDecl[] = [];
         private _isExternalModule: boolean = undefined;
+        private _amdDependencies: string[] = undefined;
 
         constructor(private _compiler: TypeScriptCompiler,
                     private _semanticInfoChain: SemanticInfoChain,
@@ -44,6 +45,92 @@ module TypeScript {
             TypeScript.syntaxDiagnosticsTime += new Date().getTime() - start;
 
             this._lineMap = syntaxTree.lineMap();
+
+            var sourceUnit = syntaxTree.sourceUnit();
+            var leadingComments = this.getLeadingComments(sourceUnit);
+
+            this._isExternalModule = this.hasImplicitImport(leadingComments) || this.hasTopLevelImportOrExport(sourceUnit);
+
+            var amdDependencies: string[] = [];
+            for (var i = 0, n = leadingComments.length; i < n; i++) {
+                var trivia = leadingComments[i];
+                var amdDependency = this.getAmdDependency(trivia.fullText());
+                if (amdDependency) {
+                    amdDependencies.push(amdDependency);
+                }
+            }
+
+            this._amdDependencies = amdDependencies;
+        }
+
+        private getLeadingComments(node: SyntaxNode): ISyntaxTrivia[] {
+            var firstToken = node.firstToken();
+            var result: ISyntaxTrivia[] = [];
+
+            if (firstToken.hasLeadingComment()) {
+                var leadingTrivia = firstToken.leadingTrivia();
+
+                for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
+                    var trivia = leadingTrivia.syntaxTriviaAt(i);
+
+                    if (trivia.isComment()) {
+                        result.push(trivia);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private getAmdDependency(comment: string): string {
+            var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
+            var match = amdDependencyRegEx.exec(comment);
+            return match ? match[2] : null;
+        }
+
+        private hasImplicitImport(sourceUnitLeadingComments: ISyntaxTrivia[]): boolean {
+            for (var i = 0, n = sourceUnitLeadingComments.length; i < n; i++) {
+                var trivia = sourceUnitLeadingComments[i];
+
+                if (this.getImplicitImport(trivia.fullText())) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private getImplicitImport(comment: string): boolean {
+            var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
+            var match = implicitImportRegEx.exec(comment);
+
+            if (match) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private hasTopLevelImportOrExport(node: SourceUnitSyntax): boolean {
+            var firstToken: ISyntaxToken;
+
+            for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
+                var moduleElement = node.moduleElements.childAt(i);
+
+                firstToken = moduleElement.firstToken();
+                if (firstToken !== null && firstToken.tokenKind === SyntaxKind.ExportKeyword) {
+                    return true;
+                }
+
+                if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
+                    var importDecl = <ImportDeclarationSyntax>moduleElement;
+                    if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public script(): Script {
@@ -82,6 +169,29 @@ module TypeScript {
             }
 
             return this._lineMap;
+        }
+
+        public isExternalModule(): boolean {
+            // October 11, 2013
+            // External modules are written as separate source files that contain at least one 
+            // external import declaration, export assignment, or top-level exported declaration.
+            if (this._isExternalModule === undefined) {
+                // force the info about isExternalModule to get created.
+                this.syntaxTree();
+                Debug.assert(this._isExternalModule !== undefined);
+            }
+
+            return this._isExternalModule;
+        }
+
+        public amdDependencies(): string[] {
+            if (this._amdDependencies === undefined) {
+                // force the info about the amd dependencies to get created.
+                this.syntaxTree();
+                Debug.assert(this._amdDependencies !== undefined);
+            }
+
+            return this._amdDependencies;
         }
 
         public syntaxTree(): SyntaxTree {
@@ -145,42 +255,6 @@ module TypeScript {
             // emitting to our own file.  Also, if we're an external module, then we're 
             // definitely emitting to our own file.
             return !this._compiler.compilationSettings().outFileOption() || this.isExternalModule();
-        }
-
-
-        public isExternalModule(): boolean {
-            // October 11, 2013
-            // External modules are written as separate source files that contain at least one 
-            // external import declaration, export assignment, or top-level exported declaration.
-            if (this._isExternalModule === undefined) {
-                this._isExternalModule = this.hasTopLevelImportOrExport(this.script());
-            }
-
-            return this._isExternalModule;
-        }
-
-        private hasTopLevelImportOrExport(script: Script): boolean {
-            if (script.hasImplicitImport) {
-                return true;
-            }
-
-            for (var i = 0, n = script.moduleElements.childCount(); i < n; i++) {
-                var moduleElement = script.moduleElements.childAt(i);
-
-                if (moduleElement.nodeType() === SyntaxKind.ImportDeclaration) {
-                    var importDeclaration = <ImportDeclaration>moduleElement;
-                    if (importDeclaration.moduleReference.nodeType() === SyntaxKind.ExternalModuleReference) {
-                        return true;
-                    }
-                }
-
-                var modifiers = getModifiers(moduleElement);
-                if (modifiers && hasModifier(modifiers, PullElementFlags.Exported)) {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {

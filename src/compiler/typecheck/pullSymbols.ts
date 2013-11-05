@@ -727,11 +727,26 @@ module TypeScript {
             return classSymbol.type.getConstructSignatures()[0];
         }
 
+        private getDocCommentText(comments: Comment[]) {
+            var docCommentText = new Array<string>();
+            for (var c = 0; c < comments.length; c++) {
+                var commentText = this.getDocCommentTextValue(comments[c]);
+                if (commentText !== "") {
+                    docCommentText.push(commentText);
+                }
+            }
+            return docCommentText.join("\n");
+        }
+
+        private getDocCommentTextValue(comment: Comment) {
+            return this.cleanJSDocComment(comment.fullText());
+        }
+
         public docComments(useConstructorAsClass?: boolean): string {
             var decls = this.getDeclarations();
             if (useConstructorAsClass && decls.length && decls[0].kind == TypeScript.PullElementKind.ConstructorMethod) {
                 var classDecl = decls[0].getParentDecl();
-                return TypeScript.Comment.getDocCommentText(this.getDocCommentsOfDecl(classDecl));
+                return this.getDocCommentText(this.getDocCommentsOfDecl(classDecl));
             }
 
             if (this._docComments === null) {
@@ -745,22 +760,24 @@ module TypeScript {
                     } else {
                         docComments = "";
                     }
-                } else if (this.kind == TypeScript.PullElementKind.Parameter) {
+                }
+                else if (this.kind == TypeScript.PullElementKind.Parameter) {
                     var parameterComments: string[] = [];
 
                     var funcContainer = this.getEnclosingSignature();
                     var funcDocComments = this.getDocCommentArray(funcContainer);
-                    var paramComment = TypeScript.Comment.getParameterDocCommentText(this.getDisplayName(), funcDocComments);
+                    var paramComment = this.getParameterDocCommentText(this.getDisplayName(), funcDocComments);
                     if (paramComment != "") {
                         parameterComments.push(paramComment);
                     }
 
-                    var paramSelfComment = TypeScript.Comment.getDocCommentText(this.getDocCommentArray(this));
+                    var paramSelfComment = this.getDocCommentText(this.getDocCommentArray(this));
                     if (paramSelfComment != "") {
                         parameterComments.push(paramSelfComment);
                     }
                     docComments = parameterComments.join("\n");
-                } else {
+                }
+                else {
                     var getSymbolComments = true;
                     if (this.kind == TypeScript.PullElementKind.FunctionType) {
                         var functionSymbol = (<TypeScript.PullTypeSymbol>this).getFunctionSymbol();
@@ -778,7 +795,7 @@ module TypeScript {
                         }
                     }
                     if (getSymbolComments) {
-                        docComments = TypeScript.Comment.getDocCommentText(this.getDocCommentArray(this));
+                        docComments = this.getDocCommentText(this.getDocCommentArray(this));
                         if (docComments == "") {
                             if (this.kind == TypeScript.PullElementKind.CallSignature) {
                                 var callTypeSymbol = (<TypeScript.PullSignatureSymbol>this).functionType;
@@ -794,6 +811,228 @@ module TypeScript {
             }
 
             return this._docComments;
+        }
+
+        private getParameterDocCommentText(param: string, fncDocComments: Comment[]) {
+            if (fncDocComments.length === 0 || fncDocComments[0].nodeType() !== SyntaxKind.MultiLineCommentTrivia) {
+                // there were no fnc doc comments and the comment is not block comment then it cannot have 
+                // @param comment that can be parsed
+                return "";
+            }
+
+            for (var i = 0; i < fncDocComments.length; i++) {
+                var commentContents = fncDocComments[i].fullText();
+                for (var j = commentContents.indexOf("@param", 0); 0 <= j; j = commentContents.indexOf("@param", j)) {
+                    j += 6;
+                    if (!this.isSpaceChar(commentContents, j)) {
+                        // This is not param tag but a tag line @paramxxxxx
+                        continue;
+                    }
+
+                    // This is param tag. Check if it is what we are looking for
+                    j = this.consumeLeadingSpace(commentContents, j);
+                    if (j === -1) {
+                        break;
+                    }
+
+                    // Ignore the type expression
+                    if (commentContents.charCodeAt(j) === CharacterCodes.openBrace) {
+                        j++;
+                        // Consume the type
+                        var charCode = 0;
+                        for (var curlies = 1; j < commentContents.length; j++) {
+                            charCode = commentContents.charCodeAt(j);
+                            // { character means we need to find another } to match the found one
+                            if (charCode === CharacterCodes.openBrace) {
+                                curlies++;
+                                continue;
+                            }
+
+                            // } char
+                            if (charCode === CharacterCodes.closeBrace) {
+                                curlies--;
+                                if (curlies === 0) {
+                                    // We do not have any more } to match the type expression is ignored completely
+                                    break;
+                                } else {
+                                    // there are more { to be matched with }
+                                    continue;
+                                }
+                            }
+
+                            // Found start of another tag
+                            if (charCode === CharacterCodes.at) {
+                                break;
+                            }
+                        }
+
+                        // End of the comment
+                        if (j === commentContents.length) {
+                            break;
+                        }
+
+                        // End of the tag, go onto looking for next tag
+                        if (charCode === CharacterCodes.at) {
+                            continue;
+                        }
+
+                        j = this.consumeLeadingSpace(commentContents, j + 1);
+                        if (j === -1) {
+                            break;
+                        }
+                    }
+
+                    // Parameter name
+                    if (param !== commentContents.substr(j, param.length) || !this.isSpaceChar(commentContents, j + param.length)) {
+                        // this is not the parameter we are looking for
+                        continue;
+                    }
+
+                    // Found the parameter we were looking for
+                    j = this.consumeLeadingSpace(commentContents, j + param.length);
+                    if (j === -1) {
+                        return "";
+                    }
+
+                    var endOfParam = commentContents.indexOf("@", j);
+                    var paramHelpString = commentContents.substring(j, endOfParam < 0 ? commentContents.length : endOfParam);
+
+                    // Find alignement spaces to remove
+                    var paramSpacesToRemove: number = undefined;
+                    var paramLineIndex = commentContents.substring(0, j).lastIndexOf("\n") + 1;
+                    if (paramLineIndex !== 0) {
+                        if (paramLineIndex < j && commentContents.charAt(paramLineIndex + 1) === "\r") {
+                            paramLineIndex++;
+                        }
+                    }
+                    var startSpaceRemovalIndex = this.consumeLeadingSpace(commentContents, paramLineIndex);
+                    if (startSpaceRemovalIndex !== j && commentContents.charAt(startSpaceRemovalIndex) === "*") {
+                        paramSpacesToRemove = j - startSpaceRemovalIndex - 1;
+                    }
+
+                    // Clean jsDocComment and return
+                    return this.cleanJSDocComment(paramHelpString, paramSpacesToRemove);
+                }
+            }
+
+            return "";
+        }
+
+        private cleanJSDocComment(content: string, spacesToRemove?: number) {
+            var docCommentLines = new Array<string>();
+            content = content.replace("/**", ""); // remove /**
+            if (content.length >= 2 && content.charAt(content.length - 1) === "/" && content.charAt(content.length - 2) === "*") {
+                content = content.substring(0, content.length - 2); // remove last */
+            }
+            var lines = content.split("\n");
+            var inParamTag = false;
+            for (var l = 0; l < lines.length; l++) {
+                var line = lines[l];
+                var cleanLinePos = this.cleanDocCommentLine(line, true, spacesToRemove);
+                if (!cleanLinePos) {
+                    // Whole line empty, read next line
+                    continue;
+                }
+
+                var docCommentText = "";
+                var prevPos = cleanLinePos.start;
+                for (var i = line.indexOf("@", cleanLinePos.start); 0 <= i && i < cleanLinePos.end; i = line.indexOf("@", i + 1)) {
+                    // We have encoutered @. 
+                    // If we were omitting param comment, we dont have to do anything
+                    // other wise the content of the text till @ tag goes as doc comment
+                    var wasInParamtag = inParamTag;
+
+                    // Parse contents next to @
+                    if (line.indexOf("param", i + 1) === i + 1 && this.isSpaceChar(line, i + 6)) {
+                        // It is param tag. 
+
+                        // If we were not in param tag earlier, push the contents from prev pos of the tag this tag start as docComment
+                        if (!wasInParamtag) {
+                            docCommentText += line.substring(prevPos, i);
+                        }
+
+                        // New start of contents 
+                        prevPos = i;
+                        inParamTag = true;
+                    } else if (wasInParamtag) {
+                        // Non param tag start
+                        prevPos = i;
+                        inParamTag = false;
+                    }
+                }
+
+                if (!inParamTag) {
+                    docCommentText += line.substring(prevPos, cleanLinePos.end);
+                }
+
+                // Add line to comment text if it is not only white space line
+                var newCleanPos = this.cleanDocCommentLine(docCommentText, false);
+                if (newCleanPos) {
+                    if (spacesToRemove === undefined) {
+                        spacesToRemove = cleanLinePos.jsDocSpacesRemoved;
+                    }
+                    docCommentLines.push(docCommentText);
+                }
+            }
+
+            return docCommentLines.join("\n");
+        }
+
+        private consumeLeadingSpace(line: string, startIndex: number, maxSpacesToRemove?: number) {
+            var endIndex = line.length;
+            if (maxSpacesToRemove !== undefined) {
+                endIndex = MathPrototype.min(startIndex + maxSpacesToRemove, endIndex);
+            }
+
+            for (; startIndex < endIndex; startIndex++) {
+                var charCode = line.charCodeAt(startIndex);
+                if (charCode !== CharacterCodes.space && charCode !== CharacterCodes.tab) {
+                    return startIndex;
+                }
+            }
+
+            if (endIndex !== line.length) {
+                return endIndex;
+            }
+
+            return -1;
+        }
+
+        private isSpaceChar(line: string, index: number) {
+            var length = line.length;
+            if (index < length) {
+                var charCode = line.charCodeAt(index);
+                // If the character is space
+                return charCode === CharacterCodes.space || charCode === CharacterCodes.tab;
+            }
+
+            // If the index is end of the line it is space
+            return index === length;
+        }
+
+        private cleanDocCommentLine(line: string, jsDocStyleComment: boolean, jsDocLineSpaceToRemove?: number) {
+            var nonSpaceIndex = this.consumeLeadingSpace(line, 0);
+            if (nonSpaceIndex !== -1) {
+                var jsDocSpacesRemoved = nonSpaceIndex;
+                if (jsDocStyleComment && line.charAt(nonSpaceIndex) === '*') { // remove leading * in case of jsDocComment
+                    var startIndex = nonSpaceIndex + 1;
+                    nonSpaceIndex = this.consumeLeadingSpace(line, startIndex, jsDocLineSpaceToRemove);
+
+                    if (nonSpaceIndex !== -1) {
+                        jsDocSpacesRemoved = nonSpaceIndex - startIndex;
+                    } else {
+                        return null;
+                    }
+                }
+
+                return {
+                    start: nonSpaceIndex,
+                    end: line.charAt(line.length - 1) === "\r" ? line.length - 1 : line.length,
+                    jsDocSpacesRemoved: jsDocSpacesRemoved
+                };
+            }
+
+            return null;
         }
     }
 
@@ -1712,6 +1951,10 @@ module TypeScript {
 
         public hasOwnIndexSignatures(): boolean {
             return this._indexSignatures !== null;
+        }
+
+        public getOwnIndexSignatures(): PullSignatureSymbol[] {
+            return this._indexSignatures || sentinelEmptyArray;
         }
 
         public getIndexSignatures(): PullSignatureSymbol[] {

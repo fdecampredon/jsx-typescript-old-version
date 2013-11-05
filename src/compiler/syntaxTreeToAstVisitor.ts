@@ -45,16 +45,16 @@ module TypeScript {
             }
 
             if (element.fullWidth() === 0) {
-                return new ASTSpan(/*start:*/ -1, /*end:*/ -1, /*trailingTriviaWidth:*/ 0);
+                return new ASTSpan(/*start:*/ -1, /*end:*/ -1);
             }
 
             var leadingTriviaWidth = element.leadingTriviaWidth();
             var trailingTriviaWidth = element.trailingTriviaWidth();
 
-            var desiredMinChar = fullStart + leadingTriviaWidth;
-            var desiredLimChar = fullStart + element.fullWidth() - trailingTriviaWidth;
+            var start = fullStart + leadingTriviaWidth;
+            var end = fullStart + element.fullWidth() - trailingTriviaWidth;
 
-            return new ASTSpan(desiredMinChar, desiredLimChar, trailingTriviaWidth);
+            return new ASTSpan(start, end);
         }
 
         public setSpan(span: AST, fullStart: number, element: ISyntaxElement, firstToken = element.firstToken(), lastToken = element.lastToken()): void {
@@ -239,51 +239,13 @@ module TypeScript {
             }
         }
 
-        private getLeadingComments(node: SyntaxNode): ISyntaxTrivia[] {
-            var firstToken = node.firstToken();
-            var result: ISyntaxTrivia[] = [];
-
-            if (firstToken.hasLeadingComment()) {
-                var leadingTrivia = firstToken.leadingTrivia();
-
-                for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
-                    var trivia = leadingTrivia.syntaxTriviaAt(i);
-
-                    if (trivia.isComment()) {
-                        result.push(trivia);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        private getAmdDependency(comment: string): string {
-            var amdDependencyRegEx = /^\/\/\/\s*<amd-dependency\s+path=('|")(.+?)\1/gim;
-            var match = amdDependencyRegEx.exec(comment);
-            return match ? match[2] : null;
-        }
-
         public visitSourceUnit(node: SourceUnitSyntax): Script {
             var start = this.position;
             Debug.assert(start === 0);
 
             var bod = this.visitSyntaxList(node.moduleElements);
 
-            var amdDependencies: string[] = [];
-
-            var leadingComments = this.getLeadingComments(node);
-            for (var i = 0, n = leadingComments.length; i < n; i++) {
-                var trivia = leadingComments[i];
-                var amdDependency = this.getAmdDependency(trivia.fullText());
-                if (amdDependency) {
-                    amdDependencies.push(amdDependency);
-                }
-            }
-
-            var hasImplicitImport = this.hasImplicitImport(leadingComments);
-
-            var result = new Script(bod, this.fileName, amdDependencies, hasImplicitImport);
+            var result = new Script(bod, this.fileName);
             this.setSpanExplicit(result, start, start + node.fullWidth());
 
             return result;
@@ -293,9 +255,20 @@ module TypeScript {
             for (var i = 0, n = sourceUnitLeadingComments.length; i < n; i++) {
                 var trivia = sourceUnitLeadingComments[i];
 
-                if (getImplicitImport(trivia.fullText())) {
+                if (this.getImplicitImport(trivia.fullText())) {
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        private getImplicitImport(comment: string): boolean {
+            var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
+            var match = implicitImportRegEx.exec(comment);
+
+            if (match) {
+                return true;
             }
 
             return false;

@@ -264,11 +264,11 @@ module TypeScript {
         }
 
         private emitComment(comment: Comment) {
-            var text = comment.getText();
+            var text = getTrimmedTextLines(comment);
             if (this.declFile.onNewLine) {
                 this.emitIndent();
             }
-            else if (!comment.isBlockComment()) {
+            else if (comment.nodeType() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
                 this.emitIndent();
             }
@@ -281,7 +281,7 @@ module TypeScript {
                 this.declFile.Write(text[i]);
             }
 
-            if (comment.endsLine || !comment.isBlockComment()) {
+            if (comment.endsLine || comment.nodeType() !== SyntaxKind.MultiLineCommentTrivia) {
                 this.declFile.WriteLine("");
             }
             else {

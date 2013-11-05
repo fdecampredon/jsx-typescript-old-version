@@ -80,17 +80,6 @@ module TypeScript {
         return null;
     }
 
-    export function getImplicitImport(comment: string): boolean {
-        var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
-        var match = implicitImportRegEx.exec(comment);
-
-        if (match) {
-            return true;
-        }
-        
-        return false;
-    }
-
     var scannerWindow = ArrayUtilities.createArray<number>(2048, 0);
     var scannerDiagnostics: any[] = [];
 

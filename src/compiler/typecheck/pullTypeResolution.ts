@@ -26,6 +26,20 @@ module TypeScript {
         public membersContextTypeSymbols: PullTypeSymbol[] = null;
     }
 
+    // A base origin is for inherited members. It points to which base the member was inherited from.
+    class MemberWithBaseOrigin {
+        constructor(public memberSymbol: PullSymbol, public baseOrigin: PullTypeSymbol) { }
+    }
+
+    class SignatureWithBaseOrigin {
+        constructor(public signature: PullSignatureSymbol, public baseOrigin: PullTypeSymbol) { }
+    }
+
+    class InheritedIndexSignatureInfo {
+        public numberSignatureWithBaseOrigin: SignatureWithBaseOrigin;
+        public stringSignatureWithBaseOrigin: SignatureWithBaseOrigin;
+    }
+
     enum CompilerReservedNames {
         _this = 1,
         _super,
@@ -3387,7 +3401,10 @@ module TypeScript {
                             var onlyStringIndexerIsPresent = !numberIndexSignature;
 
                             if (indexerKindMatchesMemberNameKind || onlyStringIndexerIsPresent) {
-                                this.checkThatMemberIsSubtypeOfIndexer(allMembers[i], signature, funcDeclAST, context, enclosingDecl, isNumericIndexer);
+                                var comparisonInfo = new TypeComparisonInfo();
+                                if (!this.sourceIsSubtypeOfTarget(allMembers[i].type, signature.returnType, context, comparisonInfo, /*isComparingInstantiatedSignatures*/ false)) {
+                                    this.reportErrorThatMemberIsNotSubtypeOfIndexer(allMembers[i], signature, funcDeclAST, context, comparisonInfo);
+                                }
                             }
                         }
                     }
@@ -11769,40 +11786,47 @@ module TypeScript {
                         !hasFlag(member.flags, PullElementFlags.Static)) {
 
                         // Decide whether to check against the number or string signature
-                        var isMemberNumeric = PullHelpers.isNameNumeric(member.name);
-                        if (isMemberNumeric && numberSignature) {
-                            this.checkThatMemberIsSubtypeOfIndexer(member.getSymbol(), numberSignature, this.semanticInfoChain.getASTForDecl(member), context, containerTypeDecl, /*isNumeric*/ true);
-                        }
-                        else if (stringSignature) {
-                            this.checkThatMemberIsSubtypeOfIndexer(member.getSymbol(), stringSignature, this.semanticInfoChain.getASTForDecl(member), context, containerTypeDecl, /*isNumeric*/ false);
+                        var memberSymbol = member.getSymbol();
+                        var relevantSignature = this.determineRelevantIndexerForMember(memberSymbol, numberSignature, stringSignature);
+                        if (relevantSignature) {
+                            var comparisonInfo = new TypeComparisonInfo();
+                            if (!this.sourceIsSubtypeOfTarget(memberSymbol.type, relevantSignature.returnType, context, comparisonInfo)) {
+                                this.reportErrorThatMemberIsNotSubtypeOfIndexer(memberSymbol, relevantSignature, member.ast(), context, comparisonInfo);
+                            }
                         }
                     }
                 }
             }
         }
 
-        private checkThatMemberIsSubtypeOfIndexer(member: PullSymbol, indexSignature: PullSignatureSymbol, astForError: AST, context: PullTypeResolutionContext, enclosingDecl: PullDecl, isNumeric: boolean) {
+        private determineRelevantIndexerForMember(member: PullSymbol, numberIndexSignature: PullSignatureSymbol, stringIndexSignature: PullSignatureSymbol): PullSignatureSymbol {
+            if (numberIndexSignature && PullHelpers.isNameNumeric(member.name)) {
+                return numberIndexSignature;
+            }
+            else if (stringIndexSignature) {
+                return stringIndexSignature;
+            }
 
-            var comparisonInfo = new TypeComparisonInfo();
+            return null;
+        }
 
-            if (!this.sourceIsSubtypeOfTarget(member.type, indexSignature.returnType, context, comparisonInfo)) {
-                if (isNumeric) {
-                    if (comparisonInfo.message) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_numerically_named_properties_must_be_subtypes_of_numeric_indexer_type_0_NL_1,
-                            [indexSignature.returnType.toString(), comparisonInfo.message]));
-                    } else {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_numerically_named_properties_must_be_subtypes_of_numeric_indexer_type_0,
-                            [indexSignature.returnType.toString()]));
-                    }
+        private reportErrorThatMemberIsNotSubtypeOfIndexer(member: PullSymbol, indexSignature: PullSignatureSymbol, astForError: AST, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo): void {
+            if (indexSignature.parameters[0].type === this.semanticInfoChain.numberTypeSymbol) {
+                if (comparisonInfo.message) {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_numerically_named_properties_must_be_subtypes_of_numeric_indexer_type_0_NL_1,
+                        [indexSignature.returnType.toString(), comparisonInfo.message]));
+                } else {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_numerically_named_properties_must_be_subtypes_of_numeric_indexer_type_0,
+                        [indexSignature.returnType.toString()]));
                 }
-                else {
-                    if (comparisonInfo.message) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_named_properties_must_be_subtypes_of_string_indexer_type_0_NL_1,
-                            [indexSignature.returnType.toString(), comparisonInfo.message]));
-                    } else {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_named_properties_must_be_subtypes_of_string_indexer_type_0,
-                            [indexSignature.returnType.toString()]));
-                    }
+            }
+            else {
+                if (comparisonInfo.message) {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_named_properties_must_be_subtypes_of_string_indexer_type_0_NL_1,
+                        [indexSignature.returnType.toString(), comparisonInfo.message]));
+                } else {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(astForError, DiagnosticCode.All_named_properties_must_be_subtypes_of_string_indexer_type_0,
+                        [indexSignature.returnType.toString()]));
                 }
             }
         }
@@ -12115,50 +12139,254 @@ module TypeScript {
                 var firstInterfaceASTWithExtendsClause = ArrayUtilities.firstOrDefault(typeSymbol.getDeclarations(), decl => 
                     (<InterfaceDeclaration>decl.ast()).heritageClauses !== null).ast();
                 if (classOrInterface === firstInterfaceASTWithExtendsClause) {
-                    this.checkPropertyTypeIdentityBetweenBases(classOrInterface, name, typeSymbol, context);
+                    this.checkTypeCompatibilityBetweenBases((<InterfaceDeclaration>classOrInterface).identifier, typeSymbol, context);
                 }
             }
         }
 
-        private checkPropertyTypeIdentityBetweenBases(
-            classOrInterface: AST,
+        private checkTypeCompatibilityBetweenBases(
             name: Identifier,
             typeSymbol: PullTypeSymbol,
             context: PullTypeResolutionContext): void {
 
-            // October 16, 2013: Section 7.1:
-            // Inherited properties with the same name must be identical (section 3.8.2).
             // The membersBag will map each member name to its type and which base type we got it from
-            var membersBag = createIntrinsicsObject<{ type: PullTypeSymbol; baseOrigin: PullTypeSymbol; }>();
-            var baseTypes = typeSymbol.getExtendedTypes();
-            for (var i = 0; i < baseTypes.length; i++) {
-                var baseMembers = baseTypes[i].getAllMembers(PullElementKind.Property | PullElementKind.Method, GetAllMembersVisiblity.all);
-                for (var j = 0; j < baseMembers.length; j++) {
-                    var member = baseMembers[j];
-                    var memberName = member.name;
-                    // Skip the member if it is shadowed in the derived type
-                    if (typeSymbol.findMember(memberName, /*lookInParent*/ false)) {
-                        continue;
-                    }
+            var derivedIndexSignatures = typeSymbol.getOwnIndexSignatures();
 
-                    // Error if there is already a member in the bag with that name, and it doesn't have the same type
-                    if (membersBag[memberName]) {
-                        var prevMember = membersBag[memberName];
-                        if (prevMember.baseOrigin !== baseTypes[i] && !this.typesAreIdentical(member.type, prevMember.type)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(name,
-                                DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_Types_of_property_3_of_types_1_and_2_are_not_identical,
-                                [typeSymbol.getDisplayName(), prevMember.baseOrigin.getScopedName(), baseTypes[i].getScopedName(), memberName]));
-                            return; // Only report first offense
-                        }
+            var inheritedMembersMap = createIntrinsicsObject<MemberWithBaseOrigin>();
+            var inheritedIndexSignatures = new InheritedIndexSignatureInfo();
+
+            var typeHasOwnNumberIndexer = false;
+            var typeHasOwnStringIndexer = false;
+            // Determine if this type has any index signatures of its own
+            if (typeSymbol.hasOwnIndexSignatures()) {
+                var ownIndexSignatures = typeSymbol.getOwnIndexSignatures();
+                for (var i = 0; i < ownIndexSignatures.length; i++) {
+                    if (ownIndexSignatures[i].parameters[0].type === this.semanticInfoChain.numberTypeSymbol) {
+                        typeHasOwnNumberIndexer = true;
                     }
                     else {
-                        membersBag[memberName] = {
-                            type: member.type,
-                            baseOrigin: baseTypes[i]
-                        };
+                        typeHasOwnStringIndexer = true;
                     }
                 }
             }
+            var baseTypes = typeSymbol.getExtendedTypes();
+            for (var i = 0; i < baseTypes.length; i++) {
+                // Check the member identity and the index signature identity between this base
+                // and bases checked so far. Only report the first error.
+                if (this.checkNamedPropertyTypeIdentityBetweenBases(name, typeSymbol, baseTypes[i], inheritedMembersMap, context) ||
+                    this.checkIndexSignatureIdentityBetweenBases(name, typeSymbol, baseTypes[i], inheritedIndexSignatures, typeHasOwnNumberIndexer, typeHasOwnStringIndexer, context)) {
+                    return;
+                }
+            }
+
+            // Check that number indexer is a subtype of the string indexer. If that check succeeds,
+            // check all the inherited members against the relevant signature
+            if (this.checkThatInheritedNumberSignatureIsSubtypeOfInheritedStringSignature(name, typeSymbol, inheritedIndexSignatures, context)) {
+                return;
+            }
+
+            this.checkInheritedMembersAgainstInheritedIndexSignatures(name, typeSymbol, inheritedIndexSignatures, inheritedMembersMap, context);
+        }
+
+        // This method returns true if there was an error given, and false if there was no error.
+        // The boolean value is used by the caller for short circuiting.
+        private checkNamedPropertyTypeIdentityBetweenBases(
+            interfaceName: Identifier,
+            interfaceSymbol: PullTypeSymbol,
+            baseTypeSymbol: PullTypeSymbol,
+            inheritedMembersMap: IIndexable<MemberWithBaseOrigin>,
+            context: PullTypeResolutionContext): boolean {
+            
+            // October 16, 2013: Section 7.1:
+            // Inherited properties with the same name must be identical (section 3.8.2).
+            var baseMembers = baseTypeSymbol.getAllMembers(PullElementKind.Property | PullElementKind.Method, GetAllMembersVisiblity.all);
+            for (var i = 0; i < baseMembers.length; i++) {
+                var member = baseMembers[i];
+                var memberName = member.name;
+                // Skip the member if it is shadowed in the derived type
+                if (interfaceSymbol.findMember(memberName, /*lookInParent*/ false)) {
+                    continue;
+                }
+
+                // Error if there is already a member in the bag with that name, and it doesn't have the same type
+                if (inheritedMembersMap[memberName]) {
+                    var prevMember = inheritedMembersMap[memberName];
+                    if (prevMember.baseOrigin !== baseTypeSymbol && !this.typesAreIdentical(member.type, prevMember.memberSymbol.type)) {
+                        var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Types_of_property_0_of_types_1_and_2_are_not_identical,
+                            [memberName, prevMember.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName()]);
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName,
+                            DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                            [interfaceSymbol.getDisplayName(), prevMember.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName(), innerDiagnostic]));
+                        return true; // Only report first offense
+                    }
+                }
+                else {
+                    inheritedMembersMap[memberName] = new MemberWithBaseOrigin(member, baseTypeSymbol);
+                }
+            }
+
+            return false;
+        }
+
+        // This method returns true if there was an error given, and false if there was no error.
+        // The boolean value is used by the caller for short circuiting.
+        private checkIndexSignatureIdentityBetweenBases(
+            interfaceName: Identifier,
+            interfaceSymbol: PullTypeSymbol,
+            baseTypeSymbol: PullTypeSymbol,
+            allInheritedSignatures: InheritedIndexSignatureInfo,
+            derivedTypeHasOwnNumberSignature: boolean,
+            derivedTypeHasOwnStringSignature: boolean,
+            context: PullTypeResolutionContext): boolean {
+
+            if (derivedTypeHasOwnNumberSignature && derivedTypeHasOwnStringSignature) {
+                return false;
+            }
+
+            // October 16, 2013:
+            // Section 3.7.4:
+            // An object type can contain at most one string index signature and one numeric index signature.
+            var indexSignaturesFromThisBaseType = baseTypeSymbol.getIndexSignatures();
+            for (var i = 0; i < indexSignaturesFromThisBaseType.length; i++) {
+                var currentInheritedSignature = indexSignaturesFromThisBaseType[i];
+
+                // Skip the signature if it is shadowed in the derived type
+                var parameterTypeIsString = currentInheritedSignature.parameters[0].type === this.semanticInfoChain.stringTypeSymbol;
+                var parameterTypeIsNumber = !parameterTypeIsString;
+                if (parameterTypeIsString && derivedTypeHasOwnStringSignature ||
+                    parameterTypeIsNumber && derivedTypeHasOwnNumberSignature) {
+                    continue;
+                }
+
+                // Now error if there is already an inherited signature of the same kind as this one
+                if (parameterTypeIsString) {
+                    if (allInheritedSignatures.stringSignatureWithBaseOrigin) {
+                        if (allInheritedSignatures.stringSignatureWithBaseOrigin.baseOrigin !== baseTypeSymbol &&
+                            !this.typesAreIdentical(allInheritedSignatures.stringSignatureWithBaseOrigin.signature.returnType, currentInheritedSignature.returnType)) {
+                            var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Types_of_string_indexer_of_types_0_and_1_are_not_identical,
+                                [allInheritedSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName()]);
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName,
+                                DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                                [interfaceSymbol.getDisplayName(), allInheritedSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName(), innerDiagnostic]));
+                            return true; // Only report first offense
+                        }
+                    }
+                    else {
+                        allInheritedSignatures.stringSignatureWithBaseOrigin = new SignatureWithBaseOrigin(currentInheritedSignature, baseTypeSymbol);
+                    }
+                }
+                else if (parameterTypeIsNumber) {
+                    if (allInheritedSignatures.numberSignatureWithBaseOrigin) {
+                        if (allInheritedSignatures.numberSignatureWithBaseOrigin.baseOrigin !== baseTypeSymbol &&
+                            !this.typesAreIdentical(allInheritedSignatures.numberSignatureWithBaseOrigin.signature.returnType, currentInheritedSignature.returnType)) {
+                            var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Types_of_number_indexer_of_types_0_and_1_are_not_identical,
+                                [allInheritedSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName()]);
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName,
+                                DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                                [interfaceSymbol.getDisplayName(), allInheritedSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName(), innerDiagnostic]));
+                            return true;
+                        }
+                    }
+                    else {
+                        allInheritedSignatures.numberSignatureWithBaseOrigin = new SignatureWithBaseOrigin(currentInheritedSignature, baseTypeSymbol);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        // This method returns true if there was an error given, and false if there was no error.
+        // The boolean value is used by the caller for short circuiting.
+        private checkInheritedMembersAgainstInheritedIndexSignatures(
+            interfaceName: Identifier,
+            interfaceSymbol: PullTypeSymbol,
+            inheritedIndexSignatures: InheritedIndexSignatureInfo,
+            inheritedMembers: IIndexable<MemberWithBaseOrigin>,
+            context: PullTypeResolutionContext): boolean {
+            if (!inheritedIndexSignatures.stringSignatureWithBaseOrigin && !inheritedIndexSignatures.numberSignatureWithBaseOrigin) {
+                return false;
+            }
+
+            // Now check that each named member is a subtype of its corresponding index signature type
+            // October 16, 2013: Section 7.1:
+            // All properties of the interface must satisfy the constraints implied by the index
+            // signatures of the interface as specified in section 3.7.4.
+            var comparisonInfo = new TypeComparisonInfo();
+            for (var memberName in inheritedMembers) {
+                var memberWithBaseOrigin = inheritedMembers[memberName];
+                if (!memberWithBaseOrigin) {
+                    continue;
+                }
+
+                var relevantSignature = this.determineRelevantIndexerForMember(memberWithBaseOrigin.memberSymbol, inheritedIndexSignatures.numberSignatureWithBaseOrigin.signature,
+                    inheritedIndexSignatures.stringSignatureWithBaseOrigin.signature);
+                Debug.assert(relevantSignature);
+
+                var relevantSignatureIsNumberSignature = relevantSignature.parameters[0].type === this.semanticInfoChain.numberTypeSymbol;
+                var signatureBaseOrigin = relevantSignatureIsNumberSignature ? inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin :
+                    inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin;
+
+                if (signatureBaseOrigin === memberWithBaseOrigin.baseOrigin) {
+                    continue;
+                }
+
+                var memberIsSubtype = this.sourceIsSubtypeOfTarget(memberWithBaseOrigin.memberSymbol.type, relevantSignature.returnType, context, comparisonInfo);
+
+                if (!memberIsSubtype) {
+                    if (relevantSignatureIsNumberSignature) {
+                        var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Type_of_property_0_in_type_1_is_not_a_subtype_of_number_indexer_type_in_type_2_NL_3,
+                            [memberName, memberWithBaseOrigin.baseOrigin.getScopedName(), inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(), comparisonInfo.message]);
+
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName, DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                            [interfaceSymbol.getDisplayName(), memberWithBaseOrigin.baseOrigin.getScopedName(), inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(), innerDiagnostic]));
+                    }
+                    else {
+                        var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Type_of_property_0_in_type_1_is_not_a_subtype_of_string_indexer_type_in_type_2_NL_3,
+                            [memberName, memberWithBaseOrigin.baseOrigin.getScopedName(), inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), comparisonInfo.message]);
+
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName, DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                            [interfaceSymbol.getDisplayName(), memberWithBaseOrigin.baseOrigin.getScopedName(), inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), innerDiagnostic]));
+                    }
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        // This function assumes that we have neither a derived string indexer nor a derived
+        // number indexer
+        private checkThatInheritedNumberSignatureIsSubtypeOfInheritedStringSignature(
+            interfaceName: Identifier,
+            interfaceSymbol: PullTypeSymbol,
+            inheritedIndexSignatures: InheritedIndexSignatureInfo,
+            context: PullTypeResolutionContext): boolean {
+            if (inheritedIndexSignatures.numberSignatureWithBaseOrigin && inheritedIndexSignatures.stringSignatureWithBaseOrigin) {
+                // If they originate in the same base, a separate error would have been reported
+                if (inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin === inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin) {
+                    return false;
+                }
+
+                var comparisonInfo = new TypeComparisonInfo();
+                var signatureIsSubtype = this.sourceIsSubtypeOfTarget(
+                    inheritedIndexSignatures.numberSignatureWithBaseOrigin.signature.returnType,
+                    inheritedIndexSignatures.stringSignatureWithBaseOrigin.signature.returnType, context, comparisonInfo);
+
+                if (!signatureIsSubtype) {
+                    var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Type_of_number_indexer_in_type_0_is_not_a_subtype_of_string_indexer_type_in_type_1_NL_2,
+                        [inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(),
+                            inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), comparisonInfo.message]);
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName,
+                        DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,
+                        [interfaceSymbol.getDisplayName(), inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin.getScopedName(),
+                            inheritedIndexSignatures.stringSignatureWithBaseOrigin.baseOrigin.getScopedName(), innerDiagnostic]));
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private checkAssignability(ast: AST, source: PullTypeSymbol, target: PullTypeSymbol, context: PullTypeResolutionContext): void {

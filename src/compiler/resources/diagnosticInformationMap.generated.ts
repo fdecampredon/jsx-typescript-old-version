@@ -1070,7 +1070,7 @@ module TypeScript {
     "code": 2188,
     "category": DiagnosticCategory.Error
   },
-  "Interface '{0}' cannot simultaneously extend types '{1}' and '{2}':{NL}Types of property '{3}' of types '{1}' and '{2}' are not identical.": {
+  "Interface '{0}' cannot simultaneously extend types '{1}' and '{2}':{NL}{3}": {
     "code": 2189,
     "category": DiagnosticCategory.Error
   },
@@ -1356,6 +1356,30 @@ module TypeScript {
   },
   "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments:{NL}{2}": {
     "code": 4031,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types of property '{0}' of types '{1}' and '{2}' are not identical.": {
+    "code": 4032,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types of string indexer of types '{0}' and '{1}' are not identical.": {
+    "code": 4033,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types of number indexer of types '{0}' and '{1}' are not identical.": {
+    "code": 4034,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Type of number indexer in type '{0}' is not a subtype of string indexer type in type '{1}'.{NL}{2}": {
+    "code": 4035,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Type of property '{0}' in type '{1}' is not a subtype of string indexer type in type '{2}'.{NL}{3}": {
+    "code": 4036,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
+    "code": 4037,
     "category": DiagnosticCategory.NoPrefix
   },
   "Current host does not support '{0}' option.": {
