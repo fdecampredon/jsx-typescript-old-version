@@ -54,22 +54,22 @@
             ]
         },
         {
-            "start": 237,
+            "start": 238,
             "length": 0,
             "diagnosticCode": "'{0}' expected.",
             "arguments": [
-                "}"
+                ">"
             ]
         }
     ],
     "sourceUnit": {
         "kind": "SourceUnit",
-        "fullWidth": 237,
+        "fullWidth": 238,
         "isIncrementallyUnusable": true,
         "moduleElements": [
             {
                 "kind": "ModuleDeclaration",
-                "fullWidth": 237,
+                "fullWidth": 238,
                 "isIncrementallyUnusable": true,
                 "modifiers": [
                     {
@@ -617,7 +617,7 @@
                     },
                     {
                         "kind": "InterfaceDeclaration",
-                        "fullWidth": 81,
+                        "fullWidth": 82,
                         "isIncrementallyUnusable": true,
                         "modifiers": [],
                         "interfaceKeyword": {
@@ -664,7 +664,7 @@
                         },
                         "body": {
                             "kind": "ObjectType",
-                            "fullWidth": 55,
+                            "fullWidth": 56,
                             "isIncrementallyUnusable": true,
                             "openBraceToken": {
                                 "kind": "OpenBraceToken",
@@ -685,7 +685,8 @@
                             "typeMembers": [
                                 {
                                     "kind": "MethodSignature",
-                                    "fullWidth": 52,
+                                    "fullWidth": 53,
+                                    "isIncrementallyUnusable": true,
                                     "propertyName": {
                                         "kind": "IdentifierName",
                                         "width": 3,
@@ -703,7 +704,8 @@
                                     },
                                     "callSignature": {
                                         "kind": "CallSignature",
-                                        "fullWidth": 41,
+                                        "fullWidth": 42,
+                                        "isIncrementallyUnusable": true,
                                         "parameterList": {
                                             "kind": "ParameterList",
                                             "fullWidth": 31,
@@ -845,7 +847,8 @@
                                         },
                                         "typeAnnotation": {
                                             "kind": "TypeAnnotation",
-                                            "fullWidth": 10,
+                                            "fullWidth": 11,
+                                            "isIncrementallyUnusable": true,
                                             "colonToken": {
                                                 "kind": "ColonToken",
                                                 "width": 1,
@@ -862,11 +865,34 @@
                                                 ]
                                             },
                                             "type": {
-                                                "kind": "IdentifierName",
-                                                "width": 8,
-                                                "text": "IPromise",
-                                                "value": "IPromise",
-                                                "valueText": "IPromise"
+                                                "kind": "GenericType",
+                                                "fullWidth": 9,
+                                                "isIncrementallyUnusable": true,
+                                                "name": {
+                                                    "kind": "IdentifierName",
+                                                    "width": 8,
+                                                    "text": "IPromise",
+                                                    "value": "IPromise",
+                                                    "valueText": "IPromise"
+                                                },
+                                                "typeArgumentList": {
+                                                    "kind": "TypeArgumentList",
+                                                    "fullWidth": 1,
+                                                    "isIncrementallyUnusable": true,
+                                                    "lessThanToken": {
+                                                        "kind": "LessThanToken",
+                                                        "width": 1,
+                                                        "text": "<",
+                                                        "value": "<",
+                                                        "valueText": "<"
+                                                    },
+                                                    "typeArguments": [],
+                                                    "greaterThanToken": {
+                                                        "kind": "GreaterThanToken",
+                                                        "width": 0,
+                                                        "text": ""
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -904,6 +930,6 @@
             158,
             185
         ],
-        "length": 237
+        "length": 238
     }
 }
