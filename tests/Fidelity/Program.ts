@@ -7,7 +7,7 @@
 ///<reference path='incremental\IncrementalParserTests.ts' />
 ///<reference path='..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\src\harness\diff.ts' />
-///<reference path='..\..\src\compiler\syntaxTreeToAstVisitor.ts' />
+///<reference path='..\..\src\compiler\references.ts' />
 
 var timer = new TypeScript.Timer();
 
@@ -142,10 +142,8 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
         var originalTree = tree;
-        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
         var totalIncrementalTime = 0;
-        var totalIncrementalASTTime = 0;
         var timer = new TypeScript.Timer();
 
         for (var i = 0; i < repeat; i++) {
@@ -158,15 +156,7 @@ class Program {
 
             TypeScript.Debug.assert(tree.structuralEquals(tree2));
 
-            timer.start();
-            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
-            timer.end();
-            totalIncrementalASTTime += timer.time;
-
-            TypeScript.Debug.assert(ast.structuralEquals(ast2, true));
-
             tree = tree2;
-            ast = ast2;
         }
         
         var rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalTime;
@@ -175,13 +165,6 @@ class Program {
 
         // TypeScript.Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
         TypeScript.Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
-
-        rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalASTTime;
-        rateBytesPerSecond = rateBytesPerMillisecond * 1000;
-        rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
-
-        // TypeScript.Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
-        TypeScript.Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
 
         var allOldElements = TypeScript.SyntaxElementsCollector.collectElements(originalTree.sourceUnit());
         var allNewElements = TypeScript.SyntaxElementsCollector.collectElements(tree.sourceUnit());
@@ -203,7 +186,6 @@ class Program {
         var text = TypeScript.TextFactory.createText(contents);
         var tree = TypeScript.Parser.parse(fileName, text, TypeScript.isDTSFile(fileName), new TypeScript.ParseOptions(TypeScript.LanguageVersion.EcmaScript5, true));
         var originalTree = tree;
-        var ast = TypeScript.SyntaxTreeToAstVisitor.visit(tree, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
         var totalIncrementalTime = 0;
         var totalIncrementalASTTime = 0;
@@ -238,13 +220,7 @@ class Program {
             timer.end();
             totalIncrementalTime += timer.time;
 
-            timer.start();
-            var ast2 = TypeScript.SyntaxTreeToAstVisitor.visit(tree2, fileName, TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
-            timer.end();
-            totalIncrementalASTTime += timer.time;
-
             tree = tree2;
-            ast = ast2;
         }
 
         var rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalTime;
@@ -442,8 +418,6 @@ class Program {
         if (verify) {
             TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
             tree.sourceUnit().accept(new PositionValidatingWalker());
-
-            TypeScript.SyntaxTreeToAstVisitor.visit(tree, "", TypeScript.ImmutableCompilationSettings.defaultSettings(), /*incrementalAST:*/ true);
 
             this.checkResult(fileName, tree, verify, generateBaseline, /*justText:*/ false);
         }

@@ -351,32 +351,32 @@ module TypeScript.Services {
             return this.compiler.getSemanticDiagnostics(fileName);
         }
 
-        public getSymbolInformationFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+        public getSymbolInformationFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetSymbolInformationFromAST(ast, document);
         }
 
-        public getCallInformationFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+        public getCallInformationFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetCallInformationFromAST(ast, document);
         }
 
-        public getVisibleMemberSymbolsFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+        public getVisibleMemberSymbolsFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetVisibleMemberSymbolsFromAST(ast, document);
         }
 
-        public getVisibleDeclsFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+        public getVisibleDeclsFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetVisibleDeclsFromAST(ast, document);
         }
 
-        public getContextualMembersFromAST(ast: TypeScript.AST, document: TypeScript.Document) {
+        public getContextualMembersFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetContextualMembersFromAST(ast, document);
         }
 
-        public pullGetDeclInformation(decl: TypeScript.PullDecl, ast: TypeScript.AST, document: TypeScript.Document) {
+        public pullGetDeclInformation(decl: TypeScript.PullDecl, ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetDeclInformation(decl, ast, document);
         }
@@ -386,7 +386,7 @@ module TypeScript.Services {
             return this.compiler.topLevelDeclaration(fileName);
         }
 
-        public getDeclForAST(ast: TypeScript.AST): TypeScript.PullDecl {
+        public getDeclForAST(ast: TypeScript.ISyntaxElement): TypeScript.PullDecl {
             this.synchronizeHostData();
             return this.compiler.getDeclForAST(ast);
         }

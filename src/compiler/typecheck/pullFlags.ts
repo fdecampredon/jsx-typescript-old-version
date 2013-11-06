@@ -39,9 +39,31 @@ module TypeScript {
         SomeInitializedModule = InitializedModule | InitializedDynamicModule | Enum,
     }
 
-    export function hasModifier(modifiers: PullElementFlags[], flag: PullElementFlags): boolean {
-        for (var i = 0, n = modifiers.length; i < n; i++) {
-            if (hasFlag(modifiers[i], flag)) {
+    function mapFlagToTokenKind(flag: PullElementFlags): SyntaxKind {
+        switch (flag) {
+            case PullElementFlags.Ambient:
+                return SyntaxKind.DeclareKeyword;
+            case PullElementFlags.Exported:
+                return SyntaxKind.ExportKeyword;
+            case PullElementFlags.Public:
+                return SyntaxKind.PublicKeyword;
+            case PullElementFlags.Private:
+                return SyntaxKind.PrivateKeyword;
+            case PullElementFlags.Static:
+                return SyntaxKind.StaticKeyword;
+            default:
+                throw Errors.invalidOperation();
+        }
+
+    }
+
+    export function hasModifier(modifiers: ISyntaxList, flag: PullElementFlags): boolean {
+        var kind = mapFlagToTokenKind(flag);
+
+        for (var i = 0, n = modifiers.childCount(); i < n; i++) {
+            var modifier = modifiers.childAt(i);
+
+            if (modifier.kind() === kind) {
                 return true;
             }
         }

@@ -253,7 +253,7 @@ module TypeScript.Services.Formatting {
                 case SyntaxKind.Block:
                     // Check if the block is a member in a list of statements (if the parent is a source unit, module, or block, or switch clause)
                     switch (parent.kind()) {
-                        case SyntaxKind.SourceUnit:
+                        case SyntaxKind.SourceUnitSyntax:
                         case SyntaxKind.ModuleDeclaration:
                         case SyntaxKind.Block:
                         case SyntaxKind.CaseSwitchClause:

@@ -492,33 +492,36 @@ module TypeScript {
             // we have to dump all syntax trees.
             //
             // If propagateEnumConstants changes, then that affects the constant value data we've 
-            // stored in the AST.
+            // stored in the ISyntaxElement.
             return before.allowAutomaticSemicolonInsertion() !== after.allowAutomaticSemicolonInsertion() ||
                 before.codeGenTarget() !== after.codeGenTarget() ||
                 before.propagateEnumConstants() != after.propagateEnumConstants();
         }
 
-        public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
+        public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
+            Debug.assert(!ast.isShared());
             this.astSymbolMap[ast.syntaxID()] = symbol;
         }
 
-        public getSymbolForAST(ast: AST): PullSymbol {
-            return this.astSymbolMap[ast.syntaxID()];
+        public getSymbolForAST(ast: ISyntaxElement): PullSymbol {
+            return ast.isShared() ? null : this.astSymbolMap[ast.syntaxID()];
         }
 
-        public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
+        public setAliasSymbolForAST(ast: ISyntaxElement, symbol: PullTypeAliasSymbol): void {
+            Debug.assert(!ast.isShared());
             this.astAliasSymbolMap[ast.syntaxID()] = symbol;
         }
 
-        public getAliasSymbolForAST(ast: AST): PullTypeAliasSymbol {
-            return this.astAliasSymbolMap[ast.syntaxID()];
+        public getAliasSymbolForAST(ast: ISyntaxElement): PullTypeAliasSymbol {
+            return ast.isShared() ? null : this.astAliasSymbolMap[ast.syntaxID()];
         }
 
-        public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            return this.astCallResolutionDataMap[ast.syntaxID()];
+        public getCallResolutionDataForAST(ast: ISyntaxElement): PullAdditionalCallResolutionData {
+            return ast.isShared() ? null : this.astCallResolutionDataMap[ast.syntaxID()];
         }
 
-        public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
+        public setCallResolutionDataForAST(ast: ISyntaxElement, callResolutionData: PullAdditionalCallResolutionData) {
+            Debug.assert(!ast.isShared());
             if (callResolutionData) {
                 this.astCallResolutionDataMap[ast.syntaxID()] = callResolutionData;
             }
@@ -572,7 +575,7 @@ module TypeScript {
             return this._resolver;
         }
 
-        public addSyntheticIndexSignature(containingDecl: PullDecl, containingSymbol: PullTypeSymbol, ast: AST,
+        public addSyntheticIndexSignature(containingDecl: PullDecl, containingSymbol: PullTypeSymbol, ast: ISyntaxElement,
             indexParamName: string, indexParamType: PullTypeSymbol, returnType: PullTypeSymbol): void {
 
             var indexSignature = new PullSignatureSymbol(PullElementKind.IndexSignature);
@@ -594,7 +597,7 @@ module TypeScript {
             indexParameterSymbol.addDeclaration(indexParamDecl);
         }
 
-        public getDeclForAST(ast: AST): PullDecl {
+        public getDeclForAST(ast: ISyntaxElement): PullDecl {
             var document = this.getDocument(ast.fileName());
 
             if (document) {
@@ -604,15 +607,15 @@ module TypeScript {
             return null;
         }
 
-        public getEnclosingDecl(ast: AST): PullDecl {
+        public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
             return this.getDocument(ast.fileName()).getEnclosingDecl(ast);
         }
 
-        public setDeclForAST(ast: AST, decl: PullDecl): void {
+        public setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
             this.getDocument(decl.fileName())._setDeclForAST(ast, decl);
         }
 
-        public getASTForDecl(decl: PullDecl): AST {
+        public getASTForDecl(decl: PullDecl): ISyntaxElement {
             var document = this.getDocument(decl.fileName());
             if (document) {
                 return document._getASTForDecl(decl);
@@ -621,7 +624,7 @@ module TypeScript {
             return null;
         }
 
-        public setASTForDecl(decl: PullDecl, ast: AST): void {
+        public setASTForDecl(decl: PullDecl, ast: ISyntaxElement): void {
             this.getDocument(decl.fileName())._setASTForDecl(decl, ast);
         }
 
@@ -642,11 +645,11 @@ module TypeScript {
             return this._topLevelDecls;
         }
 
-        public addDiagnosticFromAST(ast: AST, diagnosticKey: string, arguments: any[]= null): void {
+        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[]= null): void {
             this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, arguments));
         }
 
-        public diagnosticFromAST(ast: AST, diagnosticKey: string, arguments: any[]= null): Diagnostic {
+        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[]= null): Diagnostic {
             return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, arguments);
         }
     }

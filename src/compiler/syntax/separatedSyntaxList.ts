@@ -576,4 +576,14 @@ module TypeScript.Syntax {
 
         return new NormalSeparatedSyntaxList(nodes);
     }
+
+    export function nonSeparatorIndexOf(list: ISeparatedSyntaxList, ast: ISyntaxNodeOrToken): number {
+        for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
+            if (list.nonSeparatorAt(i) === ast) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

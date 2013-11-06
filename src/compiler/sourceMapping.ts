@@ -57,7 +57,7 @@ module TypeScript {
 
         public names: string[] = [];
 
-        private mappingLevel: IASTSpan[] = [];
+        private mappingLevel: ISpan[] = [];
 
         // Below two arrays represent the information about sourceFile at that index.
         private tsFilePaths: string[] = [];
@@ -85,18 +85,18 @@ module TypeScript {
             return result;
         }
 
-        public increaseMappingLevel(ast: IASTSpan) {
+        public increaseMappingLevel(ast: ISpan) {
             this.mappingLevel.push(ast);
         }
 
-        public decreaseMappingLevel(ast: IASTSpan) {
+        public decreaseMappingLevel(ast: ISpan) {
             Debug.assert(this.mappingLevel.length > 0, "Mapping level should never be less than 0. This suggests a missing start call.");
             var expectedAst = this.mappingLevel.pop();
-            var expectedAstInfo: any = (<AST>expectedAst).kind ? SyntaxKind[(<AST>expectedAst).kind()] : [expectedAst.start(), expectedAst.end()];
-            var astInfo: any = (<AST>ast).kind ? SyntaxKind[(<AST>ast).kind()] : [ast.start(), ast.end()]
+            var expectedAstInfo: any = (<ISyntaxElement>expectedAst).kind ? SyntaxKind[(<ISyntaxElement>expectedAst).kind()] : [expectedAst.start(), expectedAst.end()];
+            var astInfo: any = (<ISyntaxElement>ast).kind ? SyntaxKind[(<ISyntaxElement>ast).kind()] : [ast.start(), ast.end()]
             Debug.assert(
                 ast === expectedAst,
-                "Provided ast is not the expected AST, Expected: " + expectedAstInfo + " Given: " + astInfo)
+                "Provided ast is not the expected ISyntaxElement, Expected: " + expectedAstInfo + " Given: " + astInfo)
         }
 
         public setNewSourceFile(document: Document, emitOptions: EmitOptions) {
@@ -161,7 +161,7 @@ module TypeScript {
             Debug.assert(
                 this.mappingLevel.length === 0,
                 "Mapping level is not 0. This suggest a missing end call. Value: " +
-                this.mappingLevel.map(item => ['Node of type', SyntaxKind[(<AST>item).kind()], 'at', item.start(), 'to', item.end()].join(' ')).join(', '));
+                this.mappingLevel.map(item => ['Node of type', SyntaxKind[(<ISyntaxElement>item).kind()], 'at', item.start(), 'to', item.end()].join(' ')).join(', '));
             // Output map file name into the js file
             this.jsFile.WriteLine("//# sourceMappingURL=" + this.sourceMapPath);
 

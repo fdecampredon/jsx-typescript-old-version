@@ -28,7 +28,7 @@ module TypeScript.Services {
         }
 
         public static isCompletionListBlocker(sourceUnit: TypeScript.SourceUnitSyntax, position: number): boolean {
-            // This method uses Fidelity completelly. Some information can be reached using the AST, but not everything.
+            // This method uses Fidelity completelly. Some information can be reached using the ISyntaxElement, but not everything.
             return TypeScript.Syntax.isEntirelyInsideComment(sourceUnit, position) ||
                 TypeScript.Syntax.isEntirelyInStringOrRegularExpressionLiteral(sourceUnit, position) ||
                 CompletionHelpers.isIdentifierDefinitionLocation(sourceUnit, position) ||

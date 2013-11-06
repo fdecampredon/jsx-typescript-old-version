@@ -1,7 +1,12 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export class TextSpan {
+    export interface ISpan {
+        start(): number;
+        end(): number;
+    }
+
+    export class TextSpan implements ISpan {
         private _start: number;
         private _length: number;
 

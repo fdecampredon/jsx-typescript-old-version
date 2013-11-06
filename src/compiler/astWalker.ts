@@ -16,259 +16,259 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    function walkListChildren(preAst: ISyntaxList2, walker: AstWalker): void {
+    function walkListChildren(preAst: ISyntaxList, walker: AstWalker): void {
         for (var i = 0, n = preAst.childCount(); i < n; i++) {
             walker.walk(preAst.childAt(i));
         }
     }
 
-    function walkThrowStatementChildren(preAst: ThrowStatement, walker: AstWalker): void {
+    function walkThrowStatementChildren(preAst: ThrowStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkPrefixUnaryExpressionChildren(preAst: PrefixUnaryExpression, walker: AstWalker): void {
+    function walkPrefixUnaryExpressionChildren(preAst: PrefixUnaryExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.operand);
     }
 
-    function walkPostfixUnaryExpressionChildren(preAst: PostfixUnaryExpression, walker: AstWalker): void {
+    function walkPostfixUnaryExpressionChildren(preAst: PostfixUnaryExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.operand);
     }
 
-    function walkDeleteExpressionChildren(preAst: DeleteExpression, walker: AstWalker): void {
+    function walkDeleteExpressionChildren(preAst: DeleteExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkTypeArgumentListChildren(preAst: TypeArgumentList, walker: AstWalker): void {
+    function walkTypeArgumentListChildren(preAst: TypeArgumentListSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeArguments);
     }
 
-    function walkTypeOfExpressionChildren(preAst: TypeOfExpression, walker: AstWalker): void {
+    function walkTypeOfExpressionChildren(preAst: TypeOfExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkVoidExpressionChildren(preAst: VoidExpression, walker: AstWalker): void {
+    function walkVoidExpressionChildren(preAst: VoidExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkArgumentListChildren(preAst: ArgumentList, walker: AstWalker): void {
+    function walkArgumentListChildren(preAst: ArgumentListSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeArgumentList);
         walker.walk(preAst.arguments);
     }
 
-    function walkArrayLiteralExpressionChildren(preAst: ArrayLiteralExpression, walker: AstWalker): void {
+    function walkArrayLiteralExpressionChildren(preAst: ArrayLiteralExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expressions);
     }
 
-    function walkSimplePropertyAssignmentChildren(preAst: SimplePropertyAssignment, walker: AstWalker): void {
+    function walkSimplePropertyAssignmentChildren(preAst: SimplePropertyAssignmentSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.expression);
     }
 
-    function walkFunctionPropertyAssignmentChildren(preAst: FunctionPropertyAssignment, walker: AstWalker): void {
+    function walkFunctionPropertyAssignmentChildren(preAst: FunctionPropertyAssignmentSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.callSignature);
         walker.walk(preAst.block);
     }
 
-    function walkGetAccessorChildren(preAst: GetAccessor, walker: AstWalker): void {
+    function walkGetAccessorChildren(preAst: GetAccessorSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.typeAnnotation);
         walker.walk(preAst.block);
     }
 
-    function walkSeparatedListChildren(preAst: ISeparatedSyntaxList2, walker: AstWalker): void {
+    function walkSeparatedListChildren(preAst: ISeparatedSyntaxList, walker: AstWalker): void {
         for (var i = 0, n = preAst.nonSeparatorCount(); i < n; i++) {
             walker.walk(preAst.nonSeparatorAt(i));
         }
     }
 
-    function walkSetAccessorChildren(preAst: SetAccessor, walker: AstWalker): void {
+    function walkSetAccessorChildren(preAst: SetAccessorSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.block);
     }
 
-    function walkObjectLiteralExpressionChildren(preAst: ObjectLiteralExpression, walker: AstWalker): void {
+    function walkObjectLiteralExpressionChildren(preAst: ObjectLiteralExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyAssignments);
     }
 
-    function walkCastExpressionChildren(preAst: CastExpression, walker: AstWalker): void {
+    function walkCastExpressionChildren(preAst: CastExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.type);
         walker.walk(preAst.expression);
     }
 
-    function walkParenthesizedExpressionChildren(preAst: ParenthesizedExpression, walker: AstWalker): void {
+    function walkParenthesizedExpressionChildren(preAst: ParenthesizedExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkElementAccessExpressionChildren(preAst: ElementAccessExpression, walker: AstWalker): void {
+    function walkElementAccessExpressionChildren(preAst: ElementAccessExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.argumentExpression);
     }
 
-    function walkMemberAccessExpressionChildren(preAst: MemberAccessExpression, walker: AstWalker): void {
+    function walkMemberAccessExpressionChildren(preAst: MemberAccessExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.name);
     }
 
-    function walkQualifiedNameChildren(preAst: QualifiedName, walker: AstWalker): void {
+    function walkQualifiedNameChildren(preAst: QualifiedNameSyntax, walker: AstWalker): void {
         walker.walk(preAst.left);
         walker.walk(preAst.right);
     }
 
-    function walkBinaryExpressionChildren(preAst: BinaryExpression, walker: AstWalker): void {
+    function walkBinaryExpressionChildren(preAst: BinaryExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.left);
         walker.walk(preAst.right);
     }
 
-    function walkEqualsValueClauseChildren(preAst: EqualsValueClause, walker: AstWalker): void {
+    function walkEqualsValueClauseChildren(preAst: EqualsValueClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.value);
     }
 
-    function walkTypeParameterChildren(preAst: TypeParameter, walker: AstWalker): void {
+    function walkTypeParameterChildren(preAst: TypeParameterSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.constraint);
     }
 
-    function walkTypeParameterListChildren(preAst: TypeParameterList, walker: AstWalker): void {
+    function walkTypeParameterListChildren(preAst: TypeParameterListSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeParameters);
     }
 
-    function walkGenericTypeChildren(preAst: GenericType, walker: AstWalker): void {
+    function walkGenericTypeChildren(preAst: GenericTypeSyntax, walker: AstWalker): void {
         walker.walk(preAst.name);
         walker.walk(preAst.typeArgumentList);
     }
 
-    function walkTypeAnnotationChildren(preAst: TypeAnnotation, walker: AstWalker): void {
+    function walkTypeAnnotationChildren(preAst: TypeAnnotationSyntax, walker: AstWalker): void {
         walker.walk(preAst.type);
     }
 
-    function walkTypeQueryChildren(preAst: TypeQuery, walker: AstWalker): void {
+    function walkTypeQueryChildren(preAst: TypeQuerySyntax, walker: AstWalker): void {
         walker.walk(preAst.name);
     }
 
-    function walkInvocationExpressionChildren(preAst: InvocationExpression, walker: AstWalker): void {
+    function walkInvocationExpressionChildren(preAst: InvocationExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.argumentList);
     }
 
-    function walkObjectCreationExpressionChildren(preAst: ObjectCreationExpression, walker: AstWalker): void {
+    function walkObjectCreationExpressionChildren(preAst: ObjectCreationExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.argumentList);
     }
 
-    function walkTrinaryExpressionChildren(preAst: ConditionalExpression, walker: AstWalker): void {
+    function walkTrinaryExpressionChildren(preAst: ConditionalExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.condition);
         walker.walk(preAst.whenTrue);
         walker.walk(preAst.whenFalse);
     }
 
-    function walkFunctionExpressionChildren(preAst: FunctionExpression, walker: AstWalker): void {
+    function walkFunctionExpressionChildren(preAst: FunctionExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.callSignature);
         walker.walk(preAst.block);
     }
 
-    function walkFunctionTypeChildren(preAst: FunctionType, walker: AstWalker): void {
+    function walkFunctionTypeChildren(preAst: FunctionTypeSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeParameterList);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.type);
     }
 
-    function walkParenthesizedArrowFunctionExpressionChildren(preAst: ParenthesizedArrowFunctionExpression, walker: AstWalker): void {
+    function walkParenthesizedArrowFunctionExpressionChildren(preAst: ParenthesizedArrowFunctionExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.callSignature);
         walker.walk(preAst.block);
         walker.walk(preAst.expression);
     }
 
-    function walkSimpleArrowFunctionExpressionChildren(preAst: SimpleArrowFunctionExpression, walker: AstWalker): void {
+    function walkSimpleArrowFunctionExpressionChildren(preAst: SimpleArrowFunctionExpressionSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.block);
         walker.walk(preAst.expression);
     }
 
-    function walkMemberFunctionDeclarationChildren(preAst: MemberFunctionDeclaration, walker: AstWalker): void {
+    function walkMemberFunctionDeclarationChildren(preAst: MemberFunctionDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.callSignature);
         walker.walk(preAst.block);
     }
 
-    function walkFuncDeclChildren(preAst: FunctionDeclaration, walker: AstWalker): void {
+    function walkFuncDeclChildren(preAst: FunctionDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.callSignature);
         walker.walk(preAst.block);
     }
 
-    function walkIndexMemberDeclarationChildren(preAst: IndexMemberDeclaration, walker: AstWalker): void {
+    function walkIndexMemberDeclarationChildren(preAst: IndexMemberDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.indexSignature);
     }
 
-    function walkIndexSignatureChildren(preAst: IndexSignature, walker: AstWalker): void {
+    function walkIndexSignatureChildren(preAst: IndexSignatureSyntax, walker: AstWalker): void {
         walker.walk(preAst.parameter);
         walker.walk(preAst.typeAnnotation);
     }
 
-    function walkCallSignatureChildren(preAst: CallSignature, walker: AstWalker): void {
+    function walkCallSignatureChildren(preAst: CallSignatureSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeParameterList);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.typeAnnotation);
     }
 
-    function walkConstraintChildren(preAst: Constraint, walker: AstWalker): void {
+    function walkConstraintChildren(preAst: ConstraintSyntax, walker: AstWalker): void {
         walker.walk(preAst.type);
     }
 
-    function walkConstructorDeclarationChildren(preAst: ConstructorDeclaration, walker: AstWalker): void {
+    function walkConstructorDeclarationChildren(preAst: ConstructorDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.parameterList);
         walker.walk(preAst.block);
     }
 
-    function walkConstructorTypeChildren(preAst: FunctionType, walker: AstWalker): void {
+    function walkConstructorTypeChildren(preAst: FunctionTypeSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeParameterList);
         walker.walk(preAst.parameterList);
         walker.walk(preAst.type);
     }
 
-    function walkConstructSignatureChildren(preAst: ConstructSignature, walker: AstWalker): void {
+    function walkConstructSignatureChildren(preAst: ConstructSignatureSyntax, walker: AstWalker): void {
         walker.walk(preAst.callSignature);
     }
 
-    function walkParameterChildren(preAst: Parameter, walker: AstWalker): void {
+    function walkParameterChildren(preAst: ParameterSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.typeAnnotation);
         walker.walk(preAst.equalsValueClause);
     }
 
-    function walkParameterListChildren(preAst: ParameterList, walker: AstWalker): void {
+    function walkParameterListChildren(preAst: ParameterListSyntax, walker: AstWalker): void {
         walker.walk(preAst.parameters);
     }
 
-    function walkPropertySignatureChildren(preAst: PropertySignature, walker: AstWalker): void {
+    function walkPropertySignatureChildren(preAst: PropertySignatureSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.typeAnnotation);
     }
 
-    function walkVariableDeclaratorChildren(preAst: VariableDeclarator, walker: AstWalker): void {
+    function walkVariableDeclaratorChildren(preAst: VariableDeclaratorSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.typeAnnotation);
         walker.walk(preAst.equalsValueClause);
     }
 
-    function walkMemberVariableDeclarationChildren(preAst: MemberVariableDeclaration, walker: AstWalker): void {
+    function walkMemberVariableDeclarationChildren(preAst: MemberVariableDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.variableDeclarator);
     }
 
-    function walkMethodSignatureChildren(preAst: MethodSignature, walker: AstWalker): void {
+    function walkMethodSignatureChildren(preAst: MethodSignatureSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.callSignature);
     }
 
-    function walkReturnStatementChildren(preAst: ReturnStatement, walker: AstWalker): void {
+    function walkReturnStatementChildren(preAst: ReturnStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkForStatementChildren(preAst: ForStatement, walker: AstWalker): void {
+    function walkForStatementChildren(preAst: ForStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.variableDeclaration);
         walker.walk(preAst.initializer);
         walker.walk(preAst.condition);
@@ -276,150 +276,150 @@ module TypeScript {
         walker.walk(preAst.statement);
     }
 
-    function walkForInStatementChildren(preAst: ForInStatement, walker: AstWalker): void {
+    function walkForInStatementChildren(preAst: ForInStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.variableDeclaration);
         walker.walk(preAst.left);
         walker.walk(preAst.expression);
         walker.walk(preAst.statement);
     }
 
-    function walkIfStatementChildren(preAst: IfStatement, walker: AstWalker): void {
+    function walkIfStatementChildren(preAst: IfStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.condition);
         walker.walk(preAst.statement);
         walker.walk(preAst.elseClause);
     }
 
-    function walkElseClauseChildren(preAst: ElseClause, walker: AstWalker): void {
+    function walkElseClauseChildren(preAst: ElseClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.statement);
     }
 
-    function walkWhileStatementChildren(preAst: WhileStatement, walker: AstWalker): void {
+    function walkWhileStatementChildren(preAst: WhileStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.condition);
         walker.walk(preAst.statement);
     }
 
-    function walkDoStatementChildren(preAst: DoStatement, walker: AstWalker): void {
+    function walkDoStatementChildren(preAst: DoStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.condition);
         walker.walk(preAst.statement);
     }
 
-    function walkBlockChildren(preAst: Block, walker: AstWalker): void {
+    function walkBlockChildren(preAst: BlockSyntax, walker: AstWalker): void {
         walker.walk(preAst.statements);
     }
 
-    function walkVariableDeclarationChildren(preAst: VariableDeclaration, walker: AstWalker): void {
-        walker.walk(preAst.declarators);
+    function walkVariableDeclarationChildren(preAst: VariableDeclarationSyntax, walker: AstWalker): void {
+        walker.walk(preAst.variableDeclarators);
     }
 
-    function walkCaseSwitchClauseChildren(preAst: CaseSwitchClause, walker: AstWalker): void {
+    function walkCaseSwitchClauseChildren(preAst: CaseSwitchClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.statements);
     }
 
-    function walkDefaultSwitchClauseChildren(preAst: DefaultSwitchClause, walker: AstWalker): void {
+    function walkDefaultSwitchClauseChildren(preAst: DefaultSwitchClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.statements);
     }
 
-    function walkSwitchStatementChildren(preAst: SwitchStatement, walker: AstWalker): void {
+    function walkSwitchStatementChildren(preAst: SwitchStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
         walker.walk(preAst.switchClauses);
     }
 
-    function walkTryStatementChildren(preAst: TryStatement, walker: AstWalker): void {
+    function walkTryStatementChildren(preAst: TryStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.block);
         walker.walk(preAst.catchClause);
         walker.walk(preAst.finallyClause);
     }
 
-    function walkCatchClauseChildren(preAst: CatchClause, walker: AstWalker): void {
+    function walkCatchClauseChildren(preAst: CatchClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.typeAnnotation);
         walker.walk(preAst.block);
     }
 
-    function walkExternalModuleReferenceChildren(preAst: ExternalModuleReference, walker: AstWalker): void {
+    function walkExternalModuleReferenceChildren(preAst: ExternalModuleReferenceSyntax, walker: AstWalker): void {
         walker.walk(preAst.stringLiteral);
     }
 
-    function walkFinallyClauseChildren(preAst: FinallyClause, walker: AstWalker): void {
+    function walkFinallyClauseChildren(preAst: FinallyClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.block);
     }
 
-    function walkClassDeclChildren(preAst: ClassDeclaration, walker: AstWalker): void {
+    function walkClassDeclChildren(preAst: ClassDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.typeParameterList);
         walker.walk(preAst.heritageClauses);
         walker.walk(preAst.classElements);
     }
 
-    function walkScriptChildren(preAst: SourceUnit, walker: AstWalker): void {
+    function walkScriptChildren(preAst: SourceUnitSyntax, walker: AstWalker): void {
         walker.walk(preAst.moduleElements);
     }
 
-    function walkHeritageClauseChildren(preAst: HeritageClause, walker: AstWalker): void {
+    function walkHeritageClauseChildren(preAst: HeritageClauseSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeNames);
     }
 
-    function walkInterfaceDeclerationChildren(preAst: InterfaceDeclaration, walker: AstWalker): void {
+    function walkInterfaceDeclerationChildren(preAst: InterfaceDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.typeParameterList);
         walker.walk(preAst.heritageClauses);
         walker.walk(preAst.body);
     }
 
-    function walkObjectTypeChildren(preAst: ObjectType, walker: AstWalker): void {
+    function walkObjectTypeChildren(preAst: ObjectTypeSyntax, walker: AstWalker): void {
         walker.walk(preAst.typeMembers);
     }
 
-    function walkArrayTypeChildren(preAst: ArrayType, walker: AstWalker): void {
+    function walkArrayTypeChildren(preAst: ArrayTypeSyntax, walker: AstWalker): void {
         walker.walk(preAst.type);
     }
 
-    function walkModuleDeclarationChildren(preAst: ModuleDeclaration, walker: AstWalker): void {
+    function walkModuleDeclarationChildren(preAst: ModuleDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.name);
         walker.walk(preAst.stringLiteral);
         walker.walk(preAst.moduleElements);
     }
 
-    function walkModuleNameModuleReferenceChildren(preAst: ModuleNameModuleReference, walker: AstWalker): void {
+    function walkModuleNameModuleReferenceChildren(preAst: ModuleNameModuleReferenceSyntax, walker: AstWalker): void {
         walker.walk(preAst.moduleName);
     }
 
-    function walkEnumDeclarationChildren(preAst: EnumDeclaration, walker: AstWalker): void {
+    function walkEnumDeclarationChildren(preAst: EnumDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.enumElements);
     }
 
-    function walkEnumElementChildren(preAst: EnumElement, walker: AstWalker): void {
+    function walkEnumElementChildren(preAst: EnumElementSyntax, walker: AstWalker): void {
         walker.walk(preAst.propertyName);
         walker.walk(preAst.equalsValueClause);
     }
 
-    function walkImportDeclarationChildren(preAst: ImportDeclaration, walker: AstWalker): void {
+    function walkImportDeclarationChildren(preAst: ImportDeclarationSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.moduleReference);
     }
 
-    function walkExportAssignmentChildren(preAst: ExportAssignment, walker: AstWalker): void {
+    function walkExportAssignmentChildren(preAst: ExportAssignmentSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
     }
 
-    function walkWithStatementChildren(preAst: WithStatement, walker: AstWalker): void {
+    function walkWithStatementChildren(preAst: WithStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.condition);
         walker.walk(preAst.statement);
     }
 
-    function walkExpressionStatementChildren(preAst: ExpressionStatement, walker: AstWalker): void {
+    function walkExpressionStatementChildren(preAst: ExpressionStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.expression);
     }
 
-    function walkLabeledStatementChildren(preAst: LabeledStatement, walker: AstWalker): void {
+    function walkLabeledStatementChildren(preAst: LabeledStatementSyntax, walker: AstWalker): void {
         walker.walk(preAst.identifier);
         walker.walk(preAst.statement);
     }
 
-    function walkVariableStatementChildren(preAst: VariableStatement, walker: AstWalker): void {
-        walker.walk(preAst.declaration);
+    function walkVariableStatementChildren(preAst: VariableStatementSyntax, walker: AstWalker): void {
+        walker.walk(preAst.variableDeclaration);
     }
 
     var childrenWalkers: IAstWalkChildren[] = new Array<IAstWalkChildren>(SyntaxKind.Last + 1);
@@ -545,7 +545,7 @@ module TypeScript {
     childrenWalkers[SyntaxKind.QualifiedName] = walkQualifiedNameChildren;
     childrenWalkers[SyntaxKind.RegularExpressionLiteral] = null;
     childrenWalkers[SyntaxKind.ReturnStatement] = walkReturnStatementChildren;
-    childrenWalkers[SyntaxKind.SourceUnit] = walkScriptChildren;
+    childrenWalkers[SyntaxKind.SourceUnitSyntax] = walkScriptChildren;
     childrenWalkers[SyntaxKind.SeparatedList] = walkSeparatedListChildren;
     childrenWalkers[SyntaxKind.SetAccessor] = walkSetAccessorChildren;
     childrenWalkers[SyntaxKind.SignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
@@ -591,7 +591,7 @@ module TypeScript {
     }
 
     interface IAstWalkChildren {
-        (preAst: AST, walker: AstWalker): void;
+        (preAst: ISyntaxElement, walker: AstWalker): void;
     }
 
     export interface IAstWalker {
@@ -600,18 +600,18 @@ module TypeScript {
     }
 
     interface AstWalker {
-        walk(ast: AST): void;
+        walk(ast: ISyntaxElement): void;
     }
 
     class SimplePreAstWalker implements AstWalker {
         public options: AstWalkOptions = new AstWalkOptions();
 
         constructor(
-            private pre: (ast: AST, state: any) => void,
+            private pre: (ast: ISyntaxElement, state: any) => void,
             public state: any) {
         }
 
-        public walk(ast: AST): void {
+        public walk(ast: ISyntaxElement): void {
             if (!ast) {
                 return;
             }
@@ -629,12 +629,12 @@ module TypeScript {
         public options: AstWalkOptions = new AstWalkOptions();
 
         constructor(
-            private pre: (ast: AST, state: any) => void,
-            private post: (ast: AST, state: any) => void,
+            private pre: (ast: ISyntaxElement, state: any) => void,
+            private post: (ast: ISyntaxElement, state: any) => void,
             public state: any) {
         }
 
-        public walk(ast: AST): void {
+        public walk(ast: ISyntaxElement): void {
             if (!ast) {
                 return;
             }
@@ -654,12 +654,12 @@ module TypeScript {
         public options: AstWalkOptions = new AstWalkOptions();
 
         constructor(
-            private pre: (ast: AST, walker: IAstWalker) => void,
-            private post: (ast: AST, walker: IAstWalker) => void,
+            private pre: (ast: ISyntaxElement, walker: IAstWalker) => void,
+            private post: (ast: ISyntaxElement, walker: IAstWalker) => void,
             public state: any) {
         }
 
-        public walk(ast: AST): void {
+        public walk(ast: ISyntaxElement): void {
             if (!ast) {
                 return;
             }
@@ -695,11 +695,11 @@ module TypeScript {
     }
 
     export class AstWalkerFactory {
-        public walk(ast: AST, pre: (ast: AST, walker: IAstWalker) => void, post?: (ast: AST, walker: IAstWalker) => void, state?: any): void {
+        public walk(ast: ISyntaxElement, pre: (ast: ISyntaxElement, walker: IAstWalker) => void, post?: (ast: ISyntaxElement, walker: IAstWalker) => void, state?: any): void {
             new NormalAstWalker(pre, post, state).walk(ast);
         }
 
-        public simpleWalk(ast: AST, pre: (ast: AST, state: any) => void, post?: (ast: AST, state: any) => void, state?: any): void {
+        public simpleWalk(ast: ISyntaxElement, pre: (ast: ISyntaxElement, state: any) => void, post?: (ast: ISyntaxElement, state: any) => void, state?: any): void {
             if (post) {
                 new SimplePrePostAstWalker(pre, post, state).walk(ast);
             }

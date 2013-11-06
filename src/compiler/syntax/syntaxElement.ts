@@ -137,6 +137,11 @@ module TypeScript {
         expression: IExpressionSyntax;
     }
 
+    export interface ICallExpressionSyntax extends IExpressionSyntax {
+        expression: IExpressionSyntax;
+        argumentList: ArgumentListSyntax;
+    }
+
     export interface IPostfixExpressionSyntax extends IUnaryExpressionSyntax {
         isPostfixExpression(): boolean;
     }

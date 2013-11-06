@@ -17,7 +17,7 @@ module TypeScript {
     }
 
     public kind(): SyntaxKind {
-        return SyntaxKind.SourceUnit;
+        return SyntaxKind.SourceUnitSyntax;
     }
 
     public childCount(): number {

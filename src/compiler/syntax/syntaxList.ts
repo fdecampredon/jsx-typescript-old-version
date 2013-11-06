@@ -6,6 +6,11 @@ module TypeScript {
         toArray(): ISyntaxNodeOrToken[];
 
         insertChildrenInto(array: ISyntaxElement[], index: number): void;
+
+        any(func: (v: ISyntaxNodeOrToken) => boolean): boolean;
+
+        firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken;
+        lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken;
     }
 }
 
@@ -24,6 +29,10 @@ module TypeScript.Syntax {
 
         public fileName(): string {
             throw Errors.invalidOperation("Shared lists do not belong to a single file.");
+        }
+
+        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
+            return false;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -124,6 +133,14 @@ module TypeScript.Syntax {
 
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
         }
+
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return null;
+        }
+
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return null;
+        }
     }
 
     export var emptyList: ISyntaxList = new EmptySyntaxList();
@@ -150,6 +167,10 @@ module TypeScript.Syntax {
             }
 
             return this._syntaxID;
+        }
+
+        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
+            return func(this.item);
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -255,6 +276,14 @@ module TypeScript.Syntax {
 
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
             array.splice(index, 0, this.item);
+        }
+
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return func && func(this.item, 0) ? this.item : null;
+        }
+
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return func && func(this.item, 0) ? this.item : null;
         }
     }
 
@@ -454,6 +483,18 @@ module TypeScript.Syntax {
                 // TODO: this seems awfully innefficient.  Can we do better here?
                 array.splice.apply(array, [index, <any>0].concat(this.nodeOrTokens));
             }
+        }
+
+        public any(func: (v: ISyntaxNodeOrToken) => boolean): boolean {
+            return ArrayUtilities.any(this.nodeOrTokens, func);
+        }
+
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return ArrayUtilities.firstOrDefault(this.nodeOrTokens, func);
+        }
+
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+            return ArrayUtilities.lastOrDefault(this.nodeOrTokens, func);
         }
     }
 

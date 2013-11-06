@@ -32,7 +32,7 @@ module TypeScript.Services {
             // No-op.  Only kept around for compatability with the interface we shipped.
         }
 
-        private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.AST } {
+        private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.ISyntaxElement } {
             var document = this.compiler.getDocument(fileName);
             var sourceUnit = document.sourceUnit();
 
@@ -58,7 +58,7 @@ module TypeScript.Services {
 
             // if we are not looking for any but we get an any symbol, then we ran into a wrong symbol
             if (requireName) {
-                var actualNameAtPosition = (<TypeScript.Identifier>topNode).valueText();
+                var actualNameAtPosition = (<TypeScript.ISyntaxToken>topNode).valueText();
 
                 if ((symbol.isError() || symbol.isAny()) && actualNameAtPosition !== symbolName) {
                     this.logger.log("Unknown symbol found at the given position");
@@ -110,7 +110,7 @@ module TypeScript.Services {
             return result;
         }
 
-        private getSymbolScopeAST(symbol: TypeScript.PullSymbol, ast: TypeScript.AST): TypeScript.AST {
+        private getSymbolScopeAST(symbol: TypeScript.PullSymbol, ast: TypeScript.ISyntaxElement): TypeScript.ISyntaxElement {
             if (symbol.kind === TypeScript.PullElementKind.TypeParameter &&
                 symbol.getDeclarations().length > 0 &&
                 symbol.getDeclarations()[0].getParentDecl() &&
@@ -180,13 +180,13 @@ module TypeScript.Services {
             }
 
             // Store the actual name before calling getSymbolInformationFromPath
-            var actualNameAtPosition = (<TypeScript.Identifier>ast).valueText();
+            var actualNameAtPosition = (<TypeScript.ISyntaxToken>ast).valueText();
 
             var symbolInfoAtPosition = this.compiler.getSymbolInformationFromAST(ast, document);
             var symbol = symbolInfoAtPosition.symbol;
 
             if (symbol === null) {
-                this.logger.log("No symbol annotation on the identifier AST.");
+                this.logger.log("No symbol annotation on the identifier ISyntaxElement.");
                 return result;
             }
 
@@ -310,7 +310,7 @@ module TypeScript.Services {
             return result;
         }
 
-        private getReferencesInFile(fileName: string, symbol: TypeScript.PullSymbol, containingASTOpt: TypeScript.AST): ReferenceEntry[] {
+        private getReferencesInFile(fileName: string, symbol: TypeScript.PullSymbol, containingASTOpt: TypeScript.ISyntaxElement): ReferenceEntry[] {
             var result: ReferenceEntry[] = [];
             var symbolName = symbol.getDisplayName();
 
@@ -320,7 +320,7 @@ module TypeScript.Services {
                 var sourceUnit = document.sourceUnit();
 
                 possiblePositions.forEach(p => {
-                    // If it's not in the bounds of the AST we're asking for, then this can't possibly be a hit.
+                    // If it's not in the bounds of the ISyntaxElement we're asking for, then this can't possibly be a hit.
                     if (containingASTOpt && (p < containingASTOpt.start() || p > containingASTOpt.end())) {
                         return;
                     }
@@ -347,28 +347,28 @@ module TypeScript.Services {
             return result;
         }
 
-        private isWriteAccess(current: TypeScript.AST): boolean {
+        private isWriteAccess(current: TypeScript.ISyntaxElement): boolean {
             var parent = current.parent;
             if (parent !== null) {
                 var parentNodeType = parent.kind();
                 switch (parentNodeType) {
                     case TypeScript.SyntaxKind.ClassDeclaration:
-                        return (<TypeScript.ClassDeclaration>parent).identifier === current;
+                        return (<TypeScript.ClassDeclarationSyntax>parent).identifier === current;
 
                     case TypeScript.SyntaxKind.InterfaceDeclaration:
-                        return (<TypeScript.InterfaceDeclaration>parent).identifier === current;
+                        return (<TypeScript.InterfaceDeclarationSyntax>parent).identifier === current;
 
                     case TypeScript.SyntaxKind.ModuleDeclaration:
-                        return (<TypeScript.ModuleDeclaration>parent).name === current || (<TypeScript.ModuleDeclaration>parent).stringLiteral === current;
+                        return (<TypeScript.ModuleDeclarationSyntax>parent).name === current || (<TypeScript.ModuleDeclarationSyntax>parent).stringLiteral === current;
 
                     case TypeScript.SyntaxKind.FunctionDeclaration:
-                        return (<TypeScript.FunctionDeclaration>parent).identifier === current;
+                        return (<TypeScript.FunctionDeclarationSyntax>parent).identifier === current;
 
                     case TypeScript.SyntaxKind.ImportDeclaration:
-                        return (<TypeScript.ImportDeclaration>parent).identifier === current;
+                        return (<TypeScript.ImportDeclarationSyntax>parent).identifier === current;
 
                     case TypeScript.SyntaxKind.VariableDeclarator:
-                        var varDeclarator = <TypeScript.VariableDeclarator>parent;
+                        var varDeclarator = <TypeScript.VariableDeclaratorSyntax>parent;
                         return !!(varDeclarator.equalsValueClause && varDeclarator.propertyName === current);
 
                     case TypeScript.SyntaxKind.Parameter:
@@ -386,7 +386,7 @@ module TypeScript.Services {
                     case TypeScript.SyntaxKind.LeftShiftAssignmentExpression:
                     case TypeScript.SyntaxKind.UnsignedRightShiftAssignmentExpression:
                     case TypeScript.SyntaxKind.SignedRightShiftAssignmentExpression:
-                        return (<TypeScript.BinaryExpression>parent).left === current;
+                        return (<TypeScript.BinaryExpressionSyntax>parent).left === current;
 
                     case TypeScript.SyntaxKind.PreIncrementExpression:
                     case TypeScript.SyntaxKind.PostIncrementExpression:
@@ -497,7 +497,7 @@ module TypeScript.Services {
                 return null;
             }
 
-            var callExpression = <TypeScript.InvocationExpression>node;
+            var callExpression = <TypeScript.InvocationExpressionSyntax>node;
             var isNew = (callExpression.kind() === TypeScript.SyntaxKind.ObjectCreationExpression);
 
             if (isNew && callExpression.argumentList === null) {
@@ -986,7 +986,7 @@ module TypeScript.Services {
                 default:
                     return null;
                 case TypeScript.SyntaxKind.ConstructorDeclaration:
-                    var constructorAST = <TypeScript.ConstructorDeclaration>ast;
+                    var constructorAST = <TypeScript.ConstructorDeclarationSyntax>ast;
                     if (!isConstructorValidPosition || !(position >= constructorAST.start() && position <= constructorAST.start() + 11 /*constructor*/)) {
                         return null;
                     }
@@ -1016,7 +1016,7 @@ module TypeScript.Services {
             }
 
             var document = this.compiler.getDocument(fileName);
-            var ast: TypeScript.AST;
+            var ast: TypeScript.ISyntaxElement;
             var symbol: TypeScript.PullSymbol;
             var typeSymbol: TypeScript.PullTypeSymbol;
             var enclosingScopeSymbol: TypeScript.PullSymbol;
@@ -1153,33 +1153,33 @@ module TypeScript.Services {
             var isRightOfDot = false;
             if (node &&
                 node.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
-                (<TypeScript.MemberAccessExpression>node).expression.end() < position) {
+                (<TypeScript.MemberAccessExpressionSyntax>node).expression.end() < position) {
 
                 isRightOfDot = true;
-                node = (<TypeScript.MemberAccessExpression>node).expression;
+                node = (<TypeScript.MemberAccessExpressionSyntax>node).expression;
             }
             else if (node &&
                 node.kind() === TypeScript.SyntaxKind.QualifiedName &&
-                (<TypeScript.QualifiedName>node).left.end() < position) {
+                (<TypeScript.QualifiedNameSyntax>node).left.end() < position) {
 
                 isRightOfDot = true;
-                node = (<TypeScript.QualifiedName>node).left;
+                node = (<TypeScript.QualifiedNameSyntax>node).left;
             }
             else if (node && node.parent &&
                 node.kind() === TypeScript.SyntaxKind.IdentifierName &&
                 node.parent.kind() === TypeScript.SyntaxKind.MemberAccessExpression &&
-                (<TypeScript.MemberAccessExpression>node.parent).name === node) {
+                (<TypeScript.MemberAccessExpressionSyntax>node.parent).name === node) {
 
                 isRightOfDot = true;
-                node = (<TypeScript.MemberAccessExpression>node.parent).expression;
+                node = (<TypeScript.MemberAccessExpressionSyntax>node.parent).expression;
             }
             else if (node && node.parent &&
                 node.kind() === TypeScript.SyntaxKind.IdentifierName &&
                 node.parent.kind() === TypeScript.SyntaxKind.QualifiedName &&
-                (<TypeScript.QualifiedName>node.parent).right === node) {
+                (<TypeScript.QualifiedNameSyntax>node.parent).right === node) {
 
                 isRightOfDot = true;
-                node = (<TypeScript.QualifiedName>node.parent).left;
+                node = (<TypeScript.QualifiedNameSyntax>node.parent).left;
             }
 
             // Get the completions
@@ -1209,7 +1209,7 @@ module TypeScript.Services {
                     }
 
                     if (!node || node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
-                        throw TypeScript.Errors.invalidOperation("AST Path look up did not result in the same node as Fidelity Syntax Tree look up.");
+                        throw TypeScript.Errors.invalidOperation("ISyntaxElement Path look up did not result in the same node as Fidelity Syntax Tree look up.");
                     }
 
                     isMemberCompletion = true;
@@ -1804,7 +1804,7 @@ module TypeScript.Services {
         }
     }
 
-    function isSignatureHelpBlocker(ast: TypeScript.AST): boolean {
+    function isSignatureHelpBlocker(ast: TypeScript.ISyntaxElement): boolean {
         if (ast) {
             switch (ast.kind()) {
                 case TypeScript.SyntaxKind.ClassDeclaration:

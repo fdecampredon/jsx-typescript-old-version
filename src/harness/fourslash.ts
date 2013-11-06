@@ -136,7 +136,7 @@ module FourSlash {
         private languageService: TypeScript.Services.ILanguageService = null;
 
         // A reference to the language service's compiler state's compiler instance
-        private compiler: () => { getSyntaxTree(fileName: string): TypeScript.SyntaxTree; getSourceUnit(fileName: string): TypeScript.SourceUnit; };
+        private compiler: () => { getSyntaxTree(fileName: string): TypeScript.SyntaxTree; getSourceUnit(fileName: string): TypeScript.SourceUnitSyntax; };
 
         // The current caret position in the active file
         public currentCaretPosition = 0;
@@ -1064,14 +1064,9 @@ module FourSlash {
             var content = snapshot.getText(0, snapshot.getLength());
             var refSyntaxTree = TypeScript.Parser.parse(this.activeFile.fileName, TypeScript.SimpleText.fromString(content), TypeScript.isDTSFile(this.activeFile.fileName), parseOptions);
             var fullSyntaxErrs = JSON.stringify(refSyntaxTree.diagnostics());
-            var refAST = TypeScript.SyntaxTreeToAstVisitor.visit(refSyntaxTree, this.activeFile.fileName, immutableSettings, /*incrementalAST:*/ true);
 
             if (!refSyntaxTree.structuralEquals(this.compiler().getSyntaxTree(this.activeFile.fileName))) {
                 throw new Error('Incrementally-parsed and full-parsed syntax trees were not equal');
-            }
-
-            if (!TypeScript.structuralEqualsIncludingPosition(refAST, this.compiler().getSourceUnit(this.activeFile.fileName))) {
-                throw new Error('Incrementally-parsed and full-parsed ASTs were not equal');
             }
 
             if (incrSyntaxErrs !== fullSyntaxErrs) {

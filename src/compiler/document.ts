@@ -4,10 +4,9 @@ module TypeScript {
     export class Document {
         private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
-        private _sourceUnit: SourceUnit = null;
         private _lineMap: LineMap = null;
 
-        private _declASTMap: AST[] = [];
+        private _declASTMap: ISyntaxElement[] = [];
         private _astDeclMap: PullDecl[] = [];
         private _isExternalModule: boolean = undefined;
         private _amdDependencies: string[] = undefined;
@@ -32,7 +31,6 @@ module TypeScript {
             this._topLevelDecl = null;
 
             this._syntaxTree = null;
-            this._sourceUnit = null;
             this._diagnostics = null;
             this._bloomFilter = null;
         }
@@ -137,22 +135,9 @@ module TypeScript {
             return false;
         }
 
-        public sourceUnit(): SourceUnit {
+        public sourceUnit(): SourceUnitSyntax {
             // If we don't have a script, create one from our parse tree.
-            if (!this._sourceUnit) {
-                var start = new Date().getTime();
-                var syntaxTree = this.syntaxTree();
-                this._sourceUnit = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this._compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
-                TypeScript.astTranslationTime += new Date().getTime() - start;
-
-                // If we're not open, then we can throw away our syntax tree.  We don't need it from
-                // now on.
-                if (!this.isOpen) {
-                    this._syntaxTree = null;
-                }
-            }
-
-            return this._sourceUnit;
+            return this.syntaxTree().sourceUnit();
         }
 
         public diagnostics(): Diagnostic[] {
@@ -211,12 +196,7 @@ module TypeScript {
 
                 TypeScript.syntaxTreeParseTime += new Date().getTime() - start;
 
-                // If the document is open, store the syntax tree for fast incremental updates.
-                // Or, if we don't have a script, then store the syntax tree around so we won't
-                // have to immediately regenerate it when we need the script.
-                if (this.isOpen || !this._sourceUnit) {
-                    this._syntaxTree = result;
-                }
+                this._syntaxTree = result;
             }
 
             this.cacheSyntaxTreeInfo(result);
@@ -226,10 +206,10 @@ module TypeScript {
         public bloomFilter(): BloomFilter {
             if (!this._bloomFilter) {
                 var identifiers = createIntrinsicsObject<boolean>();
-                var pre = function (cur: TypeScript.AST) {
+                var pre = function (cur: TypeScript.ISyntaxElement) {
                     if (isValidAstNode(cur)) {
                         if (cur.kind() === SyntaxKind.IdentifierName) {
-                            var nodeText = (<TypeScript.Identifier>cur).valueText();
+                            var nodeText = (<TypeScript.ISyntaxToken>cur).valueText();
 
                             identifiers[nodeText] = true;
                         }
@@ -308,25 +288,25 @@ module TypeScript {
             return this._topLevelDecl;
         }
 
-        public _getDeclForAST(ast: AST): PullDecl {
+        public _getDeclForAST(ast: ISyntaxElement): PullDecl {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
             this.topLevelDecl();
             return this._astDeclMap[ast.syntaxID()];
         }
 
-        public getEnclosingDecl(ast: AST): PullDecl {
-            if (ast.kind() === SyntaxKind.SourceUnit) {
+        public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
+            if (ast.kind() === SyntaxKind.SourceUnitSyntax) {
                 return this._getDeclForAST(ast);
             }
 
-            // First, walk up the AST, looking for a decl corresponding to that AST node.
+            // First, walk up the ISyntaxElement, looking for a decl corresponding to that ISyntaxElement node.
             ast = ast.parent;
             var decl: PullDecl = null;
             while (ast) {
                 //if (ast.kind() === SyntaxKind.ModuleDeclaration) {
-                //    var moduleDecl = <ModuleDeclaration>ast;
-                //    decl = this._getDeclForAST(<AST>moduleDecl.stringLiteral || ArrayUtilities.last(getModuleNames(moduleDecl.name)));
+                //    var moduleDecl = <ModuleDeclarationSyntax>ast;
+                //    decl = this._getDeclForAST(<ISyntaxElement>moduleDecl.stringLiteral || ArrayUtilities.last(getModuleNames(moduleDecl.name)));
                 //}
                 //else {
                     decl = this._getDeclForAST(ast);
@@ -340,20 +320,20 @@ module TypeScript {
             }
 
             // Now, skip over certain decls.  The resolver never considers these the 'enclosing' 
-            // decl for an AST node.
+            // decl for an ISyntaxElement node.
             return decl._getEnclosingDeclFromParentDecl();
         }
 
-        public _setDeclForAST(ast: AST, decl: PullDecl): void {
+        public _setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this.fileName);
             this._astDeclMap[ast.syntaxID()] = decl;
         }
 
-        public _getASTForDecl(decl: PullDecl): AST {
+        public _getASTForDecl(decl: PullDecl): ISyntaxElement {
             return this._declASTMap[decl.declID];
         }
 
-        public _setASTForDecl(decl: PullDecl, ast: AST): void {
+        public _setASTForDecl(decl: PullDecl, ast: ISyntaxElement): void {
             Debug.assert(decl.fileName() === this.fileName);
             this._declASTMap[decl.declID] = ast;
         }

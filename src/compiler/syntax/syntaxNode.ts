@@ -4,7 +4,7 @@ module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
         public parent: ISyntaxElement = null;
         private _data: number;
-        private _syntaxID: number;
+        private _syntaxID: number = 0;
 
         constructor(parsedInStrictMode: boolean) {
             this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
@@ -15,7 +15,7 @@ module TypeScript {
         }
 
         public fileName(): string {
-            return this.parent.fileName();
+            return this.syntaxTree().fileName();
         }
 
         public syntaxID(): number {
@@ -268,7 +268,7 @@ module TypeScript {
 
         /**
          * Finds a token according to the following rules:
-         * 1) If position matches the End of the node/s FullSpan and the node is SourceUnit,
+         * 1) If position matches the End of the node/s FullSpan and the node is SourceUnitSyntax,
          *    then the EOF token is returned. 
          * 
          *  2) If node.FullSpan.Contains(position) then the token that contains given position is
@@ -301,7 +301,7 @@ module TypeScript {
         }
 
         private tryGetEndOfFileAt(position: number): PositionedToken {
-            if (this.kind() === SyntaxKind.SourceUnit && position === this.fullWidth()) {
+            if (this.kind() === SyntaxKind.SourceUnitSyntax && position === this.fullWidth()) {
                 var sourceUnit = <SourceUnitSyntax>this;
                 return new PositionedToken(
                     new PositionedNode(null, sourceUnit, 0),
