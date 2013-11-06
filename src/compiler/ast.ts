@@ -98,7 +98,7 @@ module TypeScript {
         constructor() {
         }
 
-        public astID(): number {
+        public syntaxID(): number {
             return this._astID;
         }
 
