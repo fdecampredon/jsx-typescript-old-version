@@ -1065,11 +1065,11 @@ module TypeScript {
                     // All the references that are not going to be part of same file
 
                     if (document &&
-                        (document.emitToOwnOutputFile() || document.sourceUnit().isDeclareFile() || !addedGlobalDocument)) {
+                        (document.emitToOwnOutputFile() || document.isDeclareFile() || !addedGlobalDocument)) {
 
                         documents = documents.concat(document);
 
-                            if (!document.sourceUnit().isDeclareFile() && document.isExternalModule()) {
+                            if (!document.isDeclareFile() && document.isExternalModule()) {
                             addedGlobalDocument = true;
                         }
                     }
@@ -1079,7 +1079,7 @@ module TypeScript {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; i++) {
                     var doc = this.compiler.getDocument(fileNames[i]);
-                    if (!doc.sourceUnit().isDeclareFile() && !doc.isExternalModule()) {
+                    if (!doc.isDeclareFile() && !doc.isExternalModule()) {
                         // Check what references need to be added
                         var scriptReferences = doc.referencedFiles;
                         for (var j = 0; j < scriptReferences.length; j++) {
@@ -1087,7 +1087,7 @@ module TypeScript {
                             var document = this.compiler.getDocument(currentReference);
                             // All the references that are not going to be part of same file
                             if (document &&
-                                (document.sourceUnit().isDeclareFile() || document.isExternalModule())) {
+                                (document.isDeclareFile() || document.isExternalModule())) {
                                 for (var k = 0; k < documents.length; k++) {
                                     if (documents[k] == document) {
                                         break;
@@ -1108,7 +1108,7 @@ module TypeScript {
             for (var i = 0; i < documents.length; i++) {
                 var document = documents[i];
                 var declFileName: string;
-                if (document.sourceUnit().isDeclareFile()) {
+                if (document.isDeclareFile()) {
                     declFileName = document.fileName;
                 } else {
                     declFileName = this.compiler.mapOutputFileName(document, this.emitOptions, TypeScriptCompiler.mapToDTSFileName);

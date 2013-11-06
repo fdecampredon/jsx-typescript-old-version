@@ -185,8 +185,7 @@ module TypeScript {
             var fileNames = this.fileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var document = this.getDocument(fileNames[i]);
-                var sourceUnit = document.sourceUnit();
-                if (!sourceUnit.isDeclareFile() && document.isExternalModule()) {
+                if (!document.isDeclareFile() && document.isExternalModule()) {
                     return true;
                 }
             }
@@ -251,21 +250,17 @@ module TypeScript {
             return getDeclareFilePath(fileName);
         }
 
-        public _shouldEmit(sourceUnit: SourceUnit) {
+        public _shouldEmit(document: Document) {
             // If its already a declare file or is resident or does not contain body 
-            if (!!sourceUnit && (sourceUnit.isDeclareFile() || sourceUnit.moduleElements === null)) {
-                return false;
-            }
-
-            return true;
+            return !document.isDeclareFile();
         }
 
-        public _shouldEmitDeclarations(script?: SourceUnit) {
+        public _shouldEmitDeclarations(document: Document) {
             if (!this.compilationSettings().generateDeclarationFiles()) {
                 return false;
             }
 
-            return this._shouldEmit(script);
+            return this._shouldEmit(document);
         }
 
         // Does the actual work of emittin the declarations from the provided document into the
@@ -276,7 +271,7 @@ module TypeScript {
             declarationEmitter?: DeclarationEmitter): DeclarationEmitter {
 
             var sourceUnit = document.sourceUnit();
-            Debug.assert(this._shouldEmitDeclarations(sourceUnit));
+            Debug.assert(this._shouldEmitDeclarations(document));
 
             if (declarationEmitter) {
                 declarationEmitter.document = document;
@@ -295,7 +290,7 @@ module TypeScript {
             onSingleFileEmitComplete: (files: OutputFile) => void,
             sharedEmitter: DeclarationEmitter): DeclarationEmitter {
 
-            if (this._shouldEmitDeclarations(document.sourceUnit())) {
+            if (this._shouldEmitDeclarations(document)) {
                 if (document.emitToOwnOutputFile()) {
                     var singleEmitter = this.emitDocumentDeclarationsWorker(document, emitOptions);
                     if (singleEmitter) {
@@ -387,7 +382,7 @@ module TypeScript {
         // May throw exceptions.
         private emitDocumentWorker(document: Document, emitOptions: EmitOptions, emitter?: Emitter): Emitter {
             var sourceUnit = document.sourceUnit();
-            Debug.assert(this._shouldEmit(sourceUnit));
+            Debug.assert(this._shouldEmit(document));
 
             var typeScriptFileName = document.fileName;
             if (!emitter) {
@@ -422,7 +417,7 @@ module TypeScript {
             sharedEmitter: Emitter): Emitter {
 
             // Emitting module or multiple files, always goes to single file
-                if (this._shouldEmit(document.sourceUnit())) {
+                if (this._shouldEmit(document)) {
                 if (document.emitToOwnOutputFile()) {
                     // We're outputting to mulitple files.  We don't want to reuse an emitter in that case.
                     var singleEmitter = this.emitDocumentWorker(document, emitOptions);
@@ -1210,7 +1205,7 @@ module TypeScript {
                 return false;
             }
 
-            if (!this.compiler._shouldEmitDeclarations()) {
+            if (!this.compiler.compilationSettings().generateDeclarationFiles()) {
                 return false;
             }
 

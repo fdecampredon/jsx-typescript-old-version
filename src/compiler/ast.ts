@@ -268,10 +268,6 @@ module TypeScript {
             return this._fileName;
         }
 
-        public isDeclareFile(): boolean {
-            return isDTSFile(this.fileName());
-        }
-
         public kind(): SyntaxKind {
             return SyntaxKind.SourceUnit;
         }
