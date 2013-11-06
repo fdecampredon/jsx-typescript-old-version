@@ -40,17 +40,10 @@ module TypeScript {
             public sourceColumn: number,
             public sourceName: string) {
 
-<<<<<<< HEAD
-            //Debug.assert(!isNaN(emittedLine));
-            //Debug.assert(!isNaN(emittedColumn));
-            //Debug.assert(!isNaN(sourceLine));
-            //Debug.assert(!isNaN(sourceColumn));
-=======
             Debug.assert(isFinite(emittedLine));
             Debug.assert(isFinite(emittedColumn));
             Debug.assert(isFinite(sourceColumn));
             Debug.assert(isFinite(sourceLine));
->>>>>>> develop
         }
     }
 
