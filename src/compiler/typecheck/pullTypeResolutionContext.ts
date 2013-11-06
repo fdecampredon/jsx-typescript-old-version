@@ -149,11 +149,11 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap[ast.astID()] = symbol;
+            this.astSymbolMap[ast.syntaxID()] = symbol;
         }
 
         public getSymbolForAST(ast: AST): PullSymbol {
-            return this.astSymbolMap[ast.astID()];
+            return this.astSymbolMap[ast.syntaxID()];
         }
     }
 
@@ -170,7 +170,7 @@ module TypeScript {
 
         public setTypeChecked(ast: AST): void {
             if (!this.inProvisionalResolution()) {
-                this.typeCheckedNodes.setValueAt(ast.astID(), true);
+                this.typeCheckedNodes.setValueAt(ast.syntaxID(), true);
             }
         }
 
@@ -185,7 +185,7 @@ module TypeScript {
             // also important as it's very possible to stack overflow when typechecking if we 
             // keep jumping around to AST nodes all around a large project.
             return this.typeCheck() &&
-                !this.typeCheckedNodes.valueAt(ast.astID()) &&
+                !this.typeCheckedNodes.valueAt(ast.syntaxID()) &&
                 this.fileName === ast.fileName();
         }
 

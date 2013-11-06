@@ -352,7 +352,7 @@ module TypeScript {
         walker.walk(preAst.classElements);
     }
 
-    function walkScriptChildren(preAst: Script, walker: AstWalker): void {
+    function walkScriptChildren(preAst: SourceUnit, walker: AstWalker): void {
         walker.walk(preAst.moduleElements);
     }
 

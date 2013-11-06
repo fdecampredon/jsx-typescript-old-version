@@ -26,7 +26,7 @@ module TypeScript {
                 return moduleDecl.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
             else if (ast.kind() === SyntaxKind.SourceUnit) {
-                var sourceUnit = <Script>ast;
+                var sourceUnit = <SourceUnit>ast;
                 return sourceUnit.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
 
@@ -71,19 +71,19 @@ module TypeScript {
         // context.pushParent(decl);
     }
 
-    function preCollectScriptDecls(script: Script, context: DeclCollectionContext): void {
-        var span = TextSpan.fromBounds(script.start(), script.end());
+    function preCollectScriptDecls(sourceUnit: SourceUnit, context: DeclCollectionContext): void {
+        var span = TextSpan.fromBounds(sourceUnit.start(), sourceUnit.end());
 
-        var fileName = script.fileName();
+        var fileName = sourceUnit.fileName();
 
         var isExternalModule = context.isExternalModule;
 
         var decl: PullDecl = new RootPullDecl(
             /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, span, context.semanticInfoChain, isExternalModule);
-        context.semanticInfoChain.setDeclForAST(script, decl);
-        context.semanticInfoChain.setASTForDecl(decl, script);
+        context.semanticInfoChain.setDeclForAST(sourceUnit, decl);
+        context.semanticInfoChain.setASTForDecl(decl, sourceUnit);
 
-        context.isDeclareFile = script.isDeclareFile();
+        context.isDeclareFile = sourceUnit.isDeclareFile();
 
         context.pushParent(decl);
 
@@ -96,20 +96,20 @@ module TypeScript {
                 declFlags |= PullElementFlags.Ambient;
             }
 
-            var moduleContainsExecutableCode = containsExecutableCode(script.moduleElements);
+            var moduleContainsExecutableCode = containsExecutableCode(sourceUnit.moduleElements);
             var kind = PullElementKind.DynamicModule;
-            var span = TextSpan.fromBounds(script.start(), script.end());
+            var span = TextSpan.fromBounds(sourceUnit.start(), sourceUnit.end());
             var valueText = quoteStr(fileName);
 
             var decl: PullDecl = new NormalPullDecl(valueText, fileName, kind, declFlags, context.getParent(), span);
 
-            context.semanticInfoChain.setASTForDecl(decl, script);
+            context.semanticInfoChain.setASTForDecl(decl, sourceUnit);
             // Note: we're overring what the script points to.  For files with an external module, 
             // the script node will point at the external module declaration.
-            context.semanticInfoChain.setDeclForAST(script, decl);
+            context.semanticInfoChain.setDeclForAST(sourceUnit, decl);
 
             if (moduleContainsExecutableCode) {
-                createModuleVariableDecl(decl, script, context);
+                createModuleVariableDecl(decl, sourceUnit, context);
             }
 
             context.pushParent(decl);
@@ -971,7 +971,7 @@ module TypeScript {
     function preCollectDecls(ast: AST, context: DeclCollectionContext) {
         switch (ast.kind()) {
             case SyntaxKind.SourceUnit:
-                preCollectScriptDecls(<Script>ast, context);
+                preCollectScriptDecls(<SourceUnit>ast, context);
                 break;
             case SyntaxKind.EnumDeclaration:
                 preCollectEnumDecls(<EnumDeclaration>ast, context);
@@ -1259,7 +1259,7 @@ module TypeScript {
             var declCollectionContext = new DeclCollectionContext(semanticInfoChain, compilationSettings.propagateEnumConstants(), document.isExternalModule());
             
             // create decls
-            getAstWalkerFactory().simpleWalk(document.script(), preCollectDecls, postCollectDecls, declCollectionContext);
+            getAstWalkerFactory().simpleWalk(document.sourceUnit(), preCollectDecls, postCollectDecls, declCollectionContext);
 
             return declCollectionContext.getParent();
         }

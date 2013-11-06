@@ -16,8 +16,8 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export function scriptIsElided(script: Script): boolean {
-        return isDTSFile(script.fileName()) || moduleMembersAreElided(script.moduleElements);
+    export function scriptIsElided(sourceUnit: SourceUnit): boolean {
+        return isDTSFile(sourceUnit.fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
     }
 
     export function moduleIsElided(declaration: ModuleDeclaration): boolean {

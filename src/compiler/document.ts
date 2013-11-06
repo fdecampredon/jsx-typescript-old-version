@@ -4,7 +4,7 @@ module TypeScript {
     export class Document {
         private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
-        private _script: Script = null;
+        private _sourceUnit: SourceUnit = null;
         private _lineMap: LineMap = null;
 
         private _declASTMap: AST[] = [];
@@ -32,7 +32,7 @@ module TypeScript {
             this._topLevelDecl = null;
 
             this._syntaxTree = null;
-            this._script = null;
+            this._sourceUnit = null;
             this._diagnostics = null;
             this._bloomFilter = null;
         }
@@ -133,12 +133,12 @@ module TypeScript {
             return false;
         }
 
-        public script(): Script {
+        public sourceUnit(): SourceUnit {
             // If we don't have a script, create one from our parse tree.
-            if (!this._script) {
+            if (!this._sourceUnit) {
                 var start = new Date().getTime();
                 var syntaxTree = this.syntaxTree();
-                this._script = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this._compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
+                this._sourceUnit = SyntaxTreeToAstVisitor.visit(syntaxTree, this.fileName, this._compiler.compilationSettings(), /*incrementalAST:*/ this.isOpen);
                 TypeScript.astTranslationTime += new Date().getTime() - start;
 
                 // If we're not open, then we can throw away our syntax tree.  We don't need it from
@@ -148,7 +148,7 @@ module TypeScript {
                 }
             }
 
-            return this._script;
+            return this._sourceUnit;
         }
 
         public diagnostics(): Diagnostic[] {
@@ -210,7 +210,7 @@ module TypeScript {
                 // If the document is open, store the syntax tree for fast incremental updates.
                 // Or, if we don't have a script, then store the syntax tree around so we won't
                 // have to immediately regenerate it when we need the script.
-                if (this.isOpen || !this._script) {
+                if (this.isOpen || !this._sourceUnit) {
                     this._syntaxTree = result;
                 }
             }
@@ -232,7 +232,7 @@ module TypeScript {
                     }
                 };
 
-                TypeScript.getAstWalkerFactory().simpleWalk(this.script(), pre, null, identifiers);
+                TypeScript.getAstWalkerFactory().simpleWalk(this.sourceUnit(), pre, null, identifiers);
 
                 var identifierCount = 0;
                 for (var name in identifiers) {
@@ -308,7 +308,7 @@ module TypeScript {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
             this.topLevelDecl();
-            return this._astDeclMap[ast.astID()];
+            return this._astDeclMap[ast.syntaxID()];
         }
 
         public getEnclosingDecl(ast: AST): PullDecl {
@@ -342,7 +342,7 @@ module TypeScript {
 
         public _setDeclForAST(ast: AST, decl: PullDecl): void {
             Debug.assert(decl.fileName() === this.fileName);
-            this._astDeclMap[ast.astID()] = decl;
+            this._astDeclMap[ast.syntaxID()] = decl;
         }
 
         public _getASTForDecl(decl: PullDecl): AST {

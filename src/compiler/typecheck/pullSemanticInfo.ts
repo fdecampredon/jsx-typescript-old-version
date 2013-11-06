@@ -499,28 +499,28 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
-            this.astSymbolMap[ast.astID()] = symbol;
+            this.astSymbolMap[ast.syntaxID()] = symbol;
         }
 
         public getSymbolForAST(ast: AST): PullSymbol {
-            return this.astSymbolMap[ast.astID()];
+            return this.astSymbolMap[ast.syntaxID()];
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {
-            this.astAliasSymbolMap[ast.astID()] = symbol;
+            this.astAliasSymbolMap[ast.syntaxID()] = symbol;
         }
 
         public getAliasSymbolForAST(ast: AST): PullTypeAliasSymbol {
-            return this.astAliasSymbolMap[ast.astID()];
+            return this.astAliasSymbolMap[ast.syntaxID()];
         }
 
         public getCallResolutionDataForAST(ast: AST): PullAdditionalCallResolutionData {
-            return this.astCallResolutionDataMap[ast.astID()];
+            return this.astCallResolutionDataMap[ast.syntaxID()];
         }
 
         public setCallResolutionDataForAST(ast: AST, callResolutionData: PullAdditionalCallResolutionData) {
             if (callResolutionData) {
-                this.astCallResolutionDataMap[ast.astID()] = callResolutionData;
+                this.astCallResolutionDataMap[ast.syntaxID()] = callResolutionData;
             }
         }
 
