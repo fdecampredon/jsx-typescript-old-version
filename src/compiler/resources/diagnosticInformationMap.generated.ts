@@ -1622,10 +1622,6 @@ module TypeScript {
     "code": 7000,
     "category": DiagnosticCategory.Error
   },
-  "Looking up path for identifier token did not result in an identifer.": {
-    "code": 7001,
-    "category": DiagnosticCategory.Error
-  },
   "Unknown rule.": {
     "code": 7002,
     "category": DiagnosticCategory.Error

@@ -406,7 +406,6 @@ module TypeScript {
         NUMBER: "NUMBER",
         Specify_the_codepage_to_use_when_opening_source_files: "Specify the codepage to use when opening source files.",
         This_version_of_the_Javascript_runtime_does_not_support_the_0_function: "This version of the Javascript runtime does not support the '{0}' function.",
-        Looking_up_path_for_identifier_token_did_not_result_in_an_identifer: "Looking up path for identifier token did not result in an identifer.",
         Unknown_rule: "Unknown rule.",
         Invalid_line_number_0: "Invalid line number ({0})",
         Warn_on_expressions_and_declarations_with_an_implied_any_type: "Warn on expressions and declarations with an implied 'any' type.",

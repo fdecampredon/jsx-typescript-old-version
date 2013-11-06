@@ -543,7 +543,8 @@ module TypeScript.Services {
             // Get the identifier information
             var ast = TypeScript.getAstAtPosition(sourceUnit, genericTypeArgumentListInfo.genericIdentifer.start());
             if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
-                throw new Error("getTypeParameterSignatureAtPosition: " + TypeScript.getLocalizedText(TypeScript.DiagnosticCode.Looking_up_path_for_identifier_token_did_not_result_in_an_identifer, null));
+                this.logger.log(["getTypeParameterSignatureAtPosition: Unexpected ast found at position:", position, ast === null ? "ast was null" : "ast kind: " + SyntaxKind[ast.kind()]].join(' '));
+                return null;
             }
 
             var symbolInformation = this.compiler.getSymbolInformationFromAST(ast, document);
