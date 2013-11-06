@@ -388,8 +388,9 @@ module TypeScript {
         if (element) {
             switch (element.kind()) {
                 case SyntaxKind.VariableStatement:
-                    var variableStatement = <VariableStatementSyntax>element;
-                    return convertTokenLeadingComments(variableStatement.firstToken(), element.fullStart());
+                    return convertNodeLeadingComments(element);
+                case SyntaxKind.ExpressionStatement:
+                    return convertNodeLeadingComments(element);
             }
         }
 
@@ -401,20 +402,34 @@ module TypeScript {
             switch (element.kind()) {
                 case SyntaxKind.VariableStatement:
                     return convertNodeTrailingComments(element);
+                case SyntaxKind.ExpressionStatement:
+                    return convertNodeTrailingComments(element, /*allowWithNewLine:*/ true);
             }
         }
 
         return null;
     }
 
-    function convertNodeTrailingComments(node: ISyntaxElement): Comment[]{
+    function convertNodeTrailingComments(node: ISyntaxElement, allowWithNewLine = false): Comment[]{
         // Bail out quickly before doing any expensive math computation.
         var lastToken = node.lastToken();
-        if (lastToken === null || !lastToken.hasTrailingComment() || lastToken.hasTrailingNewLine()) {
+        if (lastToken === null || !lastToken.hasTrailingComment()) {
+            return null;
+        }
+
+        if (!allowWithNewLine && lastToken.hasTrailingNewLine()) {
             return null;
         }
 
         return convertComments(lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - lastToken.trailingTriviaWidth());
+    }
+
+    function convertNodeLeadingComments(element: ISyntaxElement): Comment[]{
+        if (element) {
+            return convertTokenLeadingComments(element.firstToken(), element.fullStart());
+        }
+
+        return null;
     }
 
     function convertTokenLeadingComments(token: ISyntaxToken, commentStartPosition: number): Comment[]{
