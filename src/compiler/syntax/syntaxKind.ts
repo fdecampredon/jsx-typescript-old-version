@@ -146,7 +146,7 @@ module TypeScript {
         SlashEqualsToken,
 
         // SyntaxNodes
-        SourceUnitSyntax,
+        SourceUnit,
 
         // Names
         QualifiedName,

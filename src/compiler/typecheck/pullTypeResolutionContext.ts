@@ -149,11 +149,12 @@ module TypeScript {
         }
 
         public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
+            Debug.assert(!ast.isShared());
             this.astSymbolMap[ast.syntaxID()] = symbol;
         }
 
         public getSymbolForAST(ast: ISyntaxElement): PullSymbol {
-            return this.astSymbolMap[ast.syntaxID()];
+            return ast.isShared() ? null : this.astSymbolMap[ast.syntaxID()];
         }
     }
 

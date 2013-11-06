@@ -393,7 +393,7 @@ module TypeScript {
             var moduleDeclAST: ISyntaxElement = getEnclosingModuleDeclaration(moduleNameAST);
             if (!moduleDeclAST) {
                 Debug.assert(moduleContainerDecl.kind === PullElementKind.DynamicModule);
-                Debug.assert(moduleNameAST.kind() === SyntaxKind.SourceUnitSyntax);
+                Debug.assert(moduleNameAST.kind() === SyntaxKind.SourceUnit);
                 // This is the module decl for the top level synthesized external module.
                 moduleDeclAST = moduleNameAST;
             }

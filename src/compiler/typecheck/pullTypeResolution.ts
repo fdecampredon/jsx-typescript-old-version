@@ -847,7 +847,7 @@ module TypeScript {
                 if (isAnyNameOfModule(enclosingModule, ast)) {
                     resolvedSymbol = this.resolveSingleModuleDeclaration(enclosingModule, ast, context);
                 }
-                else if (ast.kind() === SyntaxKind.SourceUnitSyntax && decl.kind === PullElementKind.DynamicModule) {
+                else if (ast.kind() === SyntaxKind.SourceUnit && decl.kind === PullElementKind.DynamicModule) {
                     // Otherwise, if we have a decl for the top level external module, then just resolve that
                     // specific module.
                     resolvedSymbol = this.resolveModuleSymbol(<PullContainerSymbol>decl.getSymbol(), context, /*moduleDeclAST:*/ null, /*moduleNameAST:*/ null, <SourceUnitSyntax>ast);
@@ -5306,7 +5306,7 @@ module TypeScript {
                 case SyntaxKind.SeparatedList:
                     return this.resolveSeparatedList(<ISeparatedSyntaxList>ast, context);
 
-                case SyntaxKind.SourceUnitSyntax:
+                case SyntaxKind.SourceUnit:
                     return this.resolveSourceUnit(<SourceUnitSyntax>ast, context);
 
                 case SyntaxKind.EnumDeclaration:
@@ -5611,7 +5611,7 @@ module TypeScript {
 
             var nodeType = ast.kind();
             switch (nodeType) {
-                case SyntaxKind.SourceUnitSyntax:
+                case SyntaxKind.SourceUnit:
                     this.typeCheckSourceUnit(<SourceUnitSyntax>ast, context);
                     return;
 

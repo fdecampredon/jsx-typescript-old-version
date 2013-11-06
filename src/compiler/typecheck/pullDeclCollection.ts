@@ -25,7 +25,7 @@ module TypeScript {
                 var moduleDecl = <ModuleDeclarationSyntax>ast;
                 return moduleDecl.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
-            else if (ast.kind() === SyntaxKind.SourceUnitSyntax) {
+            else if (ast.kind() === SyntaxKind.SourceUnit) {
                 var sourceUnit = <SourceUnitSyntax>ast;
                 return sourceUnit.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
             }
@@ -970,7 +970,7 @@ module TypeScript {
 
     function preCollectDecls(ast: ISyntaxElement, context: DeclCollectionContext) {
         switch (ast.kind()) {
-            case SyntaxKind.SourceUnitSyntax:
+            case SyntaxKind.SourceUnit:
                 preCollectScriptDecls(<SourceUnitSyntax>ast, context);
                 break;
             case SyntaxKind.EnumDeclaration:

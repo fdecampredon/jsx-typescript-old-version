@@ -816,7 +816,7 @@ module TypeScript {
         }
 
         public shouldCaptureThis(ast: ISyntaxElement) {
-            if (ast.kind() === SyntaxKind.SourceUnitSyntax) {
+            if (ast.kind() === SyntaxKind.SourceUnit) {
                 var scriptDecl = this.semanticInfoChain.topLevelDecl(this.document.fileName);
                 return hasFlag(scriptDecl.flags, PullElementFlags.MustCaptureThis);
             }
@@ -3283,7 +3283,7 @@ module TypeScript {
                     return this.emitSeparatedList(<ISeparatedSyntaxList>ast);
                 case SyntaxKind.List:
                     return this.emitList(<ISyntaxList>ast);
-                case SyntaxKind.SourceUnitSyntax:
+                case SyntaxKind.SourceUnit:
                     return this.emitSourceUnit(<SourceUnitSyntax>ast);
                 case SyntaxKind.ImportDeclaration:
                     return this.emitImportDeclaration(<ImportDeclarationSyntax>ast);
