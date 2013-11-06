@@ -8,6 +8,9 @@ interfaceAssignmentCompat.ts line 42 col 13: error TS2012: Cannot convert 'M.IEy
 	Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
 interfaceAssignmentCompat.ts line 44 col 9: error TS2012: Cannot convert 'M.IEye[]' to 'M.IFrenchEye[]':
 	Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
-	Types of property 'pop' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
-		Call signatures of types '() => M.IEye' and '() => M.IFrenchEye' are incompatible:
+	Types of property 'concat' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): M.IEye[]; (...items: M.IEye[]): M.IEye[]; }' and '{ <U extends T[]>(...items: U[]): M.IFrenchEye[]; (...items: M.IFrenchEye[]): M.IFrenchEye[]; }' are incompatible:
 			Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.
+			Types of property 'pop' of types 'M.IEye[]' and 'M.IFrenchEye[]' are incompatible:
+				Call signatures of types '() => M.IEye' and '() => M.IFrenchEye' are incompatible:
+					Type 'M.IEye' is missing property 'coleur' from type 'M.IFrenchEye'.

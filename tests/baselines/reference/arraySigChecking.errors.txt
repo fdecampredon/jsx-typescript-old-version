@@ -1,7 +1,9 @@
 arraySigChecking.ts line 11 col 14: error TS1023: Index signature parameter type must be 'string' or 'number'.
 arraySigChecking.ts line 18 col 5: error TS2012: Cannot convert '{}[]' to 'string[]':
-	Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
-		Call signatures of types '() => {}' and '() => string' are incompatible.
+	Types of property 'concat' of types '{}[]' and 'string[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
+				Call signatures of types '() => {}' and '() => string' are incompatible.
 arraySigChecking.ts line 22 col 1: error TS2012: Cannot convert '{}[][]' to 'number[][][]':
 	Type '{}' is missing property 'concat' from type 'number[]'.
 	Types of property 'pop' of types '{}[]' and 'number[][]' are incompatible:

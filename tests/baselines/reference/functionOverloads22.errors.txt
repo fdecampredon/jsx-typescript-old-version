@@ -1,5 +1,8 @@
 functionOverloads22.ts line 2 col 1: error TS2149: Overload signature is not compatible with function definition:
 	Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
-	Types of property 'pop' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
-		Call signatures of types '() => { a: any; b?: any; }' and '() => { a: number; b: string; }' are incompatible:
+	Types of property 'concat' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): { a: any; b?: any; }[]; (...items: { a: any; b?: any; }[]): { a: any; b?: any; }[]; }' and '{ <U extends T[]>(...items: U[]): { a: number; b: string; }[]; (...items: { a: number; b: string; }[]): { a: number; b: string; }[]; }' are incompatible:
 			Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.
+			Types of property 'pop' of types '{ a: any; b?: any; }[]' and '{ a: number; b: string; }[]' are incompatible:
+				Call signatures of types '() => { a: any; b?: any; }' and '() => { a: number; b: string; }' are incompatible:
+					Property 'b' defined as optional in type '{ a: any; b?: any; }', but is required in type '{ a: number; b: string; }'.

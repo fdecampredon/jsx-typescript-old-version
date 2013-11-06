@@ -1,2 +1,5 @@
 genericArrayExtenstions.ts line 1 col 22: error TS2137: Class ObservableArray<T> declares interface T[] but does not implement it:
-	Type 'ObservableArray<T>' is missing property 'join' from type 'T[]'.
+	Types of property 'concat' of types 'ObservableArray<T>' and 'T[]' are incompatible:
+		Call signatures of types '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible:
+			Types of property 'pop' of types 'T[]' and 'U[]' are incompatible:
+				Call signatures of types '() => T' and '() => U' are incompatible.
