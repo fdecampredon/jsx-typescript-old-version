@@ -2782,6 +2782,18 @@ module TypeScript.Parser {
                     return true;
             }
 
+            // Check for common things that might appear where we expect a statement, but which we 
+            // do not want to consume.  This can happen when the user does not terminate their 
+            // existing block properly.  We don't want to accidently consume these as expression 
+            // below.
+            if (this.isInterfaceDeclaration(0) ||
+                this.isClassDeclaration(0) ||
+                this.isEnumDeclaration(0) ||
+                this.isModuleDeclaration(0)) {
+
+                return false;
+            }
+
             // More complicated cases.
             return this.isLabeledStatement(currentToken) ||
                 this.isVariableStatement() ||
