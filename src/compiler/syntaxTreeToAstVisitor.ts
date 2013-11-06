@@ -75,7 +75,7 @@ module TypeScript {
             span._end = end;
         }
 
-        public visitSyntaxList(node: ISyntaxList): ASTList {
+        public visitSyntaxList(node: ISyntaxList): ISyntaxList2 {
             var start = this.position;
             var array = new Array<any>(node.childCount());
 
@@ -83,13 +83,13 @@ module TypeScript {
                 array[i] = node.childAt(i).accept(this);
             }
             
-            var result = new ASTList(this.fileName, array);
+            var result = new ISyntaxList2(this.fileName, array);
             this.setSpan(result, start, node);
 
             return result;
         }
 
-        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList): ASTSeparatedList {
+        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList): ISeparatedSyntaxList2 {
             var start = this.position;
             var array = new Array<any>(list.nonSeparatorCount());
 
@@ -106,7 +106,7 @@ module TypeScript {
                 }
             }
 
-            var result = new ASTSeparatedList(this.fileName, array, list.separatorCount());
+            var result = new ISeparatedSyntaxList2(this.fileName, array, list.separatorCount());
             this.setSpan(result, start, list);
 
             result.setPostComments(this.previousTokenTrailingComments);
@@ -1671,8 +1671,8 @@ module TypeScript {
             (<any>element)._ast = ast;
         }
 
-        public visitSyntaxList(list: ISyntaxList): ASTList {
-            var result: ASTList = this.getAndMovePastAST(list);
+        public visitSyntaxList(list: ISyntaxList): ISyntaxList2 {
+            var result: ISyntaxList2 = this.getAndMovePastAST(list);
             if (!result) {
                 result = super.visitSyntaxList(list);
 
@@ -1685,8 +1685,8 @@ module TypeScript {
             return result;
         }
 
-        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList): ASTSeparatedList {
-            var result: ASTSeparatedList = this.getAndMovePastAST(list);
+        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList): ISeparatedSyntaxList2 {
+            var result: ISeparatedSyntaxList2 = this.getAndMovePastAST(list);
             if (!result) {
                 result = super.visitSeparatedSyntaxList(list);
 

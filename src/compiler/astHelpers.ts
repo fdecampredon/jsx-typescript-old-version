@@ -24,7 +24,7 @@ module TypeScript {
         return hasModifier(declaration.modifiers, PullElementFlags.Ambient) || moduleMembersAreElided(declaration.moduleElements);
     }
 
-    function moduleMembersAreElided(members: ASTList): boolean {
+    function moduleMembersAreElided(members: ISyntaxList2): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 
@@ -157,7 +157,7 @@ module TypeScript {
         return top;
     }
 
-    export function getExtendsHeritageClause(clauses: ASTList): HeritageClause {
+    export function getExtendsHeritageClause(clauses: ISyntaxList2): HeritageClause {
         if (!clauses) {
             return null;
         }
@@ -166,7 +166,7 @@ module TypeScript {
             c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ExtendsHeritageClause);
     }
 
-    export function getImplementsHeritageClause(clauses: ASTList): HeritageClause {
+    export function getImplementsHeritageClause(clauses: ISyntaxList2): HeritageClause {
         if (!clauses) {
             return null;
         }

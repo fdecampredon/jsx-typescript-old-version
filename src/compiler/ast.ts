@@ -169,7 +169,7 @@ module TypeScript {
         valueText(): string;
     }
 
-    export class ASTList extends AST {
+    export class ISyntaxList2 extends AST {
         constructor(private _fileName: string, private members: AST[]) {
             super();
 
@@ -206,13 +206,13 @@ module TypeScript {
             return ArrayUtilities.any(this.members, func);
         }
 
-        public structuralEquals(ast: ASTList, includingPosition: boolean): boolean {
+        public structuralEquals(ast: ISyntaxList2, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                    astArrayStructuralEquals(this.members, ast.members, includingPosition);
         }
     }
 
-    export class ASTSeparatedList extends AST {
+    export class ISeparatedSyntaxList2 extends AST {
         constructor(private _fileName: string, private members: AST[], private _separatorCount: number) {
             super();
 
@@ -251,14 +251,14 @@ module TypeScript {
             return SyntaxKind.SeparatedList;
         }
 
-        public structuralEquals(ast: ASTSeparatedList, includingPosition: boolean): boolean {
+        public structuralEquals(ast: ISeparatedSyntaxList2, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                 astArrayStructuralEquals(this.members, ast.members, includingPosition);
         }
     }
 
     export class Script extends AST {
-        constructor(public moduleElements: ASTList,
+        constructor(public moduleElements: ISyntaxList2,
                     private _fileName: string) {
             super();
             moduleElements && (moduleElements.parent = this);
@@ -540,7 +540,7 @@ module TypeScript {
     }
 
     export class TypeParameterList extends AST {
-        constructor(public typeParameters: ASTSeparatedList) {
+        constructor(public typeParameters: ISeparatedSyntaxList2) {
             super();
             typeParameters && (typeParameters.parent = this);
         }
@@ -551,7 +551,7 @@ module TypeScript {
     }
 
     export class ClassDeclaration extends AST {
-        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeParameterList: TypeParameterList, public heritageClauses: ASTList, public classElements: ASTList, public closeBraceToken: ASTSpan) {
+        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeParameterList: TypeParameterList, public heritageClauses: ISyntaxList2, public classElements: ISyntaxList2, public closeBraceToken: ASTSpan) {
             super();
             identifier && (identifier.parent = this);
             typeParameterList && (typeParameterList.parent = this);
@@ -573,7 +573,7 @@ module TypeScript {
     }
 
     export class InterfaceDeclaration extends AST {
-        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeParameterList: TypeParameterList, public heritageClauses: ASTList, public body: ObjectType) {
+        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public typeParameterList: TypeParameterList, public heritageClauses: ISyntaxList2, public body: ObjectType) {
             super();
             identifier && (identifier.parent = this);
             typeParameterList && (typeParameterList.parent = this);
@@ -595,7 +595,7 @@ module TypeScript {
     }
 
     export class HeritageClause extends AST {
-        constructor(private _nodeType: SyntaxKind, public typeNames: ASTSeparatedList) {
+        constructor(private _nodeType: SyntaxKind, public typeNames: ISeparatedSyntaxList2) {
             super();
             typeNames && (typeNames.parent = this);
         }
@@ -611,7 +611,7 @@ module TypeScript {
     }
 
     export class ModuleDeclaration extends AST {
-        constructor(public modifiers: PullElementFlags[], public name: AST, public stringLiteral: StringLiteral, public moduleElements: ASTList, public endingToken: ASTSpan) {
+        constructor(public modifiers: PullElementFlags[], public name: AST, public stringLiteral: StringLiteral, public moduleElements: ISyntaxList2, public endingToken: ASTSpan) {
             super();
             name && (name.parent = this);
             stringLiteral && (stringLiteral.parent = this);
@@ -666,7 +666,7 @@ module TypeScript {
     }
 
     export class VariableDeclaration extends AST {
-        constructor(public declarators: ASTSeparatedList) {
+        constructor(public declarators: ISeparatedSyntaxList2) {
             super();
             declarators && (declarators.parent = this);
         }
@@ -722,7 +722,7 @@ module TypeScript {
     }
 
     export class ArrayLiteralExpression extends AST {
-        constructor(public expressions: ASTSeparatedList) {
+        constructor(public expressions: ISeparatedSyntaxList2) {
             super();
             expressions && (expressions.parent = this);
         }
@@ -813,7 +813,7 @@ module TypeScript {
     }
 
     export class ParameterList extends AST {
-        constructor(public openParenTrailingComments: Comment[], public parameters: ASTSeparatedList) {
+        constructor(public openParenTrailingComments: Comment[], public parameters: ISeparatedSyntaxList2) {
             super();
             parameters && (parameters.parent = this);
         }
@@ -850,7 +850,7 @@ module TypeScript {
     }
 
     export class ObjectType extends AST {
-        constructor(public typeMembers: ASTSeparatedList) {
+        constructor(public typeMembers: ISeparatedSyntaxList2) {
             super();
             typeMembers && (typeMembers.parent = this);
         }
@@ -882,7 +882,7 @@ module TypeScript {
     }
 
     export class TypeArgumentList extends AST {
-        constructor(public typeArguments: ASTSeparatedList) {
+        constructor(public typeArguments: ISeparatedSyntaxList2) {
             super();
             typeArguments && (typeArguments.parent = this);
         }
@@ -927,7 +927,7 @@ module TypeScript {
     }
 
     export class Block extends AST {
-        constructor(public statements: ASTList, public closeBraceLeadingComments: Comment[], public closeBraceToken: IASTSpan) {
+        constructor(public statements: ISyntaxList2, public closeBraceLeadingComments: Comment[], public closeBraceToken: IASTSpan) {
             super();
             statements && (statements.parent = this);
         }
@@ -1026,7 +1026,7 @@ module TypeScript {
     }
 
     export class ArgumentList extends AST {
-        constructor(public typeArgumentList: TypeArgumentList, public arguments: ASTSeparatedList, public closeParenToken: ASTSpan) {
+        constructor(public typeArgumentList: TypeArgumentList, public arguments: ISeparatedSyntaxList2, public closeParenToken: ASTSpan) {
             super();
             typeArgumentList && (typeArgumentList.parent = this);
             arguments && (arguments.parent = this);
@@ -1341,7 +1341,7 @@ module TypeScript {
     }
 
     export class SwitchStatement extends AST {
-        constructor(public expression: AST, public closeParenToken: ASTSpan, public switchClauses: ASTList) {
+        constructor(public expression: AST, public closeParenToken: ASTSpan, public switchClauses: ISyntaxList2) {
             super();
             expression && (expression.parent = this);
             switchClauses && (switchClauses.parent = this);
@@ -1359,7 +1359,7 @@ module TypeScript {
     }
 
     export class CaseSwitchClause extends AST {
-        constructor(public expression: AST, public statements: ASTList) {
+        constructor(public expression: AST, public statements: ISyntaxList2) {
             super();
             expression && (expression.parent = this);
             statements && (statements.parent = this);
@@ -1377,7 +1377,7 @@ module TypeScript {
     }
 
     export class DefaultSwitchClause extends AST {
-        constructor(public statements: ASTList) {
+        constructor(public statements: ISyntaxList2) {
             super();
             statements && (statements.parent = this);
         }
@@ -1501,7 +1501,7 @@ module TypeScript {
     }
 
     export class EnumDeclaration extends AST {
-        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public enumElements: ASTSeparatedList) {
+        constructor(public modifiers: PullElementFlags[], public identifier: Identifier, public enumElements: ISeparatedSyntaxList2) {
             super();
             identifier && (identifier.parent = this);
             enumElements && (enumElements.parent = this);
@@ -1543,7 +1543,7 @@ module TypeScript {
     }
 
     export class ObjectLiteralExpression extends AST {
-        constructor(public propertyAssignments: ASTSeparatedList) {
+        constructor(public propertyAssignments: ISeparatedSyntaxList2) {
             super();
             propertyAssignments && (propertyAssignments.parent = this);
         }

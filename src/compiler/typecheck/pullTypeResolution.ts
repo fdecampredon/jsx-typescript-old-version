@@ -1035,7 +1035,7 @@ module TypeScript {
             return containerSymbol;
         }
 
-        private resolveFirstExportAssignmentStatement(moduleElements: ASTList, context: PullTypeResolutionContext): void {
+        private resolveFirstExportAssignmentStatement(moduleElements: ISyntaxList2, context: PullTypeResolutionContext): void {
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
                 if (moduleElement.kind() == SyntaxKind.ExportAssignment) {
@@ -1135,7 +1135,7 @@ module TypeScript {
         private resolveReferenceTypeDeclaration(
             classOrInterface: AST,
             name: Identifier,
-            heritageClauses: ASTList,
+            heritageClauses: ISyntaxList2,
             context: PullTypeResolutionContext): PullSymbol {
 
             var typeDecl = this.semanticInfoChain.getDeclForAST(classOrInterface);
@@ -4308,7 +4308,7 @@ module TypeScript {
                 Parameters.fromParameterList(funcDeclAST.parameterList), null, funcDeclAST.block, context);
         }
 
-        private resolveList(list: ASTList, context: PullTypeResolutionContext): PullSymbol {
+        private resolveList(list: ISyntaxList2, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(list, context)) {
                 this.setTypeChecked(list, context);
 
@@ -4321,7 +4321,7 @@ module TypeScript {
             return this.semanticInfoChain.voidTypeSymbol;
         }
 
-        private resolveSeparatedList(list: ASTSeparatedList, context: PullTypeResolutionContext): PullSymbol {
+        private resolveSeparatedList(list: ISeparatedSyntaxList2, context: PullTypeResolutionContext): PullSymbol {
             if (this.canTypeCheckAST(list, context)) {
                 this.setTypeChecked(list, context);
 
@@ -5301,10 +5301,10 @@ module TypeScript {
                     return this.resolveTypeReference(ast, context);
 
                 case SyntaxKind.List:
-                    return this.resolveList(<ASTList>ast, context);
+                    return this.resolveList(<ISyntaxList2>ast, context);
 
                 case SyntaxKind.SeparatedList:
-                    return this.resolveSeparatedList(<ASTSeparatedList>ast, context);
+                    return this.resolveSeparatedList(<ISeparatedSyntaxList2>ast, context);
 
                 case SyntaxKind.SourceUnit:
                     return this.resolveScript(<Script>ast, context);
@@ -7074,7 +7074,7 @@ module TypeScript {
         private bindObjectLiteralMembers(
             objectLiteralDeclaration: PullDecl,
             objectLiteralTypeSymbol: PullTypeSymbol,
-            objectLiteralMembers: ASTSeparatedList,
+            objectLiteralMembers: ISeparatedSyntaxList2,
             isUsingExistingSymbol: boolean,
             pullTypeContext: PullTypeResolutionContext): PullSymbol[] {
             var boundMemberSymbols: PullSymbol[] = [];
@@ -7125,7 +7125,7 @@ module TypeScript {
             objectLiteralDeclaration: PullDecl,
             objectLiteralTypeSymbol: PullTypeSymbol,
             objectLiteralContextualType: PullTypeSymbol,
-            objectLiteralMembers: ASTSeparatedList,
+            objectLiteralMembers: ISeparatedSyntaxList2,
             stringIndexerSignature: PullSignatureSymbol,
             numericIndexerSignature: PullSignatureSymbol,
             allMemberTypes: PullTypeSymbol[],
@@ -10206,7 +10206,7 @@ module TypeScript {
             return (callEx.expression.kind() === SyntaxKind.MemberAccessExpression) ? (<MemberAccessExpression>callEx.expression).name : callEx.expression;
         }
 
-        private overloadHasCorrectArity(signature: PullSignatureSymbol, args: ASTSeparatedList): boolean {
+        private overloadHasCorrectArity(signature: PullSignatureSymbol, args: ISeparatedSyntaxList2): boolean {
             if (args == null) {
                 return signature.nonOptionalParamCount === 0;
             }
@@ -10228,7 +10228,7 @@ module TypeScript {
             return true;
         }
 
-        private overloadIsApplicable(signature: PullSignatureSymbol, args: ASTSeparatedList, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo): OverloadApplicabilityStatus {
+        private overloadIsApplicable(signature: PullSignatureSymbol, args: ISeparatedSyntaxList2, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo): OverloadApplicabilityStatus {
             // Already checked for arity, so it's automatically applicable if there are no args
             if (args === null) {
                 return OverloadApplicabilityStatus.Subtype;
@@ -10428,7 +10428,7 @@ module TypeScript {
             return OverloadApplicabilityStatus.NotAssignable;
         }
 
-        private inferArgumentTypesForSignature(signature: PullSignatureSymbol, args: ASTSeparatedList, comparisonInfo: TypeComparisonInfo, context: PullTypeResolutionContext): PullTypeSymbol[] {
+        private inferArgumentTypesForSignature(signature: PullSignatureSymbol, args: ISeparatedSyntaxList2, comparisonInfo: TypeComparisonInfo, context: PullTypeResolutionContext): PullTypeSymbol[] {
             var cxt: PullContextualTypeContext = null;
 
             var parameters = signature.parameters;
@@ -10543,7 +10543,7 @@ module TypeScript {
             return resultTypes;
         }
 
-        private typeParametersAreInScopeAtArgumentList(typeParameters: PullTypeParameterSymbol[], args: ASTSeparatedList): boolean {
+        private typeParametersAreInScopeAtArgumentList(typeParameters: PullTypeParameterSymbol[], args: ISeparatedSyntaxList2): boolean {
             // If the parent path from the current enclosing decl contains the type parameters'
             // parent decl, then the type parameters must be in scope
             var enclosingDecl = this.getEnclosingDeclForAST(args);
@@ -12095,7 +12095,7 @@ module TypeScript {
                 this.baseListPrivacyErrorReporter(classOrInterface, typeSymbol, baseDeclAST, isExtendedType, errorSymbol, context));
         }
 
-        private typeCheckBases(classOrInterface: AST, name: Identifier, heritageClauses: ASTList, typeSymbol: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
+        private typeCheckBases(classOrInterface: AST, name: Identifier, heritageClauses: ISyntaxList2, typeSymbol: PullTypeSymbol, enclosingDecl: PullDecl, context: PullTypeResolutionContext) {
             var extendsClause = getExtendsHeritageClause(heritageClauses);
             var implementsClause = getImplementsHeritageClause(heritageClauses);
             if (!extendsClause && !implementsClause) {

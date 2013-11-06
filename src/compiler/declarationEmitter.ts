@@ -62,13 +62,13 @@ module TypeScript {
             this.emitDeclarationsForScript(script);
         }
 
-        private emitDeclarationsForList(list: ASTList) {
+        private emitDeclarationsForList(list: ISyntaxList2) {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.childAt(i));
             }
         }
 
-        private emitSeparatedList(list: ASTSeparatedList) {
+        private emitSeparatedList(list: ISeparatedSyntaxList2) {
             for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.nonSeparatorAt(i));
             }
@@ -733,7 +733,7 @@ module TypeScript {
             this.declFile.WriteLine(";");
         }
 
-        private emitBaseList(bases: ASTSeparatedList, useExtendsList: boolean) {
+        private emitBaseList(bases: ISeparatedSyntaxList2, useExtendsList: boolean) {
             if (bases && (bases.nonSeparatorCount() > 0)) {
                 var qual = useExtendsList ? "extends" : "implements";
                 this.declFile.Write(" " + qual + " ");
@@ -855,7 +855,7 @@ module TypeScript {
             this.declFile.WriteLine("}");
         }
 
-        private emitHeritageClauses(clauses: ASTList): void {
+        private emitHeritageClauses(clauses: ISyntaxList2): void {
             if (clauses) {
                 for (var i = 0, n = clauses.childCount(); i < n; i++) {
                     this.emitHeritageClause(<HeritageClause>clauses.childAt(i));

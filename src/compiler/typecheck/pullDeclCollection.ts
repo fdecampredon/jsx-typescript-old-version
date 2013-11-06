@@ -257,7 +257,7 @@ module TypeScript {
         context.semanticInfoChain.setASTForDecl(valueDecl, moduleNameAST);
     }
 
-    function containsExecutableCode(members: ASTList): boolean {
+    function containsExecutableCode(members: ISyntaxList2): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 

@@ -1901,7 +1901,7 @@ module TypeScript {
             return lineMap.getLineNumberFromPosition(pos1) === lineMap.getLineNumberFromPosition(pos2);
         }
 
-        private emitCommaSeparatedList(parent: AST, list: ASTSeparatedList, buffer: string, preserveNewLines: boolean): void {
+        private emitCommaSeparatedList(parent: AST, list: ISeparatedSyntaxList2, buffer: string, preserveNewLines: boolean): void {
             if (list === null || list.nonSeparatorCount() === 0) {
                 return;
             }
@@ -1962,7 +1962,7 @@ module TypeScript {
             }
         }
 
-        public emitList(list: ASTList, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.childCount()) {
+        public emitList(list: ISyntaxList2, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.childCount()) {
             if (list === null) {
                 return;
             }
@@ -1988,7 +1988,7 @@ module TypeScript {
             this.emitComments(list, false);
         }
 
-        public emitSeparatedList(list: ASTSeparatedList, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.nonSeparatorCount()) {
+        public emitSeparatedList(list: ISeparatedSyntaxList2, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.nonSeparatorCount()) {
             if (list === null) {
                 return;
             }
@@ -2536,7 +2536,7 @@ module TypeScript {
             this.writeLineToOutput(";");
         }
 
-        private requiresExtendsBlock(moduleElements: ASTList): boolean {
+        private requiresExtendsBlock(moduleElements: ISyntaxList2): boolean {
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
 
@@ -3061,7 +3061,7 @@ module TypeScript {
             this.recordSourceMappingEnd(clause);
         }
 
-        private emitSwitchClauseBody(body: ASTList): void {
+        private emitSwitchClauseBody(body: ISyntaxList2): void {
             if (body.childCount() === 1 && body.childAt(0).kind() === SyntaxKind.Block) {
                 // The case statement was written with curly braces, so emit it with the appropriate formatting
                 this.emit(body.childAt(0));
@@ -3276,9 +3276,9 @@ module TypeScript {
 
             switch (ast.kind()) {
                 case SyntaxKind.SeparatedList:
-                    return this.emitSeparatedList(<ASTSeparatedList>ast);
+                    return this.emitSeparatedList(<ISeparatedSyntaxList2>ast);
                 case SyntaxKind.List:
-                    return this.emitList(<ASTList>ast);
+                    return this.emitList(<ISyntaxList2>ast);
                 case SyntaxKind.SourceUnit:
                     return this.emitScript(<Script>ast);
                 case SyntaxKind.ImportDeclaration:
