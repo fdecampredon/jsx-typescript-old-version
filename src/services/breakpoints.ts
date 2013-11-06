@@ -655,7 +655,7 @@ module TypeScript.Services.Breakpoints {
             // If inside another module the whole declaration is debuggable
             var node = positionedNode.node();
             var moduleSyntax = <TypeScript.ModuleDeclarationSyntax>positionedNode.node();
-            if ((node.isModuleElement() && positionedNode.containingNode().kind() != TypeScript.SyntaxKind.SourceUnitSyntax) ||
+            if ((node.isModuleElement() && positionedNode.containingNode().kind() != TypeScript.SyntaxKind.SourceUnit) ||
                 node.isClassElement() ||
                 (moduleSyntax.kind() == TypeScript.SyntaxKind.ModuleDeclaration && moduleSyntax.name
                 && moduleSyntax.name.kind() == TypeScript.SyntaxKind.QualifiedName)) {

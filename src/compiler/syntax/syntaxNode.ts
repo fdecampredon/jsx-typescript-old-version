@@ -301,7 +301,7 @@ module TypeScript {
         }
 
         private tryGetEndOfFileAt(position: number): PositionedToken {
-            if (this.kind() === SyntaxKind.SourceUnitSyntax && position === this.fullWidth()) {
+            if (this.kind() === SyntaxKind.SourceUnit && position === this.fullWidth()) {
                 var sourceUnit = <SourceUnitSyntax>this;
                 return new PositionedToken(
                     new PositionedNode(null, sourceUnit, 0),

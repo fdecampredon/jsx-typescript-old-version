@@ -296,7 +296,7 @@ module TypeScript {
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            if (ast.kind() === SyntaxKind.SourceUnitSyntax) {
+            if (ast.kind() === SyntaxKind.SourceUnit) {
                 return this._getDeclForAST(ast);
             }
 

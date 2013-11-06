@@ -545,7 +545,7 @@ module TypeScript {
     childrenWalkers[SyntaxKind.QualifiedName] = walkQualifiedNameChildren;
     childrenWalkers[SyntaxKind.RegularExpressionLiteral] = null;
     childrenWalkers[SyntaxKind.ReturnStatement] = walkReturnStatementChildren;
-    childrenWalkers[SyntaxKind.SourceUnitSyntax] = walkScriptChildren;
+    childrenWalkers[SyntaxKind.SourceUnit] = walkScriptChildren;
     childrenWalkers[SyntaxKind.SeparatedList] = walkSeparatedListChildren;
     childrenWalkers[SyntaxKind.SetAccessor] = walkSetAccessorChildren;
     childrenWalkers[SyntaxKind.SignedRightShiftAssignmentExpression] = walkBinaryExpressionChildren;
