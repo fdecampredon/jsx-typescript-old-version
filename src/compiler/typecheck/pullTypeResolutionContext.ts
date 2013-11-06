@@ -20,8 +20,25 @@ module TypeScript {
         public inferenceCache: IBitMatrix = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ false);
         public candidateCache: CandidateInferenceInfo[] = [];
         public fixedParameterTypes: PullTypeSymbol[] = null;
+        public resolver: PullTypeResolver = null;
+        public argumentASTs: ISeparatedSyntaxList2 = null;
 
-        constructor(public argumentASTs: ISeparatedSyntaxList2) { }
+
+        // When inferences are being performed at function call sites, use this overloads
+        constructor(resolver: PullTypeResolver, argumentASTs: ISeparatedSyntaxList2);
+
+        // during contextual instantiation, use this overload
+        constructor(resolver: PullTypeResolver, fixedParameterTypes: PullTypeSymbol[]);
+        constructor(resolver: PullTypeResolver, argumentsOrParameters: any) {
+            this.resolver = resolver;
+
+            if (argumentsOrParameters.nonSeparatorAt != undefined) {
+                this.argumentASTs = argumentsOrParameters;
+            }
+            else {
+                this.fixedParameterTypes = argumentsOrParameters;
+            }
+        }
 
         public alreadyRelatingTypes(objectType: PullTypeSymbol, parameterType: PullTypeSymbol) {
             if (this.inferenceCache.valueAt(objectType.pullSymbolID, parameterType.pullSymbolID)) {
@@ -65,6 +82,29 @@ module TypeScript {
                     info.isFixed = fix;
                 }
             }
+        }
+
+        public getInferenceArgumentCount(): number {
+            if (this.fixedParameterTypes) {
+                return this.fixedParameterTypes.length;
+            }
+            else {
+                return this.argumentASTs.nonSeparatorCount();
+            }
+        }
+
+        public getArgumentTypeSymbolAtIndex(i: number, context: PullTypeResolutionContext): PullTypeSymbol {
+
+            Debug.assert(i >= 0, "invalid inference argument position");
+
+            if (this.fixedParameterTypes && i < this.getInferenceArgumentCount()) {
+                return this.fixedParameterTypes[i];
+            }
+            else if (i < this.getInferenceArgumentCount()) {
+                return this.resolver.resolveAST(this.argumentASTs.nonSeparatorAt(i), true, context).type;
+            }
+
+            return null;
         }
 
         public getInferenceCandidates(): PullTypeSymbol[][] {

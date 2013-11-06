@@ -7980,8 +7980,7 @@ module TypeScript {
                         }
                     }
                     else if (!typeArgs && callEx.argumentList.arguments && callEx.argumentList.arguments.nonSeparatorCount()) {
-                        var argContext = new ArgumentInferenceContext(callEx.argumentList.arguments);
-                        inferredTypeArgs = this.inferArgumentTypesForSignature(signatures[i], argContext, new TypeComparisonInfo(), context);
+                        inferredTypeArgs = this.inferArgumentTypesForSignature(signatures[i], new ArgumentInferenceContext(this, callEx.argumentList.arguments), new TypeComparisonInfo(), context);
                         triedToInferTypeArgs = true;
                     }
                     else {
@@ -8368,8 +8367,7 @@ module TypeScript {
                                 }
                             }
                             else if (!typeArgs && callEx.argumentList && callEx.argumentList.arguments && callEx.argumentList.arguments.nonSeparatorCount()) {
-                                var argContext = new ArgumentInferenceContext(callEx.argumentList.arguments);
-                                inferredTypeArgs = this.inferArgumentTypesForSignature(constructSignatures[i], argContext, new TypeComparisonInfo(), context);
+                                inferredTypeArgs = this.inferArgumentTypesForSignature(constructSignatures[i], new ArgumentInferenceContext(this, callEx.argumentList.arguments), new TypeComparisonInfo(), context);
                                 triedToInferTypeArgs = true;
                             }
                             else {
@@ -8613,16 +8611,13 @@ module TypeScript {
             var typeParameters: PullTypeParameterSymbol[] = signatureA.getTypeParameters();
             var typeConstraint: PullTypeSymbol = null;
 
-            // create a type argument list based on the parameters of signatureB
-            var signatureAST = this.semanticInfoChain.getASTForDecl(signatureB.getDeclarations()[0]);
-            var argContext = new ArgumentInferenceContext(getParameterList(signatureAST).parameters);
             var fixedParameterTypes: PullTypeSymbol[] = [];
 
             for (var i = 0; i < signatureB.parameters.length; i++) {
                 fixedParameterTypes.push(signatureB.parameters[i].type);
             }
-            argContext.fixedParameterTypes = fixedParameterTypes;
-            inferredTypeArgs = this.inferArgumentTypesForSignature(signatureA, argContext, new TypeComparisonInfo, context);
+
+            inferredTypeArgs = this.inferArgumentTypesForSignature(signatureA, new ArgumentInferenceContext(this, fixedParameterTypes), new TypeComparisonInfo, context);
 
             var functionTypeA = signatureA.functionType;
             var functionTypeB = signatureB.functionType;
@@ -10459,8 +10454,7 @@ module TypeScript {
             var typeParameters = signature.getTypeParameters();
 
             var parameterType: PullTypeSymbol = null;
-            var useArgASTs = !argContext.fixedParameterTypes;
-            var argCount = useArgASTs ? argContext.argumentASTs.nonSeparatorCount() : argContext.fixedParameterTypes.length;
+            var argCount = argContext.getInferenceArgumentCount();
 
             // seed each type parameter with the undefined type, so that we can widen it to 'any'
             // if no inferences can be made
@@ -10491,9 +10485,7 @@ module TypeScript {
 
                         context.pushContextualType(parameterType, true, substitutions);
 
-                        var argSym = useArgASTs ? this.resolveAST(argContext.argumentASTs.nonSeparatorAt(i), true, context) : argContext.fixedParameterTypes[i];
-
-                        this.relateTypeToTypeParameters(argSym.type, parameterType, false, argContext, context);
+                        this.relateTypeToTypeParameters(argContext.getArgumentTypeSymbolAtIndex(i, context), parameterType, false, argContext, context);
 
                         cxt = context.popContextualType();
                     }
@@ -10501,9 +10493,7 @@ module TypeScript {
                 else {
                     context.pushContextualType(parameterType, true, []);
 
-                    var argSym = useArgASTs ? this.resolveAST(argContext.argumentASTs.nonSeparatorAt(i), true, context) : argContext.fixedParameterTypes[i];
-
-                    this.relateTypeToTypeParameters(argSym.type, parameterType, false, argContext, context);
+                    this.relateTypeToTypeParameters(argContext.getArgumentTypeSymbolAtIndex(i, context), parameterType, false, argContext, context);
 
                     cxt = context.popContextualType();
                 }
@@ -10550,7 +10540,7 @@ module TypeScript {
 
             // We know that if we are inferring at a call expression we are not doing
             // contextual signature instantiation
-            var inferringAtCallExpression = argContext.argumentASTs.parent && argContext.argumentASTs.parent.nodeType() === SyntaxKind.ArgumentList &&
+            var inferringAtCallExpression = argContext.argumentASTs && argContext.argumentASTs.parent && argContext.argumentASTs.parent.nodeType() === SyntaxKind.ArgumentList &&
                 (argContext.argumentASTs.parent.parent.nodeType() === SyntaxKind.InvocationExpression || argContext.argumentASTs.parent.parent.nodeType() === SyntaxKind.ObjectCreationExpression);
 
             if (inferringAtCallExpression) {
