@@ -385,11 +385,69 @@ module TypeScript {
     }
 
     export function preComments(element: ISyntaxElement): Comment[]{
+        if (element) {
+            switch (element.kind()) {
+                case SyntaxKind.VariableStatement:
+                    var variableStatement = <VariableStatementSyntax>element;
+                    return convertTokenLeadingComments(variableStatement.firstToken(), element.fullStart());
+            }
+        }
+
         return null;
     }
 
     export function postComments(element: ISyntaxElement): Comment[] {
+        if (element) {
+            switch (element.kind()) {
+                case SyntaxKind.VariableStatement:
+                    return convertNodeTrailingComments(element);
+            }
+        }
+
         return null;
+    }
+
+    function convertNodeTrailingComments(node: ISyntaxElement): Comment[]{
+        // Bail out quickly before doing any expensive math computation.
+        var lastToken = node.lastToken();
+        if (lastToken === null || !lastToken.hasTrailingComment() || lastToken.hasTrailingNewLine()) {
+            return null;
+        }
+
+        return convertComments(lastToken.trailingTrivia(), node.fullStart() + node.fullWidth() - lastToken.trailingTriviaWidth());
+    }
+
+    function convertTokenLeadingComments(token: ISyntaxToken, commentStartPosition: number): Comment[]{
+        if (token === null) {
+            return null;
+        }
+
+        return token.hasLeadingComment()
+            ? convertComments(token.leadingTrivia(), commentStartPosition)
+            : null;
+    }
+
+    function convertComments(triviaList: ISyntaxTriviaList, commentStartPosition: number): Comment[]{
+        var result: Comment[] = [];
+
+        for (var i = 0, n = triviaList.count(); i < n; i++) {
+            var trivia = triviaList.syntaxTriviaAt(i);
+
+            if (trivia.isComment()) {
+                var hasTrailingNewLine = ((i + 1) < n) && triviaList.syntaxTriviaAt(i + 1).isNewLine();
+                result.push(convertComment(trivia, commentStartPosition, hasTrailingNewLine));
+            }
+
+            commentStartPosition += trivia.fullWidth();
+        }
+
+        return result;
+    }
+
+    function convertComment(trivia: ISyntaxTrivia, commentStartPosition: number, hasTrailingNewLine: boolean): Comment {
+        var comment = new Comment(trivia, hasTrailingNewLine, commentStartPosition, commentStartPosition + trivia.fullWidth());
+
+        return comment;
     }
 
     export function docComments(ast: ISyntaxElement): Comment[] {
