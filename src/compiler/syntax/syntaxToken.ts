@@ -331,6 +331,14 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -468,6 +476,14 @@ module TypeScript.Syntax {
             this._value = value;
             this._valueText = valueText;
             this._trailingTrivia = trailingTrivia;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public syntaxID(): number {

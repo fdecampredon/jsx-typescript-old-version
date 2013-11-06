@@ -1024,6 +1024,10 @@ function getPropertyAccess(child: IMemberDefinition): string {
 function generateProperties(definition: ITypeDefinition): string {
     var result = "";
 
+    if (definition.name === "SourceUnitSyntax") {
+        result += "    public _syntaxTree: SyntaxTree = null;\r\n";
+    }
+
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];
 
@@ -1688,6 +1692,13 @@ function contains(definition: ITypeDefinition, child: IMemberDefinition) {
 function generateAccessors(definition: ITypeDefinition): string {
     var result = "";
 
+    if (definition.name === "SourceUnitSyntax") {
+        result += "\r\n";
+        result += "    public syntaxTree(): SyntaxTree {\r\n";
+        result += "        return this._syntaxTree;\r\n";
+        result += "    }\r\n";
+    }
+
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];
         
@@ -2236,6 +2247,15 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "            this._fullStart = fullStart;\r\n";
         result += "        }\r\n\r\n";
     }
+
+    result += "        public syntaxTree(): SyntaxTree {\r\n";
+    result += "            return this.parent.syntaxTree();\r\n";
+    result += "        }\r\n\r\n";
+
+    result += "        public fileName(): string {\r\n";
+    result += "            return this.parent.fileName();\r\n";
+    result += "        }\r\n\r\n";
+
 
     result +=
 "        public isShared(): boolean { return false; }\r\n" +

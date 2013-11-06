@@ -25,6 +25,14 @@ module TypeScript.Syntax {
             throw Errors.invalidOperation("Should not use shared syntax element as a key.");
         }
 
+        public syntaxTree(): SyntaxTree {
+            throw Errors.invalidOperation("Shared lists do not belong to a single tree.");
+        }
+
+        public fileName(): string {
+            throw Errors.invalidOperation("Shared lists do not belong to a single file.");
+        }
+
         public kind() {
             return SyntaxKind.SeparatedList;
         }
@@ -168,6 +176,14 @@ module TypeScript.Syntax {
             Syntax.setParentForChildren(this);
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = _nextSyntaxID++;
@@ -300,6 +316,14 @@ module TypeScript.Syntax {
 
         constructor(private elements: ISyntaxNodeOrToken[]) {
             Syntax.setParentForChildren(this);
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public syntaxID(): number {

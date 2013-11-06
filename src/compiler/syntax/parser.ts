@@ -1630,7 +1630,10 @@ module TypeScript.Parser {
             var allDiagnostics = this.source.tokenDiagnostics().concat(this.diagnostics);
             allDiagnostics.sort((a: Diagnostic, b: Diagnostic) => a.start() - b.start());
 
-            return new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
+            var syntaxTree = new SyntaxTree(sourceUnit, isDeclaration, allDiagnostics, this.fileName, this.lineMap, this.parseOptions);
+            sourceUnit._syntaxTree = syntaxTree;
+
+            return syntaxTree;
         }
 
         private setStrictMode(isInStrictMode: boolean) {

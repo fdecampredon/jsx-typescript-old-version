@@ -37,6 +37,14 @@ module TypeScript.Syntax {
             this._sourceText = sourceText;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
@@ -179,6 +187,14 @@ module TypeScript.Syntax {
             this._sourceText = sourceText;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
@@ -319,6 +335,14 @@ module TypeScript.Syntax {
         public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
             this._fullStart = fullStart;
             this._sourceText = sourceText;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public isShared(): boolean { return false; }
@@ -466,6 +490,14 @@ module TypeScript.Syntax {
             this._sourceText = sourceText;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
@@ -598,6 +630,14 @@ module TypeScript.Syntax {
             this._fullStart = fullStart;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
@@ -715,6 +755,14 @@ module TypeScript.Syntax {
             this._sourceText = sourceText;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
@@ -830,6 +878,14 @@ module TypeScript.Syntax {
         public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
             this._fullStart = fullStart;
             this._sourceText = sourceText;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public isShared(): boolean { return false; }
@@ -950,6 +1006,14 @@ module TypeScript.Syntax {
         public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {
             this._fullStart = fullStart;
             this._sourceText = sourceText;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
         }
 
         public isShared(): boolean { return false; }

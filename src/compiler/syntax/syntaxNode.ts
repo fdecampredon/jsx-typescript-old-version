@@ -10,6 +10,14 @@ module TypeScript {
             this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
         }
 
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
+        public fileName(): string {
+            return this.parent.fileName();
+        }
+
         public syntaxID(): number {
             if (this._syntaxID === 0) {
                 this._syntaxID = TypeScript.Syntax._nextSyntaxID++;
