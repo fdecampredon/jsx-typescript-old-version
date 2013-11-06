@@ -10540,8 +10540,8 @@ module TypeScript {
 
             // We know that if we are inferring at a call expression we are not doing
             // contextual signature instantiation
-            var inferringAtCallExpression = argContext.argumentASTs && argContext.argumentASTs.parent && argContext.argumentASTs.parent.nodeType() === SyntaxKind.ArgumentList &&
-                (argContext.argumentASTs.parent.parent.nodeType() === SyntaxKind.InvocationExpression || argContext.argumentASTs.parent.parent.nodeType() === SyntaxKind.ObjectCreationExpression);
+            var inferringAtCallExpression = argContext.argumentASTs && argContext.argumentASTs.parent && argContext.argumentASTs.parent.kind() === SyntaxKind.ArgumentList &&
+                (argContext.argumentASTs.parent.parent.kind() === SyntaxKind.InvocationExpression || argContext.argumentASTs.parent.parent.kind() === SyntaxKind.ObjectCreationExpression);
 
             if (inferringAtCallExpression) {
                 // Need to know if the type parameters are in scope. If not, they are not legal inference
