@@ -8,7 +8,7 @@ module TypeScript {
         public isDeclareFile = false;
         public parentChain: PullDecl[] = [];
 
-        constructor(public semanticInfoChain: SemanticInfoChain, public propagateEnumConstants: boolean, public isExternalModule: boolean) {
+        constructor(public document: Document, public semanticInfoChain: SemanticInfoChain, public propagateEnumConstants: boolean) {
         }
 
         public getParent() { return this.parentChain ? this.parentChain[this.parentChain.length - 1] : null; }
@@ -76,14 +76,14 @@ module TypeScript {
 
         var fileName = sourceUnit.fileName();
 
-        var isExternalModule = context.isExternalModule;
+        var isExternalModule = context.document.isExternalModule();
 
         var decl: PullDecl = new RootPullDecl(
             /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, span, context.semanticInfoChain, isExternalModule);
         context.semanticInfoChain.setDeclForAST(sourceUnit, decl);
         context.semanticInfoChain.setASTForDecl(decl, sourceUnit);
 
-        context.isDeclareFile = sourceUnit.isDeclareFile();
+        context.isDeclareFile = context.document.isDeclareFile();
 
         context.pushParent(decl);
 
@@ -1256,7 +1256,7 @@ module TypeScript {
 
     export module DeclarationCreator {
         export function create(document: Document, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings): PullDecl {
-            var declCollectionContext = new DeclCollectionContext(semanticInfoChain, compilationSettings.propagateEnumConstants(), document.isExternalModule());
+            var declCollectionContext = new DeclCollectionContext(document, semanticInfoChain, compilationSettings.propagateEnumConstants());
             
             // create decls
             getAstWalkerFactory().simpleWalk(document.sourceUnit(), preCollectDecls, postCollectDecls, declCollectionContext);

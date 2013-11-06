@@ -37,6 +37,10 @@ module TypeScript {
             this._bloomFilter = null;
         }
 
+        public isDeclareFile(): boolean {
+            return isDTSFile(this.fileName);
+        }
+
         private cacheSyntaxTreeInfo(syntaxTree: SyntaxTree): void {
             // If we're not keeping around the syntax tree, store the diagnostics and line
             // map so they don't have to be recomputed.
