@@ -34,11 +34,11 @@ module TypeScript.Services {
 
         private getSymbolInfoAtPosition(fileName: string, pos: number, requireName: boolean): { symbol: TypeScript.PullSymbol; containingASTOpt: TypeScript.AST } {
             var document = this.compiler.getDocument(fileName);
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
             /// TODO: this does not allow getting references on "constructor"
 
-            var topNode = TypeScript.getAstAtPosition(script, pos);
+            var topNode = TypeScript.getAstAtPosition(sourceUnit, pos);
             if (topNode === null || (requireName && topNode.kind() !== TypeScript.SyntaxKind.IdentifierName)) {
                 this.logger.log("No name found at the given position");
                 return null;
@@ -154,9 +154,9 @@ module TypeScript.Services {
 
         private getSingleNodeReferenceAtPosition(fileName: string, position: number): ReferenceEntry[] {
             var document = this.compiler.getDocument(fileName);
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
-            var node = TypeScript.getAstAtPosition(script, position);
+            var node = TypeScript.getAstAtPosition(sourceUnit, position);
             if (node === null || node.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 return [];
             }
@@ -171,9 +171,9 @@ module TypeScript.Services {
             var result: ReferenceEntry[] = [];
 
             var document = this.compiler.getDocument(fileName);
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
-            var ast = TypeScript.getAstAtPosition(script, pos);
+            var ast = TypeScript.getAstAtPosition(sourceUnit, pos);
             if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 this.logger.log("No identifier at the specified location.");
                 return result;
@@ -278,10 +278,10 @@ module TypeScript.Services {
             var possiblePositions = this.getPossibleSymbolReferencePositions(fileName, symbolName);
             if (possiblePositions && possiblePositions.length > 0) {
                 var document = this.compiler.getDocument(fileName);
-                var script = document.script();
+                var sourceUnit = document.sourceUnit();
 
                 possiblePositions.forEach(p => {
-                    var nameAST = TypeScript.getAstAtPosition(script, p);
+                    var nameAST = TypeScript.getAstAtPosition(sourceUnit, p);
                     if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                         return;
                     }
@@ -317,7 +317,7 @@ module TypeScript.Services {
             var possiblePositions = this.getPossibleSymbolReferencePositions(fileName, symbolName);
             if (possiblePositions && possiblePositions.length > 0) {
                 var document = this.compiler.getDocument(fileName);
-                var script = document.script();
+                var sourceUnit = document.sourceUnit();
 
                 possiblePositions.forEach(p => {
                     // If it's not in the bounds of the AST we're asking for, then this can't possibly be a hit.
@@ -325,7 +325,7 @@ module TypeScript.Services {
                         return;
                     }
 
-                    var nameAST = TypeScript.getAstAtPosition(script, p);
+                    var nameAST = TypeScript.getAstAtPosition(sourceUnit, p);
 
                     // Compare the length so we filter out strict superstrings of the symbol we are looking for
                     if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName || (nameAST.end() - nameAST.start() !== symbolName.length)) {
@@ -470,8 +470,8 @@ module TypeScript.Services {
             }
 
             // Third set the path to find ask the type system about the call expression
-            var script = document.script();
-            var node = TypeScript.getAstAtPosition(script, position);
+            var sourceUnit = document.sourceUnit();
+            var node = TypeScript.getAstAtPosition(sourceUnit, position);
             if (!node) {
                 return null;
             }
@@ -538,10 +538,10 @@ module TypeScript.Services {
         }
 
         private getTypeParameterSignatureFromPartiallyWrittenExpression(document: TypeScript.Document, position: number, genericTypeArgumentListInfo: IPartiallyWrittenTypeArgumentListInformation): SignatureInfo {
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
             // Get the identifier information
-            var ast = TypeScript.getAstAtPosition(script, genericTypeArgumentListInfo.genericIdentifer.start());
+            var ast = TypeScript.getAstAtPosition(sourceUnit, genericTypeArgumentListInfo.genericIdentifer.start());
             if (ast === null || ast.kind() !== TypeScript.SyntaxKind.IdentifierName) {
                 throw new Error("getTypeParameterSignatureAtPosition: " + TypeScript.getLocalizedText(TypeScript.DiagnosticCode.Looking_up_path_for_identifier_token_did_not_result_in_an_identifer, null));
             }
@@ -972,9 +972,9 @@ module TypeScript.Services {
 
         private getTypeInfoEligiblePath(fileName: string, position: number, isConstructorValidPosition: boolean) {
             var document = this.compiler.getDocument(fileName);
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
-            var ast = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
+            var ast = TypeScript.getAstAtPosition(sourceUnit, position, /*useTrailingTriviaAsLimChar*/ false, /*forceInclusive*/ true);
             if (ast === null) {
                 return null;
             }
@@ -1135,14 +1135,14 @@ module TypeScript.Services {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var document = this.compiler.getDocument(fileName);
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
             if (CompletionHelpers.isCompletionListBlocker(document.syntaxTree().sourceUnit(), position)) {
                 this.logger.log("Returning an empty list because completion was blocked.");
                 return null;
             }
 
-            var node = TypeScript.getAstAtPosition(script, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
+            var node = TypeScript.getAstAtPosition(sourceUnit, position, /*useTrailingTriviaAsLimChar*/ true, /*forceInclusive*/ true);
 
             if (node && node.kind() === TypeScript.SyntaxKind.IdentifierName &&
                 node.start() === node.end()) {
@@ -1201,7 +1201,7 @@ module TypeScript.Services {
                 // Object literal expression, look up possible property names from contextual type
                 if (containingObjectLiteral) {
                     var searchPosition = Math.min(position, containingObjectLiteral.end());
-                    var path = TypeScript.getAstAtPosition(script, searchPosition);
+                    var path = TypeScript.getAstAtPosition(sourceUnit, searchPosition);
                     // Get the object literal node
 
                     while (node && node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
@@ -1403,7 +1403,7 @@ module TypeScript.Services {
 
                 // This entry has not been resolved yet. Resolve it.
                 if (decl) {
-                    var node = TypeScript.getAstAtPosition(document.script(), position);
+                    var node = TypeScript.getAstAtPosition(document.sourceUnit(), position);
                     var symbolInfo = this.compiler.pullGetDeclInformation(decl, node, document);
 
                     if (!symbolInfo) {

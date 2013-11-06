@@ -185,8 +185,8 @@ module TypeScript {
             var fileNames = this.fileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var document = this.getDocument(fileNames[i]);
-                var script = document.script();
-                if (!script.isDeclareFile() && document.isExternalModule()) {
+                var sourceUnit = document.sourceUnit();
+                if (!sourceUnit.isDeclareFile() && document.isExternalModule()) {
                     return true;
                 }
             }
@@ -251,16 +251,16 @@ module TypeScript {
             return getDeclareFilePath(fileName);
         }
 
-        public _shouldEmit(script: Script) {
+        public _shouldEmit(sourceUnit: SourceUnit) {
             // If its already a declare file or is resident or does not contain body 
-            if (!!script && (script.isDeclareFile() || script.moduleElements === null)) {
+            if (!!sourceUnit && (sourceUnit.isDeclareFile() || sourceUnit.moduleElements === null)) {
                 return false;
             }
 
             return true;
         }
 
-        public _shouldEmitDeclarations(script?: Script) {
+        public _shouldEmitDeclarations(script?: SourceUnit) {
             if (!this.compilationSettings().generateDeclarationFiles()) {
                 return false;
             }
@@ -275,8 +275,8 @@ module TypeScript {
             emitOptions: EmitOptions,
             declarationEmitter?: DeclarationEmitter): DeclarationEmitter {
 
-            var script = document.script();
-            Debug.assert(this._shouldEmitDeclarations(script));
+            var sourceUnit = document.sourceUnit();
+            Debug.assert(this._shouldEmitDeclarations(sourceUnit));
 
             if (declarationEmitter) {
                 declarationEmitter.document = document;
@@ -285,7 +285,7 @@ module TypeScript {
                 declarationEmitter = new DeclarationEmitter(declareFileName, document, this, emitOptions, this.semanticInfoChain);
             }
 
-            declarationEmitter.emitDeclarations(script);
+            declarationEmitter.emitDeclarations(sourceUnit);
             return declarationEmitter;
         }
 
@@ -295,7 +295,7 @@ module TypeScript {
             onSingleFileEmitComplete: (files: OutputFile) => void,
             sharedEmitter: DeclarationEmitter): DeclarationEmitter {
 
-            if (this._shouldEmitDeclarations(document.script())) {
+            if (this._shouldEmitDeclarations(document.sourceUnit())) {
                 if (document.emitToOwnOutputFile()) {
                     var singleEmitter = this.emitDocumentDeclarationsWorker(document, emitOptions);
                     if (singleEmitter) {
@@ -385,11 +385,9 @@ module TypeScript {
 
         // Caller is responsible for closing the returned emitter.
         // May throw exceptions.
-        private emitDocumentWorker(document: Document,
-                                   emitOptions: EmitOptions,
-                                   emitter?: Emitter): Emitter {
-            var script = document.script();
-            Debug.assert(this._shouldEmit(script));
+        private emitDocumentWorker(document: Document, emitOptions: EmitOptions, emitter?: Emitter): Emitter {
+            var sourceUnit = document.sourceUnit();
+            Debug.assert(this._shouldEmit(sourceUnit));
 
             var typeScriptFileName = document.fileName;
             if (!emitter) {
@@ -411,7 +409,7 @@ module TypeScript {
 
             // Set location info
             emitter.setDocument(document);
-            emitter.emitJavascript(script, /*startLine:*/false);
+            emitter.emitJavascript(sourceUnit, /*startLine:*/false);
 
             return emitter;
         }
@@ -424,7 +422,7 @@ module TypeScript {
             sharedEmitter: Emitter): Emitter {
 
             // Emitting module or multiple files, always goes to single file
-            if (this._shouldEmit(document.script())) {
+                if (this._shouldEmit(document.sourceUnit())) {
                 if (document.emitToOwnOutputFile()) {
                     // We're outputting to mulitple files.  We don't want to reuse an emitter in that case.
                     var singleEmitter = this.emitDocumentWorker(document, emitOptions);
@@ -526,8 +524,8 @@ module TypeScript {
             return this.getDocument(fileName).syntaxTree();
         }
 
-        private getScript(fileName: string): Script {
-            return this.getDocument(fileName).script();
+        private getSourceUnit(fileName: string): SourceUnit {
+            return this.getDocument(fileName).sourceUnit();
         }
 
         public getSemanticDiagnostics(fileName: string): Diagnostic[] {
@@ -602,7 +600,6 @@ module TypeScript {
         }
 
         private extractResolutionContextFromAST(resolver: PullTypeResolver, ast: AST, document: Document, propagateContextualTypes: boolean): { ast: AST; enclosingDecl: PullDecl; resolutionContext: PullTypeResolutionContext; inContextuallyTypedAssignment: boolean; inWithBlock: boolean; } {
-            var script = document.script;
             var scriptName = document.fileName;
 
             var enclosingDecl: PullDecl = null;

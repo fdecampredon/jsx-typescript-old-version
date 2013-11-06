@@ -11,7 +11,7 @@ module TypeScript {
                     private compilationSettings: ImmutableCompilationSettings) {
         }
 
-        public static visit(syntaxTree: SyntaxTree, fileName: string, compilationSettings: ImmutableCompilationSettings, incrementalAST: boolean): Script {
+        public static visit(syntaxTree: SyntaxTree, fileName: string, compilationSettings: ImmutableCompilationSettings, incrementalAST: boolean): SourceUnit {
             var visitor = incrementalAST
                 ? new SyntaxTreeToIncrementalAstVisitor(fileName, syntaxTree.lineMap(), compilationSettings)
                 : new SyntaxTreeToAstVisitor(fileName, syntaxTree.lineMap(), compilationSettings);
@@ -239,13 +239,13 @@ module TypeScript {
             }
         }
 
-        public visitSourceUnit(node: SourceUnitSyntax): Script {
+        public visitSourceUnit(node: SourceUnitSyntax): SourceUnit {
             var start = this.position;
             Debug.assert(start === 0);
 
             var bod = this.visitSyntaxList(node.moduleElements);
 
-            var result = new Script(bod, this.fileName);
+            var result = new SourceUnit(bod, this.fileName);
             this.setSpanExplicit(result, start, start + node.fullWidth());
 
             return result;

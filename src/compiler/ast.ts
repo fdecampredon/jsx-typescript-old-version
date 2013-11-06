@@ -257,7 +257,7 @@ module TypeScript {
         }
     }
 
-    export class Script extends AST {
+    export class SourceUnit extends AST {
         constructor(public moduleElements: ISyntaxList2,
                     private _fileName: string) {
             super();
@@ -276,7 +276,7 @@ module TypeScript {
             return SyntaxKind.SourceUnit;
         }
 
-        public structuralEquals(ast: Script, includingPosition: boolean): boolean {
+        public structuralEquals(ast: SourceUnit, includingPosition: boolean): boolean {
             return super.structuralEquals(ast, includingPosition) &&
                 structuralEquals(this.moduleElements, ast.moduleElements, includingPosition);
         }

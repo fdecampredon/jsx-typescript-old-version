@@ -1660,7 +1660,7 @@ module Harness {
         }
 
         /** Parse file given its source text */
-        public parseSourceText(fileName: string, sourceText: TypeScript.IScriptSnapshot): TypeScript.Script {
+        public parseSourceText(fileName: string, sourceText: TypeScript.IScriptSnapshot): TypeScript.SourceUnit {
             var compilationSettings = new TypeScript.CompilationSettings();
             compilationSettings.codeGenTarget = TypeScript.LanguageVersion.EcmaScript5;
 

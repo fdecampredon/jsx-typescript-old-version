@@ -58,8 +58,8 @@ module TypeScript {
             return this.declFile.getOutputFile();
         }
 
-        public emitDeclarations(script: Script) {
-            this.emitDeclarationsForScript(script);
+        public emitDeclarations(sourceUnit: SourceUnit) {
+            this.emitDeclarationsForSourceUnit(sourceUnit);
         }
 
         private emitDeclarationsForList(list: ISyntaxList2) {
@@ -1047,7 +1047,7 @@ module TypeScript {
             return resolvedReferencePath;
         }
 
-        private emitReferencePaths(script: Script) {
+        private emitReferencePaths(sourceUnit: SourceUnit) {
             // In case of shared handler we collect all the references and emit them
             if (this.emittedReferencePaths) {
                 return;
@@ -1065,11 +1065,11 @@ module TypeScript {
                     // All the references that are not going to be part of same file
 
                     if (document &&
-                        (document.emitToOwnOutputFile() || document.script().isDeclareFile() || !addedGlobalDocument)) {
+                        (document.emitToOwnOutputFile() || document.sourceUnit().isDeclareFile() || !addedGlobalDocument)) {
 
                         documents = documents.concat(document);
 
-                        if (!document.script().isDeclareFile() && document.isExternalModule()) {
+                            if (!document.sourceUnit().isDeclareFile() && document.isExternalModule()) {
                             addedGlobalDocument = true;
                         }
                     }
@@ -1079,7 +1079,7 @@ module TypeScript {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; i++) {
                     var doc = this.compiler.getDocument(fileNames[i]);
-                    if (!doc.script().isDeclareFile() && !doc.isExternalModule()) {
+                    if (!doc.sourceUnit().isDeclareFile() && !doc.isExternalModule()) {
                         // Check what references need to be added
                         var scriptReferences = doc.referencedFiles;
                         for (var j = 0; j < scriptReferences.length; j++) {
@@ -1087,7 +1087,7 @@ module TypeScript {
                             var document = this.compiler.getDocument(currentReference);
                             // All the references that are not going to be part of same file
                             if (document &&
-                                (document.script().isDeclareFile() || document.isExternalModule())) {
+                                (document.sourceUnit().isDeclareFile() || document.isExternalModule())) {
                                 for (var k = 0; k < documents.length; k++) {
                                     if (documents[k] == document) {
                                         break;
@@ -1108,7 +1108,7 @@ module TypeScript {
             for (var i = 0; i < documents.length; i++) {
                 var document = documents[i];
                 var declFileName: string;
-                if (document.script().isDeclareFile()) {
+                if (document.sourceUnit().isDeclareFile()) {
                     declFileName = document.fileName;
                 } else {
                     declFileName = this.compiler.mapOutputFileName(document, this.emitOptions, TypeScriptCompiler.mapToDTSFileName);
@@ -1122,9 +1122,9 @@ module TypeScript {
             this.emittedReferencePaths = true;
         }
 
-        private emitDeclarationsForScript(script: Script) {
-            this.emitReferencePaths(script);
-            this.emitDeclarationsForList(script.moduleElements);
+        private emitDeclarationsForSourceUnit(sourceUnit: SourceUnit) {
+            this.emitReferencePaths(sourceUnit);
+            this.emitDeclarationsForList(sourceUnit.moduleElements);
         }
     }
 }

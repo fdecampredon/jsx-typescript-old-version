@@ -850,7 +850,7 @@ module TypeScript {
                 else if (ast.kind() === SyntaxKind.SourceUnit && decl.kind === PullElementKind.DynamicModule) {
                     // Otherwise, if we have a decl for the top level external module, then just resolve that
                     // specific module.
-                    resolvedSymbol = this.resolveModuleSymbol(<PullContainerSymbol>decl.getSymbol(), context, /*moduleDeclAST:*/ null, /*moduleNameAST:*/ null, <Script>ast);
+                    resolvedSymbol = this.resolveModuleSymbol(<PullContainerSymbol>decl.getSymbol(), context, /*moduleDeclAST:*/ null, /*moduleNameAST:*/ null, <SourceUnit>ast);
                 }
                 else {
                     // This assert is here to catch potential stack overflows. There have been infinite recursions resulting
@@ -895,26 +895,26 @@ module TypeScript {
             }
         }
 
-        private resolveScript(script: Script, context: PullTypeResolutionContext): PullSymbol {
+        private resolveSourceUnit(sourceUnit: SourceUnit, context: PullTypeResolutionContext): PullSymbol {
             // Ensure that any export assignments are resolved before we proceed. 
-            var enclosingDecl = this.getEnclosingDeclForAST(script);
+            var enclosingDecl = this.getEnclosingDeclForAST(sourceUnit);
             var moduleSymbol = enclosingDecl.getSymbol();
             this.ensureAllSymbolsAreBound(moduleSymbol);
 
-            this.resolveFirstExportAssignmentStatement(script.moduleElements, context);
-            this.resolveAST(script.moduleElements, /*isContextuallyTyped:*/ false, context);
+            this.resolveFirstExportAssignmentStatement(sourceUnit.moduleElements, context);
+            this.resolveAST(sourceUnit.moduleElements, /*isContextuallyTyped:*/ false, context);
 
-            if (this.canTypeCheckAST(script, context)) {
-                this.typeCheckScript(script, context);
+            if (this.canTypeCheckAST(sourceUnit, context)) {
+                this.typeCheckSourceUnit(sourceUnit, context);
             }
 
             return moduleSymbol;
         }
 
-        private typeCheckScript(script: Script, context: PullTypeResolutionContext): void {
-            this.setTypeChecked(script, context);
+        private typeCheckSourceUnit(sourceUnit: SourceUnit, context: PullTypeResolutionContext): void {
+            this.setTypeChecked(sourceUnit, context);
 
-            this.resolveAST(script.moduleElements, /*isContextuallyTyped:*/ false, context);
+            this.resolveAST(sourceUnit.moduleElements, /*isContextuallyTyped:*/ false, context);
         }
 
         private resolveEnumDeclaration(ast: EnumDeclaration, context: PullTypeResolutionContext): PullTypeSymbol {
@@ -1003,7 +1003,7 @@ module TypeScript {
             }
         }
 
-        private resolveModuleSymbol(containerSymbol: PullContainerSymbol, context: PullTypeResolutionContext, moduleDeclAST: ModuleDeclaration, moduleDeclNameAST: AST, sourceUnitAST: Script): PullTypeSymbol {
+        private resolveModuleSymbol(containerSymbol: PullContainerSymbol, context: PullTypeResolutionContext, moduleDeclAST: ModuleDeclaration, moduleDeclNameAST: AST, sourceUnitAST: SourceUnit): PullTypeSymbol {
             if (containerSymbol.isResolved || containerSymbol.inResolution) {
                 return containerSymbol;
             }
@@ -5307,7 +5307,7 @@ module TypeScript {
                     return this.resolveSeparatedList(<ISeparatedSyntaxList2>ast, context);
 
                 case SyntaxKind.SourceUnit:
-                    return this.resolveScript(<Script>ast, context);
+                    return this.resolveSourceUnit(<SourceUnit>ast, context);
 
                 case SyntaxKind.EnumDeclaration:
                     return this.resolveEnumDeclaration(<EnumDeclaration>ast, context);
@@ -5612,7 +5612,7 @@ module TypeScript {
             var nodeType = ast.kind();
             switch (nodeType) {
                 case SyntaxKind.SourceUnit:
-                    this.typeCheckScript(<Script>ast, context);
+                    this.typeCheckSourceUnit(<SourceUnit>ast, context);
                     return;
 
                 case SyntaxKind.EnumDeclaration:
@@ -10792,14 +10792,14 @@ module TypeScript {
 
         // type check infrastructure
         public static typeCheck(compilationSettings: ImmutableCompilationSettings, semanticInfoChain: SemanticInfoChain, document: Document): void {
-            var script = document.script();
+            var sourceUnit = document.sourceUnit();
 
             var resolver = semanticInfoChain.getResolver();
-            var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, script.fileName());
+            var context = new PullTypeResolutionContext(resolver, /*inTypeCheck*/ true, sourceUnit.fileName());
 
-            if (resolver.canTypeCheckAST(script, context)) {
-                resolver.resolveAST(script, /*isContextuallyTyped:*/ false, context);
-                resolver.validateVariableDeclarationGroups(semanticInfoChain.getDeclForAST(script), context);
+            if (resolver.canTypeCheckAST(sourceUnit, context)) {
+                resolver.resolveAST(sourceUnit, /*isContextuallyTyped:*/ false, context);
+                resolver.validateVariableDeclarationGroups(semanticInfoChain.getDeclForAST(sourceUnit), context);
 
                 while (resolver.typeCheckCallBacks.length) {
                     var callBack = resolver.typeCheckCallBacks.pop();
