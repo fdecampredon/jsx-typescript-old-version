@@ -980,8 +980,23 @@ module TypeScript {
 
         public pullGetDeclInformation(decl: PullDecl, ast: ISyntaxElement, document: Document): PullSymbolInfo {
             var resolver = this.semanticInfoChain.getResolver();
+
+            // Note: we not only need to resolve down to the path the ast is at, but we also need to 
+            // resolve the path to where the decl is at.  This is because, currently, some decls 
+            // can't fin their symbols unless they are first resolved.  For example, a property of 
+            // an object literal must be resolved before its symbol can be retrieved.
             var context = this.extractResolutionContextFromAST(resolver, ast, document, /*propagateContextualTypes*/ true);
             if (!context || context.inWithBlock) {
+                return null;
+            }
+
+            var astForDecl = decl.ast();
+            if (!astForDecl) {
+                return null;
+            }
+
+            var astForDeclContext = this.extractResolutionContextFromAST(resolver, astForDecl, this.getDocument(astForDecl.fileName()), /*propagateContextualTypes*/ true);
+            if (!astForDeclContext) {
                 return null;
             }
 
