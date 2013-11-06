@@ -12367,15 +12367,18 @@ module TypeScript {
             // All properties of the interface must satisfy the constraints implied by the index
             // signatures of the interface as specified in section 3.7.4.
             var comparisonInfo = new TypeComparisonInfo();
+            var stringSignature = inheritedIndexSignatures.stringSignatureWithBaseOrigin && inheritedIndexSignatures.stringSignatureWithBaseOrigin.signature;
+            var numberSignature = inheritedIndexSignatures.numberSignatureWithBaseOrigin && inheritedIndexSignatures.numberSignatureWithBaseOrigin.signature;
             for (var memberName in inheritedMembers) {
                 var memberWithBaseOrigin = inheritedMembers[memberName];
                 if (!memberWithBaseOrigin) {
                     continue;
                 }
 
-                var relevantSignature = this.determineRelevantIndexerForMember(memberWithBaseOrigin.memberSymbol, inheritedIndexSignatures.numberSignatureWithBaseOrigin.signature,
-                    inheritedIndexSignatures.stringSignatureWithBaseOrigin.signature);
-                Debug.assert(relevantSignature);
+                var relevantSignature = this.determineRelevantIndexerForMember(memberWithBaseOrigin.memberSymbol, numberSignature, stringSignature);
+                if (!relevantSignature) {
+                    continue;
+                }
 
                 var relevantSignatureIsNumberSignature = relevantSignature.parameters[0].type === this.semanticInfoChain.numberTypeSymbol;
                 var signatureBaseOrigin = relevantSignatureIsNumberSignature ? inheritedIndexSignatures.numberSignatureWithBaseOrigin.baseOrigin :
