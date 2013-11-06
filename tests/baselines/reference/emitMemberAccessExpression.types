@@ -1,0 +1,18 @@
+=== tests/cases/compiler/emitMemberAccessExpression_file3.ts ===
+Line 2 col 12 IdentifierName "OData" = any
+Line 3 col 7 IdentifierName "Microsoft" = Microsoft
+Line 3 col 17 IdentifierName "PeopleAtWork" = Microsoft.PeopleAtWork
+Line 3 col 30 IdentifierName "Model" = Microsoft.PeopleAtWork.Model
+Line 4 col 17 IdentifierName "KnockoutExtentions" = Microsoft.PeopleAtWork.Model.KnockoutExtentions
+=== tests/cases/compiler/emitMemberAccessExpression_file1.ts ===
+=== tests/cases/compiler/emitMemberAccessExpression_file2.ts ===
+Line 2 col 7 IdentifierName "Microsoft" = Microsoft
+Line 2 col 17 IdentifierName "PeopleAtWork" = Microsoft.PeopleAtWork
+Line 2 col 30 IdentifierName "Model" = Microsoft.PeopleAtWork.Model
+Line 3 col 17 IdentifierName "_Person" = Microsoft.PeopleAtWork.Model._Person
+Line 4 col 15 IdentifierName "populate" = (raw: any) => void
+Line 4 col 24 IdentifierName "raw" = any
+Line 5 col 16 IdentifierName "res" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }
+Line 5 col 22 MemberAccessExpression "Model.KnockoutExtentions" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }
+Line 5 col 22 IdentifierName "Model" = { KnockoutExtentions: { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }; _Person: { prototype: Microsoft.PeopleAtWork.Model._Person; new(): Microsoft.PeopleAtWork.Model._Person; }; }
+Line 5 col 28 IdentifierName "KnockoutExtentions" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }

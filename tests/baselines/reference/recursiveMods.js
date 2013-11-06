@@ -13,7 +13,7 @@ var Foo = exports.Foo;
         if (true) {
             return Bar();
         }
-        return new exports.Foo.C();
+        return new Foo.C();
     }
 
     function Baz() {

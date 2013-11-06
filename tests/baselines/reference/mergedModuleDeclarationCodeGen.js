@@ -2,7 +2,7 @@
     (function (Y) {
         var A = (function () {
             function A(Y) {
-                new exports.X.Y.B();
+                new X.Y.B();
             }
             return A;
         })();
