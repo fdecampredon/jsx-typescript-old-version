@@ -8614,10 +8614,10 @@ module TypeScript {
             var fixedParameterTypes: PullTypeSymbol[] = [];
 
             for (var i = 0; i < signatureB.parameters.length; i++) {
-                fixedParameterTypes.push(signatureB.parameters[i].type);
+                fixedParameterTypes.push(signatureB.parameters[i].isVarArg ? signatureB.parameters[i].type.getElementType() : signatureB.parameters[i].type);
             }
 
-            inferredTypeArgs = this.inferArgumentTypesForSignature(signatureA, new ArgumentInferenceContext(this, fixedParameterTypes), new TypeComparisonInfo, context);
+            inferredTypeArgs = this.inferArgumentTypesForSignature(signatureA, new ArgumentInferenceContext(this, fixedParameterTypes), new TypeComparisonInfo(), context);
 
             var functionTypeA = signatureA.functionType;
             var functionTypeB = signatureB.functionType;
