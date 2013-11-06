@@ -13,6 +13,11 @@ module TypeScript.Syntax {
     // TODO: stop exporting this once typecheck bug is fixed.
     export class EmptySyntaxList implements ISyntaxList {
         public parent: ISyntaxElement = null;
+
+        public syntaxID(): number {
+            throw Errors.invalidOperation("Should not use shared syntax element as a key.");
+        }
+
         public kind(): SyntaxKind { return SyntaxKind.List; }
 
         public isNode(): boolean { return false; }
@@ -117,9 +122,18 @@ module TypeScript.Syntax {
 
     class SingletonSyntaxList implements ISyntaxList {
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(private item: ISyntaxNodeOrToken) {
             Syntax.setParentForChildren(this);
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }
@@ -231,9 +245,18 @@ module TypeScript.Syntax {
     class NormalSyntaxList implements ISyntaxList {
         public parent: ISyntaxElement = null;
         private _data: number = 0;
+        private _syntaxID: number = 0;
 
         constructor(private nodeOrTokens: ISyntaxNodeOrToken[]) {
             Syntax.setParentForChildren(this);
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public kind(): SyntaxKind { return SyntaxKind.List; }

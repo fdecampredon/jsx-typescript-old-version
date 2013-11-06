@@ -2146,6 +2146,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     }
 
     result += "        public parent: ISyntaxElement = null;\r\n";
+    result += "        private _syntaxID: number = 0;\r\n";
     result += "\r\n";
 
     if (needsSourcetext) {
@@ -2190,6 +2191,13 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "            this._trailingTriviaInfo = trailingTriviaInfo;\r\n";
     }
 
+    result += "        }\r\n\r\n";
+
+    result += "        public syntaxID(): number {\r\n";
+    result += "            if (this._syntaxID === 0) {\r\n";
+    result += "                this._syntaxID = _nextSyntaxID++;\r\n";
+    result += "            }\r\n\r\n";
+    result += "            return this._syntaxID;\r\n";
     result += "        }\r\n\r\n";
 
     result += "        public clone(): ISyntaxToken {\r\n";

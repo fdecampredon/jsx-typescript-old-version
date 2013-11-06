@@ -7,12 +7,21 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _textOrWidth: any;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, textOrWidth: any) {
             this._sourceText = sourceText;
             this._fullStart = fullStart;
             this.tokenKind = kind;
             this._textOrWidth = textOrWidth;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -138,6 +147,7 @@ module TypeScript.Syntax {
         private _leadingTriviaInfo: number;
         private _textOrWidth: any;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, textOrWidth: any) {
             this._sourceText = sourceText;
@@ -145,6 +155,14 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._leadingTriviaInfo = leadingTriviaInfo;
             this._textOrWidth = textOrWidth;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -271,6 +289,7 @@ module TypeScript.Syntax {
         private _textOrWidth: any;
         private _trailingTriviaInfo: number;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, textOrWidth: any, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -278,6 +297,14 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._textOrWidth = textOrWidth;
             this._trailingTriviaInfo = trailingTriviaInfo;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -405,6 +432,7 @@ module TypeScript.Syntax {
         private _textOrWidth: any;
         private _trailingTriviaInfo: number;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, textOrWidth: any, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -413,6 +441,14 @@ module TypeScript.Syntax {
             this._leadingTriviaInfo = leadingTriviaInfo;
             this._textOrWidth = textOrWidth;
             this._trailingTriviaInfo = trailingTriviaInfo;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -537,10 +573,19 @@ module TypeScript.Syntax {
         private _fullStart: number;
         public tokenKind: SyntaxKind;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(fullStart: number,kind: SyntaxKind) {
             this._fullStart = fullStart;
             this.tokenKind = kind;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -640,12 +685,21 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _leadingTriviaInfo: number;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number) {
             this._sourceText = sourceText;
             this._fullStart = fullStart;
             this.tokenKind = kind;
             this._leadingTriviaInfo = leadingTriviaInfo;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -748,12 +802,21 @@ module TypeScript.Syntax {
         public tokenKind: SyntaxKind;
         private _trailingTriviaInfo: number;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
             this._fullStart = fullStart;
             this.tokenKind = kind;
             this._trailingTriviaInfo = trailingTriviaInfo;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {
@@ -857,6 +920,7 @@ module TypeScript.Syntax {
         private _leadingTriviaInfo: number;
         private _trailingTriviaInfo: number;
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(sourceText: ISimpleText, fullStart: number,kind: SyntaxKind, leadingTriviaInfo: number, trailingTriviaInfo: number) {
             this._sourceText = sourceText;
@@ -864,6 +928,14 @@ module TypeScript.Syntax {
             this.tokenKind = kind;
             this._leadingTriviaInfo = leadingTriviaInfo;
             this._trailingTriviaInfo = trailingTriviaInfo;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public clone(): ISyntaxToken {

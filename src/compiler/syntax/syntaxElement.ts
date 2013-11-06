@@ -2,6 +2,7 @@
 
 module TypeScript {
     export interface ISyntaxElement {
+        syntaxID(): number;
         kind(): SyntaxKind;
         parent: ISyntaxElement;
 

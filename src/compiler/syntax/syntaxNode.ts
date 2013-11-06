@@ -4,9 +4,18 @@ module TypeScript {
     export class SyntaxNode implements ISyntaxNodeOrToken {
         public parent: ISyntaxElement = null;
         private _data: number;
+        private _syntaxID: number;
 
         constructor(parsedInStrictMode: boolean) {
             this._data = parsedInStrictMode ? SyntaxConstants.NodeParsedInStrictModeMask : 0;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = TypeScript.Syntax._nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public isNode(): boolean { return true; }

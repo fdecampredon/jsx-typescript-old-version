@@ -21,6 +21,10 @@ module TypeScript.Syntax {
     class EmptySeparatedSyntaxList implements ISeparatedSyntaxList {
         public parent: ISyntaxElement = null;
 
+        public syntaxID(): number {
+            throw Errors.invalidOperation("Should not use shared syntax element as a key.");
+        }
+
         public kind() {
             return SyntaxKind.SeparatedList;
         }
@@ -158,9 +162,18 @@ module TypeScript.Syntax {
 
     class SingletonSeparatedSyntaxList implements ISeparatedSyntaxList {
         public parent: ISyntaxElement = null;
+        private _syntaxID: number = 0;
 
         constructor(private item: ISyntaxNodeOrToken) {
             Syntax.setParentForChildren(this);
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public toJSON(key: any) {
@@ -283,9 +296,18 @@ module TypeScript.Syntax {
     class NormalSeparatedSyntaxList implements ISeparatedSyntaxList {
         public parent: ISyntaxElement = null;
         private _data: number = 0;
+        private _syntaxID: number = 0;
 
         constructor(private elements: ISyntaxNodeOrToken[]) {
             Syntax.setParentForChildren(this);
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public kind() { return SyntaxKind.SeparatedList; }

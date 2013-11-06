@@ -325,9 +325,18 @@ module TypeScript.Syntax {
     class EmptyToken implements ISyntaxToken {
         public parent: ISyntaxElement = null;
         public tokenKind: SyntaxKind;
+        private _syntaxID: number = 0;
 
         constructor(kind: SyntaxKind) {
             this.tokenKind = kind;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public setFullStartAndText(): void {
@@ -443,6 +452,7 @@ module TypeScript.Syntax {
         private _value: any;
         private _valueText: string;
         private _trailingTrivia: ISyntaxTriviaList;
+        private _syntaxID: number = 0;
 
         constructor(fullStart: number,
                     tokenKind: SyntaxKind,
@@ -458,6 +468,14 @@ module TypeScript.Syntax {
             this._value = value;
             this._valueText = valueText;
             this._trailingTrivia = trailingTrivia;
+        }
+
+        public syntaxID(): number {
+            if (this._syntaxID === 0) {
+                this._syntaxID = _nextSyntaxID++;
+            }
+
+            return this._syntaxID;
         }
 
         public setFullStartAndText(fullStart: number): void {

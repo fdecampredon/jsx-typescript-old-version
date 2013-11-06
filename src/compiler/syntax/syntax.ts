@@ -1,6 +1,8 @@
 ///<reference path='references.ts' />
 
 module TypeScript.Syntax {
+    export var _nextSyntaxID: number = 1;
+
     export function setParentForChildren(element: ISyntaxElement): void {
         for (var i = 0, n = element.childCount(); i < n; i++) {
             var child = element.childAt(i);
