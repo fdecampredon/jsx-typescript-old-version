@@ -40,10 +40,17 @@ module TypeScript {
             public sourceColumn: number,
             public sourceName: string) {
 
+<<<<<<< HEAD
             //Debug.assert(!isNaN(emittedLine));
             //Debug.assert(!isNaN(emittedColumn));
             //Debug.assert(!isNaN(sourceLine));
             //Debug.assert(!isNaN(sourceColumn));
+=======
+            Debug.assert(isFinite(emittedLine));
+            Debug.assert(isFinite(emittedColumn));
+            Debug.assert(isFinite(sourceColumn));
+            Debug.assert(isFinite(sourceLine));
+>>>>>>> develop
         }
     }
 
@@ -56,6 +63,8 @@ module TypeScript {
         private sourceRoot: string;
 
         public names: string[] = [];
+
+        private mappingLevel: IASTSpan[] = [];
 
         // Below two arrays represent the information about sourceFile at that index.
         private tsFilePaths: string[] = [];
@@ -81,6 +90,20 @@ module TypeScript {
             result.sourceMapEntries = this.sourceMapEntries;
 
             return result;
+        }
+
+        public increaseMappingLevel(ast: IASTSpan) {
+            this.mappingLevel.push(ast);
+        }
+
+        public decreaseMappingLevel(ast: IASTSpan) {
+            Debug.assert(this.mappingLevel.length > 0, "Mapping level should never be less than 0. This suggests a missing start call.");
+            var expectedAst = this.mappingLevel.pop();
+            var expectedAstInfo: any = (<AST>expectedAst).kind ? SyntaxKind[(<AST>expectedAst).kind()] : [expectedAst.start(), expectedAst.end()];
+            var astInfo: any = (<AST>ast).kind ? SyntaxKind[(<AST>ast).kind()] : [ast.start(), ast.end()]
+            Debug.assert(
+                ast === expectedAst,
+                "Provided ast is not the expected AST, Expected: " + expectedAstInfo + " Given: " + astInfo)
         }
 
         public setNewSourceFile(document: Document, emitOptions: EmitOptions) {
@@ -142,6 +165,10 @@ module TypeScript {
         // Generate source mapping.
         // Creating files can cause exceptions, they will be caught higher up in TypeScriptCompiler.emit
         public emitSourceMapping(): void {
+            Debug.assert(
+                this.mappingLevel.length === 0,
+                "Mapping level is not 0. This suggest a missing end call. Value: " +
+                this.mappingLevel.map(item => ['Node of type', SyntaxKind[(<AST>item).kind()], 'at', item.start(), 'to', item.end()].join(' ')).join(', '));
             // Output map file name into the js file
             this.jsFile.WriteLine("//# sourceMappingURL=" + this.sourceMapPath);
 
@@ -159,6 +186,7 @@ module TypeScript {
             var recordedPosition: SourceMapPosition = null;
             for (var sourceIndex = 0; sourceIndex < this.tsFilePaths.length; sourceIndex++) {
                 var recordSourceMapping = (mappedPosition: SourceMapPosition, nameIndex: number) => {
+
                     if (recordedPosition !== null &&
                         recordedPosition.emittedColumn === mappedPosition.emittedColumn &&
                         recordedPosition.emittedLine === mappedPosition.emittedLine) {

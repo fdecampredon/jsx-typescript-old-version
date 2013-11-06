@@ -1072,7 +1072,7 @@ module TypeScript {
         }
 
         public visitModuleDeclaration(node: ModuleDeclarationSyntax): void {
-            if (this.checkForReservedName(node, node.moduleName, DiagnosticCode.Module_name_cannot_be_0) ||
+            if (this.checkForReservedName(node, node.name, DiagnosticCode.Module_name_cannot_be_0) ||
                 this.checkForDisallowedDeclareModifier(node.modifiers) ||
                 this.checkForRequiredDeclareModifier(node, node.moduleKeyword, node.modifiers) ||
                 this.checkModuleElementModifiers(node.modifiers) ||

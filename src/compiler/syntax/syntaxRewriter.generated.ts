@@ -130,7 +130,7 @@ module TypeScript {
             return node.update(
                 this.visitList(node.modifiers),
                 this.visitToken(node.moduleKeyword),
-                node.moduleName === null ? null : <INameSyntax>this.visitNodeOrToken(node.moduleName),
+                node.name === null ? null : <INameSyntax>this.visitNodeOrToken(node.name),
                 node.stringLiteral === null ? null : this.visitToken(node.stringLiteral),
                 this.visitToken(node.openBraceToken),
                 this.visitList(node.moduleElements),

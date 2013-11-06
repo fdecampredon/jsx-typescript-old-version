@@ -290,7 +290,7 @@ module TypeScript.PrettyPrinter {
             this.ensureSpace();
             this.appendToken(node.moduleKeyword);
             this.ensureSpace();
-            this.appendNode(node.moduleName);
+            this.appendNode(node.name);
             this.ensureSpace();
             this.appendToken(node.stringLiteral);
             this.ensureSpace();

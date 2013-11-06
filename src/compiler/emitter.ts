@@ -1831,6 +1831,7 @@ module TypeScript {
                 var siblings = this.sourceMapper.currentMappings[this.sourceMapper.currentMappings.length - 1];
                 siblings.push(sourceMapping);
                 this.sourceMapper.currentMappings.push(sourceMapping.childMappings);
+                this.sourceMapper.increaseMappingLevel(ast);
             }
         }
 
@@ -1848,6 +1849,8 @@ module TypeScript {
 
                 Debug.assert(!isNaN(sourceMapping.end.emittedColumn));
                 Debug.assert(!isNaN(sourceMapping.end.emittedLine));
+
+                this.sourceMapper.decreaseMappingLevel(ast);
             }
         }
 
@@ -2531,6 +2534,7 @@ module TypeScript {
 
             this.emitComments(funcDecl, false);
 
+            this.recordSourceMappingEnd(funcDecl);
             this.popDecl(pullDecl);
 
             this.writeLineToOutput(";");
