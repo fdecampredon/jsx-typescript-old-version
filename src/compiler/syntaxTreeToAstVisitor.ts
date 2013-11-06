@@ -365,7 +365,7 @@ module TypeScript {
             this.moveTo(node, node.moduleKeyword);
             this.movePast(node.moduleKeyword);
 
-            var moduleName = node.moduleName ? node.moduleName.accept(this) : null;
+            var moduleName = node.name ? node.name.accept(this) : null;
             var stringLiteral = node.stringLiteral ? node.stringLiteral.accept(this) : null;
 
             this.movePast(node.openBraceToken);

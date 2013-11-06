@@ -657,8 +657,8 @@ module TypeScript.Services.Breakpoints {
             var moduleSyntax = <TypeScript.ModuleDeclarationSyntax>positionedNode.node();
             if ((node.isModuleElement() && positionedNode.containingNode().kind() != TypeScript.SyntaxKind.SourceUnit) ||
                 node.isClassElement() ||
-                (moduleSyntax.kind() == TypeScript.SyntaxKind.ModuleDeclaration && moduleSyntax.moduleName
-                && moduleSyntax.moduleName.kind() == TypeScript.SyntaxKind.QualifiedName)) {
+                (moduleSyntax.kind() == TypeScript.SyntaxKind.ModuleDeclaration && moduleSyntax.name
+                && moduleSyntax.name.kind() == TypeScript.SyntaxKind.QualifiedName)) {
                 return createBreakpointSpanInfo(positionedNode);
             } else {
                 // Try to get the breakpoint in first element declaration

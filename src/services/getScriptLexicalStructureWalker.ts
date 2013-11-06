@@ -98,7 +98,7 @@ module TypeScript.Services {
                 result.push(node.stringLiteral.text());
             }
             else {
-                this.getModuleNamesHelper(node.moduleName, result);
+                this.getModuleNamesHelper(node.name, result);
             }
 
             return result;

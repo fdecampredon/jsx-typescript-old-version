@@ -146,7 +146,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'moduleKeyword', isToken: true },
-            <any>{ name: 'moduleName', type: 'INameSyntax', isOptional: true },
+            <any>{ name: 'name', type: 'INameSyntax', isOptional: true },
             <any>{ name: 'stringLiteral', isToken: true, isOptional: true },
             <any>{ name: 'openBraceToken', isToken: true },
             <any>{ name: 'moduleElements', isList: true, elementType: 'IModuleElementSyntax' },

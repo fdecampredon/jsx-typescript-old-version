@@ -711,7 +711,7 @@ module TypeScript {
 
         constructor(public modifiers: ISyntaxList,
                     public moduleKeyword: ISyntaxToken,
-                    public moduleName: INameSyntax,
+                    public name: INameSyntax,
                     public stringLiteral: ISyntaxToken,
                     public openBraceToken: ISyntaxToken,
                     public moduleElements: ISyntaxList,
@@ -737,7 +737,7 @@ module TypeScript {
         switch (slot) {
             case 0: return this.modifiers;
             case 1: return this.moduleKeyword;
-            case 2: return this.moduleName;
+            case 2: return this.name;
             case 3: return this.stringLiteral;
             case 4: return this.openBraceToken;
             case 5: return this.moduleElements;
@@ -752,16 +752,16 @@ module TypeScript {
 
     public update(modifiers: ISyntaxList,
                   moduleKeyword: ISyntaxToken,
-                  moduleName: INameSyntax,
+                  name: INameSyntax,
                   stringLiteral: ISyntaxToken,
                   openBraceToken: ISyntaxToken,
                   moduleElements: ISyntaxList,
                   closeBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
-        if (this.modifiers === modifiers && this.moduleKeyword === moduleKeyword && this.moduleName === moduleName && this.stringLiteral === stringLiteral && this.openBraceToken === openBraceToken && this.moduleElements === moduleElements && this.closeBraceToken === closeBraceToken) {
+        if (this.modifiers === modifiers && this.moduleKeyword === moduleKeyword && this.name === name && this.stringLiteral === stringLiteral && this.openBraceToken === openBraceToken && this.moduleElements === moduleElements && this.closeBraceToken === closeBraceToken) {
             return this;
         }
 
-        return new ModuleDeclarationSyntax(modifiers, moduleKeyword, moduleName, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+        return new ModuleDeclarationSyntax(modifiers, moduleKeyword, name, stringLiteral, openBraceToken, moduleElements, closeBraceToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
     }
 
     public static create(moduleKeyword: ISyntaxToken,
@@ -783,7 +783,7 @@ module TypeScript {
     }
 
     public withModifiers(modifiers: ISyntaxList): ModuleDeclarationSyntax {
-        return this.update(modifiers, this.moduleKeyword, this.moduleName, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
+        return this.update(modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
     }
 
     public withModifier(modifier: ISyntaxToken): ModuleDeclarationSyntax {
@@ -791,23 +791,23 @@ module TypeScript {
     }
 
     public withModuleKeyword(moduleKeyword: ISyntaxToken): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, moduleKeyword, this.moduleName, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
+        return this.update(this.modifiers, moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
     }
 
-    public withModuleName(moduleName: INameSyntax): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, this.moduleKeyword, moduleName, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
+    public withName(name: INameSyntax): ModuleDeclarationSyntax {
+        return this.update(this.modifiers, this.moduleKeyword, name, this.stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
     }
 
     public withStringLiteral(stringLiteral: ISyntaxToken): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, this.moduleKeyword, this.moduleName, stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
+        return this.update(this.modifiers, this.moduleKeyword, this.name, stringLiteral, this.openBraceToken, this.moduleElements, this.closeBraceToken);
     }
 
     public withOpenBraceToken(openBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, this.moduleKeyword, this.moduleName, this.stringLiteral, openBraceToken, this.moduleElements, this.closeBraceToken);
+        return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, openBraceToken, this.moduleElements, this.closeBraceToken);
     }
 
     public withModuleElements(moduleElements: ISyntaxList): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, this.moduleKeyword, this.moduleName, this.stringLiteral, this.openBraceToken, moduleElements, this.closeBraceToken);
+        return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, moduleElements, this.closeBraceToken);
     }
 
     public withModuleElement(moduleElement: IModuleElementSyntax): ModuleDeclarationSyntax {
@@ -815,7 +815,7 @@ module TypeScript {
     }
 
     public withCloseBraceToken(closeBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
-        return this.update(this.modifiers, this.moduleKeyword, this.moduleName, this.stringLiteral, this.openBraceToken, this.moduleElements, closeBraceToken);
+        return this.update(this.modifiers, this.moduleKeyword, this.name, this.stringLiteral, this.openBraceToken, this.moduleElements, closeBraceToken);
     }
 
     public isTypeScriptSpecific(): boolean {

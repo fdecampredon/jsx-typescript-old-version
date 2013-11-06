@@ -197,7 +197,7 @@ module TypeScript.Emitter1 {
                 var childModule = <ModuleDeclarationSyntax>moduleElement;
                 if (this.containsToken(childModule.modifiers, SyntaxKind.ExportKeyword)) {
                     elements.push(this.exportModuleElement(
-                        parentModule, moduleElement, this.leftmostName(childModule.moduleName)));
+                        parentModule, moduleElement, this.leftmostName(childModule.name)));
                 }
             }
         }
@@ -214,14 +214,14 @@ module TypeScript.Emitter1 {
             }
 
             // Handle the case where the child is an export.
-            var parentModule = this.rightmostName(node.moduleName);
+            var parentModule = this.rightmostName(node.name);
             for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
                 this.handleExportedModuleElement(
                     parentModule, <IModuleElementSyntax>node.moduleElements.childAt(i), moduleElements);
             }
 
             // Break up the dotted name into pieces.
-            var names = EmitterImpl.splitModuleName(node.moduleName);
+            var names = EmitterImpl.splitModuleName(node.name);
             
             // Then, for all the names left of that name, wrap what we've created in a larger module.
             for (var nameIndex = names.length - 1; nameIndex >= 0; nameIndex--) {
