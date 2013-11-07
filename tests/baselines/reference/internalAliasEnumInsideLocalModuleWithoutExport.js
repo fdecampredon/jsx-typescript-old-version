@@ -19,9 +19,9 @@ var c = exports.c;
 ////[internalAliasEnumInsideLocalModuleWithoutExport.d.ts]
 export declare module a {
     enum weekend {
-        Friday,
-        Saturday,
-        Sunday,
+        Friday = 0,
+        Saturday = 1,
+        Sunday = 2,
     }
 }
 export declare module c {

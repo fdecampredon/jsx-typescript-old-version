@@ -982,13 +982,13 @@ module TypeScript {
             this.indenter.increaseIndent();
             var membersLen = moduleDecl.enumElements.nonSeparatorCount();
             for (var j = 0; j < membersLen; j++) {
-                var memberDecl: ISyntaxElement = moduleDecl.enumElements.nonSeparatorAt(j);
-                var enumElement = <EnumElementSyntax>memberDecl;
+                var enumElement = <EnumElementSyntax>moduleDecl.enumElements.nonSeparatorAt(j);
+                var enumElementDecl = <PullEnumElementDecl>this.semanticInfoChain.getDeclForAST(enumElement);
                 this.emitDeclarationComments(enumElement);
                 this.emitIndent();
                 this.declFile.Write(enumElement.propertyName.text());
-                if (enumElement.equalsValueClause && enumElement.equalsValueClause.value.kind() == SyntaxKind.NumericLiteral) {
-                    this.declFile.Write(" = " + (<ISyntaxToken>enumElement.equalsValueClause.value).text());
+                if (enumElementDecl.constantValue != null) {
+                    this.declFile.Write(" = " + enumElementDecl.constantValue);
                 }
                 this.declFile.WriteLine(",");
             }

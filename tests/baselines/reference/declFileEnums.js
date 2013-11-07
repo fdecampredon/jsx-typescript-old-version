@@ -40,9 +40,9 @@ var e5;
 
 ////[declFileEnums.d.ts]
 declare enum e1 {
-    a,
-    b,
-    c,
+    a = 0,
+    b = 1,
+    c = 2,
 }
 declare enum e2 {
     a = 10,
@@ -55,15 +55,15 @@ declare enum e3 {
     c,
 }
 declare enum e4 {
-    a,
-    b,
-    c,
+    a = 0,
+    b = 1,
+    c = 2,
     d = 10,
-    e,
+    e = 11,
 }
 declare enum e5 {
-    "Friday",
-    "Saturday",
-    "Sunday",
-    "Weekend days",
+    "Friday" = 0,
+    "Saturday" = 1,
+    "Sunday" = 2,
+    "Weekend days" = 3,
 }

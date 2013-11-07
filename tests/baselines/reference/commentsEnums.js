@@ -16,8 +16,8 @@ x = 1 /* FancyPink */;
 /** Enum of colors*/
 declare enum Colors {
     /** Fancy name for 'blue'*/
-    Cornflower,
+    Cornflower = 0,
     /** Fancy name for 'pink'*/
-    FancyPink,
+    FancyPink = 1,
 }
 declare var x: Colors;
