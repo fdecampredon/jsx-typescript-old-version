@@ -300,19 +300,25 @@ module TypeScript {
         }
 
         private writeDeclarationComments(declComments: Comment[], endLine = true) {
-            if (declComments.length > 0) {
+            if (declComments) {
+                var wroteComment = false;
                 for (var i = 0; i < declComments.length; i++) {
-                    this.emitComment(declComments[i]);
-                }
-
-                if (endLine) {
-                    if (!this.declFile.onNewLine) {
-                        this.declFile.WriteLine("");
+                    if (isDocComment(declComments[i])) {
+                        this.emitComment(declComments[i]);
+                        wroteComment = true;
                     }
                 }
-                else {
-                    if (this.declFile.onNewLine) {
-                        this.emitIndent();
+
+                if (wroteComment) {
+                    if (endLine) {
+                        if (!this.declFile.onNewLine) {
+                            this.declFile.WriteLine("");
+                        }
+                    }
+                    else {
+                        if (this.declFile.onNewLine) {
+                            this.emitIndent();
+                        }
                     }
                 }
             }
@@ -468,9 +474,7 @@ module TypeScript {
             this.emitIndent();
             this.declFile.Write("constructor");
 
-            this.declFile.Write("(");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameterList(funcDecl.parameterList));
-            this.declFile.Write(")");
+            this.emitParameterList(/*isPrivate:*/ false, funcDecl.parameterList);
             this.declFile.WriteLine(";");
         }
 
@@ -571,9 +575,7 @@ module TypeScript {
             this.emitTypeParameters(funcDecl.typeParameterList, funcSignature);
 
             this.emitIndent();
-            this.declFile.Write("(");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameterList(funcDecl.parameterList));
-            this.declFile.Write(")");
+            this.emitParameterList(/*isPrivate:*/ false, funcDecl.parameterList);
 
             var returnType = funcSignature.returnType;
             this.declFile.Write(": ");
@@ -603,9 +605,7 @@ module TypeScript {
             var funcSignature = funcPullDecl.getSignatureSymbol();
             this.emitTypeParameters(funcDecl.callSignature.typeParameterList, funcSignature);
 
-            this.declFile.Write("(");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameterList(funcDecl.callSignature.parameterList));
-            this.declFile.Write(")");
+            this.emitParameterList(/*isPrivate:*/ false, funcDecl.callSignature.parameterList);
 
             var returnType = funcSignature.returnType;
             this.declFile.Write(": ");
@@ -638,9 +638,7 @@ module TypeScript {
             var funcSignature = funcPullDecl.getSignatureSymbol();
             this.emitTypeParameters(funcDecl.callSignature.typeParameterList, funcSignature);
 
-            this.declFile.Write("(");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameterList(funcDecl.callSignature.parameterList));
-            this.declFile.Write(")");
+            this.emitParameterList(/*isPrivate:*/ false, funcDecl.callSignature.parameterList);
 
             var returnType = funcSignature.returnType;
             this.declFile.Write(": ");
@@ -692,9 +690,7 @@ module TypeScript {
             var funcSignature = funcPullDecl.getSignatureSymbol();
             this.emitTypeParameters(funcDecl.callSignature.typeParameterList, funcSignature);
 
-            this.declFile.Write("(");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameterList(funcDecl.callSignature.parameterList));
-            this.declFile.Write(")");
+            this.emitParameterList(/*isPrivate:*/ false, funcDecl.callSignature.parameterList);
 
             var returnType = funcSignature.returnType;
             this.declFile.Write(": ");

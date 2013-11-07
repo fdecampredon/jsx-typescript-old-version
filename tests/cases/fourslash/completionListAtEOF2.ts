@@ -7,7 +7,5 @@
 ////}
 ////var p = <Shapes.
 
-debugger;
-
 goTo.eof();
 verify.memberListContains("Point");

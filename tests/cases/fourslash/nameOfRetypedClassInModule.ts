@@ -13,7 +13,6 @@
 
 edit.disableFormatting();
 
-debugger;
 goTo.marker('check');
 verify.quickInfoSymbolNameIs('Check');
 

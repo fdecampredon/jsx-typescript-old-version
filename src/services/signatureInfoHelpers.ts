@@ -242,8 +242,9 @@ module TypeScript.Services {
             }
 
             if (ast.argumentList.arguments) {
-                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.arguments.start());
-                parameterLimChar = Math.max(parameterLimChar, Math.max(ast.argumentList.arguments.start(), ast.argumentList.arguments.end() + ast.argumentList.arguments.trailingTriviaWidth()));
+                parameterMinChar = Math.min(parameterMinChar, ast.argumentList.openParenToken.end());
+                parameterLimChar = Math.max(parameterLimChar,
+                    ast.argumentList.closeParenToken.fullWidth() > 0 ? ast.argumentList.closeParenToken.start() : ast.argumentList.fullEnd());
             }
 
             result.parameterMinChar = parameterMinChar;

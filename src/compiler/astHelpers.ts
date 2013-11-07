@@ -78,7 +78,11 @@ module TypeScript {
         return false;
     }
 
-    export function isValidAstNode(ast: ISpan): boolean {
+    export function isValidAstNode(ast: ISyntaxElement): boolean {
+        return ast && !ast.isShared() && isValidSpan(ast);
+    }
+
+    export function isValidSpan(ast: ISpan): boolean {
         if (!ast)
             return false;
 
@@ -95,7 +99,7 @@ module TypeScript {
         var top: ISyntaxElement = null;
 
         var pre = function (cur: ISyntaxElement, walker: IAstWalker) {
-            if (isValidAstNode(cur)) {
+            if (!cur.isShared() && isValidAstNode(cur)) {
                 var isInvalid1 = cur.kind() === SyntaxKind.ExpressionStatement && cur.width() === 0;
 
                 if (isInvalid1) {
@@ -388,20 +392,29 @@ module TypeScript {
         if (element) {
             switch (element.kind()) {
                 case SyntaxKind.VariableStatement:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.ExpressionStatement:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.ClassDeclaration:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.ImportDeclaration:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.FunctionDeclaration:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.ModuleDeclaration:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.EnumDeclaration:
-                    return convertNodeLeadingComments(element);
                 case SyntaxKind.IfStatement:
+                case SyntaxKind.SimplePropertyAssignment:
+                case SyntaxKind.MemberFunctionDeclaration:
+                case SyntaxKind.InterfaceDeclaration:
+                case SyntaxKind.GetAccessor:
+                case SyntaxKind.SetAccessor:
+                case SyntaxKind.ReturnStatement:
+                case SyntaxKind.ConstructorDeclaration:
+                case SyntaxKind.MemberVariableDeclaration:
+                case SyntaxKind.EnumElement:
+                case SyntaxKind.CallSignature:
+                case SyntaxKind.ConstructSignature:
+                case SyntaxKind.IndexSignature:
+                case SyntaxKind.PropertySignature:
+                case SyntaxKind.MethodSignature:
+                case SyntaxKind.FunctionPropertyAssignment:
+                case SyntaxKind.Parameter:
                     return convertNodeLeadingComments(element);
             }
         }
@@ -412,21 +425,31 @@ module TypeScript {
     export function postComments(element: ISyntaxElement): Comment[] {
         if (element) {
             switch (element.kind()) {
-                case SyntaxKind.VariableStatement:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.ExpressionStatement:
                     return convertNodeTrailingComments(element, /*allowWithNewLine:*/ true);
+                case SyntaxKind.VariableStatement:
                 case SyntaxKind.ClassDeclaration:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.ImportDeclaration:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.FunctionDeclaration:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.ModuleDeclaration:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.EnumDeclaration:
-                    return convertNodeTrailingComments(element);
                 case SyntaxKind.IfStatement:
+                case SyntaxKind.SimplePropertyAssignment:
+                case SyntaxKind.MemberFunctionDeclaration:
+                case SyntaxKind.InterfaceDeclaration:
+                case SyntaxKind.GetAccessor:
+                case SyntaxKind.SetAccessor:
+                case SyntaxKind.ReturnStatement:
+                case SyntaxKind.ConstructorDeclaration:
+                case SyntaxKind.MemberVariableDeclaration:
+                case SyntaxKind.EnumElement:
+                case SyntaxKind.CallSignature:
+                case SyntaxKind.ConstructSignature:
+                case SyntaxKind.IndexSignature:
+                case SyntaxKind.PropertySignature:
+                case SyntaxKind.MethodSignature:
+                case SyntaxKind.FunctionPropertyAssignment:
+                case SyntaxKind.Parameter:
                     return convertNodeTrailingComments(element);
             }
         }
@@ -450,19 +473,29 @@ module TypeScript {
 
     function convertNodeLeadingComments(element: ISyntaxElement): Comment[]{
         if (element) {
-            return convertTokenLeadingComments(element.firstToken(), element.fullStart());
+            return convertTokenLeadingComments(element.firstToken());
         }
 
         return null;
     }
 
-    function convertTokenLeadingComments(token: ISyntaxToken, commentStartPosition: number): Comment[]{
+    export function convertTokenLeadingComments(token: ISyntaxToken): Comment[]{
         if (token === null) {
             return null;
         }
 
         return token.hasLeadingComment()
-            ? convertComments(token.leadingTrivia(), commentStartPosition)
+            ? convertComments(token.leadingTrivia(), token.fullStart())
+            : null;
+    }
+
+    export function convertTokenTrailingComments(token: ISyntaxToken): Comment[] {
+        if (token === null) {
+            return null;
+        }
+
+        return token.hasTrailingComment()
+            ? convertComments(token.trailingTrivia(), token.fullEnd() - token.trailingTriviaWidth())
             : null;
     }
 
@@ -491,30 +524,42 @@ module TypeScript {
 
     export function docComments(ast: ISyntaxElement): Comment[] {
         if (isDeclarationAST(ast)) {
-            var preComments = ast.kind() === SyntaxKind.VariableDeclarator
-                ? preComments(getVariableStatement(<VariableDeclaratorSyntax>ast))
-                : preComments(ast);
+            var comments: Comment[] = null;
 
-            if (preComments && preComments.length > 0) {
-                var preCommentsLength = preComments.length;
-                var docComments = new Array<Comment>();
-                for (var i = preCommentsLength - 1; i >= 0; i--) {
-                    if (isDocComment(preComments[i])) {
-                        docComments.push(preComments[i]);
-                        continue;
+            if (ast.kind() === SyntaxKind.VariableDeclarator) {
+                // Get the doc comments for a variable off of the variable statement.  That's what
+                // they'll be attached to in the tree.
+                comments = TypeScript.preComments(getVariableStatement(<VariableDeclaratorSyntax>ast));
+            }
+            else if (ast.kind() === SyntaxKind.Parameter) {
+                // First check if the parameter was written like so:
+                //      (
+                //          /** blah */ a,
+                //          /** blah */ b);
+                comments = TypeScript.preComments(ast);
+                if (!comments) {
+                    // Now check if it was written like so:
+                    //      (/** blah */ a, /** blah */ b);
+                    // In this case, the comment will belong to the preceding token.
+                    var previousToken = ast.syntaxTree().sourceUnit().findToken(ast.firstToken().fullStart() - 1).token();
+                    if (previousToken && (previousToken.tokenKind === SyntaxKind.OpenParenToken || previousToken.tokenKind === SyntaxKind.CommaToken)) {
+                        comments = convertTokenTrailingComments(previousToken);
                     }
-
-                    break;
                 }
+            }
+            else {
+                comments = TypeScript.preComments(ast);
+            }
 
-                return docComments.reverse();
+            if (comments && comments.length > 0) {
+                return comments.filter(c => isDocComment(c));
             }
         }
 
         return sentinelEmptyArray;
     }
 
-    function isDocComment(comment: Comment) {
+    export function isDocComment(comment: Comment) {
         if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
             var fullText = comment.fullText();
             return fullText.charAt(2) === "*" && fullText.charAt(3) !== "/";

@@ -74,7 +74,6 @@ verify.quickInfoIs(undefined, "This is on import declaration", "extMod", "module
 goTo.marker('10');
 verify.completionListContains("extMod", "extMod", "This is on import declaration", "extMod", "module");
 
-debugger;
 goTo.marker('11');
 verify.memberListContains("m1", "extMod.m1");
 

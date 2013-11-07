@@ -397,7 +397,7 @@ module TypeScript {
             this.writeToOutput(this.getIndentString());
         }
 
-        public emitComment(comment: Comment, trailing: boolean, first: boolean) {
+        public emitComment(comment: Comment, trailing: boolean, first: boolean, noLeadingSpace = false) {
             if (this.emitOptions.compilationSettings().removeComments()) {
                 return;
             }
@@ -408,7 +408,7 @@ module TypeScript {
             if (emitColumn === 0) {
                 this.emitIndent();
             }
-            else if (trailing && first) {
+            else if (trailing && first && !noLeadingSpace) {
                 this.writeToOutput(" ");
             }
 
@@ -487,10 +487,10 @@ module TypeScript {
             }
         }
 
-        public emitCommentsArray(comments: Comment[], trailing: boolean): void {
+        private emitCommentsArray(comments: Comment[], trailing: boolean, noLeadingSpace = false): void {
             if (!this.emitOptions.compilationSettings().removeComments() && comments) {
                 for (var i = 0, n = comments.length; i < n; i++) {
-                    this.emitComment(comments[i], trailing, /*first:*/ i === 0);
+                    this.emitComment(comments[i], trailing, /*first:*/ i === 0, noLeadingSpace);
                 }
             }
         }
@@ -609,7 +609,7 @@ module TypeScript {
 
         private emitParameterList(list: ParameterListSyntax): void {
             this.writeToOutput("(");
-            this.emitCommentsArray(postComments(list.openParenToken), /*trailing:*/ true);
+            this.emitCommentsArray(convertTokenTrailingComments(list.openParenToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
             this.emitFunctionParameters(Parameters.fromParameterList(list));
             this.writeToOutput(")");
         }
@@ -618,6 +618,7 @@ module TypeScript {
             var argsLen = 0;
 
             if (parameters) {
+                var parameterListAST = parameters.ast.kind() === SyntaxKind.SeparatedList ? <ISeparatedSyntaxList>parameters.ast : null;
                 this.emitComments(parameters.ast, true);
 
                 var tempContainer = this.setContainer(EmitContainer.Args);
@@ -632,6 +633,9 @@ module TypeScript {
 
                     if (i < (printLen - 1)) {
                         this.writeToOutput(", ");
+                        if (parameterListAST) {
+                            this.emitCommentsArray(convertTokenTrailingComments(parameterListAST.separatorAt(i)), /*trailing:*/ true, /*noLeadingSpace:*/ true);
+                        }
                     }
                 }
                 this.setContainer(tempContainer);
@@ -659,7 +663,7 @@ module TypeScript {
 
             if (block) {
                 this.emitList(block.statements);
-                this.emitCommentsArray(postComments(block.closeBraceToken), /*trailing:*/ false);
+                this.emitCommentsArray(convertTokenLeadingComments(block.closeBraceToken), /*trailing:*/ false);
             }
             else {
                 // Copy any comments before the body of the arrow function to the return statement.
@@ -1161,16 +1165,14 @@ module TypeScript {
         }
 
         public emitSimpleArrowFunctionExpression(arrowFunction: SimpleArrowFunctionExpressionSyntax): void {
-            this.emitAnyArrowFunctionExpression(arrowFunction, null /*arrowFunction.getNameText()*/,
-                Parameters.fromIdentifier(arrowFunction.identifier), arrowFunction.block, arrowFunction.expression);
+            this.emitAnyArrowFunctionExpression(arrowFunction, arrowFunction.block, arrowFunction.expression);
         }
 
         public emitParenthesizedArrowFunctionExpression(arrowFunction: ParenthesizedArrowFunctionExpressionSyntax): void {
-            this.emitAnyArrowFunctionExpression(arrowFunction, null /* arrowFunction.getNameText() */,
-                Parameters.fromParameterList(arrowFunction.callSignature.parameterList), arrowFunction.block, arrowFunction.expression);
+            this.emitAnyArrowFunctionExpression(arrowFunction, arrowFunction.block, arrowFunction.expression);
         }
 
-        private emitAnyArrowFunctionExpression(arrowFunction: ISyntaxElement, funcName: string, parameters: IParameters, block: BlockSyntax, expression: ISyntaxElement): void {
+        private emitAnyArrowFunctionExpression(arrowFunction: ISyntaxElement, block: BlockSyntax, expression: ISyntaxElement): void {
             var savedInArrowFunction = this.inArrowFunction;
             this.inArrowFunction = true;
 
@@ -1186,11 +1188,23 @@ module TypeScript {
 
             this.recordSourceMappingStart(arrowFunction);
             this.writeToOutput("function ");
-            this.writeToOutput("(");
-            this.emitFunctionParameters(parameters);
-            this.writeToOutput(")");
 
-            this.emitFunctionBodyStatements(funcName, arrowFunction, parameters, block, expression);
+            var parameters: IParameters = null;
+            if (arrowFunction.kind() === SyntaxKind.ParenthesizedArrowFunctionExpression) {
+                var parenthesizedArrowFunction = <ParenthesizedArrowFunctionExpressionSyntax>arrowFunction;
+
+                parameters = Parameters.fromParameterList(parenthesizedArrowFunction.callSignature.parameterList);
+                this.emitParameterList(parenthesizedArrowFunction.callSignature.parameterList);
+            }
+            else {
+                parameters = Parameters.fromIdentifier((<SimpleArrowFunctionExpressionSyntax>arrowFunction).identifier)
+
+                this.writeToOutput("(");
+                this.emitFunctionParameters(parameters);
+                this.writeToOutput(")");
+            }
+
+            this.emitFunctionBodyStatements(/*funcName:*/ null, arrowFunction, parameters, block, expression);
 
             this.recordSourceMappingEnd(arrowFunction);
 
@@ -1220,14 +1234,13 @@ module TypeScript {
             this.recordSourceMappingStart(funcDecl);
             this.writeToOutput("function ");
             this.writeToOutput(this.thisClassNode.identifier.text());
-            this.writeToOutput("(");
-            var parameters = Parameters.fromParameterList(funcDecl.parameterList);
-            this.emitFunctionParameters(parameters);
-            this.writeLineToOutput(") {");
+            this.emitParameterList(funcDecl.parameterList);
+            this.writeLineToOutput(" {");
 
             this.recordSourceMappingNameStart("constructor");
             this.indenter.increaseIndent();
 
+            var parameters = Parameters.fromParameterList(funcDecl.parameterList)
             this.emitDefaultValueAssignments(parameters);
             this.emitRestParameterInitializer(parameters);
 
@@ -1236,7 +1249,7 @@ module TypeScript {
             }
 
             this.emitConstructorStatements(funcDecl);
-            this.emitCommentsArray(postComments(funcDecl.block.closeBraceToken), /*trailing:*/ false);
+            this.emitCommentsArray(convertTokenLeadingComments(funcDecl.block.closeBraceToken), /*trailing:*/ false);
 
             this.indenter.decreaseIndent();
             this.emitIndent();
@@ -1273,8 +1286,7 @@ module TypeScript {
 
             this.recordSourceMappingNameStart(accessor.propertyName.text());
             this.writeToOutput(accessor.propertyName.text());
-            this.writeToOutput("(");
-            this.writeToOutput(")");
+            this.emitParameterList(accessor.parameterList);
 
             this.emitFunctionBodyStatements(null, accessor, Parameters.fromParameterList(accessor.parameterList), accessor.block, /*bodyExpression:*/ null);
 
@@ -1307,13 +1319,9 @@ module TypeScript {
 
             this.recordSourceMappingNameStart(accessor.propertyName.text());
             this.writeToOutput(accessor.propertyName.text());
-            this.writeToOutput("(");
+            this.emitParameterList(accessor.parameterList);
 
-            var parameters = Parameters.fromParameterList(accessor.parameterList);
-            this.emitFunctionParameters(parameters);
-            this.writeToOutput(")");
-
-            this.emitFunctionBodyStatements(null, accessor, parameters, accessor.block, /*bodyExpression:*/ null);
+            this.emitFunctionBodyStatements(null, accessor, Parameters.fromParameterList(accessor.parameterList), accessor.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(accessor);
 
@@ -1348,13 +1356,8 @@ module TypeScript {
                 this.recordSourceMappingEnd(funcDecl.identifier);
             }
 
-            this.writeToOutput("(");
-
-            var parameters = Parameters.fromParameterList(funcDecl.callSignature.parameterList);
-            this.emitFunctionParameters(parameters);
-            this.writeToOutput(")");
-
-            this.emitFunctionBodyStatements(funcName, funcDecl, parameters, funcDecl.block, /*bodyExpression:*/ null);
+            this.emitParameterList(funcDecl.callSignature.parameterList);
+            this.emitFunctionBodyStatements(funcName, funcDecl, Parameters.fromParameterList(funcDecl.callSignature.parameterList), funcDecl.block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
 
@@ -1820,7 +1823,7 @@ module TypeScript {
         }
 
         public recordSourceMappingStart(ast: ISpan) {
-            if (this.sourceMapper && isValidAstNode(ast)) {
+            if (this.sourceMapper && isValidSpan(ast)) {
                 var lineCol = { line: -1, character: -1 };
                 var sourceMapping = new SourceMapping();
                 sourceMapping.start.emittedColumn = this.emitState.column;
@@ -1853,7 +1856,7 @@ module TypeScript {
         }
 
         public recordSourceMappingEnd(ast: ISpan) {
-            if (this.sourceMapper && isValidAstNode(ast)) {
+            if (this.sourceMapper && isValidSpan(ast)) {
                 // Pop source mapping childs
                 this.sourceMapper.currentMappings.pop();
 
@@ -2336,13 +2339,9 @@ module TypeScript {
 
             this.recordSourceMappingStart(funcDecl);
             this.writeToOutput("function ");
-
-            this.writeToOutput("(");
+            this.emitParameterList(parameterList);
 
             var parameters = Parameters.fromParameterList(parameterList);
-            this.emitFunctionParameters(parameters);
-            this.writeToOutput(")");
-
             this.emitFunctionBodyStatements(null, funcDecl, parameters, block, /*bodyExpression:*/ null);
 
             this.recordSourceMappingEnd(funcDecl);
@@ -2652,7 +2651,7 @@ module TypeScript {
         }
 
         public emitParenthesizedExpression(parenthesizedExpression: ParenthesizedExpressionSyntax): void {
-            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && postComments(parenthesizedExpression.openParenToken) === null) {
+            if (parenthesizedExpression.expression.kind() === SyntaxKind.CastExpression && convertTokenTrailingComments(parenthesizedExpression.openParenToken) === null) {
                 // We have an expression of the form: (<Type>SubExpr)
                 // Emitting this as (SubExpr) is really not desirable.  Just emit the subexpr as is.
                 this.emit(parenthesizedExpression.expression);
@@ -2660,7 +2659,7 @@ module TypeScript {
             else {
                 this.recordSourceMappingStart(parenthesizedExpression);
                 this.writeToOutput("(");
-                this.emitCommentsArray(postComments(parenthesizedExpression.openParenToken), /*trailing:*/ false);
+                this.emitCommentsArray(convertTokenTrailingComments(parenthesizedExpression.openParenToken), /*trailing:*/ false);
                 this.emit(parenthesizedExpression.expression);
                 this.writeToOutput(")");
                 this.recordSourceMappingEnd(parenthesizedExpression);
@@ -2886,7 +2885,10 @@ module TypeScript {
         public emitSimplePropertyAssignment(property: SimplePropertyAssignmentSyntax): void {
             this.recordSourceMappingStart(property);
             this.emit(property.propertyName);
+
             this.writeToOutput(": ");
+            this.emitCommentsArray(convertTokenTrailingComments(property.colonToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
+
             this.emit(property.expression);
             this.recordSourceMappingEnd(property);
         }
@@ -2985,7 +2987,7 @@ module TypeScript {
             if (block.statements) {
                 this.emitList(block.statements);
             }
-            this.emitCommentsArray(preComments(block.closeBraceToken), /*trailing:*/ false);
+            this.emitCommentsArray(convertTokenLeadingComments(block.closeBraceToken), /*trailing:*/ false);
             this.indenter.decreaseIndent();
             this.emitIndent();
             this.writeToOutput("}");
@@ -3231,10 +3233,12 @@ module TypeScript {
 
         public emitEqualsValueClause(clause: EqualsValueClauseSyntax): void {
             this.writeToOutput(" = ");
+            this.emitCommentsArray(convertTokenTrailingComments(clause.equalsToken), /*trailing:*/ true, /*noLeadingSpace:*/ true);
+
             this.emit(clause.value);
         }
 
-        public emitParameter(parameter: ParameterSyntax): void {
+        private emitParameter(parameter: ParameterSyntax): void {
             this.writeToOutputWithSourceMapRecord(parameter.identifier.text(), parameter);
         }
 

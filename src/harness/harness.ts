@@ -1940,7 +1940,7 @@ module Harness {
         }
 
         function writeComparison(expected: string, actual: string, relativeFilename: string, actualFilename: string, descriptionForDescribe: string) {
-            if (expected != actual) {
+            if (expected.trim() != actual.trim()) {
                 // Overwrite & issue error
                 var errMsg = 'The baseline file ' + relativeFilename + ' has changed. Please refer to baseline-report.html and ';
                 errMsg += 'either fix the regression (if unintended) or run jake baseline-accept (if intended).'

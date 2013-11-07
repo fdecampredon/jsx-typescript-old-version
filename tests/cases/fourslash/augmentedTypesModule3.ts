@@ -12,7 +12,6 @@ edit.insert('C.');
 verify.not.completionListContains('foo');
 edit.backspace(1);
 
-debugger;
 goTo.marker('2');
 verify.quickInfoIs("{ C: { prototype: m2g.C; new(): m2g.C; }; (): void; }", undefined, "r", "var");
 
