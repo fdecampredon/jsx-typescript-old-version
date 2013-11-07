@@ -10222,7 +10222,14 @@ module TypeScript {
         }
 
         private getCallTargetErrorSpanAST(callEx: ICallExpressionSyntax): ISyntaxElement {
-            return (callEx.expression.kind() === SyntaxKind.MemberAccessExpression) ? (<MemberAccessExpressionSyntax>callEx.expression).name : callEx.expression;
+            if (callEx.expression.kind() === SyntaxKind.MemberAccessExpression) {
+                var memberAccessExpression = <MemberAccessExpressionSyntax>callEx.expression;
+                if (memberAccessExpression.name.fullWidth() > 0) {
+                    return memberAccessExpression.name;
+                }
+            }
+
+            return callEx.expression;
         }
 
         private overloadHasCorrectArity(signature: PullSignatureSymbol, args: ISeparatedSyntaxList): boolean {

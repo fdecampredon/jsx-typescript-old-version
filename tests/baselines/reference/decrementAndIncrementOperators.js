@@ -1,7 +1,6 @@
 var x = 0;
 
 // errors
-// errors
 1++;
 
 (1)++;

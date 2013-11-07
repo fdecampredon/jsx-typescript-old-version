@@ -312,14 +312,27 @@ module TypeScript.Syntax {
         }
     }
 
+    function massageDisallowedIdentifiers(text: string): string {
+        // A bit of an unfortunate hack we need to run on some downlevel browsers. 
+        // The problem is that we use a token's valueText as a key in many of our collections.  
+        // Unfortunately, if that key turns out to be __proto__, then that breaks in some browsers
+        // due to that being a reserved way to get to the object's prototyped.  To workaround this
+        // we ensure that the valueText of any token is not __proto__ but is instead #__proto__.
+        if (text === "__proto__") {
+            return "#__proto__";
+        }
+
+        return text;
+    }
+
     function valueText1(kind: SyntaxKind, text: string): string {
         var value = value1(kind, text);
-        return value === null ? "" : value.toString();
+        return value === null ? "" : massageDisallowedIdentifiers(value.toString());
     }
 
     export function valueText(token: ISyntaxToken): string {
         var value = token.value();
-        return value === null ? "" : value.toString();
+        return value === null ? "" : massageDisallowedIdentifiers(value.toString());
     }
 
     class EmptyToken implements ISyntaxToken {

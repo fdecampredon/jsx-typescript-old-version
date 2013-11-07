@@ -68,7 +68,7 @@ arr_c3 = arr_i1_2; // should be an error - is
 arr_any = f1; // should be an error - is
 arr_any = function () {
     return null;
-};
+}; // should be an error - is
 arr_any = o1; // should be an error - is
 arr_any = a1; // should be ok - is
 arr_any = c1; // should be an error - is

@@ -1,2 +1,2 @@
-function foo( /** nothing */ ) {
+function foo(/** nothing */ ) {
 }

@@ -1,4 +1,1 @@
-var Person = makeClass(/**
-@scope Person
-*/
-{});
+var Person = makeClass({});

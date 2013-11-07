@@ -178,9 +178,13 @@ declare function jsDocMultiLineMerge(): void;
 declare function jsDocMixedComments1(): void;
 /** jsdoc comment */ /*** another jsDocComment*/
 declare function jsDocMixedComments2(): void;
+/** jsdoc comment */ /*** another jsDocComment*/
 declare function jsDocMixedComments3(): void;
+/** jsdoc comment */ /*** another jsDocComment*/
 declare function jsDocMixedComments4(): void;
+/** jsdoc comment */ /*** another jsDocComment*/
 declare function jsDocMixedComments5(): void;
+/*** another jsDocComment*/
 /** jsdoc comment */
 declare function jsDocMixedComments6(): void;
 declare function noHelpComment1(): void;

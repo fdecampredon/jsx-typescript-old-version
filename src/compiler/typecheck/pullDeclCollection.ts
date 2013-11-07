@@ -378,7 +378,9 @@ module TypeScript {
             declFlags |= PullElementFlags.DeclaredInAWithBlock;
         }
 
-        var span = TextSpan.fromBounds(argDecl.start(), argDecl.end());
+        var span = argDecl.fullWidth() > 0
+            ? TextSpan.fromBounds(argDecl.start(), argDecl.end())
+            : TextSpan.fromBounds(argDecl.parent.start(), argDecl.parent.end());
 
         var decl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
 
@@ -650,7 +652,9 @@ module TypeScript {
                 declFlags |= PullElementFlags.DeclaredInAWithBlock;
             }
 
-            var span = TextSpan.fromBounds(simpleArrow.identifier.start(), simpleArrow.identifier.end());
+            var span = simpleArrow.identifier.fullWidth() > 0
+                ? TextSpan.fromBounds(simpleArrow.identifier.start(), simpleArrow.identifier.end())
+                : TextSpan.fromBounds(simpleArrow.firstToken().start(), simpleArrow.firstToken().start());
 
             var decl: PullDecl = new NormalPullDecl(simpleArrow.identifier.valueText(), simpleArrow.identifier.text(), PullElementKind.Parameter, declFlags, parent, span);
 

@@ -28,8 +28,7 @@ var n = 30;
 var y = /** value comment */ 20;
 
 /// var deckaration with comment on type as well
-var yy = /// value comment
-20;
+var yy = 20;
 
 /** comment2 */
 var z = /** lambda comment */ function (x, y) {

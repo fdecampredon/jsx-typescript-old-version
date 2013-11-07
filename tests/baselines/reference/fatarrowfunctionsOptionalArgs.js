@@ -1,14 +1,11 @@
 // valid
 // no params
-(// valid
-// no params
-function () {
+(function () {
     return 1;
 });
 
 // one param, no type
-(// one param, no type
-function (arg) {
+(function (arg) {
     return 2;
 });
 
@@ -18,40 +15,34 @@ function (arg) {
 });
 
 // one param, no type with default value
-(// one param, no type with default value
-function (arg) {
+(function (arg) {
     if (typeof arg === "undefined") { arg = 1; }
     return 3;
 });
 
 // one param, no type, optional
-(// one param, no type, optional
-function (arg) {
+(function (arg) {
     return 4;
 });
 
 // typed param
-(// typed param
-function (arg) {
+(function (arg) {
     return 5;
 });
 
 // typed param with default value
-(// typed param with default value
-function (arg) {
+(function (arg) {
     if (typeof arg === "undefined") { arg = 0; }
     return 6;
 });
 
 // optional param
-(// optional param
-function (arg) {
+(function (arg) {
     return 7;
 });
 
 // var arg param
-(// var arg param
-function () {
+(function () {
     var arg = [];
     for (var _i = 0; _i < (arguments.length - 0); _i++) {
         arg[_i] = arguments[_i + 0];
@@ -60,8 +51,7 @@ function () {
 });
 
 // multiple arguments
-(// multiple arguments
-function (arg1, arg2) {
+(function (arg1, arg2) {
     return 12;
 });
 (function (arg1, arg2) {
@@ -237,8 +227,7 @@ false ? null : function () {
 };
 
 //multiple levels
-(//multiple levels
-function (a) {
+(function (a) {
     return a;
 });
 (function (b) {

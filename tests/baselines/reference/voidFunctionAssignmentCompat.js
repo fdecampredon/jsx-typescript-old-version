@@ -2,13 +2,13 @@ var fa = function () {
     return 3;
 };
 fa = function () {
-};
+}; // should not work
 
 var fv = function () {
 };
 fv = function () {
     return 0;
-};
+}; // should work
 
 function execAny(callback) {
     return callback(0);

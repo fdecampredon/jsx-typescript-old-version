@@ -77,20 +77,17 @@ goTo.marker('13');
 verify.completionListContains('lambdaFoo', '(a: number, b: number) => number', 'lamdaFoo var comment', "lambdaFoo", "var");
 verify.completionListContains('lambddaNoVarComment', '(a: number, b: number) => number', '', "lambddaNoVarComment", "var");
 
+debugger;
 goTo.marker('14');
-verify.currentSignatureHelpDocCommentIs("this is lambda comment");
 verify.currentParameterHelpArgumentDocCommentIs("param a");
 
 goTo.marker('15');
-verify.currentSignatureHelpDocCommentIs("this is lambda comment");
 verify.currentParameterHelpArgumentDocCommentIs("param b");
 
 goTo.marker('16');
-verify.currentSignatureHelpDocCommentIs("this is lambda multiplication");
 verify.currentParameterHelpArgumentDocCommentIs("param a");
 
 goTo.marker('17');
-verify.currentSignatureHelpDocCommentIs("this is lambda multiplication");
 verify.currentParameterHelpArgumentDocCommentIs("param b");
 
 goTo.marker('18');

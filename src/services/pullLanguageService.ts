@@ -507,12 +507,12 @@ module TypeScript.Services {
 
             TypeScript.Debug.assert(callExpression.argumentList.arguments !== null, "Expected call expression to have arguments, but it did not");
 
-            var argumentsStart = callExpression.expression.end() + callExpression.expression.trailingTriviaWidth();
+            var argumentsStart = callExpression.argumentList.openParenToken.end();
             var argumentsEnd = callExpression.argumentList.closeParenToken.fullWidth() > 0
                 ? callExpression.argumentList.closeParenToken.start()
                 : callExpression.argumentList.fullEnd();
             
-            if (position <= argumentsStart || position > argumentsEnd) {
+            if (position < argumentsStart || position > argumentsEnd) {
                 this.logger.log("Outside argument list");
                 return null;
             }

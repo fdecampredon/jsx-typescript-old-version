@@ -237,25 +237,26 @@ verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('7q');
 verify.quickInfoIs("(): void", "jsdoc comment \nanother jsDocComment", "jsDocMixedComments2", "function");
 
+debugger;
 goTo.marker('8');
-verify.currentSignatureHelpDocCommentIs("");
+verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('8q');
-verify.quickInfoIs("(): void", "", "jsDocMixedComments3", "function");
+verify.quickInfoIs("(): void", "jsdoc comment \nanother jsDocComment", "jsDocMixedComments3", "function");
 
 goTo.marker('9');
-verify.currentSignatureHelpDocCommentIs("");
+verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('9q');
-verify.quickInfoIs("(): void", "", "jsDocMixedComments4", "function");
+verify.quickInfoIs("(): void", "jsdoc comment \nanother jsDocComment", "jsDocMixedComments4", "function");
 
 goTo.marker('10');
-verify.currentSignatureHelpDocCommentIs("");
+verify.currentSignatureHelpDocCommentIs("jsdoc comment \nanother jsDocComment");
 goTo.marker('10q');
-verify.quickInfoIs("(): void", "", "jsDocMixedComments5", "function");
+verify.quickInfoIs("(): void", "jsdoc comment \nanother jsDocComment", "jsDocMixedComments5", "function");
 
 goTo.marker('11');
-verify.currentSignatureHelpDocCommentIs("jsdoc comment ");
+verify.currentSignatureHelpDocCommentIs("another jsDocComment\njsdoc comment ");
 goTo.marker('11q');
-verify.quickInfoIs("(): void", "jsdoc comment ", "jsDocMixedComments6", "function");
+verify.quickInfoIs("(): void", "another jsDocComment\njsdoc comment ", "jsDocMixedComments6", "function");
 
 goTo.marker('12');
 verify.currentSignatureHelpDocCommentIs("");

@@ -15,4 +15,4 @@ var B = (function () {
 
 function g(x) {
 }
-g(7);
+g(7); // the parameter list is fixed, so this should not error

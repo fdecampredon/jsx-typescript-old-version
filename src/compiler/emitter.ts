@@ -413,7 +413,7 @@ module TypeScript {
             }
 
             if (comment.kind() === SyntaxKind.MultiLineCommentTrivia) {
-                this.recordSourceMappingStart(comment);
+                this.recordSourceMappingSpanStart(comment);
                 this.writeToOutput(text[0]);
 
                 if (text.length > 1 || comment.endsLine) {
@@ -422,19 +422,19 @@ module TypeScript {
                         this.emitIndent();
                         this.writeToOutput(text[i]);
                     }
-                    this.recordSourceMappingEnd(comment);
+                    this.recordSourceMappingSpanEnd(comment);
                     this.writeLineToOutput("");
                     // Fall through
                 } else {
-                    this.recordSourceMappingEnd(comment);
+                    this.recordSourceMappingSpanEnd(comment);
                     this.writeToOutput(" ");
                     return;
                 }
             }
             else {
-                this.recordSourceMappingStart(comment);
+                this.recordSourceMappingSpanStart(comment);
                 this.writeToOutput(text[0]);
-                this.recordSourceMappingEnd(comment);
+                this.recordSourceMappingSpanEnd(comment);
                 this.writeLineToOutput("");
                 // Fall through
             }
@@ -1822,7 +1822,13 @@ module TypeScript {
             }
         }
 
-        public recordSourceMappingStart(ast: ISpan) {
+        private recordSourceMappingStart(ast: ISyntaxElement) {
+            if (this.sourceMapper && isValidAstNode(ast)) {
+                this.recordSourceMappingSpanStart(ast);
+            }
+        }
+
+        private recordSourceMappingSpanStart(ast: ISpan) {
             if (this.sourceMapper && isValidSpan(ast)) {
                 var lineCol = { line: -1, character: -1 };
                 var sourceMapping = new SourceMapping();
@@ -1855,7 +1861,13 @@ module TypeScript {
             }
         }
 
-        public recordSourceMappingEnd(ast: ISpan) {
+        private recordSourceMappingEnd(ast: ISyntaxElement) {
+            if (this.sourceMapper && isValidAstNode(ast)) {
+                this.recordSourceMappingSpanEnd(ast);
+            }
+        }
+
+        private recordSourceMappingSpanEnd(ast: ISpan) {
             if (this.sourceMapper && isValidSpan(ast)) {
                 // Pop source mapping childs
                 this.sourceMapper.currentMappings.pop();
