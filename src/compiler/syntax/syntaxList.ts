@@ -353,7 +353,7 @@ module TypeScript.Syntax {
         public firstToken(): ISyntaxToken {
             for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
                 var token = this.nodeOrTokens[i].firstToken();
-                if (token !== null) {
+                if (token && token.fullWidth() > 0) {
                     return token;
                 }
             }
@@ -364,7 +364,7 @@ module TypeScript.Syntax {
         public lastToken(): ISyntaxToken {
             for (var i = this.nodeOrTokens.length - 1; i >= 0; i--) {
                 var token = this.nodeOrTokens[i].lastToken();
-                if (token !== null) {
+                if (token && token.fullWidth() > 0) {
                     return token;
                 }
             }

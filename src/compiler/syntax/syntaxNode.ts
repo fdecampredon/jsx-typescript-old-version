@@ -73,8 +73,13 @@ module TypeScript {
                 var element = this.childAt(i);
 
                 if (element !== null) {
-                    if (element.fullWidth() > 0 || element.kind() === SyntaxKind.EndOfFileToken) {
-                        return element.firstToken();
+                    if (element.kind() === SyntaxKind.EndOfFileToken) {
+                        return <ISyntaxToken>element;
+                    }
+
+                    var token = element.firstToken();
+                    if (token && token.fullWidth() > 0) {
+                        return token;
                     }
                 }
             }
@@ -88,8 +93,13 @@ module TypeScript {
                 var element = this.childAt(i);
 
                 if (element !== null) {
-                    if (element.fullWidth() > 0 || element.kind() === SyntaxKind.EndOfFileToken) {
-                        return element.lastToken();
+                    if (element.kind() === SyntaxKind.EndOfFileToken) {
+                        return <ISyntaxToken>element;
+                    }
+
+                    var token = element.lastToken();
+                    if (token && token.fullWidth() > 0) {
+                        return token;
                     }
                 }
             }

@@ -227,15 +227,11 @@ class Program {
         var rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         var rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
 
-        // TypeScript.Environment.standardOut.WriteLine("Incremental     time: " + totalIncrementalTime);
         TypeScript.Environment.standardOut.WriteLine("Incremental     rate: " + rateMBPerSecond + " MB/s");
 
         rateBytesPerMillisecond = (contents.length * repeat) / totalIncrementalASTTime;
         rateBytesPerSecond = rateBytesPerMillisecond * 1000;
         rateMBPerSecond = rateBytesPerSecond / (1024 * 1024);
-
-        // TypeScript.Environment.standardOut.WriteLine("Incremental AST time: " + totalIncrementalASTTime);
-        TypeScript.Environment.standardOut.WriteLine("Incremental AST rate: " + rateMBPerSecond + " MB/s");
 
         var allOldElements = TypeScript.SyntaxElementsCollector.collectElements(originalTree.sourceUnit());
         var allNewElements = TypeScript.SyntaxElementsCollector.collectElements(tree.sourceUnit());

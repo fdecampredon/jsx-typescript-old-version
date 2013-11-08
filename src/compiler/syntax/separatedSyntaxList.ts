@@ -388,20 +388,11 @@ module TypeScript.Syntax {
         }
 
         public firstToken(): ISyntaxToken {
-            var token: ISyntaxToken;
             for (var i = 0, n = this.elements.length; i < n; i++) {
-                if (i % 2 === 0) {
-                    var nodeOrToken = this.elements[i];
-                    token = nodeOrToken.firstToken();
-                    if (token !== null) {
-                        return token;
-                    }
-                }
-                else {
-                    token = <ISyntaxToken>this.elements[i];
-                    if (token.width() > 0) {
-                        return token;
-                    }
+                var nodeOrToken = this.elements[i];
+                var token = nodeOrToken.firstToken();
+                if (token !== null && token.fullWidth() > 0) {
+                    return token;
                 }
             }
 
@@ -411,18 +402,10 @@ module TypeScript.Syntax {
         public lastToken(): ISyntaxToken {
             var token: ISyntaxToken;
             for (var i = this.elements.length - 1; i >= 0; i--) {
-                if (i % 2 === 0) {
-                    var nodeOrToken = this.elements[i];
-                    token = nodeOrToken.lastToken();
-                    if (token !== null) {
-                        return token;
-                    }
-                }
-                else {
-                    token = <ISyntaxToken>this.elements[i];
-                    if (token.width() > 0) {
-                        return token;
-                    }
+                var nodeOrToken = this.elements[i];
+                var token = nodeOrToken.lastToken();
+                if (token !== null && token.fullWidth() > 0) {
+                    return token;
                 }
             }
 

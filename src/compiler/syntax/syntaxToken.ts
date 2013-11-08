@@ -394,8 +394,8 @@ module TypeScript.Syntax {
             return new PositionedToken(parent, this, fullStart);
         }
 
-        public firstToken() { return this; }
-        public lastToken() { return this; }
+        public firstToken(): ISyntaxToken { return null; }
+        public lastToken(): ISyntaxToken { return null; }
         public isTypeScriptSpecific() { return false; }
 
         // Empty tokens are never incrementally reusable.
@@ -518,8 +518,8 @@ module TypeScript.Syntax {
 
         public kind(): SyntaxKind { return this.tokenKind; }
         public toJSON(key: any): any { return tokenToJSON(this); }
-        public firstToken() { return this; }
-        public lastToken() { return this; }
+        public firstToken() { return this.fullWidth() > 0 ? this : null; }
+        public lastToken() { return this.fullWidth() > 0 ? this : null; }
         public isTypeScriptSpecific() { return false; }
 
         // Realized tokens are created from the parser.  They are *never* incrementally reusable.

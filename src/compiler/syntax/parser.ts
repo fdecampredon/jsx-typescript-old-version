@@ -4977,7 +4977,7 @@ module TypeScript.Parser {
             for (var i = items.length - 1; i >= 0; i--) {
                 var item = items[i];
                 var lastToken = item.lastToken();
-                if (lastToken.fullWidth() > 0) {
+                if (lastToken && lastToken.fullWidth() > 0) {
                     items[i] = this.addSkippedTokenAfterNodeOrToken(item, skippedToken);
                     return;
                 }
