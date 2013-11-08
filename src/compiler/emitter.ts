@@ -1932,6 +1932,11 @@ module TypeScript {
         }
 
         private isOnSameLine(pos1: number, pos2: number): boolean {
+            if (pos1 < 0 || pos2 < 0) {
+                // Missing element.  Assume it's on the same line as the other element.
+                return true;
+            }
+
             var lineMap = this.document.lineMap();
             return lineMap.getLineNumberFromPosition(pos1) === lineMap.getLineNumberFromPosition(pos2);
         }
