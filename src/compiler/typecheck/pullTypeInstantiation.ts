@@ -579,6 +579,7 @@ module TypeScript {
                        
                         if (innerSubstitution &&
                             (!outerSubstitution.isTypeParameter() ||
+                            !outerTypeMap[innerSubstitution.pullSymbolID] ||
                             !outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] ||
                             (outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] == outerSubstitution))) {
 

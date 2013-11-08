@@ -23,7 +23,6 @@ module TypeScript {
         public resolver: PullTypeResolver = null;
         public argumentASTs: ISeparatedSyntaxList = null;
 
-
         // When inferences are being performed at function call sites, use this overloads
         constructor(resolver: PullTypeResolver, argumentASTs: ISeparatedSyntaxList);
 

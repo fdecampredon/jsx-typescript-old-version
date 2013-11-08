@@ -618,7 +618,9 @@ module TypeScript {
                     case SyntaxKind.FunctionExpression:
                     case SyntaxKind.SimpleArrowFunctionExpression:
                     case SyntaxKind.ParenthesizedArrowFunctionExpression:
-                        resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ true, resolutionContext);
+                        if (propagateContextualTypes) {
+                            resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ true, resolutionContext);
+                        }
                         break;
 
                     //case SyntaxKind.Parameter:
@@ -792,7 +794,7 @@ module TypeScript {
                     case SyntaxKind.ObjectType:
                         // ObjectType are just like Object Literals are bound when needed, ensure we have a decl, by forcing it to be 
                         // resolved before descending into it.
-                        if (TypeScript.isTypesOnlyLocation(current)) {
+                        if (propagateContextualTypes && TypeScript.isTypesOnlyLocation(current)) {
                             resolver.resolveAST(current, /*inContextuallyTypedAssignment*/ false, resolutionContext);
                         }
 

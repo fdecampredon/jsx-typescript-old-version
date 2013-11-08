@@ -174,8 +174,11 @@ module TypeScript.Services {
                 return this.createSyntaxTree(fileName, scriptSnapshot);
             }
 
-            var nextSyntaxTree = TypeScript.Parser.incrementalParse(previousSyntaxTree, editRange,
-                TypeScript.SimpleText.fromScriptSnapshot(scriptSnapshot));
+            var nextSyntaxTree =
+                Parser.incrementalParse(
+                    previousSyntaxTree,
+                    editRange,
+                    SimpleText.fromScriptSnapshot(scriptSnapshot));
 
             this.ensureInvariants(fileName, editRange, nextSyntaxTree, this._currentFileScriptSnapshot, scriptSnapshot);
 
@@ -190,34 +193,58 @@ module TypeScript.Services {
             // bad.
             var expectedNewLength = oldScriptSnapshot.getLength() - editRange.span().length() + editRange.newLength();
             var actualNewLength = newScriptSnapshot.getLength();
-            TypeScript.Debug.assert(expectedNewLength === actualNewLength);
 
-            // The following checks are quite expensive.  Don't perform them by default.
-            return;
+            function provideMoreDebugInfo() {
 
-            // If this fires, the text change range is bogus.  It says the change starts at point 
-            // 'X', but we can see a text difference *before* that point.
-            var oldPrefixText = oldScriptSnapshot.getText(0, editRange.span().start());
-            var newPrefixText = newScriptSnapshot.getText(0, editRange.span().start());
-            TypeScript.Debug.assert(oldPrefixText === newPrefixText);
+                var debugInformation = ["expected length:", expectedNewLength, "and actual length:", actualNewLength, "are not equal\r\n"];
 
-            // If this fires, the text change range is bogus.  It says the change goes only up to
-            // point 'X', but we can see a text difference *after* that point.
-            var oldSuffixText = oldScriptSnapshot.getText(editRange.span().end(), oldScriptSnapshot.getLength());
-            var newSuffixText = newScriptSnapshot.getText(editRange.newSpan().end(), newScriptSnapshot.getLength());
-            TypeScript.Debug.assert(oldSuffixText === newSuffixText);
+                var oldSpan = editRange.span();
 
-            // Ok, text change range and script snapshots look ok.  Let's verify that our 
-            // incremental parsing worked properly.
-            var normalTree = this.createSyntaxTree(fileName, newScriptSnapshot);
-            TypeScript.Debug.assert(normalTree.structuralEquals(incrementalTree));
+                function prettyPrintString(s: string): string {
+                    return '"' + s.replace(/\r/g, '\\r').replace(/\n/g, '\\n') + '"';
+                }
 
-            // Ok, the trees looked good.  So at least our incremental parser agrees with the 
-            // normal parser.  Now, verify that the incremental tree matches the contents of the 
-            // script snapshot.
-            var incrementalTreeText = incrementalTree.sourceUnit().fullText();
-            var actualSnapshotText = newScriptSnapshot.getText(0, newScriptSnapshot.getLength());
-            TypeScript.Debug.assert(incrementalTreeText === actualSnapshotText);
+                debugInformation.push('Edit range (old text) (start: ' + oldSpan.start() + ', end: ' + oldSpan.end() + ') \r\n');
+                debugInformation.push('Old text edit range contents: ' + prettyPrintString(oldScriptSnapshot.getText(oldSpan.start(), oldSpan.end())));
+
+                var newSpan = editRange.newSpan();
+
+                debugInformation.push('Edit range (new text) (start: ' + newSpan.start() + ', end: ' + newSpan.end() + ') \r\n');
+                debugInformation.push('New text edit range contents: ' + prettyPrintString(newScriptSnapshot.getText(newSpan.start(), newSpan.end())));
+
+                return debugInformation.join(' ');
+            }
+
+            Debug.assert(
+                expectedNewLength === actualNewLength,
+                "Expected length is different from actual!",
+                provideMoreDebugInfo);
+
+            if (Debug.shouldAssert(AssertionLevel.VeryAggressive)) {
+                // If this fires, the text change range is bogus.  It says the change starts at point 
+                // 'X', but we can see a text difference *before* that point.
+                var oldPrefixText = oldScriptSnapshot.getText(0, editRange.span().start());
+                var newPrefixText = newScriptSnapshot.getText(0, editRange.span().start());
+                Debug.assert(oldPrefixText === newPrefixText, 'Expected equal prefix texts!');
+
+                // If this fires, the text change range is bogus.  It says the change goes only up to
+                // point 'X', but we can see a text difference *after* that point.
+                var oldSuffixText = oldScriptSnapshot.getText(editRange.span().end(), oldScriptSnapshot.getLength());
+                var newSuffixText = newScriptSnapshot.getText(editRange.newSpan().end(), newScriptSnapshot.getLength());
+                Debug.assert(oldSuffixText === newSuffixText, 'Expected equal suffix texts!');
+
+                // Ok, text change range and script snapshots look ok.  Let's verify that our 
+                // incremental parsing worked properly.
+                var normalTree = this.createSyntaxTree(fileName, newScriptSnapshot);
+                Debug.assert(normalTree.structuralEquals(incrementalTree), 'Expected equal incremental and normal trees');
+
+                // Ok, the trees looked good.  So at least our incremental parser agrees with the 
+                // normal parser.  Now, verify that the incremental tree matches the contents of the 
+                // script snapshot.
+                var incrementalTreeText = incrementalTree.sourceUnit().fullText();
+                var actualSnapshotText = newScriptSnapshot.getText(0, newScriptSnapshot.getLength());
+                Debug.assert(incrementalTreeText === actualSnapshotText, 'Expected full texts to be equal');
+            }
         }
     }
 
