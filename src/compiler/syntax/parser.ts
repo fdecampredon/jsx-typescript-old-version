@@ -1612,6 +1612,11 @@ module TypeScript.Parser {
 
             // now, add the text of the token as skipped text to the trivia array.
             var trimmedToken = skippedToken.withLeadingTrivia(Syntax.emptyTriviaList).withTrailingTrivia(Syntax.emptyTriviaList);
+
+            // Because we removed the leading trivia from the skipped token, the full start of the
+            // trimmed token is the start of the skipped token.
+            trimmedToken.setFullStartAndText(skippedToken.start(), null);
+
             array.push(Syntax.skippedTokenTrivia(trimmedToken));
 
             // Finally, add the trailing trivia of the skipped token to the trivia array.
