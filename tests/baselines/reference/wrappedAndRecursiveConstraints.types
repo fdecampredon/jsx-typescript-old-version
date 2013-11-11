@@ -1,0 +1,27 @@
+=== tests/cases/compiler/wrappedAndRecursiveConstraints.ts ===
+Line 0 col 6 IdentifierName "C" = C<T>
+Line 0 col 8 IdentifierName "T" = T
+Line 0 col 18 IdentifierName "Date" = Date
+Line 1 col 23 IdentifierName "data" = T
+Line 1 col 29 IdentifierName "T" = T
+Line 2 col 0 IdentifierName "foo" = <U extends T>(x: U) => U
+Line 2 col 8 IdentifierName "U" = U
+Line 2 col 18 IdentifierName "T" = T
+Line 2 col 21 IdentifierName "x" = U
+Line 2 col 24 IdentifierName "U" = U
+Line 3 col 15 IdentifierName "x" = U
+Line 7 col 10 IdentifierName "Foo" = Foo
+Line 7 col 22 IdentifierName "Date" = Date
+Line 8 col 0 IdentifierName "foo" = string
+Line 11 col 4 IdentifierName "y" = Foo
+Line 11 col 7 IdentifierName "Foo" = Foo
+Line 12 col 4 IdentifierName "c" = C<Foo>
+Line 12 col 8 ObjectCreationExpression "new C(y)" = C<Foo>
+Line 12 col 12 IdentifierName "C" = { prototype: C<any>; new<T extends Date>(data: T): C<T>; }
+Line 12 col 14 IdentifierName "y" = Foo
+Line 13 col 4 IdentifierName "r" = Foo
+Line 13 col 8 InvocationExpression "c.foo(y)" = Foo
+Line 13 col 8 MemberAccessExpression "c.foo" = <U extends T>(x: U) => U
+Line 13 col 8 IdentifierName "c" = C<Foo>
+Line 13 col 10 IdentifierName "foo" = <U extends T>(x: U) => U
+Line 13 col 14 IdentifierName "y" = Foo

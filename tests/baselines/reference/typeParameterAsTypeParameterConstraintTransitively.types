@@ -1,0 +1,96 @@
+=== tests/cases/compiler/typeParameterAsTypeParameterConstraintTransitively.ts ===
+Line 0 col 10 IdentifierName "A" = A
+Line 0 col 14 IdentifierName "foo" = number
+Line 1 col 10 IdentifierName "B" = B
+Line 1 col 20 IdentifierName "A" = A
+Line 1 col 24 IdentifierName "bar" = string
+Line 2 col 10 IdentifierName "C" = C
+Line 2 col 20 IdentifierName "B" = B
+Line 2 col 24 IdentifierName "baz" = boolean
+Line 3 col 4 IdentifierName "a" = A
+Line 3 col 7 IdentifierName "A" = A
+Line 4 col 4 IdentifierName "b" = B
+Line 4 col 7 IdentifierName "B" = B
+Line 5 col 4 IdentifierName "c" = C
+Line 5 col 7 IdentifierName "C" = C
+Line 7 col 9 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 7 col 13 IdentifierName "T" = T
+Line 7 col 16 IdentifierName "U" = U
+Line 7 col 26 IdentifierName "T" = T
+Line 7 col 29 IdentifierName "V" = V
+Line 7 col 39 IdentifierName "U" = U
+Line 7 col 42 IdentifierName "x" = T
+Line 7 col 45 IdentifierName "T" = T
+Line 7 col 48 IdentifierName "y" = U
+Line 7 col 51 IdentifierName "U" = U
+Line 7 col 54 IdentifierName "z" = V
+Line 7 col 57 IdentifierName "V" = V
+Line 7 col 61 IdentifierName "V" = V
+Line 7 col 72 IdentifierName "z" = V
+Line 8 col 0 InvocationExpression "foo(1, 2, 3)" = number
+Line 8 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 10 col 0 InvocationExpression "foo({ x: 1 }, { x: 1, y: '' }, { x: 2, y: '', z: true })" = { x: number; y: string; z: boolean; }
+Line 10 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 10 col 4 ObjectLiteralExpression "{ x: 1 }" = { x: number; }
+Line 10 col 6 IdentifierName "x" = number
+Line 10 col 14 ObjectLiteralExpression "{ x: 1, y: '' }" = { x: number; y: string; }
+Line 10 col 16 IdentifierName "x" = number
+Line 10 col 22 IdentifierName "y" = string
+Line 10 col 31 ObjectLiteralExpression "{ x: 2, y: '', z: true }" = { x: number; y: string; z: boolean; }
+Line 10 col 33 IdentifierName "x" = number
+Line 10 col 39 IdentifierName "y" = string
+Line 10 col 46 IdentifierName "z" = boolean
+Line 11 col 0 InvocationExpression "foo(a, b, c)" = C
+Line 11 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 11 col 4 IdentifierName "a" = A
+Line 11 col 7 IdentifierName "b" = B
+Line 11 col 10 IdentifierName "c" = C
+Line 12 col 0 InvocationExpression "foo(a, b, { foo: 1, bar: '', hm: true })" = { foo: number; bar: string; hm: boolean; }
+Line 12 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 12 col 4 IdentifierName "a" = A
+Line 12 col 7 IdentifierName "b" = B
+Line 12 col 10 ObjectLiteralExpression "{ foo: 1, bar: '', hm: true }" = { foo: number; bar: string; hm: boolean; }
+Line 12 col 12 IdentifierName "foo" = number
+Line 12 col 20 IdentifierName "bar" = string
+Line 12 col 29 IdentifierName "hm" = boolean
+Line 13 col 0 InvocationExpression "foo((x: number, y) => { }, (x) => { }, () => { })" = () => void
+Line 13 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 13 col 4 ParenthesizedArrowFunctionExpression "(x: number, y) => { }" = (x: number, y: any) => void
+Line 13 col 5 IdentifierName "x" = number
+Line 13 col 16 IdentifierName "y" = any
+Line 13 col 27 ParenthesizedArrowFunctionExpression "(x) => { }" = (x: any) => void
+Line 13 col 28 IdentifierName "x" = any
+Line 13 col 39 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 15 col 9 IdentifierName "foo2" = <T extends A, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 15 col 14 IdentifierName "T" = T
+Line 15 col 24 IdentifierName "A" = A
+Line 15 col 27 IdentifierName "U" = U
+Line 15 col 37 IdentifierName "T" = T
+Line 15 col 40 IdentifierName "V" = V
+Line 15 col 50 IdentifierName "U" = U
+Line 15 col 53 IdentifierName "x" = T
+Line 15 col 56 IdentifierName "T" = T
+Line 15 col 59 IdentifierName "y" = U
+Line 15 col 62 IdentifierName "U" = U
+Line 15 col 65 IdentifierName "z" = V
+Line 15 col 68 IdentifierName "V" = V
+Line 15 col 72 IdentifierName "V" = V
+Line 15 col 83 IdentifierName "z" = V
+Line 16 col 0 InvocationExpression "foo(a, a, a)" = A
+Line 16 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 16 col 4 IdentifierName "a" = A
+Line 16 col 7 IdentifierName "a" = A
+Line 16 col 10 IdentifierName "a" = A
+Line 17 col 0 InvocationExpression "foo(a, b, c)" = C
+Line 17 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 17 col 4 IdentifierName "a" = A
+Line 17 col 7 IdentifierName "b" = B
+Line 17 col 10 IdentifierName "c" = C
+Line 18 col 0 InvocationExpression "foo(b, b, { foo: 1, bar: '', hm: '' })" = { foo: number; bar: string; hm: string; }
+Line 18 col 0 IdentifierName "foo" = <T, U extends T, V extends U>(x: T, y: U, z: V) => V
+Line 18 col 4 IdentifierName "b" = B
+Line 18 col 7 IdentifierName "b" = B
+Line 18 col 10 ObjectLiteralExpression "{ foo: 1, bar: '', hm: '' }" = { foo: number; bar: string; hm: string; }
+Line 18 col 12 IdentifierName "foo" = number
+Line 18 col 20 IdentifierName "bar" = string
+Line 18 col 29 IdentifierName "hm" = string

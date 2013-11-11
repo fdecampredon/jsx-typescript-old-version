@@ -43,7 +43,7 @@ goTo.marker('4');
 verify.quickInfoIs('C');
 
 goTo.marker('5');
-verify.quickInfoIs('C[]');
+verify.quickInfoIs('{ name: string; age: number; }[]');
 
 goTo.marker('6');
-verify.quickInfoIs('C');
+verify.quickInfoIs('{ name: string; age: number; }');

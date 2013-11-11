@@ -1,0 +1,62 @@
+=== tests/cases/compiler/objectTypeWithStringNamedPropertyOfIllegalCharacters.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 8 col 4 IdentifierName "c" = C
+Line 8 col 7 IdentifierName "C" = C
+Line 9 col 4 IdentifierName "r" = number
+Line 9 col 8 ElementAccessExpression "c["   "]" = number
+Line 9 col 8 IdentifierName "c" = C
+Line 10 col 4 IdentifierName "r2" = any
+Line 10 col 9 ElementAccessExpression "c["    "]" = any
+Line 10 col 9 IdentifierName "c" = C
+Line 11 col 4 IdentifierName "r3" = string
+Line 11 col 9 ElementAccessExpression "c["a   b"]" = string
+Line 11 col 9 IdentifierName "c" = C
+Line 13 col 4 IdentifierName "r4" = any
+Line 13 col 9 ElementAccessExpression "c["~!@#$%^&*()_+{}|:'<>?\/.,`"]" = any
+Line 13 col 9 IdentifierName "c" = C
+Line 15 col 10 IdentifierName "I" = I
+Line 21 col 4 IdentifierName "i" = I
+Line 21 col 7 IdentifierName "I" = I
+Line 22 col 4 IdentifierName "r" = number
+Line 22 col 8 ElementAccessExpression "i["   "]" = number
+Line 22 col 8 IdentifierName "i" = I
+Line 23 col 4 IdentifierName "r2" = any
+Line 23 col 9 ElementAccessExpression "i["    "]" = any
+Line 23 col 9 IdentifierName "i" = I
+Line 24 col 4 IdentifierName "r3" = string
+Line 24 col 9 ElementAccessExpression "i["a   b"]" = string
+Line 24 col 9 IdentifierName "i" = I
+Line 26 col 4 IdentifierName "r4" = any
+Line 26 col 9 ElementAccessExpression "i["~!@#$%^&*()_+{}|:'<>?\/.,`"]" = any
+Line 26 col 9 IdentifierName "i" = I
+Line 29 col 4 IdentifierName "a" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 35 col 4 IdentifierName "r" = number
+Line 35 col 8 ElementAccessExpression "a["   "]" = number
+Line 35 col 8 IdentifierName "a" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 36 col 4 IdentifierName "r2" = any
+Line 36 col 9 ElementAccessExpression "a["    "]" = any
+Line 36 col 9 IdentifierName "a" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 37 col 4 IdentifierName "r3" = string
+Line 37 col 9 ElementAccessExpression "a["a   b"]" = string
+Line 37 col 9 IdentifierName "a" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 39 col 4 IdentifierName "r4" = any
+Line 39 col 9 ElementAccessExpression "a["~!@#$%^&*()_+{}|:'<>?\/.,`"]" = any
+Line 39 col 9 IdentifierName "a" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 41 col 4 IdentifierName "b" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 41 col 8 ObjectLiteralExpression "{
+    "   ": 1,
+    "a   b": "",
+    "~!@#$%^&*()_+{}|:'<>?\/.,`": 1,
+}" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 47 col 4 IdentifierName "r" = number
+Line 47 col 8 ElementAccessExpression "b["   "]" = number
+Line 47 col 8 IdentifierName "b" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 48 col 4 IdentifierName "r2" = any
+Line 48 col 9 ElementAccessExpression "b["    "]" = any
+Line 48 col 9 IdentifierName "b" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 49 col 4 IdentifierName "r3" = string
+Line 49 col 9 ElementAccessExpression "b["a   b"]" = string
+Line 49 col 9 IdentifierName "b" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }
+Line 51 col 4 IdentifierName "r4" = any
+Line 51 col 9 ElementAccessExpression "b["~!@#$%^&*()_+{}|:'<>?\/.,`"]" = any
+Line 51 col 9 IdentifierName "b" = { "   ": number; "a   b": string; "~!@#$%^&*()_+{}|:'<>?\/.,`": number; }

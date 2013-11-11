@@ -1,0 +1,57 @@
+=== tests/cases/compiler/validEnumAssignments.ts ===
+Line 0 col 5 IdentifierName "E" = E
+Line 1 col 0 IdentifierName "A" = E
+Line 2 col 0 IdentifierName "B" = E
+Line 5 col 4 IdentifierName "n" = number
+Line 6 col 4 IdentifierName "a" = any
+Line 7 col 4 IdentifierName "e" = E
+Line 7 col 7 IdentifierName "E" = E
+Line 8 col 0 AssignmentExpression "n = e" = E
+Line 8 col 0 IdentifierName "n" = number
+Line 9 col 4 IdentifierName "e" = E
+Line 10 col 0 AssignmentExpression "n = E.A" = E
+Line 10 col 0 IdentifierName "n" = number
+Line 10 col 4 MemberAccessExpression "E.A" = E
+Line 10 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 10 col 6 IdentifierName "A" = E
+Line 11 col 0 AssignmentExpression "a = n" = number
+Line 11 col 0 IdentifierName "a" = any
+Line 12 col 4 IdentifierName "n" = number
+Line 13 col 0 AssignmentExpression "a = e" = E
+Line 13 col 0 IdentifierName "a" = any
+Line 13 col 4 IdentifierName "e" = E
+Line 14 col 0 AssignmentExpression "a = E.A" = E
+Line 14 col 0 IdentifierName "a" = any
+Line 14 col 4 MemberAccessExpression "E.A" = E
+Line 14 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 14 col 6 IdentifierName "A" = E
+Line 15 col 0 AssignmentExpression "e = e" = E
+Line 15 col 0 IdentifierName "e" = E
+Line 16 col 4 IdentifierName "e" = E
+Line 17 col 0 AssignmentExpression "e = E.A" = E
+Line 17 col 0 IdentifierName "e" = E
+Line 17 col 4 MemberAccessExpression "E.A" = E
+Line 17 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 17 col 6 IdentifierName "A" = E
+Line 18 col 0 AssignmentExpression "e = E.B" = E
+Line 18 col 0 IdentifierName "e" = E
+Line 18 col 4 MemberAccessExpression "E.B" = E
+Line 18 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 18 col 6 IdentifierName "B" = E
+Line 19 col 0 AssignmentExpression "e = n" = number
+Line 19 col 0 IdentifierName "e" = E
+Line 19 col 4 IdentifierName "n" = number
+Line 20 col 0 AssignmentExpression "e = null" = null
+Line 20 col 0 IdentifierName "e" = E
+Line 21 col 0 AssignmentExpression "e = undefined" = undefined
+Line 21 col 0 IdentifierName "e" = E
+Line 21 col 4 IdentifierName "undefined" = undefined
+Line 22 col 0 AssignmentExpression "e = 1" = number
+Line 22 col 0 IdentifierName "e" = E
+Line 23 col 0 AssignmentExpression "e = 1." = number
+Line 23 col 0 IdentifierName "e" = E
+Line 24 col 0 AssignmentExpression "e = 1.0" = number
+Line 24 col 0 IdentifierName "e" = E
+Line 25 col 0 AssignmentExpression "e = -1" = number
+Line 25 col 0 IdentifierName "e" = E
+Line 25 col 4 NegateExpression "-1" = number

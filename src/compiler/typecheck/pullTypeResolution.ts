@@ -7398,7 +7398,7 @@ module TypeScript {
                 // Add the contextual type to the collection as one of the types to be considered for best common type
                 collection = {
                     getLength: () => { return elements.nonSeparatorCount() + 1; },
-                    getTypeAtIndex: (index: number) => { return index === elementTypes.length ? contextualElementType : elementTypes[index]; }
+                    getTypeAtIndex: (index: number) => { return index === 0 ? contextualElementType : elementTypes[index - 1]; }
                 };
             }
             else {
@@ -8778,58 +8778,6 @@ module TypeScript {
             return typeToReturn;
         }
 
-        // type relationships
-
-        private chooseCommonType(a: PullTypeSymbol, b: PullTypeSymbol, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo): PullTypeSymbol {
-            if (!(a || b)) {
-                return null;
-            }
-            if (!a) {
-                return b;
-            }
-            if (!b) {
-                return a;
-            }
-            if (this.isAnyOrEquivalent(a) || this.isAnyOrEquivalent(b)) {
-                return this.semanticInfoChain.anyTypeSymbol;
-            }
-            else if (a === b) {
-                return a;
-            }
-            else if ((b === this.semanticInfoChain.nullTypeSymbol) && a != this.semanticInfoChain.nullTypeSymbol) {
-                return a;
-            }
-            else if ((a === this.semanticInfoChain.nullTypeSymbol) && (b != this.semanticInfoChain.nullTypeSymbol)) {
-                return b;
-            }
-            else if ((a === this.semanticInfoChain.voidTypeSymbol) && (b === this.semanticInfoChain.voidTypeSymbol || b === this.semanticInfoChain.undefinedTypeSymbol || b === this.semanticInfoChain.nullTypeSymbol)) {
-                return a;
-            }
-            else if ((a === this.semanticInfoChain.voidTypeSymbol) && (b === this.semanticInfoChain.anyTypeSymbol)) {
-                return b;
-            }
-            else if ((b === this.semanticInfoChain.undefinedTypeSymbol) && a != this.semanticInfoChain.voidTypeSymbol) {
-                return a;
-            }
-            else if ((a === this.semanticInfoChain.undefinedTypeSymbol) && (b != this.semanticInfoChain.undefinedTypeSymbol)) {
-                return b;
-            }
-            else if (a.isTypeParameter() && !b.isTypeParameter()) {
-                return b;
-            }
-            else if (!a.isTypeParameter() && b.isTypeParameter()) {
-                return a;
-            }
-            else if (this.sourceIsSubtypeOfTarget(a, b, context, comparisonInfo)) {
-                return b;
-            }
-            else if (this.sourceIsSubtypeOfTarget(b, a, context, comparisonInfo)) {
-                return a;
-            }
-
-            return null;
-        }
-
         public widenType(type: PullTypeSymbol, ast?: ISyntaxElement, context?: PullTypeResolutionContext): PullTypeSymbol {
             if (type === this.semanticInfoChain.undefinedTypeSymbol ||
                 type === this.semanticInfoChain.nullTypeSymbol ||
@@ -8870,38 +8818,39 @@ module TypeScript {
 
         public findBestCommonType(collection: IPullTypeCollection, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo) {
             var len = collection.getLength();
-            var bestCommonType: PullTypeSymbol = null;
 
-            // We set i = Math.max(i, j) + 1 in the incrementor as an optimization. If we did not converge on a type in the inner loop,
-            // then every type that we tried in the inner loop would not be a suitable candidate. Therefore there is no point in
-            // trying them.
-            for (var i = 0, j = 0; i < len; i = Math.max(i, j) + 1) {
-                bestCommonType = collection.getTypeAtIndex(i);
-
-                for (j = 0; j < len; j++) {
-
-                    // no use in comparing a type against itself
-                    if (i == j) {
-                        continue;
-                    }
-
-                    bestCommonType = this.chooseCommonType(bestCommonType, collection.getTypeAtIndex(j), context, comparisonInfo);
-
-                    // If there is no common type, try starting again with the next type in the collection
-                    if (bestCommonType === null || this.isAnyOrEquivalent(bestCommonType)) {
-                        break;
-                    }
-                }
-
-                // If we've found a type by this point, it is the best common type
-                if (bestCommonType) {
-                    return bestCommonType;
+            for (var i = 0; i < len; i++) {
+                var candidateType = collection.getTypeAtIndex(i);
+                if (this.typeIsBestCommonTypeCandidate(candidateType, collection, context)) {
+                    return candidateType;
                 }
             }
 
-            // October 16, 2013: It is possible that no such [common] type exists or more than one
-            // such type exists, in which case the best common type is an empty object type.
+            // October 16, 2013: It is possible that no such [common] type exists, in which case
+            // the best common type is an empty object type.
             return this.semanticInfoChain.emptyTypeSymbol;
+        }
+
+        private typeIsBestCommonTypeCandidate(candidateType: PullTypeSymbol, collection: IPullTypeCollection, context: PullTypeResolutionContext): boolean {
+            for (var i = 0; i < collection.getLength(); i++) {
+                var otherType = collection.getTypeAtIndex(i);
+                if (candidateType == otherType) {
+                    continue;
+                }
+                // The following two conditionals are wrong but are necessary pending fixes to
+                // type argument inference
+                if (candidateType.isTypeParameter() && !otherType.isTypeParameter()) {
+                    return false;
+                }
+                else if (!candidateType.isTypeParameter() && otherType.isTypeParameter()) {
+                    continue;
+                }
+                else if (!this.sourceIsSubtypeOfTarget(otherType, candidateType, context)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         // Type Identity
@@ -9008,8 +8957,8 @@ module TypeScript {
 
             // properties are identical in name, optionality, and type
             if (t1.hasMembers() && t2.hasMembers()) {
-                var t1Members = t1.getMembers();
-                var t2Members = t2.getMembers();
+                var t1Members = t1.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
+                var t2Members = t2.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
 
                 if (t1Members.length != t2Members.length) {
                     this.identicalCache.setValueAt(t1.pullSymbolID, t2.pullSymbolID, undefined);
@@ -9420,7 +9369,7 @@ module TypeScript {
             }
 
             if (target == this.semanticInfoChain.voidTypeSymbol) {
-                if (source == this.semanticInfoChain.anyTypeSymbol || source == this.semanticInfoChain.undefinedTypeSymbol || source == this.semanticInfoChain.nullTypeSymbol) {
+                if (source == this.semanticInfoChain.undefinedTypeSymbol || source == this.semanticInfoChain.nullTypeSymbol) {
                     return true;
                 }
 
@@ -9438,9 +9387,8 @@ module TypeScript {
                 return true;
             }
 
-            // REVIEW: We allow this only for enum initialization purposes
             if (source === this.semanticInfoChain.numberTypeSymbol && PullHelpers.symbolIsEnum(target)) {
-                return true;
+                return assignableTo;
             }
 
             if (PullHelpers.symbolIsEnum(target) && PullHelpers.symbolIsEnum(source)) {
@@ -9492,15 +9440,9 @@ module TypeScript {
 
             // this check ensures that we only operate on object types from this point forward,
             // since the checks involving primitives occurred above
-            if (source.isPrimitive() && target.isPrimitive()) {
-
+            if (sourceSubstitution.isPrimitive() || target.isPrimitive()) {
                 // we already know that they're not the same, and that neither is 'any'
                 return false;
-            }
-            else if (source.isPrimitive() != target.isPrimitive()) {
-                if (target.isPrimitive()) {
-                    return false;
-                }
             }
 
             if (target.isTypeParameter()) {

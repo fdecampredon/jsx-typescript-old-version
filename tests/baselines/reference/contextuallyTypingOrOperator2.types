@@ -2,7 +2,7 @@
 Line 0 col 4 IdentifierName "v" = { a: (_: string) => number; }
 Line 0 col 9 IdentifierName "a" = (_: string) => number
 Line 0 col 13 IdentifierName "_" = string
-Line 0 col 38 LogicalOrExpression "{ a: s => s.length } || { a: s => 1 }" = { a: (s: string) => number; }
+Line 0 col 38 LogicalOrExpression "{ a: s => s.length } || { a: s => 1 }" = { a: (_: string) => number; }
 Line 0 col 38 ObjectLiteralExpression "{ a: s => s.length }" = { a: (s: string) => number; }
 Line 0 col 40 IdentifierName "a" = (s: string) => number
 Line 0 col 43 SimpleArrowFunctionExpression "s => s.length" = (s: string) => number
