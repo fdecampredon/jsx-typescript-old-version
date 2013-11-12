@@ -17,12 +17,18 @@ module TypeScript {
 
         // If this is a skipped token trivia, then this was the token that was skipped.
         skippedToken(): ISyntaxToken;
+
+        clone(): ISyntaxTrivia;
     }
 }
 
 module TypeScript.Syntax {
     class AbstractTrivia implements ISyntaxTrivia {
         constructor(private _kind: SyntaxKind) {
+        }
+
+        public clone(): ISyntaxTrivia {
+            throw Errors.abstract();
         }
 
         public fullWidth(): number {
@@ -86,6 +92,10 @@ module TypeScript.Syntax {
             super(kind);
         }
 
+        public clone(): ISyntaxTrivia {
+            return new NormalTrivia(this.kind(), this._text);
+        }
+
         public fullWidth(): number {
             return this.fullText().length;
         }
@@ -102,6 +112,10 @@ module TypeScript.Syntax {
     class SkippedTokenTrivia extends AbstractTrivia {
         constructor(private _skippedToken: ISyntaxToken) {
             super(SyntaxKind.SkippedTokenTrivia);
+        }
+
+        public clone(): ISyntaxTrivia {
+            return new SkippedTokenTrivia(this._skippedToken.clone());
         }
 
         public fullWidth(): number {
@@ -122,6 +136,10 @@ module TypeScript.Syntax {
 
         constructor(kind: SyntaxKind, private _text: ISimpleText, private _fullStart: number, private _fullWidth: number) {
             super(kind);
+        }
+
+        public clone(): ISyntaxTrivia {
+            return new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
         }
 
         public fullWidth(): number {

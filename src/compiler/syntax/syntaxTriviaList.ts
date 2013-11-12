@@ -21,6 +21,8 @@ module TypeScript {
         concat(trivia: ISyntaxTriviaList): ISyntaxTriviaList;
 
         collectTextElements(elements: string[]): void;
+
+        clone(): ISyntaxTriviaList;
     }
 }
 
@@ -49,9 +51,11 @@ module TypeScript.Syntax {
 
         collectTextElements: (elements: string[]): void => { },
 
-        toArray: (): ISyntaxTrivia[] => [],
+        toArray: (): ISyntaxTrivia[]=> [],
 
         concat: (trivia: ISyntaxTriviaList): ISyntaxTriviaList => trivia,
+
+        clone: () => emptyTriviaList,
     };
 
     function concatTrivia(list1: ISyntaxTriviaList, list2: ISyntaxTriviaList): ISyntaxTriviaList {
@@ -132,6 +136,10 @@ module TypeScript.Syntax {
 
         public concat(trivia: ISyntaxTriviaList): ISyntaxTriviaList {
             return concatTrivia(this, trivia);
+        }
+
+        public clone(): ISyntaxTriviaList {
+            return new SingletonSyntaxTriviaList(this.item.clone());
         }
     }
 
@@ -220,6 +228,10 @@ module TypeScript.Syntax {
 
         public concat(trivia: ISyntaxTriviaList): ISyntaxTriviaList {
             return concatTrivia(this, trivia);
+        }
+
+        public clone(): ISyntaxTriviaList {
+            return new NormalSyntaxTriviaList(this.trivia.map(t => t.clone()));
         }
     }
 
