@@ -2352,7 +2352,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        public hasLeadingSkippedText(): boolean { return false; }\r\n";
     result += "        public leadingTriviaWidth(): number { return " + (leading ? "getTriviaWidth(this._leadingTriviaInfo)" : "0") + "; }\r\n";
     result += "        public leadingTrivia(): ISyntaxTriviaList { return " + (leading
-        ? "Scanner.scanTrivia(this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false)"
+        ? "Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false)"
         : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
 
     result += "        public hasTrailingTrivia(): boolean { return " + (trailing ? "true" : "false") + "; }\r\n";
@@ -2361,7 +2361,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        public hasTrailingSkippedText(): boolean { return false; }\r\n";
     result += "        public trailingTriviaWidth(): number { return " + (trailing ? "getTriviaWidth(this._trailingTriviaInfo)" : "0") + "; }\r\n";
     result += "        public trailingTrivia(): ISyntaxTriviaList { return " + (trailing
-        ? "Scanner.scanTrivia(this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true)"
+        ? "Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true)"
         : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
     result += "        public hasSkippedToken(): boolean { return false; }\r\n";
 

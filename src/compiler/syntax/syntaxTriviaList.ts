@@ -2,6 +2,8 @@
 
 module TypeScript {
     export interface ISyntaxTriviaList {
+        parent: ISyntaxToken;
+
         isShared(): boolean;
 
         count(): number;
@@ -30,6 +32,8 @@ module TypeScript {
 
 module TypeScript.Syntax {
     class EmptyTriviaList implements ISyntaxTriviaList {
+        public parent: ISyntaxToken = null;
+
         public isShared(): boolean {
             return true;
         }
@@ -112,10 +116,12 @@ module TypeScript.Syntax {
     }
 
     class SingletonSyntaxTriviaList implements ISyntaxTriviaList {
+        public parent: ISyntaxToken = null;
         private item: ISyntaxTrivia;
 
         constructor(item: ISyntaxTrivia) {
-            this.item = item;
+            this.item = item.clone();
+            this.item.parent = this;
         }
 
         public isShared(): boolean {
@@ -182,10 +188,15 @@ module TypeScript.Syntax {
     }
 
     class NormalSyntaxTriviaList implements ISyntaxTriviaList {
+        public parent: ISyntaxToken = null;
         private trivia: ISyntaxTrivia[];
 
         constructor(trivia: ISyntaxTrivia[]) {
-            this.trivia = trivia;
+            this.trivia = trivia.map(t => {
+                var cloned = t.clone();
+                cloned.parent = this;
+                return cloned;
+            });
         }
 
         public isShared(): boolean {

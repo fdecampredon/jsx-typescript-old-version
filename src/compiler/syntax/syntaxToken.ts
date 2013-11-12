@@ -484,11 +484,20 @@ module TypeScript.Syntax {
                     trailingTrivia: ISyntaxTriviaList) {
             this._fullStart = fullStart;
             this.tokenKind = tokenKind;
-            this._leadingTrivia = leadingTrivia.clone();
             this._text = text;
             this._value = value;
             this._valueText = valueText;
+
+            this._leadingTrivia = leadingTrivia.clone();
             this._trailingTrivia = trailingTrivia.clone();
+
+            if (!this._leadingTrivia.isShared()) {
+                this._leadingTrivia.parent = this;
+            }
+
+            if (!this._trailingTrivia.isShared()) {
+                this._trailingTrivia.parent = this;
+            }
         }
 
         public syntaxTree(): SyntaxTree {

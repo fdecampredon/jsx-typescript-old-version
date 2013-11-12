@@ -143,7 +143,7 @@ module TypeScript {
         private static triviaWindow: number[] = ArrayUtilities.createArray<number>(2048, 0);
 
         // Scans a subsection of 'text' as trivia.
-        public static scanTrivia(text: ISimpleText, start: number, length: number, isTrailing: boolean): ISyntaxTriviaList {
+        public static scanTrivia(parent: ISyntaxToken, text: ISimpleText, start: number, length: number, isTrailing: boolean): ISyntaxTriviaList {
             // Debug.assert(length > 0);
 
             // Note: the scanner operates upon a subrange of the text passed in. However, we also
@@ -151,10 +151,10 @@ module TypeScript {
             // directly (and not at the subtext wrapper).  This allows the subtext to get GC'ed
             // and means trivia can be represented with only a single allocation.
             var scanner = new Scanner(/*fileName:*/ null, text.subText(new TextSpan(start, length)), LanguageVersion.EcmaScript5, Scanner.triviaWindow);
-            return scanner.scanTrivia(text, start, isTrailing);
+            return scanner.scanTrivia(parent, text, start, isTrailing);
         }
 
-        private scanTrivia(underlyingText: ISimpleText, underlyingTextStart: number, isTrailing: boolean): ISyntaxTriviaList {
+        private scanTrivia(parent: ISyntaxToken, underlyingText: ISimpleText, underlyingTextStart: number, isTrailing: boolean): ISyntaxTriviaList {
             // Keep this exactly in sync with scanTriviaInfo
             var trivia = new Array<ISyntaxTrivia>();
 
@@ -226,7 +226,10 @@ module TypeScript {
                 }
 
                 // Debug.assert(trivia.length > 0);
-                return Syntax.triviaList(trivia);
+                var triviaList = Syntax.triviaList(trivia);
+                triviaList.parent = parent;
+
+                return triviaList;
             }
         }
 

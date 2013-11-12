@@ -2,6 +2,7 @@
 
 module TypeScript {
     export interface ISyntaxTrivia {
+        parent: ISyntaxTriviaList;
         kind(): SyntaxKind;
 
         isWhitespace(): boolean;
@@ -24,6 +25,8 @@ module TypeScript {
 
 module TypeScript.Syntax {
     class AbstractTrivia implements ISyntaxTrivia {
+        public parent: ISyntaxTriviaList = null;
+
         constructor(private _kind: SyntaxKind) {
         }
 

@@ -246,7 +246,7 @@ module TypeScript.Syntax {
         public hasLeadingNewLine(): boolean { return hasTriviaNewLine(this._leadingTriviaInfo); }
         public hasLeadingSkippedText(): boolean { return false; }
         public leadingTriviaWidth(): number { return getTriviaWidth(this._leadingTriviaInfo); }
-        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
+        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
 
         public hasTrailingTrivia(): boolean { return false; }
         public hasTrailingComment(): boolean { return false; }
@@ -403,7 +403,7 @@ module TypeScript.Syntax {
         public hasTrailingNewLine(): boolean { return hasTriviaNewLine(this._trailingTriviaInfo); }
         public hasTrailingSkippedText(): boolean { return false; }
         public trailingTriviaWidth(): number { return getTriviaWidth(this._trailingTriviaInfo); }
-        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
+        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
 
         public hasSkippedToken(): boolean { return false; }
         public toJSON(key: any): any { return tokenToJSON(this); }
@@ -549,14 +549,14 @@ module TypeScript.Syntax {
         public hasLeadingNewLine(): boolean { return hasTriviaNewLine(this._leadingTriviaInfo); }
         public hasLeadingSkippedText(): boolean { return false; }
         public leadingTriviaWidth(): number { return getTriviaWidth(this._leadingTriviaInfo); }
-        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
+        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
 
         public hasTrailingTrivia(): boolean { return true; }
         public hasTrailingComment(): boolean { return hasTriviaComment(this._trailingTriviaInfo); }
         public hasTrailingNewLine(): boolean { return hasTriviaNewLine(this._trailingTriviaInfo); }
         public hasTrailingSkippedText(): boolean { return false; }
         public trailingTriviaWidth(): number { return getTriviaWidth(this._trailingTriviaInfo); }
-        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
+        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
 
         public hasSkippedToken(): boolean { return false; }
         public toJSON(key: any): any { return tokenToJSON(this); }
@@ -792,7 +792,7 @@ module TypeScript.Syntax {
         public hasLeadingNewLine(): boolean { return hasTriviaNewLine(this._leadingTriviaInfo); }
         public hasLeadingSkippedText(): boolean { return false; }
         public leadingTriviaWidth(): number { return getTriviaWidth(this._leadingTriviaInfo); }
-        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
+        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
 
         public hasTrailingTrivia(): boolean { return false; }
         public hasTrailingComment(): boolean { return false; }
@@ -924,7 +924,7 @@ module TypeScript.Syntax {
         public hasTrailingNewLine(): boolean { return hasTriviaNewLine(this._trailingTriviaInfo); }
         public hasTrailingSkippedText(): boolean { return false; }
         public trailingTriviaWidth(): number { return getTriviaWidth(this._trailingTriviaInfo); }
-        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
+        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
 
         public hasSkippedToken(): boolean { return false; }
         public toJSON(key: any): any { return tokenToJSON(this); }
@@ -1045,14 +1045,14 @@ module TypeScript.Syntax {
         public hasLeadingNewLine(): boolean { return hasTriviaNewLine(this._leadingTriviaInfo); }
         public hasLeadingSkippedText(): boolean { return false; }
         public leadingTriviaWidth(): number { return getTriviaWidth(this._leadingTriviaInfo); }
-        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
+        public leadingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false); }
 
         public hasTrailingTrivia(): boolean { return true; }
         public hasTrailingComment(): boolean { return hasTriviaComment(this._trailingTriviaInfo); }
         public hasTrailingNewLine(): boolean { return hasTriviaNewLine(this._trailingTriviaInfo); }
         public hasTrailingSkippedText(): boolean { return false; }
         public trailingTriviaWidth(): number { return getTriviaWidth(this._trailingTriviaInfo); }
-        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
+        public trailingTrivia(): ISyntaxTriviaList { return Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true); }
 
         public hasSkippedToken(): boolean { return false; }
         public toJSON(key: any): any { return tokenToJSON(this); }
