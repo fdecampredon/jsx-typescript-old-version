@@ -209,7 +209,7 @@ module TypeScript {
                         case CharacterCodes.lineFeed:
                         case CharacterCodes.paragraphSeparator:
                         case CharacterCodes.lineSeparator:
-                            trivia.push(this.scanLineTerminatorSequenceTrivia(ch));
+                            trivia.push(this.scanLineTerminatorSequenceTrivia(underlyingText, underlyingTextStart, ch));
 
                             // If we're consuming leading trivia, then we will continue consuming more 
                             // trivia (including newlines) up to the first token we see.  If we're 
@@ -428,14 +428,12 @@ module TypeScript {
             }
         }
 
-        private scanLineTerminatorSequenceTrivia(ch: number): ISyntaxTrivia {
-            var absoluteStartIndex = this.slidingWindow.getAndPinAbsoluteIndex();
+        private scanLineTerminatorSequenceTrivia(underlyingText: ISimpleText, underlyingTextStart: number, ch: number): ISyntaxTrivia {
+            var absoluteStartIndex = this.slidingWindow.absoluteIndex();
             var width = this.scanLineTerminatorSequenceLength(ch);
 
-            var text = this.substring(absoluteStartIndex, absoluteStartIndex + width, /*intern:*/ false);
-            this.slidingWindow.releaseAndUnpinAbsoluteIndex(absoluteStartIndex);
-
-            return Syntax.trivia(SyntaxKind.NewLineTrivia, text, absoluteStartIndex);
+            return Syntax.deferredTrivia(SyntaxKind.NewLineTrivia,
+                underlyingText, underlyingTextStart + absoluteStartIndex, width);
         }
 
         private scanLineTerminatorSequenceLength(ch: number): number {
