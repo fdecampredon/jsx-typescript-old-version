@@ -12140,7 +12140,13 @@ module TypeScript {
                 var firstInterfaceASTWithExtendsClause = ArrayUtilities.firstOrDefault(typeSymbol.getDeclarations(), decl => 
                     (<InterfaceDeclarationSyntax>decl.ast()).heritageClauses !== null).ast();
                 if (classOrInterface === firstInterfaceASTWithExtendsClause) {
-                    this.checkTypeCompatibilityBetweenBases((<InterfaceDeclarationSyntax>classOrInterface).identifier, typeSymbol, context);
+                    // Checking type compatibility between bases requires knowing the types of all
+                    // base type members. Therefore, we have to delay this operation until all
+                    // resolution has taken place. Doing the check immediately may cause a recursive
+                    // resolution that results in a rogue "any".
+                    this.typeCheckCallBacks.push(context => {
+                        this.checkTypeCompatibilityBetweenBases((<InterfaceDeclarationSyntax>classOrInterface).identifier, typeSymbol, context);
+                    });
                 }
             }
         }
