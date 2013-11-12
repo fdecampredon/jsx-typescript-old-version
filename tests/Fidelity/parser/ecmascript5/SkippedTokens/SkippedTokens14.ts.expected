@@ -90,18 +90,26 @@
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 1,
+                            "fullEnd": 3,
                             "text": "\r\n"
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 3,
+                            "fullEnd": 22,
                             "text": "/*existing trivia*/"
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 22,
+                            "fullEnd": 23,
                             "text": " "
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 23,
+                            "fullEnd": 25,
                             "text": "\r\n"
                         },
                         {
@@ -119,12 +127,16 @@
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 26,
+                            "fullEnd": 28,
                             "text": "\r\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 29,
+                            "fullEnd": 31,
                             "text": "\r\n"
                         }
                     ]

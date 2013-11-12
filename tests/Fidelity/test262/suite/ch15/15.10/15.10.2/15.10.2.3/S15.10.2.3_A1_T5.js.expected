@@ -50,40 +50,58 @@
                         "leadingTrivia": [
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 0,
+                                "fullEnd": 60,
                                 "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 60,
+                                "fullEnd": 61,
                                 "text": "\n"
                             },
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 61,
+                                "fullEnd": 131,
                                 "text": "// This code is governed by the BSD license found in the LICENSE file."
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 131,
+                                "fullEnd": 132,
                                 "text": "\n"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 132,
+                                "fullEnd": 133,
                                 "text": "\n"
                             },
                             {
                                 "kind": "MultiLineCommentTrivia",
+                                "fullStart": 133,
+                                "fullEnd": 573,
                                 "text": "/**\n * The | regular expression operator separates two alternatives.\n * The pattern first tries to match the left Alternative (followed by the sequel of the regular expression).\n * If it fails, it tries to match the right Disjunction (followed by the sequel of the regular expression)\n *\n * @path ch15/15.10/15.10.2/15.10.2.3/S15.10.2.3_A1_T5.js\n * @description Execute /\\d{3}|[a-z]{4}/.test(\"2, 12 and 23 AND 0.00.1\") and check results\n */"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 573,
+                                "fullEnd": 574,
                                 "text": "\n"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 574,
+                                "fullEnd": 575,
                                 "text": "\n"
                             }
                         ],
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 585,
+                                "fullEnd": 586,
                                 "text": " "
                             }
                         ]
@@ -103,6 +121,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 587,
+                                "fullEnd": 588,
                                 "text": " "
                             }
                         ]
@@ -227,6 +247,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 637,
+                            "fullEnd": 638,
                             "text": "\n"
                         }
                     ]
@@ -258,20 +280,28 @@
                     "leadingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 638,
+                            "fullEnd": 639,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 639,
+                            "fullEnd": 648,
                             "text": "//CHECK#1"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 648,
+                            "fullEnd": 649,
                             "text": "\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 651,
+                            "fullEnd": 652,
                             "text": " "
                         }
                     ]
@@ -315,6 +345,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 664,
+                            "fullEnd": 665,
                             "text": " "
                         }
                     ]
@@ -343,6 +375,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 666,
+                                "fullEnd": 667,
                                 "text": "\n"
                             }
                         ]
@@ -379,6 +413,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 667,
+                                            "fullEnd": 668,
                                             "text": "\t"
                                         }
                                     ]
@@ -447,6 +483,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 742,
+                                        "fullEnd": 743,
                                         "text": "\n"
                                     }
                                 ]
@@ -469,6 +507,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 744,
+                                "fullEnd": 745,
                                 "text": "\n"
                             }
                         ]
@@ -490,10 +530,14 @@
             "leadingTrivia": [
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 745,
+                    "fullEnd": 746,
                     "text": "\n"
                 },
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 746,
+                    "fullEnd": 747,
                     "text": "\n"
                 }
             ]

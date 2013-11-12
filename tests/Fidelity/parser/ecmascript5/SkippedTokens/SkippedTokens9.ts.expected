@@ -59,22 +59,32 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 1,
+                            "fullEnd": 2,
                             "text": " "
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 2,
+                            "fullEnd": 20,
                             "text": "// existing trivia"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 20,
+                            "fullEnd": 22,
                             "text": "\r\n"
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 22,
+                            "fullEnd": 29,
                             "text": "/*foo*/"
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 29,
+                            "fullEnd": 30,
                             "text": " "
                         },
                         {
@@ -92,10 +102,14 @@
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 31,
+                            "fullEnd": 32,
                             "text": " "
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 32,
+                            "fullEnd": 39,
                             "text": "/*bar*/"
                         }
                     ]

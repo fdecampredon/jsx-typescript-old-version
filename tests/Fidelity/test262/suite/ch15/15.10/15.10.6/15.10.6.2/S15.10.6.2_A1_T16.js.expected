@@ -50,40 +50,58 @@
                         "leadingTrivia": [
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 0,
+                                "fullEnd": 60,
                                 "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 60,
+                                "fullEnd": 61,
                                 "text": "\n"
                             },
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 61,
+                                "fullEnd": 131,
                                 "text": "// This code is governed by the BSD license found in the LICENSE file."
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 131,
+                                "fullEnd": 132,
                                 "text": "\n"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 132,
+                                "fullEnd": 133,
                                 "text": "\n"
                             },
                             {
                                 "kind": "MultiLineCommentTrivia",
+                                "fullStart": 133,
+                                "fullEnd": 498,
                                 "text": "/**\n * RegExp.prototype.exec(string) Performs a regular expression match of ToString(string) against the regular expression and\n * returns an Array object containing the results of the match, or null if the string did not match\n *\n * @path ch15/15.10/15.10.6/15.10.6.2/S15.10.6.2_A1_T16.js\n * @description RegExp is /undefined/ and call exec() without arguments\n */"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 498,
+                                "fullEnd": 499,
                                 "text": "\n"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 499,
+                                "fullEnd": 500,
                                 "text": "\n"
                             }
                         ],
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 504,
+                                "fullEnd": 505,
                                 "text": " "
                             }
                         ]
@@ -103,6 +121,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 506,
+                                "fullEnd": 507,
                                 "text": " "
                             }
                         ]
@@ -260,6 +280,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 529,
+                            "fullEnd": 530,
                             "text": "\n"
                         }
                     ]
@@ -288,6 +310,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 532,
+                            "fullEnd": 533,
                             "text": " "
                         }
                     ]
@@ -327,6 +351,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 538,
+                                "fullEnd": 539,
                                 "text": " "
                             }
                         ]
@@ -346,6 +372,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 542,
+                                "fullEnd": 543,
                                 "text": " "
                             }
                         ]
@@ -378,6 +406,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 555,
+                            "fullEnd": 556,
                             "text": " "
                         }
                     ]
@@ -406,6 +436,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 557,
+                                "fullEnd": 558,
                                 "text": "\n"
                             }
                         ]
@@ -442,6 +474,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 558,
+                                            "fullEnd": 559,
                                             "text": "\t"
                                         }
                                     ]
@@ -490,6 +524,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 619,
+                                                        "fullEnd": 620,
                                                         "text": " "
                                                     }
                                                 ]
@@ -509,6 +545,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 621,
+                                                        "fullEnd": 622,
                                                         "text": " "
                                                     }
                                                 ]
@@ -590,6 +628,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 630,
+                                        "fullEnd": 631,
                                         "text": "\n"
                                     }
                                 ]
@@ -612,6 +652,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 632,
+                                "fullEnd": 633,
                                 "text": "\n"
                             }
                         ]
@@ -633,10 +675,14 @@
             "leadingTrivia": [
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 633,
+                    "fullEnd": 634,
                     "text": "\n"
                 },
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 634,
+                    "fullEnd": 635,
                     "text": "\n"
                 }
             ]

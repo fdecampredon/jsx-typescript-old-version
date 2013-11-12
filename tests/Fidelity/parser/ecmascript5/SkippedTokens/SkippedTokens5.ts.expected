@@ -71,14 +71,20 @@
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 1,
+                            "fullEnd": 2,
                             "text": " "
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 2,
+                            "fullEnd": 9,
                             "text": "/*foo*/"
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 9,
+                            "fullEnd": 10,
                             "text": " "
                         }
                     ]

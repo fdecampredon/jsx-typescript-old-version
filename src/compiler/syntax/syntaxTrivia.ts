@@ -71,8 +71,8 @@ module TypeScript.Syntax {
                 result.skippedToken = this.skippedToken();
             }
             else {
-                //result.fullStart = this.fullStart();
-                //result.fullEnd = this.fullEnd();
+                result.fullStart = this.fullStart();
+                result.fullEnd = this.fullEnd();
                 result.text = this.fullText();
             }
 

@@ -59,14 +59,20 @@
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 1,
+                            "fullEnd": 3,
                             "text": "\r\n"
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 3,
+                            "fullEnd": 10,
                             "text": "/*foo*/"
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 10,
+                            "fullEnd": 11,
                             "text": " "
                         },
                         {
@@ -84,10 +90,14 @@
                         },
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 12,
+                            "fullEnd": 13,
                             "text": " "
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 13,
+                            "fullEnd": 20,
                             "text": "/*bar*/"
                         }
                     ]

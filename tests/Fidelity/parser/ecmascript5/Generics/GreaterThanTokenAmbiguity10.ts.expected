@@ -48,10 +48,14 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 1,
+                                "fullEnd": 2,
                                 "text": " "
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 2,
+                                "fullEnd": 4,
                                 "text": "\r\n"
                             }
                         ]
@@ -76,24 +80,34 @@
                         "leadingTrivia": [
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 4,
+                                "fullEnd": 13,
                                 "text": "// before"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 13,
+                                "fullEnd": 15,
                                 "text": "\r\n"
                             }
                         ],
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 18,
+                                "fullEnd": 19,
                                 "text": " "
                             },
                             {
                                 "kind": "SingleLineCommentTrivia",
+                                "fullStart": 19,
+                                "fullEnd": 27,
                                 "text": "// after"
                             },
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 27,
+                                "fullEnd": 29,
                                 "text": "\r\n"
                             }
                         ]

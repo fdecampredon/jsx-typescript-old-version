@@ -75,10 +75,14 @@
                     "leadingTrivia": [
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 0,
+                            "fullEnd": 19,
                             "text": "/*existing trivia*/"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 19,
+                            "fullEnd": 21,
                             "text": "\r\n"
                         },
                         {
@@ -96,6 +100,8 @@
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 22,
+                            "fullEnd": 24,
                             "text": "\r\n"
                         },
                         {
@@ -113,6 +119,8 @@
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 25,
+                            "fullEnd": 27,
                             "text": "\r\n"
                         }
                     ]

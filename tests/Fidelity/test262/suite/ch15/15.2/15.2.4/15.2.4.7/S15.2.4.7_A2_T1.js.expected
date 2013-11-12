@@ -39,48 +39,70 @@
                     "leadingTrivia": [
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 0,
+                            "fullEnd": 60,
                             "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 60,
+                            "fullEnd": 61,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 61,
+                            "fullEnd": 131,
                             "text": "// This code is governed by the BSD license found in the LICENSE file."
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 131,
+                            "fullEnd": 132,
                             "text": "\n"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 132,
+                            "fullEnd": 133,
                             "text": "\n"
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 133,
+                            "fullEnd": 612,
                             "text": "/**\n * When the propertyIsEnumerable method is called with argument V, the following steps are taken:\n * i) Let O be this object\n * ii) Call ToString(V)\n * iii) If O doesn't have a property with the name given by Result(ii), return false\n * iv) If the property has the DontEnum attribute, return false\n * v) Return true\n *\n * @path ch15/15.2/15.2.4/15.2.4.7/S15.2.4.7_A2_T1.js\n * @description Checking the type of Object.prototype.propertyIsEnumerable and the returned result\n */"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 612,
+                            "fullEnd": 613,
                             "text": "\n"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 613,
+                            "fullEnd": 614,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 614,
+                            "fullEnd": 623,
                             "text": "//CHECK#1"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 623,
+                            "fullEnd": 624,
                             "text": "\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 626,
+                            "fullEnd": 627,
                             "text": " "
                         }
                     ]
@@ -128,6 +150,8 @@
                             "trailingTrivia": [
                                 {
                                     "kind": "WhitespaceTrivia",
+                                    "fullStart": 634,
+                                    "fullEnd": 635,
                                     "text": " "
                                 }
                             ]
@@ -212,6 +236,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 672,
+                                        "fullEnd": 673,
                                         "text": " "
                                     }
                                 ]
@@ -233,6 +259,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 676,
+                                "fullEnd": 677,
                                 "text": " "
                             }
                         ]
@@ -265,6 +293,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 688,
+                            "fullEnd": 689,
                             "text": " "
                         }
                     ]
@@ -293,6 +323,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 690,
+                                "fullEnd": 691,
                                 "text": "\n"
                             }
                         ]
@@ -329,6 +361,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 691,
+                                            "fullEnd": 693,
                                             "text": "  "
                                         }
                                     ]
@@ -397,6 +431,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 740,
+                                        "fullEnd": 741,
                                         "text": "\n"
                                     }
                                 ]
@@ -419,6 +455,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 742,
+                                "fullEnd": 743,
                                 "text": "\n"
                             }
                         ]
@@ -451,20 +489,28 @@
                     "leadingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 743,
+                            "fullEnd": 744,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 744,
+                            "fullEnd": 753,
                             "text": "//CHECK#2"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 753,
+                            "fullEnd": 754,
                             "text": "\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 756,
+                            "fullEnd": 757,
                             "text": " "
                         }
                     ]
@@ -630,6 +676,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 820,
+                            "fullEnd": 821,
                             "text": " "
                         }
                     ]
@@ -658,6 +706,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 822,
+                                "fullEnd": 823,
                                 "text": "\n"
                             }
                         ]
@@ -694,6 +744,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 823,
+                                            "fullEnd": 825,
                                             "text": "  "
                                         }
                                     ]
@@ -762,6 +814,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 876,
+                                        "fullEnd": 877,
                                         "text": "\n"
                                     }
                                 ]
@@ -784,6 +838,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 878,
+                                "fullEnd": 879,
                                 "text": "\n"
                             }
                         ]
@@ -806,14 +862,20 @@
             "leadingTrivia": [
                 {
                     "kind": "SingleLineCommentTrivia",
+                    "fullStart": 879,
+                    "fullEnd": 881,
                     "text": "//"
                 },
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 881,
+                    "fullEnd": 882,
                     "text": "\n"
                 },
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 882,
+                    "fullEnd": 883,
                     "text": "\n"
                 }
             ]

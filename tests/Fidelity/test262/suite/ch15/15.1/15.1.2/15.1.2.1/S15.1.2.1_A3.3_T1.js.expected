@@ -39,48 +39,70 @@
                     "leadingTrivia": [
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 0,
+                            "fullEnd": 60,
                             "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 60,
+                            "fullEnd": 61,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 61,
+                            "fullEnd": 131,
                             "text": "// This code is governed by the BSD license found in the LICENSE file."
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 131,
+                            "fullEnd": 132,
                             "text": "\n"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 132,
+                            "fullEnd": 133,
                             "text": "\n"
                         },
                         {
                             "kind": "MultiLineCommentTrivia",
+                            "fullStart": 133,
+                            "fullEnd": 346,
                             "text": "/**\n * If Result(3).type is not normal, then Result(3).type must be throw.\n * Throw Result(3).value as an exception\n *\n * @path ch15/15.1/15.1.2/15.1.2.1/S15.1.2.1_A3.3_T1.js\n * @description Continue statement\n */"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 346,
+                            "fullEnd": 347,
                             "text": "\n"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 347,
+                            "fullEnd": 348,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 348,
+                            "fullEnd": 357,
                             "text": "//CHECK#1"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 357,
+                            "fullEnd": 358,
                             "text": "\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 361,
+                            "fullEnd": 362,
                             "text": " "
                         }
                     ]
@@ -109,6 +131,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 363,
+                                "fullEnd": 364,
                                 "text": "\n"
                             }
                         ]
@@ -145,6 +169,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 364,
+                                            "fullEnd": 366,
                                             "text": "  "
                                         }
                                     ]
@@ -213,6 +239,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 384,
+                                        "fullEnd": 385,
                                         "text": "\n"
                                     }
                                 ]
@@ -249,6 +277,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 385,
+                                            "fullEnd": 387,
                                             "text": "  "
                                         }
                                     ]
@@ -297,6 +327,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 443,
+                                                        "fullEnd": 444,
                                                         "text": " "
                                                     }
                                                 ]
@@ -316,6 +348,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 445,
+                                                        "fullEnd": 446,
                                                         "text": " "
                                                     }
                                                 ]
@@ -453,6 +487,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 467,
+                                        "fullEnd": 468,
                                         "text": "\n"
                                     }
                                 ]
@@ -474,6 +510,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 469,
+                                "fullEnd": 470,
                                 "text": " "
                             }
                         ]
@@ -538,6 +576,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 478,
+                                "fullEnd": 479,
                                 "text": " "
                             }
                         ]
@@ -566,6 +606,8 @@
                             "trailingTrivia": [
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 480,
+                                    "fullEnd": 481,
                                     "text": "\n"
                                 }
                             ]
@@ -595,12 +637,16 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 481,
+                                            "fullEnd": 483,
                                             "text": "  "
                                         }
                                     ],
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 485,
+                                            "fullEnd": 486,
                                             "text": " "
                                         }
                                     ]
@@ -668,6 +714,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 489,
+                                                        "fullEnd": 490,
                                                         "text": " "
                                                     }
                                                 ]
@@ -687,6 +735,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 500,
+                                                        "fullEnd": 501,
                                                         "text": " "
                                                     }
                                                 ]
@@ -719,6 +769,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 513,
+                                                    "fullEnd": 514,
                                                     "text": " "
                                                 }
                                             ]
@@ -739,6 +791,8 @@
                                         "trailingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 517,
+                                                "fullEnd": 518,
                                                 "text": " "
                                             }
                                         ]
@@ -771,6 +825,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 523,
+                                            "fullEnd": 524,
                                             "text": " "
                                         }
                                     ]
@@ -799,6 +855,8 @@
                                         "trailingTrivia": [
                                             {
                                                 "kind": "NewLineTrivia",
+                                                "fullStart": 525,
+                                                "fullEnd": 526,
                                                 "text": "\n"
                                             }
                                         ]
@@ -835,6 +893,8 @@
                                                     "leadingTrivia": [
                                                         {
                                                             "kind": "WhitespaceTrivia",
+                                                            "fullStart": 526,
+                                                            "fullEnd": 530,
                                                             "text": "    "
                                                         }
                                                     ]
@@ -883,6 +943,8 @@
                                                                 "trailingTrivia": [
                                                                     {
                                                                         "kind": "WhitespaceTrivia",
+                                                                        "fullStart": 585,
+                                                                        "fullEnd": 586,
                                                                         "text": " "
                                                                     }
                                                                 ]
@@ -902,6 +964,8 @@
                                                                 "trailingTrivia": [
                                                                     {
                                                                         "kind": "WhitespaceTrivia",
+                                                                        "fullStart": 587,
+                                                                        "fullEnd": 588,
                                                                         "text": " "
                                                                     }
                                                                 ]
@@ -983,6 +1047,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "NewLineTrivia",
+                                                        "fullStart": 593,
+                                                        "fullEnd": 594,
                                                         "text": "\n"
                                                     }
                                                 ]
@@ -1006,16 +1072,22 @@
                                         "leadingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 594,
+                                                "fullEnd": 596,
                                                 "text": "  "
                                             }
                                         ],
                                         "trailingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 597,
+                                                "fullEnd": 599,
                                                 "text": "  "
                                             },
                                             {
                                                 "kind": "NewLineTrivia",
+                                                "fullStart": 599,
+                                                "fullEnd": 600,
                                                 "text": "\n"
                                             }
                                         ]
@@ -1039,6 +1111,8 @@
                             "trailingTrivia": [
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 601,
+                                    "fullEnd": 602,
                                     "text": "\n"
                                 }
                             ]
@@ -1072,20 +1146,28 @@
                     "leadingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 602,
+                            "fullEnd": 603,
                             "text": "\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 603,
+                            "fullEnd": 612,
                             "text": "//CHECK#2"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 612,
+                            "fullEnd": 613,
                             "text": "\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 616,
+                            "fullEnd": 617,
                             "text": " "
                         }
                     ]
@@ -1114,6 +1196,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 618,
+                                "fullEnd": 619,
                                 "text": "\n"
                             }
                         ]
@@ -1143,12 +1227,16 @@
                                 "leadingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 619,
+                                        "fullEnd": 621,
                                         "text": "  "
                                     }
                                 ],
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 624,
+                                        "fullEnd": 625,
                                         "text": " "
                                     }
                                 ]
@@ -1188,6 +1276,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 629,
+                                            "fullEnd": 630,
                                             "text": " "
                                         }
                                     ]
@@ -1216,6 +1306,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 631,
+                                                    "fullEnd": 632,
                                                     "text": " "
                                                 }
                                             ]
@@ -1243,6 +1335,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 633,
+                                                        "fullEnd": 634,
                                                         "text": " "
                                                     }
                                                 ]
@@ -1278,6 +1372,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 636,
+                                        "fullEnd": 637,
                                         "text": " "
                                     }
                                 ]
@@ -1305,6 +1401,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 638,
+                                            "fullEnd": 639,
                                             "text": " "
                                         }
                                     ]
@@ -1324,6 +1422,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 641,
+                                            "fullEnd": 642,
                                             "text": " "
                                         }
                                     ]
@@ -1356,6 +1456,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 644,
+                                        "fullEnd": 645,
                                         "text": " "
                                     }
                                 ]
@@ -1408,6 +1510,8 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 649,
+                                        "fullEnd": 650,
                                         "text": " "
                                     }
                                 ]
@@ -1436,6 +1540,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "NewLineTrivia",
+                                            "fullStart": 651,
+                                            "fullEnd": 652,
                                             "text": "\n"
                                         }
                                     ]
@@ -1465,12 +1571,16 @@
                                             "leadingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 652,
+                                                    "fullEnd": 656,
                                                     "text": "    "
                                                 }
                                             ],
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 659,
+                                                    "fullEnd": 660,
                                                     "text": " "
                                                 }
                                             ]
@@ -1510,6 +1620,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 664,
+                                                        "fullEnd": 665,
                                                         "text": " "
                                                     }
                                                 ]
@@ -1538,6 +1650,8 @@
                                                         "trailingTrivia": [
                                                             {
                                                                 "kind": "WhitespaceTrivia",
+                                                                "fullStart": 666,
+                                                                "fullEnd": 667,
                                                                 "text": " "
                                                             }
                                                         ]
@@ -1565,6 +1679,8 @@
                                                             "trailingTrivia": [
                                                                 {
                                                                     "kind": "WhitespaceTrivia",
+                                                                    "fullStart": 668,
+                                                                    "fullEnd": 669,
                                                                     "text": " "
                                                                 }
                                                             ]
@@ -1600,6 +1716,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 671,
+                                                    "fullEnd": 672,
                                                     "text": " "
                                                 }
                                             ]
@@ -1627,6 +1745,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 673,
+                                                        "fullEnd": 674,
                                                         "text": " "
                                                     }
                                                 ]
@@ -1646,6 +1766,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 676,
+                                                        "fullEnd": 677,
                                                         "text": " "
                                                     }
                                                 ]
@@ -1678,6 +1800,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 679,
+                                                    "fullEnd": 680,
                                                     "text": " "
                                                 }
                                             ]
@@ -1730,6 +1854,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 684,
+                                                    "fullEnd": 685,
                                                     "text": " "
                                                 }
                                             ]
@@ -1758,6 +1884,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "NewLineTrivia",
+                                                        "fullStart": 686,
+                                                        "fullEnd": 687,
                                                         "text": "\n"
                                                     }
                                                 ]
@@ -1794,6 +1922,8 @@
                                                             "leadingTrivia": [
                                                                 {
                                                                     "kind": "WhitespaceTrivia",
+                                                                    "fullStart": 687,
+                                                                    "fullEnd": 694,
                                                                     "text": "       "
                                                                 }
                                                             ]
@@ -1862,10 +1992,14 @@
                                                         "trailingTrivia": [
                                                             {
                                                                 "kind": "WhitespaceTrivia",
+                                                                "fullStart": 712,
+                                                                "fullEnd": 719,
                                                                 "text": "       "
                                                             },
                                                             {
                                                                 "kind": "NewLineTrivia",
+                                                                "fullStart": 719,
+                                                                "fullEnd": 720,
                                                                 "text": "\n"
                                                             }
                                                         ]
@@ -1889,12 +2023,16 @@
                                                 "leadingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 720,
+                                                        "fullEnd": 724,
                                                         "text": "    "
                                                     }
                                                 ],
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "NewLineTrivia",
+                                                        "fullStart": 725,
+                                                        "fullEnd": 726,
                                                         "text": "\n"
                                                     }
                                                 ]
@@ -1919,12 +2057,16 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 726,
+                                            "fullEnd": 728,
                                             "text": "  "
                                         }
                                     ],
                                     "trailingTrivia": [
                                         {
                                             "kind": "NewLineTrivia",
+                                            "fullStart": 729,
+                                            "fullEnd": 730,
                                             "text": "\n"
                                         }
                                     ]
@@ -1962,6 +2104,8 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 730,
+                                            "fullEnd": 732,
                                             "text": "  "
                                         }
                                     ]
@@ -2010,6 +2154,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 788,
+                                                        "fullEnd": 789,
                                                         "text": " "
                                                     }
                                                 ]
@@ -2029,6 +2175,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 790,
+                                                        "fullEnd": 791,
                                                         "text": " "
                                                     }
                                                 ]
@@ -2166,10 +2314,14 @@
                                 "trailingTrivia": [
                                     {
                                         "kind": "WhitespaceTrivia",
+                                        "fullStart": 812,
+                                        "fullEnd": 816,
                                         "text": "    "
                                     },
                                     {
                                         "kind": "NewLineTrivia",
+                                        "fullStart": 816,
+                                        "fullEnd": 817,
                                         "text": "\n"
                                     }
                                 ]
@@ -2191,6 +2343,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 818,
+                                "fullEnd": 819,
                                 "text": " "
                             }
                         ]
@@ -2255,6 +2409,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "WhitespaceTrivia",
+                                "fullStart": 827,
+                                "fullEnd": 828,
                                 "text": " "
                             }
                         ]
@@ -2283,6 +2439,8 @@
                             "trailingTrivia": [
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 829,
+                                    "fullEnd": 830,
                                     "text": "\n"
                                 }
                             ]
@@ -2312,12 +2470,16 @@
                                     "leadingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 830,
+                                            "fullEnd": 832,
                                             "text": "  "
                                         }
                                     ],
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 834,
+                                            "fullEnd": 835,
                                             "text": " "
                                         }
                                     ]
@@ -2385,6 +2547,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 838,
+                                                        "fullEnd": 839,
                                                         "text": " "
                                                     }
                                                 ]
@@ -2404,6 +2568,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 849,
+                                                        "fullEnd": 850,
                                                         "text": " "
                                                     }
                                                 ]
@@ -2436,6 +2602,8 @@
                                             "trailingTrivia": [
                                                 {
                                                     "kind": "WhitespaceTrivia",
+                                                    "fullStart": 862,
+                                                    "fullEnd": 863,
                                                     "text": " "
                                                 }
                                             ]
@@ -2456,6 +2624,8 @@
                                         "trailingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 866,
+                                                "fullEnd": 867,
                                                 "text": " "
                                             }
                                         ]
@@ -2488,6 +2658,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 872,
+                                            "fullEnd": 873,
                                             "text": " "
                                         }
                                     ]
@@ -2516,6 +2688,8 @@
                                         "trailingTrivia": [
                                             {
                                                 "kind": "NewLineTrivia",
+                                                "fullStart": 874,
+                                                "fullEnd": 875,
                                                 "text": "\n"
                                             }
                                         ]
@@ -2552,6 +2726,8 @@
                                                     "leadingTrivia": [
                                                         {
                                                             "kind": "WhitespaceTrivia",
+                                                            "fullStart": 875,
+                                                            "fullEnd": 879,
                                                             "text": "    "
                                                         }
                                                     ]
@@ -2600,6 +2776,8 @@
                                                                 "trailingTrivia": [
                                                                     {
                                                                         "kind": "WhitespaceTrivia",
+                                                                        "fullStart": 935,
+                                                                        "fullEnd": 936,
                                                                         "text": " "
                                                                     }
                                                                 ]
@@ -2619,6 +2797,8 @@
                                                                 "trailingTrivia": [
                                                                     {
                                                                         "kind": "WhitespaceTrivia",
+                                                                        "fullStart": 937,
+                                                                        "fullEnd": 938,
                                                                         "text": " "
                                                                     }
                                                                 ]
@@ -2700,6 +2880,8 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "NewLineTrivia",
+                                                        "fullStart": 943,
+                                                        "fullEnd": 944,
                                                         "text": "\n"
                                                     }
                                                 ]
@@ -2723,16 +2905,22 @@
                                         "leadingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 944,
+                                                "fullEnd": 946,
                                                 "text": "  "
                                             }
                                         ],
                                         "trailingTrivia": [
                                             {
                                                 "kind": "WhitespaceTrivia",
+                                                "fullStart": 947,
+                                                "fullEnd": 949,
                                                 "text": "  "
                                             },
                                             {
                                                 "kind": "NewLineTrivia",
+                                                "fullStart": 949,
+                                                "fullEnd": 950,
                                                 "text": "\n"
                                             }
                                         ]
@@ -2756,10 +2944,14 @@
                             "trailingTrivia": [
                                 {
                                     "kind": "WhitespaceTrivia",
+                                    "fullStart": 951,
+                                    "fullEnd": 957,
                                     "text": "      "
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 957,
+                                    "fullEnd": 958,
                                     "text": "\n"
                                 }
                             ]
@@ -2782,6 +2974,8 @@
             "leadingTrivia": [
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 958,
+                    "fullEnd": 959,
                     "text": "\n"
                 }
             ]

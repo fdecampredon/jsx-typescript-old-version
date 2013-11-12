@@ -47,10 +47,14 @@
             "leadingTrivia": [
                 {
                     "kind": "MultiLineCommentTrivia",
+                    "fullStart": 0,
+                    "fullEnd": 7,
                     "text": "/*foo*/"
                 },
                 {
                     "kind": "WhitespaceTrivia",
+                    "fullStart": 7,
+                    "fullEnd": 8,
                     "text": " "
                 },
                 {
@@ -68,10 +72,14 @@
                 },
                 {
                     "kind": "WhitespaceTrivia",
+                    "fullStart": 9,
+                    "fullEnd": 10,
                     "text": " "
                 },
                 {
                     "kind": "MultiLineCommentTrivia",
+                    "fullStart": 10,
+                    "fullEnd": 17,
                     "text": "/*bar*/"
                 }
             ]

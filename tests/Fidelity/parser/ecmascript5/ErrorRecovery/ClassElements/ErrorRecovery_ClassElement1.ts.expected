@@ -49,6 +49,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 5,
+                            "fullEnd": 6,
                             "text": " "
                         }
                     ]
@@ -68,6 +70,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 7,
+                            "fullEnd": 8,
                             "text": " "
                         }
                     ]
@@ -88,6 +92,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 9,
+                            "fullEnd": 11,
                             "text": "\r\n"
                         }
                     ]
@@ -130,28 +136,40 @@
                     "leadingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 11,
+                            "fullEnd": 13,
                             "text": "\r\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 13,
+                            "fullEnd": 91,
                             "text": "// Classes can't be nested.  So we should bail out of parsing here and recover"
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 91,
+                            "fullEnd": 93,
                             "text": "\r\n"
                         },
                         {
                             "kind": "SingleLineCommentTrivia",
+                            "fullStart": 93,
+                            "fullEnd": 126,
                             "text": "// this as a source unit element."
                         },
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 126,
+                            "fullEnd": 128,
                             "text": "\r\n"
                         }
                     ],
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 133,
+                            "fullEnd": 134,
                             "text": " "
                         }
                     ]
@@ -171,6 +189,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "WhitespaceTrivia",
+                            "fullStart": 135,
+                            "fullEnd": 136,
                             "text": " "
                         }
                     ]
@@ -191,6 +211,8 @@
                     "trailingTrivia": [
                         {
                             "kind": "NewLineTrivia",
+                            "fullStart": 137,
+                            "fullEnd": 139,
                             "text": "\r\n"
                         }
                     ]

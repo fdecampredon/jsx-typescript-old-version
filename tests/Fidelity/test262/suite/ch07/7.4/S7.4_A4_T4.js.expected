@@ -70,54 +70,80 @@
                             "leadingTrivia": [
                                 {
                                     "kind": "SingleLineCommentTrivia",
+                                    "fullStart": 0,
+                                    "fullEnd": 60,
                                     "text": "// Copyright 2009 the Sputnik authors.  All rights reserved."
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 60,
+                                    "fullEnd": 61,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "SingleLineCommentTrivia",
+                                    "fullStart": 61,
+                                    "fullEnd": 131,
                                     "text": "// This code is governed by the BSD license found in the LICENSE file."
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 131,
+                                    "fullEnd": 132,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 132,
+                                    "fullEnd": 133,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "MultiLineCommentTrivia",
+                                    "fullStart": 133,
+                                    "fullEnd": 316,
                                     "text": "/**\n * Single and Multi line comments are used together\n *\n * @path ch07/7.4/S7.4_A4_T4.js\n * @description Try to open Multi line comment at the end of Single comment\n * @negative\n */"
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 316,
+                                    "fullEnd": 317,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 317,
+                                    "fullEnd": 318,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "MultiLineCommentTrivia",
+                                    "fullStart": 318,
+                                    "fullEnd": 329,
                                     "text": "/*CHECK#1*/"
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 329,
+                                    "fullEnd": 330,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 330,
+                                    "fullEnd": 331,
                                     "text": "\n"
                                 },
                                 {
                                     "kind": "SingleLineCommentTrivia",
+                                    "fullStart": 331,
+                                    "fullEnd": 341,
                                     "text": "// var /* "
                                 },
                                 {
                                     "kind": "NewLineTrivia",
+                                    "fullStart": 341,
+                                    "fullEnd": 342,
                                     "text": "\n"
                                 }
                             ]
@@ -161,6 +187,8 @@
                         "trailingTrivia": [
                             {
                                 "kind": "NewLineTrivia",
+                                "fullStart": 345,
+                                "fullEnd": 346,
                                 "text": "\n"
                             }
                         ]
@@ -202,6 +230,8 @@
             "leadingTrivia": [
                 {
                     "kind": "NewLineTrivia",
+                    "fullStart": 346,
+                    "fullEnd": 347,
                     "text": "\n"
                 }
             ]
