@@ -435,7 +435,7 @@ module TypeScript {
             var text = this.substring(absoluteStartIndex, absoluteStartIndex + width, /*intern:*/ false);
             this.slidingWindow.releaseAndUnpinAbsoluteIndex(absoluteStartIndex);
 
-            return Syntax.trivia(SyntaxKind.NewLineTrivia, text);
+            return Syntax.trivia(SyntaxKind.NewLineTrivia, text, absoluteStartIndex);
         }
 
         private scanLineTerminatorSequenceLength(ch: number): number {
