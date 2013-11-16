@@ -34,7 +34,7 @@ Line 45 col 4 IdentifierName "i1_i" = i1
 Line 45 col 10 IdentifierName "i1" = i1
 Line 46 col 4 IdentifierName "c1_i" = c1
 Line 46 col 11 ObjectCreationExpression "new c1()" = c1
-Line 46 col 15 IdentifierName "c1" = { prototype: c1; new(): c1; }
+Line 46 col 15 IdentifierName "c1" = typeof c1
 Line 47 col 0 AssignmentExpression "// assign to interface
 i1_i = c1_i" = c1
 Line 47 col 0 IdentifierName "// assign to interface
@@ -70,10 +70,10 @@ Line 99 col 11 IdentifierName "nc_f1" = () => void
 Line 101 col 15 IdentifierName "nc_prop" = number
 Line 105 col 4 IdentifierName "c2_i" = c2
 Line 105 col 11 ObjectCreationExpression "new c2(10)" = c2
-Line 105 col 15 IdentifierName "c2" = { prototype: c2; new(a: number): c2; }
+Line 105 col 15 IdentifierName "c2" = typeof c2
 Line 106 col 4 IdentifierName "c3_i" = c3
 Line 106 col 11 ObjectCreationExpression "new c3()" = c3
-Line 106 col 15 IdentifierName "c3" = { prototype: c3; new(): c3; }
+Line 106 col 15 IdentifierName "c3" = typeof c3
 Line 107 col 0 AssignmentExpression "// assign
 c2_i = c3_i" = c3
 Line 107 col 0 IdentifierName "// assign
@@ -83,7 +83,7 @@ Line 109 col 6 IdentifierName "c4" = c4
 Line 109 col 17 IdentifierName "c2" = c2
 Line 111 col 4 IdentifierName "c4_i" = c4
 Line 111 col 11 ObjectCreationExpression "new c4(10)" = c4
-Line 111 col 15 IdentifierName "c4" = { prototype: c4; new(a: number): c4; }
+Line 111 col 15 IdentifierName "c4" = typeof c4
 Line 112 col 10 IdentifierName "i2" = i2
 Line 113 col 0 IdentifierName "/** i2_p1*/
     i2_p1" = number

@@ -1,15 +1,15 @@
 === tests/cases/compiler/overloadReturnTypes.ts ===
 Line 0 col 6 IdentifierName "Accessor" = Accessor
-Line 2 col 9 IdentifierName "attr" = { (name: string): string; (name: string, value: string): Accessor; (map: any): Accessor; }
+Line 2 col 9 IdentifierName "attr" = typeof attr
 Line 2 col 14 IdentifierName "name" = string
-Line 3 col 9 IdentifierName "attr" = { (name: string): string; (name: string, value: string): Accessor; (map: any): Accessor; }
+Line 3 col 9 IdentifierName "attr" = typeof attr
 Line 3 col 14 IdentifierName "name" = string
 Line 3 col 28 IdentifierName "value" = string
 Line 3 col 44 IdentifierName "Accessor" = Accessor
-Line 4 col 9 IdentifierName "attr" = { (name: string): string; (name: string, value: string): Accessor; (map: any): Accessor; }
+Line 4 col 9 IdentifierName "attr" = typeof attr
 Line 4 col 14 IdentifierName "map" = any
 Line 4 col 25 IdentifierName "Accessor" = Accessor
-Line 5 col 9 IdentifierName "attr" = { (name: string): string; (name: string, value: string): Accessor; (map: any): Accessor; }
+Line 5 col 9 IdentifierName "attr" = typeof attr
 Line 5 col 14 IdentifierName "nameOrMap" = any
 Line 5 col 30 IdentifierName "value" = string
 Line 6 col 8 LogicalAndExpression "nameOrMap && typeof nameOrMap === "object"" = boolean
@@ -18,7 +18,7 @@ Line 6 col 21 EqualsExpression "typeof nameOrMap === "object"" = boolean
 Line 6 col 21 TypeOfExpression "typeof nameOrMap" = string
 Line 6 col 28 IdentifierName "nameOrMap" = any
 Line 8 col 15 ObjectCreationExpression "new Accessor" = Accessor
-Line 8 col 19 IdentifierName "Accessor" = { prototype: Accessor; new(): Accessor; }
+Line 8 col 19 IdentifierName "Accessor" = typeof Accessor
 Line 17 col 10 IdentifierName "IFace" = IFace
 Line 18 col 0 IdentifierName "attr" = { (name: string): string; (name: string, value: string): Accessor; (map: any): Accessor; }
 Line 18 col 6 IdentifierName "name" = string

@@ -1,3 +1,6 @@
+// inner type parameters shadow outer ones of the same name
+// no errors expected
+
 class C<T extends Date> {
     g<T extends Number>() {
         var x: T;

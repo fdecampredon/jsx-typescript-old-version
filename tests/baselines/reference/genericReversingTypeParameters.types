@@ -1,0 +1,34 @@
+=== tests/cases/compiler/genericReversingTypeParameters.ts ===
+Line 0 col 6 IdentifierName "BiMap" = BiMap<K, V>
+Line 0 col 12 IdentifierName "K" = K
+Line 0 col 15 IdentifierName "V" = V
+Line 1 col 12 IdentifierName "inverseBiMap" = BiMap<V, K>
+Line 1 col 26 IdentifierName "BiMap" = BiMap<K, V>
+Line 1 col 32 IdentifierName "V" = V
+Line 1 col 35 IdentifierName "K" = K
+Line 2 col 11 IdentifierName "get" = (key: K) => V
+Line 2 col 15 IdentifierName "key" = K
+Line 2 col 20 IdentifierName "K" = K
+Line 2 col 24 IdentifierName "V" = V
+Line 3 col 11 IdentifierName "inverse" = () => BiMap<V, K>
+Line 3 col 22 IdentifierName "BiMap" = BiMap<K, V>
+Line 3 col 28 IdentifierName "V" = V
+Line 3 col 31 IdentifierName "K" = K
+Line 6 col 4 IdentifierName "b" = BiMap<string, number>
+Line 6 col 8 ObjectCreationExpression "new BiMap<string, number>()" = BiMap<string, number>
+Line 6 col 12 IdentifierName "BiMap" = typeof BiMap
+Line 7 col 4 IdentifierName "r1" = number
+Line 7 col 9 InvocationExpression "b.get('')" = number
+Line 7 col 9 MemberAccessExpression "b.get" = (key: string) => number
+Line 7 col 9 IdentifierName "b" = BiMap<string, number>
+Line 7 col 11 IdentifierName "get" = (key: string) => number
+Line 8 col 4 IdentifierName "i" = BiMap<number, string>
+Line 8 col 8 InvocationExpression "b.inverse()" = BiMap<number, string>
+Line 8 col 8 MemberAccessExpression "b.inverse" = () => BiMap<number, string>
+Line 8 col 8 IdentifierName "b" = BiMap<string, number>
+Line 8 col 10 IdentifierName "inverse" = () => BiMap<number, string>
+Line 9 col 4 IdentifierName "r2b" = string
+Line 9 col 10 InvocationExpression "i.get(1)" = string
+Line 9 col 10 MemberAccessExpression "i.get" = (key: number) => string
+Line 9 col 10 IdentifierName "i" = BiMap<number, string>
+Line 9 col 12 IdentifierName "get" = (key: number) => string

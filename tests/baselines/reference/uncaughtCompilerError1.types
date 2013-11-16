@@ -3,7 +3,7 @@ Line 0 col 12 IdentifierName "index" = any
 Line 0 col 19 IdentifierName "lineTokens" = any
 Line 0 col 31 IdentifierName "token" = any
 Line 0 col 38 IdentifierName "tokens" = any
-Line 2 col 9 IdentifierName "f" = () => { appendText: string; advanceCount: number; }
+Line 2 col 9 IdentifierName "f" = typeof f
 Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0 && token.type === '' && tokens[index - 1].type === 'attribute.name.html'" = boolean
 Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0 && token.type === ''" = boolean
 Line 3 col 8 LogicalAndExpression "lineTokens[index].trim() === '=' && index > 0" = boolean

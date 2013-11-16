@@ -1,16 +1,16 @@
 === tests/cases/compiler/functionOverloads36.ts ===
-Line 0 col 9 IdentifierName "foo" = { (bar: { a: number; }): number; (bar: { a: string; }): string; }
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "bar" = { a: number; }
 Line 0 col 18 IdentifierName "a" = number
-Line 1 col 9 IdentifierName "foo" = { (bar: { a: number; }): number; (bar: { a: string; }): string; }
+Line 1 col 9 IdentifierName "foo" = typeof foo
 Line 1 col 13 IdentifierName "bar" = { a: string; }
 Line 1 col 18 IdentifierName "a" = string
-Line 2 col 9 IdentifierName "foo" = { (bar: { a: number; }): number; (bar: { a: string; }): string; }
+Line 2 col 9 IdentifierName "foo" = typeof foo
 Line 2 col 13 IdentifierName "bar" = { a: any; }
 Line 2 col 18 IdentifierName "a" = any
 Line 2 col 39 IdentifierName "bar" = { a: any; }
 Line 3 col 4 IdentifierName "x" = string
 Line 3 col 8 InvocationExpression "foo({a:'foo'})" = string
-Line 3 col 8 IdentifierName "foo" = { (bar: { a: number; }): number; (bar: { a: string; }): string; }
+Line 3 col 8 IdentifierName "foo" = typeof foo
 Line 3 col 12 ObjectLiteralExpression "{a:'foo'}" = { a: string; }
 Line 3 col 13 IdentifierName "a" = string

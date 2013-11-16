@@ -1,3 +1,4 @@
+// basic uses of function literals with constructor overloads
 var C = (function () {
     function C(x) {
     }

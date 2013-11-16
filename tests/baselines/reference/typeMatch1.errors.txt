@@ -1,5 +1,5 @@
 typeMatch1.ts line 18 col 1: error TS2012: Cannot convert 'D' to 'C':
 	Types 'D' and 'C' define property 'x' as private.
-typeMatch1.ts line 19 col 1: error TS2012: Cannot convert '{ prototype: C; new(): C; }' to 'C':
-	Type '{ prototype: C; new(): C; }' is missing property 'x' from type 'C'.
-typeMatch1.ts line 20 col 1: error TS2009: Operator '==' cannot be applied to types '{ prototype: C; new(): C; }' and '{ prototype: D; new(): D; }'.
+typeMatch1.ts line 19 col 1: error TS2012: Cannot convert 'typeof C' to 'C':
+	Type 'typeof C' is missing property 'x' from type 'C'.
+typeMatch1.ts line 20 col 1: error TS2009: Operator '==' cannot be applied to types 'typeof C' and 'typeof D'.

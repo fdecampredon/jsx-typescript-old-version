@@ -1,10 +1,10 @@
-parseTypes.ts line 9 col 1: error TS2012: Cannot convert '(s: string) => void' to '() => number':
-	Call signatures of types '(s: string) => void' and '() => number' are incompatible:
+parseTypes.ts line 9 col 1: error TS2012: Cannot convert 'typeof g' to '() => number':
+	Call signatures of types 'typeof g' and '() => number' are incompatible:
 		Call signature expects 0 or fewer parameters.
-parseTypes.ts line 10 col 1: error TS2012: Cannot convert '(s: string) => void' to '() => number':
-	Call signatures of types '(s: string) => void' and '() => number' are incompatible:
+parseTypes.ts line 10 col 1: error TS2012: Cannot convert 'typeof g' to '() => number':
+	Call signatures of types 'typeof g' and '() => number' are incompatible:
 		Call signature expects 0 or fewer parameters.
-parseTypes.ts line 11 col 1: error TS2012: Cannot convert '(s: string) => void' to '{ [x: number]: number; }':
-	Index signatures of types '(s: string) => void' and '{ [x: number]: number; }' are incompatible.
-parseTypes.ts line 12 col 1: error TS2012: Cannot convert '(s: string) => void' to 'new() => number':
-	Type 'new() => number' requires a construct signature, but type '(s: string) => void' lacks one.
+parseTypes.ts line 11 col 1: error TS2012: Cannot convert 'typeof g' to '{ [x: number]: number; }':
+	Index signatures of types 'typeof g' and '{ [x: number]: number; }' are incompatible.
+parseTypes.ts line 12 col 1: error TS2012: Cannot convert 'typeof g' to 'new() => number':
+	Type 'new() => number' requires a construct signature, but type 'typeof g' lacks one.

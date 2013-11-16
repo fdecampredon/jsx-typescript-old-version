@@ -369,22 +369,7 @@ declare var i1_s_nc_p: number;
 declare var i1_s_ncf: (b: number) => number;
 declare var i1_s_ncr: number;
 declare var i1_s_ncprop: number;
-declare var i1_c: {
-    prototype: c1;
-    s1: number;
-    s2(b: number): number;
-    s3: number;
-    nc_s1: number;
-    nc_s2(b: number): number;
-    nc_s3: number;
-    a_s1: number;
-    a_s2(b: number): number;
-    a_s3: number;
-    b_s1: number;
-    b_s2(b: number): number;
-    b_s3: number;
-    new(): c1;
-};
+declare var i1_c: typeof c1;
 declare class cProperties {
     private val;
     /** getter only property*/

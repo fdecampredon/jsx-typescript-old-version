@@ -14,9 +14,4 @@ declare enum e {
     b = 1,
     c = 2,
 }
-declare var x: {
-    a: e;
-    b: e;
-    c: e;
-    [x: number]: string;
-};
+declare var x: typeof e;

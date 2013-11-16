@@ -19,12 +19,12 @@ Line 14 col 11 IdentifierName "e1" = mImport.e1
 Line 14 col 16 IdentifierName "b" = b
 Line 14 col 18 IdentifierName "a" = any
 Line 17 col 7 IdentifierName "m0" = m0
-Line 18 col 13 IdentifierName "f1" = () => void
-Line 21 col 13 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 18 col 13 IdentifierName "f1" = typeof m0.f1
+Line 21 col 13 IdentifierName "f2" = typeof m0.f2
 Line 21 col 16 IdentifierName "s" = string
-Line 22 col 13 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 22 col 13 IdentifierName "f2" = typeof m0.f2
 Line 22 col 16 IdentifierName "n" = number
-Line 23 col 13 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 23 col 13 IdentifierName "f2" = typeof m0.f2
 Line 23 col 16 IdentifierName "ns" = any
 Line 26 col 10 IdentifierName "c1" = m0.c1
 Line 27 col 15 IdentifierName "a" = () => string
@@ -52,12 +52,12 @@ Line 43 col 16 IdentifierName "c" = c
 Line 43 col 18 IdentifierName "a" = c.a
 Line 43 col 20 IdentifierName "b" = any
 Line 46 col 7 IdentifierName "m1" = m1
-Line 47 col 20 IdentifierName "f1" = () => void
-Line 50 col 20 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 47 col 20 IdentifierName "f1" = typeof m1.f1
+Line 50 col 20 IdentifierName "f2" = typeof m1.f2
 Line 50 col 23 IdentifierName "s" = string
-Line 51 col 20 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 51 col 20 IdentifierName "f2" = typeof m1.f2
 Line 51 col 23 IdentifierName "n" = number
-Line 52 col 20 IdentifierName "f2" = { (s: string): any; (n: number): any; }
+Line 52 col 20 IdentifierName "f2" = typeof m1.f2
 Line 52 col 23 IdentifierName "ns" = any
 Line 55 col 17 IdentifierName "c1" = m1.c1
 Line 56 col 15 IdentifierName "a" = () => string
@@ -107,7 +107,7 @@ Line 104 col 18 IdentifierName "m4" = m13.m4
 Line 105 col 22 IdentifierName "m2" = m13.m4.m2
 Line 106 col 26 IdentifierName "m3" = m13.m4.m2.m3
 Line 107 col 27 IdentifierName "c" = number
-Line 111 col 24 IdentifierName "f" = () => number
+Line 111 col 24 IdentifierName "f" = typeof m13.m4.f
 Line 117 col 15 IdentifierName "m4" = m4
 Line 118 col 15 IdentifierName "b" = any
 Line 121 col 15 IdentifierName "m5" = m5
@@ -127,26 +127,26 @@ Line 152 col 15 IdentifierName "f3" = () => string
 Line 157 col 17 IdentifierName "C3_public" = exportTests.C3_public
 Line 158 col 16 IdentifierName "getC2_private" = () => exportTests.C2_private
 Line 159 col 19 ObjectCreationExpression "new C2_private()" = exportTests.C2_private
-Line 159 col 23 IdentifierName "C2_private" = { prototype: exportTests.C2_private; new(): exportTests.C2_private; }
+Line 159 col 23 IdentifierName "C2_private" = typeof exportTests.C2_private
 Line 161 col 16 IdentifierName "setC2_private" = (arg: exportTests.C2_private) => void
 Line 161 col 30 IdentifierName "arg" = exportTests.C2_private
 Line 161 col 35 IdentifierName "C2_private" = exportTests.C2_private
 Line 163 col 20 IdentifierName "c2" = exportTests.C2_private
 Line 164 col 19 ObjectCreationExpression "new C2_private()" = exportTests.C2_private
-Line 164 col 23 IdentifierName "C2_private" = { prototype: exportTests.C2_private; new(): exportTests.C2_private; }
+Line 164 col 23 IdentifierName "C2_private" = typeof exportTests.C2_private
 Line 166 col 15 IdentifierName "getC1_public" = () => exportTests.C1_public
 Line 167 col 19 ObjectCreationExpression "new C1_public()" = exportTests.C1_public
-Line 167 col 23 IdentifierName "C1_public" = { prototype: exportTests.C1_public; new(): exportTests.C1_public; }
+Line 167 col 23 IdentifierName "C1_public" = typeof exportTests.C1_public
 Line 169 col 15 IdentifierName "setC1_public" = (arg: exportTests.C1_public) => void
 Line 169 col 28 IdentifierName "arg" = exportTests.C1_public
 Line 169 col 33 IdentifierName "C1_public" = exportTests.C1_public
 Line 171 col 19 IdentifierName "c1" = exportTests.C1_public
 Line 172 col 19 ObjectCreationExpression "new C1_public()" = exportTests.C1_public
-Line 172 col 23 IdentifierName "C1_public" = { prototype: exportTests.C1_public; new(): exportTests.C1_public; }
+Line 172 col 23 IdentifierName "C1_public" = typeof exportTests.C1_public
 Line 177 col 15 IdentifierName "mAmbient" = mAmbient
 Line 178 col 10 IdentifierName "C" = mAmbient.C
 Line 179 col 15 IdentifierName "myProp" = number
-Line 182 col 13 IdentifierName "foo" = () => mAmbient.C
+Line 182 col 13 IdentifierName "foo" = typeof mAmbient.foo
 Line 182 col 21 IdentifierName "C" = mAmbient.C
 Line 183 col 8 IdentifierName "aVar" = mAmbient.C
 Line 183 col 14 IdentifierName "C" = mAmbient.C
@@ -161,7 +161,7 @@ Line 191 col 0 IdentifierName "z" = mAmbient.e
 Line 194 col 11 IdentifierName "m3" = mAmbient.m3
 Line 195 col 14 IdentifierName "C" = mAmbient.m3.C
 Line 196 col 19 IdentifierName "myProp" = number
-Line 199 col 17 IdentifierName "foo" = () => mAmbient.m3.C
+Line 199 col 17 IdentifierName "foo" = typeof mAmbient.m3.foo
 Line 199 col 24 IdentifierName "C" = mAmbient.m3.C
 Line 200 col 12 IdentifierName "aVar" = mAmbient.m3.C
 Line 200 col 18 IdentifierName "C" = mAmbient.m3.C
@@ -173,19 +173,19 @@ Line 205 col 13 IdentifierName "e" = mAmbient.m3.e
 Line 206 col 0 IdentifierName "x" = mAmbient.m3.e
 Line 207 col 0 IdentifierName "y" = mAmbient.m3.e
 Line 208 col 0 IdentifierName "z" = mAmbient.m3.e
-Line 213 col 9 IdentifierName "foo" = () => mAmbient.C
+Line 213 col 9 IdentifierName "foo" = typeof foo
 Line 214 col 11 InvocationExpression "mAmbient.foo()" = mAmbient.C
-Line 214 col 11 MemberAccessExpression "mAmbient.foo" = () => mAmbient.C
-Line 214 col 11 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
-Line 214 col 20 IdentifierName "foo" = () => mAmbient.C
+Line 214 col 11 MemberAccessExpression "mAmbient.foo" = typeof mAmbient.foo
+Line 214 col 11 IdentifierName "mAmbient" = typeof mAmbient
+Line 214 col 20 IdentifierName "foo" = typeof mAmbient.foo
 Line 217 col 4 IdentifierName "cVar" = mAmbient.C
 Line 217 col 11 ObjectCreationExpression "new mAmbient.C()" = mAmbient.C
-Line 217 col 15 MemberAccessExpression "mAmbient.C" = { prototype: mAmbient.C; new(): mAmbient.C; }
-Line 217 col 15 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
-Line 217 col 24 IdentifierName "C" = { prototype: mAmbient.C; new(): mAmbient.C; }
+Line 217 col 15 MemberAccessExpression "mAmbient.C" = typeof mAmbient.C
+Line 217 col 15 IdentifierName "mAmbient" = typeof mAmbient
+Line 217 col 24 IdentifierName "C" = typeof mAmbient.C
 Line 218 col 4 IdentifierName "aVar" = mAmbient.C
 Line 218 col 11 MemberAccessExpression "mAmbient.aVar" = mAmbient.C
-Line 218 col 11 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
+Line 218 col 11 IdentifierName "mAmbient" = typeof mAmbient
 Line 218 col 20 IdentifierName "aVar" = mAmbient.C
 Line 219 col 4 IdentifierName "bB" = mAmbient.B
 Line 219 col 8 IdentifierName "mAmbient" = mAmbient
@@ -193,25 +193,25 @@ Line 219 col 17 IdentifierName "B" = mAmbient.B
 Line 220 col 4 IdentifierName "eVar" = mAmbient.e
 Line 220 col 10 IdentifierName "mAmbient" = mAmbient
 Line 220 col 19 IdentifierName "e" = mAmbient.e
-Line 222 col 9 IdentifierName "m3foo" = () => mAmbient.m3.C
+Line 222 col 9 IdentifierName "m3foo" = typeof m3foo
 Line 223 col 11 InvocationExpression "mAmbient.m3.foo()" = mAmbient.m3.C
-Line 223 col 11 MemberAccessExpression "mAmbient.m3.foo" = () => mAmbient.m3.C
-Line 223 col 11 MemberAccessExpression "mAmbient.m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
-Line 223 col 11 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
-Line 223 col 20 IdentifierName "m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
-Line 223 col 23 IdentifierName "foo" = () => mAmbient.m3.C
+Line 223 col 11 MemberAccessExpression "mAmbient.m3.foo" = typeof mAmbient.m3.foo
+Line 223 col 11 MemberAccessExpression "mAmbient.m3" = typeof mAmbient.m3
+Line 223 col 11 IdentifierName "mAmbient" = typeof mAmbient
+Line 223 col 20 IdentifierName "m3" = typeof mAmbient.m3
+Line 223 col 23 IdentifierName "foo" = typeof mAmbient.m3.foo
 Line 226 col 4 IdentifierName "m3cVar" = mAmbient.m3.C
 Line 226 col 13 ObjectCreationExpression "new mAmbient.m3.C()" = mAmbient.m3.C
-Line 226 col 17 MemberAccessExpression "mAmbient.m3.C" = { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }
-Line 226 col 17 MemberAccessExpression "mAmbient.m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
-Line 226 col 17 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
-Line 226 col 26 IdentifierName "m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
-Line 226 col 29 IdentifierName "C" = { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }
+Line 226 col 17 MemberAccessExpression "mAmbient.m3.C" = typeof mAmbient.m3.C
+Line 226 col 17 MemberAccessExpression "mAmbient.m3" = typeof mAmbient.m3
+Line 226 col 17 IdentifierName "mAmbient" = typeof mAmbient
+Line 226 col 26 IdentifierName "m3" = typeof mAmbient.m3
+Line 226 col 29 IdentifierName "C" = typeof mAmbient.m3.C
 Line 227 col 4 IdentifierName "m3aVar" = mAmbient.m3.C
 Line 227 col 13 MemberAccessExpression "mAmbient.m3.aVar" = mAmbient.m3.C
-Line 227 col 13 MemberAccessExpression "mAmbient.m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
-Line 227 col 13 IdentifierName "mAmbient" = { C: { prototype: mAmbient.C; new(): mAmbient.C; }; foo(): mAmbient.C; aVar: mAmbient.C; e: { x: mAmbient.e; y: mAmbient.e; z: mAmbient.e; [x: number]: string; }; m3: { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }; }
-Line 227 col 22 IdentifierName "m3" = { C: { prototype: mAmbient.m3.C; new(): mAmbient.m3.C; }; foo(): mAmbient.m3.C; aVar: mAmbient.m3.C; e: { x: mAmbient.m3.e; y: mAmbient.m3.e; z: mAmbient.m3.e; [x: number]: string; }; }
+Line 227 col 13 MemberAccessExpression "mAmbient.m3" = typeof mAmbient.m3
+Line 227 col 13 IdentifierName "mAmbient" = typeof mAmbient
+Line 227 col 22 IdentifierName "m3" = typeof mAmbient.m3
 Line 227 col 25 IdentifierName "aVar" = mAmbient.m3.C
 Line 228 col 4 IdentifierName "m3bB" = mAmbient.m3.B
 Line 228 col 10 IdentifierName "mAmbient" = mAmbient

@@ -2,7 +2,7 @@
 Line 0 col 4 IdentifierName "foo" = (dummy: any) => void
 Line 0 col 10 ParenthesizedArrowFunctionExpression "(dummy) => { }" = (dummy: any) => void
 Line 0 col 11 IdentifierName "dummy" = any
-Line 1 col 9 IdentifierName "test" = () => void
+Line 1 col 9 IdentifierName "test" = typeof test
 Line 3 col 0 InvocationExpression "foo(() =>
         function () { return this; }
     )" = void

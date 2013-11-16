@@ -1,32 +1,32 @@
 === tests/cases/compiler/classWithOnlyPublicMembersEquivalentToInterface2.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 11 IdentifierName "x" = string
-Line 2 col 11 IdentifierName "y" = (a: number) => number
-Line 2 col 13 IdentifierName "a" = number
-Line 3 col 15 IdentifierName "z" = number
-Line 4 col 15 IdentifierName "z" = number
-Line 4 col 17 IdentifierName "v" = number
-Line 5 col 5 IdentifierName "x" = string
-Line 5 col 17 IdentifierName "Object" = Object
-Line 6 col 5 IdentifierName "x" = number
-Line 6 col 17 IdentifierName "Object" = Object
-Line 9 col 18 IdentifierName "foo" = string
-Line 12 col 10 IdentifierName "I" = I
-Line 13 col 0 IdentifierName "x" = string
-Line 14 col 0 IdentifierName "y" = (b: number) => number
-Line 14 col 6 IdentifierName "b" = number
-Line 15 col 0 IdentifierName "z" = number
-Line 16 col 5 IdentifierName "x" = string
-Line 16 col 17 IdentifierName "Object" = Object
-Line 17 col 5 IdentifierName "x" = number
-Line 17 col 17 IdentifierName "Object" = Object
-Line 21 col 4 IdentifierName "c" = C
-Line 21 col 7 IdentifierName "C" = C
-Line 22 col 4 IdentifierName "i" = I
-Line 22 col 7 IdentifierName "I" = I
-Line 23 col 0 AssignmentExpression "c = i" = I
-Line 23 col 0 IdentifierName "c" = C
-Line 23 col 4 IdentifierName "i" = I
-Line 24 col 0 AssignmentExpression "i = c" = C
-Line 24 col 0 IdentifierName "i" = I
-Line 24 col 4 IdentifierName "c" = C
+Line 2 col 6 IdentifierName "C" = C
+Line 3 col 11 IdentifierName "x" = string
+Line 4 col 11 IdentifierName "y" = (a: number) => number
+Line 4 col 13 IdentifierName "a" = number
+Line 5 col 15 IdentifierName "z" = number
+Line 6 col 15 IdentifierName "z" = number
+Line 6 col 17 IdentifierName "v" = number
+Line 7 col 5 IdentifierName "x" = string
+Line 7 col 17 IdentifierName "Object" = Object
+Line 8 col 5 IdentifierName "x" = number
+Line 8 col 17 IdentifierName "Object" = Object
+Line 11 col 18 IdentifierName "foo" = string
+Line 14 col 10 IdentifierName "I" = I
+Line 15 col 0 IdentifierName "x" = string
+Line 16 col 0 IdentifierName "y" = (b: number) => number
+Line 16 col 6 IdentifierName "b" = number
+Line 17 col 0 IdentifierName "z" = number
+Line 18 col 5 IdentifierName "x" = string
+Line 18 col 17 IdentifierName "Object" = Object
+Line 19 col 5 IdentifierName "x" = number
+Line 19 col 17 IdentifierName "Object" = Object
+Line 23 col 4 IdentifierName "c" = C
+Line 23 col 7 IdentifierName "C" = C
+Line 24 col 4 IdentifierName "i" = I
+Line 24 col 7 IdentifierName "I" = I
+Line 25 col 0 AssignmentExpression "c = i" = I
+Line 25 col 0 IdentifierName "c" = C
+Line 25 col 4 IdentifierName "i" = I
+Line 26 col 0 AssignmentExpression "i = c" = C
+Line 26 col 0 IdentifierName "i" = I
+Line 26 col 4 IdentifierName "c" = C

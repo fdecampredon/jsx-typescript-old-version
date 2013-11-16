@@ -1,5 +1,5 @@
 === tests/cases/compiler/targetTypeObjectLiteralToAny.ts ===
-Line 0 col 9 IdentifierName "suggest" = () => void
+Line 0 col 9 IdentifierName "suggest" = typeof suggest
 Line 1 col 5 IdentifierName "TypeScriptKeywords" = string[]
 Line 2 col 5 IdentifierName "result" = any
 Line 3 col 0 InvocationExpression "TypeScriptKeywords.forEach(function(keyword) {						

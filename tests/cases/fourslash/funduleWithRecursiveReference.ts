@@ -11,5 +11,5 @@
 edit.insert('');
 
 goTo.marker();
-verify.quickInfoIs('{ C: typeof C; (): void; }');
+verify.quickInfoIs('typeof C');
 verify.numberOfErrorsInCurrentFile(0);

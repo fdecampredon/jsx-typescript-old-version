@@ -1,3 +1,6 @@
+// type parameter lists must exactly match type argument lists
+// all of these invocations are errors
+
 function f<T, U>(x: T, y: U): T { return null; }
 var r1 = f<number>(1, '');
 var r1b = f<number, string, number>(1, '');

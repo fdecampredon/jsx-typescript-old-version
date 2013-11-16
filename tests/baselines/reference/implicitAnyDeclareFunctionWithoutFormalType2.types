@@ -1,10 +1,10 @@
 === tests/cases/compiler/implicitAnyDeclareFunctionWithoutFormalType2.ts ===
-Line 1 col 9 IdentifierName "fn1" = () => number
+Line 1 col 9 IdentifierName "fn1" = typeof fn1
 Line 2 col 8 IdentifierName "x" = number
 Line 3 col 11 IdentifierName "x" = number
-Line 6 col 9 IdentifierName "fn2" = () => any
+Line 6 col 9 IdentifierName "fn2" = typeof fn2
 Line 7 col 8 IdentifierName "x" = any
 Line 8 col 11 IdentifierName "x" = any
-Line 11 col 9 IdentifierName "fn3" = () => any
+Line 11 col 9 IdentifierName "fn3" = typeof fn3
 Line 12 col 8 IdentifierName "x" = any
 Line 13 col 11 IdentifierName "x" = any

@@ -1,14 +1,14 @@
 === tests/cases/compiler/functionMergedWithModule.ts ===
-Line 0 col 9 IdentifierName "foo" = { Bar: { f(): void; }; Baz: { g(): void; }; (title: string): void; }
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "title" = string
 Line 1 col 8 IdentifierName "x" = number
 Line 4 col 7 IdentifierName "foo" = foo
 Line 4 col 11 IdentifierName "Bar" = foo.Bar
-Line 5 col 20 IdentifierName "f" = () => void
+Line 5 col 20 IdentifierName "f" = typeof foo.Bar.f
 Line 9 col 7 IdentifierName "foo" = foo
 Line 9 col 11 IdentifierName "Baz" = foo.Baz
-Line 10 col 20 IdentifierName "g" = () => void
+Line 10 col 20 IdentifierName "g" = typeof foo.Baz.g
 Line 11 col 0 InvocationExpression "Bar.f()" = void
-Line 11 col 0 MemberAccessExpression "Bar.f" = () => void
-Line 11 col 0 IdentifierName "Bar" = { f(): void; }
-Line 11 col 12 IdentifierName "f" = () => void
+Line 11 col 0 MemberAccessExpression "Bar.f" = typeof foo.Bar.f
+Line 11 col 0 IdentifierName "Bar" = typeof foo.Bar
+Line 11 col 12 IdentifierName "f" = typeof foo.Bar.f

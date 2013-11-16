@@ -9,21 +9,21 @@ Line 8 col 19 AddExpression ""<h1>" + this.greeting" = string
 Line 8 col 28 MemberAccessExpression "this.greeting" = string
 Line 8 col 28 ThisKeyword "this" = Foo.Bar.Greeter
 Line 8 col 33 IdentifierName "greeting" = string
-Line 13 col 13 IdentifierName "foo" = (greeting: string) => Foo.Bar.Greeter
+Line 13 col 13 IdentifierName "foo" = typeof Foo.Bar.foo
 Line 13 col 17 IdentifierName "greeting" = string
 Line 13 col 36 IdentifierName "Greeter" = Foo.Bar.Greeter
 Line 14 col 15 ObjectCreationExpression "new Greeter(greeting)" = Foo.Bar.Greeter
-Line 14 col 19 IdentifierName "Greeter" = { prototype: Foo.Bar.Greeter; new(greeting: string): Foo.Bar.Greeter; }
+Line 14 col 19 IdentifierName "Greeter" = typeof Foo.Bar.Greeter
 Line 14 col 27 IdentifierName "greeting" = string
 Line 17 col 8 IdentifierName "greeter" = Foo.Bar.Greeter
 Line 17 col 18 ObjectCreationExpression "new Greeter("Hello, world!")" = Foo.Bar.Greeter
-Line 17 col 22 IdentifierName "Greeter" = { prototype: Foo.Bar.Greeter; new(greeting: string): Foo.Bar.Greeter; }
+Line 17 col 22 IdentifierName "Greeter" = typeof Foo.Bar.Greeter
 Line 18 col 8 IdentifierName "str" = string
 Line 18 col 14 InvocationExpression "greeter.greet()" = string
 Line 18 col 14 MemberAccessExpression "greeter.greet" = () => string
 Line 18 col 14 IdentifierName "greeter" = Foo.Bar.Greeter
 Line 18 col 22 IdentifierName "greet" = () => string
-Line 20 col 13 IdentifierName "foo2" = (greeting: string, ...restGreetings: string[]) => Foo.Bar.Greeter[]
+Line 20 col 13 IdentifierName "foo2" = typeof Foo.Bar.foo2
 Line 20 col 18 IdentifierName "greeting" = string
 Line 20 col 39 IdentifierName "restGreetings /* more greeting */" = string[]
 Line 21 col 12 IdentifierName "greeters" = Foo.Bar.Greeter[]
@@ -33,7 +33,7 @@ Line 22 col 0 AssignmentExpression "greeters[0] = new Greeter(greeting)" = Foo.B
 Line 22 col 0 ElementAccessExpression "greeters[0]" = Foo.Bar.Greeter
 Line 22 col 0 IdentifierName "greeters" = Foo.Bar.Greeter[]
 Line 22 col 22 ObjectCreationExpression "new Greeter(greeting)" = Foo.Bar.Greeter
-Line 22 col 26 IdentifierName "Greeter" = { prototype: Foo.Bar.Greeter; new(greeting: string): Foo.Bar.Greeter; }
+Line 22 col 26 IdentifierName "Greeter" = typeof Foo.Bar.Greeter
 Line 22 col 34 IdentifierName "greeting" = string
 Line 23 col 17 IdentifierName "i" = number
 Line 23 col 24 LessThanExpression "i < restGreetings.length" = boolean
@@ -48,14 +48,14 @@ Line 24 col 0 MemberAccessExpression "greeters.push" = (...items: Foo.Bar.Greete
 Line 24 col 0 IdentifierName "greeters" = Foo.Bar.Greeter[]
 Line 24 col 21 IdentifierName "push" = (...items: Foo.Bar.Greeter[]) => number
 Line 24 col 26 ObjectCreationExpression "new Greeter(restGreetings[i])" = Foo.Bar.Greeter
-Line 24 col 30 IdentifierName "Greeter" = { prototype: Foo.Bar.Greeter; new(greeting: string): Foo.Bar.Greeter; }
+Line 24 col 30 IdentifierName "Greeter" = typeof Foo.Bar.Greeter
 Line 24 col 38 ElementAccessExpression "restGreetings[i]" = string
 Line 24 col 38 IdentifierName "restGreetings" = string[]
 Line 24 col 52 IdentifierName "i" = number
 Line 27 col 15 IdentifierName "greeters" = Foo.Bar.Greeter[]
 Line 30 col 8 IdentifierName "b" = Foo.Bar.Greeter[]
 Line 30 col 12 InvocationExpression "foo2("Hello", "World", "!")" = Foo.Bar.Greeter[]
-Line 30 col 12 IdentifierName "foo2" = (greeting: string, ...restGreetings: string[]) => Foo.Bar.Greeter[]
+Line 30 col 12 IdentifierName "foo2" = typeof Foo.Bar.foo2
 Line 32 col 13 IdentifierName "j" = number
 Line 32 col 20 LessThanExpression "j < b.length" = boolean
 Line 32 col 20 IdentifierName "j" = number

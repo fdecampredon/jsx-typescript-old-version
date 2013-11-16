@@ -1,0 +1,28 @@
+=== tests/cases/compiler/callSignatureWithoutAnnotationsOrBody.ts ===
+Line 2 col 9 IdentifierName "foo" = typeof foo
+Line 2 col 13 IdentifierName "x" = any
+Line 3 col 4 IdentifierName "r" = void
+Line 3 col 8 InvocationExpression "foo(1)" = void
+Line 3 col 8 IdentifierName "foo" = typeof foo
+Line 5 col 10 IdentifierName "I" = I
+Line 7 col 0 IdentifierName "f" = () => any
+Line 9 col 4 IdentifierName "i" = I
+Line 9 col 7 IdentifierName "I" = I
+Line 10 col 4 IdentifierName "r2" = any
+Line 10 col 9 InvocationExpression "i()" = any
+Line 10 col 9 IdentifierName "i" = I
+Line 11 col 4 IdentifierName "r3" = any
+Line 11 col 9 InvocationExpression "i.f()" = any
+Line 11 col 9 MemberAccessExpression "i.f" = () => any
+Line 11 col 9 IdentifierName "i" = I
+Line 11 col 11 IdentifierName "f" = () => any
+Line 13 col 4 IdentifierName "a" = { f(): any; (): any; }
+Line 15 col 0 IdentifierName "f" = () => any
+Line 17 col 4 IdentifierName "r4" = any
+Line 17 col 9 InvocationExpression "a()" = any
+Line 17 col 9 IdentifierName "a" = { f(): any; (): any; }
+Line 18 col 4 IdentifierName "r5" = any
+Line 18 col 9 InvocationExpression "a.f()" = any
+Line 18 col 9 MemberAccessExpression "a.f" = () => any
+Line 18 col 9 IdentifierName "a" = { f(): any; (): any; }
+Line 18 col 11 IdentifierName "f" = () => any

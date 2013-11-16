@@ -2,7 +2,7 @@
 Line 0 col 10 IdentifierName "Point" = Point
 Line 1 col 0 IdentifierName "x" = number
 Line 2 col 0 IdentifierName "y" = number
-Line 4 col 9 IdentifierName "point" = { origin: Point; equals(p1: Point, p2: Point): boolean; (x: number, y: number): Point; }
+Line 4 col 9 IdentifierName "point" = typeof point
 Line 4 col 15 IdentifierName "x" = number
 Line 4 col 26 IdentifierName "y" = number
 Line 4 col 38 IdentifierName "Point" = Point
@@ -14,7 +14,7 @@ Line 5 col 22 IdentifierName "y" = number
 Line 7 col 7 IdentifierName "point" = point
 Line 8 col 15 IdentifierName "origin" = Point
 Line 8 col 24 InvocationExpression "point(0, 0)" = Point
-Line 8 col 24 IdentifierName "point" = { origin: Point; equals(p1: Point, p2: Point): boolean; (x: number, y: number): Point; }
+Line 8 col 24 IdentifierName "point" = typeof point
 Line 9 col 20 IdentifierName "equals" = (p1: Point, p2: Point) => boolean
 Line 9 col 27 IdentifierName "p1" = Point
 Line 9 col 31 IdentifierName "Point" = Point
@@ -37,15 +37,15 @@ Line 10 col 39 IdentifierName "p2" = Point
 Line 10 col 42 IdentifierName "y" = number
 Line 13 col 4 IdentifierName "p1" = Point
 Line 13 col 9 InvocationExpression "point(0, 0)" = Point
-Line 13 col 9 IdentifierName "point" = { origin: Point; equals(p1: Point, p2: Point): boolean; (x: number, y: number): Point; }
+Line 13 col 9 IdentifierName "point" = typeof point
 Line 14 col 4 IdentifierName "p2" = Point
 Line 14 col 9 MemberAccessExpression "point.origin" = Point
-Line 14 col 9 IdentifierName "point" = { origin: Point; equals(p1: Point, p2: Point): boolean; (x: number, y: number): Point; }
+Line 14 col 9 IdentifierName "point" = typeof point
 Line 14 col 15 IdentifierName "origin" = Point
 Line 15 col 4 IdentifierName "b" = boolean
 Line 15 col 8 InvocationExpression "point.equals(p1, p2)" = boolean
 Line 15 col 8 MemberAccessExpression "point.equals" = (p1: Point, p2: Point) => boolean
-Line 15 col 8 IdentifierName "point" = { origin: Point; equals(p1: Point, p2: Point): boolean; (x: number, y: number): Point; }
+Line 15 col 8 IdentifierName "point" = typeof point
 Line 15 col 14 IdentifierName "equals" = (p1: Point, p2: Point) => boolean
 Line 15 col 21 IdentifierName "p1" = Point
 Line 15 col 25 IdentifierName "p2" = Point

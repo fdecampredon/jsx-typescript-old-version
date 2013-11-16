@@ -13,5 +13,5 @@
 edit.insert('');
 
 goTo.marker();
-verify.quickInfoIs('{ prototype: C; C: typeof C; new(): C; }');
+verify.quickInfoIs('typeof C');
 verify.numberOfErrorsInCurrentFile(0);

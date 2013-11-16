@@ -1,3 +1,5 @@
+// basic uses of function literals with overloads
+
 var f: {
     (x: string): string;
     (x: number): number;

@@ -1,3 +1,5 @@
+// public is allowed on a constructor but is not meaningful
+
 class C {
     public constructor() { }
 }

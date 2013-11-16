@@ -1,4 +1,5 @@
 //@module: commonjs
+// @declaration: true
 // @Filename: importDeclarationUsedAsTypeQuery_require.ts
 export class B {
     id: number;
@@ -7,4 +8,4 @@ export class B {
 // @Filename: importDeclarationUsedAsTypeQuery_1.ts
 ///<reference path='importDeclarationUsedAsTypeQuery_require.ts'/>
 import a = require('importDeclarationUsedAsTypeQuery_require');
-var x: typeof a;
+export var x: typeof a;

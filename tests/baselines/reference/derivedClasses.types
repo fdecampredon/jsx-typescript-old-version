@@ -28,10 +28,10 @@ Line 16 col 12 InvocationExpression "getHue()" = string
 Line 16 col 12 IdentifierName "getHue" = () => string
 Line 20 col 4 IdentifierName "r" = Red
 Line 20 col 8 ObjectCreationExpression "new Red()" = Red
-Line 20 col 12 IdentifierName "Red" = { prototype: Red; new(): Red; }
+Line 20 col 12 IdentifierName "Red" = typeof Red
 Line 21 col 4 IdentifierName "b" = Blue
 Line 21 col 8 ObjectCreationExpression "new Blue()" = Blue
-Line 21 col 12 IdentifierName "Blue" = { prototype: Blue; new(): Blue; }
+Line 21 col 12 IdentifierName "Blue" = typeof Blue
 Line 22 col 0 InvocationExpression "r.shade()" = string
 Line 22 col 0 MemberAccessExpression "r.shade" = () => string
 Line 22 col 0 IdentifierName "r" = Red

@@ -1,5 +1,5 @@
 === tests/cases/compiler/genericArrayPropertyAssignment.ts ===
-Line 0 col 9 IdentifierName "isEmpty" = (list: { length: number; }) => boolean
+Line 0 col 9 IdentifierName "isEmpty" = typeof isEmpty
 Line 0 col 17 IdentifierName "list" = { length: number; }
 Line 0 col 24 IdentifierName "length" = number
 Line 2 col 7 EqualsExpression "list.length ===0" = boolean
@@ -7,5 +7,5 @@ Line 2 col 7 MemberAccessExpression "list.length" = number
 Line 2 col 7 IdentifierName "list" = { length: number; }
 Line 2 col 12 IdentifierName "length" = number
 Line 4 col 0 InvocationExpression "isEmpty([])" = boolean
-Line 4 col 0 IdentifierName "isEmpty" = (list: { length: number; }) => boolean
+Line 4 col 0 IdentifierName "isEmpty" = typeof isEmpty
 Line 5 col 8 ArrayLiteralExpression "[]" = undefined[]

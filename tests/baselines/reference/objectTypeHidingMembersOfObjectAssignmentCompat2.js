@@ -1,7 +1,7 @@
 var i;
 var o;
-o = i;
-i = o;
+o = i; // ok
+i = o; // error
 
 var C = (function () {
     function C() {
@@ -12,12 +12,12 @@ var C = (function () {
     return C;
 })();
 var c;
-o = c;
-c = o;
+o = c; // ok
+c = o; // error
 
 var a = {
     toString: function () {
     }
 };
-o = a;
-a = o;
+o = a; // ok
+a = o; // ok

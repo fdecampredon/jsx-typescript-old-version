@@ -1,3 +1,5 @@
+// numeric properties must be distinct after a ToNumber operation
+// so the below are all errors
 var C = (function () {
     function C() {
     }

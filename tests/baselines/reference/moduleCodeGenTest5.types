@@ -1,8 +1,8 @@
 === tests/cases/compiler/moduleCodeGenTest5.ts ===
 Line 0 col 11 IdentifierName "x" = number
 Line 1 col 4 IdentifierName "y" = number
-Line 3 col 16 IdentifierName "f1" = () => void
-Line 4 col 9 IdentifierName "f2" = () => void
+Line 3 col 16 IdentifierName "f1" = typeof f1
+Line 4 col 9 IdentifierName "f2" = typeof f2
 Line 6 col 13 IdentifierName "C1" = C1
 Line 7 col 8 IdentifierName "p1" = number
 Line 8 col 8 IdentifierName "p2" = () => void
@@ -13,11 +13,11 @@ Line 15 col 12 IdentifierName "E1" = E1
 Line 15 col 16 IdentifierName "A" = E1
 Line 16 col 4 IdentifierName "u" = E1
 Line 16 col 8 MemberAccessExpression "E1.A" = E1
-Line 16 col 8 IdentifierName "E1" = { A: E1; [x: number]: string; }
+Line 16 col 8 IdentifierName "E1" = typeof E1
 Line 16 col 11 IdentifierName "A" = E1
 Line 17 col 5 IdentifierName "E2" = E2
 Line 17 col 9 IdentifierName "B" = E2
 Line 18 col 4 IdentifierName "v" = E2
 Line 18 col 8 MemberAccessExpression "E2.B" = E2
-Line 18 col 8 IdentifierName "E2" = { B: E2; [x: number]: string; }
+Line 18 col 8 IdentifierName "E2" = typeof E2
 Line 18 col 11 IdentifierName "B" = E2

@@ -1,3 +1,4 @@
+// valid uses of arrays of function types
 var x = [function () {
         return 1;
     }, function () {

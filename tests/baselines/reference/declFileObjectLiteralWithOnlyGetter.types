@@ -1,5 +1,5 @@
 === tests/cases/compiler/declFileObjectLiteralWithOnlyGetter.ts ===
-Line 1 col 14 IdentifierName "makePoint" = (x: number) => { x: number; }
+Line 1 col 14 IdentifierName "makePoint" = typeof makePoint
 Line 1 col 24 IdentifierName "x" = number
 Line 2 col 11 ObjectLiteralExpression "{
         get x() { return x; },
@@ -8,7 +8,7 @@ Line 3 col 12 IdentifierName "x" = number
 Line 3 col 25 IdentifierName "x" = number
 Line 6 col 9 IdentifierName "point" = { x: number; }
 Line 6 col 17 InvocationExpression "makePoint(2)" = { x: number; }
-Line 6 col 17 IdentifierName "makePoint" = (x: number) => { x: number; }
+Line 6 col 17 IdentifierName "makePoint" = typeof makePoint
 Line 7 col 9 IdentifierName "x" = number
 Line 7 col 13 MemberAccessExpression "point./*3*/x" = number
 Line 7 col 13 IdentifierName "point" = { x: number; }

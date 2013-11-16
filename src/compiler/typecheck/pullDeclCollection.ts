@@ -398,7 +398,9 @@ module TypeScript {
         var isInConstructor = parent.kind === PullElementKind.ConstructorMethod;
         if (isPublicOrPrivate && isInConstructor) {
             var parentsParent = context.parentChain[context.parentChain.length - 2];
-            var propDecl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Property, declFlags, parentsParent, span);
+            // optional parameters don't introduce optional properties - always drop isOptional flag on the property declaration
+            var propDeclFlags = declFlags & ~PullElementFlags.Optional;
+            var propDecl = new NormalPullDecl(argDecl.identifier.valueText(), argDecl.identifier.text(), PullElementKind.Property, propDeclFlags, parentsParent, span);
             propDecl.setValueDecl(decl);
             decl.setFlag(PullElementFlags.PropertyParameter);
             propDecl.setFlag(PullElementFlags.PropertyParameter);

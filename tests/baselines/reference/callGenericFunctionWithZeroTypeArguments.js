@@ -1,3 +1,4 @@
+// valid invocations of generic functions with no explicit type arguments provided
 function f(x) {
     return null;
 }

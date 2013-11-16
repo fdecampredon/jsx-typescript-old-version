@@ -1,37 +1,37 @@
 === tests/cases/compiler/objectTypeHidingMembersOfObject.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "valueOf" = () => void
-Line 4 col 4 IdentifierName "c" = C
-Line 4 col 7 IdentifierName "C" = C
-Line 5 col 4 IdentifierName "r1" = void
-Line 5 col 15 InvocationExpression "c.valueOf()" = void
-Line 5 col 15 MemberAccessExpression "c.valueOf" = () => void
-Line 5 col 15 IdentifierName "c" = C
-Line 5 col 17 IdentifierName "valueOf" = () => void
-Line 7 col 10 IdentifierName "I" = I
-Line 8 col 0 IdentifierName "valueOf" = () => void
-Line 11 col 4 IdentifierName "i" = I
-Line 11 col 7 IdentifierName "I" = I
-Line 12 col 4 IdentifierName "r2" = void
-Line 12 col 15 InvocationExpression "i.valueOf()" = void
-Line 12 col 15 MemberAccessExpression "i.valueOf" = () => void
-Line 12 col 15 IdentifierName "i" = I
-Line 12 col 17 IdentifierName "valueOf" = () => void
-Line 14 col 4 IdentifierName "a" = { valueOf: () => void; }
-Line 14 col 8 ObjectLiteralExpression "{
+Line 2 col 6 IdentifierName "C" = C
+Line 3 col 0 IdentifierName "valueOf" = () => void
+Line 6 col 4 IdentifierName "c" = C
+Line 6 col 7 IdentifierName "C" = C
+Line 7 col 4 IdentifierName "r1" = void
+Line 7 col 15 InvocationExpression "c.valueOf()" = void
+Line 7 col 15 MemberAccessExpression "c.valueOf" = () => void
+Line 7 col 15 IdentifierName "c" = C
+Line 7 col 17 IdentifierName "valueOf" = () => void
+Line 9 col 10 IdentifierName "I" = I
+Line 10 col 0 IdentifierName "valueOf" = () => void
+Line 13 col 4 IdentifierName "i" = I
+Line 13 col 7 IdentifierName "I" = I
+Line 14 col 4 IdentifierName "r2" = void
+Line 14 col 15 InvocationExpression "i.valueOf()" = void
+Line 14 col 15 MemberAccessExpression "i.valueOf" = () => void
+Line 14 col 15 IdentifierName "i" = I
+Line 14 col 17 IdentifierName "valueOf" = () => void
+Line 16 col 4 IdentifierName "a" = { valueOf: () => void; }
+Line 16 col 8 ObjectLiteralExpression "{
     valueOf: () => { }
 }" = { valueOf: () => void; }
-Line 15 col 0 IdentifierName "valueOf" = () => void
-Line 15 col 13 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 18 col 4 IdentifierName "r3" = void
-Line 18 col 15 InvocationExpression "a.valueOf()" = void
-Line 18 col 15 MemberAccessExpression "a.valueOf" = () => void
-Line 18 col 15 IdentifierName "a" = { valueOf: () => void; }
-Line 18 col 17 IdentifierName "valueOf" = () => void
-Line 20 col 4 IdentifierName "b" = { valueOf(): void; }
-Line 21 col 0 IdentifierName "valueOf" = () => void
-Line 24 col 4 IdentifierName "r4" = void
-Line 24 col 15 InvocationExpression "b.valueOf()" = void
-Line 24 col 15 MemberAccessExpression "b.valueOf" = () => void
-Line 24 col 15 IdentifierName "b" = { valueOf(): void; }
-Line 24 col 17 IdentifierName "valueOf" = () => void
+Line 17 col 0 IdentifierName "valueOf" = () => void
+Line 17 col 13 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 20 col 4 IdentifierName "r3" = void
+Line 20 col 15 InvocationExpression "a.valueOf()" = void
+Line 20 col 15 MemberAccessExpression "a.valueOf" = () => void
+Line 20 col 15 IdentifierName "a" = { valueOf: () => void; }
+Line 20 col 17 IdentifierName "valueOf" = () => void
+Line 22 col 4 IdentifierName "b" = { valueOf(): void; }
+Line 23 col 0 IdentifierName "valueOf" = () => void
+Line 26 col 4 IdentifierName "r4" = void
+Line 26 col 15 InvocationExpression "b.valueOf()" = void
+Line 26 col 15 MemberAccessExpression "b.valueOf" = () => void
+Line 26 col 15 IdentifierName "b" = { valueOf(): void; }
+Line 26 col 17 IdentifierName "valueOf" = () => void

@@ -1,4 +1,3 @@
-complicatedGenericRecursiveBaseClassReference.ts line 1 col 7: error TS2100: Class 'S18<B, A>' is recursively referenced as a base type of itself.
-complicatedGenericRecursiveBaseClassReference.ts line 1 col 11: error TS2000: Duplicate identifier 'B'.
+complicatedGenericRecursiveBaseClassReference.ts line 1 col 7: error TS2100: Class 'S18<B, A, C>' is recursively referenced as a base type of itself.
 complicatedGenericRecursiveBaseClassReference.ts line 4 col 6: error TS2081: Supplied parameters do not match any signature of call target.
 complicatedGenericRecursiveBaseClassReference.ts line 4 col 6: error TS2085: Could not select overload for 'new' expression.

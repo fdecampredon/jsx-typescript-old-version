@@ -1,3 +1,6 @@
+// object types with call signatures can override members of Function
+// no errors expected below 
+
 interface Function {
     data: number;
     [x: string]: Object;

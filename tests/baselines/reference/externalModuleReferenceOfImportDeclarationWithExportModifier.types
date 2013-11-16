@@ -1,8 +1,8 @@
 === tests/cases/compiler/externalModuleReferenceOfImportDeclarationWithExportModifier_1.ts ===
 Line 0 col 14 IdentifierName "file1" = file1
 Line 1 col 0 InvocationExpression "file1.foo()" = void
-Line 1 col 0 MemberAccessExpression "file1.foo" = () => void
+Line 1 col 0 MemberAccessExpression "file1.foo" = typeof foo
 Line 1 col 0 IdentifierName "file1" = file1
-Line 1 col 6 IdentifierName "foo" = () => void
+Line 1 col 6 IdentifierName "foo" = typeof foo
 === tests/cases/compiler/externalModuleReferenceOfImportDeclarationWithExportModifier_0.ts ===
-Line 0 col 16 IdentifierName "foo" = () => void
+Line 0 col 16 IdentifierName "foo" = typeof foo

@@ -10,7 +10,7 @@ Line 4 col 16 ParenthesizedArrowFunctionExpression "() => this.x" = () => string
 Line 4 col 22 MemberAccessExpression "this.x" = string
 Line 4 col 22 ThisKeyword "this" = Foo
 Line 4 col 27 IdentifierName "x" = string
-Line 8 col 9 IdentifierName "myFn" = (a: any) => void
+Line 8 col 9 IdentifierName "myFn" = typeof myFn
 Line 8 col 14 IdentifierName "a" = any
 Line 9 col 6 IdentifierName "myCls" = myCls
 Line 11 col 0 InvocationExpression "myFn(() => {
@@ -18,7 +18,7 @@ Line 11 col 0 InvocationExpression "myFn(() => {
                 var x = this;
             });
         })" = void
-Line 11 col 0 IdentifierName "myFn" = (a: any) => void
+Line 11 col 0 IdentifierName "myFn" = typeof myFn
 Line 11 col 13 ParenthesizedArrowFunctionExpression "() => {
             myFn(() => {
                 var x = this;
@@ -27,7 +27,7 @@ Line 11 col 13 ParenthesizedArrowFunctionExpression "() => {
 Line 12 col 0 InvocationExpression "myFn(() => {
                 var x = this;
             })" = void
-Line 12 col 0 IdentifierName "myFn" = (a: any) => void
+Line 12 col 0 IdentifierName "myFn" = typeof myFn
 Line 12 col 17 ParenthesizedArrowFunctionExpression "() => {
                 var x = this;
             }" = () => void

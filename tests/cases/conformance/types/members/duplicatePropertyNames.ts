@@ -1,3 +1,5 @@
+// duplicate property names are an error in all types
+
 interface Number {
     foo: string;
     foo: string;

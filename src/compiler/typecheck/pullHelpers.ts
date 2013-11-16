@@ -126,5 +126,21 @@ module TypeScript {
                 rootType = <PullTypeSymbol>type.getRootSymbol();
             }
         }
+
+        export function isSymbolLocal(symbol: PullSymbol) {
+            var container = symbol.getContainer();
+            if (container) {
+                var containerKind = container.kind;
+                if (containerKind & (TypeScript.PullElementKind.SomeFunction | TypeScript.PullElementKind.FunctionType)) {
+                    return true;
+                }
+
+                if (containerKind == TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

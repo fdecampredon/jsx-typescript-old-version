@@ -1,5 +1,5 @@
 === tests/cases/compiler/noCollisionThisExpressionAndLocalVarInLambda.ts ===
-Line 0 col 17 IdentifierName "alert" = (message?: any) => void
+Line 0 col 17 IdentifierName "alert" = typeof alert
 Line 0 col 23 IdentifierName "message" = any
 Line 1 col 4 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
 Line 1 col 8 ObjectLiteralExpression "{
@@ -23,7 +23,7 @@ Line 4 col 15 InvocationExpression "callback(_this)" = any
 Line 4 col 15 IdentifierName "callback" = any
 Line 4 col 24 IdentifierName "_this" = number
 Line 7 col 0 InvocationExpression "alert(x.doStuff(x => alert(x)))" = void
-Line 7 col 0 IdentifierName "alert" = (message?: any) => void
+Line 7 col 0 IdentifierName "alert" = typeof alert
 Line 7 col 6 InvocationExpression "x.doStuff(x => alert(x))" = () => any
 Line 7 col 6 MemberAccessExpression "x.doStuff" = (callback: any) => () => any
 Line 7 col 6 IdentifierName "x" = { doStuff: (callback: any) => () => any; }
@@ -31,5 +31,5 @@ Line 7 col 8 IdentifierName "doStuff" = (callback: any) => () => any
 Line 7 col 16 SimpleArrowFunctionExpression "x => alert(x)" = (x: any) => void
 Line 7 col 16 IdentifierName "x" = any
 Line 7 col 21 InvocationExpression "alert(x)" = void
-Line 7 col 21 IdentifierName "alert" = (message?: any) => void
+Line 7 col 21 IdentifierName "alert" = typeof alert
 Line 7 col 27 IdentifierName "x" = any

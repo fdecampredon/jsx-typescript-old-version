@@ -1,3 +1,5 @@
+// using a type parameter as a constraint for a type parameter is valid
+// no errors expected
 function foo(x, y) {
     return y;
 }

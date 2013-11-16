@@ -1,5 +1,5 @@
 === tests/cases/compiler/matchingOfObjectLiteralConstraints.ts ===
-Line 0 col 9 IdentifierName "foo2" = <T, U extends { y: T; }>(x: U, z: T) => void
+Line 0 col 9 IdentifierName "foo2" = typeof foo2
 Line 0 col 14 IdentifierName "T" = T
 Line 0 col 17 IdentifierName "U" = U
 Line 0 col 29 IdentifierName "y" = T
@@ -9,6 +9,6 @@ Line 0 col 41 IdentifierName "U" = U
 Line 0 col 44 IdentifierName "z" = T
 Line 0 col 47 IdentifierName "T" = T
 Line 1 col 0 InvocationExpression "foo2({ y: "foo" }, "foo")" = void
-Line 1 col 0 IdentifierName "foo2" = <T, U extends { y: T; }>(x: U, z: T) => void
+Line 1 col 0 IdentifierName "foo2" = typeof foo2
 Line 1 col 5 ObjectLiteralExpression "{ y: "foo" }" = { y: string; }
 Line 1 col 7 IdentifierName "y" = string

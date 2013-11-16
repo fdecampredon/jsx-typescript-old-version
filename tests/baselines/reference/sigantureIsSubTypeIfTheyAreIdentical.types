@@ -1,0 +1,13 @@
+=== tests/cases/compiler/sigantureIsSubTypeIfTheyAreIdentical.ts ===
+Line 0 col 10 IdentifierName "ICache" = ICache
+Line 1 col 0 IdentifierName "get" = <T>(key: string) => T
+Line 1 col 8 IdentifierName "T" = T
+Line 1 col 11 IdentifierName "key" = string
+Line 1 col 25 IdentifierName "T" = T
+Line 3 col 6 IdentifierName "CacheService" = CacheService
+Line 3 col 30 IdentifierName "ICache" = ICache
+Line 4 col 0 IdentifierName "get" = <T>(key: string) => T
+Line 4 col 8 IdentifierName "T" = T
+Line 4 col 11 IdentifierName "key" = string
+Line 4 col 25 IdentifierName "T" = T
+Line 5 col 15 IdentifierName "undefined" = undefined

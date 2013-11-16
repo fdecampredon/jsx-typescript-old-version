@@ -3,6 +3,6 @@ Line 0 col 14 IdentifierName "Baz" = Baz
 Line 0 col 31 IdentifierName "x" = string
 Line 1 col 0 AssignmentExpression "Baz.x = "goodbye"" = string
 Line 1 col 0 MemberAccessExpression "Baz.x" = string
-Line 1 col 0 IdentifierName "Baz" = { x: string; }
+Line 1 col 0 IdentifierName "Baz" = typeof Baz
 Line 2 col 4 IdentifierName "x" = string
 Line 3 col 0 VoidExpression "void 0" = undefined

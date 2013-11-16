@@ -1,0 +1,13 @@
+=== tests/cases/compiler/fatarrowfunctionsInFunctionParameterDefaults.ts ===
+Line 0 col 9 IdentifierName "fn" = typeof fn
+Line 0 col 12 IdentifierName "x" = () => any
+Line 0 col 16 ParenthesizedArrowFunctionExpression "() => this" = () => any
+Line 0 col 22 ThisKeyword "this" = any
+Line 0 col 28 IdentifierName "y" = any
+Line 0 col 32 InvocationExpression "x()" = any
+Line 0 col 32 IdentifierName "x" = () => any
+Line 3 col 11 IdentifierName "y" = any
+Line 6 col 0 InvocationExpression "fn.call(4)" = any
+Line 6 col 0 MemberAccessExpression "fn.call" = (thisArg: any, ...argArray: any[]) => any
+Line 6 col 0 IdentifierName "fn" = typeof fn
+Line 7 col 3 IdentifierName "call" = (thisArg: any, ...argArray: any[]) => any

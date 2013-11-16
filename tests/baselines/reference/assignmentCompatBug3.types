@@ -1,5 +1,5 @@
 === tests/cases/compiler/assignmentCompatBug3.ts ===
-Line 0 col 9 IdentifierName "makePoint" = (x: number, y: number) => { x: number; y: number; dist: () => number; }
+Line 0 col 9 IdentifierName "makePoint" = typeof makePoint
 Line 0 col 19 IdentifierName "x" = number
 Line 0 col 30 IdentifierName "y" = number
 Line 1 col 11 ObjectLiteralExpression "{
@@ -34,15 +34,15 @@ Line 7 col 24 IdentifierName "y" = number
 Line 7 col 26 IdentifierName "y" = number
 Line 12 col 6 IdentifierName "C" = C
 Line 13 col 8 IdentifierName "x" = number
-Line 18 col 9 IdentifierName "foo" = (test: string) => void
+Line 18 col 9 IdentifierName "foo" = typeof foo
 Line 18 col 13 IdentifierName "test" = string
 Line 20 col 4 IdentifierName "x" = any
 Line 21 col 4 IdentifierName "y" = any
 Line 22 col 0 InvocationExpression "foo(x)" = void
-Line 22 col 0 IdentifierName "foo" = (test: string) => void
+Line 22 col 0 IdentifierName "foo" = typeof foo
 Line 23 col 4 IdentifierName "x" = any
 Line 24 col 0 InvocationExpression "foo(x + y)" = void
-Line 24 col 0 IdentifierName "foo" = (test: string) => void
+Line 24 col 0 IdentifierName "foo" = typeof foo
 Line 24 col 4 AddExpression "x + y" = any
 Line 24 col 4 IdentifierName "x" = any
 Line 24 col 8 IdentifierName "y" = any

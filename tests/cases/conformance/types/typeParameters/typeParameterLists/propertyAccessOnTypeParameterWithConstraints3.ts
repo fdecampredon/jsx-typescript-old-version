@@ -1,3 +1,5 @@
+// generic types should behave as if they have properties of their constraint type
+
 class A {
     foo(): string { return ''; }
 }
@@ -11,11 +13,13 @@ class B extends A {
 class C<U extends A, T extends U> {
     f() {
         var x: T;
+        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
 
     g(x: U) {
+        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
@@ -35,17 +39,18 @@ var a: {
     <U extends A, T extends U>(): T;
     <U extends T, T extends A>(x: U): U;
 }
-var r3: string = a().foo();
-var r3b: string = a()['foo']();
-// parameter supplied for type argument inference
-var r3c: string = a(new B()).foo();
-var r3d: string = a(new B())['foo']();
+var r3 = a().foo(); // error, no inferences for U so it doesn't satisfy constraint
+var r3b = a()['foo']();
+// parameter supplied for type argument inference for U
+var r3c = a(new B()).foo(); // error, no inferences for T so it doesn't satisfy constraint
+var r3d = a(new B())['foo'](); // error, no inferences for T so it doesn't satisfy constraint
 
 var b = {
     foo: <U extends A, T extends U>(x: T) => {
+        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
 }
 
-var r4 = b.foo(new B());
+var r4 = b.foo(new B()); // error, no inferences for U so it doesn't satisfy constraint

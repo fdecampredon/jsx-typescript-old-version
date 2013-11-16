@@ -1,11 +1,11 @@
 === tests/cases/compiler/functionOverloads24.ts ===
-Line 0 col 9 IdentifierName "foo" = { (bar: number): (b: string) => void; (bar: string): (a: number) => void; }
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "bar" = number
 Line 0 col 26 IdentifierName "b" = string
-Line 1 col 9 IdentifierName "foo" = { (bar: number): (b: string) => void; (bar: string): (a: number) => void; }
+Line 1 col 9 IdentifierName "foo" = typeof foo
 Line 1 col 13 IdentifierName "bar" = string
 Line 1 col 26 IdentifierName "a" = number
-Line 2 col 9 IdentifierName "foo" = { (bar: number): (b: string) => void; (bar: string): (a: number) => void; }
+Line 2 col 9 IdentifierName "foo" = typeof foo
 Line 2 col 13 IdentifierName "bar" = any
 Line 2 col 23 IdentifierName "a" = any
 Line 2 col 41 FunctionExpression "function(){}" = () => void

@@ -1,41 +1,62 @@
 === tests/cases/compiler/objectTypePropertyAccess.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "foo" = string
-Line 4 col 4 IdentifierName "c" = C
-Line 4 col 7 IdentifierName "C" = C
-Line 5 col 4 IdentifierName "r1" = string
-Line 5 col 17 InvocationExpression "c.toString()" = string
-Line 5 col 17 MemberAccessExpression "c.toString" = () => string
-Line 5 col 17 IdentifierName "c" = C
-Line 5 col 19 IdentifierName "toString" = () => string
-Line 6 col 4 IdentifierName "r2" = string
-Line 6 col 17 InvocationExpression "c['toString']()" = any
-Line 6 col 17 ElementAccessExpression "c['toString']" = any
-Line 6 col 17 IdentifierName "c" = C
-Line 8 col 10 IdentifierName "I" = I
-Line 9 col 0 IdentifierName "bar" = string
-Line 11 col 4 IdentifierName "i" = I
-Line 11 col 7 IdentifierName "I" = I
-Line 12 col 4 IdentifierName "r3" = string
-Line 12 col 17 InvocationExpression "i.toString()" = string
-Line 12 col 17 MemberAccessExpression "i.toString" = () => string
-Line 12 col 17 IdentifierName "i" = I
-Line 12 col 19 IdentifierName "toString" = () => string
-Line 13 col 4 IdentifierName "r4" = string
-Line 13 col 17 InvocationExpression "i['toString']()" = any
-Line 13 col 17 ElementAccessExpression "i['toString']" = any
-Line 13 col 17 IdentifierName "i" = I
-Line 15 col 4 IdentifierName "a" = { foo: string; }
-Line 15 col 8 ObjectLiteralExpression "{
+Line 1 col 6 IdentifierName "C" = C
+Line 2 col 0 IdentifierName "foo" = string
+Line 5 col 4 IdentifierName "c" = C
+Line 5 col 7 IdentifierName "C" = C
+Line 6 col 4 IdentifierName "r1" = string
+Line 6 col 9 InvocationExpression "c.toString()" = string
+Line 6 col 9 MemberAccessExpression "c.toString" = () => string
+Line 6 col 9 IdentifierName "c" = C
+Line 6 col 11 IdentifierName "toString" = () => string
+Line 8 col 4 IdentifierName "r2" = any
+Line 8 col 9 InvocationExpression "c['toString']()" = any
+Line 8 col 9 ElementAccessExpression "c['toString']" = any
+Line 8 col 9 IdentifierName "c" = C
+Line 9 col 4 IdentifierName "r3" = string
+Line 9 col 9 MemberAccessExpression "c.foo" = string
+Line 9 col 9 IdentifierName "c" = C
+Line 9 col 11 IdentifierName "foo" = string
+Line 10 col 4 IdentifierName "r4" = string
+Line 10 col 9 ElementAccessExpression "c['foo']" = string
+Line 10 col 9 IdentifierName "c" = C
+Line 12 col 10 IdentifierName "I" = I
+Line 13 col 0 IdentifierName "bar" = string
+Line 15 col 4 IdentifierName "i" = I
+Line 15 col 7 IdentifierName "I" = I
+Line 16 col 4 IdentifierName "r4" = string
+Line 16 col 9 InvocationExpression "i.toString()" = string
+Line 16 col 9 MemberAccessExpression "i.toString" = () => string
+Line 16 col 9 IdentifierName "i" = I
+Line 16 col 11 IdentifierName "toString" = () => string
+Line 18 col 4 IdentifierName "r5" = any
+Line 18 col 9 InvocationExpression "i['toString']()" = any
+Line 18 col 9 ElementAccessExpression "i['toString']" = any
+Line 18 col 9 IdentifierName "i" = I
+Line 19 col 4 IdentifierName "r6" = string
+Line 19 col 9 MemberAccessExpression "i.bar" = string
+Line 19 col 9 IdentifierName "i" = I
+Line 19 col 11 IdentifierName "bar" = string
+Line 20 col 4 IdentifierName "r7" = string
+Line 20 col 9 ElementAccessExpression "i['bar']" = string
+Line 20 col 9 IdentifierName "i" = I
+Line 22 col 4 IdentifierName "a" = { foo: string; }
+Line 22 col 8 ObjectLiteralExpression "{
     foo: ''
 }" = { foo: string; }
-Line 16 col 0 IdentifierName "foo" = string
-Line 19 col 4 IdentifierName "r5" = string
-Line 19 col 17 InvocationExpression "a.toString()" = string
-Line 19 col 17 MemberAccessExpression "a.toString" = () => string
-Line 19 col 17 IdentifierName "a" = { foo: string; }
-Line 19 col 19 IdentifierName "toString" = () => string
-Line 20 col 4 IdentifierName "r6" = string
-Line 20 col 17 InvocationExpression "a['toString']()" = any
-Line 20 col 17 ElementAccessExpression "a['toString']" = any
-Line 20 col 17 IdentifierName "a" = { foo: string; }
+Line 23 col 0 IdentifierName "foo" = string
+Line 26 col 4 IdentifierName "r8" = string
+Line 26 col 9 InvocationExpression "a.toString()" = string
+Line 26 col 9 MemberAccessExpression "a.toString" = () => string
+Line 26 col 9 IdentifierName "a" = { foo: string; }
+Line 26 col 11 IdentifierName "toString" = () => string
+Line 28 col 4 IdentifierName "r9" = any
+Line 28 col 9 InvocationExpression "a['toString']()" = any
+Line 28 col 9 ElementAccessExpression "a['toString']" = any
+Line 28 col 9 IdentifierName "a" = { foo: string; }
+Line 29 col 4 IdentifierName "r10" = string
+Line 29 col 10 MemberAccessExpression "a.foo" = string
+Line 29 col 10 IdentifierName "a" = { foo: string; }
+Line 29 col 12 IdentifierName "foo" = string
+Line 30 col 4 IdentifierName "r11" = string
+Line 30 col 10 ElementAccessExpression "a['foo']" = string
+Line 30 col 10 IdentifierName "a" = { foo: string; }

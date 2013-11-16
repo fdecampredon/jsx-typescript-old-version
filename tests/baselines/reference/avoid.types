@@ -1,25 +1,25 @@
 === tests/cases/compiler/avoid.ts ===
-Line 0 col 9 IdentifierName "f" = () => void
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 1 col 8 IdentifierName "x" = number
 Line 4 col 4 IdentifierName "y" = void
 Line 4 col 6 InvocationExpression "f()" = void
-Line 4 col 6 IdentifierName "f" = () => void
+Line 4 col 6 IdentifierName "f" = typeof f
 Line 5 col 4 IdentifierName "why" = any
 Line 5 col 12 InvocationExpression "f()" = void
-Line 5 col 12 IdentifierName "f" = () => void
+Line 5 col 12 IdentifierName "f" = typeof f
 Line 6 col 4 IdentifierName "w" = any
 Line 7 col 0 AssignmentExpression "w=f()" = void
 Line 7 col 0 IdentifierName "w" = any
 Line 7 col 2 InvocationExpression "f()" = void
-Line 7 col 2 IdentifierName "f" = () => void
+Line 7 col 2 IdentifierName "f" = typeof f
 Line 9 col 6 IdentifierName "C" = C
 Line 10 col 0 IdentifierName "g" = () => void
 Line 15 col 4 IdentifierName "z" = void
 Line 15 col 6 InvocationExpression "new C().g()" = void
 Line 15 col 6 MemberAccessExpression "new C().g" = () => void
 Line 15 col 6 ObjectCreationExpression "new C()" = C
-Line 15 col 10 IdentifierName "C" = { prototype: C; new(): C; }
+Line 15 col 10 IdentifierName "C" = typeof C
 Line 15 col 14 IdentifierName "g" = () => void
 Line 16 col 4 IdentifierName "N" = any
 Line 16 col 6 ObjectCreationExpression "new f()" = any
-Line 16 col 10 IdentifierName "f" = () => void
+Line 16 col 10 IdentifierName "f" = typeof f

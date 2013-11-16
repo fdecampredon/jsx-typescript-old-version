@@ -1,0 +1,95 @@
+=== tests/cases/compiler/propertyAccessOnTypeParameterWithConstraints.ts ===
+Line 3 col 6 IdentifierName "C" = C<T>
+Line 3 col 8 IdentifierName "T" = T
+Line 3 col 18 IdentifierName "Date" = Date
+Line 4 col 0 IdentifierName "f" = () => any
+Line 5 col 12 IdentifierName "x" = T
+Line 5 col 15 IdentifierName "T" = T
+Line 7 col 12 IdentifierName "a" = any
+Line 7 col 16 InvocationExpression "x['getDate']()" = any
+Line 7 col 16 ElementAccessExpression "x['getDate']" = any
+Line 7 col 16 IdentifierName "x" = T
+Line 8 col 15 AddExpression "a + x.getDate()" = any
+Line 8 col 15 IdentifierName "a" = any
+Line 8 col 19 InvocationExpression "x.getDate()" = number
+Line 8 col 19 MemberAccessExpression "x.getDate" = () => number
+Line 8 col 19 IdentifierName "x" = T
+Line 8 col 21 IdentifierName "getDate" = () => number
+Line 12 col 4 IdentifierName "r" = any
+Line 12 col 8 InvocationExpression "(new C<Date>()).f()" = any
+Line 12 col 8 MemberAccessExpression "(new C<Date>()).f" = () => any
+Line 12 col 8 ParenthesizedExpression "(new C<Date>())" = C<Date>
+Line 12 col 9 ObjectCreationExpression "new C<Date>()" = C<Date>
+Line 12 col 13 IdentifierName "C" = typeof C
+Line 12 col 15 IdentifierName "Date" = Date
+Line 12 col 24 IdentifierName "f" = () => any
+Line 14 col 10 IdentifierName "I" = I<T>
+Line 14 col 12 IdentifierName "T" = T
+Line 14 col 22 IdentifierName "Date" = Date
+Line 15 col 0 IdentifierName "foo" = T
+Line 15 col 9 IdentifierName "T" = T
+Line 17 col 4 IdentifierName "i" = I<Date>
+Line 17 col 7 IdentifierName "I" = I<T>
+Line 17 col 9 IdentifierName "Date" = Date
+Line 18 col 4 IdentifierName "r2" = number
+Line 18 col 9 InvocationExpression "i.foo.getDate()" = number
+Line 18 col 9 MemberAccessExpression "i.foo.getDate" = () => number
+Line 18 col 9 MemberAccessExpression "i.foo" = Date
+Line 18 col 9 IdentifierName "i" = I<Date>
+Line 18 col 11 IdentifierName "foo" = Date
+Line 18 col 15 IdentifierName "getDate" = () => number
+Line 19 col 4 IdentifierName "r2b" = number
+Line 19 col 10 InvocationExpression "i.foo['getDate']()" = number
+Line 19 col 10 ElementAccessExpression "i.foo['getDate']" = () => number
+Line 19 col 10 MemberAccessExpression "i.foo" = Date
+Line 19 col 10 IdentifierName "i" = I<Date>
+Line 19 col 12 IdentifierName "foo" = Date
+Line 21 col 4 IdentifierName "a" = <T extends Date>() => T
+Line 22 col 5 IdentifierName "T" = T
+Line 22 col 15 IdentifierName "Date" = Date
+Line 22 col 24 IdentifierName "T" = T
+Line 24 col 4 IdentifierName "r3" = number
+Line 24 col 9 InvocationExpression "a<Date>().getDate()" = number
+Line 24 col 9 MemberAccessExpression "a<Date>().getDate" = () => number
+Line 24 col 9 InvocationExpression "a<Date>()" = Date
+Line 24 col 9 IdentifierName "a" = <T extends Date>() => T
+Line 24 col 11 IdentifierName "Date" = Date
+Line 24 col 19 IdentifierName "getDate" = () => number
+Line 25 col 4 IdentifierName "r3b" = any
+Line 25 col 10 InvocationExpression "a()['getDate']()" = any
+Line 25 col 10 ElementAccessExpression "a()['getDate']" = any
+Line 25 col 10 InvocationExpression "a()" = {}
+Line 25 col 10 IdentifierName "a" = <T extends Date>() => T
+Line 27 col 4 IdentifierName "b" = { foo: <T extends Date>(x: T) => any; }
+Line 27 col 8 ObjectLiteralExpression "{
+    foo: <T extends Date>(x: T) => {
+        var a = x['getDate'](); // should be string
+        return a + x.getDate();
+    }
+}" = { foo: <T extends Date>(x: T) => any; }
+Line 28 col 0 IdentifierName "foo" = <T extends Date>(x: T) => any
+Line 28 col 9 ParenthesizedArrowFunctionExpression "<T extends Date>(x: T) => {
+        var a = x['getDate'](); // should be string
+        return a + x.getDate();
+    }" = <T extends Date>(x: T) => any
+Line 28 col 10 IdentifierName "T" = T
+Line 28 col 20 IdentifierName "Date" = Date
+Line 28 col 26 IdentifierName "x" = T
+Line 28 col 29 IdentifierName "T" = T
+Line 29 col 12 IdentifierName "a" = any
+Line 29 col 16 InvocationExpression "x['getDate']()" = any
+Line 29 col 16 ElementAccessExpression "x['getDate']" = any
+Line 29 col 16 IdentifierName "x" = T
+Line 30 col 15 AddExpression "a + x.getDate()" = any
+Line 30 col 15 IdentifierName "a" = any
+Line 30 col 19 InvocationExpression "x.getDate()" = number
+Line 30 col 19 MemberAccessExpression "x.getDate" = () => number
+Line 30 col 19 IdentifierName "x" = T
+Line 30 col 21 IdentifierName "getDate" = () => number
+Line 34 col 4 IdentifierName "r4" = any
+Line 34 col 9 InvocationExpression "b.foo(new Date())" = any
+Line 34 col 9 MemberAccessExpression "b.foo" = <T extends Date>(x: T) => any
+Line 34 col 9 IdentifierName "b" = { foo: <T extends Date>(x: T) => any; }
+Line 34 col 11 IdentifierName "foo" = <T extends Date>(x: T) => any
+Line 34 col 15 ObjectCreationExpression "new Date()" = Date
+Line 34 col 19 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }

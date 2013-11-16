@@ -21,5 +21,5 @@ declare module a {
 }
 declare module c {
     var bVal: number;
-    var bVal2: (x: number) => number;
+    var bVal2: typeof a.foo;
 }

@@ -342,9 +342,21 @@ module TypeScript.Services {
             return this.hostCache.getScriptSnapshot(fileName);
         }
 
-        public getHostFileName(fileName: string) {
-            this.synchronizeHostData();
+        // Methods that does not require updating the host cache information
+        public getCachedHostFileName(fileName: string) {
+            if (!this.hostCache) {
+                this.synchronizeHostData();
+            }
+
             return this.hostCache.getHostFileName(fileName);
+        }
+
+        public getCachedTopLevelDeclaration(fileName: string) {
+            if (!this.hostCache) {
+                this.synchronizeHostData();
+            }
+
+            return this.compiler.topLevelDeclaration(fileName);
         }
 
         // Methods that defer to the compiler to get the result.

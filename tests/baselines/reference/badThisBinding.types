@@ -1,7 +1,7 @@
 === tests/cases/compiler/badThisBinding.ts ===
-Line 0 col 17 IdentifierName "foo" = (a: any) => any
+Line 0 col 17 IdentifierName "foo" = typeof foo
 Line 0 col 21 IdentifierName "a" = any
-Line 1 col 17 IdentifierName "bar" = (a: any) => any
+Line 1 col 17 IdentifierName "bar" = typeof bar
 Line 1 col 21 IdentifierName "a" = any
 Line 3 col 6 IdentifierName "Greeter" = Greeter
 Line 5 col 0 InvocationExpression "foo(() => {
@@ -9,7 +9,7 @@ Line 5 col 0 InvocationExpression "foo(() => {
                 var x = this;
 			});
 		})" = any
-Line 5 col 0 IdentifierName "foo" = (a: any) => any
+Line 5 col 0 IdentifierName "foo" = typeof foo
 Line 5 col 6 ParenthesizedArrowFunctionExpression "() => {
             bar(() => {
                 var x = this;
@@ -18,7 +18,7 @@ Line 5 col 6 ParenthesizedArrowFunctionExpression "() => {
 Line 6 col 0 InvocationExpression "bar(() => {
                 var x = this;
 			})" = any
-Line 6 col 0 IdentifierName "bar" = (a: any) => any
+Line 6 col 0 IdentifierName "bar" = typeof bar
 Line 6 col 16 ParenthesizedArrowFunctionExpression "() => {
                 var x = this;
 			}" = () => void

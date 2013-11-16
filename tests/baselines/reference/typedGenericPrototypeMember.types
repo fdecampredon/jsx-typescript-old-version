@@ -7,6 +7,6 @@ Line 1 col 13 IdentifierName "T" = T
 Line 3 col 0 InvocationExpression "List.prototype.add("abc")" = void
 Line 3 col 0 MemberAccessExpression "List.prototype.add" = (item: any) => void
 Line 3 col 0 MemberAccessExpression "List.prototype" = List<any>
-Line 3 col 0 IdentifierName "List" = { prototype: List<any>; new<T>(): List<T>; }
+Line 3 col 0 IdentifierName "List" = typeof List
 Line 4 col 5 IdentifierName "prototype" = List<any>
 Line 4 col 15 IdentifierName "add" = (item: any) => void

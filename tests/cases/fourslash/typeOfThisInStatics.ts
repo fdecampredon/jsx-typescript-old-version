@@ -12,8 +12,8 @@
 
 goTo.marker('1');
 // BUG 805412
-verify.quickInfoIs('{ prototype: C; foo(): any; }');
+verify.quickInfoIs('typeof C');
 
 goTo.marker('2');
 // BUG 805412
-verify.quickInfoIs('{ prototype: C; foo(): any; x; }');
+verify.quickInfoIs('typeof C');

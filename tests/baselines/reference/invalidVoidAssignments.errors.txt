@@ -10,7 +10,7 @@ invalidVoidAssignments.ts line 15 col 5: error TS2012: Cannot convert 'number' t
 	Type 'Number' is missing property '0' from type '{ 0: number; }'.
 invalidVoidAssignments.ts line 18 col 1: error TS2130: Invalid left-hand side of assignment expression.
 invalidVoidAssignments.ts line 21 col 5: error TS2011: Cannot convert 'void' to 'T'.
-invalidVoidAssignments.ts line 23 col 1: error TS2011: Cannot convert 'void' to '<T>(a: T) => void'.
-invalidVoidAssignments.ts line 26 col 1: error TS2011: Cannot convert '{ A: E; [x: number]: string; }' to 'void'.
+invalidVoidAssignments.ts line 23 col 1: error TS2130: Invalid left-hand side of assignment expression.
+invalidVoidAssignments.ts line 26 col 1: error TS2011: Cannot convert 'typeof E' to 'void'.
 invalidVoidAssignments.ts line 27 col 1: error TS2011: Cannot convert 'E' to 'void'.
 invalidVoidAssignments.ts line 29 col 1: error TS2011: Cannot convert '{ f(): void; }' to 'void'.

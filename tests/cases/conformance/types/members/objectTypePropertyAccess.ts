@@ -1,21 +1,31 @@
+// Index notation should resolve to the type of a declared property with that same name
 class C {
     foo: string;
 }
 
 var c: C;
-var r1: string = c.toString();
-var r2: string = c['toString']();
+var r1 = c.toString();
+// BUG 823818
+var r2 = c['toString']();
+var r3 = c.foo;
+var r4 = c['foo'];
 
 interface I {
     bar: string;
 }
 var i: I;
-var r3: string = i.toString();
-var r4: string = i['toString']();
+var r4 = i.toString();
+// BUG 823818
+var r5 = i['toString']();
+var r6 = i.bar;
+var r7 = i['bar'];
 
 var a = {
     foo: ''
 }
 
-var r5: string = a.toString();
-var r6: string = a['toString']();
+var r8 = a.toString();
+// BUG 823818
+var r9 = a['toString']();
+var r10 = a.foo;
+var r11 = a['foo'];

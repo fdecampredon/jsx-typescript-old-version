@@ -44,7 +44,7 @@ Line 2 col 21 FunctionExpression "function () {
                     return 11;
                 }" = () => number
 Line 3 col 0 InvocationExpression "eval("public = 1;")" = any
-Line 3 col 0 IdentifierName "eval" = (x: string) => any
+Line 3 col 0 IdentifierName "eval" = typeof eval
 Line 6 col 0 IdentifierName "set" = (v: any) => void
 Line 6 col 21 FunctionExpression "function (v) {
                 }" = (v: any) => void

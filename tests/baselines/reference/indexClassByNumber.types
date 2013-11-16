@@ -2,7 +2,7 @@
 Line 2 col 6 IdentifierName "foo" = foo
 Line 4 col 4 IdentifierName "f" = foo
 Line 4 col 8 ObjectCreationExpression "new foo()" = foo
-Line 4 col 12 IdentifierName "foo" = { prototype: foo; new(): foo; }
+Line 4 col 12 IdentifierName "foo" = typeof foo
 Line 5 col 0 AssignmentExpression "f[0] = 4" = number
 Line 5 col 0 ElementAccessExpression "f[0]" = any
 Line 5 col 0 IdentifierName "f" = foo

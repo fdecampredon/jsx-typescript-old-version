@@ -1,3 +1,4 @@
+// generic types should behave as if they have properties of their constraint type
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -29,11 +30,14 @@ var C = (function () {
     }
     C.prototype.f = function () {
         var x;
+
+        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     };
 
     C.prototype.g = function (x) {
+        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     };
@@ -51,15 +55,16 @@ var a;
 var r3 = a().foo();
 var r3b = a()['foo']();
 
-// parameter supplied for type argument inference
+// parameter supplied for type argument inference for U
 var r3c = a(new B()).foo();
 var r3d = a(new B())['foo']();
 
 var b = {
     foo: function (x) {
+        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     }
 };
 
-var r4 = b.foo(new B());
+var r4 = b.foo(new B()); // error, no inferences for U so it doesn't satisfy constraint

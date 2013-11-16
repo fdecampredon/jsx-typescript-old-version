@@ -40,7 +40,7 @@ goTo.marker('completionC');
 verify.completionListContains("x", "(a: number) => void");
 
 goTo.marker('quickInfoA');
-verify.quickInfoIs("(a: number): void", undefined, "x", "function");
+verify.quickInfoIs("(a: number): void", undefined, "x", "local function");
 
 goTo.marker('quickInfoB');
 verify.quickInfoIs("(a: number) => void", undefined, "x", "property");

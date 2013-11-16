@@ -1,3 +1,4 @@
+// no errors here
 var C = (function () {
     function C() {
     }

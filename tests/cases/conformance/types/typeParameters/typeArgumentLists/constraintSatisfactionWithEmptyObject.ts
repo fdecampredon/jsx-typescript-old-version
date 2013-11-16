@@ -1,3 +1,5 @@
+// valid uses of a basic object constraint, no errors expected
+
 // Object constraint
 function foo<T extends Object>(x: T) { }
 var r = foo({});

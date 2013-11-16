@@ -2,10 +2,10 @@
 Line 0 col 7 IdentifierName "a" = a
 Line 1 col 17 IdentifierName "c" = a.c
 Line 5 col 7 IdentifierName "c" = c
-Line 6 col 11 IdentifierName "b" = { prototype: a.c; new(): a.c; }
+Line 6 col 11 IdentifierName "b" = typeof a.c
 Line 6 col 15 IdentifierName "a" = a
 Line 6 col 17 IdentifierName "c" = a.c
 Line 7 col 15 IdentifierName "x" = a.c
 Line 7 col 18 IdentifierName "b" = c.b
 Line 7 col 22 ObjectCreationExpression "new b()" = a.c
-Line 7 col 26 IdentifierName "b" = { prototype: a.c; new(): a.c; }
+Line 7 col 26 IdentifierName "b" = typeof a.c

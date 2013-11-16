@@ -1,12 +1,12 @@
 === tests/cases/compiler/indexSignaturesInferentialTyping.ts ===
-Line 0 col 9 IdentifierName "foo" = <T>(items: { [index: number]: T; }) => T
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "T" = T
 Line 0 col 16 IdentifierName "items" = { [index: number]: T; }
 Line 0 col 26 IdentifierName "index" = number
 Line 0 col 42 IdentifierName "T" = T
 Line 0 col 48 IdentifierName "T" = T
 Line 0 col 59 IdentifierName "undefined" = undefined
-Line 1 col 9 IdentifierName "bar" = <T>(items: { [index: string]: T; }) => T
+Line 1 col 9 IdentifierName "bar" = typeof bar
 Line 1 col 13 IdentifierName "T" = T
 Line 1 col 16 IdentifierName "items" = { [index: string]: T; }
 Line 1 col 26 IdentifierName "index" = string
@@ -15,21 +15,21 @@ Line 1 col 48 IdentifierName "T" = T
 Line 1 col 59 IdentifierName "undefined" = undefined
 Line 3 col 4 IdentifierName "x1" = number
 Line 3 col 9 InvocationExpression "foo({ 0: 0, 1: 1 })" = number
-Line 3 col 9 IdentifierName "foo" = <T>(items: { [index: number]: T; }) => T
+Line 3 col 9 IdentifierName "foo" = typeof foo
 Line 3 col 13 ObjectLiteralExpression "{ 0: 0, 1: 1 }" = { 0: number; 1: number; [index: number]: number; }
 Line 4 col 4 IdentifierName "x2" = {}
 Line 4 col 9 InvocationExpression "foo({ zero: 0, one: 1 })" = {}
-Line 4 col 9 IdentifierName "foo" = <T>(items: { [index: number]: T; }) => T
+Line 4 col 9 IdentifierName "foo" = typeof foo
 Line 4 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: number]: {}; }
 Line 4 col 15 IdentifierName "zero" = number
 Line 4 col 24 IdentifierName "one" = number
 Line 5 col 4 IdentifierName "x3" = number
 Line 5 col 9 InvocationExpression "bar({ 0: 0, 1: 1 })" = number
-Line 5 col 9 IdentifierName "bar" = <T>(items: { [index: string]: T; }) => T
+Line 5 col 9 IdentifierName "bar" = typeof bar
 Line 5 col 13 ObjectLiteralExpression "{ 0: 0, 1: 1 }" = { 0: number; 1: number; [index: string]: number; }
 Line 6 col 4 IdentifierName "x4" = number
 Line 6 col 9 InvocationExpression "bar({ zero: 0, one: 1 })" = number
-Line 6 col 9 IdentifierName "bar" = <T>(items: { [index: string]: T; }) => T
+Line 6 col 9 IdentifierName "bar" = typeof bar
 Line 6 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: string]: number; }
 Line 6 col 15 IdentifierName "zero" = number
 Line 6 col 24 IdentifierName "one" = number

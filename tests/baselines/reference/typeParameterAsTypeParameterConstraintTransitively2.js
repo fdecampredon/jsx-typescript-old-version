@@ -1,3 +1,6 @@
+// using a type parameter as a constraint for a type parameter is valid
+// these invocations are all errors
+
 var a;
 var b;
 var c;

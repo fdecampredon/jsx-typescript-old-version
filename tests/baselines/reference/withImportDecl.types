@@ -15,7 +15,7 @@ Line 14 col 12 IdentifierName "declaredVar" = any
 Line 15 col 12 IdentifierName "deckareVarWithType" = number
 Line 17 col 4 IdentifierName "arrayVar" = string[]
 Line 17 col 25 ArrayLiteralExpression "['a', 'b']" = string[]
-Line 20 col 9 IdentifierName "simpleFunction" = () => { x: string; y: string; n: number; }
+Line 20 col 9 IdentifierName "simpleFunction" = typeof simpleFunction
 Line 21 col 11 ObjectLiteralExpression "{
         x: "Hello",
         y: "word",
@@ -25,13 +25,13 @@ Line 22 col 0 IdentifierName "x" = string
 Line 23 col 0 IdentifierName "y" = string
 Line 24 col 0 IdentifierName "n" = number
 Line 28 col 7 IdentifierName "m1" = m1
-Line 29 col 20 IdentifierName "foo" = () => string
+Line 29 col 20 IdentifierName "foo" = typeof m1.foo
 Line 34 col 7 IdentifierName "m3" = m3
 Line 36 col 4 IdentifierName "b" = A
 Line 36 col 8 ObjectCreationExpression "new m3.A()" = A
-Line 36 col 12 MemberAccessExpression "m3.A" = { prototype: A; new(): A; }
+Line 36 col 12 MemberAccessExpression "m3.A" = typeof A
 Line 36 col 12 IdentifierName "m3" = m3
-Line 36 col 15 IdentifierName "A" = { prototype: A; new(): A; }
+Line 36 col 15 IdentifierName "A" = typeof A
 Line 37 col 0 MemberAccessExpression "b.foo" = string
 Line 37 col 0 IdentifierName "b" = A
 Line 37 col 2 IdentifierName "foo" = string

@@ -66,7 +66,7 @@ Line 25 col 9 FunctionExpression "function(dx, dy) {
 Line 25 col 18 IdentifierName "dx" = any
 Line 25 col 22 IdentifierName "dy" = any
 Line 26 col 15 ObjectCreationExpression "new Point(this.x + dx, this.y + dy)" = Point
-Line 26 col 19 IdentifierName "Point" = { prototype: Point; new(x: number, y: number): Point; }
+Line 26 col 19 IdentifierName "Point" = typeof Point
 Line 26 col 25 AddExpression "this.x + dx" = any
 Line 26 col 25 MemberAccessExpression "this.x" = any
 Line 26 col 25 ThisKeyword "this" = any

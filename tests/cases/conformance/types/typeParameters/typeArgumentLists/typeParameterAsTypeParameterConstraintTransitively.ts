@@ -1,3 +1,6 @@
+// using a type parameter as a constraint for a type parameter is valid
+// no errors expected
+
 interface A { foo: number }
 interface B extends A { bar: string; }
 interface C extends B { baz: boolean; }

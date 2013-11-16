@@ -10,7 +10,7 @@ Line 11 col 31 IdentifierName "Cat" = Cat<CatType>
 Line 11 col 35 IdentifierName "IKitty" = IKitty
 Line 15 col 4 IdentifierName "cat" = Cat<IKitty>
 Line 15 col 10 ObjectCreationExpression "new Cat<IKitty>()" = Cat<IKitty>
-Line 15 col 14 IdentifierName "Cat" = { prototype: Cat<any>; new<CatType extends IKitty>(): Cat<CatType>; }
+Line 15 col 14 IdentifierName "Cat" = typeof Cat
 Line 15 col 18 IdentifierName "IKitty" = IKitty
 Line 16 col 4 IdentifierName "catThing" = { barry: Cat<IKitty>; }
 Line 16 col 15 ObjectLiteralExpression "{
@@ -20,5 +20,5 @@ Line 17 col 0 IdentifierName "barry" = Cat<IKitty>
 Line 17 col 11 IdentifierName "cat" = Cat<IKitty>
 Line 19 col 4 IdentifierName "catBag" = CatBag
 Line 19 col 13 ObjectCreationExpression "new CatBag(catThing)" = CatBag
-Line 19 col 17 IdentifierName "CatBag" = { prototype: CatBag; new(cats: { barry: Cat<IKitty>; }): CatBag; }
+Line 19 col 17 IdentifierName "CatBag" = typeof CatBag
 Line 19 col 24 IdentifierName "catThing" = { barry: Cat<IKitty>; }

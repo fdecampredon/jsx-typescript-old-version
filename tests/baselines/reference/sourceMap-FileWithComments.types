@@ -29,16 +29,16 @@ Line 15 col 64 ThisKeyword "this" = Shapes.Point
 Line 15 col 69 IdentifierName "y" = number
 Line 18 col 15 IdentifierName "origin" = Shapes.Point
 Line 18 col 24 ObjectCreationExpression "new Point(0, 0)" = Shapes.Point
-Line 18 col 28 IdentifierName "Point" = { prototype: Shapes.Point; origin: Shapes.Point; new(x: number, y: number): Shapes.Point; }
+Line 18 col 28 IdentifierName "Point" = typeof Shapes.Point
 Line 22 col 8 IdentifierName "a" = number
-Line 24 col 20 IdentifierName "foo" = () => void
+Line 24 col 20 IdentifierName "foo" = typeof Shapes.foo
 Line 30 col 8 IdentifierName "b" = number
 Line 34 col 4 IdentifierName "p" = IPoint
 Line 34 col 7 IdentifierName "IPoint" = IPoint
 Line 34 col 16 ObjectCreationExpression "new Shapes.Point(3, 4)" = Shapes.Point
-Line 34 col 20 MemberAccessExpression "Shapes.Point" = { prototype: Shapes.Point; origin: Shapes.Point; new(x: number, y: number): Shapes.Point; }
-Line 34 col 20 IdentifierName "Shapes" = { Point: { prototype: Shapes.Point; origin: Shapes.Point; new(x: number, y: number): Shapes.Point; }; foo(): void; }
-Line 34 col 27 IdentifierName "Point" = { prototype: Shapes.Point; origin: Shapes.Point; new(x: number, y: number): Shapes.Point; }
+Line 34 col 20 MemberAccessExpression "Shapes.Point" = typeof Shapes.Point
+Line 34 col 20 IdentifierName "Shapes" = typeof Shapes
+Line 34 col 27 IdentifierName "Point" = typeof Shapes.Point
 Line 35 col 4 IdentifierName "dist" = number
 Line 35 col 11 InvocationExpression "p.getDist()" = number
 Line 35 col 11 MemberAccessExpression "p.getDist" = () => number

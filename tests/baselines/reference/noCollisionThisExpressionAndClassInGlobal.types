@@ -1,5 +1,5 @@
 === tests/cases/compiler/noCollisionThisExpressionAndClassInGlobal.ts ===
 Line 0 col 6 IdentifierName "_this" = _this
-Line 2 col 4 IdentifierName "f" = () => { prototype: _this; new(): _this; }
-Line 2 col 8 ParenthesizedArrowFunctionExpression "() => _this" = () => { prototype: _this; new(): _this; }
-Line 2 col 14 IdentifierName "_this" = { prototype: _this; new(): _this; }
+Line 2 col 4 IdentifierName "f" = () => typeof _this
+Line 2 col 8 ParenthesizedArrowFunctionExpression "() => _this" = () => typeof _this
+Line 2 col 14 IdentifierName "_this" = typeof _this

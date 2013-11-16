@@ -1,3 +1,6 @@
+// using a type parameter as a constraint for a type parameter is valid
+// no errors expected
+
 function foo<T, U extends T>(x: T, y: U): U { return y; }
 
 var r = foo(1, 2);

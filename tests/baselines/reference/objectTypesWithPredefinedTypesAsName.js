@@ -1,3 +1,4 @@
+// it is an error to use a predefined type as a type name
 var any = (function () {
     function any() {
     }

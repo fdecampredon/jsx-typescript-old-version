@@ -1,78 +1,78 @@
 === tests/cases/compiler/callGenericFunctionWithZeroTypeArguments.ts ===
-Line 0 col 9 IdentifierName "f" = <T>(x: T) => T
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "x" = T
-Line 0 col 17 IdentifierName "T" = T
-Line 0 col 21 IdentifierName "T" = T
-Line 1 col 4 IdentifierName "r" = number
-Line 1 col 8 InvocationExpression "f(1)" = number
-Line 1 col 8 IdentifierName "f" = <T>(x: T) => T
-Line 3 col 4 IdentifierName "f2" = <T>(x: T) => T
-Line 3 col 9 ParenthesizedArrowFunctionExpression "<T>(x: T): T => { return null; }" = <T>(x: T) => T
-Line 3 col 10 IdentifierName "T" = T
-Line 3 col 13 IdentifierName "x" = T
-Line 3 col 16 IdentifierName "T" = T
-Line 3 col 20 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "r2" = number
-Line 4 col 9 InvocationExpression "f2(1)" = number
-Line 4 col 9 IdentifierName "f2" = <T>(x: T) => T
-Line 6 col 4 IdentifierName "f3" = <T>(x: T) => T
-Line 6 col 11 IdentifierName "T" = T
-Line 6 col 14 IdentifierName "x" = T
-Line 6 col 17 IdentifierName "T" = T
-Line 6 col 21 IdentifierName "T" = T
-Line 7 col 4 IdentifierName "r3" = number
-Line 7 col 9 InvocationExpression "f3(1)" = number
-Line 7 col 9 IdentifierName "f3" = <T>(x: T) => T
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 0 IdentifierName "f" = <T>(x: T) => T
-Line 10 col 6 IdentifierName "T" = T
-Line 10 col 9 IdentifierName "x" = T
-Line 10 col 12 IdentifierName "T" = T
-Line 10 col 16 IdentifierName "T" = T
-Line 14 col 4 IdentifierName "r4" = number
-Line 14 col 9 InvocationExpression "(new C()).f(1)" = number
-Line 14 col 9 MemberAccessExpression "(new C()).f" = <T>(x: T) => T
-Line 14 col 9 ParenthesizedExpression "(new C())" = C
-Line 14 col 10 ObjectCreationExpression "new C()" = C
-Line 14 col 14 IdentifierName "C" = { prototype: C; new(): C; }
-Line 14 col 19 IdentifierName "f" = <T>(x: T) => T
-Line 16 col 10 IdentifierName "I" = I
-Line 17 col 0 IdentifierName "f" = <T>(x: T) => T
-Line 17 col 6 IdentifierName "T" = T
-Line 17 col 9 IdentifierName "x" = T
-Line 17 col 12 IdentifierName "T" = T
-Line 17 col 16 IdentifierName "T" = T
-Line 19 col 4 IdentifierName "i" = I
-Line 19 col 7 IdentifierName "I" = I
-Line 20 col 4 IdentifierName "r5" = number
-Line 20 col 9 InvocationExpression "i.f(1)" = number
-Line 20 col 9 MemberAccessExpression "i.f" = <T>(x: T) => T
-Line 20 col 9 IdentifierName "i" = I
-Line 20 col 11 IdentifierName "f" = <T>(x: T) => T
-Line 22 col 6 IdentifierName "C2" = C2<T>
-Line 22 col 9 IdentifierName "T" = T
-Line 23 col 0 IdentifierName "f" = (x: T) => T
-Line 23 col 6 IdentifierName "x" = T
-Line 23 col 9 IdentifierName "T" = T
-Line 23 col 13 IdentifierName "T" = T
-Line 27 col 4 IdentifierName "r6" = {}
-Line 27 col 9 InvocationExpression "(new C2()).f(1)" = {}
-Line 27 col 9 MemberAccessExpression "(new C2()).f" = (x: {}) => {}
-Line 27 col 9 ParenthesizedExpression "(new C2())" = C2<{}>
-Line 27 col 10 ObjectCreationExpression "new C2()" = C2<{}>
-Line 27 col 14 IdentifierName "C2" = { prototype: C2<any>; new<T>(): C2<T>; }
-Line 27 col 20 IdentifierName "f" = (x: {}) => {}
-Line 29 col 10 IdentifierName "I2" = I2<T>
-Line 29 col 13 IdentifierName "T" = T
-Line 30 col 0 IdentifierName "f" = (x: T) => T
-Line 30 col 6 IdentifierName "x" = T
-Line 30 col 9 IdentifierName "T" = T
-Line 30 col 13 IdentifierName "T" = T
-Line 32 col 4 IdentifierName "i2" = I2<number>
-Line 32 col 8 IdentifierName "I2" = I2<T>
-Line 33 col 4 IdentifierName "r7" = number
-Line 33 col 9 InvocationExpression "i2.f(1)" = number
-Line 33 col 9 MemberAccessExpression "i2.f" = (x: number) => number
-Line 33 col 9 IdentifierName "i2" = I2<number>
-Line 33 col 12 IdentifierName "f" = (x: number) => number
+Line 2 col 9 IdentifierName "f" = typeof f
+Line 2 col 11 IdentifierName "T" = T
+Line 2 col 14 IdentifierName "x" = T
+Line 2 col 17 IdentifierName "T" = T
+Line 2 col 21 IdentifierName "T" = T
+Line 3 col 4 IdentifierName "r" = number
+Line 3 col 8 InvocationExpression "f(1)" = number
+Line 3 col 8 IdentifierName "f" = typeof f
+Line 5 col 4 IdentifierName "f2" = <T>(x: T) => T
+Line 5 col 9 ParenthesizedArrowFunctionExpression "<T>(x: T): T => { return null; }" = <T>(x: T) => T
+Line 5 col 10 IdentifierName "T" = T
+Line 5 col 13 IdentifierName "x" = T
+Line 5 col 16 IdentifierName "T" = T
+Line 5 col 20 IdentifierName "T" = T
+Line 6 col 4 IdentifierName "r2" = number
+Line 6 col 9 InvocationExpression "f2(1)" = number
+Line 6 col 9 IdentifierName "f2" = <T>(x: T) => T
+Line 8 col 4 IdentifierName "f3" = <T>(x: T) => T
+Line 8 col 11 IdentifierName "T" = T
+Line 8 col 14 IdentifierName "x" = T
+Line 8 col 17 IdentifierName "T" = T
+Line 8 col 21 IdentifierName "T" = T
+Line 9 col 4 IdentifierName "r3" = number
+Line 9 col 9 InvocationExpression "f3(1)" = number
+Line 9 col 9 IdentifierName "f3" = <T>(x: T) => T
+Line 11 col 6 IdentifierName "C" = C
+Line 12 col 0 IdentifierName "f" = <T>(x: T) => T
+Line 12 col 6 IdentifierName "T" = T
+Line 12 col 9 IdentifierName "x" = T
+Line 12 col 12 IdentifierName "T" = T
+Line 12 col 16 IdentifierName "T" = T
+Line 16 col 4 IdentifierName "r4" = number
+Line 16 col 9 InvocationExpression "(new C()).f(1)" = number
+Line 16 col 9 MemberAccessExpression "(new C()).f" = <T>(x: T) => T
+Line 16 col 9 ParenthesizedExpression "(new C())" = C
+Line 16 col 10 ObjectCreationExpression "new C()" = C
+Line 16 col 14 IdentifierName "C" = typeof C
+Line 16 col 19 IdentifierName "f" = <T>(x: T) => T
+Line 18 col 10 IdentifierName "I" = I
+Line 19 col 0 IdentifierName "f" = <T>(x: T) => T
+Line 19 col 6 IdentifierName "T" = T
+Line 19 col 9 IdentifierName "x" = T
+Line 19 col 12 IdentifierName "T" = T
+Line 19 col 16 IdentifierName "T" = T
+Line 21 col 4 IdentifierName "i" = I
+Line 21 col 7 IdentifierName "I" = I
+Line 22 col 4 IdentifierName "r5" = number
+Line 22 col 9 InvocationExpression "i.f(1)" = number
+Line 22 col 9 MemberAccessExpression "i.f" = <T>(x: T) => T
+Line 22 col 9 IdentifierName "i" = I
+Line 22 col 11 IdentifierName "f" = <T>(x: T) => T
+Line 24 col 6 IdentifierName "C2" = C2<T>
+Line 24 col 9 IdentifierName "T" = T
+Line 25 col 0 IdentifierName "f" = (x: T) => T
+Line 25 col 6 IdentifierName "x" = T
+Line 25 col 9 IdentifierName "T" = T
+Line 25 col 13 IdentifierName "T" = T
+Line 29 col 4 IdentifierName "r6" = {}
+Line 29 col 9 InvocationExpression "(new C2()).f(1)" = {}
+Line 29 col 9 MemberAccessExpression "(new C2()).f" = (x: {}) => {}
+Line 29 col 9 ParenthesizedExpression "(new C2())" = C2<{}>
+Line 29 col 10 ObjectCreationExpression "new C2()" = C2<{}>
+Line 29 col 14 IdentifierName "C2" = typeof C2
+Line 29 col 20 IdentifierName "f" = (x: {}) => {}
+Line 31 col 10 IdentifierName "I2" = I2<T>
+Line 31 col 13 IdentifierName "T" = T
+Line 32 col 0 IdentifierName "f" = (x: T) => T
+Line 32 col 6 IdentifierName "x" = T
+Line 32 col 9 IdentifierName "T" = T
+Line 32 col 13 IdentifierName "T" = T
+Line 34 col 4 IdentifierName "i2" = I2<number>
+Line 34 col 8 IdentifierName "I2" = I2<T>
+Line 35 col 4 IdentifierName "r7" = number
+Line 35 col 9 InvocationExpression "i2.f(1)" = number
+Line 35 col 9 MemberAccessExpression "i2.f" = (x: number) => number
+Line 35 col 9 IdentifierName "i2" = I2<number>
+Line 35 col 12 IdentifierName "f" = (x: number) => number

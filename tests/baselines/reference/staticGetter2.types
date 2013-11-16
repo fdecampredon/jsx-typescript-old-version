@@ -1,6 +1,6 @@
 === tests/cases/compiler/staticGetter2.ts ===
 Line 1 col 6 IdentifierName "C" = C
-Line 2 col 11 IdentifierName "x" = () => { prototype: C; x(): typeof C; new(): C; }
-Line 3 col 12 IdentifierName "r" = { prototype: C; x(): typeof C; new(): C; }
-Line 3 col 16 ThisKeyword "this" = { prototype: C; x(): typeof C; new(): C; }
-Line 4 col 15 ThisKeyword "this" = { prototype: C; x(): typeof C; new(): C; }
+Line 2 col 11 IdentifierName "x" = () => typeof C
+Line 3 col 12 IdentifierName "r" = typeof C
+Line 3 col 16 ThisKeyword "this" = typeof C
+Line 4 col 15 ThisKeyword "this" = typeof C

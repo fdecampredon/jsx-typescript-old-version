@@ -43,7 +43,7 @@ Line 8 col 7 IdentifierName "x" = number
 Line 9 col 10 MemberAccessExpression "this.x" = any
 Line 9 col 10 ThisKeyword "this" = any
 Line 9 col 15 IdentifierName "x" = any
-Line 13 col 17 IdentifierName "setTimeout" = (expression: any, msec?: number, language?: any) => number
+Line 13 col 17 IdentifierName "setTimeout" = typeof setTimeout
 Line 13 col 28 IdentifierName "expression" = any
 Line 13 col 45 IdentifierName "msec" = number
 Line 13 col 60 IdentifierName "language" = any
@@ -60,7 +60,7 @@ Line 16 col 11 FunctionExpression "function () {
         return setTimeout(() => { var x = this.message; }, 3000);
     }" = () => number
 Line 17 col 15 InvocationExpression "setTimeout(() => { var x = this.message; }, 3000)" = number
-Line 17 col 15 IdentifierName "setTimeout" = (expression: any, msec?: number, language?: any) => number
+Line 17 col 15 IdentifierName "setTimeout" = typeof setTimeout
 Line 17 col 26 ParenthesizedArrowFunctionExpression "() => { var x = this.message; }" = () => void
 Line 17 col 38 IdentifierName "x" = any
 Line 17 col 42 MemberAccessExpression "this.message" = any

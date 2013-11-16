@@ -457,7 +457,11 @@ module TypeScript {
         public getReferencedTypeSymbol(): PullTypeSymbol {
             this.ensureReferencedTypeIsResolved();
 
-            return this;
+            if (this.getIsSpecialized()) {
+                return this;
+            }
+
+            return this.referencedTypeSymbol;
         }
 
         // The typeParameterArgumentMap parameter represents a mapping of PUllSymbolID strings of type parameters to type argument symbols

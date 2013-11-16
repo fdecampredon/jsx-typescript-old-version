@@ -1,5 +1,5 @@
 === tests/cases/compiler/typeParametersAvailableInNestedScope2.ts ===
-Line 0 col 9 IdentifierName "foo" = <T, U>(x: T, y: U) => void
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "T" = T
 Line 0 col 16 IdentifierName "U" = U
 Line 0 col 19 IdentifierName "x" = T

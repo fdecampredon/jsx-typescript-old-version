@@ -3,19 +3,19 @@ Line 0 col 7 IdentifierName "_provider" = _provider
 Line 1 col 29 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 2 col 39 IdentifierName "foo" = () => void
 Line 7 col 7 IdentifierName "consumer" = consumer
-Line 8 col 23 IdentifierName "provider" = { UsefulClass: { prototype: _provider.UsefulClass; new(): _provider.UsefulClass; }; }
+Line 8 col 23 IdentifierName "provider" = typeof _provider
 Line 8 col 34 IdentifierName "_provider" = _provider
 Line 10 col 20 IdentifierName "g" = _provider.UsefulClass
 Line 10 col 22 IdentifierName "provider" = consumer.provider
 Line 10 col 31 IdentifierName "UsefulClass" = _provider.UsefulClass
-Line 12 col 25 IdentifierName "use" = () => _provider.UsefulClass
+Line 12 col 25 IdentifierName "use" = typeof consumer.use
 Line 12 col 31 IdentifierName "provider" = consumer.provider
 Line 12 col 40 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 13 col 36 IdentifierName "p2" = _provider.UsefulClass
 Line 13 col 39 IdentifierName "provider" = consumer.provider
 Line 13 col 48 IdentifierName "UsefulClass" = _provider.UsefulClass
 Line 13 col 61 ObjectCreationExpression "new provider.UsefulClass()" = _provider.UsefulClass
-Line 13 col 65 MemberAccessExpression "provider.UsefulClass" = { prototype: _provider.UsefulClass; new(): _provider.UsefulClass; }
-Line 13 col 65 IdentifierName "provider" = { UsefulClass: { prototype: _provider.UsefulClass; new(): _provider.UsefulClass; }; }
-Line 13 col 74 IdentifierName "UsefulClass" = { prototype: _provider.UsefulClass; new(): _provider.UsefulClass; }
+Line 13 col 65 MemberAccessExpression "provider.UsefulClass" = typeof _provider.UsefulClass
+Line 13 col 65 IdentifierName "provider" = typeof _provider
+Line 13 col 74 IdentifierName "UsefulClass" = typeof _provider.UsefulClass
 Line 14 col 39 IdentifierName "p2" = _provider.UsefulClass

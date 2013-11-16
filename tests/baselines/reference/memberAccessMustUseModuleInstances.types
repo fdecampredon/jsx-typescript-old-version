@@ -2,9 +2,9 @@
 Line 1 col 7 IdentifierName "WinJS" = WinJS
 Line 2 col 0 InvocationExpression "WinJS.Promise.timeout(10)" = Promise
 Line 2 col 0 MemberAccessExpression "WinJS.Promise.timeout" = (delay: number) => Promise
-Line 2 col 0 MemberAccessExpression "WinJS.Promise" = { prototype: Promise; timeout(delay: number): Promise; new(): Promise; }
+Line 2 col 0 MemberAccessExpression "WinJS.Promise" = typeof Promise
 Line 2 col 0 IdentifierName "WinJS" = WinJS
-Line 3 col 6 IdentifierName "Promise" = { prototype: Promise; timeout(delay: number): Promise; new(): Promise; }
+Line 3 col 6 IdentifierName "Promise" = typeof Promise
 Line 3 col 14 IdentifierName "timeout" = (delay: number) => Promise
 === tests/cases/compiler/memberAccessMustUseModuleInstances_0.ts ===
 Line 0 col 13 IdentifierName "Promise" = Promise

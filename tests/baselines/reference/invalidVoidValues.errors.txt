@@ -1,11 +1,11 @@
 invalidVoidValues.ts line 2 col 1: error TS2011: Cannot convert 'number' to 'void'.
 invalidVoidValues.ts line 3 col 1: error TS2011: Cannot convert 'string' to 'void'.
 invalidVoidValues.ts line 4 col 1: error TS2011: Cannot convert 'boolean' to 'void'.
-invalidVoidValues.ts line 7 col 1: error TS2011: Cannot convert '{ A: E; [x: number]: string; }' to 'void'.
+invalidVoidValues.ts line 7 col 1: error TS2011: Cannot convert 'typeof E' to 'void'.
 invalidVoidValues.ts line 8 col 1: error TS2011: Cannot convert 'E' to 'void'.
 invalidVoidValues.ts line 12 col 1: error TS2011: Cannot convert 'C' to 'void'.
 invalidVoidValues.ts line 16 col 1: error TS2011: Cannot convert 'I' to 'void'.
 invalidVoidValues.ts line 18 col 1: error TS2011: Cannot convert '{ f(): void; }' to 'void'.
-invalidVoidValues.ts line 21 col 1: error TS2011: Cannot convert '{ x: number; }' to 'void'.
+invalidVoidValues.ts line 21 col 1: error TS2011: Cannot convert 'typeof M' to 'void'.
 invalidVoidValues.ts line 24 col 5: error TS2011: Cannot convert 'T' to 'void'.
-invalidVoidValues.ts line 26 col 1: error TS2011: Cannot convert '<T>(a: T) => void' to 'void'.
+invalidVoidValues.ts line 26 col 1: error TS2011: Cannot convert 'typeof f' to 'void'.

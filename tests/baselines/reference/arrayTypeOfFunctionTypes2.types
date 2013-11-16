@@ -1,32 +1,32 @@
 === tests/cases/compiler/arrayTypeOfFunctionTypes2.ts ===
-Line 0 col 4 IdentifierName "x" = new() => string[]
-Line 1 col 4 IdentifierName "r" = any
-Line 1 col 8 ElementAccessExpression "x[1]" = any
-Line 1 col 8 IdentifierName "x" = new() => string[]
-Line 2 col 4 IdentifierName "r2" = any
-Line 2 col 9 ObjectCreationExpression "new r()" = any
-Line 2 col 13 IdentifierName "r" = any
-Line 3 col 4 IdentifierName "r2b" = any
-Line 3 col 10 InvocationExpression "r()" = any
-Line 3 col 10 IdentifierName "r" = any
-Line 5 col 4 IdentifierName "x2" = { new(): string; }[]
-Line 6 col 4 IdentifierName "r3" = any
-Line 6 col 9 ElementAccessExpression "x[1]" = any
-Line 6 col 9 IdentifierName "x" = new() => string[]
-Line 7 col 4 IdentifierName "r4" = any
-Line 7 col 9 ObjectCreationExpression "new r3()" = any
-Line 7 col 13 IdentifierName "r3" = any
-Line 8 col 4 IdentifierName "r4b" = any
-Line 8 col 10 ObjectCreationExpression "new r3()" = any
-Line 8 col 14 IdentifierName "r3" = any
-Line 10 col 4 IdentifierName "x3" = { new(): string; }[]
-Line 10 col 8 IdentifierName "Array" = Array<T>
-Line 11 col 4 IdentifierName "r5" = new() => string
-Line 11 col 9 ElementAccessExpression "x2[1]" = new() => string
-Line 11 col 9 IdentifierName "x2" = { new(): string; }[]
-Line 12 col 4 IdentifierName "r6" = string
-Line 12 col 9 ObjectCreationExpression "new r5()" = string
-Line 12 col 13 IdentifierName "r5" = new() => string
-Line 13 col 4 IdentifierName "r6b" = any
-Line 13 col 10 InvocationExpression "r5()" = any
-Line 13 col 10 IdentifierName "r5" = new() => string
+Line 2 col 4 IdentifierName "x" = new() => string[]
+Line 3 col 4 IdentifierName "r" = any
+Line 3 col 8 ElementAccessExpression "x[1]" = any
+Line 3 col 8 IdentifierName "x" = new() => string[]
+Line 4 col 4 IdentifierName "r2" = any
+Line 4 col 9 ObjectCreationExpression "new r()" = any
+Line 4 col 13 IdentifierName "r" = any
+Line 5 col 4 IdentifierName "r2b" = any
+Line 5 col 10 InvocationExpression "r()" = any
+Line 5 col 10 IdentifierName "r" = any
+Line 7 col 4 IdentifierName "x2" = { new(): string; }[]
+Line 8 col 4 IdentifierName "r3" = any
+Line 8 col 9 ElementAccessExpression "x[1]" = any
+Line 8 col 9 IdentifierName "x" = new() => string[]
+Line 9 col 4 IdentifierName "r4" = any
+Line 9 col 9 ObjectCreationExpression "new r3()" = any
+Line 9 col 13 IdentifierName "r3" = any
+Line 10 col 4 IdentifierName "r4b" = any
+Line 10 col 10 ObjectCreationExpression "new r3()" = any
+Line 10 col 14 IdentifierName "r3" = any
+Line 12 col 4 IdentifierName "x3" = { new(): string; }[]
+Line 12 col 8 IdentifierName "Array" = Array<T>
+Line 13 col 4 IdentifierName "r5" = new() => string
+Line 13 col 9 ElementAccessExpression "x2[1]" = new() => string
+Line 13 col 9 IdentifierName "x2" = { new(): string; }[]
+Line 14 col 4 IdentifierName "r6" = string
+Line 14 col 9 ObjectCreationExpression "new r5()" = string
+Line 14 col 13 IdentifierName "r5" = new() => string
+Line 15 col 4 IdentifierName "r6b" = any
+Line 15 col 10 InvocationExpression "r5()" = any
+Line 15 col 10 IdentifierName "r5" = new() => string

@@ -1,3 +1,5 @@
+// inner type parameters shadow outer ones of the same name
+// no errors expected
 var C = (function () {
     function C() {
     }

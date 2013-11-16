@@ -1,0 +1,17 @@
+=== tests/cases/compiler/declFileTypeofEnum.ts ===
+Line 1 col 5 IdentifierName "days" = days
+Line 2 col 0 IdentifierName "monday" = days
+Line 3 col 0 IdentifierName "tuesday" = days
+Line 4 col 0 IdentifierName "wednesday" = days
+Line 5 col 0 IdentifierName "thursday" = days
+Line 6 col 0 IdentifierName "friday" = days
+Line 7 col 0 IdentifierName "saturday" = days
+Line 8 col 0 IdentifierName "sunday" = days
+Line 11 col 4 IdentifierName "weekendDay" = days
+Line 11 col 17 MemberAccessExpression "days.saturday" = days
+Line 11 col 17 IdentifierName "days" = typeof days
+Line 11 col 22 IdentifierName "saturday" = days
+Line 12 col 4 IdentifierName "daysOfMonth" = typeof days
+Line 12 col 18 IdentifierName "days" = typeof days
+Line 13 col 4 IdentifierName "daysOfYear" = typeof days
+Line 13 col 23 IdentifierName "days" = typeof days

@@ -1,3 +1,5 @@
+// basic uses of optional properties without errors
+
 interface I {
     foo: string;
     bar?: number;

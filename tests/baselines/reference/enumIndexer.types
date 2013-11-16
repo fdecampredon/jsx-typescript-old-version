@@ -10,7 +10,7 @@ Line 3 col 28 ObjectLiteralExpression "{ key: 'bar' }" = { key: string; }
 Line 3 col 30 IdentifierName "key" = string
 Line 4 col 4 IdentifierName "enumValue" = MyEnumType
 Line 4 col 16 MemberAccessExpression "MyEnumType.foo" = MyEnumType
-Line 4 col 16 IdentifierName "MyEnumType" = { foo: MyEnumType; bar: MyEnumType; [x: number]: string; }
+Line 4 col 16 IdentifierName "MyEnumType" = typeof MyEnumType
 Line 4 col 27 IdentifierName "foo" = MyEnumType
 Line 5 col 4 IdentifierName "x" = boolean[]
 Line 5 col 8 InvocationExpression "_arr.map(o => MyEnumType[o.key] === enumValue)" = boolean[]
@@ -21,7 +21,7 @@ Line 5 col 17 SimpleArrowFunctionExpression "o => MyEnumType[o.key] === enumValu
 Line 5 col 17 IdentifierName "o" = { key: string; }
 Line 5 col 22 EqualsExpression "MyEnumType[o.key] === enumValue" = boolean
 Line 5 col 22 ElementAccessExpression "MyEnumType[o.key]" = any
-Line 5 col 22 IdentifierName "MyEnumType" = { foo: MyEnumType; bar: MyEnumType; [x: number]: string; }
+Line 5 col 22 IdentifierName "MyEnumType" = typeof MyEnumType
 Line 5 col 33 MemberAccessExpression "o.key" = string
 Line 5 col 33 IdentifierName "o" = { key: string; }
 Line 5 col 35 IdentifierName "key" = string

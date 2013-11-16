@@ -1,5 +1,5 @@
 === tests/cases/compiler/declFileObjectLiteralWithAccessors.ts ===
-Line 1 col 14 IdentifierName "makePoint" = (x: number) => { b: number; x: number; }
+Line 1 col 14 IdentifierName "makePoint" = typeof makePoint
 Line 1 col 24 IdentifierName "x" = number
 Line 2 col 11 ObjectLiteralExpression "{
         b: 10,
@@ -18,7 +18,7 @@ Line 5 col 32 IdentifierName "b" = any
 Line 5 col 36 IdentifierName "a" = number
 Line 8 col 9 IdentifierName "point" = { b: number; x: number; }
 Line 8 col 17 InvocationExpression "makePoint(2)" = { b: number; x: number; }
-Line 8 col 17 IdentifierName "makePoint" = (x: number) => { b: number; x: number; }
+Line 8 col 17 IdentifierName "makePoint" = typeof makePoint
 Line 9 col 9 IdentifierName "x" = number
 Line 9 col 13 MemberAccessExpression "point.x" = number
 Line 9 col 13 IdentifierName "point" = { b: number; x: number; }

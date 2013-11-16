@@ -1,7 +1,7 @@
-enumAssignmentCompat.ts line 26 col 5: error TS2011: Cannot convert '{ D: { prototype: W.D; new(): W.D; }; a: W; b: W; c: W; [x: number]: string; }' to 'number'.
-enumAssignmentCompat.ts line 28 col 5: error TS2011: Cannot convert 'W' to '{ D: { prototype: W.D; new(): W.D; }; a: W; b: W; c: W; [x: number]: string; }'.
-enumAssignmentCompat.ts line 30 col 5: error TS2012: Cannot convert 'number' to '{ D: { prototype: W.D; new(): W.D; }; a: W; b: W; c: W; [x: number]: string; }':
-	Type 'Number' is missing property 'W.D' from type '{ D: { prototype: W.D; new(): W.D; }; a: W; b: W; c: W; [x: number]: string; }'.
+enumAssignmentCompat.ts line 26 col 5: error TS2011: Cannot convert 'typeof W' to 'number'.
+enumAssignmentCompat.ts line 28 col 5: error TS2011: Cannot convert 'W' to 'typeof W'.
+enumAssignmentCompat.ts line 30 col 5: error TS2012: Cannot convert 'number' to 'typeof W':
+	Type 'Number' is missing property 'W.D' from type 'typeof W'.
 enumAssignmentCompat.ts line 32 col 5: error TS2011: Cannot convert 'W' to 'WStatic'.
 enumAssignmentCompat.ts line 33 col 5: error TS2012: Cannot convert 'number' to 'WStatic':
 	Type 'Number' is missing property 'a' from type 'WStatic'.

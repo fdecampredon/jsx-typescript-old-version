@@ -1,5 +1,5 @@
 === tests/cases/compiler/anyAsReturnTypeForNewOnCall.ts ===
-Line 0 col 9 IdentifierName "Point" = (x: any, y: any) => void
+Line 0 col 9 IdentifierName "Point" = typeof Point
 Line 0 col 15 IdentifierName "x" = any
 Line 0 col 18 IdentifierName "y" = any
 Line 1 col 0 AssignmentExpression "this.x = x" = any
@@ -14,7 +14,7 @@ Line 4 col 6 IdentifierName "y" = any
 Line 4 col 10 IdentifierName "y" = any
 Line 8 col 4 IdentifierName "o" = any
 Line 8 col 8 ObjectCreationExpression "new Point(3, 4)" = any
-Line 8 col 12 IdentifierName "Point" = (x: any, y: any) => void
+Line 8 col 12 IdentifierName "Point" = typeof Point
 Line 10 col 4 IdentifierName "xx" = any
 Line 10 col 9 MemberAccessExpression "o.x" = any
 Line 10 col 9 IdentifierName "o" = any

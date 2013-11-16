@@ -34,6 +34,7 @@ module TypeScript.Services {
             "interface",
             "module",
             "new",
+            "null",
             "private",
             "public",
             "require",

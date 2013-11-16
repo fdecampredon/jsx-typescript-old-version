@@ -1,7 +1,7 @@
 === tests/cases/compiler/varArgParamTypeCheck.ts ===
-Line 0 col 9 IdentifierName "sequence" = (...sequences: { (): void; }[]) => void
+Line 0 col 9 IdentifierName "sequence" = typeof sequence
 Line 0 col 21 IdentifierName "sequences" = { (): void; }[]
-Line 3 col 9 IdentifierName "callback" = (clb: () => void) => void
+Line 3 col 9 IdentifierName "callback" = typeof callback
 Line 3 col 18 IdentifierName "clb" = () => void
 Line 5 col 0 InvocationExpression "sequence(
     function bar() {
@@ -17,7 +17,7 @@ Line 5 col 0 InvocationExpression "sequence(
         });
     }
 )" = void
-Line 5 col 0 IdentifierName "sequence" = (...sequences: { (): void; }[]) => void
+Line 5 col 0 IdentifierName "sequence" = typeof sequence
 Line 7 col 0 FunctionExpression "function bar() {
     }" = () => void
 Line 7 col 13 IdentifierName "bar" = () => void
@@ -30,7 +30,7 @@ Line 9 col 13 IdentifierName "foo" = () => void
 Line 10 col 0 InvocationExpression "callback(()=>{
             this();
         })" = void
-Line 10 col 0 IdentifierName "callback" = (clb: () => void) => void
+Line 10 col 0 IdentifierName "callback" = typeof callback
 Line 10 col 17 ParenthesizedArrowFunctionExpression "()=>{
             this();
         }" = () => void
@@ -45,7 +45,7 @@ Line 14 col 13 IdentifierName "baz" = () => void
 Line 15 col 0 InvocationExpression "callback(()=>{
             this();
         })" = void
-Line 15 col 0 IdentifierName "callback" = (clb: () => void) => void
+Line 15 col 0 IdentifierName "callback" = typeof callback
 Line 15 col 17 ParenthesizedArrowFunctionExpression "()=>{
             this();
         }" = () => void

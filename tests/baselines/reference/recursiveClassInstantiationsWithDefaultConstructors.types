@@ -1,9 +1,9 @@
 === tests/cases/compiler/recursiveClassInstantiationsWithDefaultConstructors.ts ===
 Line 0 col 4 IdentifierName "a" = TypeScript2.MemberNameArray
 Line 0 col 8 ObjectCreationExpression "new TypeScript2.MemberNameArray()" = TypeScript2.MemberNameArray
-Line 0 col 12 MemberAccessExpression "TypeScript2.MemberNameArray" = { prototype: TypeScript2.MemberNameArray; new(): TypeScript2.MemberNameArray; }
-Line 0 col 12 IdentifierName "TypeScript2" = { MemberName: { prototype: TypeScript2.MemberName; new(): TypeScript2.MemberName; }; MemberNameArray: { prototype: TypeScript2.MemberNameArray; new(): TypeScript2.MemberNameArray; }; }
-Line 0 col 24 IdentifierName "MemberNameArray" = { prototype: TypeScript2.MemberNameArray; new(): TypeScript2.MemberNameArray; }
+Line 0 col 12 MemberAccessExpression "TypeScript2.MemberNameArray" = typeof TypeScript2.MemberNameArray
+Line 0 col 12 IdentifierName "TypeScript2" = typeof TypeScript2
+Line 0 col 24 IdentifierName "MemberNameArray" = typeof TypeScript2.MemberNameArray
 Line 1 col 7 IdentifierName "TypeScript2" = TypeScript2
 Line 2 col 13 IdentifierName "MemberName" = TypeScript2.MemberName
 Line 3 col 7 IdentifierName "prefix" = string

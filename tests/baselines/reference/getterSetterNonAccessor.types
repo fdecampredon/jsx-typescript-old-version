@@ -1,6 +1,6 @@
 === tests/cases/compiler/getterSetterNonAccessor.ts ===
-Line 0 col 9 IdentifierName "getFunc" = () => any
-Line 1 col 9 IdentifierName "setFunc" = (v: any) => void
+Line 0 col 9 IdentifierName "getFunc" = typeof getFunc
+Line 1 col 9 IdentifierName "setFunc" = typeof setFunc
 Line 1 col 17 IdentifierName "v" = any
 Line 2 col 0 InvocationExpression "Object.defineProperty({}, "0", <PropertyDescriptor>({
           get: getFunc,
@@ -21,14 +21,14 @@ Line 3 col 51 ParenthesizedExpression "({
           get: getFunc,
           set: setFunc,
           configurable: true
-      })" = { get: () => any; set: (v: any) => void; configurable: boolean; }
+      })" = { get: typeof getFunc; set: typeof setFunc; configurable: boolean; }
 Line 3 col 52 ObjectLiteralExpression "{
           get: getFunc,
           set: setFunc,
           configurable: true
-      }" = { get: () => any; set: (v: any) => void; configurable: boolean; }
-Line 4 col 0 IdentifierName "get" = () => any
-Line 4 col 15 IdentifierName "getFunc" = () => any
-Line 5 col 0 IdentifierName "set" = (v: any) => void
-Line 5 col 15 IdentifierName "setFunc" = (v: any) => void
+      }" = { get: typeof getFunc; set: typeof setFunc; configurable: boolean; }
+Line 4 col 0 IdentifierName "get" = typeof getFunc
+Line 4 col 15 IdentifierName "getFunc" = typeof getFunc
+Line 5 col 0 IdentifierName "set" = typeof setFunc
+Line 5 col 15 IdentifierName "setFunc" = typeof setFunc
 Line 6 col 0 IdentifierName "configurable" = boolean

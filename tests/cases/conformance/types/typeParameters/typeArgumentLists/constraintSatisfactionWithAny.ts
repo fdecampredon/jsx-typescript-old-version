@@ -1,3 +1,5 @@
+// any satisfies any constraint, no errors expected
+
 function foo<T extends String>(x: T): T { return null; }
 function foo2<T extends { x: number }>(x: T): T { return null; }
 function foo3<T extends T[]>(x: T): T { return null; }

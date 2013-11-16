@@ -1,3 +1,5 @@
+// valid invocations of generic functions with no explicit type arguments provided 
+
 function f<T>(x: T): T { return null; }
 var r = f(1);
 

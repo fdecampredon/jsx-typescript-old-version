@@ -3,7 +3,7 @@ Line 0 col 4 IdentifierName "console" = { log(val: any): any; }
 Line 1 col 0 IdentifierName "log" = (val: any) => any
 Line 1 col 8 IdentifierName "val" = any
 Line 3 col 4 IdentifierName "_this" = number
-Line 4 col 9 IdentifierName "x" = () => void
+Line 4 col 9 IdentifierName "x" = typeof x
 Line 5 col 0 SimpleArrowFunctionExpression "x => { console.log(this); }" = (x: any) => void
 Line 5 col 0 IdentifierName "x" = any
 Line 5 col 11 InvocationExpression "console.log(this)" = any

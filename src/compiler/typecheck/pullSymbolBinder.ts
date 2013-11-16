@@ -382,8 +382,6 @@ module TypeScript {
             var moduleInstanceSymbol: PullSymbol = null;
             var moduleInstanceTypeSymbol: PullTypeSymbol = null;
 
-            var moduleInstanceDecl: PullDecl = moduleContainerDecl.getValueDecl();
-
             var moduleKind = moduleContainerDecl.kind;
 
             var parent = this.getParent(moduleContainerDecl);
@@ -553,6 +551,17 @@ module TypeScript {
 
             if (valueDecl) {
                 valueDecl.ensureSymbolIsBound();
+                // We associate the value decl to the module instance symbol. This should have
+                // already been achieved by ensureSymbolIsBound, but if bindModuleDeclarationToPullSymbol
+                // was called recursively while in the middle of binding the value decl, the cycle
+                // will be short-circuited. With a more organized binding pattern, this situation
+                // shouldn't be possible.
+                if (!valueDecl.hasSymbol()) {
+                    valueDecl.setSymbol(moduleInstanceSymbol);
+                    if (!moduleInstanceSymbol.hasDeclaration(valueDecl)) {
+                        moduleInstanceSymbol.addDeclaration(valueDecl);
+                    }
+                }
             }
 
             var otherDecls = this.findDeclsInContext(moduleContainerDecl, moduleContainerDecl.kind, true);
@@ -704,18 +713,17 @@ module TypeScript {
 
                 typeParameter = classSymbol.findTypeParameter(typeParameters[i].name);
 
-                if (!typeParameter) {
-                    typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ false);
-
-                    classSymbol.addTypeParameter(typeParameter);
-                    constructorTypeSymbol.addConstructorTypeParameter(typeParameter);
-                    typeParameter.addDeclaration(typeParameters[i]);
-                    typeParameters[i].setSymbol(typeParameter);
-                }
-                else {
+                if (typeParameter != null) {
                     var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
                     this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
                 }
+
+                typeParameter = new PullTypeParameterSymbol(typeParameters[i].name, /*_isFunctionTypeParameter*/ false);
+
+                classSymbol.addTypeParameter(typeParameter);
+                constructorTypeSymbol.addConstructorTypeParameter(typeParameter);
+                typeParameter.addDeclaration(typeParameters[i]);
+                typeParameters[i].setSymbol(typeParameter);
             }
 
             var valueDecl = classDecl.getValueDecl();
@@ -1116,7 +1124,14 @@ module TypeScript {
                     if (moduleContainerTypeSymbol) {
                         variableSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
 
-                        variableSymbol.addDeclaration(variableDeclaration);
+                        // If this method calls bindModuleDeclarationToPullSymbol recursively,
+                        // we may associate the variable decl with its symbol in that recursive
+                        // call before we do it here. Therefore, make sure the symbol doesn't already
+                        // have the decl before adding it. Just like in bindModuleDeclarationToPullSymbol,
+                        // we shouldn't need this maneuver with a more iterative binding pattern.
+                        if (!variableSymbol.hasDeclaration(variableDeclaration)) {
+                            variableSymbol.addDeclaration(variableDeclaration);
+                        }
                         variableDeclaration.setSymbol(variableSymbol);
                     }
                     else {
@@ -1125,7 +1140,9 @@ module TypeScript {
                 }
             }
             else {
-                variableSymbol.addDeclaration(variableDeclaration);
+                if (!variableSymbol.hasDeclaration(variableDeclaration)) {
+                    variableSymbol.addDeclaration(variableDeclaration);
+                }
                 variableDeclaration.setSymbol(variableSymbol);
             }
 
@@ -1313,18 +1330,16 @@ module TypeScript {
                         parameterSymbol.isVarArg = true;
                     }
 
-                    if (decl.flags & PullElementFlags.Optional) {
-                        parameterSymbol.isOptional = true;
-                    }
-
                     if (params[id.valueText()]) {
                         this.semanticInfoChain.addDiagnosticFromAST(argDecl, DiagnosticCode.Duplicate_identifier_0, [id.text()]);
                     }
                     else {
                         params[id.valueText()] = true;
                     }
-                    if (decl) {
 
+                    var isParameterOptional = false;
+
+                    if (decl) {
                         if (isProperty) {
                             decl.ensureSymbolIsBound();
                             var valDecl = decl.getValueDecl();
@@ -1332,15 +1347,21 @@ module TypeScript {
                             // if this is a parameter property, we still need to set the value decl
                             // for the function parameter
                             if (valDecl) {
+                                isParameterOptional = TypeScript.hasFlag(valDecl.flags, PullElementFlags.Optional);
+
                                 valDecl.setSymbol(parameterSymbol);
                                 parameterSymbol.addDeclaration(valDecl);
                             }
                         }
                         else {
+                            isParameterOptional = TypeScript.hasFlag(decl.flags, PullElementFlags.Optional);
+
                             parameterSymbol.addDeclaration(decl);
                             decl.setSymbol(parameterSymbol);
                         }
                     }
+
+                    parameterSymbol.isOptional = isParameterOptional;
 
                     signatureSymbol.addParameter(parameterSymbol, parameterSymbol.isOptional);
 
@@ -1481,7 +1502,7 @@ module TypeScript {
             var functionName = declKind == PullElementKind.FunctionExpression ?
                 (<PullFunctionExpressionDecl>functionExpressionDeclaration).getFunctionExpressionName() :
                 functionExpressionDeclaration.name;
-            var functionSymbol: PullSymbol = new PullSymbol(functionName, PullElementKind.Function);
+            var functionSymbol: PullSymbol = new PullSymbol(functionName, declKind);
             var functionTypeSymbol = new PullTypeSymbol("", PullElementKind.FunctionType);
             functionTypeSymbol.setFunctionSymbol(functionSymbol);
 

@@ -1,0 +1,63 @@
+=== tests/cases/compiler/typeInferenceReturnTypeCallback.ts ===
+Line 0 col 10 IdentifierName "IList" = IList<A>
+Line 0 col 16 IdentifierName "A" = A
+Line 1 col 0 IdentifierName "map" = <B>(f: (t: A) => B) => IList<B>
+Line 1 col 8 IdentifierName "B" = B
+Line 1 col 11 IdentifierName "f" = (t: A) => B
+Line 1 col 15 IdentifierName "t" = A
+Line 1 col 18 IdentifierName "A" = A
+Line 1 col 24 IdentifierName "B" = B
+Line 1 col 28 IdentifierName "IList" = IList<A>
+Line 1 col 34 IdentifierName "B" = B
+Line 4 col 6 IdentifierName "Nil" = Nil<C>
+Line 4 col 10 IdentifierName "C" = C
+Line 4 col 24 IdentifierName "IList" = IList<A>
+Line 4 col 30 IdentifierName "C" = C
+Line 5 col 0 IdentifierName "map" = <D>(f: (t: C) => D) => IList<D>
+Line 5 col 8 IdentifierName "D" = D
+Line 5 col 11 IdentifierName "f" = (t: C) => D
+Line 5 col 15 IdentifierName "t" = C
+Line 5 col 18 IdentifierName "C" = C
+Line 5 col 24 IdentifierName "D" = D
+Line 5 col 28 IdentifierName "IList" = IList<A>
+Line 5 col 34 IdentifierName "D" = D
+Line 10 col 6 IdentifierName "Cons" = Cons<T>
+Line 10 col 11 IdentifierName "T" = T
+Line 10 col 25 IdentifierName "IList" = IList<A>
+Line 10 col 31 IdentifierName "T" = T
+Line 11 col 0 IdentifierName "map" = <U>(f: (t: T) => U) => IList<U>
+Line 11 col 8 IdentifierName "U" = U
+Line 11 col 11 IdentifierName "f" = (t: T) => U
+Line 11 col 15 IdentifierName "t" = T
+Line 11 col 18 IdentifierName "T" = T
+Line 11 col 24 IdentifierName "U" = U
+Line 11 col 28 IdentifierName "IList" = IList<A>
+Line 11 col 34 IdentifierName "U" = U
+Line 12 col 15 InvocationExpression "this.foldRight(new Nil<U>(), (t, acc) => {
+            return new Cons<U>();
+        })" = Nil<U>
+Line 12 col 15 MemberAccessExpression "this.foldRight" = <E>(z: E, f: (t: T, acc: E) => E) => E
+Line 12 col 15 ThisKeyword "this" = Cons<T>
+Line 12 col 20 IdentifierName "foldRight" = <E>(z: E, f: (t: T, acc: E) => E) => E
+Line 12 col 30 ObjectCreationExpression "new Nil<U>()" = Nil<U>
+Line 12 col 34 IdentifierName "Nil" = typeof Nil
+Line 12 col 38 IdentifierName "U" = U
+Line 12 col 44 ParenthesizedArrowFunctionExpression "(t, acc) => {
+            return new Cons<U>();
+        }" = (t: T, acc: Nil<U>) => Cons<U>
+Line 12 col 45 IdentifierName "t" = T
+Line 12 col 48 IdentifierName "acc" = Nil<U>
+Line 13 col 19 ObjectCreationExpression "new Cons<U>()" = Cons<U>
+Line 13 col 23 IdentifierName "Cons" = typeof Cons
+Line 13 col 28 IdentifierName "U" = U
+Line 16 col 0 IdentifierName "foldRight" = <E>(z: E, f: (t: T, acc: E) => E) => E
+Line 17 col 14 IdentifierName "E" = E
+Line 17 col 17 IdentifierName "z" = E
+Line 17 col 20 IdentifierName "E" = E
+Line 17 col 23 IdentifierName "f" = (t: T, acc: E) => E
+Line 17 col 27 IdentifierName "t" = T
+Line 17 col 30 IdentifierName "T" = T
+Line 17 col 33 IdentifierName "acc" = E
+Line 17 col 38 IdentifierName "E" = E
+Line 17 col 44 IdentifierName "E" = E
+Line 17 col 48 IdentifierName "E" = E

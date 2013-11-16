@@ -1,7 +1,7 @@
 === tests/cases/compiler/multiCallOverloads.ts ===
 Line 0 col 10 IdentifierName "ICallback" = ICallback
 Line 1 col 5 IdentifierName "x" = string
-Line 4 col 9 IdentifierName "load" = (f: ICallback) => void
+Line 4 col 9 IdentifierName "load" = typeof load
 Line 4 col 14 IdentifierName "f" = ICallback
 Line 4 col 17 IdentifierName "ICallback" = ICallback
 Line 6 col 4 IdentifierName "f1" = ICallback
@@ -13,15 +13,15 @@ Line 7 col 8 IdentifierName "ICallback" = ICallback
 Line 7 col 20 FunctionExpression "function(z?) {}" = (z?: string) => void
 Line 7 col 29 IdentifierName "z" = string
 Line 8 col 0 InvocationExpression "load(f1) // ok" = void
-Line 8 col 0 IdentifierName "load" = (f: ICallback) => void
+Line 8 col 0 IdentifierName "load" = typeof load
 Line 8 col 5 IdentifierName "f1" = ICallback
 Line 9 col 0 InvocationExpression "load(f2) // ok" = void
-Line 9 col 0 IdentifierName "load" = (f: ICallback) => void
+Line 9 col 0 IdentifierName "load" = typeof load
 Line 9 col 5 IdentifierName "f2" = ICallback
 Line 10 col 0 InvocationExpression "load(function() {}) // this shouldn’t be an error" = void
-Line 10 col 0 IdentifierName "load" = (f: ICallback) => void
+Line 10 col 0 IdentifierName "load" = typeof load
 Line 10 col 5 FunctionExpression "function() {}" = () => void
 Line 11 col 0 InvocationExpression "load(function(z?) {}) // this shouldn't be an error" = void
-Line 11 col 0 IdentifierName "load" = (f: ICallback) => void
+Line 11 col 0 IdentifierName "load" = typeof load
 Line 11 col 5 FunctionExpression "function(z?) {}" = (z?: string) => void
 Line 11 col 14 IdentifierName "z" = string

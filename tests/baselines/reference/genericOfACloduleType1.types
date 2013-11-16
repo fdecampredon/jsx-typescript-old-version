@@ -12,7 +12,7 @@ Line 3 col 18 IdentifierName "C" = M.C
 Line 4 col 21 IdentifierName "X" = M.C.X
 Line 8 col 8 IdentifierName "g1" = G<M.C>
 Line 8 col 13 ObjectCreationExpression "new G<C>()" = G<M.C>
-Line 8 col 17 IdentifierName "G" = { prototype: G<any>; new<T>(): G<T>; }
+Line 8 col 17 IdentifierName "G" = typeof G
 Line 8 col 19 IdentifierName "C" = M.C
 Line 9 col 0 InvocationExpression "g1.bar(null).foo()" = void
 Line 9 col 0 MemberAccessExpression "g1.bar(null).foo" = () => void
@@ -23,6 +23,6 @@ Line 9 col 7 IdentifierName "bar" = (x: M.C) => M.C
 Line 9 col 17 IdentifierName "foo" = () => void
 Line 11 col 4 IdentifierName "g2" = G<M.C>
 Line 11 col 9 ObjectCreationExpression "new G<M.C>() // was: error Type reference cannot refer to container 'M.C'." = G<M.C>
-Line 11 col 13 IdentifierName "G" = { prototype: G<any>; new<T>(): G<T>; }
+Line 11 col 13 IdentifierName "G" = typeof G
 Line 11 col 15 IdentifierName "M" = M
 Line 11 col 17 IdentifierName "C" = M.C

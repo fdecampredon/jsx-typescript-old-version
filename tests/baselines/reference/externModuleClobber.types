@@ -12,9 +12,9 @@ Line 9 col 4 IdentifierName "ec" = EM.EC
 Line 9 col 7 IdentifierName "EM" = EM
 Line 9 col 10 IdentifierName "EC" = EM.EC
 Line 9 col 15 ObjectCreationExpression "new EM.EC()" = EM.EC
-Line 9 col 19 MemberAccessExpression "EM.EC" = { prototype: EM.EC; new(): EM.EC; }
-Line 9 col 19 IdentifierName "EM" = { Position: { prototype: EM.Position; new(): EM.Position; }; EC: { prototype: EM.EC; new(): EM.EC; }; }
-Line 9 col 22 IdentifierName "EC" = { prototype: EM.EC; new(): EM.EC; }
+Line 9 col 19 MemberAccessExpression "EM.EC" = typeof EM.EC
+Line 9 col 19 IdentifierName "EM" = typeof EM
+Line 9 col 22 IdentifierName "EC" = typeof EM.EC
 Line 10 col 0 AssignmentExpression "x = ec.getPosition()" = EM.Position
 Line 10 col 0 IdentifierName "x" = EM.Position
 Line 11 col 4 InvocationExpression "ec.getPosition()" = EM.Position

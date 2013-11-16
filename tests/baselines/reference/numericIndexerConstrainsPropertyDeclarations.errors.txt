@@ -1,0 +1,10 @@
+numericIndexerConstrainsPropertyDeclarations.ts line 18 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 20 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 21 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 50 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 55 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 68 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 73 col 5: error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts line 78 col 5: error TS2012: Cannot convert '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' to '{ [x: number]: string; }':
+	Index signatures of types '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' and '{ [x: number]: string; }' are incompatible.
+numericIndexerConstrainsPropertyDeclarations.ts line 88 col 9: error TS2095: Could not find symbol 'Myn'.

@@ -14,7 +14,7 @@ Line 8 col 26 IdentifierName "T" = T
 Line 8 col 30 IdentifierName "T" = T
 Line 9 col 15 InvocationExpression "this.one<T>(source, 42)" = T
 Line 9 col 15 MemberAccessExpression "this.one" = <T>(source: T, value: number) => T
-Line 9 col 15 ThisKeyword "this" = { prototype: A; one<T>(source: T, value: number): T; two<T>(source: T): T; new(): A; }
+Line 9 col 15 ThisKeyword "this" = typeof A
 Line 9 col 20 IdentifierName "one" = <T>(source: T, value: number) => T
 Line 9 col 24 IdentifierName "T" = T
 Line 9 col 27 IdentifierName "source" = T
@@ -31,6 +31,6 @@ Line 19 col 23 IdentifierName "B" = B
 Line 19 col 27 IdentifierName "B" = B
 Line 20 col 15 InvocationExpression "this.one(source, 42)" = B
 Line 20 col 15 MemberAccessExpression "this.one" = (source: B, value: number) => B
-Line 20 col 15 ThisKeyword "this" = { prototype: B; one(source: B, value: number): B; two(source: B): B; new(): B; }
+Line 20 col 15 ThisKeyword "this" = typeof B
 Line 20 col 20 IdentifierName "one" = (source: B, value: number) => B
 Line 20 col 24 IdentifierName "source" = B

@@ -1,9 +1,9 @@
 === tests/cases/compiler/contextualTyping26.ts ===
-Line 0 col 9 IdentifierName "foo" = (param: { id: number; }) => void
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "param" = { id: number; }
 Line 0 col 20 IdentifierName "id" = number
 Line 0 col 36 InvocationExpression "foo(<{id:number;}>({}))" = void
-Line 0 col 36 IdentifierName "foo" = (param: { id: number; }) => void
+Line 0 col 36 IdentifierName "foo" = typeof foo
 Line 0 col 40 CastExpression "<{id:number;}>({})" = { id: number; }
 Line 0 col 42 IdentifierName "id" = number
 Line 0 col 54 ParenthesizedExpression "({})" = {}

@@ -885,6 +885,13 @@ module TypeScript {
             ast = context.ast;
             var symbol = resolver.resolveAST(ast, context.inContextuallyTypedAssignment, context.resolutionContext);
 
+            if (!symbol) {
+                Debug.assert(
+                    ast.kind() == SyntaxKind.SourceUnit,
+                    "No symbol was found for ast and ast was not source unit. Ast Kind: " + SyntaxKind[ast.kind()] );
+                return null;
+            }
+
             if (symbol.isTypeReference()) {
                 symbol = (<PullTypeReferenceSymbol>symbol).getReferencedTypeSymbol();
             }

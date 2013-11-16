@@ -1,3 +1,4 @@
+// basic valid forms of function literals
 var x = function () {
     return 1;
 };

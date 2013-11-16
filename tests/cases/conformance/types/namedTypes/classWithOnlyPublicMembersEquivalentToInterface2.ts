@@ -1,3 +1,5 @@
+// no errors expected
+
 class C {
     public x: string;
     public y(a: number): number { return null; }

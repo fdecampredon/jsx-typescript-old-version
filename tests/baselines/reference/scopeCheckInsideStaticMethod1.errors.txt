@@ -1,2 +1,2 @@
 scopeCheckInsideStaticMethod1.ts line 6 col 7: error TS2095: Could not find symbol 'v'.
-scopeCheckInsideStaticMethod1.ts line 8 col 12: error TS2094: The property 'p' does not exist on value of type '{ prototype: C; s: any; b(): void; new(): C; }'.
+scopeCheckInsideStaticMethod1.ts line 8 col 12: error TS2094: The property 'p' does not exist on value of type 'typeof C'.

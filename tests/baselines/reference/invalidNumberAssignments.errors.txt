@@ -12,5 +12,4 @@ invalidNumberAssignments.ts line 15 col 5: error TS2012: Cannot convert 'number'
 	Type 'Number' is missing property '0' from type '{ 0: number; }'.
 invalidNumberAssignments.ts line 18 col 1: error TS2130: Invalid left-hand side of assignment expression.
 invalidNumberAssignments.ts line 21 col 5: error TS2011: Cannot convert 'number' to 'T'.
-invalidNumberAssignments.ts line 23 col 1: error TS2012: Cannot convert 'number' to '<T>(a: T) => void':
-	Type '<T>(a: T) => void' requires a call signature, but type 'Number' lacks one.
+invalidNumberAssignments.ts line 23 col 1: error TS2130: Invalid left-hand side of assignment expression.

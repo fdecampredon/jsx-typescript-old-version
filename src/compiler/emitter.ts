@@ -652,13 +652,14 @@ module TypeScript {
 
             this.indenter.increaseIndent();
 
+            // Parameter list parameters with defaults could capture this
+            if (this.shouldCaptureThis(funcDecl)) {
+                this.writeCaptureThisStatement(funcDecl);
+            }
+
             if (parameterList) {
                 this.emitDefaultValueAssignments(parameterList);
                 this.emitRestParameterInitializer(parameterList);
-            }
-
-            if (this.shouldCaptureThis(funcDecl)) {
-                this.writeCaptureThisStatement(funcDecl);
             }
 
             if (block) {

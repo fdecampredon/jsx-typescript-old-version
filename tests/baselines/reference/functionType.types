@@ -1,8 +1,8 @@
 === tests/cases/compiler/functionType.ts ===
-Line 0 col 9 IdentifierName "salt" = () => void
+Line 0 col 9 IdentifierName "salt" = typeof salt
 Line 1 col 0 InvocationExpression "salt.apply("hello", [])" = any
 Line 1 col 0 MemberAccessExpression "salt.apply" = (thisArg: any, argArray?: any) => any
-Line 1 col 0 IdentifierName "salt" = () => void
+Line 1 col 0 IdentifierName "salt" = typeof salt
 Line 1 col 5 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
 Line 1 col 20 ArrayLiteralExpression "[]" = undefined[]
 Line 2 col 0 InvocationExpression "(new Function("return 5"))()" = any

@@ -1,6 +1,6 @@
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_fs.ts ===
 Line 0 col 7 IdentifierName "commands" = commands
-Line 1 col 9 IdentifierName "run" = (configuration: IConfiguration) => void
+Line 1 col 9 IdentifierName "run" = typeof run
 Line 1 col 13 IdentifierName "configuration" = IConfiguration
 Line 1 col 28 IdentifierName "commands" = commands
 Line 1 col 37 IdentifierName "IConfiguration" = IConfiguration

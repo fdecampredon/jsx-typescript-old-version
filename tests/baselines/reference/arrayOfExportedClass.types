@@ -1,5 +1,5 @@
 === tests/cases/compiler/arrayOfExportedClass_1.ts ===
-Line 1 col 7 IdentifierName "Car" = { prototype: Car; new(): Car; }
+Line 1 col 7 IdentifierName "Car" = typeof Car
 Line 3 col 6 IdentifierName "Road" = Road
 Line 5 col 11 IdentifierName "cars" = Car[]
 Line 5 col 17 IdentifierName "Car" = Car
@@ -11,8 +11,8 @@ Line 8 col 0 MemberAccessExpression "this.cars" = Car[]
 Line 8 col 0 ThisKeyword "this" = Road
 Line 9 col 13 IdentifierName "cars" = Car[]
 Line 9 col 20 IdentifierName "cars" = Car[]
-Line 13 col 9 IdentifierName "Road" = { prototype: Road; new(): Road; }
+Line 13 col 9 IdentifierName "Road" = typeof Road
 === tests/cases/compiler/arrayOfExportedClass_0.ts ===
 Line 0 col 6 IdentifierName "Car" = Car
 Line 1 col 0 IdentifierName "foo" = string
-Line 4 col 9 IdentifierName "Car" = { prototype: Car; new(): Car; }
+Line 4 col 9 IdentifierName "Car" = typeof Car

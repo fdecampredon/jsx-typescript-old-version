@@ -1,6 +1,6 @@
 === tests/cases/compiler/exportAssignmentError.ts ===
 Line 0 col 7 IdentifierName "M" = M
 Line 1 col 12 IdentifierName "x" = any
-Line 4 col 7 IdentifierName "M2" = { x: any; }
+Line 4 col 7 IdentifierName "M2" = typeof M
 Line 4 col 12 IdentifierName "M" = M
-Line 6 col 9 IdentifierName "M2" = { x: any; }
+Line 6 col 9 IdentifierName "M2" = typeof M

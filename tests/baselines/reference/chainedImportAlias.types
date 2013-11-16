@@ -12,4 +12,4 @@ Line 5 col 8 IdentifierName "log" = (message?: any) => any
 Line 5 col 12 IdentifierName "y" = y
 === tests/cases/compiler/chainedImportAlias_file0.ts ===
 Line 0 col 14 IdentifierName "m" = m
-Line 1 col 20 IdentifierName "foo" = () => void
+Line 1 col 20 IdentifierName "foo" = typeof m.foo

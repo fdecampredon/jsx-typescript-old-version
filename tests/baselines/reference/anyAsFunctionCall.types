@@ -1,12 +1,12 @@
 === tests/cases/compiler/anyAsFunctionCall.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 1 col 4 IdentifierName "a" = any
-Line 1 col 8 InvocationExpression "x()" = any
-Line 1 col 8 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "b" = any
-Line 2 col 8 InvocationExpression "x('hello')" = any
-Line 2 col 8 IdentifierName "x" = any
-Line 3 col 4 IdentifierName "c" = any
-Line 3 col 8 InvocationExpression "x(x)" = any
-Line 3 col 8 IdentifierName "x" = any
-Line 3 col 10 IdentifierName "x" = any
+Line 3 col 4 IdentifierName "x" = any
+Line 4 col 4 IdentifierName "a" = any
+Line 4 col 8 InvocationExpression "x()" = any
+Line 4 col 8 IdentifierName "x" = any
+Line 5 col 4 IdentifierName "b" = any
+Line 5 col 8 InvocationExpression "x('hello')" = any
+Line 5 col 8 IdentifierName "x" = any
+Line 6 col 4 IdentifierName "c" = any
+Line 6 col 8 InvocationExpression "x(x)" = any
+Line 6 col 8 IdentifierName "x" = any
+Line 6 col 10 IdentifierName "x" = any

@@ -1,5 +1,5 @@
 === tests/cases/compiler/objectLiteralArraySpecialization.ts ===
-Line 0 col 17 IdentifierName "create" = <T>(initialValues?: T[]) => MyArrayWrapper<T>
+Line 0 col 17 IdentifierName "create" = typeof create
 Line 0 col 24 IdentifierName "T" = T
 Line 0 col 27 IdentifierName "initialValues" = T[]
 Line 0 col 43 IdentifierName "T" = T
@@ -18,7 +18,7 @@ Line 3 col 31 IdentifierName "y" = T
 Line 3 col 34 IdentifierName "T" = T
 Line 5 col 4 IdentifierName "thing" = MyArrayWrapper<{ name: string; id: number; }>
 Line 5 col 12 InvocationExpression "create([ { name: "bob", id: 24 }, { name: "doug", id: 32 } ])" = MyArrayWrapper<{ name: string; id: number; }>
-Line 5 col 12 IdentifierName "create" = <T>(initialValues?: T[]) => MyArrayWrapper<T>
+Line 5 col 12 IdentifierName "create" = typeof create
 Line 5 col 19 ArrayLiteralExpression "[ { name: "bob", id: 24 }, { name: "doug", id: 32 } ]" = { name: string; id: number; }[]
 Line 5 col 21 ObjectLiteralExpression "{ name: "bob", id: 24 }" = { name: string; id: number; }
 Line 5 col 23 IdentifierName "name" = string

@@ -1,7 +1,7 @@
 === tests/cases/compiler/functionCall4.ts ===
-Line 0 col 9 IdentifierName "foo" = () => any
-Line 1 col 9 IdentifierName "bar" = () => () => any
-Line 1 col 30 IdentifierName "foo" = () => any
+Line 0 col 9 IdentifierName "foo" = typeof foo
+Line 1 col 9 IdentifierName "bar" = typeof bar
+Line 1 col 30 IdentifierName "foo" = typeof foo
 Line 2 col 4 IdentifierName "x" = () => any
 Line 2 col 8 InvocationExpression "bar()" = () => any
-Line 2 col 8 IdentifierName "bar" = () => () => any
+Line 2 col 8 IdentifierName "bar" = typeof bar

@@ -1,0 +1,19 @@
+=== tests/cases/compiler/declFileRestParametersOfFunctionAndFunctionType.ts ===
+Line 1 col 9 IdentifierName "f1" = typeof f1
+Line 1 col 15 IdentifierName "args" = any[]
+Line 2 col 9 IdentifierName "f2" = typeof f2
+Line 2 col 12 IdentifierName "x" = (...args: any[]) => void
+Line 2 col 19 IdentifierName "args" = any[]
+Line 3 col 9 IdentifierName "f3" = typeof f3
+Line 3 col 12 IdentifierName "x" = (...args: any[]) => void
+Line 3 col 21 IdentifierName "args" = any[]
+Line 4 col 9 IdentifierName "f4" = typeof f4
+Line 4 col 12 IdentifierName "T" = T
+Line 4 col 26 IdentifierName "args" = any[]
+Line 5 col 9 IdentifierName "f5" = typeof f5
+Line 5 col 12 IdentifierName "T" = T
+Line 5 col 28 IdentifierName "args" = any[]
+Line 6 col 4 IdentifierName "f6" = () => any[]
+Line 6 col 9 ParenthesizedArrowFunctionExpression "() => { return [<any>10]; }" = () => any[]
+Line 6 col 24 ArrayLiteralExpression "[<any>10]" = any[]
+Line 6 col 25 CastExpression "<any>10" = any

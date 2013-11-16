@@ -33,8 +33,8 @@ Line 32 col 11 IdentifierName "x" = number
 Line 35 col 8 IdentifierName "id" = number
 Line 41 col 4 IdentifierName "c" = C<string>
 Line 41 col 7 IdentifierName "C" = C<T>
-Line 44 col 4 IdentifierName "r1" = { prototype: C<any>; foo(x: number): any; foo(x: {}): any; bar(x: any): void; sa: number; sb: () => number; sc: number; sd: number; new<T>(x: number): C<T>; new<T>(x: string): C<T>; }
-Line 44 col 15 IdentifierName "C" = { prototype: C<any>; foo(x: number): any; foo(x: {}): any; bar(x: any): void; sa: number; sb: () => number; sc: number; sd: number; new<T>(x: number): C<T>; new<T>(x: string): C<T>; }
+Line 44 col 4 IdentifierName "r1" = typeof C
+Line 44 col 15 IdentifierName "C" = typeof C
 Line 45 col 4 IdentifierName "r2" = C<string>
 Line 45 col 15 IdentifierName "c" = C<string>
 Line 47 col 6 IdentifierName "D" = D<T>
@@ -45,7 +45,7 @@ Line 49 col 7 IdentifierName "T" = T
 Line 50 col 0 IdentifierName "foo" = () => void
 Line 53 col 4 IdentifierName "d" = D<string>
 Line 53 col 7 IdentifierName "D" = D<T>
-Line 54 col 4 IdentifierName "r3" = { prototype: D<any>; new<T>(y?: any): D<T>; }
-Line 54 col 15 IdentifierName "D" = { prototype: D<any>; new<T>(y?: any): D<T>; }
+Line 54 col 4 IdentifierName "r3" = typeof D
+Line 54 col 15 IdentifierName "D" = typeof D
 Line 55 col 4 IdentifierName "r4" = D<string>
 Line 55 col 15 IdentifierName "d" = D<string>

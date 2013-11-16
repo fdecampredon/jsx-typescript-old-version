@@ -1,9 +1,9 @@
 === tests/cases/compiler/genericFunctions1.ts ===
-Line 0 col 9 IdentifierName "foo" = <T>(x: T) => T
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "T" = T
 Line 0 col 18 IdentifierName "x" = T
 Line 0 col 21 IdentifierName "T" = T
 Line 0 col 33 IdentifierName "x" = T
 Line 2 col 4 IdentifierName "x" = number
 Line 2 col 8 InvocationExpression "foo(5)" = number
-Line 2 col 8 IdentifierName "foo" = <T>(x: T) => T
+Line 2 col 8 IdentifierName "foo" = typeof foo

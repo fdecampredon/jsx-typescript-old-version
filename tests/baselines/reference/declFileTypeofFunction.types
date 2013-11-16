@@ -1,0 +1,43 @@
+=== tests/cases/compiler/declFileTypeofFunction.ts ===
+Line 1 col 9 IdentifierName "f" = typeof f
+Line 1 col 11 IdentifierName "n" = typeof f
+Line 1 col 21 IdentifierName "f" = typeof f
+Line 2 col 9 IdentifierName "f" = typeof f
+Line 2 col 11 IdentifierName "n" = typeof g
+Line 2 col 21 IdentifierName "g" = typeof g
+Line 3 col 9 IdentifierName "f" = typeof f
+Line 3 col 22 IdentifierName "undefined" = undefined
+Line 4 col 9 IdentifierName "g" = typeof g
+Line 4 col 11 IdentifierName "n" = typeof g
+Line 4 col 21 IdentifierName "g" = typeof g
+Line 5 col 9 IdentifierName "g" = typeof g
+Line 5 col 11 IdentifierName "n" = typeof f
+Line 5 col 21 IdentifierName "f" = typeof f
+Line 6 col 9 IdentifierName "g" = typeof g
+Line 6 col 22 IdentifierName "undefined" = undefined
+Line 8 col 4 IdentifierName "b" = () => any
+Line 8 col 20 IdentifierName "b" = () => any
+Line 10 col 9 IdentifierName "b1" = typeof b1
+Line 11 col 11 IdentifierName "b1" = typeof b1
+Line 14 col 9 IdentifierName "foo" = typeof foo
+Line 14 col 23 IdentifierName "foo" = typeof foo
+Line 17 col 4 IdentifierName "foo1" = typeof foo
+Line 17 col 17 IdentifierName "foo" = typeof foo
+Line 18 col 4 IdentifierName "foo2" = typeof foo
+Line 18 col 11 IdentifierName "foo" = typeof foo
+Line 20 col 4 IdentifierName "foo3" = () => any
+Line 20 col 11 FunctionExpression "function () {
+    return foo3;
+}" = () => any
+Line 21 col 11 IdentifierName "foo3" = () => any
+Line 23 col 4 IdentifierName "x" = () => any
+Line 23 col 8 ParenthesizedArrowFunctionExpression "() => {
+    return x;
+}" = () => any
+Line 24 col 11 IdentifierName "x" = () => any
+Line 27 col 9 IdentifierName "foo5" = typeof foo5
+Line 27 col 14 IdentifierName "x" = number
+Line 28 col 13 IdentifierName "bar" = (x: number) => number
+Line 28 col 17 IdentifierName "x" = number
+Line 29 col 15 IdentifierName "x" = number
+Line 31 col 11 IdentifierName "bar" = (x: number) => number

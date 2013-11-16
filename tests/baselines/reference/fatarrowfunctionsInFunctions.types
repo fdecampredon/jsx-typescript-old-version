@@ -1,5 +1,5 @@
 === tests/cases/compiler/fatarrowfunctionsInFunctions.ts ===
-Line 0 col 17 IdentifierName "setTimeout" = (expression: any, msec?: number, language?: any) => number
+Line 0 col 17 IdentifierName "setTimeout" = typeof setTimeout
 Line 0 col 28 IdentifierName "expression" = any
 Line 0 col 45 IdentifierName "msec" = number
 Line 0 col 60 IdentifierName "language" = any
@@ -26,7 +26,7 @@ Line 5 col 20 ThisKeyword "this" = any
 Line 6 col 0 InvocationExpression "setTimeout(function() {
             _self.message.toString(); 
         }, 3000)" = number
-Line 6 col 0 IdentifierName "setTimeout" = (expression: any, msec?: number, language?: any) => number
+Line 6 col 0 IdentifierName "setTimeout" = typeof setTimeout
 Line 6 col 19 FunctionExpression "function() {
             _self.message.toString(); 
         }" = () => void

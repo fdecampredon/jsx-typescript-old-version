@@ -1,5 +1,5 @@
 === tests/cases/compiler/cloduleTest1.ts ===
-Line 0 col 19 IdentifierName "$" = { ajax(options: $.AjaxSettings): void; (selector: string): $; }
+Line 0 col 19 IdentifierName "$" = typeof $
 Line 0 col 21 IdentifierName "selector" = string
 Line 0 col 40 IdentifierName "$" = $
 Line 1 col 12 IdentifierName "$" = $
@@ -16,5 +16,5 @@ Line 9 col 10 IdentifierName "$" = $
 Line 9 col 14 InvocationExpression "$('.foo').addClass('bar')" = $
 Line 9 col 14 MemberAccessExpression "$('.foo').addClass" = (className: string) => $
 Line 9 col 14 InvocationExpression "$('.foo')" = $
-Line 9 col 14 IdentifierName "$" = { ajax(options: $.AjaxSettings): void; (selector: string): $; }
+Line 9 col 14 IdentifierName "$" = typeof $
 Line 9 col 24 IdentifierName "addClass" = (className: string) => $

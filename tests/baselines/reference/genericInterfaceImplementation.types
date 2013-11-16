@@ -1,0 +1,22 @@
+=== tests/cases/compiler/genericInterfaceImplementation.ts ===
+Line 0 col 10 IdentifierName "IOption" = IOption<A>
+Line 0 col 18 IdentifierName "A" = A
+Line 1 col 0 IdentifierName "get" = () => A
+Line 1 col 11 IdentifierName "A" = A
+Line 2 col 0 IdentifierName "flatten" = <B>() => IOption<B>
+Line 3 col 12 IdentifierName "B" = B
+Line 3 col 18 IdentifierName "IOption" = IOption<A>
+Line 3 col 26 IdentifierName "B" = B
+Line 6 col 6 IdentifierName "None" = None<T>
+Line 6 col 11 IdentifierName "T" = T
+Line 6 col 25 IdentifierName "IOption" = IOption<A>
+Line 6 col 33 IdentifierName "T" = T
+Line 7 col 0 IdentifierName "get" = () => T
+Line 7 col 11 IdentifierName "T" = T
+Line 10 col 0 IdentifierName "flatten" = <U>() => IOption<U>
+Line 11 col 12 IdentifierName "U" = U
+Line 11 col 19 IdentifierName "IOption" = IOption<A>
+Line 11 col 27 IdentifierName "U" = U
+Line 12 col 15 ObjectCreationExpression "new None<U>()" = None<U>
+Line 12 col 19 IdentifierName "None" = typeof None
+Line 12 col 24 IdentifierName "U" = U

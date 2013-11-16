@@ -16,14 +16,14 @@ Line 8 col 28 IdentifierName "onClick" = () => void
 Line 9 col 11 IdentifierName "onClick" = () => void
 Line 12 col 4 IdentifierName "c" = CalcButton
 Line 12 col 8 ObjectCreationExpression "new CalcButton()" = CalcButton
-Line 12 col 12 IdentifierName "CalcButton" = { prototype: CalcButton; new(): CalcButton; }
+Line 12 col 12 IdentifierName "CalcButton" = typeof CalcButton
 Line 13 col 0 InvocationExpression "c.a()" = void
 Line 13 col 0 MemberAccessExpression "c.a" = () => void
 Line 13 col 0 IdentifierName "c" = CalcButton
 Line 13 col 2 IdentifierName "a" = () => void
 Line 14 col 4 IdentifierName "c2" = CalcButton2
 Line 14 col 9 ObjectCreationExpression "new CalcButton2()" = CalcButton2
-Line 14 col 13 IdentifierName "CalcButton2" = { prototype: CalcButton2; new(): CalcButton2; }
+Line 14 col 13 IdentifierName "CalcButton2" = typeof CalcButton2
 Line 15 col 0 InvocationExpression "c2.b()" = void
 Line 15 col 0 MemberAccessExpression "c2.b" = () => void
 Line 15 col 0 IdentifierName "c2" = CalcButton2

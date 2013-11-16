@@ -1,12 +1,12 @@
 === tests/cases/compiler/instanceOfInExternalModules_1.ts ===
 Line 1 col 7 IdentifierName "Bar" = Bar
-Line 2 col 9 IdentifierName "IsFoo" = (value: any) => boolean
+Line 2 col 9 IdentifierName "IsFoo" = typeof IsFoo
 Line 2 col 15 IdentifierName "value" = any
 Line 3 col 11 InstanceOfExpression "value instanceof Bar.Foo" = boolean
 Line 3 col 11 IdentifierName "value" = any
-Line 3 col 28 MemberAccessExpression "Bar.Foo" = { prototype: Foo; new(): Foo; }
+Line 3 col 28 MemberAccessExpression "Bar.Foo" = typeof Foo
 Line 3 col 28 IdentifierName "Bar" = Bar
-Line 3 col 32 IdentifierName "Foo" = { prototype: Foo; new(): Foo; }
+Line 3 col 32 IdentifierName "Foo" = typeof Foo
 === tests/cases/compiler/instanceOfInExternalModules_require.ts ===
 Line 0 col 13 IdentifierName "Foo" = Foo
 Line 0 col 19 IdentifierName "foo" = string

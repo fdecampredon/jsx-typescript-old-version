@@ -1,19 +1,19 @@
 === tests/cases/compiler/overloadsAndTypeArgumentArity.ts ===
-Line 0 col 17 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 0 col 17 IdentifierName "Callbacks" = typeof Callbacks
 Line 0 col 27 IdentifierName "flags" = string
-Line 1 col 17 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 1 col 17 IdentifierName "Callbacks" = typeof Callbacks
 Line 1 col 27 IdentifierName "T" = T
 Line 1 col 30 IdentifierName "flags" = string
-Line 2 col 17 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 2 col 17 IdentifierName "Callbacks" = typeof Callbacks
 Line 2 col 27 IdentifierName "T1" = T1
 Line 2 col 31 IdentifierName "T2" = T2
 Line 2 col 35 IdentifierName "flags" = string
-Line 3 col 17 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 3 col 17 IdentifierName "Callbacks" = typeof Callbacks
 Line 3 col 27 IdentifierName "T1" = T1
 Line 3 col 31 IdentifierName "T2" = T2
 Line 3 col 35 IdentifierName "T3" = T3
 Line 3 col 39 IdentifierName "flags" = string
 Line 4 col 0 InvocationExpression "Callbacks<number, string, boolean>('s')" = void
-Line 4 col 0 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 4 col 0 IdentifierName "Callbacks" = typeof Callbacks
 Line 6 col 0 ObjectCreationExpression "new Callbacks<number, string, boolean>('s')" = any
-Line 6 col 4 IdentifierName "Callbacks" = { (flags?: string): void; <T>(flags?: string): void; <T1, T2>(flags?: string): void; <T1, T2, T3>(flags?: string): void; }
+Line 6 col 4 IdentifierName "Callbacks" = typeof Callbacks

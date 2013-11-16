@@ -1,22 +1,22 @@
 === tests/cases/compiler/functionLiteral.ts ===
-Line 0 col 4 IdentifierName "x" = () => number
-Line 0 col 8 ParenthesizedArrowFunctionExpression "() => 1" = () => number
-Line 1 col 4 IdentifierName "x" = () => number
-Line 5 col 4 IdentifierName "y" = (x: string) => string
-Line 5 col 10 IdentifierName "x" = string
-Line 6 col 4 IdentifierName "y" = (x: string) => string
-Line 6 col 8 IdentifierName "x" = string
-Line 7 col 4 IdentifierName "y2" = <T>(x: T) => T
-Line 7 col 11 IdentifierName "T" = T
-Line 7 col 14 IdentifierName "x" = T
-Line 7 col 17 IdentifierName "T" = T
-Line 7 col 21 IdentifierName "T" = T
-Line 7 col 28 ParenthesizedArrowFunctionExpression "<T>(x: T) => x" = <T>(x: T) => T
-Line 7 col 29 IdentifierName "T" = T
-Line 7 col 32 IdentifierName "x" = T
-Line 7 col 35 IdentifierName "T" = T
-Line 7 col 41 IdentifierName "x" = T
-Line 9 col 4 IdentifierName "z" = new(x: number) => number
-Line 9 col 14 IdentifierName "x" = number
-Line 10 col 4 IdentifierName "z" = new(x: number) => number
-Line 10 col 12 IdentifierName "x" = number
+Line 2 col 4 IdentifierName "x" = () => number
+Line 2 col 8 ParenthesizedArrowFunctionExpression "() => 1" = () => number
+Line 3 col 4 IdentifierName "x" = () => number
+Line 7 col 4 IdentifierName "y" = (x: string) => string
+Line 7 col 10 IdentifierName "x" = string
+Line 8 col 4 IdentifierName "y" = (x: string) => string
+Line 8 col 8 IdentifierName "x" = string
+Line 9 col 4 IdentifierName "y2" = <T>(x: T) => T
+Line 9 col 11 IdentifierName "T" = T
+Line 9 col 14 IdentifierName "x" = T
+Line 9 col 17 IdentifierName "T" = T
+Line 9 col 21 IdentifierName "T" = T
+Line 9 col 28 ParenthesizedArrowFunctionExpression "<T>(x: T) => x" = <T>(x: T) => T
+Line 9 col 29 IdentifierName "T" = T
+Line 9 col 32 IdentifierName "x" = T
+Line 9 col 35 IdentifierName "T" = T
+Line 9 col 41 IdentifierName "x" = T
+Line 11 col 4 IdentifierName "z" = new(x: number) => number
+Line 11 col 14 IdentifierName "x" = number
+Line 12 col 4 IdentifierName "z" = new(x: number) => number
+Line 12 col 12 IdentifierName "x" = number

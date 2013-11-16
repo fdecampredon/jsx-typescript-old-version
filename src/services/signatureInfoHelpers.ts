@@ -201,7 +201,7 @@ module TypeScript.Services {
             var signatureGroupInfo = new FormalSignatureItemInfo();
 
             var paramIndexInfo: number[] = [];
-            var symbolName = symbol.getScopedNameEx(enclosingScopeSymbol, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
+            var symbolName = symbol.getScopedNameEx(enclosingScopeSymbol, /*skipTypeParametersInName*/ false, /*useConstaintInName*/ true, /*getPrettyTypeName*/ false, /*getTypeParamMarkerInfo*/ true);
 
             signatureGroupInfo.signatureInfo = TypeScript.MemberName.memberNameToString(symbolName, paramIndexInfo);
             signatureGroupInfo.docComment = symbol.docComments();

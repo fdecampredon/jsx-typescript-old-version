@@ -24,7 +24,7 @@ verify.quickInfoIs("Colors", "", "x", "var");
 
 goTo.marker('5');
 verify.completionListContains("Colors", "Colors", "Enum of colors", "Colors", "enum");
-verify.quickInfoIs("{ Cornflower: Colors; FancyPink: Colors; [x: number]: string; }", "Enum of colors", "Colors", "enum");
+verify.quickInfoIs("typeof Colors", "Enum of colors", "Colors", "enum");
 
 goTo.marker('6');
 verify.memberListContains("Cornflower", "Colors", "Fancy name for 'blue'", "Colors.Cornflower", "property");

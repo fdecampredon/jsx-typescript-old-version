@@ -1,3 +1,5 @@
+// it is an error to use a generic type without type arguments
+// all of these are errors
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

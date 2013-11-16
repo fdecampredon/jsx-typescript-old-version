@@ -906,7 +906,7 @@ module TypeScript {
                     this.declFile.Write(", ");
                 }
 
-                var memberName = typars[i].getScopedNameEx(containerSymbol, /*useConstraintInName:*/ true);
+                var memberName = typars[i].getScopedNameEx(containerSymbol, /*skipTypeParametersInName*/ false, /*useConstraintInName:*/ true);
                 this.emitTypeNamesMember(memberName);
             }
 

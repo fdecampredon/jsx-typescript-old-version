@@ -1,12 +1,12 @@
 === tests/cases/compiler/global.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 1 col 20 IdentifierName "f" = (y: number) => number
+Line 1 col 20 IdentifierName "f" = typeof M.f
 Line 1 col 22 IdentifierName "y" = number
 Line 2 col 15 AddExpression "x+y" = number
 Line 2 col 15 IdentifierName "x" = number
 Line 2 col 17 IdentifierName "y" = number
 Line 6 col 4 IdentifierName "x" = number
 Line 7 col 0 InvocationExpression "M.f(3)" = number
-Line 7 col 0 MemberAccessExpression "M.f" = (y: number) => number
-Line 7 col 0 IdentifierName "M" = { f(y: number): number; }
-Line 7 col 2 IdentifierName "f" = (y: number) => number
+Line 7 col 0 MemberAccessExpression "M.f" = typeof M.f
+Line 7 col 0 IdentifierName "M" = typeof M
+Line 7 col 2 IdentifierName "f" = typeof M.f

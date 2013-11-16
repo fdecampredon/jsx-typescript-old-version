@@ -12,7 +12,5 @@ var Outer;
 
 ////[privacyCheckTypeOfInvisibleModuleNoError.d.ts]
 declare module Outer {
-    var f: {
-        m: number;
-    };
+    var f: typeof Inner;
 }

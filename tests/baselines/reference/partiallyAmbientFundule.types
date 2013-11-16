@@ -1,4 +1,4 @@
 === tests/cases/compiler/partiallyAmbientFundule.ts ===
 Line 0 col 15 IdentifierName "foo" = foo
-Line 1 col 20 IdentifierName "x" = () => any
-Line 3 col 9 IdentifierName "foo" = { x(): any; (): void; }
+Line 1 col 20 IdentifierName "x" = typeof foo.x
+Line 3 col 9 IdentifierName "foo" = typeof foo

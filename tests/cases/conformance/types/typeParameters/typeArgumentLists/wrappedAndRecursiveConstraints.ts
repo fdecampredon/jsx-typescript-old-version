@@ -1,3 +1,5 @@
+// no errors expected
+
 class C<T extends Date> {
     constructor(public data: T) { }
     foo<U extends T>(x: U) {

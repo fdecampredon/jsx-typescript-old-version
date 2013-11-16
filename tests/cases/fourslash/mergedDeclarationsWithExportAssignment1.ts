@@ -19,7 +19,7 @@
 edit.insert('');
 
 goTo.marker('1');
-verify.quickInfoIs('{ prototype: Foo; x: number; new(): Foo; }');
+verify.quickInfoIs('typeof Foo');
 
 goTo.marker('2');
 verify.completionListContains('Foo');

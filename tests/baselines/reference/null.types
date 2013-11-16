@@ -6,10 +6,10 @@ Line 1 col 8 IdentifierName "x" = any
 Line 2 col 4 IdentifierName "z" = number
 Line 2 col 6 AddExpression "3+null" = number
 Line 3 col 6 IdentifierName "C" = C
-Line 5 col 9 IdentifierName "f" = () => C
+Line 5 col 9 IdentifierName "f" = typeof f
 Line 7 col 11 ObjectCreationExpression "new C()" = C
-Line 7 col 15 IdentifierName "C" = { prototype: C; new(): C; }
-Line 9 col 9 IdentifierName "g" = () => number
+Line 7 col 15 IdentifierName "C" = typeof C
+Line 9 col 9 IdentifierName "g" = typeof g
 Line 13 col 10 IdentifierName "I" = I
 Line 14 col 0 IdentifierName "x" = any
 Line 15 col 0 IdentifierName "y" = number

@@ -1,11 +1,11 @@
 === tests/cases/compiler/targetTypeArgs.ts ===
-Line 0 col 9 IdentifierName "foo" = (callback: (x: string) => void) => void
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "callback" = (x: string) => void
 Line 0 col 24 IdentifierName "x" = string
 Line 1 col 0 InvocationExpression "callback("hello")" = void
 Line 1 col 0 IdentifierName "callback" = (x: string) => void
 Line 3 col 0 InvocationExpression "foo(function(x) { x })" = void
-Line 3 col 0 IdentifierName "foo" = (callback: (x: string) => void) => void
+Line 3 col 0 IdentifierName "foo" = typeof foo
 Line 4 col 4 FunctionExpression "function(x) { x }" = (x: string) => void
 Line 4 col 13 IdentifierName "x" = string
 Line 4 col 18 IdentifierName "x" = string

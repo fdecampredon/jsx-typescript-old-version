@@ -9,7 +9,7 @@ Line 4 col 0 IdentifierName "N" = number
 Line 5 col 0 IdentifierName "g" = boolean
 Line 6 col 0 IdentifierName "r" = T
 Line 6 col 14 IdentifierName "T" = T
-Line 8 col 23 IdentifierName "observable" = <T>(value: T) => ko.Observable<T>
+Line 8 col 23 IdentifierName "observable" = typeof ko.observable
 Line 8 col 34 IdentifierName "T" = T
 Line 8 col 37 IdentifierName "value" = T
 Line 8 col 44 IdentifierName "T" = T
@@ -22,14 +22,14 @@ Line 10 col 12 ObjectLiteralExpression "{
     }" = { name: ko.Observable<string>; age: ko.Observable<number>; }
 Line 11 col 0 IdentifierName "name" = ko.Observable<string>
 Line 11 col 13 InvocationExpression "ko.observable("Bob")" = ko.Observable<string>
-Line 11 col 13 MemberAccessExpression "ko.observable" = <T>(value: T) => ko.Observable<T>
-Line 11 col 13 IdentifierName "ko" = { observable<T>(value: T): ko.Observable<T>; }
-Line 11 col 16 IdentifierName "observable" = <T>(value: T) => ko.Observable<T>
+Line 11 col 13 MemberAccessExpression "ko.observable" = typeof ko.observable
+Line 11 col 13 IdentifierName "ko" = typeof ko
+Line 11 col 16 IdentifierName "observable" = typeof ko.observable
 Line 12 col 0 IdentifierName "age" = ko.Observable<number>
 Line 12 col 12 InvocationExpression "ko.observable(37)" = ko.Observable<number>
-Line 12 col 12 MemberAccessExpression "ko.observable" = <T>(value: T) => ko.Observable<T>
-Line 12 col 12 IdentifierName "ko" = { observable<T>(value: T): ko.Observable<T>; }
-Line 12 col 15 IdentifierName "observable" = <T>(value: T) => ko.Observable<T>
+Line 12 col 12 MemberAccessExpression "ko.observable" = typeof ko.observable
+Line 12 col 12 IdentifierName "ko" = typeof ko
+Line 12 col 15 IdentifierName "observable" = typeof ko.observable
 Line 14 col 8 IdentifierName "x_v" = number
 Line 14 col 14 MemberAccessExpression "o.name().length" = number
 Line 14 col 14 InvocationExpression "o.name()" = string

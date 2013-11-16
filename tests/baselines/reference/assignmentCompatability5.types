@@ -26,8 +26,8 @@ Line 6 col 15 IdentifierName "__val__obj1" = __test2__.interfaceOne<number>
 Line 6 col 29 IdentifierName "obj1" = __test2__.interfaceOne<number>
 Line 8 col 0 AssignmentExpression "__test2__.__val__obj1 = __test1__.__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>
 Line 8 col 0 MemberAccessExpression "__test2__.__val__obj1" = __test2__.interfaceOne<number>
-Line 8 col 0 IdentifierName "__test2__" = { __val__obj1: __test2__.interfaceOne<number>; }
+Line 8 col 0 IdentifierName "__test2__" = typeof __test2__
 Line 8 col 10 IdentifierName "__val__obj1" = __test2__.interfaceOne<number>
 Line 8 col 24 MemberAccessExpression "__test1__.__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>
-Line 8 col 24 IdentifierName "__test1__" = { __val__obj4: __test1__.interfaceWithPublicAndOptional<number, string>; }
+Line 8 col 24 IdentifierName "__test1__" = typeof __test1__
 Line 8 col 34 IdentifierName "__val__obj4" = __test1__.interfaceWithPublicAndOptional<number, string>

@@ -1,3 +1,4 @@
+// classes do not permit optional parameters, these are errors
 var C = (function () {
     function C() {
     }

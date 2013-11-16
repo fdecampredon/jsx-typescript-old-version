@@ -1,13 +1,13 @@
 === tests/cases/compiler/moduleAliasAsFunctionArgument_1.ts ===
 Line 1 col 7 IdentifierName "a" = a
-Line 3 col 9 IdentifierName "fn" = (arg: { x: number; }) => void
+Line 3 col 9 IdentifierName "fn" = typeof fn
 Line 3 col 12 IdentifierName "arg" = { x: number; }
 Line 3 col 19 IdentifierName "x" = number
 Line 5 col 0 MemberAccessExpression "a.x" = number
 Line 5 col 0 IdentifierName "a" = a
 Line 6 col 2 IdentifierName "x" = number
 Line 7 col 0 InvocationExpression "fn(a)" = void
-Line 7 col 0 IdentifierName "fn" = (arg: { x: number; }) => void
+Line 7 col 0 IdentifierName "fn" = typeof fn
 Line 7 col 3 IdentifierName "a" = a
 === tests/cases/compiler/moduleAliasAsFunctionArgument_0.ts ===
 Line 0 col 11 IdentifierName "x" = number

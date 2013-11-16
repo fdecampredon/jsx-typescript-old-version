@@ -1,3 +1,6 @@
+// objects with call signatures should be permitted where function types are expected
+// no errors expected below
+
 interface I {
     (): void;
 }

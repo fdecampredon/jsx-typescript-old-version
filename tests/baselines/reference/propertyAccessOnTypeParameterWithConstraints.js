@@ -1,8 +1,12 @@
+// generic types should behave as if they have properties of their constraint type
+// no errors expected
 var C = (function () {
     function C() {
     }
     C.prototype.f = function () {
         var x;
+
+        // BUG 823818
         var a = x['getDate']();
         return a + x.getDate();
     };

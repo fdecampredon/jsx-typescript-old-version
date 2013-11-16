@@ -19,7 +19,7 @@ Line 8 col 8 InvocationExpression "(new C<number>()).f()" = string
 Line 8 col 8 MemberAccessExpression "(new C<number>()).f" = () => string
 Line 8 col 8 ParenthesizedExpression "(new C<number>())" = C<number>
 Line 8 col 9 ObjectCreationExpression "new C<number>()" = C<number>
-Line 8 col 13 IdentifierName "C" = { prototype: C<any>; new<T>(): C<T>; }
+Line 8 col 13 IdentifierName "C" = typeof C
 Line 8 col 26 IdentifierName "f" = () => string
 Line 10 col 10 IdentifierName "I" = I<T>
 Line 10 col 12 IdentifierName "T" = T

@@ -1,5 +1,5 @@
 === tests/cases/compiler/returnStatement1.ts ===
-Line 0 col 9 IdentifierName "f" = () => (s: any) => void
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 1 col 11 FunctionExpression "function (s) {
         var x = s;
     }" = (s: any) => void

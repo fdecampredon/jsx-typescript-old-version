@@ -644,7 +644,7 @@ goTo.marker('106');
 verify.quickInfoIs("number", "", "i1_s_ncprop", "var");
 
 goTo.marker('107');
-verify.quickInfoIs("{ prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; new(): c1; }", "", "i1_c", "var");
+verify.quickInfoIs("typeof c1", "", "i1_c", "var");
 
 goTo.marker('108');
 verify.quickInfoIs(undefined, "This is comment for c1\nConstructor method", "c1", "class");
@@ -669,7 +669,7 @@ verify.completionListContains("i1_s_ncf", "(b: number) => number", "", "i1_s_ncf
 verify.completionListContains("i1_s_ncr", "number", "", "i1_s_ncr", "var");
 verify.completionListContains("i1_s_ncprop", "number", "", "i1_s_ncprop", "var");
 
-verify.completionListContains("i1_c", "{ prototype: c1; s1: number; s2(b: number): number; s3: number; nc_s1: number; nc_s2(b: number): number; nc_s3: number; new(): c1; }", "", "i1_c", "var");
+verify.completionListContains("i1_c", "typeof c1", "", "i1_c", "var");
 
 goTo.marker('110');
 verify.quickInfoIs("number", "setter only property", "cProperties.p2", "property");

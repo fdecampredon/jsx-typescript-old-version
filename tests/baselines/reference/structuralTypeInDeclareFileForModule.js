@@ -10,6 +10,4 @@ var m = M;
 declare module M {
     var x: any;
 }
-declare var m: {
-    x: any;
-};
+declare var m: typeof M;

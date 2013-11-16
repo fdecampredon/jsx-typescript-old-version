@@ -14,7 +14,7 @@ Line 2 col 45 PostIncrementExpression "i++" = number
 Line 2 col 45 IdentifierName "i" = number
 Line 8 col 4 IdentifierName "c" = C
 Line 8 col 8 ObjectCreationExpression "new C()" = C
-Line 8 col 12 IdentifierName "C" = { prototype: C; new(): C; }
+Line 8 col 12 IdentifierName "C" = typeof C
 Line 9 col 0 InvocationExpression "c.P(1,2,3)" = void
 Line 9 col 0 MemberAccessExpression "c.P" = (ii: number, j: number, k: number) => void
 Line 9 col 0 IdentifierName "c" = C

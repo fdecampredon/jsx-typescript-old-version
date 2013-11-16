@@ -15,19 +15,19 @@ Line 24 col 7 IdentifierName "moduleType\u0032" = moduleType\u0032
 Line 25 col 15 IdentifierName "baz2" = number
 Line 27 col 0 AssignmentExpression "moduleType1.baz1 = 3" = number
 Line 27 col 0 MemberAccessExpression "moduleType1.baz1" = number
-Line 27 col 0 IdentifierName "moduleType1" = { baz1: number; }
+Line 27 col 0 IdentifierName "moduleType1" = typeof moduleType1
 Line 28 col 12 IdentifierName "baz1" = number
 Line 29 col 0 AssignmentExpression "moduleType\u0031.baz1 = 3" = number
 Line 29 col 0 MemberAccessExpression "moduleType\u0031.baz1" = number
-Line 29 col 0 IdentifierName "moduleType\u0031" = { baz1: number; }
+Line 29 col 0 IdentifierName "moduleType\u0031" = typeof moduleType1
 Line 29 col 17 IdentifierName "baz1" = number
 Line 30 col 0 AssignmentExpression "moduleType2.baz2 = 3" = number
 Line 30 col 0 MemberAccessExpression "moduleType2.baz2" = number
-Line 30 col 0 IdentifierName "moduleType2" = { baz2: number; }
+Line 30 col 0 IdentifierName "moduleType2" = typeof moduleType\u0032
 Line 30 col 12 IdentifierName "baz2" = number
 Line 31 col 0 AssignmentExpression "moduleType\u0032.baz2 = 3" = number
 Line 31 col 0 MemberAccessExpression "moduleType\u0032.baz2" = number
-Line 31 col 0 IdentifierName "moduleType\u0032" = { baz2: number; }
+Line 31 col 0 IdentifierName "moduleType\u0032" = typeof moduleType\u0032
 Line 31 col 17 IdentifierName "baz2" = number
 Line 35 col 6 IdentifierName "classType1" = classType1
 Line 36 col 11 IdentifierName "foo1" = number
@@ -35,28 +35,28 @@ Line 38 col 6 IdentifierName "classType\u0032" = classType\u0032
 Line 39 col 11 IdentifierName "foo2" = number
 Line 42 col 4 IdentifierName "classType1Object1" = classType1
 Line 42 col 24 ObjectCreationExpression "new classType1()" = classType1
-Line 42 col 28 IdentifierName "classType1" = { prototype: classType1; new(): classType1; }
+Line 42 col 28 IdentifierName "classType1" = typeof classType1
 Line 43 col 0 AssignmentExpression "classType1Object1.foo1 = 2" = number
 Line 43 col 0 MemberAccessExpression "classType1Object1.foo1" = number
 Line 43 col 0 IdentifierName "classType1Object1" = classType1
 Line 43 col 18 IdentifierName "foo1" = number
 Line 44 col 4 IdentifierName "classType1Object2" = classType1
 Line 44 col 24 ObjectCreationExpression "new classType\u0031()" = classType1
-Line 44 col 28 IdentifierName "classType\u0031" = { prototype: classType1; new(): classType1; }
+Line 44 col 28 IdentifierName "classType\u0031" = typeof classType1
 Line 45 col 0 AssignmentExpression "classType1Object2.foo1 = 2" = number
 Line 45 col 0 MemberAccessExpression "classType1Object2.foo1" = number
 Line 45 col 0 IdentifierName "classType1Object2" = classType1
 Line 45 col 18 IdentifierName "foo1" = number
 Line 46 col 4 IdentifierName "classType2Object1" = classType\u0032
 Line 46 col 24 ObjectCreationExpression "new classType2()" = classType\u0032
-Line 46 col 28 IdentifierName "classType2" = { prototype: classType\u0032; new(): classType\u0032; }
+Line 46 col 28 IdentifierName "classType2" = typeof classType\u0032
 Line 47 col 0 AssignmentExpression "classType2Object1.foo2 = 2" = number
 Line 47 col 0 MemberAccessExpression "classType2Object1.foo2" = number
 Line 47 col 0 IdentifierName "classType2Object1" = classType\u0032
 Line 47 col 18 IdentifierName "foo2" = number
 Line 48 col 4 IdentifierName "classType2Object2" = classType\u0032
 Line 48 col 24 ObjectCreationExpression "new classType\u0032()" = classType\u0032
-Line 48 col 28 IdentifierName "classType\u0032" = { prototype: classType\u0032; new(): classType\u0032; }
+Line 48 col 28 IdentifierName "classType\u0032" = typeof classType\u0032
 Line 49 col 0 AssignmentExpression "classType2Object2.foo2 = 2" = number
 Line 49 col 0 MemberAccessExpression "classType2Object2.foo2" = number
 Line 49 col 0 IdentifierName "classType2Object2" = classType\u0032
@@ -122,7 +122,7 @@ Line 81 col 69 IdentifierName "arg\u0033" = boolean
 Line 81 col 95 IdentifierName "arg4" = number
 Line 84 col 4 IdentifierName "constructorTestObject" = constructorTestClass
 Line 84 col 28 ObjectCreationExpression "new constructorTestClass(1, 'string', true, 2)" = constructorTestClass
-Line 84 col 32 IdentifierName "constructorTestClass" = { prototype: constructorTestClass; new(arg1: number, arg\u0032: string, arg\u0033: boolean, arg4: number): constructorTestClass; }
+Line 84 col 32 IdentifierName "constructorTestClass" = typeof constructorTestClass
 Line 85 col 0 AssignmentExpression "constructorTestObject.arg\u0031 = 1" = number
 Line 85 col 0 MemberAccessExpression "constructorTestObject.arg\u0031" = number
 Line 85 col 0 IdentifierName "constructorTestObject" = constructorTestClass

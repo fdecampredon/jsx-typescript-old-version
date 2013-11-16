@@ -1,3 +1,4 @@
+// private constructors are not allowed
 var C = (function () {
     function C() {
     }

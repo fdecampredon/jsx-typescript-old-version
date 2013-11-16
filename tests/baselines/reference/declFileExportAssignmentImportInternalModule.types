@@ -21,6 +21,6 @@ Line 14 col 18 IdentifierName "connectModule" = m3.m2.connectModule
 Line 15 col 0 IdentifierName "test2" = () => m3.m2.connectModule
 Line 15 col 17 IdentifierName "m2" = m3.m2
 Line 15 col 20 IdentifierName "connectModule" = m3.m2.connectModule
-Line 19 col 7 IdentifierName "m" = { server: { test1: m3.m2.connectModule; test2(): m3.m2.connectModule; (): m3.m2.connectExport; }; }
+Line 19 col 7 IdentifierName "m" = typeof m3
 Line 19 col 11 IdentifierName "m3" = m3
-Line 20 col 9 IdentifierName "m" = { server: { test1: m3.m2.connectModule; test2(): m3.m2.connectModule; (): m3.m2.connectExport; }; }
+Line 20 col 9 IdentifierName "m" = typeof m3

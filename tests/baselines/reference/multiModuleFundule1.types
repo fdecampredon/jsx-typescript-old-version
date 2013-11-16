@@ -1,5 +1,5 @@
 === tests/cases/compiler/multiModuleFundule1.ts ===
-Line 0 col 9 IdentifierName "C" = { x: number; foo(): void; (x: number): void; }
+Line 0 col 9 IdentifierName "C" = typeof C
 Line 0 col 11 IdentifierName "x" = number
 Line 2 col 7 IdentifierName "C" = C
 Line 3 col 15 IdentifierName "x" = number
@@ -7,12 +7,12 @@ Line 5 col 7 IdentifierName "C" = C
 Line 6 col 20 IdentifierName "foo" = () => void
 Line 9 col 4 IdentifierName "r" = void
 Line 9 col 8 InvocationExpression "C(2)" = void
-Line 9 col 8 IdentifierName "C" = { x: number; foo(): void; (x: number): void; }
+Line 9 col 8 IdentifierName "C" = typeof C
 Line 10 col 4 IdentifierName "r2" = any
 Line 10 col 9 ObjectCreationExpression "new C(2)" = any
-Line 10 col 13 IdentifierName "C" = { x: number; foo(): void; (x: number): void; }
+Line 10 col 13 IdentifierName "C" = typeof C
 Line 11 col 4 IdentifierName "r3" = void
 Line 11 col 9 InvocationExpression "C.foo()" = void
 Line 11 col 9 MemberAccessExpression "C.foo" = () => void
-Line 11 col 9 IdentifierName "C" = { x: number; foo(): void; (x: number): void; }
+Line 11 col 9 IdentifierName "C" = typeof C
 Line 11 col 11 IdentifierName "foo" = () => void

@@ -6,4 +6,4 @@ superAccess2.ts line 11 col 64: error TS1005: '.' expected.
 superAccess2.ts line 15 col 19: error TS1005: '.' expected.
 superAccess2.ts line 20 col 26: error TS1005: '.' expected.
 superAccess2.ts line 17 col 15: error TS2094: The property 'y' does not exist on value of type 'P'.
-superAccess2.ts line 21 col 15: error TS2094: The property 'x' does not exist on value of type '{ prototype: P; y(): void; new(): P; }'.
+superAccess2.ts line 21 col 15: error TS2094: The property 'x' does not exist on value of type 'typeof P'.

@@ -1,5 +1,5 @@
 === tests/cases/compiler/es6ClassTest8.ts ===
-Line 0 col 9 IdentifierName "f1" = (x: any) => any
+Line 0 col 9 IdentifierName "f1" = typeof f1
 Line 0 col 12 IdentifierName "x" = any
 Line 0 col 27 IdentifierName "x" = any
 Line 2 col 6 IdentifierName "C" = C
@@ -13,9 +13,9 @@ Line 4 col 23 FunctionExpression "function() {
 Line 5 col 19 IdentifierName "bar" = any
 Line 7 col 12 IdentifierName "b" = any
 Line 7 col 16 InvocationExpression "f1(f1(bar))" = any
-Line 7 col 16 IdentifierName "f1" = (x: any) => any
+Line 7 col 16 IdentifierName "f1" = typeof f1
 Line 7 col 19 InvocationExpression "f1(bar)" = any
-Line 7 col 19 IdentifierName "f1" = (x: any) => any
+Line 7 col 19 IdentifierName "f1" = typeof f1
 Line 7 col 22 IdentifierName "bar" = any
 Line 12 col 6 IdentifierName "Vector" = Vector
 Line 13 col 11 IdentifierName "norm" = (v: Vector) => Vector
@@ -62,7 +62,7 @@ Line 31 col 36 IdentifierName "lookAt" = Vector
 Line 31 col 44 IdentifierName "Vector" = Vector
 Line 32 col 12 IdentifierName "down" = Vector
 Line 32 col 19 ObjectCreationExpression "new Vector(0.0, -1.0, 0.0)" = Vector
-Line 32 col 23 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 32 col 23 IdentifierName "Vector" = typeof Vector
 Line 32 col 35 NegateExpression "-1.0" = number
 Line 33 col 0 AssignmentExpression "this.forward = Vector.norm(Vector.minus(lookAt,this.pos))" = Vector
 Line 33 col 0 MemberAccessExpression "this.forward" = Vector
@@ -70,11 +70,11 @@ Line 33 col 0 ThisKeyword "this" = Camera
 Line 33 col 13 IdentifierName "forward" = Vector
 Line 33 col 23 InvocationExpression "Vector.norm(Vector.minus(lookAt,this.pos))" = Vector
 Line 33 col 23 MemberAccessExpression "Vector.norm" = (v: Vector) => Vector
-Line 33 col 23 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 33 col 23 IdentifierName "Vector" = typeof Vector
 Line 33 col 30 IdentifierName "norm" = (v: Vector) => Vector
 Line 33 col 35 InvocationExpression "Vector.minus(lookAt,this.pos)" = Vector
 Line 33 col 35 MemberAccessExpression "Vector.minus" = (v1: Vector, v2: Vector) => Vector
-Line 33 col 35 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 33 col 35 IdentifierName "Vector" = typeof Vector
 Line 33 col 42 IdentifierName "minus" = (v1: Vector, v2: Vector) => Vector
 Line 33 col 48 IdentifierName "lookAt" = Vector
 Line 33 col 55 MemberAccessExpression "this.pos" = Vector
@@ -86,16 +86,16 @@ Line 34 col 0 ThisKeyword "this" = Camera
 Line 34 col 13 IdentifierName "right" = Vector
 Line 34 col 21 InvocationExpression "Vector.times(down, Vector.norm(Vector.cross(this.forward, down)))" = Vector
 Line 34 col 21 MemberAccessExpression "Vector.times" = (v1: Vector, v2: Vector) => Vector
-Line 34 col 21 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 34 col 21 IdentifierName "Vector" = typeof Vector
 Line 34 col 28 IdentifierName "times" = (v1: Vector, v2: Vector) => Vector
 Line 34 col 34 IdentifierName "down" = Vector
 Line 34 col 40 InvocationExpression "Vector.norm(Vector.cross(this.forward, down))" = Vector
 Line 34 col 40 MemberAccessExpression "Vector.norm" = (v: Vector) => Vector
-Line 34 col 40 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 34 col 40 IdentifierName "Vector" = typeof Vector
 Line 34 col 47 IdentifierName "norm" = (v: Vector) => Vector
 Line 34 col 52 InvocationExpression "Vector.cross(this.forward, down)" = Vector
 Line 34 col 52 MemberAccessExpression "Vector.cross" = (v1: Vector, v2: Vector) => Vector
-Line 34 col 52 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 34 col 52 IdentifierName "Vector" = typeof Vector
 Line 34 col 59 IdentifierName "cross" = (v1: Vector, v2: Vector) => Vector
 Line 34 col 65 MemberAccessExpression "this.forward" = Vector
 Line 34 col 65 ThisKeyword "this" = Camera
@@ -107,16 +107,16 @@ Line 35 col 0 ThisKeyword "this" = Camera
 Line 35 col 13 IdentifierName "up" = Vector
 Line 35 col 18 InvocationExpression "Vector.times(down, Vector.norm(Vector.cross(this.forward, this.right)))" = Vector
 Line 35 col 18 MemberAccessExpression "Vector.times" = (v1: Vector, v2: Vector) => Vector
-Line 35 col 18 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 35 col 18 IdentifierName "Vector" = typeof Vector
 Line 35 col 25 IdentifierName "times" = (v1: Vector, v2: Vector) => Vector
 Line 35 col 31 IdentifierName "down" = Vector
 Line 35 col 37 InvocationExpression "Vector.norm(Vector.cross(this.forward, this.right))" = Vector
 Line 35 col 37 MemberAccessExpression "Vector.norm" = (v: Vector) => Vector
-Line 35 col 37 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 35 col 37 IdentifierName "Vector" = typeof Vector
 Line 35 col 44 IdentifierName "norm" = (v: Vector) => Vector
 Line 35 col 49 InvocationExpression "Vector.cross(this.forward, this.right)" = Vector
 Line 35 col 49 MemberAccessExpression "Vector.cross" = (v1: Vector, v2: Vector) => Vector
-Line 35 col 49 IdentifierName "Vector" = { prototype: Vector; norm(v: Vector): Vector; minus(v1: Vector, v2: Vector): Vector; times(v1: Vector, v2: Vector): Vector; cross(v1: Vector, v2: Vector): Vector; dot(v1: Vector, v2: Vector): Vector; new(x: number, y: number, z: number): Vector; }
+Line 35 col 49 IdentifierName "Vector" = typeof Vector
 Line 35 col 56 IdentifierName "cross" = (v1: Vector, v2: Vector) => Vector
 Line 35 col 62 MemberAccessExpression "this.forward" = Vector
 Line 35 col 62 ThisKeyword "this" = Camera

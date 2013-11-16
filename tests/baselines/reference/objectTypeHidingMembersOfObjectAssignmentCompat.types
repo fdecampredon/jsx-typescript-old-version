@@ -1,35 +1,35 @@
 === tests/cases/compiler/objectTypeHidingMembersOfObjectAssignmentCompat.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 1 col 0 IdentifierName "toString" = () => void
-Line 4 col 4 IdentifierName "i" = I
-Line 4 col 7 IdentifierName "I" = I
-Line 5 col 4 IdentifierName "o" = Object
-Line 5 col 7 IdentifierName "Object" = Object
-Line 6 col 0 AssignmentExpression "o = i" = I
-Line 6 col 0 IdentifierName "o" = Object
+Line 2 col 10 IdentifierName "I" = I
+Line 3 col 0 IdentifierName "toString" = () => void
 Line 6 col 4 IdentifierName "i" = I
-Line 7 col 0 AssignmentExpression "i = o" = Object
-Line 7 col 0 IdentifierName "i" = I
+Line 6 col 7 IdentifierName "I" = I
 Line 7 col 4 IdentifierName "o" = Object
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 0 IdentifierName "toString" = () => void
-Line 12 col 4 IdentifierName "c" = C
-Line 12 col 7 IdentifierName "C" = C
-Line 13 col 0 AssignmentExpression "o = c" = C
-Line 13 col 0 IdentifierName "o" = Object
-Line 13 col 4 IdentifierName "c" = C
-Line 14 col 0 AssignmentExpression "c = o" = Object
-Line 14 col 0 IdentifierName "c" = C
-Line 14 col 4 IdentifierName "o" = Object
-Line 16 col 4 IdentifierName "a" = { toString: () => void; }
-Line 16 col 8 ObjectLiteralExpression "{
+Line 7 col 7 IdentifierName "Object" = Object
+Line 8 col 0 AssignmentExpression "o = i" = I
+Line 8 col 0 IdentifierName "o" = Object
+Line 8 col 4 IdentifierName "i" = I
+Line 9 col 0 AssignmentExpression "i = o" = Object
+Line 9 col 0 IdentifierName "i" = I
+Line 9 col 4 IdentifierName "o" = Object
+Line 11 col 6 IdentifierName "C" = C
+Line 12 col 0 IdentifierName "toString" = () => void
+Line 14 col 4 IdentifierName "c" = C
+Line 14 col 7 IdentifierName "C" = C
+Line 15 col 0 AssignmentExpression "o = c" = C
+Line 15 col 0 IdentifierName "o" = Object
+Line 15 col 4 IdentifierName "c" = C
+Line 16 col 0 AssignmentExpression "c = o" = Object
+Line 16 col 0 IdentifierName "c" = C
+Line 16 col 4 IdentifierName "o" = Object
+Line 18 col 4 IdentifierName "a" = { toString: () => void; }
+Line 18 col 8 ObjectLiteralExpression "{
     toString: () => { }
 }" = { toString: () => void; }
-Line 17 col 0 IdentifierName "toString" = () => void
-Line 17 col 14 ParenthesizedArrowFunctionExpression "() => { }" = () => void
-Line 19 col 0 AssignmentExpression "o = a" = { toString: () => void; }
-Line 19 col 0 IdentifierName "o" = Object
-Line 19 col 4 IdentifierName "a" = { toString: () => void; }
-Line 20 col 0 AssignmentExpression "a = o" = Object
-Line 20 col 0 IdentifierName "a" = { toString: () => void; }
-Line 20 col 4 IdentifierName "o" = Object
+Line 19 col 0 IdentifierName "toString" = () => void
+Line 19 col 14 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 21 col 0 AssignmentExpression "o = a" = { toString: () => void; }
+Line 21 col 0 IdentifierName "o" = Object
+Line 21 col 4 IdentifierName "a" = { toString: () => void; }
+Line 22 col 0 AssignmentExpression "a = o" = Object
+Line 22 col 0 IdentifierName "a" = { toString: () => void; }
+Line 22 col 4 IdentifierName "o" = Object

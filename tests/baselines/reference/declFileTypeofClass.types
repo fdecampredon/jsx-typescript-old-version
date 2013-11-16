@@ -1,0 +1,16 @@
+=== tests/cases/compiler/declFileTypeofClass.ts ===
+Line 1 col 6 IdentifierName "c" = c
+Line 2 col 11 IdentifierName "x" = string
+Line 3 col 19 IdentifierName "y" = number
+Line 4 col 12 IdentifierName "x3" = string
+Line 5 col 11 IdentifierName "y3" = number
+Line 8 col 4 IdentifierName "x" = c
+Line 8 col 7 IdentifierName "c" = c
+Line 9 col 4 IdentifierName "y" = typeof c
+Line 9 col 8 IdentifierName "c" = typeof c
+Line 10 col 4 IdentifierName "z" = typeof c
+Line 10 col 14 IdentifierName "c" = typeof c
+Line 11 col 6 IdentifierName "genericC" = genericC<T>
+Line 11 col 15 IdentifierName "T" = T
+Line 14 col 4 IdentifierName "genericX" = typeof genericC
+Line 14 col 15 IdentifierName "genericC" = typeof genericC

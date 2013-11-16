@@ -1,0 +1,111 @@
+=== tests/cases/compiler/callSignaturesWithOptionalParameters.ts ===
+Line 2 col 9 IdentifierName "foo" = typeof foo
+Line 2 col 13 IdentifierName "x" = number
+Line 3 col 4 IdentifierName "f" = (x?: number) => void
+Line 3 col 8 FunctionExpression "function foo(x?: number) { }" = (x?: number) => void
+Line 3 col 17 IdentifierName "foo" = (x?: number) => void
+Line 3 col 21 IdentifierName "x" = number
+Line 4 col 4 IdentifierName "f2" = (x: number, y?: number) => void
+Line 4 col 9 ParenthesizedArrowFunctionExpression "(x: number, y?: number) => { }" = (x: number, y?: number) => void
+Line 4 col 10 IdentifierName "x" = number
+Line 4 col 21 IdentifierName "y" = number
+Line 5 col 0 InvocationExpression "foo(1)" = void
+Line 5 col 0 IdentifierName "foo" = typeof foo
+Line 7 col 0 InvocationExpression "foo()" = void
+Line 7 col 0 IdentifierName "foo" = typeof foo
+Line 8 col 0 InvocationExpression "f(1)" = void
+Line 8 col 0 IdentifierName "f" = (x?: number) => void
+Line 9 col 0 InvocationExpression "f()" = void
+Line 9 col 0 IdentifierName "f" = (x?: number) => void
+Line 10 col 0 InvocationExpression "f2(1)" = void
+Line 10 col 0 IdentifierName "f2" = (x: number, y?: number) => void
+Line 11 col 0 InvocationExpression "f2(1, 2)" = void
+Line 11 col 0 IdentifierName "f2" = (x: number, y?: number) => void
+Line 13 col 6 IdentifierName "C" = C
+Line 14 col 0 IdentifierName "foo" = (x?: number) => void
+Line 14 col 8 IdentifierName "x" = number
+Line 17 col 4 IdentifierName "c" = C
+Line 17 col 7 IdentifierName "C" = C
+Line 18 col 0 InvocationExpression "c.foo()" = void
+Line 18 col 0 MemberAccessExpression "c.foo" = (x?: number) => void
+Line 18 col 0 IdentifierName "c" = C
+Line 18 col 2 IdentifierName "foo" = (x?: number) => void
+Line 19 col 0 InvocationExpression "c.foo(1)" = void
+Line 19 col 0 MemberAccessExpression "c.foo" = (x?: number) => void
+Line 19 col 0 IdentifierName "c" = C
+Line 19 col 2 IdentifierName "foo" = (x?: number) => void
+Line 21 col 10 IdentifierName "I" = I
+Line 22 col 5 IdentifierName "x" = number
+Line 23 col 0 IdentifierName "foo" = (x: number, y?: number) => any
+Line 23 col 8 IdentifierName "x" = number
+Line 23 col 19 IdentifierName "y" = number
+Line 26 col 4 IdentifierName "i" = I
+Line 26 col 7 IdentifierName "I" = I
+Line 27 col 0 InvocationExpression "i()" = any
+Line 27 col 0 IdentifierName "i" = I
+Line 28 col 0 InvocationExpression "i(1)" = any
+Line 28 col 0 IdentifierName "i" = I
+Line 29 col 0 InvocationExpression "i.foo(1)" = any
+Line 29 col 0 MemberAccessExpression "i.foo" = (x: number, y?: number) => any
+Line 29 col 0 IdentifierName "i" = I
+Line 29 col 2 IdentifierName "foo" = (x: number, y?: number) => any
+Line 30 col 0 InvocationExpression "i.foo(1, 2)" = any
+Line 30 col 0 MemberAccessExpression "i.foo" = (x: number, y?: number) => any
+Line 30 col 0 IdentifierName "i" = I
+Line 30 col 2 IdentifierName "foo" = (x: number, y?: number) => any
+Line 32 col 4 IdentifierName "a" = { foo(x?: number): any; (x?: number): any; }
+Line 33 col 5 IdentifierName "x" = number
+Line 34 col 0 IdentifierName "foo" = (x?: number) => any
+Line 34 col 8 IdentifierName "x" = number
+Line 36 col 0 InvocationExpression "a()" = any
+Line 36 col 0 IdentifierName "a" = { foo(x?: number): any; (x?: number): any; }
+Line 38 col 0 InvocationExpression "a(1)" = any
+Line 38 col 0 IdentifierName "a" = { foo(x?: number): any; (x?: number): any; }
+Line 39 col 0 InvocationExpression "a.foo()" = any
+Line 39 col 0 MemberAccessExpression "a.foo" = (x?: number) => any
+Line 39 col 0 IdentifierName "a" = { foo(x?: number): any; (x?: number): any; }
+Line 39 col 2 IdentifierName "foo" = (x?: number) => any
+Line 40 col 0 InvocationExpression "a.foo(1)" = any
+Line 40 col 0 MemberAccessExpression "a.foo" = (x?: number) => any
+Line 40 col 0 IdentifierName "a" = { foo(x?: number): any; (x?: number): any; }
+Line 40 col 2 IdentifierName "foo" = (x?: number) => any
+Line 42 col 4 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 42 col 8 ObjectLiteralExpression "{
+    foo(x?: number) { },
+    a: function foo(x: number, y?: number) { },
+    b: (x?: number) => { }
+}" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 43 col 0 IdentifierName "foo" = (x?: number) => void
+Line 43 col 8 IdentifierName "x" = number
+Line 44 col 0 IdentifierName "a" = (x: number, y?: number) => void
+Line 44 col 7 FunctionExpression "function foo(x: number, y?: number) { }" = (x: number, y?: number) => void
+Line 44 col 16 IdentifierName "foo" = (x: number, y?: number) => void
+Line 44 col 20 IdentifierName "x" = number
+Line 44 col 31 IdentifierName "y" = number
+Line 45 col 0 IdentifierName "b" = (x?: number) => void
+Line 45 col 7 ParenthesizedArrowFunctionExpression "(x?: number) => { }" = (x?: number) => void
+Line 45 col 8 IdentifierName "x" = number
+Line 47 col 0 InvocationExpression "b.foo()" = void
+Line 47 col 0 MemberAccessExpression "b.foo" = (x?: number) => void
+Line 47 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 48 col 2 IdentifierName "foo" = (x?: number) => void
+Line 49 col 0 InvocationExpression "b.foo(1)" = void
+Line 49 col 0 MemberAccessExpression "b.foo" = (x?: number) => void
+Line 49 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 49 col 2 IdentifierName "foo" = (x?: number) => void
+Line 50 col 0 InvocationExpression "b.a(1)" = void
+Line 50 col 0 MemberAccessExpression "b.a" = (x: number, y?: number) => void
+Line 50 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 50 col 2 IdentifierName "a" = (x: number, y?: number) => void
+Line 51 col 0 InvocationExpression "b.a(1, 2)" = void
+Line 51 col 0 MemberAccessExpression "b.a" = (x: number, y?: number) => void
+Line 51 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 51 col 2 IdentifierName "a" = (x: number, y?: number) => void
+Line 52 col 0 InvocationExpression "b.b()" = void
+Line 52 col 0 MemberAccessExpression "b.b" = (x?: number) => void
+Line 52 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 52 col 2 IdentifierName "b" = (x?: number) => void
+Line 53 col 0 InvocationExpression "b.b(1)" = void
+Line 53 col 0 MemberAccessExpression "b.b" = (x?: number) => void
+Line 53 col 0 IdentifierName "b" = { foo(x?: number): void; a: (x: number, y?: number) => void; b: (x?: number) => void; }
+Line 53 col 2 IdentifierName "b" = (x?: number) => void

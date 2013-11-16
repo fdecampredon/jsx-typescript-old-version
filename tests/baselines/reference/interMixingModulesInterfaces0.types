@@ -1,7 +1,7 @@
 === tests/cases/compiler/interMixingModulesInterfaces0.ts ===
 Line 2 col 7 IdentifierName "A" = A
 Line 4 col 18 IdentifierName "B" = A.B
-Line 5 col 24 IdentifierName "createB" = () => A.B
+Line 5 col 24 IdentifierName "createB" = typeof A.B.createB
 Line 5 col 35 IdentifierName "B" = A.B
 Line 10 col 21 IdentifierName "B" = A.B
 Line 11 col 0 IdentifierName "name" = string
@@ -10,8 +10,8 @@ Line 16 col 4 IdentifierName "x" = A.B
 Line 16 col 7 IdentifierName "A" = A
 Line 16 col 9 IdentifierName "B" = A.B
 Line 16 col 13 InvocationExpression "A.B.createB()" = A.B
-Line 16 col 13 MemberAccessExpression "A.B.createB" = () => A.B
-Line 16 col 13 MemberAccessExpression "A.B" = { createB(): A.B; }
-Line 16 col 13 IdentifierName "A" = { B: { createB(): A.B; }; }
-Line 16 col 15 IdentifierName "B" = { createB(): A.B; }
-Line 16 col 17 IdentifierName "createB" = () => A.B
+Line 16 col 13 MemberAccessExpression "A.B.createB" = typeof A.B.createB
+Line 16 col 13 MemberAccessExpression "A.B" = typeof A.B
+Line 16 col 13 IdentifierName "A" = typeof A
+Line 16 col 15 IdentifierName "B" = typeof A.B
+Line 16 col 17 IdentifierName "createB" = typeof A.B.createB

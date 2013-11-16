@@ -12,7 +12,7 @@ Line 2 col 30 IdentifierName "Model" = Microsoft.PeopleAtWork.Model
 Line 3 col 17 IdentifierName "_Person" = Microsoft.PeopleAtWork.Model._Person
 Line 4 col 15 IdentifierName "populate" = (raw: any) => void
 Line 4 col 24 IdentifierName "raw" = any
-Line 5 col 16 IdentifierName "res" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }
-Line 5 col 22 MemberAccessExpression "Model.KnockoutExtentions" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }
-Line 5 col 22 IdentifierName "Model" = { KnockoutExtentions: { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }; _Person: { prototype: Microsoft.PeopleAtWork.Model._Person; new(): Microsoft.PeopleAtWork.Model._Person; }; }
-Line 5 col 28 IdentifierName "KnockoutExtentions" = { prototype: Microsoft.PeopleAtWork.Model.KnockoutExtentions; new(): Microsoft.PeopleAtWork.Model.KnockoutExtentions; }
+Line 5 col 16 IdentifierName "res" = typeof Microsoft.PeopleAtWork.Model.KnockoutExtentions
+Line 5 col 22 MemberAccessExpression "Model.KnockoutExtentions" = typeof Microsoft.PeopleAtWork.Model.KnockoutExtentions
+Line 5 col 22 IdentifierName "Model" = typeof Microsoft.PeopleAtWork.Model
+Line 5 col 28 IdentifierName "KnockoutExtentions" = typeof Microsoft.PeopleAtWork.Model.KnockoutExtentions

@@ -30,4 +30,4 @@ typeName1.ts line 21 col 5: error TS2012: Cannot convert 'number' to '{ x: strin
 	Type 'Number' is missing property 'x' from type '{ x: string; w: { y: number; }; (): {}; new(): number; new(n: number): number; }'.
 typeName1.ts line 22 col 5: error TS2012: Cannot convert 'number' to '{ f(x: number): boolean; p: any; q: any; (): string; }':
 	Type 'Number' is missing property 'f' from type '{ f(x: number): boolean; p: any; q: any; (): string; }'.
-typeName1.ts line 23 col 5: error TS2011: Cannot convert '{ prototype: C; zeek: number; new(): C; }' to 'number'.
+typeName1.ts line 23 col 5: error TS2011: Cannot convert 'typeof C' to 'number'.

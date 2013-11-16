@@ -2,21 +2,21 @@
 Line 0 col 14 IdentifierName "Foo" = Foo
 Line 1 col 14 IdentifierName "C" = Foo.C
 Line 4 col 14 IdentifierName "Foo" = Foo
-Line 6 col 10 IdentifierName "Bar" = () => Foo.C
+Line 6 col 10 IdentifierName "Bar" = typeof Foo.Bar
 Line 6 col 18 IdentifierName "C" = Foo.C
 Line 7 col 21 InvocationExpression "Bar()" = Foo.C
-Line 7 col 21 IdentifierName "Bar" = () => Foo.C
+Line 7 col 21 IdentifierName "Bar" = typeof Foo.Bar
 Line 8 col 9 ObjectCreationExpression "new C()" = Foo.C
-Line 8 col 13 IdentifierName "C" = { prototype: Foo.C; new(): Foo.C; }
-Line 11 col 10 IdentifierName "Baz" = () => Foo.C
+Line 8 col 13 IdentifierName "C" = typeof Foo.C
+Line 11 col 10 IdentifierName "Baz" = typeof Foo.Baz
 Line 11 col 18 IdentifierName "C" = Foo.C
 Line 12 col 6 IdentifierName "c" = Foo.C
 Line 12 col 10 InvocationExpression "Baz()" = Foo.C
-Line 12 col 10 IdentifierName "Baz" = () => Foo.C
+Line 12 col 10 IdentifierName "Baz" = typeof Foo.Baz
 Line 13 col 9 InvocationExpression "Bar()" = Foo.C
-Line 13 col 9 IdentifierName "Bar" = () => Foo.C
-Line 16 col 10 IdentifierName "Gar" = () => void
+Line 13 col 9 IdentifierName "Bar" = typeof Foo.Bar
+Line 16 col 10 IdentifierName "Gar" = typeof Foo.Gar
 Line 17 col 6 IdentifierName "c" = Foo.C
 Line 17 col 10 IdentifierName "C" = Foo.C
 Line 17 col 14 InvocationExpression "Baz()" = Foo.C
-Line 17 col 14 IdentifierName "Baz" = () => Foo.C
+Line 17 col 14 IdentifierName "Baz" = typeof Foo.Baz

@@ -162,7 +162,7 @@ module TypeScript.Services {
             }
 
             var isWriteAccess = this.isWriteAccess(node);
-            return [new ReferenceEntry(this.compiler.getHostFileName(fileName), node.start(), node.end(), isWriteAccess)];
+            return [new ReferenceEntry(this.compiler.getCachedHostFileName(fileName), node.start(), node.end(), isWriteAccess)];
         }
 
         public getImplementorsAtPosition(fileName: string, pos: number): ReferenceEntry[] {
@@ -300,7 +300,7 @@ module TypeScript.Services {
                         if (normalizedSymbol === symbol) {
                             var isWriteAccess = this.isWriteAccess(nameAST);
 
-                            result.push(new ReferenceEntry(this.compiler.getHostFileName(fileName),
+                            result.push(new ReferenceEntry(this.compiler.getCachedHostFileName(fileName),
                                 nameAST.start(), nameAST.end(), isWriteAccess));
                         }
                     }
@@ -338,7 +338,7 @@ module TypeScript.Services {
 
                         if (FindReferenceHelpers.compareSymbolsForLexicalIdentity(searchSymbol, symbol)) {
                             var isWriteAccess = this.isWriteAccess(nameAST);
-                            result.push(new ReferenceEntry(this.compiler.getHostFileName(fileName), nameAST.start(), nameAST.end(), isWriteAccess));
+                            result.push(new ReferenceEntry(this.compiler.getCachedHostFileName(fileName), nameAST.start(), nameAST.end(), isWriteAccess));
                         }
                     }
                 });
@@ -645,7 +645,7 @@ module TypeScript.Services {
         private addDeclaration(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declaration: TypeScript.PullDecl, result: DefinitionInfo[]): void {
             var span = declaration.getSpan();
             result.push(new DefinitionInfo(
-                this.compiler.getHostFileName(declaration.fileName()),
+                this.compiler.getCachedHostFileName(declaration.fileName()),
                 span.start(), span.end(), symbolKind, symbolName, containerKind, containerName));
         }
 
@@ -707,8 +707,8 @@ module TypeScript.Services {
 
             var fileNames = this.compiler.fileNames();
             for (var i = 0, n = fileNames.length; i < n; i++) {
-                var fileName = this.compiler.getHostFileName(fileNames[i]);
-                var declaration = this.compiler.topLevelDeclaration(TypeScript.switchToForwardSlashes(fileName));
+                var fileName = fileNames[i];
+                var declaration = this.compiler.getCachedTopLevelDeclaration(fileName);
                 this.findSearchValueInPullDecl(fileName, [declaration], items, terms, regExpTerms);
             }
             return items;
@@ -777,7 +777,7 @@ module TypeScript.Services {
                         item.matchKind = matchKind;
                         item.kind = this.mapPullElementKind(declaration.kind);
                         item.kindModifiers = this.getScriptElementKindModifiersFromDecl(declaration);
-                        item.fileName = this.compiler.getHostFileName(fileName);
+                        item.fileName = this.compiler.getCachedHostFileName(fileName);
                         item.minChar = declaration.getSpan().start();
                         item.limChar = declaration.getSpan().end();
                         item.containerName = parentName || "";
@@ -945,10 +945,10 @@ module TypeScript.Services {
 
         private getFullNameOfSymbol(symbol: TypeScript.PullSymbol, enclosingScopeSymbol: TypeScript.PullSymbol) {
             var container = symbol.getContainer();
-            if (this.isLocal(symbol) ||
+            if (PullHelpers.isSymbolLocal(symbol) ||
                 symbol.kind == TypeScript.PullElementKind.Parameter) {
                 // Local var
-                return symbol.getScopedName(enclosingScopeSymbol, /*useConstraintInName*/ true);
+                return symbol.getScopedName(enclosingScopeSymbol, /*skipTypeParametersInName*/ false, /*useConstraintInName*/ true);
             }
 
             var symbolKind = symbol.kind;
@@ -967,7 +967,7 @@ module TypeScript.Services {
                 symbolKind != TypeScript.PullElementKind.TypeParameter &&
                 !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Exported)) {
                 // Non exported variable/function
-                return symbol.getScopedName(enclosingScopeSymbol,  /*useConstraintInName*/true);
+                return symbol.getScopedName(enclosingScopeSymbol, /*skipTypeParametersInName*/ false, /*useConstraintInName*/true);
             }
 
             return symbol.fullName(enclosingScopeSymbol);
@@ -1484,22 +1484,6 @@ module TypeScript.Services {
             return declsToSearch.length === 0 ? null : declsToSearch[0];
         }
 
-        private isLocal(symbol: TypeScript.PullSymbol) {
-            var container = symbol.getContainer();
-            if (container) {
-                var containerKind = container.kind;
-                if (containerKind & (TypeScript.PullElementKind.SomeFunction | TypeScript.PullElementKind.FunctionType)) {
-                    return true;
-                }
-
-                if (containerKind == TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private getModuleOrEnumKind(symbol: TypeScript.PullSymbol) {
             if (symbol) {
                 var declarations = symbol.getDeclarations();
@@ -1537,11 +1521,11 @@ module TypeScript.Services {
                     case TypeScript.PullElementKind.Parameter:
                         return ScriptElementKind.functionElement;
                     case TypeScript.PullElementKind.Variable:
-                        return (symbol && this.isLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
+                        return (symbol && PullHelpers.isSymbolLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
                     case TypeScript.PullElementKind.Property:
                         return ScriptElementKind.memberFunctionElement;
                     case TypeScript.PullElementKind.Function:
-                        return (symbol && this.isLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
+                        return (symbol && PullHelpers.isSymbolLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
                     case TypeScript.PullElementKind.ConstructorMethod:
                         return ScriptElementKind.constructorImplementationElement;
                     case TypeScript.PullElementKind.Method:
@@ -1582,13 +1566,13 @@ module TypeScript.Services {
                         if (scriptElementKind != ScriptElementKind.unknown) {
                             return scriptElementKind;
                         }
-                        return (symbol && this.isLocal(symbol)) ? ScriptElementKind.localVariableElement : ScriptElementKind.variableElement;
+                        return (symbol && PullHelpers.isSymbolLocal(symbol)) ? ScriptElementKind.localVariableElement : ScriptElementKind.variableElement;
                     case TypeScript.PullElementKind.Parameter:
                         return ScriptElementKind.parameterElement;
                     case TypeScript.PullElementKind.Property:
                         return ScriptElementKind.memberVariableElement;
                     case TypeScript.PullElementKind.Function:
-                        return (symbol && this.isLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
+                        return (symbol && PullHelpers.isSymbolLocal(symbol)) ? ScriptElementKind.localFunctionElement : ScriptElementKind.functionElement;
                     case TypeScript.PullElementKind.ConstructorMethod:
                         return useConstructorAsClass ? ScriptElementKind.classElement : ScriptElementKind.constructorImplementationElement;
                     case TypeScript.PullElementKind.Method:

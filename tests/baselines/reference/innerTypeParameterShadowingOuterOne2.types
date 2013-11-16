@@ -1,43 +1,43 @@
 === tests/cases/compiler/innerTypeParameterShadowingOuterOne2.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 0 col 18 IdentifierName "Date" = Date
-Line 1 col 0 IdentifierName "g" = <T extends Number>() => void
-Line 1 col 6 IdentifierName "T" = T
-Line 1 col 16 IdentifierName "Number" = Number
-Line 2 col 12 IdentifierName "x" = T
-Line 2 col 15 IdentifierName "T" = T
-Line 3 col 0 InvocationExpression "x.toFixed()" = string
-Line 3 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
-Line 3 col 0 IdentifierName "x" = T
-Line 3 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 5 col 0 IdentifierName "h" = () => void
-Line 7 col 12 IdentifierName "x" = T
-Line 7 col 15 IdentifierName "T" = T
-Line 8 col 0 InvocationExpression "x.getDate()" = number
-Line 8 col 0 MemberAccessExpression "x.getDate" = () => number
-Line 8 col 0 IdentifierName "x" = T
-Line 8 col 10 IdentifierName "getDate" = () => number
-Line 12 col 6 IdentifierName "C2" = C2<T, U>
-Line 12 col 9 IdentifierName "T" = T
-Line 12 col 19 IdentifierName "Date" = Date
-Line 12 col 25 IdentifierName "U" = U
-Line 12 col 35 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "g" = <T extends Number, U extends T>() => void
-Line 13 col 6 IdentifierName "T" = T
-Line 13 col 16 IdentifierName "Number" = Number
-Line 13 col 24 IdentifierName "U" = U
-Line 13 col 34 IdentifierName "T" = T
-Line 14 col 12 IdentifierName "x" = U
-Line 14 col 15 IdentifierName "U" = U
-Line 15 col 0 InvocationExpression "x.toFixed()" = string
-Line 15 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
-Line 15 col 0 IdentifierName "x" = U
-Line 15 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 17 col 0 IdentifierName "h" = () => void
-Line 19 col 12 IdentifierName "x" = U
-Line 19 col 15 IdentifierName "U" = U
-Line 20 col 0 InvocationExpression "x.getDate()" = number
-Line 20 col 0 MemberAccessExpression "x.getDate" = () => number
-Line 20 col 0 IdentifierName "x" = U
-Line 20 col 10 IdentifierName "getDate" = () => number
+Line 3 col 6 IdentifierName "C" = C<T>
+Line 3 col 8 IdentifierName "T" = T
+Line 3 col 18 IdentifierName "Date" = Date
+Line 4 col 0 IdentifierName "g" = <T extends Number>() => void
+Line 4 col 6 IdentifierName "T" = T
+Line 4 col 16 IdentifierName "Number" = Number
+Line 5 col 12 IdentifierName "x" = T
+Line 5 col 15 IdentifierName "T" = T
+Line 6 col 0 InvocationExpression "x.toFixed()" = string
+Line 6 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
+Line 6 col 0 IdentifierName "x" = T
+Line 6 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
+Line 8 col 0 IdentifierName "h" = () => void
+Line 10 col 12 IdentifierName "x" = T
+Line 10 col 15 IdentifierName "T" = T
+Line 11 col 0 InvocationExpression "x.getDate()" = number
+Line 11 col 0 MemberAccessExpression "x.getDate" = () => number
+Line 11 col 0 IdentifierName "x" = T
+Line 11 col 10 IdentifierName "getDate" = () => number
+Line 15 col 6 IdentifierName "C2" = C2<T, U>
+Line 15 col 9 IdentifierName "T" = T
+Line 15 col 19 IdentifierName "Date" = Date
+Line 15 col 25 IdentifierName "U" = U
+Line 15 col 35 IdentifierName "T" = T
+Line 16 col 0 IdentifierName "g" = <T extends Number, U extends T>() => void
+Line 16 col 6 IdentifierName "T" = T
+Line 16 col 16 IdentifierName "Number" = Number
+Line 16 col 24 IdentifierName "U" = U
+Line 16 col 34 IdentifierName "T" = T
+Line 17 col 12 IdentifierName "x" = U
+Line 17 col 15 IdentifierName "U" = U
+Line 18 col 0 InvocationExpression "x.toFixed()" = string
+Line 18 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
+Line 18 col 0 IdentifierName "x" = U
+Line 18 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
+Line 20 col 0 IdentifierName "h" = () => void
+Line 22 col 12 IdentifierName "x" = U
+Line 22 col 15 IdentifierName "U" = U
+Line 23 col 0 InvocationExpression "x.getDate()" = number
+Line 23 col 0 MemberAccessExpression "x.getDate" = () => number
+Line 23 col 0 IdentifierName "x" = U
+Line 23 col 10 IdentifierName "getDate" = () => number

@@ -11,24 +11,24 @@ Line 7 col 13 IdentifierName "JQuery" = JQuery
 Line 7 col 22 IdentifierName "JQuery" = JQuery
 Line 10 col 6 IdentifierName "Base" = Base
 Line 10 col 13 IdentifierName "foo" = () => void
-Line 12 col 9 IdentifierName "each" = { (collection: string, callback: (indexInArray: any, valueOfElement: any) => any): any; (collection: JQuery, callback: (indexInArray: number, valueOfElement: Base) => any): any; }
+Line 12 col 9 IdentifierName "each" = typeof each
 Line 12 col 14 IdentifierName "collection" = string
 Line 12 col 34 IdentifierName "callback" = (indexInArray: any, valueOfElement: any) => any
 Line 12 col 45 IdentifierName "indexInArray" = any
 Line 12 col 64 IdentifierName "valueOfElement" = any
-Line 13 col 9 IdentifierName "each" = { (collection: string, callback: (indexInArray: any, valueOfElement: any) => any): any; (collection: JQuery, callback: (indexInArray: number, valueOfElement: Base) => any): any; }
+Line 13 col 9 IdentifierName "each" = typeof each
 Line 13 col 14 IdentifierName "collection" = JQuery
 Line 13 col 26 IdentifierName "JQuery" = JQuery
 Line 13 col 34 IdentifierName "callback" = (indexInArray: number, valueOfElement: Base) => any
 Line 13 col 45 IdentifierName "indexInArray" = number
 Line 13 col 67 IdentifierName "valueOfElement" = Base
 Line 13 col 83 IdentifierName "Base" = Base
-Line 14 col 9 IdentifierName "each" = { (collection: string, callback: (indexInArray: any, valueOfElement: any) => any): any; (collection: JQuery, callback: (indexInArray: number, valueOfElement: Base) => any): any; }
+Line 14 col 9 IdentifierName "each" = typeof each
 Line 14 col 14 IdentifierName "collection" = any
 Line 14 col 31 IdentifierName "callback" = (indexInArray: any, valueOfElement: any) => any
 Line 14 col 42 IdentifierName "indexInArray" = any
 Line 14 col 61 IdentifierName "valueOfElement" = any
-Line 18 col 9 IdentifierName "_setBarAndText" = () => void
+Line 18 col 9 IdentifierName "_setBarAndText" = typeof _setBarAndText
 Line 19 col 8 IdentifierName "x" = JQuery
 Line 19 col 11 IdentifierName "JQuery" = JQuery
 Line 19 col 19 IdentifierName "$" = JQueryStatic
@@ -37,7 +37,7 @@ Line 20 col 0 InvocationExpression "each(x.find(" "), function () {
         var $this: JQuery = $(''),
             thisBar = $this.find(".fx-usagebars-calloutbar-this"); // bug lead to 'could not find dotted symbol' here
     } )" = any
-Line 20 col 0 IdentifierName "each" = { (collection: string, callback: (indexInArray: any, valueOfElement: any) => any): any; (collection: JQuery, callback: (indexInArray: number, valueOfElement: Base) => any): any; }
+Line 20 col 0 IdentifierName "each" = typeof each
 Line 20 col 9 InvocationExpression "x.find(" ")" = JQuery
 Line 20 col 9 MemberAccessExpression "x.find" = (selector: string) => JQuery
 Line 20 col 9 IdentifierName "x" = JQuery

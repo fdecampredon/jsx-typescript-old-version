@@ -1,3 +1,5 @@
+// interfaces do not permit private members, these are errors
+
 interface I {
     private x: string;
 }

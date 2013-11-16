@@ -1,3 +1,4 @@
+// no errors expected
 var C = (function () {
     function C(data) {
         this.data = data;

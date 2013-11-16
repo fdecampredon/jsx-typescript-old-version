@@ -7,7 +7,7 @@ Line 3 col 0 AssignmentExpression "Point.prototype.add = function(dx, dy) {
 }" = (dx: number, dy: number) => void
 Line 3 col 0 MemberAccessExpression "Point.prototype.add" = (dx: number, dy: number) => void
 Line 3 col 0 MemberAccessExpression "Point.prototype" = Point
-Line 3 col 0 IdentifierName "Point" = { prototype: Point; new(): Point; }
+Line 3 col 0 IdentifierName "Point" = typeof Point
 Line 4 col 6 IdentifierName "prototype" = Point
 Line 4 col 16 IdentifierName "add" = (dx: number, dy: number) => void
 Line 4 col 22 FunctionExpression "function(dx, dy) {

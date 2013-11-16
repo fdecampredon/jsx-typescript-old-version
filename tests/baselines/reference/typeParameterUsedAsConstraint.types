@@ -59,31 +59,31 @@ Line 12 col 16 IdentifierName "U" = U
 Line 12 col 26 IdentifierName "T" = T
 Line 12 col 29 IdentifierName "V" = V
 Line 12 col 39 IdentifierName "U" = U
-Line 14 col 9 IdentifierName "f" = <T, U extends T>() => void
+Line 14 col 9 IdentifierName "f" = typeof f
 Line 14 col 11 IdentifierName "T" = T
 Line 14 col 14 IdentifierName "U" = U
 Line 14 col 24 IdentifierName "T" = T
-Line 15 col 9 IdentifierName "f2" = <T extends U, U>() => void
+Line 15 col 9 IdentifierName "f2" = typeof f2
 Line 15 col 12 IdentifierName "T" = T
 Line 15 col 22 IdentifierName "U" = U
 Line 15 col 25 IdentifierName "U" = U
-Line 16 col 9 IdentifierName "f3" = <T extends Date, U extends T>() => void
+Line 16 col 9 IdentifierName "f3" = typeof f3
 Line 16 col 12 IdentifierName "T" = T
 Line 16 col 22 IdentifierName "Date" = Date
 Line 16 col 28 IdentifierName "U" = U
 Line 16 col 38 IdentifierName "T" = T
-Line 17 col 9 IdentifierName "f4" = <T extends U, U extends Date>() => void
+Line 17 col 9 IdentifierName "f4" = typeof f4
 Line 17 col 12 IdentifierName "T" = T
 Line 17 col 22 IdentifierName "U" = U
 Line 17 col 25 IdentifierName "U" = U
 Line 17 col 35 IdentifierName "Date" = Date
-Line 18 col 9 IdentifierName "f5" = <T extends U, U extends V, V>() => void
+Line 18 col 9 IdentifierName "f5" = typeof f5
 Line 18 col 12 IdentifierName "T" = T
 Line 18 col 22 IdentifierName "U" = U
 Line 18 col 25 IdentifierName "U" = U
 Line 18 col 35 IdentifierName "V" = V
 Line 18 col 38 IdentifierName "V" = V
-Line 19 col 9 IdentifierName "f6" = <T, U extends T, V extends U>() => void
+Line 19 col 9 IdentifierName "f6" = typeof f6
 Line 19 col 12 IdentifierName "T" = T
 Line 19 col 15 IdentifierName "U" = U
 Line 19 col 25 IdentifierName "T" = T

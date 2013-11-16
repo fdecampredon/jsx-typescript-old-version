@@ -1,5 +1,5 @@
 function makeArrayG<T>(...items: T[]): T[] { return items; }
-var a1Ga = makeArrayG(1, ""); // error
+var a1Ga = makeArrayG(1, ""); // no error
 var a1Gb = makeArrayG<any>(1, ""); 
 var a1Gc = makeArrayG<Object>(1, ""); 
 var a1Gd = makeArrayG<number>(1, ""); // error

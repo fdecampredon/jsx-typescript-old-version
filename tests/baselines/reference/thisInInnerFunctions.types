@@ -12,7 +12,7 @@ Line 5 col 20 ParenthesizedArrowFunctionExpression "() => this.y" = () => any
 Line 5 col 26 MemberAccessExpression "this.y" = any
 Line 5 col 26 ThisKeyword "this" = any
 Line 5 col 31 IdentifierName "y" = any
-Line 10 col 9 IdentifierName "test" = () => void
+Line 10 col 9 IdentifierName "test" = typeof test
 Line 11 col 8 IdentifierName "x" = () => void
 Line 11 col 12 ParenthesizedArrowFunctionExpression "() => {
         (() => this)();

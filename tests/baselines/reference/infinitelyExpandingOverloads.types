@@ -1,0 +1,54 @@
+=== tests/cases/compiler/infinitelyExpandingOverloads.ts ===
+Line 0 col 10 IdentifierName "KnockoutSubscription2" = KnockoutSubscription2<T>
+Line 0 col 32 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "target" = KnockoutObservableBase2<T>
+Line 1 col 12 IdentifierName "KnockoutObservableBase2" = KnockoutObservableBase2<T>
+Line 1 col 36 IdentifierName "T" = T
+Line 3 col 10 IdentifierName "KnockoutObservableBase2" = KnockoutObservableBase2<T>
+Line 3 col 34 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "subscribe" = (callback: (newValue: T) => void, target?: any, topic?: string) => KnockoutSubscription2<T>
+Line 4 col 14 IdentifierName "callback" = (newValue: T) => void
+Line 4 col 25 IdentifierName "newValue" = T
+Line 4 col 35 IdentifierName "T" = T
+Line 4 col 47 IdentifierName "target" = any
+Line 4 col 61 IdentifierName "topic" = string
+Line 4 col 78 IdentifierName "KnockoutSubscription2" = KnockoutSubscription2<T>
+Line 4 col 100 IdentifierName "T" = T
+Line 6 col 10 IdentifierName "ValidationPlacement2" = ValidationPlacement2<TValue>
+Line 6 col 31 IdentifierName "TValue" = TValue
+Line 7 col 0 IdentifierName "initialize" = (validatable: Validatable2<TValue>) => void
+Line 7 col 15 IdentifierName "validatable" = Validatable2<TValue>
+Line 7 col 28 IdentifierName "Validatable2" = Validatable2<TValue>
+Line 7 col 41 IdentifierName "TValue" = TValue
+Line 9 col 10 IdentifierName "Validatable2" = Validatable2<TValue>
+Line 9 col 23 IdentifierName "TValue" = TValue
+Line 10 col 0 IdentifierName "validators" = KnockoutObservableBase2<Validator2<TValue>>
+Line 10 col 16 IdentifierName "KnockoutObservableBase2" = KnockoutObservableBase2<T>
+Line 10 col 40 IdentifierName "Validator2" = Validator2<TValue>
+Line 10 col 51 IdentifierName "TValue" = TValue
+Line 12 col 6 IdentifierName "Validator2" = Validator2<TValue>
+Line 12 col 17 IdentifierName "TValue" = TValue
+Line 13 col 12 IdentifierName "_subscription" = KnockoutSubscription2<TValue>
+Line 13 col 27 IdentifierName "KnockoutSubscription2" = KnockoutSubscription2<T>
+Line 13 col 49 IdentifierName "TValue" = TValue
+Line 15 col 6 IdentifierName "ViewModel" = ViewModel<TValue>
+Line 15 col 16 IdentifierName "TValue" = TValue
+Line 16 col 11 IdentifierName "validationPlacements" = ValidationPlacement2<TValue>[]
+Line 16 col 33 IdentifierName "Array" = Array<T>
+Line 16 col 39 IdentifierName "ValidationPlacement2" = ValidationPlacement2<TValue>
+Line 16 col 60 IdentifierName "TValue" = TValue
+Line 16 col 71 ObjectCreationExpression "new Array<ValidationPlacement2<TValue>>()" = ValidationPlacement2<TValue>[]
+Line 16 col 75 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+Line 16 col 81 IdentifierName "ValidationPlacement2" = ValidationPlacement2<TValue>
+Line 16 col 102 IdentifierName "TValue" = TValue
+Line 18 col 6 IdentifierName "Widget" = Widget<TValue>
+Line 18 col 13 IdentifierName "TValue" = TValue
+Line 19 col 16 IdentifierName "viewModelType" = new() => ViewModel<TValue>
+Line 19 col 41 IdentifierName "ViewModel" = ViewModel<TValue>
+Line 19 col 51 IdentifierName "TValue" = TValue
+Line 20 col 16 IdentifierName "viewModelType" = new() => ViewModel<TValue>
+Line 20 col 41 IdentifierName "ViewModel" = ViewModel<TValue>
+Line 20 col 51 IdentifierName "TValue" = TValue
+Line 22 col 15 IdentifierName "options" = ViewModel<TValue>
+Line 22 col 26 IdentifierName "ViewModel" = ViewModel<TValue>
+Line 22 col 36 IdentifierName "TValue" = TValue

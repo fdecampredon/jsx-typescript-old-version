@@ -1,3 +1,5 @@
+// basic uses of specialized signatures without errors
+
 class Base { foo: string }
 class Derived1 extends Base { bar: string }
 class Derived2 extends Base { baz: string }

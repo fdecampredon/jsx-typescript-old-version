@@ -2,7 +2,7 @@
 Line 0 col 7 IdentifierName "M" = M
 Line 2 col 15 IdentifierName "C" = M.C
 Line 4 col 16 IdentifierName "C" = M.C
-Line 5 col 15 IdentifierName "C" = { prototype: M.C; C: typeof M.C; new(): M.C; }
-Line 5 col 19 MemberAccessExpression "M.C" = { prototype: M.C; C: typeof M.C; new(): M.C; }
-Line 5 col 19 IdentifierName "M" = { C: { prototype: M.C; C: typeof M.C; new(): M.C; }; }
-Line 5 col 21 IdentifierName "C" = { prototype: M.C; C: typeof M.C; new(): M.C; }
+Line 5 col 15 IdentifierName "C" = typeof M.C
+Line 5 col 19 MemberAccessExpression "M.C" = typeof M.C
+Line 5 col 19 IdentifierName "M" = typeof M
+Line 5 col 21 IdentifierName "C" = typeof M.C

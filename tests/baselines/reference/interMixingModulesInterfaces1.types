@@ -4,14 +4,14 @@ Line 2 col 21 IdentifierName "B" = A.B
 Line 3 col 0 IdentifierName "name" = string
 Line 4 col 0 IdentifierName "value" = number
 Line 7 col 18 IdentifierName "B" = A.B
-Line 8 col 24 IdentifierName "createB" = () => A.B
+Line 8 col 24 IdentifierName "createB" = typeof A.B.createB
 Line 8 col 35 IdentifierName "B" = A.B
 Line 14 col 4 IdentifierName "x" = A.B
 Line 14 col 7 IdentifierName "A" = A
 Line 14 col 9 IdentifierName "B" = A.B
 Line 14 col 13 InvocationExpression "A.B.createB()" = A.B
-Line 14 col 13 MemberAccessExpression "A.B.createB" = () => A.B
-Line 14 col 13 MemberAccessExpression "A.B" = { createB(): A.B; }
-Line 14 col 13 IdentifierName "A" = { B: { createB(): A.B; }; }
-Line 14 col 15 IdentifierName "B" = { createB(): A.B; }
-Line 14 col 17 IdentifierName "createB" = () => A.B
+Line 14 col 13 MemberAccessExpression "A.B.createB" = typeof A.B.createB
+Line 14 col 13 MemberAccessExpression "A.B" = typeof A.B
+Line 14 col 13 IdentifierName "A" = typeof A
+Line 14 col 15 IdentifierName "B" = typeof A.B
+Line 14 col 17 IdentifierName "createB" = typeof A.B.createB

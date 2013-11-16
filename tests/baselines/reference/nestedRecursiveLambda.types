@@ -1,5 +1,5 @@
 === tests/cases/compiler/nestedRecursiveLambda.ts ===
-Line 0 col 9 IdentifierName "f" = (a: any) => void
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 0 col 11 IdentifierName "a" = any
 Line 1 col 0 VoidExpression "void (r =>(r => r))" = undefined
 Line 1 col 5 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
@@ -10,7 +10,7 @@ Line 1 col 11 SimpleArrowFunctionExpression "r => r" = (r: any) => any
 Line 1 col 11 IdentifierName "r" = any
 Line 1 col 16 IdentifierName "r" = any
 Line 3 col 0 InvocationExpression "f((r =>(r => r)))" = void
-Line 3 col 0 IdentifierName "f" = (a: any) => void
+Line 3 col 0 IdentifierName "f" = typeof f
 Line 3 col 2 ParenthesizedExpression "(r =>(r => r))" = (r: any) => (r: any) => any
 Line 3 col 3 SimpleArrowFunctionExpression "r =>(r => r)" = (r: any) => (r: any) => any
 Line 3 col 3 IdentifierName "r" = any

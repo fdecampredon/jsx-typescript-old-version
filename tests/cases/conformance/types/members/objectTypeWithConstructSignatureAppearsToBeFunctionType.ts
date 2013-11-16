@@ -1,3 +1,5 @@
+// no errors expected below 
+
 interface I {
     new(): number;
 }

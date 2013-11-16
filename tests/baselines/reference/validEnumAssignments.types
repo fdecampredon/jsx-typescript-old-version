@@ -12,7 +12,7 @@ Line 9 col 4 IdentifierName "e" = E
 Line 10 col 0 AssignmentExpression "n = E.A" = E
 Line 10 col 0 IdentifierName "n" = number
 Line 10 col 4 MemberAccessExpression "E.A" = E
-Line 10 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 10 col 4 IdentifierName "E" = typeof E
 Line 10 col 6 IdentifierName "A" = E
 Line 11 col 0 AssignmentExpression "a = n" = number
 Line 11 col 0 IdentifierName "a" = any
@@ -23,7 +23,7 @@ Line 13 col 4 IdentifierName "e" = E
 Line 14 col 0 AssignmentExpression "a = E.A" = E
 Line 14 col 0 IdentifierName "a" = any
 Line 14 col 4 MemberAccessExpression "E.A" = E
-Line 14 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 14 col 4 IdentifierName "E" = typeof E
 Line 14 col 6 IdentifierName "A" = E
 Line 15 col 0 AssignmentExpression "e = e" = E
 Line 15 col 0 IdentifierName "e" = E
@@ -31,12 +31,12 @@ Line 16 col 4 IdentifierName "e" = E
 Line 17 col 0 AssignmentExpression "e = E.A" = E
 Line 17 col 0 IdentifierName "e" = E
 Line 17 col 4 MemberAccessExpression "E.A" = E
-Line 17 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 17 col 4 IdentifierName "E" = typeof E
 Line 17 col 6 IdentifierName "A" = E
 Line 18 col 0 AssignmentExpression "e = E.B" = E
 Line 18 col 0 IdentifierName "e" = E
 Line 18 col 4 MemberAccessExpression "E.B" = E
-Line 18 col 4 IdentifierName "E" = { A: E; B: E; [x: number]: string; }
+Line 18 col 4 IdentifierName "E" = typeof E
 Line 18 col 6 IdentifierName "B" = E
 Line 19 col 0 AssignmentExpression "e = n" = number
 Line 19 col 0 IdentifierName "e" = E

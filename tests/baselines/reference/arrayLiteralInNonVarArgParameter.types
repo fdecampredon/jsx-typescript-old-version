@@ -1,7 +1,7 @@
 === tests/cases/compiler/arrayLiteralInNonVarArgParameter.ts ===
-Line 0 col 9 IdentifierName "panic" = (val: string[], ...opt: string[]) => void
+Line 0 col 9 IdentifierName "panic" = typeof panic
 Line 0 col 15 IdentifierName "val" = string[]
 Line 0 col 33 IdentifierName "opt" = string[]
 Line 1 col 0 InvocationExpression "panic([], 'one', 'two')" = void
-Line 1 col 0 IdentifierName "panic" = (val: string[], ...opt: string[]) => void
+Line 1 col 0 IdentifierName "panic" = typeof panic
 Line 2 col 6 ArrayLiteralExpression "[]" = string[]

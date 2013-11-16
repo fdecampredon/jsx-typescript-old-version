@@ -1,3 +1,5 @@
+// all of these are valid
+
 var x: any;
 
 x = 1;

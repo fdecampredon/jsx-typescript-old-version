@@ -1,7 +1,7 @@
 === tests/cases/compiler/implicitAnyAnyReturningFunction.ts ===
-Line 0 col 9 IdentifierName "A" = () => any
+Line 0 col 9 IdentifierName "A" = typeof A
 Line 1 col 11 CastExpression "<any>""" = any
-Line 4 col 9 IdentifierName "B" = () => any
+Line 4 col 9 IdentifierName "B" = typeof B
 Line 5 col 8 IdentifierName "someLocal" = any
 Line 5 col 25 ObjectLiteralExpression "{}" = {}
 Line 6 col 11 IdentifierName "someLocal" = any

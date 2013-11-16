@@ -1,3 +1,5 @@
+// no errors here
+
 class C {
     1: number;
     1.1: string;

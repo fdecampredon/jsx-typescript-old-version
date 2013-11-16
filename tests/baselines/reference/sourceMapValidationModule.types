@@ -6,7 +6,7 @@ Line 2 col 0 IdentifierName "a" = number
 Line 4 col 7 IdentifierName "m3" = m3
 Line 5 col 11 IdentifierName "m4" = m3.m4
 Line 6 col 19 IdentifierName "x" = number
-Line 9 col 20 IdentifierName "foo" = () => number
+Line 9 col 20 IdentifierName "foo" = typeof m3.foo
 Line 10 col 15 MemberAccessExpression "m4.x" = number
-Line 10 col 15 IdentifierName "m4" = { x: number; }
+Line 10 col 15 IdentifierName "m4" = typeof m3.m4
 Line 10 col 18 IdentifierName "x" = number

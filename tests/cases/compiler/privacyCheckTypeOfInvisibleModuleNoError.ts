@@ -4,5 +4,5 @@ module Outer {
         export var m: number;
     }
 
-    export var f: typeof Inner;
+    export var f: typeof Inner; // Since we dont unwind inner any more, it is error here
 }

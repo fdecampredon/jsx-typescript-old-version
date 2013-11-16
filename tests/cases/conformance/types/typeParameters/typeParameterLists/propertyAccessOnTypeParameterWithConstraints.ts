@@ -1,6 +1,10 @@
+// generic types should behave as if they have properties of their constraint type
+// no errors expected 
+
 class C<T extends Date> {
     f() {
         var x: T;
+        // BUG 823818
         var a = x['getDate'](); // should be string
         return a + x.getDate();
     }
@@ -18,8 +22,8 @@ var r2b = i.foo['getDate']();
 var a: {
     <T extends Date>(): T;
 }
-var r3: string = a<Date>().getDate();
-var r3b: string = a()['getDate']();
+var r3 = a<Date>().getDate();
+var r3b = a()['getDate']();
 
 var b = {
     foo: <T extends Date>(x: T) => {

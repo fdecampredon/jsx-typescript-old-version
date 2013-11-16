@@ -1,3 +1,4 @@
+// all of these are valid
 var x;
 
 x = 1;

@@ -6,10 +6,10 @@ Line 5 col 0 IdentifierName "/** Fancy name for 'pink'*/
     FancyPink" = Colors
 Line 8 col 4 IdentifierName "x" = Colors
 Line 8 col 8 MemberAccessExpression "Colors.Cornflower" = Colors
-Line 8 col 8 IdentifierName "Colors" = { Cornflower: Colors; FancyPink: Colors; [x: number]: string; }
+Line 8 col 8 IdentifierName "Colors" = typeof Colors
 Line 8 col 15 IdentifierName "Cornflower" = Colors
 Line 9 col 0 AssignmentExpression "x = Colors.FancyPink" = Colors
 Line 9 col 0 IdentifierName "x" = Colors
 Line 9 col 4 MemberAccessExpression "Colors.FancyPink" = Colors
-Line 9 col 4 IdentifierName "Colors" = { Cornflower: Colors; FancyPink: Colors; [x: number]: string; }
+Line 9 col 4 IdentifierName "Colors" = typeof Colors
 Line 9 col 11 IdentifierName "FancyPink" = Colors

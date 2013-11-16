@@ -1,14 +1,14 @@
 === tests/cases/compiler/internalAliasFunction.ts ===
 Line 0 col 7 IdentifierName "a" = a
-Line 1 col 20 IdentifierName "foo" = (x: number) => number
+Line 1 col 20 IdentifierName "foo" = typeof a.foo
 Line 1 col 24 IdentifierName "x" = number
 Line 2 col 15 IdentifierName "x" = number
 Line 6 col 7 IdentifierName "c" = c
-Line 7 col 11 IdentifierName "b" = (x: number) => number
+Line 7 col 11 IdentifierName "b" = typeof a.foo
 Line 7 col 15 IdentifierName "a" = a
 Line 7 col 17 IdentifierName "foo" = any
 Line 8 col 15 IdentifierName "bVal" = number
 Line 8 col 22 InvocationExpression "b(10)" = number
-Line 8 col 22 IdentifierName "b" = (x: number) => number
-Line 9 col 15 IdentifierName "bVal2" = (x: number) => number
-Line 9 col 23 IdentifierName "b" = (x: number) => number
+Line 8 col 22 IdentifierName "b" = typeof a.foo
+Line 9 col 15 IdentifierName "bVal2" = typeof a.foo
+Line 9 col 23 IdentifierName "b" = typeof a.foo

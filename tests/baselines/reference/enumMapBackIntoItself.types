@@ -5,11 +5,11 @@ Line 2 col 0 IdentifierName "Medium" = TShirtSize
 Line 3 col 0 IdentifierName "Large" = TShirtSize
 Line 5 col 4 IdentifierName "mySize" = TShirtSize
 Line 5 col 13 MemberAccessExpression "TShirtSize.Large" = TShirtSize
-Line 5 col 13 IdentifierName "TShirtSize" = { Small: TShirtSize; Medium: TShirtSize; Large: TShirtSize; [x: number]: string; }
+Line 5 col 13 IdentifierName "TShirtSize" = typeof TShirtSize
 Line 5 col 24 IdentifierName "Large" = TShirtSize
 Line 6 col 4 IdentifierName "test" = string
 Line 6 col 11 ElementAccessExpression "TShirtSize[mySize]" = string
-Line 6 col 11 IdentifierName "TShirtSize" = { Small: TShirtSize; Medium: TShirtSize; Large: TShirtSize; [x: number]: string; }
+Line 6 col 11 IdentifierName "TShirtSize" = typeof TShirtSize
 Line 6 col 22 IdentifierName "mySize" = TShirtSize
 Line 7 col 0 AddExpression "// specifically checking output here, bug was that test used to be undefined at runtime
 test + ''" = string

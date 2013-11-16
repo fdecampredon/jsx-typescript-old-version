@@ -10,7 +10,7 @@ Line 7 col 6 IdentifierName "B" = B
 Line 8 col 0 IdentifierName "bar" = () => void
 Line 14 col 4 IdentifierName "a" = A
 Line 14 col 8 ObjectCreationExpression "new A()" = A
-Line 14 col 12 IdentifierName "A" = { prototype: A; new(): A; }
+Line 14 col 12 IdentifierName "A" = typeof A
 Line 15 col 0 InvocationExpression "a.foo()" = void
 Line 15 col 0 MemberAccessExpression "a.foo" = () => void
 Line 15 col 0 IdentifierName "a" = A

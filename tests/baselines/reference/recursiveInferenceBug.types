@@ -1,9 +1,9 @@
 === tests/cases/compiler/recursiveInferenceBug.ts ===
-Line 0 col 9 IdentifierName "f" = (x: number) => number
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 0 col 11 IdentifierName "x" = number
 Line 1 col 8 IdentifierName "z" = number
 Line 1 col 12 InvocationExpression "f(x)" = number
-Line 1 col 12 IdentifierName "f" = (x: number) => number
+Line 1 col 12 IdentifierName "f" = typeof f
 Line 1 col 14 IdentifierName "x" = number
 Line 2 col 11 IdentifierName "x" = number
 Line 6 col 4 IdentifierName "zz" = { g: () => void; f: string; }

@@ -1,3 +1,5 @@
+// all of these should be valid
+
 var i;
 var o;
 o = i;

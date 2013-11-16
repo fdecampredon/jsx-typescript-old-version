@@ -1,3 +1,5 @@
+// basic valid forms of function literals
+
 var x = () => 1;
 var x: {
     (): number;

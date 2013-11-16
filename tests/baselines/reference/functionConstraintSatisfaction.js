@@ -1,3 +1,4 @@
+// satisfaction of a constraint to Function, no errors expected
 function foo(x) {
     return x;
 }

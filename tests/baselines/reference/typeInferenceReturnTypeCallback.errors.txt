@@ -1,9 +1,0 @@
-typeInferenceReturnTypeCallback.ts line 13 col 21: error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '(t: T, acc: Nil<U>) => Cons<U>' and '(t: T, acc: Nil<U>) => Nil<U>' are incompatible:
-		Types of property 'map' of types 'Cons<U>' and 'Nil<U>' are incompatible:
-			Call signatures of types '<U>(f: (t: U) => U) => IList<U>' and '<D>(f: (t: U) => D) => IList<D>' are incompatible:
-				Types of property 'map' of types 'IList<U>' and 'IList<D>' are incompatible:
-					Call signatures of types '<B>(f: (t: U) => B) => IList<B>' and '<B>(f: (t: D) => B) => IList<B>' are incompatible:
-						Call signatures of types '(t: U) => B' and '(t: D) => B' are incompatible.
-						Call signatures of types '(t: D) => B' and '(t: U) => B' are incompatible.
-typeInferenceReturnTypeCallback.ts line 13 col 21: error TS2087: Could not select overload for 'call' expression.

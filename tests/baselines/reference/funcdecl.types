@@ -1,73 +1,73 @@
 === tests/cases/compiler/funcdecl.ts ===
-Line 0 col 9 IdentifierName "simpleFunc" = () => string
-Line 3 col 4 IdentifierName "simpleFuncVar" = () => string
-Line 3 col 20 IdentifierName "simpleFunc" = () => string
-Line 5 col 9 IdentifierName "anotherFuncNoReturn" = () => void
-Line 7 col 4 IdentifierName "anotherFuncNoReturnVar" = () => void
-Line 7 col 29 IdentifierName "anotherFuncNoReturn" = () => void
-Line 9 col 9 IdentifierName "withReturn" = () => string
-Line 12 col 4 IdentifierName "withReturnVar" = () => string
-Line 12 col 20 IdentifierName "withReturn" = () => string
-Line 14 col 9 IdentifierName "withParams" = (a: string) => string
+Line 0 col 9 IdentifierName "simpleFunc" = typeof simpleFunc
+Line 3 col 4 IdentifierName "simpleFuncVar" = typeof simpleFunc
+Line 3 col 20 IdentifierName "simpleFunc" = typeof simpleFunc
+Line 5 col 9 IdentifierName "anotherFuncNoReturn" = typeof anotherFuncNoReturn
+Line 7 col 4 IdentifierName "anotherFuncNoReturnVar" = typeof anotherFuncNoReturn
+Line 7 col 29 IdentifierName "anotherFuncNoReturn" = typeof anotherFuncNoReturn
+Line 9 col 9 IdentifierName "withReturn" = typeof withReturn
+Line 12 col 4 IdentifierName "withReturnVar" = typeof withReturn
+Line 12 col 20 IdentifierName "withReturn" = typeof withReturn
+Line 14 col 9 IdentifierName "withParams" = typeof withParams
 Line 14 col 20 IdentifierName "a" = string
 Line 15 col 11 IdentifierName "a" = string
-Line 17 col 4 IdentifierName "withparamsVar" = (a: string) => string
-Line 17 col 20 IdentifierName "withParams" = (a: string) => string
-Line 19 col 9 IdentifierName "withMultiParams" = (a: number, b: any, c: Object) => number
+Line 17 col 4 IdentifierName "withparamsVar" = typeof withParams
+Line 17 col 20 IdentifierName "withParams" = typeof withParams
+Line 19 col 9 IdentifierName "withMultiParams" = typeof withMultiParams
 Line 19 col 25 IdentifierName "a" = number
 Line 19 col 37 IdentifierName "b" = any
 Line 19 col 40 IdentifierName "c" = Object
 Line 19 col 43 IdentifierName "Object" = Object
 Line 20 col 11 IdentifierName "a" = number
-Line 22 col 4 IdentifierName "withMultiParamsVar" = (a: number, b: any, c: Object) => number
-Line 22 col 25 IdentifierName "withMultiParams" = (a: number, b: any, c: Object) => number
-Line 24 col 9 IdentifierName "withOptionalParams" = (a?: string) => void
+Line 22 col 4 IdentifierName "withMultiParamsVar" = typeof withMultiParams
+Line 22 col 25 IdentifierName "withMultiParams" = typeof withMultiParams
+Line 24 col 9 IdentifierName "withOptionalParams" = typeof withOptionalParams
 Line 24 col 28 IdentifierName "a" = string
-Line 26 col 4 IdentifierName "withOptionalParamsVar" = (a?: string) => void
-Line 26 col 28 IdentifierName "withOptionalParams" = (a?: string) => void
-Line 28 col 9 IdentifierName "withInitializedParams" = (a: string, b0: any, b?: number, c?: string) => void
+Line 26 col 4 IdentifierName "withOptionalParamsVar" = typeof withOptionalParams
+Line 26 col 28 IdentifierName "withOptionalParams" = typeof withOptionalParams
+Line 28 col 9 IdentifierName "withInitializedParams" = typeof withInitializedParams
 Line 28 col 31 IdentifierName "a" = string
 Line 28 col 42 IdentifierName "b0" = any
 Line 28 col 46 IdentifierName "b" = number
 Line 28 col 54 IdentifierName "c" = string
-Line 30 col 4 IdentifierName "withInitializedParamsVar" = (a: string, b0: any, b?: number, c?: string) => void
-Line 30 col 31 IdentifierName "withInitializedParams" = (a: string, b0: any, b?: number, c?: string) => void
-Line 32 col 9 IdentifierName "withOptionalInitializedParams" = (a: string, c?: string) => void
+Line 30 col 4 IdentifierName "withInitializedParamsVar" = typeof withInitializedParams
+Line 30 col 31 IdentifierName "withInitializedParams" = typeof withInitializedParams
+Line 32 col 9 IdentifierName "withOptionalInitializedParams" = typeof withOptionalInitializedParams
 Line 32 col 39 IdentifierName "a" = string
 Line 32 col 50 IdentifierName "c" = string
-Line 34 col 4 IdentifierName "withOptionalInitializedParamsVar" = (a: string, c?: string) => void
-Line 34 col 39 IdentifierName "withOptionalInitializedParams" = (a: string, c?: string) => void
-Line 36 col 9 IdentifierName "withRestParams" = (a: string, ...myRestParameter: number[]) => number[]
+Line 34 col 4 IdentifierName "withOptionalInitializedParamsVar" = typeof withOptionalInitializedParams
+Line 34 col 39 IdentifierName "withOptionalInitializedParams" = typeof withOptionalInitializedParams
+Line 36 col 9 IdentifierName "withRestParams" = typeof withRestParams
 Line 36 col 24 IdentifierName "a" = string
 Line 36 col 39 IdentifierName "myRestParameter" = number[]
 Line 37 col 11 IdentifierName "myRestParameter" = number[]
-Line 39 col 4 IdentifierName "withRestParamsVar" = (a: string, ...myRestParameter: number[]) => number[]
-Line 39 col 24 IdentifierName "withRestParams" = (a: string, ...myRestParameter: number[]) => number[]
-Line 41 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
+Line 39 col 4 IdentifierName "withRestParamsVar" = typeof withRestParams
+Line 39 col 24 IdentifierName "withRestParams" = typeof withRestParams
+Line 41 col 9 IdentifierName "overload1" = typeof overload1
 Line 41 col 19 IdentifierName "n" = number
-Line 42 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
+Line 42 col 9 IdentifierName "overload1" = typeof overload1
 Line 42 col 19 IdentifierName "s" = string
-Line 43 col 9 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
+Line 43 col 9 IdentifierName "overload1" = typeof overload1
 Line 43 col 19 IdentifierName "ns" = any
 Line 44 col 11 InvocationExpression "ns.toString()" = any
 Line 44 col 11 MemberAccessExpression "ns.toString" = any
 Line 44 col 11 IdentifierName "ns" = any
 Line 44 col 14 IdentifierName "toString" = any
-Line 46 col 4 IdentifierName "withOverloadSignature" = { (n: number): string; (s: string): string; }
-Line 46 col 28 IdentifierName "overload1" = { (n: number): string; (s: string): string; }
-Line 48 col 9 IdentifierName "f" = (n: () => void) => void
+Line 46 col 4 IdentifierName "withOverloadSignature" = typeof overload1
+Line 46 col 28 IdentifierName "overload1" = typeof overload1
+Line 48 col 9 IdentifierName "f" = typeof f
 Line 48 col 11 IdentifierName "n" = () => void
 Line 50 col 7 IdentifierName "m2" = m2
-Line 51 col 20 IdentifierName "foo" = (n: () => void) => void
+Line 51 col 20 IdentifierName "foo" = typeof m2.foo
 Line 51 col 24 IdentifierName "n" = () => void
 Line 55 col 0 InvocationExpression "m2.foo(() =>  {
 
     var b = 30;
     return b;
 })" = void
-Line 55 col 0 MemberAccessExpression "m2.foo" = (n: () => void) => void
-Line 55 col 0 IdentifierName "m2" = { foo(n: () => void): void; }
-Line 56 col 3 IdentifierName "foo" = (n: () => void) => void
+Line 55 col 0 MemberAccessExpression "m2.foo" = typeof m2.foo
+Line 55 col 0 IdentifierName "m2" = typeof m2
+Line 56 col 3 IdentifierName "foo" = typeof m2.foo
 Line 56 col 7 ParenthesizedArrowFunctionExpression "() =>  {
 
     var b = 30;
@@ -75,11 +75,11 @@ Line 56 col 7 ParenthesizedArrowFunctionExpression "() =>  {
 }" = () => number
 Line 58 col 8 IdentifierName "b" = number
 Line 59 col 11 IdentifierName "b" = number
-Line 63 col 17 IdentifierName "fooAmbient" = (n: number) => string
+Line 63 col 17 IdentifierName "fooAmbient" = typeof fooAmbient
 Line 63 col 28 IdentifierName "n" = number
-Line 65 col 17 IdentifierName "overloadAmbient" = { (n: number): string; (s: string): string; }
+Line 65 col 17 IdentifierName "overloadAmbient" = typeof overloadAmbient
 Line 65 col 33 IdentifierName "n" = number
-Line 66 col 17 IdentifierName "overloadAmbient" = { (n: number): string; (s: string): string; }
+Line 66 col 17 IdentifierName "overloadAmbient" = typeof overloadAmbient
 Line 66 col 33 IdentifierName "s" = string
 Line 68 col 4 IdentifierName "f2" = () => string
 Line 68 col 9 ParenthesizedArrowFunctionExpression "() => {

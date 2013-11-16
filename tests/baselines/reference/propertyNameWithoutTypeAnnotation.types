@@ -1,0 +1,32 @@
+=== tests/cases/compiler/propertyNameWithoutTypeAnnotation.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 0 IdentifierName "foo" = any
+Line 4 col 10 IdentifierName "I" = I
+Line 5 col 0 IdentifierName "foo" = any
+Line 8 col 4 IdentifierName "a" = { foo: any; }
+Line 9 col 0 IdentifierName "foo" = any
+Line 12 col 4 IdentifierName "b" = { foo: any; }
+Line 12 col 8 ObjectLiteralExpression "{
+    foo: null
+}" = { foo: any; }
+Line 13 col 0 IdentifierName "foo" = any
+Line 17 col 4 IdentifierName "r1" = any
+Line 17 col 9 MemberAccessExpression "(new C()).foo" = any
+Line 17 col 9 ParenthesizedExpression "(new C())" = C
+Line 17 col 10 ObjectCreationExpression "new C()" = C
+Line 17 col 14 IdentifierName "C" = typeof C
+Line 17 col 19 IdentifierName "foo" = any
+Line 18 col 4 IdentifierName "r2" = any
+Line 18 col 9 MemberAccessExpression "(<I>null).foo" = any
+Line 18 col 9 ParenthesizedExpression "(<I>null)" = I
+Line 18 col 10 CastExpression "<I>null" = I
+Line 18 col 11 IdentifierName "I" = I
+Line 18 col 19 IdentifierName "foo" = any
+Line 19 col 4 IdentifierName "r3" = any
+Line 19 col 9 MemberAccessExpression "a.foo" = any
+Line 19 col 9 IdentifierName "a" = { foo: any; }
+Line 19 col 11 IdentifierName "foo" = any
+Line 20 col 4 IdentifierName "r4" = any
+Line 20 col 9 MemberAccessExpression "b.foo" = any
+Line 20 col 9 IdentifierName "b" = { foo: any; }
+Line 20 col 11 IdentifierName "foo" = any

@@ -1,3 +1,4 @@
+// basic uses of function literals with overloads
 var f = function (x) {
     return x;
 };

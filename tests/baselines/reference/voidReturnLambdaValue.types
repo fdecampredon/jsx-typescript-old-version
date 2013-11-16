@@ -1,5 +1,5 @@
 === tests/cases/compiler/voidReturnLambdaValue.ts ===
-Line 0 col 9 IdentifierName "foo" = (arg1: any, arg2: any, callback: (v1: any, v2: any, v3: any) => void) => void
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "arg1" = any
 Line 0 col 19 IdentifierName "arg2" = any
 Line 0 col 25 IdentifierName "callback" = (v1: any, v2: any, v3: any) => void

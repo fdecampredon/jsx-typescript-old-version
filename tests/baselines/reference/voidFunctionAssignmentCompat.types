@@ -9,21 +9,21 @@ Line 3 col 9 FunctionExpression "function(): void {}" = () => void
 Line 4 col 0 AssignmentExpression "fv = function() { return 0; } // should work" = () => number
 Line 4 col 0 IdentifierName "fv" = () => void
 Line 4 col 5 FunctionExpression "function() { return 0; } // should work" = () => number
-Line 6 col 9 IdentifierName "execAny" = (callback: (val: any) => any) => any
+Line 6 col 9 IdentifierName "execAny" = typeof execAny
 Line 6 col 17 IdentifierName "callback" = (val: any) => any
 Line 6 col 27 IdentifierName "val" = any
 Line 6 col 51 InvocationExpression "callback(0)" = any
 Line 6 col 51 IdentifierName "callback" = (val: any) => any
 Line 7 col 0 InvocationExpression "execAny(function () {})" = any
-Line 7 col 0 IdentifierName "execAny" = (callback: (val: any) => any) => any
+Line 7 col 0 IdentifierName "execAny" = typeof execAny
 Line 7 col 8 FunctionExpression "function () {}" = () => void
-Line 9 col 9 IdentifierName "execVoid" = (callback: (val: any) => void) => void
+Line 9 col 9 IdentifierName "execVoid" = typeof execVoid
 Line 9 col 18 IdentifierName "callback" = (val: any) => void
 Line 9 col 28 IdentifierName "val" = any
 Line 9 col 46 InvocationExpression "callback(0)" = void
 Line 9 col 46 IdentifierName "callback" = (val: any) => void
 Line 10 col 0 InvocationExpression "execVoid(function () {return 0;})" = void
-Line 10 col 0 IdentifierName "execVoid" = (callback: (val: any) => void) => void
+Line 10 col 0 IdentifierName "execVoid" = typeof execVoid
 Line 10 col 9 FunctionExpression "function () {return 0;}" = () => number
 Line 12 col 4 IdentifierName "fra" = (v: any) => any
 Line 12 col 10 IdentifierName "v" = any

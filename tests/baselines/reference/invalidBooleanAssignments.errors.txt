@@ -11,5 +11,4 @@ invalidBooleanAssignments.ts line 17 col 5: error TS2012: Cannot convert 'boolea
 	Type '() => string' requires a call signature, but type 'Boolean' lacks one.
 invalidBooleanAssignments.ts line 21 col 1: error TS2130: Invalid left-hand side of assignment expression.
 invalidBooleanAssignments.ts line 24 col 5: error TS2011: Cannot convert 'boolean' to 'T'.
-invalidBooleanAssignments.ts line 26 col 1: error TS2012: Cannot convert 'boolean' to '<T>(a: T) => void':
-	Type '<T>(a: T) => void' requires a call signature, but type 'Boolean' lacks one.
+invalidBooleanAssignments.ts line 26 col 1: error TS2130: Invalid left-hand side of assignment expression.

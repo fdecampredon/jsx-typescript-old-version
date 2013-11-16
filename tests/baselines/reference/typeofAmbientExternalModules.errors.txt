@@ -1,4 +1,4 @@
-typeofAmbientExternalModules_2.ts line 7 col 1: error TS2012: Cannot convert '{ prototype: D; new(): D; }' to '{ C: { prototype: C; new(): C; }; }':
-	Type '{ prototype: D; new(): D; }' is missing property 'C' from type '{ C: { prototype: C; new(): C; }; }'.
-typeofAmbientExternalModules_2.ts line 9 col 1: error TS2012: Cannot convert '{ C: { prototype: C; new(): C; }; }' to '{ prototype: D; new(): D; }':
-	Type '{ C: { prototype: C; new(): C; }; }' is missing property 'prototype' from type '{ prototype: D; new(): D; }'.
+typeofAmbientExternalModules_2.ts line 7 col 1: error TS2012: Cannot convert 'typeof exp' to 'typeof ext':
+	Type 'typeof exp' is missing property 'C' from type 'typeof ext'.
+typeofAmbientExternalModules_2.ts line 9 col 1: error TS2012: Cannot convert 'typeof ext' to 'typeof exp':
+	Type 'typeof ext' is missing property 'prototype' from type 'typeof exp'.

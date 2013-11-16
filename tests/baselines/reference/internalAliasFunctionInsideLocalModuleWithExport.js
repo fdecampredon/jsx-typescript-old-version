@@ -23,5 +23,5 @@ export declare module a {
 export declare module c {
     export import b = a.foo;
     var bVal: number;
-    var bVal2: (x: number) => number;
+    var bVal2: typeof b;
 }

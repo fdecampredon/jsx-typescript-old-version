@@ -1,5 +1,5 @@
 === tests/cases/compiler/externFunc.ts ===
-Line 0 col 17 IdentifierName "parseInt" = { (s: string, radix?: number): number; (s: string): number; }
+Line 0 col 17 IdentifierName "parseInt" = typeof parseInt
 Line 0 col 26 IdentifierName "s" = string
 Line 1 col 0 InvocationExpression "parseInt("2")" = number
-Line 1 col 0 IdentifierName "parseInt" = { (s: string, radix?: number): number; (s: string): number; }
+Line 1 col 0 IdentifierName "parseInt" = typeof parseInt

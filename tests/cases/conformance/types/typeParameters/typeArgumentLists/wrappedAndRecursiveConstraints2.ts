@@ -1,3 +1,5 @@
+// no errors expected
+
 class C<T extends C<T>> {
     constructor(x: T) { }
 }

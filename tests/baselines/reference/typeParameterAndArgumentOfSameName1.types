@@ -1,5 +1,5 @@
 === tests/cases/compiler/typeParameterAndArgumentOfSameName1.ts ===
-Line 0 col 9 IdentifierName "f" = <A extends Number>(A: A) => A
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 0 col 11 IdentifierName "A" = A
 Line 0 col 21 IdentifierName "Number" = Number
 Line 0 col 29 IdentifierName "A" = A

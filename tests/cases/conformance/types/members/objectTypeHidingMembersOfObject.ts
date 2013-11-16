@@ -1,3 +1,5 @@
+// all of these valueOf calls should return the type shown in the overriding signatures here
+
 class C {
     valueOf() { }
 }

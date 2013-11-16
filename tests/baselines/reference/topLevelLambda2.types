@@ -1,8 +1,8 @@
 === tests/cases/compiler/topLevelLambda2.ts ===
-Line 0 col 9 IdentifierName "foo" = (x: any) => void
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "x" = any
 Line 1 col 0 InvocationExpression "foo(()=>this.window)" = void
-Line 1 col 0 IdentifierName "foo" = (x: any) => void
+Line 1 col 0 IdentifierName "foo" = typeof foo
 Line 2 col 4 ParenthesizedArrowFunctionExpression "()=>this.window" = () => any
 Line 2 col 8 MemberAccessExpression "this.window" = any
 Line 2 col 8 ThisKeyword "this" = any

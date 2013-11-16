@@ -12,21 +12,29 @@
 ////}
 ////
 ////declare var _: Underscore.Static;
-////var r/*1*/ = _.all([true, 1, null, 'yes'], _.identity);
-////var r2/*2*/ = _.all([true], _.identity);
-////var r3/*3*/ = _.all([], _.identity);
-////var r4/*4*/ = _.all([<any>true], _.identity);
+////var r/*1*/ = _./*11*/all([true, 1, null, 'yes'], _.identity);
+////var r2/*2*/ = _./*21*/all([true], _.identity);
+////var r3/*3*/ = _./*31*/all([], _.identity);
+////var r4/*4*/ = _./*41*/all([<any>true], _.identity);
 
 goTo.marker('1');
-verify.quickInfoIs('{}');
+verify.quickInfoIs('any');
+goTo.marker('11');
+verify.quickInfoIs('<T>(list: T[], iterator?: Underscore.Iterator<T, boolean>, context?: any): T');
 
 goTo.marker('2');
 verify.quickInfoIs('boolean');
+goTo.marker('21');
+verify.quickInfoIs('<T>(list: boolean[], iterator?: Underscore.Iterator<boolean, boolean>, context?: any): boolean');
 
 goTo.marker('3');
-verify.quickInfoIs('{}');
+verify.quickInfoIs('any');
+goTo.marker('31');
+verify.quickInfoIs('<T>(list: T[], iterator?: Underscore.Iterator<T, boolean>, context?: any): T');
 
 goTo.marker('4');
 verify.quickInfoIs('any');
+goTo.marker('41');
+verify.quickInfoIs('<T>(list: any[], iterator?: Underscore.Iterator<any, boolean>, context?: any): any');
 
-verify.numberOfErrorsInCurrentFile(0);
+verify.numberOfErrorsInCurrentFile(4);

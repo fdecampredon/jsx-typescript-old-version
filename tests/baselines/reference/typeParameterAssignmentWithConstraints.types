@@ -1,5 +1,5 @@
 === tests/cases/compiler/typeParameterAssignmentWithConstraints.ts ===
-Line 0 col 9 IdentifierName "f" = <A, B extends A>() => void
+Line 0 col 9 IdentifierName "f" = typeof f
 Line 0 col 11 IdentifierName "A" = A
 Line 0 col 14 IdentifierName "B" = B
 Line 0 col 24 IdentifierName "A" = A

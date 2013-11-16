@@ -1,29 +1,29 @@
 === tests/cases/compiler/objectTypeWithConstructSignatureAppearsToBeFunctionType.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 4 col 4 IdentifierName "i" = I
-Line 4 col 7 IdentifierName "I" = I
-Line 5 col 4 IdentifierName "r2" = number
-Line 5 col 17 InvocationExpression "i()" = any
-Line 5 col 17 IdentifierName "i" = I
-Line 6 col 4 IdentifierName "r2b" = number
-Line 6 col 18 ObjectCreationExpression "new i()" = number
-Line 6 col 22 IdentifierName "i" = I
-Line 7 col 4 IdentifierName "r2c" = (x: any, y?: any) => any
-Line 7 col 10 IdentifierName "x" = any
-Line 7 col 18 IdentifierName "y" = any
-Line 7 col 36 MemberAccessExpression "i.apply" = (thisArg: any, argArray?: any) => any
-Line 7 col 36 IdentifierName "i" = I
-Line 7 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
-Line 9 col 4 IdentifierName "b" = new() => number
-Line 13 col 4 IdentifierName "r4" = number
-Line 13 col 17 InvocationExpression "b()" = any
-Line 13 col 17 IdentifierName "b" = new() => number
-Line 14 col 4 IdentifierName "r4b" = number
-Line 14 col 18 ObjectCreationExpression "new b()" = number
-Line 14 col 22 IdentifierName "b" = new() => number
-Line 15 col 4 IdentifierName "r4c" = (x: any, y?: any) => any
-Line 15 col 10 IdentifierName "x" = any
-Line 15 col 18 IdentifierName "y" = any
-Line 15 col 36 MemberAccessExpression "b.apply" = (thisArg: any, argArray?: any) => any
-Line 15 col 36 IdentifierName "b" = new() => number
-Line 15 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
+Line 2 col 10 IdentifierName "I" = I
+Line 6 col 4 IdentifierName "i" = I
+Line 6 col 7 IdentifierName "I" = I
+Line 7 col 4 IdentifierName "r2" = number
+Line 7 col 17 InvocationExpression "i()" = any
+Line 7 col 17 IdentifierName "i" = I
+Line 8 col 4 IdentifierName "r2b" = number
+Line 8 col 18 ObjectCreationExpression "new i()" = number
+Line 8 col 22 IdentifierName "i" = I
+Line 9 col 4 IdentifierName "r2c" = (x: any, y?: any) => any
+Line 9 col 10 IdentifierName "x" = any
+Line 9 col 18 IdentifierName "y" = any
+Line 9 col 36 MemberAccessExpression "i.apply" = (thisArg: any, argArray?: any) => any
+Line 9 col 36 IdentifierName "i" = I
+Line 9 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
+Line 11 col 4 IdentifierName "b" = new() => number
+Line 15 col 4 IdentifierName "r4" = number
+Line 15 col 17 InvocationExpression "b()" = any
+Line 15 col 17 IdentifierName "b" = new() => number
+Line 16 col 4 IdentifierName "r4b" = number
+Line 16 col 18 ObjectCreationExpression "new b()" = number
+Line 16 col 22 IdentifierName "b" = new() => number
+Line 17 col 4 IdentifierName "r4c" = (x: any, y?: any) => any
+Line 17 col 10 IdentifierName "x" = any
+Line 17 col 18 IdentifierName "y" = any
+Line 17 col 36 MemberAccessExpression "b.apply" = (thisArg: any, argArray?: any) => any
+Line 17 col 36 IdentifierName "b" = new() => number
+Line 17 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any

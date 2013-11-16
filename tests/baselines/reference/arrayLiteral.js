@@ -1,3 +1,4 @@
+// valid uses of array literals
 var x = [];
 var x = new Array(1);
 

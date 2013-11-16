@@ -1,15 +1,15 @@
 === tests/cases/compiler/commentsFunction.ts ===
-Line 2 col 9 IdentifierName "foo" = () => void
+Line 2 col 9 IdentifierName "foo" = typeof foo
 Line 4 col 0 InvocationExpression "foo()" = void
-Line 4 col 0 IdentifierName "foo" = () => void
-Line 6 col 9 IdentifierName "fooWithParameters" = (a: string, b: number) => void
+Line 4 col 0 IdentifierName "foo" = typeof foo
+Line 6 col 9 IdentifierName "fooWithParameters" = typeof fooWithParameters
 Line 6 col 56 IdentifierName "a" = string
 Line 7 col 0 IdentifierName "/** this is comment for b*/
     b" = number
 Line 9 col 8 IdentifierName "d" = string
 Line 9 col 12 IdentifierName "a" = string
 Line 11 col 0 InvocationExpression "fooWithParameters("a", 10)" = void
-Line 11 col 0 IdentifierName "fooWithParameters" = (a: string, b: number) => void
+Line 11 col 0 IdentifierName "fooWithParameters" = typeof fooWithParameters
 Line 15 col 4 IdentifierName "fooFunc" = (b: string) => string
 Line 15 col 14 FunctionExpression "function FooFunctionValue(/** fooFunctionValue param */ b: string) {
     return b;

@@ -1,3 +1,6 @@
+// using a type parameter as a constraint for a type parameter is valid
+// these should be errors unless otherwise noted
+
 function foo<T, U extends T>(x: T, y: U): U { return y; }
 
 foo(1, '');

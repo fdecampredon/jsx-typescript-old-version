@@ -1,0 +1,17 @@
+=== tests/cases/compiler/declFileInternalAliases.ts ===
+Line 0 col 7 IdentifierName "m" = m
+Line 1 col 17 IdentifierName "c" = m.c
+Line 4 col 7 IdentifierName "m1" = m1
+Line 5 col 11 IdentifierName "x" = typeof m.c
+Line 5 col 15 IdentifierName "m" = m
+Line 5 col 17 IdentifierName "c" = m.c
+Line 6 col 15 IdentifierName "d" = m.c
+Line 6 col 19 ObjectCreationExpression "new x()" = m.c
+Line 6 col 23 IdentifierName "x" = typeof m.c
+Line 8 col 7 IdentifierName "m2" = m2
+Line 9 col 18 IdentifierName "x" = typeof m.c
+Line 9 col 22 IdentifierName "m" = m
+Line 9 col 24 IdentifierName "c" = m.c
+Line 10 col 15 IdentifierName "d" = m.c
+Line 10 col 19 ObjectCreationExpression "new x()" = m.c
+Line 10 col 23 IdentifierName "x" = typeof m.c

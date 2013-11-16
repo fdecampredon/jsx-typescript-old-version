@@ -1,3 +1,5 @@
+// all of these should be valid
+
 interface I {
     toString(): void;
 }

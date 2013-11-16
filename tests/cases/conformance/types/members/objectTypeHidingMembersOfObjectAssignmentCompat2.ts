@@ -4,18 +4,18 @@ interface I {
 
 var i: I;
 var o: Object;
-o = i;
-i = o;
+o = i; // ok
+i = o; // error
 
 class C {
     toString(): number { return 1; }
 }
 var c: C;
-o = c;
-c = o;
+o = c; // ok
+c = o; // error
 
 var a = {
     toString: () => { }
 }
-o = a;
-a = o;
+o = a; // ok
+a = o; // ok

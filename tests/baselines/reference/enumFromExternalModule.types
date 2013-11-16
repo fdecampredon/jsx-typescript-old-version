@@ -2,9 +2,9 @@
 Line 1 col 7 IdentifierName "f" = f
 Line 3 col 4 IdentifierName "x" = Mode
 Line 3 col 8 MemberAccessExpression "f.Mode.Open" = Mode
-Line 3 col 8 MemberAccessExpression "f.Mode" = { Open: Mode; [x: number]: string; }
+Line 3 col 8 MemberAccessExpression "f.Mode" = typeof Mode
 Line 3 col 8 IdentifierName "f" = f
-Line 3 col 10 IdentifierName "Mode" = { Open: Mode; [x: number]: string; }
+Line 3 col 10 IdentifierName "Mode" = typeof Mode
 Line 3 col 15 IdentifierName "Open" = Mode
 === tests/cases/compiler/enumFromExternalModule_0.ts ===
 Line 0 col 12 IdentifierName "Mode" = Mode

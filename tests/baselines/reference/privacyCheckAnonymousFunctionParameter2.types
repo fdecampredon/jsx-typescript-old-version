@@ -5,7 +5,7 @@ Line 1 col 19 IdentifierName "T" = T
 Line 1 col 24 IdentifierName "x" = T
 Line 1 col 27 IdentifierName "T" = T
 Line 3 col 7 IdentifierName "Q" = Q
-Line 4 col 20 IdentifierName "foo" = <T>(x: (a: Iterator<T>) => number) => (a: Iterator<T>) => number
+Line 4 col 20 IdentifierName "foo" = typeof Q.foo
 Line 4 col 24 IdentifierName "T" = T
 Line 4 col 27 IdentifierName "x" = (a: Iterator<T>) => number
 Line 4 col 31 IdentifierName "a" = Iterator<T>
@@ -13,6 +13,6 @@ Line 4 col 34 IdentifierName "Iterator" = Iterator<T>
 Line 4 col 43 IdentifierName "T" = T
 Line 5 col 15 IdentifierName "x" = (a: Iterator<T>) => number
 Line 9 col 7 IdentifierName "Q" = Q
-Line 10 col 13 IdentifierName "bar" = () => void
+Line 10 col 13 IdentifierName "bar" = typeof Q.bar
 Line 11 col 0 InvocationExpression "foo(null)" = (a: Iterator<{}>) => number
-Line 11 col 0 IdentifierName "foo" = <T>(x: (a: Iterator<T>) => number) => (a: Iterator<T>) => number
+Line 11 col 0 IdentifierName "foo" = typeof Q.foo

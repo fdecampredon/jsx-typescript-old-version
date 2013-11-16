@@ -1,5 +1,0 @@
-genericInterfaceImplementation.ts line 7 col 7: error TS2137: Class None<T> declares interface IOption<T> but does not implement it:
-	Types of property 'flatten' of types 'None<T>' and 'IOption<T>' are incompatible:
-		Call signatures of types '<U>() => IOption<U>' and '<B>() => IOption<B>' are incompatible:
-			Types of property 'get' of types 'IOption<{}>' and 'IOption<B>' are incompatible:
-				Call signatures of types '() => {}' and '() => B' are incompatible.

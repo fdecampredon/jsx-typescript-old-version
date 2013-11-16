@@ -14,4 +14,4 @@ export declare module a {
     }
 }
 export import b = a.b;
-export declare var x: a.b.I;
+export declare var x: b.I;

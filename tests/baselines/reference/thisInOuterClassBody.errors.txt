@@ -1,3 +1,3 @@
 thisInOuterClassBody.ts line 5 col 16: error TS2140: 'this' cannot be referenced in static initializers in a class body.
 thisInOuterClassBody.ts line 12 col 22: error TS2094: The property 'y' does not exist on value of type 'Foo'.
-thisInOuterClassBody.ts line 18 col 22: error TS2094: The property 'x' does not exist on value of type '{ prototype: Foo; y: any; bar2(): void; new(): Foo; }'.
+thisInOuterClassBody.ts line 18 col 22: error TS2094: The property 'x' does not exist on value of type 'typeof Foo'.

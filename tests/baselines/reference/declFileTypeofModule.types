@@ -1,0 +1,14 @@
+=== tests/cases/compiler/declFileTypeofModule.ts ===
+Line 1 col 7 IdentifierName "m1" = m1
+Line 2 col 15 IdentifierName "c" = string
+Line 4 col 4 IdentifierName "m1_1" = typeof m1
+Line 4 col 11 IdentifierName "m1" = typeof m1
+Line 5 col 4 IdentifierName "m1_2" = typeof m1
+Line 5 col 17 IdentifierName "m1" = typeof m1
+Line 7 col 7 IdentifierName "m2" = m2
+Line 8 col 15 IdentifierName "d" = typeof m2
+Line 8 col 25 IdentifierName "m2" = typeof m2
+Line 11 col 4 IdentifierName "m2_1" = typeof m2
+Line 11 col 11 IdentifierName "m2" = typeof m2
+Line 12 col 4 IdentifierName "m2_2" = typeof m2
+Line 12 col 17 IdentifierName "m2" = typeof m2

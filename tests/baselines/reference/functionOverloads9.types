@@ -1,8 +1,8 @@
 === tests/cases/compiler/functionOverloads9.ts ===
-Line 0 col 9 IdentifierName "foo" = { (foo: string): any; }
+Line 0 col 9 IdentifierName "foo" = typeof foo
 Line 0 col 13 IdentifierName "foo" = string
-Line 1 col 9 IdentifierName "foo" = { (foo: string): any; }
+Line 1 col 9 IdentifierName "foo" = typeof foo
 Line 1 col 13 IdentifierName "foo" = string
 Line 2 col 4 IdentifierName "x" = any
 Line 2 col 8 InvocationExpression "foo('foo')" = any
-Line 2 col 8 IdentifierName "foo" = { (foo: string): any; }
+Line 2 col 8 IdentifierName "foo" = typeof foo

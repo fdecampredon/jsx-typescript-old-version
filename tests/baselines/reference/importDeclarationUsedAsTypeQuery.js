@@ -6,4 +6,14 @@ var B = (function () {
 })();
 exports.B = B;
 //// [importDeclarationUsedAsTypeQuery_1.js]
-var x;
+exports.x;
+
+
+////[importDeclarationUsedAsTypeQuery_require.d.ts]
+export declare class B {
+    public id: number;
+}
+////[importDeclarationUsedAsTypeQuery_1.d.ts]
+/// <reference path="importDeclarationUsedAsTypeQuery_require.d.ts" />
+import a = require('importDeclarationUsedAsTypeQuery_require');
+export declare var x: typeof a;

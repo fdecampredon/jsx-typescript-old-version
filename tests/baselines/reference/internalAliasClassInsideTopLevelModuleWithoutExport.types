@@ -4,12 +4,12 @@ Line 1 col 17 IdentifierName "c" = x.c
 Line 2 col 0 IdentifierName "foo" = (a: number) => number
 Line 2 col 12 IdentifierName "a" = number
 Line 3 col 19 IdentifierName "a" = number
-Line 8 col 7 IdentifierName "xc" = { prototype: x.c; new(): x.c; }
+Line 8 col 7 IdentifierName "xc" = typeof x.c
 Line 8 col 12 IdentifierName "x" = x
 Line 8 col 14 IdentifierName "c" = x.c
 Line 9 col 11 IdentifierName "cProp" = x.c
 Line 9 col 19 ObjectCreationExpression "new xc()" = x.c
-Line 9 col 23 IdentifierName "xc" = { prototype: x.c; new(): x.c; }
+Line 9 col 23 IdentifierName "xc" = typeof x.c
 Line 10 col 4 IdentifierName "cReturnVal" = number
 Line 10 col 17 InvocationExpression "cProp.foo(10)" = number
 Line 10 col 17 MemberAccessExpression "cProp.foo" = (a: number) => number

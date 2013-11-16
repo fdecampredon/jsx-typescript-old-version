@@ -1,16 +1,16 @@
 === tests/cases/compiler/restParameters.ts ===
-Line 0 col 9 IdentifierName "f18" = (a?: string, ...b: number[]) => void
+Line 0 col 9 IdentifierName "f18" = typeof f18
 Line 0 col 13 IdentifierName "a" = string
 Line 0 col 27 IdentifierName "b" = number[]
-Line 2 col 9 IdentifierName "f19" = (a?: string, b?: number, ...c: number[]) => void
+Line 2 col 9 IdentifierName "f19" = typeof f19
 Line 2 col 13 IdentifierName "a" = string
 Line 2 col 24 IdentifierName "b" = number
 Line 2 col 38 IdentifierName "c" = number[]
-Line 4 col 9 IdentifierName "f20" = (a: string, b?: string, ...c: number[]) => void
+Line 4 col 9 IdentifierName "f20" = typeof f20
 Line 4 col 13 IdentifierName "a" = string
 Line 4 col 23 IdentifierName "b" = string
 Line 4 col 37 IdentifierName "c" = number[]
-Line 6 col 9 IdentifierName "f21" = (a: string, b?: string, c?: number, ...d: number[]) => void
+Line 6 col 9 IdentifierName "f21" = typeof f21
 Line 6 col 13 IdentifierName "a" = string
 Line 6 col 23 IdentifierName "b" = string
 Line 6 col 34 IdentifierName "c" = number

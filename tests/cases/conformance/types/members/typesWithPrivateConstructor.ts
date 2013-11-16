@@ -1,3 +1,5 @@
+// private constructors are not allowed
+
 class C {
     private constructor() { }
 }

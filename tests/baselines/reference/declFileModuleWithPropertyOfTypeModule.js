@@ -16,11 +16,5 @@ var m;
 declare module m {
     class c {
     }
-    var a: {
-        c: {
-            prototype: c;
-            new(): c;
-        };
-        a: typeof m;
-    };
+    var a: typeof m;
 }

@@ -1,3 +1,5 @@
+// classes do not permit optional parameters, these are errors
+
 class C {
     x?: string;
     f?() {}

@@ -1,3 +1,5 @@
+// no errors expected
+
 class C<T extends { length: number }> {
     constructor(x: T) { }
     foo<U extends T>(x: U) {

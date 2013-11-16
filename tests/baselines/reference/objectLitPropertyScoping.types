@@ -1,5 +1,5 @@
 === tests/cases/compiler/objectLitPropertyScoping.ts ===
-Line 2 col 9 IdentifierName "makePoint" = (x: number, y: number) => { x: number; y: number; dist: () => number; }
+Line 2 col 9 IdentifierName "makePoint" = typeof makePoint
 Line 2 col 19 IdentifierName "x" = number
 Line 2 col 30 IdentifierName "y" = number
 Line 3 col 11 ObjectLiteralExpression "{

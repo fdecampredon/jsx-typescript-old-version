@@ -7,7 +7,7 @@ Line 1 col 41 IdentifierName "A" = A<T1>
 Line 1 col 43 IdentifierName "T1" = T1
 Line 2 col 12 IdentifierName "child" = B<A<T1>>
 Line 2 col 20 ObjectCreationExpression "new B(this)" = B<A<T1>>
-Line 2 col 24 IdentifierName "B" = { prototype: B<any>; new<T2>(parent: T2): B<T2>; }
+Line 2 col 24 IdentifierName "B" = typeof B
 Line 2 col 26 ThisKeyword "this" = A<T1>
 Line 4 col 0 IdentifierName "AAA" = (callback: (self: A<T1>) => void) => void
 Line 4 col 9 IdentifierName "callback" = (self: A<T1>) => void
@@ -16,7 +16,7 @@ Line 4 col 26 IdentifierName "A" = A<T1>
 Line 4 col 28 IdentifierName "T1" = T1
 Line 5 col 12 IdentifierName "child" = B<A<T1>>
 Line 5 col 20 ObjectCreationExpression "new B(this)" = B<A<T1>>
-Line 5 col 24 IdentifierName "B" = { prototype: B<any>; new<T2>(parent: T2): B<T2>; }
+Line 5 col 24 IdentifierName "B" = typeof B
 Line 5 col 26 ThisKeyword "this" = A<T1>
 Line 9 col 17 IdentifierName "C" = C<T1>
 Line 9 col 19 IdentifierName "T1" = T1

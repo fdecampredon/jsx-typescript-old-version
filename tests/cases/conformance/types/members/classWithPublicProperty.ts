@@ -9,6 +9,7 @@ class C {
     public static g = () => '';
 }
 
+// all of these are valid
 var c = new C();
 var r1: string = c.x;
 var r2: string = c.a;

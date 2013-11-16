@@ -4,7 +4,7 @@ Line 0 col 26 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "compareTo" = (other: T) => any
 Line 1 col 17 IdentifierName "other" = T
 Line 1 col 24 IdentifierName "T" = T
-Line 4 col 21 IdentifierName "sort" = <U extends IComparable<any>>(items: U[]) => U[]
+Line 4 col 21 IdentifierName "sort" = typeof sort
 Line 4 col 26 IdentifierName "U" = U
 Line 4 col 36 IdentifierName "IComparable" = IComparable<T>
 Line 4 col 54 IdentifierName "items" = U[]
@@ -16,5 +16,5 @@ Line 9 col 8 IdentifierName "sc" = StringComparable[]
 Line 9 col 12 IdentifierName "StringComparable" = StringComparable
 Line 11 col 8 IdentifierName "x" = StringComparable[]
 Line 11 col 12 InvocationExpression "sort(sc)" = StringComparable[]
-Line 11 col 12 IdentifierName "sort" = <U extends IComparable<any>>(items: U[]) => U[]
+Line 11 col 12 IdentifierName "sort" = typeof sort
 Line 11 col 17 IdentifierName "sc" = StringComparable[]

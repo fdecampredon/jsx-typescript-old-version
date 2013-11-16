@@ -1,3 +1,4 @@
+// any satisfies any constraint, no errors expected
 function foo(x) {
     return null;
 }
