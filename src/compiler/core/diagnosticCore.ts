@@ -11,7 +11,7 @@ module TypeScript {
         private _diagnosticKey: string;
         private _arguments: any[];
 
-        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, arguments: any[]= null) {
+        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, arguments: any[] = null) {
             Debug.assert(start >= 0);
             this._diagnosticKey = diagnosticKey;
             this._arguments = (arguments && arguments.length > 0) ? arguments : null;

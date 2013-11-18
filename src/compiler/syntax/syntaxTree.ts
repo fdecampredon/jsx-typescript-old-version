@@ -98,19 +98,14 @@ module TypeScript {
             super();
         }
 
-        private pushDiagnostic(start: number, length: number, diagnosticKey: string, args: any[] = null): void {
-            this.diagnostics.push(new Diagnostic(
-                this.syntaxTree.fileName(), this.syntaxTree.lineMap(), start, length, diagnosticKey, args));
-        }
-
-        private pushDiagnostic1(element: ISyntaxElement, diagnosticKey: string, args: any[] = null): void {
+        private pushDiagnostic(element: ISyntaxElement, diagnosticKey: string, args: any[] = null): void {
             this.diagnostics.push(new Diagnostic(
                 this.syntaxTree.fileName(), this.syntaxTree.lineMap(), element.start(), element.width(), diagnosticKey, args));
         }
 
         public visitCatchClause(node: CatchClauseSyntax): void {
             if (node.typeAnnotation) {
-                this.pushDiagnostic1(node.typeAnnotation,
+                this.pushDiagnostic(node.typeAnnotation,
                     DiagnosticCode.Catch_clause_parameter_cannot_have_a_type_annotation);
             }
 
@@ -121,51 +116,47 @@ module TypeScript {
             var seenOptionalParameter = false;
             var parameterCount = node.parameters.nonSeparatorCount();
 
-            for (var i = 0, n = node.parameters.childCount(); i < n; i++) {
-                var nodeOrToken = node.parameters.childAt(i);
-                if (i % 2 === 0) {
-                    var parameterIndex = i / 2;
-                    var parameter = <ParameterSyntax>node.parameters.childAt(i);
+            for (var i = 0; i < parameterCount; i++) {
+                var parameter = node.parameters.nonSeparatorAt(i);
 
-                    if (parameter.dotDotDotToken) {
-                        if (parameterIndex !== (parameterCount - 1)) {
-                            this.pushDiagnostic1(
-                                parameter,
-                                DiagnosticCode.Rest_parameter_must_be_last_in_list);
-                            return true;
-                        }
-
-                        if (parameter.questionToken) {
-                            this.pushDiagnostic1(
-                                parameter,
-                                DiagnosticCode.Rest_parameter_cannot_be_optional);
-                            return true;
-                        }
-
-                        if (parameter.equalsValueClause) {
-                            this.pushDiagnostic1(
-                                parameter,
-                                DiagnosticCode.Rest_parameter_cannot_have_an_initializer);
-                            return true;
-                        }
+                if (parameter.dotDotDotToken) {
+                    if (i !== (parameterCount - 1)) {
+                        this.pushDiagnostic(
+                            parameter,
+                            DiagnosticCode.Rest_parameter_must_be_last_in_list);
+                        return true;
                     }
-                    else if (parameter.questionToken || parameter.equalsValueClause) {
-                        seenOptionalParameter = true;
 
-                        if (parameter.questionToken && parameter.equalsValueClause) {
-                            this.pushDiagnostic1(
-                                parameter,
-                                DiagnosticCode.Parameter_cannot_have_question_mark_and_initializer);
-                            return true;
-                        }
+                    if (parameter.questionToken) {
+                        this.pushDiagnostic(
+                            parameter,
+                            DiagnosticCode.Rest_parameter_cannot_be_optional);
+                        return true;
                     }
-                    else {
-                        if (seenOptionalParameter) {
-                            this.pushDiagnostic1(
-                                parameter,
-                                DiagnosticCode.Required_parameter_cannot_follow_optional_parameter);
-                            return true;
-                        }
+
+                    if (parameter.equalsValueClause) {
+                        this.pushDiagnostic(
+                            parameter,
+                            DiagnosticCode.Rest_parameter_cannot_have_an_initializer);
+                        return true;
+                    }
+                }
+                else if (parameter.questionToken || parameter.equalsValueClause) {
+                    seenOptionalParameter = true;
+
+                    if (parameter.questionToken && parameter.equalsValueClause) {
+                        this.pushDiagnostic(
+                            parameter,
+                            DiagnosticCode.Parameter_cannot_have_question_mark_and_initializer);
+                        return true;
+                    }
+                }
+                else {
+                    if (seenOptionalParameter) {
+                        this.pushDiagnostic(
+                            parameter,
+                            DiagnosticCode.Required_parameter_cannot_follow_optional_parameter);
+                        return true;
                     }
                 }
             }
@@ -174,14 +165,11 @@ module TypeScript {
         }
 
         private checkParameterListAcessibilityModifiers(node: ParameterListSyntax): boolean {
-            for (var i = 0, n = node.parameters.childCount(); i < n; i++) {
-                var nodeOrToken = node.parameters.childAt(i);
-                if (i % 2 === 0) {
-                    var parameter = <ParameterSyntax>node.parameters.childAt(i);
+            for (var i = 0, n = node.parameters.nonSeparatorCount(); i < n; i++) {
+                var parameter = node.parameters.nonSeparatorAt(i);
 
-                    if (this.checkParameterAccessibilityModifiers(node, parameter)) {
-                        return true;
-                    }
+                if (this.checkParameterAccessibilityModifiers(node, parameter)) {
+                    return true;
                 }
             }
 
@@ -206,28 +194,28 @@ module TypeScript {
 
         private checkParameterAccessibilityModifier(parameterList: ParameterListSyntax, modifier: ISyntaxToken, modifierIndex: number): boolean {
             if (modifier.tokenKind !== SyntaxKind.PublicKeyword && modifier.tokenKind !== SyntaxKind.PrivateKeyword) {
-                this.pushDiagnostic1(modifier,
+                this.pushDiagnostic(modifier,
                     DiagnosticCode._0_modifier_cannot_appear_on_a_parameter, [modifier.text()]);
                 return true;
             }
             else {
                 if (modifierIndex > 0) {
-                    this.pushDiagnostic1(modifier, DiagnosticCode.Accessibility_modifier_already_seen);
+                    this.pushDiagnostic(modifier, DiagnosticCode.Accessibility_modifier_already_seen);
                     return true;
                 }
 
                 if (this.inAmbientDeclaration) {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_an_ambient_context);
                     return true;
                 }
                 else if (this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.parameterList === parameterList) {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
                     return true;
                 }
                 else if (this.currentConstructor === null || this.currentConstructor.parameterList !== parameterList) {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_constructors);
                     return true;
                 }
@@ -246,7 +234,7 @@ module TypeScript {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var child = list.childAt(i);
                 if (i === n - 1) {
-                    this.pushDiagnostic1(child, DiagnosticCode.Trailing_separator_not_allowed);
+                    this.pushDiagnostic(child, DiagnosticCode.Trailing_separator_not_allowed);
                 }
             }
 
@@ -261,7 +249,7 @@ module TypeScript {
             var listFullStart = parent.fullStart() + Syntax.childOffset(parent, list);
             var tokenAtStart = this.syntaxTree.sourceUnit().findToken(listFullStart);
 
-            this.pushDiagnostic1(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
+            this.pushDiagnostic(tokenAtStart, DiagnosticCode.Unexpected_token_0_expected, [expected]);
 
             return true;
         }
@@ -325,38 +313,38 @@ module TypeScript {
             var parameter = node.parameter;
 
             if (parameter.dotDotDotToken) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signatures_cannot_have_rest_parameters);
                 return true;
             }
             else if (parameter.modifiers.childCount() > 0) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_cannot_have_accessibility_modifiers);
                 return true;
             }
             else if (parameter.questionToken) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_cannot_have_a_question_mark);
                 return true;
             }
             else if (parameter.equalsValueClause) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_cannot_have_an_initializer);
                 return true;
             }
             else if (!parameter.typeAnnotation) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_must_have_a_type_annotation);
                 return true;
             }
             else if (parameter.typeAnnotation.type.kind() !== SyntaxKind.StringKeyword &&
                      parameter.typeAnnotation.type.kind() !== SyntaxKind.NumberKeyword) {
-                this.pushDiagnostic1(
+                this.pushDiagnostic(
                     parameter,
                     DiagnosticCode.Index_signature_parameter_type_must_be_string_or_number);
                 return true;
@@ -371,7 +359,7 @@ module TypeScript {
             }
 
             if (!node.typeAnnotation) {
-                this.pushDiagnostic1(node, DiagnosticCode.Index_signature_must_have_a_type_annotation);
+                this.pushDiagnostic(node, DiagnosticCode.Index_signature_must_have_a_type_annotation);
                 return;
             }
 
@@ -388,19 +376,19 @@ module TypeScript {
 
                 if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
-                        this.pushDiagnostic1(heritageClause,
+                        this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
                         return true;
                     }
 
                     if (seenImplementsClause) {
-                        this.pushDiagnostic1(heritageClause,
+                        this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_must_precede_implements_clause);
                         return true;
                     }
 
                     if (heritageClause.typeNames.nonSeparatorCount() > 1) {
-                        this.pushDiagnostic1(heritageClause,
+                        this.pushDiagnostic(heritageClause,
                             DiagnosticCode.Classes_can_only_extend_a_single_class);
                         return true;
                     }
@@ -410,7 +398,7 @@ module TypeScript {
                 else {
                     Debug.assert(heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ImplementsKeyword);
                     if (seenImplementsClause) {
-                        this.pushDiagnostic1(heritageClause,
+                        this.pushDiagnostic(heritageClause,
                             DiagnosticCode.implements_clause_already_seen);
                         return true;
                     }
@@ -428,7 +416,7 @@ module TypeScript {
                 var declareToken = SyntaxUtilities.getToken(modifiers, SyntaxKind.DeclareKeyword);
 
                 if (declareToken) {
-                    this.pushDiagnostic1(declareToken,
+                    this.pushDiagnostic(declareToken,
                         DiagnosticCode.declare_modifier_not_allowed_for_code_already_in_an_ambient_context);
                     return true;
                 }
@@ -444,7 +432,7 @@ module TypeScript {
                 // We're at the top level in a declaration file, a 'declare' modifiers is required
                 // on most module elements.
                 if (!SyntaxUtilities.containsToken(modifiers, SyntaxKind.DeclareKeyword)) {
-                    this.pushDiagnostic1(typeKeyword.firstToken(),
+                    this.pushDiagnostic(typeKeyword.firstToken(),
                         DiagnosticCode.declare_modifier_required_for_top_level_element);
                     return true;
                 }
@@ -462,14 +450,14 @@ module TypeScript {
 
                     if (inFunctionOverloadChain) {
                         if (moduleElement.kind() !== SyntaxKind.FunctionDeclaration) {
-                            this.pushDiagnostic1(moduleElement.firstToken(),
+                            this.pushDiagnostic(moduleElement.firstToken(),
                                 DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
 
                         var functionDeclaration = <FunctionDeclarationSyntax>moduleElement;
                         if (functionDeclaration.identifier.valueText() !== functionOverloadChainName) {
-                            this.pushDiagnostic1(functionDeclaration.identifier,
+                            this.pushDiagnostic(functionDeclaration.identifier,
                                 DiagnosticCode.Function_overload_name_must_be_0, [functionOverloadChainName]);
                             return true;
                         }
@@ -482,7 +470,7 @@ module TypeScript {
                             functionOverloadChainName = functionDeclaration.identifier.valueText();
 
                             if (lastElement && inFunctionOverloadChain) {
-                                this.pushDiagnostic1(moduleElement.firstToken(),
+                                this.pushDiagnostic(moduleElement.firstToken(),
                                     DiagnosticCode.Function_implementation_expected);
                                 return true;
                             }
@@ -514,28 +502,28 @@ module TypeScript {
 
                     if (inFunctionOverloadChain) {
                         if (classElement.kind() !== SyntaxKind.MemberFunctionDeclaration) {
-                            this.pushDiagnostic1(classElement.firstToken(),
+                            this.pushDiagnostic(classElement.firstToken(),
                                 DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
 
                         memberFunctionDeclaration = <MemberFunctionDeclarationSyntax>classElement;
                         if (memberFunctionDeclaration.propertyName.valueText() !== functionOverloadChainName) {
-                            this.pushDiagnostic1(memberFunctionDeclaration.propertyName,
+                            this.pushDiagnostic(memberFunctionDeclaration.propertyName,
                                 DiagnosticCode.Function_overload_name_must_be_0, [functionOverloadChainName]);
                             return true;
                         }
                         isStaticOverload = SyntaxUtilities.containsToken(memberFunctionDeclaration.modifiers, SyntaxKind.StaticKeyword);
                         if (isStaticOverload !== isInStaticOverloadChain) {
                             var diagnostic = isInStaticOverloadChain ? DiagnosticCode.Function_overload_must_be_static : DiagnosticCode.Function_overload_must_not_be_static;
-                            this.pushDiagnostic1(memberFunctionDeclaration.propertyName,
+                            this.pushDiagnostic(memberFunctionDeclaration.propertyName,
                                 diagnostic, null);
                             return true;
                         }
                     }
                     else if (inConstructorOverloadChain) {
                         if (classElement.kind() !== SyntaxKind.ConstructorDeclaration) {
-                            this.pushDiagnostic1(classElement.firstToken(),
+                            this.pushDiagnostic(classElement.firstToken(),
                                 DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
@@ -549,7 +537,7 @@ module TypeScript {
                         isInStaticOverloadChain = SyntaxUtilities.containsToken(memberFunctionDeclaration.modifiers, SyntaxKind.StaticKeyword);
 
                         if (lastElement && inFunctionOverloadChain) {
-                            this.pushDiagnostic1(classElement.firstToken(),
+                            this.pushDiagnostic(classElement.firstToken(),
                                 DiagnosticCode.Function_implementation_expected);
                             return true;
                         }
@@ -559,7 +547,7 @@ module TypeScript {
 
                         inConstructorOverloadChain = constructorDeclaration.block === null;
                         if (lastElement && inConstructorOverloadChain) {
-                            this.pushDiagnostic1(classElement.firstToken(),
+                            this.pushDiagnostic(classElement.firstToken(),
                                 DiagnosticCode.Constructor_implementation_expected);
                             return true;
                         }
@@ -592,7 +580,7 @@ module TypeScript {
                     case "boolean":
                     case "string":
                     case "void":
-                        this.pushDiagnostic1(token, diagnosticKey, [token.valueText()]);
+                        this.pushDiagnostic(token, diagnosticKey, [token.valueText()]);
                         return true;
                 }
             }
@@ -626,7 +614,7 @@ module TypeScript {
 
                 if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
-                        this.pushDiagnostic1(heritageClause,
+                        this.pushDiagnostic(heritageClause,
                             DiagnosticCode.extends_clause_already_seen);
                         return true;
                     }
@@ -635,7 +623,7 @@ module TypeScript {
                 }
                 else {
                     Debug.assert(heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ImplementsKeyword);
-                    this.pushDiagnostic1(heritageClause,
+                    this.pushDiagnostic(heritageClause,
                         DiagnosticCode.Interface_declaration_cannot_have_implements_clause);
                     return true;
                 }
@@ -648,7 +636,7 @@ module TypeScript {
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
                 var modifier = modifiers.childAt(i);
                 if (modifier.tokenKind === SyntaxKind.DeclareKeyword) {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
                     return true;
                 }
@@ -679,14 +667,14 @@ module TypeScript {
                     modifier.tokenKind === SyntaxKind.PrivateKeyword) {
 
                     if (seenAccessibilityModifier) {
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode.Accessibility_modifier_already_seen);
                         return true;
                     }
 
                     if (seenStaticModifier) {
                         var previousToken = list.childAt(i - 1);
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_must_precede_1_modifier, [modifier.text(), previousToken.text()]);
                         return true;
                     }
@@ -695,7 +683,7 @@ module TypeScript {
                 }
                 else if (modifier.tokenKind === SyntaxKind.StaticKeyword) {
                     if (seenStaticModifier) {
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);
                         return true;
                     }
@@ -703,7 +691,7 @@ module TypeScript {
                     seenStaticModifier = true;
                 }
                 else {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode._0_modifier_cannot_appear_on_a_class_element, [modifier.text()]);
                     return true;
                 }
@@ -730,7 +718,7 @@ module TypeScript {
 
         private checkGetAccessorParameter(node: SyntaxNode, getKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
             if (parameterList.parameters.childCount() !== 0) {
-                this.pushDiagnostic1(getKeyword,
+                this.pushDiagnostic(getKeyword,
                     DiagnosticCode.get_accessor_cannot_have_parameters);
                 return true;
             }
@@ -748,7 +736,7 @@ module TypeScript {
 
         private checkIndexMemberModifiers(node: IndexMemberDeclarationSyntax): boolean {
             if (node.modifiers.childCount() > 0) {
-                this.pushDiagnostic1(node.modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
+                this.pushDiagnostic(node.modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
                 return true;
             }
 
@@ -757,7 +745,7 @@ module TypeScript {
 
         private checkEcmaScriptVersionIsAtLeast(parent: ISyntaxElement, node: ISyntaxElement, languageVersion: LanguageVersion, diagnosticKey: string): boolean {
             if (this.syntaxTree.parseOptions().languageVersion() < languageVersion) {
-                this.pushDiagnostic1(node, diagnosticKey);
+                this.pushDiagnostic(node, diagnosticKey);
                 return true;
             }
 
@@ -785,7 +773,7 @@ module TypeScript {
 
         private checkForAccessorDeclarationInAmbientContext(accessor: SyntaxNode): boolean {
             if (this.inAmbientDeclaration) {
-                this.pushDiagnostic1(accessor, DiagnosticCode.Accessors_are_not_allowed_in_ambient_contexts, null);
+                this.pushDiagnostic(accessor, DiagnosticCode.Accessors_are_not_allowed_in_ambient_contexts, null);
                 return true;
             }
 
@@ -794,7 +782,7 @@ module TypeScript {
 
         private checkSetAccessorParameter(node: SyntaxNode, setKeyword: ISyntaxToken, parameterList: ParameterListSyntax): boolean {
             if (parameterList.parameters.childCount() !== 1) {
-                this.pushDiagnostic1(setKeyword,
+                this.pushDiagnostic(setKeyword,
                     DiagnosticCode.set_accessor_must_have_one_and_only_one_parameter);
                 return true;
             }
@@ -802,19 +790,19 @@ module TypeScript {
             var parameter = <ParameterSyntax>parameterList.parameters.childAt(0);
 
             if (parameter.questionToken) {
-                this.pushDiagnostic1(parameter,
+                this.pushDiagnostic(parameter,
                     DiagnosticCode.set_accessor_parameter_cannot_be_optional);
                 return true;
             }
 
             if (parameter.equalsValueClause) {
-                this.pushDiagnostic1(parameter,
+                this.pushDiagnostic(parameter,
                     DiagnosticCode.set_accessor_parameter_cannot_have_an_initializer);
                 return true;
             }
 
             if (parameter.dotDotDotToken) {
-                this.pushDiagnostic1(parameter,
+                this.pushDiagnostic(parameter,
                     DiagnosticCode.set_accessor_cannot_have_rest_parameter);
                 return true;
             }
@@ -859,7 +847,7 @@ module TypeScript {
                     var enumElement = <EnumElementSyntax>child;
 
                     if (!enumElement.equalsValueClause && seenComputedValue) {
-                        this.pushDiagnostic1(enumElement, DiagnosticCode.Enum_member_must_have_initializer, null);
+                        this.pushDiagnostic(enumElement, DiagnosticCode.Enum_member_must_have_initializer, null);
                         return true;
                     }
 
@@ -879,7 +867,7 @@ module TypeScript {
             if (this.inAmbientDeclaration && node.equalsValueClause) {
                 var expression = node.equalsValueClause.value;
                 if (!Syntax.isIntegerLiteral(expression)) {
-                    this.pushDiagnostic1(node.equalsValueClause.equalsToken,
+                    this.pushDiagnostic(node.equalsValueClause.equalsToken,
                         DiagnosticCode.Ambient_enum_elements_can_only_have_integer_literal_initializers);
                     return;
                 }
@@ -891,7 +879,7 @@ module TypeScript {
         public visitInvocationExpression(node: InvocationExpressionSyntax): void {
             if (node.expression.kind() === SyntaxKind.SuperKeyword &&
                 node.argumentList.typeArgumentList !== null) {
-                this.pushDiagnostic1(node,
+                this.pushDiagnostic(node,
                     DiagnosticCode.super_invocation_cannot_have_type_arguments);
             }
 
@@ -907,14 +895,14 @@ module TypeScript {
                 if (modifier.tokenKind === SyntaxKind.PublicKeyword ||
                     modifier.tokenKind === SyntaxKind.PrivateKeyword ||
                     modifier.tokenKind === SyntaxKind.StaticKeyword) {
-                    this.pushDiagnostic1(modifier,
+                    this.pushDiagnostic(modifier,
                         DiagnosticCode._0_modifier_cannot_appear_on_a_module_element, [modifier.text()]);
                     return true;
                 }
 
                 if (modifier.tokenKind === SyntaxKind.DeclareKeyword) {
                     if (seenDeclareModifier) {
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode.Accessibility_modifier_already_seen);
                         return;
                     }
@@ -923,13 +911,13 @@ module TypeScript {
                 }
                 else if (modifier.tokenKind === SyntaxKind.ExportKeyword) {
                     if (seenExportModifier) {
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_already_seen, [modifier.text()]);
                         return;
                     }
 
                     if (seenDeclareModifier) {
-                        this.pushDiagnostic1(modifier,
+                        this.pushDiagnostic(modifier,
                             DiagnosticCode._0_modifier_must_precede_1_modifier,
                             [SyntaxFacts.getText(SyntaxKind.ExportKeyword), SyntaxFacts.getText(SyntaxKind.DeclareKeyword)]);
                         return;
@@ -949,7 +937,7 @@ module TypeScript {
                     var importDeclaration = <ImportDeclarationSyntax>child;
                     if (importDeclaration.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
                         if (node.stringLiteral === null) {
-                            this.pushDiagnostic1(importDeclaration,
+                            this.pushDiagnostic(importDeclaration,
                                 DiagnosticCode.Import_declarations_in_an_internal_module_cannot_reference_an_external_module, null);
                         }
                     }
@@ -963,7 +951,7 @@ module TypeScript {
             var declareToken = SyntaxUtilities.getToken(modifiers, SyntaxKind.DeclareKeyword);
 
             if (declareToken) {
-                this.pushDiagnostic1(declareToken,
+                this.pushDiagnostic(declareToken,
                     DiagnosticCode.declare_modifier_not_allowed_on_import_declaration);
                 return true;
             }
@@ -996,7 +984,7 @@ module TypeScript {
 
             if (node.stringLiteral) {
                 if (!this.inAmbientDeclaration && !SyntaxUtilities.containsToken(node.modifiers, SyntaxKind.DeclareKeyword)) {
-                    this.pushDiagnostic1(node.stringLiteral,
+                    this.pushDiagnostic(node.stringLiteral,
                         DiagnosticCode.Only_ambient_modules_can_use_quoted_names);
                     return;
                 }
@@ -1030,7 +1018,7 @@ module TypeScript {
                     var child = moduleElements.childAt(i);
 
                     if (child.kind() === SyntaxKind.ExportAssignment) {
-                        this.pushDiagnostic1(child, DiagnosticCode.Export_assignment_not_allowed_in_module_with_exported_element);
+                        this.pushDiagnostic(child, DiagnosticCode.Export_assignment_not_allowed_in_module_with_exported_element);
                         return true;
                     }
                 }
@@ -1046,7 +1034,7 @@ module TypeScript {
                 var child = moduleElements.childAt(i);
                 if (child.kind() === SyntaxKind.ExportAssignment) {
                     if (seenExportAssignment) {
-                        this.pushDiagnostic1(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
+                        this.pushDiagnostic(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
                         errorFound = true;
                     }
                     seenExportAssignment = true;
@@ -1061,7 +1049,7 @@ module TypeScript {
                 var child = node.moduleElements.childAt(i);
 
                 if (child.kind() === SyntaxKind.ExportAssignment) {
-                    this.pushDiagnostic1(child, DiagnosticCode.Export_assignment_cannot_be_used_in_internal_modules);
+                    this.pushDiagnostic(child, DiagnosticCode.Export_assignment_cannot_be_used_in_internal_modules);
 
                     return true;
                 }
@@ -1072,7 +1060,7 @@ module TypeScript {
 
         public visitBlock(node: BlockSyntax): void {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic1(node.firstToken(), DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
+                this.pushDiagnostic(node.firstToken(), DiagnosticCode.Implementations_are_not_allowed_in_ambient_contexts);
                 return;
             }
 
@@ -1088,7 +1076,7 @@ module TypeScript {
 
         private checkForStatementInAmbientContxt(node: IStatementSyntax): boolean {
             if (this.inAmbientDeclaration || this.syntaxTree.isDeclaration()) {
-                this.pushDiagnostic1(node.firstToken(),
+                this.pushDiagnostic(node.firstToken(),
                     DiagnosticCode.Statements_are_not_allowed_in_ambient_contexts);
                 return true;
             }
@@ -1227,7 +1215,7 @@ module TypeScript {
         private checkForDisallowedModifiers(parent: ISyntaxElement, modifiers: ISyntaxList<ISyntaxToken>): boolean {
             if (this.inBlock || this.inObjectLiteralExpression) {
                 if (modifiers.childCount() > 0) {
-                    this.pushDiagnostic1(modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
+                    this.pushDiagnostic(modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
                     return true;
                 }
             }
@@ -1269,7 +1257,7 @@ module TypeScript {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var child = list.childAt(i);
                 if (i % 2 === 1 && child.kind() !== kind) {
-                    this.pushDiagnostic1(child, DiagnosticCode._0_expected, [SyntaxFacts.getText(kind)]);
+                    this.pushDiagnostic(child, DiagnosticCode._0_expected, [SyntaxFacts.getText(kind)]);
                 }
             }
 
@@ -1314,7 +1302,7 @@ module TypeScript {
 
         public visitVariableDeclarator(node: VariableDeclaratorSyntax): void {
             if (this.inAmbientDeclaration && node.equalsValueClause) {
-                this.pushDiagnostic1(node.equalsValueClause.equalsToken,
+                this.pushDiagnostic(node.equalsValueClause.equalsToken,
                     DiagnosticCode.Initializers_are_not_allowed_in_ambient_contexts);
                 return;
             }
@@ -1339,7 +1327,7 @@ module TypeScript {
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
                 var child = modifiers.childAt(i);
                 if (child.kind() !== SyntaxKind.PublicKeyword) {
-                    this.pushDiagnostic1(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
+                    this.pushDiagnostic(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
                     return true;
                 }
             }

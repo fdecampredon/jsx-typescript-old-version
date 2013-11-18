@@ -716,7 +716,7 @@ module TypeScript.Services.Breakpoints {
 
             var child = containerChildren.childAt(0);
             if (child && child.isNode()) {
-                return this.canHaveBreakpointInVariableDeclarator(<TypeScript.SyntaxNode>containerChildren.childAt(0));
+                return this.canHaveBreakpointInVariableDeclarator(<TypeScript.SyntaxNode>child);
             }
 
             return false;
