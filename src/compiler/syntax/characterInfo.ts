@@ -1,21 +1,22 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export class CharacterInfo {
-        public static isDecimalDigit(c: number): boolean {
+    export module CharacterInfo {
+        export function isDecimalDigit(c: number): boolean {
             return c >= CharacterCodes._0 && c <= CharacterCodes._9;
         }
-        public static isOctalDigit(c: number): boolean {
+
+        export function isOctalDigit(c: number): boolean {
             return c >= CharacterCodes._0 && c <= CharacterCodes._7;
         }
 
-        public static isHexDigit(c: number): boolean {
+        export function isHexDigit(c: number): boolean {
             return CharacterInfo.isDecimalDigit(c) ||
                    (c >= CharacterCodes.A && c <= CharacterCodes.F) ||
                    (c >= CharacterCodes.a && c <= CharacterCodes.f);
         }
 
-        public static hexValue(c: number): number {
+        export function hexValue(c: number): number {
             // Debug.assert(isHexDigit(c));
             return CharacterInfo.isDecimalDigit(c)
                 ? (c - CharacterCodes._0)
@@ -24,7 +25,7 @@ module TypeScript {
                     : c - CharacterCodes.a + 10;
         }
 
-        public static isWhitespace(ch: number): boolean {
+        export function isWhitespace(ch: number): boolean {
             switch (ch) {
                 // Unicode 3.0 space characters.
                 case CharacterCodes.space:
@@ -54,7 +55,7 @@ module TypeScript {
             return false;
         }
 
-        public static isLineTerminator(ch: number): boolean {
+        export function isLineTerminator(ch: number): boolean {
             switch (ch) {
                 case CharacterCodes.carriageReturn:
                 case CharacterCodes.lineFeed:
