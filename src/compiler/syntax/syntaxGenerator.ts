@@ -1306,10 +1306,10 @@ function generateFactory1Method(definition: ITypeDefinition): string {
             result += child.name;
         }
         else if (child.isList) {
-            result += "Syntax.emptyList";
+            result += "Syntax.emptyList()";
         }
         else if (child.isSeparatedList) {
-            result += "Syntax.emptySeparatedList";
+            result += "Syntax.emptySeparatedList()";
         }
         else {
             result += "null";
@@ -1408,10 +1408,10 @@ function generateFactory2Method(definition: ITypeDefinition): string {
             result += child.name;
         }
         else if (child.isList) {
-            result += "Syntax.emptyList";
+            result += "Syntax.emptyList()";
         }
         else if (child.isSeparatedList) {
-            result += "Syntax.emptySeparatedList";
+            result += "Syntax.emptySeparatedList()";
         }
         else if (isOptional(child)) {
             result += "null";

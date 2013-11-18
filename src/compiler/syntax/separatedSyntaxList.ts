@@ -174,7 +174,11 @@ module TypeScript.Syntax {
         }
     }
 
-    export var emptySeparatedList: ISeparatedSyntaxList = new EmptySeparatedSyntaxList();
+    var _emptySeparatedList = new EmptySeparatedSyntaxList();
+
+    export function emptySeparatedList(): ISeparatedSyntaxList {
+        return _emptySeparatedList;
+    }
 
     class SingletonSeparatedSyntaxList implements ISeparatedSyntaxList {
         public parent: ISyntaxElement = null;
@@ -552,7 +556,7 @@ module TypeScript.Syntax {
 
     function separatedListAndValidate(nodes: ISyntaxNodeOrToken[], validate: boolean): ISeparatedSyntaxList {
         if (nodes === undefined || nodes === null || nodes.length === 0) {
-            return emptySeparatedList;
+            return emptySeparatedList();
         }
 
         if (validate) {

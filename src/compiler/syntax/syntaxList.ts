@@ -145,7 +145,11 @@ module TypeScript.Syntax {
         }
     }
 
-    export var emptyList: ISyntaxList = new EmptySyntaxList();
+    var _emptyList = new EmptySyntaxList();
+
+    export function emptyList(): ISyntaxList {
+        return _emptyList;
+    }
 
     class SingletonSyntaxList implements ISyntaxList {
         public parent: ISyntaxElement = null;
@@ -505,7 +509,7 @@ module TypeScript.Syntax {
 
     export function list(nodes: ISyntaxNodeOrToken[]): ISyntaxList {
         if (nodes === undefined || nodes === null || nodes.length === 0) {
-            return emptyList;
+            return emptyList();
         }
 
         if (nodes.length === 1) {

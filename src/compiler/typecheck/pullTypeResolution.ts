@@ -2481,7 +2481,7 @@ module TypeScript {
 
         private resolvePropertySignature(varDecl: PropertySignatureSyntax, context: PullTypeResolutionContext): PullSymbol {
             return this.resolveVariableDeclaratorOrParameterOrEnumElement(
-                varDecl, Syntax.emptyList, varDecl.propertyName, getType(varDecl), null, context);
+                varDecl, Syntax.emptyList(), varDecl.propertyName, getType(varDecl), null, context);
         }
 
         private resolveVariableDeclarator(varDecl: VariableDeclaratorSyntax, context: PullTypeResolutionContext): PullSymbol {
@@ -2509,12 +2509,12 @@ module TypeScript {
 
         private resolveEnumElement(enumElement: EnumElementSyntax, context: PullTypeResolutionContext): PullSymbol {
             return this.resolveVariableDeclaratorOrParameterOrEnumElement(
-                enumElement, Syntax.emptyList, enumElement.propertyName, null, enumElement.equalsValueClause, context);
+                enumElement, Syntax.emptyList(), enumElement.propertyName, null, enumElement.equalsValueClause, context);
         }
 
         private typeCheckEnumElement(enumElement: EnumElementSyntax, context: PullTypeResolutionContext): void {
             this.typeCheckVariableDeclaratorOrParameterOrEnumElement(
-                enumElement, Syntax.emptyList, enumElement.propertyName, null, enumElement.equalsValueClause, context);
+                enumElement, Syntax.emptyList(), enumElement.propertyName, null, enumElement.equalsValueClause, context);
         }
 
         private resolveEqualsValueClause(clause: EqualsValueClauseSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext): PullSymbol {
@@ -2760,7 +2760,7 @@ module TypeScript {
 
         private typeCheckPropertySignature(varDecl: PropertySignatureSyntax, context: PullTypeResolutionContext) {
             this.typeCheckVariableDeclaratorOrParameterOrEnumElement(
-                varDecl, Syntax.emptyList, varDecl.propertyName, getType(varDecl), null, context);
+                varDecl, Syntax.emptyList(), varDecl.propertyName, getType(varDecl), null, context);
         }
 
         private typeCheckMemberVariableDeclaration(varDecl: MemberVariableDeclarationSyntax, context: PullTypeResolutionContext) {

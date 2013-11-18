@@ -46,11 +46,11 @@ module TypeScript {
     }
 
     public static create(endOfFileToken: ISyntaxToken): SourceUnitSyntax {
-        return new SourceUnitSyntax(Syntax.emptyList, endOfFileToken, /*parsedInStrictMode:*/ false);
+        return new SourceUnitSyntax(Syntax.emptyList(), endOfFileToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(endOfFileToken: ISyntaxToken): SourceUnitSyntax {
-        return new SourceUnitSyntax(Syntax.emptyList, endOfFileToken, /*parsedInStrictMode:*/ false);
+        return new SourceUnitSyntax(Syntax.emptyList(), endOfFileToken, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): SourceUnitSyntax {
@@ -278,12 +278,12 @@ module TypeScript {
                          equalsToken: ISyntaxToken,
                          moduleReference: IModuleReferenceSyntax,
                          semicolonToken: ISyntaxToken): ImportDeclarationSyntax {
-        return new ImportDeclarationSyntax(Syntax.emptyList, importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ false);
+        return new ImportDeclarationSyntax(Syntax.emptyList(), importKeyword, identifier, equalsToken, moduleReference, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken,
                           moduleReference: IModuleReferenceSyntax): ImportDeclarationSyntax {
-        return new ImportDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.ImportKeyword), identifier, Syntax.token(SyntaxKind.EqualsToken), moduleReference, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
+        return new ImportDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.ImportKeyword), identifier, Syntax.token(SyntaxKind.EqualsToken), moduleReference, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ImportDeclarationSyntax {
@@ -474,11 +474,11 @@ module TypeScript {
                          identifier: ISyntaxToken,
                          openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): ClassDeclarationSyntax {
-        return new ClassDeclarationSyntax(Syntax.emptyList, classKeyword, identifier, null, Syntax.emptyList, openBraceToken, Syntax.emptyList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new ClassDeclarationSyntax(Syntax.emptyList(), classKeyword, identifier, null, Syntax.emptyList(), openBraceToken, Syntax.emptyList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): ClassDeclarationSyntax {
-        return new ClassDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.ClassKeyword), identifier, null, Syntax.emptyList, Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new ClassDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.ClassKeyword), identifier, null, Syntax.emptyList(), Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ClassDeclarationSyntax {
@@ -596,11 +596,11 @@ module TypeScript {
     public static create(interfaceKeyword: ISyntaxToken,
                          identifier: ISyntaxToken,
                          body: ObjectTypeSyntax): InterfaceDeclarationSyntax {
-        return new InterfaceDeclarationSyntax(Syntax.emptyList, interfaceKeyword, identifier, null, Syntax.emptyList, body, /*parsedInStrictMode:*/ false);
+        return new InterfaceDeclarationSyntax(Syntax.emptyList(), interfaceKeyword, identifier, null, Syntax.emptyList(), body, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): InterfaceDeclarationSyntax {
-        return new InterfaceDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.InterfaceKeyword), identifier, null, Syntax.emptyList, ObjectTypeSyntax.create1(), /*parsedInStrictMode:*/ false);
+        return new InterfaceDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.InterfaceKeyword), identifier, null, Syntax.emptyList(), ObjectTypeSyntax.create1(), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): InterfaceDeclarationSyntax {
@@ -781,11 +781,11 @@ module TypeScript {
     public static create(moduleKeyword: ISyntaxToken,
                          openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): ModuleDeclarationSyntax {
-        return new ModuleDeclarationSyntax(Syntax.emptyList, moduleKeyword, null, null, openBraceToken, Syntax.emptyList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new ModuleDeclarationSyntax(Syntax.emptyList(), moduleKeyword, null, null, openBraceToken, Syntax.emptyList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ModuleDeclarationSyntax {
-        return new ModuleDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.ModuleKeyword), null, null, Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new ModuleDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.ModuleKeyword), null, null, Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ModuleDeclarationSyntax {
@@ -899,11 +899,11 @@ module TypeScript {
     public static create(functionKeyword: ISyntaxToken,
                          identifier: ISyntaxToken,
                          callSignature: CallSignatureSyntax): FunctionDeclarationSyntax {
-        return new FunctionDeclarationSyntax(Syntax.emptyList, functionKeyword, identifier, callSignature, null, null, /*parsedInStrictMode:*/ false);
+        return new FunctionDeclarationSyntax(Syntax.emptyList(), functionKeyword, identifier, callSignature, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): FunctionDeclarationSyntax {
-        return new FunctionDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.FunctionKeyword), identifier, CallSignatureSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
+        return new FunctionDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.FunctionKeyword), identifier, CallSignatureSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): FunctionDeclarationSyntax {
@@ -1002,11 +1002,11 @@ module TypeScript {
 
     public static create(variableDeclaration: VariableDeclarationSyntax,
                          semicolonToken: ISyntaxToken): VariableStatementSyntax {
-        return new VariableStatementSyntax(Syntax.emptyList, variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ false);
+        return new VariableStatementSyntax(Syntax.emptyList(), variableDeclaration, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(variableDeclaration: VariableDeclarationSyntax): VariableStatementSyntax {
-        return new VariableStatementSyntax(Syntax.emptyList, variableDeclaration, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
+        return new VariableStatementSyntax(Syntax.emptyList(), variableDeclaration, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): VariableStatementSyntax {
@@ -1392,11 +1392,11 @@ module TypeScript {
 
     public static create(openBracketToken: ISyntaxToken,
                          closeBracketToken: ISyntaxToken): ArrayLiteralExpressionSyntax {
-        return new ArrayLiteralExpressionSyntax(openBracketToken, Syntax.emptySeparatedList, closeBracketToken, /*parsedInStrictMode:*/ false);
+        return new ArrayLiteralExpressionSyntax(openBracketToken, Syntax.emptySeparatedList(), closeBracketToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ArrayLiteralExpressionSyntax {
-        return new ArrayLiteralExpressionSyntax(Syntax.token(SyntaxKind.OpenBracketToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseBracketToken), /*parsedInStrictMode:*/ false);
+        return new ArrayLiteralExpressionSyntax(Syntax.token(SyntaxKind.OpenBracketToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseBracketToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ArrayLiteralExpressionSyntax {
@@ -1878,11 +1878,11 @@ module TypeScript {
 
     public static create(lessThanToken: ISyntaxToken,
                          greaterThanToken: ISyntaxToken): TypeArgumentListSyntax {
-        return new TypeArgumentListSyntax(lessThanToken, Syntax.emptySeparatedList, greaterThanToken, /*parsedInStrictMode:*/ false);
+        return new TypeArgumentListSyntax(lessThanToken, Syntax.emptySeparatedList(), greaterThanToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): TypeArgumentListSyntax {
-        return new TypeArgumentListSyntax(Syntax.token(SyntaxKind.LessThanToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.GreaterThanToken), /*parsedInStrictMode:*/ false);
+        return new TypeArgumentListSyntax(Syntax.token(SyntaxKind.LessThanToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.GreaterThanToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): TypeArgumentListSyntax {
@@ -2146,11 +2146,11 @@ module TypeScript {
 
     public static create(openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): ObjectTypeSyntax {
-        return new ObjectTypeSyntax(openBraceToken, Syntax.emptySeparatedList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new ObjectTypeSyntax(openBraceToken, Syntax.emptySeparatedList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ObjectTypeSyntax {
-        return new ObjectTypeSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new ObjectTypeSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ObjectTypeSyntax {
@@ -2509,11 +2509,11 @@ module TypeScript {
 
     public static create(openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): BlockSyntax {
-        return new BlockSyntax(openBraceToken, Syntax.emptyList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new BlockSyntax(openBraceToken, Syntax.emptyList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): BlockSyntax {
-        return new BlockSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new BlockSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): BlockSyntax {
@@ -2598,11 +2598,11 @@ module TypeScript {
     }
 
     public static create(identifier: ISyntaxToken): ParameterSyntax {
-        return new ParameterSyntax(null, Syntax.emptyList, identifier, null, null, null, /*parsedInStrictMode:*/ false);
+        return new ParameterSyntax(null, Syntax.emptyList(), identifier, null, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): ParameterSyntax {
-        return new ParameterSyntax(null, Syntax.emptyList, identifier, null, null, null, /*parsedInStrictMode:*/ false);
+        return new ParameterSyntax(null, Syntax.emptyList(), identifier, null, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ParameterSyntax {
@@ -3047,11 +3047,11 @@ module TypeScript {
 
     public static create(openParenToken: ISyntaxToken,
                          closeParenToken: ISyntaxToken): ArgumentListSyntax {
-        return new ArgumentListSyntax(null, openParenToken, Syntax.emptySeparatedList, closeParenToken, /*parsedInStrictMode:*/ false);
+        return new ArgumentListSyntax(null, openParenToken, Syntax.emptySeparatedList(), closeParenToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ArgumentListSyntax {
-        return new ArgumentListSyntax(null, Syntax.token(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseParenToken), /*parsedInStrictMode:*/ false);
+        return new ArgumentListSyntax(null, Syntax.token(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseParenToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ArgumentListSyntax {
@@ -3706,11 +3706,11 @@ module TypeScript {
 
     public static create(openParenToken: ISyntaxToken,
                          closeParenToken: ISyntaxToken): ParameterListSyntax {
-        return new ParameterListSyntax(openParenToken, Syntax.emptySeparatedList, closeParenToken, /*parsedInStrictMode:*/ false);
+        return new ParameterListSyntax(openParenToken, Syntax.emptySeparatedList(), closeParenToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ParameterListSyntax {
-        return new ParameterListSyntax(Syntax.token(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseParenToken), /*parsedInStrictMode:*/ false);
+        return new ParameterListSyntax(Syntax.token(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseParenToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ParameterListSyntax {
@@ -3787,11 +3787,11 @@ module TypeScript {
 
     public static create(lessThanToken: ISyntaxToken,
                          greaterThanToken: ISyntaxToken): TypeParameterListSyntax {
-        return new TypeParameterListSyntax(lessThanToken, Syntax.emptySeparatedList, greaterThanToken, /*parsedInStrictMode:*/ false);
+        return new TypeParameterListSyntax(lessThanToken, Syntax.emptySeparatedList(), greaterThanToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): TypeParameterListSyntax {
-        return new TypeParameterListSyntax(Syntax.token(SyntaxKind.LessThanToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.GreaterThanToken), /*parsedInStrictMode:*/ false);
+        return new TypeParameterListSyntax(Syntax.token(SyntaxKind.LessThanToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.GreaterThanToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): TypeParameterListSyntax {
@@ -4259,11 +4259,11 @@ module TypeScript {
 
     public static create(constructorKeyword: ISyntaxToken,
                          parameterList: ParameterListSyntax): ConstructorDeclarationSyntax {
-        return new ConstructorDeclarationSyntax(Syntax.emptyList, constructorKeyword, parameterList, null, null, /*parsedInStrictMode:*/ false);
+        return new ConstructorDeclarationSyntax(Syntax.emptyList(), constructorKeyword, parameterList, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ConstructorDeclarationSyntax {
-        return new ConstructorDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.ConstructorKeyword), ParameterListSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
+        return new ConstructorDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.ConstructorKeyword), ParameterListSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ConstructorDeclarationSyntax {
@@ -4361,11 +4361,11 @@ module TypeScript {
 
     public static create(propertyName: ISyntaxToken,
                          callSignature: CallSignatureSyntax): MemberFunctionDeclarationSyntax {
-        return new MemberFunctionDeclarationSyntax(Syntax.emptyList, propertyName, callSignature, null, null, /*parsedInStrictMode:*/ false);
+        return new MemberFunctionDeclarationSyntax(Syntax.emptyList(), propertyName, callSignature, null, null, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(propertyName: ISyntaxToken): MemberFunctionDeclarationSyntax {
-        return new MemberFunctionDeclarationSyntax(Syntax.emptyList, propertyName, CallSignatureSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
+        return new MemberFunctionDeclarationSyntax(Syntax.emptyList(), propertyName, CallSignatureSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): MemberFunctionDeclarationSyntax {
@@ -4472,11 +4472,11 @@ module TypeScript {
                          propertyName: ISyntaxToken,
                          parameterList: ParameterListSyntax,
                          block: BlockSyntax): GetAccessorSyntax {
-        return new GetAccessorSyntax(Syntax.emptyList, getKeyword, propertyName, parameterList, null, block, /*parsedInStrictMode:*/ false);
+        return new GetAccessorSyntax(Syntax.emptyList(), getKeyword, propertyName, parameterList, null, block, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(propertyName: ISyntaxToken): GetAccessorSyntax {
-        return new GetAccessorSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.GetKeyword), propertyName, ParameterListSyntax.create1(), null, BlockSyntax.create1(), /*parsedInStrictMode:*/ false);
+        return new GetAccessorSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.GetKeyword), propertyName, ParameterListSyntax.create1(), null, BlockSyntax.create1(), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): GetAccessorSyntax {
@@ -4588,11 +4588,11 @@ module TypeScript {
                          propertyName: ISyntaxToken,
                          parameterList: ParameterListSyntax,
                          block: BlockSyntax): SetAccessorSyntax {
-        return new SetAccessorSyntax(Syntax.emptyList, setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ false);
+        return new SetAccessorSyntax(Syntax.emptyList(), setKeyword, propertyName, parameterList, block, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(propertyName: ISyntaxToken): SetAccessorSyntax {
-        return new SetAccessorSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.SetKeyword), propertyName, ParameterListSyntax.create1(), BlockSyntax.create1(), /*parsedInStrictMode:*/ false);
+        return new SetAccessorSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.SetKeyword), propertyName, ParameterListSyntax.create1(), BlockSyntax.create1(), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): SetAccessorSyntax {
@@ -4684,11 +4684,11 @@ module TypeScript {
 
     public static create(variableDeclarator: VariableDeclaratorSyntax,
                          semicolonToken: ISyntaxToken): MemberVariableDeclarationSyntax {
-        return new MemberVariableDeclarationSyntax(Syntax.emptyList, variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ false);
+        return new MemberVariableDeclarationSyntax(Syntax.emptyList(), variableDeclarator, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(variableDeclarator: VariableDeclaratorSyntax): MemberVariableDeclarationSyntax {
-        return new MemberVariableDeclarationSyntax(Syntax.emptyList, variableDeclarator, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
+        return new MemberVariableDeclarationSyntax(Syntax.emptyList(), variableDeclarator, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): MemberVariableDeclarationSyntax {
@@ -4768,11 +4768,11 @@ module TypeScript {
 
     public static create(indexSignature: IndexSignatureSyntax,
                          semicolonToken: ISyntaxToken): IndexMemberDeclarationSyntax {
-        return new IndexMemberDeclarationSyntax(Syntax.emptyList, indexSignature, semicolonToken, /*parsedInStrictMode:*/ false);
+        return new IndexMemberDeclarationSyntax(Syntax.emptyList(), indexSignature, semicolonToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(indexSignature: IndexSignatureSyntax): IndexMemberDeclarationSyntax {
-        return new IndexMemberDeclarationSyntax(Syntax.emptyList, indexSignature, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
+        return new IndexMemberDeclarationSyntax(Syntax.emptyList(), indexSignature, Syntax.token(SyntaxKind.SemicolonToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): IndexMemberDeclarationSyntax {
@@ -5131,11 +5131,11 @@ module TypeScript {
                          closeParenToken: ISyntaxToken,
                          openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): SwitchStatementSyntax {
-        return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, Syntax.emptyList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new SwitchStatementSyntax(switchKeyword, openParenToken, expression, closeParenToken, openBraceToken, Syntax.emptyList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(expression: IExpressionSyntax): SwitchStatementSyntax {
-        return new SwitchStatementSyntax(Syntax.token(SyntaxKind.SwitchKeyword), Syntax.token(SyntaxKind.OpenParenToken), expression, Syntax.token(SyntaxKind.CloseParenToken), Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new SwitchStatementSyntax(Syntax.token(SyntaxKind.SwitchKeyword), Syntax.token(SyntaxKind.OpenParenToken), expression, Syntax.token(SyntaxKind.CloseParenToken), Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptyList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): SwitchStatementSyntax {
@@ -5237,11 +5237,11 @@ module TypeScript {
     public static create(caseKeyword: ISyntaxToken,
                          expression: IExpressionSyntax,
                          colonToken: ISyntaxToken): CaseSwitchClauseSyntax {
-        return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, Syntax.emptyList, /*parsedInStrictMode:*/ false);
+        return new CaseSwitchClauseSyntax(caseKeyword, expression, colonToken, Syntax.emptyList(), /*parsedInStrictMode:*/ false);
     }
 
     public static create1(expression: IExpressionSyntax): CaseSwitchClauseSyntax {
-        return new CaseSwitchClauseSyntax(Syntax.token(SyntaxKind.CaseKeyword), expression, Syntax.token(SyntaxKind.ColonToken), Syntax.emptyList, /*parsedInStrictMode:*/ false);
+        return new CaseSwitchClauseSyntax(Syntax.token(SyntaxKind.CaseKeyword), expression, Syntax.token(SyntaxKind.ColonToken), Syntax.emptyList(), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): CaseSwitchClauseSyntax {
@@ -5327,11 +5327,11 @@ module TypeScript {
 
     public static create(defaultKeyword: ISyntaxToken,
                          colonToken: ISyntaxToken): DefaultSwitchClauseSyntax {
-        return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, Syntax.emptyList, /*parsedInStrictMode:*/ false);
+        return new DefaultSwitchClauseSyntax(defaultKeyword, colonToken, Syntax.emptyList(), /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): DefaultSwitchClauseSyntax {
-        return new DefaultSwitchClauseSyntax(Syntax.token(SyntaxKind.DefaultKeyword), Syntax.token(SyntaxKind.ColonToken), Syntax.emptyList, /*parsedInStrictMode:*/ false);
+        return new DefaultSwitchClauseSyntax(Syntax.token(SyntaxKind.DefaultKeyword), Syntax.token(SyntaxKind.ColonToken), Syntax.emptyList(), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): DefaultSwitchClauseSyntax {
@@ -6065,11 +6065,11 @@ module TypeScript {
                          identifier: ISyntaxToken,
                          openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): EnumDeclarationSyntax {
-        return new EnumDeclarationSyntax(Syntax.emptyList, enumKeyword, identifier, openBraceToken, Syntax.emptySeparatedList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new EnumDeclarationSyntax(Syntax.emptyList(), enumKeyword, identifier, openBraceToken, Syntax.emptySeparatedList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(identifier: ISyntaxToken): EnumDeclarationSyntax {
-        return new EnumDeclarationSyntax(Syntax.emptyList, Syntax.token(SyntaxKind.EnumKeyword), identifier, Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new EnumDeclarationSyntax(Syntax.emptyList(), Syntax.token(SyntaxKind.EnumKeyword), identifier, Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): EnumDeclarationSyntax {
@@ -6337,11 +6337,11 @@ module TypeScript {
 
     public static create(openBraceToken: ISyntaxToken,
                          closeBraceToken: ISyntaxToken): ObjectLiteralExpressionSyntax {
-        return new ObjectLiteralExpressionSyntax(openBraceToken, Syntax.emptySeparatedList, closeBraceToken, /*parsedInStrictMode:*/ false);
+        return new ObjectLiteralExpressionSyntax(openBraceToken, Syntax.emptySeparatedList(), closeBraceToken, /*parsedInStrictMode:*/ false);
     }
 
     public static create1(): ObjectLiteralExpressionSyntax {
-        return new ObjectLiteralExpressionSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList, Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
+        return new ObjectLiteralExpressionSyntax(Syntax.token(SyntaxKind.OpenBraceToken), Syntax.emptySeparatedList(), Syntax.token(SyntaxKind.CloseBraceToken), /*parsedInStrictMode:*/ false);
     }
 
     public withLeadingTrivia(trivia: ISyntaxTriviaList): ObjectLiteralExpressionSyntax {

@@ -662,7 +662,7 @@ module TypeScript {
 
     export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclaratorSyntax): ISyntaxList {
         var variableStatement = getVariableStatement(variableDeclarator);
-        return variableStatement ? variableStatement.modifiers : Syntax.emptyList;
+        return variableStatement ? variableStatement.modifiers : Syntax.emptyList();
     }
 
     export function isIntegerLiteralAST(expression: ISyntaxElement): boolean {

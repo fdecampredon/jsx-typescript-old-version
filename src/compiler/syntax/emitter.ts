@@ -513,7 +513,7 @@ module TypeScript.Emitter1 {
                     Syntax.list(statements)));
             }
 
-            return rewritten.withModifiers(Syntax.emptyList)
+            return rewritten.withModifiers(Syntax.emptyList())
                             .withLeadingTrivia(rewritten.leadingTrivia());
         }
 
@@ -1122,7 +1122,7 @@ module TypeScript.Emitter1 {
         public visitVariableStatement(node: VariableStatementSyntax): VariableStatementSyntax {
             var result: VariableStatementSyntax = super.visitVariableStatement(node);
 
-            return result.withModifiers(Syntax.emptyList)
+            return result.withModifiers(Syntax.emptyList())
                          .withLeadingTrivia(result.leadingTrivia());
         }
 
