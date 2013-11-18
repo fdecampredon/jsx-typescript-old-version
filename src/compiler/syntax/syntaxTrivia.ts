@@ -137,6 +137,8 @@ module TypeScript.Syntax {
     class SkippedTokenTrivia extends AbstractTrivia {
         constructor(private _skippedToken: ISyntaxToken) {
             super(SyntaxKind.SkippedTokenTrivia);
+
+            _skippedToken.parent = <ISyntaxElement><any>this;
         }
 
         public clone(): ISyntaxTrivia {
