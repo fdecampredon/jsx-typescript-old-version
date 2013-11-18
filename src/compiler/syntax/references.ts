@@ -15,7 +15,6 @@
 ///<reference path='scannerUtilities.generated.ts' />
 ///<reference path='separatedSyntaxList.ts' />
 ///<reference path='slidingWindow.ts' />
-///<reference path='strings.ts' />
 ///<reference path='syntax.ts' />
 ///<reference path='syntaxElement.ts' />
 ///<reference path='syntaxFactory.generated.ts' />

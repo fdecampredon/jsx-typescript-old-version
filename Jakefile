@@ -79,7 +79,6 @@ var compilerSources = [
 	"syntax/scannerUtilities.generated.ts",
 	"syntax/separatedSyntaxList.ts",
 	"syntax/slidingWindow.ts",
-	"syntax/strings.ts",
 	"syntax/syntax.ts",
 	"syntax/syntaxDedenter.ts",
 	"syntax/syntaxElement.ts",
