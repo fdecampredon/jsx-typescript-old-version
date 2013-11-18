@@ -2380,11 +2380,6 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 "        public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }\r\n\r\n";
 
     result +=
-"        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {\r\n" +
-"            return this;\r\n" +
-"        }\r\n\r\n";
-
-    result +=
 "        public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {\r\n" +
 "            return this.realize().withLeadingTrivia(leadingTrivia);\r\n" +
 "        }\r\n" +
@@ -2516,13 +2511,13 @@ function generateWalker(): string {
 "            this.visitNodeOrToken(nodeOrToken);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitList(list: ISyntaxList): void {\r\n" +
+"        public visitList(list: ISyntaxList<ISyntaxNodeOrToken>): void {\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "               this.visitNodeOrToken(list.childAt(i));\r\n" +
 "            }\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitSeparatedList(list: ISeparatedSyntaxList): void {\r\n" +
+"        public visitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "                var item = list.childAt(i);\r\n" +
 "                this.visitNodeOrToken(item);\r\n" + 

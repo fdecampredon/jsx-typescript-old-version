@@ -119,10 +119,6 @@ module TypeScript.Syntax {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
-
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
         }
@@ -273,10 +269,6 @@ module TypeScript.Syntax {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
-
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
         }
@@ -426,10 +418,6 @@ module TypeScript.Syntax {
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
@@ -584,10 +572,6 @@ module TypeScript.Syntax {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
-
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
         }
@@ -705,10 +689,6 @@ module TypeScript.Syntax {
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
@@ -835,10 +815,6 @@ module TypeScript.Syntax {
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
-
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
         }
@@ -963,10 +939,6 @@ module TypeScript.Syntax {
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);
@@ -1095,10 +1067,6 @@ module TypeScript.Syntax {
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
         public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            return this;
-        }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
             return this.realize().withLeadingTrivia(leadingTrivia);

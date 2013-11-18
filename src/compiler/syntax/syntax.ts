@@ -595,4 +595,31 @@ module TypeScript.Syntax {
 
         return <SyntaxNode>current;
     }
+
+    export function findToken(element: ISyntaxElement, position: number): ISyntaxToken {
+        // Debug.assert(position >= 0 && position < this.fullWidth());
+        if (element.isToken()) {
+            Debug.assert(element.fullWidth() > 0);
+            return <ISyntaxToken>element;
+        }
+
+        if (element.isShared()) {
+            // This should never have been called on this element.  It has a 0 width, so the client 
+            // should have skipped over this.
+            throw Errors.invalidOperation();
+        }
+
+        // Consider: we could use a binary search here to find the child more quickly.
+        for (var i = 0, n = element.childCount(); i < n; i++) {
+            var child = element.childAt(i);
+
+            if (child !== null && child.fullWidth() > 0) {
+                if (position >= child.fullStart() && position < child.fullEnd()) {
+                    return findToken(child, position);
+                }
+            }
+        }
+
+        throw Errors.invalidOperation();
+    }
 }

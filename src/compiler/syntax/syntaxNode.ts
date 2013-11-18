@@ -301,7 +301,7 @@ module TypeScript {
                 throw Errors.argumentOutOfRange("position");
             }
 
-            var positionedToken= this.findTokenInternal(null, position, 0);
+            var positionedToken = Syntax.findToken(this, position);
 
             if (includeSkippedTokens) {
                 return Syntax.findSkippedTokenInPositionedToken(positionedToken, position) || positionedToken;
@@ -319,28 +319,6 @@ module TypeScript {
             }
 
             return null;
-        }
-
-        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            // Debug.assert(position >= 0 && position < this.fullWidth());
-
-            parent = this;
-            for (var i = 0, n = this.childCount(); i < n; i++) {
-                var element = this.childAt(i);
-
-                if (element !== null) {
-                    var childWidth = element.fullWidth();
-
-                    if (position < childWidth) {
-                        return (<any>element).findTokenInternal(parent, position, fullStart);
-                    }
-
-                    position -= childWidth;
-                    fullStart += childWidth;
-                }
-            }
-
-            throw Errors.invalidOperation();
         }
 
         public findTokenOnLeft(position: number, includeSkippedTokens: boolean = false): ISyntaxToken {

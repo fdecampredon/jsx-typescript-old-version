@@ -148,12 +148,6 @@ module TypeScript.Syntax {
             return false;
         }
 
-        findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            // This should never have been called on this list.  It has a 0 width, so the client 
-            // should have skipped over this.
-            throw Errors.invalidOperation();
-        }
-
         insertChildrenInto(array: ISyntaxElement[], index: number): void {
         }
 
@@ -310,11 +304,6 @@ module TypeScript.Syntax {
 
         public isIncrementallyUnusable(): boolean {
             return this.item.isIncrementallyUnusable();
-        }
-
-        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            // Debug.assert(position >= 0 && position < this.item.fullWidth());
-            return (<any>this.item).findTokenInternal(this, position, fullStart);
         }
 
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
@@ -513,23 +502,6 @@ module TypeScript.Syntax {
             }
 
             return this._data;
-        }
-
-        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
-            parent = this;
-            for (var i = 0, n = this.elements.length; i < n; i++) {
-                var element = this.elements[i];
-
-                var childWidth = element.fullWidth();
-                if (position < childWidth) {
-                    return (<any>element).findTokenInternal(parent, position, fullStart);
-                }
-
-                position -= childWidth;
-                fullStart += childWidth;
-            }
-
-            throw Errors.invalidOperation();
         }
 
         public collectTextElements(elements: string[]): void {
