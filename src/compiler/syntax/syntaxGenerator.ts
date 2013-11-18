@@ -2261,8 +2261,10 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 "        public isShared(): boolean { return false; }\r\n" +
 "        public isNode(): boolean { return false; }\r\n" +
 "        public isToken(): boolean { return true; }\r\n" +
+"        public isTrivia(): boolean { return true; }\r\n" +
 "        public isList(): boolean { return false; }\r\n" +
-"        public isSeparatedList(): boolean { return false; }\r\n\r\n";
+"        public isSeparatedList(): boolean { return false; }\r\n"+
+"        public isTriviaList(): boolean { return false; }\r\n\r\n";
 
     result += "        public kind(): SyntaxKind { return this.tokenKind; }\r\n\r\n";
 
@@ -2373,11 +2375,13 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 "        public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }\r\n" +
 "        public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }\r\n" +
 "        private realize(): ISyntaxToken { return realizeToken(this); }\r\n" +
+"        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }\r\n" +
+"        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }\r\n" +
 "        public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }\r\n\r\n";
 
     result +=
-"        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {\r\n" +
-"            return new PositionedToken(parent, this, fullStart);\r\n" +
+"        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {\r\n" +
+"            return this;\r\n" +
 "        }\r\n\r\n";
 
     result +=

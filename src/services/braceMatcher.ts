@@ -32,17 +32,17 @@ module TypeScript.Services {
             return result;
         }
 
-        private static getMatchingCloseBrace(currentToken: TypeScript.PositionedToken, position: number, result: TypeScript.TextSpan[]) {
+        private static getMatchingCloseBrace(currentToken: TypeScript.ISyntaxToken, position: number, result: TypeScript.TextSpan[]) {
             if (currentToken.start() === position) {
                 var closingBraceKind = BraceMatcher.getMatchingCloseBraceTokenKind(currentToken);
                 if (closingBraceKind !== null) {
-                    var parentElement = currentToken.parentElement();
-                    var currentPosition = currentToken.parent().fullStart();
+                    var parentElement = currentToken.parent
+                    var currentPosition = currentToken.parent.fullStart();
                     for (var i = 0, n = parentElement.childCount(); i < n; i++) {
                         var element = parentElement.childAt(i);
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === closingBraceKind) {
-                                var range1 = new TypeScript.TextSpan(position, currentToken.token().width());
+                                var range1 = new TypeScript.TextSpan(position, currentToken.width());
                                 var range2 = new TypeScript.TextSpan(currentPosition + element.leadingTriviaWidth(), element.width());
                                 result.push(range1, range2);
                                 break;
@@ -55,7 +55,7 @@ module TypeScript.Services {
             }
         }
 
-        private static getMatchingOpenBrace(currentToken: TypeScript.PositionedToken, position: number, result: TypeScript.TextSpan[]) {
+        private static getMatchingOpenBrace(currentToken: TypeScript.ISyntaxToken, position: number, result: TypeScript.TextSpan[]) {
             // Check if the current token to the left is a close brace
             if (currentToken.fullStart() === position) {
                 currentToken = currentToken.previousToken();
@@ -64,13 +64,13 @@ module TypeScript.Services {
             if (currentToken !== null && currentToken.start() === (position - 1)) {
                 var openBraceKind = BraceMatcher.getMatchingOpenBraceTokenKind(currentToken);
                 if (openBraceKind !== null) {
-                    var parentElement = currentToken.parentElement();
-                    var currentPosition = currentToken.parent().fullStart() + parentElement.fullWidth();
+                    var parentElement = currentToken.parent;
+                    var currentPosition = currentToken.parent.fullStart() + parentElement.fullWidth();
                     for (var i = parentElement.childCount() - 1 ; i >= 0; i--) {
                         var element = parentElement.childAt(i);
                         if (element !== null && element.fullWidth() > 0) {
                             if (element.kind() === openBraceKind) {
-                                var range1 = new TypeScript.TextSpan(position - 1, currentToken.token().width());
+                                var range1 = new TypeScript.TextSpan(position - 1, currentToken.width());
                                 var range2 = new TypeScript.TextSpan(currentPosition - element.trailingTriviaWidth() - element.width(), element.width());
                                 result.push(range1, range2);
                                 break;
@@ -83,8 +83,8 @@ module TypeScript.Services {
             }
         }
 
-        private static getMatchingCloseBraceTokenKind(positionedElement: TypeScript.PositionedElement): TypeScript.SyntaxKind {
-            var element = positionedElement !== null && positionedElement.element();
+        private static getMatchingCloseBraceTokenKind(positionedElement: TypeScript.ISyntaxElement): TypeScript.SyntaxKind {
+            var element = positionedElement !== null && positionedElement;
             switch (element.kind()) {
                 case TypeScript.SyntaxKind.OpenBraceToken:
                     return TypeScript.SyntaxKind.CloseBraceToken
@@ -98,8 +98,8 @@ module TypeScript.Services {
             return null;
         }
 
-        private static getMatchingOpenBraceTokenKind(positionedElement: TypeScript.PositionedElement): TypeScript.SyntaxKind {
-            var element = positionedElement !== null && positionedElement.element();
+        private static getMatchingOpenBraceTokenKind(positionedElement: TypeScript.ISyntaxElement): TypeScript.SyntaxKind {
+            var element = positionedElement !== null && positionedElement;
             switch (element.kind()) {
                 case TypeScript.SyntaxKind.CloseBraceToken:
                     return TypeScript.SyntaxKind.OpenBraceToken

@@ -39,8 +39,10 @@ module TypeScript.Syntax {
 
         public isNode(): boolean { return false; }
         public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return true; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public toJSON(key: any): any {
             return [];
@@ -125,7 +127,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // This should never have been called on this list.  It has a 0 width, so the client 
             // should have skipped over this.
             throw Errors.invalidOperation();
@@ -177,8 +179,10 @@ module TypeScript.Syntax {
 
         public isToken(): boolean { return false; }
         public isNode(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return true; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public toJSON(key: any) {
             return [this.item];
@@ -268,10 +272,9 @@ module TypeScript.Syntax {
             return this.item.isIncrementallyUnusable();
         }
 
-        public findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // Debug.assert(position >= 0 && position < this.item.fullWidth());
-            return (<any>this.item).findTokenInternal(
-                new PositionedList(parent, this, fullStart), position, fullStart);
+            return (<any>this.item).findTokenInternal(this, position, fullStart);
         }
 
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
@@ -316,8 +319,10 @@ module TypeScript.Syntax {
 
         public isNode(): boolean { return false; }
         public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return true; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public toJSON(key: any) {
             return this.nodeOrTokens;
@@ -456,10 +461,10 @@ module TypeScript.Syntax {
             return this._data;
         }
 
-        public findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // Debug.assert(position >= 0 && position < this.fullWidth());
-            
-            parent = new PositionedList(parent, this, fullStart);
+
+            parent = this;
             for (var i = 0, n = this.nodeOrTokens.length; i < n; i++) {
                 var nodeOrToken = this.nodeOrTokens[i];
 

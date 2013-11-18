@@ -28,8 +28,10 @@ module TypeScript {
 
         public isNode(): boolean { return true; }
         public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind {
             throw Errors.abstract();
@@ -289,7 +291,7 @@ module TypeScript {
          * Note: findToken will always return a non-missing token with width greater than or equal to
          * 1 (except for EOF).  Empty tokens synthesized by the parser are never returned.
          */
-        public findToken(position: number, includeSkippedTokens: boolean = false): PositionedToken {
+        public findToken(position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
             var endOfFileToken = this.tryGetEndOfFileAt(position);
             if (endOfFileToken !== null) {
                 return endOfFileToken;
@@ -310,21 +312,19 @@ module TypeScript {
 
         }
 
-        private tryGetEndOfFileAt(position: number): PositionedToken {
+        private tryGetEndOfFileAt(position: number): ISyntaxToken {
             if (this.kind() === SyntaxKind.SourceUnit && position === this.fullWidth()) {
                 var sourceUnit = <SourceUnitSyntax>this;
-                return new PositionedToken(
-                    new PositionedNode(null, sourceUnit, 0),
-                    sourceUnit.endOfFileToken, sourceUnit.moduleElements.fullWidth());
+                return sourceUnit.endOfFileToken;
             }
 
             return null;
         }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // Debug.assert(position >= 0 && position < this.fullWidth());
 
-            parent = new PositionedNode(parent, this, fullStart);
+            parent = this;
             for (var i = 0, n = this.childCount(); i < n; i++) {
                 var element = this.childAt(i);
 
@@ -343,7 +343,7 @@ module TypeScript {
             throw Errors.invalidOperation();
         }
 
-        public findTokenOnLeft(position: number, includeSkippedTokens: boolean = false): PositionedToken {
+        public findTokenOnLeft(position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
             var positionedToken = this.findToken(position, /*includeSkippedTokens*/ false);
             var start = positionedToken.start();
             
@@ -369,7 +369,7 @@ module TypeScript {
             return positionedToken.previousToken(includeSkippedTokens);
         }
 
-        public findCompleteTokenOnLeft(position: number, includeSkippedTokens: boolean = false): PositionedToken {
+        public findCompleteTokenOnLeft(position: number, includeSkippedTokens: boolean = false): ISyntaxToken {
             var positionedToken = this.findToken(position, /*includeSkippedTokens*/ false);
 
             // Position better fall within this token.
@@ -381,7 +381,7 @@ module TypeScript {
             }
 
             // if position is after the end of the token, then this token is the token on the left.
-            if (positionedToken.token().width() > 0 && position >= positionedToken.end()) {
+            if (positionedToken.width() > 0 && position >= positionedToken.end()) {
                 return positionedToken;
             }
 

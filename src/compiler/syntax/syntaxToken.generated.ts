@@ -48,8 +48,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -113,10 +115,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -198,8 +202,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -263,10 +269,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -348,8 +356,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -413,10 +423,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -501,8 +513,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -566,10 +580,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -641,8 +657,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -684,10 +702,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -766,8 +786,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -809,10 +831,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -891,8 +915,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -934,10 +960,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {
@@ -1019,8 +1047,10 @@ module TypeScript.Syntax {
         public isShared(): boolean { return false; }
         public isNode(): boolean { return false; }
         public isToken(): boolean { return true; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public kind(): SyntaxKind { return this.tokenKind; }
 
@@ -1062,10 +1092,12 @@ module TypeScript.Syntax {
         public isIncrementallyUnusable(): boolean { return this.fullWidth() === 0 || SyntaxFacts.isAnyDivideOrRegularExpressionToken(this.tokenKind); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
         private realize(): ISyntaxToken { return realizeToken(this); }
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.previousToken(this, includeSkippedTokens); }
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken { return Syntax.nextToken(this, includeSkippedTokens); }
         public collectTextElements(elements: string[]): void { collectTokenTextElements(this, elements); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken {

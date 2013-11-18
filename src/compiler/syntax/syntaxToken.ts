@@ -32,6 +32,9 @@ module TypeScript {
         withLeadingTrivia(leadingTrivia: ISyntaxTriviaList): ISyntaxToken;
         withTrailingTrivia(trailingTrivia: ISyntaxTriviaList): ISyntaxToken;
 
+        previousToken(includeSkippedTokens?: boolean): ISyntaxToken;
+        nextToken(includeSkippedTokens?: boolean): ISyntaxToken;
+
         clone(): ISyntaxToken;
     }
 
@@ -372,8 +375,10 @@ module TypeScript.Syntax {
 
         public isToken(): boolean { return true; }
         public isNode(): boolean { return false; }
+        public isTrivia(): boolean { return true; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
 
         public childCount(): number {
             return 0;
@@ -390,8 +395,8 @@ module TypeScript.Syntax {
         public toJSON(key: any): any { return tokenToJSON(this); }
         public accept(visitor: ISyntaxVisitor): any { return visitor.visitToken(this); }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public firstToken(): ISyntaxToken { return null; }
@@ -457,6 +462,14 @@ module TypeScript.Syntax {
 
         public isUnaryExpression(): boolean {
             return this.isExpression();
+        }
+
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.previousToken(this, includeSkippedTokens);
+        }
+
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.nextToken(this, includeSkippedTokens);
         }
     }
 
@@ -586,8 +599,8 @@ module TypeScript.Syntax {
         public leadingTrivia(): ISyntaxTriviaList { return this._leadingTrivia; }
         public trailingTrivia(): ISyntaxTriviaList { return this._trailingTrivia; }
 
-        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            return new PositionedToken(parent, this, fullStart);
+        private findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            return this;
         }
 
         public collectTextElements(elements: string[]): void {
@@ -624,6 +637,14 @@ module TypeScript.Syntax {
 
         public isUnaryExpression(): boolean {
             return this.isExpression();
+        }
+
+        public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.previousToken(this, includeSkippedTokens);
+        }
+
+        public nextToken(includeSkippedTokens: boolean = false): ISyntaxToken {
+            return Syntax.nextToken(this, includeSkippedTokens);
         }
     }
 

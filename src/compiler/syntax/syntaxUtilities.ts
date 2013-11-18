@@ -2,9 +2,9 @@
 
 module TypeScript {
     export class SyntaxUtilities {
-        public static isAngleBracket(positionedElement: PositionedElement): boolean {
-            var element = positionedElement.element();
-            var parent = positionedElement.parentElement();
+        public static isAngleBracket(positionedElement: ISyntaxElement): boolean {
+            var element = positionedElement;
+            var parent = positionedElement.parent;
             if (parent !== null && (element.kind() === SyntaxKind.LessThanToken || element.kind() === SyntaxKind.GreaterThanToken)) {
                 switch (parent.kind()) {
                     case SyntaxKind.TypeArgumentList:
@@ -51,12 +51,12 @@ module TypeScript {
             }
         }
 
-        public static isAmbientDeclarationSyntax(positionNode: PositionedNode): boolean {
+        public static isAmbientDeclarationSyntax(positionNode: SyntaxNode): boolean {
             if (!positionNode) {
                 return false;
             }
 
-            var node = positionNode.node();
+            var node = positionNode;
             switch (node.kind()) {
                 case SyntaxKind.ModuleDeclaration:
                 case SyntaxKind.ClassDeclaration:
@@ -75,14 +75,14 @@ module TypeScript {
                 case SyntaxKind.SetAccessor:
                 case SyntaxKind.MemberVariableDeclaration:
                     if (node.isClassElement() || node.isModuleElement()) {
-                        return SyntaxUtilities.isAmbientDeclarationSyntax(positionNode.containingNode());
+                        return SyntaxUtilities.isAmbientDeclarationSyntax(Syntax.containingNode(positionNode));
                     }
 
                 case SyntaxKind.EnumElement:
-                    return SyntaxUtilities.isAmbientDeclarationSyntax(positionNode.containingNode().containingNode());
+                    return SyntaxUtilities.isAmbientDeclarationSyntax(Syntax.containingNode(Syntax.containingNode(positionNode)));
 
                 default: 
-                    return SyntaxUtilities.isAmbientDeclarationSyntax(positionNode.containingNode());
+                    return SyntaxUtilities.isAmbientDeclarationSyntax(Syntax.containingNode(positionNode));
             }
         }
     }

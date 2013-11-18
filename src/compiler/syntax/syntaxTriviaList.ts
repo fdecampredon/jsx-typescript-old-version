@@ -3,6 +3,14 @@
 module TypeScript {
     export interface ISyntaxTriviaList {
         parent: ISyntaxToken;
+        syntaxTree(): SyntaxTree;
+
+        isNode(): boolean;
+        isToken(): boolean;
+        isTrivia(): boolean;
+        isList(): boolean;
+        isSeparatedList(): boolean;
+        isTriviaList(): boolean;
 
         isShared(): boolean;
 
@@ -34,8 +42,19 @@ module TypeScript.Syntax {
     class EmptyTriviaList implements ISyntaxTriviaList {
         public parent: ISyntaxToken = null;
 
+        public isNode(): boolean { return false; }
+        public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return true; }
+
         public isShared(): boolean {
             return true;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            throw Errors.invalidOperation("Shared lists do not belong to a single tree.");
         }
 
         public kind() {
@@ -124,6 +143,17 @@ module TypeScript.Syntax {
             this.item.parent = this;
         }
 
+        public isNode(): boolean { return false; }
+        public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return true; }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
+        }
+
         public isShared(): boolean {
             return false;
         }
@@ -199,8 +229,19 @@ module TypeScript.Syntax {
             });
         }
 
+        public isNode(): boolean { return false; }
+        public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return true; }
+
         public isShared(): boolean {
             return false;
+        }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
         }
 
         public kind(): SyntaxKind { return SyntaxKind.TriviaList; }

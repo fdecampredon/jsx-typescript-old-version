@@ -55,7 +55,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     public visitToken(token: TypeScript.ISyntaxToken) {
         if (token.kind() === TypeScript.SyntaxKind.IdentifierName) {
             var posToken = this.syntaxTree.sourceUnit().findToken(this.position());
-            var myParent = posToken.parentElement();
+            var myParent = posToken.parent;
             if (!this.isName(token, myParent)) {
                 this.log(token);
             }

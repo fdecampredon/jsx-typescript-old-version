@@ -45,12 +45,20 @@ module TypeScript.Syntax {
             return false;
         }
 
+        public isTrivia(): boolean {
+            return false;
+        }
+
         public isList() {
             return false;
         }
 
         public isSeparatedList() {
             return true;
+        }
+
+        public isTriviaList(): boolean {
+            return false;
         }
 
         toJSON(key: any): any[] {
@@ -140,7 +148,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // This should never have been called on this list.  It has a 0 width, so the client 
             // should have skipped over this.
             throw Errors.invalidOperation();
@@ -200,8 +208,10 @@ module TypeScript.Syntax {
 
         public isNode(): boolean { return false; }
         public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return true; }
+        public isTriviaList(): boolean { return false; }
 
         public childCount() { return 1; }
         public nonSeparatorCount() { return 1; }
@@ -298,10 +308,9 @@ module TypeScript.Syntax {
             return this.item.isIncrementallyUnusable();
         }
 
-        public findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
+        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
             // Debug.assert(position >= 0 && position < this.item.fullWidth());
-            return (<any>this.item).findTokenInternal(
-                new PositionedSeparatedList(parent, this, fullStart), position, fullStart);
+            return (<any>this.item).findTokenInternal(this, position, fullStart);
         }
 
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
@@ -338,8 +347,11 @@ module TypeScript.Syntax {
 
         public isToken(): boolean { return false; }
         public isNode(): boolean { return false; }
+        public isTrivia(): boolean { return false; }
         public isList(): boolean { return false; }
         public isSeparatedList(): boolean { return true; }
+        public isTriviaList(): boolean { return false; }
+
         public toJSON(key: any) { return this.elements; }
 
         public childCount() { return this.elements.length; }
@@ -499,8 +511,8 @@ module TypeScript.Syntax {
             return this._data;
         }
 
-        public findTokenInternal(parent: PositionedElement, position: number, fullStart: number): PositionedToken {
-            parent = new PositionedSeparatedList(parent, this, fullStart);
+        public findTokenInternal(parent: ISyntaxElement, position: number, fullStart: number): ISyntaxToken {
+            parent = this;
             for (var i = 0, n = this.elements.length; i < n; i++) {
                 var element = this.elements[i];
 

@@ -3,7 +3,15 @@
 module TypeScript {
     export interface ISyntaxTrivia {
         parent: ISyntaxTriviaList;
+        syntaxTree(): SyntaxTree;
         kind(): SyntaxKind;
+
+        isNode(): boolean;
+        isToken(): boolean;
+        isTrivia(): boolean;
+        isList(): boolean;
+        isSeparatedList(): boolean;
+        isTriviaList(): boolean;
 
         isWhitespace(): boolean;
         isComment(): boolean;
@@ -31,6 +39,17 @@ module TypeScript.Syntax {
         public parent: ISyntaxTriviaList = null;
 
         constructor(private _kind: SyntaxKind) {
+        }
+
+        public isNode(): boolean { return false; }
+        public isToken(): boolean { return false; }
+        public isTrivia(): boolean { return true; }
+        public isList(): boolean { return false; }
+        public isSeparatedList(): boolean { return false; }
+        public isTriviaList(): boolean { return false; }
+
+        public syntaxTree(): SyntaxTree {
+            return this.parent.syntaxTree();
         }
 
         public clone(): ISyntaxTrivia {

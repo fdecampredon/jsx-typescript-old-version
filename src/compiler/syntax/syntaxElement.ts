@@ -11,8 +11,10 @@ module TypeScript {
 
         isNode(): boolean;
         isToken(): boolean;
+        isTrivia(): boolean;
         isList(): boolean;
         isSeparatedList(): boolean;
+        isTriviaList(): boolean;
 
         childCount(): number;
         childAt(index: number): ISyntaxElement;

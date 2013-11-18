@@ -74,7 +74,6 @@ var compilerSources = [
 	"syntax/languageVersion.ts",
 	"syntax/parseOptions.ts",
 	"syntax/parser.ts",
-	"syntax/positionedElement.ts",
 	"syntax/positionTrackingWalker.ts",
 	"syntax/references.ts",
 	"syntax/scanner.ts",

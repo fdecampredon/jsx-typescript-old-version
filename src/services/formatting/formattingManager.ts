@@ -46,11 +46,11 @@ module TypeScript.Services.Formatting {
 
             if (semicolonPositionedToken.kind() === SyntaxKind.SemicolonToken) {
                 // Find the outer most parent that this semicolon terminates
-                var current: PositionedElement = semicolonPositionedToken;
-                while (current.parent() !== null &&
-                       current.parent().end() === semicolonPositionedToken.end() &&
-                       current.parent().kind() !== SyntaxKind.List) {
-                    current = current.parent();
+                var current: ISyntaxElement = semicolonPositionedToken;
+                while (current.parent !== null &&
+                       current.parent.end() === semicolonPositionedToken.end() &&
+                       current.parent.kind() !== SyntaxKind.List) {
+                    current = current.parent;
                 }
 
                 // Compute the span
@@ -69,11 +69,11 @@ module TypeScript.Services.Formatting {
 
             if (closeBracePositionedToken.kind() === SyntaxKind.CloseBraceToken) {
                 // Find the outer most parent that this closing brace terminates
-                var current: PositionedElement = closeBracePositionedToken;
-                while (current.parent() !== null &&
-                       current.parent().end() === closeBracePositionedToken.end() &&
-                       current.parent().kind() !== SyntaxKind.List) {
-                    current = current.parent();
+                var current: ISyntaxElement = closeBracePositionedToken;
+                while (current.parent !== null &&
+                       current.parent.end() === closeBracePositionedToken.end() &&
+                       current.parent.kind() !== SyntaxKind.List) {
+                    current = current.parent;
                 }
 
                 // Compute the span
