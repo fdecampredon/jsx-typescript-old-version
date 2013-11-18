@@ -16,37 +16,39 @@ module TypeScript.Emitter1 {
                 // unique/
                 return token.clone();
             }
-            
+
             this.tokenTable.add(token, token);
             return token;
         }
     }
 
     class EmitterImpl extends SyntaxRewriter {
-        private syntaxInformationMap: SyntaxInformationMap;
-        private options: FormattingOptions;
         private space: ISyntaxTriviaList;
         private newLine: ISyntaxTriviaList;
         private factory: Syntax.IFactory = Syntax.normalModeFactory;
 
-        constructor(syntaxInformationMap: SyntaxInformationMap,
-                    options: FormattingOptions) {
+        // A copy of the syntax tree we keep around so that we can determine where tokens were
+        // before we started moving them around.
+        private syntaxTreeCopy: SyntaxTree;
+
+        constructor(syntaxTree: SyntaxTree, private options: FormattingOptions) {
             super();
 
-            this.syntaxInformationMap = syntaxInformationMap;
             this.options = options || FormattingOptions.defaultOptions;
 
             // TODO: use proper new line based on options.
             this.space = Syntax.spaceTriviaList;
             this.newLine = Syntax.triviaList([Syntax.carriageReturnLineFeedTrivia]);
+
+            this.syntaxTreeCopy = Parser.parse(syntaxTree.fileName(), SimpleText.fromString(syntaxTree.sourceUnit().fullText()), syntaxTree.isDeclaration(), syntaxTree.parseOptions());
         }
 
         private columnForStartOfToken(token: ISyntaxToken): number {
-            return Indentation.columnForStartOfToken(token, this.syntaxInformationMap, this.options);
+            return Indentation.columnForStartOfTokenAtPosition(this.syntaxTreeCopy, token.fullStart(), this.options);
         }
 
         private columnForEndOfToken(token: ISyntaxToken): number {
-            return Indentation.columnForEndOfToken(token, this.syntaxInformationMap, this.options);
+            return Indentation.columnForEndOfTokenAtPosition(this.syntaxTreeCopy, token.fullStart(), this.options);
         }
 
         private indentationTrivia(column: number): ISyntaxTriviaList {
@@ -65,13 +67,13 @@ module TypeScript.Emitter1 {
             }
             else if (indentAmount > 0) {
                 return SyntaxIndenter.indentNode(node,
-                    /*indentFirstToken:*/ changeFirstToken, /*indentAmount:*/ indentAmount,
+                /*indentFirstToken:*/ changeFirstToken, /*indentAmount:*/ indentAmount,
                     this.options);
             }
             else {
                 // Dedent the node.  But don't allow it go before the minimum indent amount.
                 return SyntaxDedenter.dedentNode(node,
-                    /*dedentFirstToken:*/ changeFirstToken, /*dedentAmount:*/-indentAmount, 
+                /*dedentFirstToken:*/ changeFirstToken, /*dedentAmount:*/-indentAmount,
                     /*minimumColumn:*/this.options.indentSpaces, this.options);
             }
         }
@@ -150,8 +152,8 @@ module TypeScript.Emitter1 {
         }
 
         private exportModuleElement(moduleIdentifier: ISyntaxToken,
-                                    moduleElement: IModuleElementSyntax,
-                                    elementIdentifier: ISyntaxToken): ExpressionStatementSyntax {
+            moduleElement: IModuleElementSyntax,
+            elementIdentifier: ISyntaxToken): ExpressionStatementSyntax {
             elementIdentifier = this.withNoTrivia(elementIdentifier);
 
             // M1.e = e;
@@ -163,8 +165,8 @@ module TypeScript.Emitter1 {
                         elementIdentifier.withTrailingTrivia(Syntax.spaceTriviaList)),
                     Syntax.token(SyntaxKind.EqualsToken).withTrailingTrivia(this.space),
                     elementIdentifier))
-                        .withLeadingTrivia(this.indentationTriviaForStartOfNode(moduleElement))
-                        .withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(this.indentationTriviaForStartOfNode(moduleElement))
+                .withTrailingTrivia(this.newLine);
         }
 
         private handleExportedModuleElement(parentModule: ISyntaxToken,
@@ -202,7 +204,7 @@ module TypeScript.Emitter1 {
             }
         }
 
-        public visitModuleDeclaration(node: ModuleDeclarationSyntax): IModuleElementSyntax[]{
+        public visitModuleDeclaration(node: ModuleDeclarationSyntax): IModuleElementSyntax[] {
             var _this = this;
 
             // Recurse downwards and get the rewritten children.
@@ -222,7 +224,7 @@ module TypeScript.Emitter1 {
 
             // Break up the dotted name into pieces.
             var names = EmitterImpl.splitModuleName(node.name);
-            
+
             // Then, for all the names left of that name, wrap what we've created in a larger module.
             for (var nameIndex = names.length - 1; nameIndex >= 0; nameIndex--) {
                 moduleElements = this.convertModuleDeclaration(
@@ -254,9 +256,9 @@ module TypeScript.Emitter1 {
         }
 
         private convertModuleDeclaration(moduleDeclaration: ModuleDeclarationSyntax,
-                                         moduleName: ISyntaxToken,
-                                         moduleElements: IModuleElementSyntax[],
-                                         outermost: boolean): IModuleElementSyntax[] {
+            moduleName: ISyntaxToken,
+            moduleElements: IModuleElementSyntax[],
+            outermost: boolean): IModuleElementSyntax[] {
             moduleName = moduleName.withLeadingTrivia(Syntax.emptyTriviaList).withTrailingTrivia(Syntax.emptyTriviaList);
             var moduleIdentifier = moduleName;
 
@@ -268,7 +270,7 @@ module TypeScript.Emitter1 {
                 Syntax.token(SyntaxKind.VarKeyword).withTrailingTrivia(this.space),
                 Syntax.separatedList<VariableDeclaratorSyntax>(
                     [VariableDeclaratorSyntax.create(moduleIdentifier)])))
-                        .withLeadingTrivia(leadingTrivia).withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(leadingTrivia).withTrailingTrivia(this.newLine);
 
             // function(M) { ... }
             var functionExpression = FunctionExpressionSyntax.create1()
@@ -281,9 +283,9 @@ module TypeScript.Emitter1 {
             // (function(M) { ... })(M||(M={}));
             var expressionStatement = ExpressionStatementSyntax.create1(
                 this.factory.invocationExpression(
-                ParenthesizedExpressionSyntax.create1(functionExpression),
-                ArgumentListSyntax.create1().withArgument(this.initializedVariable(moduleName))))
-                    .withLeadingTrivia(moduleIndentation).withTrailingTrivia(this.newLine);
+                    ParenthesizedExpressionSyntax.create1(functionExpression),
+                    ArgumentListSyntax.create1().withArgument(this.initializedVariable(moduleName))))
+                .withLeadingTrivia(moduleIndentation).withTrailingTrivia(this.newLine);
 
             return [<IModuleElementSyntax>variableStatement, expressionStatement];
         }
@@ -423,8 +425,8 @@ module TypeScript.Emitter1 {
             // after the function sigature.
 
             return <BlockSyntax>this.changeIndentation(block, /*indentFirstToken:*/ false,
-                Indentation.columnForStartOfFirstTokenInLineContainingToken(
-                    arrowFunction.firstToken(), this.syntaxInformationMap, this.options));
+                Indentation.columnForStartOfFirstTokenInLineContainingPosition(
+                    this.syntaxTreeCopy, arrowFunction.firstToken().fullStart(), this.options));
         }
 
         private static methodSignatureDefaultParameters(signature: MethodSignatureSyntax): ParameterSyntax[] {
@@ -457,12 +459,12 @@ module TypeScript.Emitter1 {
 
             // typeof foo === 'undefined'
             var condition = this.factory.binaryExpression(
-                    SyntaxKind.EqualsExpression,
-                    this.factory.typeOfExpression(
-                        Syntax.token(SyntaxKind.TypeOfKeyword).withTrailingTrivia(this.space),
-                        identifierName),
-                    Syntax.token(SyntaxKind.EqualsEqualsEqualsToken).withTrailingTrivia(this.space),
-                    Syntax.stringLiteralExpression('"undefined"'));
+                SyntaxKind.EqualsExpression,
+                this.factory.typeOfExpression(
+                    Syntax.token(SyntaxKind.TypeOfKeyword).withTrailingTrivia(this.space),
+                    identifierName),
+                Syntax.token(SyntaxKind.EqualsEqualsEqualsToken).withTrailingTrivia(this.space),
+                Syntax.stringLiteralExpression('"undefined"'));
 
             // foo = expr; 
             var assignmentStatement = ExpressionStatementSyntax.create1(
@@ -514,19 +516,19 @@ module TypeScript.Emitter1 {
             }
 
             return rewritten.withModifiers(Syntax.emptyList<ISyntaxToken>())
-                            .withLeadingTrivia(rewritten.leadingTrivia());
+                .withLeadingTrivia(rewritten.leadingTrivia());
         }
 
         public visitParameter(node: ParameterSyntax): ParameterSyntax {
             // transfer the trivia from the first token to the the identifier.
             return ParameterSyntax.create(node.identifier)
-                                  .withLeadingTrivia(node.leadingTrivia())
-                                  .withTrailingTrivia(node.trailingTrivia())
+                .withLeadingTrivia(node.leadingTrivia())
+                .withTrailingTrivia(node.trailingTrivia())
         }
 
         private generatePropertyAssignment(classDeclaration: ClassDeclarationSyntax,
-                                           static: boolean,
-                                           memberDeclaration: MemberVariableDeclarationSyntax): ExpressionStatementSyntax {
+            static: boolean,
+            memberDeclaration: MemberVariableDeclarationSyntax): ExpressionStatementSyntax {
             var isStatic = this.containsToken(memberDeclaration.modifiers, SyntaxKind.StaticKeyword);
             var declarator = memberDeclaration.variableDeclarator;
             if (static !== isStatic || declarator.equalsValueClause === null) {
@@ -536,7 +538,7 @@ module TypeScript.Emitter1 {
             // this.foo = expr;
             var receiver = MemberAccessExpressionSyntax.create1(
                 static ? <IExpressionSyntax>this.withNoTrivia(classDeclaration.identifier)
-                       : Syntax.token(SyntaxKind.ThisKeyword),
+                : Syntax.token(SyntaxKind.ThisKeyword),
                 this.withNoTrivia(declarator.propertyName)).withTrailingTrivia(Syntax.spaceTriviaList);
 
             return ExpressionStatementSyntax.create1(
@@ -544,11 +546,11 @@ module TypeScript.Emitter1 {
                     receiver,
                     Syntax.token(SyntaxKind.EqualsToken).withTrailingTrivia(this.space),
                     declarator.equalsValueClause.value.accept(this).withTrailingTrivia(Syntax.emptyTriviaList)))
-                        .withLeadingTrivia(memberDeclaration.leadingTrivia()).withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(memberDeclaration.leadingTrivia()).withTrailingTrivia(this.newLine);
         }
 
         private generatePropertyAssignments(classDeclaration: ClassDeclarationSyntax,
-                                            static: boolean): ExpressionStatementSyntax[] {
+            static: boolean): ExpressionStatementSyntax[] {
             var result: ExpressionStatementSyntax[] = [];
 
             // TODO: handle alignment here.
@@ -574,16 +576,16 @@ module TypeScript.Emitter1 {
             var statements: IStatementSyntax[] = [];
             if (classDeclaration.heritageClauses.childCount() > 0) {
                 statements.push(ExpressionStatementSyntax.create1(
-                        this.factory.invocationExpression(
-                            MemberAccessExpressionSyntax.create1(
-                                Syntax.identifierName("_super"), Syntax.identifierName("apply")),
-                            ArgumentListSyntax.create1().withArguments(
-                                Syntax.separatedList<IExpressionSyntax>([
-                                    Syntax.token(SyntaxKind.ThisKeyword),
-                                    Syntax.token(SyntaxKind.CommaToken).withTrailingTrivia(this.space),
-                                    Syntax.identifierName("arguments")])))
+                    this.factory.invocationExpression(
+                        MemberAccessExpressionSyntax.create1(
+                            Syntax.identifierName("_super"), Syntax.identifierName("apply")),
+                        ArgumentListSyntax.create1().withArguments(
+                            Syntax.separatedList<IExpressionSyntax>([
+                                Syntax.token(SyntaxKind.ThisKeyword),
+                                Syntax.token(SyntaxKind.CommaToken).withTrailingTrivia(this.space),
+                                Syntax.identifierName("arguments")])))
                     ).withLeadingTrivia(this.indentationTrivia(statementIndentationColumn))
-                     .withTrailingTrivia(this.newLine));
+                    .withTrailingTrivia(this.newLine));
             }
 
             if (this.mustCaptureThisInClass(classDeclaration)) {
@@ -598,17 +600,17 @@ module TypeScript.Emitter1 {
                 Syntax.token(SyntaxKind.FunctionKeyword).withLeadingTrivia(indentationTrivia).withTrailingTrivia(this.space),
                 this.withNoTrivia(classDeclaration.identifier),
                 CallSignatureSyntax.create1().withTrailingTrivia(this.space))
-                    .withBlock(this.factory.block(
-                        Syntax.token(SyntaxKind.OpenBraceToken).withTrailingTrivia(this.newLine),
-                        Syntax.list(statements),
-                        Syntax.token(SyntaxKind.CloseBraceToken).withLeadingTrivia(indentationTrivia))).withTrailingTrivia(this.newLine);
+                .withBlock(this.factory.block(
+                    Syntax.token(SyntaxKind.OpenBraceToken).withTrailingTrivia(this.newLine),
+                    Syntax.list(statements),
+                    Syntax.token(SyntaxKind.CloseBraceToken).withLeadingTrivia(indentationTrivia))).withTrailingTrivia(this.newLine);
 
             return <FunctionDeclarationSyntax>this.changeIndentation(
                 functionDeclaration, /*indentFirstToken:*/ true, this.options.indentSpaces);
         }
 
         private convertConstructorDeclaration(classDeclaration: ClassDeclarationSyntax,
-                                              constructorDeclaration: ConstructorDeclarationSyntax): FunctionDeclarationSyntax {
+            constructorDeclaration: ConstructorDeclarationSyntax): FunctionDeclarationSyntax {
             if (constructorDeclaration.block === null) {
                 return null;
             }
@@ -673,11 +675,11 @@ module TypeScript.Emitter1 {
                 Syntax.token(SyntaxKind.FunctionKeyword).withTrailingTrivia(this.space),
                 identifier,
                 CallSignatureSyntax.create(parameterList))
-                    .withBlock(block.withStatements(Syntax.list(normalStatements))).withLeadingTrivia(constructorDeclaration.leadingTrivia());
+                .withBlock(block.withStatements(Syntax.list(normalStatements))).withLeadingTrivia(constructorDeclaration.leadingTrivia());
         }
 
         private convertMemberFunctionDeclaration(classDeclaration: ClassDeclarationSyntax,
-                                                 functionDeclaration: MemberFunctionDeclarationSyntax): ExpressionStatementSyntax {
+            functionDeclaration: MemberFunctionDeclarationSyntax): ExpressionStatementSyntax {
             var _this = this;
             if (functionDeclaration.block === null) {
                 return null;
@@ -689,8 +691,8 @@ module TypeScript.Emitter1 {
             var receiver: IExpressionSyntax = classIdentifier.withLeadingTrivia(functionDeclaration.leadingTrivia());
 
             receiver = this.containsToken(functionDeclaration.modifiers, SyntaxKind.StaticKeyword)
-                ? receiver
-                : MemberAccessExpressionSyntax.create1(receiver, Syntax.identifierName("prototype"));
+            ? receiver
+            : MemberAccessExpressionSyntax.create1(receiver, Syntax.identifierName("prototype"));
 
             receiver = MemberAccessExpressionSyntax.create1(
                 receiver, functionIdentifier.withTrailingTrivia(Syntax.spaceTriviaList));
@@ -743,12 +745,12 @@ module TypeScript.Emitter1 {
                     Syntax.token(SyntaxKind.FunctionKeyword),
                     CallSignatureSyntax.create(parameterList),
                     (<any>memberAccessor).block.accept(this).withTrailingTrivia(Syntax.emptyTriviaList)))
-                        .withLeadingTrivia(this.indentationTriviaForStartOfNode(memberAccessor));
+                .withLeadingTrivia(this.indentationTriviaForStartOfNode(memberAccessor));
         }
 
         private convertMemberAccessorDeclaration(classDeclaration: ClassDeclarationSyntax,
-                                                 memberAccessor: SyntaxNode,
-                                                 classElements: IClassElementSyntax[]): IStatementSyntax {
+            memberAccessor: SyntaxNode,
+            classElements: IClassElementSyntax[]): IStatementSyntax {
             var name = (<any>memberAccessor).propertyName.valueText();
             var i: number;
 
@@ -829,7 +831,7 @@ module TypeScript.Emitter1 {
                     converted = this.generatePropertyAssignment(classDeclaration, /*static:*/ true, <MemberVariableDeclarationSyntax>classElement);
                 }
                 else if (classElement.kind() === SyntaxKind.GetAccessor ||
-                         classElement.kind() === SyntaxKind.SetAccessor) {
+                    classElement.kind() === SyntaxKind.SetAccessor) {
                     converted = this.convertMemberAccessorDeclaration(classDeclaration, <SyntaxNode>classElement, classElements);
                 }
 
@@ -845,7 +847,7 @@ module TypeScript.Emitter1 {
             var identifier = this.withNoTrivia(node.identifier);
 
             var statements: IStatementSyntax[] = [];
-            var statementIndentation = this.indentationTrivia( this.options.indentSpaces + this.columnForStartOfToken(node.firstToken()));
+            var statementIndentation = this.indentationTrivia(this.options.indentSpaces + this.columnForStartOfToken(node.firstToken()));
 
             if (node.heritageClauses.childCount() > 0) {
                 // __extends(C, _super);
@@ -876,7 +878,7 @@ module TypeScript.Emitter1 {
                 Syntax.token(SyntaxKind.ReturnKeyword).withTrailingTrivia(this.space),
                 identifier,
                 Syntax.token(SyntaxKind.SemicolonToken))
-                    .withLeadingTrivia(statementIndentation).withTrailingTrivia(this.newLine));
+                .withLeadingTrivia(statementIndentation).withTrailingTrivia(this.newLine));
 
             var block = this.factory.block(
                 Syntax.token(SyntaxKind.OpenBraceToken).withTrailingTrivia(this.newLine),
@@ -913,15 +915,15 @@ module TypeScript.Emitter1 {
             // C = (function(_super) { ... })(BaseType)
             var variableDeclarator = VariableDeclaratorSyntax.create(
                 identifier.withTrailingTrivia(Syntax.spaceTriviaList)).withEqualsValueClause(
-                    this.factory.equalsValueClause(
-                        Syntax.token(SyntaxKind.EqualsToken).withTrailingTrivia(this.space),
-                        invocationExpression));
-            
+                this.factory.equalsValueClause(
+                    Syntax.token(SyntaxKind.EqualsToken).withTrailingTrivia(this.space),
+                    invocationExpression));
+
             // var C = (function(_super) { ... })(BaseType);
             return VariableStatementSyntax.create1(this.factory.variableDeclaration(
                 Syntax.token(SyntaxKind.VarKeyword).withTrailingTrivia(this.space),
                 Syntax.separatedList<VariableDeclaratorSyntax>([variableDeclarator])))
-                    .withLeadingTrivia(node.leadingTrivia()).withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(node.leadingTrivia()).withTrailingTrivia(this.newLine);
         }
 
         public visitVariableDeclarator(node: VariableDeclaratorSyntax): VariableDeclaratorSyntax {
@@ -933,7 +935,7 @@ module TypeScript.Emitter1 {
             var newTrailingTrivia = result.propertyName.trailingTrivia().concat(result.typeAnnotation.trailingTrivia());
 
             return result.withTypeAnnotation(null)
-                         .withPropertyName(result.propertyName.withTrailingTrivia(newTrailingTrivia));
+                .withPropertyName(result.propertyName.withTrailingTrivia(newTrailingTrivia));
         }
 
         public visitCallSignature(node: CallSignatureSyntax): CallSignatureSyntax {
@@ -967,9 +969,9 @@ module TypeScript.Emitter1 {
         }
 
         private generateEnumValueExpression(enumDeclaration: EnumDeclarationSyntax,
-                                            enumElement: EnumElementSyntax,
-                                            assignDefaultValues: boolean,
-                                            index: number): IExpressionSyntax {
+            enumElement: EnumElementSyntax,
+            assignDefaultValues: boolean,
+            index: number): IExpressionSyntax {
             if (enumElement.equalsValueClause !== null) {
                 // Use the value if one is provided.
                 return enumElement.equalsValueClause.value.accept(this).withTrailingTrivia(Syntax.emptyTriviaList);
@@ -1032,8 +1034,8 @@ module TypeScript.Emitter1 {
                         elementAccessExpression,
                         Syntax.token(SyntaxKind.EqualsToken).withTrailingTrivia(this.space),
                         variableIdentifier.kind() === SyntaxKind.StringLiteral
-                            ? variableIdentifier
-                            : Syntax.stringLiteralExpression('"' + variableIdentifier.text() + '"'));
+                        ? variableIdentifier
+                        : Syntax.stringLiteralExpression('"' + variableIdentifier.text() + '"'));
 
                     var expressionStatement = ExpressionStatementSyntax.create1(
                         outerAssign).withTrailingTrivia(this.newLine);
@@ -1063,15 +1065,15 @@ module TypeScript.Emitter1 {
             var variableStatement: IStatementSyntax = VariableStatementSyntax.create1(this.factory.variableDeclaration(
                 Syntax.token(SyntaxKind.VarKeyword).withTrailingTrivia(this.space),
                 Syntax.separatedList<VariableDeclaratorSyntax>([VariableDeclaratorSyntax.create(identifier)])))
-                    .withLeadingTrivia(node.leadingTrivia()).withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(node.leadingTrivia()).withTrailingTrivia(this.newLine);
 
             // (function(E) { E[E.e1 = ... })(E||(E={}));
             var expressionStatement: IStatementSyntax = ExpressionStatementSyntax.create1(
                 this.factory.invocationExpression(
                     ParenthesizedExpressionSyntax.create1(this.generateEnumFunctionExpression(node)),
                     ArgumentListSyntax.create1().withArgument(this.initializedVariable(identifier))))
-                        .withLeadingTrivia(this.indentationTriviaForStartOfNode(node))
-                        .withTrailingTrivia(this.newLine);
+                .withLeadingTrivia(this.indentationTriviaForStartOfNode(node))
+                .withTrailingTrivia(this.newLine);
 
             return [variableStatement, expressionStatement];
         }
@@ -1089,8 +1091,8 @@ module TypeScript.Emitter1 {
             arguments.unshift(Syntax.token(SyntaxKind.ThisKeyword));
 
             return result.withExpression(expression)
-                         .withArgumentList(result.argumentList.withArguments(Syntax.separatedList<IExpressionSyntax>(arguments)))
-                         .withLeadingTrivia(result.leadingTrivia());
+                .withArgumentList(result.argumentList.withArguments(Syntax.separatedList<IExpressionSyntax>(arguments)))
+                .withLeadingTrivia(result.leadingTrivia());
         }
 
         private convertSuperMemberAccessInvocationExpression(node: InvocationExpressionSyntax): InvocationExpressionSyntax {
@@ -1105,7 +1107,7 @@ module TypeScript.Emitter1 {
 
             var expression = MemberAccessExpressionSyntax.create1(result.expression, Syntax.identifierName("call"));
             return result.withExpression(expression)
-                         .withArgumentList(result.argumentList.withArguments(Syntax.separatedList<IExpressionSyntax>(arguments)));
+                .withArgumentList(result.argumentList.withArguments(Syntax.separatedList<IExpressionSyntax>(arguments)));
         }
 
         public visitInvocationExpression(node: InvocationExpressionSyntax): InvocationExpressionSyntax {
@@ -1123,7 +1125,7 @@ module TypeScript.Emitter1 {
             var result: VariableStatementSyntax = super.visitVariableStatement(node);
 
             return result.withModifiers(Syntax.emptyList<ISyntaxToken>())
-                         .withLeadingTrivia(result.leadingTrivia());
+                .withLeadingTrivia(result.leadingTrivia());
         }
 
         public visitMemberAccessExpression(node: MemberAccessExpressionSyntax): MemberAccessExpressionSyntax {
@@ -1158,7 +1160,7 @@ module TypeScript.Emitter1 {
 
         public visitIdentifierName(token: ISyntaxToken): INameSyntax {
             // Check if a name token needs to become fully qualified.
-            var parent = this.syntaxInformationMap.parent(token);
+            var parent = token.parent;
 
             // We never qualify in a qualified name.  A qualified name only shows up in type 
             // contexts, and will be removed anyways.
@@ -1231,8 +1233,7 @@ module TypeScript.Emitter1 {
 
         // Do the initial conversion. Note: the result at this point may be 'bogus'.  For example,
         // it make contain the same token instance multiple times in the tree.
-        var output: SourceUnitSyntax = input.accept(
-            new EmitterImpl(SyntaxInformationMap.create(input, /*trackParents:*/ true, /*trackPreviousToken:*/ true), options));
+        var output: SourceUnitSyntax = input.accept(new EmitterImpl(input.syntaxTree(), options));
 
         // Make sure we clone any nodes/tokens we used in multiple places in the result.  That way
         // we don't break the invariant that all tokens in a tree are unique.

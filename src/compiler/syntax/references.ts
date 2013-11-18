@@ -41,9 +41,6 @@
 ///<reference path='syntaxWalker.generated.ts' />
 
 // SyntaxInformationMap depends on SyntaxWalker
-///<reference path='syntaxInformationMap.ts' />
-
-// SyntaxInformationMap depends on SyntaxWalker
 ///<reference path='syntaxNodeInvariantsChecker.ts' />
 
 // DepthLimitedWalker depends on PositionTrackingWalker

@@ -14,9 +14,25 @@ module TypeScript {
             node.accept(new SyntaxNodeInvariantsChecker());
         }
 
+        public visitNode(node: SyntaxNode): void {
+            Debug.assert(node.kind() === SyntaxKind.SourceUnit || node.fullWidth() === 0 || node.parent);
+            super.visitNode(node);
+        }
+
+        public visitList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
+            Debug.assert(list.fullWidth() === 0 || list.parent);
+            super.visitList(list);
+        }
+
+        public visitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
+            Debug.assert(list.fullWidth() === 0 || list.parent);
+            super.visitSeparatedList(list);
+        }
+
         public visitToken(token: ISyntaxToken): void {
             // We're calling 'add', so the table will throw if we try to put the same token in multiple
             // times. 
+            Debug.assert(token.fullWidth() === 0 || token.parent);
             this.tokenTable.add(token, token);
         }
     }

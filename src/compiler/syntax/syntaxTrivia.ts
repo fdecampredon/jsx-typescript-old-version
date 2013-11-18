@@ -193,7 +193,9 @@ module TypeScript.Syntax {
         }
 
         public clone(): ISyntaxTrivia {
-            return new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
+            var result = new DeferredTrivia(this.kind(), this._text, this._fullStart, this._fullWidth);
+            result._fullText = this._fullText;
+            return result;
         }
 
         public fullStart(): number {

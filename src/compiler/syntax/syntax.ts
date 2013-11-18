@@ -622,4 +622,22 @@ module TypeScript.Syntax {
 
         throw Errors.invalidOperation();
     }
+
+    export function firstTokenInLineContainingPosition(syntaxTree: SyntaxTree, position: number): ISyntaxToken {
+        var current = syntaxTree.sourceUnit().findToken(position);
+        while (true) {
+            if (isFirstTokenInLine(current)) {
+                break;
+            }
+
+            current = current.previousToken();
+        }
+
+        return current;
+    }
+
+    function isFirstTokenInLine(token: ISyntaxToken): boolean {
+        var previousToken = token.previousToken();
+        return previousToken === null || previousToken.hasTrailingNewLine();
+    }
 }

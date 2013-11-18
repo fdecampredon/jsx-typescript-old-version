@@ -1,15 +1,14 @@
 ///<reference path='references.ts' />
 
 module TypeScript.Indentation {
-    export function columnForEndOfToken(token: ISyntaxToken,
-                                        syntaxInformationMap: SyntaxInformationMap,
-                                        options: FormattingOptions): number {
-        return columnForStartOfToken(token, syntaxInformationMap, options) + token.width();
+    export function columnForEndOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
+        var token = syntaxTree.sourceUnit().findToken(position);
+        return columnForStartOfTokenAtPosition(syntaxTree, position, options) + token.width();
     }
 
-    export function columnForStartOfToken(token: ISyntaxToken,
-                                          syntaxInformationMap: SyntaxInformationMap,
-                                          options: FormattingOptions): number {
+    export function columnForStartOfTokenAtPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
+        var token = syntaxTree.sourceUnit().findToken(position);
+
         // Walk backward from this token until we find the first token in the line.  For each token 
         // we see (that is not the first tokem in line), push the entirety of the text into the text 
         // array.  Then, for the first token, add its text (without its leading trivia) to the text
@@ -26,12 +25,12 @@ module TypeScript.Indentation {
         //              __
         //          ____
         //      ____
-        var firstTokenInLine = syntaxInformationMap.firstTokenInLineContainingToken(token);
+        var firstTokenInLine = Syntax.firstTokenInLineContainingPosition(syntaxTree, token.fullStart());
         var leadingTextInReverse: string[] = [];
 
         var current = token;
         while (current !== firstTokenInLine) {
-            current = syntaxInformationMap.previousToken(current);
+            current = current.previousToken();
 
             if (current === firstTokenInLine) {
                 // We're at the first token in teh line.
@@ -53,12 +52,9 @@ module TypeScript.Indentation {
         return columnForLeadingTextInReverse(leadingTextInReverse, options);
     }
 
-    export function columnForStartOfFirstTokenInLineContainingToken(
-            token: ISyntaxToken,
-            syntaxInformationMap: SyntaxInformationMap,
-            options: FormattingOptions): number {
+    export function columnForStartOfFirstTokenInLineContainingPosition(syntaxTree: SyntaxTree, position: number, options: FormattingOptions): number {
         // Walk backward through the tokens until we find the first one on the line.
-        var firstTokenInLine = syntaxInformationMap.firstTokenInLineContainingToken(token);
+        var firstTokenInLine = Syntax.firstTokenInLineContainingPosition(syntaxTree, position);
         var leadingTextInReverse: string[] = [];
 
         // Now, add all trivia to the start of the line on the first token in the list.

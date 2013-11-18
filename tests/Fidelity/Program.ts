@@ -38,13 +38,9 @@ class Program {
             TypeScript.Environment.standardOut.WriteLine("");
         }
 
-        // TypeScript.Environment.standardOut.WriteLine("Testing against fuzz.");
-        // this.runTests("C:\\temp\\fuzz",
-        //    fileName => this.runParser(fileName, LanguageVersion.EcmaScript5, /*verify:*/ false, /*generateBaselines:*/ generate), 2000);
-
-        if (true) {
-            // return;
-        }
+        TypeScript.Environment.standardOut.WriteLine("Testing emitter 2.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\emitter2\\ecmascript5",
+            fileName => this.runEmitter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate, /*justText:*/ true));
 
         //TypeScript.Environment.standardOut.WriteLine("Testing Monoco.");
         //this.runTests(TypeScript.Environment.currentDirectory() + "c:\\temp\\monoco",
@@ -89,10 +85,6 @@ class Program {
         TypeScript.Environment.standardOut.WriteLine("Testing trivia.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\trivia\\ecmascript5",
             fileName => this.runTrivia(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate));
-
-        TypeScript.Environment.standardOut.WriteLine("Testing emitter 2.");
-        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\emitter2\\ecmascript5",
-            fileName => this.runEmitter(fileName, TypeScript.LanguageVersion.EcmaScript5, verify, /*generateBaselines:*/ generate, /*justText:*/ true));
 
         if (specificFile === undefined) {
             this.testIncrementalSpeed(TypeScript.Environment.currentDirectory() + "\\src\\compiler\\Syntax\\SyntaxNodes.generated.ts");

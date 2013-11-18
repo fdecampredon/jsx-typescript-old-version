@@ -87,7 +87,6 @@ var compilerSources = [
 	"syntax/syntaxFacts.ts",
 	"syntax/syntaxFacts2.ts",
 	"syntax/syntaxIndenter.ts",
-	"syntax/syntaxInformationMap.ts",
 	"syntax/syntaxIndenter.ts",
 	"syntax/syntaxKind.ts",
 	"syntax/syntaxList.ts",
