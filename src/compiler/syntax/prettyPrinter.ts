@@ -123,14 +123,20 @@ module TypeScript.PrettyPrinter {
             this.appendToken(token);
         }
 
-        private appendSpaceList(list: ISyntaxList): void {
+        private appendSpaceList(list: ISyntaxList<ISyntaxNodeOrToken>): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
-                this.appendToken(<ISyntaxToken>list.childAt(i));
+                if (list.childAt(i).isNode()) {
+                    this.appendNode(list.childAt(i));
+                }
+                else {
+                    this.appendToken(<ISyntaxToken>list.childAt(i));
+                }
+
                 this.ensureSpace();
             }
         }
 
-        private appendSeparatorSpaceList(list: ISeparatedSyntaxList): void {
+        private appendSeparatorSpaceList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (i % 2 === 0) {
                     if (i > 0) {
@@ -145,7 +151,7 @@ module TypeScript.PrettyPrinter {
             }
         }
 
-        private appendSeparatorNewLineList(list: ISeparatedSyntaxList): void {
+        private appendSeparatorNewLineList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): void {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 if (i % 2 === 0) {
                     if (i > 0) {
@@ -160,10 +166,10 @@ module TypeScript.PrettyPrinter {
             }
         }
 
-        private appendModuleElements(list: ISyntaxList): void {
+        private appendModuleElements(list: ISyntaxList<IModuleElementSyntax>): void {
             var lastModuleElement: IModuleElementSyntax = null;
             for (var i = 0, n = list.childCount(); i < n; i++) {
-                var moduleElement = <IModuleElementSyntax>list.childAt(i);
+                var moduleElement = list.childAt(i);
                 var newLineCount = this.newLineCountBetweenModuleElements(lastModuleElement, moduleElement);
 
                 this.appendNewLines(newLineCount);
@@ -225,7 +231,7 @@ module TypeScript.PrettyPrinter {
 
             var lastClassElement: IClassElementSyntax = null;
             for (var i = 0, n = node.classElements.childCount(); i < n; i++) {
-                var classElement = <IClassElementSyntax>node.classElements.childAt(i);
+                var classElement = node.classElements.childAt(i);
                 var newLineCount = this.newLineCountBetweenClassElements(lastClassElement, classElement);
 
                 this.appendNewLines(newLineCount);
@@ -452,10 +458,10 @@ module TypeScript.PrettyPrinter {
             node.type.accept(this);
         }
 
-        private appendStatements(statements: ISyntaxList): void {
+        private appendStatements(statements: ISyntaxList<IStatementSyntax>): void {
             var lastStatement: IStatementSyntax = null;
             for (var i = 0, n = statements.childCount(); i < n; i++) {
-                var statement = <IStatementSyntax>statements.childAt(i);
+                var statement = statements.childAt(i);
 
                 var newLineCount = this.newLineCountBetweenStatements(lastStatement, statement);
 
@@ -727,7 +733,7 @@ module TypeScript.PrettyPrinter {
 
             var lastSwitchClause: ISwitchClauseSyntax = null;
             for (var i = 0, n = node.switchClauses.childCount(); i < n; i++) {
-                var switchClause = <ISwitchClauseSyntax>node.switchClauses.childAt(i);
+                var switchClause = node.switchClauses.childAt(i);
 
                 var newLineCount = this.newLineCountBetweenSwitchClauses(lastSwitchClause, switchClause);
 

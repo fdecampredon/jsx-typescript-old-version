@@ -1652,7 +1652,7 @@ module TypeScript.Parser {
             // loop ends.  However, for sake of symmetry and consistancy we do this.
             var savedIsInStrictMode = this.isInStrictMode;
 
-            var result = this.parseSyntaxList(ListParsingState.SourceUnit_ModuleElements, ParserImpl.updateStrictModeState);
+            var result = this.parseSyntaxList<IModuleElementSyntax>(ListParsingState.SourceUnit_ModuleElements, ParserImpl.updateStrictModeState);
             var moduleElements = result.list;
 
             this.setStrictMode(savedIsInStrictMode);
@@ -1822,8 +1822,8 @@ module TypeScript.Parser {
 
             var lessThanToken: ISyntaxToken;
             var greaterThanToken: ISyntaxToken;
-            var result: { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList; };
-            var typeArguments: ISeparatedSyntaxList;
+            var result: { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<ITypeSyntax>; };
+            var typeArguments: ISeparatedSyntaxList<ITypeSyntax>;
 
             if (!inExpression) {
                 // if we're not in an expression, this must be a type argument list.  Just parse
@@ -1831,7 +1831,7 @@ module TypeScript.Parser {
                 lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
                 // Debug.assert(lessThanToken.fullWidth() > 0);
 
-                result = this.parseSeparatedSyntaxList(ListParsingState.TypeArgumentList_Types);
+                result = this.parseSeparatedSyntaxList<ITypeSyntax>(ListParsingState.TypeArgumentList_Types);
                 typeArguments = result.list;
                 lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
@@ -1849,7 +1849,7 @@ module TypeScript.Parser {
             lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
             // Debug.assert(lessThanToken.fullWidth() > 0);
 
-            result = this.parseSeparatedSyntaxList(ListParsingState.TypeArgumentList_Types);
+            result = this.parseSeparatedSyntaxList<ITypeSyntax>(ListParsingState.TypeArgumentList_Types);
             typeArguments = result.list;
             lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
@@ -1977,10 +1977,10 @@ module TypeScript.Parser {
             var identifier = this.eatIdentifierToken();
 
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
-            var enumElements = Syntax.emptySeparatedList();
+            var enumElements = Syntax.emptySeparatedList<EnumElementSyntax>();
 
             if (openBraceToken.width() > 0) {
-                var result = this.parseSeparatedSyntaxList(ListParsingState.EnumDeclaration_EnumElements);
+                var result = this.parseSeparatedSyntaxList<EnumElementSyntax>(ListParsingState.EnumDeclaration_EnumElements);
                 enumElements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
             }
@@ -2042,7 +2042,7 @@ module TypeScript.Parser {
             return modifierCount;
         }
 
-        private parseModifiers(): ISyntaxList {
+        private parseModifiers(): ISyntaxList<ISyntaxToken> {
             var tokens: ISyntaxToken[] = this.getArray();
 
             while (true) {
@@ -2077,11 +2077,11 @@ module TypeScript.Parser {
                    this.isIdentifier(this.peekToken(1));
         }
 
-        private parseHeritageClauses(): ISyntaxList {
-            var heritageClauses: ISyntaxList = Syntax.emptyList();
+        private parseHeritageClauses(): ISyntaxList<HeritageClauseSyntax> {
+            var heritageClauses = Syntax.emptyList<HeritageClauseSyntax>();
             
             if (this.isHeritageClause()) {
-                var result = this.parseSyntaxList(ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses);
+                var result = this.parseSyntaxList<HeritageClauseSyntax>(ListParsingState.ClassOrInterfaceDeclaration_HeritageClauses);
                 heritageClauses = result.list;
                 Debug.assert(result.skippedTokens.length === 0);
             }
@@ -2099,10 +2099,10 @@ module TypeScript.Parser {
             var typeParameterList = this.parseOptionalTypeParameterList(/*requireCompleteTypeParameterList:*/ false);
             var heritageClauses = this.parseHeritageClauses();
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
-            var classElements: ISyntaxList = Syntax.emptyList();
+            var classElements = Syntax.emptyList<IClassElementSyntax>();
 
             if (openBraceToken.width() > 0) {
-                var result = this.parseSyntaxList(ListParsingState.ClassDeclaration_ClassElements);
+                var result = this.parseSyntaxList<IClassElementSyntax>(ListParsingState.ClassDeclaration_ClassElements);
 
                 classElements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
@@ -2145,7 +2145,7 @@ module TypeScript.Parser {
             }
         }
 
-        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxList, checkForStrictMode: boolean): GetAccessorSyntax {
+        private parseGetMemberAccessorDeclaration(modifiers: ISyntaxList<ISyntaxToken>, checkForStrictMode: boolean): GetAccessorSyntax {
             // Debug.assert(this.currentToken().tokenKind === SyntaxKind.GetKeyword);
 
             var getKeyword = this.eatKeyword(SyntaxKind.GetKeyword);
@@ -2158,7 +2158,7 @@ module TypeScript.Parser {
                 modifiers, getKeyword, propertyName, parameterList, typeAnnotation, block);
         }
 
-        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxList, checkForStrictMode: boolean): SetAccessorSyntax {
+        private parseSetMemberAccessorDeclaration(modifiers: ISyntaxList<ISyntaxToken>, checkForStrictMode: boolean): SetAccessorSyntax {
             // Debug.assert(this.currentToken().tokenKind === SyntaxKind.SetKeyword);
 
             var setKeyword = this.eatKeyword(SyntaxKind.SetKeyword);
@@ -2508,9 +2508,9 @@ module TypeScript.Parser {
 
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
-            var moduleElements: ISyntaxList = Syntax.emptyList();
+            var moduleElements = Syntax.emptyList<IModuleElementSyntax>();
             if (openBraceToken.width() > 0) {
-                var result = this.parseSyntaxList(ListParsingState.ModuleDeclaration_ModuleElements);
+                var result = this.parseSyntaxList<IModuleElementSyntax>(ListParsingState.ModuleDeclaration_ModuleElements);
                 moduleElements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
             }
@@ -2553,9 +2553,9 @@ module TypeScript.Parser {
         private parseObjectType(): ObjectTypeSyntax {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
-            var typeMembers = Syntax.emptySeparatedList();
+            var typeMembers = Syntax.emptySeparatedList<ITypeMemberSyntax>();
             if (openBraceToken.width() > 0) {
-                var result = this.parseSeparatedSyntaxList(ListParsingState.ObjectType_TypeMembers);
+                var result = this.parseSeparatedSyntaxList<ITypeMemberSyntax>(ListParsingState.ObjectType_TypeMembers);
                 typeMembers = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
             }
@@ -2736,7 +2736,7 @@ module TypeScript.Parser {
             var extendsOrImplementsKeyword = this.eatAnyToken();
             Debug.assert(extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword || extendsOrImplementsKeyword.tokenKind === SyntaxKind.ImplementsKeyword);
 
-            var result = this.parseSeparatedSyntaxList(ListParsingState.HeritageClause_TypeNameList);
+            var result = this.parseSeparatedSyntaxList<INameSyntax>(ListParsingState.HeritageClause_TypeNameList);
             var typeNames = result.list;
             extendsOrImplementsKeyword = this.addSkippedTokensAfterToken(extendsOrImplementsKeyword, result.skippedTokens);
 
@@ -3153,9 +3153,9 @@ module TypeScript.Parser {
 
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
-            var switchClauses: ISyntaxList = Syntax.emptyList();
+            var switchClauses = Syntax.emptyList<ISwitchClauseSyntax>();
             if (openBraceToken.width() > 0) {
-                var result = this.parseSyntaxList(ListParsingState.SwitchStatement_SwitchClauses);
+                var result = this.parseSyntaxList<ISwitchClauseSyntax>(ListParsingState.SwitchStatement_SwitchClauses);
                 switchClauses = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
             }
@@ -3204,12 +3204,12 @@ module TypeScript.Parser {
             var caseKeyword = this.eatKeyword(SyntaxKind.CaseKeyword);
             var expression = this.parseExpression(/*allowIn:*/ true);
             var colonToken = this.eatToken(SyntaxKind.ColonToken);
-            var statements = Syntax.emptyList();
+            var statements = Syntax.emptyList<IStatementSyntax>();
 
             // TODO: allow parsing of the list evne if there's no colon.  However, we have to make 
             // sure we add any skipped tokens to the right previous node or token.
             if (colonToken.fullWidth() > 0) {
-                var result = this.parseSyntaxList(ListParsingState.SwitchClause_Statements);
+                var result = this.parseSyntaxList<IStatementSyntax>(ListParsingState.SwitchClause_Statements);
                 statements = result.list;
                 colonToken = this.addSkippedTokensAfterToken(colonToken, result.skippedTokens);
             }
@@ -3222,12 +3222,12 @@ module TypeScript.Parser {
 
             var defaultKeyword = this.eatKeyword(SyntaxKind.DefaultKeyword);
             var colonToken = this.eatToken(SyntaxKind.ColonToken);
-            var statements = Syntax.emptyList();
+            var statements = Syntax.emptyList<IStatementSyntax>();
 
             // TODO: Allow parsing witha colon here.  However, ensure that we attach any skipped 
             // tokens to the defaultKeyword.
             if (colonToken.fullWidth() > 0) {
-                var result = this.parseSyntaxList(ListParsingState.SwitchClause_Statements);
+                var result = this.parseSyntaxList<IStatementSyntax>(ListParsingState.SwitchClause_Statements);
                 statements = result.list;
                 colonToken = this.addSkippedTokensAfterToken(colonToken, result.skippedTokens);
             }
@@ -3431,7 +3431,7 @@ module TypeScript.Parser {
                 ? ListParsingState.VariableDeclaration_VariableDeclarators_AllowIn
                 : ListParsingState.VariableDeclaration_VariableDeclarators_DisallowIn;
 
-            var result = this.parseSeparatedSyntaxList(listParsingState);
+            var result = this.parseSeparatedSyntaxList<VariableDeclaratorSyntax>(listParsingState);
             var variableDeclarators = result.list;
             varKeyword = this.addSkippedTokensAfterToken(varKeyword, result.skippedTokens);
 
@@ -3911,7 +3911,7 @@ module TypeScript.Parser {
                     this.addDiagnostic(diagnostic);
 
                     return this.factory.argumentList(typeArgumentList,
-                        Syntax.emptyToken(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList(), Syntax.emptyToken(SyntaxKind.CloseParenToken));
+                        Syntax.emptyToken(SyntaxKind.OpenParenToken), Syntax.emptySeparatedList<IExpressionSyntax>(), Syntax.emptyToken(SyntaxKind.CloseParenToken));
                 }
                 else {
                     return this.parseArgumentList(typeArgumentList);
@@ -3935,10 +3935,10 @@ module TypeScript.Parser {
             var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
 
             // Don't use the name 'arguments' it prevents V8 from optimizing this method.
-            var _arguments = Syntax.emptySeparatedList();
+            var _arguments = Syntax.emptySeparatedList<IExpressionSyntax>();
 
             if (openParenToken.fullWidth() > 0) {
-                var result = this.parseSeparatedSyntaxList(ListParsingState.ArgumentList_AssignmentExpressions);
+                var result = this.parseSeparatedSyntaxList<IExpressionSyntax>(ListParsingState.ArgumentList_AssignmentExpressions);
                 _arguments = result.list;
                 openParenToken = this.addSkippedTokensAfterToken(openParenToken, result.skippedTokens);
             }
@@ -4472,7 +4472,7 @@ module TypeScript.Parser {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
             // Debug.assert(openBraceToken.fullWidth() > 0);
 
-            var result = this.parseSeparatedSyntaxList(ListParsingState.ObjectLiteralExpression_PropertyAssignments);
+            var result = this.parseSeparatedSyntaxList<IPropertyAssignmentSyntax>(ListParsingState.ObjectLiteralExpression_PropertyAssignments);
             var propertyAssignments = result.list;
             openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
 
@@ -4575,7 +4575,7 @@ module TypeScript.Parser {
             var openBracketToken = this.eatToken(SyntaxKind.OpenBracketToken);
             // Debug.assert(openBracketToken.fullWidth() > 0);
 
-            var result = this.parseSeparatedSyntaxList(ListParsingState.ArrayLiteralExpression_AssignmentExpressions);
+            var result = this.parseSeparatedSyntaxList<IExpressionSyntax>(ListParsingState.ArrayLiteralExpression_AssignmentExpressions);
             var expressions = result.list;
             openBracketToken = this.addSkippedTokensAfterToken(openBracketToken, result.skippedTokens);
 
@@ -4597,13 +4597,13 @@ module TypeScript.Parser {
         private parseBlock(parseBlockEvenWithNoOpenBrace: boolean, checkForStrictMode: boolean): BlockSyntax {
             var openBraceToken = this.eatToken(SyntaxKind.OpenBraceToken);
 
-            var statements: ISyntaxList = Syntax.emptyList();
+            var statements = Syntax.emptyList<IStatementSyntax>();
 
             if (parseBlockEvenWithNoOpenBrace || openBraceToken.width() > 0) {
                 var savedIsInStrictMode = this.isInStrictMode;
                 
                 var processItems = checkForStrictMode ? ParserImpl.updateStrictModeState : null;
-                var result = this.parseSyntaxList(ListParsingState.Block_Statements, processItems);
+                var result = this.parseSyntaxList<IStatementSyntax>(ListParsingState.Block_Statements, processItems);
                 statements = result.list;
                 openBraceToken = this.addSkippedTokensAfterToken(openBraceToken, result.skippedTokens);
 
@@ -4633,7 +4633,7 @@ module TypeScript.Parser {
             var lessThanToken = this.eatToken(SyntaxKind.LessThanToken);
             // Debug.assert(lessThanToken.fullWidth() > 0);
 
-            var result = this.parseSeparatedSyntaxList(ListParsingState.TypeParameterList_TypeParameters);
+            var result = this.parseSeparatedSyntaxList<TypeParameterSyntax>(ListParsingState.TypeParameterList_TypeParameters);
             var typeParameters = result.list;
             lessThanToken = this.addSkippedTokensAfterToken(lessThanToken, result.skippedTokens);
 
@@ -4678,10 +4678,10 @@ module TypeScript.Parser {
 
         private parseParameterList(): ParameterListSyntax {
             var openParenToken = this.eatToken(SyntaxKind.OpenParenToken);
-            var parameters = Syntax.emptySeparatedList();
+            var parameters = Syntax.emptySeparatedList<ParameterSyntax>();
 
             if (openParenToken.width() > 0) {
-                var result = this.parseSeparatedSyntaxList(ListParsingState.ParameterList_Parameters);
+                var result = this.parseSeparatedSyntaxList<ParameterSyntax>(ListParsingState.ParameterList_Parameters);
                 parameters = result.list;
                 openParenToken = this.addSkippedTokensAfterToken(openParenToken, result.skippedTokens);
             }
@@ -4915,23 +4915,24 @@ module TypeScript.Parser {
                 dotDotDotToken, modifiers, identifier, questionToken, typeAnnotation, equalsValueClause);
         }
 
-        private parseSyntaxList(currentListType: ListParsingState,
-                                processItems: (parser: ParserImpl, items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: ISyntaxList; } {
+        private parseSyntaxList<T extends ISyntaxNodeOrToken>(
+                currentListType: ListParsingState,
+                processItems: (parser: ParserImpl, items: any[]) => void = null): { skippedTokens: ISyntaxToken[]; list: ISyntaxList<T>; } {
             var savedListParsingState = this.listParsingState;
             this.listParsingState |= currentListType;
 
-            var result = this.parseSyntaxListWorker(currentListType, processItems);
+            var result = this.parseSyntaxListWorker<T>(currentListType, processItems);
 
             this.listParsingState = savedListParsingState;
 
             return result;
         }
 
-        private parseSeparatedSyntaxList(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList; } {
+        private parseSeparatedSyntaxList<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<T>; } {
             var savedListParsingState = this.listParsingState;
             this.listParsingState |= currentListType;
 
-            var result = this.parseSeparatedSyntaxListWorker(currentListType);
+            var result = this.parseSeparatedSyntaxListWorker<T>(currentListType);
 
             this.listParsingState = savedListParsingState;
 
@@ -5034,9 +5035,10 @@ module TypeScript.Parser {
             this.arrayPool.push(array);
         }
 
-        private parseSyntaxListWorker(currentListType: ListParsingState,
-                                      processItems: (parser: ParserImpl, items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: ISyntaxList; } {
-            var items: SyntaxNode[] = this.getArray();
+        private parseSyntaxListWorker<T extends ISyntaxNodeOrToken>(
+                currentListType: ListParsingState,
+                processItems: (parser: ParserImpl, items: any[]) => void ): { skippedTokens: ISyntaxToken[]; list: ISyntaxList<T>; } {
+            var items: T[] = this.getArray();
             var skippedTokens: ISyntaxToken[] = this.getArray();
 
             while (true) {
@@ -5067,7 +5069,7 @@ module TypeScript.Parser {
                 // and didn't want to abort. Continue parsing elements.
             }
 
-            var result = Syntax.list(items);
+            var result = Syntax.list<T>(items);
 
             // Can't return if it has more then 1 element.  In that case, the list will have been
             // copied into the SyntaxList.
@@ -5076,7 +5078,7 @@ module TypeScript.Parser {
             return { skippedTokens: skippedTokens, list: result };
         }
 
-        private parseSeparatedSyntaxListWorker(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList; } {
+        private parseSeparatedSyntaxListWorker<T extends ISyntaxNodeOrToken>(currentListType: ListParsingState): { skippedTokens: ISyntaxToken[]; list: ISeparatedSyntaxList<T>; } {
             var items: ISyntaxNodeOrToken[] = this.getArray();
             var skippedTokens: ISyntaxToken[] = this.getArray();
             Debug.assert(items.length === 0);
@@ -5187,7 +5189,7 @@ module TypeScript.Parser {
                 inErrorRecovery = true;
             }
 
-            var result = Syntax.separatedList(items);
+            var result = Syntax.separatedList<T>(items);
 
             // Can't return if it has more then 1 element.  In that case, the list will have been
             // copied into the SyntaxList.

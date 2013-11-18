@@ -16,7 +16,7 @@ module TypeScript.Syntax {
     }
 
     export function emptySourceUnit() {
-        return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList(), Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
+        return Syntax.normalModeFactory.sourceUnit(Syntax.emptyList<IModuleElementSyntax>(), Syntax.token(SyntaxKind.EndOfFileToken, { text: "" }, 0));
     }
 
     export function getStandaloneExpression(positionedToken: ISyntaxToken): ISyntaxNodeOrToken {
@@ -189,7 +189,7 @@ module TypeScript.Syntax {
             trivia1.fullText() === trivia2.fullText();
     }
 
-    export function listStructuralEquals(list1: ISyntaxList, list2: ISyntaxList): boolean {
+    export function listStructuralEquals<T extends ISyntaxNodeOrToken>(list1: ISyntaxList<T>, list2: ISyntaxList<T>): boolean {
         if (list1.childCount() !== list2.childCount()) {
             return false;
         }
@@ -198,7 +198,7 @@ module TypeScript.Syntax {
             var child1 = list1.childAt(i);
             var child2 = list2.childAt(i);
 
-            if (!Syntax.nodeOrTokenStructuralEquals(<any>child1, <any>child2)) {
+            if (!Syntax.nodeOrTokenStructuralEquals(child1, child2)) {
                 return false;
             }
         }
@@ -206,7 +206,7 @@ module TypeScript.Syntax {
         return true;
     }
 
-    export function separatedListStructuralEquals(list1: ISeparatedSyntaxList, list2: ISeparatedSyntaxList): boolean {
+    export function separatedListStructuralEquals<T extends ISyntaxNodeOrToken>(list1: ISeparatedSyntaxList<T>, list2: ISeparatedSyntaxList<T>): boolean {
         if (list1.childCount() !== list2.childCount()) {
             return false;
         }
@@ -214,7 +214,7 @@ module TypeScript.Syntax {
         for (var i = 0, n = list1.childCount(); i < n; i++) {
             var element1 = list1.childAt(i);
             var element2 = list2.childAt(i);
-            if (!Syntax.nodeOrTokenStructuralEquals(<any>element1, <any>element2)) {
+            if (!Syntax.nodeOrTokenStructuralEquals(element1, element2)) {
                 return false;
             }
         }
@@ -258,10 +258,10 @@ module TypeScript.Syntax {
             return nodeStructuralEquals(<SyntaxNode>element1, <SyntaxNode>element2);
         }
         else if (element1.isList()) {
-            return listStructuralEquals(<ISyntaxList>element1, <ISyntaxList>element2);
+            return listStructuralEquals(<ISyntaxList<ISyntaxNodeOrToken>>element1, <ISyntaxList<ISyntaxNodeOrToken>>element2);
         }
         else if (element1.isSeparatedList()) {
-            return separatedListStructuralEquals(<ISeparatedSyntaxList>element1, <ISeparatedSyntaxList>element2);
+            return separatedListStructuralEquals(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element1, <ISeparatedSyntaxList<ISyntaxNodeOrToken>>element2);
         }
 
         throw Errors.invalidOperation();

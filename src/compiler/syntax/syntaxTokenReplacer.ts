@@ -29,7 +29,7 @@ module TypeScript {
             return super.visitNode(node);
         }
 
-        public visitList(list: ISyntaxList): ISyntaxList {
+        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {
             if (this.token1 === null) {
                 return list;
             }
@@ -37,7 +37,7 @@ module TypeScript {
             return super.visitList(list);
         }
 
-        public visitSeparatedList(list: ISeparatedSyntaxList): ISeparatedSyntaxList {
+        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>): ISeparatedSyntaxList<T> {
             if (this.token1 === null) {
                 return list;
             }

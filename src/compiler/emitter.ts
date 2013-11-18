@@ -190,7 +190,7 @@ module TypeScript {
 
     export function lastParameterIsRest(parameterList: ParameterListSyntax): boolean {
         var parameters = parameterList.parameters;
-        return parameters.nonSeparatorCount() > 0 && (<ParameterSyntax>parameters.nonSeparatorAt(parameters.nonSeparatorCount() - 1)).dotDotDotToken !== null;
+        return parameters.nonSeparatorCount() > 0 && (parameters.nonSeparatorAt(parameters.nonSeparatorCount() - 1)).dotDotDotToken !== null;
     }
 
     export class Emitter {
@@ -618,7 +618,7 @@ module TypeScript {
             var argsLen = 0;
 
             if (parameters) {
-                var parameterListAST = parameters.ast.kind() === SyntaxKind.SeparatedList ? <ISeparatedSyntaxList>parameters.ast : null;
+                var parameterListAST = parameters.ast.kind() === SyntaxKind.SeparatedList ? <ISeparatedSyntaxList<ParameterSyntax>>parameters.ast : null;
                 this.emitComments(parameters.ast, true);
 
                 var tempContainer = this.setContainer(EmitContainer.Args);
@@ -1458,7 +1458,7 @@ module TypeScript {
         }
 
         public emitVariableDeclaration(declaration: VariableDeclarationSyntax) {
-            var varDecl = <VariableDeclaratorSyntax>declaration.variableDeclarators.nonSeparatorAt(0);
+            var varDecl = declaration.variableDeclarators.nonSeparatorAt(0);
 
             var symbol = this.semanticInfoChain.getSymbolForAST(varDecl);
 
@@ -1906,7 +1906,7 @@ module TypeScript {
 
             if (constructorDecl && constructorDecl.parameterList) {
                 for (var i = 0, n = constructorDecl.parameterList.parameters.nonSeparatorCount(); i < n; i++) {
-                    var parameter = <ParameterSyntax>constructorDecl.parameterList.parameters.nonSeparatorAt(i);
+                    var parameter = constructorDecl.parameterList.parameters.nonSeparatorAt(i);
                     var parameterDecl = this.semanticInfoChain.getDeclForAST(parameter);
                     if (hasFlag(parameterDecl.flags, PullElementFlags.PropertyParameter)) {
                         this.emitIndent();
@@ -1942,7 +1942,7 @@ module TypeScript {
             return lineMap.getLineNumberFromPosition(pos1) === lineMap.getLineNumberFromPosition(pos2);
         }
 
-        private emitCommaSeparatedList(parent: ISyntaxElement, list: ISeparatedSyntaxList, buffer: string, preserveNewLines: boolean): void {
+        private emitCommaSeparatedList<T extends ISyntaxNodeOrToken>(parent: ISyntaxElement, list: ISeparatedSyntaxList<T>, buffer: string, preserveNewLines: boolean): void {
             if (list === null || list.nonSeparatorCount() === 0) {
                 return;
             }
@@ -2003,7 +2003,7 @@ module TypeScript {
             }
         }
 
-        public emitList(list: ISyntaxList, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.childCount()) {
+        public emitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.childCount()) {
             if (list === null) {
                 return;
             }
@@ -2029,7 +2029,7 @@ module TypeScript {
             this.emitComments(list, false);
         }
 
-        public emitSeparatedList(list: ISeparatedSyntaxList, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.nonSeparatorCount()) {
+        public emitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>, useNewLineSeparator = true, startInclusive = 0, endExclusive = list.nonSeparatorCount()) {
             if (list === null) {
                 return;
             }
@@ -2574,7 +2574,7 @@ module TypeScript {
             this.writeLineToOutput(";");
         }
 
-        private requiresExtendsBlock(moduleElements: ISyntaxList): boolean {
+        private requiresExtendsBlock(moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
 
@@ -3182,7 +3182,7 @@ module TypeScript {
             this.recordSourceMappingEnd(clause);
         }
 
-        private emitSwitchClauseBody(body: ISyntaxList): void {
+        private emitSwitchClauseBody(body: ISyntaxList<IStatementSyntax>): void {
             if (body.childCount() === 1 && body.childAt(0).kind() === SyntaxKind.Block) {
                 // The case statement was written with curly braces, so emit it with the appropriate formatting
                 this.emit(body.childAt(0));
@@ -3341,7 +3341,7 @@ module TypeScript {
         }
 
         private firstVariableDeclarator(statement: VariableStatementSyntax): VariableDeclaratorSyntax {
-            return <VariableDeclaratorSyntax>statement.variableDeclaration.variableDeclarators.nonSeparatorAt(0);
+            return statement.variableDeclaration.variableDeclarators.nonSeparatorAt(0);
         }
 
         private isNotAmbientOrHasInitializer(variableStatement: VariableStatementSyntax): boolean {
@@ -3402,9 +3402,9 @@ module TypeScript {
 
             switch (ast.kind()) {
                 case SyntaxKind.SeparatedList:
-                    return this.emitSeparatedList(<ISeparatedSyntaxList>ast);
+                    return this.emitSeparatedList(<ISeparatedSyntaxList<ISyntaxNodeOrToken>>ast);
                 case SyntaxKind.List:
-                    return this.emitList(<ISyntaxList>ast);
+                    return this.emitList(<ISyntaxList<ISyntaxNodeOrToken>>ast);
                 case SyntaxKind.SourceUnit:
                     return this.emitSourceUnit(<SourceUnitSyntax>ast);
                 case SyntaxKind.ImportDeclaration:

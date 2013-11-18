@@ -193,7 +193,7 @@ module TypeScript {
                 var modifiers = parameter.modifiers;
 
                 for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-                    var modifier = <ISyntaxToken>modifiers.childAt(i);
+                    var modifier = modifiers.childAt(i);
 
                     if (this.checkParameterAccessibilityModifier(parameterList, modifier, i)) {
                         return true;
@@ -236,7 +236,7 @@ module TypeScript {
             return false;
         }
 
-        private checkForTrailingSeparator(parent: ISyntaxElement, list: ISeparatedSyntaxList): boolean {
+        private checkForTrailingSeparator(parent: ISyntaxElement, list: ISeparatedSyntaxList<ISyntaxNodeOrToken>): boolean {
             // If we have at least one child, and we have an even number of children, then that 
             // means we have an illegal trailing separator.
             if (list.childCount() === 0 || list.childCount() % 2 === 1) {
@@ -253,7 +253,7 @@ module TypeScript {
             return true;
         }
 
-        private checkForAtLeastOneElement(parent: ISyntaxElement, list: ISeparatedSyntaxList, expected: string): boolean {
+        private checkForAtLeastOneElement(parent: ISyntaxElement, list: ISeparatedSyntaxList<ISyntaxNodeOrToken>, expected: string): boolean {
             if (list.childCount() > 0) {
                 return false;
             }
@@ -384,7 +384,7 @@ module TypeScript {
 
             for (var i = 0, n = node.heritageClauses.childCount(); i < n; i++) {
                 Debug.assert(i <= 2);
-                var heritageClause = <HeritageClauseSyntax>node.heritageClauses.childAt(i);
+                var heritageClause = node.heritageClauses.childAt(i);
 
                 if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
@@ -422,7 +422,7 @@ module TypeScript {
             return false;
         }
 
-        private checkForDisallowedDeclareModifier(modifiers: ISyntaxList): boolean {
+        private checkForDisallowedDeclareModifier(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             if (this.inAmbientDeclaration) {
                 // If we're already in an ambient declaration, then 'declare' is not allowed.
                 var declareToken = SyntaxUtilities.getToken(modifiers, SyntaxKind.DeclareKeyword);
@@ -439,7 +439,7 @@ module TypeScript {
 
         private checkForRequiredDeclareModifier(moduleElement: IModuleElementSyntax,
                                                 typeKeyword: ISyntaxElement,
-                                                modifiers: ISyntaxList): boolean {
+                                                modifiers: ISyntaxList<ISyntaxToken>): boolean {
             if (!this.inAmbientDeclaration && this.syntaxTree.isDeclaration()) {
                 // We're at the top level in a declaration file, a 'declare' modifiers is required
                 // on most module elements.
@@ -451,13 +451,13 @@ module TypeScript {
             }
         }
 
-        private checkFunctionOverloads(node: ISyntaxElement, moduleElements: ISyntaxList): boolean {
+        private checkFunctionOverloads(node: ISyntaxElement, moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
             if (!this.inAmbientDeclaration && !this.syntaxTree.isDeclaration()) {
                 var inFunctionOverloadChain = false;
                 var functionOverloadChainName: string = null;
 
                 for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
-                    var moduleElement = <IModuleElementSyntax>moduleElements.childAt(i);
+                    var moduleElement = moduleElements.childAt(i);
                     var lastElement = i === (n - 1);
 
                     if (inFunctionOverloadChain) {
@@ -508,7 +508,7 @@ module TypeScript {
                 var memberFunctionDeclaration: MemberFunctionDeclarationSyntax = null;
 
                 for (var i = 0, n = node.classElements.childCount(); i < n; i++) {
-                    var classElement = <IClassElementSyntax>node.classElements.childAt(i);
+                    var classElement = node.classElements.childAt(i);
                     var lastElement = i === (n - 1);
                     var isStaticOverload: boolean = null;
 
@@ -622,7 +622,7 @@ module TypeScript {
 
             for (var i = 0, n = node.heritageClauses.childCount(); i < n; i++) {
                 Debug.assert(i <= 1);
-                var heritageClause = <HeritageClauseSyntax>node.heritageClauses.childAt(i);
+                var heritageClause = node.heritageClauses.childAt(i);
 
                 if (heritageClause.extendsOrImplementsKeyword.tokenKind === SyntaxKind.ExtendsKeyword) {
                     if (seenExtendsClause) {
@@ -644,9 +644,9 @@ module TypeScript {
             return false;
         }
 
-        private checkInterfaceModifiers(modifiers: ISyntaxList): boolean {
+        private checkInterfaceModifiers(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-                var modifier = <ISyntaxToken>modifiers.childAt(i);
+                var modifier = modifiers.childAt(i);
                 if (modifier.tokenKind === SyntaxKind.DeclareKeyword) {
                     this.pushDiagnostic1(modifier,
                         DiagnosticCode.declare_modifier_cannot_appear_on_an_interface_declaration);
@@ -669,12 +669,12 @@ module TypeScript {
             super.visitInterfaceDeclaration(node);
         }
 
-        private checkClassElementModifiers(list: ISyntaxList): boolean {
+        private checkClassElementModifiers(list: ISyntaxList<ISyntaxToken>): boolean {
             var seenAccessibilityModifier = false;
             var seenStaticModifier = false;
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
-                var modifier = <ISyntaxToken>list.childAt(i);
+                var modifier = list.childAt(i);
                 if (modifier.tokenKind === SyntaxKind.PublicKeyword ||
                     modifier.tokenKind === SyntaxKind.PrivateKeyword) {
 
@@ -685,7 +685,7 @@ module TypeScript {
                     }
 
                     if (seenStaticModifier) {
-                        var previousToken = <ISyntaxToken>list.childAt(i - 1);
+                        var previousToken = list.childAt(i - 1);
                         this.pushDiagnostic1(modifier,
                             DiagnosticCode._0_modifier_must_precede_1_modifier, [modifier.text(), previousToken.text()]);
                         return true;
@@ -898,12 +898,12 @@ module TypeScript {
             super.visitInvocationExpression(node);
         }
 
-        private checkModuleElementModifiers(modifiers: ISyntaxList): boolean {
+        private checkModuleElementModifiers(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             var seenExportModifier = false;
             var seenDeclareModifier = false;
 
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
-                var modifier = <ISyntaxToken>modifiers.childAt(i);
+                var modifier = modifiers.childAt(i);
                 if (modifier.tokenKind === SyntaxKind.PublicKeyword ||
                     modifier.tokenKind === SyntaxKind.PrivateKeyword ||
                     modifier.tokenKind === SyntaxKind.StaticKeyword) {
@@ -959,7 +959,7 @@ module TypeScript {
             return false;
         }
 
-        private checkForDisallowedDeclareModifierOnImportDeclaration(modifiers: ISyntaxList): boolean {
+        private checkForDisallowedDeclareModifierOnImportDeclaration(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             var declareToken = SyntaxUtilities.getToken(modifiers, SyntaxKind.DeclareKeyword);
 
             if (declareToken) {
@@ -1014,10 +1014,10 @@ module TypeScript {
             this.inAmbientDeclaration = savedInAmbientDeclaration;
         }
 
-        private checkForDisallowedExports(node: ISyntaxElement, moduleElements: ISyntaxList): boolean {
+        private checkForDisallowedExports(node: ISyntaxElement, moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
             var seenExportedElement = false;
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
-                var child = <IModuleElementSyntax>moduleElements.childAt(i);
+                var child = moduleElements.childAt(i);
 
                 if (SyntaxUtilities.hasExportKeyword(child)) {
                     seenExportedElement = true;
@@ -1027,7 +1027,7 @@ module TypeScript {
 
             if (seenExportedElement) {
                 for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
-                    var child = <IModuleElementSyntax>moduleElements.childAt(i);
+                    var child = moduleElements.childAt(i);
 
                     if (child.kind() === SyntaxKind.ExportAssignment) {
                         this.pushDiagnostic1(child, DiagnosticCode.Export_assignment_not_allowed_in_module_with_exported_element);
@@ -1039,11 +1039,11 @@ module TypeScript {
             return false;
         }
 
-        private checkForMultipleExportAssignments(node: ISyntaxElement, moduleElements: ISyntaxList): boolean {
+        private checkForMultipleExportAssignments(node: ISyntaxElement, moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
             var seenExportAssignment = false;
             var errorFound = false;
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
-                var child = <IModuleElementSyntax>moduleElements.childAt(i);
+                var child = moduleElements.childAt(i);
                 if (child.kind() === SyntaxKind.ExportAssignment) {
                     if (seenExportAssignment) {
                         this.pushDiagnostic1(child, DiagnosticCode.Module_cannot_have_multiple_export_assignments);
@@ -1224,7 +1224,7 @@ module TypeScript {
             super.visitWithStatement(node);
         }
 
-        private checkForDisallowedModifiers(parent: ISyntaxElement, modifiers: ISyntaxList): boolean {
+        private checkForDisallowedModifiers(parent: ISyntaxElement, modifiers: ISyntaxList<ISyntaxToken>): boolean {
             if (this.inBlock || this.inObjectLiteralExpression) {
                 if (modifiers.childCount() > 0) {
                     this.pushDiagnostic1(modifiers.childAt(0), DiagnosticCode.Modifiers_cannot_appear_here);
@@ -1265,7 +1265,7 @@ module TypeScript {
             this.inAmbientDeclaration = savedInAmbientDeclaration;
         }
 
-        private checkListSeparators(parent: ISyntaxElement, list: ISeparatedSyntaxList, kind: SyntaxKind): boolean {
+        private checkListSeparators<T extends ISyntaxNodeOrToken>(parent: ISyntaxElement, list: ISeparatedSyntaxList<T>, kind: SyntaxKind): boolean {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var child = list.childAt(i);
                 if (i % 2 === 1 && child.kind() !== kind) {
@@ -1335,7 +1335,7 @@ module TypeScript {
             this.currentConstructor = savedCurrentConstructor;
         }
 
-        private checkConstructorModifiers(modifiers: ISyntaxList): boolean {
+        private checkConstructorModifiers(modifiers: ISyntaxList<ISyntaxToken>): boolean {
             for (var i = 0, n = modifiers.childCount(); i < n; i++) {
                 var child = modifiers.childAt(i);
                 if (child.kind() !== SyntaxKind.PublicKeyword) {

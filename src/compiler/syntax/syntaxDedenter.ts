@@ -178,7 +178,7 @@ module TypeScript {
             return Syntax.multiLineComment(result);
         }
 
-        public static dedentNode(node: ISyntaxNode, dedentFirstToken: boolean, dedentAmount: number, minimumIndent: number, options: FormattingOptions): ISyntaxNode {
+        public static dedentNode<T extends ISyntaxNode>(node: T, dedentFirstToken: boolean, dedentAmount: number, minimumIndent: number, options: FormattingOptions): T {
             var dedenter = new SyntaxDedenter(dedentFirstToken, dedentAmount, minimumIndent, options);
             var result = node.accept(dedenter);
 

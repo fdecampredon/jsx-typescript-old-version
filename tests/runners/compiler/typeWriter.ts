@@ -5,7 +5,7 @@ interface PositionedNode extends TypeScript.ISyntaxElement {
 class PositionalWalker extends TypeScript.SyntaxWalker {
     private currentPosition = 0;
 
-    public visitList(list: TypeScript.ISyntaxList) {
+    public visitList<T extends TypeScript.ISyntaxNodeOrToken>(list: TypeScript.ISyntaxList<T>) {
         (<any>list).position = this.currentPosition;
         return super.visitList(list);
     }

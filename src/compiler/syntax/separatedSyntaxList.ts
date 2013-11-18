@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export interface ISeparatedSyntaxList extends ISyntaxElement {
+    export interface ISeparatedSyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
         childAt(index: number): ISyntaxNodeOrToken;
 
         toArray(): ISyntaxNodeOrToken[];
@@ -11,14 +11,14 @@ module TypeScript {
         separatorAt(index: number): ISyntaxToken;
 
         nonSeparatorCount(): number;
-        nonSeparatorAt(index: number): ISyntaxNodeOrToken;
+        nonSeparatorAt(index: number): T;
 
         insertChildrenInto(array: ISyntaxElement[], index: number): void;
     }
 }
 
 module TypeScript.Syntax {
-    class EmptySeparatedSyntaxList implements ISeparatedSyntaxList {
+    class EmptySeparatedSyntaxList<T extends ISyntaxNodeOrToken> implements ISeparatedSyntaxList<T> {
         public parent: ISyntaxElement = null;
 
         public syntaxID(): number {
@@ -85,7 +85,7 @@ module TypeScript.Syntax {
             return [];
         }
 
-        public toNonSeparatorArray(): ISyntaxNodeOrToken[] {
+        public toNonSeparatorArray(): T[] {
             return [];
         }
 
@@ -93,7 +93,7 @@ module TypeScript.Syntax {
             throw Errors.argumentOutOfRange("index");
         }
 
-        public nonSeparatorAt(index: number): ISyntaxNodeOrToken {
+        public nonSeparatorAt(index: number): T {
             throw Errors.argumentOutOfRange("index");
         }
 
@@ -174,17 +174,17 @@ module TypeScript.Syntax {
         }
     }
 
-    var _emptySeparatedList = new EmptySeparatedSyntaxList();
+    var _emptySeparatedList: ISeparatedSyntaxList<ISyntaxNodeOrToken> = new EmptySeparatedSyntaxList<ISyntaxNodeOrToken>();
 
-    export function emptySeparatedList(): ISeparatedSyntaxList {
-        return _emptySeparatedList;
+    export function emptySeparatedList<T extends ISyntaxNodeOrToken>(): ISeparatedSyntaxList<T> {
+        return <ISeparatedSyntaxList<T>>_emptySeparatedList;
     }
 
-    class SingletonSeparatedSyntaxList implements ISeparatedSyntaxList {
+    class SingletonSeparatedSyntaxList<T extends ISyntaxNodeOrToken> implements ISeparatedSyntaxList<T> {
         public parent: ISyntaxElement = null;
         private _syntaxID: number = 0;
 
-        constructor(private item: ISyntaxNodeOrToken) {
+        constructor(private item: T) {
             Syntax.setParentForChildren(this);
         }
 
@@ -226,7 +226,7 @@ module TypeScript.Syntax {
         }
 
         public toArray() { return [this.item]; }
-        public toNonSeparatorArray() { return [this.item]; }
+        public toNonSeparatorArray(): T[] { return [this.item]; }
 
         public childAt(index: number): ISyntaxNodeOrToken {
             if (index !== 0) {
@@ -236,7 +236,7 @@ module TypeScript.Syntax {
             return this.item;
         }
 
-        public nonSeparatorAt(index: number): ISyntaxNodeOrToken {
+        public nonSeparatorAt(index: number): T {
             if (index !== 0) {
                 throw Errors.argumentOutOfRange("index");
             }
@@ -322,7 +322,7 @@ module TypeScript.Syntax {
         }
     }
 
-    class NormalSeparatedSyntaxList implements ISeparatedSyntaxList {
+    class NormalSeparatedSyntaxList<T extends ISyntaxNodeOrToken> implements ISeparatedSyntaxList<T> {
         public parent: ISyntaxElement = null;
         private _data: number = 0;
         private _syntaxID: number = 0;
@@ -368,8 +368,8 @@ module TypeScript.Syntax {
 
         public toArray(): ISyntaxNodeOrToken[] { return this.elements.slice(0); }
 
-        public toNonSeparatorArray(): ISyntaxNodeOrToken[] {
-            var result: ISyntaxNodeOrToken[] = [];
+        public toNonSeparatorArray(): T[] {
+            var result: T[] = [];
             for (var i = 0, n = this.nonSeparatorCount(); i < n; i++) {
                 result.push(this.nonSeparatorAt(i));
             }
@@ -385,7 +385,7 @@ module TypeScript.Syntax {
             return this.elements[index];
         }
 
-        public nonSeparatorAt(index: number): ISyntaxNodeOrToken {
+        public nonSeparatorAt(index: number): T {
             var value = index * 2;
             if (value < 0 || value >= this.elements.length) {
                 throw Errors.argumentOutOfRange("index");
@@ -400,7 +400,7 @@ module TypeScript.Syntax {
                 throw Errors.argumentOutOfRange("index");
             }
 
-            return <ISyntaxToken>this.elements[value];
+            return <ISyntaxToken><ISyntaxNodeOrToken>this.elements[value];
         }
 
         public firstToken(): ISyntaxToken {
@@ -550,13 +550,13 @@ module TypeScript.Syntax {
         }
     }
 
-    export function separatedList(nodes: ISyntaxNodeOrToken[]): ISeparatedSyntaxList {
-        return separatedListAndValidate(nodes, false);
+    export function separatedList<T extends ISyntaxNodeOrToken>(nodes: ISyntaxNodeOrToken[]): ISeparatedSyntaxList<T> {
+        return separatedListAndValidate<T>(nodes, false);
     }
 
-    function separatedListAndValidate(nodes: ISyntaxNodeOrToken[], validate: boolean): ISeparatedSyntaxList {
+    function separatedListAndValidate<T extends ISyntaxNodeOrToken>(nodes: ISyntaxNodeOrToken[], validate: boolean): ISeparatedSyntaxList<T> {
         if (nodes === undefined || nodes === null || nodes.length === 0) {
-            return emptySeparatedList();
+            return emptySeparatedList<T>();
         }
 
         if (validate) {
@@ -570,13 +570,13 @@ module TypeScript.Syntax {
         }
 
         if (nodes.length === 1) {
-            return new SingletonSeparatedSyntaxList(nodes[0]);
+            return new SingletonSeparatedSyntaxList(<T>nodes[0]);
         }
 
-        return new NormalSeparatedSyntaxList(nodes);
+        return new NormalSeparatedSyntaxList<T>(nodes);
     }
 
-    export function nonSeparatorIndexOf(list: ISeparatedSyntaxList, ast: ISyntaxNodeOrToken): number {
+    export function nonSeparatorIndexOf<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>, ast: ISyntaxNodeOrToken): number {
         for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
             if (list.nonSeparatorAt(i) === ast) {
                 return i;

@@ -318,7 +318,7 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
-        private breakpointSpanOfFirstChildOfSyntaxList(positionedList: TypeScript.ISyntaxList): SpanInfo {
+        private breakpointSpanOfFirstChildOfSyntaxList(positionedList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>): SpanInfo {
             if (!positionedList) {
                 return null;
             }
@@ -341,7 +341,7 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
-        private breakpointSpanOfLastChildOfSyntaxList(positionedList: TypeScript.ISyntaxList): SpanInfo {
+        private breakpointSpanOfLastChildOfSyntaxList(positionedList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>): SpanInfo {
             if (!positionedList) {
                 return null;
             }
@@ -595,8 +595,9 @@ module TypeScript.Services.Breakpoints {
 
         private getSyntaxListOfDeclarationWithElements(positionedNode: TypeScript.SyntaxNode) {
             var node = positionedNode;
-            var elementsList: TypeScript.ISyntaxList;
+            var elementsList: TypeScript.ISyntaxList<ISyntaxNodeOrToken>;
             var block: TypeScript.BlockSyntax;
+
             switch (node.kind()) {
                 case TypeScript.SyntaxKind.ModuleDeclaration:
                     elementsList = (<TypeScript.ModuleDeclarationSyntax>node).moduleElements;
@@ -640,7 +641,7 @@ module TypeScript.Services.Breakpoints {
                 elementsList = block.statements;
             }
 
-            return <TypeScript.ISyntaxList>elementsList;
+            return elementsList;
         }
 
         private canHaveBreakpointInDeclaration(positionedNode: TypeScript.SyntaxNode) {
@@ -682,7 +683,7 @@ module TypeScript.Services.Breakpoints {
 
             var container = Syntax.containingNode(varDeclaratorNode);
             if (container && container.kind() == TypeScript.SyntaxKind.VariableDeclaration) {
-                var parentDeclaratorsList = <TypeScript.ISeparatedSyntaxList>varDeclaratorNode.parent;
+                var parentDeclaratorsList = <TypeScript.ISeparatedSyntaxList<VariableDeclaratorSyntax>>varDeclaratorNode.parent;
                 // If this is the first declarator in the list use the declaration instead
                 if (parentDeclaratorsList && parentDeclaratorsList.childAt(0) == varDeclaratorNode) {
                     return this.breakpointSpanOfVariableDeclaration(container);
@@ -868,26 +869,15 @@ module TypeScript.Services.Breakpoints {
                 return null;
             }
 
-            var switchClauses = <TypeScript.ISyntaxList>switchStatement.switchClauses;
+            var switchClauses = switchStatement.switchClauses;
             if (switchClauses.childCount() == 0) {
                 return null;
             }
 
-            var firstCaseClause = <TypeScript.SyntaxNode>switchClauses.childAt(0);
-            var statements: TypeScript.ISyntaxList = null;
-            if (firstCaseClause && firstCaseClause.kind() == TypeScript.SyntaxKind.CaseSwitchClause) {
-                var caseClause = <TypeScript.CaseSwitchClauseSyntax>firstCaseClause;
-                statements = caseClause.statements;
-            }
-            else if (firstCaseClause && firstCaseClause.kind() == TypeScript.SyntaxKind.DefaultSwitchClause) {
-                var defaultClause = <TypeScript.CaseSwitchClauseSyntax>firstCaseClause;
-                statements = defaultClause.statements;
-            }
-            else {
-                return null;
-            }
+            var firstCaseClause = switchClauses.childAt(0);
+            var statements = firstCaseClause.statements;
 
-            return this.breakpointSpanOfFirstChildOfSyntaxList(<TypeScript.ISyntaxList>statements);
+            return this.breakpointSpanOfFirstChildOfSyntaxList(statements);
         }
 
         private breakpointSpanOfLastStatementOfLastCaseClause(switchStatementNode: TypeScript.SyntaxNode): SpanInfo {
@@ -896,36 +886,25 @@ module TypeScript.Services.Breakpoints {
                 return null;
             }
 
-            var switchClauses = <TypeScript.ISyntaxList>switchStatement.switchClauses;
+            var switchClauses = switchStatement.switchClauses;
             if (switchClauses.childCount() == 0) {
                 return null;
             }
 
-            var lastClauseNode = <TypeScript.SyntaxNode>switchClauses.childAt(switchClauses.childCount() - 1);
-            var statements: TypeScript.ISyntaxList = null;
-            if (lastClauseNode && lastClauseNode.kind() == TypeScript.SyntaxKind.CaseSwitchClause) {
-                var caseClause = <TypeScript.CaseSwitchClauseSyntax>lastClauseNode;
-                statements = caseClause.statements;
-            }
-            else if (lastClauseNode && lastClauseNode.kind() == TypeScript.SyntaxKind.DefaultSwitchClause) {
-                var defaultClause = <TypeScript.CaseSwitchClauseSyntax>lastClauseNode;
-                statements = defaultClause.statements;
-            }
-            else {
-                return null;
-            }
+            var lastClauseNode = switchClauses.childAt(switchClauses.childCount() - 1);
+            var statements = lastClauseNode.statements;
 
-            return this.breakpointSpanOfLastChildOfSyntaxList(<TypeScript.ISyntaxList>statements);
+            return this.breakpointSpanOfLastChildOfSyntaxList(statements);
         }
 
         private breakpointSpanOfCaseSwitchClause(caseClauseNode: TypeScript.SyntaxNode): SpanInfo {
             var caseSwitchClause = <TypeScript.CaseSwitchClauseSyntax>caseClauseNode;
-            return this.breakpointSpanOfFirstChildOfSyntaxList(<TypeScript.ISyntaxList>caseSwitchClause.statements);
+            return this.breakpointSpanOfFirstChildOfSyntaxList(caseSwitchClause.statements);
         }
 
         private breakpointSpanOfDefaultSwitchClause(defaultSwithClauseNode: TypeScript.SyntaxNode): SpanInfo {
             var defaultSwitchClause = <TypeScript.DefaultSwitchClauseSyntax>defaultSwithClauseNode;
-            return this.breakpointSpanOfFirstChildOfSyntaxList(<TypeScript.ISyntaxList>defaultSwitchClause.statements);
+            return this.breakpointSpanOfFirstChildOfSyntaxList(defaultSwitchClause.statements);
         }
 
         private breakpointSpanOfWithStatement(withStatementNode: TypeScript.SyntaxNode): SpanInfo {

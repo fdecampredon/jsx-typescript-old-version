@@ -118,10 +118,10 @@ module TypeScript {
                         array.splice(index, 0, element);
                     }
                     else if (element.isList()) {
-                        (<ISyntaxList>element).insertChildrenInto(array, index);
+                        (<ISyntaxList<ISyntaxNodeOrToken>>element).insertChildrenInto(array, index);
                     }
                     else if (element.isSeparatedList()) {
-                        (<ISeparatedSyntaxList>element).insertChildrenInto(array, index);
+                        (<ISeparatedSyntaxList<ISyntaxNodeOrToken>>element).insertChildrenInto(array, index);
                     }
                     else {
                         throw Errors.invalidOperation();

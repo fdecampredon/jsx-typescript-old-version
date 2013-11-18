@@ -985,10 +985,10 @@ function getType(child: IMemberDefinition): string {
         return "ISyntaxToken";
     }
     else if (child.isSeparatedList) {
-        return "ISeparatedSyntaxList";
+        return "ISeparatedSyntaxList<" + child.elementType + ">";
     }
     else if (child.isList) {
-        return "ISyntaxList";
+        return "ISyntaxList<" + child.elementType + ">";
     }
     else {
         return child.type;
@@ -1306,10 +1306,10 @@ function generateFactory1Method(definition: ITypeDefinition): string {
             result += child.name;
         }
         else if (child.isList) {
-            result += "Syntax.emptyList()";
+            result += "Syntax.emptyList<" + child.elementType + ">()";
         }
         else if (child.isSeparatedList) {
-            result += "Syntax.emptySeparatedList()";
+            result += "Syntax.emptySeparatedList<" + child.elementType + ">()";
         }
         else {
             result += "null";
@@ -1408,10 +1408,10 @@ function generateFactory2Method(definition: ITypeDefinition): string {
             result += child.name;
         }
         else if (child.isList) {
-            result += "Syntax.emptyList()";
+            result += "Syntax.emptyList<" + child.elementType + ">()";
         }
         else if (child.isSeparatedList) {
-            result += "Syntax.emptySeparatedList()";
+            result += "Syntax.emptySeparatedList<" + child.elementType + ">()";
         }
         else if (isOptional(child)) {
             result += "null";
@@ -1748,10 +1748,10 @@ function generateWithMethod(definition: ITypeDefinition, child: IMemberDefinitio
             result += "        return this.with" + pascalCase(child.name) + "("
 
             if (child.isList) {
-                result += "Syntax.list([" + argName + "])";
+                result += "Syntax.list<" + child.elementType + ">([" + argName + "])";
             }
             else {
-                result += "Syntax.separatedList([" + argName + "])";
+                result += "Syntax.separatedList<" + child.elementType + ">([" + argName + "])";
             }
 
             result += ");\r\n";
@@ -2013,12 +2013,12 @@ function generateRewriter(): string {
 "            return node.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitList(list: ISyntaxList): ISyntaxList {\r\n" +
-"            var newItems: ISyntaxNodeOrToken[] = null;\r\n" +
+"        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {\r\n" +
+"            var newItems: T[] = null;\r\n" +
 "\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
 "                var item = list.childAt(i);\r\n" +
-"                var newItem = this.visitNodeOrToken(item);\r\n" +
+"                var newItem = <T>this.visitNodeOrToken(item);\r\n" +
 "\r\n" +
 "                if (item !== newItem && newItems === null) {\r\n" +
 "                    newItems = [];\r\n" +
@@ -2033,10 +2033,10 @@ function generateRewriter(): string {
 "            }\r\n" +
 "\r\n" +
 "            // Debug.assert(newItems === null || newItems.length === list.childCount());\r\n" +
-"            return newItems === null ? list : Syntax.list(newItems);\r\n" +
+"            return newItems === null ? list : Syntax.list<T>(newItems);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public visitSeparatedList(list: ISeparatedSyntaxList): ISeparatedSyntaxList {\r\n" +
+"        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>): ISeparatedSyntaxList<T> {\r\n" +
 "            var newItems: ISyntaxNodeOrToken[] = null;\r\n" +
 "\r\n" +
 "            for (var i = 0, n = list.childCount(); i < n; i++) {\r\n" +
@@ -2056,7 +2056,7 @@ function generateRewriter(): string {
 "            }\r\n" +
 "\r\n" +
 "            // Debug.assert(newItems === null || newItems.length === list.childCount());\r\n" +
-"            return newItems === null ? list : Syntax.separatedList(newItems);\r\n" +
+"            return newItems === null ? list : Syntax.separatedList<T>(newItems);\r\n" +
 "        }\r\n";
 
     for (var i = 0; i < definitions.length; i++) {

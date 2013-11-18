@@ -24,7 +24,7 @@ module TypeScript {
         return hasModifier(declaration.modifiers, PullElementFlags.Ambient) || moduleMembersAreElided(declaration.moduleElements);
     }
 
-    function moduleMembersAreElided(members: ISyntaxList): boolean {
+    function moduleMembersAreElided(members: ISyntaxList<IModuleElementSyntax>): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 
@@ -161,21 +161,21 @@ module TypeScript {
         return top;
     }
 
-    export function getExtendsHeritageClause(clauses: ISyntaxList): HeritageClauseSyntax {
+    export function getExtendsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
         if (!clauses) {
             return null;
         }
 
-        return <HeritageClauseSyntax>clauses.firstOrDefault((c: HeritageClauseSyntax) =>
+        return clauses.firstOrDefault(c =>
             c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ExtendsHeritageClause);
     }
 
-    export function getImplementsHeritageClause(clauses: ISyntaxList): HeritageClauseSyntax {
+    export function getImplementsHeritageClause(clauses: ISyntaxList<HeritageClauseSyntax>): HeritageClauseSyntax {
         if (!clauses) {
             return null;
         }
 
-        return <HeritageClauseSyntax>clauses.firstOrDefault((c: HeritageClauseSyntax) =>
+        return clauses.firstOrDefault(c =>
             c.typeNames.nonSeparatorCount() > 0 && c.kind() === SyntaxKind.ImplementsHeritageClause);
     }
 
@@ -342,10 +342,10 @@ module TypeScript {
                 lastParameterIsRest: () => lastParameterIsRest(list),
                 ast: list.parameters,
                 astAt: (index: number) => list.parameters.nonSeparatorAt(index),
-                identifierAt: (index: number) => (<ParameterSyntax>list.parameters.nonSeparatorAt(index)).identifier,
+                identifierAt: (index: number) => list.parameters.nonSeparatorAt(index).identifier,
                 typeAt: (index: number) => getType(list.parameters.nonSeparatorAt(index)),
-                initializerAt: (index: number) => (<ParameterSyntax>list.parameters.nonSeparatorAt(index)).equalsValueClause,
-                isOptionalAt: (index: number) => parameterIsOptional(<ParameterSyntax>list.parameters.nonSeparatorAt(index)),
+                initializerAt: (index: number) => list.parameters.nonSeparatorAt(index).equalsValueClause,
+                isOptionalAt: (index: number) => parameterIsOptional(list.parameters.nonSeparatorAt(index)),
             }
         }
     }
@@ -660,9 +660,9 @@ module TypeScript {
         return null;
     }
 
-    export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclaratorSyntax): ISyntaxList {
+    export function getVariableDeclaratorModifiers(variableDeclarator: VariableDeclaratorSyntax): ISyntaxList<ISyntaxToken> {
         var variableStatement = getVariableStatement(variableDeclarator);
-        return variableStatement ? variableStatement.modifiers : Syntax.emptyList();
+        return variableStatement ? variableStatement.modifiers : Syntax.emptyList<ISyntaxToken>();
     }
 
     export function isIntegerLiteralAST(expression: ISyntaxElement): boolean {

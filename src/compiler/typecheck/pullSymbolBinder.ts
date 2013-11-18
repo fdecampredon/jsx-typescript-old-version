@@ -314,7 +314,7 @@ module TypeScript {
             if (moduleDeclarations.length > 1 && enumAST.enumElements.nonSeparatorCount() > 0) {
                 var multipleEnums = ArrayUtilities.where(moduleDeclarations, d => d.kind === PullElementKind.Enum).length > 1;
                 if (multipleEnums) {
-                    var firstVariable = <EnumElementSyntax>enumAST.enumElements.nonSeparatorAt(0);
+                    var firstVariable = enumAST.enumElements.nonSeparatorAt(0);
                     if (!firstVariable.equalsValueClause) {
                         this.semanticInfoChain.addDiagnosticFromAST(
                             firstVariable, DiagnosticCode.Enums_with_multiple_declarations_must_provide_an_initializer_for_the_first_enum_element, null);

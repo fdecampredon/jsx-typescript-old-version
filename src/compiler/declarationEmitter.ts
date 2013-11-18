@@ -62,13 +62,13 @@ module TypeScript {
             this.emitDeclarationsForSourceUnit(sourceUnit);
         }
 
-        private emitDeclarationsForList(list: ISyntaxList) {
+        private emitDeclarationsForList(list: ISyntaxList<ISyntaxNodeOrToken>) {
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.childAt(i));
             }
         }
 
-        private emitSeparatedList(list: ISeparatedSyntaxList) {
+        private emitSeparatedList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>) {
             for (var i = 0, n = list.nonSeparatorCount(); i < n; i++) {
                 this.emitDeclarationsForAST(list.nonSeparatorAt(i));
             }
@@ -375,7 +375,7 @@ module TypeScript {
             }
         }
 
-        private emitClassElementModifiers(modifiers: ISyntaxList): void {
+        private emitClassElementModifiers(modifiers: ISyntaxList<ISyntaxToken>): void {
             if (hasModifier(modifiers, PullElementFlags.Static)) {
                 if (hasModifier(modifiers, PullElementFlags.Private)) {
                     this.declFile.Write("private ");
@@ -416,7 +416,7 @@ module TypeScript {
         private emitDeclarationsForVariableDeclaration(variableDeclaration: VariableDeclarationSyntax) {
             var varListCount = variableDeclaration.variableDeclarators.nonSeparatorCount();
             for (var i = 0; i < varListCount; i++) {
-                this.emitVariableDeclarator(<VariableDeclaratorSyntax>variableDeclaration.variableDeclarators.nonSeparatorAt(i), i == 0, i == varListCount - 1);
+                this.emitVariableDeclarator(variableDeclaration.variableDeclarators.nonSeparatorAt(i), i == 0, i == varListCount - 1);
             }
         }
 
@@ -729,7 +729,7 @@ module TypeScript {
             this.declFile.WriteLine(";");
         }
 
-        private emitBaseList(bases: ISeparatedSyntaxList, useExtendsList: boolean) {
+        private emitBaseList(bases: ISeparatedSyntaxList<INameSyntax>, useExtendsList: boolean) {
             if (bases && (bases.nonSeparatorCount() > 0)) {
                 var qual = useExtendsList ? "extends" : "implements";
                 this.declFile.Write(" " + qual + " ");
@@ -773,7 +773,7 @@ module TypeScript {
             this.emitMemberAccessorDeclaration(funcDecl, funcDecl.modifiers, funcDecl.propertyName);
         }
 
-        private emitMemberAccessorDeclaration(funcDecl: ISyntaxElement, modifiers: ISyntaxList, name: ISyntaxToken) {
+        private emitMemberAccessorDeclaration(funcDecl: ISyntaxElement, modifiers: ISyntaxList<ISyntaxToken>, name: ISyntaxToken) {
             var start = new Date().getTime();
             var accessorSymbol = PullHelpers.getAccessorSymbol(funcDecl, this.semanticInfoChain);
             TypeScript.declarationEmitGetAccessorFunctionTime += new Date().getTime();
@@ -804,7 +804,7 @@ module TypeScript {
                 }
 
                 for (var i = 0; i < argsLen; i++) {
-                    var parameter = <ParameterSyntax>funcDecl.parameterList.parameters.nonSeparatorAt(i);
+                    var parameter = funcDecl.parameterList.parameters.nonSeparatorAt(i);
                     var parameterDecl = this.semanticInfoChain.getDeclForAST(parameter);
                     if (hasFlag(parameterDecl.flags, PullElementFlags.PropertyParameter)) {
                         var funcPullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
@@ -851,10 +851,10 @@ module TypeScript {
             this.declFile.WriteLine("}");
         }
 
-        private emitHeritageClauses(clauses: ISyntaxList): void {
+        private emitHeritageClauses(clauses: ISyntaxList<HeritageClauseSyntax>): void {
             if (clauses) {
                 for (var i = 0, n = clauses.childCount(); i < n; i++) {
-                    this.emitHeritageClause(<HeritageClauseSyntax>clauses.childAt(i));
+                    this.emitHeritageClause(clauses.childAt(i));
                 }
             }
         }
@@ -982,7 +982,7 @@ module TypeScript {
             this.indenter.increaseIndent();
             var membersLen = moduleDecl.enumElements.nonSeparatorCount();
             for (var j = 0; j < membersLen; j++) {
-                var enumElement = <EnumElementSyntax>moduleDecl.enumElements.nonSeparatorAt(j);
+                var enumElement = moduleDecl.enumElements.nonSeparatorAt(j);
                 var enumElementDecl = <PullEnumElementDecl>this.semanticInfoChain.getDeclForAST(enumElement);
                 this.emitDeclarationComments(enumElement);
                 this.emitIndent();

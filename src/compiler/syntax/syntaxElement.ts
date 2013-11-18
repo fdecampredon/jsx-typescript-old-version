@@ -119,7 +119,7 @@ module TypeScript {
 
     export interface ISwitchClauseSyntax extends ISyntaxNode {
         isSwitchClause(): boolean;
-        statements: ISyntaxList;
+        statements: ISyntaxList<IStatementSyntax>;
     }
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {

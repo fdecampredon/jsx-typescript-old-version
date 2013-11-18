@@ -17,9 +17,9 @@ module TypeScript {
             return false;
         }
 
-        public static getToken(list: ISyntaxList, kind: SyntaxKind): ISyntaxToken {
+        public static getToken(list: ISyntaxList<ISyntaxToken>, kind: SyntaxKind): ISyntaxToken {
             for (var i = 0, n = list.childCount(); i < n; i++) {
-                var token = <ISyntaxToken>list.childAt(i);
+                var token = list.childAt(i);
                 if (token.tokenKind === kind) {
                     return token;
                 }
@@ -28,7 +28,7 @@ module TypeScript {
             return null;
         }
 
-        public static containsToken(list: ISyntaxList, kind: SyntaxKind): boolean {
+        public static containsToken(list: ISyntaxList<ISyntaxToken>, kind: SyntaxKind): boolean {
             return SyntaxUtilities.getToken(list, kind) !== null;
         }
 
@@ -63,7 +63,7 @@ module TypeScript {
                 case SyntaxKind.FunctionDeclaration:
                 case SyntaxKind.VariableStatement:
                 case SyntaxKind.EnumDeclaration:
-                    if (SyntaxUtilities.containsToken(<ISyntaxList>(<any>node).modifiers, SyntaxKind.DeclareKeyword)) {
+                    if (SyntaxUtilities.containsToken(<ISyntaxList<ISyntaxToken>>(<any>node).modifiers, SyntaxKind.DeclareKeyword)) {
                         return true;
                     }
                     // Fall through to check if syntax container is ambient

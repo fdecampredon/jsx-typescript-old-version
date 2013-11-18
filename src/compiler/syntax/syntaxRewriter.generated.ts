@@ -14,12 +14,12 @@ module TypeScript {
             return node.isToken() ? <ISyntaxNodeOrToken>this.visitToken(<ISyntaxToken>node) : this.visitNode(<SyntaxNode>node);
         }
 
-        public visitList(list: ISyntaxList): ISyntaxList {
-            var newItems: ISyntaxNodeOrToken[] = null;
+        public visitList<T extends ISyntaxNodeOrToken>(list: ISyntaxList<T>): ISyntaxList<T> {
+            var newItems: T[] = null;
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
                 var item = list.childAt(i);
-                var newItem = this.visitNodeOrToken(item);
+                var newItem = <T>this.visitNodeOrToken(item);
 
                 if (item !== newItem && newItems === null) {
                     newItems = [];
@@ -34,10 +34,10 @@ module TypeScript {
             }
 
             // Debug.assert(newItems === null || newItems.length === list.childCount());
-            return newItems === null ? list : Syntax.list(newItems);
+            return newItems === null ? list : Syntax.list<T>(newItems);
         }
 
-        public visitSeparatedList(list: ISeparatedSyntaxList): ISeparatedSyntaxList {
+        public visitSeparatedList<T extends ISyntaxNodeOrToken>(list: ISeparatedSyntaxList<T>): ISeparatedSyntaxList<T> {
             var newItems: ISyntaxNodeOrToken[] = null;
 
             for (var i = 0, n = list.childCount(); i < n; i++) {
@@ -57,7 +57,7 @@ module TypeScript {
             }
 
             // Debug.assert(newItems === null || newItems.length === list.childCount());
-            return newItems === null ? list : Syntax.separatedList(newItems);
+            return newItems === null ? list : Syntax.separatedList<T>(newItems);
         }
 
         public visitSourceUnit(node: SourceUnitSyntax): any {

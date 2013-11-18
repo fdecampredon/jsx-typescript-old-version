@@ -17,7 +17,7 @@ module TypeScript.Services {
 
         private createItem(
                 node: TypeScript.SyntaxNode,
-                modifiers: TypeScript.ISyntaxList,
+                modifiers: TypeScript.ISyntaxList<ISyntaxToken>,
                 kind: string,
                 name: string): void {
             var item = new NavigateToItem();
@@ -34,7 +34,7 @@ module TypeScript.Services {
             this.items.push(item);
         }
 
-        private getKindModifiers(modifiers: TypeScript.ISyntaxList): string {
+        private getKindModifiers(modifiers: TypeScript.ISyntaxList<ISyntaxToken>): string {
             var result: string[] = [];
 
             if (TypeScript.SyntaxUtilities.containsToken(modifiers, TypeScript.SyntaxKind.ExportKeyword)) {
@@ -174,7 +174,7 @@ module TypeScript.Services {
         }
 
         public visitConstructorDeclaration(node: TypeScript.ConstructorDeclarationSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.constructorImplementationElement, "constructor");
+            var item = this.createItem(node, node.modifiers, ScriptElementKind.constructorImplementationElement, "constructor");
 
             // No need to descend into a constructor;
             this.skip(node);
@@ -216,7 +216,7 @@ module TypeScript.Services {
         public visitVariableDeclarator(node: TypeScript.VariableDeclaratorSyntax): void {
             var modifiers = this.currentMemberVariableDeclaration
                 ? this.currentMemberVariableDeclaration.modifiers
-                : TypeScript.Syntax.emptyList();
+                : TypeScript.Syntax.emptyList<ISyntaxToken>();
             var kind = this.currentMemberVariableDeclaration
                 ? ScriptElementKind.memberVariableElement
                 : ScriptElementKind.variableElement;
@@ -227,42 +227,42 @@ module TypeScript.Services {
         }
 
         public visitIndexSignature(node: TypeScript.IndexSignatureSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.indexSignatureElement, "[]");
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.indexSignatureElement, "[]");
 
             // No need to descend into an index signature;
             this.skip(node);
         }
 
         public visitEnumElement(node: TypeScript.EnumElementSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.memberVariableElement, node.propertyName.text());
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.memberVariableElement, node.propertyName.text());
 
             // No need to descend into an enum element;
             this.skip(node);
         }
 
         public visitCallSignature(node: TypeScript.CallSignatureSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.callSignatureElement, "()");
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.callSignatureElement, "()");
 
             // No need to descend into a call signature;
             this.skip(node);
         }
 
         public visitConstructSignature(node: TypeScript.ConstructSignatureSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.constructSignatureElement, "new()");
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.constructSignatureElement, "new()");
 
             // No need to descend into a construct signature;
             this.skip(node);
         }
 
         public visitMethodSignature(node: TypeScript.MethodSignatureSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.memberFunctionElement, node.propertyName.text());
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.memberFunctionElement, node.propertyName.text());
 
             // No need to descend into a method signature;
             this.skip(node);
         }
 
         public visitPropertySignature(node: TypeScript.PropertySignatureSyntax): void {
-            var item = this.createItem(node, TypeScript.Syntax.emptyList(), ScriptElementKind.memberVariableElement, node.propertyName.text());
+            var item = this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.memberVariableElement, node.propertyName.text());
 
             // No need to descend into a property signature;
             this.skip(node);

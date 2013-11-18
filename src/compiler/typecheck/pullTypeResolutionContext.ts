@@ -21,10 +21,10 @@ module TypeScript {
         public candidateCache: CandidateInferenceInfo[] = [];
         public fixedParameterTypes: PullTypeSymbol[] = null;
         public resolver: PullTypeResolver = null;
-        public argumentASTs: ISeparatedSyntaxList = null;
+        public argumentASTs: ISeparatedSyntaxList<IExpressionSyntax> = null;
 
         // When inferences are being performed at function call sites, use this overloads
-        constructor(resolver: PullTypeResolver, argumentASTs: ISeparatedSyntaxList);
+        constructor(resolver: PullTypeResolver, argumentASTs: ISeparatedSyntaxList<IExpressionSyntax>);
 
         // during contextual instantiation, use this overload
         constructor(resolver: PullTypeResolver, fixedParameterTypes: PullTypeSymbol[]);

@@ -1,22 +1,22 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export interface ISyntaxList extends ISyntaxElement {
-        childAt(index: number): ISyntaxNodeOrToken;
-        toArray(): ISyntaxNodeOrToken[];
+    export interface ISyntaxList<T extends ISyntaxNodeOrToken> extends ISyntaxElement {
+        childAt(index: number): T;
+        toArray(): T[];
 
         insertChildrenInto(array: ISyntaxElement[], index: number): void;
 
-        any(func: (v: ISyntaxNodeOrToken) => boolean): boolean;
+        any(func: (v: T) => boolean): boolean;
 
-        firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken;
-        lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken;
+        firstOrDefault(func: (v: T, index: number) => boolean): T;
+        lastOrDefault(func: (v: T, index: number) => boolean): T;
     }
 }
 
 module TypeScript.Syntax {
     // TODO: stop exporting this once typecheck bug is fixed.
-    export class EmptySyntaxList implements ISyntaxList {
+    export class EmptySyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
 
         public syntaxID(): number {
@@ -52,7 +52,7 @@ module TypeScript.Syntax {
             return 0;
         }
 
-        public childAt(index: number): ISyntaxNodeOrToken {
+        public childAt(index: number): T {
             throw Errors.argumentOutOfRange("index");
         }
 
@@ -60,7 +60,7 @@ module TypeScript.Syntax {
             return true;
         }
 
-        public toArray(): ISyntaxNodeOrToken[] {
+        public toArray(): T[] {
             return [];
         }
 
@@ -136,26 +136,26 @@ module TypeScript.Syntax {
         public insertChildrenInto(array: ISyntaxElement[], index: number): void {
         }
 
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return null;
         }
 
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return null;
         }
     }
 
-    var _emptyList = new EmptySyntaxList();
+    var _emptyList: ISyntaxList<ISyntaxNodeOrToken> = <any>new EmptySyntaxList<ISyntaxNodeOrToken>();
 
-    export function emptyList(): ISyntaxList {
-        return _emptyList;
+    export function emptyList<T extends ISyntaxNodeOrToken>(): ISyntaxList<T> {
+        return <ISyntaxList<T>>_emptyList;
     }
 
-    class SingletonSyntaxList implements ISyntaxList {
+    class SingletonSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
         private _syntaxID: number = 0;
 
-        constructor(private item: ISyntaxNodeOrToken) {
+        constructor(private item: T) {
             Syntax.setParentForChildren(this);
         }
 
@@ -196,7 +196,7 @@ module TypeScript.Syntax {
             return 1;
         }
 
-        public childAt(index: number): ISyntaxNodeOrToken {
+        public childAt(index: number): T {
             if (index !== 0) {
                 throw Errors.argumentOutOfRange("index");
             }
@@ -208,7 +208,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public toArray(): ISyntaxNodeOrToken[] {
+        public toArray(): T[] {
             return [this.item];
         }
 
@@ -285,21 +285,21 @@ module TypeScript.Syntax {
             array.splice(index, 0, this.item);
         }
 
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return func && func(this.item, 0) ? this.item : null;
         }
 
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return func && func(this.item, 0) ? this.item : null;
         }
     }
 
-    class NormalSyntaxList implements ISyntaxList {
+    class NormalSyntaxList<T extends ISyntaxNodeOrToken> implements ISyntaxList<T> {
         public parent: ISyntaxElement = null;
         private _data: number = 0;
         private _syntaxID: number = 0;
 
-        constructor(private nodeOrTokens: ISyntaxNodeOrToken[]) {
+        constructor(private nodeOrTokens: T[]) {
             Syntax.setParentForChildren(this);
         }
 
@@ -336,7 +336,7 @@ module TypeScript.Syntax {
             return this.nodeOrTokens.length;
         }
 
-        public childAt(index: number): ISyntaxNodeOrToken {
+        public childAt(index: number): T {
             if (index < 0 || index >= this.nodeOrTokens.length) {
                 throw Errors.argumentOutOfRange("index");
             }
@@ -348,7 +348,7 @@ module TypeScript.Syntax {
             return false;
         }
 
-        public toArray(): ISyntaxNodeOrToken[] {
+        public toArray(): T[] {
             return this.nodeOrTokens.slice(0);
         }
 
@@ -498,23 +498,23 @@ module TypeScript.Syntax {
             return ArrayUtilities.any(this.nodeOrTokens, func);
         }
 
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return ArrayUtilities.firstOrDefault(this.nodeOrTokens, func);
         }
 
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): ISyntaxNodeOrToken {
+        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
             return ArrayUtilities.lastOrDefault(this.nodeOrTokens, func);
         }
     }
 
-    export function list(nodes: ISyntaxNodeOrToken[]): ISyntaxList {
+    export function list<T extends ISyntaxNodeOrToken>(nodes: T[]): ISyntaxList<T> {
         if (nodes === undefined || nodes === null || nodes.length === 0) {
-            return emptyList();
+            return emptyList<T>();
         }
 
         if (nodes.length === 1) {
             var item = nodes[0];
-            return new SingletonSyntaxList(item);
+            return new SingletonSyntaxList<T>(item);
         }
 
         return new NormalSyntaxList(nodes);

@@ -16,7 +16,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    function walkListChildren(preAst: ISyntaxList, walker: AstWalker): void {
+    function walkListChildren(preAst: ISyntaxList<ISyntaxNodeOrToken>, walker: AstWalker): void {
         for (var i = 0, n = preAst.childCount(); i < n; i++) {
             walker.walk(preAst.childAt(i));
         }
@@ -77,7 +77,7 @@ module TypeScript {
         walker.walk(preAst.block);
     }
 
-    function walkSeparatedListChildren(preAst: ISeparatedSyntaxList, walker: AstWalker): void {
+    function walkSeparatedListChildren(preAst: ISeparatedSyntaxList<ISyntaxNodeOrToken>, walker: AstWalker): void {
         for (var i = 0, n = preAst.nonSeparatorCount(); i < n; i++) {
             walker.walk(preAst.nonSeparatorAt(i));
         }

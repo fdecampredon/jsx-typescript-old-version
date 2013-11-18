@@ -257,7 +257,7 @@ module TypeScript {
         context.semanticInfoChain.setASTForDecl(valueDecl, moduleNameAST);
     }
 
-    function containsExecutableCode(members: ISyntaxList): boolean {
+    function containsExecutableCode(members: ISyntaxList<IModuleElementSyntax>): boolean {
         for (var i = 0, n = members.childCount(); i < n; i++) {
             var member = members.childAt(i);
 
@@ -1157,7 +1157,7 @@ module TypeScript {
         var enumMemberDecls = <PullEnumElementDecl[]>enumDecl.getChildDecls();
 
         for (var i = 0, n = ast.enumElements.nonSeparatorCount(); i < n; i++) {
-            var enumElement = <EnumElementSyntax>ast.enumElements.nonSeparatorAt(i);
+            var enumElement = ast.enumElements.nonSeparatorAt(i);
             var enumElementDecl = ArrayUtilities.first(enumMemberDecls, d =>
                 context.semanticInfoChain.getASTForDecl(d) === enumElement);
 
