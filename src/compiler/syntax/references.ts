@@ -40,9 +40,6 @@
 ///<reference path='syntaxVisitor.generated.ts' />
 ///<reference path='syntaxWalker.generated.ts' />
 
-// PositionTrackingWalker depends on SyntaxWalker
-///<reference path='positionTrackingWalker.ts' />
-
 // SyntaxInformationMap depends on SyntaxWalker
 ///<reference path='syntaxInformationMap.ts' />
 

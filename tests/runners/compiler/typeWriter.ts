@@ -1,28 +1,5 @@
-interface PositionedNode extends TypeScript.ISyntaxElement {
-    position: number;
-}
 
-class PositionalWalker extends TypeScript.SyntaxWalker {
-    private currentPosition = 0;
-
-    public visitList<T extends TypeScript.ISyntaxNodeOrToken>(list: TypeScript.ISyntaxList<T>) {
-        (<any>list).position = this.currentPosition;
-        return super.visitList(list);
-    }
-
-    public visitNode(node: TypeScript.SyntaxNode) {
-        (<any>node).position = this.currentPosition;
-        return super.visitNode(node);
-    }
-
-    public visitToken(token: TypeScript.ISyntaxToken) {
-        (<any>token).position = this.currentPosition;
-        this.currentPosition += token.fullWidth();
-        return super.visitToken(token);
-    }
-}
-
-class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
+class TypeWriterWalker extends TypeScript.SyntaxWalker {
     private document: TypeScript.Document;
     private syntaxTree: TypeScript.SyntaxTree;
     private currentPosition = 0;
@@ -40,7 +17,9 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         this.syntaxTree.sourceUnit().accept(this);
     }
 
-    private isName(token: TypeScript.ISyntaxToken, parent: TypeScript.ISyntaxElement) {
+    private isName(token: TypeScript.ISyntaxToken) {
+        var parent = token.parent;
+
         switch (parent.kind()) {
             case TypeScript.SyntaxKind.ContinueStatement:
                 return (<TypeScript.ContinueStatementSyntax>parent).identifier === token;
@@ -54,9 +33,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
 
     public visitToken(token: TypeScript.ISyntaxToken) {
         if (token.kind() === TypeScript.SyntaxKind.IdentifierName) {
-            var posToken = this.syntaxTree.sourceUnit().findToken(this.position());
-            var myParent = posToken.parent;
-            if (!this.isName(token, myParent)) {
+            if (!this.isName(token)) {
                 this.log(token);
             }
         } else if (token.kind() === TypeScript.SyntaxKind.ThisKeyword) {
@@ -69,27 +46,24 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
         return super.visitNode(node);
     }
 
-    public visitSourceUnit(node: TypeScript.SourceUnitSyntax) {
-        node.accept(new PositionalWalker());
-        return super.visitSourceUnit(node);
-    }
-
     private getAstForElement(element: TypeScript.ISyntaxElement) {
-        var candidates: string[] = [];
+        if (!element.isShared()) {
+            var candidates: string[] = [];
 
-        for (var i = 0; i < element.fullWidth(); i++) {
-            var ast = TypeScript.getAstAtPosition(this.document.sourceUnit(), (<PositionedNode>element).position + i, false, false);
-            while (ast) {
-                if (ast.end() - ast.start() === element.width()) {
-                    return ast;
+            for (var i = 0; i < element.fullWidth(); i++) {
+                var ast = TypeScript.getAstAtPosition(this.document.sourceUnit(), element.fullStart() + i, false, false);
+                while (ast) {
+                    if (ast.end() - ast.start() === element.width()) {
+                        return ast;
+                    }
+                    ast = ast.parent;
                 }
-                ast = ast.parent;
             }
+
+            var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + element.fullText() + ', width = ' + element.width() + ', pos = ' + element.fullStart();
+
+            throw new Error(errorText);
         }
-
-        var errorText = 'Was looking for AST in file ' + this.filename + ' with fulltext = ' + element.fullText() + ', width = ' + element.width() + ', pos = ' + (<PositionedNode>element).position;
-
-        throw new Error(errorText);
     }
 
     private getTypeOfElement(element: TypeScript.ISyntaxElement) {
@@ -182,7 +156,7 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     }
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
-        var pos = this.document.lineMap().getLineAndCharacterFromPosition(this.position());
+        var pos = this.document.lineMap().getLineAndCharacterFromPosition(node.fullStart());
         this.results.push('Line ' + pos.line() + ' col ' + pos.character() + ' ' + TypeScript.SyntaxKind[node.kind()] + ' "' + node.fullText().trim() + '" = ' + this.getTypeOfElement(node));
     }
 }

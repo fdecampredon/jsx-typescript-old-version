@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export class DepthLimitedWalker extends PositionTrackingWalker {
+    export class DepthLimitedWalker extends SyntaxWalker {
         private _depth: number = 0;
         private _maximumDepth: number = 0;
 
@@ -15,10 +15,6 @@ module TypeScript {
                 this._depth++;
                 super.visitNode(node);
                 this._depth--;
-            }
-            else {
-                // update the position
-                this.skip(node);
             }
         }
     }

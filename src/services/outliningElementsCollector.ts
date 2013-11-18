@@ -90,10 +90,10 @@ module TypeScript.Services {
         }
 
         private addOutlineRange(node: TypeScript.SyntaxNode, startElement: TypeScript.ISyntaxNodeOrToken, endElement: TypeScript.ISyntaxNodeOrToken) {
-            if (startElement && endElement) {
+            if (startElement && endElement && !startElement.isShared() && !endElement.isShared()) {
                 // Compute the position
-                var start = this.position() + TypeScript.Syntax.childOffset(node, startElement);
-                var end = this.position() + TypeScript.Syntax.childOffset(node, endElement) + endElement.leadingTriviaWidth() + endElement.width();
+                var start = startElement.start();
+                var end = endElement.end();
 
                 // Push the new range
                 this.elements.push(TypeScript.TextSpan.fromBounds(start, end));

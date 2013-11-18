@@ -20,10 +20,12 @@ var generate = false;
 var htmlReport = new Diff.HtmlBaselineReport("fidelity-report.html");
 htmlReport.reset();
 
-class PositionValidatingWalker extends TypeScript.PositionTrackingWalker {
+class PositionValidatingWalker extends TypeScript.SyntaxWalker {
+    private position = 0;
+
     public visitToken(token: TypeScript.ISyntaxToken): void {
-        TypeScript.Debug.assert(token.fullWidth() === 0 || this.position() === token.fullStart());
-        super.visitToken(token);
+        TypeScript.Debug.assert(token.fullWidth() === 0 || this.position === token.fullStart());
+        this.position += token.fullWidth();
     }
 }
 

@@ -56,7 +56,7 @@
 ////
 ////// trivia handeling
 ////class ClassFooWithTrivia /*  some comments */ 
-////[|   /* more trivia */ {
+////   /* more trivia */ [|{
 ////    
 ////
 ////    /*some trailing trivia */
