@@ -1025,20 +1025,22 @@ function generateProperties(definition: ITypeDefinition): string {
     var result = "";
 
     if (definition.name === "SourceUnitSyntax") {
-        result += "    public _syntaxTree: SyntaxTree = null;\r\n";
+        result += "        public _syntaxTree: SyntaxTree = null;\r\n";
     }
 
+    var newLine = false;
     for (var i = 0; i < definition.children.length; i++) {
         var child = definition.children[i];
 
         if (getType(child) === "SyntaxKind") {
             result += "    private _" + child.name + ": " + getType(child) + ";\r\n";
+            newLine = true;
         }
 
         hasKind = hasKind || (getType(child) === "SyntaxKind");
     }
 
-    if (definition.children.length > 0) {
+    if (newLine) {
         result += "\r\n";
     }
 
@@ -1281,7 +1283,7 @@ function generateFactory1Method(definition: ITypeDefinition): string {
         return "";
     }
 
-    var result = "\r\n    public static create("
+    var result = "\r\n        public static create("
     var i: number;
     var child: IMemberDefinition;
 
@@ -1291,13 +1293,13 @@ function generateFactory1Method(definition: ITypeDefinition): string {
         result += child.name + ": " + getType(child);
 
         if (i < mandatoryChildren.length - 1) {
-            result += ",\r\n                         ";
+            result += ",\r\n                             ";
         }
     }
 
     result += "): " + definition.name + " {\r\n";
 
-    result += "        return new " + definition.name + "(";
+    result += "            return new " + definition.name + "(";
     
     for (i = 0; i < definition.children.length; i++) {
         child = definition.children[i];
@@ -1319,7 +1321,7 @@ function generateFactory1Method(definition: ITypeDefinition): string {
     }
 
     result += "/*parsedInStrictMode:*/ false);\r\n";
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     return result;
 }
@@ -1386,7 +1388,7 @@ function generateFactory2Method(definition: ITypeDefinition): string {
 
     var i: number;
     var child: IMemberDefinition;
-    var result = "\r\n    public static create1("
+    var result = "\r\n        public static create1("
 
     for (i = 0; i < mandatoryChildren.length; i++) {
         child = mandatoryChildren[i];
@@ -1394,12 +1396,12 @@ function generateFactory2Method(definition: ITypeDefinition): string {
         result += child.name + ": " + getType(child);
 
         if (i < mandatoryChildren.length - 1) {
-            result += ",\r\n                          ";
+            result += ",\r\n                              ";
         }
     }
 
     result += "): " + definition.name + " {\r\n";
-    result += "        return new " + definition.name + "(";
+    result += "            return new " + definition.name + "(";
 
     for (i = 0; i < definition.children.length; i++) {
         child = definition.children[i];
@@ -1427,7 +1429,7 @@ function generateFactory2Method(definition: ITypeDefinition): string {
     }
 
     result += "/*parsedInStrictMode:*/ false);\r\n";
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     return result;
 }
@@ -1440,9 +1442,9 @@ function generateAcceptMethods(definition: ITypeDefinition): string {
     var result = "";
 
     result += "\r\n";
-    result += "    public accept(visitor: ISyntaxVisitor): any {\r\n";
-    result += "        return visitor.visit" + getNameWithoutSuffix(definition) + "(this);\r\n";
-    result += "    }\r\n";
+    result += "        public accept(visitor: ISyntaxVisitor): any {\r\n";
+    result += "            return visitor.visit" + getNameWithoutSuffix(definition) + "(this);\r\n";
+    result += "        }\r\n";
 
     return result;
 }
@@ -1473,9 +1475,9 @@ function generateIsMethod(definition: ITypeDefinition): string {
             }
 
             result += "\r\n";
-            result += "    public is" + type + "(): boolean {\r\n";
-            result += "        return true;\r\n";
-            result += "    }\r\n";
+            result += "        public is" + type + "(): boolean {\r\n";
+            result += "            return true;\r\n";
+            result += "        }\r\n";
         }
     }
 
@@ -1487,9 +1489,9 @@ function generateKindMethod(definition: ITypeDefinition): string {
 
     if (!hasKind) {
         result += "\r\n";
-        result += "    public kind(): SyntaxKind {\r\n";
-        result += "        return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
-        result += "    }\r\n";
+        result += "        public kind(): SyntaxKind {\r\n";
+        result += "            return SyntaxKind." + getNameWithoutSuffix(definition) + ";\r\n";
+        result += "        }\r\n";
     }
 
     return result;
@@ -1499,19 +1501,19 @@ function generateSlotMethods(definition: ITypeDefinition): string {
     var result = "";
 
     result += "\r\n";
-    result += "    public childCount(): number {\r\n";
+    result += "        public childCount(): number {\r\n";
     var slotCount = hasKind ? (definition.children.length - 1) : definition.children.length;
 
-    result += "        return " + slotCount + ";\r\n";
-    result += "    }\r\n\r\n";
+    result += "            return " + slotCount + ";\r\n";
+    result += "        }\r\n\r\n";
 
-    result += "    public childAt(slot: number): ISyntaxElement {\r\n";
+    result += "        public childAt(slot: number): ISyntaxElement {\r\n";
 
     if (slotCount === 0) {
-        result += "        throw Errors.invalidOperation();\r\n";
+        result += "            throw Errors.invalidOperation();\r\n";
     }
     else {
-        result += "        switch (slot) {\r\n";
+        result += "            switch (slot) {\r\n";
 
         var index = 0;
         for (var i = 0; i < definition.children.length; i++) {
@@ -1520,15 +1522,15 @@ function generateSlotMethods(definition: ITypeDefinition): string {
                 continue;
             }
 
-            result += "            case " + index + ": return this." + definition.children[i].name + ";\r\n";
+            result += "                case " + index + ": return this." + definition.children[i].name + ";\r\n";
             index++;
         }
 
-        result += "            default: throw Errors.invalidOperation();\r\n";
-        result += "        }\r\n";
+        result += "                default: throw Errors.invalidOperation();\r\n";
+        result += "            }\r\n";
     }
 
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     return result;
 }
@@ -1694,9 +1696,9 @@ function generateAccessors(definition: ITypeDefinition): string {
 
     if (definition.name === "SourceUnitSyntax") {
         result += "\r\n";
-        result += "    public syntaxTree(): SyntaxTree {\r\n";
-        result += "        return this._syntaxTree;\r\n";
-        result += "    }\r\n";
+        result += "        public syntaxTree(): SyntaxTree {\r\n";
+        result += "            return this._syntaxTree;\r\n";
+        result += "        }\r\n";
     }
 
     for (var i = 0; i < definition.children.length; i++) {
@@ -1704,9 +1706,9 @@ function generateAccessors(definition: ITypeDefinition): string {
         
         if (child.type === "SyntaxKind") {
             result += "\r\n";
-            result += "    public " + child.name + "(): " + getType(child) + " {\r\n";
-            result += "        return " + getPropertyAccess(child) + ";\r\n";
-            result += "    }\r\n";
+            result += "        public " + child.name + "(): " + getType(child) + " {\r\n";
+            result += "            return " + getPropertyAccess(child) + ";\r\n";
+            result += "        }\r\n";
         }
     }
 
@@ -1716,8 +1718,8 @@ function generateAccessors(definition: ITypeDefinition): string {
 function generateWithMethod(definition: ITypeDefinition, child: IMemberDefinition): string {
     var result = "";
     result += "\r\n";
-    result += "    public with" + pascalCase(child.name) + "(" + getSafeName(child) + ": " + getType(child) + "): " + definition.name + " {\r\n";
-    result += "        return this.update("
+    result += "        public with" + pascalCase(child.name) + "(" + getSafeName(child) + ": " + getType(child) + "): " + definition.name + " {\r\n";
+    result += "            return this.update("
 
     for (var i = 0; i < definition.children.length; i++) {
         if (i > 0) {
@@ -1733,7 +1735,7 @@ function generateWithMethod(definition: ITypeDefinition, child: IMemberDefinitio
     }
 
     result += ");\r\n";
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     if (child.isList || child.isSeparatedList) {
         if (TypeScript.StringUtilities.endsWith(child.name, "s")) {
@@ -1744,8 +1746,8 @@ function generateWithMethod(definition: ITypeDefinition, child: IMemberDefinitio
             argName = argName.substring(0, argName.length - 1)
 
             result += "\r\n";
-            result += "    public with" + pascalName + "(" + argName + ": " + child.elementType + "): " + definition.name + " {\r\n";
-            result += "        return this.with" + pascalCase(child.name) + "("
+            result += "        public with" + pascalName + "(" + argName + ": " + child.elementType + "): " + definition.name + " {\r\n";
+            result += "            return this.with" + pascalCase(child.name) + "("
 
             if (child.isList) {
                 result += "Syntax.list<" + child.elementType + ">([" + argName + "])";
@@ -1755,7 +1757,7 @@ function generateWithMethod(definition: ITypeDefinition, child: IMemberDefinitio
             }
 
             result += ");\r\n";
-            result += "    }\r\n";
+            result += "        }\r\n";
         }
     }
 
@@ -1775,12 +1777,12 @@ function generateWithMethods(definition: ITypeDefinition): string {
 
 function generateTriviaMethods(definition: ITypeDefinition): string {
     var result = "\r\n";
-    result += "    public withLeadingTrivia(trivia: ISyntaxTriviaList): " + definition.name + " {\r\n";
-    result += "        return <" + definition.name + ">super.withLeadingTrivia(trivia);\r\n";
-    result += "    }\r\n\r\n";
-    result += "    public withTrailingTrivia(trivia: ISyntaxTriviaList): " + definition.name + " {\r\n";
-    result += "        return <" + definition.name + ">super.withTrailingTrivia(trivia);\r\n";
-    result += "    }\r\n";
+    result += "        public withLeadingTrivia(trivia: ISyntaxTriviaList): " + definition.name + " {\r\n";
+    result += "            return <" + definition.name + ">super.withLeadingTrivia(trivia);\r\n";
+    result += "        }\r\n\r\n";
+    result += "        public withTrailingTrivia(trivia: ISyntaxTriviaList): " + definition.name + " {\r\n";
+    result += "            return <" + definition.name + ">super.withTrailingTrivia(trivia);\r\n";
+    result += "        }\r\n";
 
     return result;
 }
@@ -1789,7 +1791,7 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
     var result = "";
 
     result += "\r\n";
-    result += "    public update(";
+    result += "        public update(";
 
     var i: number;
     var child: IMemberDefinition;
@@ -1800,17 +1802,17 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
         result += getSafeName(child) + ": " + getType(child);
 
         if (i < definition.children.length - 1) {
-            result += ",\r\n                  ";
+            result += ",\r\n                      ";
         }
     }
 
     result += "): " + definition.name + " {\r\n";
 
     if (definition.children.length === 0) {
-        result += "        return this;\r\n";
+        result += "            return this;\r\n";
     }
     else {
-        result += "        if (";
+        result += "            if (";
 
         for (i = 0; i < definition.children.length; i++) {
             child = definition.children[i];
@@ -1823,10 +1825,10 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
         }
 
         result += ") {\r\n";
-        result += "            return this;\r\n";
-        result += "        }\r\n\r\n";
+        result += "                return this;\r\n";
+        result += "            }\r\n\r\n";
 
-        result += "        return new " + definition.name + "(";
+        result += "            return new " + definition.name + "(";
 
         for (i = 0; i < definition.children.length; i++) {
             child = definition.children[i];
@@ -1838,16 +1840,16 @@ function generateUpdateMethod(definition: ITypeDefinition): string {
         result += "/*parsedInStrictMode:*/ this.parsedInStrictMode());\r\n";
     }
 
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     return result;
 }
 
 function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string {
-    var result = "\r\n    public isTypeScriptSpecific(): boolean {\r\n";
+    var result = "\r\n        public isTypeScriptSpecific(): boolean {\r\n";
 
     if (definition.isTypeScriptSpecific) {
-        result += "        return true;\r\n";
+        result += "            return true;\r\n";
     }
     else {
         for (var i = 0; i < definition.children.length; i++) {
@@ -1859,10 +1861,10 @@ function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string
 
             if (child.isTypeScriptSpecific) {
                 if (child.isList) {
-                    result += "        if (" + getPropertyAccess(child) + ".childCount() > 0) { return true; }\r\n";
+                    result += "            if (" + getPropertyAccess(child) + ".childCount() > 0) { return true; }\r\n";
                 }
                 else {
-                    result += "        if (" + getPropertyAccess(child) + " !== null) { return true; }\r\n";
+                    result += "            if (" + getPropertyAccess(child) + " !== null) { return true; }\r\n";
                 }
                 continue;
             }
@@ -1872,17 +1874,17 @@ function generateIsTypeScriptSpecificMethod(definition: ITypeDefinition): string
             }
 
             if (child.isOptional) {
-                result += "        if (" + getPropertyAccess(child) + " !== null && " + getPropertyAccess(child) + ".isTypeScriptSpecific()) { return true; }\r\n";
+                result += "            if (" + getPropertyAccess(child) + " !== null && " + getPropertyAccess(child) + ".isTypeScriptSpecific()) { return true; }\r\n";
             }
             else {
-                result += "        if (" + getPropertyAccess(child) + ".isTypeScriptSpecific()) { return true; }\r\n";
+                result += "            if (" + getPropertyAccess(child) + ".isTypeScriptSpecific()) { return true; }\r\n";
             }
         }
 
-        result += "        return false;\r\n";
+        result += "            return false;\r\n";
     }
 
-    result += "    }\r\n";
+    result += "        }\r\n";
 
     return result;
 }
