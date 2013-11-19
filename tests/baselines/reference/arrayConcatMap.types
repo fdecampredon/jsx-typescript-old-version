@@ -1,0 +1,22 @@
+=== tests/cases/compiler/arrayConcatMap.ts ===
+Line 0 col 4 IdentifierName "x" = any[]
+Line 0 col 8 InvocationExpression "[].concat([{ a: 1 }], [{ a: 2 }])
+          .map(b => b.a)" = any[]
+Line 0 col 8 MemberAccessExpression "[].concat([{ a: 1 }], [{ a: 2 }])
+          .map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 0 col 8 InvocationExpression "[].concat([{ a: 1 }], [{ a: 2 }])" = any[]
+Line 0 col 8 MemberAccessExpression "[].concat" = { <U extends T[]>(...items: U[]): any[]; (...items: any[]): any[]; }
+Line 0 col 8 ArrayLiteralExpression "[]" = undefined[]
+Line 0 col 11 IdentifierName "concat" = { <U extends T[]>(...items: U[]): any[]; (...items: any[]): any[]; }
+Line 0 col 18 ArrayLiteralExpression "[{ a: 1 }]" = { a: number; }[]
+Line 0 col 19 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
+Line 0 col 21 IdentifierName "a" = number
+Line 0 col 30 ArrayLiteralExpression "[{ a: 2 }]" = { a: number; }[]
+Line 0 col 31 ObjectLiteralExpression "{ a: 2 }" = { a: number; }
+Line 0 col 33 IdentifierName "a" = number
+Line 1 col 11 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 1 col 15 SimpleArrowFunctionExpression "b => b.a" = (b: any) => any
+Line 1 col 15 IdentifierName "b" = any
+Line 1 col 20 MemberAccessExpression "b.a" = any
+Line 1 col 20 IdentifierName "b" = any
+Line 1 col 22 IdentifierName "a" = any

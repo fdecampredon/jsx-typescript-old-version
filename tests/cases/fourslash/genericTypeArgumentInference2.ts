@@ -30,11 +30,11 @@ verify.quickInfoIs('<T>(list: boolean[], iterator?: Underscore.Iterator<boolean,
 goTo.marker('3');
 verify.quickInfoIs('any');
 goTo.marker('31');
-verify.quickInfoIs('<T>(list: T[], iterator?: Underscore.Iterator<T, boolean>, context?: any): T');
+verify.quickInfoIs('<T>(list: any[], iterator?: Underscore.Iterator<any, boolean>, context?: any): any');
 
 goTo.marker('4');
 verify.quickInfoIs('any');
 goTo.marker('41');
 verify.quickInfoIs('<T>(list: any[], iterator?: Underscore.Iterator<any, boolean>, context?: any): any');
 
-verify.numberOfErrorsInCurrentFile(4);
+verify.numberOfErrorsInCurrentFile(2);

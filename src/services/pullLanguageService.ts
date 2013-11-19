@@ -325,7 +325,10 @@ module TypeScript.Services {
                         return;
                     }
 
-                    var nameAST = TypeScript.getAstAtPosition(sourceUnit, p);
+                    // Each position we're searching for should be at the start of an identifier.  
+                    // As such, we useTrailingTriviaAsLimChar=false so that the position doesn't
+                    // accidently return another node (which may end at that position).
+                    var nameAST = TypeScript.getAstAtPosition(sourceUnit, p, /*useTrailingTriviaAsLimChar:*/ false);
 
                     // Compare the length so we filter out strict superstrings of the symbol we are looking for
                     if (nameAST === null || nameAST.kind() !== TypeScript.SyntaxKind.IdentifierName || (nameAST.end() - nameAST.start() !== symbolName.length)) {

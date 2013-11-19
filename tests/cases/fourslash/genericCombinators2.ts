@@ -99,7 +99,7 @@ verify.quickInfoIs('Collection<number, string>');
 goTo.marker('10');
 verify.quickInfoIs('Collection<number, string>');
 goTo.marker('11');
-verify.quickInfoIs('Collection<Collection<number, number>, any>');
+verify.quickInfoIs('Collection<Collection<number, number>, number>');
 goTo.marker('12');
 verify.quickInfoIs('Collection<Collection<number, number>, number>');
 goTo.marker('13');

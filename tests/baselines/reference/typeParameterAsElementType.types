@@ -1,0 +1,8 @@
+=== tests/cases/compiler/typeParameterAsElementType.ts ===
+Line 0 col 9 IdentifierName "fee" = typeof fee
+Line 0 col 13 IdentifierName "T" = T
+Line 1 col 8 IdentifierName "t" = T
+Line 1 col 11 IdentifierName "T" = T
+Line 2 col 8 IdentifierName "arr" = {}[]
+Line 2 col 14 ArrayLiteralExpression "[t, ""]" = {}[]
+Line 2 col 15 IdentifierName "t" = T

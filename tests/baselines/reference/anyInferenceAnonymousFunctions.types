@@ -53,20 +53,20 @@ Line 13 col 26 IdentifierName "b3" = any
 Line 13 col 29 IdentifierName "concat" = any
 Line 13 col 36 ObjectLiteralExpression "{}" = {}
 Line 13 col 41 ArrayLiteralExpression "[]" = undefined[]
-Line 14 col 0 InvocationExpression "paired.map((c1) => c1.count)" = {}[]
+Line 14 col 0 InvocationExpression "paired.map((c1) => c1.count)" = any[]
 Line 14 col 0 MemberAccessExpression "paired.map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
 Line 14 col 0 IdentifierName "paired" = any[]
 Line 15 col 7 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 15 col 11 ParenthesizedArrowFunctionExpression "(c1) => c1.count" = (c1: any) => {}
+Line 15 col 11 ParenthesizedArrowFunctionExpression "(c1) => c1.count" = (c1: any) => any
 Line 15 col 12 IdentifierName "c1" = any
 Line 15 col 19 MemberAccessExpression "c1.count" = any
 Line 15 col 19 IdentifierName "c1" = any
 Line 15 col 22 IdentifierName "count" = any
-Line 16 col 0 InvocationExpression "paired.map(function (c2) { return c2.count; })" = {}[]
+Line 16 col 0 InvocationExpression "paired.map(function (c2) { return c2.count; })" = any[]
 Line 16 col 0 MemberAccessExpression "paired.map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
 Line 16 col 0 IdentifierName "paired" = any[]
 Line 16 col 7 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
-Line 16 col 11 FunctionExpression "function (c2) { return c2.count; }" = (c2: any) => {}
+Line 16 col 11 FunctionExpression "function (c2) { return c2.count; }" = (c2: any) => any
 Line 16 col 21 IdentifierName "c2" = any
 Line 16 col 34 MemberAccessExpression "c2.count" = any
 Line 16 col 34 IdentifierName "c2" = any

@@ -31,13 +31,13 @@ goTo.marker('3');
 verify.quickInfoIs('number[]');
 
 goTo.marker('4');
-verify.quickInfoIs('{}[]');
+verify.quickInfoIs('any[]');
 
 goTo.marker('5');
-verify.quickInfoIs('{}[]');
+verify.quickInfoIs('any[]');
 
 goTo.marker('6');
-verify.quickInfoIs('{}[]');
+verify.quickInfoIs('any[]');
 
 goTo.marker('7');
 verify.quickInfoIs('string');

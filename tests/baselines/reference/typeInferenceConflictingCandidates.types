@@ -1,0 +1,17 @@
+=== tests/cases/compiler/typeInferenceConflictingCandidates.ts ===
+Line 0 col 17 IdentifierName "g" = typeof g
+Line 0 col 19 IdentifierName "T" = T
+Line 0 col 22 IdentifierName "a" = T
+Line 0 col 25 IdentifierName "T" = T
+Line 0 col 28 IdentifierName "b" = T
+Line 0 col 31 IdentifierName "T" = T
+Line 0 col 34 IdentifierName "c" = (t: T) => T
+Line 0 col 38 IdentifierName "t" = T
+Line 0 col 41 IdentifierName "T" = T
+Line 0 col 47 IdentifierName "T" = T
+Line 0 col 51 IdentifierName "T" = T
+Line 1 col 0 InvocationExpression "g("", 3, a => a)" = {}
+Line 1 col 0 IdentifierName "g" = typeof g
+Line 2 col 9 SimpleArrowFunctionExpression "a => a" = (a: {}) => {}
+Line 2 col 9 IdentifierName "a" = {}
+Line 2 col 14 IdentifierName "a" = {}

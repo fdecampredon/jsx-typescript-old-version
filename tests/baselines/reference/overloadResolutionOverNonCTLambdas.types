@@ -19,7 +19,7 @@ Line 6 col 46 FunctionExpression "function(match, ...rest) {
       return typeof args[index] !== 'undefined'
         ? args[index]
         : match;
-    }" = (match: string, ...rest: any[]) => string
+    }" = (match: string, ...rest: any[]) => any
 Line 6 col 55 IdentifierName "match" = string
 Line 6 col 65 IdentifierName "rest" = any[]
 Line 7 col 10 IdentifierName "index" = any

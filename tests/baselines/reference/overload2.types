@@ -1,0 +1,20 @@
+=== tests/cases/compiler/overload2.ts ===
+Line 0 col 5 IdentifierName "A" = A
+Line 1 col 5 IdentifierName "B" = B
+Line 3 col 9 IdentifierName "foo" = typeof foo
+Line 3 col 13 IdentifierName "a" = A
+Line 3 col 16 IdentifierName "A" = A
+Line 4 col 9 IdentifierName "foo" = typeof foo
+Line 4 col 13 IdentifierName "b" = B
+Line 4 col 16 IdentifierName "B" = B
+Line 6 col 9 IdentifierName "foo" = typeof foo
+Line 6 col 13 IdentifierName "x" = number
+Line 9 col 6 IdentifierName "C" = C
+Line 10 col 9 IdentifierName "foo1" = typeof foo1
+Line 10 col 14 IdentifierName "a" = A
+Line 10 col 17 IdentifierName "A" = A
+Line 11 col 9 IdentifierName "foo1" = typeof foo1
+Line 11 col 14 IdentifierName "c" = C
+Line 11 col 17 IdentifierName "C" = C
+Line 13 col 9 IdentifierName "foo1" = typeof foo1
+Line 13 col 14 IdentifierName "x" = number

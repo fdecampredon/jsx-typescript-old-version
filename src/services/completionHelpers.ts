@@ -28,7 +28,15 @@ module TypeScript.Services {
         }
 
         public static isCompletionListBlocker(sourceUnit: TypeScript.SourceUnitSyntax, position: number): boolean {
-            // This method uses Fidelity completelly. Some information can be reached using the ISyntaxElement, but not everything.
+            // We shouldn't be getting a possition that is outside the file because
+            // isEntirelyInsideComment can't handle when the position is out of bounds, 
+            // callers should be fixed, however we should be resiliant to bad inputs
+            // so we return true (this position is a blocker for getting completions)
+            if (position < 0 || position > sourceUnit.fullWidth()) {
+                return true;
+            }
+
+            // This method uses Fidelity completely. Some information can be reached using the AST, but not everything.
             return TypeScript.Syntax.isEntirelyInsideComment(sourceUnit, position) ||
                 TypeScript.Syntax.isEntirelyInStringOrRegularExpressionLiteral(sourceUnit, position) ||
                 CompletionHelpers.isIdentifierDefinitionLocation(sourceUnit, position) ||

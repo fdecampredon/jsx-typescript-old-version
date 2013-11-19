@@ -1,0 +1,29 @@
+=== tests/cases/compiler/typeParameterOrderReversal.ts ===
+Line 0 col 10 IdentifierName "X" = X<T>
+Line 0 col 12 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "n" = T
+Line 1 col 7 IdentifierName "T" = T
+Line 5 col 9 IdentifierName "uFirst" = typeof uFirst
+Line 5 col 16 IdentifierName "U" = U
+Line 5 col 26 IdentifierName "X" = X<T>
+Line 5 col 28 IdentifierName "T" = T
+Line 5 col 32 IdentifierName "T" = T
+Line 5 col 35 IdentifierName "x" = U
+Line 5 col 38 IdentifierName "U" = U
+Line 6 col 9 IdentifierName "tFirst" = typeof tFirst
+Line 6 col 16 IdentifierName "T" = T
+Line 6 col 19 IdentifierName "U" = U
+Line 6 col 29 IdentifierName "X" = X<T>
+Line 6 col 31 IdentifierName "T" = T
+Line 6 col 35 IdentifierName "x" = U
+Line 6 col 38 IdentifierName "U" = U
+Line 7 col 4 IdentifierName "z" = X<number>
+Line 7 col 7 IdentifierName "X" = X<T>
+Line 8 col 0 InvocationExpression "// Both of these should be allowed
+uFirst(z)" = void
+Line 8 col 0 IdentifierName "// Both of these should be allowed
+uFirst" = typeof uFirst
+Line 10 col 7 IdentifierName "z" = X<number>
+Line 11 col 0 InvocationExpression "tFirst(z)" = void
+Line 11 col 0 IdentifierName "tFirst" = typeof tFirst
+Line 11 col 7 IdentifierName "z" = X<number>

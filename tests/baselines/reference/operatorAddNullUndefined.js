@@ -1,3 +1,7 @@
+var E;
+(function (E) {
+    E[E["x"] = 0] = "x";
+})(E || (E = {}));
 var x1 = null + null;
 var x2 = null + undefined;
 var x3 = undefined + null;
@@ -10,3 +14,7 @@ var x9 = "test" + null;
 var x10 = "test" + undefined;
 var x11 = null + "test";
 var x12 = undefined + "test";
+var x13 = null + 0 /* x */;
+var x14 = undefined + 0 /* x */;
+var x15 = 0 /* x */ + null;
+var x16 = 0 /* x */ + undefined;

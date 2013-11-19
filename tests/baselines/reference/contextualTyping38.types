@@ -1,6 +1,6 @@
 === tests/cases/compiler/contextualTyping38.ts ===
 Line 0 col 4 IdentifierName "foo" = () => number
 Line 0 col 10 CastExpression "<{ (): number; }> function(a) { return a }" = () => number
-Line 0 col 28 FunctionExpression "function(a) { return a }" = (a: any) => number
+Line 0 col 28 FunctionExpression "function(a) { return a }" = (a: any) => any
 Line 0 col 37 IdentifierName "a" = any
 Line 0 col 49 IdentifierName "a" = any

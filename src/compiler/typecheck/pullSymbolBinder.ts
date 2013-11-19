@@ -1337,9 +1337,9 @@ module TypeScript {
                         params[id.valueText()] = true;
                     }
 
-                    var isParameterOptional = false;
-
                     if (decl) {
+                        var isParameterOptional = false;
+
                         if (isProperty) {
                             decl.ensureSymbolIsBound();
                             var valDecl = decl.getValueDecl();
@@ -1359,9 +1359,9 @@ module TypeScript {
                             parameterSymbol.addDeclaration(decl);
                             decl.setSymbol(parameterSymbol);
                         }
-                    }
 
-                    parameterSymbol.isOptional = isParameterOptional;
+                        parameterSymbol.isOptional = isParameterOptional;
+                    }
 
                     signatureSymbol.addParameter(parameterSymbol, parameterSymbol.isOptional);
 

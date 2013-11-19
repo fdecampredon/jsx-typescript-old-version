@@ -689,7 +689,7 @@ module TypeScript {
                                 }
                             }
 
-                            resolutionContext.pushContextualType(contextualType, false, null);
+                            resolutionContext.pushNewContextualType(contextualType);
                         }
 
                         break;
@@ -703,7 +703,7 @@ module TypeScript {
                                 contextualType = currentContextualType.getElementType();
                             }
 
-                            resolutionContext.pushContextualType(contextualType, false, null);
+                            resolutionContext.pushNewContextualType(contextualType);
                         }
 
                         break;
@@ -732,7 +732,7 @@ module TypeScript {
                                     }
                                 }
 
-                                resolutionContext.pushContextualType(contextualType, false, null);
+                                resolutionContext.pushNewContextualType(contextualType);
                             }
                         }
 
@@ -752,7 +752,7 @@ module TypeScript {
                                 }
                             }
 
-                            resolutionContext.pushContextualType(contextualType, false, null);
+                            resolutionContext.pushNewContextualType(contextualType);
                         }
 
                         break;
@@ -786,7 +786,7 @@ module TypeScript {
                                 }
                             }
 
-                            resolutionContext.pushContextualType(contextualType, false, null);
+                            resolutionContext.pushNewContextualType(contextualType);
                         }
 
                         break;
@@ -855,7 +855,7 @@ module TypeScript {
                         contextualType = varSymbol.type;
                     }
 
-                    resolutionContext.pushContextualType(contextualType, false, null);
+                    resolutionContext.pushNewContextualType(contextualType);
 
                     if (init) {
                         resolver.resolveAST(init, inContextuallyTypedAssignment, resolutionContext);
