@@ -204,19 +204,12 @@ module TypeScript {
                     return true;
                 }
 
-                if (this.inAmbientDeclaration) {
-                    this.pushDiagnostic(modifier,
-                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_an_ambient_context);
+                if (!this.inAmbientDeclaration && this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.parameterList === parameterList) {
+                    this.pushDiagnostic(modifier, DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
                     return true;
                 }
-                else if (this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.parameterList === parameterList) {
-                    this.pushDiagnostic(modifier,
-                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
-                    return true;
-                }
-                else if (this.currentConstructor === null || this.currentConstructor.parameterList !== parameterList) {
-                    this.pushDiagnostic(modifier,
-                        DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_constructors);
+                else if (this.inAmbientDeclaration || this.currentConstructor === null || this.currentConstructor.parameterList !== parameterList) {
+                    this.pushDiagnostic(modifier, DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_a_non_ambient_constructor_declaration);
                     return true;
                 }
             }

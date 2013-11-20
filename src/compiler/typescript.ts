@@ -181,17 +181,6 @@ module TypeScript {
             this.semanticInfoChain.removeDocument(fileName);
         }
 
-        public _isDynamicModuleCompilation(): boolean {
-            var fileNames = this.fileNames();
-            for (var i = 0, n = fileNames.length; i < n; i++) {
-                var document = this.getDocument(fileNames[i]);
-                if (!document.isDeclareFile() && document.isExternalModule()) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         public mapOutputFileName(document: Document, emitOptions: EmitOptions, extensionChanger: (fname: string, wholeFileNameReplaced: boolean) => string) {
             if (document.emitToOwnOutputFile()) {
                 var updatedFileName = document.fileName;

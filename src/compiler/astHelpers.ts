@@ -603,7 +603,7 @@ module TypeScript {
         return null;
     }
 
-    export function getType(ast: ISyntaxElement): ISyntaxElement {
+    export function getType(ast: ISyntaxElement): ISyntaxNodeOrToken {
         if (ast) {
             switch (ast.kind()) {
                 case SyntaxKind.FunctionDeclaration:

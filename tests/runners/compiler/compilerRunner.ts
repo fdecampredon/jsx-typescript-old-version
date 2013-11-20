@@ -106,12 +106,6 @@ class CompilerBaselineRunner extends RunnerBase {
 
             // check errors
             if (this.errors) {
-                // Surface some errors that indicate test authoring failure
-                var badErrors = result.errors.filter(err => err.errorType === Harness.Compiler.ErrorType.Emit);
-                if (badErrors.length > 0) {
-                    throw new Error('Emit errors in ' + fileName + ': ' + badErrors.map(e => JSON.stringify(e)).join('\r\n'));
-                }
-
                 Harness.Baseline.runBaseline('Correct errors for ' + fileName, justName.replace(/\.ts/, '.errors.txt'), () => {
                     if (result.errors.length === 0) {
                         return null;
@@ -161,8 +155,8 @@ class CompilerBaselineRunner extends RunnerBase {
 
             if (!TypeScript.isDTSFile(lastUnit.name)) {
                 if (this.emit) {
-                    if (result.files.length === 0) {
-                        throw new Error('Expected at least 1 js file to be emitted');
+                    if (result.files.length === 0 && result.errors.length === 0) {
+                        throw new Error('Expected at least one js file to be emitted or at least one error to be created.');
                     }
 
                     // check js output

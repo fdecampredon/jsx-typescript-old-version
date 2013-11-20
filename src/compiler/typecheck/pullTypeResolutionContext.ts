@@ -27,14 +27,15 @@ module TypeScript {
                 return;
             }
 
-            // Take BCT of the candidate types
+            // November 18, 2013: Section 4.12.2:
+            // The inferred type argument for a particular type parameter is the widened form
+            // (section 3.9) of the best common type(section 3.10) of a set of candidate types.
             var collection = {
-                getLength: () => { return this.inferenceCandidates.length; },
-                getTypeAtIndex: (index: number) => {
-                    return this.inferenceCandidates[index].type;
-                }
+                getLength: () => this.inferenceCandidates.length,
+                getTypeAtIndex: (index: number) =>  this.inferenceCandidates[index].type
             };
 
+            // Now widen (per the spec citation above)
             this._inferredTypeAfterFixing = resolver.widenType(resolver.findBestCommonType(collection, context, new TypeComparisonInfo()));
         }
     }
@@ -94,6 +95,8 @@ module TypeScript {
         public addCandidateForInference(param: PullTypeParameterSymbol, candidate: PullTypeSymbol) {
             var info = this.getInferenceInfo(param);
 
+            // Add the candidate to the CandidateInferenceInfo for this type parameter
+            // only if the candidate is not already present.
             if (info && candidate && info.inferenceCandidates.indexOf(candidate) < 0) {
                 info.addCandidate(candidate);
             }
@@ -124,7 +127,9 @@ module TypeScript {
 
         public tryToFixTypeParameter(typeParameter: PullTypeParameterSymbol, resolver: PullTypeResolver, context: PullTypeResolutionContext) {
             var candidateInfo = this.candidateCache[typeParameter.pullSymbolID];
-            candidateInfo && candidateInfo.tryToFix(resolver, context);
+            if (candidateInfo) {
+                candidateInfo.tryToFix(resolver, context);
+            }
         }
 
         public getFixedTypeParameterSubstitutions(): PullTypeSymbol[] {

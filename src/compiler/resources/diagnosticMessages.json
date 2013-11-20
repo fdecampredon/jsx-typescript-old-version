@@ -163,7 +163,7 @@
         "category": "Error",
         "code": 1039
     },
-    "Parameter property declarations can only be used in constructors.": {
+    "Parameter property declarations can only be used in a non-ambient constructor declaration.": {
         "category": "Error",
         "code": 1040
     },
@@ -322,10 +322,6 @@
     "Function overload must not be static.": {
         "category": "Error",
         "code": 1081
-    },
-    "Parameter property declarations cannot be used in an ambient context.": {
-        "category": "Error",
-        "code": 1082
     },
     "Parameter property declarations cannot be used in a constructor overload.": {
         "category": "Error",
@@ -1682,5 +1678,9 @@
     "'{0}', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.":{
         "category": "Error",
         "code": 7016
+    },
+    "Index signature of object type implicitly has an 'any' type.": {
+        "category": "Error",
+        "code": 7017
     },
 }

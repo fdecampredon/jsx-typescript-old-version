@@ -467,13 +467,19 @@ module TypeScript {
                         }
                     }
 
-                    if (variableSymbol) {
+                    // use getValueDecl to emphasise that we are merging value side of the module
+                    var moduleInstanceDecl = moduleContainerDecl.getValueDecl()
+                    if (variableSymbol && moduleInstanceDecl) {
                         var declarations = variableSymbol.getDeclarations();
 
                         if (declarations.length) {
-                            var variableSymbolParentDecl = declarations[0].getParentDecl();
 
-                            if (parentDecl !== variableSymbolParentDecl) {
+                            var variableSymbolParentDecl = declarations[0].getParentDecl();
+                            var canReuseVariableSymbol =
+                                (isExported || (parentDecl === variableSymbolParentDecl)) &&
+                                this.checkThatExportsMatch(moduleInstanceDecl, variableSymbol, false);
+
+                            if (!canReuseVariableSymbol) {
                                 variableSymbol = null;
                             }
                         }

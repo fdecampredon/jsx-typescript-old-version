@@ -42,7 +42,7 @@ module TypeScript {
         Implementations_are_not_allowed_in_ambient_contexts: "Implementations are not allowed in ambient contexts.",
         declare_modifier_not_allowed_for_code_already_in_an_ambient_context: "'declare' modifier not allowed for code already in an ambient context.",
         Initializers_are_not_allowed_in_ambient_contexts: "Initializers are not allowed in ambient contexts.",
-        Parameter_property_declarations_can_only_be_used_in_constructors: "Parameter property declarations can only be used in constructors.",
+        Parameter_property_declarations_can_only_be_used_in_a_non_ambient_constructor_declaration: "Parameter property declarations can only be used in a non-ambient constructor declaration.",
         Function_implementation_expected: "Function implementation expected.",
         Constructor_implementation_expected: "Constructor implementation expected.",
         Function_overload_name_must_be_0: "Function overload name must be '{0}'.",
@@ -82,7 +82,6 @@ module TypeScript {
         declare_modifier_not_allowed_on_import_declaration: "'declare' modifier not allowed on import declaration.",
         Function_overload_must_be_static: "Function overload must be static.",
         Function_overload_must_not_be_static: "Function overload must not be static.",
-        Parameter_property_declarations_cannot_be_used_in_an_ambient_context: "Parameter property declarations cannot be used in an ambient context.",
         Parameter_property_declarations_cannot_be_used_in_a_constructor_overload: "Parameter property declarations cannot be used in a constructor overload.",
         Invalid_reference_directive_syntax: "Invalid 'reference' directive syntax.",
         Octal_literals_are_not_available_when_targeting_ECMAScript_5_and_higher: "Octal literals are not available when targeting ECMAScript 5 and higher.",
@@ -421,5 +420,6 @@ module TypeScript {
         Lambda_Function_which_lacks_return_type_annotation_implicitly_has_an_any_return_type: "Lambda Function, which lacks return-type annotation, implicitly has an 'any' return type.",
         Array_Literal_implicitly_has_an_any_type_from_widening: "Array Literal implicitly has an 'any' type from widening.",
         _0_which_lacks_get_accessor_and_parameter_type_annotation_on_set_accessor_implicitly_has_an_any_type: "'{0}', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.",
+        Index_signature_of_object_type_implicitly_has_an_any_type: "Index signature of object type implicitly has an 'any' type.",
     };
 }

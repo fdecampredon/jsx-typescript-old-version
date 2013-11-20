@@ -137,9 +137,11 @@ module TypeScript {
         public toCompilationSettings(): any {
             var result = new CompilationSettings();
 
+            var thisAsIndexable: IIndexable<any> = <any>this;
+            var resultAsIndexable: IIndexable<any> = <any>result
             for (var name in this) {
                 if (this.hasOwnProperty(name) && StringUtilities.startsWith(name, "_")) {
-                    result[name.substr(1)] = this[name];
+                    resultAsIndexable[name.substr(1)] = thisAsIndexable[name];
                 }
             }
 

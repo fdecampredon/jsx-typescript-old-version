@@ -38,14 +38,14 @@ module TypeScript {
             return false;
         }
 
-        public static groupBy(array: any[], func: (v: any) => string): any {
-            var result = {};
+        public static groupBy<T>(array: T[], func: (v: T) => string): any {
+            var result: IIndexable<T[]> = {};
 
             for (var i = 0, n = array.length; i < n; i++) {
                 var v: any = array[i];
                 var k = func(v);
 
-                var list: any[] = result[k] || [];
+                var list: T[] = result[k] || [];
                 list.push(v);
                 result[k] = list;
             }

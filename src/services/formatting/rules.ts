@@ -18,7 +18,7 @@
 module TypeScript.Services.Formatting {
     export class Rules {
         public getRuleName(rule: Rule) {
-            var o = <any>this;
+            var o: IIndexable<any> = <any>this;
             for (var name in o) {
                 if (o[name] === rule) {
                     return name;
@@ -26,6 +26,8 @@ module TypeScript.Services.Formatting {
             }
             throw new Error(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Unknown_rule, null));
         }
+
+        [name: string]: any;
 
         public IgnoreBeforeComment: Rule;
         public IgnoreAfterLineComment: Rule;

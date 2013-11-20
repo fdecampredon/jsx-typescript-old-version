@@ -162,12 +162,13 @@ module TypeScript {
                 result.parsedInStrictMode = true;
             }
 
+            var thisAsIndexable: IIndexable<any> = <any>this;
             for (var i = 0, n = this.childCount(); i < n; i++) {
                 var value = this.childAt(i);
 
                 if (value) {
                     for (var name in this) {
-                        if (value === this[name]) {
+                        if (value === thisAsIndexable[name]) {
                             result[name] = value;
                             break;
                         }

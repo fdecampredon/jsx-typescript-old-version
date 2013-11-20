@@ -100,13 +100,13 @@ class Program {
         var allNewElements = TypeScript.SyntaxElementsCollector.collectElements(newNode);
 
         for (var i = 0; i < allOldElements.length; i++) {
-            var oldElement = allOldElements[i];
+            var oldElement: TypeScript.IIndexable<any> = <any>allOldElements[i];
             oldElement[key] = key;
         }
 
         var reused = 0;
         for (var j = 0; j < allNewElements.length; j++) {
-            var newElement = allNewElements[j];
+            var newElement: TypeScript.IIndexable<any> = <any>allNewElements[j];
             if (newElement[key] === key) {
                 reused++;
             }
@@ -457,8 +457,8 @@ class Program {
 
         TypeScript.Debug.assert(tree.sourceUnit().fullWidth() === contents.length);
 
-        var tokens = {};
-        var tokensOnLeft = {};
+        var tokens: TypeScript.IIndexable<any>= {};
+        var tokensOnLeft: TypeScript.IIndexable<any> = {};
         var leftToRight: TypeScript.ISyntaxToken[] = [];
         var rightToLeft: TypeScript.ISyntaxToken[] = [];
 
@@ -610,7 +610,7 @@ class Program {
 
                 if (isNegative) {
                     var nameOnly = fileName.substr(fileName.lastIndexOf("\\") + 1);
-                    var canParseSuccessfully = <boolean>negative262ExpectedResults[nameOnly];
+                    var canParseSuccessfully = negative262ExpectedResults[nameOnly];
 
                     if (canParseSuccessfully) {
                         // We expected to parse this successfully.  Report an error if we didn't.
@@ -653,7 +653,7 @@ class Program {
     }
 }
 
-var diagnostics = {};
+var diagnostics: TypeScript.IIndexable<any> = {};
 for (var d in TypeScript.LocalizedDiagnosticMessages) {
     if (TypeScript.LocalizedDiagnosticMessages.hasOwnProperty(d)) {
         var info: TypeScript.DiagnosticInfo = TypeScript.LocalizedDiagnosticMessages[d];

@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export var LocalizedDiagnosticMessages: any = null;
+    export var LocalizedDiagnosticMessages: IIndexable<any> = null;
 
     export class Diagnostic {
         private _fileName: string;

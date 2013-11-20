@@ -65,7 +65,8 @@ module TypeScript {
         public static runAllTests() {
             for (var name in IncrementalParserTests) {
                 if (IncrementalParserTests.hasOwnProperty(name) && StringUtilities.startsWith(name, "test")) {
-                    IncrementalParserTests[name]();
+                    var o: TypeScript.IIndexable<any> = <any>IncrementalParserTests;
+                    o[name]();
                 }
             }
         }

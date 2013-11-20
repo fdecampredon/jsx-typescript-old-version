@@ -111,7 +111,7 @@ module FourSlash {
         High
     }
 
-     var entityMap = {
+    var entityMap: TypeScript.IIndexable<string> = {
         '&': '&amp;',
         '"': '&quot;',
         "'": '&#39;',

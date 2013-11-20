@@ -59,15 +59,24 @@ module TypeScript {
 
         public compilationSettings() { return this._settings; }
 
-        constructor(compiler: TypeScriptCompiler,
-                    public resolvePath: (path: string) => string) {
-
+        constructor(compiler: TypeScriptCompiler, public resolvePath: (path: string) => string) {
             var settings = compiler.compilationSettings();
             this._settings = settings;
 
-            if (settings.moduleGenTarget() === ModuleGenTarget.Unspecified && compiler._isDynamicModuleCompilation()) {
-                this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided, null);
-                return;
+            // If the document is an external module, then report if the the user has not 
+            // provided the right command line option.
+            if (settings.moduleGenTarget() === ModuleGenTarget.Unspecified) {
+                var fileNames = compiler.fileNames();
+                for (var i = 0, n = fileNames.length; i < n; i++) {
+                    var document = compiler.getDocument(fileNames[i]);
+                    if (!document.isDeclareFile() && document.isExternalModule()) {
+                        var errorSpan = document.externalModuleIndicatorSpan();
+                        this._diagnostic = new Diagnostic(document.fileName, document.lineMap(), errorSpan.start(), errorSpan.length(),
+                            DiagnosticCode.Cannot_compile_external_modules_unless_the_module_flag_is_provided);
+
+                        return;
+                    }
+                }
             }
 
             if (!settings.mapSourceFiles()) {

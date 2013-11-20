@@ -231,7 +231,7 @@ module Harness {
     }
 
     // Logger
-    export interface ILogger {
+    export interface ILogger extends TypeScript.IIndexable<any> {
         start: (fileName?: string, priority?: number) => void;
         end: (fileName?: string) => void;
         scenarioStart: (scenario: IScenarioMetadata) => void;
@@ -246,6 +246,7 @@ module Harness {
     }
 
     export class Logger implements ILogger {
+        [name: string]: any;
         public start(fileName?: string, priority?: number) { }
         public end(fileName?: string) { }
         public scenarioStart(scenario: IScenarioMetadata) { }
@@ -256,7 +257,7 @@ module Harness {
         public fail(test: ITestMetadata) { }
         public error(test: ITestMetadata, error: Error) { }
         public comment(comment: string) { }
-        public verify(test: ITestMetadata, passed: boolean, actual: any, expected: any, message: string) { }
+        public verify(test: ITestMetadata, passed: boolean, actual: any, expected: any, message: string) { }        
     }
 
     // Logger-related functions
@@ -266,8 +267,9 @@ module Harness {
     }
     export function emitLog(field: string, ...params: any[]) {
         for (var i = 0; i < loggers.length; i++) {
-            if (typeof loggers[i][field] === 'function') {
-                loggers[i][field].apply(loggers[i], params);
+            var logger = loggers[i];
+            if (typeof logger[field] === 'function') {
+                logger[field].apply(logger, params);
             }
         }
     }
@@ -726,7 +728,7 @@ module Harness {
 
         /** Mimics having multiple files, later concatenated to a single file. */
         export class EmitterIOHost implements IEmitterIOHost {
-            private fileCollection = {};
+            private fileCollection: TypeScript.IIndexable<any> = {};
 
             /** create file gets the whole path to create, so this works as expected with the --out parameter */
             public writeFile(s: string, contents: string, writeByteOrderMark: boolean): void {
@@ -1122,12 +1124,15 @@ module Harness {
                     flag: 'module', setFlag: (x: TypeScript.CompilationSettings, value: string) => {
                         switch (value.toLowerCase()) {
                             // this needs to be set on the global variable
-                            case 'amd':
-                                x.moduleGenTarget = TypeScript.ModuleGenTarget.Asynchronous;
-                                break;
                             default:
                             case 'commonjs':
                                 x.moduleGenTarget = TypeScript.ModuleGenTarget.Synchronous;
+                                break;
+                            case 'amd':
+                                x.moduleGenTarget = TypeScript.ModuleGenTarget.Asynchronous;
+                                break;
+                            case 'unspecified':
+                                x.moduleGenTarget = TypeScript.ModuleGenTarget.Unspecified;
                                 break;
                         }
                     }
@@ -1377,7 +1382,7 @@ module Harness {
 
             // Stuff related to the subfile we're parsing
             var currentFileContent: string = null;
-            var currentFileOptions = {};
+            var currentFileOptions: TypeScript.IIndexable<any> = {};
             var currentFileName: any = null;
             var refs: string[] = [];
 

@@ -38,7 +38,7 @@ class FourslashRunner extends RunnerBase {
         this.tests.forEach(runSingleFourslashTest);
 
         describe('Generate Tao XML', () => {
-            var invalidReasons = {};
+            var invalidReasons: TypeScript.IIndexable<any> = {};
             FourSlash.xmlData.forEach(xml => {
                 if (xml.invalidReason !== null) {
                     invalidReasons[xml.invalidReason] = (invalidReasons[xml.invalidReason] || 0) + 1;

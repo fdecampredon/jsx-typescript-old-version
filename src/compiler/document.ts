@@ -8,8 +8,9 @@ module TypeScript {
 
         private _declASTMap: ISyntaxElement[] = [];
         private _astDeclMap: PullDecl[] = [];
-        private _isExternalModule: boolean = undefined;
         private _amdDependencies: string[] = undefined;
+
+        private _externalModuleIndicatorSpan: TextSpan = undefined;
 
         constructor(private _compiler: TypeScriptCompiler,
                     private _semanticInfoChain: SemanticInfoChain,
@@ -49,39 +50,22 @@ module TypeScript {
             this._lineMap = syntaxTree.lineMap();
 
             var sourceUnit = syntaxTree.sourceUnit();
-            var leadingComments = this.getLeadingComments(sourceUnit);
+            var leadingTrivia = sourceUnit.leadingTrivia();
 
-            this._isExternalModule = this.hasImplicitImport(leadingComments) || this.hasTopLevelImportOrExport(sourceUnit);
+            this._externalModuleIndicatorSpan = this.getImplicitImportSpan(leadingTrivia) || this.getTopLevelImportOrExportSpan(sourceUnit);
 
             var amdDependencies: string[] = [];
-            for (var i = 0, n = leadingComments.length; i < n; i++) {
-                var trivia = leadingComments[i];
-                var amdDependency = this.getAmdDependency(trivia.fullText());
-                if (amdDependency) {
-                    amdDependencies.push(amdDependency);
-                }
-            }
-
-            this._amdDependencies = amdDependencies;
-        }
-
-        private getLeadingComments(node: SyntaxNode): ISyntaxTrivia[] {
-            var firstToken = node.firstToken();
-            var result: ISyntaxTrivia[] = [];
-
-            if (firstToken.hasLeadingComment()) {
-                var leadingTrivia = firstToken.leadingTrivia();
-
-                for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
-                    var trivia = leadingTrivia.syntaxTriviaAt(i);
-
-                    if (trivia.isComment()) {
-                        result.push(trivia);
+            for (var i = 0, n = leadingTrivia.count(); i < n; i++) {
+                var trivia = leadingTrivia.syntaxTriviaAt(i);
+                if (trivia.isComment()) {
+                    var amdDependency = this.getAmdDependency(trivia.fullText());
+                    if (amdDependency) {
+                        amdDependencies.push(amdDependency);
                     }
                 }
             }
 
-            return result;
+            this._amdDependencies = amdDependencies;
         }
 
         private getAmdDependency(comment: string): string {
@@ -90,49 +74,59 @@ module TypeScript {
             return match ? match[2] : null;
         }
 
-        private hasImplicitImport(sourceUnitLeadingComments: ISyntaxTrivia[]): boolean {
-            for (var i = 0, n = sourceUnitLeadingComments.length; i < n; i++) {
-                var trivia = sourceUnitLeadingComments[i];
+        private getImplicitImportSpan(sourceUnitLeadingTrivia: ISyntaxTriviaList): TextSpan {
+            var position = 0;
 
-                if (this.getImplicitImport(trivia.fullText())) {
-                    return true;
+            for (var i = 0, n = sourceUnitLeadingTrivia.count(); i < n; i++) {
+                var trivia = sourceUnitLeadingTrivia.syntaxTriviaAt(i);
+
+                if (trivia.isComment()) {
+                    var span = this.getImplicitImportSpanWorker(trivia, position);
+                    if (span) {
+                        return span;
+                    }
                 }
+
+                position += trivia.fullWidth();
             }
 
-            return false;
+            return null;
         }
 
-        private getImplicitImport(comment: string): boolean {
+        private getImplicitImportSpanWorker(trivia: ISyntaxTrivia, position: number): TextSpan {
             var implicitImportRegEx = /^(\/\/\/\s*<implicit-import\s*)*\/>/gim;
-            var match = implicitImportRegEx.exec(comment);
+            var match = implicitImportRegEx.exec(trivia.fullText());
 
             if (match) {
-                return true;
+                return new TextSpan(position, trivia.fullWidth());
             }
 
-            return false;
+            return null;
         }
 
-        private hasTopLevelImportOrExport(node: SourceUnitSyntax): boolean {
+        private getTopLevelImportOrExportSpan(node: SourceUnitSyntax): TextSpan {
             var firstToken: ISyntaxToken;
+            var position = 0;
 
             for (var i = 0, n = node.moduleElements.childCount(); i < n; i++) {
                 var moduleElement = node.moduleElements.childAt(i);
 
                 firstToken = moduleElement.firstToken();
                 if (firstToken !== null && firstToken.tokenKind === SyntaxKind.ExportKeyword) {
-                    return true;
+                    return new TextSpan(position + firstToken.leadingTriviaWidth(), firstToken.width());
                 }
 
                 if (moduleElement.kind() === SyntaxKind.ImportDeclaration) {
                     var importDecl = <ImportDeclarationSyntax>moduleElement;
                     if (importDecl.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
-                        return true;
+                        return new TextSpan(position + importDecl.leadingTriviaWidth(), importDecl.width());
                     }
                 }
+
+                position += moduleElement.fullWidth();
             }
 
-            return false;
+            return null;;
         }
 
         public sourceUnit(): SourceUnitSyntax {
@@ -161,16 +155,24 @@ module TypeScript {
         }
 
         public isExternalModule(): boolean {
+            return this.externalModuleIndicatorSpan() !== null;
+        }
+
+        // TODO: remove this once we move entirely over to fidelity.  Right now we don't have 
+        // enough information in the AST to reconstruct this span data, so we cache and store it
+        // on the document.  When we move to fidelity, we can just have the type checker determine
+        // this in its own codepath.
+        public externalModuleIndicatorSpan(): TextSpan {
             // October 11, 2013
             // External modules are written as separate source files that contain at least one 
             // external import declaration, export assignment, or top-level exported declaration.
-            if (this._isExternalModule === undefined) {
+            if (this._externalModuleIndicatorSpan === undefined) {
                 // force the info about isExternalModule to get created.
                 this.syntaxTree();
-                Debug.assert(this._isExternalModule !== undefined);
+                Debug.assert(this._externalModuleIndicatorSpan !== undefined);
             }
 
-            return this._isExternalModule;
+            return this._externalModuleIndicatorSpan;
         }
 
         public amdDependencies(): string[] {

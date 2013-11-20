@@ -6,7 +6,7 @@
 ///<reference path="unittest/unittestRunner.ts" />
 
 class RunnerFactory {
-    private runners = {};
+    private runners : TypeScript.IIndexable<any> = {};
 
     public addTest(name: string) {
         var normalizedName = name.replace(/\\/g, "/"); // normalize slashes so either kind can be used on the command line
