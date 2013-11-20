@@ -468,16 +468,19 @@ module TypeScript {
                     }
 
                     // use getValueDecl to emphasise that we are merging value side of the module
-                    var moduleInstanceDecl = moduleContainerDecl.getValueDecl()
-                    if (variableSymbol && moduleInstanceDecl) {
+                    var moduleValueDecl = moduleContainerDecl.getValueDecl()
+                    if (variableSymbol && moduleValueDecl) {
                         var declarations = variableSymbol.getDeclarations();
 
                         if (declarations.length) {
 
                             var variableSymbolParentDecl = declarations[0].getParentDecl();
-                            var canReuseVariableSymbol =
-                                (isExported || (parentDecl === variableSymbolParentDecl)) &&
-                                this.checkThatExportsMatch(moduleInstanceDecl, variableSymbol, false);
+                            var isExportedOrHasTheSameParent = isExported || (parentDecl === variableSymbolParentDecl);
+                            // previously defined variable symbol can be reused if 
+                            // - current decl is either exported or has the same parent with the previosly defined symbol
+                            // AND
+                            // exports match for both current and previous decl
+                            var canReuseVariableSymbol = isExportedOrHasTheSameParent && this.checkThatExportsMatch(moduleValueDecl, variableSymbol, false);
 
                             if (!canReuseVariableSymbol) {
                                 variableSymbol = null;

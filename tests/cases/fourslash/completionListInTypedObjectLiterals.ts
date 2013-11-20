@@ -17,6 +17,10 @@
 ////var p4: any = {
 ////    /*5*/
 ////}
+/////// Cast expressions
+////var x = (<MyPoint>{
+////    /*6*/x1: 0,
+////});
 ////// Call expression
 ////function bar(e: MyPoint) { }
 ////bar({
@@ -37,6 +41,8 @@
 ////var aaa: Foo;
 ////aaa = {/*9*/
 ////aaa.x = { /*10*/
+////var bbb = <Foo>{ /*11*/ 
+////var bbb = <Foo>{ x: { /*12*/
 ////var ccc: Foo = { func: () => ({ /*13*/ }) 
 ////var ddd: Foo = {
 ////
@@ -76,7 +82,7 @@ verify.memberListContains("x1");
 verify.memberListContains("y1");
 
 goTo.marker("2");
-verify.not.memberListContains("x1");
+verify.memberListContains("x1");
 verify.memberListContains("y1");
 
 goTo.marker("3");
@@ -90,6 +96,10 @@ verify.not.memberListContains("y1");
 goTo.marker("5");
 verify.completionListIsEmpty();
 
+goTo.marker("6");
+verify.memberListContains("x1");
+verify.memberListContains("y1");
+
 goTo.marker("7");
 verify.memberListContains("x1");
 verify.memberListContains("y1");
@@ -97,6 +107,14 @@ verify.memberListContains("y1");
 goTo.marker("8");
 verify.not.memberListContains("x1");
 verify.memberListContains("y1");
+
+goTo.marker("11");
+verify.memberListContains("x");
+verify.memberListCount(1);
+
+goTo.marker("12");
+verify.memberListContains("a");
+verify.memberListCount(1);
 
 goTo.marker("13");
 verify.memberListCount(0);

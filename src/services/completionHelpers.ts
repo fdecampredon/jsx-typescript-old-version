@@ -5,7 +5,7 @@
 
 module TypeScript.Services {
     export class CompletionHelpers {
-        public static filterContextualMembersList(contextualMemberSymbols: TypeScript.PullSymbol[], existingMembers: TypeScript.PullVisibleSymbolsInfo): TypeScript.PullSymbol[] {
+        public static filterContextualMembersList(contextualMemberSymbols: TypeScript.PullSymbol[], existingMembers: TypeScript.PullVisibleSymbolsInfo, fileName: string, position: number): TypeScript.PullSymbol[] {
             if (!existingMembers || !existingMembers.symbols || existingMembers.symbols.length === 0) {
                 return contextualMemberSymbols;
             }
@@ -13,6 +13,12 @@ module TypeScript.Services {
             var existingMemberSymbols = existingMembers.symbols;
             var existingMemberNames = TypeScript.createIntrinsicsObject<boolean>();
             for (var i = 0, n = existingMemberSymbols.length; i < n; i++) {
+                var decl = existingMemberSymbols[i].getDeclarations()[0];
+                if (decl.fileName() === fileName && decl.getSpan().intersectsWithPosition(position)) {
+                    // If this is the current item we are editing right now, do not filter it out
+                    continue;
+                }
+
                 existingMemberNames[TypeScript.stripStartAndEndQuotes(existingMemberSymbols[i].getDisplayName())] = true;
             }
 

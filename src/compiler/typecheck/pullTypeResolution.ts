@@ -689,8 +689,8 @@ module TypeScript {
                 }
             }
             else {
-                // could be an enum member
-                if (lhs.kind == PullElementKind.EnumMember) {
+                // could be a value of an enum type, treat it as a number
+                if (lhsType.kind == PullElementKind.Enum && !isTypesOnlyLocation(expression)) {
                     lhsType = this.semanticInfoChain.numberTypeSymbol;
                 }
 
@@ -721,6 +721,8 @@ module TypeScript {
 
                 members = lhsType.getAllMembers(declSearchKind, memberVisibilty);
 
+                // In order to show all members in type or value positions, query the associated symbol for members 
+                // on modules.
                 if (lhsType.isContainer()) {
                     var associatedInstance = (<PullContainerSymbol>lhsType).getInstanceSymbol();
                     if (associatedInstance) {
@@ -736,7 +738,7 @@ module TypeScript {
                         members = members.concat(exportedContainerMembers);
                     }
                 }
-                else if (!lhsType.isConstructor()) {
+                else if (!lhsType.isConstructor() && !lhsType.isEnum()) {
                     var associatedContainerSymbol = lhsType.getAssociatedContainerType();
                     if (associatedContainerSymbol) {
                         var containerType = associatedContainerSymbol.type;

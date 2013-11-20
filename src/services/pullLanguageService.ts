@@ -1228,7 +1228,7 @@ module TypeScript.Services {
 
                         // Add filtterd items to the completion list
                         this.getCompletionEntriesFromSymbols({
-                            symbols: CompletionHelpers.filterContextualMembersList(contextualMembers.symbols, existingMembers),
+                            symbols: CompletionHelpers.filterContextualMembersList(contextualMembers.symbols, existingMembers, fileName, position),
                             enclosingScopeSymbol: contextualMembers.enclosingScopeSymbol
                         }, entries);
                     }
