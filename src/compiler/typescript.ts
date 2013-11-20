@@ -747,7 +747,7 @@ module TypeScript {
                         break;
 
                     case SyntaxKind.CastExpression:
-                        var castExpression = <CastExpression>current;
+                        var castExpression = <CastExpressionSyntax>current;
                         if (!(i + 1 < n && path[i + 1] === castExpression.type)) {
                             // We are outside the cast term
                             if (propagateContextualTypes) {
