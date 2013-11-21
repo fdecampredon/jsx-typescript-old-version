@@ -6269,11 +6269,11 @@ module TypeScript {
             }
 
             if (typeNameSymbol.isTypeParameter()) {
-                if (enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction) && (enclosingDecl.flags & PullElementFlags.Static)) {
+                if (this.isInStaticMemberContext(enclosingDecl)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
                     if (parentDecl.kind == PullElementKind.Class) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Static_methods_cannot_reference_class_type_parameters));
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Static_members_cannot_reference_class_type_parameters));
                         return this.getNewErrorTypeSymbol();
                     }
                 }
@@ -6284,6 +6284,24 @@ module TypeScript {
             }
 
             return typeNameSymbol;
+        }
+
+        private isInStaticMemberContext(decl: PullDecl): boolean {
+            while (decl) {                
+                // check if decl correspond to static member of some sort
+                if (hasFlag(decl.kind, PullElementKind.SomeFunction | PullElementKind.Property) && hasFlag(decl.flags, PullElementFlags.Static)) {
+                    return true;
+                }
+
+                // no container can exist in static context - exit early
+                if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
+                    return false;
+                }
+
+                decl = decl.getParentDecl();
+            }
+
+            return false;
         }
 
         private isLeftSideOfQualifiedName(ast: ISyntaxElement): boolean {

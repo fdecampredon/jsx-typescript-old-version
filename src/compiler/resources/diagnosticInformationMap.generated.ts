@@ -734,7 +734,7 @@ module TypeScript {
     "code": 2097,
     "category": DiagnosticCategory.Error
   },
-  "Static methods cannot reference class type parameters.": {
+  "Static members cannot reference class type parameters.": {
     "code": 2099,
     "category": DiagnosticCategory.Error
   },

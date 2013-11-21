@@ -184,7 +184,7 @@ module TypeScript {
         Could_not_find_symbol_0: "Could not find symbol '{0}'.",
         get_and_set_accessor_must_have_the_same_type: "'get' and 'set' accessor must have the same type.",
         this_cannot_be_referenced_in_current_location: "'this' cannot be referenced in current location.",
-        Static_methods_cannot_reference_class_type_parameters: "Static methods cannot reference class type parameters.",
+        Static_members_cannot_reference_class_type_parameters: "Static members cannot reference class type parameters.",
         Class_0_is_recursively_referenced_as_a_base_type_of_itself: "Class '{0}' is recursively referenced as a base type of itself.",
         Interface_0_is_recursively_referenced_as_a_base_type_of_itself: "Interface '{0}' is recursively referenced as a base type of itself.",
         super_property_access_is_permitted_only_in_a_constructor_member_function_or_member_accessor_of_a_derived_class: "'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.",

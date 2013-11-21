@@ -291,7 +291,6 @@ module TypeScript {
 
     function preCollectClassDecls(classDecl: ClassDeclarationSyntax, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
-        var constructorDeclKind = PullElementKind.Variable;
 
         if ((hasModifier(classDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(classDecl, context)) && !containingModuleHasExportAssignment(classDecl)) {
             declFlags |= PullElementFlags.Exported;
@@ -306,7 +305,13 @@ module TypeScript {
 
         var decl = new NormalPullDecl(classDecl.identifier.valueText(), classDecl.identifier.text(), PullElementKind.Class, declFlags, parent, span);
 
-        var constructorDecl = new NormalPullDecl(classDecl.identifier.valueText(), classDecl.identifier.text(), constructorDeclKind, declFlags | PullElementFlags.ClassConstructorVariable, parent, span);
+        var constructorDecl = new NormalPullDecl(
+            classDecl.identifier.valueText(),
+            classDecl.identifier.text(),
+            PullElementKind.Variable,
+            declFlags | PullElementFlags.ClassConstructorVariable,
+            parent,
+            span);
 
         decl.setValueDecl(constructorDecl);
 
