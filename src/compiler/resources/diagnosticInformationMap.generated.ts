@@ -350,6 +350,10 @@ module TypeScript {
     "code": 1090,
     "category": DiagnosticCategory.Error
   },
+  "Only a single variable declaration is allowed in a 'for...in' statement.": {
+    "code": 1091,
+    "category": DiagnosticCategory.Error
+  },
   "Duplicate identifier '{0}'.": {
     "code": 2000,
     "category": DiagnosticCategory.Error
@@ -1006,7 +1010,7 @@ module TypeScript {
     "code": 2173,
     "category": DiagnosticCategory.Error
   },
-  "Default arguments are not allowed in an overload parameter.": {
+  "Default arguments are only allowed in implementation.": {
     "code": 2174,
     "category": DiagnosticCategory.Error
   },

@@ -1,0 +1,267 @@
+=== tests/cases/compiler/typeOfThis.ts ===
+Line 0 col 6 IdentifierName "MyTestClass" = MyTestClass
+Line 1 col 12 IdentifierName "canary" = number
+Line 2 col 11 IdentifierName "staticCanary" = number
+Line 6 col 12 IdentifierName "p" = number
+Line 6 col 16 MemberAccessExpression "this.canary" = number
+Line 6 col 16 ThisKeyword "this" = MyTestClass
+Line 6 col 21 IdentifierName "canary" = number
+Line 7 col 12 IdentifierName "p" = number
+Line 8 col 0 AssignmentExpression "this.canary = 3" = number
+Line 8 col 0 MemberAccessExpression "this.canary" = number
+Line 8 col 0 ThisKeyword "this" = MyTestClass
+Line 8 col 13 IdentifierName "canary" = number
+Line 10 col 0 IdentifierName "//type of 'this' in member function param list is the class instance type
+    memberFunc" = (t?: MyTestClass) => void
+Line 12 col 15 IdentifierName "t" = MyTestClass
+Line 12 col 19 ThisKeyword "this" = MyTestClass
+Line 13 col 12 IdentifierName "t" = MyTestClass
+Line 13 col 15 IdentifierName "MyTestClass" = MyTestClass
+Line 16 col 12 IdentifierName "p" = MyTestClass
+Line 16 col 16 ThisKeyword "this" = MyTestClass
+Line 17 col 12 IdentifierName "p" = MyTestClass
+Line 17 col 15 IdentifierName "MyTestClass" = MyTestClass
+Line 21 col 8 IdentifierName "prop" = MyTestClass
+Line 22 col 12 IdentifierName "p" = MyTestClass
+Line 22 col 16 ThisKeyword "this" = MyTestClass
+Line 23 col 12 IdentifierName "p" = MyTestClass
+Line 23 col 15 IdentifierName "MyTestClass" = MyTestClass
+Line 24 col 15 ThisKeyword "this" = MyTestClass
+Line 26 col 8 IdentifierName "prop" = MyTestClass
+Line 26 col 13 IdentifierName "v" = MyTestClass
+Line 27 col 12 IdentifierName "p" = MyTestClass
+Line 27 col 16 ThisKeyword "this" = MyTestClass
+Line 28 col 12 IdentifierName "p" = MyTestClass
+Line 28 col 15 IdentifierName "MyTestClass" = MyTestClass
+Line 29 col 0 AssignmentExpression "p = v" = MyTestClass
+Line 29 col 0 IdentifierName "p" = MyTestClass
+Line 29 col 12 IdentifierName "v" = MyTestClass
+Line 30 col 0 AssignmentExpression "v = p" = MyTestClass
+Line 30 col 0 IdentifierName "v" = MyTestClass
+Line 30 col 12 IdentifierName "p" = MyTestClass
+Line 32 col 0 IdentifierName "someFunc" = () => void
+Line 33 col 15 ParenthesizedArrowFunctionExpression "() => {
+        //type of 'this' in member variable initializer is the class instance type
+        var t = this;
+        var t: MyTestClass;
+    }" = () => void
+Line 35 col 12 IdentifierName "t" = MyTestClass
+Line 35 col 16 ThisKeyword "this" = MyTestClass
+Line 36 col 12 IdentifierName "t" = MyTestClass
+Line 36 col 15 IdentifierName "MyTestClass" = MyTestClass
+Line 40 col 11 IdentifierName "staticFn" = (t?: typeof MyTestClass) => void
+Line 40 col 20 IdentifierName "t" = typeof MyTestClass
+Line 40 col 24 ThisKeyword "this" = typeof MyTestClass
+Line 41 col 12 IdentifierName "t" = typeof MyTestClass
+Line 41 col 22 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 42 col 12 IdentifierName "t" = typeof MyTestClass
+Line 42 col 16 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 43 col 0 MemberAccessExpression "t.staticCanary" = number
+Line 43 col 0 IdentifierName "t" = typeof MyTestClass
+Line 43 col 10 IdentifierName "staticCanary" = number
+Line 46 col 12 IdentifierName "p" = typeof MyTestClass
+Line 46 col 16 ThisKeyword "this" = typeof MyTestClass
+Line 47 col 12 IdentifierName "p" = typeof MyTestClass
+Line 47 col 22 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 48 col 12 IdentifierName "p" = typeof MyTestClass
+Line 48 col 16 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 49 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 49 col 0 IdentifierName "p" = typeof MyTestClass
+Line 49 col 10 IdentifierName "staticCanary" = number
+Line 52 col 15 IdentifierName "staticProp" = typeof MyTestClass
+Line 54 col 12 IdentifierName "p" = typeof MyTestClass
+Line 54 col 16 ThisKeyword "this" = typeof MyTestClass
+Line 55 col 12 IdentifierName "p" = typeof MyTestClass
+Line 55 col 22 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 56 col 12 IdentifierName "p" = typeof MyTestClass
+Line 56 col 16 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 57 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 57 col 0 IdentifierName "p" = typeof MyTestClass
+Line 57 col 10 IdentifierName "staticCanary" = number
+Line 58 col 15 ThisKeyword "this" = typeof MyTestClass
+Line 60 col 15 IdentifierName "staticProp" = typeof MyTestClass
+Line 60 col 26 IdentifierName "v" = typeof MyTestClass
+Line 60 col 36 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 62 col 12 IdentifierName "p" = typeof MyTestClass
+Line 62 col 16 ThisKeyword "this" = typeof MyTestClass
+Line 63 col 12 IdentifierName "p" = typeof MyTestClass
+Line 63 col 22 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 64 col 12 IdentifierName "p" = typeof MyTestClass
+Line 64 col 16 IdentifierName "MyTestClass" = typeof MyTestClass
+Line 65 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 65 col 0 IdentifierName "p" = typeof MyTestClass
+Line 65 col 10 IdentifierName "staticCanary" = number
+Line 69 col 6 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 69 col 25 IdentifierName "T" = T
+Line 69 col 28 IdentifierName "U" = U
+Line 70 col 12 IdentifierName "canary" = number
+Line 71 col 11 IdentifierName "staticCanary" = number
+Line 75 col 12 IdentifierName "p" = number
+Line 75 col 16 MemberAccessExpression "this.canary" = number
+Line 75 col 16 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 75 col 21 IdentifierName "canary" = number
+Line 76 col 12 IdentifierName "p" = number
+Line 77 col 0 AssignmentExpression "this.canary = 3" = number
+Line 77 col 0 MemberAccessExpression "this.canary" = number
+Line 77 col 0 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 77 col 13 IdentifierName "canary" = number
+Line 79 col 0 IdentifierName "//type of 'this' in member function param list is the class instance type
+    memberFunc" = (t?: MyGenericTestClass<T, U>) => void
+Line 81 col 15 IdentifierName "t" = MyGenericTestClass<T, U>
+Line 81 col 19 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 82 col 12 IdentifierName "t" = MyGenericTestClass<T, U>
+Line 82 col 15 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 82 col 34 IdentifierName "T" = T
+Line 82 col 37 IdentifierName "U" = U
+Line 85 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 85 col 16 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 86 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 86 col 15 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 86 col 34 IdentifierName "T" = T
+Line 86 col 37 IdentifierName "U" = U
+Line 90 col 8 IdentifierName "prop" = MyGenericTestClass<T, U>
+Line 91 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 91 col 16 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 92 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 92 col 15 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 92 col 34 IdentifierName "T" = T
+Line 92 col 37 IdentifierName "U" = U
+Line 93 col 15 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 95 col 8 IdentifierName "prop" = MyGenericTestClass<T, U>
+Line 95 col 13 IdentifierName "v" = MyGenericTestClass<T, U>
+Line 96 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 96 col 16 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 97 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 97 col 15 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 97 col 34 IdentifierName "T" = T
+Line 97 col 37 IdentifierName "U" = U
+Line 98 col 0 AssignmentExpression "p = v" = MyGenericTestClass<T, U>
+Line 98 col 0 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 98 col 12 IdentifierName "v" = MyGenericTestClass<T, U>
+Line 99 col 0 AssignmentExpression "v = p" = MyGenericTestClass<T, U>
+Line 99 col 0 IdentifierName "v" = MyGenericTestClass<T, U>
+Line 99 col 12 IdentifierName "p" = MyGenericTestClass<T, U>
+Line 101 col 0 IdentifierName "someFunc" = () => void
+Line 102 col 15 ParenthesizedArrowFunctionExpression "() => {
+        //type of 'this' in member variable initializer is the class instance type
+        var t = this;
+        var t: MyGenericTestClass<T, U>;
+    }" = () => void
+Line 104 col 12 IdentifierName "t" = MyGenericTestClass<T, U>
+Line 104 col 16 ThisKeyword "this" = MyGenericTestClass<T, U>
+Line 105 col 12 IdentifierName "t" = MyGenericTestClass<T, U>
+Line 105 col 15 IdentifierName "MyGenericTestClass" = MyGenericTestClass<T, U>
+Line 105 col 34 IdentifierName "T" = T
+Line 105 col 37 IdentifierName "U" = U
+Line 109 col 11 IdentifierName "staticFn" = (t?: typeof MyGenericTestClass) => void
+Line 109 col 20 IdentifierName "t" = typeof MyGenericTestClass
+Line 109 col 24 ThisKeyword "this" = typeof MyGenericTestClass
+Line 110 col 12 IdentifierName "t" = typeof MyGenericTestClass
+Line 110 col 22 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 111 col 12 IdentifierName "t" = typeof MyGenericTestClass
+Line 111 col 16 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 112 col 0 MemberAccessExpression "t.staticCanary" = number
+Line 112 col 0 IdentifierName "t" = typeof MyGenericTestClass
+Line 112 col 10 IdentifierName "staticCanary" = number
+Line 115 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 115 col 16 ThisKeyword "this" = typeof MyGenericTestClass
+Line 116 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 116 col 22 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 117 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 117 col 16 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 118 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 118 col 0 IdentifierName "p" = typeof MyGenericTestClass
+Line 118 col 10 IdentifierName "staticCanary" = number
+Line 121 col 15 IdentifierName "staticProp" = typeof MyGenericTestClass
+Line 123 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 123 col 16 ThisKeyword "this" = typeof MyGenericTestClass
+Line 124 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 124 col 22 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 125 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 125 col 16 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 126 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 126 col 0 IdentifierName "p" = typeof MyGenericTestClass
+Line 126 col 10 IdentifierName "staticCanary" = number
+Line 127 col 15 ThisKeyword "this" = typeof MyGenericTestClass
+Line 129 col 15 IdentifierName "staticProp" = typeof MyGenericTestClass
+Line 129 col 26 IdentifierName "v" = typeof MyGenericTestClass
+Line 129 col 36 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 131 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 131 col 16 ThisKeyword "this" = typeof MyGenericTestClass
+Line 132 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 132 col 22 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 133 col 12 IdentifierName "p" = typeof MyGenericTestClass
+Line 133 col 16 IdentifierName "MyGenericTestClass" = typeof MyGenericTestClass
+Line 134 col 0 MemberAccessExpression "p.staticCanary" = number
+Line 134 col 0 IdentifierName "p" = typeof MyGenericTestClass
+Line 134 col 10 IdentifierName "staticCanary" = number
+Line 139 col 9 IdentifierName "fn" = typeof fn
+Line 139 col 12 IdentifierName "s" = any
+Line 139 col 16 ThisKeyword "this" = any
+Line 140 col 8 IdentifierName "s" = any
+Line 141 col 0 AssignmentExpression "s.spaaaaaaace = 4" = number
+Line 141 col 0 MemberAccessExpression "s.spaaaaaaace" = any
+Line 141 col 0 IdentifierName "s" = any
+Line 141 col 6 IdentifierName "spaaaaaaace" = any
+Line 144 col 8 IdentifierName "t" = any
+Line 145 col 8 IdentifierName "t" = any
+Line 145 col 12 ThisKeyword "this" = any
+Line 146 col 0 AssignmentExpression "this.spaaaaace = 4" = number
+Line 146 col 0 MemberAccessExpression "this.spaaaaace" = any
+Line 146 col 0 ThisKeyword "this" = any
+Line 146 col 9 IdentifierName "spaaaaace" = any
+Line 150 col 4 IdentifierName "q1" = (s?: any) => void
+Line 150 col 9 FunctionExpression "function (s = this) {
+    var s: any;
+    s.spaaaaaaace = 4;
+
+    //type of 'this' in a function expression body is Any
+    var t: any;
+    var t = this;
+    this.spaaaaace = 4;
+}" = (s?: any) => void
+Line 150 col 19 IdentifierName "s" = any
+Line 150 col 23 ThisKeyword "this" = any
+Line 151 col 8 IdentifierName "s" = any
+Line 152 col 0 AssignmentExpression "s.spaaaaaaace = 4" = number
+Line 152 col 0 MemberAccessExpression "s.spaaaaaaace" = any
+Line 152 col 0 IdentifierName "s" = any
+Line 152 col 6 IdentifierName "spaaaaaaace" = any
+Line 155 col 8 IdentifierName "t" = any
+Line 156 col 8 IdentifierName "t" = any
+Line 156 col 12 ThisKeyword "this" = any
+Line 157 col 0 AssignmentExpression "this.spaaaaace = 4" = number
+Line 157 col 0 MemberAccessExpression "this.spaaaaace" = any
+Line 157 col 0 ThisKeyword "this" = any
+Line 157 col 9 IdentifierName "spaaaaace" = any
+Line 161 col 4 IdentifierName "q2" = (s?: any) => void
+Line 161 col 9 ParenthesizedArrowFunctionExpression "(s = this) => {
+    var s: any;
+    s.spaaaaaaace = 4;
+
+    //type of 'this' in a fat arrow expression body is Any
+    var t: any;
+    var t = this;
+    this.spaaaaace = 4;
+}" = (s?: any) => void
+Line 161 col 10 IdentifierName "s" = any
+Line 161 col 14 ThisKeyword "this" = any
+Line 162 col 8 IdentifierName "s" = any
+Line 163 col 0 AssignmentExpression "s.spaaaaaaace = 4" = number
+Line 163 col 0 MemberAccessExpression "s.spaaaaaaace" = any
+Line 163 col 0 IdentifierName "s" = any
+Line 163 col 6 IdentifierName "spaaaaaaace" = any
+Line 166 col 8 IdentifierName "t" = any
+Line 167 col 8 IdentifierName "t" = any
+Line 167 col 12 ThisKeyword "this" = any
+Line 168 col 0 AssignmentExpression "this.spaaaaace = 4" = number
+Line 168 col 0 MemberAccessExpression "this.spaaaaace" = any
+Line 168 col 0 ThisKeyword "this" = any
+Line 168 col 9 IdentifierName "spaaaaace" = any
+Line 172 col 4 IdentifierName "t" = any
+Line 173 col 4 IdentifierName "t" = any
+Line 173 col 8 ThisKeyword "this" = any
+Line 174 col 0 AssignmentExpression "this.spaaaaace = 4" = number
+Line 174 col 0 MemberAccessExpression "this.spaaaaace" = any
+Line 174 col 0 ThisKeyword "this" = any
+Line 174 col 5 IdentifierName "spaaaaace" = any

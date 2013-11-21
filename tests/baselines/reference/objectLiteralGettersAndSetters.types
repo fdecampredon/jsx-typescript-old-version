@@ -1,0 +1,198 @@
+=== tests/cases/compiler/objectLiteralGettersAndSetters.ts ===
+Line 1 col 4 IdentifierName "sameName1a" = { 'a': string; }
+Line 1 col 17 ObjectLiteralExpression "{ get 'a'() { return ''; }, set a(n) { var p = n; var p: string; } }" = { 'a': string; }
+Line 1 col 49 IdentifierName "a" = string
+Line 1 col 51 IdentifierName "n" = string
+Line 1 col 60 IdentifierName "p" = string
+Line 1 col 64 IdentifierName "n" = string
+Line 1 col 71 IdentifierName "p" = string
+Line 2 col 4 IdentifierName "sameName2a" = { 0.0: string; }
+Line 2 col 17 ObjectLiteralExpression "{ get 0.0() { return ''; }, set 0(n) { var p = n; var p: string; } }" = { 0.0: string; }
+Line 2 col 51 IdentifierName "n" = string
+Line 2 col 60 IdentifierName "p" = string
+Line 2 col 64 IdentifierName "n" = string
+Line 2 col 71 IdentifierName "p" = string
+Line 3 col 4 IdentifierName "sameName3a" = { 0x20: string; }
+Line 3 col 17 ObjectLiteralExpression "{ get 0x20() { return ''; }, set 3.2e1(n) { var p = n; var p: string; } }" = { 0x20: string; }
+Line 3 col 56 IdentifierName "n" = string
+Line 3 col 65 IdentifierName "p" = string
+Line 3 col 69 IdentifierName "n" = string
+Line 3 col 76 IdentifierName "p" = string
+Line 4 col 4 IdentifierName "sameName4a" = { '': string; }
+Line 4 col 17 ObjectLiteralExpression "{ get ''() { return ''; }, set ""(n) { var p = n; var p: string; } }" = { '': string; }
+Line 4 col 51 IdentifierName "n" = string
+Line 4 col 60 IdentifierName "p" = string
+Line 4 col 64 IdentifierName "n" = string
+Line 4 col 71 IdentifierName "p" = string
+Line 5 col 4 IdentifierName "sameName5a" = { '\t': string; }
+Line 5 col 17 ObjectLiteralExpression "{ get '\t'() { return ''; }, set '\t'(n) { var p = n; var p: string; } }" = { '\t': string; }
+Line 5 col 55 IdentifierName "n" = string
+Line 5 col 64 IdentifierName "p" = string
+Line 5 col 68 IdentifierName "n" = string
+Line 5 col 75 IdentifierName "p" = string
+Line 6 col 4 IdentifierName "sameName6a" = { 'a': string; }
+Line 6 col 17 ObjectLiteralExpression "{ get 'a'() { return ''; }, set a(n) { var p = n; var p: string; } }" = { 'a': string; }
+Line 6 col 49 IdentifierName "a" = string
+Line 6 col 51 IdentifierName "n" = string
+Line 6 col 60 IdentifierName "p" = string
+Line 6 col 64 IdentifierName "n" = string
+Line 6 col 71 IdentifierName "p" = string
+Line 9 col 4 IdentifierName "callSig1" = { num(n: number): string; }
+Line 9 col 15 ObjectLiteralExpression "{ num(n: number) { return '' } }" = { num(n: number): string; }
+Line 9 col 17 IdentifierName "num" = (n: number) => string
+Line 9 col 21 IdentifierName "n" = number
+Line 10 col 4 IdentifierName "callSig1" = { num: (n: number) => string; }
+Line 10 col 16 IdentifierName "num" = (n: number) => string
+Line 10 col 22 IdentifierName "n" = number
+Line 11 col 4 IdentifierName "callSig2" = { num: (n: number) => string; }
+Line 11 col 15 ObjectLiteralExpression "{ num: function (n: number) { return '' } }" = { num: (n: number) => string; }
+Line 11 col 17 IdentifierName "num" = (n: number) => string
+Line 11 col 22 FunctionExpression "function (n: number) { return '' }" = (n: number) => string
+Line 11 col 32 IdentifierName "n" = number
+Line 12 col 4 IdentifierName "callSig2" = { num: (n: number) => string; }
+Line 12 col 16 IdentifierName "num" = (n: number) => string
+Line 12 col 22 IdentifierName "n" = number
+Line 13 col 4 IdentifierName "callSig3" = { num: (n: number) => string; }
+Line 13 col 15 ObjectLiteralExpression "{ num: (n: number) => '' }" = { num: (n: number) => string; }
+Line 13 col 17 IdentifierName "num" = (n: number) => string
+Line 13 col 22 ParenthesizedArrowFunctionExpression "(n: number) => ''" = (n: number) => string
+Line 13 col 23 IdentifierName "n" = number
+Line 14 col 4 IdentifierName "callSig3" = { num: (n: number) => string; }
+Line 14 col 16 IdentifierName "num" = (n: number) => string
+Line 14 col 22 IdentifierName "n" = number
+Line 17 col 4 IdentifierName "getter1" = { x: string; }
+Line 17 col 14 ObjectLiteralExpression "{ get x(): string { return undefined; } }" = { x: string; }
+Line 17 col 20 IdentifierName "x" = string
+Line 17 col 41 IdentifierName "undefined" = undefined
+Line 18 col 4 IdentifierName "getter1" = { x: string; }
+Line 18 col 15 IdentifierName "x" = string
+Line 21 col 4 IdentifierName "getter2" = { x: string; }
+Line 21 col 14 ObjectLiteralExpression "{ get x() { return ''; } }" = { x: string; }
+Line 21 col 20 IdentifierName "x" = string
+Line 22 col 4 IdentifierName "getter2" = { x: string; }
+Line 22 col 15 IdentifierName "x" = string
+Line 25 col 4 IdentifierName "setter1" = { x: number; }
+Line 25 col 14 ObjectLiteralExpression "{ set x(n: number) { } }" = { x: number; }
+Line 25 col 20 IdentifierName "x" = number
+Line 25 col 22 IdentifierName "n" = number
+Line 26 col 4 IdentifierName "setter1" = { x: number; }
+Line 26 col 15 IdentifierName "x" = number
+Line 29 col 4 IdentifierName "setter2" = { x: any; }
+Line 29 col 14 ObjectLiteralExpression "{ set x(n) { } }" = { x: any; }
+Line 29 col 20 IdentifierName "x" = any
+Line 29 col 22 IdentifierName "n" = any
+Line 30 col 4 IdentifierName "setter2" = { x: any; }
+Line 30 col 15 IdentifierName "x" = any
+Line 32 col 4 IdentifierName "anyVar" = any
+Line 34 col 4 IdentifierName "sameType1" = { x: string; }
+Line 34 col 16 ObjectLiteralExpression "{ get x(): string { return undefined; }, set x(n: string) { } }" = { x: string; }
+Line 34 col 22 IdentifierName "x" = string
+Line 34 col 43 IdentifierName "undefined" = undefined
+Line 34 col 61 IdentifierName "x" = string
+Line 34 col 63 IdentifierName "n" = string
+Line 35 col 4 IdentifierName "sameType2" = { x: number[]; }
+Line 35 col 16 ObjectLiteralExpression "{ get x(): Array<number> { return undefined; }, set x(n: number[]) { } }" = { x: number[]; }
+Line 35 col 22 IdentifierName "x" = number[]
+Line 35 col 27 IdentifierName "Array" = Array<T>
+Line 35 col 50 IdentifierName "undefined" = undefined
+Line 35 col 68 IdentifierName "x" = number[]
+Line 35 col 70 IdentifierName "n" = number[]
+Line 36 col 4 IdentifierName "sameType3" = { x: any; }
+Line 36 col 16 ObjectLiteralExpression "{ get x(): any { return undefined; }, set x(n: typeof anyVar) { } }" = { x: any; }
+Line 36 col 22 IdentifierName "x" = any
+Line 36 col 40 IdentifierName "undefined" = undefined
+Line 36 col 58 IdentifierName "x" = any
+Line 36 col 60 IdentifierName "n" = any
+Line 36 col 70 IdentifierName "anyVar" = any
+Line 37 col 4 IdentifierName "sameType4" = { x: Date; }
+Line 37 col 16 ObjectLiteralExpression "{ get x(): Date { return undefined; }, set x(n: Date) { } }" = { x: Date; }
+Line 37 col 22 IdentifierName "x" = Date
+Line 37 col 27 IdentifierName "Date" = Date
+Line 37 col 41 IdentifierName "undefined" = undefined
+Line 37 col 59 IdentifierName "x" = Date
+Line 37 col 61 IdentifierName "n" = Date
+Line 37 col 64 IdentifierName "Date" = Date
+Line 40 col 4 IdentifierName "setParamType1" = { n: (t: string) => void; }
+Line 40 col 20 ObjectLiteralExpression "{
+    set n(x: (t: string) => void) { },
+    get n() { return (t) => {
+            var p: string;
+            var p = t;
+        }
+    }
+}" = { n: (t: string) => void; }
+Line 41 col 8 IdentifierName "n" = (t: string) => void
+Line 41 col 10 IdentifierName "x" = (t: string) => void
+Line 41 col 14 IdentifierName "t" = string
+Line 42 col 8 IdentifierName "n" = (t: string) => void
+Line 42 col 21 ParenthesizedArrowFunctionExpression "(t) => {
+            var p: string;
+            var p = t;
+        }" = (t: string) => void
+Line 42 col 22 IdentifierName "t" = string
+Line 43 col 16 IdentifierName "p" = string
+Line 44 col 16 IdentifierName "p" = string
+Line 44 col 20 IdentifierName "t" = string
+Line 48 col 4 IdentifierName "setParamType2" = { n: (t: string) => void; }
+Line 48 col 20 ObjectLiteralExpression "{
+    get n() { return (t) => {
+            var p: string;
+            var p = t;
+        }
+    },
+    set n(x: (t: string) => void) { }
+}" = { n: (t: string) => void; }
+Line 49 col 8 IdentifierName "n" = (t: string) => void
+Line 49 col 21 ParenthesizedArrowFunctionExpression "(t) => {
+            var p: string;
+            var p = t;
+        }" = (t: string) => void
+Line 49 col 22 IdentifierName "t" = string
+Line 50 col 16 IdentifierName "p" = string
+Line 51 col 16 IdentifierName "p" = string
+Line 51 col 20 IdentifierName "t" = string
+Line 54 col 8 IdentifierName "n" = (t: string) => void
+Line 54 col 10 IdentifierName "x" = (t: string) => void
+Line 54 col 14 IdentifierName "t" = string
+Line 58 col 4 IdentifierName "getParamType1" = { n: string; }
+Line 58 col 20 ObjectLiteralExpression "{
+    set n(x) {
+        var y = x;
+        var y: string;
+    },
+    get n() { return ''; }
+}" = { n: string; }
+Line 59 col 8 IdentifierName "n" = string
+Line 59 col 10 IdentifierName "x" = string
+Line 60 col 12 IdentifierName "y" = string
+Line 60 col 16 IdentifierName "x" = string
+Line 61 col 12 IdentifierName "y" = string
+Line 63 col 8 IdentifierName "n" = string
+Line 65 col 4 IdentifierName "getParamType2" = { n: string; }
+Line 65 col 20 ObjectLiteralExpression "{
+    get n() { return ''; },
+    set n(x) {
+        var y = x;
+        var y: string;
+    }
+}" = { n: string; }
+Line 66 col 8 IdentifierName "n" = string
+Line 67 col 8 IdentifierName "n" = string
+Line 67 col 10 IdentifierName "x" = string
+Line 68 col 12 IdentifierName "y" = string
+Line 68 col 16 IdentifierName "x" = string
+Line 69 col 12 IdentifierName "y" = string
+Line 74 col 4 IdentifierName "getParamType3" = { n: string; }
+Line 74 col 20 ObjectLiteralExpression "{
+    get n() { return ''; },
+    set n(x) {
+        var y = x;
+        var y: string;
+    }
+}" = { n: string; }
+Line 75 col 8 IdentifierName "n" = string
+Line 76 col 8 IdentifierName "n" = string
+Line 76 col 10 IdentifierName "x" = string
+Line 77 col 12 IdentifierName "y" = string
+Line 77 col 16 IdentifierName "x" = string
+Line 78 col 12 IdentifierName "y" = string

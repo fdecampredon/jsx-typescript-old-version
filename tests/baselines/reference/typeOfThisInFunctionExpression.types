@@ -1,0 +1,62 @@
+=== tests/cases/compiler/typeOfThisInFunctionExpression.ts ===
+Line 2 col 9 IdentifierName "fn" = typeof fn
+Line 3 col 8 IdentifierName "p" = any
+Line 3 col 12 ThisKeyword "this" = any
+Line 4 col 8 IdentifierName "p" = any
+Line 7 col 4 IdentifierName "t" = () => void
+Line 7 col 8 FunctionExpression "function () {
+    var p = this;
+    var p: any;
+}" = () => void
+Line 8 col 8 IdentifierName "p" = any
+Line 8 col 12 ThisKeyword "this" = any
+Line 9 col 8 IdentifierName "p" = any
+Line 12 col 4 IdentifierName "t2" = () => void
+Line 12 col 9 FunctionExpression "function f() {
+    var x = this;
+    var x: any;
+}" = () => void
+Line 12 col 18 IdentifierName "f" = () => void
+Line 13 col 8 IdentifierName "x" = any
+Line 13 col 12 ThisKeyword "this" = any
+Line 14 col 8 IdentifierName "x" = any
+Line 17 col 6 IdentifierName "C" = C
+Line 18 col 0 IdentifierName "x" = () => void
+Line 18 col 8 FunctionExpression "function () {
+        var q: any;
+        var q = this;
+    }" = () => void
+Line 19 col 12 IdentifierName "q" = any
+Line 20 col 12 IdentifierName "q" = any
+Line 20 col 16 ThisKeyword "this" = any
+Line 22 col 0 IdentifierName "y" = () => void
+Line 22 col 8 FunctionExpression "function ff() {
+        var q: any;
+        var q = this;
+    }" = () => void
+Line 22 col 17 IdentifierName "ff" = () => void
+Line 23 col 12 IdentifierName "q" = any
+Line 24 col 12 IdentifierName "q" = any
+Line 24 col 16 ThisKeyword "this" = any
+Line 28 col 7 IdentifierName "M" = M
+Line 29 col 13 IdentifierName "fn" = typeof M.fn
+Line 30 col 12 IdentifierName "p" = any
+Line 30 col 16 ThisKeyword "this" = any
+Line 31 col 12 IdentifierName "p" = any
+Line 34 col 8 IdentifierName "t" = () => void
+Line 34 col 12 FunctionExpression "function () {
+        var p = this;
+        var p: any;
+    }" = () => void
+Line 35 col 12 IdentifierName "p" = any
+Line 35 col 16 ThisKeyword "this" = any
+Line 36 col 12 IdentifierName "p" = any
+Line 39 col 8 IdentifierName "t2" = () => void
+Line 39 col 13 FunctionExpression "function f() {
+        var x = this;
+        var x: any;
+    }" = () => void
+Line 39 col 22 IdentifierName "f" = () => void
+Line 40 col 12 IdentifierName "x" = any
+Line 40 col 16 ThisKeyword "this" = any
+Line 41 col 12 IdentifierName "x" = any

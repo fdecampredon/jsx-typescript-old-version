@@ -9,8 +9,8 @@ callSignatureWithOptionalParameterAndInitializer.ts line 35 col 9: error TS1015:
 callSignatureWithOptionalParameterAndInitializer.ts line 44 col 9: error TS1015: Parameter cannot have question mark and initializer.
 callSignatureWithOptionalParameterAndInitializer.ts line 45 col 32: error TS1015: Parameter cannot have question mark and initializer.
 callSignatureWithOptionalParameterAndInitializer.ts line 46 col 9: error TS1015: Parameter cannot have question mark and initializer.
-callSignatureWithOptionalParameterAndInitializer.ts line 23 col 6: error TS2174: Default arguments are not allowed in an overload parameter.
-callSignatureWithOptionalParameterAndInitializer.ts line 24 col 20: error TS2174: Default arguments are not allowed in an overload parameter.
-callSignatureWithOptionalParameterAndInitializer.ts line 34 col 6: error TS2174: Default arguments are not allowed in an overload parameter.
-callSignatureWithOptionalParameterAndInitializer.ts line 35 col 9: error TS2174: Default arguments are not allowed in an overload parameter.
+callSignatureWithOptionalParameterAndInitializer.ts line 23 col 6: error TS2174: Default arguments are only allowed in implementation.
+callSignatureWithOptionalParameterAndInitializer.ts line 24 col 20: error TS2174: Default arguments are only allowed in implementation.
+callSignatureWithOptionalParameterAndInitializer.ts line 34 col 6: error TS2174: Default arguments are only allowed in implementation.
+callSignatureWithOptionalParameterAndInitializer.ts line 35 col 9: error TS2174: Default arguments are only allowed in implementation.
 callSignatureWithOptionalParameterAndInitializer.ts line 45 col 32: error TS2011: Cannot convert 'string' to 'number'.

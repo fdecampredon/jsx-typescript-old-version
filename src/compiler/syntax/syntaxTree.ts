@@ -1126,11 +1126,25 @@ module TypeScript {
         }
 
         public visitForInStatement(node: ForInStatementSyntax): void {
-            if (this.checkForStatementInAmbientContxt(node)) {
+            if (this.checkForStatementInAmbientContxt(node) ||
+                this.checkForInStatementVariableDeclaration(node)) {
+
                 return;
             }
 
             super.visitForInStatement(node);
+        }
+
+        private checkForInStatementVariableDeclaration(node: ForInStatementSyntax): boolean {
+            // The parser accepts a Variable Declaration in a ForInStatement, but the grammar only
+            // allows a very restricted form.  Specifically, there must be only a single Variable
+            // Declarator in the Declaration.
+            if (node.variableDeclaration && node.variableDeclaration.variableDeclarators.nonSeparatorCount() > 1) {
+                this.pushDiagnostic(node.variableDeclaration, DiagnosticCode.Only_a_single_variable_declaration_is_allowed_in_a_for_in_statement);
+                return true;
+            }
+
+            return false;
         }
 
         public visitForStatement(node: ForStatementSyntax): void {

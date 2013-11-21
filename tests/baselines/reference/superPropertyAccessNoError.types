@@ -1,0 +1,50 @@
+=== tests/cases/compiler/superPropertyAccessNoError.ts ===
+Line 6 col 6 IdentifierName "SomeBaseClass" = SomeBaseClass
+Line 7 col 11 IdentifierName "func" = () => string
+Line 11 col 11 IdentifierName "func" = () => number
+Line 17 col 6 IdentifierName "SomeDerivedClass" = SomeDerivedClass
+Line 17 col 31 IdentifierName "SomeBaseClass" = SomeBaseClass
+Line 19 col 0 InvocationExpression "super()" = void
+Line 20 col 12 IdentifierName "x" = string
+Line 20 col 16 InvocationExpression "super.func()" = string
+Line 20 col 16 MemberAccessExpression "super.func" = () => string
+Line 20 col 22 IdentifierName "func" = () => string
+Line 21 col 12 IdentifierName "x" = string
+Line 23 col 0 IdentifierName "fn" = () => void
+Line 25 col 12 IdentifierName "x" = string
+Line 25 col 16 InvocationExpression "super.func()" = string
+Line 25 col 16 MemberAccessExpression "super.func" = () => string
+Line 25 col 22 IdentifierName "func" = () => string
+Line 26 col 12 IdentifierName "x" = string
+Line 29 col 8 IdentifierName "a" = any
+Line 30 col 12 IdentifierName "x" = string
+Line 30 col 16 InvocationExpression "super.func()" = string
+Line 30 col 16 MemberAccessExpression "super.func" = () => string
+Line 30 col 22 IdentifierName "func" = () => string
+Line 31 col 12 IdentifierName "x" = string
+Line 35 col 8 IdentifierName "a" = any
+Line 35 col 10 IdentifierName "n" = any
+Line 36 col 12 IdentifierName "x" = string
+Line 36 col 16 InvocationExpression "super.func()" = string
+Line 36 col 16 MemberAccessExpression "super.func" = () => string
+Line 36 col 22 IdentifierName "func" = () => string
+Line 37 col 12 IdentifierName "x" = string
+Line 40 col 11 IdentifierName "fn" = () => void
+Line 41 col 12 IdentifierName "x" = number
+Line 41 col 16 InvocationExpression "super.func()" = number
+Line 41 col 16 MemberAccessExpression "super.func" = () => number
+Line 41 col 22 IdentifierName "func" = () => number
+Line 42 col 12 IdentifierName "x" = number
+Line 45 col 15 IdentifierName "a" = any
+Line 46 col 12 IdentifierName "x" = number
+Line 46 col 16 InvocationExpression "super.func()" = number
+Line 46 col 16 MemberAccessExpression "super.func" = () => number
+Line 46 col 22 IdentifierName "func" = () => number
+Line 47 col 12 IdentifierName "x" = number
+Line 51 col 15 IdentifierName "a" = any
+Line 51 col 17 IdentifierName "n" = any
+Line 52 col 12 IdentifierName "x" = number
+Line 52 col 16 InvocationExpression "super.func()" = number
+Line 52 col 16 MemberAccessExpression "super.func" = () => number
+Line 52 col 22 IdentifierName "func" = () => number
+Line 53 col 12 IdentifierName "x" = number

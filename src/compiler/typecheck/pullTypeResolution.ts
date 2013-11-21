@@ -1997,7 +1997,7 @@ module TypeScript {
                 var typeRef = this.resolveTypeReference(getType(argDeclAST), context);
 
                 if (paramSymbol.isVarArg && !typeRef.isArrayNamedTypeReference()) {
-                    var diagnostic = context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Rest_parameters_must_be_array_types));
                     typeRef = this.getNewErrorTypeSymbol();
                 }
 
@@ -2021,6 +2021,10 @@ module TypeScript {
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Parameter_0_of_function_type_implicitly_has_an_any_type,
                         [argDeclAST.identifier.text()]));
                 }
+            }
+
+            if (hasFlag(paramDecl.flags, PullElementFlags.Optional) && argDeclAST.equalsValueClause && isTypesOnlyLocation(argDeclAST)) {
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(argDeclAST, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
             }
 
             paramSymbol.setResolved();
@@ -2895,7 +2899,7 @@ module TypeScript {
             if (init && varDeclOrParameter.kind() === SyntaxKind.Parameter) {
                 var containerSignature = enclosingDecl.getSignatureSymbol();
                 if (containerSignature && !containerSignature.isDefinition()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Default_arguments_are_not_allowed_in_an_overload_parameter));
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
                 }
             }
             if (declSymbol.kind != PullElementKind.Parameter &&
@@ -4687,29 +4691,42 @@ module TypeScript {
         private typeCheckForInStatement(forInStatement: ForInStatementSyntax, context: PullTypeResolutionContext) {
             this.setTypeChecked(forInStatement, context);
 
-            var rhsType = this.resolveAST(forInStatement.expression, /*isContextuallyTyped*/ false, context).type;
-            var lval = forInStatement.variableDeclaration || forInStatement.left;
-
-            var varSym = this.resolveAST(lval, /*isContextuallyTyped*/ false, context);
-
             if (forInStatement.variableDeclaration) {
-                var declaration = <VariableDeclarationSyntax>forInStatement.variableDeclaration;
-                var varDecl = declaration.variableDeclarators.nonSeparatorAt(0);
+                var declaration = forInStatement.variableDeclaration;
 
-                if (varDecl.typeAnnotation) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(lval, DiagnosticCode.Variable_declarations_of_a_for_statement_cannot_use_a_type_annotation));
+                // The parser will already have reported an error if 0 or more than 1 variable
+                // declarators are provided.
+                if (declaration.variableDeclarators.nonSeparatorCount() === 1) {
+                    var varDecl = declaration.variableDeclarators.nonSeparatorAt(0);
+
+                    if (varDecl.typeAnnotation) {
+                        // November 18, 2013
+                        // VarDecl must be a variable declaration without a type annotation.
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(declaration, DiagnosticCode.Variable_declarations_of_a_for_statement_cannot_use_a_type_annotation));
+                    }
                 }
+            }
+            else {
+                // November 18, 2013
+                // In a ‘for-in’ statement of the form
+                // for (Var in Expr) Statement
+                // Var must be an expression classified as a reference of type Any or the String primitive type
 
-                var varSym = this.getSymbolForAST(varDecl, context);
+                var varSym = this.resolveAST(forInStatement.left, /*isContextuallyTyped*/ false, context);
+                var isStringOrNumber = varSym.type === this.semanticInfoChain.stringTypeSymbol || this.isAnyOrEquivalent(varSym.type);
+
+                if (!isStringOrNumber) {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(forInStatement.left, DiagnosticCode.Variable_declarations_of_a_for_statement_must_be_of_types_string_or_any));
+                }
             }
 
-            var isStringOrNumber = varSym.type === this.semanticInfoChain.stringTypeSymbol || this.isAnyOrEquivalent(varSym.type);
-
-            var isValidRHS = rhsType && (this.isAnyOrEquivalent(rhsType) || !rhsType.isPrimitive());
-
-            if (!isStringOrNumber) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(lval, DiagnosticCode.Variable_declarations_of_a_for_statement_must_be_of_types_string_or_any));
-            }
+            // November 18, 2013
+            // In a ‘for-in’ statement of the form
+            // for (Var in Expr) Statement [or of the form]
+            // for (var VarDecl in Expr) Statement
+            // ... Expr must be an expression of type Any, an object type, or a type parameter type.
+            var rhsType = this.resolveAST(forInStatement.expression, /*isContextuallyTyped*/ false, context).type;
+            var isValidRHS = rhsType && (this.isAnyOrEquivalent(rhsType) || rhsType.isObject() || rhsType.isTypeParameter());
 
             if (!isValidRHS) {
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(forInStatement.expression, DiagnosticCode.The_right_hand_side_of_a_for_in_statement_must_be_of_type_any_an_object_type_or_a_type_parameter));
@@ -5175,13 +5192,13 @@ module TypeScript {
             return false;
         }
 
-        private inIterationStatement(ast: ISyntaxElement): boolean {
+        private inIterationStatement(ast: ISyntaxElement, crossFunctions: boolean): boolean {
             while (ast) {
                 if (this.isIterationStatement(ast)) {
                     return true;
                 }
 
-                if (this.isAnyFunctionExpressionOrDeclaration(ast)) {
+                if (!crossFunctions && this.isAnyFunctionExpressionOrDeclaration(ast)) {
                     return false;
                 }
 
@@ -5224,9 +5241,15 @@ module TypeScript {
         private typeCheckContinueStatement(ast: ContinueStatementSyntax, context: PullTypeResolutionContext): void {
             this.setTypeChecked(ast, context);
 
-            if (!this.inIterationStatement(ast)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
-                    DiagnosticCode.continue_statement_can_only_be_used_within_an_enclosing_iteration_statement));
+            if (!this.inIterationStatement(ast, /*crossFunctions:*/ false)) {
+                if (this.inIterationStatement(ast, /*crossFunctions:*/ true)) {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
+                        DiagnosticCode.Jump_target_cannot_cross_function_boundary));
+                }
+                else {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
+                        DiagnosticCode.continue_statement_can_only_be_used_within_an_enclosing_iteration_statement));
+                }
             }
             else if (ast.identifier) {
                 var continuableLabels = this.getEnclosingLabels(ast, /*breakable:*/ false, /*crossFunctions:*/ false);
@@ -5283,9 +5306,15 @@ module TypeScript {
                     }
                 }
             }
-            else if (!this.inIterationStatement(ast) && !this.inSwitchStatement(ast)) {
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
-                    DiagnosticCode.break_statement_can_only_be_used_within_an_enclosing_iteration_or_switch_statement));
+            else if (!this.inIterationStatement(ast, /*crossFunctions:*/ false) && !this.inSwitchStatement(ast)) {
+                if (this.inIterationStatement(ast, /*crossFunctions:*/ true)) {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
+                        DiagnosticCode.Jump_target_cannot_cross_function_boundary));
+                }
+                else {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast,
+                        DiagnosticCode.break_statement_can_only_be_used_within_an_enclosing_iteration_or_switch_statement));
+                }
             }
         }
 

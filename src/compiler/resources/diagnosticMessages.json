@@ -347,6 +347,10 @@
         "category": "Error",
         "code": 1090
     },
+    "Only a single variable declaration is allowed in a 'for...in' statement.": {
+        "category": "Error",
+        "code": 1091
+    },
     "Duplicate identifier '{0}'.": {
         "category": "Error",
         "code": 2000
@@ -1003,7 +1007,7 @@
         "category": "Error",
         "code": 2173
     },
-    "Default arguments are not allowed in an overload parameter.": {
+    "Default arguments are only allowed in implementation.": {
         "category": "Error",
         "code": 2174
     },
