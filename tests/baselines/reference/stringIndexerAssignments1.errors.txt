@@ -1,4 +1,4 @@
-stringIndexerAssignments1.ts line 4 col 1: error TS2012: Cannot convert '{ one: string; }' to '{ one: string; [index: string]: string; }':
+stringIndexerAssignments1.ts(4,1): error TS2012: Cannot convert '{ one: string; }' to '{ one: string; [index: string]: string; }':
 	Index signatures of types '{ one: string; }' and '{ one: string; [index: string]: string; }' are incompatible.
-stringIndexerAssignments1.ts line 5 col 1: error TS2012: Cannot convert '{ one: number; two: string; }' to '{ one: string; [index: string]: string; }':
+stringIndexerAssignments1.ts(5,1): error TS2012: Cannot convert '{ one: number; two: string; }' to '{ one: string; [index: string]: string; }':
 	Types of property 'one' of types '{ one: number; two: string; }' and '{ one: string; [index: string]: string; }' are incompatible.

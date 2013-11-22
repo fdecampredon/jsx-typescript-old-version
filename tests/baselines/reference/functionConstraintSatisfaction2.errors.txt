@@ -1,14 +1,14 @@
-functionConstraintSatisfaction2.ts line 5 col 1: error TS2086: Type 'number' does not satisfy the constraint 'Function' for type parameter 'T extends Function'.
-functionConstraintSatisfaction2.ts line 6 col 1: error TS2081: Supplied parameters do not match any signature of call target.
-functionConstraintSatisfaction2.ts line 6 col 1: error TS2087: Could not select overload for 'call' expression.
-functionConstraintSatisfaction2.ts line 7 col 1: error TS2086: Type 'number' does not satisfy the constraint 'Function' for type parameter 'T extends Function'.
-functionConstraintSatisfaction2.ts line 23 col 9: error TS2086: Type 'Function' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 24 col 10: error TS2086: Type '(x: string[]) => string[]' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 25 col 10: error TS2086: Type 'typeof C' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 26 col 10: error TS2086: Type 'new(x: string) => string' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 28 col 11: error TS2086: Type '<U, V>(x: U, y: V) => U' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 29 col 11: error TS2086: Type 'typeof C2' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 30 col 11: error TS2086: Type 'new<T>(x: T) => T' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 34 col 11: error TS2086: Type 'F2' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 37 col 5: error TS2086: Type 'T extends () => void' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
-functionConstraintSatisfaction2.ts line 38 col 5: error TS2086: Type 'U extends T' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(5,1): error TS2086: Type 'number' does not satisfy the constraint 'Function' for type parameter 'T extends Function'.
+functionConstraintSatisfaction2.ts(6,1): error TS2081: Supplied parameters do not match any signature of call target.
+functionConstraintSatisfaction2.ts(6,1): error TS2087: Could not select overload for 'call' expression.
+functionConstraintSatisfaction2.ts(7,1): error TS2086: Type 'number' does not satisfy the constraint 'Function' for type parameter 'T extends Function'.
+functionConstraintSatisfaction2.ts(23,9): error TS2086: Type 'Function' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(24,10): error TS2086: Type '(x: string[]) => string[]' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(25,10): error TS2086: Type 'typeof C' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(26,10): error TS2086: Type 'new(x: string) => string' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(28,11): error TS2086: Type '<U, V>(x: U, y: V) => U' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(29,11): error TS2086: Type 'typeof C2' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(30,11): error TS2086: Type 'new<T>(x: T) => T' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(34,11): error TS2086: Type 'F2' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(37,5): error TS2086: Type 'T extends () => void' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.
+functionConstraintSatisfaction2.ts(38,5): error TS2086: Type 'U extends T' does not satisfy the constraint '(x: string) => string' for type parameter 'T extends (x: string) => string'.

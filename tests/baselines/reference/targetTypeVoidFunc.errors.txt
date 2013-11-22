@@ -1,2 +1,2 @@
-targetTypeVoidFunc.ts line 2 col 12: error TS2012: Cannot convert '() => void' to 'new() => number':
+targetTypeVoidFunc.ts(2,12): error TS2012: Cannot convert '() => void' to 'new() => number':
 	Type 'new() => number' requires a construct signature, but type '() => void' lacks one.

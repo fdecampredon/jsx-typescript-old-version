@@ -1,6 +1,12 @@
-augmentedTypesModules.ts line 6 col 5: error TS2000: Duplicate identifier 'm1a'.
-augmentedTypesModules.ts line 9 col 5: error TS2000: Duplicate identifier 'm1b'.
-augmentedTypesModules.ts line 19 col 5: error TS2000: Duplicate identifier 'm1d'.
-augmentedTypesModules.ts line 26 col 1: error TS2000: Duplicate identifier 'm2a'.
-augmentedTypesModules.ts line 29 col 1: error TS2000: Duplicate identifier 'm2b'.
-augmentedTypesModules.ts line 52 col 1: error TS2000: Duplicate identifier 'm3a'.
+augmentedTypesModules.ts(6,5): error TS2000: Duplicate identifier 'm1a'. Additional locations:
+	augmentedTypesModules.ts(5,8)
+augmentedTypesModules.ts(9,5): error TS2000: Duplicate identifier 'm1b'. Additional locations:
+	augmentedTypesModules.ts(8,8)
+augmentedTypesModules.ts(19,5): error TS2000: Duplicate identifier 'm1d'. Additional locations:
+	augmentedTypesModules.ts(16,8)
+augmentedTypesModules.ts(26,10): error TS2000: Duplicate identifier 'm2a'. Additional locations:
+	augmentedTypesModules.ts(25,8)
+augmentedTypesModules.ts(29,10): error TS2000: Duplicate identifier 'm2b'. Additional locations:
+	augmentedTypesModules.ts(28,8)
+augmentedTypesModules.ts(52,7): error TS2000: Duplicate identifier 'm3a'. Additional locations:
+	augmentedTypesModules.ts(51,8)

@@ -1,8 +1,9 @@
-gettersAndSettersErrors.ts line 7 col 29: error TS1005: '{' expected.
-gettersAndSettersErrors.ts line 7 col 30: error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
-gettersAndSettersErrors.ts line 7 col 37: error TS1005: ';' expected.
-gettersAndSettersErrors.ts line 8 col 1: error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
-gettersAndSettersErrors.ts line 5 col 5: error TS2000: Duplicate identifier 'Foo'.
-gettersAndSettersErrors.ts line 7 col 30: error TS2095: Could not find symbol 'string'.
-gettersAndSettersErrors.ts line 11 col 17: error TS2127: Getter and setter accessors do not agree in visibility.
-gettersAndSettersErrors.ts line 12 col 16: error TS2127: Getter and setter accessors do not agree in visibility.
+gettersAndSettersErrors.ts(7,29): error TS1005: '{' expected.
+gettersAndSettersErrors.ts(7,30): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+gettersAndSettersErrors.ts(7,37): error TS1005: ';' expected.
+gettersAndSettersErrors.ts(8,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+gettersAndSettersErrors.ts(5,12): error TS2000: Duplicate identifier 'Foo'. Additional locations:
+	gettersAndSettersErrors.ts(2,5)
+gettersAndSettersErrors.ts(7,30): error TS2095: Could not find symbol 'string'.
+gettersAndSettersErrors.ts(11,17): error TS2127: Getter and setter accessors do not agree in visibility.
+gettersAndSettersErrors.ts(12,16): error TS2127: Getter and setter accessors do not agree in visibility.

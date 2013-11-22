@@ -1,14 +1,13 @@
-invalidBooleanAssignments.ts line 3 col 5: error TS2011: Cannot convert 'boolean' to 'number'.
-invalidBooleanAssignments.ts line 4 col 5: error TS2011: Cannot convert 'boolean' to 'string'.
-invalidBooleanAssignments.ts line 5 col 5: error TS2011: Cannot convert 'boolean' to 'void'.
-invalidBooleanAssignments.ts line 6 col 5: error TS2011: Cannot convert 'boolean' to 'undefined'.
-invalidBooleanAssignments.ts line 9 col 5: error TS2011: Cannot convert 'boolean' to 'E'.
-invalidBooleanAssignments.ts line 12 col 5: error TS2012: Cannot convert 'boolean' to 'C':
+invalidBooleanAssignments.ts(3,5): error TS2011: Cannot convert 'boolean' to 'number'.
+invalidBooleanAssignments.ts(4,5): error TS2011: Cannot convert 'boolean' to 'string'.
+invalidBooleanAssignments.ts(5,5): error TS2011: Cannot convert 'boolean' to 'void'.
+invalidBooleanAssignments.ts(9,5): error TS2011: Cannot convert 'boolean' to 'E'.
+invalidBooleanAssignments.ts(12,5): error TS2012: Cannot convert 'boolean' to 'C':
 	Type 'Boolean' is missing property 'foo' from type 'C'.
-invalidBooleanAssignments.ts line 15 col 5: error TS2012: Cannot convert 'boolean' to 'I':
+invalidBooleanAssignments.ts(15,5): error TS2012: Cannot convert 'boolean' to 'I':
 	Type 'Boolean' is missing property 'bar' from type 'I'.
-invalidBooleanAssignments.ts line 17 col 5: error TS2012: Cannot convert 'boolean' to '() => string':
+invalidBooleanAssignments.ts(17,5): error TS2012: Cannot convert 'boolean' to '() => string':
 	Type '() => string' requires a call signature, but type 'Boolean' lacks one.
-invalidBooleanAssignments.ts line 21 col 1: error TS2130: Invalid left-hand side of assignment expression.
-invalidBooleanAssignments.ts line 24 col 5: error TS2011: Cannot convert 'boolean' to 'T'.
-invalidBooleanAssignments.ts line 26 col 1: error TS2130: Invalid left-hand side of assignment expression.
+invalidBooleanAssignments.ts(21,1): error TS2130: Invalid left-hand side of assignment expression.
+invalidBooleanAssignments.ts(24,5): error TS2011: Cannot convert 'boolean' to 'T'.
+invalidBooleanAssignments.ts(26,1): error TS2130: Invalid left-hand side of assignment expression.

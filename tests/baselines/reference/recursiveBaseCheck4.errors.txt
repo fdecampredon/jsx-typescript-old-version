@@ -1,2 +1,2 @@
-recursiveBaseCheck4.ts line 1 col 7: error TS2100: Class 'M<T>' is recursively referenced as a base type of itself.
-recursiveBaseCheck4.ts line 2 col 9: error TS2094: The property 'blah' does not exist on value of type 'M<{}>'.
+recursiveBaseCheck4.ts(1,7): error TS2100: Class 'M<T>' is recursively referenced as a base type of itself.
+recursiveBaseCheck4.ts(2,9): error TS2094: The property 'blah' does not exist on value of type 'M<{}>'.

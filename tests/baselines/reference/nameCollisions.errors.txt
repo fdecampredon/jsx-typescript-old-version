@@ -1,9 +1,18 @@
-nameCollisions.ts line 6 col 5: error TS2000: Duplicate identifier 'x'.
-nameCollisions.ts line 15 col 9: error TS2000: Duplicate identifier 'z'.
-nameCollisions.ts line 21 col 5: error TS2000: Duplicate identifier 'y'.
-nameCollisions.ts line 27 col 5: error TS2000: Duplicate identifier 'f'.
-nameCollisions.ts line 30 col 9: error TS2000: Duplicate identifier 'f2'.
-nameCollisions.ts line 36 col 5: error TS2000: Duplicate identifier 'C'.
-nameCollisions.ts line 39 col 5: error TS2000: Duplicate identifier 'C2'.
-nameCollisions.ts line 45 col 5: error TS2000: Duplicate identifier 'cli'.
-nameCollisions.ts line 48 col 5: error TS2000: Duplicate identifier 'cli2'.
+nameCollisions.ts(6,12): error TS2000: Duplicate identifier 'x'. Additional locations:
+	nameCollisions.ts(4,9)
+nameCollisions.ts(15,9): error TS2000: Duplicate identifier 'z'. Additional locations:
+	nameCollisions.ts(12,12)
+nameCollisions.ts(21,11): error TS2000: Duplicate identifier 'y'. Additional locations:
+	nameCollisions.ts(17,12)
+nameCollisions.ts(27,14): error TS2000: Duplicate identifier 'f'. Additional locations:
+	nameCollisions.ts(26,9)
+nameCollisions.ts(30,9): error TS2000: Duplicate identifier 'f2'. Additional locations:
+	nameCollisions.ts(29,5)
+nameCollisions.ts(36,14): error TS2000: Duplicate identifier 'C'. Additional locations:
+	nameCollisions.ts(35,5)
+nameCollisions.ts(39,11): error TS2000: Duplicate identifier 'C2'. Additional locations:
+	nameCollisions.ts(38,5)
+nameCollisions.ts(45,15): error TS2000: Duplicate identifier 'cli'. Additional locations:
+	nameCollisions.ts(44,5)
+nameCollisions.ts(48,11): error TS2000: Duplicate identifier 'cli2'. Additional locations:
+	nameCollisions.ts(47,5)

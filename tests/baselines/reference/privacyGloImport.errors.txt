@@ -1,33 +1,33 @@
-privacyGloImport.ts line 59 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 69 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 82 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 83 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 22 col 13: error TS1029: 'export' modifier must precede 'declare' modifier.
-privacyGloImport.ts line 122 col 9: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 126 col 13: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 134 col 9: error TS1038: 'declare' modifier not allowed for code already in an ambient context.
-privacyGloImport.ts line 147 col 5: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 150 col 9: error TS2136: Import declarations in an internal module cannot reference an external module.
-privacyGloImport.ts line 22 col 27: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 30 col 20: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 50 col 16: error TS2027: Exported variable 'm1_im2_private_v1_public' has or is using private type 'm1_M2_private.c1'.
-privacyGloImport.ts line 51 col 16: error TS2027: Exported variable 'm1_im2_private_v2_public' has or is using private type 'm1_M2_private.c1'.
-privacyGloImport.ts line 52 col 16: error TS2027: Exported variable 'm1_im2_private_v3_public' has or is using private type 'm1_M2_private.f1'.
-privacyGloImport.ts line 53 col 16: error TS2027: Exported variable 'm1_im2_private_v4_public' has or is using private type 'm1_M2_private.c1'.
-privacyGloImport.ts line 59 col 5: error TS2071: Unable to resolve external module '"m1_M3_public"'.
-privacyGloImport.ts line 59 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyGloImport.ts line 69 col 5: error TS2071: Unable to resolve external module '"m1_M4_private"'.
-privacyGloImport.ts line 69 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyGloImport.ts line 81 col 5: error TS2182: Exported import declaration 'm1_im2_public' is assigned value with type that is using inaccessible module 'm1_M2_private'.
-privacyGloImport.ts line 81 col 5: error TS2185: Exported import declaration 'm1_im2_public' is assigned container that is or is using inaccessible module 'm1_M2_private'.
-privacyGloImport.ts line 82 col 5: error TS2071: Unable to resolve external module '"m1_M3_public"'.
-privacyGloImport.ts line 82 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyGloImport.ts line 83 col 5: error TS2071: Unable to resolve external module '"m1_M4_private"'.
-privacyGloImport.ts line 83 col 5: error TS2072: Module cannot be aliased to a non-module type.
-privacyGloImport.ts line 107 col 45: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
-privacyGloImport.ts line 110 col 39: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
-privacyGloImport.ts line 115 col 45: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
-privacyGloImport.ts line 118 col 39: error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
-privacyGloImport.ts line 134 col 24: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 139 col 16: error TS2195: Ambient external module declaration must be defined in global context.
-privacyGloImport.ts line 142 col 12: error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts(59,5): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(69,5): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(82,5): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(83,5): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(22,13): error TS1029: 'export' modifier must precede 'declare' modifier.
+privacyGloImport.ts(122,9): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(126,13): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(134,9): error TS1038: 'declare' modifier not allowed for code already in an ambient context.
+privacyGloImport.ts(147,5): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(150,9): error TS2136: Import declarations in an internal module cannot reference an external module.
+privacyGloImport.ts(22,27): error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts(30,20): error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts(50,16): error TS2027: Exported variable 'm1_im2_private_v1_public' has or is using private type 'm1_M2_private.c1'.
+privacyGloImport.ts(51,16): error TS2027: Exported variable 'm1_im2_private_v2_public' has or is using private type 'm1_M2_private.c1'.
+privacyGloImport.ts(52,16): error TS2027: Exported variable 'm1_im2_private_v3_public' has or is using private type 'm1_M2_private.f1'.
+privacyGloImport.ts(53,16): error TS2027: Exported variable 'm1_im2_private_v4_public' has or is using private type 'm1_M2_private.c1'.
+privacyGloImport.ts(59,5): error TS2071: Unable to resolve external module '"m1_M3_public"'.
+privacyGloImport.ts(59,5): error TS2072: Module cannot be aliased to a non-module type.
+privacyGloImport.ts(69,5): error TS2071: Unable to resolve external module '"m1_M4_private"'.
+privacyGloImport.ts(69,5): error TS2072: Module cannot be aliased to a non-module type.
+privacyGloImport.ts(81,5): error TS2182: Exported import declaration 'm1_im2_public' is assigned value with type that is using inaccessible module 'm1_M2_private'.
+privacyGloImport.ts(81,5): error TS2185: Exported import declaration 'm1_im2_public' is assigned container that is or is using inaccessible module 'm1_M2_private'.
+privacyGloImport.ts(82,5): error TS2071: Unable to resolve external module '"m1_M3_public"'.
+privacyGloImport.ts(82,5): error TS2072: Module cannot be aliased to a non-module type.
+privacyGloImport.ts(83,5): error TS2071: Unable to resolve external module '"m1_M4_private"'.
+privacyGloImport.ts(83,5): error TS2072: Module cannot be aliased to a non-module type.
+privacyGloImport.ts(107,45): error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
+privacyGloImport.ts(110,39): error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M1_public'.
+privacyGloImport.ts(115,45): error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
+privacyGloImport.ts(118,39): error TS4022: Type reference cannot refer to container '"use_glo_M1_public".use_glo_M2_public'.
+privacyGloImport.ts(134,24): error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts(139,16): error TS2195: Ambient external module declaration must be defined in global context.
+privacyGloImport.ts(142,12): error TS2195: Ambient external module declaration must be defined in global context.

@@ -1,4 +1,4 @@
-duplicateVarsAcrossFileBoundaries_1.ts line 1 col 5: error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'number', but here has type 'boolean'.
-duplicateVarsAcrossFileBoundaries_2.ts line 1 col 5: error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'number', but here has type 'string'.
-duplicateVarsAcrossFileBoundaries_2.ts line 2 col 5: error TS2134: Subsequent variable declarations must have the same type.  Variable 'y' must be of type 'string', but here has type 'number'.
-duplicateVarsAcrossFileBoundaries_2.ts line 3 col 5: error TS2134: Subsequent variable declarations must have the same type.  Variable 'z' must be of type 'number', but here has type 'boolean'.
+duplicateVarsAcrossFileBoundaries_1.ts(1,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'number', but here has type 'boolean'.
+duplicateVarsAcrossFileBoundaries_2.ts(1,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'number', but here has type 'string'.
+duplicateVarsAcrossFileBoundaries_2.ts(2,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'y' must be of type 'string', but here has type 'number'.
+duplicateVarsAcrossFileBoundaries_2.ts(3,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'z' must be of type 'number', but here has type 'boolean'.

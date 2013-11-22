@@ -1,8 +1,8 @@
-implicitAnyDeclareMemberWithoutType.ts line 3 col 5: error TS7005: Variable 'member1' implicitly has an 'any' type.
-implicitAnyDeclareMemberWithoutType.ts line 5 col 5: error TS7010: 'constructor', which lacks return-type annotation, implicitly has an 'any' return type.
-implicitAnyDeclareMemberWithoutType.ts line 5 col 17: error TS7006: Parameter 'c1' of 'constructor' implicitly has an 'any' type.
-implicitAnyDeclareMemberWithoutType.ts line 5 col 33: error TS7006: Parameter 'c3' of 'constructor' implicitly has an 'any' type.
-implicitAnyDeclareMemberWithoutType.ts line 6 col 5: error TS7010: 'funcOfIFace', which lacks return-type annotation, implicitly has an 'any' return type.
-implicitAnyDeclareMemberWithoutType.ts line 6 col 17: error TS7006: Parameter 'f1' of 'funcOfIFace' implicitly has an 'any' type.
-implicitAnyDeclareMemberWithoutType.ts line 6 col 21: error TS7006: Parameter 'f2' of 'funcOfIFace' implicitly has an 'any' type.
-implicitAnyDeclareMemberWithoutType.ts line 7 col 5: error TS7013: Constructor signature, which lacks return-type annotation, implicitly has an 'any' return type.
+implicitAnyDeclareMemberWithoutType.ts(3,5): error TS7005: Variable 'member1' implicitly has an 'any' type.
+implicitAnyDeclareMemberWithoutType.ts(5,5): error TS7010: 'constructor', which lacks return-type annotation, implicitly has an 'any' return type.
+implicitAnyDeclareMemberWithoutType.ts(5,17): error TS7006: Parameter 'c1' of 'constructor' implicitly has an 'any' type.
+implicitAnyDeclareMemberWithoutType.ts(5,33): error TS7006: Parameter 'c3' of 'constructor' implicitly has an 'any' type.
+implicitAnyDeclareMemberWithoutType.ts(6,5): error TS7010: 'funcOfIFace', which lacks return-type annotation, implicitly has an 'any' return type.
+implicitAnyDeclareMemberWithoutType.ts(6,17): error TS7006: Parameter 'f1' of 'funcOfIFace' implicitly has an 'any' type.
+implicitAnyDeclareMemberWithoutType.ts(6,21): error TS7006: Parameter 'f2' of 'funcOfIFace' implicitly has an 'any' type.
+implicitAnyDeclareMemberWithoutType.ts(7,5): error TS7013: Constructor signature, which lacks return-type annotation, implicitly has an 'any' return type.

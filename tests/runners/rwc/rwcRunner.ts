@@ -128,8 +128,8 @@ class RWCRunner extends RunnerBase {
                         fsOutput.Close();
                         fsDeclOutput.Close();
 
-                        compilationErrors.forEach((err: Harness.Compiler.ReportedError) => {
-                            errors += Harness.getFileName(err.fileName) + " (" + err.line + "," + err.column + ") " + err.message + '\r\n';
+                        compilationErrors.forEach(err => {
+                            errors += this._getDiagnosticText(err);
                         });
                         result = fsOutput.lines.join('\r\n');
                         dtsresult = fsDeclOutput.lines.join("\r\n");

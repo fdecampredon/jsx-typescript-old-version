@@ -1,4 +1,4 @@
-arrayAssignmentTest2.ts line 47 col 1: error TS2012: Cannot convert 'C2[]' to 'C3[]':
+arrayAssignmentTest2.ts(47,1): error TS2012: Cannot convert 'C2[]' to 'C3[]':
 	Type 'C2' is missing property 'CM3M1' from type 'C3'.
 	Types of property 'concat' of types 'C2[]' and 'C3[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): C2[]; (...items: C2[]): C2[]; }' and '{ <U extends T[]>(...items: U[]): C3[]; (...items: C3[]): C3[]; }' are incompatible:
@@ -6,7 +6,7 @@ arrayAssignmentTest2.ts line 47 col 1: error TS2012: Cannot convert 'C2[]' to 'C
 			Types of property 'pop' of types 'C2[]' and 'C3[]' are incompatible:
 				Call signatures of types '() => C2' and '() => C3' are incompatible:
 					Type 'C2' is missing property 'CM3M1' from type 'C3'.
-arrayAssignmentTest2.ts line 48 col 1: error TS2012: Cannot convert 'C1[]' to 'C3[]':
+arrayAssignmentTest2.ts(48,1): error TS2012: Cannot convert 'C1[]' to 'C3[]':
 	Type 'C1' is missing property 'CM3M1' from type 'C3'.
 	Types of property 'concat' of types 'C1[]' and 'C3[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): C1[]; (...items: C1[]): C1[]; }' and '{ <U extends T[]>(...items: U[]): C3[]; (...items: C3[]): C3[]; }' are incompatible:
@@ -14,7 +14,7 @@ arrayAssignmentTest2.ts line 48 col 1: error TS2012: Cannot convert 'C1[]' to 'C
 			Types of property 'pop' of types 'C1[]' and 'C3[]' are incompatible:
 				Call signatures of types '() => C1' and '() => C3' are incompatible:
 					Type 'C1' is missing property 'CM3M1' from type 'C3'.
-arrayAssignmentTest2.ts line 49 col 1: error TS2012: Cannot convert 'I1[]' to 'C3[]':
+arrayAssignmentTest2.ts(49,1): error TS2012: Cannot convert 'I1[]' to 'C3[]':
 	Type 'I1' is missing property 'CM3M1' from type 'C3'.
 	Types of property 'concat' of types 'I1[]' and 'C3[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): I1[]; (...items: I1[]): I1[]; }' and '{ <U extends T[]>(...items: U[]): C3[]; (...items: C3[]): C3[]; }' are incompatible:
@@ -22,17 +22,17 @@ arrayAssignmentTest2.ts line 49 col 1: error TS2012: Cannot convert 'I1[]' to 'C
 			Types of property 'pop' of types 'I1[]' and 'C3[]' are incompatible:
 				Call signatures of types '() => I1' and '() => C3' are incompatible:
 					Type 'I1' is missing property 'CM3M1' from type 'C3'.
-arrayAssignmentTest2.ts line 51 col 1: error TS2012: Cannot convert '() => C1' to 'any[]':
+arrayAssignmentTest2.ts(51,1): error TS2012: Cannot convert '() => C1' to 'any[]':
 	Type '() => C1' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 52 col 1: error TS2012: Cannot convert '() => any' to 'any[]':
+arrayAssignmentTest2.ts(52,1): error TS2012: Cannot convert '() => any' to 'any[]':
 	Type '() => any' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 53 col 1: error TS2012: Cannot convert '{ one: number; }' to 'any[]':
+arrayAssignmentTest2.ts(53,1): error TS2012: Cannot convert '{ one: number; }' to 'any[]':
 	Type '{ one: number; }' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 55 col 1: error TS2012: Cannot convert 'C1' to 'any[]':
+arrayAssignmentTest2.ts(55,1): error TS2012: Cannot convert 'C1' to 'any[]':
 	Type 'C1' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 56 col 1: error TS2012: Cannot convert 'C2' to 'any[]':
+arrayAssignmentTest2.ts(56,1): error TS2012: Cannot convert 'C2' to 'any[]':
 	Type 'C2' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 57 col 1: error TS2012: Cannot convert 'C3' to 'any[]':
+arrayAssignmentTest2.ts(57,1): error TS2012: Cannot convert 'C3' to 'any[]':
 	Type 'C3' is missing property 'concat' from type 'any[]'.
-arrayAssignmentTest2.ts line 58 col 1: error TS2012: Cannot convert 'I1' to 'any[]':
+arrayAssignmentTest2.ts(58,1): error TS2012: Cannot convert 'I1' to 'any[]':
 	Type 'I1' is missing property 'concat' from type 'any[]'.

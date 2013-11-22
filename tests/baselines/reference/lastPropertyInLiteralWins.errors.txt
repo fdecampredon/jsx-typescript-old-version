@@ -1,6 +1,8 @@
-lastPropertyInLiteralWins.ts line 7 col 1: error TS2082: Supplied parameters do not match any signature of call target:
+lastPropertyInLiteralWins.ts(7,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'thunk' of types '{ thunk: (str: string) => void; thunk: (num: number) => void; }' and 'Thing' are incompatible:
 		Call signatures of types '(num: number) => void' and '(str: string) => void' are incompatible.
-lastPropertyInLiteralWins.ts line 7 col 1: error TS2087: Could not select overload for 'call' expression.
-lastPropertyInLiteralWins.ts line 9 col 5: error TS2000: Duplicate identifier 'thunk'.
-lastPropertyInLiteralWins.ts line 14 col 5: error TS2000: Duplicate identifier 'thunk'.
+lastPropertyInLiteralWins.ts(7,1): error TS2087: Could not select overload for 'call' expression.
+lastPropertyInLiteralWins.ts(9,5): error TS2000: Duplicate identifier 'thunk'. Additional locations:
+	lastPropertyInLiteralWins.ts(8,5)
+lastPropertyInLiteralWins.ts(14,5): error TS2000: Duplicate identifier 'thunk'. Additional locations:
+	lastPropertyInLiteralWins.ts(13,5)

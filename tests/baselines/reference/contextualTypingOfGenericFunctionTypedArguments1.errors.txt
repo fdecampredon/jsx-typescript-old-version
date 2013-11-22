@@ -1,8 +1,8 @@
-contextualTypingOfGenericFunctionTypedArguments1.ts line 16 col 12: error TS2082: Supplied parameters do not match any signature of call target:
+contextualTypingOfGenericFunctionTypedArguments1.ts(16,12): error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '(x: number) => string' and '(x: number) => Date' are incompatible:
 		Type 'String' is missing property 'toDateString' from type 'Date'.
-contextualTypingOfGenericFunctionTypedArguments1.ts line 16 col 12: error TS2087: Could not select overload for 'call' expression.
-contextualTypingOfGenericFunctionTypedArguments1.ts line 17 col 12: error TS2082: Supplied parameters do not match any signature of call target:
+contextualTypingOfGenericFunctionTypedArguments1.ts(16,12): error TS2087: Could not select overload for 'call' expression.
+contextualTypingOfGenericFunctionTypedArguments1.ts(17,12): error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '(x: number) => string' and '(x: number) => Date' are incompatible:
 		Type 'String' is missing property 'toDateString' from type 'Date'.
-contextualTypingOfGenericFunctionTypedArguments1.ts line 17 col 12: error TS2087: Could not select overload for 'call' expression.
+contextualTypingOfGenericFunctionTypedArguments1.ts(17,12): error TS2087: Could not select overload for 'call' expression.

@@ -1,22 +1,22 @@
-privacyInterface.ts line 13 col 10: error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 15 col 23: error TS2053: Return type of call signature from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 18 col 14: error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 20 col 27: error TS2052: Return type of constructor signature from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 23 col 22: error TS2054: Return type of index signature from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 26 col 9: error TS2026: Property 'y' of exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 29 col 9: error TS2026: Property 'b' of exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 32 col 12: error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 34 col 15: error TS2057: Return type of method from exported interface has or is using private type 'C2_private'.
-privacyInterface.ts line 143 col 6: error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 145 col 19: error TS2053: Return type of call signature from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 148 col 10: error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 150 col 23: error TS2052: Return type of constructor signature from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 153 col 18: error TS2054: Return type of index signature from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 156 col 5: error TS2026: Property 'y' of exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 159 col 5: error TS2026: Property 'b' of exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 162 col 8: error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 164 col 11: error TS2057: Return type of method from exported interface has or is using private type 'C6_private'.
-privacyInterface.ts line 210 col 43: error TS2020: Exported interface 'm3_C4_public' extends private interface 'm3_i_private'.
-privacyInterface.ts line 215 col 44: error TS2020: Exported interface 'm3_C6_public' extends private interface 'm3_i_private'.
-privacyInterface.ts line 258 col 40: error TS2020: Exported interface 'glo_C4_public' extends private interface 'glo_i_private'.
-privacyInterface.ts line 263 col 41: error TS2020: Exported interface 'glo_C6_public' extends private interface 'glo_i_private'.
+privacyInterface.ts(13,10): error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(15,23): error TS2053: Return type of call signature from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(18,14): error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(20,27): error TS2052: Return type of constructor signature from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(23,22): error TS2054: Return type of index signature from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(26,9): error TS2026: Property 'y' of exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(29,9): error TS2026: Property 'b' of exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(32,12): error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(34,15): error TS2057: Return type of method from exported interface has or is using private type 'C2_private'.
+privacyInterface.ts(143,6): error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(145,19): error TS2053: Return type of call signature from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(148,10): error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(150,23): error TS2052: Return type of constructor signature from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(153,18): error TS2054: Return type of index signature from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(156,5): error TS2026: Property 'y' of exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(159,5): error TS2026: Property 'b' of exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(162,8): error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(164,11): error TS2057: Return type of method from exported interface has or is using private type 'C6_private'.
+privacyInterface.ts(210,43): error TS2020: Exported interface 'm3_C4_public' extends private interface 'm3_i_private'.
+privacyInterface.ts(215,44): error TS2020: Exported interface 'm3_C6_public' extends private interface 'm3_i_private'.
+privacyInterface.ts(258,40): error TS2020: Exported interface 'glo_C4_public' extends private interface 'glo_i_private'.
+privacyInterface.ts(263,41): error TS2020: Exported interface 'glo_C6_public' extends private interface 'glo_i_private'.

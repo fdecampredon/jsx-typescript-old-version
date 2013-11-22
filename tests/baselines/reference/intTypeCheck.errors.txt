@@ -1,120 +1,121 @@
-intTypeCheck.ts line 37 col 16: error TS1005: ']' expected.
-intTypeCheck.ts line 37 col 28: error TS1005: ';' expected.
-intTypeCheck.ts line 37 col 29: error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-intTypeCheck.ts line 72 col 16: error TS1005: ']' expected.
-intTypeCheck.ts line 72 col 28: error TS1005: ';' expected.
-intTypeCheck.ts line 72 col 29: error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-intTypeCheck.ts line 104 col 20: error TS1003: Identifier expected.
-intTypeCheck.ts line 118 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 132 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 146 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 160 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 174 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 188 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 202 col 21: error TS1003: Identifier expected.
-intTypeCheck.ts line 15 col 5: error TS2175: Overloads cannot differ only by return type.
-intTypeCheck.ts line 26 col 5: error TS2175: Overloads cannot differ only by return type.
-intTypeCheck.ts line 50 col 5: error TS2175: Overloads cannot differ only by return type.
-intTypeCheck.ts line 62 col 5: error TS2175: Overloads cannot differ only by return type.
-intTypeCheck.ts line 78 col 5: error TS2000: Duplicate identifier 'p3'.
-intTypeCheck.ts line 83 col 5: error TS2144: Duplicate overload signature for 'p7'.
-intTypeCheck.ts line 83 col 5: error TS2153: Overload signatures must all be optional or required.
-intTypeCheck.ts line 97 col 5: error TS2012: Cannot convert 'Object' to 'i1':
+intTypeCheck.ts(37,16): error TS1005: ']' expected.
+intTypeCheck.ts(37,28): error TS1005: ';' expected.
+intTypeCheck.ts(37,29): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+intTypeCheck.ts(72,16): error TS1005: ']' expected.
+intTypeCheck.ts(72,28): error TS1005: ';' expected.
+intTypeCheck.ts(72,29): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+intTypeCheck.ts(104,20): error TS1003: Identifier expected.
+intTypeCheck.ts(118,21): error TS1003: Identifier expected.
+intTypeCheck.ts(132,21): error TS1003: Identifier expected.
+intTypeCheck.ts(146,21): error TS1003: Identifier expected.
+intTypeCheck.ts(160,21): error TS1003: Identifier expected.
+intTypeCheck.ts(174,21): error TS1003: Identifier expected.
+intTypeCheck.ts(188,21): error TS1003: Identifier expected.
+intTypeCheck.ts(202,21): error TS1003: Identifier expected.
+intTypeCheck.ts(15,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(26,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(50,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(62,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(78,5): error TS2000: Duplicate identifier 'p3'. Additional locations:
+	intTypeCheck.ts(72,18)
+intTypeCheck.ts(83,5): error TS2144: Duplicate overload signature for 'p7'.
+intTypeCheck.ts(83,5): error TS2153: Overload signatures must all be optional or required.
+intTypeCheck.ts(97,5): error TS2012: Cannot convert 'Object' to 'i1':
 	Type 'Object' is missing property 'p' from type 'i1'.
-intTypeCheck.ts line 98 col 20: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 99 col 5: error TS2012: Cannot convert 'Base' to 'i1':
+intTypeCheck.ts(98,20): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(99,5): error TS2012: Cannot convert 'Base' to 'i1':
 	Type 'Base' is missing property 'p' from type 'i1'.
-intTypeCheck.ts line 101 col 5: error TS2012: Cannot convert '() => void' to 'i1':
+intTypeCheck.ts(101,5): error TS2012: Cannot convert '() => void' to 'i1':
 	Type '() => void' is missing property 'p' from type 'i1'.
-intTypeCheck.ts line 104 col 5: error TS2012: Cannot convert 'boolean' to 'i1':
+intTypeCheck.ts(104,5): error TS2012: Cannot convert 'boolean' to 'i1':
 	Type 'Boolean' is missing property 'p' from type 'i1'.
-intTypeCheck.ts line 104 col 21: error TS2095: Could not find symbol 'i1'.
-intTypeCheck.ts line 105 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 110 col 5: error TS2012: Cannot convert '{}' to 'i2':
+intTypeCheck.ts(104,21): error TS2095: Could not find symbol 'i1'.
+intTypeCheck.ts(105,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(110,5): error TS2012: Cannot convert '{}' to 'i2':
 	Type 'i2' requires a call signature, but type '{}' lacks one.
-intTypeCheck.ts line 111 col 5: error TS2012: Cannot convert 'Object' to 'i2':
+intTypeCheck.ts(111,5): error TS2012: Cannot convert 'Object' to 'i2':
 	Type 'i2' requires a call signature, but type 'Object' lacks one.
-intTypeCheck.ts line 112 col 21: error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
-intTypeCheck.ts line 113 col 5: error TS2012: Cannot convert 'Base' to 'i2':
+intTypeCheck.ts(112,21): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+intTypeCheck.ts(113,5): error TS2012: Cannot convert 'Base' to 'i2':
 	Type 'i2' requires a call signature, but type 'Base' lacks one.
-intTypeCheck.ts line 118 col 5: error TS2012: Cannot convert 'boolean' to 'i2':
+intTypeCheck.ts(118,5): error TS2012: Cannot convert 'boolean' to 'i2':
 	Type 'i2' requires a call signature, but type 'Boolean' lacks one.
-intTypeCheck.ts line 118 col 22: error TS2095: Could not find symbol 'i2'.
-intTypeCheck.ts line 119 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 124 col 5: error TS2012: Cannot convert '{}' to 'i3':
+intTypeCheck.ts(118,22): error TS2095: Could not find symbol 'i2'.
+intTypeCheck.ts(119,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(124,5): error TS2012: Cannot convert '{}' to 'i3':
 	Type 'i3' requires a construct signature, but type '{}' lacks one.
-intTypeCheck.ts line 125 col 5: error TS2012: Cannot convert 'Object' to 'i3':
+intTypeCheck.ts(125,5): error TS2012: Cannot convert 'Object' to 'i3':
 	Type 'i3' requires a construct signature, but type 'Object' lacks one.
-intTypeCheck.ts line 127 col 5: error TS2012: Cannot convert 'Base' to 'i3':
+intTypeCheck.ts(127,5): error TS2012: Cannot convert 'Base' to 'i3':
 	Type 'i3' requires a construct signature, but type 'Base' lacks one.
-intTypeCheck.ts line 129 col 5: error TS2012: Cannot convert '() => void' to 'i3':
+intTypeCheck.ts(129,5): error TS2012: Cannot convert '() => void' to 'i3':
 	Type 'i3' requires a construct signature, but type '() => void' lacks one.
-intTypeCheck.ts line 132 col 5: error TS2012: Cannot convert 'boolean' to 'i3':
+intTypeCheck.ts(132,5): error TS2012: Cannot convert 'boolean' to 'i3':
 	Type 'i3' requires a construct signature, but type 'Boolean' lacks one.
-intTypeCheck.ts line 132 col 22: error TS2095: Could not find symbol 'i3'.
-intTypeCheck.ts line 133 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 138 col 5: error TS2012: Cannot convert '{ [p1: string]: any; }' to 'i4':
+intTypeCheck.ts(132,22): error TS2095: Could not find symbol 'i3'.
+intTypeCheck.ts(133,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(138,5): error TS2012: Cannot convert '{ [p1: string]: any; }' to 'i4':
 	Type '{ [p1: string]: any; }' is missing property 'p3' from type 'i4'.
-intTypeCheck.ts line 139 col 5: error TS2012: Cannot convert 'Object' to 'i4':
+intTypeCheck.ts(139,5): error TS2012: Cannot convert 'Object' to 'i4':
 	Type 'Object' is missing property 'p3' from type 'i4'.
-intTypeCheck.ts line 140 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 141 col 5: error TS2012: Cannot convert 'Base' to 'i4':
+intTypeCheck.ts(140,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(141,5): error TS2012: Cannot convert 'Base' to 'i4':
 	Type 'Base' is missing property 'p3' from type 'i4'.
-intTypeCheck.ts line 143 col 5: error TS2012: Cannot convert '() => void' to 'i4':
+intTypeCheck.ts(143,5): error TS2012: Cannot convert '() => void' to 'i4':
 	Type '() => void' is missing property 'p3' from type 'i4'.
-intTypeCheck.ts line 146 col 5: error TS2012: Cannot convert 'boolean' to 'i4':
+intTypeCheck.ts(146,5): error TS2012: Cannot convert 'boolean' to 'i4':
 	Type 'Boolean' is missing property 'p3' from type 'i4'.
-intTypeCheck.ts line 146 col 22: error TS2095: Could not find symbol 'i4'.
-intTypeCheck.ts line 147 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 152 col 5: error TS2012: Cannot convert '{}' to 'i5':
+intTypeCheck.ts(146,22): error TS2095: Could not find symbol 'i4'.
+intTypeCheck.ts(147,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(152,5): error TS2012: Cannot convert '{}' to 'i5':
 	Type '{}' is missing property 'p' from type 'i5'.
-intTypeCheck.ts line 153 col 5: error TS2012: Cannot convert 'Object' to 'i5':
+intTypeCheck.ts(153,5): error TS2012: Cannot convert 'Object' to 'i5':
 	Type 'Object' is missing property 'p' from type 'i5'.
-intTypeCheck.ts line 154 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 155 col 5: error TS2012: Cannot convert 'Base' to 'i5':
+intTypeCheck.ts(154,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(155,5): error TS2012: Cannot convert 'Base' to 'i5':
 	Type 'Base' is missing property 'p' from type 'i5'.
-intTypeCheck.ts line 157 col 5: error TS2012: Cannot convert '() => void' to 'i5':
+intTypeCheck.ts(157,5): error TS2012: Cannot convert '() => void' to 'i5':
 	Type '() => void' is missing property 'p' from type 'i5'.
-intTypeCheck.ts line 160 col 5: error TS2012: Cannot convert 'boolean' to 'i5':
+intTypeCheck.ts(160,5): error TS2012: Cannot convert 'boolean' to 'i5':
 	Type 'Boolean' is missing property 'p' from type 'i5'.
-intTypeCheck.ts line 160 col 22: error TS2095: Could not find symbol 'i5'.
-intTypeCheck.ts line 161 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 166 col 5: error TS2012: Cannot convert '{}' to 'i6':
+intTypeCheck.ts(160,22): error TS2095: Could not find symbol 'i5'.
+intTypeCheck.ts(161,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(166,5): error TS2012: Cannot convert '{}' to 'i6':
 	Type 'i6' requires a call signature, but type '{}' lacks one.
-intTypeCheck.ts line 167 col 5: error TS2012: Cannot convert 'Object' to 'i6':
+intTypeCheck.ts(167,5): error TS2012: Cannot convert 'Object' to 'i6':
 	Type 'i6' requires a call signature, but type 'Object' lacks one.
-intTypeCheck.ts line 168 col 21: error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
-intTypeCheck.ts line 169 col 5: error TS2012: Cannot convert 'Base' to 'i6':
+intTypeCheck.ts(168,21): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+intTypeCheck.ts(169,5): error TS2012: Cannot convert 'Base' to 'i6':
 	Type 'i6' requires a call signature, but type 'Base' lacks one.
-intTypeCheck.ts line 171 col 5: error TS2012: Cannot convert '() => void' to 'i6':
+intTypeCheck.ts(171,5): error TS2012: Cannot convert '() => void' to 'i6':
 	Call signatures of types '() => void' and 'i6' are incompatible.
-intTypeCheck.ts line 174 col 5: error TS2012: Cannot convert 'boolean' to 'i6':
+intTypeCheck.ts(174,5): error TS2012: Cannot convert 'boolean' to 'i6':
 	Type 'i6' requires a call signature, but type 'Boolean' lacks one.
-intTypeCheck.ts line 174 col 22: error TS2095: Could not find symbol 'i6'.
-intTypeCheck.ts line 175 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 180 col 5: error TS2012: Cannot convert '{}' to 'i7':
+intTypeCheck.ts(174,22): error TS2095: Could not find symbol 'i6'.
+intTypeCheck.ts(175,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(180,5): error TS2012: Cannot convert '{}' to 'i7':
 	Type 'i7' requires a construct signature, but type '{}' lacks one.
-intTypeCheck.ts line 181 col 5: error TS2012: Cannot convert 'Object' to 'i7':
+intTypeCheck.ts(181,5): error TS2012: Cannot convert 'Object' to 'i7':
 	Type 'i7' requires a construct signature, but type 'Object' lacks one.
-intTypeCheck.ts line 183 col 17: error TS2012: Cannot convert 'Base' to 'i7':
-	Type 'i7' is missing property 'foo' from type 'Base'.
+intTypeCheck.ts(183,17): error TS2012: Cannot convert 'Base' to 'i7':
 	Type 'i7' requires a construct signature, but type 'Base' lacks one.
-intTypeCheck.ts line 185 col 5: error TS2012: Cannot convert '() => void' to 'i7':
+	Type 'i7' is missing property 'foo' from type 'Base'.
+intTypeCheck.ts(185,5): error TS2012: Cannot convert '() => void' to 'i7':
 	Type 'i7' requires a construct signature, but type '() => void' lacks one.
-intTypeCheck.ts line 188 col 5: error TS2012: Cannot convert 'boolean' to 'i7':
+intTypeCheck.ts(188,5): error TS2012: Cannot convert 'boolean' to 'i7':
 	Type 'i7' requires a construct signature, but type 'Boolean' lacks one.
-intTypeCheck.ts line 188 col 22: error TS2095: Could not find symbol 'i7'.
-intTypeCheck.ts line 189 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 194 col 5: error TS2012: Cannot convert '{ [p1: string]: any; }' to 'i8':
+intTypeCheck.ts(188,22): error TS2095: Could not find symbol 'i7'.
+intTypeCheck.ts(189,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(194,5): error TS2012: Cannot convert '{ [p1: string]: any; }' to 'i8':
 	Type '{ [p1: string]: any; }' is missing property 'p3' from type 'i8'.
-intTypeCheck.ts line 195 col 5: error TS2012: Cannot convert 'Object' to 'i8':
+intTypeCheck.ts(195,5): error TS2012: Cannot convert 'Object' to 'i8':
 	Type 'Object' is missing property 'p3' from type 'i8'.
-intTypeCheck.ts line 196 col 21: error TS2083: Invalid 'new' expression.
-intTypeCheck.ts line 197 col 5: error TS2012: Cannot convert 'Base' to 'i8':
+intTypeCheck.ts(196,21): error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(197,5): error TS2012: Cannot convert 'Base' to 'i8':
 	Type 'Base' is missing property 'p3' from type 'i8'.
-intTypeCheck.ts line 199 col 5: error TS2012: Cannot convert '() => void' to 'i8':
+intTypeCheck.ts(199,5): error TS2012: Cannot convert '() => void' to 'i8':
 	Type '() => void' is missing property 'p3' from type 'i8'.
-intTypeCheck.ts line 202 col 5: error TS2012: Cannot convert 'boolean' to 'i8':
+intTypeCheck.ts(202,5): error TS2012: Cannot convert 'boolean' to 'i8':
 	Type 'Boolean' is missing property 'p3' from type 'i8'.
-intTypeCheck.ts line 202 col 22: error TS2095: Could not find symbol 'i8'.
-intTypeCheck.ts line 203 col 21: error TS2083: Invalid 'new' expression.
+intTypeCheck.ts(202,22): error TS2095: Could not find symbol 'i8'.
+intTypeCheck.ts(203,21): error TS2083: Invalid 'new' expression.

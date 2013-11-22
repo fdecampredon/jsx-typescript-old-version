@@ -1,4 +1,8 @@
-numericStringNamedPropertyEquivalence.ts line 6 col 5: error TS2000: Duplicate identifier '1.0'.
-numericStringNamedPropertyEquivalence.ts line 12 col 5: error TS2000: Duplicate identifier '1'.
-numericStringNamedPropertyEquivalence.ts line 17 col 5: error TS2000: Duplicate identifier '1.0'.
-numericStringNamedPropertyEquivalence.ts line 22 col 5: error TS2000: Duplicate identifier '0'.
+numericStringNamedPropertyEquivalence.ts(6,5): error TS2000: Duplicate identifier '1.0'. Additional locations:
+	numericStringNamedPropertyEquivalence.ts(4,5)
+numericStringNamedPropertyEquivalence.ts(12,5): error TS2000: Duplicate identifier '1'. Additional locations:
+	numericStringNamedPropertyEquivalence.ts(10,5)
+numericStringNamedPropertyEquivalence.ts(17,5): error TS2000: Duplicate identifier '1.0'. Additional locations:
+	numericStringNamedPropertyEquivalence.ts(16,5)
+numericStringNamedPropertyEquivalence.ts(22,5): error TS2000: Duplicate identifier '0'. Additional locations:
+	numericStringNamedPropertyEquivalence.ts(21,5)

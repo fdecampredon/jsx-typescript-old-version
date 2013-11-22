@@ -253,7 +253,7 @@ module TypeScript {
                 (symbol) => symbol.getDisplayName(), skipInternalAliasName);
             if (aliasDisplayName != null) {
                 return aliasDisplayName;
-           }
+            }
 
             // Get the actual name associated with a declaration for this symbol
             var decls = this.getDeclarations();
@@ -1447,6 +1447,8 @@ module TypeScript {
 
         public typeReference: PullTypeReferenceSymbol = null;
 
+        private _widenedType: PullTypeSymbol = null;
+
         constructor(name: string, kind: PullElementKind) {
             super(name, kind);
             this.type = this;
@@ -1501,7 +1503,8 @@ module TypeScript {
 
         public isObject(): boolean {
             return hasFlag(this.kind,
-                PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType | PullElementKind.Interface | PullElementKind.ObjectType);
+                PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType |
+                PullElementKind.Interface | PullElementKind.ObjectType | PullElementKind.ObjectLiteral);
         }
 
         public getKnownBaseTypeCount() { return this._knownBaseTypeCount; }
@@ -2746,6 +2749,16 @@ module TypeScript {
                 return false;
             }
         }
+
+        // This is the same signature as PullTypeResolver.widenType (except that the positions
+        // of the resolver are switched). This method just returns the cached value of the widened
+        // type, otherwise, calls into the resolver.
+        public widenedType(resolver: PullTypeResolver, ast: ISyntaxElement, context: PullTypeResolutionContext): PullTypeSymbol {
+            if (!this._widenedType) {
+                this._widenedType = resolver.widenType(this, ast, context);
+            }
+            return this._widenedType;
+        }
     }
 
     export class PullPrimitiveTypeSymbol extends PullTypeSymbol {
@@ -2756,13 +2769,33 @@ module TypeScript {
         }
 
         public isAny(): boolean {
-            return this.name === "any";
+            return !this.isStringConstant() && this.name === "any";
+        }
+
+        public isNull(): boolean {
+            return !this.isStringConstant() && this.name === "null";
+        }
+
+        public isUndefined(): boolean {
+            return !this.isStringConstant() && this.name === "undefined";
         }
 
         public isStringConstant() { return false; }
 
         public setUnresolved() {
             // do nothing...
+        }
+
+        // Overrides the PullSymbol.getDisplayName to give the appearance of widening. The spec
+        // doesn't say anything about displaying types, but we should leave no trace of undefined
+        // or null.
+        public getDisplayName() {
+            if (this.isNull() || this.isUndefined()) {
+                return "any";
+            }
+            else {
+                return super.getDisplayName();
+            }
         }
     }
 

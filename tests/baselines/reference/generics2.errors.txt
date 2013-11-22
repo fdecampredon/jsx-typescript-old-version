@@ -1,3 +1,3 @@
-generics2.ts line 17 col 9: error TS2086: Type 'A' does not satisfy the constraint 'B' for type parameter 'U extends B'.
-generics2.ts line 20 col 9: error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
-generics2.ts line 21 col 9: error TS2173: Generic type references must include all type arguments.
+generics2.ts(17,9): error TS2086: Type 'A' does not satisfy the constraint 'B' for type parameter 'U extends B'.
+generics2.ts(20,9): error TS2090: Generic type 'G<T, U>' requires 2 type argument(s).
+generics2.ts(21,9): error TS2173: Generic type references must include all type arguments.

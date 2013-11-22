@@ -1,0 +1,61 @@
+=== tests/cases/compiler/invalidUndefinedValues.ts ===
+Line 0 col 4 IdentifierName "x" = any
+Line 0 col 14 IdentifierName "undefined" = any
+Line 1 col 0 AssignmentExpression "x = 1" = number
+Line 1 col 0 IdentifierName "x" = any
+Line 3 col 0 AssignmentExpression "x = ''" = string
+Line 3 col 0 IdentifierName "x" = any
+Line 4 col 0 AssignmentExpression "x = true" = boolean
+Line 4 col 0 IdentifierName "x" = any
+Line 5 col 4 IdentifierName "a" = void
+Line 6 col 0 AssignmentExpression "x = a" = void
+Line 6 col 0 IdentifierName "x" = any
+Line 6 col 4 IdentifierName "a" = void
+Line 7 col 0 AssignmentExpression "x = null" = any
+Line 7 col 0 IdentifierName "x" = any
+Line 9 col 6 IdentifierName "C" = C
+Line 9 col 10 IdentifierName "foo" = string
+Line 10 col 4 IdentifierName "b" = C
+Line 10 col 7 IdentifierName "C" = C
+Line 11 col 0 AssignmentExpression "x = C" = typeof C
+Line 11 col 0 IdentifierName "x" = any
+Line 11 col 4 IdentifierName "C" = typeof C
+Line 12 col 0 AssignmentExpression "x = b" = C
+Line 12 col 0 IdentifierName "x" = any
+Line 12 col 4 IdentifierName "b" = C
+Line 14 col 10 IdentifierName "I" = I
+Line 14 col 14 IdentifierName "foo" = string
+Line 15 col 4 IdentifierName "c" = I
+Line 15 col 7 IdentifierName "I" = I
+Line 16 col 0 AssignmentExpression "x = c" = I
+Line 16 col 0 IdentifierName "x" = any
+Line 16 col 4 IdentifierName "c" = I
+Line 18 col 7 IdentifierName "M" = M
+Line 18 col 22 IdentifierName "x" = number
+Line 19 col 0 AssignmentExpression "x = M" = typeof M
+Line 19 col 0 IdentifierName "x" = any
+Line 19 col 4 IdentifierName "M" = typeof M
+Line 20 col 0 AssignmentExpression "x = { f() { } }" = { f(): void; }
+Line 20 col 0 IdentifierName "x" = any
+Line 21 col 4 ObjectLiteralExpression "{ f() { } }" = { f(): void; }
+Line 21 col 6 IdentifierName "f" = () => void
+Line 23 col 9 IdentifierName "f" = typeof f
+Line 23 col 11 IdentifierName "T" = T
+Line 23 col 14 IdentifierName "a" = T
+Line 23 col 17 IdentifierName "T" = T
+Line 24 col 0 AssignmentExpression "x = a" = T
+Line 24 col 0 IdentifierName "x" = any
+Line 24 col 8 IdentifierName "a" = T
+Line 26 col 0 AssignmentExpression "x = f" = typeof f
+Line 26 col 0 IdentifierName "x" = any
+Line 26 col 4 IdentifierName "f" = typeof f
+Line 28 col 5 IdentifierName "E" = E
+Line 28 col 9 IdentifierName "A" = E
+Line 29 col 0 AssignmentExpression "x = E" = typeof E
+Line 29 col 0 IdentifierName "x" = any
+Line 29 col 4 IdentifierName "E" = typeof E
+Line 30 col 0 AssignmentExpression "x = E.A" = E
+Line 30 col 0 IdentifierName "x" = any
+Line 30 col 4 MemberAccessExpression "E.A" = E
+Line 30 col 4 IdentifierName "E" = typeof E
+Line 30 col 6 IdentifierName "A" = E

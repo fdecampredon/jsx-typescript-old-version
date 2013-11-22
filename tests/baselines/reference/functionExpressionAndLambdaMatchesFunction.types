@@ -6,7 +6,7 @@ Line 2 col 32 IdentifierName "Function" = Function
 Line 4 col 0 InvocationExpression "doSomething(() => undefined)" = void
 Line 4 col 0 IdentifierName "doSomething" = (a: Function) => void
 Line 4 col 20 ParenthesizedArrowFunctionExpression "() => undefined" = () => any
-Line 4 col 26 IdentifierName "undefined" = undefined
+Line 4 col 26 IdentifierName "undefined" = any
 Line 5 col 0 InvocationExpression "doSomething(function () { })" = void
 Line 5 col 0 IdentifierName "doSomething" = (a: Function) => void
 Line 5 col 20 FunctionExpression "function () { }" = () => void

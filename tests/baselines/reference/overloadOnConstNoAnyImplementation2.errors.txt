@@ -1,8 +1,8 @@
-overloadOnConstNoAnyImplementation2.ts line 2 col 29: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-overloadOnConstNoAnyImplementation2.ts line 6 col 29: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-overloadOnConstNoAnyImplementation2.ts line 12 col 9: error TS2082: Supplied parameters do not match any signature of call target:
+overloadOnConstNoAnyImplementation2.ts(2,29): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+overloadOnConstNoAnyImplementation2.ts(6,29): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+overloadOnConstNoAnyImplementation2.ts(12,9): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'string' to argument 1 which is of type 'number'.
-overloadOnConstNoAnyImplementation2.ts line 12 col 9: error TS2087: Could not select overload for 'call' expression.
-overloadOnConstNoAnyImplementation2.ts line 17 col 9: error TS2163: Overload signature implementation cannot use specialized type.
-overloadOnConstNoAnyImplementation2.ts line 18 col 9: error TS2163: Overload signature implementation cannot use specialized type.
-overloadOnConstNoAnyImplementation2.ts line 19 col 9: error TS2163: Overload signature implementation cannot use specialized type.
+overloadOnConstNoAnyImplementation2.ts(12,9): error TS2087: Could not select overload for 'call' expression.
+overloadOnConstNoAnyImplementation2.ts(17,9): error TS2163: Overload signature implementation cannot use specialized type.
+overloadOnConstNoAnyImplementation2.ts(18,9): error TS2163: Overload signature implementation cannot use specialized type.
+overloadOnConstNoAnyImplementation2.ts(19,9): error TS2163: Overload signature implementation cannot use specialized type.

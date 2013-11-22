@@ -1,2 +1,2 @@
-numericIndexerConstraint5.ts line 2 col 5: error TS2012: Cannot convert '{ name: string; 0: Date; }' to '{ [name: number]: string; }':
+numericIndexerConstraint5.ts(2,5): error TS2012: Cannot convert '{ name: string; 0: Date; }' to '{ [name: number]: string; }':
 	Index signatures of types '{ name: string; 0: Date; }' and '{ [name: number]: string; }' are incompatible.

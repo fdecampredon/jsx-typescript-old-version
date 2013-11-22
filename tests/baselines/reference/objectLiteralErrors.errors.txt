@@ -1,43 +1,79 @@
-objectLiteralErrors.ts line 17 col 19: error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.
-objectLiteralErrors.ts line 37 col 23: error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.
-objectLiteralErrors.ts line 3 col 18: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 4 col 19: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 5 col 18: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 6 col 21: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 7 col 19: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 8 col 18: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 9 col 20: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 10 col 20: error TS2000: Duplicate identifier '"a"'.
-objectLiteralErrors.ts line 11 col 20: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 12 col 21: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 13 col 21: error TS2000: Duplicate identifier ''1''.
-objectLiteralErrors.ts line 14 col 19: error TS2000: Duplicate identifier '0'.
-objectLiteralErrors.ts line 15 col 19: error TS2000: Duplicate identifier '0'.
-objectLiteralErrors.ts line 16 col 19: error TS2000: Duplicate identifier '0x0'.
-objectLiteralErrors.ts line 17 col 19: error TS2000: Duplicate identifier '000'.
-objectLiteralErrors.ts line 18 col 23: error TS2000: Duplicate identifier '1e2'.
-objectLiteralErrors.ts line 19 col 22: error TS2000: Duplicate identifier '3.2e1'.
-objectLiteralErrors.ts line 20 col 25: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 23 col 18: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 24 col 19: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 25 col 18: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 26 col 21: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 27 col 19: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 28 col 18: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 29 col 20: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 30 col 20: error TS2000: Duplicate identifier '"a"'.
-objectLiteralErrors.ts line 31 col 20: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 32 col 21: error TS2000: Duplicate identifier ''a''.
-objectLiteralErrors.ts line 33 col 21: error TS2000: Duplicate identifier ''1''.
-objectLiteralErrors.ts line 34 col 19: error TS2000: Duplicate identifier '0'.
-objectLiteralErrors.ts line 35 col 19: error TS2000: Duplicate identifier '0'.
-objectLiteralErrors.ts line 36 col 19: error TS2000: Duplicate identifier '0x0'.
-objectLiteralErrors.ts line 37 col 19: error TS2000: Duplicate identifier '000'.
-objectLiteralErrors.ts line 38 col 23: error TS2000: Duplicate identifier '1e2'.
-objectLiteralErrors.ts line 39 col 22: error TS2000: Duplicate identifier '3.2e1'.
-objectLiteralErrors.ts line 40 col 42: error TS2000: Duplicate identifier 'a'.
-objectLiteralErrors.ts line 43 col 12: error TS2096: 'get' and 'set' accessor must have the same type.
-objectLiteralErrors.ts line 43 col 43: error TS2096: 'get' and 'set' accessor must have the same type.
-objectLiteralErrors.ts line 44 col 29: error TS2011: Cannot convert 'number' to 'string'.
-objectLiteralErrors.ts line 45 col 12: error TS2096: 'get' and 'set' accessor must have the same type.
-objectLiteralErrors.ts line 45 col 51: error TS2096: 'get' and 'set' accessor must have the same type.
+objectLiteralErrors.ts(17,19): error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.
+objectLiteralErrors.ts(37,23): error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.
+objectLiteralErrors.ts(3,18): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(3,12)
+objectLiteralErrors.ts(4,19): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(4,12)
+objectLiteralErrors.ts(5,18): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(5,12)
+objectLiteralErrors.ts(6,21): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(6,12)
+objectLiteralErrors.ts(7,19): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(7,12)
+objectLiteralErrors.ts(8,18): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(8,12)
+objectLiteralErrors.ts(9,20): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(9,12)
+objectLiteralErrors.ts(10,20): error TS2000: Duplicate identifier '"a"'. Additional locations:
+	objectLiteralErrors.ts(10,12)
+objectLiteralErrors.ts(11,20): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(11,12)
+objectLiteralErrors.ts(12,21): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(12,13)
+objectLiteralErrors.ts(13,21): error TS2000: Duplicate identifier ''1''. Additional locations:
+	objectLiteralErrors.ts(13,13)
+objectLiteralErrors.ts(14,19): error TS2000: Duplicate identifier '0'. Additional locations:
+	objectLiteralErrors.ts(14,13)
+objectLiteralErrors.ts(15,19): error TS2000: Duplicate identifier '0'. Additional locations:
+	objectLiteralErrors.ts(15,13)
+objectLiteralErrors.ts(16,19): error TS2000: Duplicate identifier '0x0'. Additional locations:
+	objectLiteralErrors.ts(16,13)
+objectLiteralErrors.ts(17,19): error TS2000: Duplicate identifier '000'. Additional locations:
+	objectLiteralErrors.ts(17,13)
+objectLiteralErrors.ts(18,23): error TS2000: Duplicate identifier '1e2'. Additional locations:
+	objectLiteralErrors.ts(18,13)
+objectLiteralErrors.ts(19,22): error TS2000: Duplicate identifier '3.2e1'. Additional locations:
+	objectLiteralErrors.ts(19,13)
+objectLiteralErrors.ts(20,25): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(20,13)
+objectLiteralErrors.ts(23,22): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(23,12)
+objectLiteralErrors.ts(24,23): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(24,12)
+objectLiteralErrors.ts(25,22): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(25,12)
+objectLiteralErrors.ts(26,25): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(26,12)
+objectLiteralErrors.ts(27,23): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(27,12)
+objectLiteralErrors.ts(28,22): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(28,12)
+objectLiteralErrors.ts(29,24): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(29,12)
+objectLiteralErrors.ts(30,24): error TS2000: Duplicate identifier '"a"'. Additional locations:
+	objectLiteralErrors.ts(30,12)
+objectLiteralErrors.ts(31,24): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(31,12)
+objectLiteralErrors.ts(32,25): error TS2000: Duplicate identifier ''a''. Additional locations:
+	objectLiteralErrors.ts(32,13)
+objectLiteralErrors.ts(33,25): error TS2000: Duplicate identifier ''1''. Additional locations:
+	objectLiteralErrors.ts(33,13)
+objectLiteralErrors.ts(34,23): error TS2000: Duplicate identifier '0'. Additional locations:
+	objectLiteralErrors.ts(34,13)
+objectLiteralErrors.ts(35,23): error TS2000: Duplicate identifier '0'. Additional locations:
+	objectLiteralErrors.ts(35,13)
+objectLiteralErrors.ts(36,23): error TS2000: Duplicate identifier '0x0'. Additional locations:
+	objectLiteralErrors.ts(36,13)
+objectLiteralErrors.ts(37,23): error TS2000: Duplicate identifier '000'. Additional locations:
+	objectLiteralErrors.ts(37,13)
+objectLiteralErrors.ts(38,27): error TS2000: Duplicate identifier '1e2'. Additional locations:
+	objectLiteralErrors.ts(38,13)
+objectLiteralErrors.ts(39,26): error TS2000: Duplicate identifier '3.2e1'. Additional locations:
+	objectLiteralErrors.ts(39,13)
+objectLiteralErrors.ts(40,46): error TS2000: Duplicate identifier 'a'. Additional locations:
+	objectLiteralErrors.ts(40,13)
+objectLiteralErrors.ts(43,12): error TS2096: 'get' and 'set' accessor must have the same type.
+objectLiteralErrors.ts(43,43): error TS2096: 'get' and 'set' accessor must have the same type.
+objectLiteralErrors.ts(44,29): error TS2011: Cannot convert 'number' to 'string'.
+objectLiteralErrors.ts(45,12): error TS2096: 'get' and 'set' accessor must have the same type.
+objectLiteralErrors.ts(45,51): error TS2096: 'get' and 'set' accessor must have the same type.

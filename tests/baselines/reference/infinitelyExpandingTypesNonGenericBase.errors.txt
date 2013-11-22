@@ -1,4 +1,4 @@
-infinitelyExpandingTypesNonGenericBase.ts line 24 col 1: error TS2082: Supplied parameters do not match any signature of call target:
+infinitelyExpandingTypesNonGenericBase.ts(24,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Construct signatures of types 'typeof A' and 'new() => Base' are incompatible:
 		Types 'A<{}>' and 'Base' originating in inifinitely expanding type reference do not refer to same named type.
-infinitelyExpandingTypesNonGenericBase.ts line 24 col 1: error TS2087: Could not select overload for 'call' expression.
+infinitelyExpandingTypesNonGenericBase.ts(24,1): error TS2087: Could not select overload for 'call' expression.

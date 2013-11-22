@@ -1,12 +1,12 @@
-typeParameterAssignmentCompat1.ts line 8 col 5: error TS2012: Cannot convert 'Foo<U>' to 'Foo<T>':
+typeParameterAssignmentCompat1.ts(8,5): error TS2012: Cannot convert 'Foo<U>' to 'Foo<T>':
 	Types of property 'frobble' of types 'Foo<U>' and 'Foo<T>' are incompatible:
 		Call signatures of types '(value: U) => U' and '(value: T) => T' are incompatible.
-typeParameterAssignmentCompat1.ts line 9 col 12: error TS2012: Cannot convert 'Foo<T>' to 'Foo<U>':
+typeParameterAssignmentCompat1.ts(9,12): error TS2012: Cannot convert 'Foo<T>' to 'Foo<U>':
 	Types of property 'frobble' of types 'Foo<T>' and 'Foo<U>' are incompatible:
 		Call signatures of types '(value: T) => T' and '(value: U) => U' are incompatible.
-typeParameterAssignmentCompat1.ts line 16 col 9: error TS2012: Cannot convert 'Foo<U>' to 'Foo<T>':
+typeParameterAssignmentCompat1.ts(16,9): error TS2012: Cannot convert 'Foo<U>' to 'Foo<T>':
 	Types of property 'frobble' of types 'Foo<U>' and 'Foo<T>' are incompatible:
 		Call signatures of types '(value: U) => U' and '(value: T) => T' are incompatible.
-typeParameterAssignmentCompat1.ts line 17 col 16: error TS2012: Cannot convert 'Foo<T>' to 'Foo<U>':
+typeParameterAssignmentCompat1.ts(17,16): error TS2012: Cannot convert 'Foo<T>' to 'Foo<U>':
 	Types of property 'frobble' of types 'Foo<T>' and 'Foo<U>' are incompatible:
 		Call signatures of types '(value: T) => T' and '(value: U) => U' are incompatible.

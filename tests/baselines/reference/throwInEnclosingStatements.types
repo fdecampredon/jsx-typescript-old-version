@@ -1,0 +1,45 @@
+=== tests/cases/compiler/throwInEnclosingStatements.ts ===
+Line 0 col 9 IdentifierName "fn" = typeof fn
+Line 0 col 12 IdentifierName "x" = any
+Line 1 col 10 IdentifierName "x" = any
+Line 3 col 0 ParenthesizedArrowFunctionExpression "<T>(x: T) => { throw x; }" = <T>(x: T) => void
+Line 4 col 1 IdentifierName "T" = T
+Line 4 col 4 IdentifierName "x" = T
+Line 4 col 7 IdentifierName "T" = T
+Line 4 col 21 IdentifierName "x" = T
+Line 6 col 4 IdentifierName "y" = string
+Line 7 col 8 IdentifierName "y" = string
+Line 9 col 14 IdentifierName "y" = string
+Line 11 col 14 IdentifierName "y" = string
+Line 14 col 4 IdentifierName "z" = number
+Line 15 col 7 LessThanExpression "z < 10" = boolean
+Line 15 col 7 IdentifierName "z" = number
+Line 16 col 10 IdentifierName "z" = number
+Line 19 col 9 IdentifierName "i" = number
+Line 19 col 27 IdentifierName "i" = number
+Line 21 col 9 IdentifierName "idx" = any
+Line 21 col 16 ObjectLiteralExpression "{}" = {}
+Line 21 col 28 IdentifierName "idx" = any
+Line 25 col 4 IdentifierName "j" = number
+Line 26 col 7 LessThanExpression "j < 0" = boolean
+Line 26 col 7 IdentifierName "j" = number
+Line 26 col 22 IdentifierName "j" = number
+Line 28 col 6 IdentifierName "C" = C<T>
+Line 28 col 8 IdentifierName "T" = T
+Line 29 col 12 IdentifierName "value" = T
+Line 29 col 19 IdentifierName "T" = T
+Line 30 col 0 IdentifierName "biz" = () => void
+Line 31 col 14 MemberAccessExpression "this.value" = T
+Line 31 col 14 ThisKeyword "this" = C<T>
+Line 31 col 19 IdentifierName "value" = T
+Line 35 col 14 ThisKeyword "this" = C<T>
+Line 39 col 4 IdentifierName "aa" = { id: number; biz(): void; }
+Line 39 col 9 ObjectLiteralExpression "{
+    id:12,
+    biz() {
+        throw this;
+    }
+}" = { id: number; biz(): void; }
+Line 40 col 0 IdentifierName "id" = number
+Line 41 col 0 IdentifierName "biz" = () => void
+Line 42 col 14 ThisKeyword "this" = any

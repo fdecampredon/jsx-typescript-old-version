@@ -1,12 +1,12 @@
-interfaceAssignmentCompat.ts line 32 col 13: error TS2082: Supplied parameters do not match any signature of call target:
+interfaceAssignmentCompat.ts(32,13): error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types 'typeof CompareYeux' and '(a: IEye, b: IEye) => number' are incompatible:
 		Type 'IFrenchEye' is missing property 'color' from type 'IEye'.
 		Type 'IEye' is missing property 'coleur' from type 'IFrenchEye'.
-interfaceAssignmentCompat.ts line 32 col 13: error TS2087: Could not select overload for 'call' expression.
-interfaceAssignmentCompat.ts line 37 col 29: error TS2094: The property '_map' does not exist on value of type 'typeof Color'.
-interfaceAssignmentCompat.ts line 42 col 13: error TS2012: Cannot convert 'IEye' to 'IFrenchEye':
+interfaceAssignmentCompat.ts(32,13): error TS2087: Could not select overload for 'call' expression.
+interfaceAssignmentCompat.ts(37,29): error TS2094: The property '_map' does not exist on value of type 'typeof Color'.
+interfaceAssignmentCompat.ts(42,13): error TS2012: Cannot convert 'IEye' to 'IFrenchEye':
 	Type 'IEye' is missing property 'coleur' from type 'IFrenchEye'.
-interfaceAssignmentCompat.ts line 44 col 9: error TS2012: Cannot convert 'IEye[]' to 'IFrenchEye[]':
+interfaceAssignmentCompat.ts(44,9): error TS2012: Cannot convert 'IEye[]' to 'IFrenchEye[]':
 	Type 'IEye' is missing property 'coleur' from type 'IFrenchEye'.
 	Types of property 'concat' of types 'IEye[]' and 'IFrenchEye[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): IEye[]; (...items: IEye[]): IEye[]; }' and '{ <U extends T[]>(...items: U[]): IFrenchEye[]; (...items: IFrenchEye[]): IFrenchEye[]; }' are incompatible:

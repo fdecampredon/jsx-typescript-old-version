@@ -119,7 +119,6 @@ module TypeScript {
     function preCollectEnumDecls(enumDecl: EnumDeclarationSyntax, context: DeclCollectionContext): void {
         var declFlags = PullElementFlags.None;
         var enumName = enumDecl.identifier.valueText();
-        var kind: PullElementKind = PullElementKind.Container;
 
         if ((hasModifier(enumDecl.modifiers, PullElementFlags.Exported) || isParsingAmbientModule(enumDecl, context)) && !containingModuleHasExportAssignment(enumDecl)) {
             declFlags |= PullElementFlags.Exported;
@@ -131,7 +130,7 @@ module TypeScript {
 
         // Consider an enum 'always initialized'.
         declFlags |= PullElementFlags.Enum;
-        kind = PullElementKind.Enum;
+        var kind = PullElementKind.Enum;
 
         var span = TextSpan.fromBounds(enumDecl.start(), enumDecl.end());
 
@@ -886,6 +885,10 @@ module TypeScript {
     }
 
     function preCollectCatchDecls(ast: CatchClauseSyntax, context: DeclCollectionContext): void {
+        if (ast.identifier.fullWidth() === 0) {
+            return;
+        }
+
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.CatchBlock;
 

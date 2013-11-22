@@ -1,0 +1,8 @@
+invalidReturnStatements.ts(2,17): error TS2125: Function 'fn1' declared a non-void return type, but has no return expression.
+invalidReturnStatements.ts(3,17): error TS2125: Function 'fn2' declared a non-void return type, but has no return expression.
+invalidReturnStatements.ts(4,17): error TS2125: Function 'fn3' declared a non-void return type, but has no return expression.
+invalidReturnStatements.ts(5,17): error TS2125: Function 'fn4' declared a non-void return type, but has no return expression.
+invalidReturnStatements.ts(16,29): error TS2012: Cannot convert '{ id: number; }' to 'D':
+	Type '{ id: number; }' is missing property 'name' from type 'D'.
+invalidReturnStatements.ts(18,29): error TS2012: Cannot convert 'C' to 'D':
+	Type 'C' is missing property 'name' from type 'D'.

@@ -1,6 +1,6 @@
-typeParameterAsTypeParameterConstraint2.ts line 6 col 1: error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends T'.
-typeParameterAsTypeParameterConstraint2.ts line 7 col 1: error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
-typeParameterAsTypeParameterConstraint2.ts line 14 col 10: error TS2086: Type 'NumberVariant' does not satisfy the constraint 'number' for type parameter 'U extends T'.
-typeParameterAsTypeParameterConstraint2.ts line 17 col 1: error TS2086: Type '{ length: string; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
-typeParameterAsTypeParameterConstraint2.ts line 18 col 1: error TS2086: Type '{ length: {}; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
-typeParameterAsTypeParameterConstraint2.ts line 19 col 1: error TS2086: Type 'string[]' does not satisfy the constraint '{ length: any[]; }' for type parameter 'U extends { length: T; }'.
+typeParameterAsTypeParameterConstraint2.ts(6,1): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeParameterAsTypeParameterConstraint2.ts(7,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeParameterAsTypeParameterConstraint2.ts(14,10): error TS2086: Type 'NumberVariant' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeParameterAsTypeParameterConstraint2.ts(17,1): error TS2086: Type '{ length: string; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
+typeParameterAsTypeParameterConstraint2.ts(18,1): error TS2086: Type '{ length: {}; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
+typeParameterAsTypeParameterConstraint2.ts(19,1): error TS2086: Type 'string[]' does not satisfy the constraint '{ length: any[]; }' for type parameter 'U extends { length: T; }'.

@@ -1,16 +1,16 @@
-genericAssignmentCompatWithInterfaces1.ts line 12 col 5: error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
+genericAssignmentCompatWithInterfaces1.ts(12,5): error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
 	Types of property 'x' of types '{ x: A<number>; }' and 'I<string>' are incompatible:
 		Types of property 'compareTo' of types 'A<number>' and 'Comparable<string>' are incompatible:
 			Call signatures of types '(other: number) => number' and '(other: string) => number' are incompatible.
-genericAssignmentCompatWithInterfaces1.ts line 13 col 5: error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
+genericAssignmentCompatWithInterfaces1.ts(13,5): error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
 	Types of property 'x' of types '{ x: A<number>; }' and 'I<string>' are incompatible:
 		Types of property 'compareTo' of types 'A<number>' and 'Comparable<string>' are incompatible:
 			Call signatures of types '(other: number) => number' and '(other: string) => number' are incompatible.
-genericAssignmentCompatWithInterfaces1.ts line 16 col 5: error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
+genericAssignmentCompatWithInterfaces1.ts(16,5): error TS2012: Cannot convert '{ x: A<number>; }' to 'I<string>':
 	Types of property 'x' of types '{ x: A<number>; }' and 'I<string>' are incompatible:
 		Types of property 'compareTo' of types 'A<number>' and 'Comparable<string>' are incompatible:
 			Call signatures of types '(other: number) => number' and '(other: string) => number' are incompatible.
-genericAssignmentCompatWithInterfaces1.ts line 17 col 5: error TS2012: Cannot convert 'K<number>' to 'I<string>':
+genericAssignmentCompatWithInterfaces1.ts(17,5): error TS2012: Cannot convert 'K<number>' to 'I<string>':
 	Types of property 'x' of types 'K<number>' and 'I<string>' are incompatible:
 		Types of property 'compareTo' of types 'A<number>' and 'Comparable<string>' are incompatible:
 			Call signatures of types '(other: number) => number' and '(other: string) => number' are incompatible.

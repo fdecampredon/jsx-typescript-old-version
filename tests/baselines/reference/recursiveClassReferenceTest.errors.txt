@@ -1,6 +1,6 @@
-recursiveClassReferenceTest.ts line 16 col 19: error TS2095: Could not find symbol 'Element'.
-recursiveClassReferenceTest.ts line 56 col 11: error TS2095: Could not find symbol 'domNode'.
-recursiveClassReferenceTest.ts line 88 col 36: error TS2095: Could not find symbol 'mode'.
-recursiveClassReferenceTest.ts line 95 col 15: error TS2082: Supplied parameters do not match any signature of call target:
+recursiveClassReferenceTest.ts(16,19): error TS2095: Could not find symbol 'Element'.
+recursiveClassReferenceTest.ts(56,11): error TS2095: Could not find symbol 'domNode'.
+recursiveClassReferenceTest.ts(88,36): error TS2095: Could not find symbol 'mode'.
+recursiveClassReferenceTest.ts(95,15): error TS2082: Supplied parameters do not match any signature of call target:
 	Type 'Window' is missing property 'getInitialState' from type 'IMode'.
-recursiveClassReferenceTest.ts line 95 col 15: error TS2085: Could not select overload for 'new' expression.
+recursiveClassReferenceTest.ts(95,15): error TS2085: Could not select overload for 'new' expression.

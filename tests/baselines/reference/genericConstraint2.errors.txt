@@ -1,3 +1,3 @@
-genericConstraint2.ts line 11 col 7: error TS2137: Class ComparableString declares interface Comparable<string> but does not implement it:
+genericConstraint2.ts(11,7): error TS2137: Class ComparableString declares interface Comparable<string> but does not implement it:
 	Type 'ComparableString' is missing property 'comparer' from type 'Comparable<string>'.
-genericConstraint2.ts line 21 col 9: error TS2086: Type 'ComparableString' does not satisfy the constraint 'Comparable<ComparableString>' for type parameter 'T extends Comparable<T>'.
+genericConstraint2.ts(21,9): error TS2086: Type 'ComparableString' does not satisfy the constraint 'Comparable<ComparableString>' for type parameter 'T extends Comparable<T>'.

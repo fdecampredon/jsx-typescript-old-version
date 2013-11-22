@@ -645,12 +645,25 @@ module TypeScript {
             return this._topLevelDecls;
         }
 
-        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[]= null): void {
-            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, arguments));
+        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[] = null, additionalLocations: Location[] = null): void {
+            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, arguments, additionalLocations));
         }
 
-        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[]= null): Diagnostic {
-            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, arguments);
+        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
+            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, arguments, additionalLocations);
+        }
+
+        public locationFromAST(ast: ISyntaxElement): Location {
+            return new Location(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width());
+        }
+
+        public duplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): Diagnostic {
+            return this.diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_0, [identifier],
+                additionalLocationAST ? [this.locationFromAST(additionalLocationAST)] : null);
+        }
+
+        public addDuplicateIdentifierDiagnosticFromAST(ast: ISyntaxElement, identifier: string, additionalLocationAST: ISyntaxElement): void {
+            this.addDiagnostic(this.duplicateIdentifierDiagnosticFromAST(ast, identifier, additionalLocationAST));
         }
     }
 }

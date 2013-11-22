@@ -1,4 +1,5 @@
-parameterPropertyInConstructor2.ts line 3 col 17: error TS1083: Parameter property declarations cannot be used in a constructor overload.
-parameterPropertyInConstructor2.ts line 3 col 5: error TS2149: Overload signature is not compatible with function definition:
+parameterPropertyInConstructor2.ts(3,17): error TS1083: Parameter property declarations cannot be used in a constructor overload.
+parameterPropertyInConstructor2.ts(3,5): error TS2149: Overload signature is not compatible with function definition:
 	Call signature expects 1 or fewer parameters.
-parameterPropertyInConstructor2.ts line 4 col 17: error TS2000: Duplicate identifier 'names'.
+parameterPropertyInConstructor2.ts(4,24): error TS2000: Duplicate identifier 'names'. Additional locations:
+	parameterPropertyInConstructor2.ts(3,17)

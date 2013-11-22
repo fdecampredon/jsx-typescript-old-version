@@ -1,26 +1,26 @@
-recursiveFunctionTypes.ts line 1 col 35: error TS2012: Cannot convert 'number' to 'typeof fn':
+recursiveFunctionTypes.ts(1,35): error TS2012: Cannot convert 'number' to 'typeof fn':
 	Type 'typeof fn' requires a call signature, but type 'Number' lacks one.
-recursiveFunctionTypes.ts line 3 col 5: error TS2011: Cannot convert 'typeof fn' to 'number'.
-recursiveFunctionTypes.ts line 4 col 5: error TS2012: Cannot convert 'typeof fn' to '() => number':
+recursiveFunctionTypes.ts(3,5): error TS2011: Cannot convert 'typeof fn' to 'number'.
+recursiveFunctionTypes.ts(4,5): error TS2012: Cannot convert 'typeof fn' to '() => number':
 	Call signatures of types 'typeof fn' and '() => number' are incompatible.
-recursiveFunctionTypes.ts line 11 col 16: error TS2125: Function 'f2' declared a non-void return type, but has no return expression.
-recursiveFunctionTypes.ts line 12 col 16: error TS2125: Function 'g2' declared a non-void return type, but has no return expression.
-recursiveFunctionTypes.ts line 17 col 5: error TS2011: Cannot convert 'typeof f3' to 'number'.
-recursiveFunctionTypes.ts line 22 col 3: error TS2082: Supplied parameters do not match any signature of call target:
+recursiveFunctionTypes.ts(11,16): error TS2125: Function 'f2' declared a non-void return type, but has no return expression.
+recursiveFunctionTypes.ts(12,16): error TS2125: Function 'g2' declared a non-void return type, but has no return expression.
+recursiveFunctionTypes.ts(17,5): error TS2011: Cannot convert 'typeof f3' to 'number'.
+recursiveFunctionTypes.ts(22,3): error TS2082: Supplied parameters do not match any signature of call target:
 	Type '(t: any) => void' requires a call signature, but type 'Number' lacks one.
-recursiveFunctionTypes.ts line 22 col 3: error TS2087: Could not select overload for 'call' expression.
-recursiveFunctionTypes.ts line 25 col 1: error TS2012: Cannot convert 'number' to '() => any':
+recursiveFunctionTypes.ts(22,3): error TS2087: Could not select overload for 'call' expression.
+recursiveFunctionTypes.ts(25,1): error TS2012: Cannot convert 'number' to '() => any':
 	Type '() => any' requires a call signature, but type 'Number' lacks one.
-recursiveFunctionTypes.ts line 30 col 1: error TS2149: Overload signature is not compatible with function definition:
+recursiveFunctionTypes.ts(30,1): error TS2149: Overload signature is not compatible with function definition:
 	Call signatures of types 'typeof f6' and '() => number' are incompatible:
 		Call signature expects 0 or fewer parameters.
-recursiveFunctionTypes.ts line 33 col 1: error TS2081: Supplied parameters do not match any signature of call target.
-recursiveFunctionTypes.ts line 33 col 1: error TS2087: Could not select overload for 'call' expression.
-recursiveFunctionTypes.ts line 34 col 1: error TS2082: Supplied parameters do not match any signature of call target:
+recursiveFunctionTypes.ts(33,1): error TS2081: Supplied parameters do not match any signature of call target.
+recursiveFunctionTypes.ts(33,1): error TS2087: Could not select overload for 'call' expression.
+recursiveFunctionTypes.ts(34,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Type 'typeof f6' requires a call signature, but type 'String' lacks one.
-recursiveFunctionTypes.ts line 34 col 1: error TS2087: Could not select overload for 'call' expression.
-recursiveFunctionTypes.ts line 42 col 1: error TS2081: Supplied parameters do not match any signature of call target.
-recursiveFunctionTypes.ts line 42 col 1: error TS2087: Could not select overload for 'call' expression.
-recursiveFunctionTypes.ts line 43 col 1: error TS2082: Supplied parameters do not match any signature of call target:
+recursiveFunctionTypes.ts(34,1): error TS2087: Could not select overload for 'call' expression.
+recursiveFunctionTypes.ts(42,1): error TS2081: Supplied parameters do not match any signature of call target.
+recursiveFunctionTypes.ts(42,1): error TS2087: Could not select overload for 'call' expression.
+recursiveFunctionTypes.ts(43,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Type 'typeof f7' requires a call signature, but type 'String' lacks one.
-recursiveFunctionTypes.ts line 43 col 1: error TS2087: Could not select overload for 'call' expression.
+recursiveFunctionTypes.ts(43,1): error TS2087: Could not select overload for 'call' expression.

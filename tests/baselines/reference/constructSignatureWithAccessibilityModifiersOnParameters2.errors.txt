@@ -1,18 +1,21 @@
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 4 col 17: error TS1083: Parameter property declarations cannot be used in a constructor overload.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 9 col 17: error TS1083: Parameter property declarations cannot be used in a constructor overload.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 14 col 17: error TS1083: Parameter property declarations cannot be used in a constructor overload.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 19 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 20 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 24 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 25 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 29 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 30 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 34 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 35 col 10: error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 5 col 17: error TS2000: Duplicate identifier 'x'.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 5 col 27: error TS2000: Duplicate identifier 'y'.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 10 col 17: error TS2000: Duplicate identifier 'x'.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 20 col 5: error TS2147: Duplicate overload construct signature.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 25 col 5: error TS2147: Duplicate overload construct signature.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 30 col 5: error TS2147: Duplicate overload construct signature.
-constructSignatureWithAccessibilityModifiersOnParameters2.ts line 35 col 5: error TS2147: Duplicate overload construct signature.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(4,17): error TS1083: Parameter property declarations cannot be used in a constructor overload.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(9,17): error TS1083: Parameter property declarations cannot be used in a constructor overload.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(14,17): error TS1083: Parameter property declarations cannot be used in a constructor overload.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(19,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(20,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(24,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(25,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(29,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(30,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(34,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(35,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(5,24): error TS2000: Duplicate identifier 'x'. Additional locations:
+	constructSignatureWithAccessibilityModifiersOnParameters2.ts(4,17)
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(5,35): error TS2000: Duplicate identifier 'y'. Additional locations:
+	constructSignatureWithAccessibilityModifiersOnParameters2.ts(4,27)
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(10,24): error TS2000: Duplicate identifier 'x'. Additional locations:
+	constructSignatureWithAccessibilityModifiersOnParameters2.ts(9,17)
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(20,5): error TS2147: Duplicate overload construct signature.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(25,5): error TS2147: Duplicate overload construct signature.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(30,5): error TS2147: Duplicate overload construct signature.
+constructSignatureWithAccessibilityModifiersOnParameters2.ts(35,5): error TS2147: Duplicate overload construct signature.

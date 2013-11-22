@@ -1,4 +1,4 @@
-varArgsOnConstructorTypes.ts line 23 col 5: error TS2082: Supplied parameters do not match any signature of call target:
+varArgsOnConstructorTypes.ts(23,5): error TS2082: Supplied parameters do not match any signature of call target:
 	Construct signatures of types 'typeof B' and 'new(...params: any[]) => A' are incompatible:
 		Call signature expects 0 or fewer parameters.
-varArgsOnConstructorTypes.ts line 23 col 5: error TS2087: Could not select overload for 'call' expression.
+varArgsOnConstructorTypes.ts(23,5): error TS2087: Could not select overload for 'call' expression.

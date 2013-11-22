@@ -1,5 +1,5 @@
-contextualTypingOfObjectLiterals.ts line 4 col 1: error TS2012: Cannot convert '{ x: string; }' to '{ [x: string]: string; }':
+contextualTypingOfObjectLiterals.ts(4,1): error TS2012: Cannot convert '{ x: string; }' to '{ [x: string]: string; }':
 	Index signatures of types '{ x: string; }' and '{ [x: string]: string; }' are incompatible.
-contextualTypingOfObjectLiterals.ts line 10 col 1: error TS2082: Supplied parameters do not match any signature of call target:
+contextualTypingOfObjectLiterals.ts(10,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Index signatures of types '{ x: string; }' and '{ [s: string]: string; }' are incompatible.
-contextualTypingOfObjectLiterals.ts line 10 col 1: error TS2087: Could not select overload for 'call' expression.
+contextualTypingOfObjectLiterals.ts(10,1): error TS2087: Could not select overload for 'call' expression.

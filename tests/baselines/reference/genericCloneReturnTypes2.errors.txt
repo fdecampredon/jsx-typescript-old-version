@@ -1,4 +1,4 @@
-genericCloneReturnTypes2.ts line 15 col 5: error TS2012: Cannot convert 'MyList<string>' to 'MyList<number>':
+genericCloneReturnTypes2.ts(15,5): error TS2012: Cannot convert 'MyList<string>' to 'MyList<number>':
 	Types of property 'data' of types 'MyList<string>' and 'MyList<number>' are incompatible:
 		Types of property 'concat' of types 'string[]' and 'number[]' are incompatible:
 			Call signatures of types '{ <U extends T[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:

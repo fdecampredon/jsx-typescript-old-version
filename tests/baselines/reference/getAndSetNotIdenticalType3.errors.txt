@@ -1,4 +1,4 @@
-getAndSetNotIdenticalType3.ts line 5 col 5: error TS2096: 'get' and 'set' accessor must have the same type.
-getAndSetNotIdenticalType3.ts line 8 col 5: error TS2096: 'get' and 'set' accessor must have the same type.
-getAndSetNotIdenticalType3.ts line 9 col 9: error TS2012: Cannot convert 'A<string>' to 'A<number>':
+getAndSetNotIdenticalType3.ts(5,5): error TS2096: 'get' and 'set' accessor must have the same type.
+getAndSetNotIdenticalType3.ts(8,5): error TS2096: 'get' and 'set' accessor must have the same type.
+getAndSetNotIdenticalType3.ts(9,9): error TS2012: Cannot convert 'A<string>' to 'A<number>':
 	Types of property 'foo' of types 'A<string>' and 'A<number>' are incompatible.

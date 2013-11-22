@@ -1,8 +1,10 @@
-interfaceDeclaration1.ts line 3 col 5: error TS2000: Duplicate identifier 'item'.
-interfaceDeclaration1.ts line 8 col 5: error TS2000: Duplicate identifier 'item'.
-interfaceDeclaration1.ts line 22 col 11: error TS2101: Interface 'I5' is recursively referenced as a base type of itself.
-interfaceDeclaration1.ts line 35 col 7: error TS2137: Class C1 declares interface I3 but does not implement it:
+interfaceDeclaration1.ts(3,5): error TS2000: Duplicate identifier 'item'. Additional locations:
+	interfaceDeclaration1.ts(2,5)
+interfaceDeclaration1.ts(8,5): error TS2000: Duplicate identifier 'item'. Additional locations:
+	interfaceDeclaration1.ts(7,5)
+interfaceDeclaration1.ts(22,11): error TS2101: Interface 'I5' is recursively referenced as a base type of itself.
+interfaceDeclaration1.ts(35,7): error TS2137: Class C1 declares interface I3 but does not implement it:
 	Type 'C1' is missing property 'prototype' from type 'I3'.
-interfaceDeclaration1.ts line 41 col 11: error TS2101: Interface 'i8' is recursively referenced as a base type of itself.
-interfaceDeclaration1.ts line 52 col 11: error TS2189: Interface 'i12' cannot simultaneously extend types 'i10' and 'i11':
+interfaceDeclaration1.ts(41,11): error TS2101: Interface 'i8' is recursively referenced as a base type of itself.
+interfaceDeclaration1.ts(52,11): error TS2189: Interface 'i12' cannot simultaneously extend types 'i10' and 'i11':
 Types of property 'foo' of types 'i10' and 'i11' are not identical.

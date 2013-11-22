@@ -1,7 +1,7 @@
-enumAssignmentCompat2.ts line 25 col 5: error TS2011: Cannot convert 'typeof W' to 'number'.
-enumAssignmentCompat2.ts line 27 col 5: error TS2011: Cannot convert 'W' to 'typeof W'.
-enumAssignmentCompat2.ts line 29 col 5: error TS2012: Cannot convert 'number' to 'typeof W':
+enumAssignmentCompat2.ts(25,5): error TS2011: Cannot convert 'typeof W' to 'number'.
+enumAssignmentCompat2.ts(27,5): error TS2011: Cannot convert 'W' to 'typeof W'.
+enumAssignmentCompat2.ts(29,5): error TS2012: Cannot convert 'number' to 'typeof W':
 	Type 'Number' is missing property 'a' from type 'typeof W'.
-enumAssignmentCompat2.ts line 31 col 5: error TS2011: Cannot convert 'W' to 'WStatic'.
-enumAssignmentCompat2.ts line 32 col 5: error TS2012: Cannot convert 'number' to 'WStatic':
+enumAssignmentCompat2.ts(31,5): error TS2011: Cannot convert 'W' to 'WStatic'.
+enumAssignmentCompat2.ts(32,5): error TS2012: Cannot convert 'number' to 'WStatic':
 	Type 'Number' is missing property 'a' from type 'WStatic'.

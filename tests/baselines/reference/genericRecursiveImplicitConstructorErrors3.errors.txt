@@ -1,11 +1,11 @@
-genericRecursiveImplicitConstructorErrors3.ts line 3 col 66: error TS2125: Function 'create' declared a non-void return type, but has no return expression.
-genericRecursiveImplicitConstructorErrors3.ts line 3 col 66: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 10 col 22: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 12 col 48: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 13 col 31: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 14 col 46: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 18 col 53: error TS2173: Generic type references must include all type arguments.
-genericRecursiveImplicitConstructorErrors3.ts line 19 col 22: error TS2094: The property 'isArray' does not exist on value of type 'PullTypeSymbol<A, B, C>'.
-genericRecursiveImplicitConstructorErrors3.ts line 21 col 36: error TS2094: The property 'isArray' does not exist on value of type 'PullTypeSymbol<any, any, any>'.
-genericRecursiveImplicitConstructorErrors3.ts line 21 col 67: error TS2094: The property 'isNamedTypeSymbol' does not exist on value of type 'PullTypeSymbol<any, any, any>'.
-genericRecursiveImplicitConstructorErrors3.ts line 23 col 35: error TS2094: The property 'getMemberTypeNameEx' does not exist on value of type 'PullTypeSymbol<any, any, any>'.
+genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2125: Function 'create' declared a non-void return type, but has no return expression.
+genericRecursiveImplicitConstructorErrors3.ts(3,66): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(10,22): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(12,48): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(13,31): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(14,46): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(18,53): error TS2173: Generic type references must include all type arguments.
+genericRecursiveImplicitConstructorErrors3.ts(19,22): error TS2094: The property 'isArray' does not exist on value of type 'PullTypeSymbol<A, B, C>'.
+genericRecursiveImplicitConstructorErrors3.ts(21,36): error TS2094: The property 'isArray' does not exist on value of type 'PullTypeSymbol<any, any, any>'.
+genericRecursiveImplicitConstructorErrors3.ts(21,67): error TS2094: The property 'isNamedTypeSymbol' does not exist on value of type 'PullTypeSymbol<any, any, any>'.
+genericRecursiveImplicitConstructorErrors3.ts(23,35): error TS2094: The property 'getMemberTypeNameEx' does not exist on value of type 'PullTypeSymbol<any, any, any>'.

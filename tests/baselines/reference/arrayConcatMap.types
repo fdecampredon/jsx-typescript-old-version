@@ -6,7 +6,7 @@ Line 0 col 8 MemberAccessExpression "[].concat([{ a: 1 }], [{ a: 2 }])
           .map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
 Line 0 col 8 InvocationExpression "[].concat([{ a: 1 }], [{ a: 2 }])" = any[]
 Line 0 col 8 MemberAccessExpression "[].concat" = { <U extends T[]>(...items: U[]): any[]; (...items: any[]): any[]; }
-Line 0 col 8 ArrayLiteralExpression "[]" = undefined[]
+Line 0 col 8 ArrayLiteralExpression "[]" = any[]
 Line 0 col 11 IdentifierName "concat" = { <U extends T[]>(...items: U[]): any[]; (...items: any[]): any[]; }
 Line 0 col 18 ArrayLiteralExpression "[{ a: 1 }]" = { a: number; }[]
 Line 0 col 19 ObjectLiteralExpression "{ a: 1 }" = { a: number; }

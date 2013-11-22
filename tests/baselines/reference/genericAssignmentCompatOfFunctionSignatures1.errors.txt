@@ -1,4 +1,4 @@
-genericAssignmentCompatOfFunctionSignatures1.ts line 4 col 1: error TS2012: Cannot convert '<T, U extends { a: T; b: number; }>(x: T, z: U) => void' to '<T, U extends { a: T; b: string; }>(x: T, z: U) => void':
+genericAssignmentCompatOfFunctionSignatures1.ts(4,1): error TS2012: Cannot convert '<T, U extends { a: T; b: number; }>(x: T, z: U) => void' to '<T, U extends { a: T; b: string; }>(x: T, z: U) => void':
 	Call signatures of types '<T, U extends { a: T; b: number; }>(x: T, z: U) => void' and '<T, U extends { a: T; b: string; }>(x: T, z: U) => void' are incompatible.
-genericAssignmentCompatOfFunctionSignatures1.ts line 5 col 1: error TS2012: Cannot convert '<T, U extends { a: T; b: string; }>(x: T, z: U) => void' to '<T, U extends { a: T; b: number; }>(x: T, z: U) => void':
+genericAssignmentCompatOfFunctionSignatures1.ts(5,1): error TS2012: Cannot convert '<T, U extends { a: T; b: string; }>(x: T, z: U) => void' to '<T, U extends { a: T; b: number; }>(x: T, z: U) => void':
 	Call signatures of types '<T, U extends { a: T; b: string; }>(x: T, z: U) => void' and '<T, U extends { a: T; b: number; }>(x: T, z: U) => void' are incompatible.

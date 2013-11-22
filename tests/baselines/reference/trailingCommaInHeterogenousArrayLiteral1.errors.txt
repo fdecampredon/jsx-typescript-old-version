@@ -1,12 +1,12 @@
-trailingCommaInHeterogenousArrayLiteral1.ts line 5 col 14: error TS2082: Supplied parameters do not match any signature of call target:
+trailingCommaInHeterogenousArrayLiteral1.ts(5,14): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'concat' of types '{}[]' and 'number[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:
 			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
 				Call signatures of types '() => {}' and '() => number' are incompatible.
-trailingCommaInHeterogenousArrayLiteral1.ts line 5 col 14: error TS2087: Could not select overload for 'call' expression.
-trailingCommaInHeterogenousArrayLiteral1.ts line 6 col 14: error TS2082: Supplied parameters do not match any signature of call target:
+trailingCommaInHeterogenousArrayLiteral1.ts(5,14): error TS2087: Could not select overload for 'call' expression.
+trailingCommaInHeterogenousArrayLiteral1.ts(6,14): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'concat' of types '{}[]' and 'number[]' are incompatible:
 		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): number[]; (...items: number[]): number[]; }' are incompatible:
 			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
 				Call signatures of types '() => {}' and '() => number' are incompatible.
-trailingCommaInHeterogenousArrayLiteral1.ts line 6 col 14: error TS2087: Could not select overload for 'call' expression.
+trailingCommaInHeterogenousArrayLiteral1.ts(6,14): error TS2087: Could not select overload for 'call' expression.

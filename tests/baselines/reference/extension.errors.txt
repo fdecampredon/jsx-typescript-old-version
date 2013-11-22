@@ -1,4 +1,5 @@
-extension.ts line 16 col 5: error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
-extension.ts line 16 col 22: error TS1005: ';' expected.
-extension.ts line 16 col 12: error TS2095: Could not find symbol 'extension'.
-extension.ts line 16 col 22: error TS2000: Duplicate identifier 'C'.
+extension.ts(16,5): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+extension.ts(16,22): error TS1005: ';' expected.
+extension.ts(16,12): error TS2095: Could not find symbol 'extension'.
+extension.ts(16,28): error TS2000: Duplicate identifier 'C'. Additional locations:
+	extension.ts(10,5)

@@ -1,3 +1,6 @@
-augmentedTypesModules2.ts line 6 col 1: error TS2000: Duplicate identifier 'm2a'.
-augmentedTypesModules2.ts line 9 col 1: error TS2000: Duplicate identifier 'm2b'.
-augmentedTypesModules2.ts line 15 col 1: error TS2000: Duplicate identifier 'm2cc'.
+augmentedTypesModules2.ts(6,10): error TS2000: Duplicate identifier 'm2a'. Additional locations:
+	augmentedTypesModules2.ts(5,8)
+augmentedTypesModules2.ts(9,10): error TS2000: Duplicate identifier 'm2b'. Additional locations:
+	augmentedTypesModules2.ts(8,8)
+augmentedTypesModules2.ts(15,10): error TS2000: Duplicate identifier 'm2cc'. Additional locations:
+	augmentedTypesModules2.ts(14,8)

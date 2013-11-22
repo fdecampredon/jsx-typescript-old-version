@@ -1,9 +1,9 @@
-indexTypeCheck.ts line 32 col 11: error TS1005: ']' expected.
-indexTypeCheck.ts line 32 col 21: error TS1005: ';' expected.
-indexTypeCheck.ts line 32 col 22: error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
-indexTypeCheck.ts line 17 col 2: error TS2167: Numeric indexer type 'number' must be a subtype of string indexer type 'string'.
-indexTypeCheck.ts line 22 col 2: error TS2168: Numeric indexer type 'Orange' must be a subtype of string indexer type 'Yellow':
+indexTypeCheck.ts(32,11): error TS1005: ']' expected.
+indexTypeCheck.ts(32,21): error TS1005: ';' expected.
+indexTypeCheck.ts(32,22): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+indexTypeCheck.ts(17,2): error TS2167: Numeric indexer type 'number' must be a subtype of string indexer type 'string'.
+indexTypeCheck.ts(22,2): error TS2168: Numeric indexer type 'Orange' must be a subtype of string indexer type 'Yellow':
 	Index signatures of types 'Orange' and 'Yellow' are incompatible:
 		Index signatures of types 'String' and 'Red' are incompatible.
-indexTypeCheck.ts line 27 col 2: error TS2167: Numeric indexer type 'number' must be a subtype of string indexer type 'string'.
-indexTypeCheck.ts line 51 col 1: error TS2008: Value of type 'Yellow' is not indexable by type 'Blue'.
+indexTypeCheck.ts(27,2): error TS2167: Numeric indexer type 'number' must be a subtype of string indexer type 'string'.
+indexTypeCheck.ts(51,1): error TS2008: Value of type 'Yellow' is not indexable by type 'Blue'.

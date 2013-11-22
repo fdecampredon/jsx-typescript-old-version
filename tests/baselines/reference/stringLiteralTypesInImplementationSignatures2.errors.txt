@@ -1,14 +1,15 @@
-stringLiteralTypesInImplementationSignatures2.ts line 4 col 1: error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures2.ts line 7 col 5: error TS2148: Overload signature is not compatible with function definition.
-stringLiteralTypesInImplementationSignatures2.ts line 8 col 5: error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures2.ts line 12 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 13 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 14 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 15 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 19 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 20 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 21 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 22 col 5: error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
-stringLiteralTypesInImplementationSignatures2.ts line 26 col 5: error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures2.ts line 27 col 5: error TS2000: Duplicate identifier 'foo'.
-stringLiteralTypesInImplementationSignatures2.ts line 27 col 5: error TS2163: Overload signature implementation cannot use specialized type.
+stringLiteralTypesInImplementationSignatures2.ts(4,1): error TS2163: Overload signature implementation cannot use specialized type.
+stringLiteralTypesInImplementationSignatures2.ts(7,5): error TS2148: Overload signature is not compatible with function definition.
+stringLiteralTypesInImplementationSignatures2.ts(8,5): error TS2163: Overload signature implementation cannot use specialized type.
+stringLiteralTypesInImplementationSignatures2.ts(12,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(13,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(14,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(15,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(19,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(20,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(21,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(22,5): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypesInImplementationSignatures2.ts(26,5): error TS2163: Overload signature implementation cannot use specialized type.
+stringLiteralTypesInImplementationSignatures2.ts(27,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	stringLiteralTypesInImplementationSignatures2.ts(26,5)
+stringLiteralTypesInImplementationSignatures2.ts(27,5): error TS2163: Overload signature implementation cannot use specialized type.

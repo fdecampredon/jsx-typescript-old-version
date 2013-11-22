@@ -768,23 +768,6 @@ module Harness {
         export var libText = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "lib.d.ts", /*codepage:*/ null).contents : '';
         export var libTextMinimal = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "../../tests/minimal.lib.d.ts", /*codepage:*/ null).contents : '';
 
-        export enum ErrorType {
-            Resolution,
-            Syntactic,
-            Semantic,
-            Emit,
-            Declaration
-        }
-
-        export interface ReportedError {
-            errorType: ErrorType;
-            fileName: string;
-            line: number;
-            column: number;
-            length: number;
-            message: string;
-        }
-
         /** This is the harness's own version of the batch compiler that encapsulates state about resolution */
         export class HarnessCompiler implements TypeScript.IReferenceResolverHost {
             private inputFiles: string[] = [];
@@ -794,7 +777,7 @@ module Harness {
             public ioHost = new Harness.Compiler.EmitterIOHost();
             private sourcemapRecorder = new WriterAggregator();
 
-            private errorList: ReportedError[] = [];
+            private errorList: TypeScript.Diagnostic[] = [];
             private useMinimalDefaultLib: boolean;
 
             constructor(options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
@@ -822,7 +805,7 @@ module Harness {
                         this.compiler.compilationSettings().useCaseSensitiveFileResolution()
                     );
                     resolvedFiles = resolutionResults.resolvedFiles;
-                    resolutionResults.diagnostics.forEach(diag => this.addError(ErrorType.Resolution, diag));
+                    resolutionResults.diagnostics.forEach(diag => this.addError(diag));
                 }
                 else {
                     for (var i = 0, n = this.inputFiles.length; i < n; i++) {
@@ -1080,17 +1063,17 @@ module Harness {
                 });
 
                 units.forEach(u => {
-                    this.compiler.getSyntacticDiagnostics(u).forEach(d => this.addError(ErrorType.Syntactic, d));
-                    this.compiler.getSemanticDiagnostics(u).forEach(d => this.addError(ErrorType.Semantic, d));
+                    this.compiler.getSyntacticDiagnostics(u).forEach(d => this.addError(d));
+                    this.compiler.getSemanticDiagnostics(u).forEach(d => this.addError(d));
                 });
 
                 // Emit (note: reportDiagnostics is what causes the emit to happen)
                 var emitDiagnostics = this.emitAll(this.ioHost);
-                emitDiagnostics.forEach(d => this.addError(ErrorType.Emit, d));
+                emitDiagnostics.forEach(d => this.addError(d));
 
                 // Emit declarations
                 var emitDeclarationsDiagnostics = this.emitAllDeclarations(this.ioHost);
-                emitDeclarationsDiagnostics.forEach(d => this.addError(ErrorType.Declaration, d));
+                emitDeclarationsDiagnostics.forEach(d => this.addError(d));
 
                 return this.errorList;
             }
@@ -1169,7 +1152,7 @@ module Harness {
                 var fixedPath = this.fixFilename(filename);
                 var snapshot = this.fileNameToScriptSnapshot.lookup(fixedPath);
                 if (!snapshot) {
-                    this.addError(ErrorType.Resolution, new TypeScript.Diagnostic(null, null, 0, 0, TypeScript.DiagnosticCode.Cannot_read_file_0_1, [filename, '']));
+                    this.addError(new TypeScript.Diagnostic(null, null, 0, 0, TypeScript.DiagnosticCode.Cannot_read_file_0_1, [filename, '']));
                 }
 
                 return snapshot;
@@ -1219,23 +1202,8 @@ module Harness {
                 return TypeScript.IO.dirName(path);
             }
 
-            addError(type: ErrorType, diagnostic: TypeScript.Diagnostic) {
-                var line = -1, col = -1, length = -1;
-
-                if (diagnostic.fileName()) {
-                    line = diagnostic.line() + 1; // We use 1-based numbers in tests, but these are 0-based
-                    col = diagnostic.character() + 1; // Same as above
-                    length = diagnostic.length();
-                }
-
-                this.errorList.push({
-                    fileName: diagnostic.fileName(),
-                    errorType: type,
-                    line: line,
-                    column: col,
-                    length: length,
-                    message: diagnostic.message()
-                });
+            addError(diagnostic: TypeScript.Diagnostic) {
+                this.errorList.push(diagnostic);
             }
 
         }
@@ -1292,13 +1260,13 @@ module Harness {
         /** Contains the code and errors of a compilation and some helper methods to check its status. */
         export class CompilerResult {
             public files: GeneratedFile[] = [];
-            public errors: ReportedError[] = [];
+            public errors: TypeScript.Diagnostic[] = [];
             public declFilesCode: GeneratedFile[] = [];
             public sourceMaps: GeneratedFile[] = []; 
             public sourceMapRecord: string;
 
             /** @param fileResults an array of strings for the fileName and an ITextWriter with its code */
-            constructor(fileResults: { fileName: string; file: WriterAggregator; }[], errors: ReportedError[], sourceMapRecordLines: string[]) {
+            constructor(fileResults: { fileName: string; file: WriterAggregator; }[], errors: TypeScript.Diagnostic[], sourceMapRecordLines: string[]) {
                 var lines: string[] = [];
 
                 var endsWith = (str: string, end: string) => str.substr(str.length - end.length) === end;
@@ -1324,7 +1292,7 @@ module Harness {
 
             public isErrorAt(line: number, column: number, message: string) {
                 for (var i = 0; i < this.errors.length; i++) {
-                    if (this.errors[i].line === line && this.errors[i].column === column && this.errors[i].message === message)
+                    if ((this.errors[i].line() + 1) === line && (this.errors[i].character() + 1) === column && this.errors[i].message() === message)
                         return true;
                 }
 

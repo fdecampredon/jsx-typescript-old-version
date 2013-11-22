@@ -1,9 +1,9 @@
-privacyTypeParameterOfFunction.ts line 9 col 10: error TS2208: TypeParameter 'T extends privateClass' of constructor signature from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 9 col 37: error TS2052: Return type of constructor signature from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 12 col 6: error TS2209: TypeParameter 'T extends privateClass' of call signature from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 12 col 33: error TS2053: Return type of call signature from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 15 col 14: error TS2212: TypeParameter 'T extends privateClass' of method from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 15 col 41: error TS2057: Return type of method from exported interface has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 38 col 33: error TS2210: TypeParameter 'T extends privateClass' of public static method from exported class has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 43 col 20: error TS2211: TypeParameter 'T extends privateClass' of public method from exported class has or is using private type 'privateClass'.
-privacyTypeParameterOfFunction.ts line 83 col 57: error TS2213: TypeParameter 'T extends privateClass' of exported function has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(9,10): error TS2208: TypeParameter 'T extends privateClass' of constructor signature from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(9,37): error TS2052: Return type of constructor signature from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(12,6): error TS2209: TypeParameter 'T extends privateClass' of call signature from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(12,33): error TS2053: Return type of call signature from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(15,14): error TS2212: TypeParameter 'T extends privateClass' of method from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(15,41): error TS2057: Return type of method from exported interface has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(38,33): error TS2210: TypeParameter 'T extends privateClass' of public static method from exported class has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(43,20): error TS2211: TypeParameter 'T extends privateClass' of public method from exported class has or is using private type 'privateClass'.
+privacyTypeParameterOfFunction.ts(83,57): error TS2213: TypeParameter 'T extends privateClass' of exported function has or is using private type 'privateClass'.

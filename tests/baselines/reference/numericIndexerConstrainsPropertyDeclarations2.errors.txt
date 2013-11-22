@@ -1,15 +1,15 @@
-numericIndexerConstrainsPropertyDeclarations2.ts line 16 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(16,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 17 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(17,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 25 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(25,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 26 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(26,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 34 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(34,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 35 col 5: error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
+numericIndexerConstrainsPropertyDeclarations2.ts(35,5): error TS2170: All numerically named properties must be subtypes of numeric indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
-numericIndexerConstrainsPropertyDeclarations2.ts line 39 col 5: error TS2012: Cannot convert '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' to '{ [x: number]: A; }':
+numericIndexerConstrainsPropertyDeclarations2.ts(39,5): error TS2012: Cannot convert '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' to '{ [x: number]: A; }':
 	Index signatures of types '{ 1.0: A; 2.0: B; "2.5": B; 3.0: number; "4.0": string; [x: number]: {}; }' and '{ [x: number]: A; }' are incompatible:
 		Type '{}' is missing property 'foo' from type 'A'.

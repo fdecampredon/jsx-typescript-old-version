@@ -1,16 +1,16 @@
-qualify.ts line 21 col 13: error TS2012: Cannot convert 'number' to 'I':
+qualify.ts(21,13): error TS2012: Cannot convert 'number' to 'I':
 	Type 'Number' is missing property 'p' from type 'I'.
-qualify.ts line 30 col 13: error TS2012: Cannot convert 'number' to 'T.U.I2':
+qualify.ts(30,13): error TS2012: Cannot convert 'number' to 'T.U.I2':
 	Type 'Number' is missing property 'q' from type 'T.U.I2'.
-qualify.ts line 45 col 13: error TS2012: Cannot convert 'I4' to 'K1.I3':
+qualify.ts(45,13): error TS2012: Cannot convert 'I4' to 'K1.I3':
 	Type 'I4' is missing property 'zeep' from type 'K1.I3'.
-qualify.ts line 46 col 13: error TS2012: Cannot convert 'I4' to 'K1.I3[]':
+qualify.ts(46,13): error TS2012: Cannot convert 'I4' to 'K1.I3[]':
 	Type 'I4' is missing property 'concat' from type 'K1.I3[]'.
-qualify.ts line 47 col 13: error TS2012: Cannot convert 'I4' to '() => K1.I3':
+qualify.ts(47,13): error TS2012: Cannot convert 'I4' to '() => K1.I3':
 	Type '() => K1.I3' requires a call signature, but type 'I4' lacks one.
-qualify.ts line 48 col 13: error TS2012: Cannot convert 'I4' to '(k: K1.I3) => void':
+qualify.ts(48,13): error TS2012: Cannot convert 'I4' to '(k: K1.I3) => void':
 	Type '(k: K1.I3) => void' requires a call signature, but type 'I4' lacks one.
-qualify.ts line 49 col 13: error TS2012: Cannot convert 'I4' to '{ k: K1.I3; }':
+qualify.ts(49,13): error TS2012: Cannot convert 'I4' to '{ k: K1.I3; }':
 	Type 'I4' is missing property 'k' from type '{ k: K1.I3; }'.
-qualify.ts line 58 col 5: error TS2012: Cannot convert 'I' to 'T.I':
+qualify.ts(58,5): error TS2012: Cannot convert 'I' to 'T.I':
 	Type 'I' is missing property 'p' from type 'T.I'.

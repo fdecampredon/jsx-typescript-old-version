@@ -1,2 +1,2 @@
-constructorAsType.ts line 1 col 5: error TS2012: Cannot convert '() => { name: string; }' to 'new() => { name: string; }':
+constructorAsType.ts(1,5): error TS2012: Cannot convert '() => { name: string; }' to 'new() => { name: string; }':
 	Type 'new() => { name: string; }' requires a construct signature, but type '() => { name: string; }' lacks one.

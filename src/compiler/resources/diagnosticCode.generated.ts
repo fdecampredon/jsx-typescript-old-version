@@ -405,6 +405,7 @@ module TypeScript {
         DIRECTORY: "DIRECTORY",
         NUMBER: "NUMBER",
         Specify_the_codepage_to_use_when_opening_source_files: "Specify the codepage to use when opening source files.",
+        Additional_locations: "Additional locations:",
         This_version_of_the_Javascript_runtime_does_not_support_the_0_function: "This version of the Javascript runtime does not support the '{0}' function.",
         Unknown_rule: "Unknown rule.",
         Invalid_line_number_0: "Invalid line number ({0})",
@@ -422,5 +423,6 @@ module TypeScript {
         Array_Literal_implicitly_has_an_any_type_from_widening: "Array Literal implicitly has an 'any' type from widening.",
         _0_which_lacks_get_accessor_and_parameter_type_annotation_on_set_accessor_implicitly_has_an_any_type: "'{0}', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.",
         Index_signature_of_object_type_implicitly_has_an_any_type: "Index signature of object type implicitly has an 'any' type.",
+        Object_literal_s_property_0_implicitly_has_an_any_type_from_widening: "Object literal's property '{0}' implicitly has an 'any' type from widening.",
     };
 }

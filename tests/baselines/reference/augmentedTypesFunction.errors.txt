@@ -1,6 +1,12 @@
-augmentedTypesFunction.ts line 3 col 5: error TS2000: Duplicate identifier 'y1'.
-augmentedTypesFunction.ts line 7 col 1: error TS2000: Duplicate identifier 'y2'.
-augmentedTypesFunction.ts line 10 col 5: error TS2000: Duplicate identifier 'y2a'.
-augmentedTypesFunction.ts line 14 col 1: error TS2000: Duplicate identifier 'y3'.
-augmentedTypesFunction.ts line 17 col 1: error TS2000: Duplicate identifier 'y3a'.
-augmentedTypesFunction.ts line 21 col 1: error TS2000: Duplicate identifier 'y4'.
+augmentedTypesFunction.ts(3,5): error TS2000: Duplicate identifier 'y1'. Additional locations:
+	augmentedTypesFunction.ts(2,1)
+augmentedTypesFunction.ts(7,10): error TS2000: Duplicate identifier 'y2'. Additional locations:
+	augmentedTypesFunction.ts(6,1)
+augmentedTypesFunction.ts(10,5): error TS2000: Duplicate identifier 'y2a'. Additional locations:
+	augmentedTypesFunction.ts(9,1)
+augmentedTypesFunction.ts(14,7): error TS2000: Duplicate identifier 'y3'. Additional locations:
+	augmentedTypesFunction.ts(13,1)
+augmentedTypesFunction.ts(17,7): error TS2000: Duplicate identifier 'y3a'. Additional locations:
+	augmentedTypesFunction.ts(16,1)
+augmentedTypesFunction.ts(21,6): error TS2000: Duplicate identifier 'y4'. Additional locations:
+	augmentedTypesFunction.ts(20,1)

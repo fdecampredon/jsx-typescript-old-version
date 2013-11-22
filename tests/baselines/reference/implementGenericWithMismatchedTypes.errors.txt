@@ -1,6 +1,6 @@
-implementGenericWithMismatchedTypes.ts line 7 col 7: error TS2137: Class C<T> declares interface IFoo<T> but does not implement it:
+implementGenericWithMismatchedTypes.ts(7,7): error TS2137: Class C<T> declares interface IFoo<T> but does not implement it:
 	Types of property 'foo' of types 'C<T>' and 'IFoo<T>' are incompatible:
 		Call signatures of types '(x: string) => number' and '(x: T) => T' are incompatible.
-implementGenericWithMismatchedTypes.ts line 16 col 7: error TS2137: Class C2<T> declares interface IFoo2<T> but does not implement it:
+implementGenericWithMismatchedTypes.ts(16,7): error TS2137: Class C2<T> declares interface IFoo2<T> but does not implement it:
 	Types of property 'foo' of types 'C2<T>' and 'IFoo2<T>' are incompatible:
 		Call signatures of types '<string>(x: string) => number' and '(x: T) => T' are incompatible.

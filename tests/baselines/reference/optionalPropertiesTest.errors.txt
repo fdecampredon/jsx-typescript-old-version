@@ -1,8 +1,8 @@
-optionalPropertiesTest.ts line 14 col 1: error TS2012: Cannot convert '{ name: string; }' to 'IFoo':
+optionalPropertiesTest.ts(14,1): error TS2012: Cannot convert '{ name: string; }' to 'IFoo':
 	Type '{ name: string; }' is missing property 'id' from type 'IFoo'.
-optionalPropertiesTest.ts line 25 col 5: error TS2012: Cannot convert '{}' to 'i1':
+optionalPropertiesTest.ts(25,5): error TS2012: Cannot convert '{}' to 'i1':
 	Type '{}' is missing property 'M' from type 'i1'.
-optionalPropertiesTest.ts line 26 col 5: error TS2012: Cannot convert '{}' to 'i3':
+optionalPropertiesTest.ts(26,5): error TS2012: Cannot convert '{}' to 'i3':
 	Type '{}' is missing property 'M' from type 'i3'.
-optionalPropertiesTest.ts line 40 col 1: error TS2012: Cannot convert 'i2' to 'i1':
+optionalPropertiesTest.ts(40,1): error TS2012: Cannot convert 'i2' to 'i1':
 	Property 'M' defined as optional in type 'i2', but is required in type 'i1'.

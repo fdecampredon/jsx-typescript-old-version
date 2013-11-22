@@ -1,4 +1,4 @@
-typeofExternalModules_core.ts line 5 col 1: error TS2012: Cannot convert 'typeof exp' to 'typeof ext':
+typeofExternalModules_core.ts(5,1): error TS2012: Cannot convert 'typeof exp' to 'typeof ext':
 	Type 'typeof exp' is missing property 'C' from type 'typeof ext'.
-typeofExternalModules_core.ts line 7 col 1: error TS2012: Cannot convert 'typeof ext' to 'typeof exp':
+typeofExternalModules_core.ts(7,1): error TS2012: Cannot convert 'typeof ext' to 'typeof exp':
 	Type 'typeof ext' is missing property 'prototype' from type 'typeof exp'.

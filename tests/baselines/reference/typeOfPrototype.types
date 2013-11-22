@@ -2,10 +2,10 @@
 Line 0 col 6 IdentifierName "Foo" = Foo
 Line 1 col 0 IdentifierName "bar" = number
 Line 2 col 11 IdentifierName "bar" = string
-Line 4 col 0 AssignmentExpression "Foo.prototype.bar = undefined" = undefined
+Line 4 col 0 AssignmentExpression "Foo.prototype.bar = undefined" = any
 Line 4 col 0 MemberAccessExpression "Foo.prototype.bar" = number
 Line 4 col 0 MemberAccessExpression "Foo.prototype" = Foo
 Line 4 col 0 IdentifierName "Foo" = typeof Foo
 Line 4 col 4 IdentifierName "prototype" = Foo
 Line 4 col 14 IdentifierName "bar" = number
-Line 4 col 20 IdentifierName "undefined" = undefined
+Line 4 col 20 IdentifierName "undefined" = any

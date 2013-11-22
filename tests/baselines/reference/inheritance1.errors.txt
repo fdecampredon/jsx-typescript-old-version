@@ -1,18 +1,18 @@
-inheritance1.ts line 14 col 7: error TS2137: Class ImageBase declares interface SelectableControl but does not implement it:
+inheritance1.ts(14,7): error TS2137: Class ImageBase declares interface SelectableControl but does not implement it:
 	Type 'ImageBase' is missing property 'select' from type 'SelectableControl'.
-inheritance1.ts line 18 col 7: error TS2137: Class Locations declares interface SelectableControl but does not implement it:
+inheritance1.ts(18,7): error TS2137: Class Locations declares interface SelectableControl but does not implement it:
 	Type 'Locations' is missing property 'state' from type 'SelectableControl'.
-inheritance1.ts line 31 col 1: error TS2012: Cannot convert 'Control' to 'Button':
+inheritance1.ts(31,1): error TS2012: Cannot convert 'Control' to 'Button':
 	Type 'Control' is missing property 'select' from type 'Button'.
-inheritance1.ts line 37 col 1: error TS2012: Cannot convert 'Control' to 'TextBox':
+inheritance1.ts(37,1): error TS2012: Cannot convert 'Control' to 'TextBox':
 	Type 'Control' is missing property 'select' from type 'TextBox'.
-inheritance1.ts line 46 col 1: error TS2012: Cannot convert 'Image1' to 'SelectableControl':
+inheritance1.ts(46,1): error TS2012: Cannot convert 'Image1' to 'SelectableControl':
 	Type 'Image1' is missing property 'select' from type 'SelectableControl'.
-inheritance1.ts line 55 col 1: error TS2012: Cannot convert 'Control' to 'Locations':
+inheritance1.ts(55,1): error TS2012: Cannot convert 'Control' to 'Locations':
 	Type 'Control' is missing property 'select' from type 'Locations'.
-inheritance1.ts line 58 col 1: error TS2012: Cannot convert 'Locations1' to 'SelectableControl':
+inheritance1.ts(58,1): error TS2012: Cannot convert 'Locations1' to 'SelectableControl':
 	Type 'Locations1' is missing property 'state' from type 'SelectableControl'.
-inheritance1.ts line 59 col 1: error TS2012: Cannot convert 'Locations1' to 'Control':
+inheritance1.ts(59,1): error TS2012: Cannot convert 'Locations1' to 'Control':
 	Type 'Locations1' is missing property 'state' from type 'Control'.
-inheritance1.ts line 61 col 1: error TS2012: Cannot convert 'Control' to 'Locations1':
+inheritance1.ts(61,1): error TS2012: Cannot convert 'Control' to 'Locations1':
 	Type 'Control' is missing property 'select' from type 'Locations1'.

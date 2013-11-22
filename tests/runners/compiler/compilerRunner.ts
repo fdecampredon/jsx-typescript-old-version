@@ -33,16 +33,6 @@ class CompilerBaselineRunner extends RunnerBase {
         }
     }    
 
-    /** Replaces instances of full paths with filenames only */
-    static removeFullPaths(text: string) {
-        var fullPath = /(\w+:)?(\/|\\)([\w+\-\.]|\/)*\.ts/g;
-        var fullPathList = text.match(fullPath);
-        if (fullPathList) {
-            fullPathList.forEach((match: string) => text = text.replace(match, Harness.getFileName(match)));
-        }
-        return text;
-    }
-
     public checkTestCodeOutput(fileName: string) {
         // strips the fileName from the path.
         var justName = fileName.replace(/^.*[\\\/]/, '');
@@ -110,7 +100,7 @@ class CompilerBaselineRunner extends RunnerBase {
                     if (result.errors.length === 0) {
                         return null;
                     } else {
-                        var errorDescr = result.errors.map(err => CompilerBaselineRunner.removeFullPaths(Harness.getFileName(err.fileName) + ' line ' + err.line + ' col ' + err.column + ': ' + err.message)).join('\r\n');
+                        var errorDescr = result.errors.map(err => this._getDiagnosticText(err)).join("");
                         return errorDescr;
                     }
                 });
@@ -142,7 +132,7 @@ class CompilerBaselineRunner extends RunnerBase {
                     [declFile],
                     declOtherFiles,
                     function (result) {
-                        declErrors = result.errors.map(err => Harness.getFileName(err.fileName) + ' line ' + err.line + ' col ' + err.column + ': ' + err.message + '\r\n');
+                        declErrors = result.errors.map(err => this.getDiagnosticText(err) + "\r\n");
                     },
                     function (settings) {
                         harnessCompiler.setCompilerSettings(tcSettings);

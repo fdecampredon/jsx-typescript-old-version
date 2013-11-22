@@ -1,6 +1,6 @@
-indexerAssignability.ts line 5 col 1: error TS2012: Cannot convert '{ [n: number]: string; }' to '{ [s: string]: string; }':
+indexerAssignability.ts(5,1): error TS2012: Cannot convert '{ [n: number]: string; }' to '{ [s: string]: string; }':
 	Index signatures of types '{ [n: number]: string; }' and '{ [s: string]: string; }' are incompatible.
-indexerAssignability.ts line 6 col 1: error TS2012: Cannot convert '{}' to '{ [s: string]: string; }':
+indexerAssignability.ts(6,1): error TS2012: Cannot convert '{}' to '{ [s: string]: string; }':
 	Index signatures of types '{}' and '{ [s: string]: string; }' are incompatible.
-indexerAssignability.ts line 8 col 1: error TS2012: Cannot convert '{}' to '{ [n: number]: string; }':
+indexerAssignability.ts(8,1): error TS2012: Cannot convert '{}' to '{ [n: number]: string; }':
 	Index signatures of types '{}' and '{ [n: number]: string; }' are incompatible.

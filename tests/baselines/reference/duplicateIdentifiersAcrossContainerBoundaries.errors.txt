@@ -1,4 +1,8 @@
-duplicateIdentifiersAcrossContainerBoundaries.ts line 5 col 5: error TS2000: Duplicate identifier 'I'.
-duplicateIdentifiersAcrossContainerBoundaries.ts line 12 col 5: error TS2000: Duplicate identifier 'f'.
-duplicateIdentifiersAcrossContainerBoundaries.ts line 33 col 16: error TS2000: Duplicate identifier 'v'.
-duplicateIdentifiersAcrossContainerBoundaries.ts line 41 col 16: error TS2000: Duplicate identifier 'x'.
+duplicateIdentifiersAcrossContainerBoundaries.ts(5,18): error TS2000: Duplicate identifier 'I'. Additional locations:
+	duplicateIdentifiersAcrossContainerBoundaries.ts(2,5)
+duplicateIdentifiersAcrossContainerBoundaries.ts(12,18): error TS2000: Duplicate identifier 'f'. Additional locations:
+	duplicateIdentifiersAcrossContainerBoundaries.ts(9,5)
+duplicateIdentifiersAcrossContainerBoundaries.ts(33,16): error TS2000: Duplicate identifier 'v'. Additional locations:
+	duplicateIdentifiersAcrossContainerBoundaries.ts(30,16)
+duplicateIdentifiersAcrossContainerBoundaries.ts(41,16): error TS2000: Duplicate identifier 'x'. Additional locations:
+	duplicateIdentifiersAcrossContainerBoundaries.ts(37,5)

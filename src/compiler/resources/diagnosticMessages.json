@@ -1355,27 +1355,27 @@
         "category": "NoPrefix",
         "code": 4031
     },
-	"Types of property '{0}' of types '{1}' and '{2}' are not identical.": {
+    "Types of property '{0}' of types '{1}' and '{2}' are not identical.": {
         "category": "NoPrefix",
         "code": 4032
     },
-	"Types of string indexer of types '{0}' and '{1}' are not identical.": {
+    "Types of string indexer of types '{0}' and '{1}' are not identical.": {
         "category": "NoPrefix",
         "code": 4033
     },
-	"Types of number indexer of types '{0}' and '{1}' are not identical.": {
+    "Types of number indexer of types '{0}' and '{1}' are not identical.": {
         "category": "NoPrefix",
         "code": 4034
     },
-	"Type of number indexer in type '{0}' is not a subtype of string indexer type in type '{1}'.{NL}{2}": {
+    "Type of number indexer in type '{0}' is not a subtype of string indexer type in type '{1}'.{NL}{2}": {
         "category": "NoPrefix",
         "code": 4035
     },
-	"Type of property '{0}' in type '{1}' is not a subtype of string indexer type in type '{2}'.{NL}{3}": {
+    "Type of property '{0}' in type '{1}' is not a subtype of string indexer type in type '{2}'.{NL}{3}": {
         "category": "NoPrefix",
         "code": 4036
     },
-	"Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
+    "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
         "category": "NoPrefix",
         "code": 4037
     },
@@ -1619,6 +1619,10 @@
         "category": "Message",
         "code": 6040
     },
+    "Additional locations:": {
+        "category": "Message",
+        "code": 6041
+    },
     "This version of the Javascript runtime does not support the '{0}' function.": {
         "category": "Error",
         "code": 7000
@@ -1686,5 +1690,9 @@
     "Index signature of object type implicitly has an 'any' type.": {
         "category": "Error",
         "code": 7017
+    },
+    "Object literal's property '{0}' implicitly has an 'any' type from widening.":{
+        "category": "Error",
+        "code": 7018
     },
 }

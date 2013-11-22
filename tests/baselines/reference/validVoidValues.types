@@ -1,7 +1,7 @@
 === tests/cases/compiler/validVoidValues.ts ===
 Line 0 col 4 IdentifierName "x" = void
-Line 1 col 0 AssignmentExpression "x = undefined" = undefined
+Line 1 col 0 AssignmentExpression "x = undefined" = any
 Line 1 col 0 IdentifierName "x" = void
-Line 1 col 4 IdentifierName "undefined" = undefined
-Line 2 col 0 AssignmentExpression "x = null" = null
+Line 1 col 4 IdentifierName "undefined" = any
+Line 2 col 0 AssignmentExpression "x = null" = any
 Line 2 col 0 IdentifierName "x" = void

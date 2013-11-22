@@ -1,0 +1,50 @@
+=== tests/cases/compiler/recursiveInitializer.ts ===
+Line 1 col 4 IdentifierName "n1" = number
+Line 1 col 9 PostIncrementExpression "n1++" = number
+Line 1 col 9 IdentifierName "n1" = number
+Line 2 col 4 IdentifierName "n2" = number
+Line 2 col 17 AddExpression "n2 + n2" = number
+Line 2 col 17 IdentifierName "n2" = number
+Line 2 col 22 IdentifierName "n2" = number
+Line 3 col 4 IdentifierName "n3 /* any */" = any
+Line 3 col 19 AddExpression "n3 + n3" = any
+Line 3 col 19 IdentifierName "n3" = any
+Line 3 col 24 IdentifierName "n3" = any
+Line 6 col 4 IdentifierName "s1" = string
+Line 6 col 9 AddExpression "s1 + ''" = string
+Line 6 col 9 IdentifierName "s1" = string
+Line 7 col 4 IdentifierName "s2 /* any */" = any
+Line 7 col 19 AddExpression "s2 + s2" = any
+Line 7 col 19 IdentifierName "s2" = any
+Line 7 col 24 IdentifierName "s2" = any
+Line 8 col 4 IdentifierName "s3" = string
+Line 8 col 18 AddExpression "s3 + s3" = string
+Line 8 col 18 IdentifierName "s3" = string
+Line 8 col 23 IdentifierName "s3" = string
+Line 9 col 4 IdentifierName "s4" = string
+Line 9 col 9 AddExpression "'' + s4" = string
+Line 9 col 14 IdentifierName "s4" = string
+Line 12 col 4 IdentifierName "b1" = boolean
+Line 12 col 9 LogicalNotExpression "!b1" = boolean
+Line 12 col 10 IdentifierName "b1" = boolean
+Line 13 col 4 IdentifierName "b2" = boolean
+Line 13 col 9 LogicalNotExpression "!!b2" = boolean
+Line 13 col 10 LogicalNotExpression "!b2" = boolean
+Line 13 col 11 IdentifierName "b2" = boolean
+Line 14 col 4 IdentifierName "b3" = any
+Line 14 col 9 LogicalOrExpression "!b3 || b3" = any
+Line 14 col 9 LogicalNotExpression "!b3" = boolean
+Line 14 col 10 IdentifierName "b3" = any
+Line 14 col 16 IdentifierName "b3" = any
+Line 15 col 4 IdentifierName "b4" = any
+Line 15 col 9 LogicalAndExpression "(!b4) && b4" = any
+Line 15 col 9 ParenthesizedExpression "(!b4)" = boolean
+Line 15 col 10 LogicalNotExpression "!b4" = boolean
+Line 15 col 11 IdentifierName "b4" = any
+Line 15 col 18 IdentifierName "b4" = any
+Line 18 col 4 IdentifierName "f" = (x: string) => any
+Line 18 col 8 ParenthesizedArrowFunctionExpression "(x: string) => f(x)" = (x: string) => any
+Line 18 col 9 IdentifierName "x" = string
+Line 18 col 23 InvocationExpression "f(x)" = any
+Line 18 col 23 IdentifierName "f" = (x: string) => any
+Line 18 col 25 IdentifierName "x" = string

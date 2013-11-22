@@ -1,0 +1,12 @@
+invalidMultipleVariableDeclarations.ts(32,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'a' must be of type 'any', but here has type 'number'.
+invalidMultipleVariableDeclarations.ts(33,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'a' must be of type 'any', but here has type 'string'.
+invalidMultipleVariableDeclarations.ts(34,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'a' must be of type 'any', but here has type 'C'.
+invalidMultipleVariableDeclarations.ts(35,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'a' must be of type 'any', but here has type 'D<string>'.
+invalidMultipleVariableDeclarations.ts(36,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'a' must be of type 'any', but here has type 'typeof M'.
+invalidMultipleVariableDeclarations.ts(39,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'b' must be of type 'I', but here has type 'C'.
+invalidMultipleVariableDeclarations.ts(40,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'b' must be of type 'I', but here has type 'C2'.
+invalidMultipleVariableDeclarations.ts(43,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'f' must be of type 'typeof F', but here has type '(x: number) => string'.
+invalidMultipleVariableDeclarations.ts(46,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'arr' must be of type 'string[]', but here has type 'number[]'.
+invalidMultipleVariableDeclarations.ts(47,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'arr' must be of type 'string[]', but here has type '{}[]'.
+invalidMultipleVariableDeclarations.ts(50,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'arr2' must be of type 'D<string>[]', but here has type 'D<number>[]'.
+invalidMultipleVariableDeclarations.ts(53,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'm' must be of type 'typeof M', but here has type 'typeof M.A'.

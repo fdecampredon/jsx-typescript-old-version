@@ -1,6 +1,6 @@
 === tests/cases/compiler/arrayLiteral.ts ===
 Line 2 col 4 IdentifierName "x" = any[]
-Line 2 col 8 ArrayLiteralExpression "[]" = undefined[]
+Line 2 col 8 ArrayLiteralExpression "[]" = any[]
 Line 3 col 4 IdentifierName "x" = any[]
 Line 3 col 8 ObjectCreationExpression "new Array(1)" = any[]
 Line 3 col 12 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }

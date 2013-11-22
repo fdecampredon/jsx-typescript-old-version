@@ -1,11 +1,21 @@
-duplicatePropertyNames.ts line 5 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 10 col 5: error TS2144: Duplicate overload signature for 'foo'.
-duplicatePropertyNames.ts line 15 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 20 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 23 col 5: error TS2000: Duplicate identifier 'bar'.
-duplicatePropertyNames.ts line 26 col 5: error TS2000: Duplicate identifier 'baz'.
-duplicatePropertyNames.ts line 31 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 36 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 39 col 5: error TS2000: Duplicate identifier 'bar'.
-duplicatePropertyNames.ts line 44 col 5: error TS2000: Duplicate identifier 'foo'.
-duplicatePropertyNames.ts line 46 col 5: error TS2000: Duplicate identifier 'bar'.
+duplicatePropertyNames.ts(5,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(4,5)
+duplicatePropertyNames.ts(10,5): error TS2144: Duplicate overload signature for 'foo'.
+duplicatePropertyNames.ts(15,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(14,5)
+duplicatePropertyNames.ts(20,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(19,5)
+duplicatePropertyNames.ts(23,5): error TS2000: Duplicate identifier 'bar'. Additional locations:
+	duplicatePropertyNames.ts(22,5)
+duplicatePropertyNames.ts(26,5): error TS2000: Duplicate identifier 'baz'. Additional locations:
+	duplicatePropertyNames.ts(25,5)
+duplicatePropertyNames.ts(31,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(30,5)
+duplicatePropertyNames.ts(36,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(35,5)
+duplicatePropertyNames.ts(39,5): error TS2000: Duplicate identifier 'bar'. Additional locations:
+	duplicatePropertyNames.ts(38,5)
+duplicatePropertyNames.ts(44,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+	duplicatePropertyNames.ts(43,5)
+duplicatePropertyNames.ts(46,5): error TS2000: Duplicate identifier 'bar'. Additional locations:
+	duplicatePropertyNames.ts(45,5)

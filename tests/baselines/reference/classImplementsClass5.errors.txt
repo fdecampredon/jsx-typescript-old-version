@@ -1,6 +1,6 @@
-classImplementsClass5.ts line 5 col 7: error TS2137: Class C declares interface A but does not implement it:
+classImplementsClass5.ts(5,7): error TS2137: Class C declares interface A but does not implement it:
 	Types 'C' and 'A' define property 'x' as private.
-classImplementsClass5.ts line 16 col 1: error TS2012: Cannot convert 'C2' to 'C':
+classImplementsClass5.ts(16,1): error TS2012: Cannot convert 'C2' to 'C':
 	Types 'A' and 'C' define property 'x' as private.
-classImplementsClass5.ts line 17 col 1: error TS2012: Cannot convert 'C' to 'C2':
+classImplementsClass5.ts(17,1): error TS2012: Cannot convert 'C' to 'C2':
 	Types 'C' and 'A' define property 'x' as private.

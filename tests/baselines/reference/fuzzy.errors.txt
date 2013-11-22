@@ -1,6 +1,6 @@
-fuzzy.ts line 13 col 18: error TS2137: Class C declares interface I but does not implement it:
+fuzzy.ts(13,18): error TS2137: Class C declares interface I but does not implement it:
 	Type 'C' is missing property 'alsoWorks' from type 'I'.
-fuzzy.ts line 25 col 20: error TS2012: Cannot convert '{ oneI: C; }' to 'R':
+fuzzy.ts(25,20): error TS2012: Cannot convert '{ oneI: C; }' to 'R':
+	Type '{ oneI: C; }' is missing property 'anything' from type 'R'.
 	Types of property 'oneI' of types 'R' and '{ oneI: C; }' are incompatible:
 		Type 'I' is missing property 'x' from type 'C'.
-	Type '{ oneI: C; }' is missing property 'anything' from type 'R'.

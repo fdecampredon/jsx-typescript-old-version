@@ -1,6 +1,6 @@
-objectLiteralIndexerErrors.ts line 13 col 5: error TS2012: Cannot convert '{ x: B; 0: A; [s: string]: A; [n: number]: A; }' to '{ [s: string]: A; [n: number]: B; }':
+objectLiteralIndexerErrors.ts(13,5): error TS2012: Cannot convert '{ x: B; 0: A; [s: string]: A; [n: number]: A; }' to '{ [s: string]: A; [n: number]: B; }':
 	Index signatures of types '{ x: B; 0: A; [s: string]: A; [n: number]: A; }' and '{ [s: string]: A; [n: number]: B; }' are incompatible:
 		Type 'A' is missing property 'y' from type 'B'.
-objectLiteralIndexerErrors.ts line 14 col 1: error TS2012: Cannot convert '{ x: any; 0: A; [s: string]: any; [n: number]: A; }' to '{ [s: string]: A; [n: number]: B; }':
+objectLiteralIndexerErrors.ts(14,1): error TS2012: Cannot convert '{ x: any; 0: A; [s: string]: any; [n: number]: A; }' to '{ [s: string]: A; [n: number]: B; }':
 	Index signatures of types '{ x: any; 0: A; [s: string]: any; [n: number]: A; }' and '{ [s: string]: A; [n: number]: B; }' are incompatible:
 		Type 'A' is missing property 'y' from type 'B'.

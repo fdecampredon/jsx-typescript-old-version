@@ -1,18 +1,18 @@
-classUpdateTests.ts line 93 col 3: error TS1008: Unexpected token; 'statement' expected.
-classUpdateTests.ts line 95 col 1: error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
-classUpdateTests.ts line 99 col 3: error TS1008: Unexpected token; 'statement' expected.
-classUpdateTests.ts line 101 col 1: error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
-classUpdateTests.ts line 105 col 3: error TS1008: Unexpected token; 'statement' expected.
-classUpdateTests.ts line 111 col 3: error TS1008: Unexpected token; 'statement' expected.
-classUpdateTests.ts line 34 col 2: error TS2105: Constructors for derived classes must contain a 'super' call.
-classUpdateTests.ts line 43 col 18: error TS2103: 'super' cannot be referenced in non-derived classes.
-classUpdateTests.ts line 46 col 17: error TS2073: A class may only extend another class.
-classUpdateTests.ts line 47 col 18: error TS2103: 'super' cannot be referenced in non-derived classes.
-classUpdateTests.ts line 57 col 2: error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
-classUpdateTests.ts line 63 col 7: error TS2141: Class 'L' cannot extend class 'G':
+classUpdateTests.ts(93,3): error TS1008: Unexpected token; 'statement' expected.
+classUpdateTests.ts(95,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+classUpdateTests.ts(99,3): error TS1008: Unexpected token; 'statement' expected.
+classUpdateTests.ts(101,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+classUpdateTests.ts(105,3): error TS1008: Unexpected token; 'statement' expected.
+classUpdateTests.ts(111,3): error TS1008: Unexpected token; 'statement' expected.
+classUpdateTests.ts(34,2): error TS2105: Constructors for derived classes must contain a 'super' call.
+classUpdateTests.ts(43,18): error TS2103: 'super' cannot be referenced in non-derived classes.
+classUpdateTests.ts(46,17): error TS2073: A class may only extend another class.
+classUpdateTests.ts(47,18): error TS2103: 'super' cannot be referenced in non-derived classes.
+classUpdateTests.ts(57,2): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+classUpdateTests.ts(63,7): error TS2141: Class 'L' cannot extend class 'G':
 	Property 'p1' defined as private in type 'L' is defined as public in type 'G'.
-classUpdateTests.ts line 69 col 7: error TS2141: Class 'M' cannot extend class 'G':
+classUpdateTests.ts(69,7): error TS2141: Class 'M' cannot extend class 'G':
 	Property 'p1' defined as private in type 'M' is defined as public in type 'G'.
-classUpdateTests.ts line 70 col 2: error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
-classUpdateTests.ts line 105 col 15: error TS2094: The property 'p1' does not exist on value of type 'Q'.
-classUpdateTests.ts line 111 col 16: error TS2094: The property 'p1' does not exist on value of type 'R'.
+classUpdateTests.ts(70,2): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+classUpdateTests.ts(105,15): error TS2094: The property 'p1' does not exist on value of type 'Q'.
+classUpdateTests.ts(111,16): error TS2094: The property 'p1' does not exist on value of type 'R'.

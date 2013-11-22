@@ -22,4 +22,18 @@ class RunnerBase {
     public initializeTests(): void {
         throw new Error('run method not implemented');
     }
+
+    public _getDiagnosticText(diagnostic: TypeScript.Diagnostic): string {
+        return RunnerBase.removeFullPaths(TypeScript.TypeScriptCompiler.getFullDiagnosticText(diagnostic));
+    }
+
+    /** Replaces instances of full paths with filenames only */
+    static removeFullPaths(text: string) {
+        var fullPath = /(\w+:)?(\/|\\)([\w+\-\.]|\/)*\.ts/g;
+        var fullPathList = text.match(fullPath);
+        if (fullPathList) {
+            fullPathList.forEach((match: string) => text = text.replace(match, Harness.getFileName(match)));
+        }
+        return text;
+    }
 }

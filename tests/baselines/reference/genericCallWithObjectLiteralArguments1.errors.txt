@@ -1,12 +1,12 @@
-genericCallWithObjectLiteralArguments1.ts line 4 col 10: error TS2082: Supplied parameters do not match any signature of call target:
+genericCallWithObjectLiteralArguments1.ts(4,10): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'y' of types '{ x: number; y: string; }' and '{ x: number; y: number; }' are incompatible.
-genericCallWithObjectLiteralArguments1.ts line 4 col 10: error TS2087: Could not select overload for 'call' expression.
-genericCallWithObjectLiteralArguments1.ts line 5 col 10: error TS2082: Supplied parameters do not match any signature of call target:
+genericCallWithObjectLiteralArguments1.ts(4,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithObjectLiteralArguments1.ts(5,10): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'x' of types '{ x: number; y: string; }' and '{ x: string; y: string; }' are incompatible.
-genericCallWithObjectLiteralArguments1.ts line 5 col 10: error TS2087: Could not select overload for 'call' expression.
-genericCallWithObjectLiteralArguments1.ts line 6 col 10: error TS2082: Supplied parameters do not match any signature of call target:
+genericCallWithObjectLiteralArguments1.ts(5,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithObjectLiteralArguments1.ts(6,10): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'x' of types '{ x: string; y: number; }' and '{ x: number; y: number; }' are incompatible.
-genericCallWithObjectLiteralArguments1.ts line 6 col 10: error TS2087: Could not select overload for 'call' expression.
-genericCallWithObjectLiteralArguments1.ts line 7 col 10: error TS2082: Supplied parameters do not match any signature of call target:
+genericCallWithObjectLiteralArguments1.ts(6,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithObjectLiteralArguments1.ts(7,10): error TS2082: Supplied parameters do not match any signature of call target:
 	Types of property 'y' of types '{ x: string; y: number; }' and '{ x: string; y: string; }' are incompatible.
-genericCallWithObjectLiteralArguments1.ts line 7 col 10: error TS2087: Could not select overload for 'call' expression.
+genericCallWithObjectLiteralArguments1.ts(7,10): error TS2087: Could not select overload for 'call' expression.

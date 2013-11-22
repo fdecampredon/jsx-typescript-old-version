@@ -1,2 +1,4 @@
-augmentedTypesClass.ts line 3 col 5: error TS2000: Duplicate identifier 'c1'.
-augmentedTypesClass.ts line 7 col 1: error TS2000: Duplicate identifier 'c4'.
+augmentedTypesClass.ts(3,5): error TS2000: Duplicate identifier 'c1'. Additional locations:
+	augmentedTypesClass.ts(2,1)
+augmentedTypesClass.ts(7,6): error TS2000: Duplicate identifier 'c4'. Additional locations:
+	augmentedTypesClass.ts(6,1)

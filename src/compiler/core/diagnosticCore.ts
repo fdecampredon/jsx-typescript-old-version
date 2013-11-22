@@ -3,37 +3,17 @@
 module TypeScript {
     export var LocalizedDiagnosticMessages: IIndexable<any> = null;
 
-    export class Diagnostic {
+    export class Location {
         private _fileName: string;
         private _lineMap: LineMap;
         private _start: number;
         private _length: number;
-        private _diagnosticKey: string;
-        private _arguments: any[];
 
-        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, arguments: any[] = null) {
-            Debug.assert(start >= 0);
-            this._diagnosticKey = diagnosticKey;
-            this._arguments = (arguments && arguments.length > 0) ? arguments : null;
+        constructor(fileName: string, lineMap: LineMap, start: number, length: number) {
             this._fileName = fileName;
             this._lineMap = lineMap;
             this._start = start;
             this._length = length;
-        }
-
-        public toJSON(key: any): any {
-            var result: any = {};
-            result.start = this.start();
-            result.length = this.length();
-
-            result.diagnosticCode = this._diagnosticKey;
-
-            var arguments: any[] = (<any>this).arguments();
-            if (arguments && arguments.length > 0) {
-                result.arguments = arguments;
-            }
-
-            return result;
         }
 
         public fileName(): string {
@@ -54,6 +34,40 @@ module TypeScript {
 
         public length(): number {
             return this._length;
+        }
+
+        public static equals(location1: Location, location2: Location): boolean {
+            return location1._fileName === location2._fileName &&
+                location1._start === location2._start &&
+                location1._length === location2._length;
+        }
+    }
+
+    export class Diagnostic extends Location {
+        private _diagnosticKey: string;
+        private _arguments: any[];
+        private _additionalLocations: Location[];
+
+        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, arguments: any[]= null, additionalLocations: Location[] = null) {
+            super(fileName, lineMap, start, length);
+            this._diagnosticKey = diagnosticKey;
+            this._arguments = (arguments && arguments.length > 0) ? arguments : null;
+            this._additionalLocations = (additionalLocations && additionalLocations.length > 0) ? additionalLocations : null;
+        }
+
+        public toJSON(key: any): any {
+            var result: any = {};
+            result.start = this.start();
+            result.length = this.length();
+
+            result.diagnosticCode = this._diagnosticKey;
+
+            var arguments: any[] = (<any>this).arguments();
+            if (arguments && arguments.length > 0) {
+                result.arguments = arguments;
+            }
+
+            return result;
         }
 
         public diagnosticKey(): string {
@@ -84,13 +98,11 @@ module TypeScript {
          * with the error.
          */
         public additionalLocations(): Location[] {
-            return [];
+            return this._additionalLocations || [];
         }
 
         public static equals(diagnostic1: Diagnostic, diagnostic2: Diagnostic): boolean {
-            return diagnostic1._fileName === diagnostic2._fileName &&
-                diagnostic1._start === diagnostic2._start &&
-                diagnostic1._length === diagnostic2._length &&
+            return Location.equals(diagnostic1, diagnostic2) &&
                 diagnostic1._diagnosticKey === diagnostic2._diagnosticKey &&
                 ArrayUtilities.sequenceEquals(diagnostic1._arguments, diagnostic2._arguments, (v1, v2) => v1 === v2);
         }

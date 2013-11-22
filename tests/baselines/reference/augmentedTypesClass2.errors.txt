@@ -1,2 +1,4 @@
-augmentedTypesClass2.ts line 10 col 1: error TS2000: Duplicate identifier 'c11'.
-augmentedTypesClass2.ts line 21 col 1: error TS2000: Duplicate identifier 'c33'.
+augmentedTypesClass2.ts(10,11): error TS2000: Duplicate identifier 'c11'. Additional locations:
+	augmentedTypesClass2.ts(4,1)
+augmentedTypesClass2.ts(21,6): error TS2000: Duplicate identifier 'c33'. Additional locations:
+	augmentedTypesClass2.ts(16,1)

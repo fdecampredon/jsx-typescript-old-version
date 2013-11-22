@@ -1,8 +1,8 @@
-genericTypeAssertions2.ts line 10 col 5: error TS2012: Cannot convert 'B<string>' to 'A<number>':
+genericTypeAssertions2.ts(10,5): error TS2012: Cannot convert 'B<string>' to 'A<number>':
 	Types of property 'foo' of types 'B<string>' and 'A<number>' are incompatible:
 		Call signatures of types '(x: string) => void' and '(x: number) => void' are incompatible.
-genericTypeAssertions2.ts line 11 col 5: error TS2012: Cannot convert 'A<number>' to 'B<number>':
+genericTypeAssertions2.ts(11,5): error TS2012: Cannot convert 'A<number>' to 'B<number>':
 	Type 'A<number>' is missing property 'bar' from type 'B<number>'.
-genericTypeAssertions2.ts line 13 col 21: error TS2012: Cannot convert 'undefined[]' to 'A<number>':
-	Type 'A<number>' is missing property 'concat' from type 'undefined[]'.
-	Type 'undefined[]' is missing property 'foo' from type 'A<number>'.
+genericTypeAssertions2.ts(13,21): error TS2012: Cannot convert 'any[]' to 'A<number>':
+	Type 'any[]' is missing property 'foo' from type 'A<number>'.
+	Type 'A<number>' is missing property 'concat' from type 'any[]'.

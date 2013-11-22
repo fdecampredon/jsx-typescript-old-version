@@ -1,5 +1,5 @@
-extendAndImplementTheSameBaseType2.ts line 7 col 7: error TS2137: Class D declares interface C<number> but does not implement it:
+extendAndImplementTheSameBaseType2.ts(7,7): error TS2137: Class D declares interface C<number> but does not implement it:
 	Types of property 'bar' of types 'D' and 'C<number>' are incompatible:
 		Call signatures of types '() => string' and '() => number' are incompatible.
-extendAndImplementTheSameBaseType2.ts line 12 col 5: error TS2011: Cannot convert 'number' to 'string'.
-extendAndImplementTheSameBaseType2.ts line 16 col 5: error TS2011: Cannot convert 'string' to 'number'.
+extendAndImplementTheSameBaseType2.ts(12,5): error TS2011: Cannot convert 'number' to 'string'.
+extendAndImplementTheSameBaseType2.ts(16,5): error TS2011: Cannot convert 'string' to 'number'.

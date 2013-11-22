@@ -1,6 +1,6 @@
 === tests/cases/compiler/voidAsOperator.ts ===
 Line 0 col 4 NotEqualsExpression "!void 0 !== true" = boolean
 Line 0 col 4 LogicalNotExpression "!void 0" = boolean
-Line 0 col 5 VoidExpression "void 0" = undefined
+Line 0 col 5 VoidExpression "void 0" = any
 Line 5 col 4 NotEqualsExpression "!null !== true" = boolean
 Line 5 col 4 LogicalNotExpression "!null" = boolean

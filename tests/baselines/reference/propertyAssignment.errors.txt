@@ -1,5 +1,5 @@
-propertyAssignment.ts line 6 col 14: error TS1022: Index signature parameter must have a type annotation.
-propertyAssignment.ts line 14 col 1: error TS2012: Cannot convert '{ x: number; }' to 'new() => any':
+propertyAssignment.ts(6,14): error TS1022: Index signature parameter must have a type annotation.
+propertyAssignment.ts(14,1): error TS2012: Cannot convert '{ x: number; }' to 'new() => any':
 	Type 'new() => any' requires a construct signature, but type '{ x: number; }' lacks one.
-propertyAssignment.ts line 16 col 1: error TS2012: Cannot convert '{ x: number; }' to '() => void':
+propertyAssignment.ts(16,1): error TS2012: Cannot convert '{ x: number; }' to '() => void':
 	Type '() => void' requires a call signature, but type '{ x: number; }' lacks one.

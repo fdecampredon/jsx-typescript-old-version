@@ -1,5 +1,5 @@
-implicitAnyGetAndSetAccessorWithAnyReturnType.ts line 3 col 5: error TS7005: Variable 'getAndSet' implicitly has an 'any' type.
-implicitAnyGetAndSetAccessorWithAnyReturnType.ts line 9 col 30: error TS7005: Variable 'value' implicitly has an 'any' type.
-implicitAnyGetAndSetAccessorWithAnyReturnType.ts line 15 col 5: error TS7016: 'haveOnlySet', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.
-implicitAnyGetAndSetAccessorWithAnyReturnType.ts line 15 col 28: error TS7005: Variable 'newXValue' implicitly has an 'any' type.
-implicitAnyGetAndSetAccessorWithAnyReturnType.ts line 20 col 5: error TS7010: 'haveOnlyGet', which lacks return-type annotation, implicitly has an 'any' return type.
+implicitAnyGetAndSetAccessorWithAnyReturnType.ts(3,5): error TS7005: Variable 'getAndSet' implicitly has an 'any' type.
+implicitAnyGetAndSetAccessorWithAnyReturnType.ts(9,30): error TS7005: Variable 'value' implicitly has an 'any' type.
+implicitAnyGetAndSetAccessorWithAnyReturnType.ts(15,5): error TS7016: 'haveOnlySet', which lacks 'get' accessor and parameter type annotation on 'set' accessor, implicitly has an 'any' type.
+implicitAnyGetAndSetAccessorWithAnyReturnType.ts(15,28): error TS7005: Variable 'newXValue' implicitly has an 'any' type.
+implicitAnyGetAndSetAccessorWithAnyReturnType.ts(20,5): error TS7010: 'haveOnlyGet', which lacks return-type annotation, implicitly has an 'any' return type.

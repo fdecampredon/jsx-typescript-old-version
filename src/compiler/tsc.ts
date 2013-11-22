@@ -675,17 +675,14 @@ module TypeScript {
             return result;
         }
 
-        private addDiagnostic(diagnostic: Diagnostic) {
+
+        private addDiagnostic(diagnostic: Diagnostic): void {
             var diagnosticInfo = diagnostic.info();
             if (diagnosticInfo.category === DiagnosticCategory.Error) {
                 this.hasErrors = true;
             }
 
-            if (diagnostic.fileName()) {
-                this.ioHost.stderr.Write(diagnostic.fileName() + "(" + (diagnostic.line() + 1) + "," + (diagnostic.character() + 1) + "): ");
-            }
-
-            this.ioHost.stderr.WriteLine(diagnostic.message());
+            this.ioHost.stderr.Write(TypeScriptCompiler.getFullDiagnosticText(diagnostic));
         }
 
         private tryWriteOutputFiles(outputFiles: OutputFile[]): boolean {

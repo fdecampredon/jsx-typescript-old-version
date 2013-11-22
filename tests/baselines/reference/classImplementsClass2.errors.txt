@@ -1,4 +1,4 @@
-classImplementsClass2.ts line 2 col 7: error TS2137: Class C declares interface A but does not implement it:
+classImplementsClass2.ts(2,7): error TS2137: Class C declares interface A but does not implement it:
 	Type 'C' is missing property 'foo' from type 'A'.
-classImplementsClass2.ts line 13 col 1: error TS2012: Cannot convert 'C' to 'C2':
+classImplementsClass2.ts(13,1): error TS2012: Cannot convert 'C' to 'C2':
 	Type 'C' is missing property 'foo' from type 'C2'.

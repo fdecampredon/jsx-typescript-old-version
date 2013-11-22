@@ -1,4 +1,4 @@
-crashRegressionTest.ts line 16 col 13: error TS2008: Value of type 'MsPortal.Util.TemplateEngine.TemplateKeyValue' is not indexable by type 'any'.
-crashRegressionTest.ts line 16 col 56: error TS2094: The property '_name' does not exist on value of type 'StringTemplate'.
-crashRegressionTest.ts line 21 col 9: error TS2025: Public property 'templateSources' of exported class has or is using private type 'TemplateKeyValue'.
-crashRegressionTest.ts line 22 col 9: error TS2025: Public property 'templateData' of exported class has or is using private type 'TemplateKeyValue'.
+crashRegressionTest.ts(16,13): error TS2008: Value of type 'MsPortal.Util.TemplateEngine.TemplateKeyValue' is not indexable by type 'any'.
+crashRegressionTest.ts(16,56): error TS2094: The property '_name' does not exist on value of type 'StringTemplate'.
+crashRegressionTest.ts(21,9): error TS2025: Public property 'templateSources' of exported class has or is using private type 'TemplateKeyValue'.
+crashRegressionTest.ts(22,9): error TS2025: Public property 'templateData' of exported class has or is using private type 'TemplateKeyValue'.

@@ -127,7 +127,7 @@ module TypeScript {
         SomeValue = Variable | Parameter | Property | EnumMember | SomeFunction,
 
         SomeType = Script | Global | Primitive | Class | Interface |
-                    Enum | ObjectType | FunctionType | ConstructorType | TypeParameter,
+                    Enum | ObjectLiteral | ObjectType | FunctionType | ConstructorType | TypeParameter,
 
         AcceptableAlias = Variable | SomeFunction | Class | Interface | Enum | Container | ObjectType | FunctionType | ConstructorType,
 

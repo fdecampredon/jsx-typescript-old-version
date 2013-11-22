@@ -1,6 +1,6 @@
-genericSpecializations1.ts line 5 col 7: error TS2137: Class IntFooBad declares interface IFoo<number> but does not implement it:
+genericSpecializations1.ts(5,7): error TS2137: Class IntFooBad declares interface IFoo<number> but does not implement it:
 	Types of property 'foo' of types 'IntFooBad' and 'IFoo<number>' are incompatible:
 		Call signatures of types '(x: string) => string' and '<T>(x: T) => T' are incompatible.
-genericSpecializations1.ts line 9 col 7: error TS2137: Class StringFoo2 declares interface IFoo<string> but does not implement it:
+genericSpecializations1.ts(9,7): error TS2137: Class StringFoo2 declares interface IFoo<string> but does not implement it:
 	Types of property 'foo' of types 'StringFoo2' and 'IFoo<string>' are incompatible:
 		Call signatures of types '(x: string) => string' and '<T>(x: T) => T' are incompatible.

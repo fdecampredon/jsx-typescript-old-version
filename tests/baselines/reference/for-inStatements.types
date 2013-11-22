@@ -1,0 +1,141 @@
+=== tests/cases/compiler/for-inStatements.ts ===
+Line 0 col 4 IdentifierName "aString" = string
+Line 1 col 5 IdentifierName "aString" = string
+Line 1 col 16 ObjectLiteralExpression "{}" = {}
+Line 3 col 4 IdentifierName "anAny" = any
+Line 4 col 5 IdentifierName "anAny" = any
+Line 4 col 14 ObjectLiteralExpression "{}" = {}
+Line 6 col 9 IdentifierName "x" = any
+Line 6 col 14 ObjectLiteralExpression "{}" = {}
+Line 7 col 9 IdentifierName "x" = any
+Line 7 col 14 ArrayLiteralExpression "[]" = any[]
+Line 8 col 9 IdentifierName "x" = any
+Line 8 col 14 ArrayLiteralExpression "[1, 2, 3, 4, 5]" = number[]
+Line 10 col 9 IdentifierName "fn" = typeof fn
+Line 11 col 9 IdentifierName "x" = any
+Line 11 col 14 InvocationExpression "fn()" = any
+Line 11 col 14 IdentifierName "fn" = typeof fn
+Line 13 col 9 IdentifierName "x" = any
+Line 14 col 9 IdentifierName "x" = any
+Line 14 col 14 ObjectCreationExpression "new Date()" = Date
+Line 14 col 18 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+Line 16 col 4 IdentifierName "c" = any
+Line 16 col 7 IdentifierName "d" = any
+Line 16 col 10 IdentifierName "e" = any
+Line 18 col 9 IdentifierName "x" = any
+Line 18 col 14 LogicalOrExpression "c || d" = any
+Line 18 col 14 IdentifierName "c" = any
+Line 18 col 19 IdentifierName "d" = any
+Line 19 col 9 IdentifierName "x" = any
+Line 19 col 14 ConditionalExpression "e ? c : d" = any
+Line 19 col 14 IdentifierName "e" = any
+Line 19 col 18 IdentifierName "c" = any
+Line 19 col 22 IdentifierName "d" = any
+Line 20 col 9 IdentifierName "x" = any
+Line 20 col 14 ConditionalExpression "42 ? c : d" = any
+Line 20 col 19 IdentifierName "c" = any
+Line 20 col 23 IdentifierName "d" = any
+Line 21 col 9 IdentifierName "x" = any
+Line 21 col 14 ConditionalExpression "'' ? c : d" = any
+Line 21 col 19 IdentifierName "c" = any
+Line 21 col 23 IdentifierName "d" = any
+Line 22 col 9 IdentifierName "x" = any
+Line 22 col 14 ConditionalExpression "42 ? d[x] : c[x]" = any
+Line 22 col 19 ElementAccessExpression "d[x]" = any
+Line 22 col 19 IdentifierName "d" = any
+Line 22 col 21 IdentifierName "x" = any
+Line 22 col 26 ElementAccessExpression "c[x]" = any
+Line 22 col 26 IdentifierName "c" = any
+Line 22 col 28 IdentifierName "x" = any
+Line 23 col 9 IdentifierName "x" = any
+Line 23 col 14 ElementAccessExpression "c[d]" = any
+Line 23 col 14 IdentifierName "c" = any
+Line 23 col 16 IdentifierName "d" = any
+Line 25 col 9 IdentifierName "x" = any
+Line 25 col 14 ParenthesizedExpression "(<T>(x: T) => x)" = <T>(x: T) => T
+Line 25 col 15 ParenthesizedArrowFunctionExpression "<T>(x: T) => x" = <T>(x: T) => T
+Line 25 col 16 IdentifierName "T" = T
+Line 25 col 19 IdentifierName "x" = T
+Line 25 col 22 IdentifierName "T" = T
+Line 25 col 28 IdentifierName "x" = T
+Line 26 col 9 IdentifierName "x" = any
+Line 26 col 14 FunctionExpression "function (x: string, y: number) { return x + y }" = (x: string, y: number) => string
+Line 26 col 24 IdentifierName "x" = string
+Line 26 col 35 IdentifierName "y" = number
+Line 26 col 55 AddExpression "x + y" = string
+Line 26 col 55 IdentifierName "x" = string
+Line 26 col 59 IdentifierName "y" = number
+Line 28 col 6 IdentifierName "A" = A
+Line 29 col 0 IdentifierName "biz" = () => any
+Line 30 col 17 IdentifierName "x" = any
+Line 30 col 22 InvocationExpression "this.biz()" = any
+Line 30 col 22 MemberAccessExpression "this.biz" = () => any
+Line 30 col 22 ThisKeyword "this" = A
+Line 30 col 27 IdentifierName "biz" = () => any
+Line 31 col 17 IdentifierName "x" = any
+Line 31 col 22 MemberAccessExpression "this.biz" = () => any
+Line 31 col 22 ThisKeyword "this" = A
+Line 31 col 27 IdentifierName "biz" = () => any
+Line 32 col 17 IdentifierName "x" = any
+Line 32 col 22 ThisKeyword "this" = A
+Line 36 col 11 IdentifierName "baz" = () => any
+Line 37 col 17 IdentifierName "x" = any
+Line 37 col 22 ThisKeyword "this" = typeof A
+Line 38 col 17 IdentifierName "x" = any
+Line 38 col 22 MemberAccessExpression "this.baz" = () => any
+Line 38 col 22 ThisKeyword "this" = typeof A
+Line 38 col 27 IdentifierName "baz" = () => any
+Line 39 col 17 IdentifierName "x" = any
+Line 39 col 22 InvocationExpression "this.baz()" = any
+Line 39 col 22 MemberAccessExpression "this.baz" = () => any
+Line 39 col 22 ThisKeyword "this" = typeof A
+Line 39 col 27 IdentifierName "baz" = () => any
+Line 45 col 6 IdentifierName "B" = B
+Line 45 col 16 IdentifierName "A" = A
+Line 46 col 0 IdentifierName "boz" = () => any
+Line 47 col 17 IdentifierName "x" = any
+Line 47 col 22 InvocationExpression "this.biz()" = any
+Line 47 col 22 MemberAccessExpression "this.biz" = () => any
+Line 47 col 22 ThisKeyword "this" = B
+Line 47 col 27 IdentifierName "biz" = () => any
+Line 48 col 17 IdentifierName "x" = any
+Line 48 col 22 MemberAccessExpression "this.biz" = () => any
+Line 48 col 22 ThisKeyword "this" = B
+Line 48 col 27 IdentifierName "biz" = () => any
+Line 49 col 17 IdentifierName "x" = any
+Line 49 col 22 ThisKeyword "this" = B
+Line 51 col 17 IdentifierName "x" = any
+Line 51 col 22 MemberAccessExpression "super.biz" = () => any
+Line 51 col 28 IdentifierName "biz" = () => any
+Line 52 col 17 IdentifierName "x" = any
+Line 52 col 22 InvocationExpression "super.biz()" = any
+Line 52 col 22 MemberAccessExpression "super.biz" = () => any
+Line 52 col 28 IdentifierName "biz" = () => any
+Line 57 col 10 IdentifierName "I" = I
+Line 58 col 0 IdentifierName "id" = number
+Line 59 col 5 IdentifierName "idx" = number
+Line 59 col 19 IdentifierName "I" = I
+Line 61 col 4 IdentifierName "i" = I
+Line 61 col 7 IdentifierName "I" = I
+Line 63 col 9 IdentifierName "x" = any
+Line 63 col 14 ElementAccessExpression "i[42]" = I
+Line 63 col 14 IdentifierName "i" = I
+Line 66 col 7 IdentifierName "M" = M
+Line 67 col 17 IdentifierName "X" = M.X<T>
+Line 67 col 19 IdentifierName "T" = T
+Line 68 col 0 IdentifierName "name" = string
+Line 72 col 9 IdentifierName "x" = any
+Line 72 col 14 IdentifierName "M" = typeof M
+Line 73 col 9 IdentifierName "x" = any
+Line 73 col 14 MemberAccessExpression "M.X" = typeof M.X
+Line 73 col 14 IdentifierName "M" = typeof M
+Line 73 col 16 IdentifierName "X" = typeof M.X
+Line 75 col 5 IdentifierName "Color" = Color
+Line 75 col 13 IdentifierName "Red" = Color
+Line 75 col 18 IdentifierName "Blue" = Color
+Line 77 col 9 IdentifierName "x" = any
+Line 77 col 14 IdentifierName "Color" = typeof Color
+Line 78 col 9 IdentifierName "x" = any
+Line 78 col 14 MemberAccessExpression "Color.Blue" = Color
+Line 78 col 14 IdentifierName "Color" = typeof Color
+Line 78 col 20 IdentifierName "Blue" = Color

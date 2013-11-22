@@ -1,11 +1,11 @@
-overload1.ts line 19 col 9: error TS2175: Overloads cannot differ only by return type.
-overload1.ts line 27 col 5: error TS2011: Cannot convert 'O.C' to 'string'.
-overload1.ts line 29 col 1: error TS2011: Cannot convert 'number' to 'string'.
-overload1.ts line 31 col 5: error TS2081: Supplied parameters do not match any signature of call target.
-overload1.ts line 31 col 5: error TS2087: Could not select overload for 'call' expression.
-overload1.ts line 32 col 5: error TS2081: Supplied parameters do not match any signature of call target.
-overload1.ts line 32 col 5: error TS2087: Could not select overload for 'call' expression.
-overload1.ts line 33 col 1: error TS2011: Cannot convert 'O.C' to 'string'.
-overload1.ts line 34 col 5: error TS2082: Supplied parameters do not match any signature of call target:
+overload1.ts(19,9): error TS2175: Overloads cannot differ only by return type.
+overload1.ts(27,5): error TS2011: Cannot convert 'O.C' to 'string'.
+overload1.ts(29,1): error TS2011: Cannot convert 'number' to 'string'.
+overload1.ts(31,5): error TS2081: Supplied parameters do not match any signature of call target.
+overload1.ts(31,5): error TS2087: Could not select overload for 'call' expression.
+overload1.ts(32,5): error TS2081: Supplied parameters do not match any signature of call target.
+overload1.ts(32,5): error TS2087: Could not select overload for 'call' expression.
+overload1.ts(33,1): error TS2011: Cannot convert 'O.C' to 'string'.
+overload1.ts(34,5): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'string' to argument 1 which is of type 'number'.
-overload1.ts line 34 col 5: error TS2087: Could not select overload for 'call' expression.
+overload1.ts(34,5): error TS2087: Could not select overload for 'call' expression.

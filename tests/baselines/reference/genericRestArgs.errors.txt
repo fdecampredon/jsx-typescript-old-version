@@ -1,6 +1,6 @@
-genericRestArgs.ts line 5 col 12: error TS2082: Supplied parameters do not match any signature of call target:
+genericRestArgs.ts(5,12): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'number' to argument 2 which is of type 'string'.
-genericRestArgs.ts line 5 col 12: error TS2087: Could not select overload for 'call' expression.
-genericRestArgs.ts line 12 col 12: error TS2082: Supplied parameters do not match any signature of call target:
+genericRestArgs.ts(5,12): error TS2087: Could not select overload for 'call' expression.
+genericRestArgs.ts(12,12): error TS2082: Supplied parameters do not match any signature of call target:
 	Type 'Number' is missing property 'concat' from type 'any[]'.
-genericRestArgs.ts line 12 col 12: error TS2087: Could not select overload for 'call' expression.
+genericRestArgs.ts(12,12): error TS2087: Could not select overload for 'call' expression.

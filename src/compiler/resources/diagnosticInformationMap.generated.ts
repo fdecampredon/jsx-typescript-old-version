@@ -1618,6 +1618,10 @@ module TypeScript {
     "code": 6040,
     "category": DiagnosticCategory.Message
   },
+  "Additional locations:": {
+    "code": 6041,
+    "category": DiagnosticCategory.Message
+  },
   "This version of the Javascript runtime does not support the '{0}' function.": {
     "code": 7000,
     "category": DiagnosticCategory.Error
@@ -1684,6 +1688,10 @@ module TypeScript {
   },
   "Index signature of object type implicitly has an 'any' type.": {
     "code": 7017,
+    "category": DiagnosticCategory.Error
+  },
+  "Object literal's property '{0}' implicitly has an 'any' type from widening.": {
+    "code": 7018,
     "category": DiagnosticCategory.Error
   }
 };

@@ -1,6 +1,6 @@
-typeofInternalModules.ts line 15 col 29: error TS2094: The property 'P' does not exist on value of type 'Outer.uninstantiated'.
-typeofInternalModules.ts line 17 col 9: error TS4022: Type reference cannot refer to container 'Outer'.
-typeofInternalModules.ts line 19 col 1: error TS2012: Cannot convert 'typeof Outer' to 'typeof Outer.instantiated':
+typeofInternalModules.ts(15,29): error TS2094: The property 'P' does not exist on value of type 'Outer.uninstantiated'.
+typeofInternalModules.ts(17,9): error TS4022: Type reference cannot refer to container 'Outer'.
+typeofInternalModules.ts(19,1): error TS2012: Cannot convert 'typeof Outer' to 'typeof Outer.instantiated':
 	Type 'typeof Outer' is missing property 'Outer.instantiated.C' from type 'typeof Outer.instantiated'.
-typeofInternalModules.ts line 23 col 1: error TS2012: Cannot convert 'typeof Outer.instantiated' to 'typeof Outer':
+typeofInternalModules.ts(23,1): error TS2012: Cannot convert 'typeof Outer.instantiated' to 'typeof Outer':
 	Type 'typeof Outer.instantiated' is missing property 'Outer.instantiated' from type 'typeof Outer'.
