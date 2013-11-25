@@ -33,7 +33,6 @@ module Parallax {
                 surface.currentY = offset;
                 currentParallax *= this.perspective;
             }
-
         }
 
         addSurface(surface: ParallaxSurface): void {

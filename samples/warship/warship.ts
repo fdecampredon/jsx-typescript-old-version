@@ -6,15 +6,14 @@ class Cell {
     hasHit: boolean;
     element: HTMLElement;
 
-    constructor (public row: number, public column: number) {
+    constructor(public row: number, public column: number) {
         this.element = $("<div class='cell notBombed'></div>")[0];
-
     }
 
     // Parse a cell location of the format "row,column"
     static parseCellLocation(pos: string) {
         var indices: string[] = pos.split(",");
-        return {'row': parseInt(indices[0]), 'column': parseInt(indices[1])};
+        return { 'row': parseInt(indices[0]), 'column': parseInt(indices[1]) };
     }
 
     // Return the cell location of the format "row,column"
@@ -30,7 +29,7 @@ class Ship {
     hits = 0;
     element: HTMLElement;
 
-    constructor (public size: number) { 
+    constructor(public size: number) {
         this.element = $("<div class='ship'></div>")[0];
     }
 
@@ -93,7 +92,7 @@ class Board {
 
     private positioningEnabled: boolean;    // Set to true when the player can position the ships
 
-    constructor (public element: HTMLElement, playerBoard: boolean = true) {
+    constructor(public element: HTMLElement, playerBoard: boolean = true) {
         this.positioningEnabled = playerBoard;
         this.cells = [];
         this.ships = [];
@@ -137,12 +136,12 @@ class Board {
                     // Reduce size slightly to avoid overlap issues blocking the last cell
                     grid: [referenceCell.width() * 0.99 + 2, referenceCell.height() * 0.99 + 2],
                     cursor: 'crosshair'
-                }).click( (evt: JQueryEventObject) => {
-                    if (this.positioningEnabled) {
-                        var shipIndex: number = $(evt.target).data("shipIndex");
-                        this.ships[shipIndex].flipShip();
-                    }
-                });
+                }).click((evt: JQueryEventObject) => {
+                        if (this.positioningEnabled) {
+                            var shipIndex: number = $(evt.target).data("shipIndex");
+                            this.ships[shipIndex].flipShip();
+                        }
+                    });
             }
         }
 
@@ -164,7 +163,7 @@ class Board {
         ships.draggable("option", "disabled", !val);
         cells.droppable("option", "disabled", !val);
     }
-    
+
     static getRandomPosition() {
         return {
             "row": Math.floor(Math.random() * 10),
@@ -283,7 +282,7 @@ class Board {
 }
 
 class Game {
-    static gameState = {begin: 0, computerTurn: 1, playerTurn: 2, finished: 3};
+    static gameState = { begin: 0, computerTurn: 1, playerTurn: 2, finished: 3 };
     static msgs = {
         gameStart: "Drag your ships to the desired location on your board (on the right), then bomb a square on the left board to start the game!",
         invalidPositions: "All ships must be in valid positions before the game can begin.",
@@ -300,14 +299,14 @@ class Game {
     playerBoard: Board;
     computerBoard: Board;
 
-    constructor () {
+    constructor() {
         this.updateStatus(Game.msgs.gameStart);
         this.playerBoard = new Board($("#playerBoard")[0]);
         this.computerBoard = new Board($("#computerBoard")[0], false);
         this.computerBoard.randomize();
         this.playerBoard.randomize();
         this.playerBoard.dragAndDropEnabled = true;
-        this.computerBoard.onEvent = (evt) => {
+        this.computerBoard.onEvent = (evt: string) => {
             switch (evt) {
                 case 'click': // The user has click outside a turn.  Action depends on current state
                     switch (this.state) {
@@ -344,7 +343,7 @@ class Game {
                     break;
             }
         };
-        this.playerBoard.onEvent = (evt) => {
+        this.playerBoard.onEvent = (evt: string) => {
             switch (evt) {
                 case 'playerMissed':
                 case 'hit':
@@ -366,7 +365,8 @@ class Game {
     private computersTurn() {
         this.computerBoard.playerTurn = false;
         this.state = Game.gameState.computerTurn;
-        setTimeout(() => { this.playerBoard.chooseMove();
+        setTimeout(() => {
+            this.playerBoard.chooseMove();
         }, 250);
     }
 
@@ -384,8 +384,8 @@ class Game {
 
     private updateStatus(msg: string) {
         $("#status").slideUp('fast', function () {  // Slide out the old text
-                    $(this).text(msg).slideDown('fast');  // Then slide in the new text
-                });
+            $(this).text(msg).slideDown('fast');  // Then slide in the new text
+        });
     }
 }
 

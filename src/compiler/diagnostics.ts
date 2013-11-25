@@ -71,7 +71,9 @@ module TypeScript {
         var start = (new Date()).getTime();
         var result = func();
         var end = (new Date()).getTime();
-        logger.log(funcDescription + " completed in " + (end - start) + " msec");
+        if (logger.information()) {
+            logger.log(funcDescription + " completed in " + (end - start) + " msec");
+        }
         return result;
     }
 }

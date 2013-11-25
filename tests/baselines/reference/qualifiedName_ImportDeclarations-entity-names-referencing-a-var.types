@@ -1,0 +1,11 @@
+=== tests/cases/compiler/qualifiedName_ImportDeclarations-entity-names-referencing-a-var.ts ===
+Line 0 col 7 IdentifierName "Alpha" = Alpha
+Line 1 col 15 IdentifierName "x" = number
+Line 4 col 7 IdentifierName "Beta" = Beta
+Line 5 col 11 IdentifierName "p" = number
+Line 5 col 15 IdentifierName "Alpha" = Alpha
+Line 5 col 21 IdentifierName "x" = number
+Line 9 col 4 IdentifierName "x" = number
+Line 9 col 8 MemberAccessExpression "Alpha.x" = number
+Line 9 col 8 IdentifierName "Alpha" = typeof Alpha
+Line 9 col 14 IdentifierName "x" = number
