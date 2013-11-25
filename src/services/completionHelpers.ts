@@ -5,6 +5,10 @@
 
 module TypeScript.Services {
     export class CompletionHelpers {
+        private static getSpan(ast: ISyntaxElement): TextSpan {
+            return new TextSpan(ast.start(), ast.width());
+        }
+
         public static filterContextualMembersList(contextualMemberSymbols: TypeScript.PullSymbol[], existingMembers: TypeScript.PullVisibleSymbolsInfo, fileName: string, position: number): TypeScript.PullSymbol[] {
             if (!existingMembers || !existingMembers.symbols || existingMembers.symbols.length === 0) {
                 return contextualMemberSymbols;
@@ -14,7 +18,7 @@ module TypeScript.Services {
             var existingMemberNames = TypeScript.createIntrinsicsObject<boolean>();
             for (var i = 0, n = existingMemberSymbols.length; i < n; i++) {
                 var decl = existingMemberSymbols[i].getDeclarations()[0];
-                if (decl.fileName() === fileName && decl.getSpan().intersectsWithPosition(position)) {
+                if (decl.fileName() === fileName && this.getSpan(decl.ast()).intersectsWithPosition(position)) {
                     // If this is the current item we are editing right now, do not filter it out
                     continue;
                 }

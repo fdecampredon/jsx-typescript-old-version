@@ -4,7 +4,7 @@
 ///<reference path='..\references.ts' />
 
 module TypeScript {
-    export var pullDeclID = 0;
+    var pullDeclID = 0;
     var sentinelEmptyPullDeclArray: any[] = [];
 
     export class PullDecl {
@@ -15,7 +15,6 @@ module TypeScript {
 
         public declID = pullDeclID++;
         public flags: PullElementFlags = PullElementFlags.None;
-        private span: TextSpan;
 
         private declGroups: IIndexable<PullDeclGroup> = null;
 
@@ -34,11 +33,10 @@ module TypeScript {
         public childDeclNamespaceCache: IIndexable<PullDecl[]> = null;
         public childDeclTypeParameterCache: IIndexable<PullDecl[]> = null;
 
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan) {
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags) {
             this.name = declName;
             this.kind = kind;
             this.flags = declFlags;
-            this.span = span;
 
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
@@ -107,8 +105,8 @@ module TypeScript {
             this.semanticInfoChain().setSymbolForDecl(this, symbol);
         }
 
-        public ensureSymbolIsBound(bindSignatureSymbol=false) {
-            if (!((bindSignatureSymbol && this.hasSignatureSymbol()) || this.hasSymbol()) && this.kind != PullElementKind.Script) {
+        public ensureSymbolIsBound() {
+            if (!this.hasSymbol() && this.kind != PullElementKind.Script) {
                 var binder = this.semanticInfoChain().getBinder();
                 binder.bindDeclToPullSymbol(this);
             }
@@ -134,8 +132,7 @@ module TypeScript {
         }
 
         public getSignatureSymbol(): PullSignatureSymbol { 
-            this.ensureSymbolIsBound(true);
-
+            this.ensureSymbolIsBound();
             return this.semanticInfoChain().getSignatureSymbolForDecl(this);
         }
 
@@ -148,20 +145,9 @@ module TypeScript {
 
         public setFlag(flags: PullElementFlags) { this.flags |= flags; }
 
-        public getSpan(): TextSpan { return this.span; }
-
         public setValueDecl(valDecl: PullDecl) { this.synthesizedValDecl = valDecl; }
 
         public getValueDecl() { return this.synthesizedValDecl; }
-
-        public isEqual(other: PullDecl) {
-            return  (this.name === other.name) &&
-                    (this.kind === other.kind) &&
-                    (this.flags === other.flags) &&
-                    (this.fileName() === other.fileName()) &&
-                    (this.span.start() === other.span.start()) &&
-                    (this.span.end() === other.span.end());
-        }
 
         private getChildDeclCache(declKind: PullElementKind): IIndexable<PullDecl[]> {
             if (declKind === PullElementKind.TypeParameter) {
@@ -222,16 +208,6 @@ module TypeScript {
                 cache[declName] = childrenOfName;
             }
         }
-
-        //public lookupChildDecls(declName: string, declKind: PullElementKind): PullDecl[] {
-        //    // find the decl with the optional type
-        //    // if necessary, cache the decl
-        //    // may be wise to return a chain of decls, or take a parent decl as a parameter
-        //    var cache = this.getChildDeclCache(declKind);
-        //    var childrenOfName = <PullDecl[]>cache[declName];
-
-        //    return childrenOfName ? childrenOfName : [];
-        //}
 
         // Search for a child decl with the given name.  'isType' is used to specify whether or 
         // not child types or child values are returned.
@@ -335,8 +311,8 @@ module TypeScript {
         private _isExternalModule: boolean;
         private _fileName: string;
 
-        constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, span: TextSpan, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
-            super(name, name, kind, declFlags, span);
+        constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
+            super(name, name, kind, declFlags);
             this._semanticInfoChain = semanticInfoChain;
             this._isExternalModule = isExternalModule;
             this._fileName = fileName;
@@ -372,8 +348,8 @@ module TypeScript {
         private parentDecl: PullDecl = null;
         private parentPath: PullDecl[] = null;
 
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, addToParent = true) {
-            super(declName, displayName, kind, declFlags, span);
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, addToParent = true) {
+            super(declName, displayName, kind, declFlags);
 
             // Link to parent
             this.parentDecl = parentDecl;
@@ -430,16 +406,16 @@ module TypeScript {
     export class PullEnumElementDecl extends NormalPullDecl {
         public constantValue: number = null;
 
-        constructor(declName: string, displayName: string, parentDecl: PullDecl, span: TextSpan) {
-            super(declName, displayName, PullElementKind.EnumMember, PullElementFlags.Public, parentDecl, span);
+        constructor(declName: string, displayName: string, parentDecl: PullDecl) {
+            super(declName, displayName, PullElementKind.EnumMember, PullElementFlags.Public, parentDecl);
         }
     }
 
     export class PullFunctionExpressionDecl extends NormalPullDecl {
         private functionExpressionName: string;
 
-        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, displayName: string = "") {
-            super("", displayName, PullElementKind.FunctionExpression, declFlags, parentDecl, span);
+        constructor(expressionName: string, declFlags: PullElementFlags, parentDecl: PullDecl, displayName: string = "") {
+            super("", displayName, PullElementKind.FunctionExpression, declFlags, parentDecl);
             this.functionExpressionName = expressionName;
         }
 
@@ -454,8 +430,8 @@ module TypeScript {
         // This is a synthesized decl; its life time should match that of the symbol using it, and 
         // not that of its parent decl. To enforce this we are not making it reachable from its 
         // parent, but will set the parent link.
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, span: TextSpan, semanticInfoChain: SemanticInfoChain) {
-            super(declName, displayName, kind, declFlags, parentDecl, span, /*addToParent*/ false);
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, semanticInfoChain: SemanticInfoChain) {
+            super(declName, displayName, kind, declFlags, parentDecl, /*addToParent*/ false);
             this._semanticInfoChain = semanticInfoChain
         }
 

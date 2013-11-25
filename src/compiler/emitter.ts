@@ -257,7 +257,31 @@ module TypeScript {
         }
 
         public shouldEmitImportDeclaration(importDeclAST: ImportDeclarationSyntax) {
-            return importDeclarationIsElided(importDeclAST, this.semanticInfoChain, this.emitOptions.compilationSettings());
+            var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
+            var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
+            var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
+
+            // 1) Any internal reference needs to check if the emit can happen
+            // 2) External module reference with export modifier always needs to be emitted
+            // 3) commonjs needs the var declaration for the import declaration
+            if (isExternalModuleReference && !isExported && isAmdCodeGen) {
+                return false;
+            }
+
+            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
+            if (importDeclAST.moduleReference.kind() !== SyntaxKind.ExternalModuleReference) {
+                if (importSymbol.getExportAssignedValueSymbol()) {
+                    return true;
+                }
+
+                var containerSymbol = importSymbol.getExportAssignedContainerSymbol();
+                if (containerSymbol && containerSymbol.getInstanceSymbol()) {
+                    return true;
+                }
+            }
+
+            return importSymbol.isUsedAsValue();
         }
 
         public emitImportDeclaration(importDeclAST: ImportDeclarationSyntax) {

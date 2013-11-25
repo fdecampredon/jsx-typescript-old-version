@@ -646,10 +646,10 @@ module TypeScript.Services {
         }
 
         private addDeclaration(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declaration: TypeScript.PullDecl, result: DefinitionInfo[]): void {
-            var span = declaration.getSpan();
+            var ast = declaration.ast();
             result.push(new DefinitionInfo(
                 this.compiler.getCachedHostFileName(declaration.fileName()),
-                span.start(), span.end(), symbolKind, symbolName, containerKind, containerName));
+                ast.start(), ast.end(), symbolKind, symbolName, containerKind, containerName));
         }
 
         private tryAddDefinition(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declarations: TypeScript.PullDecl[], result: DefinitionInfo[]): boolean {
@@ -774,6 +774,7 @@ module TypeScript.Services {
                 // create corresponding NavigateToItem and add it into results array
                 if (this.shouldIncludeDeclarationInNavigationItems(declaration)) {
                     fullName = parentName ? parentName + "." + declName : declName;
+                    var ast = declaration.ast();
                     if (matchKind) {
                         item = new NavigateToItem();
                         item.name = declName;
@@ -781,8 +782,8 @@ module TypeScript.Services {
                         item.kind = this.mapPullElementKind(declaration.kind);
                         item.kindModifiers = this.getScriptElementKindModifiersFromDecl(declaration);
                         item.fileName = this.compiler.getCachedHostFileName(fileName);
-                        item.minChar = declaration.getSpan().start();
-                        item.limChar = declaration.getSpan().end();
+                        item.minChar = ast.start();
+                        item.limChar = ast.end();
                         item.containerName = parentName || "";
                         item.containerKind = parentkindName || "";
                         results.push(item);

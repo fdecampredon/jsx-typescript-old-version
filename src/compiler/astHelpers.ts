@@ -52,37 +52,11 @@ module TypeScript {
         return false;
     }
 
-    export function importDeclarationIsElided(importDeclAST: ImportDeclarationSyntax, semanticInfoChain: SemanticInfoChain, compilationSettings: ImmutableCompilationSettings = null) {
-        var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
-        var importDecl = semanticInfoChain.getDeclForAST(importDeclAST);
-        var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-        var isAmdCodeGen = compilationSettings && compilationSettings.moduleGenTarget() == ModuleGenTarget.Asynchronous;
+     export function isValidAstNode(ast: ISyntaxElement): boolean {
+         return ast && !ast.isShared() && isValidSpan(ast);
+     }
 
-        if (!isExternalModuleReference || // Any internal reference needs to check if the emit can happen
-            isExported || // External module reference with export modifier always needs to be emitted
-            !isAmdCodeGen) {// commonjs needs the var declaration for the import declaration
-            var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
-            if (importDeclAST.moduleReference.kind() !== SyntaxKind.ExternalModuleReference) {
-                if (importSymbol.getExportAssignedValueSymbol()) {
-                    return true;
-                }
-                var containerSymbol = importSymbol.getExportAssignedContainerSymbol();
-                if (containerSymbol && containerSymbol.getInstanceSymbol()) {
-                    return true;
-                }
-            }
-
-            return importSymbol.isUsedAsValue();
-        }
-
-        return false;
-    }
-
-    export function isValidAstNode(ast: ISyntaxElement): boolean {
-        return ast && !ast.isShared() && isValidSpan(ast);
-    }
-
-    export function isValidSpan(ast: ISpan): boolean {
+     export function isValidSpan(ast: ISpan): boolean {
         if (!ast)
             return false;
 

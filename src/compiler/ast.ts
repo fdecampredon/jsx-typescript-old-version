@@ -51,9 +51,9 @@ module TypeScript {
         }
     }
 
-    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
-        var span = decl.getSpan();
-        return new Diagnostic(decl.fileName(), decl.semanticInfoChain().lineMap(decl.fileName()), span.start(), span.length(), diagnosticKey, arguments, additionalLocations);
+    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
+        var ast = decl.ast();
+        return decl.semanticInfoChain().diagnosticFromAST(ast, diagnosticKey, arguments, additionalLocations);
     }
 
     function min(a: number, b: number): number {

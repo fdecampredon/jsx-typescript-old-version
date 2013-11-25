@@ -1777,8 +1777,7 @@ module TypeScript {
             // Add synthetic prototype decl and symbol
             if (!prototypeSymbol || !prototypeSymbol.getIsSynthesized()) {
                 var prototypeDecl = new PullSynthesizedDecl(prototypeStr, prototypeStr, PullElementKind.Property,
-                    PullElementFlags.Public | PullElementFlags.Static, constructorTypeSymbol.getDeclarations()[0],
-                    classTypeSymbol.getDeclarations()[0].getSpan(), this.semanticInfoChain);
+                    PullElementFlags.Public | PullElementFlags.Static, constructorTypeSymbol.getDeclarations()[0], this.semanticInfoChain);
 
                 prototypeSymbol = new PullSymbol(prototypeStr, PullElementKind.Property);
                 prototypeSymbol.setIsSynthesized();

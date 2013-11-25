@@ -5,7 +5,7 @@
 /////*remoteFunctionDefinition*/function rem2Fn() { }
 /////*remoteClassDefinition*/class rem2Cls { }
 /////*remoteInterfaceDefinition*/interface rem2Int{}
-/////*remoteModuleDefinition*/module rem2Mod { export var foo; }
+////module /*remoteModuleDefinition*/rem2Mod { export var foo; }
 
 // @Filename: Remote1.ts
 ////var remVar;
