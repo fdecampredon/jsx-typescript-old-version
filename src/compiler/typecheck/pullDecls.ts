@@ -247,10 +247,12 @@ module TypeScript {
          }
 
         public getChildDecls(): PullDecl[] {
-            return this.childDecls ? this.childDecls : sentinelEmptyPullDeclArray;
+            return this.childDecls || sentinelEmptyPullDeclArray;
         }
 
-        public getTypeParameters(): PullDecl[] { return this.typeParameters ? this.typeParameters : sentinelEmptyPullDeclArray; }
+        public getTypeParameters(): PullDecl[] {
+            return this.typeParameters || sentinelEmptyPullDeclArray;
+        }
 
         public addVariableDeclToGroup(decl: PullDecl) {
             if (!this.declGroups) {
@@ -283,7 +285,7 @@ module TypeScript {
                 }
             }
 
-            return declGroups ? declGroups : sentinelEmptyPullDeclArray;
+            return declGroups || sentinelEmptyPullDeclArray;
         }
 
         public hasBeenBound() {

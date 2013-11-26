@@ -190,7 +190,7 @@ module TypeScript {
         private cachedFunctionArgumentsSymbol(): PullSymbol {
             if (!this._cachedFunctionArgumentsSymbol) {
                 this._cachedFunctionArgumentsSymbol = new PullSymbol("arguments", PullElementKind.Variable);
-                this._cachedFunctionArgumentsSymbol.type = this.cachedIArgumentsInterfaceType() ? this.cachedIArgumentsInterfaceType() : this.semanticInfoChain.anyTypeSymbol;
+                this._cachedFunctionArgumentsSymbol.type = this.cachedIArgumentsInterfaceType() || this.semanticInfoChain.anyTypeSymbol;
                 this._cachedFunctionArgumentsSymbol.setResolved();
 
                 var functionArgumentsDecl = new PullSynthesizedDecl("arguments", "arguments", PullElementKind.Parameter, PullElementFlags.None, /*parentDecl*/ null, this.semanticInfoChain);
@@ -2649,7 +2649,7 @@ module TypeScript {
             }
 
             var wrapperDecl = this.getEnclosingDecl(decl);
-            wrapperDecl = wrapperDecl ? wrapperDecl : enclosingDecl;
+            wrapperDecl = wrapperDecl || enclosingDecl;
 
             var typeExprSymbol = this.resolveTypeReference(typeExpr, context);
 
@@ -2736,7 +2736,7 @@ module TypeScript {
             var declParameterSymbol: PullSymbol = decl.getValueDecl() ? decl.getValueDecl().getSymbol() : null;
 
             var wrapperDecl = this.getEnclosingDecl(decl);
-            wrapperDecl = wrapperDecl ? wrapperDecl : enclosingDecl;
+            wrapperDecl = wrapperDecl || enclosingDecl;
 
             var initExprSymbol = this.resolveAST(init, typeExprSymbol != null, context);
 
@@ -2868,7 +2868,7 @@ module TypeScript {
                 // Do not report an error if the variable declaration is declared in ForIn statement
 
                 var wrapperDecl = this.getEnclosingDecl(decl);
-                wrapperDecl = wrapperDecl ? wrapperDecl : enclosingDecl;
+                wrapperDecl = wrapperDecl || enclosingDecl;
 
                 // check what enclosingDecl the varDecl is in and report an appropriate error message
                 // varDecl is a function/constructor/constructor-signature parameter

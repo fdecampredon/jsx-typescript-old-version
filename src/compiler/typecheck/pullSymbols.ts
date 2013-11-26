@@ -1825,7 +1825,7 @@ module TypeScript {
                 }
 
                 var result = this._simpleInstantiationCache[substitutingTypes[0].pullSymbolID];
-                return result ? result : null;
+                return result || null;
             }
             else {
                 if (!this._complexInstantiationCache) {
@@ -1833,7 +1833,7 @@ module TypeScript {
                 }
 
                 var result = this._complexInstantiationCache[getIDForTypeSubstitutions(substitutingTypes)];
-                return result ? result : null;
+                return result || null;
             }
         }
 
