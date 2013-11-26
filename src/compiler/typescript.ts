@@ -896,7 +896,7 @@ module TypeScript {
 
             if (!symbol) {
                 Debug.assert(
-                    ast.kind() == SyntaxKind.SourceUnit,
+                    ast.kind() === SyntaxKind.SourceUnit,
                     "No symbol was found for ast and ast was not source unit. Ast Kind: " + SyntaxKind[ast.kind()] );
                 return null;
             }

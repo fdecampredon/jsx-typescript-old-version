@@ -346,7 +346,7 @@ module TypeScript {
         }
 
         private bindEnumIndexerDeclsToPullSymbols(enumContainerDecl: PullDecl, enumContainerSymbol: PullContainerSymbol): void {
-            var indexSigDecl = enumContainerDecl.getChildDecls().filter(decl => decl.kind == PullElementKind.IndexSignature)[0];
+            var indexSigDecl = enumContainerDecl.getChildDecls().filter(decl => decl.kind === PullElementKind.IndexSignature)[0];
             var indexParamDecl = indexSigDecl.getChildDecls()[0];
 
             var syntheticIndexerParameterSymbol = new PullSymbol(indexParamDecl.name, PullElementKind.Parameter);
@@ -971,7 +971,7 @@ module TypeScript {
                 var isAmbientOrPrevIsAmbient = prevIsAmbient || (variableDeclaration.flags & PullElementFlags.Ambient) != 0;
                 var prevDecl = variableSymbol.getDeclarations()[0];
                 var prevParentDecl = prevDecl.getParentDecl();
-                var bothAreGlobal = parentDecl && (parentDecl.kind == PullElementKind.Script) && (prevParentDecl.kind == PullElementKind.Script);
+                var bothAreGlobal = parentDecl && (parentDecl.kind === PullElementKind.Script) && (prevParentDecl.kind === PullElementKind.Script);
                 var shareParent = bothAreGlobal || prevDecl.getParentDecl() == variableDeclaration.getParentDecl();
                 var prevIsParam = shareParent && prevKind == PullElementKind.Parameter && declKind == PullElementKind.Variable;
 

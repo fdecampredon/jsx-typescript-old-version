@@ -117,7 +117,7 @@ module TypeScript {
 
                             if (!skipScopeSymbolAliasesLookIn && this.isExternalModuleReferenceAlias(symbol) &&
                                 (!symbol.assignedContainer().hasExportAssignment() ||
-                                (symbol.assignedContainer().getExportAssignedContainerSymbol() && symbol.assignedContainer().getExportAssignedContainerSymbol().kind == PullElementKind.DynamicModule))) {// It is a dynamic module)) {
+                                (symbol.assignedContainer().getExportAssignedContainerSymbol() && symbol.assignedContainer().getExportAssignedContainerSymbol().kind === PullElementKind.DynamicModule))) {// It is a dynamic module)) {
                                 scopeSymbolAliasesToLookIn.push(symbol);
                             }
                         }
@@ -171,7 +171,7 @@ module TypeScript {
                 }
 
                 // Its internal module
-                if (aliasSymbol.assignedContainer() && aliasSymbol.assignedContainer().kind != PullElementKind.DynamicModule) {
+                if (aliasSymbol.assignedContainer() && aliasSymbol.assignedContainer().kind !== PullElementKind.DynamicModule) {
                     return false;
                 }
 
@@ -184,7 +184,7 @@ module TypeScript {
         // Gets exported alias with internal module reference if present representing this symbol
         private getExportedInternalAliasSymbol(scopeSymbol: PullSymbol) {
             if (scopeSymbol) {
-                if (this.kind != PullElementKind.TypeAlias) {
+                if (this.kind !== PullElementKind.TypeAlias) {
                     var scopePath = scopeSymbol.pathToRoot();
                     for (var i = 0; i < scopePath.length; i++) {
                         var internalAliases = this.findAliasedType(scopeSymbol, /*skipScopeSymbolAliasesLookIn*/ true, /*lookIntoOnlyExportedAlias*/ true);
@@ -474,7 +474,7 @@ module TypeScript {
                 }
 
                 var scopedName = path[i].getNamePartForFullName();
-                if (path[i].kind == PullElementKind.DynamicModule && !isQuoted(scopedName)) {
+                if (path[i].kind === PullElementKind.DynamicModule && !isQuoted(scopedName)) {
                     // Same file as dynamic module - do not include this name
                     break;
                 }
@@ -556,7 +556,7 @@ module TypeScript {
 
         private getTypeNameForFunctionSignature(prefix: string, scopeSymbol?: PullSymbol, getPrettyTypeName?: boolean) {
             var type = this.type;
-            if (type && !type.isNamedTypeSymbol() && this.kind != PullElementKind.Property && this.kind != PullElementKind.Variable && this.kind != PullElementKind.Parameter) {
+            if (type && !type.isNamedTypeSymbol() && this.kind !== PullElementKind.Property && this.kind !== PullElementKind.Variable && this.kind !== PullElementKind.Parameter) {
                 var signatures = type.getCallSignatures();
                 if (signatures.length == 1 || (getPrettyTypeName && signatures.length)) {
                     var typeName = new MemberNameArray();
@@ -680,7 +680,7 @@ module TypeScript {
                     var parentDecl = decls[0].getParentDecl();
                     if (parentDecl) {
                         var parentSymbol = parentDecl.getSymbol();
-                        if (!parentSymbol || parentDecl.kind == PullElementKind.Script) {
+                        if (!parentSymbol || parentDecl.kind === PullElementKind.Script) {
                             return true;
                         }
 
@@ -692,9 +692,9 @@ module TypeScript {
             }
 
             // If export assignment check if this is the symbol that is exported
-            if (container.kind == PullElementKind.DynamicModule ||
-                (container.getAssociatedContainerType() && container.getAssociatedContainerType().kind == PullElementKind.DynamicModule)) {
-                var containerSymbol = container.kind == PullElementKind.DynamicModule
+            if (container.kind === PullElementKind.DynamicModule ||
+                (container.getAssociatedContainerType() && container.getAssociatedContainerType().kind === PullElementKind.DynamicModule)) {
+                var containerSymbol = container.kind === PullElementKind.DynamicModule
                     ? <PullContainerSymbol>container
                     : <PullContainerSymbol>container.getAssociatedContainerType();
                 if (PullContainerSymbol.usedAsSymbol(containerSymbol, this)) {
@@ -703,7 +703,7 @@ module TypeScript {
             }
 
             // If non exported member and is not class properties and method, it is not visible
-            if (!this.anyDeclHasFlag(PullElementFlags.Exported) && kind != PullElementKind.Property && kind != PullElementKind.Method) {
+            if (!this.anyDeclHasFlag(PullElementFlags.Exported) && kind !== PullElementKind.Property && kind !== PullElementKind.Method) {
                 return false;
             }
 
@@ -1487,14 +1487,14 @@ module TypeScript {
 
         public isType() { return true; }
         public isClass() {
-            return this.kind == PullElementKind.Class || (this._constructorMethod != null);
+            return this.kind === PullElementKind.Class || (this._constructorMethod != null);
         }
         public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) != 0; }
-        public isConstructor() { return this.kind == PullElementKind.ConstructorType; }
+        public isConstructor() { return this.kind === PullElementKind.ConstructorType; }
         public isTypeParameter() { return false; }
         public isTypeVariable() { return false; }
         public isError() { return false; }
-        public isEnum() { return this.kind == PullElementKind.Enum; }
+        public isEnum() { return this.kind === PullElementKind.Enum; }
 
         public getTypeParameterArgumentMap(): PullTypeSymbol[] {
             return null;
@@ -1587,7 +1587,7 @@ module TypeScript {
 
             var nonMemberSymbol = this._containedNonMemberTypeNameCache[typeName];
 
-            if (nonMemberSymbol && kind != PullElementKind.None) {
+            if (nonMemberSymbol && kind !== PullElementKind.None) {
                 nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
             }
 
@@ -1601,7 +1601,7 @@ module TypeScript {
 
             var nonMemberSymbol = this._containedNonMemberContainerCache[containerName];
 
-            if (nonMemberSymbol && kind != PullElementKind.None) {
+            if (nonMemberSymbol && kind !== PullElementKind.None) {
                 nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
             }
 
@@ -2213,7 +2213,7 @@ module TypeScript {
 
             memberSymbol = this._enclosedTypeNameCache[name];
 
-            if (memberSymbol && kind != PullElementKind.None) {
+            if (memberSymbol && kind !== PullElementKind.None) {
                 memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
             }
 
@@ -2229,7 +2229,7 @@ module TypeScript {
 
             memberSymbol = this._enclosedContainerCache[name];
 
-            if (memberSymbol && kind != PullElementKind.None) {
+            if (memberSymbol && kind !== PullElementKind.None) {
                 memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
             }
 
@@ -2374,7 +2374,7 @@ module TypeScript {
 
             // typeof Function
             var functionSymbol = this.getFunctionSymbol();
-            if (functionSymbol && functionSymbol.kind == PullElementKind.Function && !PullHelpers.isSymbolLocal(functionSymbol)) {
+            if (functionSymbol && functionSymbol.kind === PullElementKind.Function && !PullHelpers.isSymbolLocal(functionSymbol)) {
                 return functionSymbol;
             }
 
@@ -2405,7 +2405,7 @@ module TypeScript {
                 var curlies = !topLevel || indexSignatures.length != 0;
                 var delim = "; ";
                 for (var i = 0; i < members.length; i++) {
-                    if (members[i].kind == PullElementKind.Method && members[i].type.hasOnlyOverloadCallSignatures()) {
+                    if (members[i].kind === PullElementKind.Method && members[i].type.hasOnlyOverloadCallSignatures()) {
                         // Add all Call signatures of the method
                         var methodCallSignatures = members[i].type.getCallSignatures();
                         var nameStr = members[i].getDisplayName(scopeSymbol) + (members[i].isOptional ? "?" : "");;

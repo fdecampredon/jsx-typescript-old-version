@@ -106,14 +106,14 @@ module TypeScript {
         }
 
         public ensureSymbolIsBound() {
-            if (!this.hasSymbol() && this.kind != PullElementKind.Script) {
+            if (!this.hasSymbol() && this.kind !== PullElementKind.Script) {
                 var binder = this.semanticInfoChain().getBinder();
                 binder.bindDeclToPullSymbol(this);
             }
         }
 
         public getSymbol(): PullSymbol {
-            if (this.kind == PullElementKind.Script) {
+            if (this.kind === PullElementKind.Script) {
                 return null;
             }
 

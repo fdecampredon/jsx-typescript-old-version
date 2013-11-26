@@ -80,7 +80,7 @@ module TypeScript {
         }
 
         export function symbolIsModule(symbol: PullSymbol) {
-            return symbol && (symbol.kind == PullElementKind.Container || isOneDeclarationOfKind(symbol, PullElementKind.Container));
+            return symbol && (symbol.kind === PullElementKind.Container || isOneDeclarationOfKind(symbol, PullElementKind.Container));
         }
 
         function isOneDeclarationOfKind(symbol: PullSymbol, kind: TypeScript.PullElementKind): boolean {

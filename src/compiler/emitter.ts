@@ -314,7 +314,7 @@ module TypeScript {
                 } else {
                     var valueSymbol = importSymbol.getExportAssignedValueSymbol();
                     if (valueSymbol &&
-                        (valueSymbol.kind == PullElementKind.Method || valueSymbol.kind == PullElementKind.Function)) {
+                        (valueSymbol.kind === PullElementKind.Method || valueSymbol.kind === PullElementKind.Function)) {
                         needsPropertyAssignment = true;
                     } else {
                         usePropertyAssignmentInsteadOfVarDecl = true;
@@ -2823,7 +2823,7 @@ module TypeScript {
         // Emit the member access expression using the declPath
         private emitDottedNameMemberAccessExpressionWorker(expression: MemberAccessExpression, potentialPath: PullDecl[], startingIndex: number, lastIndex: number) {
             this.recordSourceMappingStart(expression);
-            if (expression.expression.kind() == SyntaxKind.MemberAccessExpression) {
+            if (expression.expression.kind() === SyntaxKind.MemberAccessExpression) {
                 // Emit the dotted name access expression
                 this.emitDottedNameMemberAccessExpressionRecurse(<MemberAccessExpression>expression.expression, potentialPath, startingIndex, lastIndex - 1);
             } else { // Name

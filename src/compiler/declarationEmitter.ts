@@ -186,7 +186,7 @@ module TypeScript {
                     }
 
                     // Emit declare only in global context
-                    if (isExternalModule || container.kind() == SyntaxKind.SourceUnit) {
+                    if (isExternalModule || container.kind() === SyntaxKind.SourceUnit) {
                         // Emit declare if not interface declaration or import declaration && is not from module
                         if (emitDeclare && typeString !== "interface" && typeString != "import") {
                             result += "declare ";
