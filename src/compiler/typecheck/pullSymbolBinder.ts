@@ -1202,9 +1202,6 @@ module TypeScript {
 
             var declName = variableDeclaration.name;
 
-            //var parent = this.getParent(variableDeclaration, true);
-            //var parentDecl = variableDeclaration.getParentDecl();
-
             var variableSymbol = new PullSymbol(declName, declKind);
 
             variableSymbol.addDeclaration(variableDeclaration);
@@ -1214,24 +1211,6 @@ module TypeScript {
             variableSymbol.type = this.semanticInfoChain.anyTypeSymbol;
 
             this.semanticInfoChain.setSymbolForAST(identifier, variableSymbol);
-
-            //if (parent && !parentHadSymbol) {
-
-            //    if (declFlags & PullElementFlags.Exported) {
-            //        parent.addMember(variableSymbol);
-            //    }
-            //    else {
-            //        parent.addEnclosedNonMember(variableSymbol);
-            //    }
-            //}
-
-            //var otherDecls = this.findDeclsInContext(variableDeclaration, variableDeclaration.kind, /*searchGlobally*/ false);
-
-            //if (otherDecls && otherDecls.length) {
-            //    for (var i = 0; i < otherDecls.length; i++) {
-            //        otherDecls[i].ensureSymbolIsBound();
-            //    }
-            //}
         }
 
         // properties

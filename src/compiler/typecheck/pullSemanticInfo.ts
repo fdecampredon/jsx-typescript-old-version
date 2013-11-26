@@ -93,7 +93,7 @@ module TypeScript {
         }
 
         // Must pass in a new decl, or an old symbol that has a decl available for ownership transfer
-        private bindPrimitiveSymbol(decl: PullDecl, newSymbol: PullSymbol): PullSymbol {
+        private bindPrimitiveSymbol<TSymbol extends PullSymbol>(decl: PullDecl, newSymbol: TSymbol): TSymbol {
             newSymbol.addDeclaration(decl);
             decl.setSymbol(newSymbol);
             newSymbol.setResolved();
@@ -105,7 +105,7 @@ module TypeScript {
         // invalidation after every edit.
         private addPrimitiveTypeSymbol(decl: PullDecl): PullPrimitiveTypeSymbol {
             var newSymbol = new PullPrimitiveTypeSymbol(decl.name);
-            return <PullPrimitiveTypeSymbol>this.bindPrimitiveSymbol(decl, newSymbol);
+            return this.bindPrimitiveSymbol(decl, newSymbol);
         }
 
         // Creates a new value symbol to be bound to this decl, and has the specified type.
