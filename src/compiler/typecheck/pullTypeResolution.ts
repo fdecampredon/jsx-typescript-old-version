@@ -335,7 +335,7 @@ module TypeScript {
                     // If we were looking  for some type or value, we need to look for alias so we can see if it has associated value or type symbol with it
                     if ((declSearchKind & PullElementKind.SomeType) != 0 || (declSearchKind & PullElementKind.SomeValue) != 0) {
                         childDecls = typeDeclarations[j].searchChildDecls(symbolName, PullElementKind.TypeAlias);
-                        if (childDecls.length && childDecls[0].kind == PullElementKind.TypeAlias) { // this can return container or dynamic module
+                        if (childDecls.length && childDecls[0].kind === PullElementKind.TypeAlias) { // this can return container or dynamic module
                             var aliasSymbol = <PullTypeAliasSymbol>this.getExportedMemberSymbol(childDecls[0].getSymbol(), parent);
                             if (aliasSymbol) {
                                 if ((declSearchKind & PullElementKind.SomeType) != 0) {
@@ -688,7 +688,7 @@ module TypeScript {
             }
             else {
                 // could be a value of an enum type, treat it as a number
-                if (lhsType.kind == PullElementKind.Enum && !isTypesOnlyLocation(expression)) {
+                if (lhsType.kind === PullElementKind.Enum && !isTypesOnlyLocation(expression)) {
                     lhsType = this.semanticInfoChain.numberTypeSymbol;
                 }
 
@@ -868,7 +868,7 @@ module TypeScript {
 
                 // if the symbol is a parameter property referenced in an out-of-order fashion, it may not have been resolved
                 // along with the original property, so we need to "fix" its type here
-                if (decl.kind == PullElementKind.Parameter &&
+                if (decl.kind === PullElementKind.Parameter &&
                     !symbol.isResolved &&
                     !symbol.type &&
                     resolvedSymbol &&
@@ -1568,7 +1568,7 @@ module TypeScript {
                 aliasSymbol = memberSymbol.aliasSymbol;
             }
 
-            if (!acceptableAlias && containerSymbol && containerSymbol.kind == PullElementKind.TypeAlias) {
+            if (!acceptableAlias && containerSymbol && containerSymbol.kind === PullElementKind.TypeAlias) {
                 this.resolveDeclaredSymbol(containerSymbol, context);
                 var aliasedAssignedValue = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedValueSymbol();
                 var aliasedAssignedType = (<PullTypeAliasSymbol>containerSymbol).getExportAssignedTypeSymbol();
@@ -1825,7 +1825,7 @@ module TypeScript {
             if (importStatementAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference) {
                 var containerSymbol = importDeclSymbol.getExportAssignedContainerSymbol();
                 var container = containerSymbol ? containerSymbol.getContainer() : null;
-                if (container && container.kind == PullElementKind.DynamicModule) {
+                if (container && container.kind === PullElementKind.DynamicModule) {
                     checkPrivacy = true;
                 }
             }
@@ -1922,7 +1922,7 @@ module TypeScript {
                 acceptableAlias = (containerSymbol.kind & PullElementKind.AcceptableAlias) != 0;
             }
 
-            if (!acceptableAlias && containerSymbol && containerSymbol.kind == PullElementKind.TypeAlias) {
+            if (!acceptableAlias && containerSymbol && containerSymbol.kind === PullElementKind.TypeAlias) {
                 this.resolveDeclaredSymbol(containerSymbol, context);
 
                 var aliasSymbol = <PullTypeAliasSymbol>containerSymbol;
@@ -2196,13 +2196,13 @@ module TypeScript {
             // If the method/function/constructor is non ambient, with code block and has rest parameter it would have the rest parameter code gen
             if (nodeType == SyntaxKind.FunctionDeclaration) {
                 var functionDeclaration = <FunctionDeclaration>enclosingAST;
-                return !hasFlag(someFunctionDecl.kind == PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
+                return !hasFlag(someFunctionDecl.kind === PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
                 && functionDeclaration.block
                 && lastParameterIsRest(functionDeclaration.callSignature.parameterList);
             }
             else if (nodeType === SyntaxKind.MemberFunctionDeclaration) {
                 var memberFunction = <MemberFunctionDeclaration>enclosingAST;
-                return !hasFlag(someFunctionDecl.kind == PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
+                return !hasFlag(someFunctionDecl.kind === PullElementKind.Method ? someFunctionDecl.getParentDecl().flags : someFunctionDecl.flags, PullElementFlags.Ambient)
                 && memberFunction.block
                 && lastParameterIsRest(memberFunction.callSignature.parameterList);
             }
@@ -2259,7 +2259,7 @@ module TypeScript {
             }
 
             // If the declaration is in external module
-            if (enclosingDecl && enclosingDecl.kind == PullElementKind.DynamicModule) {
+            if (enclosingDecl && enclosingDecl.kind === PullElementKind.DynamicModule) {
                 var decl = this.semanticInfoChain.getDeclForAST(ast);
                 // This is not ambient declaration, then there would be code gen
                 if (!hasFlag(decl.flags, PullElementFlags.Ambient)) { 
@@ -2328,12 +2328,12 @@ module TypeScript {
             var aliasType: PullTypeAliasSymbol = null;
             var type = this.computeTypeReferenceSymbol(typeRef, context);
 
-            if (type.kind == PullElementKind.Container) {
+            if (type.kind === PullElementKind.Container) {
                 var container = <PullContainerSymbol>type;
                 var instanceSymbol = container.getInstanceSymbol();
                 // check if it is actually merged with class
                 if (instanceSymbol &&
-                    (instanceSymbol.anyDeclHasFlag(PullElementFlags.ClassConstructorVariable) || instanceSymbol.kind == PullElementKind.ConstructorMethod)) {
+                    (instanceSymbol.anyDeclHasFlag(PullElementFlags.ClassConstructorVariable) || instanceSymbol.kind === PullElementKind.ConstructorMethod)) {
                     type = instanceSymbol.type.getAssociatedContainerType();
                 }
             }
@@ -2561,7 +2561,7 @@ module TypeScript {
             var decl = this.semanticInfoChain.getDeclForAST(varDeclOrParameter);
 
             // if the enclosing decl is a lambda, we may not have bound the parent symbol
-            if (enclosingDecl && decl.kind == PullElementKind.Parameter) {
+            if (enclosingDecl && decl.kind === PullElementKind.Parameter) {
                 enclosingDecl.ensureSymbolIsBound();
             }
 
@@ -2712,7 +2712,7 @@ module TypeScript {
 
                 // We associate the value with the function type here because we couldn't do so at biding
                 // but need this information to get correct doc comments
-                if (typeExprSymbol.kind == PullElementKind.FunctionType && !typeExprSymbol.getFunctionSymbol()) {
+                if (typeExprSymbol.kind === PullElementKind.FunctionType && !typeExprSymbol.getFunctionSymbol()) {
                     typeExprSymbol.setFunctionSymbol(declSymbol);
                 }
             }
@@ -2921,13 +2921,13 @@ module TypeScript {
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter, DiagnosticCode.Default_arguments_are_only_allowed_in_implementation));
                 }
             }
-            if (declSymbol.kind != PullElementKind.Parameter &&
-                (declSymbol.kind != PullElementKind.Property || declSymbol.getContainer().isNamedTypeSymbol())) {
+            if (declSymbol.kind !== PullElementKind.Parameter &&
+                (declSymbol.kind !== PullElementKind.Property || declSymbol.getContainer().isNamedTypeSymbol())) {
                 this.checkSymbolPrivacy(declSymbol, declSymbol.type, (symbol: PullSymbol) =>
                     this.variablePrivacyErrorReporter(varDeclOrParameter, declSymbol, symbol, context));
             }
 
-            if ((declSymbol.kind != PullElementKind.Property && declSymbol.kind != PullElementKind.EnumMember) || declSymbol.anyDeclHasFlag(PullElementFlags.PropertyParameter)) {
+            if ((declSymbol.kind !== PullElementKind.Property && declSymbol.kind !== PullElementKind.EnumMember) || declSymbol.anyDeclHasFlag(PullElementFlags.PropertyParameter)) {
                 // Non property variable with _this name, we need to verify if this would be ok
                 this.checkNameForCompilerGeneratedDeclarationCollision(varDeclOrParameter, /*isDeclaration*/ true, name, context);
             }
@@ -2954,7 +2954,7 @@ module TypeScript {
                     if (enclosingAST.kind() !== SyntaxKind.ParenthesizedArrowFunctionExpression &&
                         enclosingAST.kind() !== SyntaxKind.SimpleArrowFunctionExpression) {
 
-                        var block = enclosingDecl.kind == PullElementKind.Method ? (<FunctionDeclaration>enclosingAST).block : (<ConstructorDeclaration>enclosingAST).block;
+                        var block = enclosingDecl.kind === PullElementKind.Method ? (<FunctionDeclaration>enclosingAST).block : (<ConstructorDeclaration>enclosingAST).block;
                         if (!block) {
                             return; // just a overload signature - no code gen
                         }
@@ -6300,7 +6300,7 @@ module TypeScript {
                 if (this.isInStaticMemberContext(enclosingDecl)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
-                    if (parentDecl.kind == PullElementKind.Class) {
+                    if (parentDecl.kind === PullElementKind.Class) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Static_members_cannot_reference_class_type_parameters));
                         return this.getNewErrorTypeSymbol();
                     }
@@ -8116,7 +8116,7 @@ module TypeScript {
 
             var signatures = isSuperCall ? targetTypeSymbol.getConstructSignatures() : targetTypeSymbol.getCallSignatures();
 
-            if (!signatures.length && (targetTypeSymbol.kind == PullElementKind.ConstructorType)) {
+            if (!signatures.length && (targetTypeSymbol.kind === PullElementKind.ConstructorType)) {
                 this.postOverloadResolutionDiagnostics(this.semanticInfoChain.diagnosticFromAST(targetAST, DiagnosticCode.Value_of_type_0_is_not_callable_Did_you_mean_to_include_new, [targetTypeSymbol.toString()]),
                     additionalResults, context);
             }
@@ -11527,7 +11527,7 @@ module TypeScript {
                     this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getCallSignatures(), privacyErrorReporter);
                     this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getConstructSignatures(), privacyErrorReporter);
                     this.checkTypePrivacyOfSignatures(declSymbol, typeSymbol.getIndexSignatures(), privacyErrorReporter);
-                } else if (typeSymbol.kind == PullElementKind.TypeParameter) {
+                } else if (typeSymbol.kind === PullElementKind.TypeParameter) {
                     this.checkSymbolPrivacy(declSymbol, (<PullTypeParameterSymbol>typeSymbol).getConstraint(), privacyErrorReporter);
                 }
 
@@ -11543,12 +11543,12 @@ module TypeScript {
                 // Check if type symbol is externally visible
                 var symbolIsVisible = symbol.isExternallyVisible();
                 // If Visible check if the type is part of dynamic module
-                if (symbolIsVisible && symbol.kind != PullElementKind.TypeParameter) {
+                if (symbolIsVisible && symbol.kind !== PullElementKind.TypeParameter) {
                     var symbolPath = symbol.pathToRoot();
                     var declSymbolPath = declSymbol.pathToRoot();
                     // Symbols are from different dynamic modules
                     if (symbolPath[symbolPath.length - 1].kind === PullElementKind.DynamicModule &&
-                        declSymbolPath[declSymbolPath.length - 1].kind == PullElementKind.DynamicModule &&
+                        declSymbolPath[declSymbolPath.length - 1].kind === PullElementKind.DynamicModule &&
                         declSymbolPath[declSymbolPath.length - 1] != symbolPath[symbolPath.length - 1]) {
                         // Declaration symbol is from different modules
                         // Type may not be visible without import statement
@@ -11565,7 +11565,7 @@ module TypeScript {
                         }
                         symbol = symbolPath[symbolPath.length - 1];
                     }
-                } else if (symbol.kind == PullElementKind.TypeAlias) {
+                } else if (symbol.kind === PullElementKind.TypeAlias) {
                     var aliasSymbol = <PullTypeAliasSymbol>symbol;
                     symbolIsVisible = true;
                     aliasSymbol.setTypeUsedExternally(true);
@@ -11767,7 +11767,7 @@ module TypeScript {
                         return;
                     }
                 }
-                else if (functionSymbol.kind == PullElementKind.Method &&
+                else if (functionSymbol.kind === PullElementKind.Method &&
                          !isStatic &&
                          !functionSymbol.getContainer().isNamedTypeSymbol()) {
                     // method of the unnmaed type

@@ -12,10 +12,9 @@ module TypeScript {
         }
 
         private getParent(decl: PullDecl, returnInstanceType = false): PullTypeSymbol {
-
             var parentDecl = decl.getParentDecl();
 
-            if (parentDecl.kind == PullElementKind.Script) {
+            if (parentDecl.kind === PullElementKind.Script) {
                 return null;
             }
 
