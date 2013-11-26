@@ -1,4 +1,3 @@
-// BUG 787697
 class C<U extends T, T extends U> { }
 class C2<T extends U, U extends V, V extends T> { }
 

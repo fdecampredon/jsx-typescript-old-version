@@ -5,7 +5,6 @@
 
 module TypeScript {
     export var pullSymbolID = 0;
-    export var globalTyvarID = 0;
     export var sentinelEmptyArray: any[] = [];
 
     export class PullSymbol {
@@ -47,13 +46,13 @@ module TypeScript {
         }
 
         public isType() {
-            return (this.kind & PullElementKind.SomeType) != 0;
+            return (this.kind & PullElementKind.SomeType) !== 0;
         }
 
         public isTypeReference() { return false; }
 
         public isSignature() {
-            return (this.kind & PullElementKind.SomeSignature) != 0;
+            return (this.kind & PullElementKind.SomeSignature) !== 0;
         }
 
         public isArrayNamedTypeReference() {
@@ -118,7 +117,7 @@ module TypeScript {
 
                             if (!skipScopeSymbolAliasesLookIn && this.isExternalModuleReferenceAlias(symbol) &&
                                 (!symbol.assignedContainer().hasExportAssignment() ||
-                                (symbol.assignedContainer().getExportAssignedContainerSymbol() && symbol.assignedContainer().getExportAssignedContainerSymbol().kind == PullElementKind.DynamicModule))) {// It is a dynamic module)) {
+                                (symbol.assignedContainer().getExportAssignedContainerSymbol() && symbol.assignedContainer().getExportAssignedContainerSymbol().kind === PullElementKind.DynamicModule))) {// It is a dynamic module)) {
                                 scopeSymbolAliasesToLookIn.push(symbol);
                             }
                         }
@@ -167,12 +166,12 @@ module TypeScript {
                 }
 
                 // Has type that is not same as container
-                if (aliasSymbol.assignedType() && aliasSymbol.assignedType() != aliasSymbol.assignedContainer()) {
+                if (aliasSymbol.assignedType() && aliasSymbol.assignedType() !== aliasSymbol.assignedContainer()) {
                     return false;
                 }
 
                 // Its internal module
-                if (aliasSymbol.assignedContainer() && aliasSymbol.assignedContainer().kind != PullElementKind.DynamicModule) {
+                if (aliasSymbol.assignedContainer() && aliasSymbol.assignedContainer().kind !== PullElementKind.DynamicModule) {
                     return false;
                 }
 
@@ -185,12 +184,12 @@ module TypeScript {
         // Gets exported alias with internal module reference if present representing this symbol
         private getExportedInternalAliasSymbol(scopeSymbol: PullSymbol) {
             if (scopeSymbol) {
-                if (this.kind != PullElementKind.TypeAlias) {
+                if (this.kind !== PullElementKind.TypeAlias) {
                     var scopePath = scopeSymbol.pathToRoot();
                     for (var i = 0; i < scopePath.length; i++) {
                         var internalAliases = this.findAliasedType(scopeSymbol, /*skipScopeSymbolAliasesLookIn*/ true, /*lookIntoOnlyExportedAlias*/ true);
                         if (internalAliases) {
-                            Debug.assert(internalAliases.length == 1);
+                            Debug.assert(internalAliases.length === 1);
                             return internalAliases[0];
                         }
                     }
@@ -240,18 +239,14 @@ module TypeScript {
          */
         public getName(scopeSymbol?: PullSymbol, useConstraintInName?: boolean): string {
             var aliasName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.getName(scopeSymbol, useConstraintInName), (symbol) => symbol.getName());
-            if (aliasName != null) {
-                return aliasName;
-            }
-
-            return this.name;
+            return aliasName || this.name;
         }
 
         public getDisplayName(scopeSymbol?: PullSymbol, useConstraintInName?: boolean, skipInternalAliasName?: boolean): string {
             var aliasDisplayName = this.getAliasSymbolName(scopeSymbol,
                 (symbol) => symbol.getDisplayName(scopeSymbol, useConstraintInName),
                 (symbol) => symbol.getDisplayName(), skipInternalAliasName);
-            if (aliasDisplayName != null) {
+            if (aliasDisplayName) {
                 return aliasDisplayName;
             }
 
@@ -387,9 +382,10 @@ module TypeScript {
                 }
                 path[path.length] = node;
                 var nodeKind = node.kind;
-                if (nodeKind == PullElementKind.Parameter) {
+                if (nodeKind === PullElementKind.Parameter) {
                     break;
-                } else {
+                }
+                else {
                     node = node.getContainer();
                 }
             }
@@ -406,7 +402,8 @@ module TypeScript {
             var bPath: PullSymbol[];
             if (b) {
                 bPath = b.pathToRoot();
-            } else {
+            }
+            else {
                 return aPath;
             }
 
@@ -430,7 +427,7 @@ module TypeScript {
                                 bDecl = decls[0].getParentDecl();
                             }
                         }
-                        if (!aDecl || !bDecl || aDecl == bDecl) {
+                        if (!aDecl || !bDecl || aDecl === bDecl) {
                             commonNodeIndex = i;
                             break;
                         }
@@ -463,19 +460,19 @@ module TypeScript {
             var fullName = "";
 
             var aliasFullName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
-            if (aliasFullName != null) {
+            if (aliasFullName) {
                 return aliasFullName;
             }
 
             for (var i = 1; i < path.length; i++) {
                 var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
-                if (aliasFullName != null) {
+                if (aliasFullName) {
                     fullName = aliasFullName + "." + fullName;
                     break;
                 }
 
                 var scopedName = path[i].getNamePartForFullName();
-                if (path[i].kind == PullElementKind.DynamicModule && !isQuoted(scopedName)) {
+                if (path[i].kind === PullElementKind.DynamicModule && !isQuoted(scopedName)) {
                     // Same file as dynamic module - do not include this name
                     break;
                 }
@@ -498,7 +495,7 @@ module TypeScript {
 
             var aliasFullName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName),
                 (symbol) => symbol.getNamePartForFullName(), skipInternalAliasName);
-            if (aliasFullName != null) {
+            if (aliasFullName) {
                 return aliasFullName;
             }
 
@@ -507,7 +504,7 @@ module TypeScript {
                 if (kind === PullElementKind.Container || kind === PullElementKind.DynamicModule) {
                     var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol.getScopedName(scopeSymbol, skipTypeParametersInName, /*useConstraintInName*/ false, skipInternalAliasName),
                         (symbol) => symbol.getNamePartForFullName(), skipInternalAliasName);
-                    if (aliasFullName != null) {
+                    if (aliasFullName) {
                         fullName = aliasFullName + "." + fullName;
                         break;
                     }
@@ -523,7 +520,8 @@ module TypeScript {
                         }
                         break;
                     }
-                } else {
+                }
+                else {
                     // Any other type of container is not part of the name
                     break;
                 }
@@ -557,9 +555,9 @@ module TypeScript {
 
         private getTypeNameForFunctionSignature(prefix: string, scopeSymbol?: PullSymbol, getPrettyTypeName?: boolean) {
             var type = this.type;
-            if (type && !type.isNamedTypeSymbol() && this.kind != PullElementKind.Property && this.kind != PullElementKind.Variable && this.kind != PullElementKind.Parameter) {
+            if (type && !type.isNamedTypeSymbol() && this.kind !== PullElementKind.Property && this.kind !== PullElementKind.Variable && this.kind !== PullElementKind.Parameter) {
                 var signatures = type.getCallSignatures();
-                if (signatures.length == 1 || (getPrettyTypeName && signatures.length)) {
+                if (signatures.length === 1 || (getPrettyTypeName && signatures.length)) {
                     var typeName = new MemberNameArray();
                     var signatureName = PullSignatureSymbol.getSignaturesTypeNameEx(signatures, prefix, /*shortform*/ false, /*brackets*/ false, scopeSymbol, getPrettyTypeName);
                     typeName.addAll(signatureName);
@@ -681,7 +679,7 @@ module TypeScript {
                     var parentDecl = decls[0].getParentDecl();
                     if (parentDecl) {
                         var parentSymbol = parentDecl.getSymbol();
-                        if (!parentSymbol || parentDecl.kind == PullElementKind.Script) {
+                        if (!parentSymbol || parentDecl.kind === PullElementKind.Script) {
                             return true;
                         }
 
@@ -693,9 +691,9 @@ module TypeScript {
             }
 
             // If export assignment check if this is the symbol that is exported
-            if (container.kind == PullElementKind.DynamicModule ||
-                (container.getAssociatedContainerType() && container.getAssociatedContainerType().kind == PullElementKind.DynamicModule)) {
-                var containerSymbol = container.kind == PullElementKind.DynamicModule
+            if (container.kind === PullElementKind.DynamicModule ||
+                (container.getAssociatedContainerType() && container.getAssociatedContainerType().kind === PullElementKind.DynamicModule)) {
+                var containerSymbol = container.kind === PullElementKind.DynamicModule
                     ? <PullContainerSymbol>container
                     : <PullContainerSymbol>container.getAssociatedContainerType();
                 if (PullContainerSymbol.usedAsSymbol(containerSymbol, this)) {
@@ -704,7 +702,7 @@ module TypeScript {
             }
 
             // If non exported member and is not class properties and method, it is not visible
-            if (!this.anyDeclHasFlag(PullElementFlags.Exported) && kind != PullElementKind.Property && kind != PullElementKind.Method) {
+            if (!this.anyDeclHasFlag(PullElementFlags.Exported) && kind !== PullElementKind.Property && kind !== PullElementKind.Method) {
                 return false;
             }
 
@@ -721,7 +719,7 @@ module TypeScript {
                     return docComments(enclosingModuleDeclaration);
                 }
 
-                if (ast.kind() != TypeScript.SyntaxKind.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable) {
+                if (ast.kind() !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
                     return docComments(ast);
                 }
             }
@@ -735,10 +733,10 @@ module TypeScript {
                 return docComments;
             }
 
-            var isParameter = symbol.kind == TypeScript.PullElementKind.Parameter;
+            var isParameter = symbol.kind === TypeScript.PullElementKind.Parameter;
             var decls = symbol.getDeclarations();
             for (var i = 0; i < decls.length; i++) {
-                if (isParameter && decls[i].kind == TypeScript.PullElementKind.Property) {
+                if (isParameter && decls[i].kind === TypeScript.PullElementKind.Property) {
                     // Ignore declaration for property that was defined as parameter because they both 
                     // point to same doc comment
                     continue;
@@ -777,24 +775,25 @@ module TypeScript {
 
         public docComments(useConstructorAsClass?: boolean): string {
             var decls = this.getDeclarations();
-            if (useConstructorAsClass && decls.length && decls[0].kind == TypeScript.PullElementKind.ConstructorMethod) {
+            if (useConstructorAsClass && decls.length && decls[0].kind === TypeScript.PullElementKind.ConstructorMethod) {
                 var classDecl = decls[0].getParentDecl();
                 return this.getDocCommentText(this.getDocCommentsOfDecl(classDecl));
             }
 
             if (this._docComments === null) {
                 var docComments: string = "";
-                if (!useConstructorAsClass && this.kind == TypeScript.PullElementKind.ConstructSignature &&
-                    decls.length && decls[0].kind == TypeScript.PullElementKind.Class) {
+                if (!useConstructorAsClass && this.kind === TypeScript.PullElementKind.ConstructSignature &&
+                    decls.length && decls[0].kind === TypeScript.PullElementKind.Class) {
                     var classSymbol = (<TypeScript.PullSignatureSymbol>this).returnType;
                     var extendedTypes = classSymbol.getExtendedTypes();
                     if (extendedTypes.length) {
                         docComments = extendedTypes[0].getConstructorMethod().docComments();
-                    } else {
+                    }
+                    else {
                         docComments = "";
                     }
                 }
-                else if (this.kind == TypeScript.PullElementKind.Parameter) {
+                else if (this.kind === TypeScript.PullElementKind.Parameter) {
                     var parameterComments: string[] = [];
 
                     var funcContainer = this.getEnclosingSignature();
@@ -812,7 +811,7 @@ module TypeScript {
                 }
                 else {
                     var getSymbolComments = true;
-                    if (this.kind == TypeScript.PullElementKind.FunctionType) {
+                    if (this.kind === TypeScript.PullElementKind.FunctionType) {
                         var functionSymbol = (<TypeScript.PullTypeSymbol>this).getFunctionSymbol();
 
                         if (functionSymbol) {
@@ -829,10 +828,10 @@ module TypeScript {
                     }
                     if (getSymbolComments) {
                         docComments = this.getDocCommentText(this.getDocCommentArray(this));
-                        if (docComments == "") {
-                            if (this.kind == TypeScript.PullElementKind.CallSignature) {
+                        if (docComments === "") {
+                            if (this.kind === TypeScript.PullElementKind.CallSignature) {
                                 var callTypeSymbol = (<TypeScript.PullSignatureSymbol>this).functionType;
-                                if (callTypeSymbol && callTypeSymbol.getCallSignatures().length == 1) {
+                                if (callTypeSymbol && callTypeSymbol.getCallSignatures().length === 1) {
                                     docComments = callTypeSymbol.docComments();
                                 }
                             }
@@ -887,7 +886,8 @@ module TypeScript {
                                 if (curlies === 0) {
                                     // We do not have any more } to match the type expression is ignored completely
                                     break;
-                                } else {
+                                }
+                                else {
                                     // there are more { to be matched with }
                                     continue;
                                 }
@@ -987,7 +987,8 @@ module TypeScript {
                         // New start of contents 
                         prevPos = i;
                         inParamTag = true;
-                    } else if (wasInParamtag) {
+                    }
+                    else if (wasInParamtag) {
                         // Non param tag start
                         prevPos = i;
                         inParamTag = false;
@@ -1053,7 +1054,8 @@ module TypeScript {
 
                     if (nonSpaceIndex !== -1) {
                         jsDocSpacesRemoved = nonSpaceIndex - startIndex;
-                    } else {
+                    }
+                    else {
                         return null;
                     }
                 }
@@ -1096,10 +1098,10 @@ module TypeScript {
         public isDefinition() { return false; }
 
         // GTODO
-        public isGeneric() { return this.hasAGenericParameter || (this.typeParameters && this.typeParameters.length != 0); }
+        public isGeneric() { return this.hasAGenericParameter || (this.typeParameters && this.typeParameters.length !== 0); }
 
         public addParameter(parameter: PullSymbol, isOptional = false) {
-            if (this.parameters == sentinelEmptyArray) {
+            if (this.parameters === sentinelEmptyArray) {
                 this.parameters = [];
             }
 
@@ -1354,7 +1356,7 @@ module TypeScript {
                 return isCheckingTypeArgumentList;
             }
 
-            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
+            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) !== undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
             }
 
@@ -1488,14 +1490,14 @@ module TypeScript {
 
         public isType() { return true; }
         public isClass() {
-            return this.kind == PullElementKind.Class || (this._constructorMethod != null);
+            return this.kind === PullElementKind.Class || (this._constructorMethod !== null);
         }
-        public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) != 0; }
-        public isConstructor() { return this.kind == PullElementKind.ConstructorType; }
+        public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) !== 0; }
+        public isConstructor() { return this.kind === PullElementKind.ConstructorType; }
         public isTypeParameter() { return false; }
         public isTypeVariable() { return false; }
         public isError() { return false; }
-        public isEnum() { return this.kind == PullElementKind.Enum; }
+        public isEnum() { return this.kind === PullElementKind.Enum; }
 
         public getTypeParameterArgumentMap(): PullTypeSymbol[] {
             return null;
@@ -1520,7 +1522,7 @@ module TypeScript {
 
         public hasMembers(): boolean {
 
-            if (this._members != sentinelEmptyArray) {
+            if (this._members !== sentinelEmptyArray) {
                 return true;
             }
 
@@ -1588,8 +1590,8 @@ module TypeScript {
 
             var nonMemberSymbol = this._containedNonMemberTypeNameCache[typeName];
 
-            if (nonMemberSymbol && kind != PullElementKind.None) {
-                nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
+            if (nonMemberSymbol && kind !== PullElementKind.None) {
+                nonMemberSymbol = hasFlag(nonMemberSymbol.kind, kind) ? nonMemberSymbol : null;
             }
 
             return nonMemberSymbol;
@@ -1602,8 +1604,8 @@ module TypeScript {
 
             var nonMemberSymbol = this._containedNonMemberContainerCache[containerName];
 
-            if (nonMemberSymbol && kind != PullElementKind.None) {
-                nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
+            if (nonMemberSymbol && kind !== PullElementKind.None) {
+                nonMemberSymbol = hasFlag(nonMemberSymbol.kind, kind) ? nonMemberSymbol : null;
             }
 
             return nonMemberSymbol;
@@ -1826,7 +1828,7 @@ module TypeScript {
                 }
 
                 var result = this._simpleInstantiationCache[substitutingTypes[0].pullSymbolID];
-                return result ? result : null;
+                return result || null;
             }
             else {
                 if (!this._complexInstantiationCache) {
@@ -1834,7 +1836,7 @@ module TypeScript {
                 }
 
                 var result = this._complexInstantiationCache[getIDForTypeSubstitutions(substitutingTypes)];
-                return result ? result : null;
+                return result || null;
             }
         }
 
@@ -2167,7 +2169,8 @@ module TypeScript {
                     // Class extending non class Type is invalid
                     return baseType.kind === PullElementKind.Class;
                 }
-            } else {
+            }
+            else {
                 if (!thisIsClass) {
                     // Interface implementing baseType is invalid
                     return false;
@@ -2214,8 +2217,8 @@ module TypeScript {
 
             memberSymbol = this._enclosedTypeNameCache[name];
 
-            if (memberSymbol && kind != PullElementKind.None) {
-                memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
+            if (memberSymbol && kind !== PullElementKind.None) {
+                memberSymbol = hasFlag(memberSymbol.kind, kind) ? memberSymbol : null;
             }
 
             return memberSymbol;
@@ -2230,8 +2233,8 @@ module TypeScript {
 
             memberSymbol = this._enclosedContainerCache[name];
 
-            if (memberSymbol && kind != PullElementKind.None) {
-                memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
+            if (memberSymbol && kind !== PullElementKind.None) {
+                memberSymbol = hasFlag(memberSymbol.kind, kind) ? memberSymbol : null;
             }
 
             return memberSymbol;
@@ -2242,7 +2245,7 @@ module TypeScript {
             var allMembers: PullSymbol[] = [];
 
             // Add members
-            if (this._members != sentinelEmptyArray) {
+            if (this._members !== sentinelEmptyArray) {
 
                 for (var i = 0, n = this._members.length; i < n; i++) {
                     var member = this._members[i];
@@ -2318,7 +2321,7 @@ module TypeScript {
                 kind === PullElementKind.TypeAlias || // dynamic module
                 kind === PullElementKind.Enum || // enum
                 kind === PullElementKind.TypeParameter || //TypeParameter
-                ((kind === PullElementKind.Interface || kind === PullElementKind.ObjectType) && this.name != "")) {
+                ((kind === PullElementKind.Interface || kind === PullElementKind.ObjectType) && this.name !== "")) {
                 return true;
             }
 
@@ -2348,7 +2351,8 @@ module TypeScript {
 
             if (skipTypeParametersInName) {
                 return MemberName.create(super.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName));
-            } else {
+            }
+            else {
                 var builder = new MemberNameArray();
                 builder.prefix = super.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName);
 
@@ -2375,7 +2379,7 @@ module TypeScript {
 
             // typeof Function
             var functionSymbol = this.getFunctionSymbol();
-            if (functionSymbol && functionSymbol.kind == PullElementKind.Function && !PullHelpers.isSymbolLocal(functionSymbol)) {
+            if (functionSymbol && functionSymbol.kind === PullElementKind.Function && !PullHelpers.isSymbolLocal(functionSymbol)) {
                 return functionSymbol;
             }
 
@@ -2403,20 +2407,22 @@ module TypeScript {
                 this._inMemberTypeNameEx = true;
 
                 var allMemberNames = new MemberNameArray();
-                var curlies = !topLevel || indexSignatures.length != 0;
+                var curlies = !topLevel || indexSignatures.length !== 0;
                 var delim = "; ";
                 for (var i = 0; i < members.length; i++) {
-                    if (members[i].kind == PullElementKind.Method && members[i].type.hasOnlyOverloadCallSignatures()) {
+                    if (members[i].kind === PullElementKind.Method && members[i].type.hasOnlyOverloadCallSignatures()) {
                         // Add all Call signatures of the method
                         var methodCallSignatures = members[i].type.getCallSignatures();
                         var nameStr = members[i].getDisplayName(scopeSymbol) + (members[i].isOptional ? "?" : "");;
                         var methodMemberNames = PullSignatureSymbol.getSignaturesTypeNameEx(methodCallSignatures, nameStr, /*shortform*/ false, /*brackets*/ false, scopeSymbol);
                         allMemberNames.addAll(methodMemberNames);
-                    } else {
+                    }
+                    else {
                         var memberTypeName = members[i].getNameAndTypeNameEx(scopeSymbol);
                         if (memberTypeName.isArray() && (<MemberNameArray>memberTypeName).delim === delim) {
                             allMemberNames.addAll((<MemberNameArray>memberTypeName).entries);
-                        } else {
+                        }
+                        else {
                             allMemberNames.add(memberTypeName);
                         }
                     }
@@ -2452,7 +2458,8 @@ module TypeScript {
                     allMemberNames.prefix = "{ ";
                     allMemberNames.suffix = "}";
                     allMemberNames.delim = delim;
-                } else if (allMemberNames.entries.length > 1) {
+                }
+                else if (allMemberNames.entries.length > 1) {
                     allMemberNames.delim = delim;
                 }
 
@@ -2601,7 +2608,7 @@ module TypeScript {
                     if (typeArguments) {
                         for (var i = 0; i < typeArguments.length; i++) {
                             if (!typeArguments[i].isTypeParameter() && // The typeArgument is not type parameter
-                                !(rootTypeArguments && rootTypeArguments[i] == typeArguments[i].getRootSymbol())) { // Root symbol of the type argument is not same as type argument of rootSymbol
+                                !(rootTypeArguments && rootTypeArguments[i] === typeArguments[i].getRootSymbol())) { // Root symbol of the type argument is not same as type argument of rootSymbol
                                 return false;
                             }
                         }
@@ -2609,7 +2616,8 @@ module TypeScript {
                     }
 
                     return false;
-                } else {
+                }
+                else {
                     // Just a reference to the declaration
                     return true;
                 }
@@ -2620,7 +2628,7 @@ module TypeScript {
 
         private isTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
             // If this type is already in wrap check or is this is the typeBeingWrapped - it is the wrapping of the type
-            if (this.inWrapCheck || this == typeBeingWrapped) {
+            if (this.inWrapCheck || this === typeBeingWrapped) {
                 return true;
             }
 
@@ -2635,7 +2643,7 @@ module TypeScript {
         private anyRootTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
             var prevRootType = this;
             var rootType = <PullTypeSymbol>this.getRootSymbol();
-            while (rootType != prevRootType) {
+            while (rootType !== prevRootType) {
                 if (rootType.isTypeBeingWrapped(typeBeingWrapped)) {
                     // members are already being checked - do not iterate
                     return true;
@@ -2658,7 +2666,7 @@ module TypeScript {
                 return isCheckingTypeArgumentList;
             }
 
-            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
+            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) !== undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
             }
 
@@ -2889,7 +2897,7 @@ module TypeScript {
                 return false;
             }
 
-            if (!containerSymbol.isAlias() && containerSymbol.type == symbol) {
+            if (!containerSymbol.isAlias() && containerSymbol.type === symbol) {
                 return true;
             }
 
@@ -2898,7 +2906,7 @@ module TypeScript {
             var typeExportSymbol = moduleSymbol.getExportAssignedTypeSymbol();
             var containerExportSymbol = moduleSymbol.getExportAssignedContainerSymbol();
             if (valueExportSymbol || typeExportSymbol || containerExportSymbol) {
-                return valueExportSymbol == symbol || typeExportSymbol == symbol || containerExportSymbol == symbol || PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
+                return valueExportSymbol === symbol || typeExportSymbol == symbol || containerExportSymbol == symbol || PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
             }
 
             return false;
@@ -3005,7 +3013,8 @@ module TypeScript {
                     this.retrievingExportAssignment = true;
                     var sym = (<PullTypeAliasSymbol>this._assignedType).getExportAssignedTypeSymbol();
                     this.retrievingExportAssignment = false;
-                } else if (this._assignedType != this._assignedContainer) {
+                }
+                else if (this._assignedType !== this._assignedContainer) {
                     return this._assignedType;
                 }
             }

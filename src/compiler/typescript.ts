@@ -190,7 +190,8 @@ module TypeScript {
                     updatedFileName = emitOptions.outputDirectory() + updatedFileName;
                 }
                 return extensionChanger(updatedFileName, false);
-            } else {
+            }
+            else {
                 return extensionChanger(emitOptions.sharedOutputFile(), true);
             }
         }
@@ -264,7 +265,8 @@ module TypeScript {
 
             if (declarationEmitter) {
                 declarationEmitter.document = document;
-            } else {
+            }
+            else {
                 var declareFileName = this.mapOutputFileName(document, emitOptions, TypeScriptCompiler.mapToDTSFileName);
                 declarationEmitter = new DeclarationEmitter(declareFileName, document, this, emitOptions, this.semanticInfoChain);
             }
@@ -355,7 +357,8 @@ module TypeScript {
             if (wholeFileNameReplaced) {
                 // The complete output is redirected in this file so do not change extension
                 return fileName;
-            } else {
+            }
+            else {
                 // Change the extension of the file
                 var splitFname = fileName.split(".");
                 splitFname.pop();
@@ -896,7 +899,7 @@ module TypeScript {
 
             if (!symbol) {
                 Debug.assert(
-                    ast.kind() == SyntaxKind.SourceUnit,
+                    ast.kind() === SyntaxKind.SourceUnit,
                     "No symbol was found for ast and ast was not source unit. Ast Kind: " + SyntaxKind[ast.kind()] );
                 return null;
             }
@@ -1159,13 +1162,13 @@ module TypeScript {
                 case CompilerPhase.Syntax:
                 case CompilerPhase.Semantics:
                     // Each of these phases are done when we've processed the last file.
-                    return this.index == this.fileNames.length;
+                    return this.index === this.fileNames.length;
 
                 case CompilerPhase.Emit:
                 case CompilerPhase.DeclarationEmit:
                     // Emitting is done when we get 'one' past the end of hte file list.  This is
                     // because we use that step to collect the results from the shared emitter.
-                    return this.index == (this.fileNames.length + 1);
+                    return this.index === (this.fileNames.length + 1);
             }
 
             return false;
@@ -1293,11 +1296,11 @@ module TypeScript {
 
     export function compareDataObjects(dst: any, src: any): boolean {
         for (var e in dst) {
-            if (typeof dst[e] == "object") {
+            if (typeof dst[e] === "object") {
                 if (!compareDataObjects(dst[e], src[e]))
                     return false;
             }
-            else if (typeof dst[e] != "function") {
+            else if (typeof dst[e] !== "function") {
                 if (dst[e] !== src[e])
                     return false;
             }

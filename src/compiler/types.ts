@@ -33,7 +33,8 @@ module TypeScript {
 
             if (memberName.isString()) {
                 result += (<MemberNameString>memberName).text;
-            } else if (memberName.isArray()) {
+            }
+            else if (memberName.isArray()) {
                 var ar = <MemberNameArray>memberName;
                 for (var index = 0; index < ar.entries.length; index++) {
                     if (ar.entries[index].isMarker()) {

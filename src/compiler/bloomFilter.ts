@@ -111,16 +111,16 @@ module TypeScript {
 
         public isEquivalent(filter: BloomFilter): boolean {
             return BloomFilter.isEquivalent(this.bitArray, filter.bitArray)
-                && this.hashFunctionCount == filter.hashFunctionCount;
+                && this.hashFunctionCount === filter.hashFunctionCount;
         }
 
         static isEquivalent(array1: boolean[], array2: boolean[]): boolean {
-            if (array1.length != array2.length) {
+            if (array1.length !== array2.length) {
                 return false;
             }
 
             for (var i = 0; i < array1.length; i++) {
-                if (array1[i] != array2[i]) {
+                if (array1[i] !== array2[i]) {
                     return false;
                 }
             }

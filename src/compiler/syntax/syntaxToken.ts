@@ -218,7 +218,7 @@ module TypeScript.Syntax {
 
                         case CharacterCodes.carriageReturn:
                             var nextIndex = i + 1;
-                            if (nextIndex < text.length && text.charCodeAt(nextIndex) == CharacterCodes.lineFeed) {
+                            if (nextIndex < text.length && text.charCodeAt(nextIndex) === CharacterCodes.lineFeed) {
                                 // Skip the entire \r\n sequence.
                                 i++;
                             }

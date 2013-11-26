@@ -90,7 +90,7 @@ module TypeScript {
 
             // Handle the last char (or 2 bytes) if they exist.  This happens if the original string had
             // odd length.
-            if (numberOfCharsLeft == 1) {
+            if (numberOfCharsLeft === 1) {
                 h ^= key.charCodeAt(index);
                 h = IntegerUtilities.integerMultiplyLow32Bits(h, m);
             }

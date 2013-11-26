@@ -106,14 +106,14 @@ module TypeScript {
         }
 
         public ensureSymbolIsBound() {
-            if (!this.hasSymbol() && this.kind != PullElementKind.Script) {
+            if (!this.hasSymbol() && this.kind !== PullElementKind.Script) {
                 var binder = this.semanticInfoChain().getBinder();
                 binder.bindDeclToPullSymbol(this);
             }
         }
 
         public getSymbol(): PullSymbol {
-            if (this.kind == PullElementKind.Script) {
+            if (this.kind === PullElementKind.Script) {
                 return null;
             }
 
@@ -247,10 +247,12 @@ module TypeScript {
          }
 
         public getChildDecls(): PullDecl[] {
-            return this.childDecls ? this.childDecls : sentinelEmptyPullDeclArray;
+            return this.childDecls || sentinelEmptyPullDeclArray;
         }
 
-        public getTypeParameters(): PullDecl[] { return this.typeParameters ? this.typeParameters : sentinelEmptyPullDeclArray; }
+        public getTypeParameters(): PullDecl[] {
+            return this.typeParameters || sentinelEmptyPullDeclArray;
+        }
 
         public addVariableDeclToGroup(decl: PullDecl) {
             if (!this.declGroups) {
@@ -283,7 +285,7 @@ module TypeScript {
                 }
             }
 
-            return declGroups ? declGroups : sentinelEmptyPullDeclArray;
+            return declGroups || sentinelEmptyPullDeclArray;
         }
 
         public hasBeenBound() {
@@ -376,7 +378,7 @@ module TypeScript {
                 var parentDecl = this.parentDecl;
 
                 while (parentDecl) {
-                    if (parentDecl && path[path.length - 1] != parentDecl && !(parentDecl.kind & PullElementKind.ObjectLiteral)) {
+                    if (parentDecl && path[path.length - 1] !== parentDecl && !(parentDecl.kind & PullElementKind.ObjectLiteral)) {
                         path.unshift(parentDecl);
                     }
 

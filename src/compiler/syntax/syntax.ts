@@ -347,7 +347,8 @@ module TypeScript.Syntax {
             var end = fullStart + trivia.fullWidth();
             if (position < end) {
                 return true;
-            } else if (position === end) {
+            }
+            else if (position === end) {
                 return trivia.kind() === SyntaxKind.SingleLineCommentTrivia || isUnterminatedMultilineCommentTrivia(trivia);
             }
         }

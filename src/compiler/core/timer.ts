@@ -25,7 +25,8 @@ module TypeScript {
             };
 
             resolution = TestUtilities.QueryPerformanceFrequency();
-        } else {
+        }
+         else {
             now = function () {
                 return Date.now();
             };

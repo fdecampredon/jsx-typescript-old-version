@@ -21,23 +21,20 @@ module TypeScript {
 
         // TODO: We need the context because the sourceIsRelatableToTarget needs the context.
         // Investigate removing this dependency
-        public tryToFix(resolver: PullTypeResolver, context: PullTypeResolutionContext) {
-            if (this._inferredTypeAfterFixing) {
-                // Already fixed
-                return;
+        public tryToFix(resolver: PullTypeResolver, context: PullTypeResolutionContext): void {
+            if (!this._inferredTypeAfterFixing) {
+                // November 18, 2013: Section 4.12.2:
+                // The inferred type argument for a particular type parameter is the widened form
+                // (section 3.9) of the best common type(section 3.10) of a set of candidate types.
+                var collection = {
+                    getLength: () => this.inferenceCandidates.length,
+                    getTypeAtIndex: (index: number) => this.inferenceCandidates[index].type
+                };
+
+                // Now widen (per the spec citation above)
+                var bestCommonType = resolver.findBestCommonType(collection, context, new TypeComparisonInfo());
+                this._inferredTypeAfterFixing = bestCommonType.widenedType(resolver, /*ast*/ null, context);
             }
-
-            // November 18, 2013: Section 4.12.2:
-            // The inferred type argument for a particular type parameter is the widened form
-            // (section 3.9) of the best common type(section 3.10) of a set of candidate types.
-            var collection = {
-                getLength: () => this.inferenceCandidates.length,
-                getTypeAtIndex: (index: number) =>  this.inferenceCandidates[index].type
-            };
-
-            // Now widen (per the spec citation above)
-            var bestCommonType = resolver.findBestCommonType(collection, context, new TypeComparisonInfo());
-            this._inferredTypeAfterFixing = bestCommonType.widenedType(resolver, /*ast*/ null, context);
         }
     }
 
@@ -56,7 +53,7 @@ module TypeScript {
         constructor(resolver: PullTypeResolver, argumentsOrParameters: any) {
             this.resolver = resolver;
 
-            if (argumentsOrParameters.nonSeparatorAt != undefined) {
+            if (argumentsOrParameters.nonSeparatorAt !== undefined) {
                 this.argumentASTs = argumentsOrParameters;
             }
             else {
@@ -164,7 +161,7 @@ module TypeScript {
 
                     // is there already a substitution for this type?
                     for (var i = 0; i < results.length; i++) {
-                        if (results[i].type == info.typeParameter) {
+                        if (results[i].type === info.typeParameter) {
                             results[i].type = info._inferredTypeAfterFixing;
                         }
                     }

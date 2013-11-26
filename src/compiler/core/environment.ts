@@ -54,7 +54,8 @@ module TypeScript {
             function getStreamObject(): any {
                 if (streamObjectPool.length > 0) {
                     return streamObjectPool.pop();
-                } else {
+                }
+                else {
                     return new ActiveXObject("ADODB.Stream");
                 }
             }
@@ -291,9 +292,11 @@ module TypeScript {
                         var stats = _fs.statSync(path);
                         if (stats.isFile()) {
                             throw "\"" + path + "\" exists but isn't a directory.";
-                        } else if (stats.isDirectory()) {
+                        }
+                        else if (stats.isDirectory()) {
                             return;
-                        } else {
+                        }
+                        else {
                             mkdirRecursiveSync(_path.dirname(path));
                             _fs.mkdirSync(path, 509 /*775 in octal*/);
                         }
@@ -352,7 +355,8 @@ module TypeScript {
                             var stat = _fs.statSync(folder + "\\" + files[i]);
                             if (options.recursive && stat.isDirectory()) {
                                 paths = paths.concat(filesInFolder(folder + "\\" + files[i]));
-                            } else if (stat.isFile() && (!spec || files[i].match(spec))) {
+                            }
+                            else if (stat.isFile() && (!spec || files[i].match(spec))) {
                                 paths.push(folder + "\\" + files[i]);
                             }
                         }

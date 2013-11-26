@@ -33,7 +33,7 @@ module TypeScript {
         constructor(public referencedTypeSymbol: PullTypeSymbol) {
             super(referencedTypeSymbol.name, referencedTypeSymbol.kind);
 
-            Debug.assert(referencedTypeSymbol != null, "Type root symbol may not be null");
+            Debug.assert(referencedTypeSymbol !== null, "Type root symbol may not be null");
 
             this.setRootSymbol(referencedTypeSymbol);
 
@@ -349,7 +349,7 @@ module TypeScript {
 
         public getGenerativeTypeClassification(enclosingType: PullTypeSymbol): GenerativeTypeClassification {
 
-            if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
+            if (this._generativeTypeClassification === GenerativeTypeClassification.Unknown) {
                 // With respect to the enclosing type, is this type reference open, closed or 
                 // infinitely expanding?
 
@@ -394,23 +394,23 @@ module TypeScript {
                     }
 
                     // if none of the type parameters are wrapped, the type reference is closed
-                    if (i == typeParameters.length) {
+                    if (i === typeParameters.length) {
                         this._generativeTypeClassification = GenerativeTypeClassification.Closed;
                     }
 
                     // If the type reference is not closed, it's either open or infinitely expanding
-                    if (this._generativeTypeClassification == GenerativeTypeClassification.Unknown) {
+                    if (this._generativeTypeClassification === GenerativeTypeClassification.Unknown) {
 
                         // A type reference that references any of this type's type parameters in a type
                         // argument position is 'open'
 
                         var i = 0;
 
-                        while ((this._generativeTypeClassification == GenerativeTypeClassification.Unknown) &&
+                        while ((this._generativeTypeClassification === GenerativeTypeClassification.Unknown) &&
                             (i < typeReferenceTypeArguments.length)) {
 
                                 for (var j = 0; j < typeParameters.length; j++) {
-                                    if (typeParameters[j] == typeReferenceTypeArguments[i]) {
+                                    if (typeParameters[j] === typeReferenceTypeArguments[i]) {
                                         this._generativeTypeClassification = GenerativeTypeClassification.Open;
                                         break;
                                     }
@@ -421,7 +421,7 @@ module TypeScript {
 
                         // if it's not open, then it's infinitely expanding (given that the 'wrap' check above
                         // returned true
-                        if (this._generativeTypeClassification != GenerativeTypeClassification.Open) {
+                        if (this._generativeTypeClassification !== GenerativeTypeClassification.Open) {
                             this._generativeTypeClassification = GenerativeTypeClassification.InfinitelyExpanding;
                         }
                     }
@@ -435,7 +435,7 @@ module TypeScript {
 
         public isArrayNamedTypeReference(): boolean {
             if (this._isArray === undefined) {
-                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() == this._getResolver().getArrayNamedType());
+                this._isArray = this.getRootSymbol().isArrayNamedTypeReference() || (this.getRootSymbol() === this._getResolver().getArrayNamedType());
             }
             return this._isArray;
         }
@@ -446,12 +446,7 @@ module TypeScript {
             }
 
             var typeArguments = this.getTypeArguments();
-
-            if (typeArguments != null) {
-                return typeArguments[0];
-            }
-
-            return null;
+            return typeArguments ? typeArguments[0] : null;
         }
 
         public getReferencedTypeSymbol(): PullTypeSymbol {
@@ -513,11 +508,11 @@ module TypeScript {
             // If the reference is made to itself (e.g., referring to Array<T> within the declaration of Array<T>,
             // We want to special-case the reference so later calls to getMember, etc., will delegate directly
             // to the referenced declaration type, and not force any additional instantiation
-            var isReferencedType = (type.kind & PullElementKind.SomeInstantiatableType) != 0;
+            var isReferencedType = (type.kind & PullElementKind.SomeInstantiatableType) !== 0;
 
             if (isReferencedType) {
                 if (typeParameters && reconstructedTypeArgumentList) {
-                    if (typeParameters.length == reconstructedTypeArgumentList.length) {
+                    if (typeParameters.length === reconstructedTypeArgumentList.length) {
                         for (var i = 0; i < typeParameters.length; i++) {
                             if (!PullHelpers.typeSymbolsAreIdentical(typeParameters[i], reconstructedTypeArgumentList[i])) {
                                 isReferencedType = false;
@@ -585,7 +580,7 @@ module TypeScript {
                             (!outerSubstitution.isTypeParameter() ||
                             !outerTypeMap[innerSubstitution.pullSymbolID] ||
                             !outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] ||
-                            (outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] == outerSubstitution))) {
+                            (outerTypeMap[outerTypeMap[typeParameterID].pullSymbolID] === outerSubstitution))) {
 
                             initializationMap[typeParameterID] = typeParameterArgumentMap[outerTypeMap[typeParameterID].pullSymbolID];
 

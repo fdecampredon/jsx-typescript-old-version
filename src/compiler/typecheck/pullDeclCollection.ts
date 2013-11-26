@@ -374,7 +374,7 @@ module TypeScript {
             parent.flags |= PullElementFlags.HasDefaultArgs;
         }
 
-        if (parent.kind == PullElementKind.ConstructorMethod) {
+        if (parent.kind === PullElementKind.ConstructorMethod) {
             decl.setFlag(PullElementFlags.ConstructorParameter);
         }
         
@@ -390,7 +390,7 @@ module TypeScript {
             decl.setFlag(PullElementFlags.PropertyParameter);
             propDecl.setFlag(PullElementFlags.PropertyParameter);
 
-            if (parent.kind == PullElementKind.ConstructorMethod) {
+            if (parent.kind === PullElementKind.ConstructorMethod) {
                 propDecl.setFlag(PullElementFlags.ConstructorParameter);
             }
 

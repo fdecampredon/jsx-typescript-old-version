@@ -124,7 +124,7 @@ module TypeScript {
         var regex = /\{(\d+)\}/g;
 
         var match: RegExpExecArray;
-        while ((match = regex.exec(diagnostic)) != null) {
+        while (match = regex.exec(diagnostic)) {
             var val = parseInt(match[1]);
             if (!isNaN(val) && val > largest) {
                 largest = val;
@@ -183,9 +183,11 @@ module TypeScript {
         var message: string;
         if (diagnostic.category === DiagnosticCategory.Error) {
             message = getLocalizedText(DiagnosticCode.error_TS_0_1, [diagnostic.code, diagnosticMessageText]);
-        } else if (diagnostic.category === DiagnosticCategory.Warning) {
+        }
+        else if (diagnostic.category === DiagnosticCategory.Warning) {
             message = getLocalizedText(DiagnosticCode.warning_TS_0_1, [diagnostic.code, diagnosticMessageText]);
-        } else {
+        }
+        else {
             message = diagnosticMessageText;
         }
 

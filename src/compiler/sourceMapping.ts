@@ -133,10 +133,12 @@ module TypeScript {
                     this.sourceMapDirectory = emitOptions.commonDirectoryPath() + this.sourceMapDirectory;
                     this.sourceMapDirectory = convertToDirectoryPath(switchToForwardSlashes(resolvePath(this.sourceMapDirectory)));
                     this.sourceMapPath = getRelativePathToFixedPath(getRootFilePath(jsFilePath), this.sourceMapDirectory + prettyMapFileName);
-                } else {
+                }
+                else {
                     this.sourceMapPath = this.sourceMapDirectory + prettyMapFileName;
                 }
-            } else {
+            }
+            else {
                 this.sourceMapPath = prettyMapFileName;
                 this.sourceMapDirectory = getRootFilePath(jsFilePath);
             }
@@ -148,7 +150,8 @@ module TypeScript {
             if (emitOptions.sourceRootDirectory()) {
                 // Use the relative path corresponding to the common directory path
                 tsFilePath = getRelativePathToFixedPath(emitOptions.commonDirectoryPath(), tsFilePath);
-            } else {
+            }
+            else {
                 // Source locations relative to map file location
                 tsFilePath = getRelativePathToFixedPath(this.sourceMapDirectory, tsFilePath);
             }

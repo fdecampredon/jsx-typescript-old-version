@@ -85,7 +85,8 @@ module TypeScript {
                     if (settings.sourceRoot()) {
                         this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Options_mapRoot_and_sourceRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
                         return;
-                    } else {
+                    }
+                    else {
                         this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Option_mapRoot_cannot_be_specified_without_specifying_sourcemap_option, null);
                         return;
                     }
@@ -136,7 +137,8 @@ module TypeScript {
                         // So common path = directory of file
                         commonComponents = fileComponents;
                         commonComponentsLength = commonComponents.length;
-                    } else {
+                    }
+                    else {
                         var updatedPath = false;
                         for (var j = 0; j < commonComponentsLength && j < fileComponents.length; j++) {
                             if (commonComponents[j] !== fileComponents[j]) {
@@ -260,7 +262,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous;
 
             // 1) Any internal reference needs to check if the emit can happen
             // 2) External module reference with export modifier always needs to be emitted
@@ -288,7 +290,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous;
 
             this.emitComments(importDeclAST, true);
 
@@ -304,19 +306,21 @@ module TypeScript {
             var moduleNamePrefix: string;
 
             if (isExported &&
-                (parentKind == PullElementKind.Container ||
+                (parentKind === PullElementKind.Container ||
                 parentKind === PullElementKind.DynamicModule ||
                 associatedParentSymbolKind === PullElementKind.Container ||
                 associatedParentSymbolKind === PullElementKind.DynamicModule)) {
                 if (importSymbol.getExportAssignedTypeSymbol() || importSymbol.getExportAssignedContainerSymbol()) {
                     // Type or container assignment that is exported
                     needsPropertyAssignment = true;
-                } else {
+                }
+                else {
                     var valueSymbol = importSymbol.getExportAssignedValueSymbol();
                     if (valueSymbol &&
-                        (valueSymbol.kind == PullElementKind.Method || valueSymbol.kind == PullElementKind.Function)) {
+                        (valueSymbol.kind === PullElementKind.Method || valueSymbol.kind === PullElementKind.Function)) {
                         needsPropertyAssignment = true;
-                    } else {
+                    }
+                    else {
                         usePropertyAssignmentInsteadOfVarDecl = true;
                     }
                 }
@@ -334,11 +338,13 @@ module TypeScript {
                 // For amdCode gen of exported external module reference, do not emit var declaration
                 // Emit the property assignment since it is exported
                 needsPropertyAssignment = true;
-            } else {
+            }
+            else {
                 this.recordSourceMappingStart(importDeclAST);
                 if (usePropertyAssignmentInsteadOfVarDecl) {
                     this.writeToOutput(moduleNamePrefix);
-                } else {
+                }
+                else {
                     this.writeToOutput("var ");
                 }
                 this.writeToOutput(importDeclAST.identifier.text() + " = ");
@@ -381,7 +387,8 @@ module TypeScript {
                 // There are new lines in the string, update the line and column number accordingly
                 this.emitState.line += lineNumbers.length - 1;
                 this.emitState.column = s.length - lineNumbers[lineNumbers.length - 1];
-            } else {
+            }
+            else {
                 // No new lines in the string
                 this.emitState.column += s.length;
             }
@@ -458,7 +465,8 @@ module TypeScript {
                     this.recordSourceMappingSpanEnd(comment);
                     this.writeLineToOutput("");
                     // Fall through
-                } else {
+                }
+                else {
                     this.recordSourceMappingSpanEnd(comment);
                     this.writeToOutput(" ");
                     return;
@@ -472,7 +480,7 @@ module TypeScript {
                 // Fall through
             }
 
-            if (!trailing && emitColumn != 0) {
+            if (!trailing && emitColumn !== 0) {
                 // If we were indented before, stay indented after.
                 this.emitIndent();
             }
@@ -617,7 +625,8 @@ module TypeScript {
                     this.writeToOutput(", ");
                     this.emitCommaSeparatedList(callNode.argumentList, args, /*buffer:*/ "", /*preserveNewLines:*/ false);
                 }
-            } else {
+            }
+            else {
                 if (callNode.expression.kind() === SyntaxKind.SuperKeyword && this.emitState.container === EmitContainer.Constructor) {
                     this.writeToOutput("_super.call");
                 }
@@ -938,7 +947,8 @@ module TypeScript {
                     this.writeLineToOutput("");
                     this.emitIndent();
                     this.writeToOutput("var " + this.moduleName + " = exports." + this.moduleName + ";");
-                } else {
+                }
+                else {
                     this.writeLineToOutput("");
                     this.emitIndent();
                     this.writeToOutput("var " + this.moduleName + " = " + svModuleName + "." + this.moduleName + ";");
@@ -956,7 +966,8 @@ module TypeScript {
             if (ArrayUtilities.contains(this.declStack, moduleDecl)) {
                 // Given decl is in the scope, we would need to check for child name collision
                 return moduleDecl;
-            } else if (changeNameIfAnyDeclarationInContext) {
+            }
+            else if (changeNameIfAnyDeclarationInContext) {
                 // Check if any other declaration of the given symbol is in scope 
                 // (eg. when emitting expression of type defined from different declaration in reopened module)
                 var symbol = moduleDecl.getSymbol();
@@ -976,7 +987,7 @@ module TypeScript {
 
         private hasChildNameCollision(moduleName: string, childDecls: PullDecl[]) {
             return ArrayUtilities.any(childDecls, (childDecl: PullDecl) => {
-                if (childDecl.name == moduleName) {
+                if (childDecl.name === moduleName) {
                     // same name child
                     var childAST = this.semanticInfoChain.getASTForDecl(childDecl);
                     if (this.shouldEmit(childAST)) {
@@ -1136,7 +1147,8 @@ module TypeScript {
                     this.writeLineToOutput("");
                     this.emitIndent();
                     this.writeToOutput("var " + this.moduleName + " = exports." + this.moduleName + ";");
-                } else {
+                }
+                else {
                     this.writeLineToOutput("");
                     this.emitIndent();
                     this.writeToOutput("var " + this.moduleName + " = " + svModuleName + "." + this.moduleName + ";");
@@ -1707,7 +1719,8 @@ module TypeScript {
             for (var i = startingIndex - 1; i > commonNodeIndex; i--) {
                 if (symbolContainerDeclPath[i + 1].flags & PullElementFlags.Exported) {
                     startingIndex = i;
-                } else {
+                }
+                else {
                     break;
                 }
             }
@@ -1720,7 +1733,8 @@ module TypeScript {
                 if (declPath[i].kind === PullElementKind.DynamicModule ||
                     declPath[i].flags & PullElementFlags.InitializedDynamicModule) {
                     this.writeToOutput("exports.");
-                } else {
+                }
+                else {
                     // Get the name of the decl that would need to referenced and is conflict free.
                     this.writeToOutput(this.getModuleName(declPath[i], /* changeNameIfAnyDeclarationInContext */ true) + ".");
                 }
@@ -1746,7 +1760,7 @@ module TypeScript {
                     pullSymbolAlias.getExportAssignedTypeSymbol() :
                     pullSymbolAlias.getExportAssignedValueSymbol();
 
-                if (pullSymbol == symbolToCompare) {
+                if (pullSymbol === symbolToCompare) {
                     pullSymbol = pullSymbolAlias;
                     pullSymbolAlias = null;
                 }
@@ -1765,7 +1779,7 @@ module TypeScript {
                 }
                 var pullSymbolAlias = symbolForEmit.aliasSymbol;
                 var pullSymbolKind = pullSymbol.kind;
-                var isLocalAlias = pullSymbolAlias && (pullSymbolAlias.getDeclarations()[0].getParentDecl() == this.getEnclosingDecl());
+                var isLocalAlias = pullSymbolAlias && (pullSymbolAlias.getDeclarations()[0].getParentDecl() === this.getEnclosingDecl());
                 if (addThis && (this.emitState.container !== EmitContainer.Args) && pullSymbol) {
                     var pullSymbolContainer = pullSymbol.getContainer();
 
@@ -1828,7 +1842,7 @@ module TypeScript {
                 if (name) {
                     if (this.sourceMapper.currentNameIndex.length > 0) {
                         var parentNameIndex = this.sourceMapper.currentNameIndex[this.sourceMapper.currentNameIndex.length - 1];
-                        if (parentNameIndex != -1) {
+                        if (parentNameIndex !== -1) {
                             name = this.sourceMapper.names[parentNameIndex] + "." + name;
                         }
                     }
@@ -1836,12 +1850,12 @@ module TypeScript {
                     // Look if there already exists name
                     var nameIndex = this.sourceMapper.names.length - 1;
                     for (nameIndex; nameIndex >= 0; nameIndex--) {
-                        if (this.sourceMapper.names[nameIndex] == name) {
+                        if (this.sourceMapper.names[nameIndex] === name) {
                             break;
                         }
                     }
 
-                    if (nameIndex == -1) {
+                    if (nameIndex === -1) {
                         nameIndex = this.sourceMapper.names.length;
                         this.sourceMapper.names.push(name);
                     }
@@ -2421,7 +2435,8 @@ module TypeScript {
 
             if (hasBaseClass) {
                 this.writeLineToOutput(" = (function (_super) {");
-            } else {
+            }
+            else {
                 this.writeLineToOutput(" = (function () {");
             }
 
@@ -2808,7 +2823,7 @@ module TypeScript {
             var memberExpressionNodeType = expression.expression.kind();
 
             // If the memberAccess is of Name or another member access, we could potentially emit the symbol using the this memberAccessSymol
-            if (memberExpressionNodeType == SyntaxKind.IdentifierName || memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
+            if (memberExpressionNodeType === SyntaxKind.IdentifierName || memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
                 var memberAccessSymbol = this.getSymbolForEmit(expression).symbol;
                 var memberAccessExpressionSymbol = this.getSymbolForEmit(expression.expression).symbol;
                 if (memberAccessSymbol && memberAccessExpressionSymbol // We have symbols resolved for this expression and access
@@ -2824,7 +2839,7 @@ module TypeScript {
                         || ((memberAccessSymbol.anyDeclHasFlag(PullElementFlags.Exported) && !this.symbolIsUsedInItsEnclosingContainer(memberAccessSymbol)))) {
 
                         // If the expression is member access, we need to verify it as well
-                        if (memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
+                        if (memberExpressionNodeType === SyntaxKind.MemberAccessExpression) {
                             return this.canEmitDottedNameMemberAccessExpression(<MemberAccessExpressionSyntax>expression.expression);
                         }
 
@@ -2839,10 +2854,11 @@ module TypeScript {
         // Emit the member access expression using the declPath
         private emitDottedNameMemberAccessExpressionWorker(expression: MemberAccessExpressionSyntax, potentialPath: PullDecl[], startingIndex: number, lastIndex: number) {
             this.recordSourceMappingStart(expression);
-            if (expression.expression.kind() == SyntaxKind.MemberAccessExpression) {
+            if (expression.expression.kind() === SyntaxKind.MemberAccessExpression) {
                 // Emit the dotted name access expression
                 this.emitDottedNameMemberAccessExpressionRecurse(<MemberAccessExpressionSyntax>expression.expression, potentialPath, startingIndex, lastIndex - 1);
-            } else { // Name
+            }
+            else { // Name
                 this.emitComments(expression.expression, true);
                 this.recordSourceMappingStart(expression.expression);
 
@@ -2886,7 +2902,8 @@ module TypeScript {
                 // If the expression is dotted name of the modules, emit it using decl path so the name could be resolved correctly.
                 if (this.canEmitDottedNameMemberAccessExpression(expression)) {
                     this.emitDottedNameMemberAccessExpression(expression);
-                } else {
+                }
+                else {
                     this.recordSourceMappingStart(expression);
                     this.emit(expression.expression);
                     this.writeToOutput(".");

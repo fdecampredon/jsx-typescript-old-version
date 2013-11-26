@@ -75,7 +75,7 @@ module TypeScript {
 
         public getDocument(fileName: string): Document {
             var document = this.fileNameToDocument[fileName];
-            return document ? document : null;
+            return document || null;
         }
 
         public lineMap(fileName: string): LineMap {
@@ -93,7 +93,7 @@ module TypeScript {
         }
 
         // Must pass in a new decl, or an old symbol that has a decl available for ownership transfer
-        private bindPrimitiveSymbol(decl: PullDecl, newSymbol: PullSymbol): PullSymbol {
+        private bindPrimitiveSymbol<TSymbol extends PullSymbol>(decl: PullDecl, newSymbol: TSymbol): TSymbol {
             newSymbol.addDeclaration(decl);
             decl.setSymbol(newSymbol);
             newSymbol.setResolved();
@@ -105,7 +105,7 @@ module TypeScript {
         // invalidation after every edit.
         private addPrimitiveTypeSymbol(decl: PullDecl): PullPrimitiveTypeSymbol {
             var newSymbol = new PullPrimitiveTypeSymbol(decl.name);
-            return <PullPrimitiveTypeSymbol>this.bindPrimitiveSymbol(decl, newSymbol);
+            return this.bindPrimitiveSymbol(decl, newSymbol);
         }
 
         // Creates a new value symbol to be bound to this decl, and has the specified type.
@@ -208,7 +208,7 @@ module TypeScript {
 
                     // We finished searching up to the file that included the stopping point decl.  
                     // no need to continue.
-                    if (doNotGoPastThisDecl && topLevelDecl.name == doNotGoPastThisDecl.fileName()) {
+                    if (doNotGoPastThisDecl && topLevelDecl.name === doNotGoPastThisDecl.fileName()) {
                         return null;
                     }
                 }
@@ -274,8 +274,8 @@ module TypeScript {
                 var topLevelDecl = document.topLevelDecl(); // Script
 
                 if (topLevelDecl.isExternalModule()) {
-                    var isDtsFile = document.fileName == dtsFile;
-                    if (isDtsFile || document.fileName == tsFile) {
+                    var isDtsFile = document.fileName === dtsFile;
+                    if (isDtsFile || document.fileName === tsFile) {
                         var dynamicModuleDecl = topLevelDecl.getChildDecls()[0];
                         symbol = <PullContainerSymbol>dynamicModuleDecl.getSymbol();
                         this.symbolCache[dtsCacheID] = isDtsFile ? symbol : null;
@@ -349,7 +349,7 @@ module TypeScript {
                     foundDecls = declsToSearch[j].searchChildDecls(path, declKind);
 
                     for (var k = 0; k < foundDecls.length; k++) {
-                        if (decls == sentinelEmptyArray) {
+                        if (decls === sentinelEmptyArray) {
                             decls = [];
                         }
                         decls[decls.length] = foundDecls[k];
@@ -411,7 +411,14 @@ module TypeScript {
 
             if (decls.length) {
 
-                symbol = decls[0].getSymbol();
+                var decl = decls[0];
+                if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
+                    var valueDecl = decl.getValueDecl();
+                    if (valueDecl) {
+                        valueDecl.ensureSymbolIsBound();
+                    }
+                }
+                symbol = decl.getSymbol();
 
                 if (symbol) {
                     this.symbolCache[cacheID] = symbol;
@@ -474,7 +481,6 @@ module TypeScript {
 
             // Reset global counters
             TypeScript.pullSymbolID = 0;
-            TypeScript.globalTyvarID = 0;
 
             this.resetGlobalSymbols();
 
@@ -493,7 +499,7 @@ module TypeScript {
             // stored in the ISyntaxElement.
             return before.allowAutomaticSemicolonInsertion() !== after.allowAutomaticSemicolonInsertion() ||
                 before.codeGenTarget() !== after.codeGenTarget() ||
-                before.propagateEnumConstants() != after.propagateEnumConstants();
+                before.propagateEnumConstants() !== after.propagateEnumConstants();
         }
 
         public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
@@ -502,7 +508,7 @@ module TypeScript {
         }
 
         public getSymbolForAST(ast: ISyntaxElement): PullSymbol {
-            return ast.isShared() ? null : this.astSymbolMap[ast.syntaxID()];
+            return this.astSymbolMap[ast.syntaxID()] || null;
         }
 
         public setAliasSymbolForAST(ast: ISyntaxElement, symbol: PullTypeAliasSymbol): void {
@@ -554,7 +560,7 @@ module TypeScript {
 
         public getDiagnostics(fileName: string): Diagnostic[] {
             var diagnostics = this.fileNameToDiagnostics[fileName];
-            return diagnostics ? diagnostics : [];
+            return diagnostics || [];
         }
 
         public getBinder(): PullSymbolBinder {

@@ -186,9 +186,9 @@ module TypeScript {
                     }
 
                     // Emit declare only in global context
-                    if (isExternalModule || container.kind() == SyntaxKind.SourceUnit) {
+                    if (isExternalModule || container.kind() === SyntaxKind.SourceUnit) {
                         // Emit declare if not interface declaration or import declaration && is not from module
-                        if (emitDeclare && typeString !== "interface" && typeString != "import") {
+                        if (emitDeclare && typeString !== "interface" && typeString !== "import") {
                             result += "declare ";
                         }
                     }
@@ -416,7 +416,7 @@ module TypeScript {
         private emitDeclarationsForVariableDeclaration(variableDeclaration: VariableDeclarationSyntax) {
             var varListCount = variableDeclaration.variableDeclarators.nonSeparatorCount();
             for (var i = 0; i < varListCount; i++) {
-                this.emitVariableDeclarator(variableDeclaration.variableDeclarators.nonSeparatorAt(i), i == 0, i == varListCount - 1);
+                this.emitVariableDeclarator(variableDeclaration.variableDeclarators.nonSeparatorAt(i), i === 0, i === varListCount - 1);
             }
         }
 
@@ -963,7 +963,8 @@ module TypeScript {
         public getFullName(name: ISyntaxElement): string {
             if (name.kind() === SyntaxKind.IdentifierName) {
                 return (<ISyntaxToken>name).text();
-            } else {
+            }
+            else {
                 var dotExpr = <QualifiedNameSyntax>name;
                 return this.getFullName(dotExpr.left) + "." + this.getFullName(dotExpr.right);
             }
@@ -987,7 +988,7 @@ module TypeScript {
                 this.emitDeclarationComments(enumElement);
                 this.emitIndent();
                 this.declFile.Write(enumElement.propertyName.text());
-                if (enumElementDecl.constantValue != null) {
+                if (enumElementDecl.constantValue !== null) {
                     this.declFile.Write(" = " + enumElementDecl.constantValue);
                 }
                 this.declFile.WriteLine(",");
@@ -1070,7 +1071,8 @@ module TypeScript {
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 // Collect from all the references and emit
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; i++) {
@@ -1085,12 +1087,12 @@ module TypeScript {
                             if (document &&
                                 (document.isDeclareFile() || document.isExternalModule())) {
                                 for (var k = 0; k < documents.length; k++) {
-                                    if (documents[k] == document) {
+                                    if (documents[k] === document) {
                                         break;
                                     }
                                 }
 
-                                if (k == documents.length) {
+                                if (k === documents.length) {
                                     documents = documents.concat(document);
                                 }
                             }
@@ -1106,7 +1108,8 @@ module TypeScript {
                 var declFileName: string;
                 if (document.isDeclareFile()) {
                     declFileName = document.fileName;
-                } else {
+                }
+                else {
                     declFileName = this.compiler.mapOutputFileName(document, this.emitOptions, TypeScriptCompiler.mapToDTSFileName);
                 }
 

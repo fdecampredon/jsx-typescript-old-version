@@ -1,4 +1,3 @@
-// BUG 787697
 var C = (function () {
     function C() {
     }

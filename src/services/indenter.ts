@@ -26,7 +26,8 @@ module TypeScript.Services {
             if (currentToken.kind() === TypeScript.SyntaxKind.EndOfFileToken) {
                 // Ignore EOF tokens, pick the one before it
                 currentNode = currentToken.previousToken();
-            } else if (Indenter.belongsToBracket(soruceText, currentToken, position)) {
+            }
+            else if (Indenter.belongsToBracket(soruceText, currentToken, position)) {
                 // Let braces and brackets take the indentation of thier parents
                 currentNode = currentToken.parent;
             }
@@ -49,7 +50,8 @@ module TypeScript.Services {
                 if (parent.fullStart() !== currentNode.fullStart()) {
                     if (Indenter.isInContainerNode(parent, currentElement)) {
                         indentation += editorOptions.IndentSize;
-                    } else {
+                    }
+                    else {
                         var listIndentation = Indenter.getCustomListIndentation(parent, currentElement);
                         if (listIndentation !== -1) {
                             // Found a list node with special indentation, If the list items span multiple lines, we want 
