@@ -5,7 +5,6 @@
 
 module TypeScript {
     export var pullSymbolID = 0;
-    export var globalTyvarID = 0;
     export var sentinelEmptyArray: any[] = [];
 
     export class PullSymbol {
