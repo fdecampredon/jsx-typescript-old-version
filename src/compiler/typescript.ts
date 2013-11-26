@@ -190,7 +190,8 @@ module TypeScript {
                     updatedFileName = emitOptions.outputDirectory() + updatedFileName;
                 }
                 return extensionChanger(updatedFileName, false);
-            } else {
+            }
+            else {
                 return extensionChanger(emitOptions.sharedOutputFile(), true);
             }
         }
@@ -264,7 +265,8 @@ module TypeScript {
 
             if (declarationEmitter) {
                 declarationEmitter.document = document;
-            } else {
+            }
+            else {
                 var declareFileName = this.mapOutputFileName(document, emitOptions, TypeScriptCompiler.mapToDTSFileName);
                 declarationEmitter = new DeclarationEmitter(declareFileName, document, this, emitOptions, this.semanticInfoChain);
             }
@@ -355,7 +357,8 @@ module TypeScript {
             if (wholeFileNameReplaced) {
                 // The complete output is redirected in this file so do not change extension
                 return fileName;
-            } else {
+            }
+            else {
                 // Change the extension of the file
                 var splitFname = fileName.split(".");
                 splitFname.pop();

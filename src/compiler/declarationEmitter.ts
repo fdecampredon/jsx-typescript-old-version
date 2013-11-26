@@ -967,7 +967,8 @@ module TypeScript {
         public getFullName(name: AST): string {
             if (name.kind() === SyntaxKind.IdentifierName) {
                 return (<Identifier>name).text();
-            } else {
+            }
+            else {
                 var dotExpr = <QualifiedName>name;
                 return this.getFullName(dotExpr.left) + "." + this.getFullName(dotExpr.right);
             }
@@ -1075,7 +1076,8 @@ module TypeScript {
                         }
                     }
                 }
-            } else {
+            }
+            else {
                 // Collect from all the references and emit
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; i++) {
@@ -1111,7 +1113,8 @@ module TypeScript {
                 var declFileName: string;
                 if (document.isDeclareFile()) {
                     declFileName = document.fileName;
-                } else {
+                }
+                else {
                     declFileName = this.compiler.mapOutputFileName(document, this.emitOptions, TypeScriptCompiler.mapToDTSFileName);
                 }
 

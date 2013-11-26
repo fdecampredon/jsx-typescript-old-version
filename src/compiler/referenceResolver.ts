@@ -208,7 +208,8 @@ module TypeScript {
                     referencedFiles: normalizedReferencePaths,
                     importedFiles: normalizedImportPaths
                 });
-            } else {
+            }
+            else {
                 normalizedPath = visitedPath;
             }
 

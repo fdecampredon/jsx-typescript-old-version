@@ -252,7 +252,8 @@ module TypeScript.Services {
             var members: TypeScript.PullSymbol[];
             if (container.isClass()) {
                 members = container.getMembers();
-            } else if (container.isInterface()) {
+            }
+            else if (container.isInterface()) {
                 members = container.getMembers();
             }
 
@@ -1493,13 +1494,16 @@ module TypeScript.Services {
                     var declKind = declarations[i].kind;
                     if (declKind == TypeScript.PullElementKind.Container) {
                         return ScriptElementKind.moduleElement;
-                    } else if (declKind == TypeScript.PullElementKind.Enum) {
+                    }
+                    else if (declKind == TypeScript.PullElementKind.Enum) {
                         return ScriptElementKind.enumElement;
-                    } else if (declKind == TypeScript.PullElementKind.Variable) {
+                    }
+                    else if (declKind == TypeScript.PullElementKind.Variable) {
                         var declFlags = declarations[i].flags;
                         if (declFlags & TypeScript.PullElementFlags.InitializedModule) {
                             return ScriptElementKind.moduleElement;
-                        } else if (declFlags & TypeScript.PullElementFlags.Enum) {
+                        }
+                        else if (declFlags & TypeScript.PullElementFlags.Enum) {
                             return ScriptElementKind.enumElement;
                         }
                     }
@@ -1549,7 +1553,8 @@ module TypeScript.Services {
                     case TypeScript.PullElementKind.Primitive:
                         return ScriptElementKind.primitiveType;
                 }
-            } else {
+            }
+            else {
                 switch (kind) {
                     case TypeScript.PullElementKind.Script:
                         return ScriptElementKind.scriptElement;
@@ -1668,7 +1673,8 @@ module TypeScript.Services {
                 if (TypeScript.isNameOfMemberAccessExpression(node) ||
                     TypeScript.isRightSideOfQualifiedName(node)) {
                     node = node.parent;
-                } else {
+                }
+                else {
                     break;
                 }
             }

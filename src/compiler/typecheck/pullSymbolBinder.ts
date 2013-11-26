@@ -706,7 +706,8 @@ module TypeScript {
 
                 if (constructorSymbol) {
                     constructorTypeSymbol = constructorSymbol.type;
-                } else {
+                }
+                else {
                     constructorSymbol = new PullSymbol(className, PullElementKind.ConstructorMethod);
                     constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType);
                     constructorSymbol.setIsSynthesized();

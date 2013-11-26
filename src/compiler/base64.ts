@@ -26,7 +26,8 @@ module TypeScript {
         static decodeChar(inChar: string) {
             if (inChar.length === 1) {
                 return Base64Format.encodedValues.indexOf(inChar);
-            } else {
+            }
+            else {
                 throw TypeError('"' + inChar + '" must have length 1');
             }
         }
@@ -74,7 +75,8 @@ module TypeScript {
                         negative = true;
                     }
                     result = (byte >> 1) & 15; // 1111x
-                } else {
+                }
+                else {
                     result = result | ((byte & 31) << shift); // 11111
                 }
 
@@ -82,7 +84,8 @@ module TypeScript {
 
                 if ((byte & 32) === 32) {
                     // Continue
-                } else {
+                }
+                else {
                     return { value: negative ? -(result) : result, rest: inString.substr(i + 1) };
                 }
             }

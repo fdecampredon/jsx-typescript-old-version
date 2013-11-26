@@ -384,7 +384,8 @@ module TypeScript {
                 var nodeKind = node.kind;
                 if (nodeKind === PullElementKind.Parameter) {
                     break;
-                } else {
+                }
+                else {
                     node = node.getContainer();
                 }
             }
@@ -401,7 +402,8 @@ module TypeScript {
             var bPath: PullSymbol[];
             if (b) {
                 bPath = b.pathToRoot();
-            } else {
+            }
+            else {
                 return aPath;
             }
 
@@ -518,7 +520,8 @@ module TypeScript {
                         }
                         break;
                     }
-                } else {
+                }
+                else {
                     // Any other type of container is not part of the name
                     break;
                 }
@@ -785,7 +788,8 @@ module TypeScript {
                     var extendedTypes = classSymbol.getExtendedTypes();
                     if (extendedTypes.length) {
                         docComments = extendedTypes[0].getConstructorMethod().docComments();
-                    } else {
+                    }
+                    else {
                         docComments = "";
                     }
                 }
@@ -882,7 +886,8 @@ module TypeScript {
                                 if (curlies === 0) {
                                     // We do not have any more } to match the type expression is ignored completely
                                     break;
-                                } else {
+                                }
+                                else {
                                     // there are more { to be matched with }
                                     continue;
                                 }
@@ -982,7 +987,8 @@ module TypeScript {
                         // New start of contents 
                         prevPos = i;
                         inParamTag = true;
-                    } else if (wasInParamtag) {
+                    }
+                    else if (wasInParamtag) {
                         // Non param tag start
                         prevPos = i;
                         inParamTag = false;
@@ -1048,7 +1054,8 @@ module TypeScript {
 
                     if (nonSpaceIndex !== -1) {
                         jsDocSpacesRemoved = nonSpaceIndex - startIndex;
-                    } else {
+                    }
+                    else {
                         return null;
                     }
                 }
@@ -2162,7 +2169,8 @@ module TypeScript {
                     // Class extending non class Type is invalid
                     return baseType.kind === PullElementKind.Class;
                 }
-            } else {
+            }
+            else {
                 if (!thisIsClass) {
                     // Interface implementing baseType is invalid
                     return false;
@@ -2343,7 +2351,8 @@ module TypeScript {
 
             if (skipTypeParametersInName) {
                 return MemberName.create(super.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName));
-            } else {
+            }
+            else {
                 var builder = new MemberNameArray();
                 builder.prefix = super.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName);
 
@@ -2407,11 +2416,13 @@ module TypeScript {
                         var nameStr = members[i].getDisplayName(scopeSymbol) + (members[i].isOptional ? "?" : "");;
                         var methodMemberNames = PullSignatureSymbol.getSignaturesTypeNameEx(methodCallSignatures, nameStr, /*shortform*/ false, /*brackets*/ false, scopeSymbol);
                         allMemberNames.addAll(methodMemberNames);
-                    } else {
+                    }
+                    else {
                         var memberTypeName = members[i].getNameAndTypeNameEx(scopeSymbol);
                         if (memberTypeName.isArray() && (<MemberNameArray>memberTypeName).delim === delim) {
                             allMemberNames.addAll((<MemberNameArray>memberTypeName).entries);
-                        } else {
+                        }
+                        else {
                             allMemberNames.add(memberTypeName);
                         }
                     }
@@ -2447,7 +2458,8 @@ module TypeScript {
                     allMemberNames.prefix = "{ ";
                     allMemberNames.suffix = "}";
                     allMemberNames.delim = delim;
-                } else if (allMemberNames.entries.length > 1) {
+                }
+                else if (allMemberNames.entries.length > 1) {
                     allMemberNames.delim = delim;
                 }
 
@@ -2604,7 +2616,8 @@ module TypeScript {
                     }
 
                     return false;
-                } else {
+                }
+                else {
                     // Just a reference to the declaration
                     return true;
                 }
@@ -2999,7 +3012,8 @@ module TypeScript {
                     this.retrievingExportAssignment = true;
                     var sym = (<PullTypeAliasSymbol>this._assignedType).getExportAssignedTypeSymbol();
                     this.retrievingExportAssignment = false;
-                } else if (this._assignedType !== this._assignedContainer) {
+                }
+                else if (this._assignedType !== this._assignedContainer) {
                     return this._assignedType;
                 }
             }
