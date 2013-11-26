@@ -111,14 +111,14 @@ module TypeScript {
                 b = (<PullTypeReferenceSymbol>b).referencedTypeSymbol;
             }
 
-            return a == b;
+            return a === b;
         }
 
         export function getRootType(type: PullTypeSymbol): PullTypeSymbol {
             var rootType: PullTypeSymbol = <PullTypeSymbol>type.getRootSymbol();
 
             while (true) {
-                if (type == rootType) {
+                if (type === rootType) {
                     return type;
                 }
 
@@ -135,7 +135,7 @@ module TypeScript {
                     return true;
                 }
 
-                if (containerKind == TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static)) {
+                if (containerKind === TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static)) {
                     return true;
                 }
             }

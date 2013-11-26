@@ -124,7 +124,7 @@ module TypeScript {
         var regex = /\{(\d+)\}/g;
 
         var match: RegExpExecArray;
-        while ((match = regex.exec(diagnostic)) != null) {
+        while (match = regex.exec(diagnostic)) {
             var val = parseInt(match[1]);
             if (!isNaN(val) && val > largest) {
                 largest = val;

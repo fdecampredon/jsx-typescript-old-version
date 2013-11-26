@@ -208,7 +208,7 @@ module TypeScript {
 
                     // We finished searching up to the file that included the stopping point decl.  
                     // no need to continue.
-                    if (doNotGoPastThisDecl && topLevelDecl.name == doNotGoPastThisDecl.fileName()) {
+                    if (doNotGoPastThisDecl && topLevelDecl.name === doNotGoPastThisDecl.fileName()) {
                         return null;
                     }
                 }
@@ -274,8 +274,8 @@ module TypeScript {
                 var topLevelDecl = document.topLevelDecl(); // Script
 
                 if (topLevelDecl.isExternalModule()) {
-                    var isDtsFile = document.fileName == dtsFile;
-                    if (isDtsFile || document.fileName == tsFile) {
+                    var isDtsFile = document.fileName === dtsFile;
+                    if (isDtsFile || document.fileName === tsFile) {
                         var dynamicModuleDecl = topLevelDecl.getChildDecls()[0];
                         symbol = <PullContainerSymbol>dynamicModuleDecl.getSymbol();
                         this.symbolCache[dtsCacheID] = isDtsFile ? symbol : null;
@@ -349,7 +349,7 @@ module TypeScript {
                     foundDecls = declsToSearch[j].searchChildDecls(path, declKind);
 
                     for (var k = 0; k < foundDecls.length; k++) {
-                        if (decls == sentinelEmptyArray) {
+                        if (decls === sentinelEmptyArray) {
                             decls = [];
                         }
                         decls[decls.length] = foundDecls[k];
@@ -499,7 +499,7 @@ module TypeScript {
             // stored in the AST.
             return before.allowAutomaticSemicolonInsertion() !== after.allowAutomaticSemicolonInsertion() ||
                 before.codeGenTarget() !== after.codeGenTarget() ||
-                before.propagateEnumConstants() != after.propagateEnumConstants();
+                before.propagateEnumConstants() !== after.propagateEnumConstants();
         }
 
         public setSymbolForAST(ast: AST, symbol: PullSymbol): void {
@@ -507,7 +507,7 @@ module TypeScript {
         }
 
         public getSymbolForAST(ast: AST): PullSymbol {
-            return this.astSymbolMap[ast.syntaxID()];
+            return this.astSymbolMap[ast.syntaxID()] || null;
         }
 
         public setAliasSymbolForAST(ast: AST, symbol: PullTypeAliasSymbol): void {

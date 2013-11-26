@@ -260,7 +260,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous;
 
             // 1) Any internal reference needs to check if the emit can happen
             // 2) External module reference with export modifier always needs to be emitted
@@ -288,7 +288,7 @@ module TypeScript {
             var isExternalModuleReference = importDeclAST.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
             var importDecl = this.semanticInfoChain.getDeclForAST(importDeclAST);
             var isExported = hasFlag(importDecl.flags, PullElementFlags.Exported);
-            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() == ModuleGenTarget.Asynchronous;
+            var isAmdCodeGen = this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous;
 
             this.emitComments(importDeclAST, true);
 
@@ -304,7 +304,7 @@ module TypeScript {
             var moduleNamePrefix: string;
 
             if (isExported &&
-                (parentKind == PullElementKind.Container ||
+                (parentKind === PullElementKind.Container ||
                 parentKind === PullElementKind.DynamicModule ||
                 associatedParentSymbolKind === PullElementKind.Container ||
                 associatedParentSymbolKind === PullElementKind.DynamicModule)) {
@@ -472,7 +472,7 @@ module TypeScript {
                 // Fall through
             }
 
-            if (!trailing && emitColumn != 0) {
+            if (!trailing && emitColumn !== 0) {
                 // If we were indented before, stay indented after.
                 this.emitIndent();
             }
@@ -972,7 +972,7 @@ module TypeScript {
 
         private hasChildNameCollision(moduleName: string, childDecls: PullDecl[]) {
             return ArrayUtilities.any(childDecls, (childDecl: PullDecl) => {
-                if (childDecl.name == moduleName) {
+                if (childDecl.name === moduleName) {
                     // same name child
                     var childAST = this.semanticInfoChain.getASTForDecl(childDecl);
                     if (this.shouldEmit(childAST)) {
@@ -1743,7 +1743,7 @@ module TypeScript {
                     pullSymbolAlias.getExportAssignedTypeSymbol() :
                     pullSymbolAlias.getExportAssignedValueSymbol();
 
-                if (pullSymbol == symbolToCompare) {
+                if (pullSymbol === symbolToCompare) {
                     pullSymbol = pullSymbolAlias;
                     pullSymbolAlias = null;
                 }
@@ -1762,7 +1762,7 @@ module TypeScript {
                 }
                 var pullSymbolAlias = symbolForEmit.aliasSymbol;
                 var pullSymbolKind = pullSymbol.kind;
-                var isLocalAlias = pullSymbolAlias && (pullSymbolAlias.getDeclarations()[0].getParentDecl() == this.getEnclosingDecl());
+                var isLocalAlias = pullSymbolAlias && (pullSymbolAlias.getDeclarations()[0].getParentDecl() === this.getEnclosingDecl());
                 if (addThis && (this.emitState.container !== EmitContainer.Args) && pullSymbol) {
                     var pullSymbolContainer = pullSymbol.getContainer();
 
@@ -1825,7 +1825,7 @@ module TypeScript {
                 if (name) {
                     if (this.sourceMapper.currentNameIndex.length > 0) {
                         var parentNameIndex = this.sourceMapper.currentNameIndex[this.sourceMapper.currentNameIndex.length - 1];
-                        if (parentNameIndex != -1) {
+                        if (parentNameIndex !== -1) {
                             name = this.sourceMapper.names[parentNameIndex] + "." + name;
                         }
                     }
@@ -1833,12 +1833,12 @@ module TypeScript {
                     // Look if there already exists name
                     var nameIndex = this.sourceMapper.names.length - 1;
                     for (nameIndex; nameIndex >= 0; nameIndex--) {
-                        if (this.sourceMapper.names[nameIndex] == name) {
+                        if (this.sourceMapper.names[nameIndex] === name) {
                             break;
                         }
                     }
 
-                    if (nameIndex == -1) {
+                    if (nameIndex === -1) {
                         nameIndex = this.sourceMapper.names.length;
                         this.sourceMapper.names.push(name);
                     }
@@ -2792,7 +2792,7 @@ module TypeScript {
             var memberExpressionNodeType = expression.expression.kind();
 
             // If the memberAccess is of Name or another member access, we could potentially emit the symbol using the this memberAccessSymol
-            if (memberExpressionNodeType == SyntaxKind.IdentifierName || memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
+            if (memberExpressionNodeType === SyntaxKind.IdentifierName || memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
                 var memberAccessSymbol = this.getSymbolForEmit(expression).symbol;
                 var memberAccessExpressionSymbol = this.getSymbolForEmit(expression.expression).symbol;
                 if (memberAccessSymbol && memberAccessExpressionSymbol // We have symbols resolved for this expression and access
@@ -2808,7 +2808,7 @@ module TypeScript {
                         || ((memberAccessSymbol.anyDeclHasFlag(PullElementFlags.Exported) && !this.symbolIsUsedInItsEnclosingContainer(memberAccessSymbol)))) {
 
                         // If the expression is member access, we need to verify it as well
-                        if (memberExpressionNodeType == SyntaxKind.MemberAccessExpression) {
+                        if (memberExpressionNodeType === SyntaxKind.MemberAccessExpression) {
                             return this.canEmitDottedNameMemberAccessExpression(<MemberAccessExpression>expression.expression);
                         }
 

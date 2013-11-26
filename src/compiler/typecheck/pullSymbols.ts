@@ -46,13 +46,13 @@ module TypeScript {
         }
 
         public isType() {
-            return (this.kind & PullElementKind.SomeType) != 0;
+            return (this.kind & PullElementKind.SomeType) !== 0;
         }
 
         public isTypeReference() { return false; }
 
         public isSignature() {
-            return (this.kind & PullElementKind.SomeSignature) != 0;
+            return (this.kind & PullElementKind.SomeSignature) !== 0;
         }
 
         public isArrayNamedTypeReference() {
@@ -166,7 +166,7 @@ module TypeScript {
                 }
 
                 // Has type that is not same as container
-                if (aliasSymbol.assignedType() && aliasSymbol.assignedType() != aliasSymbol.assignedContainer()) {
+                if (aliasSymbol.assignedType() && aliasSymbol.assignedType() !== aliasSymbol.assignedContainer()) {
                     return false;
                 }
 
@@ -189,7 +189,7 @@ module TypeScript {
                     for (var i = 0; i < scopePath.length; i++) {
                         var internalAliases = this.findAliasedType(scopeSymbol, /*skipScopeSymbolAliasesLookIn*/ true, /*lookIntoOnlyExportedAlias*/ true);
                         if (internalAliases) {
-                            Debug.assert(internalAliases.length == 1);
+                            Debug.assert(internalAliases.length === 1);
                             return internalAliases[0];
                         }
                     }
@@ -239,18 +239,14 @@ module TypeScript {
          */
         public getName(scopeSymbol?: PullSymbol, useConstraintInName?: boolean): string {
             var aliasName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.getName(scopeSymbol, useConstraintInName), (symbol) => symbol.getName());
-            if (aliasName != null) {
-                return aliasName;
-            }
-
-            return this.name;
+            return aliasName || this.name;
         }
 
         public getDisplayName(scopeSymbol?: PullSymbol, useConstraintInName?: boolean, skipInternalAliasName?: boolean): string {
             var aliasDisplayName = this.getAliasSymbolName(scopeSymbol,
                 (symbol) => symbol.getDisplayName(scopeSymbol, useConstraintInName),
                 (symbol) => symbol.getDisplayName(), skipInternalAliasName);
-            if (aliasDisplayName != null) {
+            if (aliasDisplayName) {
                 return aliasDisplayName;
             }
 
@@ -386,7 +382,7 @@ module TypeScript {
                 }
                 path[path.length] = node;
                 var nodeKind = node.kind;
-                if (nodeKind == PullElementKind.Parameter) {
+                if (nodeKind === PullElementKind.Parameter) {
                     break;
                 } else {
                     node = node.getContainer();
@@ -429,7 +425,7 @@ module TypeScript {
                                 bDecl = decls[0].getParentDecl();
                             }
                         }
-                        if (!aDecl || !bDecl || aDecl == bDecl) {
+                        if (!aDecl || !bDecl || aDecl === bDecl) {
                             commonNodeIndex = i;
                             break;
                         }
@@ -462,13 +458,13 @@ module TypeScript {
             var fullName = "";
 
             var aliasFullName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
-            if (aliasFullName != null) {
+            if (aliasFullName) {
                 return aliasFullName;
             }
 
             for (var i = 1; i < path.length; i++) {
                 var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
-                if (aliasFullName != null) {
+                if (aliasFullName) {
                     fullName = aliasFullName + "." + fullName;
                     break;
                 }
@@ -497,7 +493,7 @@ module TypeScript {
 
             var aliasFullName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName),
                 (symbol) => symbol.getNamePartForFullName(), skipInternalAliasName);
-            if (aliasFullName != null) {
+            if (aliasFullName) {
                 return aliasFullName;
             }
 
@@ -506,7 +502,7 @@ module TypeScript {
                 if (kind === PullElementKind.Container || kind === PullElementKind.DynamicModule) {
                     var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol.getScopedName(scopeSymbol, skipTypeParametersInName, /*useConstraintInName*/ false, skipInternalAliasName),
                         (symbol) => symbol.getNamePartForFullName(), skipInternalAliasName);
-                    if (aliasFullName != null) {
+                    if (aliasFullName) {
                         fullName = aliasFullName + "." + fullName;
                         break;
                     }
@@ -558,7 +554,7 @@ module TypeScript {
             var type = this.type;
             if (type && !type.isNamedTypeSymbol() && this.kind !== PullElementKind.Property && this.kind !== PullElementKind.Variable && this.kind !== PullElementKind.Parameter) {
                 var signatures = type.getCallSignatures();
-                if (signatures.length == 1 || (getPrettyTypeName && signatures.length)) {
+                if (signatures.length === 1 || (getPrettyTypeName && signatures.length)) {
                     var typeName = new MemberNameArray();
                     var signatureName = PullSignatureSymbol.getSignaturesTypeNameEx(signatures, prefix, /*shortform*/ false, /*brackets*/ false, scopeSymbol, getPrettyTypeName);
                     typeName.addAll(signatureName);
@@ -720,7 +716,7 @@ module TypeScript {
                     return docComments(enclosingModuleDeclaration);
                 }
 
-                if (ast.kind() != TypeScript.SyntaxKind.ModuleDeclaration || decl.kind != TypeScript.PullElementKind.Variable) {
+                if (ast.kind() !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
                     return docComments(ast);
                 }
             }
@@ -734,10 +730,10 @@ module TypeScript {
                 return docComments;
             }
 
-            var isParameter = symbol.kind == TypeScript.PullElementKind.Parameter;
+            var isParameter = symbol.kind === TypeScript.PullElementKind.Parameter;
             var decls = symbol.getDeclarations();
             for (var i = 0; i < decls.length; i++) {
-                if (isParameter && decls[i].kind == TypeScript.PullElementKind.Property) {
+                if (isParameter && decls[i].kind === TypeScript.PullElementKind.Property) {
                     // Ignore declaration for property that was defined as parameter because they both 
                     // point to same doc comment
                     continue;
@@ -776,15 +772,15 @@ module TypeScript {
 
         public docComments(useConstructorAsClass?: boolean): string {
             var decls = this.getDeclarations();
-            if (useConstructorAsClass && decls.length && decls[0].kind == TypeScript.PullElementKind.ConstructorMethod) {
+            if (useConstructorAsClass && decls.length && decls[0].kind === TypeScript.PullElementKind.ConstructorMethod) {
                 var classDecl = decls[0].getParentDecl();
                 return this.getDocCommentText(this.getDocCommentsOfDecl(classDecl));
             }
 
             if (this._docComments === null) {
                 var docComments: string = "";
-                if (!useConstructorAsClass && this.kind == TypeScript.PullElementKind.ConstructSignature &&
-                    decls.length && decls[0].kind == TypeScript.PullElementKind.Class) {
+                if (!useConstructorAsClass && this.kind === TypeScript.PullElementKind.ConstructSignature &&
+                    decls.length && decls[0].kind === TypeScript.PullElementKind.Class) {
                     var classSymbol = (<TypeScript.PullSignatureSymbol>this).returnType;
                     var extendedTypes = classSymbol.getExtendedTypes();
                     if (extendedTypes.length) {
@@ -793,7 +789,7 @@ module TypeScript {
                         docComments = "";
                     }
                 }
-                else if (this.kind == TypeScript.PullElementKind.Parameter) {
+                else if (this.kind === TypeScript.PullElementKind.Parameter) {
                     var parameterComments: string[] = [];
 
                     var funcContainer = this.getEnclosingSignature();
@@ -811,7 +807,7 @@ module TypeScript {
                 }
                 else {
                     var getSymbolComments = true;
-                    if (this.kind == TypeScript.PullElementKind.FunctionType) {
+                    if (this.kind === TypeScript.PullElementKind.FunctionType) {
                         var functionSymbol = (<TypeScript.PullTypeSymbol>this).getFunctionSymbol();
 
                         if (functionSymbol) {
@@ -828,10 +824,10 @@ module TypeScript {
                     }
                     if (getSymbolComments) {
                         docComments = this.getDocCommentText(this.getDocCommentArray(this));
-                        if (docComments == "") {
-                            if (this.kind == TypeScript.PullElementKind.CallSignature) {
+                        if (docComments === "") {
+                            if (this.kind === TypeScript.PullElementKind.CallSignature) {
                                 var callTypeSymbol = (<TypeScript.PullSignatureSymbol>this).functionType;
-                                if (callTypeSymbol && callTypeSymbol.getCallSignatures().length == 1) {
+                                if (callTypeSymbol && callTypeSymbol.getCallSignatures().length === 1) {
                                     docComments = callTypeSymbol.docComments();
                                 }
                             }
@@ -1095,10 +1091,10 @@ module TypeScript {
         public isDefinition() { return false; }
 
         // GTODO
-        public isGeneric() { return this.hasAGenericParameter || (this.typeParameters && this.typeParameters.length != 0); }
+        public isGeneric() { return this.hasAGenericParameter || (this.typeParameters && this.typeParameters.length !== 0); }
 
         public addParameter(parameter: PullSymbol, isOptional = false) {
-            if (this.parameters == sentinelEmptyArray) {
+            if (this.parameters === sentinelEmptyArray) {
                 this.parameters = [];
             }
 
@@ -1353,7 +1349,7 @@ module TypeScript {
                 return isCheckingTypeArgumentList;
             }
 
-            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
+            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) !== undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
             }
 
@@ -1487,9 +1483,9 @@ module TypeScript {
 
         public isType() { return true; }
         public isClass() {
-            return this.kind === PullElementKind.Class || (this._constructorMethod != null);
+            return this.kind === PullElementKind.Class || (this._constructorMethod !== null);
         }
-        public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) != 0; }
+        public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) !== 0; }
         public isConstructor() { return this.kind === PullElementKind.ConstructorType; }
         public isTypeParameter() { return false; }
         public isTypeVariable() { return false; }
@@ -1519,7 +1515,7 @@ module TypeScript {
 
         public hasMembers(): boolean {
 
-            if (this._members != sentinelEmptyArray) {
+            if (this._members !== sentinelEmptyArray) {
                 return true;
             }
 
@@ -1588,7 +1584,7 @@ module TypeScript {
             var nonMemberSymbol = this._containedNonMemberTypeNameCache[typeName];
 
             if (nonMemberSymbol && kind !== PullElementKind.None) {
-                nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
+                nonMemberSymbol = hasFlag(nonMemberSymbol.kind, kind) ? nonMemberSymbol : null;
             }
 
             return nonMemberSymbol;
@@ -1602,7 +1598,7 @@ module TypeScript {
             var nonMemberSymbol = this._containedNonMemberContainerCache[containerName];
 
             if (nonMemberSymbol && kind !== PullElementKind.None) {
-                nonMemberSymbol = ((nonMemberSymbol.kind & kind) != 0) ? nonMemberSymbol : null;
+                nonMemberSymbol = hasFlag(nonMemberSymbol.kind, kind) ? nonMemberSymbol : null;
             }
 
             return nonMemberSymbol;
@@ -2214,7 +2210,7 @@ module TypeScript {
             memberSymbol = this._enclosedTypeNameCache[name];
 
             if (memberSymbol && kind !== PullElementKind.None) {
-                memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
+                memberSymbol = hasFlag(memberSymbol.kind, kind) ? memberSymbol : null;
             }
 
             return memberSymbol;
@@ -2230,7 +2226,7 @@ module TypeScript {
             memberSymbol = this._enclosedContainerCache[name];
 
             if (memberSymbol && kind !== PullElementKind.None) {
-                memberSymbol = ((memberSymbol.kind & kind) != 0) ? memberSymbol : null;
+                memberSymbol = hasFlag(memberSymbol.kind, kind) ? memberSymbol : null;
             }
 
             return memberSymbol;
@@ -2241,7 +2237,7 @@ module TypeScript {
             var allMembers: PullSymbol[] = [];
 
             // Add members
-            if (this._members != sentinelEmptyArray) {
+            if (this._members !== sentinelEmptyArray) {
 
                 for (var i = 0, n = this._members.length; i < n; i++) {
                     var member = this._members[i];
@@ -2317,7 +2313,7 @@ module TypeScript {
                 kind === PullElementKind.TypeAlias || // dynamic module
                 kind === PullElementKind.Enum || // enum
                 kind === PullElementKind.TypeParameter || //TypeParameter
-                ((kind === PullElementKind.Interface || kind === PullElementKind.ObjectType) && this.name != "")) {
+                ((kind === PullElementKind.Interface || kind === PullElementKind.ObjectType) && this.name !== "")) {
                 return true;
             }
 
@@ -2402,7 +2398,7 @@ module TypeScript {
                 this._inMemberTypeNameEx = true;
 
                 var allMemberNames = new MemberNameArray();
-                var curlies = !topLevel || indexSignatures.length != 0;
+                var curlies = !topLevel || indexSignatures.length !== 0;
                 var delim = "; ";
                 for (var i = 0; i < members.length; i++) {
                     if (members[i].kind === PullElementKind.Method && members[i].type.hasOnlyOverloadCallSignatures()) {
@@ -2600,7 +2596,7 @@ module TypeScript {
                     if (typeArguments) {
                         for (var i = 0; i < typeArguments.length; i++) {
                             if (!typeArguments[i].isTypeParameter() && // The typeArgument is not type parameter
-                                !(rootTypeArguments && rootTypeArguments[i] == typeArguments[i].getRootSymbol())) { // Root symbol of the type argument is not same as type argument of rootSymbol
+                                !(rootTypeArguments && rootTypeArguments[i] === typeArguments[i].getRootSymbol())) { // Root symbol of the type argument is not same as type argument of rootSymbol
                                 return false;
                             }
                         }
@@ -2619,7 +2615,7 @@ module TypeScript {
 
         private isTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
             // If this type is already in wrap check or is this is the typeBeingWrapped - it is the wrapping of the type
-            if (this.inWrapCheck || this == typeBeingWrapped) {
+            if (this.inWrapCheck || this === typeBeingWrapped) {
                 return true;
             }
 
@@ -2634,7 +2630,7 @@ module TypeScript {
         private anyRootTypeBeingWrapped(typeBeingWrapped: PullTypeSymbol) {
             var prevRootType = this;
             var rootType = <PullTypeSymbol>this.getRootSymbol();
-            while (rootType != prevRootType) {
+            while (rootType !== prevRootType) {
                 if (rootType.isTypeBeingWrapped(typeBeingWrapped)) {
                     // members are already being checked - do not iterate
                     return true;
@@ -2657,7 +2653,7 @@ module TypeScript {
                 return isCheckingTypeArgumentList;
             }
 
-            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) != undefined) {
+            if (knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID) !== undefined) {
                 return knownWrapMap.valueAt(this.pullSymbolID, typeBeingWrapped.pullSymbolID);
             }
 
@@ -2888,7 +2884,7 @@ module TypeScript {
                 return false;
             }
 
-            if (!containerSymbol.isAlias() && containerSymbol.type == symbol) {
+            if (!containerSymbol.isAlias() && containerSymbol.type === symbol) {
                 return true;
             }
 
@@ -2897,7 +2893,7 @@ module TypeScript {
             var typeExportSymbol = moduleSymbol.getExportAssignedTypeSymbol();
             var containerExportSymbol = moduleSymbol.getExportAssignedContainerSymbol();
             if (valueExportSymbol || typeExportSymbol || containerExportSymbol) {
-                return valueExportSymbol == symbol || typeExportSymbol == symbol || containerExportSymbol == symbol || PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
+                return valueExportSymbol === symbol || typeExportSymbol == symbol || containerExportSymbol == symbol || PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
             }
 
             return false;
@@ -3003,7 +2999,7 @@ module TypeScript {
                     this.retrievingExportAssignment = true;
                     var sym = (<PullTypeAliasSymbol>this._assignedType).getExportAssignedTypeSymbol();
                     this.retrievingExportAssignment = false;
-                } else if (this._assignedType != this._assignedContainer) {
+                } else if (this._assignedType !== this._assignedContainer) {
                     return this._assignedType;
                 }
             }

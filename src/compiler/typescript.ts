@@ -1159,13 +1159,13 @@ module TypeScript {
                 case CompilerPhase.Syntax:
                 case CompilerPhase.Semantics:
                     // Each of these phases are done when we've processed the last file.
-                    return this.index == this.fileNames.length;
+                    return this.index === this.fileNames.length;
 
                 case CompilerPhase.Emit:
                 case CompilerPhase.DeclarationEmit:
                     // Emitting is done when we get 'one' past the end of hte file list.  This is
                     // because we use that step to collect the results from the shared emitter.
-                    return this.index == (this.fileNames.length + 1);
+                    return this.index === (this.fileNames.length + 1);
             }
 
             return false;
@@ -1293,11 +1293,11 @@ module TypeScript {
 
     export function compareDataObjects(dst: any, src: any): boolean {
         for (var e in dst) {
-            if (typeof dst[e] == "object") {
+            if (typeof dst[e] === "object") {
                 if (!compareDataObjects(dst[e], src[e]))
                     return false;
             }
-            else if (typeof dst[e] != "function") {
+            else if (typeof dst[e] !== "function") {
                 if (dst[e] !== src[e])
                     return false;
             }

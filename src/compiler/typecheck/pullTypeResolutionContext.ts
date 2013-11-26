@@ -54,7 +54,7 @@ module TypeScript {
         constructor(resolver: PullTypeResolver, argumentsOrParameters: any) {
             this.resolver = resolver;
 
-            if (argumentsOrParameters.nonSeparatorAt != undefined) {
+            if (argumentsOrParameters.nonSeparatorAt !== undefined) {
                 this.argumentASTs = argumentsOrParameters;
             }
             else {
@@ -162,7 +162,7 @@ module TypeScript {
 
                     // is there already a substitution for this type?
                     for (var i = 0; i < results.length; i++) {
-                        if (results[i].type == info.typeParameter) {
+                        if (results[i].type === info.typeParameter) {
                             results[i].type = info._inferredTypeAfterFixing;
                         }
                     }
