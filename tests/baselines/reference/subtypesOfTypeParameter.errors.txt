@@ -1,0 +1,38 @@
+subtypesOfTypeParameter.ts(7,7): error TS2141: Class 'D1<T, U>' cannot extend class 'C3<T>':
+	Types of property 'foo' of types 'D1<T, U>' and 'C3<T>' are incompatible.
+subtypesOfTypeParameter.ts(12,13): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+subtypesOfTypeParameter.ts(13,13): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.
+subtypesOfTypeParameter.ts(38,14): error TS2226: Type of conditional '{}' must be identical to 'number' or 'T'.
+subtypesOfTypeParameter.ts(39,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'number'.
+subtypesOfTypeParameter.ts(41,14): error TS2226: Type of conditional '{}' must be identical to 'string' or 'T'.
+subtypesOfTypeParameter.ts(42,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'string'.
+subtypesOfTypeParameter.ts(44,14): error TS2226: Type of conditional '{}' must be identical to 'boolean' or 'T'.
+subtypesOfTypeParameter.ts(45,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'boolean'.
+subtypesOfTypeParameter.ts(47,14): error TS2226: Type of conditional '{}' must be identical to 'Date' or 'T'.
+subtypesOfTypeParameter.ts(48,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'Date'.
+subtypesOfTypeParameter.ts(50,14): error TS2226: Type of conditional '{}' must be identical to 'RegExp' or 'T'.
+subtypesOfTypeParameter.ts(51,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'RegExp'.
+subtypesOfTypeParameter.ts(53,14): error TS2226: Type of conditional '{}' must be identical to '{ foo: number; }' or 'T'.
+subtypesOfTypeParameter.ts(54,14): error TS2226: Type of conditional '{}' must be identical to 'T' or '{ foo: number; }'.
+subtypesOfTypeParameter.ts(56,14): error TS2226: Type of conditional '{}' must be identical to '() => void' or 'T'.
+subtypesOfTypeParameter.ts(57,14): error TS2226: Type of conditional '{}' must be identical to 'T' or '() => void'.
+subtypesOfTypeParameter.ts(59,14): error TS2226: Type of conditional '{}' must be identical to '<T>(x: T) => T' or 'T'.
+subtypesOfTypeParameter.ts(60,15): error TS2226: Type of conditional '{}' must be identical to 'T' or '<T>(x: T) => T'.
+subtypesOfTypeParameter.ts(63,14): error TS2226: Type of conditional '{}' must be identical to 'I1' or 'T'.
+subtypesOfTypeParameter.ts(64,14): error TS2226: Type of conditional '{}' must be identical to 'T' or 'I1'.
+subtypesOfTypeParameter.ts(67,15): error TS2226: Type of conditional '{}' must be identical to 'C1' or 'T'.
+subtypesOfTypeParameter.ts(68,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'C1'.
+subtypesOfTypeParameter.ts(72,15): error TS2226: Type of conditional '{}' must be identical to 'C2<number>' or 'T'.
+subtypesOfTypeParameter.ts(73,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'C2<number>'.
+subtypesOfTypeParameter.ts(76,15): error TS2226: Type of conditional '{}' must be identical to 'typeof E' or 'T'.
+subtypesOfTypeParameter.ts(77,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof E'.
+subtypesOfTypeParameter.ts(79,15): error TS2226: Type of conditional '{}' must be identical to 'E' or 'T'.
+subtypesOfTypeParameter.ts(80,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'E'.
+subtypesOfTypeParameter.ts(83,15): error TS2226: Type of conditional '{}' must be identical to 'typeof f' or 'T'.
+subtypesOfTypeParameter.ts(84,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof f'.
+subtypesOfTypeParameter.ts(87,15): error TS2226: Type of conditional '{}' must be identical to 'typeof c' or 'T'.
+subtypesOfTypeParameter.ts(88,15): error TS2226: Type of conditional '{}' must be identical to 'T' or 'typeof c'.
+subtypesOfTypeParameter.ts(91,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'T'.
+subtypesOfTypeParameter.ts(92,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'T'.
+subtypesOfTypeParameter.ts(96,19): error TS2226: Type of conditional '{}' must be identical to 'T' or 'U'.
+subtypesOfTypeParameter.ts(97,19): error TS2226: Type of conditional '{}' must be identical to 'U' or 'T'.

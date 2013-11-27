@@ -159,7 +159,7 @@ module TypeScript.Services.Formatting {
                 parentIndentationAmount = parent.indentationAmount();
             }
             else {
-                if (node.kind() !== SyntaxKind.Block && parent.kind() === SyntaxKind.Block && this._parent.parent().kind() !== SyntaxKind.Block) {
+                if (parent.kind() === SyntaxKind.Block && !this.shouldIndentBlockInParent(this._parent.parent())) {
                     // Blocks preserve the indentation of their containing node (unless they're a 
                     // standalone block in a list).  i.e. if you have:
                     //
@@ -277,18 +277,11 @@ module TypeScript.Services.Formatting {
 
                 case SyntaxKind.Block:
                     // Check if the block is a member in a list of statements (if the parent is a source unit, module, or block, or switch clause)
-                    switch (parent.kind()) {
-                        case SyntaxKind.SourceUnit:
-                        case SyntaxKind.ModuleDeclaration:
-                        case SyntaxKind.Block:
-                        case SyntaxKind.CaseSwitchClause:
-                        case SyntaxKind.DefaultSwitchClause:
-                            indentationAmount = parentIndentationAmount + parentIndentationAmountDelta;
-                            break;
-
-                        default:
-                            indentationAmount = parentIndentationAmount;
-                            break;
+                    if (this.shouldIndentBlockInParent(parent)) {
+                        indentationAmount = parentIndentationAmount + parentIndentationAmountDelta;
+                    }
+                    else {
+                        indentationAmount = parentIndentationAmount;
                     }
 
                     indentationAmountDelta = this.options.indentSpaces;
@@ -325,6 +318,20 @@ module TypeScript.Services.Formatting {
                 indentationAmount: indentationAmount,
                 indentationAmountDelta: indentationAmountDelta
             };
+        }
+
+        private shouldIndentBlockInParent(parent: IndentationNodeContext): boolean {
+            switch (parent.kind()) {
+                case SyntaxKind.SourceUnit:
+                case SyntaxKind.ModuleDeclaration:
+                case SyntaxKind.Block:
+                case SyntaxKind.CaseSwitchClause:
+                case SyntaxKind.DefaultSwitchClause:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
         private forceRecomputeIndentationOfParent(tokenStart: number, newLineAdded: boolean /*as opposed to removed*/): void {

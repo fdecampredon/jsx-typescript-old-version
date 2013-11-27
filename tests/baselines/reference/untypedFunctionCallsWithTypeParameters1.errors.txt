@@ -1,9 +1,11 @@
 untypedFunctionCallsWithTypeParameters1.ts(3,10): error TS2087: Could not select overload for 'call' expression.
 untypedFunctionCallsWithTypeParameters1.ts(5,10): error TS2158: Untyped function calls may not accept type arguments.
 untypedFunctionCallsWithTypeParameters1.ts(8,10): error TS2159: Non-generic functions may not accept type arguments.
-untypedFunctionCallsWithTypeParameters1.ts(17,10): error TS2159: Non-generic functions may not accept type arguments.
-untypedFunctionCallsWithTypeParameters1.ts(19,18): error TS2073: A class may only extend another class.
-untypedFunctionCallsWithTypeParameters1.ts(21,10): error TS2088: Cannot invoke an expression whose type lacks a call signature.
-untypedFunctionCallsWithTypeParameters1.ts(27,10): error TS2087: Could not select overload for 'call' expression.
-untypedFunctionCallsWithTypeParameters1.ts(34,1): error TS2087: Could not select overload for 'call' expression.
-untypedFunctionCallsWithTypeParameters1.ts(40,1): error TS2087: Could not select overload for 'call' expression.
+untypedFunctionCallsWithTypeParameters1.ts(10,7): error TS2137: Class C declares interface Function but does not implement it:
+	Type 'C' is missing property 'apply' from type 'Function'.
+untypedFunctionCallsWithTypeParameters1.ts(18,10): error TS2159: Non-generic functions may not accept type arguments.
+untypedFunctionCallsWithTypeParameters1.ts(20,18): error TS2073: A class may only extend another class.
+untypedFunctionCallsWithTypeParameters1.ts(22,10): error TS2088: Cannot invoke an expression whose type lacks a call signature.
+untypedFunctionCallsWithTypeParameters1.ts(28,10): error TS2087: Could not select overload for 'call' expression.
+untypedFunctionCallsWithTypeParameters1.ts(35,1): error TS2087: Could not select overload for 'call' expression.
+untypedFunctionCallsWithTypeParameters1.ts(41,1): error TS2087: Could not select overload for 'call' expression.

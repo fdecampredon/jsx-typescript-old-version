@@ -13,6 +13,7 @@ class C implements Function {
     arguments = null;
     caller = () => { };
 }
+
 var c2: C;
 var r4 = c2<number>(); // should be an error
 

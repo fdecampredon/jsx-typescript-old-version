@@ -457,6 +457,7 @@ module TypeScript.Services.Breakpoints {
 
             var expressionParent = expressionNode.parent;
             if (expressionParent && expressionParent.kind() == TypeScript.SyntaxKind.ForStatement) {
+
                 var expression = expressionNode;
                 var forStatement = <TypeScript.ForStatementSyntax>expressionParent;
                 var initializer = forStatement.initializer;

@@ -1,0 +1,26 @@
+=== tests/cases/compiler/objectLiteralWidened.ts ===
+Line 2 col 4 IdentifierName "x" = { foo: any; bar: any; }
+Line 2 col 8 ObjectLiteralExpression "{
+    foo: null,
+    bar: undefined
+}" = { foo: any; bar: any; }
+Line 3 col 0 IdentifierName "foo" = any
+Line 4 col 0 IdentifierName "bar" = any
+Line 4 col 9 IdentifierName "undefined" = any
+Line 7 col 4 IdentifierName "y" = { foo: any; bar: { baz: any; boo: any; }; }
+Line 7 col 8 ObjectLiteralExpression "{
+    foo: null,
+    bar: {
+        baz: null,
+        boo: undefined
+    }
+}" = { foo: any; bar: { baz: any; boo: any; }; }
+Line 8 col 0 IdentifierName "foo" = any
+Line 9 col 0 IdentifierName "bar" = { baz: any; boo: any; }
+Line 9 col 9 ObjectLiteralExpression "{
+        baz: null,
+        boo: undefined
+    }" = { baz: any; boo: any; }
+Line 10 col 0 IdentifierName "baz" = any
+Line 11 col 0 IdentifierName "boo" = any
+Line 11 col 13 IdentifierName "undefined" = any

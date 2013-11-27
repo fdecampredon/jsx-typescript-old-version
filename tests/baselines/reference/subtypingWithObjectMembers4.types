@@ -1,0 +1,23 @@
+=== tests/cases/compiler/subtypingWithObjectMembers4.ts ===
+Line 2 col 6 IdentifierName "Base" = Base
+Line 3 col 0 IdentifierName "foo" = string
+Line 6 col 6 IdentifierName "Derived" = Derived
+Line 6 col 22 IdentifierName "Base" = Base
+Line 7 col 0 IdentifierName "bar" = string
+Line 10 col 6 IdentifierName "A" = A
+Line 11 col 0 IdentifierName "foo" = Base
+Line 11 col 9 IdentifierName "Base" = Base
+Line 14 col 6 IdentifierName "B" = B
+Line 14 col 16 IdentifierName "A" = A
+Line 15 col 0 IdentifierName "fooo" = Derived
+Line 15 col 10 IdentifierName "Derived" = Derived
+Line 18 col 6 IdentifierName "A2" = A2
+Line 19 col 7 IdentifierName "Base" = Base
+Line 22 col 6 IdentifierName "B2" = B2
+Line 22 col 17 IdentifierName "A2" = A2
+Line 23 col 9 IdentifierName "Derived" = Derived
+Line 26 col 6 IdentifierName "A3" = A3
+Line 27 col 9 IdentifierName "Base" = Base
+Line 30 col 6 IdentifierName "B3" = B3
+Line 30 col 17 IdentifierName "A3" = A3
+Line 31 col 11 IdentifierName "Derived" = Derived

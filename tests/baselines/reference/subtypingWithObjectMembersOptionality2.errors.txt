@@ -1,0 +1,7 @@
+subtypingWithObjectMembersOptionality2.ts(18,11): error TS2143: Interface 'S' cannot extend interface 'T':
+	Property 'Foo' defined as optional in type 'S', but is required in type 'T'.
+subtypingWithObjectMembersOptionality2.ts(26,11): error TS2143: Interface 'S2' cannot extend interface 'T2':
+	Property '1' defined as optional in type 'S2', but is required in type 'T2'.
+subtypingWithObjectMembersOptionality2.ts(34,11): error TS2143: Interface 'S3' cannot extend interface 'T3':
+	Property ''1'' defined as optional in type 'S3', but is required in type 'T3'.
+subtypingWithObjectMembersOptionality2.ts(41,9): error TS2226: Type of conditional '{}' must be identical to '{ Foo: Base; }' or '{ Foo?: Derived; }'.

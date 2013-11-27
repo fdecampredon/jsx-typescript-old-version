@@ -411,6 +411,10 @@ module TypeScript {
 
             if (decls.length) {
 
+                // it might happen that container also has a value side: i.e fundule\clodule.
+                // if value side is not bound yet then binding of the module (caused by getSymbol) will create a fresh variable symbol for the value side
+                // instead of sharing one with function\enum\class => big problems with name resolution in future.
+                // To avoid we make sure that symbol for value decl is already bound prior to getSymbol call for the container decl(if value decl is present)
                 var decl = decls[0];
                 if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
                     var valueDecl = decl.getValueDecl();

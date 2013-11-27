@@ -25,6 +25,7 @@ var C = (function () {
     }
     return C;
 })();
+
 var c2;
 var r4 = c2();
 

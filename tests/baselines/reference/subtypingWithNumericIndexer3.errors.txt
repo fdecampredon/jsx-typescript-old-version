@@ -1,0 +1,10 @@
+subtypingWithNumericIndexer3.ts(11,7): error TS2141: Class 'B' cannot extend class 'A':
+	Index signatures of types 'B' and 'A' are incompatible:
+		Type 'Base' is missing property 'bar' from type 'Derived'.
+subtypingWithNumericIndexer3.ts(24,21): error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
+subtypingWithNumericIndexer3.ts(32,11): error TS2141: Class 'Generics.B3<T>' cannot extend class 'Generics.A<T>':
+	Index signatures of types 'B3<T>' and 'A<T>' are incompatible.
+subtypingWithNumericIndexer3.ts(36,11): error TS2141: Class 'Generics.B4<T>' cannot extend class 'Generics.A<T>':
+	Index signatures of types 'B4<T>' and 'A<T>' are incompatible.
+subtypingWithNumericIndexer3.ts(40,11): error TS2141: Class 'Generics.B5<T>' cannot extend class 'Generics.A<T>':
+	Index signatures of types 'B5<T>' and 'A<T>' are incompatible.

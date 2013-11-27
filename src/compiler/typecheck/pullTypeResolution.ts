@@ -1047,7 +1047,6 @@ module TypeScript {
         private resolveFirstExportAssignmentStatement(moduleElements: ISyntaxList<IModuleElementSyntax>, context: PullTypeResolutionContext): void {
             for (var i = 0, n = moduleElements.childCount(); i < n; i++) {
                 var moduleElement = moduleElements.childAt(i);
-
                 if (moduleElement.kind() === SyntaxKind.ExportAssignment) {
                     this.resolveExportAssignmentStatement(<ExportAssignmentSyntax>moduleElement, context);
                     return;
@@ -1424,18 +1423,17 @@ module TypeScript {
             var typeDeclSymbol = <PullTypeSymbol>typeDecl.getSymbol();
             var typeDeclTypeParameters = typeDeclSymbol.getTypeParameters();
 
-            var typeParameters = classOrInterface.kind() === SyntaxKind.ClassDeclaration
-                ? (<ClassDeclarationSyntax>classOrInterface).typeParameterList
-                : (<InterfaceDeclarationSyntax>classOrInterface).typeParameterList;
-
             for (var i = 0; i < typeDeclTypeParameters.length; i++) {
-
                 var typeParameter = typeDeclTypeParameters[i];
 
                 this.checkSymbolPrivacy(typeDeclSymbol, typeParameter, (symbol: PullSymbol) =>
                     this.typeParameterOfTypeDeclarationPrivacyErrorReporter(classOrInterface, i, typeDeclTypeParameters[i], symbol, context));
 
                 if (this.isTypeParameterConstraintHasSelfReference(typeParameter)) {
+                    var typeParameters = classOrInterface.kind() === SyntaxKind.ClassDeclaration
+                        ? (<ClassDeclarationSyntax>classOrInterface).typeParameterList
+                        : (<InterfaceDeclarationSyntax>classOrInterface).typeParameterList;
+
                     var typeParameterAST = typeParameters.typeParameters.nonSeparatorAt(i);
                     this.reportErrorThatTypeParameterReferencesItselfInConstraint(typeParameter, typeDeclSymbol, typeParameterAST, context);
                 }
@@ -4356,6 +4354,7 @@ module TypeScript {
                 if (this.compilationSettings.noImplicitAny()) {
                     // if setter has an any type, it must be implicit any
                     var setterFunctionDeclarationAst = <SetAccessorSyntax>funcDeclAST;
+
                     if (!PullTypeResolver.hasSetAccessorParameterTypeAnnotation(setterFunctionDeclarationAst) && accessorSymbol.type === this.semanticInfoChain.anyTypeSymbol) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDeclAST,
                             DiagnosticCode._0_which_lacks_get_accessor_and_parameter_type_annotation_on_set_accessor_implicitly_has_an_any_type, [setterFunctionDeclarationAst.propertyName.text()]));
@@ -6505,21 +6504,14 @@ module TypeScript {
             return symbol;
         }
 
-        private isInImportDeclaration(ast: ISyntaxElement): boolean {
-            var parent = ast.parent;
-            while (parent) {
-                // SPEC: November 18, 2013 section 10.3 -
-                // Don't walk up any other qualified names because the spec says only the last entity name can be a non-module
-                // i.e. Only Module.Module.Module.var and not Module.Type.var or Module.var.member
-                if (parent.kind() === SyntaxKind.ModuleNameModuleReference) {
-                    parent = parent.parent;
-                }
-                else {
-                    break;
-                }
-            }
-
-            return !!parent && parent.kind() === SyntaxKind.ImportDeclaration;
+        private isLastNameOfQualifiedModuleNameModuleReference(ast: ISyntaxElement): boolean {
+            // SPEC: November 18, 2013 section 10.3 -
+            // Don't walk up any other qualified names because the spec says only the last entity name can be a non-module
+            // i.e. Only Module.Module.Module.var and not Module.Type.var or Module.var.member
+            return ast.kind() === SyntaxKind.IdentifierName &&
+                ast.parent && ast.parent.kind() === SyntaxKind.QualifiedName &&
+                (<QualifiedNameSyntax>ast.parent).right === ast &&
+                ast.parent.parent && ast.parent.parent.kind() === SyntaxKind.ModuleNameModuleReference;
         }
 
         private computeQualifiedName(dottedNameAST: QualifiedNameSyntax, context: PullTypeResolutionContext): PullTypeSymbol {
@@ -6561,8 +6553,8 @@ module TypeScript {
             //  - An EntityName consisting of more than one identifier is resolved as 
             //     a ModuleName followed by an identifier that names one or more exported entities in the given module.
             //     The resulting local alias has all the meanings and classifications of the referenced entity or entities. 
-            //     (As many as three distinct meanings are possible for an entity name—namespace, type, and member.)
-            if (!childTypeSymbol && !isNameOfModule && this.isInImportDeclaration(dottedNameAST))
+            //     (As many as three distinct meanings are possible for an entity name — namespace, type, and member.)
+            if (!childTypeSymbol && !isNameOfModule && this.isLastNameOfQualifiedModuleNameModuleReference(dottedNameAST.right))
             {
                 childTypeSymbol = <PullTypeSymbol>this.getMemberSymbol(rhsName, PullElementKind.SomeValue, lhsType);
             }
@@ -9369,31 +9361,18 @@ module TypeScript {
                 return false;
             }
 
-            var sig1: PullSignatureSymbol = null;
-            var sig2: PullSignatureSymbol = null;
-            var sigsMatch = false;
-
-            // The signatures in the signature group may not be ordered...
-            // REVIEW: Should definition signatures be required to be identical as well?
-            for (var iSig1 = 0; iSig1 < sg1.length; iSig1++) {
-                sig1 = sg1[iSig1];
-
-                for (var iSig2 = 0; iSig2 < sg2.length; iSig2++) {
-                    sig2 = sg2[iSig2];
-
-                    if (this.signaturesAreIdentical(sig1, sig2)) {
-                        sigsMatch = true;
-                        break;
-                    }
+            // Signatures must be in the same order for the signature groups to be identical.
+            // The spec does not say this yet. It is vague about this comparison:
+            // November 18th, 2013: Section 3.8.2:
+            // Two members are considered identical when:
+            // ...
+            //    they are identical call signatures,
+            //    they are identical construct signatures, or
+            //    they are index signatures of identical kind with identical types.
+            for (var i = 0; i < sg1.length; i++) {
+                if (!this.signaturesAreIdentical(sg1[i], sg2[i], /*includeReturnTypes*/ true)) {
+                    return false;
                 }
-
-                if (sigsMatch) {
-                    sigsMatch = false;
-                    continue;
-                }
-
-                // no match found for a specific signature
-                return false;
             }
 
             return true;
@@ -9962,7 +9941,7 @@ module TypeScript {
                     if (!sourceProp) {
                         // Now, the property was not found on Object, but the type in question is a function, look
                         // for it on function
-                        if (this.cachedFunctionInterfaceType() && (targetPropType.getCallSignatures().length || targetPropType.getConstructSignatures().length)) {
+                        if (this.cachedFunctionInterfaceType() && (source.getCallSignatures().length || source.getConstructSignatures().length)) {
                             sourceProp = this.getMemberSymbol(targetProp.name, PullElementKind.SomeValue, this.cachedFunctionInterfaceType());
                         }
 
@@ -11493,14 +11472,14 @@ module TypeScript {
         }
 
         private isTypeParameterConstraintHasSelfReference(originalTypeParameter: PullTypeParameterSymbol): boolean {
-            var seen = BitVector.getBitVector(false);
+            var seen: {[value: number]: boolean}= {};
 
-            function checkConstraints(typeParameter: PullTypeParameterSymbol): boolean {
-                if (seen.valueAt(typeParameter.pullSymbolID)) {
+            var checkConstraints = (typeParameter: PullTypeParameterSymbol): boolean => {
+                if (seen[typeParameter.pullSymbolID] !== undefined) {
                     return false;
                 }
 
-                seen.setValueAt(typeParameter.pullSymbolID, true);
+                seen[typeParameter.pullSymbolID] = true;
 
                 var isSelfReferenced = false;
                 var constraint = typeParameter.getConstraint();
@@ -11514,11 +11493,10 @@ module TypeScript {
                     }
                 }
 
-                seen.setValueAt(typeParameter.pullSymbolID, false);
+                seen[typeParameter.pullSymbolID] = false;
                 return isSelfReferenced;
             }
             var isSelfReferenced = checkConstraints(originalTypeParameter);
-            seen.release();
 
             return isSelfReferenced;
         }
