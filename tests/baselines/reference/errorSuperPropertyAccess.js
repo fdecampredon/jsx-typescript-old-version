@@ -65,6 +65,7 @@ var SomeBase = (function () {
 //super.publicInstanceMemberNotFunction in constructor of derived class
 //super.publicInstanceMemberNotFunction in instance member function of derived class
 //super.publicInstanceMemberNotFunction in instance member accessor(get and set) of derived class
+//super property access only available with typed this
 var SomeDerived1 = (function (_super) {
     __extends(SomeDerived1, _super);
     function SomeDerived1() {
@@ -86,6 +87,16 @@ var SomeDerived1 = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    SomeDerived1.prototype.fn2 = function () {
+        function inner() {
+            _super.prototype.publicFunc.call(this);
+        }
+        var x = {
+            test: function () {
+                return _super.prototype.publicFunc.call(this);
+            }
+        };
+    };
     return SomeDerived1;
 })(SomeBase);
 

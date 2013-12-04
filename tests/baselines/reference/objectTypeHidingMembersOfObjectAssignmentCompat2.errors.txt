@@ -1,6 +1,15 @@
+objectTypeHidingMembersOfObjectAssignmentCompat2.ts(7,1): error TS2012: Cannot convert 'I' to 'Object':
+	Types of property 'toString' of types 'I' and 'Object' are incompatible:
+		Call signatures of types '() => number' and '() => string' are incompatible.
 objectTypeHidingMembersOfObjectAssignmentCompat2.ts(8,1): error TS2012: Cannot convert 'Object' to 'I':
 	Types of property 'toString' of types 'Object' and 'I' are incompatible:
 		Call signatures of types '() => string' and '() => number' are incompatible.
+objectTypeHidingMembersOfObjectAssignmentCompat2.ts(14,1): error TS2012: Cannot convert 'C' to 'Object':
+	Types of property 'toString' of types 'C' and 'Object' are incompatible:
+		Call signatures of types '() => number' and '() => string' are incompatible.
 objectTypeHidingMembersOfObjectAssignmentCompat2.ts(15,1): error TS2012: Cannot convert 'Object' to 'C':
 	Types of property 'toString' of types 'Object' and 'C' are incompatible:
 		Call signatures of types '() => string' and '() => number' are incompatible.
+objectTypeHidingMembersOfObjectAssignmentCompat2.ts(20,1): error TS2012: Cannot convert '{ toString: () => void; }' to 'Object':
+	Types of property 'toString' of types '{ toString: () => void; }' and 'Object' are incompatible:
+		Call signatures of types '() => void' and '() => string' are incompatible.

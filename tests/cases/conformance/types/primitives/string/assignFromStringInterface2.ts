@@ -19,7 +19,7 @@ interface NotString {
     replace(searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string;
     search(regexp: string): number;
     search(regexp: RegExp): number;
-    slice(start: number, end?: number): string;
+    slice(start?: number, end?: number): string;
     split(separator: string, limit?: number): string[];
     split(separator: RegExp, limit?: number): string[];
     substring(start: number, end?: number): string;

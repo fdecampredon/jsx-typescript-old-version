@@ -1,0 +1,23 @@
+=== tests/cases/compiler/library_ArraySlice.ts ===
+Line 0 col 0 InvocationExpression "// Array.prototype.slice can have zero, one, or two arguments
+Array.prototype.slice()" = any[]
+Line 0 col 0 MemberAccessExpression "// Array.prototype.slice can have zero, one, or two arguments
+Array.prototype.slice" = (start?: number, end?: number) => any[]
+Line 0 col 0 MemberAccessExpression "// Array.prototype.slice can have zero, one, or two arguments
+Array.prototype" = any[]
+Line 0 col 0 IdentifierName "// Array.prototype.slice can have zero, one, or two arguments
+Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+Line 1 col 6 IdentifierName "prototype" = any[]
+Line 1 col 16 IdentifierName "slice" = (start?: number, end?: number) => any[]
+Line 2 col 0 InvocationExpression "Array.prototype.slice(0)" = any[]
+Line 2 col 0 MemberAccessExpression "Array.prototype.slice" = (start?: number, end?: number) => any[]
+Line 2 col 0 MemberAccessExpression "Array.prototype" = any[]
+Line 2 col 0 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+Line 2 col 6 IdentifierName "prototype" = any[]
+Line 2 col 16 IdentifierName "slice" = (start?: number, end?: number) => any[]
+Line 3 col 0 InvocationExpression "Array.prototype.slice(0, 1)" = any[]
+Line 3 col 0 MemberAccessExpression "Array.prototype.slice" = (start?: number, end?: number) => any[]
+Line 3 col 0 MemberAccessExpression "Array.prototype" = any[]
+Line 3 col 0 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+Line 3 col 6 IdentifierName "prototype" = any[]
+Line 3 col 16 IdentifierName "slice" = (start?: number, end?: number) => any[]

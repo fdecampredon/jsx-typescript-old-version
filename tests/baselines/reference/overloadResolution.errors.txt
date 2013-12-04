@@ -1,0 +1,17 @@
+overloadResolution.ts(27,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type '{}'.
+overloadResolution.ts(27,1): error TS2087: Could not select overload for 'call' expression.
+overloadResolution.ts(41,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 1 which is of type 'string'.
+overloadResolution.ts(41,1): error TS2087: Could not select overload for 'call' expression.
+overloadResolution.ts(63,1): error TS4027: Signature expected 1 type arguments, got 4 instead.
+overloadResolution.ts(70,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type 'number'.
+overloadResolution.ts(70,1): error TS2087: Could not select overload for 'call' expression.
+overloadResolution.ts(71,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 1 which is of type 'string'.
+overloadResolution.ts(71,1): error TS2087: Could not select overload for 'call' expression.
+overloadResolution.ts(81,1): error TS2086: Type 'Date' does not satisfy the constraint 'string' for type parameter 'U extends string'.
+overloadResolution.ts(81,5): error TS2095: Could not find symbol 'Window'.
+overloadResolution.ts(84,5): error TS2095: Could not find symbol 'window'.
+overloadResolution.ts(85,11): error TS2095: Could not find symbol 'window'.

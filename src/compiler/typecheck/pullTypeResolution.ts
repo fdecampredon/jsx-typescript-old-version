@@ -5957,14 +5957,63 @@ module TypeScript {
                 this.getSomeInnermostFunctionScopeDecl(nameSymbolDecl.getParentPath()) === functionScopeDecl);
         }
 
+        private findConstructorDeclOfEnclosingType(decl: PullDecl): PullDecl {
+            var current = decl;
+            while (current) {
+                if (hasFlag(current.kind, PullElementKind.Property)) {
+                    var parentDecl = current.getParentDecl();
+                    if (hasFlag(parentDecl.kind, PullElementKind.Class)) {
+                        return ArrayUtilities.lastOrDefault(parentDecl.getChildDecls(), decl => hasFlag(decl.kind, PullElementKind.ConstructorMethod));
+                    }
+                }
+
+                if (hasFlag(current.kind, PullElementKind.SomeContainer)) {
+                    return null;
+                }
+
+                current = current.getParentDecl();
+            }
+            return null;
+        }
+
         private computeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext, reportDiagnostics: boolean): PullSymbol {
             var id = nameAST.valueText();
             if (id.length === 0) {
                 return this.semanticInfoChain.anyTypeSymbol;
             }
-
+            
             var nameSymbol: PullSymbol = null;
             var enclosingDecl = this.getEnclosingDeclForAST(nameAST);//, /*skipNonScopeDecls:*/ false);
+
+            // SPEC: Nov 18, 2013
+            // Initializer expressions for instance member variables are evaluated in the scope of the class constructor body 
+            // but are not permitted to reference parameters or local variables of the constructor.
+            // This effectively means that entities from outer scopes by the same name as a constructor parameter or local variable are inaccessible 
+            // in initializer expressions for instance member variables.
+            var diagnosticForInitializer: Diagnostic = null;
+            var memberVariableDeclarationAST = getEnclosingMemberVariableDeclaration (nameAST);
+            if (memberVariableDeclarationAST) {
+
+                var memberVariableDecl = this.semanticInfoChain.getDeclForAST(memberVariableDeclarationAST);
+                if (memberVariableDecl && !hasFlag(memberVariableDecl.flags, PullElementFlags.Static)) {
+                    var constructorDecl = this.findConstructorDeclOfEnclosingType(memberVariableDecl);
+
+                    if (constructorDecl) {
+                        var childDecls = constructorDecl.searchChildDecls(id, PullElementKind.SomeValue);
+
+                        if (childDecls.length) {
+                            var childDeclSymbol = childDecls[0].getSymbol();
+                            // name that was used in initializer was resolved in the scope of constructor.
+                            // delay error reporting:
+                            // - if this name won't be found in other scopes then we'll print normal 'Could not find symbol' error
+                            // - otherwise we'll report more specific error about shadowing value from the outer scope
+                            diagnosticForInitializer = this.semanticInfoChain.diagnosticFromAST(nameAST,
+                                DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor,
+                                [childDeclSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()])
+                        }
+                    }
+                }
+            }
 
             // First check if this is the name child of a declaration. If it is, no need to search for a name in scope since this is not a reference.
             if (isDeclarationASTOrDeclarationNameAST(nameAST)) {
@@ -6016,6 +6065,10 @@ module TypeScript {
                     return this.getNewErrorTypeSymbol(id);
                 }
             }
+            else if (diagnosticForInitializer) {
+                context.postDiagnostic(diagnosticForInitializer);
+                return this.getNewErrorTypeSymbol(id);
+            }
 
             // October 11, 2013:
             // Initializer expressions are evaluated in the scope of the function body but are not 
@@ -6038,23 +6091,34 @@ module TypeScript {
                 var parameterList = getParameterList(enclosingFunctionAST);
                 // Short circuit if we are located in the function body, since all child decls of the function are accessible there
                 if (currentParameterIndex >= 0) {
-                    // Search the enclosing function ISyntaxElement for a parameter with the right name, but stop once we hit our current context
-                    var foundMatchingParameter = false;
+                    // Search the enclosing function AST for a parameter with the right name, but stop once we hit our current context
+                    var matchingParameter: ParameterSyntax;
                     if (parameterList) {
                         for (var i = 0; i <= currentParameterIndex; i++) {
                             var candidateParameter = parameterList.parameters.nonSeparatorAt(i);
                             if (candidateParameter && candidateParameter.identifier.valueText() === id) {
-                                foundMatchingParameter = true;
+                                matchingParameter = candidateParameter;
+                                break;
                             }
                         }
                     }
 
-                    if (!foundMatchingParameter) {
+                    if (!matchingParameter) {
                         // We didn't find a matching parameter to the left, so error
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST,
                             DiagnosticCode.Initializer_of_parameter_0_cannot_reference_identifier_1_declared_after_it,
                             [parameterList.parameters.nonSeparatorAt(currentParameterIndex).identifier.text(), nameAST.text()]));
                         return this.getNewErrorTypeSymbol(id);
+                    }
+                    else if (matchingParameter === getEnclosingParameter(nameAST)) {
+                        // we've found matching parameter but it references itself from the initializer
+                        // per spec Nov 18: 
+                        // Initializer expressions ..and are only permitted to access parameters that are declared to the left of the parameter they initialize
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST,
+                            DiagnosticCode.Parameter_0_cannot_be_referenced_in_its_initializer,
+                            [parameterList.parameters.nonSeparatorAt(currentParameterIndex).identifier.text()]));
+                        return this.getNewErrorTypeSymbol(id);
+
                     }
                 }
             }
@@ -9881,16 +9945,6 @@ module TypeScript {
             // This is an optimization that is a deviation from the spec. The spec sections 3.8.3 and 3.8.4 say to compare structurally,
             // but we know that if a type nominally extends another type, it is both a subtype and assignable.
             if ((source.kind & PullElementKind.SomeInstantiatableType) && (target.kind & PullElementKind.SomeInstantiatableType) && this.sourceExtendsTarget(source, target, context)) {
-                return true;
-            }
-
-            if (this.cachedObjectInterfaceType() && target === this.cachedObjectInterfaceType()) {
-                return true;
-            }
-
-            if (this.cachedFunctionInterfaceType() &&
-                (sourceSubstitution.getCallSignatures().length || sourceSubstitution.getConstructSignatures().length) &&
-                target.hasBase(this.cachedFunctionInterfaceType())) {
                 return true;
             }
 

@@ -1,6 +1,7 @@
 //super.publicInstanceMemberFunction in constructor of derived class
 //super.publicInstanceMemberFunction in instance member function of derived class
 //super.publicInstanceMemberFunction in instance member accessor(get and set) of derived class
+//super.publicInstanceMemberFunction in lambda in member function
 //super.publicStaticMemberFunction in static member function of derived class
 //super.publicStaticMemberFunction in static member accessor(get and set) of derived class
 var __extends = this.__extends || function (d, b) {
@@ -30,8 +31,12 @@ var SomeDerivedClass = (function (_super) {
         var x;
     }
     SomeDerivedClass.prototype.fn = function () {
+        var _this = this;
         var x = _super.prototype.func.call(this);
         var x;
+        var y = function () {
+            return _super.prototype.func.call(_this);
+        };
     };
 
     Object.defineProperty(SomeDerivedClass.prototype, "a", {

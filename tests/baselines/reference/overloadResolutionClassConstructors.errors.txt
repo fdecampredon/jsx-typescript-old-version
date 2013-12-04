@@ -1,0 +1,19 @@
+overloadResolutionClassConstructors.ts(27,5): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type '{}'.
+overloadResolutionClassConstructors.ts(27,5): error TS2085: Could not select overload for 'new' expression.
+overloadResolutionClassConstructors.ts(60,5): error TS4027: Signature expected 3 type arguments, got 1 instead.
+overloadResolutionClassConstructors.ts(61,5): error TS4027: Signature expected 3 type arguments, got 2 instead.
+overloadResolutionClassConstructors.ts(65,5): error TS4027: Signature expected 3 type arguments, got 4 instead.
+overloadResolutionClassConstructors.ts(69,5): error TS2148: Overload signature is not compatible with function definition.
+overloadResolutionClassConstructors.ts(73,5): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type 'number'.
+overloadResolutionClassConstructors.ts(73,5): error TS2085: Could not select overload for 'new' expression.
+overloadResolutionClassConstructors.ts(74,5): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+overloadResolutionClassConstructors.ts(75,5): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+overloadResolutionClassConstructors.ts(79,5): error TS2086: Type '{}' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+overloadResolutionClassConstructors.ts(80,5): error TS2086: Type '{}' does not satisfy the constraint 'string' for type parameter 'T extends string'.
+overloadResolutionClassConstructors.ts(84,5): error TS2086: Type 'Date' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+overloadResolutionClassConstructors.ts(84,9): error TS2095: Could not find symbol 'Window'.
+overloadResolutionClassConstructors.ts(87,9): error TS2095: Could not find symbol 'window'.
+overloadResolutionClassConstructors.ts(88,15): error TS2095: Could not find symbol 'window'.
+overloadResolutionClassConstructors.ts(98,18): error TS2094: The property 'blah' does not exist on value of type 'String'.

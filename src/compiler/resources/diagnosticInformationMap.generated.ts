@@ -1234,6 +1234,14 @@ module TypeScript {
     "code": 2229,
     "category": DiagnosticCategory.Error
   },
+  "Initializer of instance member variable '{0}' cannot reference identifier '{1}' declared in the constructor.": {
+    "code": 2230,
+    "category": DiagnosticCategory.Error
+  },
+  "Parameter '{0}' cannot be referenced in its initializer.": {
+    "code": 2231,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix

@@ -1,0 +1,13 @@
+typeAssertions.ts(5,5): error TS2087: Could not select overload for 'call' expression.
+typeAssertions.ts(31,12): error TS2012: Cannot convert 'SomeOther' to 'SomeBase':
+	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.
+	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
+typeAssertions.ts(35,15): error TS2012: Cannot convert 'SomeOther' to 'SomeDerived':
+	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
+	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
+typeAssertions.ts(37,13): error TS2012: Cannot convert 'SomeDerived' to 'SomeOther':
+	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
+	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
+typeAssertions.ts(38,13): error TS2012: Cannot convert 'SomeBase' to 'SomeOther':
+	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
+	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.

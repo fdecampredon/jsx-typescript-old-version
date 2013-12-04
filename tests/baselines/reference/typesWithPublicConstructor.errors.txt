@@ -1,3 +1,4 @@
-typesWithPublicConstructor.ts(8,23): error TS2094: The property 'constructor' does not exist on value of type 'C'.
+typesWithPublicConstructor.ts(8,5): error TS2012: Cannot convert 'Function' to '() => void':
+	Type '() => void' requires a call signature, but type 'Function' lacks one.
 typesWithPublicConstructor.ts(15,14): error TS2081: Supplied parameters do not match any signature of call target.
 typesWithPublicConstructor.ts(15,14): error TS2085: Could not select overload for 'new' expression.

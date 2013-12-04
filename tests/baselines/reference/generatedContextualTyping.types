@@ -1,0 +1,2997 @@
+=== tests/cases/compiler/generatedContextualTyping.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 0 col 21 IdentifierName "p" = any
+Line 1 col 6 IdentifierName "Derived1" = Derived1
+Line 1 col 23 IdentifierName "Base" = Base
+Line 1 col 38 IdentifierName "m" = any
+Line 2 col 6 IdentifierName "Derived2" = Derived2
+Line 2 col 23 IdentifierName "Base" = Base
+Line 2 col 38 IdentifierName "n" = any
+Line 3 col 10 IdentifierName "Genric" = Genric<T>
+Line 3 col 17 IdentifierName "T" = T
+Line 3 col 22 IdentifierName "func" = (n: T[]) => any
+Line 3 col 27 IdentifierName "n" = T[]
+Line 3 col 30 IdentifierName "T" = T
+Line 4 col 4 IdentifierName "b" = Base
+Line 4 col 8 ObjectCreationExpression "new Base()" = Base
+Line 4 col 12 IdentifierName "Base" = typeof Base
+Line 4 col 20 IdentifierName "d1" = Derived1
+Line 4 col 25 ObjectCreationExpression "new Derived1()" = Derived1
+Line 4 col 29 IdentifierName "Derived1" = typeof Derived1
+Line 4 col 41 IdentifierName "d2" = Derived2
+Line 4 col 46 ObjectCreationExpression "new Derived2()" = Derived2
+Line 4 col 50 IdentifierName "Derived2" = typeof Derived2
+Line 5 col 4 IdentifierName "x1" = () => Base[]
+Line 5 col 14 IdentifierName "Base" = Base
+Line 5 col 23 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 5 col 29 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 5 col 30 IdentifierName "d1" = Derived1
+Line 5 col 34 IdentifierName "d2" = Derived2
+Line 6 col 4 IdentifierName "x2" = () => Base[]
+Line 6 col 14 IdentifierName "Base" = Base
+Line 6 col 23 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 6 col 43 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 6 col 44 IdentifierName "d1" = Derived1
+Line 6 col 48 IdentifierName "d2" = Derived2
+Line 7 col 4 IdentifierName "x3" = () => Base[]
+Line 7 col 14 IdentifierName "Base" = Base
+Line 7 col 23 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 7 col 32 IdentifierName "named" = () => Base[]
+Line 7 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 7 col 50 IdentifierName "d1" = Derived1
+Line 7 col 54 IdentifierName "d2" = Derived2
+Line 8 col 4 IdentifierName "x4" = () => Base[]
+Line 8 col 14 IdentifierName "Base" = Base
+Line 8 col 26 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 8 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 8 col 33 IdentifierName "d1" = Derived1
+Line 8 col 37 IdentifierName "d2" = Derived2
+Line 9 col 4 IdentifierName "x5" = () => Base[]
+Line 9 col 14 IdentifierName "Base" = Base
+Line 9 col 26 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 9 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 9 col 47 IdentifierName "d1" = Derived1
+Line 9 col 51 IdentifierName "d2" = Derived2
+Line 10 col 4 IdentifierName "x6" = () => Base[]
+Line 10 col 14 IdentifierName "Base" = Base
+Line 10 col 26 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 10 col 35 IdentifierName "named" = () => Base[]
+Line 10 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 10 col 53 IdentifierName "d1" = Derived1
+Line 10 col 57 IdentifierName "d2" = Derived2
+Line 11 col 4 IdentifierName "x7" = Base[]
+Line 11 col 8 IdentifierName "Base" = Base
+Line 11 col 17 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 11 col 18 IdentifierName "d1" = Derived1
+Line 11 col 22 IdentifierName "d2" = Derived2
+Line 12 col 4 IdentifierName "x8" = Base[]
+Line 12 col 8 IdentifierName "Array" = Array<T>
+Line 12 col 14 IdentifierName "Base" = Base
+Line 12 col 22 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 12 col 23 IdentifierName "d1" = Derived1
+Line 12 col 27 IdentifierName "d2" = Derived2
+Line 13 col 4 IdentifierName "x9" = { [n: number]: Base; }
+Line 13 col 11 IdentifierName "n" = number
+Line 13 col 23 IdentifierName "Base" = Base
+Line 13 col 33 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 13 col 34 IdentifierName "d1" = Derived1
+Line 13 col 38 IdentifierName "d2" = Derived2
+Line 14 col 4 IdentifierName "x10" = { n: Base[]; }
+Line 14 col 10 IdentifierName "n" = Base[]
+Line 14 col 13 IdentifierName "Base" = Base
+Line 14 col 26 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 14 col 28 IdentifierName "n" = Base[]
+Line 14 col 31 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 14 col 32 IdentifierName "d1" = Derived1
+Line 14 col 36 IdentifierName "d2" = Derived2
+Line 15 col 4 IdentifierName "x11" = (s: Base[]) => any
+Line 15 col 10 IdentifierName "s" = Base[]
+Line 15 col 13 IdentifierName "Base" = Base
+Line 15 col 30 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 15 col 30 IdentifierName "n" = Base[]
+Line 15 col 41 IdentifierName "n" = Base[]
+Line 15 col 44 IdentifierName "Base" = Base
+Line 16 col 4 IdentifierName "x12" = Genric<Base>
+Line 16 col 9 IdentifierName "Genric" = Genric<T>
+Line 16 col 16 IdentifierName "Base" = Base
+Line 16 col 24 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 16 col 26 IdentifierName "func" = (n: Base[]) => {}[]
+Line 16 col 32 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 16 col 32 IdentifierName "n" = Base[]
+Line 16 col 46 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 16 col 47 IdentifierName "d1" = Derived1
+Line 16 col 51 IdentifierName "d2" = Derived2
+Line 17 col 6 IdentifierName "x13" = x13
+Line 17 col 12 IdentifierName "member" = () => Base[]
+Line 17 col 26 IdentifierName "Base" = Base
+Line 17 col 35 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 17 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 17 col 42 IdentifierName "d1" = Derived1
+Line 17 col 46 IdentifierName "d2" = Derived2
+Line 18 col 6 IdentifierName "x14" = x14
+Line 18 col 12 IdentifierName "member" = () => Base[]
+Line 18 col 26 IdentifierName "Base" = Base
+Line 18 col 35 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 18 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 18 col 56 IdentifierName "d1" = Derived1
+Line 18 col 60 IdentifierName "d2" = Derived2
+Line 19 col 6 IdentifierName "x15" = x15
+Line 19 col 12 IdentifierName "member" = () => Base[]
+Line 19 col 26 IdentifierName "Base" = Base
+Line 19 col 35 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 19 col 44 IdentifierName "named" = () => Base[]
+Line 19 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 19 col 62 IdentifierName "d1" = Derived1
+Line 19 col 66 IdentifierName "d2" = Derived2
+Line 20 col 6 IdentifierName "x16" = x16
+Line 20 col 12 IdentifierName "member" = () => Base[]
+Line 20 col 26 IdentifierName "Base" = Base
+Line 20 col 38 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 20 col 44 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 20 col 45 IdentifierName "d1" = Derived1
+Line 20 col 49 IdentifierName "d2" = Derived2
+Line 21 col 6 IdentifierName "x17" = x17
+Line 21 col 12 IdentifierName "member" = () => Base[]
+Line 21 col 26 IdentifierName "Base" = Base
+Line 21 col 38 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 21 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 21 col 59 IdentifierName "d1" = Derived1
+Line 21 col 63 IdentifierName "d2" = Derived2
+Line 22 col 6 IdentifierName "x18" = x18
+Line 22 col 12 IdentifierName "member" = () => Base[]
+Line 22 col 26 IdentifierName "Base" = Base
+Line 22 col 38 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 22 col 47 IdentifierName "named" = () => Base[]
+Line 22 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 22 col 65 IdentifierName "d1" = Derived1
+Line 22 col 69 IdentifierName "d2" = Derived2
+Line 23 col 6 IdentifierName "x19" = x19
+Line 23 col 12 IdentifierName "member" = Base[]
+Line 23 col 20 IdentifierName "Base" = Base
+Line 23 col 29 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 23 col 30 IdentifierName "d1" = Derived1
+Line 23 col 34 IdentifierName "d2" = Derived2
+Line 24 col 6 IdentifierName "x20" = x20
+Line 24 col 12 IdentifierName "member" = Base[]
+Line 24 col 20 IdentifierName "Array" = Array<T>
+Line 24 col 26 IdentifierName "Base" = Base
+Line 24 col 34 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 24 col 35 IdentifierName "d1" = Derived1
+Line 24 col 39 IdentifierName "d2" = Derived2
+Line 25 col 6 IdentifierName "x21" = x21
+Line 25 col 12 IdentifierName "member" = { [n: number]: Base; }
+Line 25 col 23 IdentifierName "n" = number
+Line 25 col 35 IdentifierName "Base" = Base
+Line 25 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 25 col 46 IdentifierName "d1" = Derived1
+Line 25 col 50 IdentifierName "d2" = Derived2
+Line 26 col 6 IdentifierName "x22" = x22
+Line 26 col 12 IdentifierName "member" = { n: Base[]; }
+Line 26 col 21 IdentifierName "n" = Base[]
+Line 26 col 24 IdentifierName "Base" = Base
+Line 26 col 37 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 26 col 39 IdentifierName "n" = Base[]
+Line 26 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 26 col 43 IdentifierName "d1" = Derived1
+Line 26 col 47 IdentifierName "d2" = Derived2
+Line 27 col 6 IdentifierName "x23" = x23
+Line 27 col 12 IdentifierName "member" = (s: Base[]) => any
+Line 27 col 21 IdentifierName "s" = Base[]
+Line 27 col 24 IdentifierName "Base" = Base
+Line 27 col 41 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 27 col 41 IdentifierName "n" = Base[]
+Line 27 col 52 IdentifierName "n" = Base[]
+Line 27 col 55 IdentifierName "Base" = Base
+Line 28 col 6 IdentifierName "x24" = x24
+Line 28 col 12 IdentifierName "member" = Genric<Base>
+Line 28 col 20 IdentifierName "Genric" = Genric<T>
+Line 28 col 27 IdentifierName "Base" = Base
+Line 28 col 35 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 28 col 37 IdentifierName "func" = (n: Base[]) => {}[]
+Line 28 col 43 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 28 col 43 IdentifierName "n" = Base[]
+Line 28 col 57 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 28 col 58 IdentifierName "d1" = Derived1
+Line 28 col 62 IdentifierName "d2" = Derived2
+Line 29 col 6 IdentifierName "x25" = x25
+Line 29 col 20 IdentifierName "member" = () => Base[]
+Line 29 col 34 IdentifierName "Base" = Base
+Line 29 col 43 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 29 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 29 col 50 IdentifierName "d1" = Derived1
+Line 29 col 54 IdentifierName "d2" = Derived2
+Line 30 col 6 IdentifierName "x26" = x26
+Line 30 col 20 IdentifierName "member" = () => Base[]
+Line 30 col 34 IdentifierName "Base" = Base
+Line 30 col 43 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 30 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 30 col 64 IdentifierName "d1" = Derived1
+Line 30 col 68 IdentifierName "d2" = Derived2
+Line 31 col 6 IdentifierName "x27" = x27
+Line 31 col 20 IdentifierName "member" = () => Base[]
+Line 31 col 34 IdentifierName "Base" = Base
+Line 31 col 43 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 31 col 52 IdentifierName "named" = () => Base[]
+Line 31 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 31 col 70 IdentifierName "d1" = Derived1
+Line 31 col 74 IdentifierName "d2" = Derived2
+Line 32 col 6 IdentifierName "x28" = x28
+Line 32 col 20 IdentifierName "member" = () => Base[]
+Line 32 col 34 IdentifierName "Base" = Base
+Line 32 col 46 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 32 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 32 col 53 IdentifierName "d1" = Derived1
+Line 32 col 57 IdentifierName "d2" = Derived2
+Line 33 col 6 IdentifierName "x29" = x29
+Line 33 col 20 IdentifierName "member" = () => Base[]
+Line 33 col 34 IdentifierName "Base" = Base
+Line 33 col 46 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 33 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 33 col 67 IdentifierName "d1" = Derived1
+Line 33 col 71 IdentifierName "d2" = Derived2
+Line 34 col 6 IdentifierName "x30" = x30
+Line 34 col 20 IdentifierName "member" = () => Base[]
+Line 34 col 34 IdentifierName "Base" = Base
+Line 34 col 46 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 34 col 55 IdentifierName "named" = () => Base[]
+Line 34 col 72 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 34 col 73 IdentifierName "d1" = Derived1
+Line 34 col 77 IdentifierName "d2" = Derived2
+Line 35 col 6 IdentifierName "x31" = x31
+Line 35 col 20 IdentifierName "member" = Base[]
+Line 35 col 28 IdentifierName "Base" = Base
+Line 35 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 35 col 38 IdentifierName "d1" = Derived1
+Line 35 col 42 IdentifierName "d2" = Derived2
+Line 36 col 6 IdentifierName "x32" = x32
+Line 36 col 20 IdentifierName "member" = Base[]
+Line 36 col 28 IdentifierName "Array" = Array<T>
+Line 36 col 34 IdentifierName "Base" = Base
+Line 36 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 36 col 43 IdentifierName "d1" = Derived1
+Line 36 col 47 IdentifierName "d2" = Derived2
+Line 37 col 6 IdentifierName "x33" = x33
+Line 37 col 20 IdentifierName "member" = { [n: number]: Base; }
+Line 37 col 31 IdentifierName "n" = number
+Line 37 col 43 IdentifierName "Base" = Base
+Line 37 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 37 col 54 IdentifierName "d1" = Derived1
+Line 37 col 58 IdentifierName "d2" = Derived2
+Line 38 col 6 IdentifierName "x34" = x34
+Line 38 col 20 IdentifierName "member" = { n: Base[]; }
+Line 38 col 29 IdentifierName "n" = Base[]
+Line 38 col 32 IdentifierName "Base" = Base
+Line 38 col 45 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 38 col 47 IdentifierName "n" = Base[]
+Line 38 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 38 col 51 IdentifierName "d1" = Derived1
+Line 38 col 55 IdentifierName "d2" = Derived2
+Line 39 col 6 IdentifierName "x35" = x35
+Line 39 col 20 IdentifierName "member" = (s: Base[]) => any
+Line 39 col 29 IdentifierName "s" = Base[]
+Line 39 col 32 IdentifierName "Base" = Base
+Line 39 col 49 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 39 col 49 IdentifierName "n" = Base[]
+Line 39 col 60 IdentifierName "n" = Base[]
+Line 39 col 63 IdentifierName "Base" = Base
+Line 40 col 6 IdentifierName "x36" = x36
+Line 40 col 20 IdentifierName "member" = Genric<Base>
+Line 40 col 28 IdentifierName "Genric" = Genric<T>
+Line 40 col 35 IdentifierName "Base" = Base
+Line 40 col 43 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 40 col 45 IdentifierName "func" = (n: Base[]) => {}[]
+Line 40 col 51 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 40 col 51 IdentifierName "n" = Base[]
+Line 40 col 65 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 40 col 66 IdentifierName "d1" = Derived1
+Line 40 col 70 IdentifierName "d2" = Derived2
+Line 41 col 6 IdentifierName "x37" = x37
+Line 41 col 19 IdentifierName "member" = () => Base[]
+Line 41 col 33 IdentifierName "Base" = Base
+Line 41 col 42 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 41 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 41 col 49 IdentifierName "d1" = Derived1
+Line 41 col 53 IdentifierName "d2" = Derived2
+Line 42 col 6 IdentifierName "x38" = x38
+Line 42 col 19 IdentifierName "member" = () => Base[]
+Line 42 col 33 IdentifierName "Base" = Base
+Line 42 col 42 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 42 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 42 col 63 IdentifierName "d1" = Derived1
+Line 42 col 67 IdentifierName "d2" = Derived2
+Line 43 col 6 IdentifierName "x39" = x39
+Line 43 col 19 IdentifierName "member" = () => Base[]
+Line 43 col 33 IdentifierName "Base" = Base
+Line 43 col 42 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 43 col 51 IdentifierName "named" = () => Base[]
+Line 43 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 43 col 69 IdentifierName "d1" = Derived1
+Line 43 col 73 IdentifierName "d2" = Derived2
+Line 44 col 6 IdentifierName "x40" = x40
+Line 44 col 19 IdentifierName "member" = () => Base[]
+Line 44 col 33 IdentifierName "Base" = Base
+Line 44 col 45 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 44 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 44 col 52 IdentifierName "d1" = Derived1
+Line 44 col 56 IdentifierName "d2" = Derived2
+Line 45 col 6 IdentifierName "x41" = x41
+Line 45 col 19 IdentifierName "member" = () => Base[]
+Line 45 col 33 IdentifierName "Base" = Base
+Line 45 col 45 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 45 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 45 col 66 IdentifierName "d1" = Derived1
+Line 45 col 70 IdentifierName "d2" = Derived2
+Line 46 col 6 IdentifierName "x42" = x42
+Line 46 col 19 IdentifierName "member" = () => Base[]
+Line 46 col 33 IdentifierName "Base" = Base
+Line 46 col 45 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 46 col 54 IdentifierName "named" = () => Base[]
+Line 46 col 71 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 46 col 72 IdentifierName "d1" = Derived1
+Line 46 col 76 IdentifierName "d2" = Derived2
+Line 47 col 6 IdentifierName "x43" = x43
+Line 47 col 19 IdentifierName "member" = Base[]
+Line 47 col 27 IdentifierName "Base" = Base
+Line 47 col 36 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 47 col 37 IdentifierName "d1" = Derived1
+Line 47 col 41 IdentifierName "d2" = Derived2
+Line 48 col 6 IdentifierName "x44" = x44
+Line 48 col 19 IdentifierName "member" = Base[]
+Line 48 col 27 IdentifierName "Array" = Array<T>
+Line 48 col 33 IdentifierName "Base" = Base
+Line 48 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 48 col 42 IdentifierName "d1" = Derived1
+Line 48 col 46 IdentifierName "d2" = Derived2
+Line 49 col 6 IdentifierName "x45" = x45
+Line 49 col 19 IdentifierName "member" = { [n: number]: Base; }
+Line 49 col 30 IdentifierName "n" = number
+Line 49 col 42 IdentifierName "Base" = Base
+Line 49 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 49 col 53 IdentifierName "d1" = Derived1
+Line 49 col 57 IdentifierName "d2" = Derived2
+Line 50 col 6 IdentifierName "x46" = x46
+Line 50 col 19 IdentifierName "member" = { n: Base[]; }
+Line 50 col 28 IdentifierName "n" = Base[]
+Line 50 col 31 IdentifierName "Base" = Base
+Line 50 col 44 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 50 col 46 IdentifierName "n" = Base[]
+Line 50 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 50 col 50 IdentifierName "d1" = Derived1
+Line 50 col 54 IdentifierName "d2" = Derived2
+Line 51 col 6 IdentifierName "x47" = x47
+Line 51 col 19 IdentifierName "member" = (s: Base[]) => any
+Line 51 col 28 IdentifierName "s" = Base[]
+Line 51 col 31 IdentifierName "Base" = Base
+Line 51 col 48 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 51 col 48 IdentifierName "n" = Base[]
+Line 51 col 59 IdentifierName "n" = Base[]
+Line 51 col 62 IdentifierName "Base" = Base
+Line 52 col 6 IdentifierName "x48" = x48
+Line 52 col 19 IdentifierName "member" = Genric<Base>
+Line 52 col 27 IdentifierName "Genric" = Genric<T>
+Line 52 col 34 IdentifierName "Base" = Base
+Line 52 col 42 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 52 col 44 IdentifierName "func" = (n: Base[]) => {}[]
+Line 52 col 50 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 52 col 50 IdentifierName "n" = Base[]
+Line 52 col 64 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 52 col 65 IdentifierName "d1" = Derived1
+Line 52 col 69 IdentifierName "d2" = Derived2
+Line 53 col 6 IdentifierName "x49" = x49
+Line 53 col 19 IdentifierName "member" = () => Base[]
+Line 53 col 33 IdentifierName "Base" = Base
+Line 53 col 42 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 53 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 53 col 49 IdentifierName "d1" = Derived1
+Line 53 col 53 IdentifierName "d2" = Derived2
+Line 54 col 6 IdentifierName "x50" = x50
+Line 54 col 19 IdentifierName "member" = () => Base[]
+Line 54 col 33 IdentifierName "Base" = Base
+Line 54 col 42 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 54 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 54 col 63 IdentifierName "d1" = Derived1
+Line 54 col 67 IdentifierName "d2" = Derived2
+Line 55 col 6 IdentifierName "x51" = x51
+Line 55 col 19 IdentifierName "member" = () => Base[]
+Line 55 col 33 IdentifierName "Base" = Base
+Line 55 col 42 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 55 col 51 IdentifierName "named" = () => Base[]
+Line 55 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 55 col 69 IdentifierName "d1" = Derived1
+Line 55 col 73 IdentifierName "d2" = Derived2
+Line 56 col 6 IdentifierName "x52" = x52
+Line 56 col 19 IdentifierName "member" = () => Base[]
+Line 56 col 33 IdentifierName "Base" = Base
+Line 56 col 45 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 56 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 56 col 52 IdentifierName "d1" = Derived1
+Line 56 col 56 IdentifierName "d2" = Derived2
+Line 57 col 6 IdentifierName "x53" = x53
+Line 57 col 19 IdentifierName "member" = () => Base[]
+Line 57 col 33 IdentifierName "Base" = Base
+Line 57 col 45 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 57 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 57 col 66 IdentifierName "d1" = Derived1
+Line 57 col 70 IdentifierName "d2" = Derived2
+Line 58 col 6 IdentifierName "x54" = x54
+Line 58 col 19 IdentifierName "member" = () => Base[]
+Line 58 col 33 IdentifierName "Base" = Base
+Line 58 col 45 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 58 col 54 IdentifierName "named" = () => Base[]
+Line 58 col 71 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 58 col 72 IdentifierName "d1" = Derived1
+Line 58 col 76 IdentifierName "d2" = Derived2
+Line 59 col 6 IdentifierName "x55" = x55
+Line 59 col 19 IdentifierName "member" = Base[]
+Line 59 col 27 IdentifierName "Base" = Base
+Line 59 col 36 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 59 col 37 IdentifierName "d1" = Derived1
+Line 59 col 41 IdentifierName "d2" = Derived2
+Line 60 col 6 IdentifierName "x56" = x56
+Line 60 col 19 IdentifierName "member" = Base[]
+Line 60 col 27 IdentifierName "Array" = Array<T>
+Line 60 col 33 IdentifierName "Base" = Base
+Line 60 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 60 col 42 IdentifierName "d1" = Derived1
+Line 60 col 46 IdentifierName "d2" = Derived2
+Line 61 col 6 IdentifierName "x57" = x57
+Line 61 col 19 IdentifierName "member" = { [n: number]: Base; }
+Line 61 col 30 IdentifierName "n" = number
+Line 61 col 42 IdentifierName "Base" = Base
+Line 61 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 61 col 53 IdentifierName "d1" = Derived1
+Line 61 col 57 IdentifierName "d2" = Derived2
+Line 62 col 6 IdentifierName "x58" = x58
+Line 62 col 19 IdentifierName "member" = { n: Base[]; }
+Line 62 col 28 IdentifierName "n" = Base[]
+Line 62 col 31 IdentifierName "Base" = Base
+Line 62 col 44 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 62 col 46 IdentifierName "n" = Base[]
+Line 62 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 62 col 50 IdentifierName "d1" = Derived1
+Line 62 col 54 IdentifierName "d2" = Derived2
+Line 63 col 6 IdentifierName "x59" = x59
+Line 63 col 19 IdentifierName "member" = (s: Base[]) => any
+Line 63 col 28 IdentifierName "s" = Base[]
+Line 63 col 31 IdentifierName "Base" = Base
+Line 63 col 48 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 63 col 48 IdentifierName "n" = Base[]
+Line 63 col 59 IdentifierName "n" = Base[]
+Line 63 col 62 IdentifierName "Base" = Base
+Line 64 col 6 IdentifierName "x60" = x60
+Line 64 col 19 IdentifierName "member" = Genric<Base>
+Line 64 col 27 IdentifierName "Genric" = Genric<T>
+Line 64 col 34 IdentifierName "Base" = Base
+Line 64 col 42 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 64 col 44 IdentifierName "func" = (n: Base[]) => {}[]
+Line 64 col 50 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 64 col 50 IdentifierName "n" = Base[]
+Line 64 col 64 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 64 col 65 IdentifierName "d1" = Derived1
+Line 64 col 69 IdentifierName "d2" = Derived2
+Line 65 col 6 IdentifierName "x61" = x61
+Line 65 col 27 IdentifierName "member" = () => Base[]
+Line 65 col 41 IdentifierName "Base" = Base
+Line 65 col 50 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 65 col 56 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 65 col 57 IdentifierName "d1" = Derived1
+Line 65 col 61 IdentifierName "d2" = Derived2
+Line 66 col 6 IdentifierName "x62" = x62
+Line 66 col 27 IdentifierName "member" = () => Base[]
+Line 66 col 41 IdentifierName "Base" = Base
+Line 66 col 50 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 66 col 70 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 66 col 71 IdentifierName "d1" = Derived1
+Line 66 col 75 IdentifierName "d2" = Derived2
+Line 67 col 6 IdentifierName "x63" = x63
+Line 67 col 27 IdentifierName "member" = () => Base[]
+Line 67 col 41 IdentifierName "Base" = Base
+Line 67 col 50 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 67 col 59 IdentifierName "named" = () => Base[]
+Line 67 col 76 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 67 col 77 IdentifierName "d1" = Derived1
+Line 67 col 81 IdentifierName "d2" = Derived2
+Line 68 col 6 IdentifierName "x64" = x64
+Line 68 col 27 IdentifierName "member" = () => Base[]
+Line 68 col 41 IdentifierName "Base" = Base
+Line 68 col 53 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 68 col 59 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 68 col 60 IdentifierName "d1" = Derived1
+Line 68 col 64 IdentifierName "d2" = Derived2
+Line 69 col 6 IdentifierName "x65" = x65
+Line 69 col 27 IdentifierName "member" = () => Base[]
+Line 69 col 41 IdentifierName "Base" = Base
+Line 69 col 53 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 69 col 73 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 69 col 74 IdentifierName "d1" = Derived1
+Line 69 col 78 IdentifierName "d2" = Derived2
+Line 70 col 6 IdentifierName "x66" = x66
+Line 70 col 27 IdentifierName "member" = () => Base[]
+Line 70 col 41 IdentifierName "Base" = Base
+Line 70 col 53 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 70 col 62 IdentifierName "named" = () => Base[]
+Line 70 col 79 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 70 col 80 IdentifierName "d1" = Derived1
+Line 70 col 84 IdentifierName "d2" = Derived2
+Line 71 col 6 IdentifierName "x67" = x67
+Line 71 col 27 IdentifierName "member" = Base[]
+Line 71 col 35 IdentifierName "Base" = Base
+Line 71 col 44 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 71 col 45 IdentifierName "d1" = Derived1
+Line 71 col 49 IdentifierName "d2" = Derived2
+Line 72 col 6 IdentifierName "x68" = x68
+Line 72 col 27 IdentifierName "member" = Base[]
+Line 72 col 35 IdentifierName "Array" = Array<T>
+Line 72 col 41 IdentifierName "Base" = Base
+Line 72 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 72 col 50 IdentifierName "d1" = Derived1
+Line 72 col 54 IdentifierName "d2" = Derived2
+Line 73 col 6 IdentifierName "x69" = x69
+Line 73 col 27 IdentifierName "member" = { [n: number]: Base; }
+Line 73 col 38 IdentifierName "n" = number
+Line 73 col 50 IdentifierName "Base" = Base
+Line 73 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 73 col 61 IdentifierName "d1" = Derived1
+Line 73 col 65 IdentifierName "d2" = Derived2
+Line 74 col 6 IdentifierName "x70" = x70
+Line 74 col 27 IdentifierName "member" = { n: Base[]; }
+Line 74 col 36 IdentifierName "n" = Base[]
+Line 74 col 39 IdentifierName "Base" = Base
+Line 74 col 52 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 74 col 54 IdentifierName "n" = Base[]
+Line 74 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 74 col 58 IdentifierName "d1" = Derived1
+Line 74 col 62 IdentifierName "d2" = Derived2
+Line 75 col 6 IdentifierName "x71" = x71
+Line 75 col 27 IdentifierName "member" = (s: Base[]) => any
+Line 75 col 36 IdentifierName "s" = Base[]
+Line 75 col 39 IdentifierName "Base" = Base
+Line 75 col 56 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 75 col 56 IdentifierName "n" = Base[]
+Line 75 col 67 IdentifierName "n" = Base[]
+Line 75 col 70 IdentifierName "Base" = Base
+Line 76 col 6 IdentifierName "x72" = x72
+Line 76 col 27 IdentifierName "member" = Genric<Base>
+Line 76 col 35 IdentifierName "Genric" = Genric<T>
+Line 76 col 42 IdentifierName "Base" = Base
+Line 76 col 50 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 76 col 52 IdentifierName "func" = (n: Base[]) => {}[]
+Line 76 col 58 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 76 col 58 IdentifierName "n" = Base[]
+Line 76 col 72 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 76 col 73 IdentifierName "d1" = Derived1
+Line 76 col 77 IdentifierName "d2" = Derived2
+Line 77 col 6 IdentifierName "x73" = x73
+Line 77 col 26 IdentifierName "member" = () => Base[]
+Line 77 col 40 IdentifierName "Base" = Base
+Line 77 col 49 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 77 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 77 col 56 IdentifierName "d1" = Derived1
+Line 77 col 60 IdentifierName "d2" = Derived2
+Line 78 col 6 IdentifierName "x74" = x74
+Line 78 col 26 IdentifierName "member" = () => Base[]
+Line 78 col 40 IdentifierName "Base" = Base
+Line 78 col 49 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 78 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 78 col 70 IdentifierName "d1" = Derived1
+Line 78 col 74 IdentifierName "d2" = Derived2
+Line 79 col 6 IdentifierName "x75" = x75
+Line 79 col 26 IdentifierName "member" = () => Base[]
+Line 79 col 40 IdentifierName "Base" = Base
+Line 79 col 49 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 79 col 58 IdentifierName "named" = () => Base[]
+Line 79 col 75 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 79 col 76 IdentifierName "d1" = Derived1
+Line 79 col 80 IdentifierName "d2" = Derived2
+Line 80 col 6 IdentifierName "x76" = x76
+Line 80 col 26 IdentifierName "member" = () => Base[]
+Line 80 col 40 IdentifierName "Base" = Base
+Line 80 col 52 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 80 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 80 col 59 IdentifierName "d1" = Derived1
+Line 80 col 63 IdentifierName "d2" = Derived2
+Line 81 col 6 IdentifierName "x77" = x77
+Line 81 col 26 IdentifierName "member" = () => Base[]
+Line 81 col 40 IdentifierName "Base" = Base
+Line 81 col 52 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 81 col 72 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 81 col 73 IdentifierName "d1" = Derived1
+Line 81 col 77 IdentifierName "d2" = Derived2
+Line 82 col 6 IdentifierName "x78" = x78
+Line 82 col 26 IdentifierName "member" = () => Base[]
+Line 82 col 40 IdentifierName "Base" = Base
+Line 82 col 52 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 82 col 61 IdentifierName "named" = () => Base[]
+Line 82 col 78 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 82 col 79 IdentifierName "d1" = Derived1
+Line 82 col 83 IdentifierName "d2" = Derived2
+Line 83 col 6 IdentifierName "x79" = x79
+Line 83 col 26 IdentifierName "member" = Base[]
+Line 83 col 34 IdentifierName "Base" = Base
+Line 83 col 43 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 83 col 44 IdentifierName "d1" = Derived1
+Line 83 col 48 IdentifierName "d2" = Derived2
+Line 84 col 6 IdentifierName "x80" = x80
+Line 84 col 26 IdentifierName "member" = Base[]
+Line 84 col 34 IdentifierName "Array" = Array<T>
+Line 84 col 40 IdentifierName "Base" = Base
+Line 84 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 84 col 49 IdentifierName "d1" = Derived1
+Line 84 col 53 IdentifierName "d2" = Derived2
+Line 85 col 6 IdentifierName "x81" = x81
+Line 85 col 26 IdentifierName "member" = { [n: number]: Base; }
+Line 85 col 37 IdentifierName "n" = number
+Line 85 col 49 IdentifierName "Base" = Base
+Line 85 col 59 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 85 col 60 IdentifierName "d1" = Derived1
+Line 85 col 64 IdentifierName "d2" = Derived2
+Line 86 col 6 IdentifierName "x82" = x82
+Line 86 col 26 IdentifierName "member" = { n: Base[]; }
+Line 86 col 35 IdentifierName "n" = Base[]
+Line 86 col 38 IdentifierName "Base" = Base
+Line 86 col 51 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 86 col 53 IdentifierName "n" = Base[]
+Line 86 col 56 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 86 col 57 IdentifierName "d1" = Derived1
+Line 86 col 61 IdentifierName "d2" = Derived2
+Line 87 col 6 IdentifierName "x83" = x83
+Line 87 col 26 IdentifierName "member" = (s: Base[]) => any
+Line 87 col 35 IdentifierName "s" = Base[]
+Line 87 col 38 IdentifierName "Base" = Base
+Line 87 col 55 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 87 col 55 IdentifierName "n" = Base[]
+Line 87 col 66 IdentifierName "n" = Base[]
+Line 87 col 69 IdentifierName "Base" = Base
+Line 88 col 6 IdentifierName "x84" = x84
+Line 88 col 26 IdentifierName "member" = Genric<Base>
+Line 88 col 34 IdentifierName "Genric" = Genric<T>
+Line 88 col 41 IdentifierName "Base" = Base
+Line 88 col 49 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 88 col 51 IdentifierName "func" = (n: Base[]) => {}[]
+Line 88 col 57 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 88 col 57 IdentifierName "n" = Base[]
+Line 88 col 71 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 88 col 72 IdentifierName "d1" = Derived1
+Line 88 col 76 IdentifierName "d2" = Derived2
+Line 89 col 6 IdentifierName "x85" = x85
+Line 89 col 24 IdentifierName "parm" = () => Base[]
+Line 89 col 36 IdentifierName "Base" = Base
+Line 89 col 45 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 89 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 89 col 52 IdentifierName "d1" = Derived1
+Line 89 col 56 IdentifierName "d2" = Derived2
+Line 90 col 6 IdentifierName "x86" = x86
+Line 90 col 24 IdentifierName "parm" = () => Base[]
+Line 90 col 36 IdentifierName "Base" = Base
+Line 90 col 45 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 90 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 90 col 66 IdentifierName "d1" = Derived1
+Line 90 col 70 IdentifierName "d2" = Derived2
+Line 91 col 6 IdentifierName "x87" = x87
+Line 91 col 24 IdentifierName "parm" = () => Base[]
+Line 91 col 36 IdentifierName "Base" = Base
+Line 91 col 45 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 91 col 54 IdentifierName "named" = () => Base[]
+Line 91 col 71 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 91 col 72 IdentifierName "d1" = Derived1
+Line 91 col 76 IdentifierName "d2" = Derived2
+Line 92 col 6 IdentifierName "x88" = x88
+Line 92 col 24 IdentifierName "parm" = () => Base[]
+Line 92 col 36 IdentifierName "Base" = Base
+Line 92 col 48 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 92 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 92 col 55 IdentifierName "d1" = Derived1
+Line 92 col 59 IdentifierName "d2" = Derived2
+Line 93 col 6 IdentifierName "x89" = x89
+Line 93 col 24 IdentifierName "parm" = () => Base[]
+Line 93 col 36 IdentifierName "Base" = Base
+Line 93 col 48 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 93 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 93 col 69 IdentifierName "d1" = Derived1
+Line 93 col 73 IdentifierName "d2" = Derived2
+Line 94 col 6 IdentifierName "x90" = x90
+Line 94 col 24 IdentifierName "parm" = () => Base[]
+Line 94 col 36 IdentifierName "Base" = Base
+Line 94 col 48 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 94 col 57 IdentifierName "named" = () => Base[]
+Line 94 col 74 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 94 col 75 IdentifierName "d1" = Derived1
+Line 94 col 79 IdentifierName "d2" = Derived2
+Line 95 col 6 IdentifierName "x91" = x91
+Line 95 col 24 IdentifierName "parm" = Base[]
+Line 95 col 30 IdentifierName "Base" = Base
+Line 95 col 39 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 95 col 40 IdentifierName "d1" = Derived1
+Line 95 col 44 IdentifierName "d2" = Derived2
+Line 96 col 6 IdentifierName "x92" = x92
+Line 96 col 24 IdentifierName "parm" = Base[]
+Line 96 col 30 IdentifierName "Array" = Array<T>
+Line 96 col 36 IdentifierName "Base" = Base
+Line 96 col 44 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 96 col 45 IdentifierName "d1" = Derived1
+Line 96 col 49 IdentifierName "d2" = Derived2
+Line 97 col 6 IdentifierName "x93" = x93
+Line 97 col 24 IdentifierName "parm" = { [n: number]: Base; }
+Line 97 col 33 IdentifierName "n" = number
+Line 97 col 45 IdentifierName "Base" = Base
+Line 97 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 97 col 56 IdentifierName "d1" = Derived1
+Line 97 col 60 IdentifierName "d2" = Derived2
+Line 98 col 6 IdentifierName "x94" = x94
+Line 98 col 24 IdentifierName "parm" = { n: Base[]; }
+Line 98 col 31 IdentifierName "n" = Base[]
+Line 98 col 34 IdentifierName "Base" = Base
+Line 98 col 47 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 98 col 49 IdentifierName "n" = Base[]
+Line 98 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 98 col 53 IdentifierName "d1" = Derived1
+Line 98 col 57 IdentifierName "d2" = Derived2
+Line 99 col 6 IdentifierName "x95" = x95
+Line 99 col 24 IdentifierName "parm" = (s: Base[]) => any
+Line 99 col 31 IdentifierName "s" = Base[]
+Line 99 col 34 IdentifierName "Base" = Base
+Line 99 col 51 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 99 col 51 IdentifierName "n" = Base[]
+Line 99 col 62 IdentifierName "n" = Base[]
+Line 99 col 65 IdentifierName "Base" = Base
+Line 100 col 6 IdentifierName "x96" = x96
+Line 100 col 24 IdentifierName "parm" = Genric<Base>
+Line 100 col 30 IdentifierName "Genric" = Genric<T>
+Line 100 col 37 IdentifierName "Base" = Base
+Line 100 col 45 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 100 col 47 IdentifierName "func" = (n: Base[]) => {}[]
+Line 100 col 53 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 100 col 53 IdentifierName "n" = Base[]
+Line 100 col 67 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 100 col 68 IdentifierName "d1" = Derived1
+Line 100 col 72 IdentifierName "d2" = Derived2
+Line 101 col 6 IdentifierName "x97" = x97
+Line 101 col 31 IdentifierName "parm" = () => Base[]
+Line 101 col 43 IdentifierName "Base" = Base
+Line 101 col 52 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 101 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 101 col 59 IdentifierName "d1" = Derived1
+Line 101 col 63 IdentifierName "d2" = Derived2
+Line 102 col 6 IdentifierName "x98" = x98
+Line 102 col 31 IdentifierName "parm" = () => Base[]
+Line 102 col 43 IdentifierName "Base" = Base
+Line 102 col 52 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 102 col 72 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 102 col 73 IdentifierName "d1" = Derived1
+Line 102 col 77 IdentifierName "d2" = Derived2
+Line 103 col 6 IdentifierName "x99" = x99
+Line 103 col 31 IdentifierName "parm" = () => Base[]
+Line 103 col 43 IdentifierName "Base" = Base
+Line 103 col 52 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 103 col 61 IdentifierName "named" = () => Base[]
+Line 103 col 78 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 103 col 79 IdentifierName "d1" = Derived1
+Line 103 col 83 IdentifierName "d2" = Derived2
+Line 104 col 6 IdentifierName "x100" = x100
+Line 104 col 32 IdentifierName "parm" = () => Base[]
+Line 104 col 44 IdentifierName "Base" = Base
+Line 104 col 56 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 104 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 104 col 63 IdentifierName "d1" = Derived1
+Line 104 col 67 IdentifierName "d2" = Derived2
+Line 105 col 6 IdentifierName "x101" = x101
+Line 105 col 32 IdentifierName "parm" = () => Base[]
+Line 105 col 44 IdentifierName "Base" = Base
+Line 105 col 56 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 105 col 76 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 105 col 77 IdentifierName "d1" = Derived1
+Line 105 col 81 IdentifierName "d2" = Derived2
+Line 106 col 6 IdentifierName "x102" = x102
+Line 106 col 32 IdentifierName "parm" = () => Base[]
+Line 106 col 44 IdentifierName "Base" = Base
+Line 106 col 56 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 106 col 65 IdentifierName "named" = () => Base[]
+Line 106 col 82 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 106 col 83 IdentifierName "d1" = Derived1
+Line 106 col 87 IdentifierName "d2" = Derived2
+Line 107 col 6 IdentifierName "x103" = x103
+Line 107 col 32 IdentifierName "parm" = Base[]
+Line 107 col 38 IdentifierName "Base" = Base
+Line 107 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 107 col 48 IdentifierName "d1" = Derived1
+Line 107 col 52 IdentifierName "d2" = Derived2
+Line 108 col 6 IdentifierName "x104" = x104
+Line 108 col 32 IdentifierName "parm" = Base[]
+Line 108 col 38 IdentifierName "Array" = Array<T>
+Line 108 col 44 IdentifierName "Base" = Base
+Line 108 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 108 col 53 IdentifierName "d1" = Derived1
+Line 108 col 57 IdentifierName "d2" = Derived2
+Line 109 col 6 IdentifierName "x105" = x105
+Line 109 col 32 IdentifierName "parm" = { [n: number]: Base; }
+Line 109 col 41 IdentifierName "n" = number
+Line 109 col 53 IdentifierName "Base" = Base
+Line 109 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 109 col 64 IdentifierName "d1" = Derived1
+Line 109 col 68 IdentifierName "d2" = Derived2
+Line 110 col 6 IdentifierName "x106" = x106
+Line 110 col 32 IdentifierName "parm" = { n: Base[]; }
+Line 110 col 39 IdentifierName "n" = Base[]
+Line 110 col 42 IdentifierName "Base" = Base
+Line 110 col 55 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 110 col 57 IdentifierName "n" = Base[]
+Line 110 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 110 col 61 IdentifierName "d1" = Derived1
+Line 110 col 65 IdentifierName "d2" = Derived2
+Line 111 col 6 IdentifierName "x107" = x107
+Line 111 col 32 IdentifierName "parm" = (s: Base[]) => any
+Line 111 col 39 IdentifierName "s" = Base[]
+Line 111 col 42 IdentifierName "Base" = Base
+Line 111 col 59 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 111 col 59 IdentifierName "n" = Base[]
+Line 111 col 70 IdentifierName "n" = Base[]
+Line 111 col 73 IdentifierName "Base" = Base
+Line 112 col 6 IdentifierName "x108" = x108
+Line 112 col 32 IdentifierName "parm" = Genric<Base>
+Line 112 col 38 IdentifierName "Genric" = Genric<T>
+Line 112 col 45 IdentifierName "Base" = Base
+Line 112 col 53 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 112 col 55 IdentifierName "func" = (n: Base[]) => {}[]
+Line 112 col 61 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 112 col 61 IdentifierName "n" = Base[]
+Line 112 col 75 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 112 col 76 IdentifierName "d1" = Derived1
+Line 112 col 80 IdentifierName "d2" = Derived2
+Line 113 col 6 IdentifierName "x109" = x109
+Line 113 col 33 IdentifierName "parm" = () => Base[]
+Line 113 col 45 IdentifierName "Base" = Base
+Line 113 col 54 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 113 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 113 col 61 IdentifierName "d1" = Derived1
+Line 113 col 65 IdentifierName "d2" = Derived2
+Line 114 col 6 IdentifierName "x110" = x110
+Line 114 col 33 IdentifierName "parm" = () => Base[]
+Line 114 col 45 IdentifierName "Base" = Base
+Line 114 col 54 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 114 col 74 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 114 col 75 IdentifierName "d1" = Derived1
+Line 114 col 79 IdentifierName "d2" = Derived2
+Line 115 col 6 IdentifierName "x111" = x111
+Line 115 col 33 IdentifierName "parm" = () => Base[]
+Line 115 col 45 IdentifierName "Base" = Base
+Line 115 col 54 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 115 col 63 IdentifierName "named" = () => Base[]
+Line 115 col 80 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 115 col 81 IdentifierName "d1" = Derived1
+Line 115 col 85 IdentifierName "d2" = Derived2
+Line 116 col 6 IdentifierName "x112" = x112
+Line 116 col 33 IdentifierName "parm" = () => Base[]
+Line 116 col 45 IdentifierName "Base" = Base
+Line 116 col 57 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 116 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 116 col 64 IdentifierName "d1" = Derived1
+Line 116 col 68 IdentifierName "d2" = Derived2
+Line 117 col 6 IdentifierName "x113" = x113
+Line 117 col 33 IdentifierName "parm" = () => Base[]
+Line 117 col 45 IdentifierName "Base" = Base
+Line 117 col 57 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 117 col 77 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 117 col 78 IdentifierName "d1" = Derived1
+Line 117 col 82 IdentifierName "d2" = Derived2
+Line 118 col 6 IdentifierName "x114" = x114
+Line 118 col 33 IdentifierName "parm" = () => Base[]
+Line 118 col 45 IdentifierName "Base" = Base
+Line 118 col 57 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 118 col 66 IdentifierName "named" = () => Base[]
+Line 118 col 83 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 118 col 84 IdentifierName "d1" = Derived1
+Line 118 col 88 IdentifierName "d2" = Derived2
+Line 119 col 6 IdentifierName "x115" = x115
+Line 119 col 33 IdentifierName "parm" = Base[]
+Line 119 col 39 IdentifierName "Base" = Base
+Line 119 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 119 col 49 IdentifierName "d1" = Derived1
+Line 119 col 53 IdentifierName "d2" = Derived2
+Line 120 col 6 IdentifierName "x116" = x116
+Line 120 col 33 IdentifierName "parm" = Base[]
+Line 120 col 39 IdentifierName "Array" = Array<T>
+Line 120 col 45 IdentifierName "Base" = Base
+Line 120 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 120 col 54 IdentifierName "d1" = Derived1
+Line 120 col 58 IdentifierName "d2" = Derived2
+Line 121 col 6 IdentifierName "x117" = x117
+Line 121 col 33 IdentifierName "parm" = { [n: number]: Base; }
+Line 121 col 42 IdentifierName "n" = number
+Line 121 col 54 IdentifierName "Base" = Base
+Line 121 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 121 col 65 IdentifierName "d1" = Derived1
+Line 121 col 69 IdentifierName "d2" = Derived2
+Line 122 col 6 IdentifierName "x118" = x118
+Line 122 col 33 IdentifierName "parm" = { n: Base[]; }
+Line 122 col 40 IdentifierName "n" = Base[]
+Line 122 col 43 IdentifierName "Base" = Base
+Line 122 col 56 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 122 col 58 IdentifierName "n" = Base[]
+Line 122 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 122 col 62 IdentifierName "d1" = Derived1
+Line 122 col 66 IdentifierName "d2" = Derived2
+Line 123 col 6 IdentifierName "x119" = x119
+Line 123 col 33 IdentifierName "parm" = (s: Base[]) => any
+Line 123 col 40 IdentifierName "s" = Base[]
+Line 123 col 43 IdentifierName "Base" = Base
+Line 123 col 60 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 123 col 60 IdentifierName "n" = Base[]
+Line 123 col 71 IdentifierName "n" = Base[]
+Line 123 col 74 IdentifierName "Base" = Base
+Line 124 col 6 IdentifierName "x120" = x120
+Line 124 col 33 IdentifierName "parm" = Genric<Base>
+Line 124 col 39 IdentifierName "Genric" = Genric<T>
+Line 124 col 46 IdentifierName "Base" = Base
+Line 124 col 54 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 124 col 56 IdentifierName "func" = (n: Base[]) => {}[]
+Line 124 col 62 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 124 col 62 IdentifierName "n" = Base[]
+Line 124 col 76 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 124 col 77 IdentifierName "d1" = Derived1
+Line 124 col 81 IdentifierName "d2" = Derived2
+Line 125 col 9 IdentifierName "x121" = typeof x121
+Line 125 col 14 IdentifierName "parm" = () => Base[]
+Line 125 col 26 IdentifierName "Base" = Base
+Line 125 col 35 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 125 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 125 col 42 IdentifierName "d1" = Derived1
+Line 125 col 46 IdentifierName "d2" = Derived2
+Line 126 col 9 IdentifierName "x122" = typeof x122
+Line 126 col 14 IdentifierName "parm" = () => Base[]
+Line 126 col 26 IdentifierName "Base" = Base
+Line 126 col 35 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 126 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 126 col 56 IdentifierName "d1" = Derived1
+Line 126 col 60 IdentifierName "d2" = Derived2
+Line 127 col 9 IdentifierName "x123" = typeof x123
+Line 127 col 14 IdentifierName "parm" = () => Base[]
+Line 127 col 26 IdentifierName "Base" = Base
+Line 127 col 35 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 127 col 44 IdentifierName "named" = () => Base[]
+Line 127 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 127 col 62 IdentifierName "d1" = Derived1
+Line 127 col 66 IdentifierName "d2" = Derived2
+Line 128 col 9 IdentifierName "x124" = typeof x124
+Line 128 col 14 IdentifierName "parm" = () => Base[]
+Line 128 col 26 IdentifierName "Base" = Base
+Line 128 col 38 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 128 col 44 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 128 col 45 IdentifierName "d1" = Derived1
+Line 128 col 49 IdentifierName "d2" = Derived2
+Line 129 col 9 IdentifierName "x125" = typeof x125
+Line 129 col 14 IdentifierName "parm" = () => Base[]
+Line 129 col 26 IdentifierName "Base" = Base
+Line 129 col 38 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 129 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 129 col 59 IdentifierName "d1" = Derived1
+Line 129 col 63 IdentifierName "d2" = Derived2
+Line 130 col 9 IdentifierName "x126" = typeof x126
+Line 130 col 14 IdentifierName "parm" = () => Base[]
+Line 130 col 26 IdentifierName "Base" = Base
+Line 130 col 38 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 130 col 47 IdentifierName "named" = () => Base[]
+Line 130 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 130 col 65 IdentifierName "d1" = Derived1
+Line 130 col 69 IdentifierName "d2" = Derived2
+Line 131 col 9 IdentifierName "x127" = typeof x127
+Line 131 col 14 IdentifierName "parm" = Base[]
+Line 131 col 20 IdentifierName "Base" = Base
+Line 131 col 29 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 131 col 30 IdentifierName "d1" = Derived1
+Line 131 col 34 IdentifierName "d2" = Derived2
+Line 132 col 9 IdentifierName "x128" = typeof x128
+Line 132 col 14 IdentifierName "parm" = Base[]
+Line 132 col 20 IdentifierName "Array" = Array<T>
+Line 132 col 26 IdentifierName "Base" = Base
+Line 132 col 34 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 132 col 35 IdentifierName "d1" = Derived1
+Line 132 col 39 IdentifierName "d2" = Derived2
+Line 133 col 9 IdentifierName "x129" = typeof x129
+Line 133 col 14 IdentifierName "parm" = { [n: number]: Base; }
+Line 133 col 23 IdentifierName "n" = number
+Line 133 col 35 IdentifierName "Base" = Base
+Line 133 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 133 col 46 IdentifierName "d1" = Derived1
+Line 133 col 50 IdentifierName "d2" = Derived2
+Line 134 col 9 IdentifierName "x130" = typeof x130
+Line 134 col 14 IdentifierName "parm" = { n: Base[]; }
+Line 134 col 21 IdentifierName "n" = Base[]
+Line 134 col 24 IdentifierName "Base" = Base
+Line 134 col 37 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 134 col 39 IdentifierName "n" = Base[]
+Line 134 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 134 col 43 IdentifierName "d1" = Derived1
+Line 134 col 47 IdentifierName "d2" = Derived2
+Line 135 col 9 IdentifierName "x131" = typeof x131
+Line 135 col 14 IdentifierName "parm" = (s: Base[]) => any
+Line 135 col 21 IdentifierName "s" = Base[]
+Line 135 col 24 IdentifierName "Base" = Base
+Line 135 col 41 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 135 col 41 IdentifierName "n" = Base[]
+Line 135 col 52 IdentifierName "n" = Base[]
+Line 135 col 55 IdentifierName "Base" = Base
+Line 136 col 9 IdentifierName "x132" = typeof x132
+Line 136 col 14 IdentifierName "parm" = Genric<Base>
+Line 136 col 20 IdentifierName "Genric" = Genric<T>
+Line 136 col 27 IdentifierName "Base" = Base
+Line 136 col 35 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 136 col 37 IdentifierName "func" = (n: Base[]) => {}[]
+Line 136 col 43 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 136 col 43 IdentifierName "n" = Base[]
+Line 136 col 57 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 136 col 58 IdentifierName "d1" = Derived1
+Line 136 col 62 IdentifierName "d2" = Derived2
+Line 137 col 9 IdentifierName "x133" = typeof x133
+Line 137 col 23 IdentifierName "Base" = Base
+Line 137 col 39 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 137 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 137 col 46 IdentifierName "d1" = Derived1
+Line 137 col 50 IdentifierName "d2" = Derived2
+Line 138 col 9 IdentifierName "x134" = typeof x134
+Line 138 col 23 IdentifierName "Base" = Base
+Line 138 col 39 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 138 col 59 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 138 col 60 IdentifierName "d1" = Derived1
+Line 138 col 64 IdentifierName "d2" = Derived2
+Line 139 col 9 IdentifierName "x135" = typeof x135
+Line 139 col 23 IdentifierName "Base" = Base
+Line 139 col 39 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 139 col 48 IdentifierName "named" = () => Base[]
+Line 139 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 139 col 66 IdentifierName "d1" = Derived1
+Line 139 col 70 IdentifierName "d2" = Derived2
+Line 140 col 9 IdentifierName "x136" = typeof x136
+Line 140 col 23 IdentifierName "Base" = Base
+Line 140 col 42 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 140 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 140 col 49 IdentifierName "d1" = Derived1
+Line 140 col 53 IdentifierName "d2" = Derived2
+Line 141 col 9 IdentifierName "x137" = typeof x137
+Line 141 col 23 IdentifierName "Base" = Base
+Line 141 col 42 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 141 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 141 col 63 IdentifierName "d1" = Derived1
+Line 141 col 67 IdentifierName "d2" = Derived2
+Line 142 col 9 IdentifierName "x138" = typeof x138
+Line 142 col 23 IdentifierName "Base" = Base
+Line 142 col 42 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 142 col 51 IdentifierName "named" = () => Base[]
+Line 142 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 142 col 69 IdentifierName "d1" = Derived1
+Line 142 col 73 IdentifierName "d2" = Derived2
+Line 143 col 9 IdentifierName "x139" = typeof x139
+Line 143 col 17 IdentifierName "Base" = Base
+Line 143 col 33 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 143 col 34 IdentifierName "d1" = Derived1
+Line 143 col 38 IdentifierName "d2" = Derived2
+Line 144 col 9 IdentifierName "x140" = typeof x140
+Line 144 col 17 IdentifierName "Array" = Array<T>
+Line 144 col 23 IdentifierName "Base" = Base
+Line 144 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 144 col 39 IdentifierName "d1" = Derived1
+Line 144 col 43 IdentifierName "d2" = Derived2
+Line 145 col 9 IdentifierName "x141" = typeof x141
+Line 145 col 20 IdentifierName "n" = number
+Line 145 col 32 IdentifierName "Base" = Base
+Line 145 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 145 col 50 IdentifierName "d1" = Derived1
+Line 145 col 54 IdentifierName "d2" = Derived2
+Line 146 col 9 IdentifierName "x142" = typeof x142
+Line 146 col 18 IdentifierName "n" = Base[]
+Line 146 col 21 IdentifierName "Base" = Base
+Line 146 col 41 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 146 col 43 IdentifierName "n" = Base[]
+Line 146 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 146 col 47 IdentifierName "d1" = Derived1
+Line 146 col 51 IdentifierName "d2" = Derived2
+Line 147 col 9 IdentifierName "x143" = typeof x143
+Line 147 col 18 IdentifierName "s" = Base[]
+Line 147 col 21 IdentifierName "Base" = Base
+Line 147 col 45 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 147 col 45 IdentifierName "n" = Base[]
+Line 147 col 56 IdentifierName "n" = Base[]
+Line 147 col 59 IdentifierName "Base" = Base
+Line 148 col 9 IdentifierName "x144" = typeof x144
+Line 148 col 17 IdentifierName "Genric" = Genric<T>
+Line 148 col 24 IdentifierName "Base" = Base
+Line 148 col 39 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 148 col 41 IdentifierName "func" = (n: Base[]) => {}[]
+Line 148 col 47 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 148 col 47 IdentifierName "n" = Base[]
+Line 148 col 61 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 148 col 62 IdentifierName "d1" = Derived1
+Line 148 col 66 IdentifierName "d2" = Derived2
+Line 149 col 9 IdentifierName "x145" = typeof x145
+Line 149 col 23 IdentifierName "Base" = Base
+Line 149 col 39 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 149 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 149 col 46 IdentifierName "d1" = Derived1
+Line 149 col 50 IdentifierName "d2" = Derived2
+Line 149 col 62 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 149 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 149 col 69 IdentifierName "d1" = Derived1
+Line 149 col 73 IdentifierName "d2" = Derived2
+Line 150 col 9 IdentifierName "x146" = typeof x146
+Line 150 col 23 IdentifierName "Base" = Base
+Line 150 col 39 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 150 col 59 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 150 col 60 IdentifierName "d1" = Derived1
+Line 150 col 64 IdentifierName "d2" = Derived2
+Line 150 col 78 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 150 col 98 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 150 col 99 IdentifierName "d1" = Derived1
+Line 150 col 103 IdentifierName "d2" = Derived2
+Line 151 col 9 IdentifierName "x147" = typeof x147
+Line 151 col 23 IdentifierName "Base" = Base
+Line 151 col 39 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 151 col 48 IdentifierName "named" = () => Base[]
+Line 151 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 151 col 66 IdentifierName "d1" = Derived1
+Line 151 col 70 IdentifierName "d2" = Derived2
+Line 151 col 84 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 151 col 93 IdentifierName "named" = () => Base[]
+Line 151 col 110 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 151 col 111 IdentifierName "d1" = Derived1
+Line 151 col 115 IdentifierName "d2" = Derived2
+Line 152 col 9 IdentifierName "x148" = typeof x148
+Line 152 col 23 IdentifierName "Base" = Base
+Line 152 col 42 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 152 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 152 col 49 IdentifierName "d1" = Derived1
+Line 152 col 53 IdentifierName "d2" = Derived2
+Line 152 col 65 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 152 col 71 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 152 col 72 IdentifierName "d1" = Derived1
+Line 152 col 76 IdentifierName "d2" = Derived2
+Line 153 col 9 IdentifierName "x149" = typeof x149
+Line 153 col 23 IdentifierName "Base" = Base
+Line 153 col 42 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 153 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 153 col 63 IdentifierName "d1" = Derived1
+Line 153 col 67 IdentifierName "d2" = Derived2
+Line 153 col 81 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 153 col 101 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 153 col 102 IdentifierName "d1" = Derived1
+Line 153 col 106 IdentifierName "d2" = Derived2
+Line 154 col 9 IdentifierName "x150" = typeof x150
+Line 154 col 23 IdentifierName "Base" = Base
+Line 154 col 42 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 154 col 51 IdentifierName "named" = () => Base[]
+Line 154 col 68 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 154 col 69 IdentifierName "d1" = Derived1
+Line 154 col 73 IdentifierName "d2" = Derived2
+Line 154 col 87 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 154 col 96 IdentifierName "named" = () => Base[]
+Line 154 col 113 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 154 col 114 IdentifierName "d1" = Derived1
+Line 154 col 118 IdentifierName "d2" = Derived2
+Line 155 col 9 IdentifierName "x151" = typeof x151
+Line 155 col 17 IdentifierName "Base" = Base
+Line 155 col 33 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 155 col 34 IdentifierName "d1" = Derived1
+Line 155 col 38 IdentifierName "d2" = Derived2
+Line 155 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 155 col 51 IdentifierName "d1" = Derived1
+Line 155 col 55 IdentifierName "d2" = Derived2
+Line 156 col 9 IdentifierName "x152" = typeof x152
+Line 156 col 17 IdentifierName "Array" = Array<T>
+Line 156 col 23 IdentifierName "Base" = Base
+Line 156 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 156 col 39 IdentifierName "d1" = Derived1
+Line 156 col 43 IdentifierName "d2" = Derived2
+Line 156 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 156 col 56 IdentifierName "d1" = Derived1
+Line 156 col 60 IdentifierName "d2" = Derived2
+Line 157 col 9 IdentifierName "x153" = typeof x153
+Line 157 col 20 IdentifierName "n" = number
+Line 157 col 32 IdentifierName "Base" = Base
+Line 157 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 157 col 50 IdentifierName "d1" = Derived1
+Line 157 col 54 IdentifierName "d2" = Derived2
+Line 157 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 157 col 67 IdentifierName "d1" = Derived1
+Line 157 col 71 IdentifierName "d2" = Derived2
+Line 158 col 9 IdentifierName "x154" = typeof x154
+Line 158 col 18 IdentifierName "n" = Base[]
+Line 158 col 21 IdentifierName "Base" = Base
+Line 158 col 41 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 158 col 43 IdentifierName "n" = Base[]
+Line 158 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 158 col 47 IdentifierName "d1" = Derived1
+Line 158 col 51 IdentifierName "d2" = Derived2
+Line 158 col 65 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 158 col 67 IdentifierName "n" = Base[]
+Line 158 col 70 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 158 col 71 IdentifierName "d1" = Derived1
+Line 158 col 75 IdentifierName "d2" = Derived2
+Line 159 col 9 IdentifierName "x155" = typeof x155
+Line 159 col 18 IdentifierName "s" = Base[]
+Line 159 col 21 IdentifierName "Base" = Base
+Line 159 col 45 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 159 col 45 IdentifierName "n" = Base[]
+Line 159 col 56 IdentifierName "n" = Base[]
+Line 159 col 59 IdentifierName "Base" = Base
+Line 159 col 90 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 159 col 90 IdentifierName "n" = Base[]
+Line 159 col 101 IdentifierName "n" = Base[]
+Line 159 col 104 IdentifierName "Base" = Base
+Line 160 col 9 IdentifierName "x156" = typeof x156
+Line 160 col 17 IdentifierName "Genric" = Genric<T>
+Line 160 col 24 IdentifierName "Base" = Base
+Line 160 col 39 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 160 col 41 IdentifierName "func" = (n: Base[]) => {}[]
+Line 160 col 47 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 160 col 47 IdentifierName "n" = Base[]
+Line 160 col 61 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 160 col 62 IdentifierName "d1" = Derived1
+Line 160 col 66 IdentifierName "d2" = Derived2
+Line 160 col 83 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 160 col 85 IdentifierName "func" = (n: Base[]) => {}[]
+Line 160 col 91 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 160 col 91 IdentifierName "n" = Base[]
+Line 160 col 105 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 160 col 106 IdentifierName "d1" = Derived1
+Line 160 col 110 IdentifierName "d2" = Derived2
+Line 161 col 4 IdentifierName "x157" = () => () => Base[]
+Line 161 col 22 IdentifierName "Base" = Base
+Line 161 col 31 ParenthesizedArrowFunctionExpression "() => { return () => [d1, d2]; }" = () => () => Base[]
+Line 161 col 46 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 161 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 161 col 53 IdentifierName "d1" = Derived1
+Line 161 col 57 IdentifierName "d2" = Derived2
+Line 162 col 4 IdentifierName "x158" = () => () => Base[]
+Line 162 col 22 IdentifierName "Base" = Base
+Line 162 col 31 ParenthesizedArrowFunctionExpression "() => { return function() { return [d1, d2] }; }" = () => () => Base[]
+Line 162 col 46 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 162 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 162 col 67 IdentifierName "d1" = Derived1
+Line 162 col 71 IdentifierName "d2" = Derived2
+Line 163 col 4 IdentifierName "x159" = () => () => Base[]
+Line 163 col 22 IdentifierName "Base" = Base
+Line 163 col 31 ParenthesizedArrowFunctionExpression "() => { return function named() { return [d1, d2] }; }" = () => () => Base[]
+Line 163 col 46 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 163 col 55 IdentifierName "named" = () => Base[]
+Line 163 col 72 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 163 col 73 IdentifierName "d1" = Derived1
+Line 163 col 77 IdentifierName "d2" = Derived2
+Line 164 col 4 IdentifierName "x160" = () => () => Base[]
+Line 164 col 22 IdentifierName "Base" = Base
+Line 164 col 34 ParenthesizedArrowFunctionExpression "() => { return () => [d1, d2]; }" = () => () => Base[]
+Line 164 col 49 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 164 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 164 col 56 IdentifierName "d1" = Derived1
+Line 164 col 60 IdentifierName "d2" = Derived2
+Line 165 col 4 IdentifierName "x161" = () => () => Base[]
+Line 165 col 22 IdentifierName "Base" = Base
+Line 165 col 34 ParenthesizedArrowFunctionExpression "() => { return function() { return [d1, d2] }; }" = () => () => Base[]
+Line 165 col 49 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 165 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 165 col 70 IdentifierName "d1" = Derived1
+Line 165 col 74 IdentifierName "d2" = Derived2
+Line 166 col 4 IdentifierName "x162" = () => () => Base[]
+Line 166 col 22 IdentifierName "Base" = Base
+Line 166 col 34 ParenthesizedArrowFunctionExpression "() => { return function named() { return [d1, d2] }; }" = () => () => Base[]
+Line 166 col 49 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 166 col 58 IdentifierName "named" = () => Base[]
+Line 166 col 75 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 166 col 76 IdentifierName "d1" = Derived1
+Line 166 col 80 IdentifierName "d2" = Derived2
+Line 167 col 4 IdentifierName "x163" = () => Base[]
+Line 167 col 16 IdentifierName "Base" = Base
+Line 167 col 25 ParenthesizedArrowFunctionExpression "() => { return [d1, d2]; }" = () => Base[]
+Line 167 col 40 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 167 col 41 IdentifierName "d1" = Derived1
+Line 167 col 45 IdentifierName "d2" = Derived2
+Line 168 col 4 IdentifierName "x164" = () => Base[]
+Line 168 col 16 IdentifierName "Array" = Array<T>
+Line 168 col 22 IdentifierName "Base" = Base
+Line 168 col 30 ParenthesizedArrowFunctionExpression "() => { return [d1, d2]; }" = () => Base[]
+Line 168 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 168 col 46 IdentifierName "d1" = Derived1
+Line 168 col 50 IdentifierName "d2" = Derived2
+Line 169 col 4 IdentifierName "x165" = () => { [n: number]: Base; }
+Line 169 col 19 IdentifierName "n" = number
+Line 169 col 31 IdentifierName "Base" = Base
+Line 169 col 41 ParenthesizedArrowFunctionExpression "() => { return [d1, d2]; }" = () => Base[]
+Line 169 col 56 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 169 col 57 IdentifierName "d1" = Derived1
+Line 169 col 61 IdentifierName "d2" = Derived2
+Line 170 col 4 IdentifierName "x166" = () => { n: Base[]; }
+Line 170 col 17 IdentifierName "n" = Base[]
+Line 170 col 20 IdentifierName "Base" = Base
+Line 170 col 33 ParenthesizedArrowFunctionExpression "() => { return { n: [d1, d2] }; }" = () => { n: Base[]; }
+Line 170 col 48 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 170 col 50 IdentifierName "n" = Base[]
+Line 170 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 170 col 54 IdentifierName "d1" = Derived1
+Line 170 col 58 IdentifierName "d2" = Derived2
+Line 171 col 4 IdentifierName "x167" = () => (s: Base[]) => any
+Line 171 col 17 IdentifierName "s" = Base[]
+Line 171 col 20 IdentifierName "Base" = Base
+Line 171 col 37 ParenthesizedArrowFunctionExpression "() => { return n => { var n: Base[]; return null; }; }" = () => (n: Base[]) => any
+Line 171 col 52 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 171 col 52 IdentifierName "n" = Base[]
+Line 171 col 63 IdentifierName "n" = Base[]
+Line 171 col 66 IdentifierName "Base" = Base
+Line 172 col 4 IdentifierName "x168" = () => Genric<Base>
+Line 172 col 16 IdentifierName "Genric" = Genric<T>
+Line 172 col 23 IdentifierName "Base" = Base
+Line 172 col 31 ParenthesizedArrowFunctionExpression "() => { return { func: n => { return [d1, d2]; } }; }" = () => { func: (n: Base[]) => {}[]; }
+Line 172 col 46 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 172 col 48 IdentifierName "func" = (n: Base[]) => {}[]
+Line 172 col 54 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 172 col 54 IdentifierName "n" = Base[]
+Line 172 col 68 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 172 col 69 IdentifierName "d1" = Derived1
+Line 172 col 73 IdentifierName "d2" = Derived2
+Line 173 col 4 IdentifierName "x169" = () => () => Base[]
+Line 173 col 22 IdentifierName "Base" = Base
+Line 173 col 31 FunctionExpression "function() { return () => [d1, d2]; }" = () => () => Base[]
+Line 173 col 51 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 173 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 173 col 58 IdentifierName "d1" = Derived1
+Line 173 col 62 IdentifierName "d2" = Derived2
+Line 174 col 4 IdentifierName "x170" = () => () => Base[]
+Line 174 col 22 IdentifierName "Base" = Base
+Line 174 col 31 FunctionExpression "function() { return function() { return [d1, d2] }; }" = () => () => Base[]
+Line 174 col 51 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 174 col 71 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 174 col 72 IdentifierName "d1" = Derived1
+Line 174 col 76 IdentifierName "d2" = Derived2
+Line 175 col 4 IdentifierName "x171" = () => () => Base[]
+Line 175 col 22 IdentifierName "Base" = Base
+Line 175 col 31 FunctionExpression "function() { return function named() { return [d1, d2] }; }" = () => () => Base[]
+Line 175 col 51 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 175 col 60 IdentifierName "named" = () => Base[]
+Line 175 col 77 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 175 col 78 IdentifierName "d1" = Derived1
+Line 175 col 82 IdentifierName "d2" = Derived2
+Line 176 col 4 IdentifierName "x172" = () => () => Base[]
+Line 176 col 22 IdentifierName "Base" = Base
+Line 176 col 34 FunctionExpression "function() { return () => [d1, d2]; }" = () => () => Base[]
+Line 176 col 54 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 176 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 176 col 61 IdentifierName "d1" = Derived1
+Line 176 col 65 IdentifierName "d2" = Derived2
+Line 177 col 4 IdentifierName "x173" = () => () => Base[]
+Line 177 col 22 IdentifierName "Base" = Base
+Line 177 col 34 FunctionExpression "function() { return function() { return [d1, d2] }; }" = () => () => Base[]
+Line 177 col 54 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 177 col 74 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 177 col 75 IdentifierName "d1" = Derived1
+Line 177 col 79 IdentifierName "d2" = Derived2
+Line 178 col 4 IdentifierName "x174" = () => () => Base[]
+Line 178 col 22 IdentifierName "Base" = Base
+Line 178 col 34 FunctionExpression "function() { return function named() { return [d1, d2] }; }" = () => () => Base[]
+Line 178 col 54 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 178 col 63 IdentifierName "named" = () => Base[]
+Line 178 col 80 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 178 col 81 IdentifierName "d1" = Derived1
+Line 178 col 85 IdentifierName "d2" = Derived2
+Line 179 col 4 IdentifierName "x175" = () => Base[]
+Line 179 col 16 IdentifierName "Base" = Base
+Line 179 col 25 FunctionExpression "function() { return [d1, d2]; }" = () => Base[]
+Line 179 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 179 col 46 IdentifierName "d1" = Derived1
+Line 179 col 50 IdentifierName "d2" = Derived2
+Line 180 col 4 IdentifierName "x176" = () => Base[]
+Line 180 col 16 IdentifierName "Array" = Array<T>
+Line 180 col 22 IdentifierName "Base" = Base
+Line 180 col 30 FunctionExpression "function() { return [d1, d2]; }" = () => Base[]
+Line 180 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 180 col 51 IdentifierName "d1" = Derived1
+Line 180 col 55 IdentifierName "d2" = Derived2
+Line 181 col 4 IdentifierName "x177" = () => { [n: number]: Base; }
+Line 181 col 19 IdentifierName "n" = number
+Line 181 col 31 IdentifierName "Base" = Base
+Line 181 col 41 FunctionExpression "function() { return [d1, d2]; }" = () => Base[]
+Line 181 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 181 col 62 IdentifierName "d1" = Derived1
+Line 181 col 66 IdentifierName "d2" = Derived2
+Line 182 col 4 IdentifierName "x178" = () => { n: Base[]; }
+Line 182 col 17 IdentifierName "n" = Base[]
+Line 182 col 20 IdentifierName "Base" = Base
+Line 182 col 33 FunctionExpression "function() { return { n: [d1, d2] }; }" = () => { n: Base[]; }
+Line 182 col 53 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 182 col 55 IdentifierName "n" = Base[]
+Line 182 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 182 col 59 IdentifierName "d1" = Derived1
+Line 182 col 63 IdentifierName "d2" = Derived2
+Line 183 col 4 IdentifierName "x179" = () => (s: Base[]) => any
+Line 183 col 17 IdentifierName "s" = Base[]
+Line 183 col 20 IdentifierName "Base" = Base
+Line 183 col 37 FunctionExpression "function() { return n => { var n: Base[]; return null; }; }" = () => (n: Base[]) => any
+Line 183 col 57 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 183 col 57 IdentifierName "n" = Base[]
+Line 183 col 68 IdentifierName "n" = Base[]
+Line 183 col 71 IdentifierName "Base" = Base
+Line 184 col 4 IdentifierName "x180" = () => Genric<Base>
+Line 184 col 16 IdentifierName "Genric" = Genric<T>
+Line 184 col 23 IdentifierName "Base" = Base
+Line 184 col 31 FunctionExpression "function() { return { func: n => { return [d1, d2]; } }; }" = () => { func: (n: Base[]) => {}[]; }
+Line 184 col 51 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 184 col 53 IdentifierName "func" = (n: Base[]) => {}[]
+Line 184 col 59 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 184 col 59 IdentifierName "n" = Base[]
+Line 184 col 73 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 184 col 74 IdentifierName "d1" = Derived1
+Line 184 col 78 IdentifierName "d2" = Derived2
+Line 185 col 7 IdentifierName "x181" = x181
+Line 185 col 18 IdentifierName "t" = () => Base[]
+Line 185 col 27 IdentifierName "Base" = Base
+Line 185 col 36 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 185 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 185 col 43 IdentifierName "d1" = Derived1
+Line 185 col 47 IdentifierName "d2" = Derived2
+Line 186 col 7 IdentifierName "x182" = x182
+Line 186 col 18 IdentifierName "t" = () => Base[]
+Line 186 col 27 IdentifierName "Base" = Base
+Line 186 col 36 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 186 col 56 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 186 col 57 IdentifierName "d1" = Derived1
+Line 186 col 61 IdentifierName "d2" = Derived2
+Line 187 col 7 IdentifierName "x183" = x183
+Line 187 col 18 IdentifierName "t" = () => Base[]
+Line 187 col 27 IdentifierName "Base" = Base
+Line 187 col 36 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 187 col 45 IdentifierName "named" = () => Base[]
+Line 187 col 62 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 187 col 63 IdentifierName "d1" = Derived1
+Line 187 col 67 IdentifierName "d2" = Derived2
+Line 188 col 7 IdentifierName "x184" = x184
+Line 188 col 18 IdentifierName "t" = () => Base[]
+Line 188 col 27 IdentifierName "Base" = Base
+Line 188 col 39 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 188 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 188 col 46 IdentifierName "d1" = Derived1
+Line 188 col 50 IdentifierName "d2" = Derived2
+Line 189 col 7 IdentifierName "x185" = x185
+Line 189 col 18 IdentifierName "t" = () => Base[]
+Line 189 col 27 IdentifierName "Base" = Base
+Line 189 col 39 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 189 col 59 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 189 col 60 IdentifierName "d1" = Derived1
+Line 189 col 64 IdentifierName "d2" = Derived2
+Line 190 col 7 IdentifierName "x186" = x186
+Line 190 col 18 IdentifierName "t" = () => Base[]
+Line 190 col 27 IdentifierName "Base" = Base
+Line 190 col 39 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 190 col 48 IdentifierName "named" = () => Base[]
+Line 190 col 65 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 190 col 66 IdentifierName "d1" = Derived1
+Line 190 col 70 IdentifierName "d2" = Derived2
+Line 191 col 7 IdentifierName "x187" = x187
+Line 191 col 18 IdentifierName "t" = Base[]
+Line 191 col 21 IdentifierName "Base" = Base
+Line 191 col 30 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 191 col 31 IdentifierName "d1" = Derived1
+Line 191 col 35 IdentifierName "d2" = Derived2
+Line 192 col 7 IdentifierName "x188" = x188
+Line 192 col 18 IdentifierName "t" = Base[]
+Line 192 col 21 IdentifierName "Array" = Array<T>
+Line 192 col 27 IdentifierName "Base" = Base
+Line 192 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 192 col 36 IdentifierName "d1" = Derived1
+Line 192 col 40 IdentifierName "d2" = Derived2
+Line 193 col 7 IdentifierName "x189" = x189
+Line 193 col 18 IdentifierName "t" = { [n: number]: Base; }
+Line 193 col 24 IdentifierName "n" = number
+Line 193 col 36 IdentifierName "Base" = Base
+Line 193 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 193 col 47 IdentifierName "d1" = Derived1
+Line 193 col 51 IdentifierName "d2" = Derived2
+Line 194 col 7 IdentifierName "x190" = x190
+Line 194 col 18 IdentifierName "t" = { n: Base[]; }
+Line 194 col 22 IdentifierName "n" = Base[]
+Line 194 col 25 IdentifierName "Base" = Base
+Line 194 col 38 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 194 col 40 IdentifierName "n" = Base[]
+Line 194 col 43 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 194 col 44 IdentifierName "d1" = Derived1
+Line 194 col 48 IdentifierName "d2" = Derived2
+Line 195 col 7 IdentifierName "x191" = x191
+Line 195 col 18 IdentifierName "t" = (s: Base[]) => any
+Line 195 col 22 IdentifierName "s" = Base[]
+Line 195 col 25 IdentifierName "Base" = Base
+Line 195 col 42 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 195 col 42 IdentifierName "n" = Base[]
+Line 195 col 53 IdentifierName "n" = Base[]
+Line 195 col 56 IdentifierName "Base" = Base
+Line 196 col 7 IdentifierName "x192" = x192
+Line 196 col 18 IdentifierName "t" = Genric<Base>
+Line 196 col 21 IdentifierName "Genric" = Genric<T>
+Line 196 col 28 IdentifierName "Base" = Base
+Line 196 col 36 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 196 col 38 IdentifierName "func" = (n: Base[]) => {}[]
+Line 196 col 44 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 196 col 44 IdentifierName "n" = Base[]
+Line 196 col 58 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 196 col 59 IdentifierName "d1" = Derived1
+Line 196 col 63 IdentifierName "d2" = Derived2
+Line 197 col 7 IdentifierName "x193" = x193
+Line 197 col 25 IdentifierName "t" = () => Base[]
+Line 197 col 34 IdentifierName "Base" = Base
+Line 197 col 43 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 197 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 197 col 50 IdentifierName "d1" = Derived1
+Line 197 col 54 IdentifierName "d2" = Derived2
+Line 198 col 7 IdentifierName "x194" = x194
+Line 198 col 25 IdentifierName "t" = () => Base[]
+Line 198 col 34 IdentifierName "Base" = Base
+Line 198 col 43 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 198 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 198 col 64 IdentifierName "d1" = Derived1
+Line 198 col 68 IdentifierName "d2" = Derived2
+Line 199 col 7 IdentifierName "x195" = x195
+Line 199 col 25 IdentifierName "t" = () => Base[]
+Line 199 col 34 IdentifierName "Base" = Base
+Line 199 col 43 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 199 col 52 IdentifierName "named" = () => Base[]
+Line 199 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 199 col 70 IdentifierName "d1" = Derived1
+Line 199 col 74 IdentifierName "d2" = Derived2
+Line 200 col 7 IdentifierName "x196" = x196
+Line 200 col 25 IdentifierName "t" = () => Base[]
+Line 200 col 34 IdentifierName "Base" = Base
+Line 200 col 46 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 200 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 200 col 53 IdentifierName "d1" = Derived1
+Line 200 col 57 IdentifierName "d2" = Derived2
+Line 201 col 7 IdentifierName "x197" = x197
+Line 201 col 25 IdentifierName "t" = () => Base[]
+Line 201 col 34 IdentifierName "Base" = Base
+Line 201 col 46 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 201 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 201 col 67 IdentifierName "d1" = Derived1
+Line 201 col 71 IdentifierName "d2" = Derived2
+Line 202 col 7 IdentifierName "x198" = x198
+Line 202 col 25 IdentifierName "t" = () => Base[]
+Line 202 col 34 IdentifierName "Base" = Base
+Line 202 col 46 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 202 col 55 IdentifierName "named" = () => Base[]
+Line 202 col 72 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 202 col 73 IdentifierName "d1" = Derived1
+Line 202 col 77 IdentifierName "d2" = Derived2
+Line 203 col 7 IdentifierName "x199" = x199
+Line 203 col 25 IdentifierName "t" = Base[]
+Line 203 col 28 IdentifierName "Base" = Base
+Line 203 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 203 col 38 IdentifierName "d1" = Derived1
+Line 203 col 42 IdentifierName "d2" = Derived2
+Line 204 col 7 IdentifierName "x200" = x200
+Line 204 col 25 IdentifierName "t" = Base[]
+Line 204 col 28 IdentifierName "Array" = Array<T>
+Line 204 col 34 IdentifierName "Base" = Base
+Line 204 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 204 col 43 IdentifierName "d1" = Derived1
+Line 204 col 47 IdentifierName "d2" = Derived2
+Line 205 col 7 IdentifierName "x201" = x201
+Line 205 col 25 IdentifierName "t" = { [n: number]: Base; }
+Line 205 col 31 IdentifierName "n" = number
+Line 205 col 43 IdentifierName "Base" = Base
+Line 205 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 205 col 54 IdentifierName "d1" = Derived1
+Line 205 col 58 IdentifierName "d2" = Derived2
+Line 206 col 7 IdentifierName "x202" = x202
+Line 206 col 25 IdentifierName "t" = { n: Base[]; }
+Line 206 col 29 IdentifierName "n" = Base[]
+Line 206 col 32 IdentifierName "Base" = Base
+Line 206 col 45 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 206 col 47 IdentifierName "n" = Base[]
+Line 206 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 206 col 51 IdentifierName "d1" = Derived1
+Line 206 col 55 IdentifierName "d2" = Derived2
+Line 207 col 7 IdentifierName "x203" = x203
+Line 207 col 25 IdentifierName "t" = (s: Base[]) => any
+Line 207 col 29 IdentifierName "s" = Base[]
+Line 207 col 32 IdentifierName "Base" = Base
+Line 207 col 49 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 207 col 49 IdentifierName "n" = Base[]
+Line 207 col 60 IdentifierName "n" = Base[]
+Line 207 col 63 IdentifierName "Base" = Base
+Line 208 col 7 IdentifierName "x204" = x204
+Line 208 col 25 IdentifierName "t" = Genric<Base>
+Line 208 col 28 IdentifierName "Genric" = Genric<T>
+Line 208 col 35 IdentifierName "Base" = Base
+Line 208 col 43 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 208 col 45 IdentifierName "func" = (n: Base[]) => {}[]
+Line 208 col 51 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 208 col 51 IdentifierName "n" = Base[]
+Line 208 col 65 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 208 col 66 IdentifierName "d1" = Derived1
+Line 208 col 70 IdentifierName "d2" = Derived2
+Line 209 col 4 IdentifierName "x206" = () => Base[]
+Line 209 col 11 CastExpression "<() => Base[]>function() { return [d1, d2] }" = () => Base[]
+Line 209 col 18 IdentifierName "Base" = Base
+Line 209 col 25 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 209 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 209 col 46 IdentifierName "d1" = Derived1
+Line 209 col 50 IdentifierName "d2" = Derived2
+Line 210 col 4 IdentifierName "x207" = () => Base[]
+Line 210 col 11 CastExpression "<() => Base[]>function named() { return [d1, d2] }" = () => Base[]
+Line 210 col 18 IdentifierName "Base" = Base
+Line 210 col 25 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 210 col 34 IdentifierName "named" = () => Base[]
+Line 210 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 210 col 52 IdentifierName "d1" = Derived1
+Line 210 col 56 IdentifierName "d2" = Derived2
+Line 211 col 4 IdentifierName "x209" = () => Base[]
+Line 211 col 11 CastExpression "<{ (): Base[]; }>function() { return [d1, d2] }" = () => Base[]
+Line 211 col 18 IdentifierName "Base" = Base
+Line 211 col 28 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 211 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 211 col 49 IdentifierName "d1" = Derived1
+Line 211 col 53 IdentifierName "d2" = Derived2
+Line 212 col 4 IdentifierName "x210" = () => Base[]
+Line 212 col 11 CastExpression "<{ (): Base[]; }>function named() { return [d1, d2] }" = () => Base[]
+Line 212 col 18 IdentifierName "Base" = Base
+Line 212 col 28 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 212 col 37 IdentifierName "named" = () => Base[]
+Line 212 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 212 col 55 IdentifierName "d1" = Derived1
+Line 212 col 59 IdentifierName "d2" = Derived2
+Line 213 col 4 IdentifierName "x211" = Base[]
+Line 213 col 11 CastExpression "<Base[]>[d1, d2]" = Base[]
+Line 213 col 12 IdentifierName "Base" = Base
+Line 213 col 19 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 213 col 20 IdentifierName "d1" = Derived1
+Line 213 col 24 IdentifierName "d2" = Derived2
+Line 214 col 4 IdentifierName "x212" = Base[]
+Line 214 col 11 CastExpression "<Array<Base>>[d1, d2]" = Base[]
+Line 214 col 12 IdentifierName "Array" = Array<T>
+Line 214 col 18 IdentifierName "Base" = Base
+Line 214 col 24 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 214 col 25 IdentifierName "d1" = Derived1
+Line 214 col 29 IdentifierName "d2" = Derived2
+Line 215 col 4 IdentifierName "x213" = { [n: number]: Base; }
+Line 215 col 11 CastExpression "<{ [n: number]: Base; }>[d1, d2]" = { [n: number]: Base; }
+Line 215 col 15 IdentifierName "n" = number
+Line 215 col 27 IdentifierName "Base" = Base
+Line 215 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 215 col 36 IdentifierName "d1" = Derived1
+Line 215 col 40 IdentifierName "d2" = Derived2
+Line 216 col 4 IdentifierName "x214" = { n: Base[]; }
+Line 216 col 11 CastExpression "<{n: Base[]; } >{ n: [d1, d2] }" = { n: Base[]; }
+Line 216 col 13 IdentifierName "n" = Base[]
+Line 216 col 16 IdentifierName "Base" = Base
+Line 216 col 27 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 216 col 29 IdentifierName "n" = Base[]
+Line 216 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 216 col 33 IdentifierName "d1" = Derived1
+Line 216 col 37 IdentifierName "d2" = Derived2
+Line 217 col 4 IdentifierName "x216" = Genric<Base>
+Line 217 col 11 CastExpression "<Genric<Base>>{ func: n => { return [d1, d2]; } }" = Genric<Base>
+Line 217 col 12 IdentifierName "Genric" = Genric<T>
+Line 217 col 19 IdentifierName "Base" = Base
+Line 217 col 25 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 217 col 27 IdentifierName "func" = (n: Base[]) => {}[]
+Line 217 col 33 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 217 col 33 IdentifierName "n" = Base[]
+Line 217 col 47 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 217 col 48 IdentifierName "d1" = Derived1
+Line 217 col 52 IdentifierName "d2" = Derived2
+Line 218 col 4 IdentifierName "x217" = () => Base[]
+Line 218 col 11 LogicalOrExpression "(<() => Base[]>undefined) || function() { return [d1, d2] }" = () => Base[]
+Line 218 col 11 ParenthesizedExpression "(<() => Base[]>undefined)" = () => Base[]
+Line 218 col 12 CastExpression "<() => Base[]>undefined" = () => Base[]
+Line 218 col 19 IdentifierName "Base" = Base
+Line 218 col 26 IdentifierName "undefined" = any
+Line 218 col 40 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 218 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 218 col 61 IdentifierName "d1" = Derived1
+Line 218 col 65 IdentifierName "d2" = Derived2
+Line 219 col 4 IdentifierName "x218" = () => Base[]
+Line 219 col 11 LogicalOrExpression "(<() => Base[]>undefined) || function named() { return [d1, d2] }" = () => Base[]
+Line 219 col 11 ParenthesizedExpression "(<() => Base[]>undefined)" = () => Base[]
+Line 219 col 12 CastExpression "<() => Base[]>undefined" = () => Base[]
+Line 219 col 19 IdentifierName "Base" = Base
+Line 219 col 26 IdentifierName "undefined" = any
+Line 219 col 40 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 219 col 49 IdentifierName "named" = () => Base[]
+Line 219 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 219 col 67 IdentifierName "d1" = Derived1
+Line 219 col 71 IdentifierName "d2" = Derived2
+Line 220 col 4 IdentifierName "x219" = () => Base[]
+Line 220 col 11 LogicalOrExpression "(<{ (): Base[]; }>undefined) || function() { return [d1, d2] }" = () => Base[]
+Line 220 col 11 ParenthesizedExpression "(<{ (): Base[]; }>undefined)" = () => Base[]
+Line 220 col 12 CastExpression "<{ (): Base[]; }>undefined" = () => Base[]
+Line 220 col 19 IdentifierName "Base" = Base
+Line 220 col 29 IdentifierName "undefined" = any
+Line 220 col 43 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 220 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 220 col 64 IdentifierName "d1" = Derived1
+Line 220 col 68 IdentifierName "d2" = Derived2
+Line 221 col 4 IdentifierName "x220" = () => Base[]
+Line 221 col 11 LogicalOrExpression "(<{ (): Base[]; }>undefined) || function named() { return [d1, d2] }" = () => Base[]
+Line 221 col 11 ParenthesizedExpression "(<{ (): Base[]; }>undefined)" = () => Base[]
+Line 221 col 12 CastExpression "<{ (): Base[]; }>undefined" = () => Base[]
+Line 221 col 19 IdentifierName "Base" = Base
+Line 221 col 29 IdentifierName "undefined" = any
+Line 221 col 43 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 221 col 52 IdentifierName "named" = () => Base[]
+Line 221 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 221 col 70 IdentifierName "d1" = Derived1
+Line 221 col 74 IdentifierName "d2" = Derived2
+Line 222 col 4 IdentifierName "x221" = Base[]
+Line 222 col 11 LogicalOrExpression "(<Base[]>undefined) || [d1, d2]" = Base[]
+Line 222 col 11 ParenthesizedExpression "(<Base[]>undefined)" = Base[]
+Line 222 col 12 CastExpression "<Base[]>undefined" = Base[]
+Line 222 col 13 IdentifierName "Base" = Base
+Line 222 col 20 IdentifierName "undefined" = any
+Line 222 col 34 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 222 col 35 IdentifierName "d1" = Derived1
+Line 222 col 39 IdentifierName "d2" = Derived2
+Line 223 col 4 IdentifierName "x222" = Base[]
+Line 223 col 11 LogicalOrExpression "(<Array<Base>>undefined) || [d1, d2]" = Base[]
+Line 223 col 11 ParenthesizedExpression "(<Array<Base>>undefined)" = Base[]
+Line 223 col 12 CastExpression "<Array<Base>>undefined" = Base[]
+Line 223 col 13 IdentifierName "Array" = Array<T>
+Line 223 col 19 IdentifierName "Base" = Base
+Line 223 col 25 IdentifierName "undefined" = any
+Line 223 col 39 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 223 col 40 IdentifierName "d1" = Derived1
+Line 223 col 44 IdentifierName "d2" = Derived2
+Line 224 col 4 IdentifierName "x223" = { [n: number]: Base; }
+Line 224 col 11 LogicalOrExpression "(<{ [n: number]: Base; }>undefined) || [d1, d2]" = { [n: number]: Base; }
+Line 224 col 11 ParenthesizedExpression "(<{ [n: number]: Base; }>undefined)" = { [n: number]: Base; }
+Line 224 col 12 CastExpression "<{ [n: number]: Base; }>undefined" = { [n: number]: Base; }
+Line 224 col 16 IdentifierName "n" = number
+Line 224 col 28 IdentifierName "Base" = Base
+Line 224 col 36 IdentifierName "undefined" = any
+Line 224 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 224 col 51 IdentifierName "d1" = Derived1
+Line 224 col 55 IdentifierName "d2" = Derived2
+Line 225 col 4 IdentifierName "x224" = { n: Base[]; }
+Line 225 col 11 LogicalOrExpression "(<{n: Base[]; } >undefined) || { n: [d1, d2] }" = { n: Base[]; }
+Line 225 col 11 ParenthesizedExpression "(<{n: Base[]; } >undefined)" = { n: Base[]; }
+Line 225 col 12 CastExpression "<{n: Base[]; } >undefined" = { n: Base[]; }
+Line 225 col 14 IdentifierName "n" = Base[]
+Line 225 col 17 IdentifierName "Base" = Base
+Line 225 col 28 IdentifierName "undefined" = any
+Line 225 col 42 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 225 col 44 IdentifierName "n" = Base[]
+Line 225 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 225 col 48 IdentifierName "d1" = Derived1
+Line 225 col 52 IdentifierName "d2" = Derived2
+Line 226 col 4 IdentifierName "x225" = () => Base[]
+Line 226 col 16 IdentifierName "Base" = Base
+Line 226 col 24 AssignmentExpression "x225 = () => [d1, d2]" = () => Base[]
+Line 226 col 24 IdentifierName "x225" = () => Base[]
+Line 226 col 31 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 226 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 226 col 38 IdentifierName "d1" = Derived1
+Line 226 col 42 IdentifierName "d2" = Derived2
+Line 227 col 4 IdentifierName "x226" = () => Base[]
+Line 227 col 16 IdentifierName "Base" = Base
+Line 227 col 24 AssignmentExpression "x226 = function() { return [d1, d2] }" = () => Base[]
+Line 227 col 24 IdentifierName "x226" = () => Base[]
+Line 227 col 31 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 227 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 227 col 52 IdentifierName "d1" = Derived1
+Line 227 col 56 IdentifierName "d2" = Derived2
+Line 228 col 4 IdentifierName "x227" = () => Base[]
+Line 228 col 16 IdentifierName "Base" = Base
+Line 228 col 24 AssignmentExpression "x227 = function named() { return [d1, d2] }" = () => Base[]
+Line 228 col 24 IdentifierName "x227" = () => Base[]
+Line 228 col 31 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 228 col 40 IdentifierName "named" = () => Base[]
+Line 228 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 228 col 58 IdentifierName "d1" = Derived1
+Line 228 col 62 IdentifierName "d2" = Derived2
+Line 229 col 4 IdentifierName "x228" = () => Base[]
+Line 229 col 16 IdentifierName "Base" = Base
+Line 229 col 27 AssignmentExpression "x228 = () => [d1, d2]" = () => Base[]
+Line 229 col 27 IdentifierName "x228" = () => Base[]
+Line 229 col 34 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 229 col 40 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 229 col 41 IdentifierName "d1" = Derived1
+Line 229 col 45 IdentifierName "d2" = Derived2
+Line 230 col 4 IdentifierName "x229" = () => Base[]
+Line 230 col 16 IdentifierName "Base" = Base
+Line 230 col 27 AssignmentExpression "x229 = function() { return [d1, d2] }" = () => Base[]
+Line 230 col 27 IdentifierName "x229" = () => Base[]
+Line 230 col 34 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 230 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 230 col 55 IdentifierName "d1" = Derived1
+Line 230 col 59 IdentifierName "d2" = Derived2
+Line 231 col 4 IdentifierName "x230" = () => Base[]
+Line 231 col 16 IdentifierName "Base" = Base
+Line 231 col 27 AssignmentExpression "x230 = function named() { return [d1, d2] }" = () => Base[]
+Line 231 col 27 IdentifierName "x230" = () => Base[]
+Line 231 col 34 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 231 col 43 IdentifierName "named" = () => Base[]
+Line 231 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 231 col 61 IdentifierName "d1" = Derived1
+Line 231 col 65 IdentifierName "d2" = Derived2
+Line 232 col 4 IdentifierName "x231" = Base[]
+Line 232 col 10 IdentifierName "Base" = Base
+Line 232 col 18 AssignmentExpression "x231 = [d1, d2]" = Base[]
+Line 232 col 18 IdentifierName "x231" = Base[]
+Line 232 col 25 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 232 col 26 IdentifierName "d1" = Derived1
+Line 232 col 30 IdentifierName "d2" = Derived2
+Line 233 col 4 IdentifierName "x232" = Base[]
+Line 233 col 10 IdentifierName "Array" = Array<T>
+Line 233 col 16 IdentifierName "Base" = Base
+Line 233 col 23 AssignmentExpression "x232 = [d1, d2]" = Base[]
+Line 233 col 23 IdentifierName "x232" = Base[]
+Line 233 col 30 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 233 col 31 IdentifierName "d1" = Derived1
+Line 233 col 35 IdentifierName "d2" = Derived2
+Line 234 col 4 IdentifierName "x233" = { [n: number]: Base; }
+Line 234 col 13 IdentifierName "n" = number
+Line 234 col 25 IdentifierName "Base" = Base
+Line 234 col 34 AssignmentExpression "x233 = [d1, d2]" = Base[]
+Line 234 col 34 IdentifierName "x233" = { [n: number]: Base; }
+Line 234 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 234 col 42 IdentifierName "d1" = Derived1
+Line 234 col 46 IdentifierName "d2" = Derived2
+Line 235 col 4 IdentifierName "x234" = { n: Base[]; }
+Line 235 col 11 IdentifierName "n" = Base[]
+Line 235 col 14 IdentifierName "Base" = Base
+Line 235 col 26 AssignmentExpression "x234 = { n: [d1, d2] }" = { n: Base[]; }
+Line 235 col 26 IdentifierName "x234" = { n: Base[]; }
+Line 235 col 33 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 235 col 35 IdentifierName "n" = Base[]
+Line 235 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 235 col 39 IdentifierName "d1" = Derived1
+Line 235 col 43 IdentifierName "d2" = Derived2
+Line 236 col 4 IdentifierName "x235" = (s: Base[]) => any
+Line 236 col 11 IdentifierName "s" = Base[]
+Line 236 col 14 IdentifierName "Base" = Base
+Line 236 col 30 AssignmentExpression "x235 = n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 236 col 30 IdentifierName "x235" = (s: Base[]) => any
+Line 236 col 37 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 236 col 37 IdentifierName "n" = Base[]
+Line 236 col 48 IdentifierName "n" = Base[]
+Line 236 col 51 IdentifierName "Base" = Base
+Line 237 col 4 IdentifierName "x236" = Genric<Base>
+Line 237 col 10 IdentifierName "Genric" = Genric<T>
+Line 237 col 17 IdentifierName "Base" = Base
+Line 237 col 24 AssignmentExpression "x236 = { func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 237 col 24 IdentifierName "x236" = Genric<Base>
+Line 237 col 31 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 237 col 33 IdentifierName "func" = (n: Base[]) => {}[]
+Line 237 col 39 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 237 col 39 IdentifierName "n" = Base[]
+Line 237 col 53 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 237 col 54 IdentifierName "d1" = Derived1
+Line 237 col 58 IdentifierName "d2" = Derived2
+Line 238 col 4 IdentifierName "x237" = { n: () => Base[]; }
+Line 238 col 12 IdentifierName "n" = () => Base[]
+Line 238 col 21 IdentifierName "Base" = Base
+Line 238 col 33 ObjectLiteralExpression "{ n: () => [d1, d2] }" = { n: () => Base[]; }
+Line 238 col 35 IdentifierName "n" = () => Base[]
+Line 238 col 38 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 238 col 44 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 238 col 45 IdentifierName "d1" = Derived1
+Line 238 col 49 IdentifierName "d2" = Derived2
+Line 239 col 4 IdentifierName "x238" = { n: () => Base[]; }
+Line 239 col 12 IdentifierName "n" = () => Base[]
+Line 239 col 21 IdentifierName "Base" = Base
+Line 239 col 33 ObjectLiteralExpression "{ n: function() { return [d1, d2] } }" = { n: () => Base[]; }
+Line 239 col 35 IdentifierName "n" = () => Base[]
+Line 239 col 38 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 239 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 239 col 59 IdentifierName "d1" = Derived1
+Line 239 col 63 IdentifierName "d2" = Derived2
+Line 240 col 4 IdentifierName "x239" = { n: () => Base[]; }
+Line 240 col 12 IdentifierName "n" = () => Base[]
+Line 240 col 21 IdentifierName "Base" = Base
+Line 240 col 33 ObjectLiteralExpression "{ n: function named() { return [d1, d2] } }" = { n: () => Base[]; }
+Line 240 col 35 IdentifierName "n" = () => Base[]
+Line 240 col 38 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 240 col 47 IdentifierName "named" = () => Base[]
+Line 240 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 240 col 65 IdentifierName "d1" = Derived1
+Line 240 col 69 IdentifierName "d2" = Derived2
+Line 241 col 4 IdentifierName "x240" = { n: () => Base[]; }
+Line 241 col 12 IdentifierName "n" = () => Base[]
+Line 241 col 21 IdentifierName "Base" = Base
+Line 241 col 36 ObjectLiteralExpression "{ n: () => [d1, d2] }" = { n: () => Base[]; }
+Line 241 col 38 IdentifierName "n" = () => Base[]
+Line 241 col 41 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 241 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 241 col 48 IdentifierName "d1" = Derived1
+Line 241 col 52 IdentifierName "d2" = Derived2
+Line 242 col 4 IdentifierName "x241" = { n: () => Base[]; }
+Line 242 col 12 IdentifierName "n" = () => Base[]
+Line 242 col 21 IdentifierName "Base" = Base
+Line 242 col 36 ObjectLiteralExpression "{ n: function() { return [d1, d2] } }" = { n: () => Base[]; }
+Line 242 col 38 IdentifierName "n" = () => Base[]
+Line 242 col 41 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 242 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 242 col 62 IdentifierName "d1" = Derived1
+Line 242 col 66 IdentifierName "d2" = Derived2
+Line 243 col 4 IdentifierName "x242" = { n: () => Base[]; }
+Line 243 col 12 IdentifierName "n" = () => Base[]
+Line 243 col 21 IdentifierName "Base" = Base
+Line 243 col 36 ObjectLiteralExpression "{ n: function named() { return [d1, d2] } }" = { n: () => Base[]; }
+Line 243 col 38 IdentifierName "n" = () => Base[]
+Line 243 col 41 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 243 col 50 IdentifierName "named" = () => Base[]
+Line 243 col 67 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 243 col 68 IdentifierName "d1" = Derived1
+Line 243 col 72 IdentifierName "d2" = Derived2
+Line 244 col 4 IdentifierName "x243" = { n: Base[]; }
+Line 244 col 12 IdentifierName "n" = Base[]
+Line 244 col 15 IdentifierName "Base" = Base
+Line 244 col 27 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 244 col 29 IdentifierName "n" = Base[]
+Line 244 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 244 col 33 IdentifierName "d1" = Derived1
+Line 244 col 37 IdentifierName "d2" = Derived2
+Line 245 col 4 IdentifierName "x244" = { n: Base[]; }
+Line 245 col 12 IdentifierName "n" = Base[]
+Line 245 col 15 IdentifierName "Array" = Array<T>
+Line 245 col 21 IdentifierName "Base" = Base
+Line 245 col 32 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 245 col 34 IdentifierName "n" = Base[]
+Line 245 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 245 col 38 IdentifierName "d1" = Derived1
+Line 245 col 42 IdentifierName "d2" = Derived2
+Line 246 col 4 IdentifierName "x245" = { n: { [n: number]: Base; }; }
+Line 246 col 12 IdentifierName "n" = { [n: number]: Base; }
+Line 246 col 18 IdentifierName "n" = number
+Line 246 col 30 IdentifierName "Base" = Base
+Line 246 col 43 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 246 col 45 IdentifierName "n" = Base[]
+Line 246 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 246 col 49 IdentifierName "d1" = Derived1
+Line 246 col 53 IdentifierName "d2" = Derived2
+Line 247 col 4 IdentifierName "x246" = { n: { n: Base[]; }; }
+Line 247 col 12 IdentifierName "n" = { n: Base[]; }
+Line 247 col 16 IdentifierName "n" = Base[]
+Line 247 col 19 IdentifierName "Base" = Base
+Line 247 col 35 ObjectLiteralExpression "{ n: { n: [d1, d2] } }" = { n: { n: Base[]; }; }
+Line 247 col 37 IdentifierName "n" = { n: Base[]; }
+Line 247 col 40 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 247 col 42 IdentifierName "n" = Base[]
+Line 247 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 247 col 46 IdentifierName "d1" = Derived1
+Line 247 col 50 IdentifierName "d2" = Derived2
+Line 248 col 4 IdentifierName "x247" = { n: (s: Base[]) => any; }
+Line 248 col 12 IdentifierName "n" = (s: Base[]) => any
+Line 248 col 16 IdentifierName "s" = Base[]
+Line 248 col 19 IdentifierName "Base" = Base
+Line 248 col 39 ObjectLiteralExpression "{ n: n => { var n: Base[]; return null; } }" = { n: (n: Base[]) => any; }
+Line 248 col 41 IdentifierName "n" = (n: Base[]) => any
+Line 248 col 44 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 248 col 44 IdentifierName "n" = Base[]
+Line 248 col 55 IdentifierName "n" = Base[]
+Line 248 col 58 IdentifierName "Base" = Base
+Line 249 col 4 IdentifierName "x248" = { n: Genric<Base>; }
+Line 249 col 12 IdentifierName "n" = Genric<Base>
+Line 249 col 15 IdentifierName "Genric" = Genric<T>
+Line 249 col 22 IdentifierName "Base" = Base
+Line 249 col 33 ObjectLiteralExpression "{ n: { func: n => { return [d1, d2]; } } }" = { n: { func: (n: Base[]) => {}[]; }; }
+Line 249 col 35 IdentifierName "n" = { func: (n: Base[]) => {}[]; }
+Line 249 col 38 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 249 col 40 IdentifierName "func" = (n: Base[]) => {}[]
+Line 249 col 46 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 249 col 46 IdentifierName "n" = Base[]
+Line 249 col 60 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 249 col 61 IdentifierName "d1" = Derived1
+Line 249 col 65 IdentifierName "d2" = Derived2
+Line 250 col 4 IdentifierName "x252" = { (): Base[]; }[]
+Line 250 col 16 IdentifierName "Base" = Base
+Line 250 col 30 ArrayLiteralExpression "[() => [d1, d2]]" = { (): Base[]; }[]
+Line 250 col 31 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 250 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 250 col 38 IdentifierName "d1" = Derived1
+Line 250 col 42 IdentifierName "d2" = Derived2
+Line 251 col 4 IdentifierName "x253" = { (): Base[]; }[]
+Line 251 col 16 IdentifierName "Base" = Base
+Line 251 col 30 ArrayLiteralExpression "[function() { return [d1, d2] }]" = { (): Base[]; }[]
+Line 251 col 31 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 251 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 251 col 52 IdentifierName "d1" = Derived1
+Line 251 col 56 IdentifierName "d2" = Derived2
+Line 252 col 4 IdentifierName "x254" = { (): Base[]; }[]
+Line 252 col 16 IdentifierName "Base" = Base
+Line 252 col 30 ArrayLiteralExpression "[function named() { return [d1, d2] }]" = { (): Base[]; }[]
+Line 252 col 31 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 252 col 40 IdentifierName "named" = () => Base[]
+Line 252 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 252 col 58 IdentifierName "d1" = Derived1
+Line 252 col 62 IdentifierName "d2" = Derived2
+Line 253 col 4 IdentifierName "x255" = Base[][]
+Line 253 col 10 IdentifierName "Base" = Base
+Line 253 col 21 ArrayLiteralExpression "[[d1, d2]]" = Base[][]
+Line 253 col 22 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 253 col 23 IdentifierName "d1" = Derived1
+Line 253 col 27 IdentifierName "d2" = Derived2
+Line 254 col 4 IdentifierName "x256" = Base[][]
+Line 254 col 10 IdentifierName "Array" = Array<T>
+Line 254 col 16 IdentifierName "Base" = Base
+Line 254 col 26 ArrayLiteralExpression "[[d1, d2]]" = Base[][]
+Line 254 col 27 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 254 col 28 IdentifierName "d1" = Derived1
+Line 254 col 32 IdentifierName "d2" = Derived2
+Line 255 col 4 IdentifierName "x257" = { [n: number]: Base; }[]
+Line 255 col 13 IdentifierName "n" = number
+Line 255 col 25 IdentifierName "Base" = Base
+Line 255 col 37 ArrayLiteralExpression "[[d1, d2]]" = { [n: number]: Base; }[]
+Line 255 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 255 col 39 IdentifierName "d1" = Derived1
+Line 255 col 43 IdentifierName "d2" = Derived2
+Line 256 col 4 IdentifierName "x258" = { n: Base[]; }[]
+Line 256 col 11 IdentifierName "n" = Base[]
+Line 256 col 14 IdentifierName "Base" = Base
+Line 256 col 29 ArrayLiteralExpression "[{ n: [d1, d2] }]" = { n: Base[]; }[]
+Line 256 col 30 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 256 col 32 IdentifierName "n" = Base[]
+Line 256 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 256 col 36 IdentifierName "d1" = Derived1
+Line 256 col 40 IdentifierName "d2" = Derived2
+Line 257 col 4 IdentifierName "x260" = Genric<Base>[]
+Line 257 col 10 IdentifierName "Genric" = Genric<T>
+Line 257 col 17 IdentifierName "Base" = Base
+Line 257 col 27 ArrayLiteralExpression "[{ func: n => { return [d1, d2]; } }]" = Genric<Base>[]
+Line 257 col 28 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 257 col 30 IdentifierName "func" = (n: Base[]) => {}[]
+Line 257 col 36 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 257 col 36 IdentifierName "n" = Base[]
+Line 257 col 50 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 257 col 51 IdentifierName "d1" = Derived1
+Line 257 col 55 IdentifierName "d2" = Derived2
+Line 258 col 4 IdentifierName "x261" = () => Base[]
+Line 258 col 16 IdentifierName "Base" = Base
+Line 258 col 25 LogicalOrExpression "function() { return [d1, d2] } || undefined" = () => Base[]
+Line 258 col 25 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 258 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 258 col 46 IdentifierName "d1" = Derived1
+Line 258 col 50 IdentifierName "d2" = Derived2
+Line 258 col 59 IdentifierName "undefined" = any
+Line 259 col 4 IdentifierName "x262" = () => Base[]
+Line 259 col 16 IdentifierName "Base" = Base
+Line 259 col 25 LogicalOrExpression "function named() { return [d1, d2] } || undefined" = () => Base[]
+Line 259 col 25 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 259 col 34 IdentifierName "named" = () => Base[]
+Line 259 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 259 col 52 IdentifierName "d1" = Derived1
+Line 259 col 56 IdentifierName "d2" = Derived2
+Line 259 col 65 IdentifierName "undefined" = any
+Line 260 col 4 IdentifierName "x263" = () => Base[]
+Line 260 col 16 IdentifierName "Base" = Base
+Line 260 col 28 LogicalOrExpression "function() { return [d1, d2] } || undefined" = () => Base[]
+Line 260 col 28 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 260 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 260 col 49 IdentifierName "d1" = Derived1
+Line 260 col 53 IdentifierName "d2" = Derived2
+Line 260 col 62 IdentifierName "undefined" = any
+Line 261 col 4 IdentifierName "x264" = () => Base[]
+Line 261 col 16 IdentifierName "Base" = Base
+Line 261 col 28 LogicalOrExpression "function named() { return [d1, d2] } || undefined" = () => Base[]
+Line 261 col 28 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 261 col 37 IdentifierName "named" = () => Base[]
+Line 261 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 261 col 55 IdentifierName "d1" = Derived1
+Line 261 col 59 IdentifierName "d2" = Derived2
+Line 261 col 68 IdentifierName "undefined" = any
+Line 262 col 4 IdentifierName "x265" = Base[]
+Line 262 col 10 IdentifierName "Base" = Base
+Line 262 col 19 LogicalOrExpression "[d1, d2] || undefined" = Base[]
+Line 262 col 19 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 262 col 20 IdentifierName "d1" = Derived1
+Line 262 col 24 IdentifierName "d2" = Derived2
+Line 262 col 31 IdentifierName "undefined" = any
+Line 263 col 4 IdentifierName "x266" = Base[]
+Line 263 col 10 IdentifierName "Array" = Array<T>
+Line 263 col 16 IdentifierName "Base" = Base
+Line 263 col 24 LogicalOrExpression "[d1, d2] || undefined" = Base[]
+Line 263 col 24 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 263 col 25 IdentifierName "d1" = Derived1
+Line 263 col 29 IdentifierName "d2" = Derived2
+Line 263 col 36 IdentifierName "undefined" = any
+Line 264 col 4 IdentifierName "x267" = { [n: number]: Base; }
+Line 264 col 13 IdentifierName "n" = number
+Line 264 col 25 IdentifierName "Base" = Base
+Line 264 col 35 LogicalOrExpression "[d1, d2] || undefined" = { [n: number]: Base; }
+Line 264 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 264 col 36 IdentifierName "d1" = Derived1
+Line 264 col 40 IdentifierName "d2" = Derived2
+Line 264 col 47 IdentifierName "undefined" = any
+Line 265 col 4 IdentifierName "x268" = { n: Base[]; }
+Line 265 col 11 IdentifierName "n" = Base[]
+Line 265 col 14 IdentifierName "Base" = Base
+Line 265 col 27 LogicalOrExpression "{ n: [d1, d2] } || undefined" = { n: Base[]; }
+Line 265 col 27 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 265 col 29 IdentifierName "n" = Base[]
+Line 265 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 265 col 33 IdentifierName "d1" = Derived1
+Line 265 col 37 IdentifierName "d2" = Derived2
+Line 265 col 46 IdentifierName "undefined" = any
+Line 266 col 4 IdentifierName "x269" = () => Base[]
+Line 266 col 16 IdentifierName "Base" = Base
+Line 266 col 25 LogicalOrExpression "undefined || function() { return [d1, d2] }" = () => Base[]
+Line 266 col 25 IdentifierName "undefined" = any
+Line 266 col 38 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 266 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 266 col 59 IdentifierName "d1" = Derived1
+Line 266 col 63 IdentifierName "d2" = Derived2
+Line 267 col 4 IdentifierName "x270" = () => Base[]
+Line 267 col 16 IdentifierName "Base" = Base
+Line 267 col 25 LogicalOrExpression "undefined || function named() { return [d1, d2] }" = () => Base[]
+Line 267 col 25 IdentifierName "undefined" = any
+Line 267 col 38 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 267 col 47 IdentifierName "named" = () => Base[]
+Line 267 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 267 col 65 IdentifierName "d1" = Derived1
+Line 267 col 69 IdentifierName "d2" = Derived2
+Line 268 col 4 IdentifierName "x271" = () => Base[]
+Line 268 col 16 IdentifierName "Base" = Base
+Line 268 col 28 LogicalOrExpression "undefined || function() { return [d1, d2] }" = () => Base[]
+Line 268 col 28 IdentifierName "undefined" = any
+Line 268 col 41 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 268 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 268 col 62 IdentifierName "d1" = Derived1
+Line 268 col 66 IdentifierName "d2" = Derived2
+Line 269 col 4 IdentifierName "x272" = () => Base[]
+Line 269 col 16 IdentifierName "Base" = Base
+Line 269 col 28 LogicalOrExpression "undefined || function named() { return [d1, d2] }" = () => Base[]
+Line 269 col 28 IdentifierName "undefined" = any
+Line 269 col 41 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 269 col 50 IdentifierName "named" = () => Base[]
+Line 269 col 67 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 269 col 68 IdentifierName "d1" = Derived1
+Line 269 col 72 IdentifierName "d2" = Derived2
+Line 270 col 4 IdentifierName "x273" = Base[]
+Line 270 col 10 IdentifierName "Base" = Base
+Line 270 col 19 LogicalOrExpression "undefined || [d1, d2]" = Base[]
+Line 270 col 19 IdentifierName "undefined" = any
+Line 270 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 270 col 33 IdentifierName "d1" = Derived1
+Line 270 col 37 IdentifierName "d2" = Derived2
+Line 271 col 4 IdentifierName "x274" = Base[]
+Line 271 col 10 IdentifierName "Array" = Array<T>
+Line 271 col 16 IdentifierName "Base" = Base
+Line 271 col 24 LogicalOrExpression "undefined || [d1, d2]" = Base[]
+Line 271 col 24 IdentifierName "undefined" = any
+Line 271 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 271 col 38 IdentifierName "d1" = Derived1
+Line 271 col 42 IdentifierName "d2" = Derived2
+Line 272 col 4 IdentifierName "x275" = { [n: number]: Base; }
+Line 272 col 13 IdentifierName "n" = number
+Line 272 col 25 IdentifierName "Base" = Base
+Line 272 col 35 LogicalOrExpression "undefined || [d1, d2]" = { [n: number]: Base; }
+Line 272 col 35 IdentifierName "undefined" = any
+Line 272 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 272 col 49 IdentifierName "d1" = Derived1
+Line 272 col 53 IdentifierName "d2" = Derived2
+Line 273 col 4 IdentifierName "x276" = { n: Base[]; }
+Line 273 col 11 IdentifierName "n" = Base[]
+Line 273 col 14 IdentifierName "Base" = Base
+Line 273 col 27 LogicalOrExpression "undefined || { n: [d1, d2] }" = { n: Base[]; }
+Line 273 col 27 IdentifierName "undefined" = any
+Line 273 col 40 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 273 col 42 IdentifierName "n" = Base[]
+Line 273 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 273 col 46 IdentifierName "d1" = Derived1
+Line 273 col 50 IdentifierName "d2" = Derived2
+Line 274 col 4 IdentifierName "x277" = () => Base[]
+Line 274 col 16 IdentifierName "Base" = Base
+Line 274 col 25 LogicalOrExpression "function() { return [d1, d2] } || function() { return [d1, d2] }" = () => Base[]
+Line 274 col 25 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 274 col 45 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 274 col 46 IdentifierName "d1" = Derived1
+Line 274 col 50 IdentifierName "d2" = Derived2
+Line 274 col 59 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 274 col 79 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 274 col 80 IdentifierName "d1" = Derived1
+Line 274 col 84 IdentifierName "d2" = Derived2
+Line 275 col 4 IdentifierName "x278" = () => Base[]
+Line 275 col 16 IdentifierName "Base" = Base
+Line 275 col 25 LogicalOrExpression "function named() { return [d1, d2] } || function named() { return [d1, d2] }" = () => Base[]
+Line 275 col 25 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 275 col 34 IdentifierName "named" = () => Base[]
+Line 275 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 275 col 52 IdentifierName "d1" = Derived1
+Line 275 col 56 IdentifierName "d2" = Derived2
+Line 275 col 65 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 275 col 74 IdentifierName "named" = () => Base[]
+Line 275 col 91 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 275 col 92 IdentifierName "d1" = Derived1
+Line 275 col 96 IdentifierName "d2" = Derived2
+Line 276 col 4 IdentifierName "x279" = () => Base[]
+Line 276 col 16 IdentifierName "Base" = Base
+Line 276 col 28 LogicalOrExpression "function() { return [d1, d2] } || function() { return [d1, d2] }" = () => Base[]
+Line 276 col 28 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 276 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 276 col 49 IdentifierName "d1" = Derived1
+Line 276 col 53 IdentifierName "d2" = Derived2
+Line 276 col 62 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 276 col 82 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 276 col 83 IdentifierName "d1" = Derived1
+Line 276 col 87 IdentifierName "d2" = Derived2
+Line 277 col 4 IdentifierName "x280" = () => Base[]
+Line 277 col 16 IdentifierName "Base" = Base
+Line 277 col 28 LogicalOrExpression "function named() { return [d1, d2] } || function named() { return [d1, d2] }" = () => Base[]
+Line 277 col 28 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 277 col 37 IdentifierName "named" = () => Base[]
+Line 277 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 277 col 55 IdentifierName "d1" = Derived1
+Line 277 col 59 IdentifierName "d2" = Derived2
+Line 277 col 68 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 277 col 77 IdentifierName "named" = () => Base[]
+Line 277 col 94 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 277 col 95 IdentifierName "d1" = Derived1
+Line 277 col 99 IdentifierName "d2" = Derived2
+Line 278 col 4 IdentifierName "x281" = Base[]
+Line 278 col 10 IdentifierName "Base" = Base
+Line 278 col 19 LogicalOrExpression "[d1, d2] || [d1, d2]" = Base[]
+Line 278 col 19 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 278 col 20 IdentifierName "d1" = Derived1
+Line 278 col 24 IdentifierName "d2" = Derived2
+Line 278 col 31 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 278 col 32 IdentifierName "d1" = Derived1
+Line 278 col 36 IdentifierName "d2" = Derived2
+Line 279 col 4 IdentifierName "x282" = Base[]
+Line 279 col 10 IdentifierName "Array" = Array<T>
+Line 279 col 16 IdentifierName "Base" = Base
+Line 279 col 24 LogicalOrExpression "[d1, d2] || [d1, d2]" = Base[]
+Line 279 col 24 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 279 col 25 IdentifierName "d1" = Derived1
+Line 279 col 29 IdentifierName "d2" = Derived2
+Line 279 col 36 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 279 col 37 IdentifierName "d1" = Derived1
+Line 279 col 41 IdentifierName "d2" = Derived2
+Line 280 col 4 IdentifierName "x283" = { [n: number]: Base; }
+Line 280 col 13 IdentifierName "n" = number
+Line 280 col 25 IdentifierName "Base" = Base
+Line 280 col 35 LogicalOrExpression "[d1, d2] || [d1, d2]" = { [n: number]: Base; }
+Line 280 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 280 col 36 IdentifierName "d1" = Derived1
+Line 280 col 40 IdentifierName "d2" = Derived2
+Line 280 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 280 col 48 IdentifierName "d1" = Derived1
+Line 280 col 52 IdentifierName "d2" = Derived2
+Line 281 col 4 IdentifierName "x284" = { n: Base[]; }
+Line 281 col 11 IdentifierName "n" = Base[]
+Line 281 col 14 IdentifierName "Base" = Base
+Line 281 col 27 LogicalOrExpression "{ n: [d1, d2] } || { n: [d1, d2] }" = { n: Base[]; }
+Line 281 col 27 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 281 col 29 IdentifierName "n" = Base[]
+Line 281 col 32 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 281 col 33 IdentifierName "d1" = Derived1
+Line 281 col 37 IdentifierName "d2" = Derived2
+Line 281 col 46 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 281 col 48 IdentifierName "n" = Base[]
+Line 281 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 281 col 52 IdentifierName "d1" = Derived1
+Line 281 col 56 IdentifierName "d2" = Derived2
+Line 282 col 4 IdentifierName "x285" = () => Base[]
+Line 282 col 16 IdentifierName "Base" = Base
+Line 282 col 25 ConditionalExpression "true ? () => [d1, d2] : () => [d1, d2]" = () => Base[]
+Line 282 col 32 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 282 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 282 col 39 IdentifierName "d1" = Derived1
+Line 282 col 43 IdentifierName "d2" = Derived2
+Line 282 col 49 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 282 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 282 col 56 IdentifierName "d1" = Derived1
+Line 282 col 60 IdentifierName "d2" = Derived2
+Line 283 col 4 IdentifierName "x286" = () => Base[]
+Line 283 col 16 IdentifierName "Base" = Base
+Line 283 col 25 ConditionalExpression "true ? function() { return [d1, d2] } : function() { return [d1, d2] }" = () => Base[]
+Line 283 col 32 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 283 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 283 col 53 IdentifierName "d1" = Derived1
+Line 283 col 57 IdentifierName "d2" = Derived2
+Line 283 col 65 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 283 col 85 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 283 col 86 IdentifierName "d1" = Derived1
+Line 283 col 90 IdentifierName "d2" = Derived2
+Line 284 col 4 IdentifierName "x287" = () => Base[]
+Line 284 col 16 IdentifierName "Base" = Base
+Line 284 col 25 ConditionalExpression "true ? function named() { return [d1, d2] } : function named() { return [d1, d2] }" = () => Base[]
+Line 284 col 32 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 284 col 41 IdentifierName "named" = () => Base[]
+Line 284 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 284 col 59 IdentifierName "d1" = Derived1
+Line 284 col 63 IdentifierName "d2" = Derived2
+Line 284 col 71 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 284 col 80 IdentifierName "named" = () => Base[]
+Line 284 col 97 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 284 col 98 IdentifierName "d1" = Derived1
+Line 284 col 102 IdentifierName "d2" = Derived2
+Line 285 col 4 IdentifierName "x288" = () => Base[]
+Line 285 col 16 IdentifierName "Base" = Base
+Line 285 col 28 ConditionalExpression "true ? () => [d1, d2] : () => [d1, d2]" = () => Base[]
+Line 285 col 35 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 285 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 285 col 42 IdentifierName "d1" = Derived1
+Line 285 col 46 IdentifierName "d2" = Derived2
+Line 285 col 52 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 285 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 285 col 59 IdentifierName "d1" = Derived1
+Line 285 col 63 IdentifierName "d2" = Derived2
+Line 286 col 4 IdentifierName "x289" = () => Base[]
+Line 286 col 16 IdentifierName "Base" = Base
+Line 286 col 28 ConditionalExpression "true ? function() { return [d1, d2] } : function() { return [d1, d2] }" = () => Base[]
+Line 286 col 35 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 286 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 286 col 56 IdentifierName "d1" = Derived1
+Line 286 col 60 IdentifierName "d2" = Derived2
+Line 286 col 68 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 286 col 88 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 286 col 89 IdentifierName "d1" = Derived1
+Line 286 col 93 IdentifierName "d2" = Derived2
+Line 287 col 4 IdentifierName "x290" = () => Base[]
+Line 287 col 16 IdentifierName "Base" = Base
+Line 287 col 28 ConditionalExpression "true ? function named() { return [d1, d2] } : function named() { return [d1, d2] }" = () => Base[]
+Line 287 col 35 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 287 col 44 IdentifierName "named" = () => Base[]
+Line 287 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 287 col 62 IdentifierName "d1" = Derived1
+Line 287 col 66 IdentifierName "d2" = Derived2
+Line 287 col 74 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 287 col 83 IdentifierName "named" = () => Base[]
+Line 287 col 100 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 287 col 101 IdentifierName "d1" = Derived1
+Line 287 col 105 IdentifierName "d2" = Derived2
+Line 288 col 4 IdentifierName "x291" = Base[]
+Line 288 col 10 IdentifierName "Base" = Base
+Line 288 col 19 ConditionalExpression "true ? [d1, d2] : [d1, d2]" = Base[]
+Line 288 col 26 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 288 col 27 IdentifierName "d1" = Derived1
+Line 288 col 31 IdentifierName "d2" = Derived2
+Line 288 col 37 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 288 col 38 IdentifierName "d1" = Derived1
+Line 288 col 42 IdentifierName "d2" = Derived2
+Line 289 col 4 IdentifierName "x292" = Base[]
+Line 289 col 10 IdentifierName "Array" = Array<T>
+Line 289 col 16 IdentifierName "Base" = Base
+Line 289 col 24 ConditionalExpression "true ? [d1, d2] : [d1, d2]" = Base[]
+Line 289 col 31 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 289 col 32 IdentifierName "d1" = Derived1
+Line 289 col 36 IdentifierName "d2" = Derived2
+Line 289 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 289 col 43 IdentifierName "d1" = Derived1
+Line 289 col 47 IdentifierName "d2" = Derived2
+Line 290 col 4 IdentifierName "x293" = { [n: number]: Base; }
+Line 290 col 13 IdentifierName "n" = number
+Line 290 col 25 IdentifierName "Base" = Base
+Line 290 col 35 ConditionalExpression "true ? [d1, d2] : [d1, d2]" = { [n: number]: Base; }
+Line 290 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 290 col 43 IdentifierName "d1" = Derived1
+Line 290 col 47 IdentifierName "d2" = Derived2
+Line 290 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 290 col 54 IdentifierName "d1" = Derived1
+Line 290 col 58 IdentifierName "d2" = Derived2
+Line 291 col 4 IdentifierName "x294" = { n: Base[]; }
+Line 291 col 11 IdentifierName "n" = Base[]
+Line 291 col 14 IdentifierName "Base" = Base
+Line 291 col 27 ConditionalExpression "true ? { n: [d1, d2] } : { n: [d1, d2] }" = { n: Base[]; }
+Line 291 col 34 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 291 col 36 IdentifierName "n" = Base[]
+Line 291 col 39 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 291 col 40 IdentifierName "d1" = Derived1
+Line 291 col 44 IdentifierName "d2" = Derived2
+Line 291 col 52 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 291 col 54 IdentifierName "n" = Base[]
+Line 291 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 291 col 58 IdentifierName "d1" = Derived1
+Line 291 col 62 IdentifierName "d2" = Derived2
+Line 292 col 4 IdentifierName "x295" = (s: Base[]) => any
+Line 292 col 11 IdentifierName "s" = Base[]
+Line 292 col 14 IdentifierName "Base" = Base
+Line 292 col 31 ConditionalExpression "true ? n => { var n: Base[]; return null; } : n => { var n: Base[]; return null; }" = (s: Base[]) => any
+Line 292 col 38 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 292 col 38 IdentifierName "n" = Base[]
+Line 292 col 49 IdentifierName "n" = Base[]
+Line 292 col 52 IdentifierName "Base" = Base
+Line 292 col 77 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 292 col 77 IdentifierName "n" = Base[]
+Line 292 col 88 IdentifierName "n" = Base[]
+Line 292 col 91 IdentifierName "Base" = Base
+Line 293 col 4 IdentifierName "x296" = Genric<Base>
+Line 293 col 10 IdentifierName "Genric" = Genric<T>
+Line 293 col 17 IdentifierName "Base" = Base
+Line 293 col 25 ConditionalExpression "true ? { func: n => { return [d1, d2]; } } : { func: n => { return [d1, d2]; } }" = Genric<Base>
+Line 293 col 32 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 293 col 34 IdentifierName "func" = (n: Base[]) => {}[]
+Line 293 col 40 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 293 col 40 IdentifierName "n" = Base[]
+Line 293 col 54 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 293 col 55 IdentifierName "d1" = Derived1
+Line 293 col 59 IdentifierName "d2" = Derived2
+Line 293 col 70 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 293 col 72 IdentifierName "func" = (n: Base[]) => {}[]
+Line 293 col 78 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 293 col 78 IdentifierName "n" = Base[]
+Line 293 col 92 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 293 col 93 IdentifierName "d1" = Derived1
+Line 293 col 97 IdentifierName "d2" = Derived2
+Line 294 col 4 IdentifierName "x297" = () => Base[]
+Line 294 col 16 IdentifierName "Base" = Base
+Line 294 col 25 ConditionalExpression "true ? undefined : () => [d1, d2]" = () => Base[]
+Line 294 col 32 IdentifierName "undefined" = any
+Line 294 col 44 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 294 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 294 col 51 IdentifierName "d1" = Derived1
+Line 294 col 55 IdentifierName "d2" = Derived2
+Line 295 col 4 IdentifierName "x298" = () => Base[]
+Line 295 col 16 IdentifierName "Base" = Base
+Line 295 col 25 ConditionalExpression "true ? undefined : function() { return [d1, d2] }" = () => Base[]
+Line 295 col 32 IdentifierName "undefined" = any
+Line 295 col 44 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 295 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 295 col 65 IdentifierName "d1" = Derived1
+Line 295 col 69 IdentifierName "d2" = Derived2
+Line 296 col 4 IdentifierName "x299" = () => Base[]
+Line 296 col 16 IdentifierName "Base" = Base
+Line 296 col 25 ConditionalExpression "true ? undefined : function named() { return [d1, d2] }" = () => Base[]
+Line 296 col 32 IdentifierName "undefined" = any
+Line 296 col 44 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 296 col 53 IdentifierName "named" = () => Base[]
+Line 296 col 70 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 296 col 71 IdentifierName "d1" = Derived1
+Line 296 col 75 IdentifierName "d2" = Derived2
+Line 297 col 4 IdentifierName "x300" = () => Base[]
+Line 297 col 16 IdentifierName "Base" = Base
+Line 297 col 28 ConditionalExpression "true ? undefined : () => [d1, d2]" = () => Base[]
+Line 297 col 35 IdentifierName "undefined" = any
+Line 297 col 47 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 297 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 297 col 54 IdentifierName "d1" = Derived1
+Line 297 col 58 IdentifierName "d2" = Derived2
+Line 298 col 4 IdentifierName "x301" = () => Base[]
+Line 298 col 16 IdentifierName "Base" = Base
+Line 298 col 28 ConditionalExpression "true ? undefined : function() { return [d1, d2] }" = () => Base[]
+Line 298 col 35 IdentifierName "undefined" = any
+Line 298 col 47 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 298 col 67 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 298 col 68 IdentifierName "d1" = Derived1
+Line 298 col 72 IdentifierName "d2" = Derived2
+Line 299 col 4 IdentifierName "x302" = () => Base[]
+Line 299 col 16 IdentifierName "Base" = Base
+Line 299 col 28 ConditionalExpression "true ? undefined : function named() { return [d1, d2] }" = () => Base[]
+Line 299 col 35 IdentifierName "undefined" = any
+Line 299 col 47 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 299 col 56 IdentifierName "named" = () => Base[]
+Line 299 col 73 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 299 col 74 IdentifierName "d1" = Derived1
+Line 299 col 78 IdentifierName "d2" = Derived2
+Line 300 col 4 IdentifierName "x303" = Base[]
+Line 300 col 10 IdentifierName "Base" = Base
+Line 300 col 19 ConditionalExpression "true ? undefined : [d1, d2]" = Base[]
+Line 300 col 26 IdentifierName "undefined" = any
+Line 300 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 300 col 39 IdentifierName "d1" = Derived1
+Line 300 col 43 IdentifierName "d2" = Derived2
+Line 301 col 4 IdentifierName "x304" = Base[]
+Line 301 col 10 IdentifierName "Array" = Array<T>
+Line 301 col 16 IdentifierName "Base" = Base
+Line 301 col 24 ConditionalExpression "true ? undefined : [d1, d2]" = Base[]
+Line 301 col 31 IdentifierName "undefined" = any
+Line 301 col 43 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 301 col 44 IdentifierName "d1" = Derived1
+Line 301 col 48 IdentifierName "d2" = Derived2
+Line 302 col 4 IdentifierName "x305" = { [n: number]: Base; }
+Line 302 col 13 IdentifierName "n" = number
+Line 302 col 25 IdentifierName "Base" = Base
+Line 302 col 35 ConditionalExpression "true ? undefined : [d1, d2]" = { [n: number]: Base; }
+Line 302 col 42 IdentifierName "undefined" = any
+Line 302 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 302 col 55 IdentifierName "d1" = Derived1
+Line 302 col 59 IdentifierName "d2" = Derived2
+Line 303 col 4 IdentifierName "x306" = { n: Base[]; }
+Line 303 col 11 IdentifierName "n" = Base[]
+Line 303 col 14 IdentifierName "Base" = Base
+Line 303 col 27 ConditionalExpression "true ? undefined : { n: [d1, d2] }" = { n: Base[]; }
+Line 303 col 34 IdentifierName "undefined" = any
+Line 303 col 46 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 303 col 48 IdentifierName "n" = Base[]
+Line 303 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 303 col 52 IdentifierName "d1" = Derived1
+Line 303 col 56 IdentifierName "d2" = Derived2
+Line 304 col 4 IdentifierName "x307" = (s: Base[]) => any
+Line 304 col 11 IdentifierName "s" = Base[]
+Line 304 col 14 IdentifierName "Base" = Base
+Line 304 col 31 ConditionalExpression "true ? undefined : n => { var n: Base[]; return null; }" = (s: Base[]) => any
+Line 304 col 38 IdentifierName "undefined" = any
+Line 304 col 50 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 304 col 50 IdentifierName "n" = Base[]
+Line 304 col 61 IdentifierName "n" = Base[]
+Line 304 col 64 IdentifierName "Base" = Base
+Line 305 col 4 IdentifierName "x308" = Genric<Base>
+Line 305 col 10 IdentifierName "Genric" = Genric<T>
+Line 305 col 17 IdentifierName "Base" = Base
+Line 305 col 25 ConditionalExpression "true ? undefined : { func: n => { return [d1, d2]; } }" = Genric<Base>
+Line 305 col 32 IdentifierName "undefined" = any
+Line 305 col 44 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 305 col 46 IdentifierName "func" = (n: Base[]) => {}[]
+Line 305 col 52 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 305 col 52 IdentifierName "n" = Base[]
+Line 305 col 66 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 305 col 67 IdentifierName "d1" = Derived1
+Line 305 col 71 IdentifierName "d2" = Derived2
+Line 306 col 4 IdentifierName "x309" = () => Base[]
+Line 306 col 16 IdentifierName "Base" = Base
+Line 306 col 25 ConditionalExpression "true ? () => [d1, d2] : undefined" = () => Base[]
+Line 306 col 32 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 306 col 38 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 306 col 39 IdentifierName "d1" = Derived1
+Line 306 col 43 IdentifierName "d2" = Derived2
+Line 306 col 49 IdentifierName "undefined" = any
+Line 307 col 4 IdentifierName "x310" = () => Base[]
+Line 307 col 16 IdentifierName "Base" = Base
+Line 307 col 25 ConditionalExpression "true ? function() { return [d1, d2] } : undefined" = () => Base[]
+Line 307 col 32 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 307 col 52 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 307 col 53 IdentifierName "d1" = Derived1
+Line 307 col 57 IdentifierName "d2" = Derived2
+Line 307 col 65 IdentifierName "undefined" = any
+Line 308 col 4 IdentifierName "x311" = () => Base[]
+Line 308 col 16 IdentifierName "Base" = Base
+Line 308 col 25 ConditionalExpression "true ? function named() { return [d1, d2] } : undefined" = () => Base[]
+Line 308 col 32 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 308 col 41 IdentifierName "named" = () => Base[]
+Line 308 col 58 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 308 col 59 IdentifierName "d1" = Derived1
+Line 308 col 63 IdentifierName "d2" = Derived2
+Line 308 col 71 IdentifierName "undefined" = any
+Line 309 col 4 IdentifierName "x312" = () => Base[]
+Line 309 col 16 IdentifierName "Base" = Base
+Line 309 col 28 ConditionalExpression "true ? () => [d1, d2] : undefined" = () => Base[]
+Line 309 col 35 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 309 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 309 col 42 IdentifierName "d1" = Derived1
+Line 309 col 46 IdentifierName "d2" = Derived2
+Line 309 col 52 IdentifierName "undefined" = any
+Line 310 col 4 IdentifierName "x313" = () => Base[]
+Line 310 col 16 IdentifierName "Base" = Base
+Line 310 col 28 ConditionalExpression "true ? function() { return [d1, d2] } : undefined" = () => Base[]
+Line 310 col 35 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 310 col 55 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 310 col 56 IdentifierName "d1" = Derived1
+Line 310 col 60 IdentifierName "d2" = Derived2
+Line 310 col 68 IdentifierName "undefined" = any
+Line 311 col 4 IdentifierName "x314" = () => Base[]
+Line 311 col 16 IdentifierName "Base" = Base
+Line 311 col 28 ConditionalExpression "true ? function named() { return [d1, d2] } : undefined" = () => Base[]
+Line 311 col 35 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 311 col 44 IdentifierName "named" = () => Base[]
+Line 311 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 311 col 62 IdentifierName "d1" = Derived1
+Line 311 col 66 IdentifierName "d2" = Derived2
+Line 311 col 74 IdentifierName "undefined" = any
+Line 312 col 4 IdentifierName "x315" = Base[]
+Line 312 col 10 IdentifierName "Base" = Base
+Line 312 col 19 ConditionalExpression "true ? [d1, d2] : undefined" = Base[]
+Line 312 col 26 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 312 col 27 IdentifierName "d1" = Derived1
+Line 312 col 31 IdentifierName "d2" = Derived2
+Line 312 col 37 IdentifierName "undefined" = any
+Line 313 col 4 IdentifierName "x316" = Base[]
+Line 313 col 10 IdentifierName "Array" = Array<T>
+Line 313 col 16 IdentifierName "Base" = Base
+Line 313 col 24 ConditionalExpression "true ? [d1, d2] : undefined" = Base[]
+Line 313 col 31 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 313 col 32 IdentifierName "d1" = Derived1
+Line 313 col 36 IdentifierName "d2" = Derived2
+Line 313 col 42 IdentifierName "undefined" = any
+Line 314 col 4 IdentifierName "x317" = { [n: number]: Base; }
+Line 314 col 13 IdentifierName "n" = number
+Line 314 col 25 IdentifierName "Base" = Base
+Line 314 col 35 ConditionalExpression "true ? [d1, d2] : undefined" = { [n: number]: Base; }
+Line 314 col 42 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 314 col 43 IdentifierName "d1" = Derived1
+Line 314 col 47 IdentifierName "d2" = Derived2
+Line 314 col 53 IdentifierName "undefined" = any
+Line 315 col 4 IdentifierName "x318" = { n: Base[]; }
+Line 315 col 11 IdentifierName "n" = Base[]
+Line 315 col 14 IdentifierName "Base" = Base
+Line 315 col 27 ConditionalExpression "true ? { n: [d1, d2] } : undefined" = { n: Base[]; }
+Line 315 col 34 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 315 col 36 IdentifierName "n" = Base[]
+Line 315 col 39 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 315 col 40 IdentifierName "d1" = Derived1
+Line 315 col 44 IdentifierName "d2" = Derived2
+Line 315 col 52 IdentifierName "undefined" = any
+Line 316 col 4 IdentifierName "x319" = (s: Base[]) => any
+Line 316 col 11 IdentifierName "s" = Base[]
+Line 316 col 14 IdentifierName "Base" = Base
+Line 316 col 31 ConditionalExpression "true ? n => { var n: Base[]; return null; } : undefined" = (s: Base[]) => any
+Line 316 col 38 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 316 col 38 IdentifierName "n" = Base[]
+Line 316 col 49 IdentifierName "n" = Base[]
+Line 316 col 52 IdentifierName "Base" = Base
+Line 316 col 77 IdentifierName "undefined" = any
+Line 317 col 4 IdentifierName "x320" = Genric<Base>
+Line 317 col 10 IdentifierName "Genric" = Genric<T>
+Line 317 col 17 IdentifierName "Base" = Base
+Line 317 col 25 ConditionalExpression "true ? { func: n => { return [d1, d2]; } } : undefined" = Genric<Base>
+Line 317 col 32 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 317 col 34 IdentifierName "func" = (n: Base[]) => {}[]
+Line 317 col 40 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 317 col 40 IdentifierName "n" = Base[]
+Line 317 col 54 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 317 col 55 IdentifierName "d1" = Derived1
+Line 317 col 59 IdentifierName "d2" = Derived2
+Line 317 col 70 IdentifierName "undefined" = any
+Line 318 col 9 IdentifierName "x321" = typeof x321
+Line 318 col 14 IdentifierName "n" = () => Base[]
+Line 318 col 23 IdentifierName "Base" = Base
+Line 318 col 36 InvocationExpression "x321(() => [d1, d2])" = void
+Line 318 col 36 IdentifierName "x321" = typeof x321
+Line 318 col 41 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 318 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 318 col 48 IdentifierName "d1" = Derived1
+Line 318 col 52 IdentifierName "d2" = Derived2
+Line 319 col 9 IdentifierName "x322" = typeof x322
+Line 319 col 14 IdentifierName "n" = () => Base[]
+Line 319 col 23 IdentifierName "Base" = Base
+Line 319 col 36 InvocationExpression "x322(function() { return [d1, d2] })" = void
+Line 319 col 36 IdentifierName "x322" = typeof x322
+Line 319 col 41 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 319 col 61 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 319 col 62 IdentifierName "d1" = Derived1
+Line 319 col 66 IdentifierName "d2" = Derived2
+Line 320 col 9 IdentifierName "x323" = typeof x323
+Line 320 col 14 IdentifierName "n" = () => Base[]
+Line 320 col 23 IdentifierName "Base" = Base
+Line 320 col 36 InvocationExpression "x323(function named() { return [d1, d2] })" = void
+Line 320 col 36 IdentifierName "x323" = typeof x323
+Line 320 col 41 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 320 col 50 IdentifierName "named" = () => Base[]
+Line 320 col 67 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 320 col 68 IdentifierName "d1" = Derived1
+Line 320 col 72 IdentifierName "d2" = Derived2
+Line 321 col 9 IdentifierName "x324" = typeof x324
+Line 321 col 14 IdentifierName "n" = () => Base[]
+Line 321 col 23 IdentifierName "Base" = Base
+Line 321 col 39 InvocationExpression "x324(() => [d1, d2])" = void
+Line 321 col 39 IdentifierName "x324" = typeof x324
+Line 321 col 44 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 321 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 321 col 51 IdentifierName "d1" = Derived1
+Line 321 col 55 IdentifierName "d2" = Derived2
+Line 322 col 9 IdentifierName "x325" = typeof x325
+Line 322 col 14 IdentifierName "n" = () => Base[]
+Line 322 col 23 IdentifierName "Base" = Base
+Line 322 col 39 InvocationExpression "x325(function() { return [d1, d2] })" = void
+Line 322 col 39 IdentifierName "x325" = typeof x325
+Line 322 col 44 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 322 col 64 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 322 col 65 IdentifierName "d1" = Derived1
+Line 322 col 69 IdentifierName "d2" = Derived2
+Line 323 col 9 IdentifierName "x326" = typeof x326
+Line 323 col 14 IdentifierName "n" = () => Base[]
+Line 323 col 23 IdentifierName "Base" = Base
+Line 323 col 39 InvocationExpression "x326(function named() { return [d1, d2] })" = void
+Line 323 col 39 IdentifierName "x326" = typeof x326
+Line 323 col 44 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 323 col 53 IdentifierName "named" = () => Base[]
+Line 323 col 70 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 323 col 71 IdentifierName "d1" = Derived1
+Line 323 col 75 IdentifierName "d2" = Derived2
+Line 324 col 9 IdentifierName "x327" = typeof x327
+Line 324 col 14 IdentifierName "n" = Base[]
+Line 324 col 17 IdentifierName "Base" = Base
+Line 324 col 30 InvocationExpression "x327([d1, d2])" = void
+Line 324 col 30 IdentifierName "x327" = typeof x327
+Line 324 col 35 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 324 col 36 IdentifierName "d1" = Derived1
+Line 324 col 40 IdentifierName "d2" = Derived2
+Line 325 col 9 IdentifierName "x328" = typeof x328
+Line 325 col 14 IdentifierName "n" = Base[]
+Line 325 col 17 IdentifierName "Array" = Array<T>
+Line 325 col 23 IdentifierName "Base" = Base
+Line 325 col 35 InvocationExpression "x328([d1, d2])" = void
+Line 325 col 35 IdentifierName "x328" = typeof x328
+Line 325 col 40 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 325 col 41 IdentifierName "d1" = Derived1
+Line 325 col 45 IdentifierName "d2" = Derived2
+Line 326 col 9 IdentifierName "x329" = typeof x329
+Line 326 col 14 IdentifierName "n" = { [n: number]: Base; }
+Line 326 col 20 IdentifierName "n" = number
+Line 326 col 32 IdentifierName "Base" = Base
+Line 326 col 46 InvocationExpression "x329([d1, d2])" = void
+Line 326 col 46 IdentifierName "x329" = typeof x329
+Line 326 col 51 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 326 col 52 IdentifierName "d1" = Derived1
+Line 326 col 56 IdentifierName "d2" = Derived2
+Line 327 col 9 IdentifierName "x330" = typeof x330
+Line 327 col 14 IdentifierName "n" = { n: Base[]; }
+Line 327 col 18 IdentifierName "n" = Base[]
+Line 327 col 21 IdentifierName "Base" = Base
+Line 327 col 38 InvocationExpression "x330({ n: [d1, d2] })" = void
+Line 327 col 38 IdentifierName "x330" = typeof x330
+Line 327 col 43 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 327 col 45 IdentifierName "n" = Base[]
+Line 327 col 48 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 327 col 49 IdentifierName "d1" = Derived1
+Line 327 col 53 IdentifierName "d2" = Derived2
+Line 328 col 9 IdentifierName "x331" = typeof x331
+Line 328 col 14 IdentifierName "n" = (s: Base[]) => any
+Line 328 col 18 IdentifierName "s" = Base[]
+Line 328 col 21 IdentifierName "Base" = Base
+Line 328 col 42 InvocationExpression "x331(n => { var n: Base[]; return null; })" = void
+Line 328 col 42 IdentifierName "x331" = typeof x331
+Line 328 col 47 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 328 col 47 IdentifierName "n" = Base[]
+Line 328 col 58 IdentifierName "n" = Base[]
+Line 328 col 61 IdentifierName "Base" = Base
+Line 329 col 9 IdentifierName "x332" = typeof x332
+Line 329 col 14 IdentifierName "n" = Genric<Base>
+Line 329 col 17 IdentifierName "Genric" = Genric<T>
+Line 329 col 24 IdentifierName "Base" = Base
+Line 329 col 36 InvocationExpression "x332({ func: n => { return [d1, d2]; } })" = void
+Line 329 col 36 IdentifierName "x332" = typeof x332
+Line 329 col 41 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 329 col 43 IdentifierName "func" = (n: Base[]) => {}[]
+Line 329 col 49 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 329 col 49 IdentifierName "n" = Base[]
+Line 329 col 63 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 329 col 64 IdentifierName "d1" = Derived1
+Line 329 col 68 IdentifierName "d2" = Derived2
+Line 330 col 4 IdentifierName "x333" = (n: () => Base[]) => () => Base[]
+Line 330 col 11 ParenthesizedArrowFunctionExpression "(n: () => Base[]) => n" = (n: () => Base[]) => () => Base[]
+Line 330 col 12 IdentifierName "n" = () => Base[]
+Line 330 col 21 IdentifierName "Base" = Base
+Line 330 col 32 IdentifierName "n" = () => Base[]
+Line 330 col 35 InvocationExpression "x333(() => [d1, d2])" = () => Base[]
+Line 330 col 35 IdentifierName "x333" = (n: () => Base[]) => () => Base[]
+Line 330 col 40 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 330 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 330 col 47 IdentifierName "d1" = Derived1
+Line 330 col 51 IdentifierName "d2" = Derived2
+Line 331 col 4 IdentifierName "x334" = (n: () => Base[]) => () => Base[]
+Line 331 col 11 ParenthesizedArrowFunctionExpression "(n: () => Base[]) => n" = (n: () => Base[]) => () => Base[]
+Line 331 col 12 IdentifierName "n" = () => Base[]
+Line 331 col 21 IdentifierName "Base" = Base
+Line 331 col 32 IdentifierName "n" = () => Base[]
+Line 331 col 35 InvocationExpression "x334(function() { return [d1, d2] })" = () => Base[]
+Line 331 col 35 IdentifierName "x334" = (n: () => Base[]) => () => Base[]
+Line 331 col 40 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 331 col 60 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 331 col 61 IdentifierName "d1" = Derived1
+Line 331 col 65 IdentifierName "d2" = Derived2
+Line 332 col 4 IdentifierName "x335" = (n: () => Base[]) => () => Base[]
+Line 332 col 11 ParenthesizedArrowFunctionExpression "(n: () => Base[]) => n" = (n: () => Base[]) => () => Base[]
+Line 332 col 12 IdentifierName "n" = () => Base[]
+Line 332 col 21 IdentifierName "Base" = Base
+Line 332 col 32 IdentifierName "n" = () => Base[]
+Line 332 col 35 InvocationExpression "x335(function named() { return [d1, d2] })" = () => Base[]
+Line 332 col 35 IdentifierName "x335" = (n: () => Base[]) => () => Base[]
+Line 332 col 40 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 332 col 49 IdentifierName "named" = () => Base[]
+Line 332 col 66 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 332 col 67 IdentifierName "d1" = Derived1
+Line 332 col 71 IdentifierName "d2" = Derived2
+Line 333 col 4 IdentifierName "x336" = (n: () => Base[]) => () => Base[]
+Line 333 col 11 ParenthesizedArrowFunctionExpression "(n: { (): Base[]; }) => n" = (n: () => Base[]) => () => Base[]
+Line 333 col 12 IdentifierName "n" = () => Base[]
+Line 333 col 21 IdentifierName "Base" = Base
+Line 333 col 35 IdentifierName "n" = () => Base[]
+Line 333 col 38 InvocationExpression "x336(() => [d1, d2])" = () => Base[]
+Line 333 col 38 IdentifierName "x336" = (n: () => Base[]) => () => Base[]
+Line 333 col 43 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 333 col 49 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 333 col 50 IdentifierName "d1" = Derived1
+Line 333 col 54 IdentifierName "d2" = Derived2
+Line 334 col 4 IdentifierName "x337" = (n: () => Base[]) => () => Base[]
+Line 334 col 11 ParenthesizedArrowFunctionExpression "(n: { (): Base[]; }) => n" = (n: () => Base[]) => () => Base[]
+Line 334 col 12 IdentifierName "n" = () => Base[]
+Line 334 col 21 IdentifierName "Base" = Base
+Line 334 col 35 IdentifierName "n" = () => Base[]
+Line 334 col 38 InvocationExpression "x337(function() { return [d1, d2] })" = () => Base[]
+Line 334 col 38 IdentifierName "x337" = (n: () => Base[]) => () => Base[]
+Line 334 col 43 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 334 col 63 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 334 col 64 IdentifierName "d1" = Derived1
+Line 334 col 68 IdentifierName "d2" = Derived2
+Line 335 col 4 IdentifierName "x338" = (n: () => Base[]) => () => Base[]
+Line 335 col 11 ParenthesizedArrowFunctionExpression "(n: { (): Base[]; }) => n" = (n: () => Base[]) => () => Base[]
+Line 335 col 12 IdentifierName "n" = () => Base[]
+Line 335 col 21 IdentifierName "Base" = Base
+Line 335 col 35 IdentifierName "n" = () => Base[]
+Line 335 col 38 InvocationExpression "x338(function named() { return [d1, d2] })" = () => Base[]
+Line 335 col 38 IdentifierName "x338" = (n: () => Base[]) => () => Base[]
+Line 335 col 43 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 335 col 52 IdentifierName "named" = () => Base[]
+Line 335 col 69 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 335 col 70 IdentifierName "d1" = Derived1
+Line 335 col 74 IdentifierName "d2" = Derived2
+Line 336 col 4 IdentifierName "x339" = (n: Base[]) => Base[]
+Line 336 col 11 ParenthesizedArrowFunctionExpression "(n: Base[]) => n" = (n: Base[]) => Base[]
+Line 336 col 12 IdentifierName "n" = Base[]
+Line 336 col 15 IdentifierName "Base" = Base
+Line 336 col 26 IdentifierName "n" = Base[]
+Line 336 col 29 InvocationExpression "x339([d1, d2])" = Base[]
+Line 336 col 29 IdentifierName "x339" = (n: Base[]) => Base[]
+Line 336 col 34 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 336 col 35 IdentifierName "d1" = Derived1
+Line 336 col 39 IdentifierName "d2" = Derived2
+Line 337 col 4 IdentifierName "x340" = (n: Base[]) => Base[]
+Line 337 col 11 ParenthesizedArrowFunctionExpression "(n: Array<Base>) => n" = (n: Base[]) => Base[]
+Line 337 col 12 IdentifierName "n" = Base[]
+Line 337 col 15 IdentifierName "Array" = Array<T>
+Line 337 col 21 IdentifierName "Base" = Base
+Line 337 col 31 IdentifierName "n" = Base[]
+Line 337 col 34 InvocationExpression "x340([d1, d2])" = Base[]
+Line 337 col 34 IdentifierName "x340" = (n: Base[]) => Base[]
+Line 337 col 39 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 337 col 40 IdentifierName "d1" = Derived1
+Line 337 col 44 IdentifierName "d2" = Derived2
+Line 338 col 4 IdentifierName "x341" = (n: { [n: number]: Base; }) => { [n: number]: Base; }
+Line 338 col 11 ParenthesizedArrowFunctionExpression "(n: { [n: number]: Base; }) => n" = (n: { [n: number]: Base; }) => { [n: number]: Base; }
+Line 338 col 12 IdentifierName "n" = { [n: number]: Base; }
+Line 338 col 18 IdentifierName "n" = number
+Line 338 col 30 IdentifierName "Base" = Base
+Line 338 col 42 IdentifierName "n" = { [n: number]: Base; }
+Line 338 col 45 InvocationExpression "x341([d1, d2])" = { [n: number]: Base; }
+Line 338 col 45 IdentifierName "x341" = (n: { [n: number]: Base; }) => { [n: number]: Base; }
+Line 338 col 50 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 338 col 51 IdentifierName "d1" = Derived1
+Line 338 col 55 IdentifierName "d2" = Derived2
+Line 339 col 4 IdentifierName "x342" = (n: { n: Base[]; }) => { n: Base[]; }
+Line 339 col 11 ParenthesizedArrowFunctionExpression "(n: {n: Base[]; } ) => n" = (n: { n: Base[]; }) => { n: Base[]; }
+Line 339 col 12 IdentifierName "n" = { n: Base[]; }
+Line 339 col 16 IdentifierName "n" = Base[]
+Line 339 col 19 IdentifierName "Base" = Base
+Line 339 col 34 IdentifierName "n" = { n: Base[]; }
+Line 339 col 37 InvocationExpression "x342({ n: [d1, d2] })" = { n: Base[]; }
+Line 339 col 37 IdentifierName "x342" = (n: { n: Base[]; }) => { n: Base[]; }
+Line 339 col 42 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 339 col 44 IdentifierName "n" = Base[]
+Line 339 col 47 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 339 col 48 IdentifierName "d1" = Derived1
+Line 339 col 52 IdentifierName "d2" = Derived2
+Line 340 col 4 IdentifierName "x343" = (n: (s: Base[]) => any) => (s: Base[]) => any
+Line 340 col 11 ParenthesizedArrowFunctionExpression "(n: (s: Base[]) => any) => n" = (n: (s: Base[]) => any) => (s: Base[]) => any
+Line 340 col 12 IdentifierName "n" = (s: Base[]) => any
+Line 340 col 16 IdentifierName "s" = Base[]
+Line 340 col 19 IdentifierName "Base" = Base
+Line 340 col 38 IdentifierName "n" = (s: Base[]) => any
+Line 340 col 41 InvocationExpression "x343(n => { var n: Base[]; return null; })" = (s: Base[]) => any
+Line 340 col 41 IdentifierName "x343" = (n: (s: Base[]) => any) => (s: Base[]) => any
+Line 340 col 46 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 340 col 46 IdentifierName "n" = Base[]
+Line 340 col 57 IdentifierName "n" = Base[]
+Line 340 col 60 IdentifierName "Base" = Base
+Line 341 col 4 IdentifierName "x344" = (n: Genric<Base>) => Genric<Base>
+Line 341 col 11 ParenthesizedArrowFunctionExpression "(n: Genric<Base>) => n" = (n: Genric<Base>) => Genric<Base>
+Line 341 col 12 IdentifierName "n" = Genric<Base>
+Line 341 col 15 IdentifierName "Genric" = Genric<T>
+Line 341 col 22 IdentifierName "Base" = Base
+Line 341 col 32 IdentifierName "n" = Genric<Base>
+Line 341 col 35 InvocationExpression "x344({ func: n => { return [d1, d2]; } })" = Genric<Base>
+Line 341 col 35 IdentifierName "x344" = (n: Genric<Base>) => Genric<Base>
+Line 341 col 40 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 341 col 42 IdentifierName "func" = (n: Base[]) => {}[]
+Line 341 col 48 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 341 col 48 IdentifierName "n" = Base[]
+Line 341 col 62 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 341 col 63 IdentifierName "d1" = Derived1
+Line 341 col 67 IdentifierName "d2" = Derived2
+Line 342 col 4 IdentifierName "x345" = (n: () => Base[]) => void
+Line 342 col 11 FunctionExpression "function(n: () => Base[]) { }" = (n: () => Base[]) => void
+Line 342 col 20 IdentifierName "n" = () => Base[]
+Line 342 col 29 IdentifierName "Base" = Base
+Line 342 col 42 InvocationExpression "x345(() => [d1, d2])" = void
+Line 342 col 42 IdentifierName "x345" = (n: () => Base[]) => void
+Line 342 col 47 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 342 col 53 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 342 col 54 IdentifierName "d1" = Derived1
+Line 342 col 58 IdentifierName "d2" = Derived2
+Line 343 col 4 IdentifierName "x346" = (n: () => Base[]) => void
+Line 343 col 11 FunctionExpression "function(n: () => Base[]) { }" = (n: () => Base[]) => void
+Line 343 col 20 IdentifierName "n" = () => Base[]
+Line 343 col 29 IdentifierName "Base" = Base
+Line 343 col 42 InvocationExpression "x346(function() { return [d1, d2] })" = void
+Line 343 col 42 IdentifierName "x346" = (n: () => Base[]) => void
+Line 343 col 47 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 343 col 67 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 343 col 68 IdentifierName "d1" = Derived1
+Line 343 col 72 IdentifierName "d2" = Derived2
+Line 344 col 4 IdentifierName "x347" = (n: () => Base[]) => void
+Line 344 col 11 FunctionExpression "function(n: () => Base[]) { }" = (n: () => Base[]) => void
+Line 344 col 20 IdentifierName "n" = () => Base[]
+Line 344 col 29 IdentifierName "Base" = Base
+Line 344 col 42 InvocationExpression "x347(function named() { return [d1, d2] })" = void
+Line 344 col 42 IdentifierName "x347" = (n: () => Base[]) => void
+Line 344 col 47 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 344 col 56 IdentifierName "named" = () => Base[]
+Line 344 col 73 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 344 col 74 IdentifierName "d1" = Derived1
+Line 344 col 78 IdentifierName "d2" = Derived2
+Line 345 col 4 IdentifierName "x348" = (n: () => Base[]) => void
+Line 345 col 11 FunctionExpression "function(n: { (): Base[]; }) { }" = (n: () => Base[]) => void
+Line 345 col 20 IdentifierName "n" = () => Base[]
+Line 345 col 29 IdentifierName "Base" = Base
+Line 345 col 45 InvocationExpression "x348(() => [d1, d2])" = void
+Line 345 col 45 IdentifierName "x348" = (n: () => Base[]) => void
+Line 345 col 50 ParenthesizedArrowFunctionExpression "() => [d1, d2]" = () => Base[]
+Line 345 col 56 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 345 col 57 IdentifierName "d1" = Derived1
+Line 345 col 61 IdentifierName "d2" = Derived2
+Line 346 col 4 IdentifierName "x349" = (n: () => Base[]) => void
+Line 346 col 11 FunctionExpression "function(n: { (): Base[]; }) { }" = (n: () => Base[]) => void
+Line 346 col 20 IdentifierName "n" = () => Base[]
+Line 346 col 29 IdentifierName "Base" = Base
+Line 346 col 45 InvocationExpression "x349(function() { return [d1, d2] })" = void
+Line 346 col 45 IdentifierName "x349" = (n: () => Base[]) => void
+Line 346 col 50 FunctionExpression "function() { return [d1, d2] }" = () => Base[]
+Line 346 col 70 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 346 col 71 IdentifierName "d1" = Derived1
+Line 346 col 75 IdentifierName "d2" = Derived2
+Line 347 col 4 IdentifierName "x350" = (n: () => Base[]) => void
+Line 347 col 11 FunctionExpression "function(n: { (): Base[]; }) { }" = (n: () => Base[]) => void
+Line 347 col 20 IdentifierName "n" = () => Base[]
+Line 347 col 29 IdentifierName "Base" = Base
+Line 347 col 45 InvocationExpression "x350(function named() { return [d1, d2] })" = void
+Line 347 col 45 IdentifierName "x350" = (n: () => Base[]) => void
+Line 347 col 50 FunctionExpression "function named() { return [d1, d2] }" = () => Base[]
+Line 347 col 59 IdentifierName "named" = () => Base[]
+Line 347 col 76 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 347 col 77 IdentifierName "d1" = Derived1
+Line 347 col 81 IdentifierName "d2" = Derived2
+Line 348 col 4 IdentifierName "x351" = (n: Base[]) => void
+Line 348 col 11 FunctionExpression "function(n: Base[]) { }" = (n: Base[]) => void
+Line 348 col 20 IdentifierName "n" = Base[]
+Line 348 col 23 IdentifierName "Base" = Base
+Line 348 col 36 InvocationExpression "x351([d1, d2])" = void
+Line 348 col 36 IdentifierName "x351" = (n: Base[]) => void
+Line 348 col 41 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 348 col 42 IdentifierName "d1" = Derived1
+Line 348 col 46 IdentifierName "d2" = Derived2
+Line 349 col 4 IdentifierName "x352" = (n: Base[]) => void
+Line 349 col 11 FunctionExpression "function(n: Array<Base>) { }" = (n: Base[]) => void
+Line 349 col 20 IdentifierName "n" = Base[]
+Line 349 col 23 IdentifierName "Array" = Array<T>
+Line 349 col 29 IdentifierName "Base" = Base
+Line 349 col 41 InvocationExpression "x352([d1, d2])" = void
+Line 349 col 41 IdentifierName "x352" = (n: Base[]) => void
+Line 349 col 46 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 349 col 47 IdentifierName "d1" = Derived1
+Line 349 col 51 IdentifierName "d2" = Derived2
+Line 350 col 4 IdentifierName "x353" = (n: { [n: number]: Base; }) => void
+Line 350 col 11 FunctionExpression "function(n: { [n: number]: Base; }) { }" = (n: { [n: number]: Base; }) => void
+Line 350 col 20 IdentifierName "n" = { [n: number]: Base; }
+Line 350 col 26 IdentifierName "n" = number
+Line 350 col 38 IdentifierName "Base" = Base
+Line 350 col 52 InvocationExpression "x353([d1, d2])" = void
+Line 350 col 52 IdentifierName "x353" = (n: { [n: number]: Base; }) => void
+Line 350 col 57 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 350 col 58 IdentifierName "d1" = Derived1
+Line 350 col 62 IdentifierName "d2" = Derived2
+Line 351 col 4 IdentifierName "x354" = (n: { n: Base[]; }) => void
+Line 351 col 11 FunctionExpression "function(n: {n: Base[]; } ) { }" = (n: { n: Base[]; }) => void
+Line 351 col 20 IdentifierName "n" = { n: Base[]; }
+Line 351 col 24 IdentifierName "n" = Base[]
+Line 351 col 27 IdentifierName "Base" = Base
+Line 351 col 44 InvocationExpression "x354({ n: [d1, d2] })" = void
+Line 351 col 44 IdentifierName "x354" = (n: { n: Base[]; }) => void
+Line 351 col 49 ObjectLiteralExpression "{ n: [d1, d2] }" = { n: Base[]; }
+Line 351 col 51 IdentifierName "n" = Base[]
+Line 351 col 54 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 351 col 55 IdentifierName "d1" = Derived1
+Line 351 col 59 IdentifierName "d2" = Derived2
+Line 352 col 4 IdentifierName "x355" = (n: (s: Base[]) => any) => void
+Line 352 col 11 FunctionExpression "function(n: (s: Base[]) => any) { }" = (n: (s: Base[]) => any) => void
+Line 352 col 20 IdentifierName "n" = (s: Base[]) => any
+Line 352 col 24 IdentifierName "s" = Base[]
+Line 352 col 27 IdentifierName "Base" = Base
+Line 352 col 48 InvocationExpression "x355(n => { var n: Base[]; return null; })" = void
+Line 352 col 48 IdentifierName "x355" = (n: (s: Base[]) => any) => void
+Line 352 col 53 SimpleArrowFunctionExpression "n => { var n: Base[]; return null; }" = (n: Base[]) => any
+Line 352 col 53 IdentifierName "n" = Base[]
+Line 352 col 64 IdentifierName "n" = Base[]
+Line 352 col 67 IdentifierName "Base" = Base
+Line 353 col 4 IdentifierName "x356" = (n: Genric<Base>) => void
+Line 353 col 11 FunctionExpression "function(n: Genric<Base>) { }" = (n: Genric<Base>) => void
+Line 353 col 20 IdentifierName "n" = Genric<Base>
+Line 353 col 23 IdentifierName "Genric" = Genric<T>
+Line 353 col 30 IdentifierName "Base" = Base
+Line 353 col 42 InvocationExpression "x356({ func: n => { return [d1, d2]; } })" = void
+Line 353 col 42 IdentifierName "x356" = (n: Genric<Base>) => void
+Line 353 col 47 ObjectLiteralExpression "{ func: n => { return [d1, d2]; } }" = { func: (n: Base[]) => {}[]; }
+Line 353 col 49 IdentifierName "func" = (n: Base[]) => {}[]
+Line 353 col 55 SimpleArrowFunctionExpression "n => { return [d1, d2]; }" = (n: Base[]) => {}[]
+Line 353 col 55 IdentifierName "n" = Base[]
+Line 353 col 69 ArrayLiteralExpression "[d1, d2]" = {}[]
+Line 353 col 70 IdentifierName "d1" = Derived1
+Line 353 col 74 IdentifierName "d2" = Derived2

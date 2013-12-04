@@ -1,0 +1,23 @@
+=== tests/cases/compiler/library_StringSlice.ts ===
+Line 0 col 0 InvocationExpression "// String.prototype.slice can have zero, one, or two arguments
+String.prototype.slice()" = string
+Line 0 col 0 MemberAccessExpression "// String.prototype.slice can have zero, one, or two arguments
+String.prototype.slice" = (start?: number, end?: number) => string
+Line 0 col 0 MemberAccessExpression "// String.prototype.slice can have zero, one, or two arguments
+String.prototype" = String
+Line 0 col 0 IdentifierName "// String.prototype.slice can have zero, one, or two arguments
+String" = { prototype: String; fromCharCode(...codes: number[]): string; (value?: any): string; new(value?: any): String; }
+Line 1 col 7 IdentifierName "prototype" = String
+Line 1 col 17 IdentifierName "slice" = (start?: number, end?: number) => string
+Line 2 col 0 InvocationExpression "String.prototype.slice(0)" = string
+Line 2 col 0 MemberAccessExpression "String.prototype.slice" = (start?: number, end?: number) => string
+Line 2 col 0 MemberAccessExpression "String.prototype" = String
+Line 2 col 0 IdentifierName "String" = { prototype: String; fromCharCode(...codes: number[]): string; (value?: any): string; new(value?: any): String; }
+Line 2 col 7 IdentifierName "prototype" = String
+Line 2 col 17 IdentifierName "slice" = (start?: number, end?: number) => string
+Line 3 col 0 InvocationExpression "String.prototype.slice(0,1)" = string
+Line 3 col 0 MemberAccessExpression "String.prototype.slice" = (start?: number, end?: number) => string
+Line 3 col 0 MemberAccessExpression "String.prototype" = String
+Line 3 col 0 IdentifierName "String" = { prototype: String; fromCharCode(...codes: number[]): string; (value?: any): string; new(value?: any): String; }
+Line 3 col 7 IdentifierName "prototype" = String
+Line 3 col 17 IdentifierName "slice" = (start?: number, end?: number) => string

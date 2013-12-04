@@ -1,0 +1,28 @@
+typeArgumentInferenceWithConstraints.ts(9,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+typeArgumentInferenceWithConstraints.ts(11,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+typeArgumentInferenceWithConstraints.ts(15,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeArgumentInferenceWithConstraints.ts(16,1): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'U extends T'.
+typeArgumentInferenceWithConstraints.ts(17,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeArgumentInferenceWithConstraints.ts(32,34): error TS2095: Could not find symbol 'Window'.
+typeArgumentInferenceWithConstraints.ts(34,15): error TS2095: Could not find symbol 'Window'.
+typeArgumentInferenceWithConstraints.ts(39,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+typeArgumentInferenceWithConstraints.ts(41,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
+typeArgumentInferenceWithConstraints.ts(41,1): error TS2087: Could not select overload for 'call' expression.
+typeArgumentInferenceWithConstraints.ts(46,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+typeArgumentInferenceWithConstraints.ts(48,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
+typeArgumentInferenceWithConstraints.ts(48,1): error TS2087: Could not select overload for 'call' expression.
+typeArgumentInferenceWithConstraints.ts(49,1): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+typeArgumentInferenceWithConstraints.ts(53,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'A extends number'.
+typeArgumentInferenceWithConstraints.ts(55,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(n: string) => string' and '(b: number) => number' are incompatible.
+typeArgumentInferenceWithConstraints.ts(55,1): error TS2087: Could not select overload for 'call' expression.
+typeArgumentInferenceWithConstraints.ts(60,1): error TS2086: Type '{}' does not satisfy the constraint 'string' for type parameter 'B extends string'.
+typeArgumentInferenceWithConstraints.ts(66,9): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type 'typeof someGenerics7'.
+typeArgumentInferenceWithConstraints.ts(66,9): error TS2087: Could not select overload for 'call' expression.
+typeArgumentInferenceWithConstraints.ts(67,1): error TS2158: Untyped function calls may not accept type arguments.
+typeArgumentInferenceWithConstraints.ts(85,9): error TS2095: Could not find symbol 'Window'.
+typeArgumentInferenceWithConstraints.ts(87,47): error TS2095: Could not find symbol 'window'.
+typeArgumentInferenceWithConstraints.ts(89,52): error TS2095: Could not find symbol 'window'.

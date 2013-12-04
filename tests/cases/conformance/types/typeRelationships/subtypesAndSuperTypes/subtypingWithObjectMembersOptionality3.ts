@@ -3,10 +3,6 @@
 interface Base { foo: string; }
 interface Derived extends Base { bar: string; }
 
-// S is a subtype of a type T, and T is a supertype of S, if one of the following is true, where S’ denotes the apparent type (section 3.8.1) of S:
-//   - S’ and T are object types and, for each member M in T, one of the following is true:
-//      - M is an optional property and S’ contains no property of the same name as M.
-
 interface T {
     Foo?: Base;
 }
@@ -16,7 +12,7 @@ interface S extends T {
 }
 
 interface T2 {
-    1?: Base; 
+    1?: Base;
 }
 
 interface S2 extends T2 {

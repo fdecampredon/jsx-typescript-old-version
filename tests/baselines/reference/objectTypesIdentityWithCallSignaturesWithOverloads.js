@@ -27,6 +27,7 @@ var C = (function () {
 })();
 
 var a;
+
 var b = {
     foo: function (x) {
         return '';

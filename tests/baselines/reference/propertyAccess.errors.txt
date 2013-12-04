@@ -1,0 +1,17 @@
+propertyAccess.ts(9,22): error TS2095: Could not find symbol 'HTMLElement'.
+propertyAccess.ts(10,22): error TS2095: Could not find symbol 'HTMLDivElement'.
+propertyAccess.ts(37,14): error TS2094: The property 'qqq' does not exist on value of type '{ 10: string; x: string; y: number; z: { n: string; m: number; o: () => boolean; }; 'literal property': number; }'.
+propertyAccess.ts(72,10): error TS2008: Value of type '{ [n: number]: string; }' is not indexable by type 'any'.
+propertyAccess.ts(72,19): error TS2095: Could not find symbol 'window'.
+propertyAccess.ts(109,10): error TS2008: Value of type 'typeof noIndex' is not indexable by type 'any'.
+propertyAccess.ts(109,18): error TS2095: Could not find symbol 'window'.
+propertyAccess.ts(117,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'ww' must be of type 'any', but here has type 'any'.
+propertyAccess.ts(117,9): error TS2095: Could not find symbol 'HTMLDivElement'.
+propertyAccess.ts(121,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'xx' must be of type 'any', but here has type 'any'.
+propertyAccess.ts(121,9): error TS2095: Could not find symbol 'HTMLDivElement'.
+propertyAccess.ts(125,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'yy' must be of type 'any', but here has type 'any'.
+propertyAccess.ts(125,9): error TS2095: Could not find symbol 'HTMLElement'.
+propertyAccess.ts(129,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'zz' must be of type 'any', but here has type 'any'.
+propertyAccess.ts(129,9): error TS2095: Could not find symbol 'HTMLElement'.
+propertyAccess.ts(132,12): error TS2008: Value of type '{ [n: string]: any; [m: number]: any; }' is not indexable by type 'any'.
+propertyAccess.ts(132,22): error TS2095: Could not find symbol 'window'.

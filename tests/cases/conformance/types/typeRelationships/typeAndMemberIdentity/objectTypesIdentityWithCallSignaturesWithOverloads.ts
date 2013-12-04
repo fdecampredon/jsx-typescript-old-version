@@ -31,9 +31,10 @@ interface I2<T> {
 }
 
 var a: {
-    foo(x: string): string
     foo(x: number): number
+    foo(x: string): string
 }
+
 var b = {
     foo(x: any) { return <any>''; }
 };

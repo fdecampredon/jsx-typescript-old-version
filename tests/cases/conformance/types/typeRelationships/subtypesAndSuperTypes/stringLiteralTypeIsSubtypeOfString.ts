@@ -50,7 +50,7 @@ class C implements String {
     match(regexp: any): string[] { return null; }
     replace(searchValue: any, replaceValue: any): string { return null; }
     search(regexp: any): number { return null; }
-    slice(start: number, end?: number): string { return null; }
+    slice(start?: number, end?: number): string { return null; }
     split(separator: any, limit?: number): string[] { return null; }
     substring(start: number, end?: number): string { return null; }
     toLowerCase(): string { return null; }

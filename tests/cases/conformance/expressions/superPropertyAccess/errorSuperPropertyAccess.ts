@@ -50,6 +50,7 @@ class SomeBase {
 //super.publicInstanceMemberNotFunction in constructor of derived class
 //super.publicInstanceMemberNotFunction in instance member function of derived class
 //super.publicInstanceMemberNotFunction in instance member accessor(get and set) of derived class
+//super property access only available with typed this
 class SomeDerived1 extends SomeBase {
     constructor() {
         super();
@@ -67,7 +68,14 @@ class SomeDerived1 extends SomeBase {
     set a(n) {
         n = super.publicMember;
     }
-
+    fn2() {
+        function inner() {
+            super.publicFunc();
+        }
+        var x = {
+            test: function () { return super.publicFunc(); }
+        }
+    }
 }
 
 //super.privateProperty in constructor of derived class

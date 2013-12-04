@@ -228,6 +228,46 @@ module TypeScript {
         return isNameOfSomeDeclaration(ast) || isDeclarationAST(ast);
     }
 
+    export function getEnclosingParameter(ast: ISyntaxElement): ParameterSyntax {
+        var current = ast;
+        while (current) {
+            switch (current.kind()) {
+                case SyntaxKind.EqualsValueClause:
+                    if (current.parent && current.parent.kind() === SyntaxKind.Parameter) {
+                        return <ParameterSyntax>current.parent;
+                    }
+                    break;
+                case SyntaxKind.ClassDeclaration:
+                case SyntaxKind.InterfaceDeclaration:
+                case SyntaxKind.ModuleDeclaration:
+                    // exit early
+                    return null;
+            }
+            
+            current = current.parent;
+        }
+        return null;
+    }
+
+    export function getEnclosingMemberVariableDeclaration(ast: ISyntaxElement): MemberVariableDeclarationSyntax {
+        var current = ast;
+
+        while (current) {
+            switch (current.kind()) {
+                case SyntaxKind.MemberVariableDeclaration:
+                    return <MemberVariableDeclarationSyntax>current;
+                case SyntaxKind.ClassDeclaration:
+                case SyntaxKind.InterfaceDeclaration:
+                case SyntaxKind.ModuleDeclaration:
+                    // exit early
+                    return null;
+            }
+            current = current.parent;
+        }
+
+        return null;
+    }
+
     export function isNameOfFunction(ast: ISyntaxElement) {
         return ast
             && ast.parent

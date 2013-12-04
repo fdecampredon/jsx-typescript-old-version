@@ -1,23 +1,21 @@
-// all of these should be valid
-
 interface I {
     toString(): void;
 }
 
 var i: I;
 var o: Object;
-o = i;
-i = o;
+o = i; // error
+i = o; // ok
 
 class C {
     toString(): void { }
 }
 var c: C;
-o = c;
-c = o;
+o = c; // error
+c = o; // ok
 
 var a = {
     toString: () => { }
 }
-o = a;
-a = o;
+o = a; // error
+a = o; // ok
