@@ -24,7 +24,7 @@ class PositionValidatingWalker extends TypeScript.SyntaxWalker {
     private position = 0;
 
     public visitToken(token: TypeScript.ISyntaxToken): void {
-        TypeScript.Debug.assert(token.fullWidth() === 0 || this.position === token.fullStart());
+        TypeScript.Debug.assert(this.position === token.fullStart());
         this.position += token.fullWidth();
     }
 }

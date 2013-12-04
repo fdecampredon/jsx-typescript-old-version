@@ -409,10 +409,86 @@ module TypeScript.Syntax {
         public fullWidth() { return 0; }
         public width() { return 0; }
 
-        public fullStart(): number { return -1; }
-        public fullEnd(): number { return -1; }
-        public start(): number { return -1; }
-        public end(): number { return -1; }
+        private position(): number {
+            // It's hard for us to tell the position of an empty token at the eact time we create 
+            // it.  For example, we may have:
+            //
+            //      a / finally
+            //
+            // There will be a missing token detected after the forward slash, so it would be 
+            // tempting to set its position as the full-end of hte slash token. However, 
+            // immediately after that, the 'finally' token will be skipped and will be attached
+            // as skipped text to the forward slash.  This means the 'full-end' of the forward
+            // slash will change, and thus the empty token will now appear to be embedded inside
+            // another token.  This violates are rule that all tokens must only touch at the end,
+            // and makes enforcing invariants much harder.
+            //
+            // To address this we create the empty token with no known position, and then we 
+            // determine what it's position should be based on where it lies in the tree.  
+            // Specifically, we find the previous non-zero-width syntax element, and we consider
+            // the full-start of this token to be at the full-end of that element.
+
+            var previousElement = this.previousNonZeroWidthElement();
+            return previousElement === null ? 0 : previousElement.fullStart() + previousElement.fullWidth();
+        }
+
+        private previousNonZeroWidthElement(): ISyntaxElement {
+            var current: ISyntaxElement = this;
+            while (true) {
+                var parent = current.parent;
+                if (parent === null) {
+                    Debug.assert(current.kind() === SyntaxKind.SourceUnit, "We had a node without a parent that was not the root node!");
+
+                    // We walked all the way to the top, and never found a previous element.  This 
+                    // can happen with code like:
+                    //
+                    //      / b;
+                    //
+                    // We will have an empty identifier token as the first token in the tree.  In
+                    // this case, return null so that the position of the empty token will be 
+                    // considered to be 0.
+                    return null;
+                }
+
+                // Ok.  We have a parent.  First, find out which slot we're at in the parent.
+                for (var i = 0, n = parent.childCount(); i < n; i++) {
+                    if (parent.childAt(i) === current) {
+                        break;
+                    }
+                }
+
+                Debug.assert(i !== n, "Could not find current element in parent's child list!");
+
+                // Walk backward from this element, looking for a non-zero-width sibling.
+                for (var j = i - 1; j >= 0; j--) {
+                    var sibling = parent.childAt(j);
+                    if (sibling && sibling.fullWidth() > 0) {
+                        return sibling;
+                    }
+                }
+
+                // We couldn't find a non-zero-width sibling.  We were either the first element, or
+                // all preceding elements are empty.  So, move up to our parent so we we can find
+                // its preceding sibling.
+                current = current.parent;
+            }
+        }
+
+        public fullStart(): number {
+            return this.position();
+        }
+
+        public fullEnd(): number {
+            return this.position();
+        }
+
+        public start(): number {
+            return this.position();
+        }
+
+        public end(): number {
+            return this.position();
+        }
 
         public text() { return ""; }
         public fullText(): string { return ""; }

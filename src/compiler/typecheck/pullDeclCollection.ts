@@ -833,10 +833,6 @@ module TypeScript {
     }
 
     function preCollectCatchDecls(ast: CatchClauseSyntax, context: DeclCollectionContext): void {
-        if (ast.identifier.fullWidth() === 0) {
-            return;
-        }
-
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.CatchBlock;
 
