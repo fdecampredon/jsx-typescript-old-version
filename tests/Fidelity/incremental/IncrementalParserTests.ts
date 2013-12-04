@@ -1,6 +1,7 @@
 ///<reference path='..\..\..\src\Compiler\Syntax\References.ts' />
 ///<reference path='..\..\..\src\Compiler\Core\Environment.ts' />
 ///<reference path='..\..\..\src\compiler\references.ts' />
+///<reference path='..\Program.ts' />
 
 module TypeScript {
     export class SyntaxElementsCollector extends SyntaxWalker {
@@ -43,11 +44,15 @@ module TypeScript {
     // unavoidable.  If it does decrease an investigation 
     function compareTrees(oldText: IText, newText: IText, textChangeRange: TextChangeRange, reusedElements: number = -1): void {
         var oldTree = Parser.parse("", oldText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
-        var settings = ImmutableCompilationSettings.defaultSettings();
+        oldTree.sourceUnit().accept(new PositionValidatingWalker());
 
+        var settings = ImmutableCompilationSettings.defaultSettings();
+        
         var newTree = Parser.parse("", newText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
+        newTree.sourceUnit().accept(new PositionValidatingWalker());
 
         var incrementalNewTree = Parser.incrementalParse(oldTree, textChangeRange, newText);
+        incrementalNewTree.sourceUnit().accept(new PositionValidatingWalker());
 
         // We should get the same tree when doign a full or incremental parse.
         Debug.assert(newTree.structuralEquals(incrementalNewTree));
