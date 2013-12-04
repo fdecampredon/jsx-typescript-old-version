@@ -4911,10 +4911,8 @@ module TypeScript {
             this.setTypeChecked(ast, context);
             this.resolveAST(ast.block, /*isContextuallyTyped*/ false, context);
 
-            if (ast.identifier.fullWidth() > 0) {
-                var catchDecl = this.semanticInfoChain.getDeclForAST(ast);
-                this.validateVariableDeclarationGroups(catchDecl, context);
-            }
+            var catchDecl = this.semanticInfoChain.getDeclForAST(ast);
+            this.validateVariableDeclarationGroups(catchDecl, context);
         }
 
         private resolveFinallyClause(ast: FinallyClauseSyntax, context: PullTypeResolutionContext): PullSymbol {
