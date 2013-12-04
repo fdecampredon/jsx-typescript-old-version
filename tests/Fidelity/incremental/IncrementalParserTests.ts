@@ -16,6 +16,18 @@ module TypeScript {
             this.elements.push(token);
         }
 
+        public visitSyntaxList(list: ISyntaxList<ISyntaxNodeOrToken>) {
+            if (!list.isShared()) {
+                this.elements.push(list);
+            }
+        }
+
+        public visitSeparatedSyntaxList(list: ISeparatedSyntaxList<ISyntaxNodeOrToken>) {
+            if (!list.isShared()) {
+                this.elements.push(list);
+            }
+        }
+
         public static collectElements(node: SourceUnitSyntax): ISyntaxElement[] {
             var collector = new SyntaxElementsCollector();
             node.accept(collector);
@@ -46,8 +58,6 @@ module TypeScript {
         var oldTree = Parser.parse("", oldText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
         oldTree.sourceUnit().accept(new PositionValidatingWalker());
 
-        var settings = ImmutableCompilationSettings.defaultSettings();
-        
         var newTree = Parser.parse("", newText, false, new ParseOptions(LanguageVersion.EcmaScript5, true));
         newTree.sourceUnit().accept(new PositionValidatingWalker());
 
