@@ -571,19 +571,14 @@ module m3 { }\
             compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
         }
 
-        //public static testComplexEdits1() {
-        //    var source = Environment.readFile(Environment.currentDirectory() + "\\tests\\Fidelity\\incremental\\resources\\pullTypeChecker.ts");
-            
-        //    var index = source.indexOf("if (isGetter && !hasReturn) {");
-        //    index += "if (isGetter ".length;
+        public static testSlashToRegex1() {
+            var source = "while (true) /3; return;"
 
-        //    var text1 = TextFactory.createText(source);
-        //    var newTextAndChange1 = withChange(text1, index, "&& !hasReturn".length, "/*&& !hasReturn*/");
-        //    var text2 = newTextAndChange1.text;
+            var oldText = TextFactory.createText(source);
+            var index = source.length - 1;
+            var newTextAndChange = withInsert(oldText, index, "/");
 
-        //    compareTrees(text1, text2, newTextAndChange1.textChangeRange);
-
-        //    // index = 
-        //}
+            compareTrees(oldText, newTextAndChange.text, newTextAndChange.textChangeRange, -1);
+        }
     }
 }
