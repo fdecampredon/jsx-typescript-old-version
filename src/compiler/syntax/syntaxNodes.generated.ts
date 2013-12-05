@@ -4163,7 +4163,7 @@ module TypeScript {
     export class ConstructorDeclarationSyntax extends SyntaxNode implements IClassElementSyntax {
         constructor(public modifiers: ISyntaxList<ISyntaxToken>,
                     public constructorKeyword: ISyntaxToken,
-                    public parameterList: ParameterListSyntax,
+                    public callSignature: CallSignatureSyntax,
                     public block: BlockSyntax,
                     public semicolonToken: ISyntaxToken,
                     parsedInStrictMode: boolean) {
@@ -4188,7 +4188,7 @@ module TypeScript {
             switch (slot) {
                 case 0: return this.modifiers;
                 case 1: return this.constructorKeyword;
-                case 2: return this.parameterList;
+                case 2: return this.callSignature;
                 case 3: return this.block;
                 case 4: return this.semicolonToken;
                 default: throw Errors.invalidOperation();
@@ -4201,23 +4201,23 @@ module TypeScript {
 
         public update(modifiers: ISyntaxList<ISyntaxToken>,
                       constructorKeyword: ISyntaxToken,
-                      parameterList: ParameterListSyntax,
+                      callSignature: CallSignatureSyntax,
                       block: BlockSyntax,
                       semicolonToken: ISyntaxToken): ConstructorDeclarationSyntax {
-            if (this.modifiers === modifiers && this.constructorKeyword === constructorKeyword && this.parameterList === parameterList && this.block === block && this.semicolonToken === semicolonToken) {
+            if (this.modifiers === modifiers && this.constructorKeyword === constructorKeyword && this.callSignature === callSignature && this.block === block && this.semicolonToken === semicolonToken) {
                 return this;
             }
 
-            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, parameterList, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
+            return new ConstructorDeclarationSyntax(modifiers, constructorKeyword, callSignature, block, semicolonToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
         }
 
         public static create(constructorKeyword: ISyntaxToken,
-                             parameterList: ParameterListSyntax): ConstructorDeclarationSyntax {
-            return new ConstructorDeclarationSyntax(Syntax.emptyList<ISyntaxToken>(), constructorKeyword, parameterList, null, null, /*parsedInStrictMode:*/ false);
+                             callSignature: CallSignatureSyntax): ConstructorDeclarationSyntax {
+            return new ConstructorDeclarationSyntax(Syntax.emptyList<ISyntaxToken>(), constructorKeyword, callSignature, null, null, /*parsedInStrictMode:*/ false);
         }
 
         public static create1(): ConstructorDeclarationSyntax {
-            return new ConstructorDeclarationSyntax(Syntax.emptyList<ISyntaxToken>(), Syntax.token(SyntaxKind.ConstructorKeyword), ParameterListSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
+            return new ConstructorDeclarationSyntax(Syntax.emptyList<ISyntaxToken>(), Syntax.token(SyntaxKind.ConstructorKeyword), CallSignatureSyntax.create1(), null, null, /*parsedInStrictMode:*/ false);
         }
 
         public withLeadingTrivia(trivia: ISyntaxTriviaList): ConstructorDeclarationSyntax {
@@ -4229,7 +4229,7 @@ module TypeScript {
         }
 
         public withModifiers(modifiers: ISyntaxList<ISyntaxToken>): ConstructorDeclarationSyntax {
-            return this.update(modifiers, this.constructorKeyword, this.parameterList, this.block, this.semicolonToken);
+            return this.update(modifiers, this.constructorKeyword, this.callSignature, this.block, this.semicolonToken);
         }
 
         public withModifier(modifier: ISyntaxToken): ConstructorDeclarationSyntax {
@@ -4237,19 +4237,19 @@ module TypeScript {
         }
 
         public withConstructorKeyword(constructorKeyword: ISyntaxToken): ConstructorDeclarationSyntax {
-            return this.update(this.modifiers, constructorKeyword, this.parameterList, this.block, this.semicolonToken);
+            return this.update(this.modifiers, constructorKeyword, this.callSignature, this.block, this.semicolonToken);
         }
 
-        public withParameterList(parameterList: ParameterListSyntax): ConstructorDeclarationSyntax {
-            return this.update(this.modifiers, this.constructorKeyword, parameterList, this.block, this.semicolonToken);
+        public withCallSignature(callSignature: CallSignatureSyntax): ConstructorDeclarationSyntax {
+            return this.update(this.modifiers, this.constructorKeyword, callSignature, this.block, this.semicolonToken);
         }
 
         public withBlock(block: BlockSyntax): ConstructorDeclarationSyntax {
-            return this.update(this.modifiers, this.constructorKeyword, this.parameterList, block, this.semicolonToken);
+            return this.update(this.modifiers, this.constructorKeyword, this.callSignature, block, this.semicolonToken);
         }
 
         public withSemicolonToken(semicolonToken: ISyntaxToken): ConstructorDeclarationSyntax {
-            return this.update(this.modifiers, this.constructorKeyword, this.parameterList, this.block, semicolonToken);
+            return this.update(this.modifiers, this.constructorKeyword, this.callSignature, this.block, semicolonToken);
         }
 
         public isTypeScriptSpecific(): boolean {

@@ -89,6 +89,8 @@ module TypeScript {
         _0_modifier_cannot_appear_on_a_constructor_declaration: "'{0}' modifier cannot appear on a constructor declaration.",
         _0_modifier_cannot_appear_on_a_parameter: "'{0}' modifier cannot appear on a parameter.",
         Only_a_single_variable_declaration_is_allowed_in_a_for_in_statement: "Only a single variable declaration is allowed in a 'for...in' statement.",
+        Type_parameters_cannot_appear_on_a_constructor_declaration: "Type parameters cannot appear on a constructor declaration.",
+        Type_annotation_cannot_appear_on_a_constructor_declaration: "Type annotation cannot appear on a constructor declaration.",
         Duplicate_identifier_0: "Duplicate identifier '{0}'.",
         The_name_0_does_not_exist_in_the_current_scope: "The name '{0}' does not exist in the current scope.",
         The_name_0_does_not_refer_to_a_value: "The name '{0}' does not refer to a value.",

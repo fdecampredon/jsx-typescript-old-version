@@ -228,7 +228,7 @@ module TypeScript {
         return isNameOfSomeDeclaration(ast) || isDeclarationAST(ast);
     }
 
-    export function getEnclosingParameter(ast: ISyntaxElement): ParameterSyntax {
+    export function getEnclosingParameterForInitializer(ast: ISyntaxElement): ParameterSyntax {
         var current = ast;
         while (current) {
             switch (current.kind()) {
@@ -586,7 +586,7 @@ module TypeScript {
         if (ast) {
             switch (ast.kind()) {
                 case SyntaxKind.ConstructorDeclaration:
-                    return (<ConstructorDeclarationSyntax>ast).parameterList;
+                    return getParameterList((<ConstructorDeclarationSyntax>ast).callSignature);
                 case SyntaxKind.FunctionDeclaration:
                     return getParameterList((<FunctionDeclarationSyntax>ast).callSignature);
                 case SyntaxKind.ParenthesizedArrowFunctionExpression:

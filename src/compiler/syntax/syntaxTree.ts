@@ -204,12 +204,14 @@ module TypeScript {
                     return true;
                 }
 
-                if (!this.inAmbientDeclaration && this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.parameterList === parameterList) {
-                    this.pushDiagnostic(modifier, DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
+                if (!this.inAmbientDeclaration && this.currentConstructor && !this.currentConstructor.block && this.currentConstructor.callSignature.parameterList === parameterList) {
+                    this.pushDiagnostic(modifier,
+                        DiagnosticCode.Parameter_property_declarations_cannot_be_used_in_a_constructor_overload);
                     return true;
                 }
-                else if (this.inAmbientDeclaration || this.currentConstructor === null || this.currentConstructor.parameterList !== parameterList) {
-                    this.pushDiagnostic(modifier, DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_a_non_ambient_constructor_declaration);
+                else if (this.inAmbientDeclaration || this.currentConstructor === null || this.currentConstructor.callSignature.parameterList !== parameterList) {
+                    this.pushDiagnostic(modifier,
+                        DiagnosticCode.Parameter_property_declarations_can_only_be_used_in_a_non_ambient_constructor_declaration);
                     return true;
                 }
             }
@@ -1319,7 +1321,9 @@ module TypeScript {
 
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): void {
             if (this.checkClassElementModifiers(node.modifiers) ||
-                this.checkConstructorModifiers(node.modifiers)) {
+                this.checkConstructorModifiers(node.modifiers) ||
+                this.checkConstructorTypeParameterList(node) ||
+                this.checkConstructorTypeAnnotation(node)) {
 
                 return;
             }
@@ -1337,6 +1341,24 @@ module TypeScript {
                     this.pushDiagnostic(child, DiagnosticCode._0_modifier_cannot_appear_on_a_constructor_declaration, [SyntaxFacts.getText(child.kind())]);
                     return true;
                 }
+            }
+
+            return false;
+        }
+
+        private checkConstructorTypeParameterList(node: ConstructorDeclarationSyntax): boolean {
+            if (node.callSignature.typeParameterList) {
+                this.pushDiagnostic(node.callSignature.typeParameterList, DiagnosticCode.Type_parameters_cannot_appear_on_a_constructor_declaration);
+                return true;
+            }
+
+            return false;
+        }
+
+        private checkConstructorTypeAnnotation(node: ConstructorDeclarationSyntax): boolean {
+            if (node.callSignature.typeAnnotation) {
+                this.pushDiagnostic(node.callSignature.typeAnnotation, DiagnosticCode.Type_annotation_cannot_appear_on_a_constructor_declaration);
+                return true;
             }
 
             return false;

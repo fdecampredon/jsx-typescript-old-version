@@ -129,15 +129,21 @@
                                 }
                             ]
                         },
+<<<<<<< HEAD
                         "parameterList": {
                             "kind": "ParameterList",
                             "fullStart": 30,
                             "fullEnd": 39,
                             "start": 30,
                             "end": 38,
+=======
+                        "callSignature": {
+                            "kind": "CallSignature",
+>>>>>>> develop
                             "fullWidth": 9,
                             "width": 8,
                             "isIncrementallyUnusable": true,
+<<<<<<< HEAD
                             "openParenToken": {
                                 "kind": "OpenParenToken",
                                 "fullStart": 30,
@@ -193,8 +199,49 @@
                                         "fullStart": 38,
                                         "fullEnd": 39,
                                         "text": " "
+=======
+                            "parameterList": {
+                                "kind": "ParameterList",
+                                "fullWidth": 9,
+                                "isIncrementallyUnusable": true,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [
+                                    {
+                                        "kind": "Parameter",
+                                        "fullWidth": 6,
+                                        "isIncrementallyUnusable": true,
+                                        "modifiers": [],
+                                        "identifier": {
+                                            "kind": "IdentifierName",
+                                            "width": 6,
+                                            "text": "static",
+                                            "value": "static",
+                                            "valueText": "static"
+                                        }
+>>>>>>> develop
                                     }
-                                ]
+                                ],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "width": 1,
+                                    "fullWidth": 2,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "text": " "
+                                        }
+                                    ]
+                                }
                             }
                         },
                         "block": {

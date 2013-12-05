@@ -619,15 +619,15 @@ module TypeScript.Emitter1 {
             var identifier = this.withNoTrivia(classDeclaration.identifier);
 
             var constructorIndentationColumn = this.columnForStartOfToken(constructorDeclaration.firstToken());
-            var originalParameterListindentation = this.columnForStartOfToken(constructorDeclaration.parameterList.firstToken());
+            var originalParameterListindentation = this.columnForStartOfToken(constructorDeclaration.callSignature.firstToken());
 
             // The original indent + "function" + <space> + "ClassName"
             var newParameterListIndentation =
                 constructorIndentationColumn + SyntaxFacts.getText(SyntaxKind.FunctionKeyword).length + 1 + identifier.width();
 
-            var parameterList = constructorDeclaration.parameterList.accept(this);
-            parameterList = this.changeIndentation(
-                parameterList, /*changeFirstToken:*/ false, newParameterListIndentation - originalParameterListindentation);
+            var callSignature = constructorDeclaration.callSignature.accept(this);
+            callSignature= this.changeIndentation(
+                callSignature, /*changeFirstToken:*/ false, newParameterListIndentation - originalParameterListindentation);
 
             var block = constructorDeclaration.block;
             var allStatements = <SyntaxNode[]>block.statements.toArray();
@@ -643,7 +643,7 @@ module TypeScript.Emitter1 {
             }
 
             var parameterPropertyAssignments = <ExpressionStatementSyntax[]>ArrayUtilities.select(
-                ArrayUtilities.where(<ParameterSyntax[]>constructorDeclaration.parameterList.parameters.toNonSeparatorArray(), p => p.modifiers.childCount() > 0),
+                ArrayUtilities.where(<ParameterSyntax[]>constructorDeclaration.callSignature.parameterList.parameters.toNonSeparatorArray(), p => p.modifiers.childCount() > 0),
                 p => this.generatePropertyAssignmentStatement(p));
 
             for (i = parameterPropertyAssignments.length - 1; i >= 0; i--) {
@@ -662,7 +662,7 @@ module TypeScript.Emitter1 {
             }
 
             var defaultValueAssignments = <IfStatementSyntax[]>ArrayUtilities.select(
-                EmitterImpl.parameterListDefaultParameters(constructorDeclaration.parameterList),
+                EmitterImpl.parameterListDefaultParameters(constructorDeclaration.callSignature.parameterList),
                 p => this.generateDefaultValueAssignmentStatement(p));
 
             for (i = defaultValueAssignments.length - 1; i >= 0; i--) {
@@ -673,9 +673,8 @@ module TypeScript.Emitter1 {
             // function C(...) { ... }
             return FunctionDeclarationSyntax.create(
                 Syntax.token(SyntaxKind.FunctionKeyword).withTrailingTrivia(this.space),
-                identifier,
-                CallSignatureSyntax.create(parameterList))
-                .withBlock(block.withStatements(Syntax.list(normalStatements))).withLeadingTrivia(constructorDeclaration.leadingTrivia());
+                identifier, callSignature)
+                    .withBlock(block.withStatements(Syntax.list(normalStatements))).withLeadingTrivia(constructorDeclaration.leadingTrivia());
         }
 
         private convertMemberFunctionDeclaration(classDeclaration: ClassDeclarationSyntax,

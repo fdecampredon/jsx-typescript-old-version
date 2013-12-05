@@ -374,7 +374,7 @@ module TypeScript {
         public visitConstructorDeclaration(node: ConstructorDeclarationSyntax): void {
             this.visitList(node.modifiers);
             this.visitToken(node.constructorKeyword);
-            this.visitNode(node.parameterList);
+            this.visitNode(node.callSignature);
             this.visitOptionalNode(node.block);
             this.visitOptionalToken(node.semicolonToken);
         }

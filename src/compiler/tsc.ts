@@ -441,13 +441,14 @@ module TypeScript {
 
             this.inputFiles.push.apply(this.inputFiles, opts.unnamed);
 
-            // If no source files provided to compiler - print usage information
-            if (this.inputFiles.length === 0 || needsHelp) {
-                opts.printUsage();
+            if (shouldPrintVersionOnly) {
+                opts.printVersion();
                 return false;
             }
-            else if (shouldPrintVersionOnly) {
-                opts.printVersion();
+            // If no source files provided to compiler - print usage information
+            else if (this.inputFiles.length === 0 || needsHelp) {
+                opts.printUsage();
+                return false;
             }
 
             return !this.hasErrors;

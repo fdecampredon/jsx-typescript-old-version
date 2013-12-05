@@ -80,7 +80,7 @@ var bigObject = {
 
 var bigClass = (function () {
     function bigClass() {
-        this.constructor = 0;
+        this["constructor"] = 0;
         this.any = 0;
         this.boolean = 0;
         this.implements = 0;

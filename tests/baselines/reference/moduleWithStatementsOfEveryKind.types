@@ -1,0 +1,81 @@
+=== tests/cases/compiler/moduleWithStatementsOfEveryKind.ts ===
+Line 0 col 7 IdentifierName "A" = A
+Line 1 col 10 IdentifierName "A" = A.A
+Line 1 col 14 IdentifierName "s" = string
+Line 2 col 10 IdentifierName "AA" = A.AA<T>
+Line 2 col 13 IdentifierName "T" = T
+Line 2 col 18 IdentifierName "s" = T
+Line 2 col 21 IdentifierName "T" = T
+Line 3 col 14 IdentifierName "I" = A.I
+Line 3 col 18 IdentifierName "id" = number
+Line 5 col 10 IdentifierName "B" = A.B
+Line 5 col 20 IdentifierName "AA" = A.AA<T>
+Line 5 col 42 IdentifierName "I" = A.I
+Line 5 col 46 IdentifierName "id" = number
+Line 6 col 10 IdentifierName "BB" = A.BB<T>
+Line 6 col 13 IdentifierName "T" = T
+Line 6 col 24 IdentifierName "A" = A.A
+Line 7 col 0 IdentifierName "id" = number
+Line 10 col 11 IdentifierName "Module" = A.Module
+Line 11 col 14 IdentifierName "A" = A.Module.A
+Line 11 col 18 IdentifierName "s" = string
+Line 13 col 9 IdentifierName "Color" = A.Color
+Line 13 col 17 IdentifierName "Blue" = A.Color
+Line 13 col 23 IdentifierName "Red" = A.Color
+Line 14 col 8 IdentifierName "x" = number
+Line 15 col 13 IdentifierName "F" = typeof A.F
+Line 15 col 15 IdentifierName "s" = string
+Line 18 col 8 IdentifierName "array" = A.I[]
+Line 18 col 15 IdentifierName "I" = A.I
+Line 19 col 8 IdentifierName "fn" = (s: string) => string
+Line 19 col 13 ParenthesizedArrowFunctionExpression "(s: string) => {
+        return 'hello ' + s;
+    }" = (s: string) => string
+Line 19 col 14 IdentifierName "s" = string
+Line 20 col 15 AddExpression "'hello ' + s" = string
+Line 20 col 26 IdentifierName "s" = string
+Line 22 col 8 IdentifierName "ol" = { s: string; id: number; isvalid: boolean; }
+Line 22 col 13 ObjectLiteralExpression "{ s: 'hello', id: 2, isvalid: true }" = { s: string; id: number; isvalid: boolean; }
+Line 22 col 15 IdentifierName "s" = string
+Line 22 col 27 IdentifierName "id" = number
+Line 22 col 34 IdentifierName "isvalid" = boolean
+Line 25 col 7 IdentifierName "Y" = Y
+Line 26 col 17 IdentifierName "A" = Y.A
+Line 26 col 21 IdentifierName "s" = string
+Line 27 col 17 IdentifierName "AA" = Y.AA<T>
+Line 27 col 20 IdentifierName "T" = T
+Line 27 col 25 IdentifierName "s" = T
+Line 27 col 28 IdentifierName "T" = T
+Line 28 col 21 IdentifierName "I" = Y.I
+Line 28 col 25 IdentifierName "id" = number
+Line 30 col 17 IdentifierName "B" = Y.B
+Line 30 col 27 IdentifierName "AA" = Y.AA<T>
+Line 30 col 49 IdentifierName "I" = Y.I
+Line 30 col 53 IdentifierName "id" = number
+Line 31 col 17 IdentifierName "BB" = Y.BB<T>
+Line 31 col 20 IdentifierName "T" = T
+Line 31 col 31 IdentifierName "A" = Y.A
+Line 32 col 0 IdentifierName "id" = number
+Line 35 col 18 IdentifierName "Module" = Y.Module
+Line 36 col 14 IdentifierName "A" = Y.Module.A
+Line 36 col 18 IdentifierName "s" = string
+Line 38 col 16 IdentifierName "Color" = Y.Color
+Line 38 col 24 IdentifierName "Blue" = Y.Color
+Line 38 col 30 IdentifierName "Red" = Y.Color
+Line 39 col 15 IdentifierName "x" = number
+Line 40 col 20 IdentifierName "F" = typeof Y.F
+Line 40 col 22 IdentifierName "s" = string
+Line 43 col 15 IdentifierName "array" = Y.I[]
+Line 43 col 22 IdentifierName "I" = Y.I
+Line 44 col 15 IdentifierName "fn" = (s: string) => string
+Line 44 col 20 ParenthesizedArrowFunctionExpression "(s: string) => {
+        return 'hello ' + s;
+    }" = (s: string) => string
+Line 44 col 21 IdentifierName "s" = string
+Line 45 col 15 AddExpression "'hello ' + s" = string
+Line 45 col 26 IdentifierName "s" = string
+Line 47 col 15 IdentifierName "ol" = { s: string; id: number; isvalid: boolean; }
+Line 47 col 20 ObjectLiteralExpression "{ s: 'hello', id: 2, isvalid: true }" = { s: string; id: number; isvalid: boolean; }
+Line 47 col 22 IdentifierName "s" = string
+Line 47 col 34 IdentifierName "id" = number
+Line 47 col 41 IdentifierName "isvalid" = boolean

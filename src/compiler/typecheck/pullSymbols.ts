@@ -2925,6 +2925,7 @@ module TypeScript {
         private _isUsedAsValue = false;
         private _typeUsedExternally = false;
         private retrievingExportAssignment = false;
+        private contingentValueSymbols: PullTypeAliasSymbol[] = null;
 
         constructor(name: string) {
             super(name, PullElementKind.TypeAlias);
@@ -2944,17 +2945,23 @@ module TypeScript {
             this._typeUsedExternally = value;
         }
 
+        public addContingentValueSymbol(contingentValueSymbol: PullTypeAliasSymbol) {
+            if (!this.contingentValueSymbols) {
+                this.contingentValueSymbols = [contingentValueSymbol];
+            }
+            else {
+                this.contingentValueSymbols.push(contingentValueSymbol);
+            }
+        }
+
         public setIsUsedAsValue(value: boolean): void {
             this._isUsedAsValue = value;
 
-            // Set the alias as used as value if this alias comes from the another alias
-            this._resolveDeclaredSymbol();
-            var resolver = this._getResolver();
-            var importDeclStatement = <ImportDeclarationSyntax>resolver.semanticInfoChain.getASTForDecl(this.getDeclarations()[0]);
-
-            var aliasSymbol = <PullTypeAliasSymbol>resolver.semanticInfoChain.getAliasSymbolForAST(importDeclStatement.moduleReference);
-            if (aliasSymbol) {
-                aliasSymbol.setIsUsedAsValue(value);
+            // Set other aliases as used - this would happen if this alias comes from the another alias
+            if (this.contingentValueSymbols && this.contingentValueSymbols.length > 0) {
+                for (var i = 0, len = this.contingentValueSymbols.length; i < len; i++) {
+                    this.contingentValueSymbols[i].setIsUsedAsValue(value);
+                }
             }
         }
 

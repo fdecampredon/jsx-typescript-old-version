@@ -16,10 +16,6 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export interface IIndexable<T> {
-        [s: string]: T;
-    }
-
     var proto = "__proto__"
 
     class BlockIntrinsics<T> {

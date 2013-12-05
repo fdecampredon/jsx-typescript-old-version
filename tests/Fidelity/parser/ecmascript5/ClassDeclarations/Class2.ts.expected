@@ -226,6 +226,7 @@
                                 }
                             ]
                         },
+<<<<<<< HEAD
                         "parameterList": {
                             "kind": "ParameterList",
                             "fullStart": 77,
@@ -330,9 +331,93 @@
                                             "text": "ILogger",
                                             "value": "ILogger",
                                             "valueText": "ILogger"
+=======
+                        "callSignature": {
+                            "kind": "CallSignature",
+                            "fullWidth": 25,
+                            "parameterList": {
+                                "kind": "ParameterList",
+                                "fullWidth": 25,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [
+                                    {
+                                        "kind": "Parameter",
+                                        "fullWidth": 22,
+                                        "modifiers": [
+                                            {
+                                                "kind": "PublicKeyword",
+                                                "width": 6,
+                                                "fullWidth": 7,
+                                                "text": "public",
+                                                "value": "public",
+                                                "valueText": "public",
+                                                "hasTrailingTrivia": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "WhitespaceTrivia",
+                                                        "text": " "
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "identifier": {
+                                            "kind": "IdentifierName",
+                                            "width": 6,
+                                            "text": "logger",
+                                            "value": "logger",
+                                            "valueText": "logger"
+                                        },
+                                        "typeAnnotation": {
+                                            "kind": "TypeAnnotation",
+                                            "fullWidth": 9,
+                                            "colonToken": {
+                                                "kind": "ColonToken",
+                                                "width": 1,
+                                                "fullWidth": 2,
+                                                "text": ":",
+                                                "value": ":",
+                                                "valueText": ":",
+                                                "hasTrailingTrivia": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "WhitespaceTrivia",
+                                                        "text": " "
+                                                    }
+                                                ]
+                                            },
+                                            "type": {
+                                                "kind": "IdentifierName",
+                                                "width": 7,
+                                                "text": "ILogger",
+                                                "value": "ILogger",
+                                                "valueText": "ILogger"
+                                            }
+>>>>>>> develop
                                         }
                                     }
+                                ],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "width": 1,
+                                    "fullWidth": 2,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")",
+                                    "hasTrailingTrivia": true,
+                                    "trailingTrivia": [
+                                        {
+                                            "kind": "WhitespaceTrivia",
+                                            "text": " "
+                                        }
+                                    ]
                                 }
+<<<<<<< HEAD
                             ],
                             "closeParenToken": {
                                 "kind": "CloseParenToken",
@@ -354,6 +439,8 @@
                                         "text": " "
                                     }
                                 ]
+=======
+>>>>>>> develop
                             }
                         },
                         "block": {

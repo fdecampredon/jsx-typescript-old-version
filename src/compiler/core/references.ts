@@ -14,6 +14,7 @@
 ///<reference path='hash.ts' />
 ///<reference path='hashTable.ts' />
 ///<reference path='environment.ts' />
+///<reference path='indexable.ts' />
 ///<reference path='integerUtilities.ts' />
 ///<reference path='iterator.ts' />
 ///<reference path='lineAndCharacter.ts' />

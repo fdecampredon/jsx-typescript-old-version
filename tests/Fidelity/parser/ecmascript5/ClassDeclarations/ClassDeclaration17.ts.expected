@@ -588,6 +588,7 @@
                                 }
                             ]
                         },
+<<<<<<< HEAD
                         "parameterList": {
                             "kind": "ParameterList",
                             "fullStart": 123,
@@ -670,9 +671,69 @@
                                             "text": "any",
                                             "value": "any",
                                             "valueText": "any"
+=======
+                        "callSignature": {
+                            "kind": "CallSignature",
+                            "fullWidth": 8,
+                            "parameterList": {
+                                "kind": "ParameterList",
+                                "fullWidth": 8,
+                                "openParenToken": {
+                                    "kind": "OpenParenToken",
+                                    "width": 1,
+                                    "text": "(",
+                                    "value": "(",
+                                    "valueText": "("
+                                },
+                                "parameters": [
+                                    {
+                                        "kind": "Parameter",
+                                        "fullWidth": 6,
+                                        "modifiers": [],
+                                        "identifier": {
+                                            "kind": "IdentifierName",
+                                            "width": 1,
+                                            "text": "o",
+                                            "value": "o",
+                                            "valueText": "o"
+                                        },
+                                        "typeAnnotation": {
+                                            "kind": "TypeAnnotation",
+                                            "fullWidth": 5,
+                                            "colonToken": {
+                                                "kind": "ColonToken",
+                                                "width": 1,
+                                                "fullWidth": 2,
+                                                "text": ":",
+                                                "value": ":",
+                                                "valueText": ":",
+                                                "hasTrailingTrivia": true,
+                                                "trailingTrivia": [
+                                                    {
+                                                        "kind": "WhitespaceTrivia",
+                                                        "text": " "
+                                                    }
+                                                ]
+                                            },
+                                            "type": {
+                                                "kind": "AnyKeyword",
+                                                "width": 3,
+                                                "text": "any",
+                                                "value": "any",
+                                                "valueText": "any"
+                                            }
+>>>>>>> develop
                                         }
                                     }
+                                ],
+                                "closeParenToken": {
+                                    "kind": "CloseParenToken",
+                                    "width": 1,
+                                    "text": ")",
+                                    "value": ")",
+                                    "valueText": ")"
                                 }
+<<<<<<< HEAD
                             ],
                             "closeParenToken": {
                                 "kind": "CloseParenToken",
@@ -685,6 +746,8 @@
                                 "text": ")",
                                 "value": ")",
                                 "valueText": ")"
+=======
+>>>>>>> develop
                             }
                         },
                         "semicolonToken": {

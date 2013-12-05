@@ -2212,11 +2212,13 @@ module TypeScript.Parser {
         }
 
         private isConstructorDeclaration(): boolean {
-            // Note: we need to look for 'constructor(' because 'public constructor' is a legal
-            // variable name.
+            // Note: we deviate slightly from the spec here.  If we see 'constructor' then we 
+            // assume this is a constructor.  That means, if a user writes "public constructor;"
+            // it won't be viewed as a member.  As a workaround, they can simply write:
+            //      public 'constructor';
+
             var index = this.modifierCount();
-            return this.peekToken(index).tokenKind === SyntaxKind.ConstructorKeyword &&
-                this.peekToken(index + 1).tokenKind === SyntaxKind.OpenParenToken;
+            return this.peekToken(index).tokenKind === SyntaxKind.ConstructorKeyword;
         }
 
         private parseConstructorDeclaration(): ConstructorDeclarationSyntax {
@@ -2224,7 +2226,7 @@ module TypeScript.Parser {
 
             var modifiers = this.parseModifiers();
             var constructorKeyword = this.eatKeyword(SyntaxKind.ConstructorKeyword);
-            var parameterList = this.parseParameterList();
+            var callSignature = this.parseCallSignature(/*requireCompleteTypeParameterList:*/ false);
 
             var semicolonToken: ISyntaxToken = null;
             var block: BlockSyntax = null;
@@ -2236,7 +2238,7 @@ module TypeScript.Parser {
                 semicolonToken = this.eatExplicitOrAutomaticSemicolon(/*allowWithoutNewline:*/ false);
             }
 
-            return this.factory.constructorDeclaration(modifiers, constructorKeyword, parameterList, block, semicolonToken);
+            return this.factory.constructorDeclaration(modifiers, constructorKeyword, callSignature, block, semicolonToken);
         }
 
         private isMemberFunctionDeclaration(inErrorRecovery: boolean): boolean {

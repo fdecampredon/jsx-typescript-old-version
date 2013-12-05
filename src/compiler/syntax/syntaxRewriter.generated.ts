@@ -434,7 +434,7 @@ module TypeScript {
             return node.update(
                 this.visitList(node.modifiers),
                 this.visitToken(node.constructorKeyword),
-                <ParameterListSyntax>this.visitNode(node.parameterList),
+                <CallSignatureSyntax>this.visitNode(node.callSignature),
                 node.block === null ? null : <BlockSyntax>this.visitNode(node.block),
                 node.semicolonToken === null ? null : this.visitToken(node.semicolonToken));
         }

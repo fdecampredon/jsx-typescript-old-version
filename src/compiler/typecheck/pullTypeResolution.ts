@@ -1659,6 +1659,8 @@ module TypeScript {
                         this.semanticInfoChain.setSymbolForAST(moduleNameExpr, moduleSymbol);
                         if (resolvedModuleNameSymbol.isAlias()) {
                             this.semanticInfoChain.setAliasSymbolForAST(moduleNameExpr, <PullTypeAliasSymbol>resolvedModuleNameSymbol);
+                            var importDeclSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
+                            importDeclSymbol.addContingentValueSymbol(<PullTypeAliasSymbol>resolvedModuleNameSymbol);
                         }
                     }
                     else {
@@ -1721,9 +1723,6 @@ module TypeScript {
                         importDeclSymbol.setAssignedTypeSymbol(identifierResolution.typeSymbol);
                         importDeclSymbol.setAssignedContainerSymbol(identifierResolution.containerSymbol);
                         this.semanticInfoChain.setAliasSymbolForAST(moduleReference, identifierResolution.aliasSymbol);
-                        if (identifierResolution.valueSymbol) {
-                            importDeclSymbol.setIsUsedAsValue(true);
-                        }
                         return null;
                     }
                 }
@@ -1755,12 +1754,7 @@ module TypeScript {
                 // dynamic module name (string literal)
                 var modPath = (<ExternalModuleReferenceSyntax>importStatementAST.moduleReference).stringLiteral.valueText();
                 var declPath = enclosingDecl.getParentPath();
-                
-                // SPEC: November 18, 2013 section 10.3 -
-                //  - An EntityName consisting of more than one identifier is resolved as 
-                //     a ModuleName followed by an identifier that names one or more exported entities in the given module.
-                //     The resulting local alias has all the meanings and classifications of the referenced entity or entities. 
-                //     (As many as three distinct meanings are possible for an entity name—namespace, type, and member.)
+
                 aliasedType = this.resolveExternalModuleReference(modPath, importDecl.fileName());
 
                 if (!aliasedType) {
@@ -2220,7 +2214,7 @@ module TypeScript {
                 var constructorDeclaration = <ConstructorDeclarationSyntax>enclosingAST;
                  return !hasFlag(someFunctionDecl.getParentDecl().flags, PullElementFlags.Ambient)
                 && constructorDeclaration.block
-                && lastParameterIsRest(constructorDeclaration.parameterList);
+                && lastParameterIsRest(constructorDeclaration.callSignature.parameterList);
             }
             else if (nodeType === SyntaxKind.ParenthesizedArrowFunctionExpression) {
                 var arrowFunctionExpression = <ParenthesizedArrowFunctionExpressionSyntax>enclosingAST;
@@ -2348,6 +2342,7 @@ module TypeScript {
                 }
             }
 
+            // Unwrap an alias type to its true type.
             if (type && type.isAlias()) {
                 aliasType = <PullTypeAliasSymbol>type;
                 type = aliasType.getExportAssignedTypeSymbol();
@@ -2461,7 +2456,8 @@ module TypeScript {
             }
             else if (term.kind() === SyntaxKind.ArrayType) {
                 var arrayType = <ArrayTypeSyntax>term;
-                var underlying = this.computeTypeReferenceSymbol(arrayType.type, context);
+                var underlying = this.resolveTypeReference(arrayType.type, context);
+
                 var arraySymbol: PullTypeSymbol = underlying.getArrayType();
 
                 // otherwise, create a new array symbol
@@ -3246,10 +3242,8 @@ module TypeScript {
             var funcDecl = this.semanticInfoChain.getDeclForAST(funcDeclAST);
 
             // resolve parameter type annotations as necessary
-            if (funcDeclAST.parameterList) {
-                for (var i = 0; i < funcDeclAST.parameterList.parameters.nonSeparatorCount(); i++) {
-                    this.resolveAST(funcDeclAST.parameterList.parameters.nonSeparatorAt(i), /*isContextuallyTyped:*/ false, context);
-                }
+            for (var i = 0; i < funcDeclAST.callSignature.parameterList.parameters.nonSeparatorCount(); i++) {
+                this.resolveAST(funcDeclAST.callSignature.parameterList.parameters.nonSeparatorAt(i), /*isContextuallyTyped:*/ false, context);
             }
 
             this.resolveAST(funcDeclAST.block, false, context);
@@ -3275,7 +3269,7 @@ module TypeScript {
             this.validateVariableDeclarationGroups(funcDecl, context);
 
             this.checkFunctionTypePrivacy(
-                funcDeclAST, /*isStatic:*/ false, null, Parameters.fromParameterList(funcDeclAST.parameterList), null, funcDeclAST.block, context);
+                funcDeclAST, /*isStatic:*/ false, null, Parameters.fromParameterList(funcDeclAST.callSignature.parameterList), null, funcDeclAST.block, context);
 
             this.typeCheckCallBacks.push(context => {
                 // Function or constructor
@@ -3607,19 +3601,17 @@ module TypeScript {
 
                 // resolve parameter type annotations as necessary
 
-                if (funcDeclAST.parameterList) {
-                    var prevInTypeCheck = context.inTypeCheck;
+                var prevInTypeCheck = context.inTypeCheck;
 
-                    // TODO: why are we getting ourselves out of typecheck here?
-                    context.inTypeCheck = false;
+                // TODO: why are we getting ourselves out of typecheck here?
+                context.inTypeCheck = false;
 
-                    for (var i = 0; i < funcDeclAST.parameterList.parameters.nonSeparatorCount(); i++) {
-                        // TODO: why are we calling resolveParameter instead of resolveAST.
-                        this.resolveParameter(funcDeclAST.parameterList.parameters.nonSeparatorAt(i), context);
-                    }
-
-                    context.inTypeCheck = prevInTypeCheck;
+                for (var i = 0; i < funcDeclAST.callSignature.parameterList.parameters.nonSeparatorCount(); i++) {
+                    // TODO: why are we calling resolveParameter instead of resolveAST.
+                    this.resolveParameter(funcDeclAST.callSignature.parameterList.parameters.nonSeparatorAt(i), context);
                 }
+
+                context.inTypeCheck = prevInTypeCheck;
 
                 if (signature.isGeneric()) {
                     // PULLREVIEW: This is split into a spearate if statement to make debugging slightly easier...
@@ -5974,22 +5966,18 @@ module TypeScript {
             return null;
         }
 
-        private computeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext, reportDiagnostics: boolean): PullSymbol {
+        private checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST: ISyntaxToken): Diagnostic {
             var id = nameAST.valueText();
             if (id.length === 0) {
-                return this.semanticInfoChain.anyTypeSymbol;
+                return null;
             }
-            
-            var nameSymbol: PullSymbol = null;
-            var enclosingDecl = this.getEnclosingDeclForAST(nameAST);//, /*skipNonScopeDecls:*/ false);
 
             // SPEC: Nov 18, 2013
             // Initializer expressions for instance member variables are evaluated in the scope of the class constructor body 
             // but are not permitted to reference parameters or local variables of the constructor.
             // This effectively means that entities from outer scopes by the same name as a constructor parameter or local variable are inaccessible 
             // in initializer expressions for instance member variables.
-            var diagnosticForInitializer: Diagnostic = null;
-            var memberVariableDeclarationAST = getEnclosingMemberVariableDeclaration (nameAST);
+            var memberVariableDeclarationAST = getEnclosingMemberVariableDeclaration(nameAST);
             if (memberVariableDeclarationAST) {
 
                 var memberVariableDecl = this.semanticInfoChain.getDeclForAST(memberVariableDeclarationAST);
@@ -6005,13 +5993,34 @@ module TypeScript {
                             // delay error reporting:
                             // - if this name won't be found in other scopes then we'll print normal 'Could not find symbol' error
                             // - otherwise we'll report more specific error about shadowing value from the outer scope
-                            diagnosticForInitializer = this.semanticInfoChain.diagnosticFromAST(nameAST,
+                            return this.semanticInfoChain.diagnosticFromAST(nameAST,
                                 DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor,
                                 [childDeclSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()])
                         }
                     }
                 }
             }
+            return null;
+        }
+
+        private computeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext, reportDiagnostics: boolean): PullSymbol {
+            var id = nameAST.valueText();
+            if (id.length === 0) {
+                return this.semanticInfoChain.anyTypeSymbol;
+            }
+            
+            var nameSymbol: PullSymbol = null;
+            var enclosingDecl = this.getEnclosingDeclForAST(nameAST);//, /*skipNonScopeDecls:*/ false);
+
+            // if enclosing decl is property check if it has valueDecl that corresponds to parameter
+            if (hasFlag(enclosingDecl.flags, PullElementFlags.PropertyParameter)) {
+                var valueDecl = enclosingDecl.getValueDecl();
+                if (valueDecl && hasFlag(valueDecl.kind, PullElementKind.Parameter)) {
+                    enclosingDecl = valueDecl;
+                }
+            }
+
+            var diagnosticForInitializer = this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST);
 
             // First check if this is the name child of a declaration. If it is, no need to search for a name in scope since this is not a reference.
             if (isDeclarationASTOrDeclarationNameAST(nameAST)) {
@@ -6108,7 +6117,7 @@ module TypeScript {
                             [parameterList.parameters.nonSeparatorAt(currentParameterIndex).identifier.text(), nameAST.text()]));
                         return this.getNewErrorTypeSymbol(id);
                     }
-                    else if (matchingParameter === getEnclosingParameter(nameAST)) {
+                    else if (matchingParameter === getEnclosingParameterForInitializer(nameAST)) {
                         // we've found matching parameter but it references itself from the initializer
                         // per spec Nov 18: 
                         // Initializer expressions ..and are only permitted to access parameters that are declared to the left of the parameter they initialize
@@ -6222,12 +6231,8 @@ module TypeScript {
                 if (!this.inTypeQuery(expression)) {
                     (<PullTypeAliasSymbol>lhs).setIsUsedAsValue(true);
                 }
-                lhsType = (<PullTypeAliasSymbol>lhs).getExportAssignedTypeSymbol();
-            }
 
-            // this could happen if a module exports an import statement
-            if (lhsType.isAlias()) {
-                lhsType = (<PullTypeAliasSymbol>lhsType).getExportAssignedTypeSymbol();
+                lhsType = (<PullTypeAliasSymbol>lhs).getExportAssignedTypeSymbol();
             }
 
             lhsType = lhsType.widenedType(this, expression, context);
@@ -7040,9 +7045,11 @@ module TypeScript {
             var current = ast;
             while (current) {
                 switch (current.kind()) {
-                    case SyntaxKind.ConstructorDeclaration:
-                        var constructorDecl = <ConstructorDeclarationSyntax>current;
-                        return previous === constructorDecl.parameterList;
+                    case SyntaxKind.CallSignature:
+                        var callSignature = <CallSignatureSyntax>current;
+                        if (previous === callSignature.parameterList && callSignature.parent.kind() === SyntaxKind.ConstructorDeclaration) {
+                            return true;
+                        }
 
                     case SyntaxKind.ClassDeclaration:
                     case SyntaxKind.ModuleDeclaration:
@@ -7325,8 +7332,9 @@ module TypeScript {
 
         public resolveObjectLiteralExpression(expressionAST: ObjectLiteralExpressionSyntax, isContextuallyTyped: boolean, context: PullTypeResolutionContext, additionalResults?: PullAdditionalObjectLiteralResolutionData): PullSymbol {
             var symbol = this.getSymbolForAST(expressionAST, context);
+            var hasResolvedSymbol = symbol && symbol.isResolved;
 
-            if (!symbol || additionalResults || this.canTypeCheckAST(expressionAST, context)) {
+            if (!hasResolvedSymbol || additionalResults || this.canTypeCheckAST(expressionAST, context)) {
                 if (this.canTypeCheckAST(expressionAST, context)) {
                     this.setTypeChecked(expressionAST, context);
                 }
@@ -7463,7 +7471,7 @@ module TypeScript {
                 }
 
                 var isAccessor = propertyAssignment.kind() === SyntaxKind.SetAccessor || propertyAssignment.kind() === SyntaxKind.GetAccessor;
-                if (!isUsingExistingSymbol) {
+                if (!memberSymbol.isResolved) {
                     if (isAccessor) {
                         this.setSymbolForAST(id, memberSymbolType, pullTypeContext);
                     }

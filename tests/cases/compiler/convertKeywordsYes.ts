@@ -176,7 +176,7 @@ interface bigInterface {
 }
 
 class bigClass {
-    public constructor = 0;
+    public "constructor" = 0;
     public any = 0;
     public boolean = 0;
     public implements = 0;

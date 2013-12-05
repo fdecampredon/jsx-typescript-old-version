@@ -1,0 +1,26 @@
+=== tests/cases/compiler/nameCollision.ts ===
+Line 0 col 7 IdentifierName "A" = A
+Line 3 col 8 IdentifierName "A" = number
+Line 4 col 8 IdentifierName "_A" = string
+Line 7 col 7 IdentifierName "B" = B
+Line 8 col 8 IdentifierName "A" = number
+Line 11 col 7 IdentifierName "B" = B
+Line 14 col 10 IdentifierName "B" = B.B
+Line 15 col 0 IdentifierName "name" = string
+Line 19 col 7 IdentifierName "X" = X
+Line 20 col 8 IdentifierName "X" = number
+Line 21 col 18 IdentifierName "Y" = X.Y
+Line 22 col 12 IdentifierName "Y" = number
+Line 23 col 22 IdentifierName "Z" = X.Y.Z
+Line 24 col 16 IdentifierName "X" = number
+Line 25 col 16 IdentifierName "Y" = number
+Line 26 col 16 IdentifierName "Z" = number
+Line 31 col 7 IdentifierName "Y" = Y
+Line 31 col 9 IdentifierName "Y" = Y.Y
+Line 32 col 16 IdentifierName "Y" = Y.Y.Y
+Line 33 col 0 IdentifierName "Red" = Y.Y.Y
+Line 33 col 13 IdentifierName "Blue" = Y.Y.Y
+Line 39 col 7 IdentifierName "D" = D
+Line 40 col 21 IdentifierName "D" = D.D
+Line 41 col 0 IdentifierName "id" = number
+Line 44 col 15 IdentifierName "E" = string

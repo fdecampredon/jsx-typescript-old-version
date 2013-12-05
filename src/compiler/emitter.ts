@@ -507,7 +507,7 @@ module TypeScript {
 
                 // We're emitting comments on an elided element.  Only keep the comment if it is
                 // a triple slash or pinned comment.
-                if (onlyPinnedOrTripleSlashComments) {
+                if (preComments && onlyPinnedOrTripleSlashComments) {
                     preComments = ArrayUtilities.where(preComments, c => this.isPinnedOrTripleSlash(c));
                 }
 
@@ -1280,13 +1280,13 @@ module TypeScript {
             this.recordSourceMappingStart(funcDecl);
             this.writeToOutput("function ");
             this.writeToOutput(this.thisClassNode.identifier.text());
-            this.emitParameterList(funcDecl.parameterList);
+            this.emitParameterList(funcDecl.callSignature.parameterList);
             this.writeLineToOutput(" {");
 
             this.recordSourceMappingNameStart("constructor");
             this.indenter.increaseIndent();
 
-            var parameters = Parameters.fromParameterList(funcDecl.parameterList)
+            var parameters = Parameters.fromParameterList(funcDecl.callSignature.parameterList);
             this.emitDefaultValueAssignments(parameters);
             this.emitRestParameterInitializer(parameters);
 
@@ -1951,9 +1951,10 @@ module TypeScript {
             // emit any parameter properties first
             var constructorDecl = getLastConstructor(this.thisClassNode);
 
-            if (constructorDecl && constructorDecl.parameterList) {
-                for (var i = 0, n = constructorDecl.parameterList.parameters.nonSeparatorCount(); i < n; i++) {
-                    var parameter = constructorDecl.parameterList.parameters.nonSeparatorAt(i);
+            if (constructorDecl) {
+                for (var i = 0, n = constructorDecl.callSignature.parameterList.parameters.nonSeparatorCount(); i < n; i++) {
+                    var parameter = constructorDecl.callSignature.parameterList.parameters.nonSeparatorAt(i);
+
                     var parameterDecl = this.semanticInfoChain.getDeclForAST(parameter);
                     if (hasFlag(parameterDecl.flags, PullElementFlags.PropertyParameter)) {
                         this.emitIndent();

@@ -987,15 +987,16 @@ module TypeScript.Services {
                 return null;
             }
 
-            if (ast.kind() === SyntaxKind.ParameterList && ast.parent.kind() === SyntaxKind.ConstructorDeclaration) {
-                ast = ast.parent;
+            if (ast.kind() === SyntaxKind.ParameterList && ast.parent.kind() === SyntaxKind.CallSignature && ast.parent.parent.kind() === SyntaxKind.ConstructorDeclaration) {
+                ast = ast.parent.parent;
             }
+
             switch (ast.kind()) {
                 default:
                     return null;
                 case TypeScript.SyntaxKind.ConstructorDeclaration:
                     var constructorAST = <TypeScript.ConstructorDeclarationSyntax>ast;
-                    if (!isConstructorValidPosition || !(position >= constructorAST.start() && position <= constructorAST.start() + 11 /*constructor*/)) {
+                    if (!isConstructorValidPosition || !(position >= constructorAST.start() && position <= constructorAST.start() + "constructor".length)) {
                         return null;
                     }
                     else {

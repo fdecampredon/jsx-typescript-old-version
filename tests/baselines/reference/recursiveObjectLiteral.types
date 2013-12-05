@@ -1,0 +1,5 @@
+=== tests/cases/compiler/recursiveObjectLiteral.ts ===
+Line 0 col 4 IdentifierName "a" = { f: any; }
+Line 0 col 8 ObjectLiteralExpression "{ f: a }" = { f: any; }
+Line 0 col 10 IdentifierName "f" = any
+Line 0 col 13 IdentifierName "a" = { f: any; }

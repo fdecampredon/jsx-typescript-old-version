@@ -354,6 +354,14 @@ module TypeScript {
     "code": 1091,
     "category": DiagnosticCategory.Error
   },
+  "Type parameters cannot appear on a constructor declaration.": {
+    "code": 1091,
+    "category": DiagnosticCategory.Error
+  },
+  "Type annotation cannot appear on a constructor declaration.": {
+    "code": 1092,
+    "category": DiagnosticCategory.Error
+  },
   "Duplicate identifier '{0}'.": {
     "code": 2000,
     "category": DiagnosticCategory.Error

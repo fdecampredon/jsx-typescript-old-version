@@ -1838,7 +1838,7 @@ module TypeScript {
             constructSignature.addDeclaration(constructorDeclaration);
             constructorDeclaration.setSignatureSymbol(constructSignature);
 
-            this.bindParameterSymbols(constructorAST, Parameters.fromParameterList(constructorAST.parameterList), constructorTypeSymbol, constructSignature);
+            this.bindParameterSymbols(constructorAST, Parameters.fromParameterList(constructorAST.callSignature.parameterList), constructorTypeSymbol, constructSignature);
 
             var typeParameters = constructorTypeSymbol.getTypeParameters();
 
@@ -1846,7 +1846,7 @@ module TypeScript {
                 constructSignature.addTypeParameter(typeParameters[i]);
             }
 
-            if (lastParameterIsRest(constructorAST.parameterList)) {
+            if (lastParameterIsRest(constructorAST.callSignature.parameterList)) {
                 constructSignature.hasVarArgs = true;
             }
 

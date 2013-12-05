@@ -29,7 +29,7 @@ interface IMemberDefinition {
     elementType?: string;
 }
 
-var interfaces = {
+var interfaces: TypeScript.IIndexable<any> = {
     IMemberDeclarationSyntax: 'IClassElementSyntax',
     IStatementSyntax: 'IModuleElementSyntax',
     INameSyntax: 'ITypeSyntax',
@@ -592,7 +592,7 @@ var definitions:ITypeDefinition[] = [
         children: [
             <any>{ name: 'modifiers', isList: true, elementType: 'ISyntaxToken' },
             <any>{ name: 'constructorKeyword', isToken: true },
-            <any>{ name: 'parameterList', type: 'ParameterListSyntax' },
+            <any>{ name: 'callSignature', type: 'CallSignatureSyntax' },
             <any>{ name: 'block', type: 'BlockSyntax', isOptional: true },
             <any>{ name: 'semicolonToken', isToken: true, isOptional: true }
         ],

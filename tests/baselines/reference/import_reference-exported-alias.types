@@ -1,0 +1,22 @@
+=== tests/cases/compiler/file2.ts ===
+Line 0 col 7 IdentifierName "appJs" = typeof App
+Line 1 col 7 IdentifierName "Services" = typeof App.Services
+Line 1 col 18 IdentifierName "appJs" = App
+Line 1 col 24 IdentifierName "Services" = typeof App.Services
+Line 2 col 7 IdentifierName "UserServices" = typeof App.Services.UserServices
+Line 2 col 22 IdentifierName "Services" = App.Services
+Line 2 col 31 IdentifierName "UserServices" = App.Services.UserServices
+Line 3 col 4 IdentifierName "x" = string
+Line 3 col 8 InvocationExpression "new UserServices().getUserName()" = string
+Line 3 col 8 MemberAccessExpression "new UserServices().getUserName" = () => string
+Line 3 col 8 ObjectCreationExpression "new UserServices()" = App.Services.UserServices
+Line 3 col 12 IdentifierName "UserServices" = typeof App.Services.UserServices
+Line 3 col 27 IdentifierName "getUserName" = () => string
+=== tests/cases/compiler/file1.ts ===
+Line 0 col 7 IdentifierName "App" = App
+Line 1 col 18 IdentifierName "Services" = App.Services
+Line 2 col 21 IdentifierName "UserServices" = App.Services.UserServices
+Line 3 col 19 IdentifierName "getUserName" = () => string
+Line 10 col 7 IdentifierName "Mod" = typeof App
+Line 10 col 13 IdentifierName "App" = App
+Line 11 col 9 IdentifierName "Mod" = typeof App
