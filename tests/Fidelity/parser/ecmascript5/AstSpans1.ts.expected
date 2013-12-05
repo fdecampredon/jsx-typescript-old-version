@@ -9775,98 +9775,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 1902,
                             "fullEnd": 1914,
                             "start": 1902,
                             "end": 1913,
                             "fullWidth": 12,
                             "width": 11,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 1902,
-                                "fullEnd": 1903,
-                                "start": 1902,
-                                "end": 1903,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [
-                                {
-                                    "kind": "Parameter",
-                                    "fullStart": 1903,
-                                    "fullEnd": 1912,
-                                    "start": 1903,
-                                    "end": 1912,
-                                    "fullWidth": 9,
-                                    "width": 9,
-                                    "modifiers": [],
-                                    "identifier": {
-                                        "kind": "IdentifierName",
-                                        "fullStart": 1903,
-                                        "fullEnd": 1904,
-                                        "start": 1903,
-                                        "end": 1904,
-                                        "fullWidth": 1,
-                                        "width": 1,
-                                        "text": "a",
-                                        "value": "a",
-                                        "valueText": "a"
-                                    },
-                                    "typeAnnotation": {
-                                        "kind": "TypeAnnotation",
-                                        "fullStart": 1904,
-                                        "fullEnd": 1912,
-                                        "start": 1904,
-                                        "end": 1912,
-                                        "fullWidth": 8,
-                                        "width": 8,
-                                        "colonToken": {
-                                            "kind": "ColonToken",
-                                            "fullStart": 1904,
-                                            "fullEnd": 1906,
-                                            "start": 1904,
-                                            "end": 1905,
-                                            "fullWidth": 2,
-                                            "width": 1,
-                                            "text": ":",
-                                            "value": ":",
-                                            "valueText": ":",
-                                            "hasTrailingTrivia": true,
-                                            "trailingTrivia": [
-                                                {
-                                                    "kind": "WhitespaceTrivia",
-                                                    "fullStart": 1905,
-                                                    "fullEnd": 1906,
-                                                    "text": " "
-                                                }
-                                            ]
-                                        },
-                                        "type": {
-                                            "kind": "NumberKeyword",
-                                            "fullStart": 1906,
-                                            "fullEnd": 1912,
-                                            "start": 1906,
-                                            "end": 1912,
-                                            "fullWidth": 6,
-                                            "width": 6,
-                                            "text": "number",
-                                            "value": "number",
-                                            "valueText": "number"
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 12,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 1902,
+                                "fullEnd": 1914,
+                                "start": 1902,
+                                "end": 1913,
                                 "fullWidth": 12,
+                                "width": 11,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 1902,
+                                    "fullEnd": 1903,
+                                    "start": 1902,
+                                    "end": 1903,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -9875,10 +9806,20 @@
                                 "parameters": [
                                     {
                                         "kind": "Parameter",
+                                        "fullStart": 1903,
+                                        "fullEnd": 1912,
+                                        "start": 1903,
+                                        "end": 1912,
                                         "fullWidth": 9,
+                                        "width": 9,
                                         "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
+                                            "fullStart": 1903,
+                                            "fullEnd": 1904,
+                                            "start": 1903,
+                                            "end": 1904,
+                                            "fullWidth": 1,
                                             "width": 1,
                                             "text": "a",
                                             "value": "a",
@@ -9886,11 +9827,20 @@
                                         },
                                         "typeAnnotation": {
                                             "kind": "TypeAnnotation",
+                                            "fullStart": 1904,
+                                            "fullEnd": 1912,
+                                            "start": 1904,
+                                            "end": 1912,
                                             "fullWidth": 8,
+                                            "width": 8,
                                             "colonToken": {
                                                 "kind": "ColonToken",
-                                                "width": 1,
+                                                "fullStart": 1904,
+                                                "fullEnd": 1906,
+                                                "start": 1904,
+                                                "end": 1905,
                                                 "fullWidth": 2,
+                                                "width": 1,
                                                 "text": ":",
                                                 "value": ":",
                                                 "valueText": ":",
@@ -9898,25 +9848,35 @@
                                                 "trailingTrivia": [
                                                     {
                                                         "kind": "WhitespaceTrivia",
+                                                        "fullStart": 1905,
+                                                        "fullEnd": 1906,
                                                         "text": " "
                                                     }
                                                 ]
                                             },
                                             "type": {
                                                 "kind": "NumberKeyword",
+                                                "fullStart": 1906,
+                                                "fullEnd": 1912,
+                                                "start": 1906,
+                                                "end": 1912,
+                                                "fullWidth": 6,
                                                 "width": 6,
                                                 "text": "number",
                                                 "value": "number",
                                                 "valueText": "number"
                                             }
->>>>>>> develop
                                         }
                                     }
                                 ],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
-                                    "width": 1,
+                                    "fullStart": 1912,
+                                    "fullEnd": 1914,
+                                    "start": 1912,
+                                    "end": 1913,
                                     "fullWidth": 2,
+                                    "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")",
@@ -9924,34 +9884,12 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 1913,
+                                            "fullEnd": 1914,
                                             "text": " "
                                         }
                                     ]
                                 }
-<<<<<<< HEAD
-                            ],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 1912,
-                                "fullEnd": 1914,
-                                "start": 1912,
-                                "end": 1913,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 1913,
-                                        "fullEnd": 1914,
-                                        "text": " "
-                                    }
-                                ]
-=======
->>>>>>> develop
                             }
                         },
                         "block": {
@@ -10338,57 +10276,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 1990,
                             "fullEnd": 1993,
                             "start": 1990,
                             "end": 1992,
                             "fullWidth": 3,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 1990,
-                                "fullEnd": 1991,
-                                "start": 1990,
-                                "end": 1991,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 1991,
-                                "fullEnd": 1993,
-                                "start": 1991,
-                                "end": 1992,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 1992,
-                                        "fullEnd": 1993,
-                                        "text": " "
-                                    }
-                                ]
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 3,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 1990,
+                                "fullEnd": 1993,
+                                "start": 1990,
+                                "end": 1992,
                                 "fullWidth": 3,
+                                "width": 2,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 1990,
+                                    "fullEnd": 1991,
+                                    "start": 1990,
+                                    "end": 1991,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -10397,8 +10307,12 @@
                                 "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
-                                    "width": 1,
+                                    "fullStart": 1991,
+                                    "fullEnd": 1993,
+                                    "start": 1991,
+                                    "end": 1992,
                                     "fullWidth": 2,
+                                    "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")",
@@ -10406,11 +10320,12 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 1992,
+                                            "fullEnd": 1993,
                                             "text": " "
                                         }
                                     ]
                                 }
->>>>>>> develop
                             }
                         },
                         "block": {
@@ -20809,57 +20724,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 3740,
                             "fullEnd": 3743,
                             "start": 3740,
                             "end": 3742,
                             "fullWidth": 3,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 3740,
-                                "fullEnd": 3741,
-                                "start": 3740,
-                                "end": 3741,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 3741,
-                                "fullEnd": 3743,
-                                "start": 3741,
-                                "end": 3742,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 3742,
-                                        "fullEnd": 3743,
-                                        "text": " "
-                                    }
-                                ]
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 3,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 3740,
+                                "fullEnd": 3743,
+                                "start": 3740,
+                                "end": 3742,
                                 "fullWidth": 3,
+                                "width": 2,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 3740,
+                                    "fullEnd": 3741,
+                                    "start": 3740,
+                                    "end": 3741,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -20868,8 +20755,12 @@
                                 "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
-                                    "width": 1,
+                                    "fullStart": 3741,
+                                    "fullEnd": 3743,
+                                    "start": 3741,
+                                    "end": 3742,
                                     "fullWidth": 2,
+                                    "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")",
@@ -20877,11 +20768,12 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 3742,
+                                            "fullEnd": 3743,
                                             "text": " "
                                         }
                                     ]
                                 }
->>>>>>> develop
                             }
                         },
                         "block": {

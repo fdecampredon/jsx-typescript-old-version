@@ -100,15 +100,11 @@
                 },
                 "classElements": [
                     {
-<<<<<<< HEAD
-                        "kind": "MemberVariableDeclaration",
+                        "kind": "ConstructorDeclaration",
                         "fullStart": 11,
                         "fullEnd": 58,
                         "start": 37,
                         "end": 56,
-=======
-                        "kind": "ConstructorDeclaration",
->>>>>>> develop
                         "fullWidth": 47,
                         "width": 19,
                         "isIncrementallyUnusable": true,
@@ -164,30 +160,13 @@
                                 ]
                             }
                         ],
-<<<<<<< HEAD
-                        "variableDeclarator": {
-                            "kind": "VariableDeclarator",
+                        "constructorKeyword": {
+                            "kind": "ConstructorKeyword",
                             "fullStart": 44,
                             "fullEnd": 55,
                             "start": 44,
                             "end": 55,
                             "fullWidth": 11,
-                            "width": 11,
-                            "isIncrementallyUnusable": true,
-                            "propertyName": {
-                                "kind": "IdentifierName",
-                                "fullStart": 44,
-                                "fullEnd": 55,
-                                "start": 44,
-                                "end": 55,
-                                "fullWidth": 11,
-                                "width": 11,
-                                "text": "constructor",
-                                "value": "constructor",
-                                "valueText": "constructor"
-=======
-                        "constructorKeyword": {
-                            "kind": "ConstructorKeyword",
                             "width": 11,
                             "text": "constructor",
                             "value": "constructor",
@@ -195,24 +174,43 @@
                         },
                         "callSignature": {
                             "kind": "CallSignature",
+                            "fullStart": -1,
+                            "fullEnd": -1,
+                            "start": -1,
+                            "end": -1,
                             "fullWidth": 0,
+                            "width": 0,
                             "isIncrementallyUnusable": true,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": -1,
+                                "fullEnd": -1,
+                                "start": -1,
+                                "end": -1,
                                 "fullWidth": 0,
+                                "width": 0,
                                 "isIncrementallyUnusable": true,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 55,
+                                    "fullEnd": 55,
+                                    "start": 55,
+                                    "end": 55,
+                                    "fullWidth": 0,
                                     "width": 0,
                                     "text": ""
                                 },
                                 "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
+                                    "fullStart": 55,
+                                    "fullEnd": 55,
+                                    "start": 55,
+                                    "end": 55,
+                                    "fullWidth": 0,
                                     "width": 0,
                                     "text": ""
                                 }
->>>>>>> develop
                             }
                         },
                         "semicolonToken": {

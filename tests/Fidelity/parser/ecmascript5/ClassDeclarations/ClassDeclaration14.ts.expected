@@ -221,48 +221,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 36,
                             "fullEnd": 38,
                             "start": 36,
                             "end": 38,
                             "fullWidth": 2,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 36,
-                                "fullEnd": 37,
-                                "start": 36,
-                                "end": 37,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 37,
-                                "fullEnd": 38,
-                                "start": 37,
-                                "end": 38,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")"
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 2,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 36,
+                                "fullEnd": 38,
+                                "start": 36,
+                                "end": 38,
                                 "fullWidth": 2,
+                                "width": 2,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 36,
+                                    "fullEnd": 37,
+                                    "start": 36,
+                                    "end": 37,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -271,12 +252,16 @@
                                 "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
+                                    "fullStart": 37,
+                                    "fullEnd": 38,
+                                    "start": 37,
+                                    "end": 38,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")"
                                 }
->>>>>>> develop
                             }
                         },
                         "semicolonToken": {

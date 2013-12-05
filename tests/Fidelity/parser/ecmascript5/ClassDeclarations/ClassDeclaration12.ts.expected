@@ -118,48 +118,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 25,
                             "fullEnd": 27,
                             "start": 25,
                             "end": 27,
                             "fullWidth": 2,
                             "width": 2,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 25,
-                                "fullEnd": 26,
-                                "start": 25,
-                                "end": 26,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 26,
-                                "fullEnd": 27,
-                                "start": 26,
-                                "end": 27,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")"
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 2,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 25,
+                                "fullEnd": 27,
+                                "start": 25,
+                                "end": 27,
                                 "fullWidth": 2,
+                                "width": 2,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 25,
+                                    "fullEnd": 26,
+                                    "start": 25,
+                                    "end": 26,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -168,12 +149,16 @@
                                 "parameters": [],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
+                                    "fullStart": 26,
+                                    "fullEnd": 27,
+                                    "start": 26,
+                                    "end": 27,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")"
                                 }
->>>>>>> develop
                             }
                         },
                         "semicolonToken": {
@@ -229,78 +214,29 @@
                                 }
                             ]
                         },
-<<<<<<< HEAD
-                        "parameterList": {
-                            "kind": "ParameterList",
+                        "callSignature": {
+                            "kind": "CallSignature",
                             "fullStart": 44,
                             "fullEnd": 48,
                             "start": 44,
                             "end": 47,
                             "fullWidth": 4,
                             "width": 3,
-                            "openParenToken": {
-                                "kind": "OpenParenToken",
-                                "fullStart": 44,
-                                "fullEnd": 45,
-                                "start": 44,
-                                "end": 45,
-                                "fullWidth": 1,
-                                "width": 1,
-                                "text": "(",
-                                "value": "(",
-                                "valueText": "("
-                            },
-                            "parameters": [
-                                {
-                                    "kind": "Parameter",
-                                    "fullStart": 45,
-                                    "fullEnd": 46,
-                                    "start": 45,
-                                    "end": 46,
-                                    "fullWidth": 1,
-                                    "width": 1,
-                                    "modifiers": [],
-                                    "identifier": {
-                                        "kind": "IdentifierName",
-                                        "fullStart": 45,
-                                        "fullEnd": 46,
-                                        "start": 45,
-                                        "end": 46,
-                                        "fullWidth": 1,
-                                        "width": 1,
-                                        "text": "a",
-                                        "value": "a",
-                                        "valueText": "a"
-                                    }
-                                }
-                            ],
-                            "closeParenToken": {
-                                "kind": "CloseParenToken",
-                                "fullStart": 46,
-                                "fullEnd": 48,
-                                "start": 46,
-                                "end": 47,
-                                "fullWidth": 2,
-                                "width": 1,
-                                "text": ")",
-                                "value": ")",
-                                "valueText": ")",
-                                "hasTrailingTrivia": true,
-                                "trailingTrivia": [
-                                    {
-                                        "kind": "WhitespaceTrivia",
-                                        "fullStart": 47,
-                                        "fullEnd": 48,
-                                        "text": " "
-=======
-                        "callSignature": {
-                            "kind": "CallSignature",
-                            "fullWidth": 4,
                             "parameterList": {
                                 "kind": "ParameterList",
+                                "fullStart": 44,
+                                "fullEnd": 48,
+                                "start": 44,
+                                "end": 47,
                                 "fullWidth": 4,
+                                "width": 3,
                                 "openParenToken": {
                                     "kind": "OpenParenToken",
+                                    "fullStart": 44,
+                                    "fullEnd": 45,
+                                    "start": 44,
+                                    "end": 45,
+                                    "fullWidth": 1,
                                     "width": 1,
                                     "text": "(",
                                     "value": "(",
@@ -309,22 +245,35 @@
                                 "parameters": [
                                     {
                                         "kind": "Parameter",
+                                        "fullStart": 45,
+                                        "fullEnd": 46,
+                                        "start": 45,
+                                        "end": 46,
                                         "fullWidth": 1,
+                                        "width": 1,
                                         "modifiers": [],
                                         "identifier": {
                                             "kind": "IdentifierName",
+                                            "fullStart": 45,
+                                            "fullEnd": 46,
+                                            "start": 45,
+                                            "end": 46,
+                                            "fullWidth": 1,
                                             "width": 1,
                                             "text": "a",
                                             "value": "a",
                                             "valueText": "a"
                                         }
->>>>>>> develop
                                     }
                                 ],
                                 "closeParenToken": {
                                     "kind": "CloseParenToken",
-                                    "width": 1,
+                                    "fullStart": 46,
+                                    "fullEnd": 48,
+                                    "start": 46,
+                                    "end": 47,
                                     "fullWidth": 2,
+                                    "width": 1,
                                     "text": ")",
                                     "value": ")",
                                     "valueText": ")",
@@ -332,6 +281,8 @@
                                     "trailingTrivia": [
                                         {
                                             "kind": "WhitespaceTrivia",
+                                            "fullStart": 47,
+                                            "fullEnd": 48,
                                             "text": " "
                                         }
                                     ]
