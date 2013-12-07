@@ -2970,13 +2970,15 @@ module TypeScript {
     }
 
     export class ArgumentListSyntax extends SyntaxNode {
+    public arguments: ISeparatedSyntaxList<IExpressionSyntax>;
         constructor(public typeArgumentList: TypeArgumentListSyntax,
                     public openParenToken: ISyntaxToken,
-                    public arguments: ISeparatedSyntaxList<IExpressionSyntax>,
+                    _arguments: ISeparatedSyntaxList<IExpressionSyntax>,
                     public closeParenToken: ISyntaxToken,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
 
+            this.arguments = _arguments;
             Syntax.setParentForChildren(this);
         }
 

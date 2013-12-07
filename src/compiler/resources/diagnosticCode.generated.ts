@@ -313,6 +313,8 @@ module TypeScript {
         Type_parameter_0_cannot_be_a_direct_or_indirect_constraint_for_itself: "Type parameter '{0}' cannot be a direct or indirect constraint for itself.",
         Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor: "Initializer of instance member variable '{0}' cannot reference identifier '{1}' declared in the constructor.",
         Parameter_0_cannot_be_referenced_in_its_initializer: "Parameter '{0}' cannot be referenced in its initializer.",
+        Duplicate_string_index_signature: "Duplicate string index signature.",
+        Duplicate_number_index_signature: "Duplicate number index signature.",
         Type_0_is_missing_property_1_from_type_2: "Type '{0}' is missing property '{1}' from type '{2}'.",
         Types_of_property_0_of_types_1_and_2_are_incompatible: "Types of property '{0}' of types '{1}' and '{2}' are incompatible.",
         Types_of_property_0_of_types_1_and_2_are_incompatible_NL_3: "Types of property '{0}' of types '{1}' and '{2}' are incompatible:{NL}{3}",

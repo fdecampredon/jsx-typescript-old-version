@@ -1250,6 +1250,14 @@ module TypeScript {
     "code": 2231,
     "category": DiagnosticCategory.Error
   },
+  "Duplicate string index signature.": {
+    "code": 2232,
+    "category": DiagnosticCategory.Error
+  },
+  "Duplicate number index signature.": {
+    "code": 2233,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix

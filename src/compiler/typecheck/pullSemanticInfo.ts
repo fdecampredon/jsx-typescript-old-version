@@ -652,12 +652,12 @@ module TypeScript {
             return this._topLevelDecls;
         }
 
-        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[] = null, additionalLocations: Location[] = null): void {
-            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, arguments, additionalLocations));
+        public addDiagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): void {
+            this.addDiagnostic(this.diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations));
         }
 
-        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
-            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, arguments, additionalLocations);
+        public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
+            return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
         }
 
         public locationFromAST(ast: ISyntaxElement): Location {

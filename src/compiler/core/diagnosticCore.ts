@@ -48,10 +48,10 @@ module TypeScript {
         private _arguments: any[];
         private _additionalLocations: Location[];
 
-        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, arguments: any[]= null, additionalLocations: Location[] = null) {
+        constructor(fileName: string, lineMap: LineMap, start: number, length: number, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[] = null) {
             super(fileName, lineMap, start, length);
             this._diagnosticKey = diagnosticKey;
-            this._arguments = (arguments && arguments.length > 0) ? arguments : null;
+            this._arguments = (_arguments && _arguments.length > 0) ? _arguments : null;
             this._additionalLocations = (additionalLocations && additionalLocations.length > 0) ? additionalLocations : null;
         }
 

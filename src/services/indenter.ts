@@ -152,9 +152,9 @@ module TypeScript.Services {
                     // The separated list has been handled in the previous case, this is just if we are after
                     // the last element of the list, we want to get the indentation of the last element of the list
                     var argumentList = <TypeScript.ArgumentListSyntax> list;
-                    var arguments = argumentList.arguments;
-                    if (arguments !== null && argumentList.closeParenToken === element) {
-                        return Indenter.getListItemIndentation(arguments, arguments.childCount() - 1);
+                    var _arguments = argumentList.arguments;
+                    if (_arguments !== null && argumentList.closeParenToken === element) {
+                        return Indenter.getListItemIndentation(_arguments, _arguments.childCount() - 1);
                     }
                     break;
 

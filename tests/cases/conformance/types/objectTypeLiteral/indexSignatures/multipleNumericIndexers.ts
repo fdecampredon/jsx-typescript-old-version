@@ -1,5 +1,4 @@
 // Multiple indexers of the same type are an error
-// BUG 787692
 
 class C {
     [x: number]: string;

@@ -645,8 +645,6 @@ module TypeScript {
 
                             // Check if we are in an argumnt for a call, propagate the contextual typing
                             if ((i + 2 < n) && callExpression.argumentList === path[i + 1] && callExpression.argumentList.arguments === path[i + 2]) {
-                                var arguments = callExpression.argumentList.arguments;
-
                                 var callResolutionResults = new PullAdditionalCallResolutionData();
                                 if (isNew) {
                                     resolver.resolveObjectCreationExpression(<ObjectCreationExpressionSyntax>callExpression, resolutionContext, callResolutionResults);

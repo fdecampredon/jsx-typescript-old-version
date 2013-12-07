@@ -1,0 +1,16 @@
+=== tests/cases/compiler/simpleArrowFunctionParameterReferencedInObjectLiteral1.ts ===
+Line 0 col 0 InvocationExpression "[].map(() => [].map(p => ({ X: p })))" = { X: any; }[][]
+Line 0 col 0 MemberAccessExpression "[].map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 0 col 0 ArrayLiteralExpression "[]" = any[]
+Line 0 col 3 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 0 col 7 ParenthesizedArrowFunctionExpression "() => [].map(p => ({ X: p }))" = () => { X: any; }[]
+Line 0 col 13 InvocationExpression "[].map(p => ({ X: p }))" = { X: any; }[]
+Line 0 col 13 MemberAccessExpression "[].map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 0 col 13 ArrayLiteralExpression "[]" = any[]
+Line 0 col 16 IdentifierName "map" = <U>(callbackfn: (value: any, index: number, array: any[]) => U, thisArg?: any) => U[]
+Line 0 col 20 SimpleArrowFunctionExpression "p => ({ X: p })" = (p: any) => { X: any; }
+Line 0 col 20 IdentifierName "p" = any
+Line 0 col 25 ParenthesizedExpression "({ X: p })" = { X: any; }
+Line 0 col 26 ObjectLiteralExpression "{ X: p }" = { X: any; }
+Line 0 col 28 IdentifierName "X" = any
+Line 0 col 31 IdentifierName "p" = any

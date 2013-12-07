@@ -51,9 +51,9 @@ module TypeScript {
         }
     }
 
-    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
+    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
         var ast = decl.ast();
-        return decl.semanticInfoChain().diagnosticFromAST(ast, diagnosticKey, arguments, additionalLocations);
+        return decl.semanticInfoChain().diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations);
     }
 
     function min(a: number, b: number): number {

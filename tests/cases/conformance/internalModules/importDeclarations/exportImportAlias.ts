@@ -17,7 +17,6 @@ module C {
     export import a = A;
 }
 
-// Error the first 2 should be valid 
 var a: string = C.a.x;
 var b: { x: number; y: number; } = new C.a.Point(0, 0);
 var c: { name: string };
@@ -63,7 +62,7 @@ module M {
 }
 
 var o: { name: string };
-var o = new M.D.C('Hello'); // Unexpected error
+var o = new M.D('Hello');
 
 var p: { x: number; y: number; }
-var p: M.D.L.Point; // unexpected error
+var p: M.D.Point;

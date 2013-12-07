@@ -1,0 +1,11 @@
+=== tests/cases/compiler/consumer.ts ===
+Line 1 col 7 IdentifierName "host" = host
+Line 2 col 4 IdentifierName "hostVar" = host
+Line 2 col 14 IdentifierName "host" = host
+Line 3 col 4 IdentifierName "v" = Host
+Line 3 col 8 ObjectCreationExpression "new hostVar.Host()" = Host
+Line 3 col 12 MemberAccessExpression "hostVar.Host" = typeof Host
+Line 3 col 12 IdentifierName "hostVar" = host
+Line 3 col 20 IdentifierName "Host" = typeof Host
+=== tests/cases/compiler/host.ts ===
+Line 0 col 13 IdentifierName "Host" = Host

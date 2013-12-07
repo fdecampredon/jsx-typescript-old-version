@@ -256,9 +256,9 @@ module TypeScript {
             // instantiated modules. 
             //
             // Note: small spec deviation.  We don't consider an import statement sufficient to
-            // consider a module instantiated.  After all, if there is an import, but no actual
-            // code that references the imported value, then there's no need to emit the import
-            // or the module.
+            // consider a module instantiated (except the case of 'export import' handled below ).
+            // After all, if there is an import, but no actual code that references the imported value, 
+            // then there's no need to emit the import or the module.
             if (member.kind() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclarationSyntax>member;
 
@@ -268,7 +268,14 @@ module TypeScript {
                     return true;
                 }
             }
-            else if (member.kind() !== SyntaxKind.InterfaceDeclaration && member.kind() !== SyntaxKind.ImportDeclaration) {
+            else if (member.kind() === SyntaxKind.ImportDeclaration) {
+                // pessimistically assume 'export import' declaration will be the alias to something instantiated
+                // we cannot figure out it exactly until the resolution time.
+                if (hasModifier((<ImportDeclarationSyntax>member).modifiers, PullElementFlags.Exported)) {
+                    return true;
+                }
+            }
+            else if (member.kind() !== SyntaxKind.InterfaceDeclaration) {
                 // If we contain anything that's not an interface declaration, then we contain
                 // executable code.
                 return true;

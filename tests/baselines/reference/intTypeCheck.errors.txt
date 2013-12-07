@@ -14,8 +14,12 @@ intTypeCheck.ts(188,21): error TS1003: Identifier expected.
 intTypeCheck.ts(202,21): error TS1003: Identifier expected.
 intTypeCheck.ts(15,5): error TS2175: Overloads cannot differ only by return type.
 intTypeCheck.ts(26,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(37,5): error TS2232: Duplicate string index signature. Additional locations:
+	intTypeCheck.ts(36,5)
 intTypeCheck.ts(50,5): error TS2175: Overloads cannot differ only by return type.
 intTypeCheck.ts(62,5): error TS2175: Overloads cannot differ only by return type.
+intTypeCheck.ts(72,5): error TS2232: Duplicate string index signature. Additional locations:
+	intTypeCheck.ts(71,5)
 intTypeCheck.ts(78,5): error TS2000: Duplicate identifier 'p3'. Additional locations:
 	intTypeCheck.ts(72,18)
 intTypeCheck.ts(83,5): error TS2144: Duplicate overload signature for 'p7'.

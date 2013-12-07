@@ -18,7 +18,6 @@ var C;
     C.a = a;
 })(C || (C = {}));
 
-// Error the first 2 should be valid
 var a = C.a.x;
 var b = new C.a.Point(0, 0);
 var c;
@@ -77,7 +76,7 @@ var M;
 })(M || (M = {}));
 
 var o;
-var o = new M.D.C('Hello');
+var o = new M.D('Hello');
 
 var p;
-var p; // unexpected error
+var p;
