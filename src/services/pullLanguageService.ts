@@ -1218,7 +1218,9 @@ module TypeScript.Services {
                     }
 
                     if (!node || node.kind() !== TypeScript.SyntaxKind.ObjectLiteralExpression) {
-                        throw TypeScript.Errors.invalidOperation("ISyntaxElement Path look up did not result in the same node as Fidelity Syntax Tree look up.");
+                        // AST Path look up did not result in the same node as Fidelity Syntax Tree look up.
+                        // Once we remove AST this will no longer be a problem.
+                        return null;
                     }
 
                     isMemberCompletion = true;

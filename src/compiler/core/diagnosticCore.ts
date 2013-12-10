@@ -62,9 +62,9 @@ module TypeScript {
 
             result.diagnosticCode = this._diagnosticKey;
 
-            var arguments: any[] = (<any>this).arguments();
-            if (arguments && arguments.length > 0) {
-                result.arguments = arguments;
+            var _arguments: any[] = (<any>this).arguments();
+            if (_arguments && _arguments.length > 0) {
+                result.arguments = _arguments;
             }
 
             return result;

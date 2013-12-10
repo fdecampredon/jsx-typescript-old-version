@@ -4,12 +4,12 @@ Line 0 col 8 IdentifierName "T" = T
 Line 1 col 0 IdentifierName "f" = () => string
 Line 2 col 12 IdentifierName "x" = T
 Line 2 col 15 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "a" = any
-Line 3 col 16 InvocationExpression "x['toString']()" = any
-Line 3 col 16 ElementAccessExpression "x['toString']" = any
+Line 3 col 12 IdentifierName "a" = string
+Line 3 col 16 InvocationExpression "x['toString']()" = string
+Line 3 col 16 ElementAccessExpression "x['toString']" = () => string
 Line 3 col 16 IdentifierName "x" = T
 Line 4 col 15 AddExpression "a + x.toString()" = string
-Line 4 col 15 IdentifierName "a" = any
+Line 4 col 15 IdentifierName "a" = string
 Line 4 col 19 InvocationExpression "x.toString()" = string
 Line 4 col 19 MemberAccessExpression "x.toString" = () => string
 Line 4 col 19 IdentifierName "x" = T
@@ -34,9 +34,9 @@ Line 14 col 9 MemberAccessExpression "i.foo" = number
 Line 14 col 9 IdentifierName "i" = I<number>
 Line 14 col 11 IdentifierName "foo" = number
 Line 14 col 15 IdentifierName "toString" = (radix?: number) => string
-Line 15 col 4 IdentifierName "r2b" = any
-Line 15 col 10 InvocationExpression "i.foo['toString']()" = any
-Line 15 col 10 ElementAccessExpression "i.foo['toString']" = any
+Line 15 col 4 IdentifierName "r2b" = string
+Line 15 col 10 InvocationExpression "i.foo['toString']()" = string
+Line 15 col 10 ElementAccessExpression "i.foo['toString']" = () => string
 Line 15 col 10 MemberAccessExpression "i.foo" = number
 Line 15 col 10 IdentifierName "i" = I<number>
 Line 15 col 12 IdentifierName "foo" = number
@@ -50,8 +50,8 @@ Line 20 col 17 InvocationExpression "a()" = {}
 Line 20 col 17 IdentifierName "a" = <T>() => T
 Line 20 col 21 IdentifierName "toString" = () => string
 Line 21 col 4 IdentifierName "r3b" = string
-Line 21 col 18 InvocationExpression "a()['toString']()" = any
-Line 21 col 18 ElementAccessExpression "a()['toString']" = any
+Line 21 col 18 InvocationExpression "a()['toString']()" = string
+Line 21 col 18 ElementAccessExpression "a()['toString']" = () => string
 Line 21 col 18 InvocationExpression "a()" = {}
 Line 21 col 18 IdentifierName "a" = <T>() => T
 Line 23 col 4 IdentifierName "b" = { foo: <T>(x: T) => string; }
@@ -69,12 +69,12 @@ Line 24 col 9 ParenthesizedArrowFunctionExpression "<T>(x: T) => {
 Line 24 col 10 IdentifierName "T" = T
 Line 24 col 13 IdentifierName "x" = T
 Line 24 col 16 IdentifierName "T" = T
-Line 25 col 12 IdentifierName "a" = any
-Line 25 col 16 InvocationExpression "x['toString']()" = any
-Line 25 col 16 ElementAccessExpression "x['toString']" = any
+Line 25 col 12 IdentifierName "a" = string
+Line 25 col 16 InvocationExpression "x['toString']()" = string
+Line 25 col 16 ElementAccessExpression "x['toString']" = () => string
 Line 25 col 16 IdentifierName "x" = T
 Line 26 col 15 AddExpression "a + x.toString()" = string
-Line 26 col 15 IdentifierName "a" = any
+Line 26 col 15 IdentifierName "a" = string
 Line 26 col 19 InvocationExpression "x.toString()" = string
 Line 26 col 19 MemberAccessExpression "x.toString" = () => string
 Line 26 col 19 IdentifierName "x" = T

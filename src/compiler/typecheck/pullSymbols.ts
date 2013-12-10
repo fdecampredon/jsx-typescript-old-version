@@ -1409,6 +1409,7 @@ module TypeScript {
         private _constructSignatures: PullSignatureSymbol[] = null;
         private _indexSignatures: PullSignatureSymbol[] = null;
         private _allIndexSignatures: PullSignatureSymbol[] = null;
+        private _allIndexSignaturesOfAugmentedType: PullSignatureSymbol[] = null;
 
         private _memberNameCache: IIndexable<PullSymbol> = null;
         private _enclosedTypeNameCache: IIndexable<PullTypeSymbol> = null;
@@ -1472,7 +1473,6 @@ module TypeScript {
             if (typeArgs && this.getTypeArguments().length === 1 &&
                 this.name === "Array") {
 
-                var container = this.getContainer();
                 var declaration = this.getDeclarations()[0];
 
                 // If we're a child of the global module (i.e. we have a parent decl, but our 
@@ -1507,6 +1507,10 @@ module TypeScript {
             return hasFlag(this.kind,
                 PullElementKind.Class | PullElementKind.ConstructorType | PullElementKind.Enum | PullElementKind.FunctionType |
                 PullElementKind.Interface | PullElementKind.ObjectType | PullElementKind.ObjectLiteral);
+        }
+
+        public isFunctionType(): boolean {
+            return this.getCallSignatures().length > 0 || this.getConstructSignatures().length > 0;
         }
 
         public getKnownBaseTypeCount() { return this._knownBaseTypeCount; }
@@ -1901,37 +1905,6 @@ module TypeScript {
             indexSignature.functionType = this;
         }
 
-        // This method can be called to get unhidden (not shadowed by a signature in derived class)
-        // signatures from a set of base class signatures. Can be used for signatures of any kind.
-        // October 16, 2013: Section 7.1:
-        // A call signature declaration hides a base type call signature that is identical when
-        // return types are ignored.
-        // A construct signature declaration hides a base type construct signature that is
-        // identical when return types are ignored.
-        // A string index signature declaration hides a base type string index signature.
-        // A numeric index signature declaration hides a base type numeric index signature.
-        
-        private addUnhiddenSignaturesFromBaseType(derivedTypeSignatures: PullSignatureSymbol[], baseTypeSignatures: PullSignatureSymbol[], signaturesBeingAggregated: PullSignatureSymbol[]) {
-            // If there are no derived type signatures, none of the base signatures will be hidden.
-            if (!derivedTypeSignatures) {
-                signaturesBeingAggregated.push.apply(signaturesBeingAggregated, baseTypeSignatures);
-                return;
-            }
-
-            var resolver = this._getResolver();
-            for (var i = 0; i < baseTypeSignatures.length; i++) {
-                var baseSignature = baseTypeSignatures[i];
-                // If it is different from every signature in the derived type (modulo
-                // return types, add it to the list)
-                var signatureIsHidden = ArrayUtilities.any(derivedTypeSignatures, sig => 
-                    resolver.signaturesAreIdentical(baseSignature, sig, /*includingReturnType*/ false));
-
-                if (!signatureIsHidden) {
-                    signaturesBeingAggregated.push(baseSignature);
-                }
-            }
-        }
-
         public hasOwnCallSignatures(): boolean {
             return this._callSignatures !== null;
         }
@@ -1958,7 +1931,7 @@ module TypeScript {
                     // October 16, 2013: Section 7.1:
                     // A call signature declaration hides a base type call signature that is
                     // identical when return types are ignored.
-                    this.addUnhiddenSignaturesFromBaseType(this._callSignatures, this._extendedTypes[i].getCallSignatures(), signatures);
+                    this._getResolver()._addUnhiddenSignaturesFromBaseType(this._callSignatures, this._extendedTypes[i].getCallSignatures(), signatures);
                 }
             }
 
@@ -1990,7 +1963,7 @@ module TypeScript {
                     // October 16, 2013: Section 7.1:
                     // A construct signature declaration hides a base type construct signature that is
                     // identical when return types are ignored.
-                    this.addUnhiddenSignaturesFromBaseType(this._constructSignatures, this._extendedTypes[i].getConstructSignatures(), signatures);
+                    this._getResolver()._addUnhiddenSignaturesFromBaseType(this._constructSignatures, this._extendedTypes[i].getConstructSignatures(), signatures);
                 }
             }
 
@@ -2025,13 +1998,69 @@ module TypeScript {
                     // October 16, 2013: Section 7.1:
                     // A string index signature declaration hides a base type string index signature.
                     // A numeric index signature declaration hides a base type numeric index signature.
-                    this.addUnhiddenSignaturesFromBaseType(this._indexSignatures, this._extendedTypes[i].getIndexSignatures(), signatures);
+                    this._getResolver()._addUnhiddenSignaturesFromBaseType(this._indexSignatures, this._extendedTypes[i].getIndexSignatures(), signatures);
                 }
             }
 
             this._allIndexSignatures = signatures;
 
             return signatures;
+        }
+
+        // The augmented form of an object type T adds to T those members of the global interface
+        // type 'Object' that aren't hidden by members in T. Furthermore, if T has one or more call
+        // or construct signatures, the augmented form of T adds to T the members of the global 
+        // interface type 'Function' that aren't hidden by members in T. Members in T hide 'Object'
+        // or 'Function' interface members in the following manner:
+        // ...
+        // An index signature hides an 'Object' or 'Function' index signature with the same parameter type.
+        public getIndexSignaturesOfAugmentedType(resolver: PullTypeResolver, globalFunctionInterface: PullTypeSymbol, globalObjectInterface: PullTypeSymbol): PullSignatureSymbol[] {
+            if (!this._allIndexSignaturesOfAugmentedType) {
+                // Start with the types own and inherited index signatures
+                var initialIndexSignatures = this.getIndexSignatures();
+                var shouldAddFunctionSignatures = false;
+                var shouldAddObjectSignatures = false;
+
+                if (globalFunctionInterface && this.isFunctionType() && this !== globalFunctionInterface) {
+                    var functionIndexSignatures = globalFunctionInterface.getIndexSignatures();
+                    if (functionIndexSignatures.length) {
+                        shouldAddFunctionSignatures = true;
+                    }
+                }
+
+                if (globalObjectInterface && this !== globalObjectInterface) {
+                    var objectIndexSignatures = globalObjectInterface.getIndexSignatures();
+                    if (objectIndexSignatures.length) {
+                        shouldAddObjectSignatures = true;
+                    }
+                }
+
+                // The 'then' block of this conditional should almost never be entered, since
+                // Object and Function in lib.d.ts have no index signatures. This could only
+                // happen if the user has added index signatures to Object or Function.
+                if (shouldAddFunctionSignatures || shouldAddObjectSignatures) {
+                    // First, copy the existing signatures into a new array
+                    // .slice(0) is an idiom for copying
+                    this._allIndexSignaturesOfAugmentedType = initialIndexSignatures.slice(0);
+                    if (shouldAddFunctionSignatures) {
+                        // The following call mutates this._allIndexSignaturesOfAugmentedType
+                        resolver._addUnhiddenSignaturesFromBaseType(initialIndexSignatures, functionIndexSignatures, this._allIndexSignaturesOfAugmentedType);
+                    }
+                    if (shouldAddObjectSignatures) {
+                        if (shouldAddFunctionSignatures) {
+                            // Concat function index signatures to make sure we don't add object signatures
+                            // hidden by function signatures.
+                            initialIndexSignatures = initialIndexSignatures.concat(functionIndexSignatures);
+                        }
+                        resolver._addUnhiddenSignaturesFromBaseType(initialIndexSignatures, objectIndexSignatures, this._allIndexSignaturesOfAugmentedType);
+                    }
+                }
+                else {
+                    this._allIndexSignaturesOfAugmentedType = initialIndexSignatures;
+                }
+            }
+
+            return this._allIndexSignaturesOfAugmentedType;
         }
 
         public addImplementedType(implementedType: PullTypeSymbol): void {
@@ -2333,13 +2362,26 @@ module TypeScript {
             return s;
         }
 
-        public getScopedNameEx(scopeSymbol?: PullSymbol, skipTypeParametersInName?: boolean, useConstraintInName?: boolean, getPrettyTypeName?: boolean, getTypeParamMarkerInfo?: boolean, skipInternalAliasName?: boolean): MemberName {
+        public getScopedNameEx(
+            scopeSymbol?: PullSymbol,
+            skipTypeParametersInName?: boolean,
+            useConstraintInName?: boolean,
+            getPrettyTypeName?: boolean,
+            getTypeParamMarkerInfo?: boolean,
+            skipInternalAliasName?: boolean,
+            shouldAllowArrayType: boolean = true): MemberName {
 
-            if (this.isArrayNamedTypeReference()) {
+            if (this.isArrayNamedTypeReference() && shouldAllowArrayType) {
                 var elementType = this.getElementType();
                 var elementMemberName = elementType ?
                     (elementType.isArrayNamedTypeReference() || elementType.isNamedTypeSymbol() ?
-                    elementType.getScopedNameEx(scopeSymbol, /*skipTypeParametersInName*/ false, /*useConstraintInName*/ false, getPrettyTypeName, getTypeParamMarkerInfo, skipInternalAliasName) :
+                    elementType.getScopedNameEx(
+                        scopeSymbol,
+                        /*skipTypeParametersInName*/ false,
+                        /*useConstraintInName*/ false,
+                        getPrettyTypeName,
+                        getTypeParamMarkerInfo,
+                        skipInternalAliasName) :
                     elementType.getMemberTypeNameEx(/*topLevel*/ false, scopeSymbol, getPrettyTypeName)) :
                     MemberName.create("any");
                 return MemberName.create(elementMemberName, "", "[]");

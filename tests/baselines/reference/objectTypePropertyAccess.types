@@ -8,9 +8,9 @@ Line 6 col 9 InvocationExpression "c.toString()" = string
 Line 6 col 9 MemberAccessExpression "c.toString" = () => string
 Line 6 col 9 IdentifierName "c" = C
 Line 6 col 11 IdentifierName "toString" = () => string
-Line 8 col 4 IdentifierName "r2" = any
-Line 8 col 9 InvocationExpression "c['toString']()" = any
-Line 8 col 9 ElementAccessExpression "c['toString']" = any
+Line 8 col 4 IdentifierName "r2" = string
+Line 8 col 9 InvocationExpression "c['toString']()" = string
+Line 8 col 9 ElementAccessExpression "c['toString']" = () => string
 Line 8 col 9 IdentifierName "c" = C
 Line 9 col 4 IdentifierName "r3" = string
 Line 9 col 9 MemberAccessExpression "c.foo" = string
@@ -28,9 +28,9 @@ Line 16 col 9 InvocationExpression "i.toString()" = string
 Line 16 col 9 MemberAccessExpression "i.toString" = () => string
 Line 16 col 9 IdentifierName "i" = I
 Line 16 col 11 IdentifierName "toString" = () => string
-Line 18 col 4 IdentifierName "r5" = any
-Line 18 col 9 InvocationExpression "i['toString']()" = any
-Line 18 col 9 ElementAccessExpression "i['toString']" = any
+Line 18 col 4 IdentifierName "r5" = string
+Line 18 col 9 InvocationExpression "i['toString']()" = string
+Line 18 col 9 ElementAccessExpression "i['toString']" = () => string
 Line 18 col 9 IdentifierName "i" = I
 Line 19 col 4 IdentifierName "r6" = string
 Line 19 col 9 MemberAccessExpression "i.bar" = string
@@ -49,9 +49,9 @@ Line 26 col 9 InvocationExpression "a.toString()" = string
 Line 26 col 9 MemberAccessExpression "a.toString" = () => string
 Line 26 col 9 IdentifierName "a" = { foo: string; }
 Line 26 col 11 IdentifierName "toString" = () => string
-Line 28 col 4 IdentifierName "r9" = any
-Line 28 col 9 InvocationExpression "a['toString']()" = any
-Line 28 col 9 ElementAccessExpression "a['toString']" = any
+Line 28 col 4 IdentifierName "r9" = string
+Line 28 col 9 InvocationExpression "a['toString']()" = string
+Line 28 col 9 ElementAccessExpression "a['toString']" = () => string
 Line 28 col 9 IdentifierName "a" = { foo: string; }
 Line 29 col 4 IdentifierName "r10" = string
 Line 29 col 10 MemberAccessExpression "a.foo" = string

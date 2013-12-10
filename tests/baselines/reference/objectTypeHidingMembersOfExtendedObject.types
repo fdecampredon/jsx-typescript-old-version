@@ -1,0 +1,93 @@
+=== tests/cases/compiler/objectTypeHidingMembersOfExtendedObject.ts ===
+Line 0 col 6 IdentifierName "A" = A
+Line 1 col 0 IdentifierName "foo" = string
+Line 4 col 6 IdentifierName "B" = B
+Line 4 col 16 IdentifierName "A" = A
+Line 5 col 0 IdentifierName "bar" = string
+Line 8 col 10 IdentifierName "Object" = Object
+Line 9 col 0 IdentifierName "data" = A
+Line 9 col 10 IdentifierName "A" = A
+Line 10 col 5 IdentifierName "x" = string
+Line 10 col 17 IdentifierName "Object" = Object
+Line 13 col 6 IdentifierName "C" = C
+Line 14 col 0 IdentifierName "valueOf" = () => void
+Line 15 col 0 IdentifierName "data" = B
+Line 15 col 10 IdentifierName "B" = B
+Line 16 col 5 IdentifierName "x" = string
+Line 19 col 4 IdentifierName "c" = C
+Line 19 col 7 IdentifierName "C" = C
+Line 20 col 4 IdentifierName "r1" = void
+Line 20 col 15 InvocationExpression "c.valueOf()" = void
+Line 20 col 15 MemberAccessExpression "c.valueOf" = () => void
+Line 20 col 15 IdentifierName "c" = C
+Line 20 col 17 IdentifierName "valueOf" = () => void
+Line 21 col 4 IdentifierName "r1b" = B
+Line 21 col 9 IdentifierName "B" = B
+Line 21 col 13 MemberAccessExpression "c.data" = B
+Line 21 col 13 IdentifierName "c" = C
+Line 21 col 15 IdentifierName "data" = B
+Line 22 col 4 IdentifierName "r1c" = Object
+Line 22 col 10 ElementAccessExpression "r1b['hm']" = Object
+Line 22 col 10 IdentifierName "r1b" = B
+Line 23 col 4 IdentifierName "r1d" = any
+Line 23 col 10 ElementAccessExpression "c['hm']" = any
+Line 23 col 10 IdentifierName "c" = C
+Line 25 col 10 IdentifierName "I" = I
+Line 26 col 0 IdentifierName "valueOf" = () => void
+Line 27 col 0 IdentifierName "data" = B
+Line 27 col 10 IdentifierName "B" = B
+Line 28 col 5 IdentifierName "x" = string
+Line 31 col 4 IdentifierName "i" = I
+Line 31 col 7 IdentifierName "I" = I
+Line 32 col 4 IdentifierName "r2" = void
+Line 32 col 15 InvocationExpression "i.valueOf()" = void
+Line 32 col 15 MemberAccessExpression "i.valueOf" = () => void
+Line 32 col 15 IdentifierName "i" = I
+Line 32 col 17 IdentifierName "valueOf" = () => void
+Line 33 col 4 IdentifierName "r2b" = B
+Line 33 col 9 IdentifierName "B" = B
+Line 33 col 13 MemberAccessExpression "i.data" = B
+Line 33 col 13 IdentifierName "i" = I
+Line 33 col 15 IdentifierName "data" = B
+Line 34 col 4 IdentifierName "r2c" = Object
+Line 34 col 10 ElementAccessExpression "r2b['hm']" = Object
+Line 34 col 10 IdentifierName "r2b" = B
+Line 35 col 4 IdentifierName "r2d" = any
+Line 35 col 10 ElementAccessExpression "i['hm']" = any
+Line 35 col 10 IdentifierName "i" = I
+Line 37 col 4 IdentifierName "a" = { valueOf: () => void; data: B; }
+Line 37 col 8 ObjectLiteralExpression "{
+    valueOf: () => { },
+    data: new B()
+}" = { valueOf: () => void; data: B; }
+Line 38 col 0 IdentifierName "valueOf" = () => void
+Line 38 col 13 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 39 col 0 IdentifierName "data" = B
+Line 39 col 10 ObjectCreationExpression "new B()" = B
+Line 39 col 14 IdentifierName "B" = typeof B
+Line 42 col 4 IdentifierName "r3" = void
+Line 42 col 15 InvocationExpression "a.valueOf()" = void
+Line 42 col 15 MemberAccessExpression "a.valueOf" = () => void
+Line 42 col 15 IdentifierName "a" = { valueOf: () => void; data: B; }
+Line 42 col 17 IdentifierName "valueOf" = () => void
+Line 43 col 4 IdentifierName "r3b" = B
+Line 43 col 9 IdentifierName "B" = B
+Line 43 col 13 MemberAccessExpression "a.data" = B
+Line 43 col 13 IdentifierName "a" = { valueOf: () => void; data: B; }
+Line 43 col 15 IdentifierName "data" = B
+Line 44 col 4 IdentifierName "r3c" = Object
+Line 44 col 10 ElementAccessExpression "r3b['hm']" = Object
+Line 44 col 10 IdentifierName "r3b" = B
+Line 45 col 4 IdentifierName "r3d" = any
+Line 45 col 10 ElementAccessExpression "i['hm']" = any
+Line 45 col 10 IdentifierName "i" = I
+Line 47 col 4 IdentifierName "b" = { valueOf(): void; data: B; [x: string]: any; }
+Line 48 col 0 IdentifierName "valueOf" = () => void
+Line 49 col 0 IdentifierName "data" = B
+Line 49 col 10 IdentifierName "B" = B
+Line 50 col 5 IdentifierName "x" = string
+Line 53 col 4 IdentifierName "r4" = void
+Line 53 col 15 InvocationExpression "b.valueOf()" = void
+Line 53 col 15 MemberAccessExpression "b.valueOf" = () => void
+Line 53 col 15 IdentifierName "b" = { valueOf(): void; data: B; [x: string]: any; }
+Line 53 col 17 IdentifierName "valueOf" = () => void

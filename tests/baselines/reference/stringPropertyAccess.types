@@ -18,7 +18,7 @@ Line 5 col 4 IdentifierName "d" = any
 Line 5 col 8 InvocationExpression "x['charAt']('invalid')" = any
 Line 5 col 8 ElementAccessExpression "x['charAt']" = any
 Line 5 col 8 IdentifierName "x" = string
-Line 6 col 4 IdentifierName "e" = any
-Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = any
-Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = any
+Line 6 col 4 IdentifierName "e" = boolean
+Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
+Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
 Line 6 col 8 IdentifierName "x" = string

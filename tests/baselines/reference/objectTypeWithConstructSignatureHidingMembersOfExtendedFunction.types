@@ -32,36 +32,36 @@ Line 15 col 4 IdentifierName "r1d" = number
 Line 15 col 10 MemberAccessExpression "i.data" = number
 Line 15 col 10 IdentifierName "i" = I
 Line 15 col 12 IdentifierName "data" = number
-Line 17 col 4 IdentifierName "r1e" = any
-Line 17 col 10 ElementAccessExpression "i['hm']" = any
-Line 17 col 10 IdentifierName "i" = I
-Line 19 col 4 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
-Line 21 col 0 IdentifierName "apply" = (a: any, b?: any) => void
-Line 21 col 10 IdentifierName "a" = any
-Line 21 col 18 IdentifierName "b" = any
-Line 22 col 0 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 22 col 9 IdentifierName "thisArg" = number
-Line 22 col 29 IdentifierName "argArray" = number[]
-Line 25 col 4 IdentifierName "r2" = (a: any, b?: any) => void
-Line 25 col 9 IdentifierName "a" = any
-Line 25 col 17 IdentifierName "b" = any
-Line 25 col 36 MemberAccessExpression "x.apply" = (a: any, b?: any) => void
-Line 25 col 36 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
-Line 25 col 38 IdentifierName "apply" = (a: any, b?: any) => void
-Line 26 col 4 IdentifierName "r2b" = (thisArg: number, ...argArray: number[]) => void
-Line 26 col 10 IdentifierName "thisArg" = number
-Line 26 col 30 IdentifierName "argArray" = number[]
-Line 26 col 60 MemberAccessExpression "x.call" = (thisArg: number, ...argArray: number[]) => any
-Line 26 col 60 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
-Line 26 col 62 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
-Line 27 col 4 IdentifierName "r2c" = any
-Line 27 col 10 MemberAccessExpression "x.arguments" = any
+Line 16 col 4 IdentifierName "r1e" = Object
+Line 16 col 10 ElementAccessExpression "i['hm']" = Object
+Line 16 col 10 IdentifierName "i" = I
+Line 18 col 4 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
+Line 20 col 0 IdentifierName "apply" = (a: any, b?: any) => void
+Line 20 col 10 IdentifierName "a" = any
+Line 20 col 18 IdentifierName "b" = any
+Line 21 col 0 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
+Line 21 col 9 IdentifierName "thisArg" = number
+Line 21 col 29 IdentifierName "argArray" = number[]
+Line 24 col 4 IdentifierName "r2" = (a: any, b?: any) => void
+Line 24 col 9 IdentifierName "a" = any
+Line 24 col 17 IdentifierName "b" = any
+Line 24 col 36 MemberAccessExpression "x.apply" = (a: any, b?: any) => void
+Line 24 col 36 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
+Line 24 col 38 IdentifierName "apply" = (a: any, b?: any) => void
+Line 25 col 4 IdentifierName "r2b" = (thisArg: number, ...argArray: number[]) => void
+Line 25 col 10 IdentifierName "thisArg" = number
+Line 25 col 30 IdentifierName "argArray" = number[]
+Line 25 col 60 MemberAccessExpression "x.call" = (thisArg: number, ...argArray: number[]) => any
+Line 25 col 60 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
+Line 25 col 62 IdentifierName "call" = (thisArg: number, ...argArray: number[]) => any
+Line 26 col 4 IdentifierName "r2c" = any
+Line 26 col 10 MemberAccessExpression "x.arguments" = any
+Line 26 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
+Line 26 col 12 IdentifierName "arguments" = any
+Line 27 col 4 IdentifierName "r2d" = number
+Line 27 col 10 MemberAccessExpression "x.data" = number
 Line 27 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
-Line 27 col 12 IdentifierName "arguments" = any
-Line 28 col 4 IdentifierName "r2d" = number
-Line 28 col 10 MemberAccessExpression "x.data" = number
+Line 27 col 12 IdentifierName "data" = number
+Line 28 col 4 IdentifierName "r2e" = Object
+Line 28 col 10 ElementAccessExpression "x['hm']" = Object
 Line 28 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }
-Line 28 col 12 IdentifierName "data" = number
-Line 30 col 4 IdentifierName "r2e" = any
-Line 30 col 10 ElementAccessExpression "x['hm']" = any
-Line 30 col 10 IdentifierName "x" = { apply(a: any, b?: any): void; call(thisArg: number, ...argArray: number[]): any; new(): number; }

@@ -1,0 +1,10 @@
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(8,16): error TS2027: Exported variable 'Origin' has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(10,34): error TS2018: Exported class 'Point3d' extends private class 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(16,23): error TS2220: TypeParameter 'TPoint extends Point' of exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(17,21): error TS2025: Public property 'start' of exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(17,21): error TS2032: Parameter 'start' of constructor from exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(17,43): error TS2025: Public property 'end' of exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(17,43): error TS2032: Parameter 'end' of constructor from exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(19,9): error TS2055: Return type of public static method from exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(19,29): error TS2037: Parameter 'p' of public static method from exported class has or is using private type 'Point'.
+ExportClassWithInaccessibleTypeInTypeParameterConstraint.ts(19,40): error TS2055: Return type of public static method from exported class has or is using private type 'Point'.

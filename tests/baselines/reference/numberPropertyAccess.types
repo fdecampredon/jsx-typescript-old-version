@@ -14,7 +14,7 @@ Line 5 col 4 IdentifierName "c" = any
 Line 5 col 8 InvocationExpression "x['toExponential']()" = any
 Line 5 col 8 ElementAccessExpression "x['toExponential']" = any
 Line 5 col 8 IdentifierName "x" = number
-Line 6 col 4 IdentifierName "d" = any
-Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = any
-Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = any
+Line 6 col 4 IdentifierName "d" = boolean
+Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
+Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
 Line 6 col 8 IdentifierName "x" = number

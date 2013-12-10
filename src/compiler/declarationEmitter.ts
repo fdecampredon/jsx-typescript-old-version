@@ -259,7 +259,16 @@ module TypeScript {
             var declarationPullSymbol = declarationContainerDecl.getSymbol();
             TypeScript.declarationEmitTypeSignatureTime += new Date().getTime() - start;
 
-            var typeNameMembers = type.getScopedNameEx(declarationPullSymbol);
+            var isNotAGenericType = ast.kind() !== SyntaxKind.GenericType;
+
+            var typeNameMembers = type.getScopedNameEx(
+                declarationPullSymbol, 
+                /*skipTypeParametersInName?*/ false, 
+                /*useConstraintInName?*/ false, 
+                /*getPrettyTypeName?*/ false, 
+                /*getTypeParamMarkerInfo?*/ false, 
+                /*skipInternalAliasName?*/ false,
+                /*shouldAllowArrayType:*/ isNotAGenericType);
             this.emitTypeNamesMember(typeNameMembers);
         }
 

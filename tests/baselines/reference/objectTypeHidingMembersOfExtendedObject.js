@@ -29,16 +29,12 @@ var C = (function () {
 var c;
 var r1 = c.valueOf();
 var r1b = c.data;
-
-// BUG 792592
 var r1c = r1b['hm'];
 var r1d = c['hm'];
 
 var i;
 var r2 = i.valueOf();
 var r2b = i.data;
-
-// BUG 792592
 var r2c = r2b['hm'];
 var r2d = i['hm'];
 
@@ -50,10 +46,8 @@ var a = {
 
 var r3 = a.valueOf();
 var r3b = a.data;
-
-// BUG 792592
 var r3c = r3b['hm'];
-var r3c = i['hm'];
+var r3d = i['hm'];
 
 var b;
 
