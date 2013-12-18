@@ -1,11 +1,6 @@
 arrayLiteralContextualType.ts(28,1): error TS2082: Supplied parameters do not match any signature of call target:
-	Type '{}' is missing property 'name' from type 'IAnimal'.
 	Types of property 'concat' of types '{}[]' and 'IAnimal[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): IAnimal[]; (...items: IAnimal[]): IAnimal[]; }' are incompatible:
-			Type '{}' is missing property 'name' from type 'IAnimal'.
-			Types of property 'pop' of types '{}[]' and 'IAnimal[]' are incompatible:
-				Call signatures of types '() => {}' and '() => IAnimal' are incompatible:
-					Type '{}' is missing property 'name' from type 'IAnimal'.
+		Call signatures of types '{ <U extends {}[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends IAnimal[]>(...items: U[]): IAnimal[]; (...items: IAnimal[]): IAnimal[]; }' are incompatible.
 arrayLiteralContextualType.ts(28,1): error TS2087: Could not select overload for 'call' expression.
 arrayLiteralContextualType.ts(29,1): error TS2082: Supplied parameters do not match any signature of call target:
 	Index signatures of types '{}[]' and '{ [n: number]: IAnimal; }' are incompatible:

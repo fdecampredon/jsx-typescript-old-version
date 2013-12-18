@@ -1255,6 +1255,10 @@
         "category": "Error",
         "code": 2233
     },
+    "All declarations of an interface must have identical type parameters.": {
+        "category": "Error",
+        "code": 2234
+    },
     "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",
         "code": 4000
@@ -1351,7 +1355,7 @@
         "category": "Error",
         "code": 4023
     },
-    "Enums with multiple declarations must provide an initializer for the first enum element.": {
+    "In enums with multiple declarations only one declaration can omit an initializer for the first enum element.": {
         "category": "Error",
         "code": 4024
     },

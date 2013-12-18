@@ -1,0 +1,207 @@
+=== tests/cases/compiler/genericClassWithFunctionTypedMemberArguments.ts ===
+Line 3 col 7 IdentifierName "ImmediatelyFix" = ImmediatelyFix
+Line 4 col 10 IdentifierName "C" = ImmediatelyFix.C<T>
+Line 4 col 12 IdentifierName "T" = T
+Line 5 col 0 IdentifierName "foo" = <T>(x: (a: T) => T) => T
+Line 5 col 12 IdentifierName "T" = T
+Line 5 col 15 IdentifierName "x" = (a: T) => T
+Line 5 col 19 IdentifierName "a" = T
+Line 5 col 22 IdentifierName "T" = T
+Line 5 col 28 IdentifierName "T" = T
+Line 6 col 19 InvocationExpression "x(null)" = T
+Line 6 col 19 IdentifierName "x" = (a: T) => T
+Line 10 col 8 IdentifierName "c" = ImmediatelyFix.C<number>
+Line 10 col 12 ObjectCreationExpression "new C<number>()" = ImmediatelyFix.C<number>
+Line 10 col 16 IdentifierName "C" = typeof ImmediatelyFix.C
+Line 11 col 8 IdentifierName "r" = {}
+Line 11 col 12 InvocationExpression "c.foo(<U>(x: U) => '')" = {}
+Line 11 col 12 MemberAccessExpression "c.foo" = <T>(x: (a: T) => T) => T
+Line 11 col 12 IdentifierName "c" = ImmediatelyFix.C<number>
+Line 11 col 14 IdentifierName "foo" = <T>(x: (a: T) => T) => T
+Line 11 col 18 ParenthesizedArrowFunctionExpression "<U>(x: U) => ''" = <U>(x: U) => string
+Line 11 col 19 IdentifierName "U" = U
+Line 11 col 22 IdentifierName "x" = U
+Line 11 col 25 IdentifierName "U" = U
+Line 12 col 8 IdentifierName "r2" = string
+Line 12 col 13 InvocationExpression "c.foo<string>(<U>(x: U) => '')" = string
+Line 12 col 13 MemberAccessExpression "c.foo" = <T>(x: (a: T) => T) => T
+Line 12 col 13 IdentifierName "c" = ImmediatelyFix.C<number>
+Line 12 col 15 IdentifierName "foo" = <T>(x: (a: T) => T) => T
+Line 12 col 27 ParenthesizedArrowFunctionExpression "<U>(x: U) => ''" = <U>(x: U) => string
+Line 12 col 28 IdentifierName "U" = U
+Line 12 col 31 IdentifierName "x" = U
+Line 12 col 34 IdentifierName "U" = U
+Line 13 col 8 IdentifierName "r3" = {}
+Line 13 col 13 InvocationExpression "c.foo(x => '')" = {}
+Line 13 col 13 MemberAccessExpression "c.foo" = <T>(x: (a: T) => T) => T
+Line 13 col 13 IdentifierName "c" = ImmediatelyFix.C<number>
+Line 13 col 15 IdentifierName "foo" = <T>(x: (a: T) => T) => T
+Line 13 col 19 SimpleArrowFunctionExpression "x => ''" = (x: {}) => string
+Line 13 col 19 IdentifierName "x" = {}
+Line 15 col 10 IdentifierName "C2" = ImmediatelyFix.C2<T>
+Line 15 col 13 IdentifierName "T" = T
+Line 16 col 0 IdentifierName "foo" = (x: (a: T) => T) => T
+Line 16 col 12 IdentifierName "x" = (a: T) => T
+Line 16 col 16 IdentifierName "a" = T
+Line 16 col 19 IdentifierName "T" = T
+Line 16 col 25 IdentifierName "T" = T
+Line 17 col 19 InvocationExpression "x(null)" = T
+Line 17 col 19 IdentifierName "x" = (a: T) => T
+Line 21 col 8 IdentifierName "c2" = ImmediatelyFix.C2<number>
+Line 21 col 13 ObjectCreationExpression "new C2<number>()" = ImmediatelyFix.C2<number>
+Line 21 col 17 IdentifierName "C2" = typeof ImmediatelyFix.C2
+Line 22 col 8 IdentifierName "ra" = number
+Line 22 col 13 InvocationExpression "c2.foo(<U>(x: U) => 1)" = number
+Line 22 col 13 MemberAccessExpression "c2.foo" = (x: (a: number) => number) => number
+Line 22 col 13 IdentifierName "c2" = ImmediatelyFix.C2<number>
+Line 22 col 16 IdentifierName "foo" = (x: (a: number) => number) => number
+Line 22 col 20 ParenthesizedArrowFunctionExpression "<U>(x: U) => 1" = <U>(x: U) => number
+Line 22 col 21 IdentifierName "U" = U
+Line 22 col 24 IdentifierName "x" = U
+Line 22 col 27 IdentifierName "U" = U
+Line 23 col 8 IdentifierName "r3a" = number
+Line 23 col 14 InvocationExpression "c2.foo(x => 1)" = number
+Line 23 col 14 MemberAccessExpression "c2.foo" = (x: (a: number) => number) => number
+Line 23 col 14 IdentifierName "c2" = ImmediatelyFix.C2<number>
+Line 23 col 17 IdentifierName "foo" = (x: (a: number) => number) => number
+Line 23 col 21 SimpleArrowFunctionExpression "x => 1" = (x: number) => number
+Line 23 col 21 IdentifierName "x" = number
+Line 26 col 7 IdentifierName "WithCandidates" = WithCandidates
+Line 27 col 10 IdentifierName "C" = WithCandidates.C<T>
+Line 27 col 12 IdentifierName "T" = T
+Line 28 col 0 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 28 col 13 IdentifierName "T" = T
+Line 28 col 16 IdentifierName "U" = U
+Line 28 col 19 IdentifierName "x" = T
+Line 28 col 22 IdentifierName "T" = T
+Line 28 col 25 IdentifierName "cb" = (a: T) => U
+Line 28 col 30 IdentifierName "a" = T
+Line 28 col 33 IdentifierName "T" = T
+Line 28 col 39 IdentifierName "U" = U
+Line 29 col 19 InvocationExpression "cb(x)" = U
+Line 29 col 19 IdentifierName "cb" = (a: T) => U
+Line 29 col 22 IdentifierName "x" = T
+Line 33 col 8 IdentifierName "c" = WithCandidates.C<number>
+Line 33 col 11 IdentifierName "C" = WithCandidates.C<T>
+Line 34 col 8 IdentifierName "r4" = {}
+Line 34 col 13 InvocationExpression "c.foo2(1, function <Z>(a: Z) { return '' })" = {}
+Line 34 col 13 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 34 col 13 IdentifierName "c" = WithCandidates.C<number>
+Line 34 col 15 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 34 col 23 FunctionExpression "function <Z>(a: Z) { return '' }" = <Z>(a: Z) => string
+Line 34 col 33 IdentifierName "Z" = Z
+Line 34 col 36 IdentifierName "a" = Z
+Line 34 col 39 IdentifierName "Z" = Z
+Line 35 col 8 IdentifierName "r5" = string
+Line 35 col 13 InvocationExpression "c.foo2(1, (a) => '')" = string
+Line 35 col 13 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 35 col 13 IdentifierName "c" = WithCandidates.C<number>
+Line 35 col 15 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 35 col 23 ParenthesizedArrowFunctionExpression "(a) => ''" = (a: number) => string
+Line 35 col 24 IdentifierName "a" = number
+Line 36 col 8 IdentifierName "r6" = number
+Line 36 col 13 InvocationExpression "c.foo2<string, number>('', <Z>(a: Z) => 1)" = number
+Line 36 col 13 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 36 col 13 IdentifierName "c" = WithCandidates.C<number>
+Line 36 col 15 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 36 col 40 ParenthesizedArrowFunctionExpression "<Z>(a: Z) => 1" = <Z>(a: Z) => number
+Line 36 col 41 IdentifierName "Z" = Z
+Line 36 col 44 IdentifierName "a" = Z
+Line 36 col 47 IdentifierName "Z" = Z
+Line 38 col 10 IdentifierName "C2" = WithCandidates.C2<T, U>
+Line 38 col 13 IdentifierName "T" = T
+Line 38 col 16 IdentifierName "U" = U
+Line 39 col 0 IdentifierName "foo3" = (x: T, cb: (a: T) => U, y: U) => U
+Line 39 col 13 IdentifierName "x" = T
+Line 39 col 16 IdentifierName "T" = T
+Line 39 col 19 IdentifierName "cb" = (a: T) => U
+Line 39 col 24 IdentifierName "a" = T
+Line 39 col 27 IdentifierName "T" = T
+Line 39 col 33 IdentifierName "U" = U
+Line 39 col 36 IdentifierName "y" = U
+Line 39 col 39 IdentifierName "U" = U
+Line 40 col 19 InvocationExpression "cb(x)" = U
+Line 40 col 19 IdentifierName "cb" = (a: T) => U
+Line 40 col 22 IdentifierName "x" = T
+Line 44 col 8 IdentifierName "c2" = WithCandidates.C2<number, string>
+Line 44 col 12 IdentifierName "C2" = WithCandidates.C2<T, U>
+Line 45 col 8 IdentifierName "r7" = string
+Line 45 col 13 InvocationExpression "c2.foo3(1, <Z>(a: Z) => '', '')" = string
+Line 45 col 13 MemberAccessExpression "c2.foo3" = (x: number, cb: (a: number) => string, y: string) => string
+Line 45 col 13 IdentifierName "c2" = WithCandidates.C2<number, string>
+Line 45 col 16 IdentifierName "foo3" = (x: number, cb: (a: number) => string, y: string) => string
+Line 45 col 24 ParenthesizedArrowFunctionExpression "<Z>(a: Z) => ''" = <Z>(a: Z) => string
+Line 45 col 25 IdentifierName "Z" = Z
+Line 45 col 28 IdentifierName "a" = Z
+Line 45 col 31 IdentifierName "Z" = Z
+Line 46 col 8 IdentifierName "r8" = string
+Line 46 col 13 InvocationExpression "c2.foo3(1, function (a) { return '' }, '')" = string
+Line 46 col 13 MemberAccessExpression "c2.foo3" = (x: number, cb: (a: number) => string, y: string) => string
+Line 46 col 13 IdentifierName "c2" = WithCandidates.C2<number, string>
+Line 46 col 16 IdentifierName "foo3" = (x: number, cb: (a: number) => string, y: string) => string
+Line 46 col 24 FunctionExpression "function (a) { return '' }" = (a: number) => string
+Line 46 col 34 IdentifierName "a" = number
+Line 48 col 10 IdentifierName "C3" = WithCandidates.C3<T, U>
+Line 48 col 13 IdentifierName "T" = T
+Line 48 col 16 IdentifierName "U" = U
+Line 49 col 0 IdentifierName "foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 49 col 13 IdentifierName "T" = T
+Line 49 col 15 IdentifierName "U" = U
+Line 49 col 18 IdentifierName "x" = T
+Line 49 col 21 IdentifierName "T" = T
+Line 49 col 24 IdentifierName "cb" = (a: T) => U
+Line 49 col 29 IdentifierName "a" = T
+Line 49 col 32 IdentifierName "T" = T
+Line 49 col 38 IdentifierName "U" = U
+Line 49 col 41 IdentifierName "y" = U
+Line 49 col 44 IdentifierName "U" = U
+Line 50 col 19 InvocationExpression "cb(x)" = U
+Line 50 col 19 IdentifierName "cb" = (a: T) => U
+Line 50 col 22 IdentifierName "x" = T
+Line 53 col 8 IdentifierName "c3" = WithCandidates.C3<number, string>
+Line 53 col 12 IdentifierName "C3" = WithCandidates.C3<T, U>
+Line 55 col 13 IdentifierName "other" = typeof WithCandidates.other
+Line 55 col 19 IdentifierName "T" = T
+Line 55 col 22 IdentifierName "U" = U
+Line 55 col 25 IdentifierName "t" = T
+Line 55 col 28 IdentifierName "T" = T
+Line 55 col 31 IdentifierName "u" = U
+Line 55 col 34 IdentifierName "U" = U
+Line 56 col 12 IdentifierName "r10" = string
+Line 56 col 18 InvocationExpression "c.foo2(1, (x: T) => '')" = string
+Line 56 col 18 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 56 col 18 IdentifierName "c" = WithCandidates.C<number>
+Line 56 col 20 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 56 col 28 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 56 col 29 IdentifierName "x" = T
+Line 56 col 32 IdentifierName "T" = T
+Line 57 col 12 IdentifierName "r10" = string
+Line 57 col 18 InvocationExpression "c.foo2(1, (x) => '')" = string
+Line 57 col 18 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 57 col 18 IdentifierName "c" = WithCandidates.C<number>
+Line 57 col 20 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U
+Line 57 col 28 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: number) => string
+Line 57 col 29 IdentifierName "x" = number
+Line 59 col 12 IdentifierName "r11" = string
+Line 59 col 18 InvocationExpression "c3.foo3(1, (x: T) => '', '')" = string
+Line 59 col 18 MemberAccessExpression "c3.foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 59 col 18 IdentifierName "c3" = WithCandidates.C3<number, string>
+Line 59 col 21 IdentifierName "foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 59 col 29 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 59 col 30 IdentifierName "x" = T
+Line 59 col 33 IdentifierName "T" = T
+Line 60 col 12 IdentifierName "r11b" = {}
+Line 60 col 19 InvocationExpression "c3.foo3(1, (x: T) => '', 1)" = {}
+Line 60 col 19 MemberAccessExpression "c3.foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 60 col 19 IdentifierName "c3" = WithCandidates.C3<number, string>
+Line 60 col 22 IdentifierName "foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 60 col 30 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 60 col 31 IdentifierName "x" = T
+Line 60 col 34 IdentifierName "T" = T
+Line 61 col 12 IdentifierName "r12" = {}
+Line 61 col 18 InvocationExpression "c3.foo3(1, function (a) { return '' }, 1)" = {}
+Line 61 col 18 MemberAccessExpression "c3.foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 61 col 18 IdentifierName "c3" = WithCandidates.C3<number, string>
+Line 61 col 21 IdentifierName "foo3" = <T, U>(x: T, cb: (a: T) => U, y: U) => U
+Line 61 col 29 FunctionExpression "function (a) { return '' }" = (a: number) => string
+Line 61 col 39 IdentifierName "a" = number

@@ -254,13 +254,11 @@ module TypeScript {
         public findExternalModule(id: string) {
             id = normalizePath(id);
 
-            var dtsFile = id + ".d.ts";
-            var dtsCacheID = this.getDeclPathCacheID([dtsFile], PullElementKind.DynamicModule);
-            var symbol = <PullContainerSymbol>this.symbolCache[dtsCacheID];
-            if (symbol) {
-                return symbol;
-            }
-
+            // SPEC: Nov 18
+            // An external import declaration that specifies a relative external module name (section 11.2.1) resolves the name 
+            // relative to the directory of the containing source file.
+            // If a source file with the resulting path and file extension '.ts' exists, that file is added as a dependency.
+            // Otherwise, if a source file with the resulting path and file extension '.d.ts' exists, that file is added as a dependency.
             var tsFile = id + ".ts"
             var tsCacheID = this.getDeclPathCacheID([tsFile], PullElementKind.DynamicModule);
             symbol = <PullContainerSymbol>this.symbolCache[tsCacheID]
@@ -268,27 +266,47 @@ module TypeScript {
                 return symbol;
             }
 
-            symbol = null;
+            var dtsFile = id + ".d.ts";
+            var dtsCacheID = this.getDeclPathCacheID([dtsFile], PullElementKind.DynamicModule);
+            var symbol = <PullContainerSymbol>this.symbolCache[dtsCacheID];
+            if (symbol) {
+                return symbol;
+            }
+
+
+            var dtsSymbol: PullContainerSymbol;
             for (var i = 0; i < this.documents.length; i++) {
                 var document = this.documents[i];
                 var topLevelDecl = document.topLevelDecl(); // Script
 
                 if (topLevelDecl.isExternalModule()) {
-                    var isDtsFile = document.fileName === dtsFile;
-                    if (isDtsFile || document.fileName === tsFile) {
+                    var isTsFile = document.fileName === tsFile;
+                    if (isTsFile || document.fileName === dtsFile) {
                         var dynamicModuleDecl = topLevelDecl.getChildDecls()[0];
                         symbol = <PullContainerSymbol>dynamicModuleDecl.getSymbol();
-                        this.symbolCache[dtsCacheID] = isDtsFile ? symbol : null;
-                        this.symbolCache[tsCacheID] = !isDTSFile ? symbol : null;
-                        return symbol;
+
+                        if (isTsFile) {
+                            this.symbolCache[tsCacheID] = symbol;
+                            // .ts file found - can return immediately
+                            return symbol;
+                        }
+                        else {
+                            // .d.ts file found - save the symbol and continue looking for .ts file
+                            dtsSymbol = symbol;
+                        }
                     }
                 }
+            }
+
+            if (dtsSymbol) {
+                this.symbolCache[dtsCacheID] = symbol;
+                return dtsSymbol;
             }
 
             this.symbolCache[dtsCacheID] = null;
             this.symbolCache[tsCacheID] = null;
 
-            return symbol;
+            return null;
         }
 
         public findAmbientExternalModuleInGlobalContext(id: string) {

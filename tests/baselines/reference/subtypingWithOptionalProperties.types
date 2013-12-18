@@ -1,0 +1,26 @@
+=== tests/cases/compiler/subtypingWithOptionalProperties.ts ===
+Line 3 col 9 IdentifierName "f" = typeof f
+Line 3 col 11 IdentifierName "T" = T
+Line 3 col 14 IdentifierName "a" = T
+Line 3 col 17 IdentifierName "T" = T
+Line 4 col 8 IdentifierName "b" = { s?: number; }
+Line 4 col 13 IdentifierName "s" = number
+Line 4 col 28 IdentifierName "a" = T
+Line 5 col 11 IdentifierName "b" = { s?: number; }
+Line 8 col 4 IdentifierName "r" = { s?: number; }
+Line 8 col 8 InvocationExpression "f({ s: new Object() })" = { s?: number; }
+Line 8 col 8 IdentifierName "f" = typeof f
+Line 8 col 10 ObjectLiteralExpression "{ s: new Object() }" = { s: Object; }
+Line 8 col 12 IdentifierName "s" = Object
+Line 8 col 15 ObjectCreationExpression "new Object()" = Object
+Line 8 col 19 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+Line 9 col 0 LogicalAndExpression "r.s && r.s.toFixed()" = string
+Line 9 col 0 MemberAccessExpression "r.s" = number
+Line 9 col 0 IdentifierName "r" = { s?: number; }
+Line 9 col 2 IdentifierName "s" = number
+Line 9 col 7 InvocationExpression "r.s.toFixed()" = string
+Line 9 col 7 MemberAccessExpression "r.s.toFixed" = (fractionDigits?: number) => string
+Line 9 col 7 MemberAccessExpression "r.s" = number
+Line 9 col 7 IdentifierName "r" = { s?: number; }
+Line 9 col 9 IdentifierName "s" = number
+Line 9 col 11 IdentifierName "toFixed" = (fractionDigits?: number) => string

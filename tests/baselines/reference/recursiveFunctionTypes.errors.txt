@@ -12,8 +12,7 @@ recursiveFunctionTypes.ts(22,3): error TS2087: Could not select overload for 'ca
 recursiveFunctionTypes.ts(25,1): error TS2012: Cannot convert 'number' to '() => any':
 	Type '() => any' requires a call signature, but type 'Number' lacks one.
 recursiveFunctionTypes.ts(30,1): error TS2149: Overload signature is not compatible with function definition:
-	Call signatures of types 'typeof f6' and '() => number' are incompatible:
-		Call signature expects 0 or fewer parameters.
+	Call signatures of types 'typeof f6' and '() => number' are incompatible.
 recursiveFunctionTypes.ts(33,1): error TS2081: Supplied parameters do not match any signature of call target.
 recursiveFunctionTypes.ts(33,1): error TS2087: Could not select overload for 'call' expression.
 recursiveFunctionTypes.ts(34,1): error TS2082: Supplied parameters do not match any signature of call target:

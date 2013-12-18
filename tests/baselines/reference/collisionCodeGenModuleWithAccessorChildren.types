@@ -1,0 +1,42 @@
+=== tests/cases/compiler/collisionCodeGenModuleWithAccessorChildren.ts ===
+Line 0 col 7 IdentifierName "M" = M
+Line 1 col 15 IdentifierName "x" = number
+Line 2 col 10 IdentifierName "c" = M.c
+Line 3 col 16 IdentifierName "y" = any
+Line 4 col 12 IdentifierName "Z" = any
+Line 4 col 14 IdentifierName "M" = any
+Line 5 col 0 AssignmentExpression "this.y = x" = number
+Line 5 col 0 MemberAccessExpression "this.y" = any
+Line 5 col 0 ThisKeyword "this" = M.c
+Line 5 col 17 IdentifierName "y" = any
+Line 5 col 21 IdentifierName "x" = number
+Line 10 col 7 IdentifierName "M" = M
+Line 11 col 10 IdentifierName "d" = M.d
+Line 12 col 16 IdentifierName "y" = any
+Line 13 col 12 IdentifierName "Z" = any
+Line 13 col 14 IdentifierName "p" = any
+Line 14 col 16 IdentifierName "M" = number
+Line 15 col 0 AssignmentExpression "this.y = x" = number
+Line 15 col 0 MemberAccessExpression "this.y" = any
+Line 15 col 0 ThisKeyword "this" = M.d
+Line 15 col 17 IdentifierName "y" = any
+Line 15 col 21 IdentifierName "x" = number
+Line 20 col 7 IdentifierName "M" = M
+Line 21 col 10 IdentifierName "e" = M.e
+Line 22 col 16 IdentifierName "y" = any
+Line 23 col 12 IdentifierName "M" = any
+Line 23 col 14 IdentifierName "p" = any
+Line 24 col 0 AssignmentExpression "this.y = x" = number
+Line 24 col 0 MemberAccessExpression "this.y" = any
+Line 24 col 0 ThisKeyword "this" = M.e
+Line 24 col 17 IdentifierName "y" = any
+Line 24 col 21 IdentifierName "x" = number
+Line 29 col 7 IdentifierName "M" = M
+Line 30 col 10 IdentifierName "f" = M.f
+Line 31 col 12 IdentifierName "Z" = number
+Line 32 col 16 IdentifierName "M" = number
+Line 33 col 19 IdentifierName "x" = number
+Line 38 col 7 IdentifierName "M" = M
+Line 39 col 10 IdentifierName "e" = M.e
+Line 40 col 12 IdentifierName "M" = number
+Line 41 col 19 IdentifierName "x" = number

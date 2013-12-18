@@ -1,9 +1,4 @@
 contextualTyping33.ts(1,62): error TS2082: Supplied parameters do not match any signature of call target:
-	Type '{ (): number; (i: number): number; }' requires a call signature, but type '{}' lacks one.
 	Types of property 'concat' of types '{}[]' and '{ (): number; (i: number): number; }[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends T[]>(...items: U[]): { (): number; (i: number): number; }[]; (...items: { (): number; (i: number): number; }[]): { (): number; (i: number): number; }[]; }' are incompatible:
-			Type '{ (): number; (i: number): number; }' requires a call signature, but type '{}' lacks one.
-			Types of property 'pop' of types '{}[]' and '{ (): number; (i: number): number; }[]' are incompatible:
-				Call signatures of types '() => {}' and '() => { (): number; (i: number): number; }' are incompatible:
-					Type '{ (): number; (i: number): number; }' requires a call signature, but type '{}' lacks one.
+		Call signatures of types '{ <U extends {}[]>(...items: U[]): {}[]; (...items: {}[]): {}[]; }' and '{ <U extends { (): number; (i: number): number; }[]>(...items: U[]): { (): number; (i: number): number; }[]; (...items: { (): number; (i: number): number; }[]): { (): number; (i: number): number; }[]; }' are incompatible.
 contextualTyping33.ts(1,62): error TS2087: Could not select overload for 'call' expression.

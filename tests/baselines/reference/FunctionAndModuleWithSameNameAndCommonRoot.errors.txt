@@ -1,0 +1,5 @@
+module.ts(2,19): error TS2188: Module 'Point' cannot merge with previous declaration of 'Point' in a different file 'function.ts'.
+test.ts(2,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'fn' must be of type '() => { x: number; y: number; }', but here has type 'any'.
+test.ts(5,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'cl' must be of type '{ x: number; y: number; }', but here has type 'any'.
+test.ts(6,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'cl' must be of type '{ x: number; y: number; }', but here has type 'any'.
+simple.ts(13,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'fn' must be of type '() => { x: number; y: number; }', but here has type 'typeof B.Point'.

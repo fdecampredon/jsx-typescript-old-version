@@ -1,0 +1,5 @@
+=== tests/cases/compiler/autonumberingInEnums.ts ===
+Line 0 col 5 IdentifierName "Foo" = Foo
+Line 1 col 0 IdentifierName "a" = Foo
+Line 4 col 5 IdentifierName "Foo" = Foo
+Line 5 col 0 IdentifierName "b // should work fine" = Foo

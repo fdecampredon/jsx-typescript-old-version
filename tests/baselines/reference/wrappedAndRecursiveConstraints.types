@@ -21,7 +21,7 @@ Line 14 col 12 IdentifierName "C" = typeof C
 Line 14 col 14 IdentifierName "y" = Foo
 Line 15 col 4 IdentifierName "r" = Foo
 Line 15 col 8 InvocationExpression "c.foo(y)" = Foo
-Line 15 col 8 MemberAccessExpression "c.foo" = <U extends T>(x: U) => U
+Line 15 col 8 MemberAccessExpression "c.foo" = <U extends Foo>(x: U) => U
 Line 15 col 8 IdentifierName "c" = C<Foo>
-Line 15 col 10 IdentifierName "foo" = <U extends T>(x: U) => U
+Line 15 col 10 IdentifierName "foo" = <U extends Foo>(x: U) => U
 Line 15 col 14 IdentifierName "y" = Foo

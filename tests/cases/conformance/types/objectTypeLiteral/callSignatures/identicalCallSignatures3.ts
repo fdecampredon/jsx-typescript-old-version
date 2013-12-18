@@ -1,5 +1,5 @@
 // Normally it is an error to have multiple overloads with identical signatures in a single type declaration.
-// Here the multiple overloads come from multiple merged declarations and we also report errors.
+// Here the multiple overloads come from multiple merged declarations, so we do not report errors.
 
 interface I {
     (x: number): string;

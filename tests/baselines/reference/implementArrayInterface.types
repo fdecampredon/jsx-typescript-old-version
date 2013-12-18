@@ -1,0 +1,160 @@
+=== tests/cases/compiler/implementArrayInterface.ts ===
+Line 0 col 14 IdentifierName "ArrayConstructor" = ArrayConstructor<T>
+Line 0 col 31 IdentifierName "T" = T
+Line 0 col 45 IdentifierName "Array" = Array<T>
+Line 0 col 51 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "toString" = () => string
+Line 2 col 0 IdentifierName "toLocaleString" = () => string
+Line 3 col 0 IdentifierName "concat" = { <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }
+Line 3 col 11 IdentifierName "U" = U
+Line 3 col 21 IdentifierName "T" = T
+Line 3 col 29 IdentifierName "items" = U[]
+Line 3 col 36 IdentifierName "U" = U
+Line 3 col 42 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "concat" = { <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }
+Line 4 col 14 IdentifierName "items" = T[]
+Line 4 col 21 IdentifierName "T" = T
+Line 4 col 27 IdentifierName "T" = T
+Line 5 col 0 IdentifierName "join" = (separator?: string) => string
+Line 5 col 9 IdentifierName "separator" = string
+Line 6 col 0 IdentifierName "pop" = () => T
+Line 6 col 11 IdentifierName "T" = T
+Line 7 col 0 IdentifierName "push" = (...items: T[]) => number
+Line 7 col 12 IdentifierName "items" = T[]
+Line 7 col 19 IdentifierName "T" = T
+Line 8 col 0 IdentifierName "reverse" = () => T[]
+Line 8 col 15 IdentifierName "T" = T
+Line 9 col 0 IdentifierName "shift" = () => T
+Line 9 col 13 IdentifierName "T" = T
+Line 10 col 0 IdentifierName "slice" = (start?: number, end?: number) => T[]
+Line 10 col 10 IdentifierName "start" = number
+Line 10 col 26 IdentifierName "end" = number
+Line 10 col 41 IdentifierName "T" = T
+Line 11 col 0 IdentifierName "sort" = (compareFn?: (a: T, b: T) => number) => T[]
+Line 11 col 9 IdentifierName "compareFn" = (a: T, b: T) => number
+Line 11 col 22 IdentifierName "a" = T
+Line 11 col 25 IdentifierName "T" = T
+Line 11 col 28 IdentifierName "b" = T
+Line 11 col 31 IdentifierName "T" = T
+Line 11 col 46 IdentifierName "T" = T
+Line 12 col 0 IdentifierName "splice" = { (start: number): T[]; (start: number, deleteCount: number, ...items: T[]): T[]; }
+Line 12 col 11 IdentifierName "start" = number
+Line 12 col 27 IdentifierName "T" = T
+Line 13 col 0 IdentifierName "splice" = { (start: number): T[]; (start: number, deleteCount: number, ...items: T[]): T[]; }
+Line 13 col 11 IdentifierName "start" = number
+Line 13 col 26 IdentifierName "deleteCount" = number
+Line 13 col 50 IdentifierName "items" = T[]
+Line 13 col 57 IdentifierName "T" = T
+Line 13 col 63 IdentifierName "T" = T
+Line 14 col 0 IdentifierName "unshift" = (...items: T[]) => number
+Line 14 col 15 IdentifierName "items" = T[]
+Line 14 col 22 IdentifierName "T" = T
+Line 15 col 0 IdentifierName "indexOf" = (searchElement: T, fromIndex?: number) => number
+Line 16 col 12 IdentifierName "searchElement" = T
+Line 16 col 27 IdentifierName "T" = T
+Line 16 col 30 IdentifierName "fromIndex" = number
+Line 17 col 0 IdentifierName "lastIndexOf" = (searchElement: T, fromIndex?: number) => number
+Line 17 col 16 IdentifierName "searchElement" = T
+Line 17 col 31 IdentifierName "T" = T
+Line 17 col 34 IdentifierName "fromIndex" = number
+Line 18 col 0 IdentifierName "every" = (callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any) => boolean
+Line 18 col 10 IdentifierName "callbackfn" = (value: T, index: number, array: T[]) => boolean
+Line 18 col 23 IdentifierName "value" = T
+Line 18 col 30 IdentifierName "T" = T
+Line 18 col 33 IdentifierName "index" = number
+Line 18 col 48 IdentifierName "array" = T[]
+Line 18 col 55 IdentifierName "T" = T
+Line 18 col 72 IdentifierName "thisArg" = any
+Line 19 col 0 IdentifierName "some" = (callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any) => boolean
+Line 19 col 9 IdentifierName "callbackfn" = (value: T, index: number, array: T[]) => boolean
+Line 19 col 22 IdentifierName "value" = T
+Line 19 col 29 IdentifierName "T" = T
+Line 19 col 32 IdentifierName "index" = number
+Line 19 col 47 IdentifierName "array" = T[]
+Line 19 col 54 IdentifierName "T" = T
+Line 19 col 71 IdentifierName "thisArg" = any
+Line 20 col 0 IdentifierName "forEach" = (callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any) => void
+Line 20 col 12 IdentifierName "callbackfn" = (value: T, index: number, array: T[]) => void
+Line 20 col 25 IdentifierName "value" = T
+Line 20 col 32 IdentifierName "T" = T
+Line 20 col 35 IdentifierName "index" = number
+Line 20 col 50 IdentifierName "array" = T[]
+Line 20 col 57 IdentifierName "T" = T
+Line 20 col 71 IdentifierName "thisArg" = any
+Line 21 col 0 IdentifierName "map" = <U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any) => U[]
+Line 21 col 8 IdentifierName "U" = U
+Line 21 col 11 IdentifierName "callbackfn" = (value: T, index: number, array: T[]) => U
+Line 21 col 24 IdentifierName "value" = T
+Line 21 col 31 IdentifierName "T" = T
+Line 21 col 34 IdentifierName "index" = number
+Line 21 col 49 IdentifierName "array" = T[]
+Line 21 col 56 IdentifierName "T" = T
+Line 21 col 64 IdentifierName "U" = U
+Line 21 col 67 IdentifierName "thisArg" = any
+Line 21 col 83 IdentifierName "U" = U
+Line 22 col 0 IdentifierName "filter" = (callbackfn: (value: T, index: number, array: T[]) => boolean, thisArg?: any) => T[]
+Line 22 col 11 IdentifierName "callbackfn" = (value: T, index: number, array: T[]) => boolean
+Line 22 col 24 IdentifierName "value" = T
+Line 22 col 31 IdentifierName "T" = T
+Line 22 col 34 IdentifierName "index" = number
+Line 22 col 49 IdentifierName "array" = T[]
+Line 22 col 56 IdentifierName "T" = T
+Line 22 col 73 IdentifierName "thisArg" = any
+Line 22 col 89 IdentifierName "T" = T
+Line 23 col 0 IdentifierName "reduce" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+Line 23 col 11 IdentifierName "callbackfn" = (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T
+Line 23 col 24 IdentifierName "previousValue" = T
+Line 23 col 39 IdentifierName "T" = T
+Line 23 col 42 IdentifierName "currentValue" = T
+Line 23 col 56 IdentifierName "T" = T
+Line 23 col 59 IdentifierName "currentIndex" = number
+Line 23 col 81 IdentifierName "array" = T[]
+Line 23 col 88 IdentifierName "T" = T
+Line 23 col 96 IdentifierName "T" = T
+Line 23 col 99 IdentifierName "initialValue" = T
+Line 23 col 114 IdentifierName "T" = T
+Line 23 col 118 IdentifierName "T" = T
+Line 24 col 0 IdentifierName "reduce" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+Line 24 col 11 IdentifierName "U" = U
+Line 24 col 14 IdentifierName "callbackfn" = (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U
+Line 24 col 27 IdentifierName "previousValue" = U
+Line 24 col 42 IdentifierName "U" = U
+Line 24 col 45 IdentifierName "currentValue" = T
+Line 24 col 59 IdentifierName "T" = T
+Line 24 col 62 IdentifierName "currentIndex" = number
+Line 24 col 84 IdentifierName "array" = T[]
+Line 24 col 91 IdentifierName "T" = T
+Line 24 col 99 IdentifierName "U" = U
+Line 24 col 102 IdentifierName "initialValue" = U
+Line 24 col 116 IdentifierName "U" = U
+Line 24 col 120 IdentifierName "U" = U
+Line 25 col 0 IdentifierName "reduceRight" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+Line 25 col 16 IdentifierName "callbackfn" = (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T
+Line 25 col 29 IdentifierName "previousValue" = T
+Line 25 col 44 IdentifierName "T" = T
+Line 25 col 47 IdentifierName "currentValue" = T
+Line 25 col 61 IdentifierName "T" = T
+Line 25 col 64 IdentifierName "currentIndex" = number
+Line 25 col 86 IdentifierName "array" = T[]
+Line 25 col 93 IdentifierName "T" = T
+Line 25 col 101 IdentifierName "T" = T
+Line 25 col 104 IdentifierName "initialValue" = T
+Line 25 col 119 IdentifierName "T" = T
+Line 25 col 123 IdentifierName "T" = T
+Line 26 col 0 IdentifierName "reduceRight" = { (callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue?: T): T; <U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U; }
+Line 26 col 16 IdentifierName "U" = U
+Line 26 col 19 IdentifierName "callbackfn" = (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U
+Line 26 col 32 IdentifierName "previousValue" = U
+Line 26 col 47 IdentifierName "U" = U
+Line 26 col 50 IdentifierName "currentValue" = T
+Line 26 col 64 IdentifierName "T" = T
+Line 26 col 67 IdentifierName "currentIndex" = number
+Line 26 col 89 IdentifierName "array" = T[]
+Line 26 col 96 IdentifierName "T" = T
+Line 26 col 104 IdentifierName "U" = U
+Line 26 col 107 IdentifierName "initialValue" = U
+Line 26 col 121 IdentifierName "U" = U
+Line 26 col 125 IdentifierName "U" = U
+Line 27 col 0 IdentifierName "length" = number
+Line 30 col 5 IdentifierName "n" = number
+Line 30 col 17 IdentifierName "T" = T

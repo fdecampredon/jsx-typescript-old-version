@@ -1,0 +1,313 @@
+=== tests/cases/compiler/genericCallWithConstraintsTypeArgumentInference.ts ===
+Line 2 col 6 IdentifierName "Base" = Base
+Line 2 col 13 IdentifierName "foo" = string
+Line 3 col 6 IdentifierName "Derived" = Derived
+Line 3 col 22 IdentifierName "Base" = Base
+Line 3 col 29 IdentifierName "bar" = string
+Line 4 col 6 IdentifierName "Derived2" = Derived2
+Line 4 col 23 IdentifierName "Derived" = Derived
+Line 4 col 33 IdentifierName "baz" = string
+Line 5 col 4 IdentifierName "b" = Base
+Line 5 col 7 IdentifierName "Base" = Base
+Line 6 col 4 IdentifierName "d1" = Derived
+Line 6 col 8 IdentifierName "Derived" = Derived
+Line 7 col 4 IdentifierName "d2" = Derived2
+Line 7 col 8 IdentifierName "Derived2" = Derived2
+Line 9 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 13 IdentifierName "T" = T
+Line 9 col 23 IdentifierName "Base" = Base
+Line 9 col 29 IdentifierName "t" = T
+Line 9 col 32 IdentifierName "T" = T
+Line 10 col 11 IdentifierName "t" = T
+Line 13 col 4 IdentifierName "r" = Base
+Line 13 col 8 InvocationExpression "foo(b)" = Base
+Line 13 col 8 IdentifierName "foo" = typeof foo
+Line 13 col 12 IdentifierName "b" = Base
+Line 14 col 4 IdentifierName "r2" = Derived
+Line 14 col 9 InvocationExpression "foo(d1)" = Derived
+Line 14 col 9 IdentifierName "foo" = typeof foo
+Line 14 col 13 IdentifierName "d1" = Derived
+Line 16 col 9 IdentifierName "foo2" = typeof foo2
+Line 16 col 14 IdentifierName "T" = T
+Line 16 col 24 IdentifierName "Base" = Base
+Line 16 col 30 IdentifierName "U" = U
+Line 16 col 40 IdentifierName "Derived" = Derived
+Line 16 col 49 IdentifierName "t" = T
+Line 16 col 52 IdentifierName "T" = T
+Line 16 col 55 IdentifierName "u" = U
+Line 16 col 58 IdentifierName "U" = U
+Line 17 col 11 IdentifierName "u" = U
+Line 20 col 9 IdentifierName "foo2b" = typeof foo2b
+Line 20 col 15 IdentifierName "T" = T
+Line 20 col 25 IdentifierName "Base" = Base
+Line 20 col 31 IdentifierName "U" = U
+Line 20 col 41 IdentifierName "Derived" = Derived
+Line 20 col 50 IdentifierName "u" = U
+Line 20 col 53 IdentifierName "U" = U
+Line 21 col 8 IdentifierName "x" = T
+Line 21 col 11 IdentifierName "T" = T
+Line 22 col 11 IdentifierName "x" = T
+Line 25 col 9 IdentifierName "foo2c" = typeof foo2c
+Line 25 col 15 IdentifierName "T" = T
+Line 25 col 25 IdentifierName "Base" = Base
+Line 25 col 31 IdentifierName "U" = U
+Line 25 col 41 IdentifierName "Derived" = Derived
+Line 26 col 8 IdentifierName "x" = T
+Line 26 col 11 IdentifierName "T" = T
+Line 27 col 11 IdentifierName "x" = T
+Line 32 col 4 IdentifierName "r3b" = {}
+Line 32 col 10 InvocationExpression "foo2c()" = {}
+Line 32 col 10 IdentifierName "foo2c" = typeof foo2c
+Line 34 col 6 IdentifierName "C" = C<T, U>
+Line 34 col 8 IdentifierName "T" = T
+Line 34 col 18 IdentifierName "Base" = Base
+Line 34 col 24 IdentifierName "U" = U
+Line 34 col 34 IdentifierName "Derived" = Derived
+Line 35 col 23 IdentifierName "t" = T
+Line 35 col 26 IdentifierName "T" = T
+Line 35 col 36 IdentifierName "u" = U
+Line 35 col 39 IdentifierName "U" = U
+Line 37 col 0 IdentifierName "foo" = (t: T, u: U) => T
+Line 38 col 8 IdentifierName "t" = T
+Line 38 col 11 IdentifierName "T" = T
+Line 38 col 14 IdentifierName "u" = U
+Line 38 col 17 IdentifierName "U" = U
+Line 39 col 15 IdentifierName "t" = T
+Line 41 col 0 IdentifierName "foo2" = (t: T, u: U) => U
+Line 42 col 9 IdentifierName "t" = T
+Line 42 col 12 IdentifierName "T" = T
+Line 42 col 15 IdentifierName "u" = U
+Line 42 col 18 IdentifierName "U" = U
+Line 43 col 15 IdentifierName "u" = U
+Line 45 col 0 IdentifierName "foo3" = <T extends Derived>(t: T, u: U) => T
+Line 46 col 9 IdentifierName "T" = T
+Line 46 col 19 IdentifierName "Derived" = Derived
+Line 46 col 28 IdentifierName "t" = T
+Line 46 col 31 IdentifierName "T" = T
+Line 46 col 34 IdentifierName "u" = U
+Line 46 col 37 IdentifierName "U" = U
+Line 47 col 15 IdentifierName "t" = T
+Line 49 col 0 IdentifierName "foo4" = <U extends Derived2>(t: T, u: U) => T
+Line 50 col 9 IdentifierName "U" = U
+Line 50 col 19 IdentifierName "Derived2" = Derived2
+Line 50 col 29 IdentifierName "t" = T
+Line 50 col 32 IdentifierName "T" = T
+Line 50 col 35 IdentifierName "u" = U
+Line 50 col 38 IdentifierName "U" = U
+Line 51 col 15 IdentifierName "t" = T
+Line 53 col 0 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 54 col 9 IdentifierName "T" = T
+Line 54 col 19 IdentifierName "Derived" = Derived
+Line 54 col 28 IdentifierName "U" = U
+Line 54 col 38 IdentifierName "Derived2" = Derived2
+Line 54 col 48 IdentifierName "t" = T
+Line 54 col 51 IdentifierName "T" = T
+Line 54 col 54 IdentifierName "u" = U
+Line 54 col 57 IdentifierName "U" = U
+Line 55 col 15 IdentifierName "t" = T
+Line 57 col 0 IdentifierName "foo6" = <T extends Derived, U extends Derived2>() => T
+Line 58 col 9 IdentifierName "T" = T
+Line 58 col 19 IdentifierName "Derived" = Derived
+Line 58 col 28 IdentifierName "U" = U
+Line 58 col 38 IdentifierName "Derived2" = Derived2
+Line 59 col 12 IdentifierName "x" = T
+Line 59 col 15 IdentifierName "T" = T
+Line 60 col 15 IdentifierName "x" = T
+Line 62 col 0 IdentifierName "foo7" = <T extends Base, U extends Derived>(u: U) => T
+Line 63 col 9 IdentifierName "T" = T
+Line 63 col 19 IdentifierName "Base" = Base
+Line 63 col 25 IdentifierName "U" = U
+Line 63 col 35 IdentifierName "Derived" = Derived
+Line 63 col 44 IdentifierName "u" = U
+Line 63 col 47 IdentifierName "U" = U
+Line 64 col 12 IdentifierName "x" = T
+Line 64 col 15 IdentifierName "T" = T
+Line 65 col 15 IdentifierName "x" = T
+Line 67 col 0 IdentifierName "foo8" = <T extends Base, U extends Derived>() => T
+Line 68 col 9 IdentifierName "T" = T
+Line 68 col 19 IdentifierName "Base" = Base
+Line 68 col 25 IdentifierName "U" = U
+Line 68 col 35 IdentifierName "Derived" = Derived
+Line 69 col 12 IdentifierName "x" = T
+Line 69 col 15 IdentifierName "T" = T
+Line 70 col 15 IdentifierName "x" = T
+Line 74 col 4 IdentifierName "c" = C<Base, Derived>
+Line 74 col 8 ObjectCreationExpression "new C(b, d1)" = C<Base, Derived>
+Line 74 col 12 IdentifierName "C" = typeof C
+Line 74 col 14 IdentifierName "b" = Base
+Line 74 col 17 IdentifierName "d1" = Derived
+Line 75 col 4 IdentifierName "r4" = Base
+Line 75 col 9 InvocationExpression "c.foo(d1, d2)" = Base
+Line 75 col 9 MemberAccessExpression "c.foo" = (t: Base, u: Derived) => Base
+Line 75 col 9 IdentifierName "c" = C<Base, Derived>
+Line 75 col 11 IdentifierName "foo" = (t: Base, u: Derived) => Base
+Line 75 col 15 IdentifierName "d1" = Derived
+Line 75 col 19 IdentifierName "d2" = Derived2
+Line 76 col 4 IdentifierName "r5" = Derived
+Line 76 col 9 InvocationExpression "c.foo2(b, d2)" = Derived
+Line 76 col 9 MemberAccessExpression "c.foo2" = (t: Base, u: Derived) => Derived
+Line 76 col 9 IdentifierName "c" = C<Base, Derived>
+Line 76 col 11 IdentifierName "foo2" = (t: Base, u: Derived) => Derived
+Line 76 col 16 IdentifierName "b" = Base
+Line 76 col 19 IdentifierName "d2" = Derived2
+Line 77 col 4 IdentifierName "r6" = Derived
+Line 77 col 9 InvocationExpression "c.foo3(d1, d1)" = Derived
+Line 77 col 9 MemberAccessExpression "c.foo3" = <T extends Derived>(t: T, u: Derived) => T
+Line 77 col 9 IdentifierName "c" = C<Base, Derived>
+Line 77 col 11 IdentifierName "foo3" = <T extends Derived>(t: T, u: Derived) => T
+Line 77 col 16 IdentifierName "d1" = Derived
+Line 77 col 20 IdentifierName "d1" = Derived
+Line 78 col 4 IdentifierName "r7" = Base
+Line 78 col 9 InvocationExpression "c.foo4(d1, d2)" = Base
+Line 78 col 9 MemberAccessExpression "c.foo4" = <U extends Derived2>(t: Base, u: U) => Base
+Line 78 col 9 IdentifierName "c" = C<Base, Derived>
+Line 78 col 11 IdentifierName "foo4" = <U extends Derived2>(t: Base, u: U) => Base
+Line 78 col 16 IdentifierName "d1" = Derived
+Line 78 col 20 IdentifierName "d2" = Derived2
+Line 79 col 4 IdentifierName "r8" = Derived
+Line 79 col 9 InvocationExpression "c.foo5(d1, d2)" = Derived
+Line 79 col 9 MemberAccessExpression "c.foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 79 col 9 IdentifierName "c" = C<Base, Derived>
+Line 79 col 11 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 79 col 16 IdentifierName "d1" = Derived
+Line 79 col 20 IdentifierName "d2" = Derived2
+Line 80 col 4 IdentifierName "r8b" = Derived2
+Line 80 col 10 InvocationExpression "c.foo5(d2, d2)" = Derived2
+Line 80 col 10 MemberAccessExpression "c.foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 80 col 10 IdentifierName "c" = C<Base, Derived>
+Line 80 col 12 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 80 col 17 IdentifierName "d2" = Derived2
+Line 80 col 21 IdentifierName "d2" = Derived2
+Line 81 col 4 IdentifierName "r9" = {}
+Line 81 col 9 InvocationExpression "c.foo6()" = {}
+Line 81 col 9 MemberAccessExpression "c.foo6" = <T extends Derived, U extends Derived2>() => T
+Line 81 col 9 IdentifierName "c" = C<Base, Derived>
+Line 81 col 11 IdentifierName "foo6" = <T extends Derived, U extends Derived2>() => T
+Line 84 col 4 IdentifierName "r11" = {}
+Line 84 col 10 InvocationExpression "c.foo8()" = {}
+Line 84 col 10 MemberAccessExpression "c.foo8" = <T extends Base, U extends Derived>() => T
+Line 84 col 10 IdentifierName "c" = C<Base, Derived>
+Line 84 col 12 IdentifierName "foo8" = <T extends Base, U extends Derived>() => T
+Line 86 col 10 IdentifierName "I" = I<T, U>
+Line 86 col 12 IdentifierName "T" = T
+Line 86 col 22 IdentifierName "Base" = Base
+Line 86 col 28 IdentifierName "U" = U
+Line 86 col 38 IdentifierName "Derived" = Derived
+Line 87 col 9 IdentifierName "t" = T
+Line 87 col 12 IdentifierName "T" = T
+Line 87 col 15 IdentifierName "u" = U
+Line 87 col 18 IdentifierName "U" = U
+Line 88 col 0 IdentifierName "foo" = (t: T, u: U) => T
+Line 88 col 8 IdentifierName "t" = T
+Line 88 col 11 IdentifierName "T" = T
+Line 88 col 14 IdentifierName "u" = U
+Line 88 col 17 IdentifierName "U" = U
+Line 88 col 21 IdentifierName "T" = T
+Line 89 col 0 IdentifierName "foo2" = (t: T, u: U) => U
+Line 89 col 9 IdentifierName "t" = T
+Line 89 col 12 IdentifierName "T" = T
+Line 89 col 15 IdentifierName "u" = U
+Line 89 col 18 IdentifierName "U" = U
+Line 89 col 22 IdentifierName "U" = U
+Line 90 col 0 IdentifierName "foo3" = <T extends Derived>(t: T, u: U) => T
+Line 90 col 9 IdentifierName "T" = T
+Line 90 col 19 IdentifierName "Derived" = Derived
+Line 90 col 28 IdentifierName "t" = T
+Line 90 col 31 IdentifierName "T" = T
+Line 90 col 34 IdentifierName "u" = U
+Line 90 col 37 IdentifierName "U" = U
+Line 90 col 41 IdentifierName "T" = T
+Line 91 col 0 IdentifierName "foo4" = <U extends Derived2>(t: T, u: U) => T
+Line 91 col 9 IdentifierName "U" = U
+Line 91 col 19 IdentifierName "Derived2" = Derived2
+Line 91 col 29 IdentifierName "t" = T
+Line 91 col 32 IdentifierName "T" = T
+Line 91 col 35 IdentifierName "u" = U
+Line 91 col 38 IdentifierName "U" = U
+Line 91 col 42 IdentifierName "T" = T
+Line 92 col 0 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 92 col 9 IdentifierName "T" = T
+Line 92 col 19 IdentifierName "Derived" = Derived
+Line 92 col 28 IdentifierName "U" = U
+Line 92 col 38 IdentifierName "Derived2" = Derived2
+Line 92 col 48 IdentifierName "t" = T
+Line 92 col 51 IdentifierName "T" = T
+Line 92 col 54 IdentifierName "u" = U
+Line 92 col 57 IdentifierName "U" = U
+Line 92 col 61 IdentifierName "T" = T
+Line 93 col 0 IdentifierName "foo6" = <T extends Derived, U extends Derived2>() => T
+Line 93 col 9 IdentifierName "T" = T
+Line 93 col 19 IdentifierName "Derived" = Derived
+Line 93 col 28 IdentifierName "U" = U
+Line 93 col 38 IdentifierName "Derived2" = Derived2
+Line 93 col 51 IdentifierName "T" = T
+Line 94 col 0 IdentifierName "foo7" = <T extends Base, U extends Derived>(u: U) => T
+Line 94 col 9 IdentifierName "T" = T
+Line 94 col 19 IdentifierName "Base" = Base
+Line 94 col 25 IdentifierName "U" = U
+Line 94 col 35 IdentifierName "Derived" = Derived
+Line 94 col 44 IdentifierName "u" = U
+Line 94 col 47 IdentifierName "U" = U
+Line 94 col 51 IdentifierName "T" = T
+Line 95 col 0 IdentifierName "foo8" = <T extends Base, U extends Derived>() => T
+Line 95 col 9 IdentifierName "T" = T
+Line 95 col 19 IdentifierName "Base" = Base
+Line 95 col 25 IdentifierName "U" = U
+Line 95 col 35 IdentifierName "Derived" = Derived
+Line 95 col 47 IdentifierName "T" = T
+Line 98 col 4 IdentifierName "i" = I<Base, Derived>
+Line 98 col 7 IdentifierName "I" = I<T, U>
+Line 98 col 9 IdentifierName "Base" = Base
+Line 98 col 15 IdentifierName "Derived" = Derived
+Line 99 col 4 IdentifierName "r4" = Base
+Line 99 col 9 InvocationExpression "i.foo(d1, d2)" = Base
+Line 99 col 9 MemberAccessExpression "i.foo" = (t: Base, u: Derived) => Base
+Line 99 col 9 IdentifierName "i" = I<Base, Derived>
+Line 99 col 11 IdentifierName "foo" = (t: Base, u: Derived) => Base
+Line 99 col 15 IdentifierName "d1" = Derived
+Line 99 col 19 IdentifierName "d2" = Derived2
+Line 100 col 4 IdentifierName "r5" = Derived
+Line 100 col 9 InvocationExpression "i.foo2(b, d2)" = Derived
+Line 100 col 9 MemberAccessExpression "i.foo2" = (t: Base, u: Derived) => Derived
+Line 100 col 9 IdentifierName "i" = I<Base, Derived>
+Line 100 col 11 IdentifierName "foo2" = (t: Base, u: Derived) => Derived
+Line 100 col 16 IdentifierName "b" = Base
+Line 100 col 19 IdentifierName "d2" = Derived2
+Line 101 col 4 IdentifierName "r6" = Derived
+Line 101 col 9 InvocationExpression "i.foo3(d1, d1)" = Derived
+Line 101 col 9 MemberAccessExpression "i.foo3" = <T extends Derived>(t: T, u: Derived) => T
+Line 101 col 9 IdentifierName "i" = I<Base, Derived>
+Line 101 col 11 IdentifierName "foo3" = <T extends Derived>(t: T, u: Derived) => T
+Line 101 col 16 IdentifierName "d1" = Derived
+Line 101 col 20 IdentifierName "d1" = Derived
+Line 102 col 4 IdentifierName "r7" = Base
+Line 102 col 9 InvocationExpression "i.foo4(d1, d2)" = Base
+Line 102 col 9 MemberAccessExpression "i.foo4" = <U extends Derived2>(t: Base, u: U) => Base
+Line 102 col 9 IdentifierName "i" = I<Base, Derived>
+Line 102 col 11 IdentifierName "foo4" = <U extends Derived2>(t: Base, u: U) => Base
+Line 102 col 16 IdentifierName "d1" = Derived
+Line 102 col 20 IdentifierName "d2" = Derived2
+Line 103 col 4 IdentifierName "r8" = Derived
+Line 103 col 9 InvocationExpression "i.foo5(d1, d2)" = Derived
+Line 103 col 9 MemberAccessExpression "i.foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 103 col 9 IdentifierName "i" = I<Base, Derived>
+Line 103 col 11 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 103 col 16 IdentifierName "d1" = Derived
+Line 103 col 20 IdentifierName "d2" = Derived2
+Line 104 col 4 IdentifierName "r8b" = Derived2
+Line 104 col 10 InvocationExpression "i.foo5(d2, d2)" = Derived2
+Line 104 col 10 MemberAccessExpression "i.foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 104 col 10 IdentifierName "i" = I<Base, Derived>
+Line 104 col 12 IdentifierName "foo5" = <T extends Derived, U extends Derived2>(t: T, u: U) => T
+Line 104 col 17 IdentifierName "d2" = Derived2
+Line 104 col 21 IdentifierName "d2" = Derived2
+Line 105 col 4 IdentifierName "r9" = {}
+Line 105 col 9 InvocationExpression "i.foo6()" = {}
+Line 105 col 9 MemberAccessExpression "i.foo6" = <T extends Derived, U extends Derived2>() => T
+Line 105 col 9 IdentifierName "i" = I<Base, Derived>
+Line 105 col 11 IdentifierName "foo6" = <T extends Derived, U extends Derived2>() => T
+Line 108 col 4 IdentifierName "r11" = {}
+Line 108 col 10 InvocationExpression "i.foo8()" = {}
+Line 108 col 10 MemberAccessExpression "i.foo8" = <T extends Base, U extends Derived>() => T
+Line 108 col 10 IdentifierName "i" = I<Base, Derived>
+Line 108 col 12 IdentifierName "foo8" = <T extends Base, U extends Derived>() => T

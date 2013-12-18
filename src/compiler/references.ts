@@ -24,12 +24,14 @@
 ///<reference path='typecheck\pullFlags.ts' />
 ///<reference path='typecheck\pullDecls.ts' />
 ///<reference path='typecheck\pullSymbols.ts' />
+///<reference path='typecheck\pullTypeEnclosingTypeWalker.ts' />
 ///<reference path='typecheck\pullTypeResolutionContext.ts' />
 ///<reference path='typecheck\pullTypeResolution.ts' />
 ///<reference path='typecheck\pullSemanticInfo.ts' />
 ///<reference path='typecheck\pullDeclCollection.ts' />
 ///<reference path='typecheck\pullSymbolBinder.ts' />
 ///<reference path='typecheck\pullHelpers.ts' />
+///<reference path='typecheck\pullInstantiationHelpers.ts' />
 
 ///<reference path='typecheck\pullTypeInstantiation.ts' />
 ///<reference path='syntaxTreeToAstVisitor.ts' />

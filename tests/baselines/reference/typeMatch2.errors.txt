@@ -5,21 +5,11 @@ typeMatch2.ts(4,5): error TS2012: Cannot convert '{ x: number; }' to '{ x: numbe
 typeMatch2.ts(6,5): error TS2012: Cannot convert '{ x: number; z: number; }' to '{ x: number; y: number; }':
 	Type '{ x: number; z: number; }' is missing property 'y' from type '{ x: number; y: number; }'.
 typeMatch2.ts(18,5): error TS2012: Cannot convert 'Animal[]' to 'Giraffe[]':
-	Type 'Animal' is missing property 'g' from type 'Giraffe'.
 	Types of property 'concat' of types 'Animal[]' and 'Giraffe[]' are incompatible:
-		Call signatures of types '{ <U extends T[]>(...items: U[]): Animal[]; (...items: Animal[]): Animal[]; }' and '{ <U extends T[]>(...items: U[]): Giraffe[]; (...items: Giraffe[]): Giraffe[]; }' are incompatible:
-			Type 'Animal' is missing property 'g' from type 'Giraffe'.
-			Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
-				Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:
-					Type 'Animal' is missing property 'g' from type 'Giraffe'.
+		Call signatures of types '{ <U extends Animal[]>(...items: U[]): Animal[]; (...items: Animal[]): Animal[]; }' and '{ <U extends Giraffe[]>(...items: U[]): Giraffe[]; (...items: Giraffe[]): Giraffe[]; }' are incompatible.
 typeMatch2.ts(22,5): error TS2012: Cannot convert '{ f1: number; f2: Animal[]; }' to '{ f1: number; f2: Giraffe[]; }':
 	Types of property 'f2' of types '{ f1: number; f2: Animal[]; }' and '{ f1: number; f2: Giraffe[]; }' are incompatible:
-		Type 'Animal' is missing property 'g' from type 'Giraffe'.
 		Types of property 'concat' of types 'Animal[]' and 'Giraffe[]' are incompatible:
-			Call signatures of types '{ <U extends T[]>(...items: U[]): Animal[]; (...items: Animal[]): Animal[]; }' and '{ <U extends T[]>(...items: U[]): Giraffe[]; (...items: Giraffe[]): Giraffe[]; }' are incompatible:
-				Type 'Animal' is missing property 'g' from type 'Giraffe'.
-				Types of property 'pop' of types 'Animal[]' and 'Giraffe[]' are incompatible:
-					Call signatures of types '() => Animal' and '() => Giraffe' are incompatible:
-						Type 'Animal' is missing property 'g' from type 'Giraffe'.
+			Call signatures of types '{ <U extends Animal[]>(...items: U[]): Animal[]; (...items: Animal[]): Animal[]; }' and '{ <U extends Giraffe[]>(...items: U[]): Giraffe[]; (...items: Giraffe[]): Giraffe[]; }' are incompatible.
 typeMatch2.ts(35,5): error TS2012: Cannot convert '{ x: number; }' to '{ x: number; y: number; }':
 	Type '{ x: number; }' is missing property 'y' from type '{ x: number; y: number; }'.

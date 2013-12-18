@@ -106,6 +106,13 @@ class CompilerBaselineRunner extends RunnerBase {
                 });
             }
 
+            // Source maps?
+            if (result.sourceMapRecord) {
+                Harness.Baseline.runBaseline('Correct sourcemap content for ' + fileName, justName.replace(/\.ts$/, '.sourcemap.txt'), () => {
+                    return result.sourceMapRecord;
+                });
+            }
+
             // if the .d.ts is non-empty, confirm it compiles correctly as well
             if (this.decl && result.declFilesCode.length > 0 && result.errors.length === 0) {
                 var declErrors: string[] = undefined;

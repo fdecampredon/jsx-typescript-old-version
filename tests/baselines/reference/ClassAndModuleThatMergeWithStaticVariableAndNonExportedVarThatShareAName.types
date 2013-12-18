@@ -1,0 +1,22 @@
+=== tests/cases/compiler/ClassAndModuleThatMergeWithStaticVariableAndNonExportedVarThatShareAName.ts ===
+Line 0 col 6 IdentifierName "Point" = Point
+Line 1 col 23 IdentifierName "x" = number
+Line 1 col 41 IdentifierName "y" = number
+Line 3 col 11 IdentifierName "Origin" = Point
+Line 3 col 19 IdentifierName "Point" = Point
+Line 3 col 27 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
+Line 3 col 29 IdentifierName "x" = number
+Line 3 col 35 IdentifierName "y" = number
+Line 6 col 7 IdentifierName "Point" = Point
+Line 7 col 8 IdentifierName "Origin" = string
+Line 11 col 7 IdentifierName "A" = A
+Line 12 col 17 IdentifierName "Point" = A.Point
+Line 13 col 27 IdentifierName "x" = number
+Line 13 col 45 IdentifierName "y" = number
+Line 15 col 15 IdentifierName "Origin" = A.Point
+Line 15 col 23 IdentifierName "Point" = A.Point
+Line 15 col 31 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
+Line 15 col 33 IdentifierName "x" = number
+Line 15 col 39 IdentifierName "y" = number
+Line 18 col 18 IdentifierName "Point" = A.Point
+Line 19 col 12 IdentifierName "Origin" = string

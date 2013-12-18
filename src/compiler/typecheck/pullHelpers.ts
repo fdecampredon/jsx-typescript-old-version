@@ -6,6 +6,19 @@
 module TypeScript {
 
     export module PullHelpers {
+        // This helps in case we would like to make sure we have type while we are resolving/infering types for it
+        // without infering back to any because we incorrectly detected recursive resolution of function
+        export function resolveDeclaredSymbolToUseType(symbol: PullSymbol) {
+            if (symbol.isSignature()) {
+                if (!(<PullSignatureSymbol>symbol).returnType) {
+                    symbol._resolveDeclaredSymbol();
+                }
+            }
+            else if (!symbol.type) {
+                symbol._resolveDeclaredSymbol();
+            }
+        }
+
         export interface SignatureInfoForFuncDecl {
             signature: PullSignatureSymbol;
             allSignatures: PullSignatureSymbol[];
@@ -24,7 +37,7 @@ module TypeScript {
             if (funcSymbol.isSignature()) {
                 functionSignature = <PullSignatureSymbol>funcSymbol;
                 var parent = functionDecl.getParentDecl();
-                typeSymbolWithAllSignatures = parent.getSymbol().type;                
+                typeSymbolWithAllSignatures = parent.getSymbol().type;
             }
             else {
                 functionSignature = functionDecl.getSignatureSymbol();
@@ -51,7 +64,7 @@ module TypeScript {
         export function getAccessorSymbol(getterOrSetter: ISyntaxElement, semanticInfoChain: SemanticInfoChain): PullAccessorSymbol {
             var functionDecl = semanticInfoChain.getDeclForAST(getterOrSetter);
             var getterOrSetterSymbol = functionDecl.getSymbol();
-            
+
             return <PullAccessorSymbol>getterOrSetterSymbol;
         }
 
@@ -141,6 +154,77 @@ module TypeScript {
             }
 
             return false;
+        }
+
+        // Caller of walkPullTypeSymbolStructure should implement this interface to walk the members, signatures
+        export interface PullTypeSymbolStructureWalker {
+            memberSymbolWalk(memberSymbol: PullSymbol): boolean;
+            callSignatureWalk(signatureSymbol: PullSignatureSymbol): boolean;
+            constructSignatureWalk(signatureSymbol: PullSignatureSymbol): boolean;
+            indexSignatureWalk(signatureSymbol: PullSignatureSymbol): boolean;
+            signatureParameterWalk(parameterSymbol: PullSymbol): boolean;
+            signatureReturnTypeWalk(returnType: PullTypeSymbol): boolean;
+        }
+
+        // Walks the signature
+        function walkSignatureSymbol(signatureSymbol: PullSignatureSymbol, walker: PullTypeSymbolStructureWalker) {
+            var continueWalk = true;
+            var parameters = signatureSymbol.parameters;
+            if (parameters) {
+                for (var i = 0; continueWalk && i < parameters.length; i++) {
+                    continueWalk = walker.signatureParameterWalk(parameters[i]);
+                }
+            }
+
+            if (continueWalk) {
+                continueWalk = walker.signatureReturnTypeWalk(signatureSymbol.returnType);
+            }
+
+            return continueWalk;
+        }
+
+        // Walk the type symbol structure
+        export function walkPullTypeSymbolStructure(typeSymbol: PullTypeSymbol, walker: PullTypeSymbolStructureWalker) {
+            var continueWalk = true;
+            // Members
+            var members = typeSymbol.getMembers();
+            for (var i = 0; continueWalk && i < members.length; i++) {
+                continueWalk = walker.memberSymbolWalk(members[i]);
+            }
+
+            if (continueWalk) {
+                // Call signatures
+                var callSigantures = typeSymbol.getCallSignatures();
+                for (var i = 0; continueWalk && i < callSigantures.length; i++) {
+                    continueWalk = walker.callSignatureWalk(callSigantures[i]);
+                    if (continueWalk) {
+                        continueWalk = walkSignatureSymbol(callSigantures[i], walker);
+                    }
+                }
+            }
+
+            if (continueWalk) {
+                // Construct signatures
+                var constructSignatures = typeSymbol.getConstructSignatures();
+                for (var i = 0; continueWalk && i < constructSignatures.length; i++) {
+                    continueWalk = walker.constructSignatureWalk(constructSignatures[i]);
+                    if (continueWalk) {
+                        continueWalk = walkSignatureSymbol(constructSignatures[i], walker);
+                    }
+
+                }
+            }
+
+            if (continueWalk) {
+                // Index signatures
+                var indexSignatures = typeSymbol.getIndexSignatures();
+                for (var i = 0; continueWalk && i < indexSignatures.length; i++) {
+                    continueWalk = walker.indexSignatureWalk(indexSignatures[i]);
+                    if (continueWalk) {
+                        continueWalk = walkSignatureSymbol(indexSignatures[i], walker);
+                    }
+                }
+            }
         }
     }
 }

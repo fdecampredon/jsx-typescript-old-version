@@ -30,7 +30,7 @@ subtypingWithCallSignaturesWithRestParameters.ts(119,11): error TS2143: Interfac
 	Types of property 'a4' of types 'I14' and 'Base' are incompatible:
 		Call signatures of types '(x: number, y?: number) => number' and '(x?: number, y?: string, ...z: number[]) => number' are incompatible:
 			Call signature expects 0 or fewer parameters.
-subtypingWithCallSignaturesWithRestParameters.ts(128,11): error TS2143: Interface 'I16' cannot extend interface 'Base':
+subtypingWithCallSignaturesWithRestParameters.ts(127,11): error TS2143: Interface 'I16' cannot extend interface 'Base':
 	Types of property 'a4' of types 'I16' and 'Base' are incompatible:
 		Call signatures of types '(x: number, ...args: string[]) => number' and '(x?: number, y?: string, ...z: number[]) => number' are incompatible:
 			Call signature expects 0 or fewer parameters.

@@ -1,1 +1,1 @@
-genericConstraintSatisfaction1.ts(6,3): error TS2086: Type '{ s: number; }' does not satisfy the constraint '{ s: string; }' for type parameter 'T extends S'.
+genericConstraintSatisfaction1.ts(6,3): error TS2086: Type '{ s: number; }' does not satisfy the constraint '{ s: string; }' for type parameter 'T extends { s: string; }'.

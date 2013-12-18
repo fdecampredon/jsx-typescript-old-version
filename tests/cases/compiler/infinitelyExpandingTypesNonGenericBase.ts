@@ -20,5 +20,4 @@ interface Options<T> extends OptionsBase<T> {
 function o(type: new () => Base) {
 }
 
-// A and Base originating in infinitely expanding type reference do not refer to same named type.
 o(A);

@@ -1,0 +1,125 @@
+=== tests/cases/compiler/genericCallWithFunctionTypedArguments.ts ===
+Line 3 col 9 IdentifierName "foo" = typeof foo
+Line 3 col 13 IdentifierName "T" = T
+Line 3 col 16 IdentifierName "x" = (a: T) => T
+Line 3 col 20 IdentifierName "a" = T
+Line 3 col 23 IdentifierName "T" = T
+Line 3 col 29 IdentifierName "T" = T
+Line 4 col 11 InvocationExpression "x(null)" = T
+Line 4 col 11 IdentifierName "x" = (a: T) => T
+Line 7 col 4 IdentifierName "r" = {}
+Line 7 col 8 InvocationExpression "foo(<U>(x: U) => '')" = {}
+Line 7 col 8 IdentifierName "foo" = typeof foo
+Line 7 col 12 ParenthesizedArrowFunctionExpression "<U>(x: U) => ''" = <U>(x: U) => string
+Line 7 col 13 IdentifierName "U" = U
+Line 7 col 16 IdentifierName "x" = U
+Line 7 col 19 IdentifierName "U" = U
+Line 8 col 4 IdentifierName "r2" = string
+Line 8 col 9 InvocationExpression "foo<string>(<U>(x: U) => '')" = string
+Line 8 col 9 IdentifierName "foo" = typeof foo
+Line 8 col 21 ParenthesizedArrowFunctionExpression "<U>(x: U) => ''" = <U>(x: U) => string
+Line 8 col 22 IdentifierName "U" = U
+Line 8 col 25 IdentifierName "x" = U
+Line 8 col 28 IdentifierName "U" = U
+Line 9 col 4 IdentifierName "r3" = {}
+Line 9 col 9 InvocationExpression "foo(x => '')" = {}
+Line 9 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 13 SimpleArrowFunctionExpression "x => ''" = (x: {}) => string
+Line 9 col 13 IdentifierName "x" = {}
+Line 11 col 9 IdentifierName "foo2" = typeof foo2
+Line 11 col 14 IdentifierName "T" = T
+Line 11 col 17 IdentifierName "U" = U
+Line 11 col 20 IdentifierName "x" = T
+Line 11 col 23 IdentifierName "T" = T
+Line 11 col 26 IdentifierName "cb" = (a: T) => U
+Line 11 col 31 IdentifierName "a" = T
+Line 11 col 34 IdentifierName "T" = T
+Line 11 col 40 IdentifierName "U" = U
+Line 12 col 11 InvocationExpression "cb(x)" = U
+Line 12 col 11 IdentifierName "cb" = (a: T) => U
+Line 12 col 14 IdentifierName "x" = T
+Line 15 col 4 IdentifierName "r4" = {}
+Line 15 col 9 InvocationExpression "foo2(1, function <Z>(a: Z) { return '' })" = {}
+Line 15 col 9 IdentifierName "foo2" = typeof foo2
+Line 15 col 17 FunctionExpression "function <Z>(a: Z) { return '' }" = <Z>(a: Z) => string
+Line 15 col 27 IdentifierName "Z" = Z
+Line 15 col 30 IdentifierName "a" = Z
+Line 15 col 33 IdentifierName "Z" = Z
+Line 16 col 4 IdentifierName "r5" = string
+Line 16 col 9 InvocationExpression "foo2(1, (a) => '')" = string
+Line 16 col 9 IdentifierName "foo2" = typeof foo2
+Line 16 col 17 ParenthesizedArrowFunctionExpression "(a) => ''" = (a: number) => string
+Line 16 col 18 IdentifierName "a" = number
+Line 17 col 4 IdentifierName "r6" = number
+Line 17 col 9 InvocationExpression "foo2<string, number>('', <Z>(a: Z) => 1)" = number
+Line 17 col 9 IdentifierName "foo2" = typeof foo2
+Line 17 col 34 ParenthesizedArrowFunctionExpression "<Z>(a: Z) => 1" = <Z>(a: Z) => number
+Line 17 col 35 IdentifierName "Z" = Z
+Line 17 col 38 IdentifierName "a" = Z
+Line 17 col 41 IdentifierName "Z" = Z
+Line 19 col 9 IdentifierName "foo3" = typeof foo3
+Line 19 col 14 IdentifierName "T" = T
+Line 19 col 17 IdentifierName "U" = U
+Line 19 col 20 IdentifierName "x" = T
+Line 19 col 23 IdentifierName "T" = T
+Line 19 col 26 IdentifierName "cb" = (a: T) => U
+Line 19 col 31 IdentifierName "a" = T
+Line 19 col 34 IdentifierName "T" = T
+Line 19 col 40 IdentifierName "U" = U
+Line 19 col 43 IdentifierName "y" = U
+Line 19 col 46 IdentifierName "U" = U
+Line 20 col 11 InvocationExpression "cb(x)" = U
+Line 20 col 11 IdentifierName "cb" = (a: T) => U
+Line 20 col 14 IdentifierName "x" = T
+Line 23 col 4 IdentifierName "r7" = string
+Line 23 col 9 InvocationExpression "foo3(1, <Z>(a: Z) => '', '')" = string
+Line 23 col 9 IdentifierName "foo3" = typeof foo3
+Line 23 col 17 ParenthesizedArrowFunctionExpression "<Z>(a: Z) => ''" = <Z>(a: Z) => string
+Line 23 col 18 IdentifierName "Z" = Z
+Line 23 col 21 IdentifierName "a" = Z
+Line 23 col 24 IdentifierName "Z" = Z
+Line 25 col 4 IdentifierName "r8" = {}
+Line 25 col 9 InvocationExpression "foo3(1, function (a) { return '' }, 1)" = {}
+Line 25 col 9 IdentifierName "foo3" = typeof foo3
+Line 25 col 17 FunctionExpression "function (a) { return '' }" = (a: number) => string
+Line 25 col 27 IdentifierName "a" = number
+Line 26 col 4 IdentifierName "r9" = string
+Line 26 col 9 InvocationExpression "foo3<number, string>(1, (a) => '', '')" = string
+Line 26 col 9 IdentifierName "foo3" = typeof foo3
+Line 26 col 33 ParenthesizedArrowFunctionExpression "(a) => ''" = (a: number) => string
+Line 26 col 34 IdentifierName "a" = number
+Line 28 col 9 IdentifierName "other" = typeof other
+Line 28 col 15 IdentifierName "T" = T
+Line 28 col 18 IdentifierName "U" = U
+Line 28 col 21 IdentifierName "t" = T
+Line 28 col 24 IdentifierName "T" = T
+Line 28 col 27 IdentifierName "u" = U
+Line 28 col 30 IdentifierName "U" = U
+Line 29 col 8 IdentifierName "r10" = string
+Line 29 col 14 InvocationExpression "foo2(1, (x: T) => '')" = string
+Line 29 col 14 IdentifierName "foo2" = typeof foo2
+Line 29 col 22 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 29 col 23 IdentifierName "x" = T
+Line 29 col 26 IdentifierName "T" = T
+Line 30 col 8 IdentifierName "r10" = string
+Line 30 col 14 InvocationExpression "foo2(1, (x) => '')" = string
+Line 30 col 14 IdentifierName "foo2" = typeof foo2
+Line 30 col 22 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: number) => string
+Line 30 col 23 IdentifierName "x" = number
+Line 32 col 8 IdentifierName "r11" = string
+Line 32 col 14 InvocationExpression "foo3(1, (x: T) => '', '')" = string
+Line 32 col 14 IdentifierName "foo3" = typeof foo3
+Line 32 col 22 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 32 col 23 IdentifierName "x" = T
+Line 32 col 26 IdentifierName "T" = T
+Line 33 col 8 IdentifierName "r11b" = {}
+Line 33 col 15 InvocationExpression "foo3(1, (x: T) => '', 1)" = {}
+Line 33 col 15 IdentifierName "foo3" = typeof foo3
+Line 33 col 23 ParenthesizedArrowFunctionExpression "(x: T) => ''" = (x: T) => string
+Line 33 col 24 IdentifierName "x" = T
+Line 33 col 27 IdentifierName "T" = T
+Line 34 col 8 IdentifierName "r12" = {}
+Line 34 col 14 InvocationExpression "foo3(1, function (a) { return '' }, 1)" = {}
+Line 34 col 14 IdentifierName "foo3" = typeof foo3
+Line 34 col 22 FunctionExpression "function (a) { return '' }" = (a: number) => string
+Line 34 col 32 IdentifierName "a" = number

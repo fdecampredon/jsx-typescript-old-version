@@ -1,8 +1,8 @@
 (function (X) {
-    (function (Y) {
+    (function (_Y) {
         var A = (function () {
             function A(Y) {
-                new X.Y.B();
+                new X._Y.B();
             }
             return A;
         })();

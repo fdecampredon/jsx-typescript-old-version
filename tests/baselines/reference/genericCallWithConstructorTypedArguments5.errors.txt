@@ -1,0 +1,10 @@
+genericCallWithConstructorTypedArguments5.ts(11,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'cb' of types '{ cb: new<T>(x: T, y: T) => string; }' and '{ cb: new(t: {}) => {}; }' are incompatible:
+		Construct signatures of types 'new<T>(x: T, y: T) => string' and 'new(t: {}) => {}' are incompatible:
+			Call signature expects 1 or fewer parameters.
+genericCallWithConstructorTypedArguments5.ts(11,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithConstructorTypedArguments5.ts(13,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'cb' of types '{ cb: new(x: string, y: number) => string; }' and '{ cb: new(t: {}) => {}; }' are incompatible:
+		Construct signatures of types 'new(x: string, y: number) => string' and 'new(t: {}) => {}' are incompatible:
+			Call signature expects 1 or fewer parameters.
+genericCallWithConstructorTypedArguments5.ts(13,10): error TS2087: Could not select overload for 'call' expression.

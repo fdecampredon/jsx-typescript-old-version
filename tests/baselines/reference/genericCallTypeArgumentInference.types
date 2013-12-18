@@ -1,0 +1,232 @@
+=== tests/cases/compiler/genericCallTypeArgumentInference.ts ===
+Line 2 col 9 IdentifierName "foo" = typeof foo
+Line 2 col 13 IdentifierName "T" = T
+Line 2 col 16 IdentifierName "t" = T
+Line 2 col 19 IdentifierName "T" = T
+Line 3 col 11 IdentifierName "t" = T
+Line 6 col 4 IdentifierName "r" = string
+Line 6 col 8 InvocationExpression "foo('')" = string
+Line 6 col 8 IdentifierName "foo" = typeof foo
+Line 8 col 9 IdentifierName "foo2" = typeof foo2
+Line 8 col 14 IdentifierName "T" = T
+Line 8 col 17 IdentifierName "U" = U
+Line 8 col 20 IdentifierName "t" = T
+Line 8 col 23 IdentifierName "T" = T
+Line 8 col 26 IdentifierName "u" = U
+Line 8 col 29 IdentifierName "U" = U
+Line 9 col 11 IdentifierName "u" = U
+Line 12 col 9 IdentifierName "foo2b" = typeof foo2b
+Line 12 col 15 IdentifierName "T" = T
+Line 12 col 18 IdentifierName "U" = U
+Line 12 col 21 IdentifierName "u" = U
+Line 12 col 24 IdentifierName "U" = U
+Line 13 col 8 IdentifierName "x" = T
+Line 13 col 11 IdentifierName "T" = T
+Line 14 col 11 IdentifierName "x" = T
+Line 17 col 4 IdentifierName "r2" = number
+Line 17 col 9 InvocationExpression "foo2('', 1)" = number
+Line 17 col 9 IdentifierName "foo2" = typeof foo2
+Line 18 col 4 IdentifierName "r3" = {}
+Line 18 col 9 InvocationExpression "foo2b(1)" = {}
+Line 18 col 9 IdentifierName "foo2b" = typeof foo2b
+Line 20 col 6 IdentifierName "C" = C<T, U>
+Line 20 col 8 IdentifierName "T" = T
+Line 20 col 11 IdentifierName "U" = U
+Line 21 col 23 IdentifierName "t" = T
+Line 21 col 26 IdentifierName "T" = T
+Line 21 col 36 IdentifierName "u" = U
+Line 21 col 39 IdentifierName "U" = U
+Line 23 col 0 IdentifierName "foo" = (t: T, u: U) => T
+Line 24 col 8 IdentifierName "t" = T
+Line 24 col 11 IdentifierName "T" = T
+Line 24 col 14 IdentifierName "u" = U
+Line 24 col 17 IdentifierName "U" = U
+Line 25 col 15 IdentifierName "t" = T
+Line 27 col 0 IdentifierName "foo2" = (t: T, u: U) => U
+Line 28 col 9 IdentifierName "t" = T
+Line 28 col 12 IdentifierName "T" = T
+Line 28 col 15 IdentifierName "u" = U
+Line 28 col 18 IdentifierName "U" = U
+Line 29 col 15 IdentifierName "u" = U
+Line 31 col 0 IdentifierName "foo3" = <T>(t: T, u: U) => T
+Line 32 col 9 IdentifierName "T" = T
+Line 32 col 12 IdentifierName "t" = T
+Line 32 col 15 IdentifierName "T" = T
+Line 32 col 18 IdentifierName "u" = U
+Line 32 col 21 IdentifierName "U" = U
+Line 33 col 15 IdentifierName "t" = T
+Line 35 col 0 IdentifierName "foo4" = <U>(t: T, u: U) => T
+Line 36 col 9 IdentifierName "U" = U
+Line 36 col 12 IdentifierName "t" = T
+Line 36 col 15 IdentifierName "T" = T
+Line 36 col 18 IdentifierName "u" = U
+Line 36 col 21 IdentifierName "U" = U
+Line 37 col 15 IdentifierName "t" = T
+Line 39 col 0 IdentifierName "foo5" = <T, U>(t: T, u: U) => T
+Line 40 col 9 IdentifierName "T" = T
+Line 40 col 11 IdentifierName "U" = U
+Line 40 col 14 IdentifierName "t" = T
+Line 40 col 17 IdentifierName "T" = T
+Line 40 col 20 IdentifierName "u" = U
+Line 40 col 23 IdentifierName "U" = U
+Line 41 col 15 IdentifierName "t" = T
+Line 43 col 0 IdentifierName "foo6" = <T, U>() => T
+Line 44 col 9 IdentifierName "T" = T
+Line 44 col 12 IdentifierName "U" = U
+Line 45 col 12 IdentifierName "x" = T
+Line 45 col 15 IdentifierName "T" = T
+Line 46 col 15 IdentifierName "x" = T
+Line 48 col 0 IdentifierName "foo7" = <T, U>(u: U) => T
+Line 49 col 9 IdentifierName "T" = T
+Line 49 col 12 IdentifierName "U" = U
+Line 49 col 15 IdentifierName "u" = U
+Line 49 col 18 IdentifierName "U" = U
+Line 50 col 12 IdentifierName "x" = T
+Line 50 col 15 IdentifierName "T" = T
+Line 51 col 15 IdentifierName "x" = T
+Line 53 col 0 IdentifierName "foo8" = <T, U>() => T
+Line 54 col 9 IdentifierName "T" = T
+Line 54 col 12 IdentifierName "U" = U
+Line 55 col 12 IdentifierName "x" = T
+Line 55 col 15 IdentifierName "T" = T
+Line 56 col 15 IdentifierName "x" = T
+Line 60 col 4 IdentifierName "c" = C<string, number>
+Line 60 col 8 ObjectCreationExpression "new C('', 1)" = C<string, number>
+Line 60 col 12 IdentifierName "C" = typeof C
+Line 61 col 4 IdentifierName "r4" = string
+Line 61 col 9 InvocationExpression "c.foo('', 1)" = string
+Line 61 col 9 MemberAccessExpression "c.foo" = (t: string, u: number) => string
+Line 61 col 9 IdentifierName "c" = C<string, number>
+Line 61 col 11 IdentifierName "foo" = (t: string, u: number) => string
+Line 62 col 4 IdentifierName "r5" = number
+Line 62 col 9 InvocationExpression "c.foo2('', 1)" = number
+Line 62 col 9 MemberAccessExpression "c.foo2" = (t: string, u: number) => number
+Line 62 col 9 IdentifierName "c" = C<string, number>
+Line 62 col 11 IdentifierName "foo2" = (t: string, u: number) => number
+Line 63 col 4 IdentifierName "r6" = boolean
+Line 63 col 9 InvocationExpression "c.foo3(true, 1)" = boolean
+Line 63 col 9 MemberAccessExpression "c.foo3" = <T>(t: T, u: number) => T
+Line 63 col 9 IdentifierName "c" = C<string, number>
+Line 63 col 11 IdentifierName "foo3" = <T>(t: T, u: number) => T
+Line 64 col 4 IdentifierName "r7" = string
+Line 64 col 9 InvocationExpression "c.foo4('', true)" = string
+Line 64 col 9 MemberAccessExpression "c.foo4" = <U>(t: string, u: U) => string
+Line 64 col 9 IdentifierName "c" = C<string, number>
+Line 64 col 11 IdentifierName "foo4" = <U>(t: string, u: U) => string
+Line 65 col 4 IdentifierName "r8" = boolean
+Line 65 col 9 InvocationExpression "c.foo5(true, 1)" = boolean
+Line 65 col 9 MemberAccessExpression "c.foo5" = <T, U>(t: T, u: U) => T
+Line 65 col 9 IdentifierName "c" = C<string, number>
+Line 65 col 11 IdentifierName "foo5" = <T, U>(t: T, u: U) => T
+Line 66 col 4 IdentifierName "r9" = {}
+Line 66 col 9 InvocationExpression "c.foo6()" = {}
+Line 66 col 9 MemberAccessExpression "c.foo6" = <T, U>() => T
+Line 66 col 9 IdentifierName "c" = C<string, number>
+Line 66 col 11 IdentifierName "foo6" = <T, U>() => T
+Line 67 col 4 IdentifierName "r10" = {}
+Line 67 col 10 InvocationExpression "c.foo7('')" = {}
+Line 67 col 10 MemberAccessExpression "c.foo7" = <T, U>(u: U) => T
+Line 67 col 10 IdentifierName "c" = C<string, number>
+Line 67 col 12 IdentifierName "foo7" = <T, U>(u: U) => T
+Line 68 col 4 IdentifierName "r11" = {}
+Line 68 col 10 InvocationExpression "c.foo8()" = {}
+Line 68 col 10 MemberAccessExpression "c.foo8" = <T, U>() => T
+Line 68 col 10 IdentifierName "c" = C<string, number>
+Line 68 col 12 IdentifierName "foo8" = <T, U>() => T
+Line 70 col 10 IdentifierName "I" = I<T, U>
+Line 70 col 12 IdentifierName "T" = T
+Line 70 col 15 IdentifierName "U" = U
+Line 71 col 9 IdentifierName "t" = T
+Line 71 col 12 IdentifierName "T" = T
+Line 71 col 15 IdentifierName "u" = U
+Line 71 col 18 IdentifierName "U" = U
+Line 72 col 0 IdentifierName "foo" = (t: T, u: U) => T
+Line 72 col 8 IdentifierName "t" = T
+Line 72 col 11 IdentifierName "T" = T
+Line 72 col 14 IdentifierName "u" = U
+Line 72 col 17 IdentifierName "U" = U
+Line 72 col 21 IdentifierName "T" = T
+Line 73 col 0 IdentifierName "foo2" = (t: T, u: U) => U
+Line 73 col 9 IdentifierName "t" = T
+Line 73 col 12 IdentifierName "T" = T
+Line 73 col 15 IdentifierName "u" = U
+Line 73 col 18 IdentifierName "U" = U
+Line 73 col 22 IdentifierName "U" = U
+Line 74 col 0 IdentifierName "foo3" = <T>(t: T, u: U) => T
+Line 74 col 9 IdentifierName "T" = T
+Line 74 col 12 IdentifierName "t" = T
+Line 74 col 15 IdentifierName "T" = T
+Line 74 col 18 IdentifierName "u" = U
+Line 74 col 21 IdentifierName "U" = U
+Line 74 col 25 IdentifierName "T" = T
+Line 75 col 0 IdentifierName "foo4" = <U>(t: T, u: U) => T
+Line 75 col 9 IdentifierName "U" = U
+Line 75 col 12 IdentifierName "t" = T
+Line 75 col 15 IdentifierName "T" = T
+Line 75 col 18 IdentifierName "u" = U
+Line 75 col 21 IdentifierName "U" = U
+Line 75 col 25 IdentifierName "T" = T
+Line 76 col 0 IdentifierName "foo5" = <T, U>(t: T, u: U) => T
+Line 76 col 9 IdentifierName "T" = T
+Line 76 col 12 IdentifierName "U" = U
+Line 76 col 15 IdentifierName "t" = T
+Line 76 col 18 IdentifierName "T" = T
+Line 76 col 21 IdentifierName "u" = U
+Line 76 col 24 IdentifierName "U" = U
+Line 76 col 28 IdentifierName "T" = T
+Line 77 col 0 IdentifierName "foo6" = <T, U>() => T
+Line 77 col 9 IdentifierName "T" = T
+Line 77 col 12 IdentifierName "U" = U
+Line 77 col 18 IdentifierName "T" = T
+Line 78 col 0 IdentifierName "foo7" = <T, U>(u: U) => T
+Line 78 col 9 IdentifierName "T" = T
+Line 78 col 12 IdentifierName "U" = U
+Line 78 col 15 IdentifierName "u" = U
+Line 78 col 18 IdentifierName "U" = U
+Line 78 col 22 IdentifierName "T" = T
+Line 79 col 0 IdentifierName "foo8" = <T, U>() => T
+Line 79 col 9 IdentifierName "T" = T
+Line 79 col 12 IdentifierName "U" = U
+Line 79 col 18 IdentifierName "T" = T
+Line 82 col 4 IdentifierName "i" = I<string, number>
+Line 82 col 7 IdentifierName "I" = I<T, U>
+Line 83 col 4 IdentifierName "r4" = string
+Line 83 col 9 InvocationExpression "i.foo('', 1)" = string
+Line 83 col 9 MemberAccessExpression "i.foo" = (t: string, u: number) => string
+Line 83 col 9 IdentifierName "i" = I<string, number>
+Line 83 col 11 IdentifierName "foo" = (t: string, u: number) => string
+Line 84 col 4 IdentifierName "r5" = number
+Line 84 col 9 InvocationExpression "i.foo2('', 1)" = number
+Line 84 col 9 MemberAccessExpression "i.foo2" = (t: string, u: number) => number
+Line 84 col 9 IdentifierName "i" = I<string, number>
+Line 84 col 11 IdentifierName "foo2" = (t: string, u: number) => number
+Line 85 col 4 IdentifierName "r6" = boolean
+Line 85 col 9 InvocationExpression "i.foo3(true, 1)" = boolean
+Line 85 col 9 MemberAccessExpression "i.foo3" = <T>(t: T, u: number) => T
+Line 85 col 9 IdentifierName "i" = I<string, number>
+Line 85 col 11 IdentifierName "foo3" = <T>(t: T, u: number) => T
+Line 86 col 4 IdentifierName "r7" = string
+Line 86 col 9 InvocationExpression "i.foo4('', true)" = string
+Line 86 col 9 MemberAccessExpression "i.foo4" = <U>(t: string, u: U) => string
+Line 86 col 9 IdentifierName "i" = I<string, number>
+Line 86 col 11 IdentifierName "foo4" = <U>(t: string, u: U) => string
+Line 87 col 4 IdentifierName "r8" = boolean
+Line 87 col 9 InvocationExpression "i.foo5(true, 1)" = boolean
+Line 87 col 9 MemberAccessExpression "i.foo5" = <T, U>(t: T, u: U) => T
+Line 87 col 9 IdentifierName "i" = I<string, number>
+Line 87 col 11 IdentifierName "foo5" = <T, U>(t: T, u: U) => T
+Line 88 col 4 IdentifierName "r9" = {}
+Line 88 col 9 InvocationExpression "i.foo6()" = {}
+Line 88 col 9 MemberAccessExpression "i.foo6" = <T, U>() => T
+Line 88 col 9 IdentifierName "i" = I<string, number>
+Line 88 col 11 IdentifierName "foo6" = <T, U>() => T
+Line 89 col 4 IdentifierName "r10" = {}
+Line 89 col 10 InvocationExpression "i.foo7('')" = {}
+Line 89 col 10 MemberAccessExpression "i.foo7" = <T, U>(u: U) => T
+Line 89 col 10 IdentifierName "i" = I<string, number>
+Line 89 col 12 IdentifierName "foo7" = <T, U>(u: U) => T
+Line 90 col 4 IdentifierName "r11" = {}
+Line 90 col 10 InvocationExpression "i.foo8()" = {}
+Line 90 col 10 MemberAccessExpression "i.foo8" = <T, U>() => T
+Line 90 col 10 IdentifierName "i" = I<string, number>
+Line 90 col 12 IdentifierName "foo8" = <T, U>() => T

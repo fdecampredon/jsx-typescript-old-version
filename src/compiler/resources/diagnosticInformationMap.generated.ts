@@ -1258,6 +1258,10 @@ module TypeScript {
     "code": 2233,
     "category": DiagnosticCategory.Error
   },
+  "All declarations of an interface must have identical type parameters.": {
+    "code": 2234,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix
@@ -1354,7 +1358,7 @@ module TypeScript {
     "code": 4023,
     "category": DiagnosticCategory.Error
   },
-  "Enums with multiple declarations must provide an initializer for the first enum element.": {
+  "In enums with multiple declarations only one declaration can omit an initializer for the first enum element.": {
     "code": 4024,
     "category": DiagnosticCategory.Error
   },

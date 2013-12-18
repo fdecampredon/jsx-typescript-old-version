@@ -1,0 +1,10 @@
+genericCallWithFunctionTypedArguments5.ts(10,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'cb' of types '{ cb: <T>(x: T, y: T) => string; }' and '{ cb: (t: {}) => {}; }' are incompatible:
+		Call signatures of types '<T>(x: T, y: T) => string' and '(t: {}) => {}' are incompatible:
+			Call signature expects 1 or fewer parameters.
+genericCallWithFunctionTypedArguments5.ts(10,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithFunctionTypedArguments5.ts(11,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'cb' of types '{ cb: (x: string, y: number) => string; }' and '{ cb: (t: {}) => {}; }' are incompatible:
+		Call signatures of types '(x: string, y: number) => string' and '(t: {}) => {}' are incompatible:
+			Call signature expects 1 or fewer parameters.
+genericCallWithFunctionTypedArguments5.ts(11,10): error TS2087: Could not select overload for 'call' expression.

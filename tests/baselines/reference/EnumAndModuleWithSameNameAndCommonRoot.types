@@ -1,0 +1,22 @@
+=== tests/cases/compiler/EnumAndModuleWithSameNameAndCommonRoot.ts ===
+Line 0 col 5 IdentifierName "enumdule" = enumdule
+Line 1 col 0 IdentifierName "Red" = enumdule
+Line 1 col 9 IdentifierName "Blue" = enumdule
+Line 4 col 7 IdentifierName "enumdule" = enumdule
+Line 6 col 17 IdentifierName "Point" = enumdule.Point
+Line 7 col 27 IdentifierName "x" = number
+Line 7 col 45 IdentifierName "y" = number
+Line 11 col 4 IdentifierName "x" = enumdule
+Line 11 col 7 IdentifierName "enumdule" = enumdule
+Line 12 col 4 IdentifierName "x" = enumdule
+Line 12 col 8 MemberAccessExpression "enumdule.Red" = enumdule
+Line 12 col 8 IdentifierName "enumdule" = typeof enumdule
+Line 12 col 17 IdentifierName "Red" = enumdule
+Line 14 col 4 IdentifierName "y" = { x: number; y: number; }
+Line 14 col 9 IdentifierName "x" = number
+Line 14 col 20 IdentifierName "y" = number
+Line 15 col 4 IdentifierName "y" = enumdule.Point
+Line 15 col 8 ObjectCreationExpression "new enumdule.Point(0, 0)" = enumdule.Point
+Line 15 col 12 MemberAccessExpression "enumdule.Point" = typeof enumdule.Point
+Line 15 col 12 IdentifierName "enumdule" = typeof enumdule
+Line 15 col 21 IdentifierName "Point" = typeof enumdule.Point

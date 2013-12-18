@@ -1,0 +1,4 @@
+genericCallWithObjectTypeArgsAndConstraints4.ts(20,10): error TS2086: Type 'C' does not satisfy the constraint 'D' for type parameter 'U extends T'.
+genericCallWithObjectTypeArgsAndConstraints4.ts(31,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'T' to argument 1 which is of type 'C'.
+genericCallWithObjectTypeArgsAndConstraints4.ts(31,14): error TS2087: Could not select overload for 'call' expression.

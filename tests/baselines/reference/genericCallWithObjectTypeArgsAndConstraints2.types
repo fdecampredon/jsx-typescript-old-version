@@ -1,0 +1,93 @@
+=== tests/cases/compiler/genericCallWithObjectTypeArgsAndConstraints2.ts ===
+Line 3 col 6 IdentifierName "Base" = Base
+Line 4 col 0 IdentifierName "x" = string
+Line 6 col 6 IdentifierName "Derived" = Derived
+Line 6 col 22 IdentifierName "Base" = Base
+Line 7 col 0 IdentifierName "y" = string
+Line 10 col 9 IdentifierName "f" = typeof f
+Line 10 col 11 IdentifierName "T" = T
+Line 10 col 21 IdentifierName "Base" = Base
+Line 10 col 27 IdentifierName "x" = { foo: T; bar: T; }
+Line 10 col 32 IdentifierName "foo" = T
+Line 10 col 37 IdentifierName "T" = T
+Line 10 col 40 IdentifierName "bar" = T
+Line 10 col 45 IdentifierName "T" = T
+Line 11 col 8 IdentifierName "r" = T
+Line 11 col 11 IdentifierName "T" = T
+Line 12 col 11 IdentifierName "r" = T
+Line 14 col 4 IdentifierName "r" = Base
+Line 14 col 8 InvocationExpression "f({ foo: new Base(), bar: new Derived() })" = Base
+Line 14 col 8 IdentifierName "f" = typeof f
+Line 14 col 10 ObjectLiteralExpression "{ foo: new Base(), bar: new Derived() }" = { foo: Base; bar: Derived; }
+Line 14 col 12 IdentifierName "foo" = Base
+Line 14 col 17 ObjectCreationExpression "new Base()" = Base
+Line 14 col 21 IdentifierName "Base" = typeof Base
+Line 14 col 29 IdentifierName "bar" = Derived
+Line 14 col 34 ObjectCreationExpression "new Derived()" = Derived
+Line 14 col 38 IdentifierName "Derived" = typeof Derived
+Line 15 col 4 IdentifierName "r2" = Derived
+Line 15 col 9 InvocationExpression "f({ foo: new Derived(), bar: new Derived() })" = Derived
+Line 15 col 9 IdentifierName "f" = typeof f
+Line 15 col 11 ObjectLiteralExpression "{ foo: new Derived(), bar: new Derived() }" = { foo: Derived; bar: Derived; }
+Line 15 col 13 IdentifierName "foo" = Derived
+Line 15 col 18 ObjectCreationExpression "new Derived()" = Derived
+Line 15 col 22 IdentifierName "Derived" = typeof Derived
+Line 15 col 33 IdentifierName "bar" = Derived
+Line 15 col 38 ObjectCreationExpression "new Derived()" = Derived
+Line 15 col 42 IdentifierName "Derived" = typeof Derived
+Line 18 col 10 IdentifierName "I" = I<T>
+Line 18 col 12 IdentifierName "T" = T
+Line 19 col 0 IdentifierName "a" = T
+Line 19 col 7 IdentifierName "T" = T
+Line 21 col 9 IdentifierName "f2" = typeof f2
+Line 21 col 12 IdentifierName "T" = T
+Line 21 col 22 IdentifierName "Base" = Base
+Line 21 col 28 IdentifierName "x" = I<T>
+Line 21 col 31 IdentifierName "I" = I<T>
+Line 21 col 33 IdentifierName "T" = T
+Line 22 col 8 IdentifierName "r" = T
+Line 22 col 11 IdentifierName "T" = T
+Line 23 col 11 IdentifierName "r" = T
+Line 25 col 4 IdentifierName "i" = I<Derived>
+Line 25 col 7 IdentifierName "I" = I<T>
+Line 25 col 9 IdentifierName "Derived" = Derived
+Line 26 col 4 IdentifierName "r3" = Derived
+Line 26 col 9 InvocationExpression "f2(i)" = Derived
+Line 26 col 9 IdentifierName "f2" = typeof f2
+Line 26 col 12 IdentifierName "i" = I<Derived>
+Line 29 col 9 IdentifierName "f3" = typeof f3
+Line 29 col 12 IdentifierName "T" = T
+Line 29 col 22 IdentifierName "Base" = Base
+Line 29 col 28 IdentifierName "x" = T
+Line 29 col 31 IdentifierName "T" = T
+Line 29 col 34 IdentifierName "y" = (a: T) => T
+Line 29 col 38 IdentifierName "a" = T
+Line 29 col 41 IdentifierName "T" = T
+Line 29 col 47 IdentifierName "T" = T
+Line 30 col 11 InvocationExpression "y(null)" = T
+Line 30 col 11 IdentifierName "y" = (a: T) => T
+Line 32 col 4 IdentifierName "r4" = Base
+Line 32 col 9 InvocationExpression "f3(new Base(), x => x)" = Base
+Line 32 col 9 IdentifierName "f3" = typeof f3
+Line 32 col 12 ObjectCreationExpression "new Base()" = Base
+Line 32 col 16 IdentifierName "Base" = typeof Base
+Line 32 col 24 SimpleArrowFunctionExpression "x => x" = (x: Base) => Base
+Line 32 col 24 IdentifierName "x" = Base
+Line 32 col 29 IdentifierName "x" = Base
+Line 33 col 4 IdentifierName "r5" = Derived
+Line 33 col 9 InvocationExpression "f3(new Derived(), x => x)" = Derived
+Line 33 col 9 IdentifierName "f3" = typeof f3
+Line 33 col 12 ObjectCreationExpression "new Derived()" = Derived
+Line 33 col 16 IdentifierName "Derived" = typeof Derived
+Line 33 col 27 SimpleArrowFunctionExpression "x => x" = (x: Derived) => Derived
+Line 33 col 27 IdentifierName "x" = Derived
+Line 33 col 32 IdentifierName "x" = Derived
+Line 35 col 4 IdentifierName "r6" = any
+Line 35 col 9 InvocationExpression "f3(null, null)" = any
+Line 35 col 9 IdentifierName "f3" = typeof f3
+Line 36 col 4 IdentifierName "r7" = any
+Line 36 col 9 InvocationExpression "f3(null, x => x)" = any
+Line 36 col 9 IdentifierName "f3" = typeof f3
+Line 36 col 18 SimpleArrowFunctionExpression "x => x" = (x: any) => any
+Line 36 col 18 IdentifierName "x" = any
+Line 36 col 23 IdentifierName "x" = any

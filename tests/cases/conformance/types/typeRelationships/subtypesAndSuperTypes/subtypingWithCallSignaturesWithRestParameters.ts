@@ -109,7 +109,7 @@ interface I11 extends Base {
 }
 
 interface I12 extends Base {
-    a4: (x?: number, y?: number) => number; // ok, fewer required params
+    a4: (x?: number, y?: number) => number; // error, type mismatch
 }
 
 interface I13 extends Base {
@@ -120,9 +120,8 @@ interface I14 extends Base {
     a4: (x: number, y?: number) => number;  // error, too many required params
 }
 
-// BUG 833443
 interface I15 extends Base {
-    a4: (x?: number, y?: string) => number;  // error, too many required params
+    a4: (x?: number, y?: string) => number;  // ok, same number of required params with matching types
 }
 
 interface I16 extends Base {

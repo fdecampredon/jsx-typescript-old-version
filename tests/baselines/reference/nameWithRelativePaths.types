@@ -1,0 +1,25 @@
+=== tests/cases/compiler/test/foo_3.ts ===
+Line 0 col 7 IdentifierName "foo0" = foo0
+Line 1 col 7 IdentifierName "foo1" = foo1
+Line 2 col 7 IdentifierName "foo2" = foo2
+Line 4 col 3 MemberAccessExpression "foo2.M2.x" = boolean
+Line 4 col 3 MemberAccessExpression "foo2.M2" = typeof M2
+Line 4 col 3 IdentifierName "foo2" = foo2
+Line 4 col 8 IdentifierName "M2" = typeof M2
+Line 4 col 11 IdentifierName "x" = boolean
+Line 5 col 5 IdentifierName "x" = number
+Line 5 col 9 AddExpression "foo0.foo + foo1.f()" = number
+Line 5 col 9 MemberAccessExpression "foo0.foo" = number
+Line 5 col 9 IdentifierName "foo0" = foo0
+Line 5 col 14 IdentifierName "foo" = number
+Line 5 col 20 InvocationExpression "foo1.f()" = number
+Line 5 col 20 MemberAccessExpression "foo1.f" = typeof f
+Line 5 col 20 IdentifierName "foo1" = foo1
+Line 5 col 25 IdentifierName "f" = typeof f
+=== tests/cases/compiler/foo_0.ts ===
+Line 0 col 11 IdentifierName "foo" = number
+=== tests/cases/compiler/test/test/foo_1.ts ===
+Line 0 col 16 IdentifierName "f" = typeof f
+=== tests/cases/compiler/test/foo_2.ts ===
+Line 0 col 14 IdentifierName "M2" = M2
+Line 1 col 12 IdentifierName "x" = boolean

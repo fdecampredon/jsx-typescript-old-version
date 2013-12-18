@@ -27,5 +27,4 @@ var A = (function (_super) {
 function o(type) {
 }
 
-// A and Base originating in infinitely expanding type reference do not refer to same named type.
 o(A);

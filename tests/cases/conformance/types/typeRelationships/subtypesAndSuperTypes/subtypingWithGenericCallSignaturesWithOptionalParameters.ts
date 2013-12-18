@@ -88,6 +88,7 @@ module ClassTypeParam {
 
 module GenericSignaturesInvalid {
 
+    // all of these are errors
     interface Base2 {
         a: <T>() => T;
         a2: <T>(x?: T) => T;
@@ -97,79 +98,79 @@ module GenericSignaturesInvalid {
     }
 
     interface I1<T> extends Base2 {
-        a: () => T; // ok, same T of required params
+        a: () => T; 
     }
 
     interface I2<T> extends Base2 {
-        a: (x?: T) => T; // ok, same T of required params
+        a: (x?: T) => T;
     }
 
     interface I3<T> extends Base2 {
-        a: (x: T) => T; // error, too many required params
+        a: (x: T) => T; 
     }
 
 
     interface I4<T> extends Base2 {
-        a2: () => T; // ok, same T of required params
+        a2: () => T; 
     }
 
     interface I5<T> extends Base2 {
-        a2: (x?: T) => T; // ok, same T of required params
+        a2: (x?: T) => T
     }
 
     interface I6<T> extends Base2 {
-        a2: (x: T) => T; // error, too many required params
+        a2: (x: T) => T;
     }
 
 
     interface I7<T> extends Base2 {
-        a3: () => T; // ok, fewer required params
+        a3: () => T;
     }
 
     interface I8<T> extends Base2 {
-        a3: (x?: T) => T; // ok, fewer required params
+        a3: (x?: T) => T; 
     }
 
     interface I9<T> extends Base2 {
-        a3: (x: T) => T; // ok, same T of required params
+        a3: (x: T) => T; 
     }
 
     interface I10<T> extends Base2 {
-        a3: (x: T, y: T) => T;  // error, too many required params
+        a3: (x: T, y: T) => T;  
     }
 
 
     interface I11<T> extends Base2 {
-        a4: () => T; // ok, fewer required params
+        a4: () => T; 
     }
 
     interface I12<T> extends Base2 {
-        a4: (x?: T, y?: T) => T; // ok, fewer required params
+        a4: (x?: T, y?: T) => T; 
     }
 
     interface I13<T> extends Base2 {
-        a4: (x: T) => T; // ok, same T of required params
+        a4: (x: T) => T; 
     }
 
     interface I14<T> extends Base2 {
-        a4: (x: T, y: T) => T;  // error, too many required params
+        a4: (x: T, y: T) => T; 
     }
 
 
     interface I15<T> extends Base2 {
-        a5: () => T; // ok, fewer required params
+        a5: () => T; 
     }
 
     interface I16<T> extends Base2 {
-        a5: (x?: T, y?: T) => T; // ok, fewer required params
+        a5: (x?: T, y?: T) => T; 
     }
 
     interface I17<T> extends Base2 {
-        a5: (x: T) => T; // error, too many required params
+        a5: (x: T) => T;
     }
 
     interface I18<T> extends Base2 {
-        a5: (x: T, y: T) => T;  // error, too many required params
+        a5: (x: T, y: T) => T; 
     }
 }
 

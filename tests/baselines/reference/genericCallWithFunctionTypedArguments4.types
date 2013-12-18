@@ -1,0 +1,35 @@
+=== tests/cases/compiler/genericCallWithFunctionTypedArguments4.ts ===
+Line 2 col 6 IdentifierName "C" = C
+Line 2 col 10 IdentifierName "foo" = string
+Line 3 col 6 IdentifierName "D" = D
+Line 3 col 10 IdentifierName "bar" = string
+Line 4 col 4 IdentifierName "a" = { new(x: boolean): C; new(x: string): D; }
+Line 5 col 8 IdentifierName "x" = boolean
+Line 5 col 21 IdentifierName "C" = C
+Line 6 col 8 IdentifierName "x" = string
+Line 6 col 20 IdentifierName "D" = D
+Line 9 col 9 IdentifierName "foo4" = typeof foo4
+Line 9 col 14 IdentifierName "T" = T
+Line 9 col 17 IdentifierName "U" = U
+Line 9 col 20 IdentifierName "cb" = new(x: T) => U
+Line 9 col 28 IdentifierName "x" = T
+Line 9 col 31 IdentifierName "T" = T
+Line 9 col 37 IdentifierName "U" = U
+Line 10 col 8 IdentifierName "u" = U
+Line 10 col 11 IdentifierName "U" = U
+Line 11 col 11 IdentifierName "u" = U
+Line 14 col 4 IdentifierName "r" = {}
+Line 14 col 8 InvocationExpression "foo4(a)" = {}
+Line 14 col 8 IdentifierName "foo4" = typeof foo4
+Line 14 col 13 IdentifierName "a" = { new(x: boolean): C; new(x: string): D; }
+Line 16 col 4 IdentifierName "b" = { new<T>(x: boolean): T; new<T>(x: T): any; }
+Line 17 col 8 IdentifierName "T" = T
+Line 17 col 11 IdentifierName "x" = boolean
+Line 17 col 24 IdentifierName "T" = T
+Line 18 col 8 IdentifierName "T" = T
+Line 18 col 11 IdentifierName "x" = T
+Line 18 col 14 IdentifierName "T" = T
+Line 21 col 4 IdentifierName "r2" = {}
+Line 21 col 9 InvocationExpression "foo4(b)" = {}
+Line 21 col 9 IdentifierName "foo4" = typeof foo4
+Line 21 col 14 IdentifierName "b" = { new<T>(x: boolean): T; new<T>(x: T): any; }

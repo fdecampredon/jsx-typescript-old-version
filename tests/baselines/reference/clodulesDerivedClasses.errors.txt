@@ -1,0 +1,3 @@
+clodulesDerivedClasses.ts(9,7): error TS2141: Class 'Path' cannot extend class 'Shape':
+	Types of static property 'Utils' of class 'Path' and class 'Shape' are incompatible:
+		Type 'typeof Path.Utils' is missing property 'Shape.Utils.convert' from type 'typeof Shape.Utils'.

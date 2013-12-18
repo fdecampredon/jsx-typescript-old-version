@@ -1,0 +1,58 @@
+assignmentCompatWithObjectMembersStringNumericNames.ts(21,5): error TS2012: Cannot convert 'T' to 'S':
+	Type 'T' is missing property ''1'' from type 'S'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(22,5): error TS2012: Cannot convert 'S' to 'T':
+	Type 'S' is missing property ''1.'' from type 'T'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(24,5): error TS2012: Cannot convert '{ '1.0': string; }' to 'S':
+	Type '{ '1.0': string; }' is missing property ''1'' from type 'S'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(26,5): error TS2012: Cannot convert 'T2' to 'S2':
+	Type 'T2' is missing property ''1'' from type 'S2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(27,5): error TS2012: Cannot convert 'S2' to 'T2':
+	Type 'S2' is missing property ''1.0'' from type 'T2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(28,5): error TS2012: Cannot convert 'T' to 'S2':
+	Type 'T' is missing property ''1'' from type 'S2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(29,5): error TS2012: Cannot convert '{ '1.0': string; baz?: string; }' to 'S2':
+	Type '{ '1.0': string; baz?: string; }' is missing property ''1'' from type 'S2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(30,5): error TS2012: Cannot convert '{ '1.0': string; }' to 'S2':
+	Type '{ '1.0': string; }' is missing property ''1'' from type 'S2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(32,5): error TS2012: Cannot convert '{ '1.0': string; baz?: string; }' to '{ '1.': string; bar?: string; }':
+	Type '{ '1.0': string; baz?: string; }' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(33,5): error TS2012: Cannot convert '{ '1.': string; bar?: string; }' to '{ '1.0': string; baz?: string; }':
+	Type '{ '1.': string; bar?: string; }' is missing property ''1.0'' from type '{ '1.0': string; baz?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(34,5): error TS2012: Cannot convert 'S' to '{ '1.': string; bar?: string; }':
+	Type 'S' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(35,5): error TS2012: Cannot convert 'S2' to '{ '1.': string; bar?: string; }':
+	Type 'S2' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(36,5): error TS2012: Cannot convert '{ '1.0': string; }' to '{ '1.': string; bar?: string; }':
+	Type '{ '1.0': string; }' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(38,5): error TS2012: Cannot convert '{ '1': string; }' to '{ '1.0': string; }':
+	Type '{ '1': string; }' is missing property ''1.0'' from type '{ '1.0': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(39,5): error TS2012: Cannot convert '{ '1.0': string; }' to '{ '1': string; }':
+	Type '{ '1.0': string; }' is missing property ''1'' from type '{ '1': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(42,5): error TS2012: Cannot convert 'T' to '{ '1.0': string; }':
+	Type 'T' is missing property ''1.0'' from type '{ '1.0': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(65,5): error TS2012: Cannot convert '{ '1.0': string; }' to 'S':
+	Type '{ '1.0': string; }' is missing property ''1'' from type 'S'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(71,5): error TS2012: Cannot convert '{ '1.0': string; }' to 'S2':
+	Type '{ '1.0': string; }' is missing property ''1'' from type 'S2'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(73,5): error TS2012: Cannot convert '{ 1.0: string; baz?: string; }' to '{ '1.': string; bar?: string; }':
+	Type '{ 1.0: string; baz?: string; }' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(74,5): error TS2012: Cannot convert '{ '1.': string; bar?: string; }' to '{ 1.0: string; baz?: string; }':
+	Type '{ '1.': string; bar?: string; }' is missing property '1.0' from type '{ 1.0: string; baz?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(75,5): error TS2012: Cannot convert 'S' to '{ '1.': string; bar?: string; }':
+	Type 'S' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(76,5): error TS2012: Cannot convert 'S2' to '{ '1.': string; bar?: string; }':
+	Type 'S2' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(77,5): error TS2012: Cannot convert '{ '1.0': string; }' to '{ '1.': string; bar?: string; }':
+	Type '{ '1.0': string; }' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(78,5): error TS2012: Cannot convert '{ 1.: string; }' to '{ '1.': string; bar?: string; }':
+	Type '{ 1.: string; }' is missing property ''1.'' from type '{ '1.': string; bar?: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(80,5): error TS2012: Cannot convert '{ 1.: string; }' to '{ '1.0': string; }':
+	Type '{ 1.: string; }' is missing property ''1.0'' from type '{ '1.0': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(81,5): error TS2012: Cannot convert '{ '1.0': string; }' to '{ 1.: string; }':
+	Type '{ '1.0': string; }' is missing property '1.' from type '{ 1.: string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(82,5): error TS2012: Cannot convert '{ 1.0: string; baz?: string; }' to '{ '1.0': string; }':
+	Type '{ 1.0: string; baz?: string; }' is missing property ''1.0'' from type '{ '1.0': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(83,5): error TS2012: Cannot convert 'T2' to '{ '1.0': string; }':
+	Type 'T2' is missing property ''1.0'' from type '{ '1.0': string; }'.
+assignmentCompatWithObjectMembersStringNumericNames.ts(84,5): error TS2012: Cannot convert 'T' to '{ '1.0': string; }':
+	Type 'T' is missing property ''1.0'' from type '{ '1.0': string; }'.

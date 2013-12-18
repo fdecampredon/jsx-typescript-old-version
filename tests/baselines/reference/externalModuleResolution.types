@@ -1,0 +1,13 @@
+=== tests/cases/compiler/consumer.ts ===
+Line 0 col 7 IdentifierName "x" = typeof M2
+Line 1 col 0 MemberAccessExpression "x.Y // .ts should be picked" = number
+Line 1 col 0 IdentifierName "x" = typeof M2
+Line 1 col 2 IdentifierName "Y // .ts should be picked" = number
+=== tests/cases/compiler/foo.d.ts ===
+Line 0 col 15 IdentifierName "M1" = M1
+Line 1 col 15 IdentifierName "X" = number
+Line 3 col 9 IdentifierName "M1" = typeof M1
+=== tests/cases/compiler/foo.ts ===
+Line 0 col 7 IdentifierName "M2" = M2
+Line 1 col 15 IdentifierName "Y" = number
+Line 3 col 9 IdentifierName "M2" = typeof M2

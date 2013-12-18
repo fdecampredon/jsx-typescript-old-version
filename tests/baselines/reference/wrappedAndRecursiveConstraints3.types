@@ -21,11 +21,11 @@ Line 12 col 8 ObjectCreationExpression "new C({ length: 2 })" = C<{ length: numb
 Line 12 col 12 IdentifierName "C" = typeof C
 Line 12 col 14 ObjectLiteralExpression "{ length: 2 }" = { length: number; }
 Line 12 col 16 IdentifierName "length" = number
-Line 13 col 4 IdentifierName "r" = <V extends U>(x: V) => V
-Line 13 col 8 InvocationExpression "c.foo({ length: 3, charAt: (x: number) => { '' } })" = <V extends U>(x: V) => V
-Line 13 col 8 MemberAccessExpression "c.foo" = <U extends T>(x: U) => <V extends U>(x: V) => V
+Line 13 col 4 IdentifierName "r" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+Line 13 col 8 InvocationExpression "c.foo({ length: 3, charAt: (x: number) => { '' } })" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V
+Line 13 col 8 MemberAccessExpression "c.foo" = <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
 Line 13 col 8 IdentifierName "c" = C<{ length: number; }>
-Line 13 col 10 IdentifierName "foo" = <U extends T>(x: U) => <V extends U>(x: V) => V
+Line 13 col 10 IdentifierName "foo" = <U extends { length: number; }>(x: U) => <V extends U>(x: V) => V
 Line 13 col 14 ObjectLiteralExpression "{ length: 3, charAt: (x: number) => { '' } }" = { length: number; charAt: (x: number) => void; }
 Line 13 col 16 IdentifierName "length" = number
 Line 13 col 27 IdentifierName "charAt" = (x: number) => void
@@ -33,4 +33,4 @@ Line 13 col 35 ParenthesizedArrowFunctionExpression "(x: number) => { '' }" = (x
 Line 13 col 36 IdentifierName "x" = number
 Line 14 col 4 IdentifierName "r2" = string
 Line 14 col 9 InvocationExpression "r('')" = string
-Line 14 col 9 IdentifierName "r" = <V extends U>(x: V) => V
+Line 14 col 9 IdentifierName "r" = <V extends { length: number; charAt: (x: number) => void; }>(x: V) => V

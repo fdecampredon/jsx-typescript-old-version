@@ -4,18 +4,13 @@ var c = null;
 var d = null;
 
 var e = null;
-
-// BUG 791098
-e = null; // should work
+e = null; // ok
 
 var E;
 (function (E) {
     E[E["A"] = 0] = "A";
 })(E || (E = {}));
-
-// BUG 767030
-e = null;
-0 /* A */ = null;
+0 /* A */ = null; // error
 
 var C = (function () {
     function C() {
@@ -23,24 +18,22 @@ var C = (function () {
     return C;
 })();
 var f;
-f = null;
-C = null;
+f = null; // ok
+C = null; // error
 
 var g;
-g = null;
-I = null;
+g = null; // ok
+I = null; // error
 
 var M;
 (function (M) {
     M.x = 1;
 })(M || (M = {}));
-
-// BUG 767030
-M = null;
+M = null; // error
 
 var h = null;
 
 function i(a) {
     a = null;
 }
-i = null; // should be an error
+i = null; // error

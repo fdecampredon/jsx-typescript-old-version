@@ -50,11 +50,11 @@ function foo4(x: typeof b); // error
 function foo4(x: any) { }
 
 function foo5(x: A);
-function foo5(x: B); // error
+function foo5(x: B); // no error
 function foo5(x: any) { }
 
 function foo5b(x: A);
-function foo5b(x: C<string>); // error
+function foo5b(x: C<string>); // no error
 function foo5b(x: any) { }
 
 function foo5c(x: A);
@@ -62,35 +62,35 @@ function foo5c(x: PA); // error
 function foo5c(x: any) { }
 
 function foo5d(x: A);
-function foo5d(x: PB); // error
+function foo5d(x: PB); // no error
 function foo5d(x: any) { }
 
 function foo6(x: A);
-function foo6(x: I); // error
+function foo6(x: I); // no error
 function foo6(x: any) { }
 
 function foo7(x: A);
-function foo7(x: typeof a); // error
+function foo7(x: typeof a); // no error
 function foo7(x: any) { }
 
 function foo8(x: B);
-function foo8(x: I); // error
+function foo8(x: I); // no error
 function foo8(x: any) { }
 
 function foo9(x: B);
-function foo9(x: C<string>); // error
+function foo9(x: C<string>); // no error
 function foo9(x: any) { }
 
 function foo10(x: B);
-function foo10(x: typeof a); // error
+function foo10(x: typeof a); // no error
 function foo10(x: any) { }
 
 function foo11(x: B);
-function foo11(x: typeof b); // error
+function foo11(x: typeof b); // no error
 function foo11(x: any) { }
 
 function foo11b(x: B);
-function foo11b(x: PA); // error
+function foo11b(x: PA); // no error
 function foo11b(x: any) { }
 
 function foo11c(x: B);
@@ -98,7 +98,7 @@ function foo11c(x: PB); // error
 function foo11c(x: any) { }
 
 function foo12(x: I);
-function foo12(x: C<string>); // error
+function foo12(x: C<string>); // no error
 function foo12(x: any) { }
 
 function foo13(x: I);
@@ -110,10 +110,10 @@ function foo14(x: typeof b); // error
 function foo14(x: any) { }
 
 function foo15(x: I);
-function foo15(x: PA); // error
+function foo15(x: PA); // no error
 function foo15(x: any) { }
 
 function foo16(x: I);
-function foo16(x: PB); // error
+function foo16(x: PB); // no error
 function foo16(x: any) { }
 

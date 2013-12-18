@@ -1,0 +1,154 @@
+=== tests/cases/compiler/genericClassWithObjectTypeArgsAndConstraints.ts ===
+Line 3 col 6 IdentifierName "C" = C
+Line 4 col 0 IdentifierName "x" = string
+Line 7 col 6 IdentifierName "D" = D
+Line 8 col 0 IdentifierName "x" = string
+Line 9 col 0 IdentifierName "y" = string
+Line 12 col 6 IdentifierName "X" = X<T>
+Line 12 col 8 IdentifierName "T" = T
+Line 13 col 0 IdentifierName "x" = T
+Line 13 col 7 IdentifierName "T" = T
+Line 16 col 7 IdentifierName "Class" = Class
+Line 17 col 10 IdentifierName "G" = Class.G<T>
+Line 17 col 12 IdentifierName "T" = T
+Line 17 col 24 IdentifierName "x" = string
+Line 18 col 0 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 18 col 12 IdentifierName "T" = T
+Line 18 col 24 IdentifierName "x" = string
+Line 18 col 37 IdentifierName "t" = X<T>
+Line 18 col 40 IdentifierName "X" = X<T>
+Line 18 col 42 IdentifierName "T" = T
+Line 18 col 46 IdentifierName "t2" = X<T>
+Line 18 col 50 IdentifierName "X" = X<T>
+Line 18 col 52 IdentifierName "T" = T
+Line 19 col 16 IdentifierName "x" = T
+Line 19 col 19 IdentifierName "T" = T
+Line 20 col 19 IdentifierName "x" = T
+Line 24 col 8 IdentifierName "c1" = X<C>
+Line 24 col 13 ObjectCreationExpression "new X<C>()" = X<C>
+Line 24 col 17 IdentifierName "X" = typeof X
+Line 24 col 19 IdentifierName "C" = C
+Line 25 col 8 IdentifierName "d1" = X<D>
+Line 25 col 13 ObjectCreationExpression "new X<D>()" = X<D>
+Line 25 col 17 IdentifierName "X" = typeof X
+Line 25 col 19 IdentifierName "D" = D
+Line 26 col 8 IdentifierName "g" = Class.G<{ x: string; y: string; }>
+Line 26 col 11 IdentifierName "G" = Class.G<T>
+Line 26 col 15 IdentifierName "x" = string
+Line 26 col 26 IdentifierName "y" = string
+Line 27 col 8 IdentifierName "r" = C
+Line 27 col 12 InvocationExpression "g.foo(c1, d1)" = C
+Line 27 col 12 MemberAccessExpression "g.foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 27 col 12 IdentifierName "g" = Class.G<{ x: string; y: string; }>
+Line 27 col 14 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 27 col 18 IdentifierName "c1" = X<C>
+Line 27 col 22 IdentifierName "d1" = X<D>
+Line 28 col 8 IdentifierName "r2" = C
+Line 28 col 13 InvocationExpression "g.foo(c1, c1)" = C
+Line 28 col 13 MemberAccessExpression "g.foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 28 col 13 IdentifierName "g" = Class.G<{ x: string; y: string; }>
+Line 28 col 15 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 28 col 19 IdentifierName "c1" = X<C>
+Line 28 col 23 IdentifierName "c1" = X<C>
+Line 30 col 10 IdentifierName "G2" = Class.G2<T>
+Line 30 col 13 IdentifierName "T" = T
+Line 30 col 23 IdentifierName "C" = C
+Line 31 col 0 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 31 col 13 IdentifierName "T" = T
+Line 31 col 23 IdentifierName "C" = C
+Line 31 col 26 IdentifierName "t" = X<T>
+Line 31 col 29 IdentifierName "X" = X<T>
+Line 31 col 31 IdentifierName "T" = T
+Line 31 col 35 IdentifierName "t2" = X<T>
+Line 31 col 39 IdentifierName "X" = X<T>
+Line 31 col 41 IdentifierName "T" = T
+Line 32 col 16 IdentifierName "x" = T
+Line 32 col 19 IdentifierName "T" = T
+Line 33 col 19 IdentifierName "x" = T
+Line 36 col 8 IdentifierName "g2" = Class.G2<D>
+Line 36 col 12 IdentifierName "G2" = Class.G2<T>
+Line 36 col 15 IdentifierName "D" = D
+Line 37 col 8 IdentifierName "r" = C
+Line 37 col 12 InvocationExpression "g2.foo2(c1, d1)" = C
+Line 37 col 12 MemberAccessExpression "g2.foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 37 col 12 IdentifierName "g2" = Class.G2<D>
+Line 37 col 15 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 37 col 20 IdentifierName "c1" = X<C>
+Line 37 col 24 IdentifierName "d1" = X<D>
+Line 38 col 8 IdentifierName "r2" = C
+Line 38 col 13 InvocationExpression "g2.foo2(c1, c1)" = C
+Line 38 col 13 MemberAccessExpression "g2.foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 38 col 13 IdentifierName "g2" = Class.G2<D>
+Line 38 col 16 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 38 col 21 IdentifierName "c1" = X<C>
+Line 38 col 25 IdentifierName "c1" = X<C>
+Line 41 col 7 IdentifierName "Interface" = Interface
+Line 42 col 14 IdentifierName "G" = Interface.G<T>
+Line 42 col 16 IdentifierName "T" = T
+Line 42 col 28 IdentifierName "x" = string
+Line 43 col 0 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 43 col 12 IdentifierName "T" = T
+Line 43 col 24 IdentifierName "x" = string
+Line 43 col 37 IdentifierName "t" = X<T>
+Line 43 col 40 IdentifierName "X" = X<T>
+Line 43 col 42 IdentifierName "T" = T
+Line 43 col 46 IdentifierName "t2" = X<T>
+Line 43 col 50 IdentifierName "X" = X<T>
+Line 43 col 52 IdentifierName "T" = T
+Line 43 col 57 IdentifierName "T" = T
+Line 46 col 8 IdentifierName "c1" = X<C>
+Line 46 col 13 ObjectCreationExpression "new X<C>()" = X<C>
+Line 46 col 17 IdentifierName "X" = typeof X
+Line 46 col 19 IdentifierName "C" = C
+Line 47 col 8 IdentifierName "d1" = X<D>
+Line 47 col 13 ObjectCreationExpression "new X<D>()" = X<D>
+Line 47 col 17 IdentifierName "X" = typeof X
+Line 47 col 19 IdentifierName "D" = D
+Line 48 col 8 IdentifierName "g" = Interface.G<{ x: string; y: string; }>
+Line 48 col 11 IdentifierName "G" = Interface.G<T>
+Line 48 col 15 IdentifierName "x" = string
+Line 48 col 26 IdentifierName "y" = string
+Line 49 col 8 IdentifierName "r" = C
+Line 49 col 12 InvocationExpression "g.foo(c1, d1)" = C
+Line 49 col 12 MemberAccessExpression "g.foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 49 col 12 IdentifierName "g" = Interface.G<{ x: string; y: string; }>
+Line 49 col 14 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 49 col 18 IdentifierName "c1" = X<C>
+Line 49 col 22 IdentifierName "d1" = X<D>
+Line 50 col 8 IdentifierName "r2" = C
+Line 50 col 13 InvocationExpression "g.foo(c1, c1)" = C
+Line 50 col 13 MemberAccessExpression "g.foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 50 col 13 IdentifierName "g" = Interface.G<{ x: string; y: string; }>
+Line 50 col 15 IdentifierName "foo" = <T extends { x: string; }>(t: X<T>, t2: X<T>) => T
+Line 50 col 19 IdentifierName "c1" = X<C>
+Line 50 col 23 IdentifierName "c1" = X<C>
+Line 52 col 14 IdentifierName "G2" = Interface.G2<T>
+Line 52 col 17 IdentifierName "T" = T
+Line 52 col 27 IdentifierName "C" = C
+Line 53 col 0 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 53 col 13 IdentifierName "T" = T
+Line 53 col 23 IdentifierName "C" = C
+Line 53 col 26 IdentifierName "t" = X<T>
+Line 53 col 29 IdentifierName "X" = X<T>
+Line 53 col 31 IdentifierName "T" = T
+Line 53 col 35 IdentifierName "t2" = X<T>
+Line 53 col 39 IdentifierName "X" = X<T>
+Line 53 col 41 IdentifierName "T" = T
+Line 53 col 46 IdentifierName "T" = T
+Line 56 col 8 IdentifierName "g2" = Interface.G2<D>
+Line 56 col 12 IdentifierName "G2" = Interface.G2<T>
+Line 56 col 15 IdentifierName "D" = D
+Line 57 col 8 IdentifierName "r" = C
+Line 57 col 12 InvocationExpression "g2.foo2(c1, d1)" = C
+Line 57 col 12 MemberAccessExpression "g2.foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 57 col 12 IdentifierName "g2" = Interface.G2<D>
+Line 57 col 15 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 57 col 20 IdentifierName "c1" = X<C>
+Line 57 col 24 IdentifierName "d1" = X<D>
+Line 58 col 8 IdentifierName "r2" = C
+Line 58 col 13 InvocationExpression "g2.foo2(c1, c1)" = C
+Line 58 col 13 MemberAccessExpression "g2.foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 58 col 13 IdentifierName "g2" = Interface.G2<D>
+Line 58 col 16 IdentifierName "foo2" = <T extends C>(t: X<T>, t2: X<T>) => T
+Line 58 col 21 IdentifierName "c1" = X<C>
+Line 58 col 25 IdentifierName "c1" = X<C>

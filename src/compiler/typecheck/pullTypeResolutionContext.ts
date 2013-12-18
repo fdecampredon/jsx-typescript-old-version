@@ -207,6 +207,8 @@ module TypeScript {
     export class PullTypeResolutionContext {
         private contextStack: PullContextualTypeContext[] = [];
         private typeCheckedNodes: IBitVector = null;
+        public enclosingTypeWalker1: PullTypeEnclosingTypeWalker = null;
+        public enclosingTypeWalker2: PullTypeEnclosingTypeWalker = null;
 
         constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public fileName: string = null) {
             if (inTypeCheck) {
@@ -306,11 +308,6 @@ module TypeScript {
                     return null;
                 }
 
-                // if it's a type parameter, return the upper bound
-                if (type.isTypeParameter() && (<PullTypeParameterSymbol>type).getConstraint()) {
-                    type = (<PullTypeParameterSymbol>type).getConstraint();
-                }
-
                 var substitution = this.findSubstitution(type);
 
                 return substitution || type;
@@ -385,6 +382,129 @@ module TypeScript {
             }
 
             return null;
+        }
+
+        public startWalkingTypes(symbol1: PullTypeSymbol, symbol2: PullTypeSymbol) {
+            if (!this.enclosingTypeWalker1) {
+                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
+            }
+            var symbolsWhenStartedWalkingTypes1 = this.enclosingTypeWalker1.startWalkingType(symbol1);
+            if (!this.enclosingTypeWalker2) {
+                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
+            }
+            var symbolsWhenStartedWalkingTypes2 = this.enclosingTypeWalker2.startWalkingType(symbol2);            
+            return { symbolsWhenStartedWalkingTypes1: symbolsWhenStartedWalkingTypes1, symbolsWhenStartedWalkingTypes2: symbolsWhenStartedWalkingTypes2 };
+        }
+
+        public endWalkingTypes(symbolsWhenStartedWalkingTypes: { symbolsWhenStartedWalkingTypes1: PullSymbol[]; symbolsWhenStartedWalkingTypes2: PullSymbol[]; }) {
+            this.enclosingTypeWalker1.endWalkingType(symbolsWhenStartedWalkingTypes.symbolsWhenStartedWalkingTypes1);
+            this.enclosingTypeWalker2.endWalkingType(symbolsWhenStartedWalkingTypes.symbolsWhenStartedWalkingTypes2);
+        }
+
+        public setEnclosingTypes(symbol1: PullSymbol, symbol2: PullSymbol) {
+            if (!this.enclosingTypeWalker1) {
+                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
+            }
+            this.enclosingTypeWalker1.setEnclosingType(symbol1);
+            if (!this.enclosingTypeWalker2) {
+                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
+            }
+            this.enclosingTypeWalker2.setEnclosingType(symbol2);
+        }
+
+        public walkMemberTypes(memberName: string) {
+            this.enclosingTypeWalker1.walkMemberType(memberName, this.resolver);
+            this.enclosingTypeWalker2.walkMemberType(memberName, this.resolver);
+        }
+
+        public postWalkMemberTypes() {
+            this.enclosingTypeWalker1.postWalkMemberType();
+            this.enclosingTypeWalker2.postWalkMemberType();
+        }
+
+        public walkSignatures(kind: PullElementKind, index: number, index2?: number) {
+            this.enclosingTypeWalker1.walkSignature(kind, index);
+            this.enclosingTypeWalker2.walkSignature(kind, index2 == undefined ? index : index2);
+        }
+
+        public postWalkSignatures() {
+            this.enclosingTypeWalker1.postWalkSignature();
+            this.enclosingTypeWalker2.postWalkSignature();
+        }
+
+        public walkTypeParameterConstraints(index: number) {
+            this.enclosingTypeWalker1.walkTypeParameterConstraint(index);
+            this.enclosingTypeWalker2.walkTypeParameterConstraint(index);
+        }
+
+        public postWalkTypeParameterConstraints() {
+            this.enclosingTypeWalker1.postWalkTypeParameterConstraint();
+            this.enclosingTypeWalker2.postWalkTypeParameterConstraint();
+        }
+
+        public walkReturnTypes() {
+            this.enclosingTypeWalker1.walkReturnType();
+            this.enclosingTypeWalker2.walkReturnType();
+        }
+
+        public postWalkReturnTypes() {
+            this.enclosingTypeWalker1.postWalkReturnType();
+            this.enclosingTypeWalker2.postWalkReturnType();
+        }
+
+        public walkParameterTypes(iParam: number) {
+            this.enclosingTypeWalker1.walkParameterType(iParam);
+            this.enclosingTypeWalker2.walkParameterType(iParam);
+        }
+
+        public postWalkParameterTypes() {
+            this.enclosingTypeWalker1.postWalkParameterType();
+            this.enclosingTypeWalker2.postWalkParameterType();
+        }
+
+        public getBothKindOfIndexSignatures(includeAugmentedType1: boolean, includeAugmentedType2: boolean) {
+            var indexSigs1 = this.enclosingTypeWalker1.getBothKindOfIndexSignatures(this.resolver, this, includeAugmentedType1);
+            var indexSigs2 = this.enclosingTypeWalker2.getBothKindOfIndexSignatures(this.resolver, this, includeAugmentedType2);
+            return { indexSigs1: indexSigs1, indexSigs2: indexSigs2 };
+        }
+
+        public walkIndexSignatureReturnTypes(indexSigs: { indexSigs1: IndexSignatureInfo; indexSigs2: IndexSignatureInfo; },
+            useStringIndexSignature1: boolean, useStringIndexSignature2: boolean, onlySignature?: boolean) {
+            this.enclosingTypeWalker1.walkIndexSignatureReturnType(indexSigs.indexSigs1, useStringIndexSignature1, onlySignature);
+            this.enclosingTypeWalker2.walkIndexSignatureReturnType(indexSigs.indexSigs2, useStringIndexSignature2, onlySignature);
+        }
+
+        public postWalkIndexSignatureReturnTypes(onlySignature?: boolean) {
+            this.enclosingTypeWalker1.postWalkIndexSignatureReturnType(onlySignature);
+            this.enclosingTypeWalker2.postWalkIndexSignatureReturnType(onlySignature);
+        }
+
+        public swapEnclosingTypeWalkers() {
+            var tempEnclosingWalker1 = this.enclosingTypeWalker1;
+            this.enclosingTypeWalker1 = this.enclosingTypeWalker2;
+            this.enclosingTypeWalker2 = tempEnclosingWalker1;
+        }
+
+        public getGenerativeClassifications() {
+            var generativeClassification1 = this.enclosingTypeWalker1.getGenerativeClassification();
+            var generativeClassification2 = this.enclosingTypeWalker2.getGenerativeClassification();
+            return { generativeClassification1: generativeClassification1, generativeClassification2: generativeClassification2 };
+        }
+
+        public resetEnclosingTypeWalkers() {
+            var enclosingTypeWalker1 = this.enclosingTypeWalker1;
+            var enclosingTypeWalker2 = this.enclosingTypeWalker2;
+            this.enclosingTypeWalker1 = null;
+            this.enclosingTypeWalker2 = null;
+            return {
+                enclosingTypeWalker1: enclosingTypeWalker1,
+                enclosingTypeWalker2: enclosingTypeWalker2
+            }
+        }
+
+        public setEnclosingTypeWalkers(enclosingTypeWalkers: { enclosingTypeWalker1: PullTypeEnclosingTypeWalker; enclosingTypeWalker2: PullTypeEnclosingTypeWalker; }) {
+            this.enclosingTypeWalker1 = enclosingTypeWalkers.enclosingTypeWalker1;
+            this.enclosingTypeWalker2 = enclosingTypeWalkers.enclosingTypeWalker2;
         }
     }
 }

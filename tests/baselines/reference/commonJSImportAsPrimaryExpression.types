@@ -1,0 +1,11 @@
+=== tests/cases/compiler/foo_1.ts ===
+Line 0 col 7 IdentifierName "foo" = foo
+Line 1 col 3 MemberAccessExpression "foo.C1.s1" = boolean
+Line 1 col 3 MemberAccessExpression "foo.C1" = typeof C1
+Line 1 col 3 IdentifierName "foo" = foo
+Line 1 col 7 IdentifierName "C1" = typeof C1
+Line 1 col 10 IdentifierName "s1" = boolean
+=== tests/cases/compiler/foo_0.ts ===
+Line 0 col 13 IdentifierName "C1" = C1
+Line 1 col 0 IdentifierName "m1" = number
+Line 2 col 8 IdentifierName "s1" = boolean

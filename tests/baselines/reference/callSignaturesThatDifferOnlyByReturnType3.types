@@ -1,0 +1,11 @@
+=== tests/cases/compiler/callSignaturesThatDifferOnlyByReturnType3.ts ===
+Line 3 col 10 IdentifierName "I" = I
+Line 4 col 5 IdentifierName "x" = string
+Line 7 col 10 IdentifierName "I" = I
+Line 8 col 5 IdentifierName "x" = string
+Line 11 col 10 IdentifierName "I2" = I2<T>
+Line 11 col 13 IdentifierName "T" = T
+Line 12 col 5 IdentifierName "x" = string
+Line 15 col 10 IdentifierName "I2" = I2<T>
+Line 15 col 13 IdentifierName "T" = T
+Line 16 col 5 IdentifierName "x" = string

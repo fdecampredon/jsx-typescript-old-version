@@ -1,0 +1,23 @@
+=== tests/cases/compiler/collisionCodeGenModuleWithMethodChildren.ts ===
+Line 0 col 7 IdentifierName "M" = M
+Line 1 col 15 IdentifierName "x" = number
+Line 2 col 10 IdentifierName "c" = M.c
+Line 3 col 0 IdentifierName "fn" = (M: any, p?: number) => void
+Line 3 col 11 IdentifierName "M" = any
+Line 3 col 14 IdentifierName "p" = number
+Line 3 col 18 IdentifierName "x" = number
+Line 7 col 7 IdentifierName "M" = M
+Line 8 col 10 IdentifierName "d" = M.d
+Line 9 col 0 IdentifierName "fn2" = () => void
+Line 10 col 16 IdentifierName "M" = any
+Line 11 col 16 IdentifierName "p" = number
+Line 11 col 20 IdentifierName "x" = number
+Line 16 col 7 IdentifierName "M" = M
+Line 17 col 10 IdentifierName "e" = M.e
+Line 18 col 0 IdentifierName "fn3" = () => void
+Line 19 col 21 IdentifierName "M" = () => void
+Line 20 col 20 IdentifierName "p" = number
+Line 20 col 24 IdentifierName "x" = number
+Line 26 col 7 IdentifierName "M" = M
+Line 27 col 10 IdentifierName "f" = M.f
+Line 28 col 0 IdentifierName "M" = () => void

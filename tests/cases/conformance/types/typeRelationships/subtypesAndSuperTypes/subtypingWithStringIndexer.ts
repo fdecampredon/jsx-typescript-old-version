@@ -30,10 +30,10 @@ module Generics {
     }
 
     class B3<T extends Base> extends A<T> {
-        [x: string]: Derived; // error, BUG?
+        [x: string]: Derived; // error
     }
 
     class B4<T extends Base> extends A<T> {
-        [x: string]: Derived2; // error, BUG?
+        [x: string]: Derived2; // error
     }
 }

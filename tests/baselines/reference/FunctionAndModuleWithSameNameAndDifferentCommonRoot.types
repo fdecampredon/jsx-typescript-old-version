@@ -1,0 +1,30 @@
+=== tests/cases/compiler/function.ts ===
+Line 0 col 7 IdentifierName "A" = A
+Line 1 col 20 IdentifierName "Point" = typeof A.Point
+Line 2 col 15 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
+Line 2 col 17 IdentifierName "x" = number
+Line 2 col 23 IdentifierName "y" = number
+=== tests/cases/compiler/module.ts ===
+Line 0 col 7 IdentifierName "B" = B
+Line 1 col 18 IdentifierName "Point" = B.Point
+Line 2 col 19 IdentifierName "Origin" = { x: number; y: number; }
+Line 2 col 28 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
+Line 2 col 30 IdentifierName "x" = number
+Line 2 col 36 IdentifierName "y" = number
+=== tests/cases/compiler/test.ts ===
+Line 0 col 4 IdentifierName "fn" = () => { x: number; y: number; }
+Line 0 col 16 IdentifierName "x" = number
+Line 0 col 27 IdentifierName "y" = number
+Line 1 col 4 IdentifierName "fn" = typeof A.Point
+Line 1 col 9 MemberAccessExpression "A.Point" = typeof A.Point
+Line 1 col 9 IdentifierName "A" = typeof A
+Line 1 col 11 IdentifierName "Point" = typeof A.Point
+Line 3 col 4 IdentifierName "cl" = { x: number; y: number; }
+Line 3 col 10 IdentifierName "x" = number
+Line 3 col 21 IdentifierName "y" = number
+Line 4 col 4 IdentifierName "cl" = { x: number; y: number; }
+Line 4 col 9 MemberAccessExpression "B.Point.Origin" = { x: number; y: number; }
+Line 4 col 9 MemberAccessExpression "B.Point" = typeof B.Point
+Line 4 col 9 IdentifierName "B" = typeof B
+Line 4 col 11 IdentifierName "Point" = typeof B.Point
+Line 4 col 17 IdentifierName "Origin" = { x: number; y: number; }

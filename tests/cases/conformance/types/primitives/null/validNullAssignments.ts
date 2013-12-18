@@ -4,31 +4,27 @@ var c: string = null;
 var d: void = null;
 
 var e: typeof undefined = null;
-// BUG 791098
-e = null; // should work
+e = null; // ok
 
 enum E { A }
-// BUG 767030
-e = null;
-E.A = null;
+E.A = null; // error
 
 class C { foo: string }
 var f: C;
-f = null;
-C = null;
+f = null; // ok
+C = null; // error
 
 interface I { foo: string }
 var g: I;
-g = null;
-I = null;
+g = null; // ok
+I = null; // error
 
 module M { export var x = 1; }
-// BUG 767030
-M = null;
+M = null; // error
 
 var h: { f(): void } = null;
 
 function i<T>(a: T) {
     a = null;
 }
-i = null; // should be an error
+i = null; // error

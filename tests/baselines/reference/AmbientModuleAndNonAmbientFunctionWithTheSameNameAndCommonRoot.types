@@ -1,0 +1,21 @@
+=== tests/cases/compiler/module.d.ts ===
+Line 0 col 15 IdentifierName "Point" = Point
+Line 1 col 15 IdentifierName "Origin" = { x: number; y: number; }
+Line 1 col 25 IdentifierName "x" = number
+Line 1 col 36 IdentifierName "y" = number
+=== tests/cases/compiler/function.ts ===
+Line 0 col 9 IdentifierName "Point" = typeof Point
+Line 1 col 11 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
+Line 1 col 13 IdentifierName "x" = number
+Line 1 col 19 IdentifierName "y" = number
+=== tests/cases/compiler/test.ts ===
+Line 0 col 4 IdentifierName "cl" = { x: number; y: number; }
+Line 0 col 10 IdentifierName "x" = number
+Line 0 col 21 IdentifierName "y" = number
+Line 1 col 4 IdentifierName "cl" = { x: number; y: number; }
+Line 1 col 9 InvocationExpression "Point()" = { x: number; y: number; }
+Line 1 col 9 IdentifierName "Point" = typeof Point
+Line 2 col 4 IdentifierName "cl" = { x: number; y: number; }
+Line 2 col 9 MemberAccessExpression "Point.Origin" = { x: number; y: number; }
+Line 2 col 9 IdentifierName "Point" = typeof Point
+Line 2 col 15 IdentifierName "Origin" = { x: number; y: number; }

@@ -91,11 +91,11 @@ module TypeScript {
                 var dtsFile = normalizedPath + ".d.ts";
                 var tsFile = normalizedPath + ".ts";
 
-                if (this.host.fileExists(dtsFile)) {
-                    normalizedPath = dtsFile;
+                if (this.host.fileExists(tsFile)) {
+                    normalizedPath = tsFile;
                 }
                 else {
-                    normalizedPath = tsFile;
+                    normalizedPath = dtsFile;
                 }
             }
 
@@ -130,17 +130,22 @@ module TypeScript {
 
                 var start = new Date().getTime();
 
+                // SPEC: Nov 18
+                // An external import declaration that specifies a relative external module name (section 11.2.1) resolves the name 
+                // relative to the directory of the containing source file.
+                // If a source file with the resulting path and file extension '.ts' exists, that file is added as a dependency.
+                // Otherwise, if a source file with the resulting path and file extension '.d.ts' exists, that file is added as a dependency.
                 do {
-                    // Search for ".d.ts" file firs
-                    var currentFilePath = this.host.resolveRelativePath(dtsFileName, parentDirectory);
+                    // Search for ".ts" file first
+                    currentFilePath = this.host.resolveRelativePath(tsFilePath, parentDirectory);
                     if (this.host.fileExists(currentFilePath)) {
                         // Found the file
                         searchFilePath = currentFilePath;
                         break;
                     }
 
-                    // Search for ".ts" file
-                    currentFilePath = this.host.resolveRelativePath(tsFilePath, parentDirectory);
+                    // Search for ".d.ts" file
+                    var currentFilePath = this.host.resolveRelativePath(dtsFileName, parentDirectory);
                     if (this.host.fileExists(currentFilePath)) {
                         // Found the file
                         searchFilePath = currentFilePath;

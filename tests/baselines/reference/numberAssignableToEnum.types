@@ -1,0 +1,12 @@
+=== tests/cases/compiler/numberAssignableToEnum.ts ===
+Line 0 col 5 IdentifierName "E" = E
+Line 0 col 9 IdentifierName "A" = E
+Line 1 col 4 IdentifierName "n" = number
+Line 2 col 4 IdentifierName "e" = E
+Line 2 col 7 IdentifierName "E" = E
+Line 3 col 0 AssignmentExpression "e = n" = number
+Line 3 col 0 IdentifierName "e" = E
+Line 3 col 4 IdentifierName "n" = number
+Line 4 col 0 AssignmentExpression "n = e" = E
+Line 4 col 0 IdentifierName "n" = number
+Line 4 col 4 IdentifierName "e" = E

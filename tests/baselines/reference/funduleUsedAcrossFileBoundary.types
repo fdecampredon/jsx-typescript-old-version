@@ -1,0 +1,24 @@
+=== tests/cases/compiler/funduleUsedAcrossFileBoundary_file1.ts ===
+Line 0 col 17 IdentifierName "Q" = typeof Q
+Line 0 col 19 IdentifierName "T" = T
+Line 0 col 22 IdentifierName "value" = T
+Line 0 col 29 IdentifierName "T" = T
+Line 1 col 15 IdentifierName "Q" = Q
+Line 2 col 14 IdentifierName "Promise" = Q.Promise<T>
+Line 2 col 22 IdentifierName "T" = T
+Line 3 col 0 IdentifierName "foo" = string
+Line 5 col 20 IdentifierName "defer" = <T>() => string
+Line 5 col 26 IdentifierName "T" = T
+=== tests/cases/compiler/funduleUsedAcrossFileBoundary_file2.ts ===
+Line 0 col 9 IdentifierName "promiseWithCancellation" = typeof promiseWithCancellation
+Line 0 col 33 IdentifierName "T" = T
+Line 0 col 36 IdentifierName "promise" = Q.Promise<T>
+Line 0 col 45 IdentifierName "Q" = Q
+Line 0 col 47 IdentifierName "Promise" = Q.Promise<T>
+Line 0 col 55 IdentifierName "T" = T
+Line 1 col 8 IdentifierName "deferred" = string
+Line 1 col 19 InvocationExpression "Q.defer<T>()" = string
+Line 1 col 19 MemberAccessExpression "Q.defer" = <T>() => string
+Line 1 col 19 IdentifierName "Q" = typeof Q
+Line 1 col 21 IdentifierName "defer" = <T>() => string
+Line 1 col 27 IdentifierName "T" = T

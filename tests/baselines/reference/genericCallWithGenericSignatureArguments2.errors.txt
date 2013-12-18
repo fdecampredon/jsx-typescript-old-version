@@ -1,0 +1,14 @@
+genericCallWithGenericSignatureArguments2.ts(9,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(x: string) => string' and '(x: number) => number' are incompatible.
+genericCallWithGenericSignatureArguments2.ts(9,10): error TS2087: Could not select overload for 'call' expression.
+genericCallWithGenericSignatureArguments2.ts(14,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'T' to argument 1 which is of type 'Date'.
+genericCallWithGenericSignatureArguments2.ts(14,14): error TS2087: Could not select overload for 'call' expression.
+genericCallWithGenericSignatureArguments2.ts(15,15): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'T' to argument 1 which is of type 'number'.
+genericCallWithGenericSignatureArguments2.ts(15,15): error TS2087: Could not select overload for 'call' expression.
+genericCallWithGenericSignatureArguments2.ts(24,14): error TS2086: Type 'T extends RegExp' does not satisfy the constraint 'Date' for type parameter 'T extends Date'.
+genericCallWithGenericSignatureArguments2.ts(25,15): error TS2086: Type '{}' does not satisfy the constraint 'Date' for type parameter 'T extends Date'.
+genericCallWithGenericSignatureArguments2.ts(36,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(x: E) => F' and '(x: E) => E' are incompatible.
+genericCallWithGenericSignatureArguments2.ts(36,10): error TS2087: Could not select overload for 'call' expression.
