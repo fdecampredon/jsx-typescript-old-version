@@ -17,41 +17,41 @@ var D = 'D'
 goTo.marker(B);
 edit.insert('constructor(val: T) { }');
 goTo.marker('Asig');
-verify.quickInfoIs("<T>(): A<string>", null, A, 'constructor');
+verify.quickInfoIs("(): A<string>", null, A, 'constructor');
 
 goTo.marker('Bsig');
-verify.quickInfoIs("<T>(val: string): B<string>", null, B, 'constructor');
+verify.quickInfoIs("(val: string): B<string>", null, B, 'constructor');
 
 goTo.marker('Csig'); 
-verify.quickInfoIs("<T>(val: string): C<string>", null, C, 'constructor');
+verify.quickInfoIs("(val: string): C<string>", null, C, 'constructor');
 
 goTo.marker('Dsig');
-verify.quickInfoIs("<T>(val: string): D<string>", null, D, 'constructor');
+verify.quickInfoIs("(val: string): D<string>", null, D, 'constructor');
 
 goTo.marker(C);
 edit.deleteAtCaret('constructor(val: T) { }'.length);
 goTo.marker('Asig');
-verify.quickInfoIs("<T>(): A<string>", null, A, 'constructor');
+verify.quickInfoIs("(): A<string>", null, A, 'constructor');
 
 goTo.marker('Bsig');
-verify.quickInfoIs("<T>(val: string): B<string>", null, B, 'constructor');
+verify.quickInfoIs("(val: string): B<string>", null, B, 'constructor');
 
 goTo.marker('Csig');
-verify.quickInfoIs("<T>(): C<{}>", null, C, 'constructor');
+verify.quickInfoIs("(): C<{}>", null, C, 'constructor');
 
 goTo.marker('Dsig');
-verify.quickInfoIs("<T>(val: string): D<string>", null, D, 'constructor');
+verify.quickInfoIs("(val: string): D<string>", null, D, 'constructor');
 
 goTo.marker(D);
 edit.deleteAtCaret("val: T".length);
 goTo.marker('Asig');
-verify.quickInfoIs("<T>(): A<string>", null, A, 'constructor');
+verify.quickInfoIs("(): A<string>", null, A, 'constructor');
 
 goTo.marker('Bsig');
-verify.quickInfoIs("<T>(val: string): B<string>", null, B, 'constructor');
+verify.quickInfoIs("(val: string): B<string>", null, B, 'constructor');
 
 goTo.marker('Csig');
-verify.quickInfoIs("<T>(): C<{}>", null, C, 'constructor');
+verify.quickInfoIs("(): C<{}>", null, C, 'constructor');
 
 goTo.marker('Dsig');
-verify.quickInfoIs("<T>(): D<string>", null, D, 'constructor');
+verify.quickInfoIs("(): D<string>", null, D, 'constructor');

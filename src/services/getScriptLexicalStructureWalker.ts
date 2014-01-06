@@ -146,7 +146,22 @@ module TypeScript.Services {
         }
 
         public visitConstructorDeclaration(node: TypeScript.ConstructorDeclarationSyntax): void {
-            var item = this.createItem(node, node.modifiers, ScriptElementKind.constructorImplementationElement, "constructor");
+            this.createItem(node, TypeScript.Syntax.emptyList<ISyntaxToken>(), ScriptElementKind.constructorImplementationElement, "constructor");
+
+            // Search the parameter list of class properties
+            var parameters = node.callSignature.parameterList.parameters;
+            if (parameters) {
+                for (var i = 0, n = parameters.nonSeparatorCount(); i < n; i++) {
+                    var parameter = <ParameterSyntax>parameters.nonSeparatorAt(i);
+
+                    Debug.assert(parameter.kind() === SyntaxKind.Parameter);
+
+                    if (SyntaxUtilities.containsToken(parameter.modifiers, SyntaxKind.PublicKeyword) ||
+                        SyntaxUtilities.containsToken(parameter.modifiers, SyntaxKind.PrivateKeyword)) {
+                        this.createItem(node, parameter.modifiers, ScriptElementKind.memberVariableElement, parameter.identifier.text());
+                    }
+                }
+            }
 
             // No need to descend into a constructor;
         }

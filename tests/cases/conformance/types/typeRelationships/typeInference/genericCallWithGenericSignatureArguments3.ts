@@ -6,8 +6,8 @@ function foo<T>(x: T, a: (x: T) => T, b: (x: T) => T) {
     return r;
 }
 
-var r1 = foo('', (x: string) => '', (x: Object) => null); // string => string
-var r1 = foo('', (x) => '', (x) => null); // string => string
+var r1 = foo('', (x: string) => '', (x: Object) => null); // any => any
+var r1ii = foo('', (x) => '', (x) => null); // string => string
 var r2 = foo('', (x: string) => '', (x: Object) => ''); // string => string
 var r3 = foo(null, (x: Object) => '', (x: string) => ''); // Object => Object
 var r4 = foo(null, (x) => '', (x) => ''); // any => any

@@ -1,0 +1,3 @@
+constructorFunctionTypeIsSubtypeOfBaseType.ts(14,7): error TS2141: Class 'Derived2' cannot extend class 'Base':
+	Types of static property 'foo' of class 'Derived2' and class 'Base' are incompatible:
+		Types of property 'bar' of types '{ bar: any; }' and '{ bar: Object; }' are incompatible.

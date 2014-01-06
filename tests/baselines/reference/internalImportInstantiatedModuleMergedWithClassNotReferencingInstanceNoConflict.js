@@ -10,5 +10,4 @@ var A;
 
 var B;
 (function (B) {
-    var Y = A;
 })(B || (B = {}));

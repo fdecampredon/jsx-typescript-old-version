@@ -16,23 +16,23 @@ Line 4 col 12 IdentifierName "x" = T
 Line 4 col 15 IdentifierName "T" = T
 Line 4 col 21 IdentifierName "T" = T
 Line 5 col 11 IdentifierName "r" = (x: T) => T
-Line 8 col 4 IdentifierName "r1" = (x: string) => string
-Line 8 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => null)" = (x: string) => string
+Line 8 col 4 IdentifierName "r1" = (x: any) => any
+Line 8 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => null)" = (x: any) => any
 Line 8 col 9 IdentifierName "foo" = typeof foo
 Line 8 col 17 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
 Line 8 col 18 IdentifierName "x" = string
 Line 8 col 36 ParenthesizedArrowFunctionExpression "(x: Object) => null" = (x: Object) => any
 Line 8 col 37 IdentifierName "x" = Object
 Line 8 col 40 IdentifierName "Object" = Object
-Line 9 col 4 IdentifierName "r1" = (x: string) => string
-Line 9 col 9 InvocationExpression "foo('', (x) => '', (x) => null)" = (x: string) => string
-Line 9 col 9 IdentifierName "foo" = typeof foo
-Line 9 col 17 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: string) => string
-Line 9 col 18 IdentifierName "x" = string
-Line 9 col 28 ParenthesizedArrowFunctionExpression "(x) => null" = (x: string) => any
-Line 9 col 29 IdentifierName "x" = string
-Line 10 col 4 IdentifierName "r2" = (x: string) => string
-Line 10 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => '')" = (x: string) => string
+Line 9 col 4 IdentifierName "r1ii" = (x: string) => string
+Line 9 col 11 InvocationExpression "foo('', (x) => '', (x) => null)" = (x: string) => string
+Line 9 col 11 IdentifierName "foo" = typeof foo
+Line 9 col 19 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: string) => string
+Line 9 col 20 IdentifierName "x" = string
+Line 9 col 30 ParenthesizedArrowFunctionExpression "(x) => null" = (x: string) => any
+Line 9 col 31 IdentifierName "x" = string
+Line 10 col 4 IdentifierName "r2" = (x: Object) => Object
+Line 10 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => '')" = (x: Object) => Object
 Line 10 col 9 IdentifierName "foo" = typeof foo
 Line 10 col 17 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
 Line 10 col 18 IdentifierName "x" = string

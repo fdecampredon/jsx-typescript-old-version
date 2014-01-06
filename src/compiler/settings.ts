@@ -21,6 +21,7 @@ module TypeScript {
         public useCaseSensitiveFileResolution: boolean = false;
         public gatherDiagnostics: boolean = false;
         public codepage: number = null
+        public createFileLog: boolean = false;
     }
 
     export class ImmutableCompilationSettings {
@@ -44,6 +45,7 @@ module TypeScript {
         private _useCaseSensitiveFileResolution: boolean;
         private _gatherDiagnostics: boolean;
         private _codepage: number;
+        private _createFileLog: boolean;
 
         public propagateEnumConstants() { return this._propagateEnumConstants; }
         public removeComments() { return this._removeComments; }
@@ -63,6 +65,7 @@ module TypeScript {
         public useCaseSensitiveFileResolution() { return this._useCaseSensitiveFileResolution; }
         public gatherDiagnostics() { return this._gatherDiagnostics; }
         public codepage() { return this._codepage; }
+        public createFileLog() { return this._createFileLog; }
 
         constructor(
             propagateEnumConstants: boolean,
@@ -82,7 +85,8 @@ module TypeScript {
             generateDeclarationFiles: boolean,
             useCaseSensitiveFileResolution: boolean,
             gatherDiagnostics: boolean,
-            codepage: number) {
+            codepage: number,
+            createFileLog: boolean) {
 
             this._propagateEnumConstants = propagateEnumConstants;
             this._removeComments = removeComments;
@@ -102,6 +106,7 @@ module TypeScript {
             this._useCaseSensitiveFileResolution = useCaseSensitiveFileResolution;
             this._gatherDiagnostics = gatherDiagnostics;
             this._codepage = codepage;
+            this._createFileLog = createFileLog;
         }
 
         public static defaultSettings() {
@@ -131,7 +136,8 @@ module TypeScript {
                 settings.generateDeclarationFiles,
                 settings.useCaseSensitiveFileResolution,
                 settings.gatherDiagnostics,
-                settings.codepage);
+                settings.codepage,
+                settings.createFileLog);
         }
 
         public toCompilationSettings(): any {

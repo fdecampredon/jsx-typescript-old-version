@@ -7,7 +7,7 @@
 ////var y = C.proto/*2*/type;
 
 goTo.marker('1');
-verify.quickInfoIs('<T>(): C<any>');
+verify.quickInfoIs('(): C<any>');
 
 goTo.marker('2');
 verify.quickInfoIs('C<any>');

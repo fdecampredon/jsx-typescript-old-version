@@ -2,8 +2,6 @@
 // Shouldn't compile b.B is not defined in C
 var A;
 (function (A) {
-    var b = B;
-    var c = C;
 })(A || (A = {}));
 
 var B;

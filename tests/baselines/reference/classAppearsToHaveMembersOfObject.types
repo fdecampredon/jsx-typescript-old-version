@@ -1,0 +1,20 @@
+=== tests/cases/compiler/classAppearsToHaveMembersOfObject.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 0 col 10 IdentifierName "foo" = string
+Line 2 col 4 IdentifierName "c" = C
+Line 2 col 7 IdentifierName "C" = C
+Line 3 col 4 IdentifierName "r" = string
+Line 3 col 8 InvocationExpression "c.toString()" = string
+Line 3 col 8 MemberAccessExpression "c.toString" = () => string
+Line 3 col 8 IdentifierName "c" = C
+Line 3 col 10 IdentifierName "toString" = () => string
+Line 4 col 4 IdentifierName "r2" = boolean
+Line 4 col 9 InvocationExpression "c.hasOwnProperty('')" = boolean
+Line 4 col 9 MemberAccessExpression "c.hasOwnProperty" = (v: string) => boolean
+Line 4 col 9 IdentifierName "c" = C
+Line 4 col 11 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 5 col 4 IdentifierName "o" = Object
+Line 5 col 7 IdentifierName "Object" = Object
+Line 5 col 16 IdentifierName "c" = C
+Line 6 col 4 IdentifierName "o2" = {}
+Line 6 col 13 IdentifierName "c" = C

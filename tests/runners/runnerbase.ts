@@ -20,7 +20,7 @@ class RunnerBase {
      *  The first test should be a describe/it block that sets up the harness's compiler instance appropriately
      */
     public initializeTests(): void {
-        throw new Error('run method not implemented');
+        throw new Error('method not implemented');
     }
 
     public _getDiagnosticText(diagnostic: TypeScript.Diagnostic): string {
@@ -28,12 +28,12 @@ class RunnerBase {
     }
 
     /** Replaces instances of full paths with filenames only */
-    static removeFullPaths(text: string) {
+    static removeFullPaths(path: string) {
         var fullPath = /(\w+:)?(\/|\\)([\w+\-\.]|\/)*\.ts/g;
-        var fullPathList = text.match(fullPath);
+        var fullPathList = path.match(fullPath);
         if (fullPathList) {
-            fullPathList.forEach((match: string) => text = text.replace(match, Harness.getFileName(match)));
+            fullPathList.forEach((match: string) => path = path.replace(match, Harness.getFileName(match)));
         }
-        return text;
+        return path;
     }
 }

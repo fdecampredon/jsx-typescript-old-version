@@ -1762,9 +1762,10 @@ module TypeScript.Services {
             return OutliningElementsCollector.collectElements(syntaxTree.sourceUnit());
         }
 
-        // Given a script name and position in the script, return a string representing 
-        // the desired smart indent text (assuming the line is empty).
-        // Return "null" in case the smart indent cannot be determined.
+        // Given a script name and position in the script, return the
+        // number of spaces equivalent to the desired smart indent 
+        // (assuming the line is empty). Returns "null" in case the
+        // smart indent cannot be determined.
         public getIndentationAtPosition(fileName: string, position: number, editorOptions: EditorOptions): number {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 

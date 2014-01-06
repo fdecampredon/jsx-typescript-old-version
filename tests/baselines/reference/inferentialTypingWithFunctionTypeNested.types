@@ -1,0 +1,24 @@
+=== tests/cases/compiler/inferentialTypingWithFunctionTypeNested.ts ===
+Line 0 col 17 IdentifierName "map" = typeof map
+Line 0 col 21 IdentifierName "T" = T
+Line 0 col 24 IdentifierName "U" = U
+Line 0 col 27 IdentifierName "x" = T
+Line 0 col 30 IdentifierName "T" = T
+Line 0 col 33 IdentifierName "f" = () => { x: (s: T) => U; }
+Line 0 col 44 IdentifierName "x" = (s: T) => U
+Line 0 col 48 IdentifierName "s" = T
+Line 0 col 51 IdentifierName "T" = T
+Line 0 col 57 IdentifierName "U" = U
+Line 0 col 63 IdentifierName "U" = U
+Line 1 col 17 IdentifierName "identity" = typeof identity
+Line 1 col 26 IdentifierName "V" = V
+Line 1 col 29 IdentifierName "y" = V
+Line 1 col 32 IdentifierName "V" = V
+Line 1 col 36 IdentifierName "V" = V
+Line 3 col 4 IdentifierName "s" = string
+Line 3 col 16 InvocationExpression "map("", () => { return { x: identity }; })" = string
+Line 3 col 16 IdentifierName "map" = typeof map
+Line 3 col 24 ParenthesizedArrowFunctionExpression "() => { return { x: identity }; }" = () => { x: typeof identity; }
+Line 3 col 39 ObjectLiteralExpression "{ x: identity }" = { x: typeof identity; }
+Line 3 col 41 IdentifierName "x" = typeof identity
+Line 3 col 44 IdentifierName "identity" = typeof identity

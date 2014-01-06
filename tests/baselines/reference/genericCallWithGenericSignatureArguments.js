@@ -21,7 +21,7 @@ var r3 = foo(function (x) {
 }, function (x) {
     return null;
 });
-var r3 = foo(function (x) {
+var r3ii = foo(function (x) {
     return 1;
 }, function (x) {
     return 1;

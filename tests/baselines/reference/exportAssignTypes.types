@@ -1,0 +1,57 @@
+=== tests/cases/compiler/consumer.ts ===
+Line 0 col 7 IdentifierName "iString" = string
+Line 1 col 4 IdentifierName "v1" = string
+Line 1 col 17 IdentifierName "iString" = string
+Line 3 col 7 IdentifierName "iNumber" = number
+Line 4 col 4 IdentifierName "v2" = number
+Line 4 col 17 IdentifierName "iNumber" = number
+Line 6 col 7 IdentifierName "iBoolean" = boolean
+Line 7 col 4 IdentifierName "v3" = boolean
+Line 7 col 18 IdentifierName "iBoolean" = boolean
+Line 9 col 7 IdentifierName "iArray" = number[]
+Line 10 col 4 IdentifierName "v4" = number[]
+Line 10 col 8 IdentifierName "Array" = Array<T>
+Line 10 col 24 IdentifierName "iArray" = number[]
+Line 12 col 7 IdentifierName "iObject" = { answer: number; when: number; }
+Line 13 col 4 IdentifierName "v5" = Object
+Line 13 col 8 IdentifierName "Object" = Object
+Line 13 col 17 IdentifierName "iObject" = { answer: number; when: number; }
+Line 15 col 7 IdentifierName "iAny" = any
+Line 16 col 4 IdentifierName "v6" = any
+Line 16 col 9 IdentifierName "iAny" = any
+Line 18 col 7 IdentifierName "iGeneric" = typeof x
+Line 19 col 4 IdentifierName "v7" = <x>(p1: x) => x
+Line 19 col 10 IdentifierName "x" = x
+Line 19 col 13 IdentifierName "p1" = x
+Line 19 col 17 IdentifierName "x" = x
+Line 19 col 21 IdentifierName "x" = x
+Line 19 col 26 IdentifierName "iGeneric" = typeof x
+=== tests/cases/compiler/expString.ts ===
+Line 0 col 4 IdentifierName "x" = string
+Line 1 col 9 IdentifierName "x" = string
+=== tests/cases/compiler/expNumber.ts ===
+Line 0 col 4 IdentifierName "x" = number
+Line 1 col 9 IdentifierName "x" = number
+=== tests/cases/compiler/expBoolean.ts ===
+Line 0 col 4 IdentifierName "x" = boolean
+Line 1 col 9 IdentifierName "x" = boolean
+=== tests/cases/compiler/expArray.ts ===
+Line 0 col 4 IdentifierName "x" = number[]
+Line 0 col 8 ArrayLiteralExpression "[1,2]" = number[]
+Line 1 col 9 IdentifierName "x" = number[]
+=== tests/cases/compiler/expObject.ts ===
+Line 0 col 4 IdentifierName "x" = { answer: number; when: number; }
+Line 0 col 8 ObjectLiteralExpression "{ answer: 42, when: 1776}" = { answer: number; when: number; }
+Line 0 col 10 IdentifierName "answer" = number
+Line 0 col 22 IdentifierName "when" = number
+Line 1 col 9 IdentifierName "x" = { answer: number; when: number; }
+=== tests/cases/compiler/expAny.ts ===
+Line 0 col 4 IdentifierName "x" = any
+Line 1 col 9 IdentifierName "x" = any
+=== tests/cases/compiler/expGeneric.ts ===
+Line 0 col 9 IdentifierName "x" = typeof x
+Line 0 col 11 IdentifierName "T" = T
+Line 0 col 14 IdentifierName "a" = T
+Line 0 col 17 IdentifierName "T" = T
+Line 1 col 8 IdentifierName "a" = T
+Line 3 col 9 IdentifierName "x" = typeof x

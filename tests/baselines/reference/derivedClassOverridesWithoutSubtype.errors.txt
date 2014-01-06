@@ -1,0 +1,6 @@
+derivedClassOverridesWithoutSubtype.ts(7,7): error TS2141: Class 'Derived' cannot extend class 'Base':
+	Types of property 'x' of types 'Derived' and 'Base' are incompatible:
+		Types of property 'foo' of types '{ foo: any; }' and '{ foo: string; }' are incompatible.
+derivedClassOverridesWithoutSubtype.ts(19,7): error TS2141: Class 'Derived2' cannot extend class 'Base2':
+	Types of static property 'y' of class 'Derived2' and class 'Base2' are incompatible:
+		Types of property 'foo' of types '{ foo: any; }' and '{ foo: string; }' are incompatible.

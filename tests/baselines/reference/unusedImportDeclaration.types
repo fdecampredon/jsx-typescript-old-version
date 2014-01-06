@@ -1,0 +1,21 @@
+=== tests/cases/compiler/unusedImportDeclaration_testerA.ts ===
+Line 0 col 7 IdentifierName "B" = typeof TesterB
+Line 1 col 4 IdentifierName "thingy" = TesterB
+Line 1 col 12 IdentifierName "B" = B
+Line 1 col 16 ObjectLiteralExpression "{
+    me: "A"
+}" = { me: string; }
+Line 2 col 0 IdentifierName "me" = string
+Line 4 col 17 IdentifierName "foo" = typeof foo
+Line 4 col 21 IdentifierName "a" = string
+Line 5 col 0 InvocationExpression "foo("IN " + thingy.me + "!")" = void
+Line 5 col 0 IdentifierName "foo" = typeof foo
+Line 5 col 4 AddExpression ""IN " + thingy.me + "!"" = string
+Line 5 col 4 AddExpression ""IN " + thingy.me" = string
+Line 5 col 12 MemberAccessExpression "thingy.me" = string
+Line 5 col 12 IdentifierName "thingy" = TesterB
+Line 5 col 19 IdentifierName "me" = string
+=== tests/cases/compiler/unusedImportDeclaration_testerB.ts ===
+Line 0 col 6 IdentifierName "TesterB" = TesterB
+Line 1 col 0 IdentifierName "me" = string
+Line 3 col 9 IdentifierName "TesterB" = typeof TesterB

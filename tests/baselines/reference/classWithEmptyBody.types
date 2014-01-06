@@ -1,0 +1,29 @@
+=== tests/cases/compiler/classWithEmptyBody.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 3 col 4 IdentifierName "c" = C
+Line 3 col 7 IdentifierName "C" = C
+Line 4 col 4 IdentifierName "o" = {}
+Line 4 col 12 IdentifierName "c" = C
+Line 5 col 0 AssignmentExpression "c = 1" = number
+Line 5 col 0 IdentifierName "c" = C
+Line 6 col 0 AssignmentExpression "c = { foo: '' }" = { foo: string; }
+Line 6 col 0 IdentifierName "c" = C
+Line 6 col 4 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
+Line 6 col 6 IdentifierName "foo" = string
+Line 7 col 0 AssignmentExpression "c = () => { }" = () => void
+Line 7 col 0 IdentifierName "c" = C
+Line 7 col 4 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 9 col 6 IdentifierName "D" = D
+Line 15 col 4 IdentifierName "d" = D
+Line 15 col 7 IdentifierName "D" = D
+Line 16 col 4 IdentifierName "o" = {}
+Line 16 col 12 IdentifierName "d" = D
+Line 17 col 0 AssignmentExpression "d = 1" = number
+Line 17 col 0 IdentifierName "d" = D
+Line 18 col 0 AssignmentExpression "d = { foo: '' }" = { foo: string; }
+Line 18 col 0 IdentifierName "d" = D
+Line 18 col 4 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
+Line 18 col 6 IdentifierName "foo" = string
+Line 19 col 0 AssignmentExpression "d = () => { }" = () => void
+Line 19 col 0 IdentifierName "d" = D
+Line 19 col 4 ParenthesizedArrowFunctionExpression "() => { }" = () => void

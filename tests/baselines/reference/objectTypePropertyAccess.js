@@ -7,16 +7,12 @@ var C = (function () {
 
 var c;
 var r1 = c.toString();
-
-// BUG 823818
 var r2 = c['toString']();
 var r3 = c.foo;
 var r4 = c['foo'];
 
 var i;
 var r4 = i.toString();
-
-// BUG 823818
 var r5 = i['toString']();
 var r6 = i.bar;
 var r7 = i['bar'];
@@ -26,8 +22,6 @@ var a = {
 };
 
 var r8 = a.toString();
-
-// BUG 823818
 var r9 = a['toString']();
 var r10 = a.foo;
 var r11 = a['foo'];

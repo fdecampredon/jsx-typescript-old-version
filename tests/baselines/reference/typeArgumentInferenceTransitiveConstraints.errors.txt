@@ -1,1 +1,2 @@
-typeArgumentInferenceTransitiveConstraints.ts(7,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'd' must be of type '{}[]', but here has type 'Date[]'.
+typeArgumentInferenceTransitiveConstraints.ts(2,29): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeArgumentInferenceTransitiveConstraints.ts(2,42): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.

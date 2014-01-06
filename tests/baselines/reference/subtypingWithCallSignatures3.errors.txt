@@ -1,0 +1,57 @@
+subtypingWithCallSignatures3.ts(47,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a2' of types 'I' and 'A' are incompatible:
+		Call signatures of types '<T, U>(x: T) => U[]' and '(x: number) => string[]' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
+				Call signatures of types '() => {}' and '() => string' are incompatible.
+subtypingWithCallSignatures3.ts(51,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I2<T, U>' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a2' of types 'I2<T, U>' and 'A' are incompatible:
+		Call signatures of types '(x: T) => U[]' and '(x: number) => string[]' are incompatible:
+			Types of property 'concat' of types 'U[]' and 'string[]' are incompatible:
+				Call signatures of types '{ <U extends U[]>(...items: U[]): U[]; (...items: U[]): U[]; }' and '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible.
+subtypingWithCallSignatures3.ts(55,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I3' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a7' of types 'I3' and 'A' are incompatible:
+		Call signatures of types '<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V' and '(x: (arg: Base) => Derived) => (r: Base) => Derived2' are incompatible.
+subtypingWithCallSignatures3.ts(60,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a8' of types 'I4' and 'A' are incompatible:
+		Call signatures of types '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' and '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' are incompatible:
+			Call signatures of types '(arg2: { foo: number; }) => Derived' and '(arg2: Base) => Derived' are incompatible:
+				Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
+				Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
+			Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => Derived' are incompatible:
+				Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
+				Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
+subtypingWithCallSignatures3.ts(64,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4B' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a10' of types 'I4B' and 'A' are incompatible:
+		Call signatures of types '<T extends Derived>(...x: T[]) => T' and '(...x: Base[]) => Base' are incompatible.
+subtypingWithCallSignatures3.ts(68,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4C' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a11' of types 'I4C' and 'A' are incompatible:
+		Call signatures of types '<T extends Derived>(x: T, y: T) => T' and '(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' are incompatible.
+subtypingWithCallSignatures3.ts(72,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4E' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a12' of types 'I4E' and 'A' are incompatible:
+		Call signatures of types '<T extends Derived2[]>(x: Base[], y: Base[]) => T' and '(x: Base[], y: Derived2[]) => Derived[]' are incompatible.
+subtypingWithCallSignatures3.ts(76,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I6' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a15' of types 'I6' and 'A' are incompatible:
+		Call signatures of types '<T>(x: { a: T; b: T; }) => T' and '(x: { a: string; b: number; }) => number' are incompatible.
+subtypingWithCallSignatures3.ts(80,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I7' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a15' of types 'I7' and 'A' are incompatible:
+		Call signatures of types '<T extends Base>(x: { a: T; b: T; }) => number' and '(x: { a: string; b: number; }) => number' are incompatible.
+subtypingWithCallSignatures3.ts(84,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I8' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a16' of types 'I8' and 'A' are incompatible:
+		Call signatures of types '<T>(x: (a: T) => T) => T[]' and '{ (x: { (a: number): number; (a?: number): number; }): number[]; (x: { (a: boolean): boolean; (a?: boolean): boolean; }): boolean[]; }' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
+				Call signatures of types '() => {}' and '() => number' are incompatible.
+subtypingWithCallSignatures3.ts(89,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I9' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+	Types of property 'a17' of types 'I9' and 'A' are incompatible:
+		Call signatures of types '<T>(x: (a: T) => T) => any[]' and '{ (x: { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[]; }' are incompatible:
+			Call signatures of types '(a: {}) => {}' and '{ <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }' are incompatible.
+			Call signatures of types '{ <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }' and '(a: {}) => {}' are incompatible.
+subtypingWithCallSignatures3.ts(100,19): error TS2143: Interface 'Errors.WithGenericSignaturesInBaseType.I6' cannot extend interface 'Errors.WithGenericSignaturesInBaseType.B':
+	Types of property 'a2' of types 'I6' and 'B' are incompatible:
+		Call signatures of types '<T>(x: T) => string[]' and '<T>(x: T) => T[]' are incompatible:
+			Types of property 'concat' of types 'string[]' and 'T[]' are incompatible:
+				Call signatures of types '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible.
+subtypingWithCallSignatures3.ts(109,19): error TS2143: Interface 'Errors.WithGenericSignaturesInBaseType.I7' cannot extend interface 'Errors.WithGenericSignaturesInBaseType.C':
+	Types of property 'a2' of types 'I7' and 'C' are incompatible:
+		Call signatures of types '<T>(x: T) => T[]' and '<T>(x: T) => string[]' are incompatible:
+			Types of property 'concat' of types 'T[]' and 'string[]' are incompatible:
+				Call signatures of types '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' and '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible.

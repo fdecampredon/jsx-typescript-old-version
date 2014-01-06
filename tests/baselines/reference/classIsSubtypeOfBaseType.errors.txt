@@ -1,0 +1,3 @@
+classIsSubtypeOfBaseType.ts(11,7): error TS2141: Class 'Derived2' cannot extend class 'Base<{ bar: string; }>':
+	Types of property 'foo' of types 'Derived2' and 'Base<{ bar: string; }>' are incompatible:
+		Property 'bar' defined as optional in type '{ bar?: string; }', but is required in type '{ bar: string; }'.

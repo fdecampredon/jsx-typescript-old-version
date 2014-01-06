@@ -1,0 +1,24 @@
+=== tests/cases/compiler/indexersInClassType.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 5 IdentifierName "x" = number
+Line 1 col 17 IdentifierName "Date" = Date
+Line 2 col 5 IdentifierName "x" = string
+Line 2 col 17 IdentifierName "Object" = Object
+Line 3 col 7 IdentifierName "Date" = Date
+Line 5 col 0 IdentifierName "fn" = () => C
+Line 7 col 15 ThisKeyword "this" = C
+Line 11 col 4 IdentifierName "c" = C
+Line 11 col 8 ObjectCreationExpression "new C()" = C
+Line 11 col 12 IdentifierName "C" = typeof C
+Line 12 col 4 IdentifierName "r" = C
+Line 12 col 8 InvocationExpression "c.fn()" = C
+Line 12 col 8 MemberAccessExpression "c.fn" = () => C
+Line 12 col 8 IdentifierName "c" = C
+Line 12 col 10 IdentifierName "fn" = () => C
+Line 13 col 4 IdentifierName "r2" = Date
+Line 13 col 9 ElementAccessExpression "r[1]" = Date
+Line 13 col 9 IdentifierName "r" = C
+Line 14 col 4 IdentifierName "r3" = {}
+Line 14 col 9 MemberAccessExpression "r.a" = {}
+Line 14 col 9 IdentifierName "r" = C
+Line 14 col 11 IdentifierName "a" = {}

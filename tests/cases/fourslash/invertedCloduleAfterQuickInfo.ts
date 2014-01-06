@@ -11,5 +11,4 @@
 
 goTo.marker();
 verify.quickInfoExists();
-// Bug 823365
-// verify.numberOfErrorsInCurrentFile(1); // We get no errors
+verify.numberOfErrorsInCurrentFile(1);

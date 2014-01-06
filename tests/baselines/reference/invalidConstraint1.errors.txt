@@ -1,1 +1,2 @@
+invalidConstraint1.ts(1,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 invalidConstraint1.ts(4,1): error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends { a: T; }'.

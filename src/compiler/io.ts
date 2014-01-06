@@ -30,6 +30,7 @@ module TypeScript {
 
     export interface IIO {
         readFile(path: string, codepage: number): FileInformation;
+        appendFile(path: string, contents: string): void;
         writeFile(path: string, contents: string, writeByteOrderMark: boolean): void;
         deleteFile(path: string): void;
         dir(path: string, re?: RegExp, options?: { recursive?: boolean; }): string[];
@@ -143,6 +144,11 @@ module TypeScript {
             }
 
             return {
+                appendFile: function (path: string, content: string) {
+                    var txtFile = fso.OpenTextFile(path, 8 /* append */, true /* create if file doesn't exist */);
+                    txtFile.Write(content);
+                    txtFile.Close();
+                },
                 readFile: function (path: string, codepage: number): FileInformation {
                     return Environment.readFile(path, codepage);
                 },
@@ -278,7 +284,10 @@ module TypeScript {
             var _path = require('path');
             var _module = require('module');
 
-        return {
+            return {
+                appendFile: function (path: string, content: string) {
+                    _fs.appendFileSync(path, content);
+                },
                 readFile: function (file: string, codepage: number): FileInformation {
                     return Environment.readFile(file, codepage);
                 },

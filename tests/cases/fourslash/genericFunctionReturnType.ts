@@ -9,7 +9,7 @@
 ////var r2/*4*/ = r(/*3*/"");
 
 goTo.marker('1');
-verify.currentSignatureHelpIs('foo<T, U>(x: number, y: string): (a: string) => number');
+verify.currentSignatureHelpIs('foo(x: number, y: string): (a: string) => number');
 
 goTo.marker('2');
 verify.quickInfoIs('(a: string) => number');

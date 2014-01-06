@@ -157,7 +157,7 @@ module TypeScript {
                     textStream.Open();
                     textStream.WriteText(contents, 0 /*do not add newline*/);
 
-                    // If they don't want the BOM, then skip it (it will be added autoamtically
+                    // If they don't want the BOM, then skip it (it will be added automatically
                     // when we write the utf8 bytes out above).
                     if (!writeByteOrderMark) {
                         textStream.Position = 3;

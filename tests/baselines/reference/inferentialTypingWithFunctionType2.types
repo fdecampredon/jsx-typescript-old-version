@@ -1,0 +1,14 @@
+=== tests/cases/compiler/inferentialTypingWithFunctionType2.ts ===
+Line 0 col 9 IdentifierName "identity" = typeof identity
+Line 0 col 18 IdentifierName "A" = A
+Line 0 col 21 IdentifierName "a" = A
+Line 0 col 24 IdentifierName "A" = A
+Line 0 col 28 IdentifierName "A" = A
+Line 1 col 11 IdentifierName "a" = A
+Line 3 col 4 IdentifierName "x" = number
+Line 3 col 16 ElementAccessExpression "[1, 2, 3].map(identity)[0]" = number
+Line 3 col 16 InvocationExpression "[1, 2, 3].map(identity)" = number[]
+Line 3 col 16 MemberAccessExpression "[1, 2, 3].map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+Line 3 col 16 ArrayLiteralExpression "[1, 2, 3]" = number[]
+Line 3 col 26 IdentifierName "map" = <U>(callbackfn: (value: number, index: number, array: number[]) => U, thisArg?: any) => U[]
+Line 3 col 30 IdentifierName "identity" = typeof identity

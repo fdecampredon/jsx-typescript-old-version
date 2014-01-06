@@ -1,0 +1,39 @@
+=== tests/cases/compiler/classWithStaticMembers.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 11 IdentifierName "fn" = () => typeof C
+Line 1 col 25 ThisKeyword "this" = typeof C
+Line 2 col 15 IdentifierName "x" = number
+Line 3 col 15 IdentifierName "x" = number
+Line 3 col 17 IdentifierName "v" = number
+Line 4 col 23 IdentifierName "a" = number
+Line 4 col 42 IdentifierName "b" = number
+Line 5 col 11 IdentifierName "foo" = string
+Line 8 col 4 IdentifierName "r" = typeof C
+Line 8 col 8 InvocationExpression "C.fn()" = typeof C
+Line 8 col 8 MemberAccessExpression "C.fn" = () => typeof C
+Line 8 col 8 IdentifierName "C" = typeof C
+Line 8 col 10 IdentifierName "fn" = () => typeof C
+Line 9 col 4 IdentifierName "r2" = number
+Line 9 col 9 MemberAccessExpression "r.x" = number
+Line 9 col 9 IdentifierName "r" = typeof C
+Line 9 col 11 IdentifierName "x" = number
+Line 10 col 4 IdentifierName "r3" = string
+Line 10 col 9 MemberAccessExpression "r.foo" = string
+Line 10 col 9 IdentifierName "r" = typeof C
+Line 10 col 11 IdentifierName "foo" = string
+Line 12 col 6 IdentifierName "D" = D
+Line 12 col 16 IdentifierName "C" = C
+Line 13 col 0 IdentifierName "bar" = string
+Line 16 col 4 IdentifierName "r" = typeof C
+Line 16 col 8 InvocationExpression "D.fn()" = typeof C
+Line 16 col 8 MemberAccessExpression "D.fn" = () => typeof C
+Line 16 col 8 IdentifierName "D" = typeof D
+Line 16 col 10 IdentifierName "fn" = () => typeof C
+Line 17 col 4 IdentifierName "r2" = number
+Line 17 col 9 MemberAccessExpression "r.x" = number
+Line 17 col 9 IdentifierName "r" = typeof C
+Line 17 col 11 IdentifierName "x" = number
+Line 18 col 4 IdentifierName "r3" = string
+Line 18 col 9 MemberAccessExpression "r.foo" = string
+Line 18 col 9 IdentifierName "r" = typeof C
+Line 18 col 11 IdentifierName "foo" = string

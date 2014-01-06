@@ -1235,7 +1235,7 @@
         "category": "Error",
         "code": 2228
     },
-    "Type parameter '{0}' cannot be a direct or indirect constraint for itself.": {
+    "Constraint of a type parameter cannot reference any type parameter from the same type parameter list.": {
         "category": "Error",
         "code": 2229
     },
@@ -1410,6 +1410,18 @@
     "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
         "category": "NoPrefix",
         "code": 4037
+    },
+    "Static property '{0}' defined as private in type '{1}' is defined as public in type '{2}'.": {
+        "category": "NoPrefix",
+        "code": 4038
+    },
+    "Static property '{0}' defined as public in type '{1}' is defined as private in type '{2}'.": {
+        "category": "NoPrefix",
+        "code": 4039
+    },
+    "Types '{0}' and '{1}' define static property '{2}' as private.": {
+        "category": "NoPrefix",
+        "code": 4040
     },
     "Current host does not support '{0}' option.": {
         "category": "Error",

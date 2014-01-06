@@ -1,2 +1,2 @@
-typeParameterHasSelfAsConstraint.ts(1,14): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
+typeParameterHasSelfAsConstraint.ts(1,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 typeParameterHasSelfAsConstraint.ts(2,8): error TS2011: Cannot convert 'T' to 'number'.

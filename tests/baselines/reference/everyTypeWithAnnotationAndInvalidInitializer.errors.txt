@@ -21,7 +21,7 @@ everyTypeWithAnnotationAndInvalidInitializer.ts(48,5): error TS2012: Cannot conv
 	Call signatures of types '(x: string) => string' and 'typeof F' are incompatible.
 everyTypeWithAnnotationAndInvalidInitializer.ts(50,5): error TS2012: Cannot convert 'typeof N' to 'typeof M':
 	Types of property 'M.A' of types 'typeof N' and 'typeof M' are incompatible:
-		Types of property 'prototype' of types 'typeof N.A' and 'typeof M.A' are incompatible:
+		Types of static property 'prototype' of class 'N.A' and class 'M.A' are incompatible:
 			Type 'N.A' is missing property 'name' from type 'M.A'.
 everyTypeWithAnnotationAndInvalidInitializer.ts(51,5): error TS2012: Cannot convert 'N.A' to 'M.A':
 	Type 'N.A' is missing property 'name' from type 'M.A'.

@@ -1,0 +1,10 @@
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(12,7): error TS2141: Class 'Derived' cannot extend class 'Base':
+	Property 'x' defined as private in type 'Derived' is defined as public in type 'Base'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(22,14): error TS2094: The property 'x' does not exist on value of type 'typeof Base'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(23,18): error TS2094: The property 'x' does not exist on value of type 'typeof Derived'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(25,15): error TS2094: The property 'fn' does not exist on value of type 'typeof Base'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(26,18): error TS2094: The property 'fn' does not exist on value of type 'typeof Derived'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(28,15): error TS2094: The property 'a' does not exist on value of type 'typeof Base'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(29,6): error TS2094: The property 'a' does not exist on value of type 'typeof Base'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(31,18): error TS2094: The property 'a' does not exist on value of type 'typeof Derived'.
+derivedClassWithPrivateInstanceShadowingPublicInstance.ts(32,9): error TS2094: The property 'a' does not exist on value of type 'typeof Derived'.

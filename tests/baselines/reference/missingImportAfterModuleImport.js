@@ -1,7 +1,5 @@
 //// [missingImportAfterModuleImport_0.js]
 //// [missingImportAfterModuleImport_1.js]
-///<reference path='missingImportAfterModuleImport_0.ts'/>
-var SubModule = require('SubModule');
 var MainModule = (function () {
     function MainModule() {
     }

@@ -10,7 +10,7 @@ var r1 = foo('', function (x) {
 }, function (x) {
     return null;
 });
-var r1 = foo('', function (x) {
+var r1ii = foo('', function (x) {
     return '';
 }, function (x) {
     return null;

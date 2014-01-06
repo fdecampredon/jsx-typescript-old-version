@@ -1,3 +1,5 @@
+typeParamExtendsOtherTypeParam.ts(1,12): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParamExtendsOtherTypeParam.ts(2,27): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 typeParamExtendsOtherTypeParam.ts(12,9): error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
 typeParamExtendsOtherTypeParam.ts(13,9): error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
 typeParamExtendsOtherTypeParam.ts(14,9): error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.

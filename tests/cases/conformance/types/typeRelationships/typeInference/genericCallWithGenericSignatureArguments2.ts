@@ -6,7 +6,7 @@ function foo<T>(a: (x: T) => T, b: (x: T) => T) {
     return r;
 }
 
-var r1 = foo((x: number) => 1, (x: string) => ''); // error
+var r1: (x: {}) => {} = foo((x: number) => 1, (x: string) => '');
 
 function other2<T extends Date>(x: T) {
     var r7 = foo((a: T) => a, (b: T) => b); // T => T

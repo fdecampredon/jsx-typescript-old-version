@@ -38,8 +38,8 @@ Line 11 col 40 IdentifierName "U" = U
 Line 12 col 11 InvocationExpression "cb(x)" = U
 Line 12 col 11 IdentifierName "cb" = (a: T) => U
 Line 12 col 14 IdentifierName "x" = T
-Line 15 col 4 IdentifierName "r4" = {}
-Line 15 col 9 InvocationExpression "foo2(1, function <Z>(a: Z) { return '' })" = {}
+Line 15 col 4 IdentifierName "r4" = string
+Line 15 col 9 InvocationExpression "foo2(1, function <Z>(a: Z) { return '' })" = string
 Line 15 col 9 IdentifierName "foo2" = typeof foo2
 Line 15 col 17 FunctionExpression "function <Z>(a: Z) { return '' }" = <Z>(a: Z) => string
 Line 15 col 27 IdentifierName "Z" = Z

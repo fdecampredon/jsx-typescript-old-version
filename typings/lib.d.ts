@@ -9422,7 +9422,7 @@ declare var SVGRectElement: {
 
 interface ErrorEventHandler {
     (event: Event, source: string, fileno: number, columnNumber: number): void;
-    (message: any, uri: string, lineNumber: number, columnNumber?: number): boolean;
+    (message: any, uri: string, lineNumber: number, columnNumber?: number): void;
 }
 
 interface HTMLDivElement extends HTMLElement, MSDataBindingExtensions {
@@ -12144,14 +12144,15 @@ interface IDBKeyRange {
     upperOpen: boolean;
     lower: any;
     lowerOpen: boolean;
-    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
-    only(value: any): IDBKeyRange;
-    lowerBound(bound: any, open?: boolean): IDBKeyRange;
-    upperBound(bound: any, open?: boolean): IDBKeyRange;
+
 }
 declare var IDBKeyRange: {
     prototype: IDBKeyRange;
     new (): IDBKeyRange;
+    only(value: any): IDBKeyRange;
+    lowerBound(bound: any, open?: boolean): IDBKeyRange;
+    upperBound(bound: any, open?: boolean): IDBKeyRange;
+    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
 }
 
 interface WindowConsole {

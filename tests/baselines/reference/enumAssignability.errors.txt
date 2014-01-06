@@ -16,6 +16,7 @@ enumAssignability.ts(42,9): error TS2011: Cannot convert 'E' to '{ foo: string; 
 enumAssignability.ts(43,9): error TS2011: Cannot convert 'E' to '<T>(x: T) => T'.
 enumAssignability.ts(44,9): error TS2011: Cannot convert 'E' to 'Number'.
 enumAssignability.ts(45,9): error TS2011: Cannot convert 'E' to 'String'.
+enumAssignability.ts(47,21): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 enumAssignability.ts(48,9): error TS2011: Cannot convert 'E' to 'T'.
 enumAssignability.ts(49,9): error TS2011: Cannot convert 'E' to 'U'.
 enumAssignability.ts(50,9): error TS2011: Cannot convert 'E' to 'V'.

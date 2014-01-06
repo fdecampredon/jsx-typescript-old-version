@@ -1,0 +1,6 @@
+derivedClassWithPrivateStaticShadowingPublicStatic.ts(13,7): error TS2141: Class 'Derived' cannot extend class 'Base':
+	Static property 'x' defined as private in type 'Derived' is defined as public in type 'Base'.
+derivedClassWithPrivateStaticShadowingPublicStatic.ts(24,18): error TS2107: 'Derived.x' is inaccessible.
+derivedClassWithPrivateStaticShadowingPublicStatic.ts(27,18): error TS2107: 'Derived.fn' is inaccessible.
+derivedClassWithPrivateStaticShadowingPublicStatic.ts(32,18): error TS2107: 'Derived.a' is inaccessible.
+derivedClassWithPrivateStaticShadowingPublicStatic.ts(33,9): error TS2107: 'Derived.a' is inaccessible.

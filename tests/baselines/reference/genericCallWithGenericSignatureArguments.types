@@ -21,29 +21,29 @@ Line 9 col 14 ParenthesizedArrowFunctionExpression "(x) => 1" = (x: {}) => numbe
 Line 9 col 15 IdentifierName "x" = {}
 Line 9 col 24 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: {}) => string
 Line 9 col 25 IdentifierName "x" = {}
-Line 10 col 4 IdentifierName "r2" = (x: Object) => Object
-Line 10 col 9 InvocationExpression "foo((x: Object) => null, (x: string) => '')" = (x: Object) => Object
+Line 10 col 4 IdentifierName "r2" = (x: any) => any
+Line 10 col 9 InvocationExpression "foo((x: Object) => null, (x: string) => '')" = (x: any) => any
 Line 10 col 9 IdentifierName "foo" = typeof foo
 Line 10 col 13 ParenthesizedArrowFunctionExpression "(x: Object) => null" = (x: Object) => any
 Line 10 col 14 IdentifierName "x" = Object
 Line 10 col 17 IdentifierName "Object" = Object
 Line 10 col 34 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
 Line 10 col 35 IdentifierName "x" = string
-Line 11 col 4 IdentifierName "r3" = (x: number) => number
-Line 11 col 9 InvocationExpression "foo((x: number) => 1, (x: Object) => null)" = (x: number) => number
+Line 11 col 4 IdentifierName "r3" = (x: any) => any
+Line 11 col 9 InvocationExpression "foo((x: number) => 1, (x: Object) => null)" = (x: any) => any
 Line 11 col 9 IdentifierName "foo" = typeof foo
 Line 11 col 13 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
 Line 11 col 14 IdentifierName "x" = number
 Line 11 col 31 ParenthesizedArrowFunctionExpression "(x: Object) => null" = (x: Object) => any
 Line 11 col 32 IdentifierName "x" = Object
 Line 11 col 35 IdentifierName "Object" = Object
-Line 12 col 4 IdentifierName "r3" = (x: number) => number
-Line 12 col 9 InvocationExpression "foo((x: number) => 1, (x: number) => 1)" = (x: number) => number
-Line 12 col 9 IdentifierName "foo" = typeof foo
-Line 12 col 13 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
-Line 12 col 14 IdentifierName "x" = number
-Line 12 col 31 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
-Line 12 col 32 IdentifierName "x" = number
+Line 12 col 4 IdentifierName "r3ii" = (x: number) => number
+Line 12 col 11 InvocationExpression "foo((x: number) => 1, (x: number) => 1)" = (x: number) => number
+Line 12 col 11 IdentifierName "foo" = typeof foo
+Line 12 col 15 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
+Line 12 col 16 IdentifierName "x" = number
+Line 12 col 33 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
+Line 12 col 34 IdentifierName "x" = number
 Line 14 col 4 IdentifierName "a" = { x: number; y?: number; }
 Line 14 col 9 IdentifierName "x" = number
 Line 14 col 20 IdentifierName "y" = number

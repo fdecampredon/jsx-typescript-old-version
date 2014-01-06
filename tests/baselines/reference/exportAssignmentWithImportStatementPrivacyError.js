@@ -3,7 +3,6 @@ define(["require", "exports"], function(require, exports) {
     (function (M) {
         M.server;
     })(M || (M = {}));
-    var M22 = M;
 
     
     return M;

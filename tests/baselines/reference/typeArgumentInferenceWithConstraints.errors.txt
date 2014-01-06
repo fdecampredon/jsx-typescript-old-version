@@ -1,5 +1,6 @@
 typeArgumentInferenceWithConstraints.ts(9,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
 typeArgumentInferenceWithConstraints.ts(11,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+typeArgumentInferenceWithConstraints.ts(14,27): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 typeArgumentInferenceWithConstraints.ts(15,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
 typeArgumentInferenceWithConstraints.ts(16,1): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'U extends T'.
 typeArgumentInferenceWithConstraints.ts(17,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.

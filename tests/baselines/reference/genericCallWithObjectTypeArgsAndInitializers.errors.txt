@@ -1,4 +1,9 @@
 genericCallWithObjectTypeArgsAndInitializers.ts(5,33): error TS2011: Cannot convert 'number' to 'T'.
+genericCallWithObjectTypeArgsAndInitializers.ts(6,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithObjectTypeArgsAndInitializers.ts(6,37): error TS2011: Cannot convert 'T' to 'U'.
+genericCallWithObjectTypeArgsAndInitializers.ts(7,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericCallWithObjectTypeArgsAndInitializers.ts(8,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericCallWithObjectTypeArgsAndInitializers.ts(8,31): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithObjectTypeArgsAndInitializers.ts(8,56): error TS2011: Cannot convert 'U' to 'V'.
-genericCallWithObjectTypeArgsAndInitializers.ts(10,50): error TS2011: Cannot convert 'V' to 'U'.
+genericCallWithObjectTypeArgsAndInitializers.ts(10,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericCallWithObjectTypeArgsAndInitializers.ts(10,31): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.

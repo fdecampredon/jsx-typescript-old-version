@@ -1238,7 +1238,7 @@ module TypeScript {
     "code": 2228,
     "category": DiagnosticCategory.Error
   },
-  "Type parameter '{0}' cannot be a direct or indirect constraint for itself.": {
+  "Constraint of a type parameter cannot reference any type parameter from the same type parameter list.": {
     "code": 2229,
     "category": DiagnosticCategory.Error
   },
@@ -1412,6 +1412,18 @@ module TypeScript {
   },
   "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
     "code": 4037,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Static property '{0}' defined as private in type '{1}' is defined as public in type '{2}'.": {
+    "code": 4038,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Static property '{0}' defined as public in type '{1}' is defined as private in type '{2}'.": {
+    "code": 4039,
+    "category": DiagnosticCategory.NoPrefix
+  },
+  "Types '{0}' and '{1}' define static property '{2}' as private.": {
+    "code": 4040,
     "category": DiagnosticCategory.NoPrefix
   },
   "Current host does not support '{0}' option.": {

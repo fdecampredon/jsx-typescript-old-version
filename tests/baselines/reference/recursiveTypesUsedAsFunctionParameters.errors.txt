@@ -1,0 +1,5 @@
+recursiveTypesUsedAsFunctionParameters.ts(12,1): error TS2144: Duplicate overload signature for 'foo'.
+recursiveTypesUsedAsFunctionParameters.ts(21,16): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+recursiveTypesUsedAsFunctionParameters.ts(24,5): error TS2149: Overload signature is not compatible with function definition:
+	Types of property 'next' of types 'List<U>' and 'MyList<{}>' are incompatible:
+		Types 'List<List<U>>' and 'MyList<MyList<{}>>' originating in inifinitely expanding type reference do not refer to same named type.

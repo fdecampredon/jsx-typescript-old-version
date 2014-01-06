@@ -215,11 +215,14 @@ module TypeScript {
             var externalAliases = this.getExternalAliasedSymbols(scopeSymbol);
             // Use only alias symbols to the dynamic module
             if (externalAliases && this.isExternalModuleReferenceAlias(externalAliases[externalAliases.length - 1])) {
-                var aliasFullName = "";
+                var aliasFullName = aliasNameGetter(externalAliases[0]);
+                if (!aliasFullName) {
+                    return null;
+                }
                 for (var i = 1, symbolsLen = externalAliases.length; i < symbolsLen; i++) {
                     aliasFullName = aliasFullName + "." + aliasPartsNameGetter(externalAliases[i]);
                 }
-                return aliasNameGetter(externalAliases[0]) + aliasFullName;
+                return aliasFullName;
             }
 
             return null;
@@ -465,7 +468,7 @@ module TypeScript {
             }
 
             for (var i = 1; i < path.length; i++) {
-                var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
+                var aliasFullName = path[i].getAliasSymbolName(scopeSymbol, (symbol) => symbol === this ? null : symbol.fullName(scopeSymbol), (symbol) => symbol.getNamePartForFullName());
                 if (aliasFullName) {
                     fullName = aliasFullName + "." + fullName;
                     break;
@@ -1102,9 +1105,6 @@ module TypeScript {
 
         public hasVarArgs = false;
 
-        // GTODO
-        public hasAGenericParameterOrReturnType = false;
-
         private _allowedToReferenceTypeParameters: PullTypeParameterSymbol[] = null;
         private _instantiationCache: IIndexable<PullSignatureSymbol> = null;
 
@@ -1120,12 +1120,8 @@ module TypeScript {
 
         // GTODO
         public isGeneric() {
-            if (this.hasAGenericParameterOrReturnType) {
-                return true;
-            }
-
             var typeParameters = this.getTypeParameters();
-            return typeParameters && typeParameters.length !== 0;
+            return !!typeParameters && typeParameters.length !== 0;
         }
 
         public addParameter(parameter: PullSymbol, isOptional = false) {
@@ -1395,6 +1391,49 @@ module TypeScript {
             }
 
             return builder;
+        }
+
+        public forAllParameterTypes(length: number, predicate: (parameterType: PullTypeSymbol, iterationIndex: number) => boolean): boolean {
+            if (this.parameters.length < length && !this.hasVarArgs) {
+                length = this.parameters.length;
+            }
+
+            for (var i = 0; i < length; i++) {
+                var paramType = this.getParameterTypeAtIndex(i);
+                if (!predicate(paramType, i)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public forAllCorrespondingParameterTypesInThisAndOtherSignature(
+            otherSignature: PullSignatureSymbol,
+            predicate: (thisSignatureParameterType: PullTypeSymbol, otherSignatureParameterType: PullTypeSymbol, iterationIndex: number) => boolean): boolean {
+            // First determine the length
+            var length: number;
+            if (this.hasVarArgs) {
+                length = otherSignature.hasVarArgs
+                    ? Math.max(this.parameters.length, otherSignature.parameters.length)
+                    : otherSignature.parameters.length;
+            }
+            else {
+                length = otherSignature.hasVarArgs
+                    ? this.parameters.length
+                    : Math.min(this.parameters.length, otherSignature.parameters.length);
+            }
+
+            for (var i = 0; i < length; i++) {
+                // Finally, call the callback using the knowledge of whether each param is a rest param
+                var thisParamType = this.getParameterTypeAtIndex(i);
+                var otherParamType = otherSignature.getParameterTypeAtIndex(i);
+                if (!predicate(thisParamType, otherParamType, i)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public wrapsSomeTypeParameter(typeParameterArgumentMap: PullTypeSymbol[]): boolean {
@@ -3031,11 +3070,17 @@ module TypeScript {
 
         private _isUsedAsValue = false;
         private _typeUsedExternally = false;
+        private _isUsedInExportAlias = false;
         private retrievingExportAssignment = false;
-        private contingentValueSymbols: PullTypeAliasSymbol[] = null;
+        private linkedAliasSymbols: PullTypeAliasSymbol[] = null;
 
         constructor(name: string) {
             super(name, PullElementKind.TypeAlias);
+        }
+
+        public isUsedInExportedAlias(): boolean {
+            this._resolveDeclaredSymbol();
+            return this._isUsedInExportAlias;
         }
 
         public typeUsedExternally(): boolean {
@@ -3048,27 +3093,30 @@ module TypeScript {
             return this._isUsedAsValue;
         }
 
-        public setTypeUsedExternally(value: boolean): void {
-            this._typeUsedExternally = value;
+        public setTypeUsedExternally(): void {
+            this._typeUsedExternally = true;
         }
 
-        public addContingentValueSymbol(contingentValueSymbol: PullTypeAliasSymbol) {
-            if (!this.contingentValueSymbols) {
-                this.contingentValueSymbols = [contingentValueSymbol];
+        public setIsUsedInExportedAlias(): void {
+            this._isUsedInExportAlias = true;
+            if (this.linkedAliasSymbols) {
+                this.linkedAliasSymbols.forEach(s => s.setIsUsedInExportedAlias());
+            }
+        }
+
+        public addLinkedAliasSymbol(contingentValueSymbol: PullTypeAliasSymbol) {
+            if (!this.linkedAliasSymbols) {
+                this.linkedAliasSymbols = [contingentValueSymbol];
             }
             else {
-                this.contingentValueSymbols.push(contingentValueSymbol);
+                this.linkedAliasSymbols.push(contingentValueSymbol);
             }
         }
 
-        public setIsUsedAsValue(value: boolean): void {
-            this._isUsedAsValue = value;
-
-            // Set other aliases as used - this would happen if this alias comes from the another alias
-            if (this.contingentValueSymbols && this.contingentValueSymbols.length > 0) {
-                for (var i = 0, len = this.contingentValueSymbols.length; i < len; i++) {
-                    this.contingentValueSymbols[i].setIsUsedAsValue(value);
-                }
+        public setIsUsedAsValue(): void {
+            this._isUsedAsValue = true;
+            if (this.linkedAliasSymbols) {
+                this.linkedAliasSymbols.forEach(s => s.setIsUsedAsValue());
             }
         }
 
@@ -3248,7 +3296,9 @@ module TypeScript {
             return this._constraint;
         }
 
-        public getCallSignatures(): PullSignatureSymbol[]{
+        // Note: This is a deviation from the spec. Using the constraint to get signatures is only
+        // warranted when we explicitly ask for an apparent type.
+        public getCallSignatures(): PullSignatureSymbol[] {
             if (this._constraint) {
                 return this._constraint.getCallSignatures();
             }

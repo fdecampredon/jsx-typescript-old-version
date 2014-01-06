@@ -1,3 +1,6 @@
+underscoreTest1_underscoreTests.ts(26,3): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '<T>(value: T) => T' and 'Iterator<{}, boolean>' are incompatible.
+underscoreTest1_underscoreTests.ts(26,3): error TS2087: Could not select overload for 'call' expression.
 underscoreTest1_underscoreTests.ts(133,11): error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '(func: (name: any) => string, arg: any) => string' and '(func: (name: any) => string, ...args: any[]) => any' are incompatible:
 		Call signature expects 1 or fewer parameters.

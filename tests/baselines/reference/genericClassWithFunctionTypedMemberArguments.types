@@ -83,8 +83,8 @@ Line 29 col 19 IdentifierName "cb" = (a: T) => U
 Line 29 col 22 IdentifierName "x" = T
 Line 33 col 8 IdentifierName "c" = WithCandidates.C<number>
 Line 33 col 11 IdentifierName "C" = WithCandidates.C<T>
-Line 34 col 8 IdentifierName "r4" = {}
-Line 34 col 13 InvocationExpression "c.foo2(1, function <Z>(a: Z) { return '' })" = {}
+Line 34 col 8 IdentifierName "r4" = string
+Line 34 col 13 InvocationExpression "c.foo2(1, function <Z>(a: Z) { return '' })" = string
 Line 34 col 13 MemberAccessExpression "c.foo2" = <T, U>(x: T, cb: (a: T) => U) => U
 Line 34 col 13 IdentifierName "c" = WithCandidates.C<number>
 Line 34 col 15 IdentifierName "foo2" = <T, U>(x: T, cb: (a: T) => U) => U

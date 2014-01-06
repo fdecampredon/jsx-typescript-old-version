@@ -36,6 +36,25 @@ module TypeScript {
         }
     }
 
+    class FileLogger implements ILogger {
+
+        private fileName: string;
+
+        constructor(public ioHost: IIO) {
+            var file = "tsc." + Date.now() + ".log";
+
+            this.fileName = this.ioHost.resolvePath(file);
+        }
+        public information(): boolean { return false; }
+        public debug(): boolean { return false; }
+        public warning(): boolean { return false; }
+        public error(): boolean { return false; }
+        public fatal(): boolean { return false; }
+        public log(s: string): void {
+            this.ioHost.appendFile(this.fileName, s + '\r\n');
+        }
+    }
+
     export class BatchCompiler implements IReferenceResolverHost {
         public compilerVersion = "0.9.5.0";
         private inputFiles: string[] = [];
@@ -56,7 +75,14 @@ module TypeScript {
 
             // Parse command line options
             if (this.parseOptions()) {
-                this.logger = this.compilationSettings.gatherDiagnostics() ? <ILogger>new DiagnosticsLogger(this.ioHost) : new NullLogger();
+
+                if (this.compilationSettings.createFileLog()) {
+                    this.logger = new FileLogger(this.ioHost);
+                } else if (this.compilationSettings.gatherDiagnostics()) {
+                    this.logger = new DiagnosticsLogger(this.ioHost);
+                } else {
+                    this.logger = new NullLogger();
+                }
 
                 if (this.compilationSettings.watch()) {
                     // Watch will cause the program to stick around as long as the files exist
@@ -68,6 +94,46 @@ module TypeScript {
                 this.resolve();
 
                 this.compile();
+
+                if (this.compilationSettings.createFileLog()) {
+                    this.logger.log("Compilation settings:");
+                    this.logger.log(" propagateEnumConstants " + this.compilationSettings.propagateEnumConstants());
+                    this.logger.log(" removeComments " + this.compilationSettings.removeComments());
+                    this.logger.log(" watch " + this.compilationSettings.watch());
+                    this.logger.log(" noResolve " + this.compilationSettings.noResolve());
+                    this.logger.log(" noImplicitAny " + this.compilationSettings.noImplicitAny());
+                    this.logger.log(" nolib " + this.compilationSettings.noLib());
+                    this.logger.log(" target " + this.compilationSettings.codeGenTarget());
+                    this.logger.log(" module " + this.compilationSettings.moduleGenTarget());
+                    this.logger.log(" out " + this.compilationSettings.outFileOption());
+                    this.logger.log(" outDir " + this.compilationSettings.outDirOption());
+                    this.logger.log(" sourcemap " + this.compilationSettings.mapSourceFiles());
+                    this.logger.log(" mapRoot " + this.compilationSettings.mapRoot());
+                    this.logger.log(" sourceroot " + this.compilationSettings.sourceRoot());
+                    this.logger.log(" declaration " + this.compilationSettings.generateDeclarationFiles());
+                    this.logger.log(" useCaseSensitiveFileResolution " + this.compilationSettings.useCaseSensitiveFileResolution());
+                    this.logger.log(" diagnostics " + this.compilationSettings.gatherDiagnostics());
+                    this.logger.log(" codepage " + this.compilationSettings.codepage());
+
+                    this.logger.log("");
+
+                    this.logger.log("Input files:");
+                    this.inputFiles.forEach((file) => {
+                        this.logger.log(" " + file);
+                    });
+
+                    this.logger.log("");
+
+                    this.logger.log("Resolved Files:");
+                    this.resolvedFiles.forEach((file) => {
+                        file.importedFiles.forEach((file) => {
+                            this.logger.log(" " + file);
+                        });
+                        file.referencedFiles.forEach((file) => {
+                            this.logger.log(" " + file);
+                        });
+                    });
+                }
 
                 if (this.compilationSettings.gatherDiagnostics()) {
                     this.logger.log("");
@@ -318,6 +384,13 @@ module TypeScript {
                 experimental: true,
                 set: () => {
                     mutableSettings.gatherDiagnostics = true;
+                }
+            });
+
+            opts.flag('logFile', {
+                experimental: true,
+                set: () => {
+                    mutableSettings.createFileLog = true;
                 }
             });
 

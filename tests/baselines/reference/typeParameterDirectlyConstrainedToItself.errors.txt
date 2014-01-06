@@ -1,10 +1,10 @@
-typeParameterDirectlyConstrainedToItself.ts(3,9): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(4,13): error TS2229: Type parameter 'U' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(6,13): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(7,17): error TS2229: Type parameter 'U' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(9,12): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(10,16): error TS2229: Type parameter 'U' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(13,6): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(14,9): error TS2229: Type parameter 'U' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(17,10): error TS2229: Type parameter 'T' cannot be a direct or indirect constraint for itself.
-typeParameterDirectlyConstrainedToItself.ts(18,14): error TS2229: Type parameter 'U' cannot be a direct or indirect constraint for itself.
+typeParameterDirectlyConstrainedToItself.ts(3,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(4,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(6,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(7,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(9,12): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(10,16): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(13,6): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(14,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(17,10): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+typeParameterDirectlyConstrainedToItself.ts(18,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.

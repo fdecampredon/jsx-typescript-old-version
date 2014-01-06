@@ -1,0 +1,4 @@
+assignmentCompatWithCallSignatures6.ts(30,1): error TS2012: Cannot convert '<T>(x: T) => void' to '<T>(x: T) => T':
+	Call signatures of types '<T>(x: T) => void' and '<T>(x: T) => T' are incompatible.
+assignmentCompatWithCallSignatures6.ts(42,1): error TS2012: Cannot convert '<T extends Base>(x: { a: T; b: T; }) => T[]' to '<T>(x: { a: T; b: T; }) => T[]':
+	Call signatures of types '<T extends Base>(x: { a: T; b: T; }) => T[]' and '<T>(x: { a: T; b: T; }) => T[]' are incompatible.

@@ -1,0 +1,40 @@
+=== tests/cases/compiler/assignmentCompatWithGenericCallSignatures3.ts ===
+Line 2 col 10 IdentifierName "I" = I<T, S>
+Line 2 col 12 IdentifierName "T" = T
+Line 2 col 15 IdentifierName "S" = S
+Line 3 col 5 IdentifierName "U" = U
+Line 3 col 8 IdentifierName "f" = (x: T) => (y: S) => U
+Line 3 col 12 IdentifierName "x" = T
+Line 3 col 15 IdentifierName "T" = T
+Line 3 col 22 IdentifierName "y" = S
+Line 3 col 25 IdentifierName "S" = S
+Line 3 col 31 IdentifierName "U" = U
+Line 3 col 35 IdentifierName "U" = U
+Line 6 col 4 IdentifierName "g" = <T>(x: T) => <S>(y: S) => I<T, S>
+Line 6 col 8 IdentifierName "T" = T
+Line 6 col 11 IdentifierName "x" = T
+Line 6 col 14 IdentifierName "T" = T
+Line 6 col 21 IdentifierName "S" = S
+Line 6 col 24 IdentifierName "y" = S
+Line 6 col 27 IdentifierName "S" = S
+Line 6 col 33 IdentifierName "I" = I<T, S>
+Line 6 col 35 IdentifierName "T" = T
+Line 6 col 38 IdentifierName "S" = S
+Line 7 col 4 IdentifierName "h" = <T>(x: T) => <S>(y: S) => <U>(f: (x: T) => (y: S) => U) => U
+Line 7 col 8 IdentifierName "T" = T
+Line 7 col 11 IdentifierName "x" = T
+Line 7 col 14 IdentifierName "T" = T
+Line 7 col 21 IdentifierName "S" = S
+Line 7 col 24 IdentifierName "y" = S
+Line 7 col 27 IdentifierName "S" = S
+Line 7 col 36 IdentifierName "U" = U
+Line 7 col 39 IdentifierName "f" = (x: T) => (y: S) => U
+Line 7 col 43 IdentifierName "x" = T
+Line 7 col 46 IdentifierName "T" = T
+Line 7 col 53 IdentifierName "y" = S
+Line 7 col 56 IdentifierName "S" = S
+Line 7 col 62 IdentifierName "U" = U
+Line 7 col 66 IdentifierName "U" = U
+Line 8 col 0 AssignmentExpression "g = h // ok" = <T>(x: T) => <S>(y: S) => <U>(f: (x: T) => (y: S) => U) => U
+Line 8 col 0 IdentifierName "g" = <T>(x: T) => <S>(y: S) => I<T, S>
+Line 9 col 4 IdentifierName "h // ok" = <T>(x: T) => <S>(y: S) => <U>(f: (x: T) => (y: S) => U) => U

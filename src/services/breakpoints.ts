@@ -80,7 +80,7 @@ module TypeScript.Services.Breakpoints {
                 switch (container.kind()) {
                     case TypeScript.SyntaxKind.Block:
                         if (!this.canHaveBreakpointInBlock(container)) {
-                            return null();
+                            return null;
                         }
                         return this.breakpointSpanOfFirstStatementInBlock(container);
                         break;
@@ -172,7 +172,7 @@ module TypeScript.Services.Breakpoints {
                 switch (container.kind()) {
                     case TypeScript.SyntaxKind.Block:
                         if (!this.canHaveBreakpointInBlock(container)) {
-                            return null();
+                            return null;
                         }
                         return this.breakpointSpanOfLastStatementInBlock(container);
                         break;

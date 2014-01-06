@@ -15,6 +15,7 @@ anyIsNotASubtype.ts(84,10): error TS2095: Could not find symbol 'Eany'.
 anyIsNotASubtype.ts(94,5): error TS2171: All named properties must be subtypes of string indexer type 'typeof f'.
 anyIsNotASubtype.ts(104,5): error TS2171: All named properties must be subtypes of string indexer type 'typeof c'.
 anyIsNotASubtype.ts(110,5): error TS2171: All named properties must be subtypes of string indexer type 'T'.
+anyIsNotASubtype.ts(114,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 anyIsNotASubtype.ts(116,5): error TS2171: All named properties must be subtypes of string indexer type 'U'.
 anyIsNotASubtype.ts(122,5): error TS2171: All named properties must be subtypes of string indexer type 'Object'.
 anyIsNotASubtype.ts(128,5): error TS2171: All named properties must be subtypes of string indexer type '{}'.

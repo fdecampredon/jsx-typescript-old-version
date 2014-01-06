@@ -270,20 +270,32 @@ module TypeScript {
             if (isExternalModuleReference && !isExported && isAmdCodeGen) {
                 return false;
             }
-
+  
             var importSymbol = <PullTypeAliasSymbol>importDecl.getSymbol();
+            if (importSymbol.isUsedAsValue()) {
+                return true;
+            }
+
             if (importDeclAST.moduleReference.kind() !== SyntaxKind.ExternalModuleReference) {
-                if (importSymbol.getExportAssignedValueSymbol()) {
-                    return true;
+                var canBeUsedExternally = isExported || importSymbol.typeUsedExternally() || importSymbol.isUsedInExportedAlias();
+                if (!canBeUsedExternally && !this.document.isExternalModule()) {
+                    // top level import in non-external module are visible across the whole global module
+                    canBeUsedExternally = hasFlag(importDecl.getParentDecl().kind, PullElementKind.Script | PullElementKind.DynamicModule);
                 }
 
-                var containerSymbol = importSymbol.getExportAssignedContainerSymbol();
-                if (containerSymbol && containerSymbol.getInstanceSymbol()) {
-                    return true;
+                if (canBeUsedExternally) {
+                    if (importSymbol.getExportAssignedValueSymbol()) {
+                        return true;
+                    }
+
+                    var containerSymbol = importSymbol.getExportAssignedContainerSymbol();
+                    if (containerSymbol && containerSymbol.getInstanceSymbol()) {
+                        return true;
+                    }
                 }
             }
 
-            return importSymbol.isUsedAsValue();
+            return false;
         }
 
         public emitImportDeclaration(importDeclAST: ImportDeclarationSyntax) {

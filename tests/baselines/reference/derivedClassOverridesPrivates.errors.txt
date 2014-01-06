@@ -1,0 +1,4 @@
+derivedClassOverridesPrivates.ts(5,7): error TS2141: Class 'Derived' cannot extend class 'Base':
+	Types 'Derived' and 'Base' define property 'x' as private.
+derivedClassOverridesPrivates.ts(13,7): error TS2141: Class 'Derived2' cannot extend class 'Base2':
+	Types 'Derived2' and 'Base2' define static property 'y' as private.

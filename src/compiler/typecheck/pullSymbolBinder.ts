@@ -4,9 +4,11 @@
 ///<reference path='..\references.ts' />
 
 module TypeScript {
+
     export class PullSymbolBinder {
-    
+
         private declsBeingBound: number[] = [];
+        private inBindingOtherDeclsWalker = new PullHelpers.OtherPullDeclsWalker();
 
         constructor(private semanticInfoChain: SemanticInfoChain) {
         }
@@ -167,6 +169,15 @@ module TypeScript {
             var indexToInsert = ArrayUtilities.indexOf(currentSignatures, someSignature =>
                 someSignature.getDeclarations()[0].getParentDecl() !== enclosingDecl);
             return indexToInsert < 0 ? currentSignatures.length : indexToInsert;
+        }
+
+        private bindOtherDecls(currentlyBindingDecl: PullDecl, searchGlobally: boolean) {
+            // Get the other decls
+            var otherDecls = this.findDeclsInContext(currentlyBindingDecl, currentlyBindingDecl.kind, searchGlobally);
+
+            // Bind the other decls
+            this.inBindingOtherDeclsWalker.walkOtherPullDecls(currentlyBindingDecl, otherDecls,
+                otherDecl => otherDecl.ensureSymbolIsBound());
         }
 
         //
@@ -331,13 +342,7 @@ module TypeScript {
                 valueDecl.ensureSymbolIsBound();
             }
 
-            var otherDecls = this.findDeclsInContext(enumContainerDecl, enumContainerDecl.kind, true);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(enumContainerDecl, /*searchGlobally*/ true);
         }
 
         private bindEnumIndexerDeclsToPullSymbols(enumContainerDecl: PullDecl, enumContainerSymbol: PullContainerSymbol): void {
@@ -578,13 +583,7 @@ module TypeScript {
                 }
             }
 
-            var otherDecls = this.findDeclsInContext(moduleContainerDecl, moduleContainerDecl.kind, true);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(moduleContainerDecl, /*searchGlobally*/ true);
         }
 
         // aliases
@@ -635,6 +634,34 @@ module TypeScript {
             }
         }
 
+        // Preserves required binding order for a declaration with given name to prevent cases like:
+        // module A { export module B { var x = 1} }
+        // module A { export class B { c } }
+        // Here if class declaration is bound before module declaration (i.e. because of IDE activities)
+        // we won't report expected 'duplicate identifier' error for the class.
+        private ensurePriorDeclarationsAreBound(container: PullSymbol, currentDecl: PullDecl) {
+            if (!container) {
+                return;
+            }
+            
+            var parentDecls = container.getDeclarations();
+            for (var i = 0; i < parentDecls.length; ++i) {
+                var parentDecl = parentDecls[i];
+                var childDecls = parentDecl.getChildDecls();
+                for (var j = 0; j < childDecls.length; ++j) {
+
+                    var childDecl = childDecls[j];
+                    if (childDecl === currentDecl) {
+                        return;
+                    }
+
+                    if (childDecl.name === currentDecl.name) {
+                        childDecl.ensureSymbolIsBound();
+                    }
+                }
+            }
+        }
+
         // classes
         private bindClassDeclarationToPullSymbol(classDecl: PullDecl) {
 
@@ -647,6 +674,9 @@ module TypeScript {
             var classAST = <ClassDeclarationSyntax>this.semanticInfoChain.getASTForDecl(classDecl);
 
             var parent = this.getParent(classDecl);
+
+            this.ensurePriorDeclarationsAreBound(parent, classDecl);
+
             var parentDecl = classDecl.getParentDecl();
             var isExported = classDecl.flags & PullElementFlags.Exported;
             var isGeneric = false;
@@ -836,13 +866,7 @@ module TypeScript {
                 typeParameters[i].setSymbol(typeParameter);
             }
 
-            var otherDecls = this.findDeclsInContext(interfaceDecl, interfaceDecl.kind, true);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(interfaceDecl, /*searchGlobally*/ true);
         }
 
         private bindObjectTypeDeclarationToPullSymbol(objectDecl: PullDecl) {
@@ -959,7 +983,7 @@ module TypeScript {
                 var prevIsClassConstructorVariable = variableSymbol.anyDeclHasFlag(PullElementFlags.ClassConstructorVariable);
                 var prevIsModuleValue = variableSymbol.allDeclsHaveFlag(PullElementFlags.InitializedModule);
                 var prevIsImplicit = variableSymbol.anyDeclHasFlag(PullElementFlags.ImplicitVariable);
-                var prevIsFunction = prevKind === PullElementKind.Function;
+                var prevIsFunction = ArrayUtilities.any(variableSymbol.getDeclarations(), decl => decl.kind === PullElementKind.Function);
                 var prevIsAmbient = variableSymbol.allDeclsHaveFlag(PullElementFlags.Ambient);
                 var isAmbientOrPrevIsAmbient = prevIsAmbient || (variableDeclaration.flags & PullElementFlags.Ambient) !== 0;
                 var prevDecl = variableSymbol.getDeclarations()[0];
@@ -1178,13 +1202,7 @@ module TypeScript {
                 }
             }
 
-            var otherDecls = this.findDeclsInContext(variableDeclaration, variableDeclaration.kind, /*searchGlobally*/ false);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(variableDeclaration, /*searchGlobally*/ false);
         }
 
         private bindCatchVariableToPullSymbol(variableDeclaration: PullDecl) {
@@ -1389,6 +1407,9 @@ module TypeScript {
             var isSignature: boolean = (declFlags & PullElementFlags.Signature) !== 0;
 
             var parent = this.getParent(functionDeclaration, true);
+
+            this.ensurePriorDeclarationsAreBound(parent, functionDeclaration);
+
             var parentDecl = functionDeclaration.getParentDecl();
             var parentHadSymbol = false;
 
@@ -1399,11 +1420,30 @@ module TypeScript {
             functionSymbol = this.getExistingSymbol(functionDeclaration, PullElementKind.SomeValue, parent);
 
             if (functionSymbol) {
+                // SPEC: Nov 18
+                // When merging a non-ambient function or class declaration and a non-ambient internal module declaration, 
+                // the function or class declaration must be located prior to the internal module declaration in the same source file. 
+                // => when any of components is ambient - order doesn't matter                
+                var acceptableRedeclaration: boolean;
+                
                 // Duplicate is acceptable if it is another signature (not a duplicate implementation), or an ambient fundule
-                var previousIsAmbient = functionSymbol.allDeclsHaveFlag(PullElementFlags.Ambient);
-                var isAmbientOrPreviousIsAmbient = previousIsAmbient || functionDeclaration.flags & PullElementFlags.Ambient;
-                var acceptableRedeclaration = functionSymbol.kind === PullElementKind.Function && (isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature)) ||
-                    functionSymbol.allDeclsHaveFlag(PullElementFlags.InitializedModule) && isAmbientOrPreviousIsAmbient;
+                if (functionSymbol.kind === PullElementKind.Function) {
+                    // normal fundule - we are allowed to add overloads
+                    acceptableRedeclaration = isSignature || functionSymbol.allDeclsHaveFlag(PullElementFlags.Signature);
+                }
+                else {
+                    // check if this is ambient fundule?
+                    var isCurrentDeclAmbient = hasFlag(functionDeclaration.flags, PullElementFlags.Ambient);
+                    acceptableRedeclaration = ArrayUtilities.all(functionSymbol.getDeclarations(), (decl) => {
+                        // allowed elements for ambient fundules
+                        // - signatures
+                        // - initialized modules that can be ambient or not depending on whether current decl is ambient                       
+                        var isInitializedModuleOrAmbientDecl = hasFlag(decl.flags, PullElementFlags.InitializedModule) && (isCurrentDeclAmbient || hasFlag(decl.flags, PullElementFlags.Ambient));
+                        var isSignature = hasFlag(decl.flags, PullElementFlags.Signature);
+                        return isInitializedModuleOrAmbientDecl || isSignature;
+                    });
+                }
+
                 if (!acceptableRedeclaration) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
                         funcDeclAST.identifier, functionDeclaration.getDisplayName(), functionSymbol.getDeclarations()[0].ast());
@@ -1479,13 +1519,7 @@ module TypeScript {
             // add the implicit call member for this function type
             functionTypeSymbol.appendCallSignature(signature);
 
-            var otherDecls = this.findDeclsInContext(functionDeclaration, functionDeclaration.kind, false);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(functionDeclaration, /*searchGlobally*/ false);
         }
 
         private bindFunctionExpressionToPullSymbol(functionExpressionDeclaration: PullDecl) {
@@ -1725,13 +1759,7 @@ module TypeScript {
             var signatureIndex = this.getIndexForInsertingSignatureAtEndOfEnclosingDeclInSignatureList(signature, methodTypeSymbol.getOwnCallSignatures());
             methodTypeSymbol.insertCallSignatureAtIndex(signature, signatureIndex);
 
-            var otherDecls = this.findDeclsInContext(methodDeclaration, methodDeclaration.kind, false);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(methodDeclaration, /*searchGlobally*/ false);
         }
 
         private bindStaticPrototypePropertyOfClass(classTypeSymbol: PullTypeSymbol, constructorTypeSymbol: PullTypeSymbol) {
@@ -1838,13 +1866,7 @@ module TypeScript {
 
             constructorTypeSymbol.appendConstructSignature(constructSignature);
 
-            var otherDecls = this.findDeclsInContext(constructorDeclaration, constructorDeclaration.kind, false);
-
-            if (otherDecls && otherDecls.length) {
-                for (var i = 0; i < otherDecls.length; i++) {
-                    otherDecls[i].ensureSymbolIsBound();
-                }
-            }
+            this.bindOtherDecls(constructorDeclaration, /*searchGlobally*/ false);
 
             // Create the constructorTypeSymbol
             this.bindStaticPrototypePropertyOfClass(parent, constructorTypeSymbol);

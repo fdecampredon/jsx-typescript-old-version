@@ -10,7 +10,7 @@ function foo<T>(a: (x: T) => T, b: (x: T) => T) {
 var r1b = foo((x) => 1, (x) => ''); // {} => {}
 var r2 = foo((x: Object) => null, (x: string) => ''); // Object => Object
 var r3 = foo((x: number) => 1, (x: Object) => null); // number => number
-var r3 = foo((x: number) => 1, (x: number) => 1); // number => number
+var r3ii = foo((x: number) => 1, (x: number) => 1); // number => number
 
 var a: { x: number; y?: number; };
 var b: { x: number; z?: number; };

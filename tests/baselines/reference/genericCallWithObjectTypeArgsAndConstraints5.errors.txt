@@ -1,5 +1,7 @@
+genericCallWithObjectTypeArgsAndConstraints5.ts(12,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithObjectTypeArgsAndConstraints5.ts(18,10): error TS2086: Type 'C' does not satisfy the constraint 'D' for type parameter 'U extends T'.
 genericCallWithObjectTypeArgsAndConstraints5.ts(19,10): error TS2086: Type '() => void' does not satisfy the constraint '() => number' for type parameter 'U extends T'.
+genericCallWithObjectTypeArgsAndConstraints5.ts(21,19): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithObjectTypeArgsAndConstraints5.ts(22,14): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'T' to argument 1 which is of type 'C'.
 genericCallWithObjectTypeArgsAndConstraints5.ts(22,14): error TS2087: Could not select overload for 'call' expression.

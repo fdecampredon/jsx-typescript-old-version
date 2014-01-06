@@ -23,7 +23,6 @@ var a2: (x: number, ...z: number[]) => number;
     a2 = (x?: number) => 1; // ok, fewer required params
     a2 = (x: number) => 1; // ok, same number of required params
     a2 = (x: number, ...args: number[]) => 1; // ok, same number of required params
-    // BUG 833401
     a2 = (x: number, ...args: string[]) => 1; // should be type mismatch error
     a2 = (x: number, y: number) => 1; // error, too many required params
     a2 = (x: number, y?: number) => 1; // ok, same number of required params
@@ -33,9 +32,7 @@ var a3: (x: number, y?: string, ...z: number[]) => number;
     a3 = (x?: number) => 1; // ok, fewer required params
     a3 = (x: number) => 1; // ok, same number of required params
     a3 = (x: number, y: string) => 1;  // error, too many required params
-    // BUG 833440
     a3 = (x: number, y?: number, z?: number) => 1;  // should be error
-    // BUG 833440
     a3 = (x: number, ...z: number[]) => 1;  // should be error
     a3 = (x: string, y?: string, z?: string) => 1;  // error
 

@@ -19,9 +19,7 @@ module TypeScript {
             return !!this._inferredTypeAfterFixing;
         }
 
-        // TODO: We need the context because the sourceIsRelatableToTarget needs the context.
-        // Investigate removing this dependency
-        public tryToFix(resolver: PullTypeResolver, context: PullTypeResolutionContext): void {
+        public fixTypeParameter(resolver: PullTypeResolver, context: PullTypeResolutionContext): void {
             if (!this._inferredTypeAfterFixing) {
                 // November 18, 2013: Section 4.12.2:
                 // The inferred type argument for a particular type parameter is the widened form
@@ -38,26 +36,14 @@ module TypeScript {
         }
     }
 
-    export class ArgumentInferenceContext {
+    export class TypeArgumentInferenceContext {
         public inferenceCache: IBitMatrix = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ false);
         public candidateCache: CandidateInferenceInfo[] = [];
-        public fixedParameterTypes: PullTypeSymbol[] = null;
-        public resolver: PullTypeResolver = null;
-        public argumentASTs: ISeparatedSyntaxList<IExpressionSyntax> = null;
 
-        // When inferences are being performed at function call sites, use this overloads
-        constructor(resolver: PullTypeResolver, argumentASTs: ISeparatedSyntaxList<IExpressionSyntax>);
-
-        // during contextual instantiation, use this overload
-        constructor(resolver: PullTypeResolver, fixedParameterTypes: PullTypeSymbol[]);
-        constructor(resolver: PullTypeResolver, argumentsOrParameters: any) {
-            this.resolver = resolver;
-
-            if (argumentsOrParameters.nonSeparatorAt !== undefined) {
-                this.argumentASTs = argumentsOrParameters;
-            }
-            else {
-                this.fixedParameterTypes = argumentsOrParameters;
+        constructor(public resolver: PullTypeResolver, public context: PullTypeResolutionContext, public signatureBeingInferred: PullSignatureSymbol) {
+            var typeParameters = signatureBeingInferred.getTypeParameters();
+            for (var i = 0; i < typeParameters.length; i++) {
+                this.addInferenceRoot(typeParameters[i]);
             }
         }
 
@@ -100,33 +86,14 @@ module TypeScript {
             }
         }
 
-        public getInferenceArgumentCount(): number {
-            if (this.fixedParameterTypes) {
-                return this.fixedParameterTypes.length;
-            }
-            else {
-                return this.argumentASTs.nonSeparatorCount();
-            }
+        public inferTypeArguments(): PullTypeSymbol[] {
+            throw Errors.abstract();
         }
 
-        public getArgumentTypeSymbolAtIndex(i: number, context: PullTypeResolutionContext): PullTypeSymbol {
-
-            Debug.assert(i >= 0, "invalid inference argument position");
-
-            if (this.fixedParameterTypes && i < this.getInferenceArgumentCount()) {
-                return this.fixedParameterTypes[i];
-            }
-            else if (i < this.getInferenceArgumentCount()) {
-                return this.resolver.resolveAST(this.argumentASTs.nonSeparatorAt(i), true, context).type;
-            }
-
-            return null;
-        }
-
-        public tryToFixTypeParameter(typeParameter: PullTypeParameterSymbol, resolver: PullTypeResolver, context: PullTypeResolutionContext) {
+        public fixTypeParameter(typeParameter: PullTypeParameterSymbol) {
             var candidateInfo = this.candidateCache[typeParameter.pullSymbolID];
             if (candidateInfo) {
-                candidateInfo.tryToFix(resolver, context);
+                candidateInfo.fixTypeParameter(this.resolver, this.context);
             }
         }
 
@@ -136,41 +103,105 @@ module TypeScript {
             for (var infoKey in this.candidateCache) {
                 if (this.candidateCache.hasOwnProperty(infoKey)) {
                     var info = this.candidateCache[infoKey];
-                    // We only want to substitute types for *fixed* type parameters
-                    // TODO: We fix type parameters too late. Therefore, sometimes we want the
-                    // inferred type of a type parameter that hasn't yet been fixed. For now,
-                    // we fall back on the first inference candidate (which might be null).
-                    // This means that in the common case with one candidate, we will have the
-                    // right type if the type parameter appears in a lambda parameter.
-                    fixedTypeParametersToTypesMap[info.typeParameter.pullSymbolID] = info._inferredTypeAfterFixing ||
-                        info.inferenceCandidates[0];
+                    fixedTypeParametersToTypesMap[info.typeParameter.pullSymbolID] = info._inferredTypeAfterFixing;
                 }
             }
 
             return fixedTypeParametersToTypesMap;
         }
 
-        public inferArgumentTypes(resolver: PullTypeResolver, context: PullTypeResolutionContext): { param: PullTypeParameterSymbol; type: PullTypeSymbol; }[] {
-            var results: { param: PullTypeParameterSymbol; type: PullTypeSymbol; }[] = [];
+        public _finalizeInferredTypeArguments(): PullTypeSymbol[]{
+            var results: PullTypeSymbol[] = [];
+            var typeParameters = this.signatureBeingInferred.getTypeParameters();
+            for (var i = 0; i < typeParameters.length; i++) {
+                var info = this.candidateCache[typeParameters[i].pullSymbolID];
 
-            for (var infoKey in this.candidateCache) {
-                if (this.candidateCache.hasOwnProperty(infoKey)) {
-                    var info = this.candidateCache[infoKey];
+                info.fixTypeParameter(this.resolver, this.context);
 
-                    info.tryToFix(resolver, context);
-
-                    // is there already a substitution for this type?
-                    for (var i = 0; i < results.length; i++) {
-                        if (results[i].type === info.typeParameter) {
-                            results[i].type = info._inferredTypeAfterFixing;
-                        }
+                // is there already a substitution for this type?
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].type === info.typeParameter) {
+                        results[i].type = info._inferredTypeAfterFixing;
                     }
-
-                    results[results.length] = { param: info.typeParameter, type: info._inferredTypeAfterFixing };
                 }
+
+                results.push(info._inferredTypeAfterFixing);
             }
 
             return results;
+        }
+
+        public isInvocationInferenceContext(): boolean {
+            throw Errors.abstract();
+        }
+    }
+
+    export class InvocationTypeArgumentInferenceContext extends TypeArgumentInferenceContext {
+        constructor(
+            resolver: PullTypeResolver,
+            context: PullTypeResolutionContext,
+            signatureBeingInferred: PullSignatureSymbol,
+            public argumentASTs: ISeparatedSyntaxList<IExpressionSyntax>) {
+            super(resolver, context, signatureBeingInferred);
+        }
+
+        public isInvocationInferenceContext() {
+            return true;
+        }
+
+        public inferTypeArguments(): PullTypeSymbol[] {
+            // Resolve all of the argument ASTs in the callback
+            this.signatureBeingInferred.forAllParameterTypes(/*length*/ this.argumentASTs.nonSeparatorCount(), (parameterType, argumentIndex) => {
+                var argumentAST = this.argumentASTs.nonSeparatorAt(argumentIndex);
+
+                this.context.pushInferentialType(parameterType, this);
+                var argumentType = this.resolver.resolveAST(argumentAST, /*isContextuallyTyped*/ true, this.context).type;
+                this.resolver.relateTypeToTypeParametersWithNewEnclosingTypes(argumentType, parameterType, this, this.context);
+                this.context.popAnyContextualType();
+
+                return true; // Continue iterating
+            });
+
+            return this._finalizeInferredTypeArguments();
+        }
+    }
+
+    export class ContextualSignatureInstantiationTypeArgumentInferenceContext extends TypeArgumentInferenceContext {
+        // for the shouldFixContextualSignatureParameterTypes flag, pass true during inferential typing
+        // and false during signature relation checking
+        constructor(
+            resolver: PullTypeResolver,
+            context: PullTypeResolutionContext,
+            signatureBeingInferred: PullSignatureSymbol,
+            private contextualSignature: PullSignatureSymbol,
+            private shouldFixContextualSignatureParameterTypes: boolean) {
+            super(resolver, context, signatureBeingInferred);
+        }
+
+        public isInvocationInferenceContext() {
+            return false;
+        }
+
+        public inferTypeArguments(): PullTypeSymbol[] {
+            // We are in contextual signature instantiation. This callback will be executed
+            // for each parameter we are trying to relate in order to infer type arguments.
+            var relateTypesCallback = (parameterTypeBeingInferred: PullTypeSymbol, contextualParameterType: PullTypeSymbol) => {
+                if (this.shouldFixContextualSignatureParameterTypes) {
+                    // Need to modify the callback to cause fixing. Per spec section 4.12.2
+                    // 4th bullet of inferential typing:
+                    // ... then any inferences made for type parameters referenced by the
+                    // parameters of T's call signature are fixed
+                    // (T here is the contextual signature)
+                    contextualParameterType = this.context.fixAllTypeParametersReferencedByType(contextualParameterType, this.resolver, this);
+                }
+                this.resolver.relateTypeToTypeParametersWithNewEnclosingTypes(contextualParameterType, parameterTypeBeingInferred, this, this.context);
+
+                return true; // continue iterating
+            };
+
+            this.signatureBeingInferred.forAllCorrespondingParameterTypesInThisAndOtherSignature(this.contextualSignature, relateTypesCallback);
+
+            return this._finalizeInferredTypeArguments();
         }
     }
 
@@ -182,7 +213,7 @@ module TypeScript {
         constructor(public contextualType: PullTypeSymbol,
             public provisional: boolean,
             public isInferentiallyTyping: boolean,
-            public substitutions: PullTypeSymbol[]) { }
+            public typeArgumentInferenceContext: TypeArgumentInferenceContext) { }
 
         public recordProvisionallyTypedSymbol(symbol: PullSymbol) {
             this.provisionallyTypedSymbols[this.provisionallyTypedSymbols.length] = symbol;
@@ -239,8 +270,8 @@ module TypeScript {
                 this.fileName === ast.fileName();
         }
 
-        private _pushAnyContextualType(type: PullTypeSymbol, provisional: boolean, isInferentiallyTyping: boolean, substitutions: PullTypeSymbol[]) {
-            this.contextStack.push(new PullContextualTypeContext(type, provisional, isInferentiallyTyping, substitutions));
+        private _pushAnyContextualType(type: PullTypeSymbol, provisional: boolean, isInferentiallyTyping: boolean, argContext: TypeArgumentInferenceContext) {
+            this.contextStack.push(new PullContextualTypeContext(type, provisional, isInferentiallyTyping, argContext));
         }
 
         // Use this to push any kind of contextual type if it is NOT propagated inward from a parent
@@ -252,13 +283,12 @@ module TypeScript {
         // Use this when propagating a contextual type from a parent contextual type to a subexpression.
         // This corresponds to the second series of bullets in section 4.19 of the spec.
         public propagateContextualType(type: PullTypeSymbol) {
-            this._pushAnyContextualType(type, this.inProvisionalResolution(), this.isInferentiallyTyping(), null);
+            this._pushAnyContextualType(type, this.inProvisionalResolution(), this.isInferentiallyTyping(), this.getCurrentTypeArgumentInferenceContext());
         }
 
         // Use this if you are trying to infer type arguments.
-        // substitutions is information about what you have inferred so far.
-        public pushInferentialType(type: PullTypeSymbol, substitutions: PullTypeSymbol[]) {
-            this._pushAnyContextualType(type, /*provisional*/ true, /*isInferentiallyTyping*/ true, substitutions);
+        public pushInferentialType(type: PullTypeSymbol, typeArgumentInferenceContext: TypeArgumentInferenceContext) {
+            this._pushAnyContextualType(type, /*provisional*/ true, /*isInferentiallyTyping*/ true, typeArgumentInferenceContext);
         }
 
         // Use this if you are trying to choose an overload and are trying a contextual type.
@@ -286,18 +316,7 @@ module TypeScript {
             return this.contextStack.length ? this.contextStack[this.contextStack.length - 1].hasProvisionalErrors : false;
         }
 
-        public findSubstitution(type: PullTypeSymbol) {
-            if (this.contextStack.length) {
-                for (var i = this.contextStack.length - 1; i >= 0; i--) {
-                    if (this.contextStack[i].substitutions) {
-                        return this.contextStack[i].substitutions[type.pullSymbolID];
-                    }
-                }
-            }
-
-            return null;
-        }
-
+        // Gets the current contextual or inferential type
         public getContextualType(): PullTypeSymbol {
             var context = !this.contextStack.length ? null : this.contextStack[this.contextStack.length - 1];
             
@@ -308,12 +327,43 @@ module TypeScript {
                     return null;
                 }
 
-                var substitution = this.findSubstitution(type);
-
-                return substitution || type;
+                return type;
             }
 
             return null;
+        }
+
+        public fixAllTypeParametersReferencedByType(type: PullTypeSymbol, resolver: PullTypeResolver, argContext?: TypeArgumentInferenceContext): PullTypeSymbol {
+            var argContext = this.getCurrentTypeArgumentInferenceContext();
+            if (type.wrapsSomeTypeParameter(argContext.candidateCache)) {
+                // Build up a type parameter argument map with which we will instantiate this type
+                // after fixing type parameters
+                var typeParameterArgumentMap: PullTypeSymbol[] = [];
+                // Iterate over all the type parameters and fix any one that is wrapped
+                for (var n in argContext.candidateCache) {
+                    var typeParameter = argContext.candidateCache[n] && argContext.candidateCache[n].typeParameter;
+                    if (typeParameter) {
+                        var dummyMap: PullTypeSymbol[] = [];
+                        dummyMap[typeParameter.pullSymbolID] = typeParameter;
+                        if (type.wrapsSomeTypeParameter(dummyMap)) {
+                            argContext.fixTypeParameter(typeParameter);
+                            Debug.assert(argContext.candidateCache[n]._inferredTypeAfterFixing);
+                            typeParameterArgumentMap[typeParameter.pullSymbolID] = argContext.candidateCache[n]._inferredTypeAfterFixing;
+                        }
+                    }
+                }
+
+                return resolver.instantiateType(type, typeParameterArgumentMap);
+            }
+
+            return type;
+        }
+
+        // If we are not in inferential typing, this will return null
+        private getCurrentTypeArgumentInferenceContext() {
+            return this.contextStack.length
+                ? this.contextStack[this.contextStack.length - 1].typeArgumentInferenceContext
+                : null;
         }
 
         public isInferentiallyTyping(): boolean {
@@ -339,9 +389,7 @@ module TypeScript {
         }
 
         public setTypeInContext(symbol: PullSymbol, type: PullTypeSymbol) {
-            var substitution: PullTypeSymbol = this.findSubstitution(type);
-
-            symbol.type = substitution || type;
+            symbol.type = type;
 
             if (this.contextStack.length && this.inProvisionalResolution()) {
                 this.contextStack[this.contextStack.length - 1].recordProvisionallyTypedSymbol(symbol);

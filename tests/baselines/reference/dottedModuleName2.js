@@ -31,9 +31,4 @@ var A;
 
 var M;
 (function (M) {
-    var X1 = A;
-
-    var X2 = A.B;
-
-    var X3 = A.B.C;
 })(M || (M = {}));

@@ -32,7 +32,7 @@ module WithCandidates {
     }
 
     var c: C<number>;
-    var r4 = c.foo2(1, function <Z>(a: Z) { return '' }); // {}, no inference made from generic call signatures
+    var r4 = c.foo2(1, function <Z>(a: Z) { return '' }); // string, contextual signature instantiation is applied to generic functions
     var r5 = c.foo2(1, (a) => ''); // string
     var r6 = c.foo2<string, number>('', <Z>(a: Z) => 1); // number
 

@@ -212,7 +212,7 @@ module GenericSignaturesValid {
 
 
     interface I7 extends Base2 {
-        a3: <T>() => T; // ok, fewer required params
+        a3: <T>() => T; // error, no inferences for T so {} not assignable to {} in return type
     }
 
     interface I8 extends Base2 {

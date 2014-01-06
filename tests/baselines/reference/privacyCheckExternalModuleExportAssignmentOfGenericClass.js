@@ -7,4 +7,3 @@ var Foo = (function () {
 })();
 module.exports = Foo;
 //// [privacyCheckExternalModuleExportAssignmentOfGenericClass_1.js]
-var Foo = require("privacyCheckExternalModuleExportAssignmentOfGenericClass_0");

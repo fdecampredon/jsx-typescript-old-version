@@ -1,3 +1,4 @@
+genericCallWithConstraintsTypeArgumentInference2.ts(3,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithConstraintsTypeArgumentInference2.ts(8,9): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
 genericCallWithConstraintsTypeArgumentInference2.ts(11,10): error TS2082: Supplied parameters do not match any signature of call target:
 	Type 'Number' is missing property 'toDateString' from type 'Date'.

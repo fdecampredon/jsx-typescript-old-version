@@ -226,5 +226,54 @@ module TypeScript {
                 }
             }
         }
+
+        // Helper class to walk the other decls
+        export class OtherPullDeclsWalker {
+            // The below walk just gives example of the usage of walk:
+            // This is list of decls that are currently binding other decl. 
+            // We maintain this so that we dont keep binding other decls in the stack. 
+            // eg. if we have this:
+            // module a{            // decl1
+            // }
+            // module a {           // decl2
+            // }
+            // module a {           // decl3
+            // }
+            // module a {           // decl4
+            // }
+            // If we do not keep track of these decls we would end up binding decl4 on stack when binding decl1, decl2, decl3 as below:
+            // After binding decl1, we would go and try to bind other decls of 'a'
+            // as part of it we would try to bind decl1, since its already bound we proceed to decl2
+            // After binding decl2, we go bind other decls of 'a' and find that decl1 and decl2 are already bound
+            // So as we bind decl3, and then go and try to bind other decls of 'a' which ends us up in binding decl4.
+            // Thus the stack would be proportional to decls for given particular symbol.
+            //
+            // To avoid this before binding other symbols we always check if the list of decls contains 
+            // the decl whose other decls we are already binding and if yes we skip the binding other decls
+            // In the above eg. when we start binding other decls of 'a' after binding decl1, we go bind decl2
+            // but when binding other decls of decl2, we find that it contains decl1, which is already binding its other decls
+            // hence we dont do other decl binding and return and do same process for rest of the decls, thus ending up 
+            // binding only current decl if we are binding that symbol as part of binding other decls
+            private currentlyWalkingOtherDecls: PullDecl[] = [];
+            public walkOtherPullDecls(currentDecl: PullDecl, otherDecls: PullDecl[], callBack: (otherDecl: PullDecl) => void) {
+                if (otherDecls) {
+                    var isAlreadyWalkingOtherDecl = ArrayUtilities.any(this.currentlyWalkingOtherDecls,
+                        inWalkingOtherDecl => ArrayUtilities.contains(otherDecls, inWalkingOtherDecl));
+
+                    // If we are already binding other decls for this 
+                    if (!isAlreadyWalkingOtherDecl) {
+                        this.currentlyWalkingOtherDecls.push(currentDecl);
+                        for (var i = 0; i < otherDecls.length; i++) {
+                            if (otherDecls[i] !== currentDecl) {
+                                callBack(otherDecls[i]);
+                            }
+                        }
+                        var currentlyWalkingOtherDeclsDecl = this.currentlyWalkingOtherDecls.pop();
+                        Debug.assert(currentlyWalkingOtherDeclsDecl == currentDecl);
+                    }
+                }
+            }
+        }
+
     }
 }

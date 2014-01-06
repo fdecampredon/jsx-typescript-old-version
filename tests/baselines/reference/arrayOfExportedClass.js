@@ -7,9 +7,6 @@ var Car = (function () {
 
 module.exports = Car;
 //// [arrayOfExportedClass_1.js]
-///<reference path='arrayOfExportedClass_0.ts'/>
-var Car = require('arrayOfExportedClass_0');
-
 var Road = (function () {
     function Road() {
     }

@@ -373,7 +373,7 @@ module TypeScript {
                     // - A type reference that references any of G's type parameters in a type argument is 
                     //      classified as an open type reference.
                     if (typeArguments[i].wrapsSomeTypeParameter(enclosingTypeParameterMap, /*skipTypeArgumentCheck*/ true)) {
-                        // This type wraps type parameter of the enclosing type so it is alteast open
+                        // This type wraps type parameter of the enclosing type so it is at least open
                         generativeTypeClassification = GenerativeTypeClassification.Open;
                         break;
                     }
@@ -833,7 +833,10 @@ module TypeScript {
             if (!this._typeParameters) {
                 var rootSymbol = <PullSignatureSymbol>this.getRootSymbol();
                 var typeParameters = rootSymbol.getTypeParameters();
-                if (typeParameters.length) {
+                var hasInstantiatedTypeParametersOfThisSignature = ArrayUtilities.all(typeParameters, typeParameter =>
+                    this._typeParameterArgumentMap[typeParameter.pullSymbolID] !== undefined);
+
+                if (!hasInstantiatedTypeParametersOfThisSignature && typeParameters.length) {
                     // Type parameteres are the instantiated version of the rootTypeparmeters with our own type parameter argument map
                     this._typeParameters = [];
                     for (var i = 0; i < typeParameters.length; i++) {

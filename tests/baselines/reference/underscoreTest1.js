@@ -40,7 +40,8 @@ var odds = _.reject([1, 2, 3, 4, 5, 6], function (num) {
     return num % 2 == 0;
 });
 
-//_.all([true, 1, null, 'yes'], _.identity);
+_.all([true, 1, null, 'yes'], _.identity);
+
 _.any([null, 0, 'yes', false]);
 
 _.contains([1, 2, 3], 3);

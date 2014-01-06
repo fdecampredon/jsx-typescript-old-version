@@ -1,0 +1,12 @@
+=== tests/cases/compiler/foo2.ts ===
+Line 0 col 7 IdentifierName "foo1" = typeof M1
+Line 1 col 4 IdentifierName "x" = number
+Line 1 col 16 InvocationExpression "foo1.b()" = number
+Line 1 col 16 MemberAccessExpression "foo1.b" = typeof M1.b
+Line 1 col 16 IdentifierName "foo1" = typeof M1
+Line 1 col 21 IdentifierName "b" = typeof M1.b
+=== tests/cases/compiler/foo1.ts ===
+Line 1 col 15 IdentifierName "M1" = M1
+Line 2 col 12 IdentifierName "a" = string
+Line 3 col 17 IdentifierName "b" = typeof M1.b
+Line 5 col 9 IdentifierName "M1" = typeof M1

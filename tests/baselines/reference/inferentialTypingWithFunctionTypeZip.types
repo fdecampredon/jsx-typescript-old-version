@@ -1,0 +1,38 @@
+=== tests/cases/compiler/inferentialTypingWithFunctionTypeZip.ts ===
+Line 0 col 4 IdentifierName "pair" = <T, S>(x: T) => (y: S) => { x: T; y: S; }
+Line 0 col 11 IdentifierName "T" = T
+Line 0 col 14 IdentifierName "S" = S
+Line 0 col 17 IdentifierName "x" = T
+Line 0 col 20 IdentifierName "T" = T
+Line 0 col 27 IdentifierName "y" = S
+Line 0 col 30 IdentifierName "S" = S
+Line 0 col 38 IdentifierName "x" = T
+Line 0 col 41 IdentifierName "T" = T
+Line 0 col 44 IdentifierName "y" = S
+Line 0 col 47 IdentifierName "S" = S
+Line 1 col 4 IdentifierName "zipWith" = <T, S, U>(a: T[], b: S[], f: (x: T) => (y: S) => U) => U[]
+Line 1 col 14 IdentifierName "T" = T
+Line 1 col 17 IdentifierName "S" = S
+Line 1 col 20 IdentifierName "U" = U
+Line 1 col 23 IdentifierName "a" = T[]
+Line 1 col 26 IdentifierName "T" = T
+Line 1 col 31 IdentifierName "b" = S[]
+Line 1 col 34 IdentifierName "S" = S
+Line 1 col 39 IdentifierName "f" = (x: T) => (y: S) => U
+Line 1 col 43 IdentifierName "x" = T
+Line 1 col 46 IdentifierName "T" = T
+Line 1 col 53 IdentifierName "y" = S
+Line 1 col 56 IdentifierName "S" = S
+Line 1 col 62 IdentifierName "U" = U
+Line 1 col 68 IdentifierName "U" = U
+Line 2 col 4 IdentifierName "result" = { x: number; y: {}; }[]
+Line 2 col 13 InvocationExpression "zipWith([1, 2], ['a', 'b'], pair)" = { x: number; y: {}; }[]
+Line 2 col 13 IdentifierName "zipWith" = <T, S, U>(a: T[], b: S[], f: (x: T) => (y: S) => U) => U[]
+Line 2 col 21 ArrayLiteralExpression "[1, 2]" = number[]
+Line 2 col 29 ArrayLiteralExpression "['a', 'b']" = {}[]
+Line 2 col 41 IdentifierName "pair" = <T, S>(x: T) => (y: S) => { x: T; y: S; }
+Line 3 col 4 IdentifierName "i" = number
+Line 3 col 8 MemberAccessExpression "result[0].x" = number
+Line 3 col 8 ElementAccessExpression "result[0]" = { x: number; y: {}; }
+Line 3 col 8 IdentifierName "result" = { x: number; y: {}; }[]
+Line 3 col 18 IdentifierName "x" = number

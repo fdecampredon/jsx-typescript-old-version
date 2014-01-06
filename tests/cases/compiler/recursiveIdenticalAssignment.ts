@@ -1,0 +1,10 @@
+interface A<T> {
+    x: A<T>
+}
+
+interface B<T extends B<B<T>>> {
+    x: B<T>
+}
+
+var a: A<A<any>>
+var b: B<B<any>> = a

@@ -1,0 +1,26 @@
+=== tests/cases/compiler/derivedTypeDoesNotRequireExtendsClause.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 1 col 0 IdentifierName "foo" = string
+Line 4 col 6 IdentifierName "Derived" = Derived
+Line 5 col 0 IdentifierName "foo" = string
+Line 6 col 0 IdentifierName "bar" = number
+Line 9 col 6 IdentifierName "Derived2" = Derived2
+Line 9 col 23 IdentifierName "Base" = Base
+Line 10 col 0 IdentifierName "bar" = string
+Line 13 col 4 IdentifierName "b" = Base
+Line 13 col 7 IdentifierName "Base" = Base
+Line 14 col 4 IdentifierName "d1" = Derived
+Line 14 col 8 IdentifierName "Derived" = Derived
+Line 15 col 4 IdentifierName "d2" = Derived2
+Line 15 col 8 IdentifierName "Derived2" = Derived2
+Line 16 col 0 AssignmentExpression "b = d1" = Derived
+Line 16 col 0 IdentifierName "b" = Base
+Line 16 col 4 IdentifierName "d1" = Derived
+Line 17 col 0 AssignmentExpression "b = d2" = Derived2
+Line 17 col 0 IdentifierName "b" = Base
+Line 17 col 4 IdentifierName "d2" = Derived2
+Line 19 col 4 IdentifierName "r" = Base[]
+Line 19 col 7 IdentifierName "Base" = Base
+Line 19 col 16 ArrayLiteralExpression "[d1, d2]" = Base[]
+Line 19 col 17 IdentifierName "d1" = Derived
+Line 19 col 21 IdentifierName "d2" = Derived2

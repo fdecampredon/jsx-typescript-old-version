@@ -1,1 +1,2 @@
+maxConstraints.ts(5,6): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 maxConstraints.ts(8,17): error TS2086: Type 'number' does not satisfy the constraint 'Comparable<number>' for type parameter 'T extends Comparable<T>'.

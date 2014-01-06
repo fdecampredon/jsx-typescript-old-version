@@ -1,0 +1,7 @@
+staticPropertyNotInClassType.ts(16,16): error TS2094: The property 'foo' does not exist on value of type 'C'.
+staticPropertyNotInClassType.ts(17,16): error TS2094: The property 'bar' does not exist on value of type 'C'.
+staticPropertyNotInClassType.ts(18,16): error TS2094: The property 'x' does not exist on value of type 'C'.
+staticPropertyNotInClassType.ts(27,21): error TS2099: Static members cannot reference class type parameters.
+staticPropertyNotInClassType.ts(36,16): error TS2094: The property 'foo' does not exist on value of type 'C<number, string>'.
+staticPropertyNotInClassType.ts(37,16): error TS2094: The property 'bar' does not exist on value of type 'C<number, string>'.
+staticPropertyNotInClassType.ts(38,16): error TS2094: The property 'x' does not exist on value of type 'C<number, string>'.

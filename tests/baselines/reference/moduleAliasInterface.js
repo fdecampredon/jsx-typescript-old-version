@@ -11,8 +11,6 @@ var _modes;
 // _modes. // produces an internal error - please implement in derived class
 var editor;
 (function (editor) {
-    var modes = _modes;
-
     var i;
 
     // If you just use p1:modes, the compiler accepts it - should be an error
@@ -65,8 +63,6 @@ var A1;
 
 var B1;
 (function (B1) {
-    var A1Alias1 = A1;
-
     var i;
     var c;
 })(B1 || (B1 = {}));

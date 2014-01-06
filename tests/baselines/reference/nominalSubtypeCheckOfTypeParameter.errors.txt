@@ -1,0 +1,4 @@
+nominalSubtypeCheckOfTypeParameter.ts(14,11): error TS2143: Interface 'List<T>' cannot extend interface 'Sequence<T>':
+	Types of property 'zip' of types 'List<T>' and 'Sequence<T>' are incompatible:
+		Call signatures of types '<S>(seq: Sequence<S>) => List<Tuple<T, S>>' and '<S>(seq: Sequence<S>) => Sequence<Tuple<T, S>>' are incompatible:
+			Types 'List<Tuple<T, S>>' and 'Sequence<Tuple<T, S>>' originating in inifinitely expanding type reference do not refer to same named type.

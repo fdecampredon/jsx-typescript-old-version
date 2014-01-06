@@ -12,5 +12,11 @@ stringLiteralTypeIsSubtypeOfString.ts(84,1): error TS2154: Specialized overload 
 stringLiteralTypeIsSubtypeOfString.ts(85,1): error TS2148: Overload signature is not compatible with function definition.
 stringLiteralTypeIsSubtypeOfString.ts(89,1): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
 stringLiteralTypeIsSubtypeOfString.ts(93,1): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypeIsSubtypeOfString.ts(93,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+stringLiteralTypeIsSubtypeOfString.ts(94,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+stringLiteralTypeIsSubtypeOfString.ts(95,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 stringLiteralTypeIsSubtypeOfString.ts(97,1): error TS2154: Specialized overload signature is not subtype of any non-specialized signature.
+stringLiteralTypeIsSubtypeOfString.ts(97,32): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 stringLiteralTypeIsSubtypeOfString.ts(98,1): error TS2148: Overload signature is not compatible with function definition.
+stringLiteralTypeIsSubtypeOfString.ts(98,32): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+stringLiteralTypeIsSubtypeOfString.ts(99,32): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.

@@ -1,3 +1,8 @@
+genericMemberFunction.ts(2,20): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericMemberFunction.ts(7,20): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericMemberFunction.ts(10,20): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+genericMemberFunction.ts(15,19): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericMemberFunction.ts(16,5): error TS2095: Could not find symbol 'a'.
 genericMemberFunction.ts(17,5): error TS2095: Could not find symbol 'removedFiles'.
+genericMemberFunction.ts(17,30): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericMemberFunction.ts(18,12): error TS2094: The property 'removeFile' does not exist on value of type 'BuildResult<A, B, C>'.

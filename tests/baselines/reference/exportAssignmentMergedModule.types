@@ -1,0 +1,33 @@
+=== tests/cases/compiler/foo_1.ts ===
+Line 0 col 7 IdentifierName "foo" = typeof Foo
+Line 1 col 4 IdentifierName "a" = number
+Line 1 col 16 InvocationExpression "foo.a()" = number
+Line 1 col 16 MemberAccessExpression "foo.a" = typeof Foo.a
+Line 1 col 16 IdentifierName "foo" = typeof Foo
+Line 1 col 20 IdentifierName "a" = typeof Foo.a
+Line 2 col 3 LogicalNotExpression "!!foo.b" = boolean
+Line 2 col 4 LogicalNotExpression "!foo.b" = boolean
+Line 2 col 5 MemberAccessExpression "foo.b" = boolean
+Line 2 col 5 IdentifierName "foo" = typeof Foo
+Line 2 col 9 IdentifierName "b" = boolean
+Line 3 col 0 AssignmentExpression "foo.Test.answer = foo.c(42)" = number
+Line 3 col 0 MemberAccessExpression "foo.Test.answer" = number
+Line 3 col 0 MemberAccessExpression "foo.Test" = typeof Foo.Test
+Line 3 col 0 IdentifierName "foo" = typeof Foo
+Line 3 col 5 IdentifierName "Test" = typeof Foo.Test
+Line 3 col 10 IdentifierName "answer" = number
+Line 3 col 19 InvocationExpression "foo.c(42)" = number
+Line 3 col 19 MemberAccessExpression "foo.c" = typeof Foo.c
+Line 3 col 19 IdentifierName "foo" = typeof Foo
+Line 3 col 23 IdentifierName "c" = typeof Foo.c
+=== tests/cases/compiler/foo_0.ts ===
+Line 0 col 7 IdentifierName "Foo" = Foo
+Line 1 col 17 IdentifierName "a" = typeof Foo.a
+Line 4 col 12 IdentifierName "b" = boolean
+Line 6 col 7 IdentifierName "Foo" = Foo
+Line 7 col 17 IdentifierName "c" = typeof Foo.c
+Line 7 col 19 IdentifierName "a" = number
+Line 8 col 9 IdentifierName "a" = number
+Line 10 col 15 IdentifierName "Test" = Foo.Test
+Line 11 col 13 IdentifierName "answer" = number
+Line 14 col 9 IdentifierName "Foo" = typeof Foo

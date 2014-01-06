@@ -57,7 +57,6 @@ interface I6B extends Base {
     a2: (x: number, ...args: number[]) => number; // ok, same number of required params
 }
 
-// BUG 833401
 interface I6C extends Base {
     a2: (x: number, ...args: string[]) => number; // should be type mismatch error
 }
@@ -88,17 +87,14 @@ interface I10 extends Base {
     a3: (x: number, y: string) => number;  // error, too many required params
 }
 
-// BUG 833440
 interface I10B extends Base {
     a3: (x: number, y?: number, z?: number) => number;  // should be error
 }
 
-// BUG 833440
 interface I10C extends Base {
     a3: (x: number, ...z: number[]) => number;  // should be error
 }
 
-// BUG 833401
 interface I10D extends Base {
     a3: (x: string, y?: string, z?: string) => number;  // should be error, incompatible types
 }

@@ -42,8 +42,10 @@ var cfilter = curry1(filter);
 
 // compose :: (b->c) -> (a->b) -> (a->c)
 // length :: [a] -> Num
-// cfilter :: (a -> Bool) -> [a] -> [a]
+// cfilter :: {} -> {} -> [{}]
 // pred :: a -> Bool 
+// cfilter(pred) :: {} -> [{}]
+// length2 :: [a] -> Num
 // countWhere :: (a -> Bool) -> [a] -> Num
 
 function countWhere_1<A>(pred: (a: A) => boolean): (a: A[]) => number {

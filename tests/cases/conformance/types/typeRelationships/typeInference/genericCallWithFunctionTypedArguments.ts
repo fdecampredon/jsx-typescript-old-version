@@ -13,7 +13,7 @@ function foo2<T, U>(x: T, cb: (a: T) => U) {
     return cb(x);
 }
 
-var r4 = foo2(1, function <Z>(a: Z) { return '' }); // {}, no inference made from generic call signatures
+var r4 = foo2(1, function <Z>(a: Z) { return '' }); // string, contextual signature instantiation is applied to generic functions
 var r5 = foo2(1, (a) => ''); // string
 var r6 = foo2<string, number>('', <Z>(a: Z) => 1);
 

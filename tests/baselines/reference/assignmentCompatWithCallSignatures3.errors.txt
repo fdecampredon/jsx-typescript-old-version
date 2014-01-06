@@ -1,0 +1,41 @@
+assignmentCompatWithCallSignatures3.ts(47,1): error TS2012: Cannot convert '(x: number) => number[]' to '<T>(x: T) => T[]':
+	Call signatures of types '(x: number) => number[]' and '<T>(x: T) => T[]' are incompatible:
+		Types of property 'concat' of types 'number[]' and 'T[]' are incompatible:
+			Call signatures of types '{ <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible.
+assignmentCompatWithCallSignatures3.ts(50,1): error TS2012: Cannot convert '(x: number) => string[]' to '<T>(x: T) => string[]':
+	Call signatures of types '(x: number) => string[]' and '<T>(x: T) => string[]' are incompatible.
+assignmentCompatWithCallSignatures3.ts(53,1): error TS2012: Cannot convert '(x: number) => void' to '<T>(x: T) => T':
+	Call signatures of types '(x: number) => void' and '<T>(x: T) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(56,1): error TS2012: Cannot convert '(x: string, y: number) => string' to '<T, U>(x: T, y: U) => T':
+	Call signatures of types '(x: string, y: number) => string' and '<T, U>(x: T, y: U) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(59,1): error TS2012: Cannot convert '(x: (arg: string) => number) => string' to '<T, U>(x: (arg: T) => U) => T':
+	Call signatures of types '(x: (arg: string) => number) => string' and '<T, U>(x: (arg: T) => U) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(62,1): error TS2012: Cannot convert '(x: (arg: Base) => Derived) => Base' to '<T extends Base, U extends Derived>(x: (arg: T) => U) => T':
+	Call signatures of types '(x: (arg: Base) => Derived) => Base' and '<T extends Base, U extends Derived>(x: (arg: T) => U) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(65,1): error TS2012: Cannot convert '(x: (arg: Base) => Derived) => (r: Base) => Derived' to '<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U':
+	Call signatures of types '(x: (arg: Base) => Derived) => (r: Base) => Derived' and '<T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U' are incompatible:
+		Call signatures of types '(r: Base) => Derived' and '(r: T) => U' are incompatible.
+assignmentCompatWithCallSignatures3.ts(68,1): error TS2012: Cannot convert '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U':
+	Call signatures of types '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' and '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U' are incompatible:
+		Call signatures of types '(r: Base) => Derived' and '(r: T) => U' are incompatible.
+assignmentCompatWithCallSignatures3.ts(71,1): error TS2012: Cannot convert '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U':
+	Call signatures of types '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' and '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U' are incompatible:
+		Call signatures of types '(r: Base) => Derived' and '(r: T) => U' are incompatible.
+assignmentCompatWithCallSignatures3.ts(74,1): error TS2012: Cannot convert '(...x: Derived[]) => Derived' to '<T extends Derived>(...x: T[]) => T':
+	Call signatures of types '(...x: Derived[]) => Derived' and '<T extends Derived>(...x: T[]) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(77,1): error TS2012: Cannot convert '(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' to '<T extends Base>(x: T, y: T) => T':
+	Call signatures of types '(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' and '<T extends Base>(x: T, y: T) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(80,1): error TS2012: Cannot convert '(x: Base[], y: Derived2[]) => Derived[]' to '<T extends Base[]>(x: Base[], y: T) => Derived[]':
+	Call signatures of types '(x: Base[], y: Derived2[]) => Derived[]' and '<T extends Base[]>(x: Base[], y: T) => Derived[]' are incompatible:
+		Types of property 'concat' of types 'Base[]' and 'Derived2[]' are incompatible:
+			Call signatures of types '{ <U extends Base[]>(...items: U[]): Base[]; (...items: Base[]): Base[]; }' and '{ <U extends Derived2[]>(...items: U[]): Derived2[]; (...items: Derived2[]): Derived2[]; }' are incompatible.
+assignmentCompatWithCallSignatures3.ts(83,1): error TS2012: Cannot convert '(x: Base[], y: Derived[]) => Derived[]' to '<T extends Derived[]>(x: Base[], y: T) => T':
+	Call signatures of types '(x: Base[], y: Derived[]) => Derived[]' and '<T extends Derived[]>(x: Base[], y: T) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(86,1): error TS2012: Cannot convert '(x: { a: string; b: number; }) => Object' to '<T>(x: { a: T; b: T; }) => T':
+	Call signatures of types '(x: { a: string; b: number; }) => Object' and '<T>(x: { a: T; b: T; }) => T' are incompatible.
+assignmentCompatWithCallSignatures3.ts(89,1): error TS2012: Cannot convert '{ (x: number): number[]; (x: string): string[]; }' to '<T>(x: T) => T[]':
+	Call signatures of types '{ (x: number): number[]; (x: string): string[]; }' and '<T>(x: T) => T[]' are incompatible.
+assignmentCompatWithCallSignatures3.ts(95,1): error TS2012: Cannot convert '{ (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }' to '<T>(x: (a: T) => T) => T[]':
+	Call signatures of types '{ (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }' and '<T>(x: (a: T) => T) => T[]' are incompatible.
+assignmentCompatWithCallSignatures3.ts(98,1): error TS2012: Cannot convert '{ (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }' to '<T>(x: (a: T) => T) => T[]':
+	Call signatures of types '{ (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }' and '<T>(x: (a: T) => T) => T[]' are incompatible.

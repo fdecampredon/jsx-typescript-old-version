@@ -1,0 +1,16 @@
+=== tests/cases/compiler/doNotWidenAtObjectLiteralPropertyAssignment.ts ===
+Line 0 col 10 IdentifierName "ITestEventInterval" = ITestEventInterval
+Line 1 col 0 IdentifierName "begin" = number
+Line 4 col 10 IdentifierName "IIntervalTreeNode" = IIntervalTreeNode
+Line 5 col 0 IdentifierName "interval" = ITestEventInterval
+Line 5 col 14 IdentifierName "ITestEventInterval" = ITestEventInterval
+Line 6 col 0 IdentifierName "children" = IIntervalTreeNode[]
+Line 6 col 15 IdentifierName "IIntervalTreeNode" = IIntervalTreeNode
+Line 9 col 4 IdentifierName "test" = IIntervalTreeNode[]
+Line 9 col 10 IdentifierName "IIntervalTreeNode" = IIntervalTreeNode
+Line 9 col 32 ArrayLiteralExpression "[{ interval: { begin: 0 }, children: null }]" = IIntervalTreeNode[]
+Line 9 col 33 ObjectLiteralExpression "{ interval: { begin: 0 }, children: null }" = { interval: { begin: number; }; children: any; }
+Line 9 col 35 IdentifierName "interval" = { begin: number; }
+Line 9 col 45 ObjectLiteralExpression "{ begin: 0 }" = { begin: number; }
+Line 9 col 47 IdentifierName "begin" = number
+Line 9 col 59 IdentifierName "children" = any

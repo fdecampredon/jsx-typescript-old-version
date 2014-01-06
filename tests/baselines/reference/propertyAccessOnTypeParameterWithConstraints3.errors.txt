@@ -1,4 +1,9 @@
+propertyAccessOnTypeParameterWithConstraints3.ts(13,22): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+propertyAccessOnTypeParameterWithConstraints3.ts(31,26): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+propertyAccessOnTypeParameterWithConstraints3.ts(39,19): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+propertyAccessOnTypeParameterWithConstraints3.ts(40,6): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 propertyAccessOnTypeParameterWithConstraints3.ts(42,14): error TS2094: The property 'foo' does not exist on value of type '{}'.
 propertyAccessOnTypeParameterWithConstraints3.ts(45,11): error TS2086: Type '{}' does not satisfy the constraint 'A' for type parameter 'T extends A'.
 propertyAccessOnTypeParameterWithConstraints3.ts(46,11): error TS2086: Type '{}' does not satisfy the constraint 'A' for type parameter 'T extends A'.
+propertyAccessOnTypeParameterWithConstraints3.ts(49,24): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 propertyAccessOnTypeParameterWithConstraints3.ts(56,12): error TS2086: Type '{}' does not satisfy the constraint 'A' for type parameter 'U extends A'.

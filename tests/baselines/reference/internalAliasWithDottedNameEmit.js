@@ -12,7 +12,6 @@ var a;
 (function (a) {
     (function (e) {
         (function (f) {
-            var g = a.b.c;
         })(e.f || (e.f = {}));
         var f = e.f;
     })(a.e || (a.e = {}));

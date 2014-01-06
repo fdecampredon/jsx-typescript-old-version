@@ -55,8 +55,6 @@ a2 = function (x) {
     }
     return 1;
 }; // ok, same number of required params
-
-// BUG 833401
 a2 = function (x) {
     var args = [];
     for (var _i = 0; _i < (arguments.length - 1); _i++) {
@@ -84,13 +82,9 @@ a3 = function (x) {
 a3 = function (x, y) {
     return 1;
 }; // error, too many required params
-
-// BUG 833440
 a3 = function (x, y, z) {
     return 1;
 }; // should be error
-
-// BUG 833440
 a3 = function (x) {
     var z = [];
     for (var _i = 0; _i < (arguments.length - 1); _i++) {
