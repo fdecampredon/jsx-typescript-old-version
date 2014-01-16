@@ -10,7 +10,9 @@ module TypeScript {
     export class PullSymbol {
 
         // private state
-        public pullSymbolID = pullSymbolID++;
+        // The symbol ids start with 1 and not 0 as 0 is reserved to detect false conditions eg. in determining 
+        // wrappingTypeParameterID
+        public pullSymbolID = ++pullSymbolID;
 
         public name: string;
 
@@ -230,7 +232,7 @@ module TypeScript {
 
         public _getResolver(): PullTypeResolver {
             Debug.assert(this._declarations && this._declarations.length > 0);
-            return this._declarations[0].semanticInfoChain().getResolver();
+            return this._declarations[0].semanticInfoChain.getResolver();
         }
 
         public _resolveDeclaredSymbol() {
@@ -717,13 +719,13 @@ module TypeScript {
             var ast = decl.ast();
 
             if (ast) {
-                var enclosingModuleDeclaration = getEnclosingModuleDeclaration(ast);
-                if (isLastNameOfModule(enclosingModuleDeclaration, ast)) {
-                    return docComments(enclosingModuleDeclaration);
+                var enclosingModuleDeclaration = ASTHelpers.getEnclosingModuleDeclaration(ast);
+                if (ASTHelpers.isLastNameOfModule(enclosingModuleDeclaration, ast)) {
+                    return ASTHelpers.docComments(enclosingModuleDeclaration);
                 }
 
                 if (ast.kind() !== TypeScript.SyntaxKind.ModuleDeclaration || decl.kind !== TypeScript.PullElementKind.Variable) {
-                    return docComments(ast);
+                    return ASTHelpers.docComments(ast);
                 }
             }
 
@@ -1112,6 +1114,8 @@ module TypeScript {
         public inWrapCheck = false;
         public inWrapInfiniteExpandingReferenceCheck = false;
 
+        private _wrapsTypeParameterCache: WrapsTypeParameterCache;
+
         constructor(kind: PullElementKind, private _isDefinition = false) {
             super("", kind);
         }
@@ -1437,35 +1441,40 @@ module TypeScript {
         }
 
         public wrapsSomeTypeParameter(typeParameterArgumentMap: PullTypeSymbol[]): boolean {
-            var signature = this;
+            return this.getWrappingTypeParameterID(typeParameterArgumentMap) !== 0;
+        }
+
+        public getWrappingTypeParameterID(typeParameterArgumentMap: PullTypeSymbol[]): number {            var signature = this;
             if (signature.inWrapCheck) {
-                return false;
+                return 0;
             }
 
+            // Find result from cache
+            this._wrapsTypeParameterCache = this._wrapsTypeParameterCache || new WrapsTypeParameterCache();
+        
+            var wrappingTypeParameterID = this._wrapsTypeParameterCache.getWrapsTypeParameter(typeParameterArgumentMap);
+            if (wrappingTypeParameterID === undefined) {
+                wrappingTypeParameterID = this.getWrappingTypeParameterIDWorker(typeParameterArgumentMap);
+                this._wrapsTypeParameterCache.setWrapsTypeParameter(typeParameterArgumentMap, wrappingTypeParameterID);
+            }
+            return wrappingTypeParameterID;        }
+
+        public getWrappingTypeParameterIDWorker(typeParameterArgumentMap: PullTypeSymbol[]): number {            var signature = this;
             signature.inWrapCheck = true;
-
-            var wrapsSomeTypeParameter = false;
-
             PullHelpers.resolveDeclaredSymbolToUseType(signature);
-            if (signature.returnType && signature.returnType.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                wrapsSomeTypeParameter = true;
-            }
+            var wrappingTypeParameterID = signature.returnType ? signature.returnType.getWrappingTypeParameterID(typeParameterArgumentMap) : 0;
 
-            if (!wrapsSomeTypeParameter) {
-                var parameters = signature.parameters;
-
-                for (var i = 0; i < parameters.length; i++) {
-                    PullHelpers.resolveDeclaredSymbolToUseType(parameters[i]);
-                    if (parameters[i].type.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                        wrapsSomeTypeParameter = true;
-                        break;
-                    }
-                }
+            // Continue iterating over parameter types to find if they wrap type parameter,
+            // only until we find the first wrapping Type parameter
+            var parameters = signature.parameters;
+            for (var i = 0; !wrappingTypeParameterID && i < parameters.length; i++) {
+                PullHelpers.resolveDeclaredSymbolToUseType(parameters[i]);
+                wrappingTypeParameterID = parameters[i].type.getWrappingTypeParameterID(typeParameterArgumentMap);
             }
 
             signature.inWrapCheck = false;
 
-            return wrapsSomeTypeParameter;
+            return wrappingTypeParameterID;
         }
 
         public _wrapsSomeTypeParameterIntoInfinitelyExpandingTypeReference(enclosingType: PullTypeSymbol, knownWrapMap: IBitMatrix) {
@@ -1570,6 +1579,8 @@ module TypeScript {
         public typeReference: PullTypeReferenceSymbol = null;
 
         private _widenedType: PullTypeSymbol = null;
+
+        private _wrapsTypeParameterCache: WrapsTypeParameterCache;
 
         constructor(name: string, kind: PullElementKind) {
             super(name, kind);
@@ -2688,28 +2699,55 @@ module TypeScript {
         public wrapsSomeTypeParameter(typeParameterArgumentMap: CandidateInferenceInfo[]): boolean;
         public wrapsSomeTypeParameter(typeParameterArgumentMap: PullTypeSymbol[], skipTypeArgumentCheck?: boolean): boolean;
         public wrapsSomeTypeParameter(typeParameterArgumentMap: any[], skipTypeArgumentCheck?: boolean): boolean {
+            return this.getWrappingTypeParameterID(typeParameterArgumentMap, skipTypeArgumentCheck) != 0;
+        }
+
+        // 0 means there was no type parameter ID wrapping
+        // otherwise typeParameterID that was wrapped
+        public getWrappingTypeParameterID(typeParameterArgumentMap: PullTypeSymbol[], skipTypeArgumentCheck?: boolean): number {
             var type = this;
 
             // if we encounter a type paramter, we're obviously wrapping
             if (type.isTypeParameter()) {
                 if (typeParameterArgumentMap[type.pullSymbolID] || typeParameterArgumentMap[type.getRootSymbol().pullSymbolID]) {
-                    return true;
+                    return type.pullSymbolID;
                 }
 
                 var constraint = (<PullTypeParameterSymbol>type).getConstraint();
-
-                if (constraint && constraint.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                    return true;
-                }
-
-                return false;
+                var wrappingTypeParameterID = constraint ? constraint.getWrappingTypeParameterID(typeParameterArgumentMap) : 0;
+                return wrappingTypeParameterID;
             }
 
             if (type.inWrapCheck) {
-                return false;
+                return 0;
             }
 
-            var wrapsSomeTypeParameter = false;
+            // Find result from cache
+            this._wrapsTypeParameterCache = this._wrapsTypeParameterCache || new WrapsTypeParameterCache();
+            var wrappingTypeParameterID = this._wrapsTypeParameterCache.getWrapsTypeParameter(typeParameterArgumentMap);
+            if (wrappingTypeParameterID === undefined) {
+                wrappingTypeParameterID = this.getWrappingTypeParameterIDWorker(typeParameterArgumentMap, skipTypeArgumentCheck);
+                // Update the cache
+                this._wrapsTypeParameterCache.setWrapsTypeParameter(typeParameterArgumentMap, wrappingTypeParameterID);
+            }
+            return wrappingTypeParameterID;
+        }
+
+        private getWrappingTypeParameterIDFromSignatures(signatures: PullSignatureSymbol[], typeParameterArgumentMap: PullTypeSymbol[]): number {
+            for (var i = 0; i < signatures.length; i++) {
+                var wrappingTypeParameterID = signatures[i].getWrappingTypeParameterID(typeParameterArgumentMap);
+                if (wrappingTypeParameterID !== 0) {
+                    return wrappingTypeParameterID;
+                }
+            }
+
+            return 0;
+        }
+
+        private getWrappingTypeParameterIDWorker(typeParameterArgumentMap: PullTypeSymbol[], skipTypeArgumentCheck: boolean): number {
+            var type = this;
+            var wrappingTypeParameterID = 0;
+
             if (!skipTypeArgumentCheck) {
                 type.inWrapCheck = true;
 
@@ -2723,70 +2761,34 @@ module TypeScript {
 
                 // if it's a generic type, scan the type arguments to see which may wrap type parameters
                 if (typeArguments) {
-                    for (var i = 0; i < typeArguments.length; i++) {
-                        if (typeArguments[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                            wrapsSomeTypeParameter = true;
-                            break;
-                        }
+                    for (var i = 0; !wrappingTypeParameterID && i < typeArguments.length; i++) {
+                        wrappingTypeParameterID = typeArguments[i].getWrappingTypeParameterID(typeParameterArgumentMap);
                     }
                 }
             }
 
             // if it's not a named type, we'll need to introspect its member list
             if (skipTypeArgumentCheck || !(type.kind & PullElementKind.SomeInstantiatableType) || !type.name) {
-                if (!wrapsSomeTypeParameter) {
-                    // otherwise, walk the member list and signatures, checking for wraps
-                    var members = type.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
-
-                    for (var i = 0; i < members.length; i++) {
-                        PullHelpers.resolveDeclaredSymbolToUseType(members[i]);
-                        if (members[i].type.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                            wrapsSomeTypeParameter = true;
-                            break;
-                        }
-                    }
+                // otherwise, walk the member list and signatures, checking for wraps
+                var members = type.getAllMembers(PullElementKind.SomeValue, GetAllMembersVisiblity.all);
+                for (var i = 0; !wrappingTypeParameterID && i < members.length; i++) {
+                    PullHelpers.resolveDeclaredSymbolToUseType(members[i]);
+                    wrappingTypeParameterID = members[i].type.getWrappingTypeParameterID(typeParameterArgumentMap);
                 }
 
-                if (!wrapsSomeTypeParameter) {
-                    var sigs = type.getCallSignatures();
-
-                    for (var i = 0; i < sigs.length; i++) {
-                        if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                            wrapsSomeTypeParameter = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!wrapsSomeTypeParameter) {
-                    sigs = type.getConstructSignatures();
-
-                    for (var i = 0; i < sigs.length; i++) {
-                        if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                            wrapsSomeTypeParameter = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!wrapsSomeTypeParameter) {
-                    sigs = type.getIndexSignatures();
-
-                    for (var i = 0; i < sigs.length; i++) {
-                        if (sigs[i].wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                            wrapsSomeTypeParameter = true;
-                            break;
-                        }
-                    }
-                }
+                wrappingTypeParameterID = wrappingTypeParameterID
+                || this.getWrappingTypeParameterIDFromSignatures(type.getCallSignatures(), typeParameterArgumentMap)
+                || this.getWrappingTypeParameterIDFromSignatures(type.getConstructSignatures(), typeParameterArgumentMap)
+                || this.getWrappingTypeParameterIDFromSignatures(type.getIndexSignatures(), typeParameterArgumentMap);
             }
 
             if (!skipTypeArgumentCheck) {
                 type.inWrapCheck = false;
             }
 
-            return wrapsSomeTypeParameter;
+            return wrappingTypeParameterID;
         }
+
 
         // Detect if a type parameter is wrapped in a wrapped form that generates infinite expansion.  E.g., for 'T'
         //  class C<T> {

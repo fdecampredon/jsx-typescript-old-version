@@ -41,14 +41,13 @@ function f6(x) {
     }
 }
 
-function f7(x, y) {
-    if (true) {
-        return x;
-    } else {
-        return y;
-    }
-}
-
+//function f7<T extends U, U>(x: T, y: U) {
+//    if (true) {
+//        return x;
+//    } else {
+//        return y;
+//    }
+//}
 var a;
 var b;
 

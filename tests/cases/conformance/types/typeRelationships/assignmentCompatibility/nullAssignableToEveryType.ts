@@ -30,8 +30,14 @@ var o: <T>(x: T) => T = null;
 var p: Number = null;
 var q: String = null;
 
-function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+function foo<T, U, V extends Date>(x: T, y: U, z: V) {
     x = null;
     y = null;
     z = null;
 }
+
+//function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+//    x = null;
+//    y = null;
+//    z = null;
+//}

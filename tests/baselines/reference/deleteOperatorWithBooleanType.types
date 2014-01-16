@@ -1,0 +1,62 @@
+=== tests/cases/compiler/deleteOperatorWithBooleanType.ts ===
+Line 1 col 4 IdentifierName "BOOLEAN" = boolean
+Line 3 col 9 IdentifierName "foo" = typeof foo
+Line 5 col 6 IdentifierName "A" = A
+Line 6 col 11 IdentifierName "a" = boolean
+Line 7 col 11 IdentifierName "foo" = () => boolean
+Line 9 col 7 IdentifierName "M" = M
+Line 10 col 15 IdentifierName "n" = boolean
+Line 13 col 4 IdentifierName "objA" = A
+Line 13 col 11 ObjectCreationExpression "new A()" = A
+Line 13 col 15 IdentifierName "A" = typeof A
+Line 16 col 4 IdentifierName "ResultIsBoolean1" = boolean
+Line 16 col 23 DeleteExpression "delete BOOLEAN" = boolean
+Line 16 col 30 IdentifierName "BOOLEAN" = boolean
+Line 19 col 4 IdentifierName "ResultIsBoolean2" = boolean
+Line 19 col 23 DeleteExpression "delete true" = boolean
+Line 20 col 4 IdentifierName "ResultIsBoolean3" = boolean
+Line 20 col 23 DeleteExpression "delete { x: true, y: false }" = boolean
+Line 20 col 30 ObjectLiteralExpression "{ x: true, y: false }" = { x: boolean; y: boolean; }
+Line 20 col 32 IdentifierName "x" = boolean
+Line 20 col 41 IdentifierName "y" = boolean
+Line 23 col 4 IdentifierName "ResultIsBoolean4" = boolean
+Line 23 col 23 DeleteExpression "delete objA.a" = boolean
+Line 23 col 30 MemberAccessExpression "objA.a" = boolean
+Line 23 col 30 IdentifierName "objA" = A
+Line 23 col 35 IdentifierName "a" = boolean
+Line 24 col 4 IdentifierName "ResultIsBoolean5" = boolean
+Line 24 col 23 DeleteExpression "delete M.n" = boolean
+Line 24 col 30 MemberAccessExpression "M.n" = boolean
+Line 24 col 30 IdentifierName "M" = typeof M
+Line 24 col 32 IdentifierName "n" = boolean
+Line 25 col 4 IdentifierName "ResultIsBoolean6" = boolean
+Line 25 col 23 DeleteExpression "delete foo()" = boolean
+Line 25 col 30 InvocationExpression "foo()" = boolean
+Line 25 col 30 IdentifierName "foo" = typeof foo
+Line 26 col 4 IdentifierName "ResultIsBoolean7" = boolean
+Line 26 col 23 DeleteExpression "delete A.foo()" = boolean
+Line 26 col 30 InvocationExpression "A.foo()" = boolean
+Line 26 col 30 MemberAccessExpression "A.foo" = () => boolean
+Line 26 col 30 IdentifierName "A" = typeof A
+Line 26 col 32 IdentifierName "foo" = () => boolean
+Line 29 col 4 IdentifierName "ResultIsBoolean8" = boolean
+Line 29 col 23 DeleteExpression "delete delete BOOLEAN" = boolean
+Line 29 col 30 DeleteExpression "delete BOOLEAN" = boolean
+Line 29 col 37 IdentifierName "BOOLEAN" = boolean
+Line 30 col 0 DeleteExpression "// miss assignment operators
+delete true" = boolean
+Line 33 col 0 DeleteExpression "delete BOOLEAN" = boolean
+Line 33 col 7 IdentifierName "BOOLEAN" = boolean
+Line 34 col 0 DeleteExpression "delete foo()" = boolean
+Line 34 col 7 InvocationExpression "foo()" = boolean
+Line 34 col 7 IdentifierName "foo" = typeof foo
+Line 35 col 0 CommaExpression "delete true, false" = boolean
+Line 35 col 0 DeleteExpression "delete true" = boolean
+Line 36 col 0 DeleteExpression "delete objA.a" = boolean
+Line 36 col 7 MemberAccessExpression "objA.a" = boolean
+Line 36 col 7 IdentifierName "objA" = A
+Line 36 col 12 IdentifierName "a" = boolean
+Line 37 col 0 DeleteExpression "delete M.n" = boolean
+Line 37 col 7 MemberAccessExpression "M.n" = boolean
+Line 37 col 7 IdentifierName "M" = typeof M
+Line 37 col 9 IdentifierName "n" = boolean

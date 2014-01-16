@@ -1,0 +1,148 @@
+=== tests/cases/compiler/conditionalOperatorConditionIsBooleanType.ts ===
+Line 1 col 4 IdentifierName "condBoolean" = boolean
+Line 3 col 4 IdentifierName "exprAny1" = any
+Line 4 col 4 IdentifierName "exprBoolean1" = boolean
+Line 5 col 4 IdentifierName "exprNumber1" = number
+Line 6 col 4 IdentifierName "exprString1" = string
+Line 7 col 4 IdentifierName "exprIsObject1" = Object
+Line 7 col 19 IdentifierName "Object" = Object
+Line 9 col 4 IdentifierName "exprAny2" = any
+Line 10 col 4 IdentifierName "exprBoolean2" = boolean
+Line 11 col 4 IdentifierName "exprNumber2" = number
+Line 12 col 4 IdentifierName "exprString2" = string
+Line 13 col 4 IdentifierName "exprIsObject2" = Object
+Line 13 col 19 IdentifierName "Object" = Object
+Line 14 col 0 ConditionalExpression "//Cond is a boolean type variable
+condBoolean ? exprAny1 : exprAny2" = any
+Line 14 col 0 IdentifierName "//Cond is a boolean type variable
+condBoolean" = boolean
+Line 16 col 14 IdentifierName "exprAny1" = any
+Line 16 col 25 IdentifierName "exprAny2" = any
+Line 17 col 0 ConditionalExpression "condBoolean ? exprBoolean1 : exprBoolean2" = boolean
+Line 17 col 0 IdentifierName "condBoolean" = boolean
+Line 17 col 14 IdentifierName "exprBoolean1" = boolean
+Line 17 col 29 IdentifierName "exprBoolean2" = boolean
+Line 18 col 0 ConditionalExpression "condBoolean ? exprNumber1 : exprNumber2" = number
+Line 18 col 0 IdentifierName "condBoolean" = boolean
+Line 18 col 14 IdentifierName "exprNumber1" = number
+Line 18 col 28 IdentifierName "exprNumber2" = number
+Line 19 col 0 ConditionalExpression "condBoolean ? exprString1 : exprString2" = string
+Line 19 col 0 IdentifierName "condBoolean" = boolean
+Line 19 col 14 IdentifierName "exprString1" = string
+Line 19 col 28 IdentifierName "exprString2" = string
+Line 20 col 0 ConditionalExpression "condBoolean ? exprIsObject1 : exprIsObject2" = Object
+Line 20 col 0 IdentifierName "condBoolean" = boolean
+Line 20 col 14 IdentifierName "exprIsObject1" = Object
+Line 20 col 30 IdentifierName "exprIsObject2" = Object
+Line 21 col 0 ConditionalExpression "//Cond is a boolean type literal
+true ? exprAny1 : exprAny2" = any
+Line 23 col 7 IdentifierName "exprAny1" = any
+Line 23 col 18 IdentifierName "exprAny2" = any
+Line 24 col 0 ConditionalExpression "false ? exprBoolean1 : exprBoolean2" = boolean
+Line 24 col 8 IdentifierName "exprBoolean1" = boolean
+Line 24 col 23 IdentifierName "exprBoolean2" = boolean
+Line 25 col 0 ConditionalExpression "true ? exprNumber1 : exprNumber2" = number
+Line 25 col 7 IdentifierName "exprNumber1" = number
+Line 25 col 21 IdentifierName "exprNumber2" = number
+Line 26 col 0 ConditionalExpression "false ? exprString1 : exprString2" = string
+Line 26 col 8 IdentifierName "exprString1" = string
+Line 26 col 22 IdentifierName "exprString2" = string
+Line 27 col 0 ConditionalExpression "true ? exprIsObject1 : exprIsObject2" = Object
+Line 27 col 7 IdentifierName "exprIsObject1" = Object
+Line 27 col 23 IdentifierName "exprIsObject2" = Object
+Line 28 col 0 ConditionalExpression "//Cond is a boolean type expression
+!true ? exprAny1 : exprAny2" = any
+Line 28 col 0 LogicalNotExpression "//Cond is a boolean type expression
+!true" = boolean
+Line 30 col 8 IdentifierName "exprAny1" = any
+Line 30 col 19 IdentifierName "exprAny2" = any
+Line 31 col 0 ConditionalExpression "typeof "123" == "string" ? exprBoolean1 : exprBoolean2" = boolean
+Line 31 col 0 EqualsWithTypeConversionExpression "typeof "123" == "string"" = boolean
+Line 31 col 0 TypeOfExpression "typeof "123"" = string
+Line 31 col 27 IdentifierName "exprBoolean1" = boolean
+Line 31 col 42 IdentifierName "exprBoolean2" = boolean
+Line 32 col 0 ConditionalExpression "2 > 1 ? exprNumber1 : exprNumber2" = number
+Line 32 col 0 GreaterThanExpression "2 > 1" = boolean
+Line 32 col 8 IdentifierName "exprNumber1" = number
+Line 32 col 22 IdentifierName "exprNumber2" = number
+Line 33 col 0 ConditionalExpression "null === undefined ? exprString1 : exprString2" = string
+Line 33 col 0 EqualsExpression "null === undefined" = boolean
+Line 33 col 9 IdentifierName "undefined" = any
+Line 33 col 21 IdentifierName "exprString1" = string
+Line 33 col 35 IdentifierName "exprString2" = string
+Line 34 col 0 ConditionalExpression "true || false ? exprIsObject1 : exprIsObject2" = Object
+Line 34 col 0 LogicalOrExpression "true || false" = boolean
+Line 34 col 16 IdentifierName "exprIsObject1" = Object
+Line 34 col 32 IdentifierName "exprIsObject2" = Object
+Line 37 col 4 IdentifierName "resultIsAny1" = any
+Line 37 col 19 ConditionalExpression "condBoolean ? exprAny1 : exprAny2" = any
+Line 37 col 19 IdentifierName "condBoolean" = boolean
+Line 37 col 33 IdentifierName "exprAny1" = any
+Line 37 col 44 IdentifierName "exprAny2" = any
+Line 38 col 4 IdentifierName "resultIsBoolean1" = boolean
+Line 38 col 23 ConditionalExpression "condBoolean ? exprBoolean1 : exprBoolean2" = boolean
+Line 38 col 23 IdentifierName "condBoolean" = boolean
+Line 38 col 37 IdentifierName "exprBoolean1" = boolean
+Line 38 col 52 IdentifierName "exprBoolean2" = boolean
+Line 39 col 4 IdentifierName "resultIsNumber1" = number
+Line 39 col 22 ConditionalExpression "condBoolean ? exprNumber1 : exprNumber2" = number
+Line 39 col 22 IdentifierName "condBoolean" = boolean
+Line 39 col 36 IdentifierName "exprNumber1" = number
+Line 39 col 50 IdentifierName "exprNumber2" = number
+Line 40 col 4 IdentifierName "resultIsString1" = string
+Line 40 col 22 ConditionalExpression "condBoolean ? exprString1 : exprString2" = string
+Line 40 col 22 IdentifierName "condBoolean" = boolean
+Line 40 col 36 IdentifierName "exprString1" = string
+Line 40 col 50 IdentifierName "exprString2" = string
+Line 41 col 4 IdentifierName "resultIsObject1" = Object
+Line 41 col 22 ConditionalExpression "condBoolean ? exprIsObject1 : exprIsObject2" = Object
+Line 41 col 22 IdentifierName "condBoolean" = boolean
+Line 41 col 36 IdentifierName "exprIsObject1" = Object
+Line 41 col 52 IdentifierName "exprIsObject2" = Object
+Line 43 col 4 IdentifierName "resultIsAny2" = any
+Line 43 col 19 ConditionalExpression "true ? exprAny1 : exprAny2" = any
+Line 43 col 26 IdentifierName "exprAny1" = any
+Line 43 col 37 IdentifierName "exprAny2" = any
+Line 44 col 4 IdentifierName "resultIsBoolean2" = boolean
+Line 44 col 23 ConditionalExpression "false ? exprBoolean1 : exprBoolean2" = boolean
+Line 44 col 31 IdentifierName "exprBoolean1" = boolean
+Line 44 col 46 IdentifierName "exprBoolean2" = boolean
+Line 45 col 4 IdentifierName "resultIsNumber2" = number
+Line 45 col 22 ConditionalExpression "true ? exprNumber1 : exprNumber2" = number
+Line 45 col 29 IdentifierName "exprNumber1" = number
+Line 45 col 43 IdentifierName "exprNumber2" = number
+Line 46 col 4 IdentifierName "resultIsString2" = string
+Line 46 col 22 ConditionalExpression "false ? exprString1 : exprString2" = string
+Line 46 col 30 IdentifierName "exprString1" = string
+Line 46 col 44 IdentifierName "exprString2" = string
+Line 47 col 4 IdentifierName "resultIsObject2" = Object
+Line 47 col 22 ConditionalExpression "true ? exprIsObject1 : exprIsObject2" = Object
+Line 47 col 29 IdentifierName "exprIsObject1" = Object
+Line 47 col 45 IdentifierName "exprIsObject2" = Object
+Line 49 col 4 IdentifierName "resultIsAny3" = any
+Line 49 col 19 ConditionalExpression "!true ? exprAny1 : exprAny2" = any
+Line 49 col 19 LogicalNotExpression "!true" = boolean
+Line 49 col 27 IdentifierName "exprAny1" = any
+Line 49 col 38 IdentifierName "exprAny2" = any
+Line 50 col 4 IdentifierName "resultIsBoolean3" = boolean
+Line 50 col 23 ConditionalExpression "typeof "123" == "string" ? exprBoolean1 : exprBoolean2" = boolean
+Line 50 col 23 EqualsWithTypeConversionExpression "typeof "123" == "string"" = boolean
+Line 50 col 23 TypeOfExpression "typeof "123"" = string
+Line 50 col 50 IdentifierName "exprBoolean1" = boolean
+Line 50 col 65 IdentifierName "exprBoolean2" = boolean
+Line 51 col 4 IdentifierName "resultIsNumber3" = number
+Line 51 col 22 ConditionalExpression "2 > 1 ? exprNumber1 : exprNumber2" = number
+Line 51 col 22 GreaterThanExpression "2 > 1" = boolean
+Line 51 col 30 IdentifierName "exprNumber1" = number
+Line 51 col 44 IdentifierName "exprNumber2" = number
+Line 52 col 4 IdentifierName "resultIsString3" = string
+Line 52 col 22 ConditionalExpression "null === undefined ? exprString1 : exprString2" = string
+Line 52 col 22 EqualsExpression "null === undefined" = boolean
+Line 52 col 31 IdentifierName "undefined" = any
+Line 52 col 43 IdentifierName "exprString1" = string
+Line 52 col 57 IdentifierName "exprString2" = string
+Line 53 col 4 IdentifierName "resultIsObject3" = Object
+Line 53 col 22 ConditionalExpression "true || false ? exprIsObject1 : exprIsObject2" = Object
+Line 53 col 22 LogicalOrExpression "true || false" = boolean
+Line 53 col 38 IdentifierName "exprIsObject1" = Object
+Line 53 col 54 IdentifierName "exprIsObject2" = Object

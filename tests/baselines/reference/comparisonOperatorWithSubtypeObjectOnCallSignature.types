@@ -1,0 +1,788 @@
+=== tests/cases/compiler/comparisonOperatorWithSubtypeObjectOnCallSignature.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 1 col 11 IdentifierName "a" = string
+Line 4 col 6 IdentifierName "Derived" = Derived
+Line 4 col 22 IdentifierName "Base" = Base
+Line 5 col 11 IdentifierName "b" = string
+Line 8 col 4 IdentifierName "a1" = { fn(): void; }
+Line 8 col 10 IdentifierName "fn" = () => void
+Line 9 col 4 IdentifierName "b1" = { fn(): void; }
+Line 9 col 10 IdentifierName "fn" = () => void
+Line 11 col 4 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 11 col 10 IdentifierName "fn" = (a: number, b: string) => void
+Line 11 col 13 IdentifierName "a" = number
+Line 11 col 24 IdentifierName "b" = string
+Line 12 col 4 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 12 col 10 IdentifierName "fn" = (a: number, b: string) => void
+Line 12 col 13 IdentifierName "a" = number
+Line 12 col 24 IdentifierName "b" = string
+Line 14 col 4 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 14 col 10 IdentifierName "fn" = (a: number, b: string) => void
+Line 14 col 13 IdentifierName "a" = number
+Line 14 col 24 IdentifierName "b" = string
+Line 15 col 4 IdentifierName "b3" = { fn(a: number): void; }
+Line 15 col 10 IdentifierName "fn" = (a: number) => void
+Line 15 col 13 IdentifierName "a" = number
+Line 17 col 4 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 17 col 10 IdentifierName "fn" = (a: number, b: string) => void
+Line 17 col 13 IdentifierName "a" = number
+Line 17 col 24 IdentifierName "b" = string
+Line 18 col 4 IdentifierName "b4" = { fn(): void; }
+Line 18 col 10 IdentifierName "fn" = () => void
+Line 20 col 4 IdentifierName "a5" = { fn(a: Base): void; }
+Line 20 col 10 IdentifierName "fn" = (a: Base) => void
+Line 20 col 13 IdentifierName "a" = Base
+Line 20 col 16 IdentifierName "Base" = Base
+Line 21 col 4 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 21 col 10 IdentifierName "fn" = (a: Derived) => void
+Line 21 col 13 IdentifierName "a" = Derived
+Line 21 col 16 IdentifierName "Derived" = Derived
+Line 23 col 4 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 23 col 10 IdentifierName "fn" = (a: Derived, b: Base) => void
+Line 23 col 13 IdentifierName "a" = Derived
+Line 23 col 16 IdentifierName "Derived" = Derived
+Line 23 col 25 IdentifierName "b" = Base
+Line 23 col 28 IdentifierName "Base" = Base
+Line 24 col 4 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 24 col 10 IdentifierName "fn" = (a: Base, b: Derived) => void
+Line 24 col 13 IdentifierName "a" = Base
+Line 24 col 16 IdentifierName "Base" = Base
+Line 24 col 22 IdentifierName "b" = Derived
+Line 24 col 25 IdentifierName "Derived" = Derived
+Line 26 col 4 IdentifierName "a7" = { fn(): void; }
+Line 26 col 10 IdentifierName "fn" = () => void
+Line 27 col 4 IdentifierName "b7" = { fn(): Base; }
+Line 27 col 10 IdentifierName "fn" = () => Base
+Line 27 col 16 IdentifierName "Base" = Base
+Line 29 col 4 IdentifierName "a8" = { fn(): Base; }
+Line 29 col 10 IdentifierName "fn" = () => Base
+Line 29 col 16 IdentifierName "Base" = Base
+Line 30 col 4 IdentifierName "b8" = { fn(): Base; }
+Line 30 col 10 IdentifierName "fn" = () => Base
+Line 30 col 16 IdentifierName "Base" = Base
+Line 32 col 4 IdentifierName "a9" = { fn(): Base; }
+Line 32 col 10 IdentifierName "fn" = () => Base
+Line 32 col 16 IdentifierName "Base" = Base
+Line 33 col 4 IdentifierName "b9" = { fn(): Derived; }
+Line 33 col 10 IdentifierName "fn" = () => Derived
+Line 33 col 16 IdentifierName "Derived" = Derived
+Line 35 col 4 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 35 col 11 IdentifierName "fn" = (a?: Base) => void
+Line 35 col 14 IdentifierName "a" = Base
+Line 35 col 18 IdentifierName "Base" = Base
+Line 36 col 4 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 36 col 11 IdentifierName "fn" = (a?: Derived) => void
+Line 36 col 14 IdentifierName "a" = Derived
+Line 36 col 18 IdentifierName "Derived" = Derived
+Line 38 col 4 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 38 col 11 IdentifierName "fn" = (...a: Base[]) => void
+Line 38 col 17 IdentifierName "a" = Base[]
+Line 38 col 20 IdentifierName "Base" = Base
+Line 39 col 4 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 39 col 11 IdentifierName "fn" = (...a: Derived[]) => void
+Line 39 col 17 IdentifierName "a" = Derived[]
+Line 39 col 20 IdentifierName "Derived" = Derived
+Line 45 col 4 IdentifierName "r1a1" = boolean
+Line 45 col 11 LessThanExpression "a1 < b1" = boolean
+Line 45 col 11 IdentifierName "a1" = { fn(): void; }
+Line 45 col 16 IdentifierName "b1" = { fn(): void; }
+Line 46 col 4 IdentifierName "r1a2" = boolean
+Line 46 col 11 LessThanExpression "a2 < b2" = boolean
+Line 46 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 46 col 16 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 47 col 4 IdentifierName "r1a3" = boolean
+Line 47 col 11 LessThanExpression "a3 < b3" = boolean
+Line 47 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 47 col 16 IdentifierName "b3" = { fn(a: number): void; }
+Line 48 col 4 IdentifierName "r1a4" = boolean
+Line 48 col 11 LessThanExpression "a4 < b4" = boolean
+Line 48 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 48 col 16 IdentifierName "b4" = { fn(): void; }
+Line 49 col 4 IdentifierName "r1a5" = boolean
+Line 49 col 11 LessThanExpression "a5 < b5" = boolean
+Line 49 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 49 col 16 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 50 col 4 IdentifierName "r1a6" = boolean
+Line 50 col 11 LessThanExpression "a6 < b6" = boolean
+Line 50 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 50 col 16 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 51 col 4 IdentifierName "r1a7" = boolean
+Line 51 col 11 LessThanExpression "a7 < b7" = boolean
+Line 51 col 11 IdentifierName "a7" = { fn(): void; }
+Line 51 col 16 IdentifierName "b7" = { fn(): Base; }
+Line 52 col 4 IdentifierName "r1a8" = boolean
+Line 52 col 11 LessThanExpression "a8 < b8" = boolean
+Line 52 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 52 col 16 IdentifierName "b8" = { fn(): Base; }
+Line 53 col 4 IdentifierName "r1a9" = boolean
+Line 53 col 11 LessThanExpression "a9 < b9" = boolean
+Line 53 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 53 col 16 IdentifierName "b9" = { fn(): Derived; }
+Line 54 col 4 IdentifierName "r1a10" = boolean
+Line 54 col 12 LessThanExpression "a10 < b10" = boolean
+Line 54 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 54 col 18 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 55 col 4 IdentifierName "r1a11" = boolean
+Line 55 col 12 LessThanExpression "a11 < b11" = boolean
+Line 55 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 55 col 18 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 58 col 4 IdentifierName "r1b1" = boolean
+Line 58 col 11 LessThanExpression "b1 < a1" = boolean
+Line 58 col 11 IdentifierName "b1" = { fn(): void; }
+Line 58 col 16 IdentifierName "a1" = { fn(): void; }
+Line 59 col 4 IdentifierName "r1b2" = boolean
+Line 59 col 11 LessThanExpression "b2 < a2" = boolean
+Line 59 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 59 col 16 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 60 col 4 IdentifierName "r1b3" = boolean
+Line 60 col 11 LessThanExpression "b3 < a3" = boolean
+Line 60 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 60 col 16 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 61 col 4 IdentifierName "r1b4" = boolean
+Line 61 col 11 LessThanExpression "b4 < a4" = boolean
+Line 61 col 11 IdentifierName "b4" = { fn(): void; }
+Line 61 col 16 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 62 col 4 IdentifierName "r1b5" = boolean
+Line 62 col 11 LessThanExpression "b5 < a5" = boolean
+Line 62 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 62 col 16 IdentifierName "a5" = { fn(a: Base): void; }
+Line 63 col 4 IdentifierName "r1b6" = boolean
+Line 63 col 11 LessThanExpression "b6 < a6" = boolean
+Line 63 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 63 col 16 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 64 col 4 IdentifierName "r1b7" = boolean
+Line 64 col 11 LessThanExpression "b7 < a7" = boolean
+Line 64 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 64 col 16 IdentifierName "a7" = { fn(): void; }
+Line 65 col 4 IdentifierName "r1b8" = boolean
+Line 65 col 11 LessThanExpression "b8 < a8" = boolean
+Line 65 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 65 col 16 IdentifierName "a8" = { fn(): Base; }
+Line 66 col 4 IdentifierName "r1b9" = boolean
+Line 66 col 11 LessThanExpression "b9 < a9" = boolean
+Line 66 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 66 col 16 IdentifierName "a9" = { fn(): Base; }
+Line 67 col 4 IdentifierName "r1b10" = boolean
+Line 67 col 12 LessThanExpression "b10 < a10" = boolean
+Line 67 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 67 col 18 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 68 col 4 IdentifierName "r1b11" = boolean
+Line 68 col 12 LessThanExpression "b11 < a11" = boolean
+Line 68 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 68 col 18 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 72 col 4 IdentifierName "r2a1" = boolean
+Line 72 col 11 GreaterThanExpression "a1 > b1" = boolean
+Line 72 col 11 IdentifierName "a1" = { fn(): void; }
+Line 72 col 16 IdentifierName "b1" = { fn(): void; }
+Line 73 col 4 IdentifierName "r2a2" = boolean
+Line 73 col 11 GreaterThanExpression "a2 > b2" = boolean
+Line 73 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 73 col 16 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 74 col 4 IdentifierName "r2a3" = boolean
+Line 74 col 11 GreaterThanExpression "a3 > b3" = boolean
+Line 74 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 74 col 16 IdentifierName "b3" = { fn(a: number): void; }
+Line 75 col 4 IdentifierName "r2a4" = boolean
+Line 75 col 11 GreaterThanExpression "a4 > b4" = boolean
+Line 75 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 75 col 16 IdentifierName "b4" = { fn(): void; }
+Line 76 col 4 IdentifierName "r2a5" = boolean
+Line 76 col 11 GreaterThanExpression "a5 > b5" = boolean
+Line 76 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 76 col 16 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 77 col 4 IdentifierName "r2a6" = boolean
+Line 77 col 11 GreaterThanExpression "a6 > b6" = boolean
+Line 77 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 77 col 16 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 78 col 4 IdentifierName "r2a7" = boolean
+Line 78 col 11 GreaterThanExpression "a7 > b7" = boolean
+Line 78 col 11 IdentifierName "a7" = { fn(): void; }
+Line 78 col 16 IdentifierName "b7" = { fn(): Base; }
+Line 79 col 4 IdentifierName "r2a8" = boolean
+Line 79 col 11 GreaterThanExpression "a8 > b8" = boolean
+Line 79 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 79 col 16 IdentifierName "b8" = { fn(): Base; }
+Line 80 col 4 IdentifierName "r2a9" = boolean
+Line 80 col 11 GreaterThanExpression "a9 > b9" = boolean
+Line 80 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 80 col 16 IdentifierName "b9" = { fn(): Derived; }
+Line 81 col 4 IdentifierName "r2a10" = boolean
+Line 81 col 12 GreaterThanExpression "a10 > b10" = boolean
+Line 81 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 81 col 18 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 82 col 4 IdentifierName "r2a11" = boolean
+Line 82 col 12 GreaterThanExpression "a11 > b11" = boolean
+Line 82 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 82 col 18 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 85 col 4 IdentifierName "r2b1" = boolean
+Line 85 col 11 GreaterThanExpression "b1 > a1" = boolean
+Line 85 col 11 IdentifierName "b1" = { fn(): void; }
+Line 85 col 16 IdentifierName "a1" = { fn(): void; }
+Line 86 col 4 IdentifierName "r2b2" = boolean
+Line 86 col 11 GreaterThanExpression "b2 > a2" = boolean
+Line 86 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 86 col 16 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 87 col 4 IdentifierName "r2b3" = boolean
+Line 87 col 11 GreaterThanExpression "b3 > a3" = boolean
+Line 87 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 87 col 16 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 88 col 4 IdentifierName "r2b4" = boolean
+Line 88 col 11 GreaterThanExpression "b4 > a4" = boolean
+Line 88 col 11 IdentifierName "b4" = { fn(): void; }
+Line 88 col 16 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 89 col 4 IdentifierName "r2b5" = boolean
+Line 89 col 11 GreaterThanExpression "b5 > a5" = boolean
+Line 89 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 89 col 16 IdentifierName "a5" = { fn(a: Base): void; }
+Line 90 col 4 IdentifierName "r2b6" = boolean
+Line 90 col 11 GreaterThanExpression "b6 > a6" = boolean
+Line 90 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 90 col 16 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 91 col 4 IdentifierName "r2b7" = boolean
+Line 91 col 11 GreaterThanExpression "b7 > a7" = boolean
+Line 91 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 91 col 16 IdentifierName "a7" = { fn(): void; }
+Line 92 col 4 IdentifierName "r2b8" = boolean
+Line 92 col 11 GreaterThanExpression "b8 > a8" = boolean
+Line 92 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 92 col 16 IdentifierName "a8" = { fn(): Base; }
+Line 93 col 4 IdentifierName "r2b9" = boolean
+Line 93 col 11 GreaterThanExpression "b9 > a9" = boolean
+Line 93 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 93 col 16 IdentifierName "a9" = { fn(): Base; }
+Line 94 col 4 IdentifierName "r2b10" = boolean
+Line 94 col 12 GreaterThanExpression "b10 > a10" = boolean
+Line 94 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 94 col 18 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 95 col 4 IdentifierName "r2b11" = boolean
+Line 95 col 12 GreaterThanExpression "b11 > a11" = boolean
+Line 95 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 95 col 18 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 99 col 4 IdentifierName "r3a1" = boolean
+Line 99 col 11 LessThanOrEqualExpression "a1 <= b1" = boolean
+Line 99 col 11 IdentifierName "a1" = { fn(): void; }
+Line 99 col 17 IdentifierName "b1" = { fn(): void; }
+Line 100 col 4 IdentifierName "r3a2" = boolean
+Line 100 col 11 LessThanOrEqualExpression "a2 <= b2" = boolean
+Line 100 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 100 col 17 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 101 col 4 IdentifierName "r3a3" = boolean
+Line 101 col 11 LessThanOrEqualExpression "a3 <= b3" = boolean
+Line 101 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 101 col 17 IdentifierName "b3" = { fn(a: number): void; }
+Line 102 col 4 IdentifierName "r3a4" = boolean
+Line 102 col 11 LessThanOrEqualExpression "a4 <= b4" = boolean
+Line 102 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 102 col 17 IdentifierName "b4" = { fn(): void; }
+Line 103 col 4 IdentifierName "r3a5" = boolean
+Line 103 col 11 LessThanOrEqualExpression "a5 <= b5" = boolean
+Line 103 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 103 col 17 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 104 col 4 IdentifierName "r3a6" = boolean
+Line 104 col 11 LessThanOrEqualExpression "a6 <= b6" = boolean
+Line 104 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 104 col 17 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 105 col 4 IdentifierName "r3a7" = boolean
+Line 105 col 11 LessThanOrEqualExpression "a7 <= b7" = boolean
+Line 105 col 11 IdentifierName "a7" = { fn(): void; }
+Line 105 col 17 IdentifierName "b7" = { fn(): Base; }
+Line 106 col 4 IdentifierName "r3a8" = boolean
+Line 106 col 11 LessThanOrEqualExpression "a8 <= b8" = boolean
+Line 106 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 106 col 17 IdentifierName "b8" = { fn(): Base; }
+Line 107 col 4 IdentifierName "r3a9" = boolean
+Line 107 col 11 LessThanOrEqualExpression "a9 <= b9" = boolean
+Line 107 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 107 col 17 IdentifierName "b9" = { fn(): Derived; }
+Line 108 col 4 IdentifierName "r3a10" = boolean
+Line 108 col 12 LessThanOrEqualExpression "a10 <= b10" = boolean
+Line 108 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 108 col 19 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 109 col 4 IdentifierName "r3a11" = boolean
+Line 109 col 12 LessThanOrEqualExpression "a11 <= b11" = boolean
+Line 109 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 109 col 19 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 112 col 4 IdentifierName "r3b1" = boolean
+Line 112 col 11 LessThanOrEqualExpression "b1 <= a1" = boolean
+Line 112 col 11 IdentifierName "b1" = { fn(): void; }
+Line 112 col 17 IdentifierName "a1" = { fn(): void; }
+Line 113 col 4 IdentifierName "r3b2" = boolean
+Line 113 col 11 LessThanOrEqualExpression "b2 <= a2" = boolean
+Line 113 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 113 col 17 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 114 col 4 IdentifierName "r3b3" = boolean
+Line 114 col 11 LessThanOrEqualExpression "b3 <= a3" = boolean
+Line 114 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 114 col 17 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 115 col 4 IdentifierName "r3b4" = boolean
+Line 115 col 11 LessThanOrEqualExpression "b4 <= a4" = boolean
+Line 115 col 11 IdentifierName "b4" = { fn(): void; }
+Line 115 col 17 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 116 col 4 IdentifierName "r3b5" = boolean
+Line 116 col 11 LessThanOrEqualExpression "b5 <= a5" = boolean
+Line 116 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 116 col 17 IdentifierName "a5" = { fn(a: Base): void; }
+Line 117 col 4 IdentifierName "r3b6" = boolean
+Line 117 col 11 LessThanOrEqualExpression "b6 <= a6" = boolean
+Line 117 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 117 col 17 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 118 col 4 IdentifierName "r3b7" = boolean
+Line 118 col 11 LessThanOrEqualExpression "b7 <= a7" = boolean
+Line 118 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 118 col 17 IdentifierName "a7" = { fn(): void; }
+Line 119 col 4 IdentifierName "r3b8" = boolean
+Line 119 col 11 LessThanOrEqualExpression "b8 <= a8" = boolean
+Line 119 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 119 col 17 IdentifierName "a8" = { fn(): Base; }
+Line 120 col 4 IdentifierName "r3b9" = boolean
+Line 120 col 11 LessThanOrEqualExpression "b9 <= a9" = boolean
+Line 120 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 120 col 17 IdentifierName "a9" = { fn(): Base; }
+Line 121 col 4 IdentifierName "r3b10" = boolean
+Line 121 col 12 LessThanOrEqualExpression "b10 <= a10" = boolean
+Line 121 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 121 col 19 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 122 col 4 IdentifierName "r3b11" = boolean
+Line 122 col 12 LessThanOrEqualExpression "b11 <= a11" = boolean
+Line 122 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 122 col 19 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 126 col 4 IdentifierName "r4a1" = boolean
+Line 126 col 11 GreaterThanOrEqualExpression "a1 >= b1" = boolean
+Line 126 col 11 IdentifierName "a1" = { fn(): void; }
+Line 126 col 17 IdentifierName "b1" = { fn(): void; }
+Line 127 col 4 IdentifierName "r4a2" = boolean
+Line 127 col 11 GreaterThanOrEqualExpression "a2 >= b2" = boolean
+Line 127 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 127 col 17 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 128 col 4 IdentifierName "r4a3" = boolean
+Line 128 col 11 GreaterThanOrEqualExpression "a3 >= b3" = boolean
+Line 128 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 128 col 17 IdentifierName "b3" = { fn(a: number): void; }
+Line 129 col 4 IdentifierName "r4a4" = boolean
+Line 129 col 11 GreaterThanOrEqualExpression "a4 >= b4" = boolean
+Line 129 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 129 col 17 IdentifierName "b4" = { fn(): void; }
+Line 130 col 4 IdentifierName "r4a5" = boolean
+Line 130 col 11 GreaterThanOrEqualExpression "a5 >= b5" = boolean
+Line 130 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 130 col 17 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 131 col 4 IdentifierName "r4a6" = boolean
+Line 131 col 11 GreaterThanOrEqualExpression "a6 >= b6" = boolean
+Line 131 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 131 col 17 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 132 col 4 IdentifierName "r4a7" = boolean
+Line 132 col 11 GreaterThanOrEqualExpression "a7 >= b7" = boolean
+Line 132 col 11 IdentifierName "a7" = { fn(): void; }
+Line 132 col 17 IdentifierName "b7" = { fn(): Base; }
+Line 133 col 4 IdentifierName "r4a8" = boolean
+Line 133 col 11 GreaterThanOrEqualExpression "a8 >= b8" = boolean
+Line 133 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 133 col 17 IdentifierName "b8" = { fn(): Base; }
+Line 134 col 4 IdentifierName "r4a9" = boolean
+Line 134 col 11 GreaterThanOrEqualExpression "a9 >= b9" = boolean
+Line 134 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 134 col 17 IdentifierName "b9" = { fn(): Derived; }
+Line 135 col 4 IdentifierName "r4a10" = boolean
+Line 135 col 12 GreaterThanOrEqualExpression "a10 >= b10" = boolean
+Line 135 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 135 col 19 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 136 col 4 IdentifierName "r4a11" = boolean
+Line 136 col 12 GreaterThanOrEqualExpression "a11 >= b11" = boolean
+Line 136 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 136 col 19 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 139 col 4 IdentifierName "r4b1" = boolean
+Line 139 col 11 GreaterThanOrEqualExpression "b1 >= a1" = boolean
+Line 139 col 11 IdentifierName "b1" = { fn(): void; }
+Line 139 col 17 IdentifierName "a1" = { fn(): void; }
+Line 140 col 4 IdentifierName "r4b2" = boolean
+Line 140 col 11 GreaterThanOrEqualExpression "b2 >= a2" = boolean
+Line 140 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 140 col 17 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 141 col 4 IdentifierName "r4b3" = boolean
+Line 141 col 11 GreaterThanOrEqualExpression "b3 >= a3" = boolean
+Line 141 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 141 col 17 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 142 col 4 IdentifierName "r4b4" = boolean
+Line 142 col 11 GreaterThanOrEqualExpression "b4 >= a4" = boolean
+Line 142 col 11 IdentifierName "b4" = { fn(): void; }
+Line 142 col 17 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 143 col 4 IdentifierName "r4b5" = boolean
+Line 143 col 11 GreaterThanOrEqualExpression "b5 >= a5" = boolean
+Line 143 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 143 col 17 IdentifierName "a5" = { fn(a: Base): void; }
+Line 144 col 4 IdentifierName "r4b6" = boolean
+Line 144 col 11 GreaterThanOrEqualExpression "b6 >= a6" = boolean
+Line 144 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 144 col 17 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 145 col 4 IdentifierName "r4b7" = boolean
+Line 145 col 11 GreaterThanOrEqualExpression "b7 >= a7" = boolean
+Line 145 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 145 col 17 IdentifierName "a7" = { fn(): void; }
+Line 146 col 4 IdentifierName "r4b8" = boolean
+Line 146 col 11 GreaterThanOrEqualExpression "b8 >= a8" = boolean
+Line 146 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 146 col 17 IdentifierName "a8" = { fn(): Base; }
+Line 147 col 4 IdentifierName "r4b9" = boolean
+Line 147 col 11 GreaterThanOrEqualExpression "b9 >= a9" = boolean
+Line 147 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 147 col 17 IdentifierName "a9" = { fn(): Base; }
+Line 148 col 4 IdentifierName "r4b10" = boolean
+Line 148 col 12 GreaterThanOrEqualExpression "b10 >= a10" = boolean
+Line 148 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 148 col 19 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 149 col 4 IdentifierName "r4b11" = boolean
+Line 149 col 12 GreaterThanOrEqualExpression "b11 >= a11" = boolean
+Line 149 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 149 col 19 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 153 col 4 IdentifierName "r5a1" = boolean
+Line 153 col 11 EqualsWithTypeConversionExpression "a1 == b1" = boolean
+Line 153 col 11 IdentifierName "a1" = { fn(): void; }
+Line 153 col 17 IdentifierName "b1" = { fn(): void; }
+Line 154 col 4 IdentifierName "r5a2" = boolean
+Line 154 col 11 EqualsWithTypeConversionExpression "a2 == b2" = boolean
+Line 154 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 154 col 17 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 155 col 4 IdentifierName "r5a3" = boolean
+Line 155 col 11 EqualsWithTypeConversionExpression "a3 == b3" = boolean
+Line 155 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 155 col 17 IdentifierName "b3" = { fn(a: number): void; }
+Line 156 col 4 IdentifierName "r5a4" = boolean
+Line 156 col 11 EqualsWithTypeConversionExpression "a4 == b4" = boolean
+Line 156 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 156 col 17 IdentifierName "b4" = { fn(): void; }
+Line 157 col 4 IdentifierName "r5a5" = boolean
+Line 157 col 11 EqualsWithTypeConversionExpression "a5 == b5" = boolean
+Line 157 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 157 col 17 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 158 col 4 IdentifierName "r5a6" = boolean
+Line 158 col 11 EqualsWithTypeConversionExpression "a6 == b6" = boolean
+Line 158 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 158 col 17 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 159 col 4 IdentifierName "r5a7" = boolean
+Line 159 col 11 EqualsWithTypeConversionExpression "a7 == b7" = boolean
+Line 159 col 11 IdentifierName "a7" = { fn(): void; }
+Line 159 col 17 IdentifierName "b7" = { fn(): Base; }
+Line 160 col 4 IdentifierName "r5a8" = boolean
+Line 160 col 11 EqualsWithTypeConversionExpression "a8 == b8" = boolean
+Line 160 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 160 col 17 IdentifierName "b8" = { fn(): Base; }
+Line 161 col 4 IdentifierName "r5a9" = boolean
+Line 161 col 11 EqualsWithTypeConversionExpression "a9 == b9" = boolean
+Line 161 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 161 col 17 IdentifierName "b9" = { fn(): Derived; }
+Line 162 col 4 IdentifierName "r5a10" = boolean
+Line 162 col 12 EqualsWithTypeConversionExpression "a10 == b10" = boolean
+Line 162 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 162 col 19 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 163 col 4 IdentifierName "r5a11" = boolean
+Line 163 col 12 EqualsWithTypeConversionExpression "a11 == b11" = boolean
+Line 163 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 163 col 19 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 166 col 4 IdentifierName "r5b1" = boolean
+Line 166 col 11 EqualsWithTypeConversionExpression "b1 == a1" = boolean
+Line 166 col 11 IdentifierName "b1" = { fn(): void; }
+Line 166 col 17 IdentifierName "a1" = { fn(): void; }
+Line 167 col 4 IdentifierName "r5b2" = boolean
+Line 167 col 11 EqualsWithTypeConversionExpression "b2 == a2" = boolean
+Line 167 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 167 col 17 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 168 col 4 IdentifierName "r5b3" = boolean
+Line 168 col 11 EqualsWithTypeConversionExpression "b3 == a3" = boolean
+Line 168 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 168 col 17 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 169 col 4 IdentifierName "r5b4" = boolean
+Line 169 col 11 EqualsWithTypeConversionExpression "b4 == a4" = boolean
+Line 169 col 11 IdentifierName "b4" = { fn(): void; }
+Line 169 col 17 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 170 col 4 IdentifierName "r5b5" = boolean
+Line 170 col 11 EqualsWithTypeConversionExpression "b5 == a5" = boolean
+Line 170 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 170 col 17 IdentifierName "a5" = { fn(a: Base): void; }
+Line 171 col 4 IdentifierName "r5b6" = boolean
+Line 171 col 11 EqualsWithTypeConversionExpression "b6 == a6" = boolean
+Line 171 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 171 col 17 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 172 col 4 IdentifierName "r5b7" = boolean
+Line 172 col 11 EqualsWithTypeConversionExpression "b7 == a7" = boolean
+Line 172 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 172 col 17 IdentifierName "a7" = { fn(): void; }
+Line 173 col 4 IdentifierName "r5b8" = boolean
+Line 173 col 11 EqualsWithTypeConversionExpression "b8 == a8" = boolean
+Line 173 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 173 col 17 IdentifierName "a8" = { fn(): Base; }
+Line 174 col 4 IdentifierName "r5b9" = boolean
+Line 174 col 11 EqualsWithTypeConversionExpression "b9 == a9" = boolean
+Line 174 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 174 col 17 IdentifierName "a9" = { fn(): Base; }
+Line 175 col 4 IdentifierName "r5b10" = boolean
+Line 175 col 12 EqualsWithTypeConversionExpression "b10 == a10" = boolean
+Line 175 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 175 col 19 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 176 col 4 IdentifierName "r5b11" = boolean
+Line 176 col 12 EqualsWithTypeConversionExpression "b11 == a11" = boolean
+Line 176 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 176 col 19 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 180 col 4 IdentifierName "r6a1" = boolean
+Line 180 col 11 NotEqualsWithTypeConversionExpression "a1 != b1" = boolean
+Line 180 col 11 IdentifierName "a1" = { fn(): void; }
+Line 180 col 17 IdentifierName "b1" = { fn(): void; }
+Line 181 col 4 IdentifierName "r6a2" = boolean
+Line 181 col 11 NotEqualsWithTypeConversionExpression "a2 != b2" = boolean
+Line 181 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 181 col 17 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 182 col 4 IdentifierName "r6a3" = boolean
+Line 182 col 11 NotEqualsWithTypeConversionExpression "a3 != b3" = boolean
+Line 182 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 182 col 17 IdentifierName "b3" = { fn(a: number): void; }
+Line 183 col 4 IdentifierName "r6a4" = boolean
+Line 183 col 11 NotEqualsWithTypeConversionExpression "a4 != b4" = boolean
+Line 183 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 183 col 17 IdentifierName "b4" = { fn(): void; }
+Line 184 col 4 IdentifierName "r6a5" = boolean
+Line 184 col 11 NotEqualsWithTypeConversionExpression "a5 != b5" = boolean
+Line 184 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 184 col 17 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 185 col 4 IdentifierName "r6a6" = boolean
+Line 185 col 11 NotEqualsWithTypeConversionExpression "a6 != b6" = boolean
+Line 185 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 185 col 17 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 186 col 4 IdentifierName "r6a7" = boolean
+Line 186 col 11 NotEqualsWithTypeConversionExpression "a7 != b7" = boolean
+Line 186 col 11 IdentifierName "a7" = { fn(): void; }
+Line 186 col 17 IdentifierName "b7" = { fn(): Base; }
+Line 187 col 4 IdentifierName "r6a8" = boolean
+Line 187 col 11 NotEqualsWithTypeConversionExpression "a8 != b8" = boolean
+Line 187 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 187 col 17 IdentifierName "b8" = { fn(): Base; }
+Line 188 col 4 IdentifierName "r6a9" = boolean
+Line 188 col 11 NotEqualsWithTypeConversionExpression "a9 != b9" = boolean
+Line 188 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 188 col 17 IdentifierName "b9" = { fn(): Derived; }
+Line 189 col 4 IdentifierName "r6a10" = boolean
+Line 189 col 12 NotEqualsWithTypeConversionExpression "a10 != b10" = boolean
+Line 189 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 189 col 19 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 190 col 4 IdentifierName "r6a11" = boolean
+Line 190 col 12 NotEqualsWithTypeConversionExpression "a11 != b11" = boolean
+Line 190 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 190 col 19 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 193 col 4 IdentifierName "r6b1" = boolean
+Line 193 col 11 NotEqualsWithTypeConversionExpression "b1 != a1" = boolean
+Line 193 col 11 IdentifierName "b1" = { fn(): void; }
+Line 193 col 17 IdentifierName "a1" = { fn(): void; }
+Line 194 col 4 IdentifierName "r6b2" = boolean
+Line 194 col 11 NotEqualsWithTypeConversionExpression "b2 != a2" = boolean
+Line 194 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 194 col 17 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 195 col 4 IdentifierName "r6b3" = boolean
+Line 195 col 11 NotEqualsWithTypeConversionExpression "b3 != a3" = boolean
+Line 195 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 195 col 17 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 196 col 4 IdentifierName "r6b4" = boolean
+Line 196 col 11 NotEqualsWithTypeConversionExpression "b4 != a4" = boolean
+Line 196 col 11 IdentifierName "b4" = { fn(): void; }
+Line 196 col 17 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 197 col 4 IdentifierName "r6b5" = boolean
+Line 197 col 11 NotEqualsWithTypeConversionExpression "b5 != a5" = boolean
+Line 197 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 197 col 17 IdentifierName "a5" = { fn(a: Base): void; }
+Line 198 col 4 IdentifierName "r6b6" = boolean
+Line 198 col 11 NotEqualsWithTypeConversionExpression "b6 != a6" = boolean
+Line 198 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 198 col 17 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 199 col 4 IdentifierName "r6b7" = boolean
+Line 199 col 11 NotEqualsWithTypeConversionExpression "b7 != a7" = boolean
+Line 199 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 199 col 17 IdentifierName "a7" = { fn(): void; }
+Line 200 col 4 IdentifierName "r6b8" = boolean
+Line 200 col 11 NotEqualsWithTypeConversionExpression "b8 != a8" = boolean
+Line 200 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 200 col 17 IdentifierName "a8" = { fn(): Base; }
+Line 201 col 4 IdentifierName "r6b9" = boolean
+Line 201 col 11 NotEqualsWithTypeConversionExpression "b9 != a9" = boolean
+Line 201 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 201 col 17 IdentifierName "a9" = { fn(): Base; }
+Line 202 col 4 IdentifierName "r6b10" = boolean
+Line 202 col 12 NotEqualsWithTypeConversionExpression "b10 != a10" = boolean
+Line 202 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 202 col 19 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 203 col 4 IdentifierName "r6b11" = boolean
+Line 203 col 12 NotEqualsWithTypeConversionExpression "b11 != a11" = boolean
+Line 203 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 203 col 19 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 207 col 4 IdentifierName "r7a1" = boolean
+Line 207 col 11 EqualsExpression "a1 === b1" = boolean
+Line 207 col 11 IdentifierName "a1" = { fn(): void; }
+Line 207 col 18 IdentifierName "b1" = { fn(): void; }
+Line 208 col 4 IdentifierName "r7a2" = boolean
+Line 208 col 11 EqualsExpression "a2 === b2" = boolean
+Line 208 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 208 col 18 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 209 col 4 IdentifierName "r7a3" = boolean
+Line 209 col 11 EqualsExpression "a3 === b3" = boolean
+Line 209 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 209 col 18 IdentifierName "b3" = { fn(a: number): void; }
+Line 210 col 4 IdentifierName "r7a4" = boolean
+Line 210 col 11 EqualsExpression "a4 === b4" = boolean
+Line 210 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 210 col 18 IdentifierName "b4" = { fn(): void; }
+Line 211 col 4 IdentifierName "r7a5" = boolean
+Line 211 col 11 EqualsExpression "a5 === b5" = boolean
+Line 211 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 211 col 18 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 212 col 4 IdentifierName "r7a6" = boolean
+Line 212 col 11 EqualsExpression "a6 === b6" = boolean
+Line 212 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 212 col 18 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 213 col 4 IdentifierName "r7a7" = boolean
+Line 213 col 11 EqualsExpression "a7 === b7" = boolean
+Line 213 col 11 IdentifierName "a7" = { fn(): void; }
+Line 213 col 18 IdentifierName "b7" = { fn(): Base; }
+Line 214 col 4 IdentifierName "r7a8" = boolean
+Line 214 col 11 EqualsExpression "a8 === b8" = boolean
+Line 214 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 214 col 18 IdentifierName "b8" = { fn(): Base; }
+Line 215 col 4 IdentifierName "r7a9" = boolean
+Line 215 col 11 EqualsExpression "a9 === b9" = boolean
+Line 215 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 215 col 18 IdentifierName "b9" = { fn(): Derived; }
+Line 216 col 4 IdentifierName "r7a10" = boolean
+Line 216 col 12 EqualsExpression "a10 === b10" = boolean
+Line 216 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 216 col 20 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 217 col 4 IdentifierName "r7a11" = boolean
+Line 217 col 12 EqualsExpression "a11 === b11" = boolean
+Line 217 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 217 col 20 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 220 col 4 IdentifierName "r7b1" = boolean
+Line 220 col 11 EqualsExpression "b1 === a1" = boolean
+Line 220 col 11 IdentifierName "b1" = { fn(): void; }
+Line 220 col 18 IdentifierName "a1" = { fn(): void; }
+Line 221 col 4 IdentifierName "r7b2" = boolean
+Line 221 col 11 EqualsExpression "b2 === a2" = boolean
+Line 221 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 221 col 18 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 222 col 4 IdentifierName "r7b3" = boolean
+Line 222 col 11 EqualsExpression "b3 === a3" = boolean
+Line 222 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 222 col 18 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 223 col 4 IdentifierName "r7b4" = boolean
+Line 223 col 11 EqualsExpression "b4 === a4" = boolean
+Line 223 col 11 IdentifierName "b4" = { fn(): void; }
+Line 223 col 18 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 224 col 4 IdentifierName "r7b5" = boolean
+Line 224 col 11 EqualsExpression "b5 === a5" = boolean
+Line 224 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 224 col 18 IdentifierName "a5" = { fn(a: Base): void; }
+Line 225 col 4 IdentifierName "r7b6" = boolean
+Line 225 col 11 EqualsExpression "b6 === a6" = boolean
+Line 225 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 225 col 18 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 226 col 4 IdentifierName "r7b7" = boolean
+Line 226 col 11 EqualsExpression "b7 === a7" = boolean
+Line 226 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 226 col 18 IdentifierName "a7" = { fn(): void; }
+Line 227 col 4 IdentifierName "r7b8" = boolean
+Line 227 col 11 EqualsExpression "b8 === a8" = boolean
+Line 227 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 227 col 18 IdentifierName "a8" = { fn(): Base; }
+Line 228 col 4 IdentifierName "r7b9" = boolean
+Line 228 col 11 EqualsExpression "b9 === a9" = boolean
+Line 228 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 228 col 18 IdentifierName "a9" = { fn(): Base; }
+Line 229 col 4 IdentifierName "r7b10" = boolean
+Line 229 col 12 EqualsExpression "b10 === a10" = boolean
+Line 229 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 229 col 20 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 230 col 4 IdentifierName "r7b11" = boolean
+Line 230 col 12 EqualsExpression "b11 === a11" = boolean
+Line 230 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 230 col 20 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 234 col 4 IdentifierName "r8a1" = boolean
+Line 234 col 11 NotEqualsExpression "a1 !== b1" = boolean
+Line 234 col 11 IdentifierName "a1" = { fn(): void; }
+Line 234 col 18 IdentifierName "b1" = { fn(): void; }
+Line 235 col 4 IdentifierName "r8a2" = boolean
+Line 235 col 11 NotEqualsExpression "a2 !== b2" = boolean
+Line 235 col 11 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 235 col 18 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 236 col 4 IdentifierName "r8a3" = boolean
+Line 236 col 11 NotEqualsExpression "a3 !== b3" = boolean
+Line 236 col 11 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 236 col 18 IdentifierName "b3" = { fn(a: number): void; }
+Line 237 col 4 IdentifierName "r8a4" = boolean
+Line 237 col 11 NotEqualsExpression "a4 !== b4" = boolean
+Line 237 col 11 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 237 col 18 IdentifierName "b4" = { fn(): void; }
+Line 238 col 4 IdentifierName "r8a5" = boolean
+Line 238 col 11 NotEqualsExpression "a5 !== b5" = boolean
+Line 238 col 11 IdentifierName "a5" = { fn(a: Base): void; }
+Line 238 col 18 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 239 col 4 IdentifierName "r8a6" = boolean
+Line 239 col 11 NotEqualsExpression "a6 !== b6" = boolean
+Line 239 col 11 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 239 col 18 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 240 col 4 IdentifierName "r8a7" = boolean
+Line 240 col 11 NotEqualsExpression "a7 !== b7" = boolean
+Line 240 col 11 IdentifierName "a7" = { fn(): void; }
+Line 240 col 18 IdentifierName "b7" = { fn(): Base; }
+Line 241 col 4 IdentifierName "r8a8" = boolean
+Line 241 col 11 NotEqualsExpression "a8 !== b8" = boolean
+Line 241 col 11 IdentifierName "a8" = { fn(): Base; }
+Line 241 col 18 IdentifierName "b8" = { fn(): Base; }
+Line 242 col 4 IdentifierName "r8a9" = boolean
+Line 242 col 11 NotEqualsExpression "a9 !== b9" = boolean
+Line 242 col 11 IdentifierName "a9" = { fn(): Base; }
+Line 242 col 18 IdentifierName "b9" = { fn(): Derived; }
+Line 243 col 4 IdentifierName "r8a10" = boolean
+Line 243 col 12 NotEqualsExpression "a10 !== b10" = boolean
+Line 243 col 12 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 243 col 20 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 244 col 4 IdentifierName "r8a11" = boolean
+Line 244 col 12 NotEqualsExpression "a11 !== b11" = boolean
+Line 244 col 12 IdentifierName "a11" = { fn(...a: Base[]): void; }
+Line 244 col 20 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 247 col 4 IdentifierName "r8b1" = boolean
+Line 247 col 11 NotEqualsExpression "b1 !== a1" = boolean
+Line 247 col 11 IdentifierName "b1" = { fn(): void; }
+Line 247 col 18 IdentifierName "a1" = { fn(): void; }
+Line 248 col 4 IdentifierName "r8b2" = boolean
+Line 248 col 11 NotEqualsExpression "b2 !== a2" = boolean
+Line 248 col 11 IdentifierName "b2" = { fn(a: number, b: string): void; }
+Line 248 col 18 IdentifierName "a2" = { fn(a: number, b: string): void; }
+Line 249 col 4 IdentifierName "r8b3" = boolean
+Line 249 col 11 NotEqualsExpression "b3 !== a3" = boolean
+Line 249 col 11 IdentifierName "b3" = { fn(a: number): void; }
+Line 249 col 18 IdentifierName "a3" = { fn(a: number, b: string): void; }
+Line 250 col 4 IdentifierName "r8b4" = boolean
+Line 250 col 11 NotEqualsExpression "b4 !== a4" = boolean
+Line 250 col 11 IdentifierName "b4" = { fn(): void; }
+Line 250 col 18 IdentifierName "a4" = { fn(a: number, b: string): void; }
+Line 251 col 4 IdentifierName "r8b5" = boolean
+Line 251 col 11 NotEqualsExpression "b5 !== a5" = boolean
+Line 251 col 11 IdentifierName "b5" = { fn(a: Derived): void; }
+Line 251 col 18 IdentifierName "a5" = { fn(a: Base): void; }
+Line 252 col 4 IdentifierName "r8b6" = boolean
+Line 252 col 11 NotEqualsExpression "b6 !== a6" = boolean
+Line 252 col 11 IdentifierName "b6" = { fn(a: Base, b: Derived): void; }
+Line 252 col 18 IdentifierName "a6" = { fn(a: Derived, b: Base): void; }
+Line 253 col 4 IdentifierName "r8b7" = boolean
+Line 253 col 11 NotEqualsExpression "b7 !== a7" = boolean
+Line 253 col 11 IdentifierName "b7" = { fn(): Base; }
+Line 253 col 18 IdentifierName "a7" = { fn(): void; }
+Line 254 col 4 IdentifierName "r8b8" = boolean
+Line 254 col 11 NotEqualsExpression "b8 !== a8" = boolean
+Line 254 col 11 IdentifierName "b8" = { fn(): Base; }
+Line 254 col 18 IdentifierName "a8" = { fn(): Base; }
+Line 255 col 4 IdentifierName "r8b9" = boolean
+Line 255 col 11 NotEqualsExpression "b9 !== a9" = boolean
+Line 255 col 11 IdentifierName "b9" = { fn(): Derived; }
+Line 255 col 18 IdentifierName "a9" = { fn(): Base; }
+Line 256 col 4 IdentifierName "r8b10" = boolean
+Line 256 col 12 NotEqualsExpression "b10 !== a10" = boolean
+Line 256 col 12 IdentifierName "b10" = { fn(a?: Derived): void; }
+Line 256 col 20 IdentifierName "a10" = { fn(a?: Base): void; }
+Line 257 col 4 IdentifierName "r8b11" = boolean
+Line 257 col 12 NotEqualsExpression "b11 !== a11" = boolean
+Line 257 col 12 IdentifierName "b11" = { fn(...a: Derived[]): void; }
+Line 257 col 20 IdentifierName "a11" = { fn(...a: Base[]): void; }

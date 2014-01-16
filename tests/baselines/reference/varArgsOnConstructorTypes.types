@@ -1,0 +1,37 @@
+=== tests/cases/compiler/varArgsOnConstructorTypes.ts ===
+Line 0 col 13 IdentifierName "A" = A
+Line 1 col 16 IdentifierName "ctor" = any
+Line 4 col 13 IdentifierName "B" = B
+Line 4 col 23 IdentifierName "A" = A
+Line 5 col 12 IdentifierName "p1" = number
+Line 6 col 12 IdentifierName "p2" = string
+Line 8 col 16 IdentifierName "element" = any
+Line 8 col 30 IdentifierName "url" = string
+Line 9 col 0 InvocationExpression "super(element)" = void
+Line 9 col 13 IdentifierName "element" = any
+Line 10 col 0 AssignmentExpression "this.p1 = element" = any
+Line 10 col 0 MemberAccessExpression "this.p1" = number
+Line 10 col 0 ThisKeyword "this" = B
+Line 10 col 13 IdentifierName "p1" = number
+Line 10 col 18 IdentifierName "element" = any
+Line 11 col 0 AssignmentExpression "this.p2 = url" = string
+Line 11 col 0 MemberAccessExpression "this.p2" = string
+Line 11 col 0 ThisKeyword "this" = B
+Line 11 col 13 IdentifierName "p2" = string
+Line 11 col 18 IdentifierName "url" = string
+Line 15 col 17 IdentifierName "I1" = I1
+Line 16 col 0 IdentifierName "register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
+Line 16 col 13 IdentifierName "inputClass" = new(...params: any[]) => A
+Line 16 col 32 IdentifierName "params" = any[]
+Line 16 col 50 IdentifierName "A" = A
+Line 17 col 0 IdentifierName "register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
+Line 17 col 13 IdentifierName "inputClass" = { new(...params: any[]): A; }[]
+Line 17 col 35 IdentifierName "params" = any[]
+Line 17 col 51 IdentifierName "A" = A
+Line 21 col 4 IdentifierName "reg" = I1
+Line 21 col 9 IdentifierName "I1" = I1
+Line 22 col 0 InvocationExpression "reg.register(B)" = any
+Line 22 col 0 MemberAccessExpression "reg.register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
+Line 22 col 0 IdentifierName "reg" = I1
+Line 22 col 4 IdentifierName "register" = { (inputClass: new(...params: any[]) => A): any; (inputClass: { new(...params: any[]): A; }[]): any; }
+Line 22 col 13 IdentifierName "B" = typeof B

@@ -19,3 +19,5 @@ var e2 = (function () {
     };
     return e2;
 })();
+//enum then enum - covered
+//enum then import - covered

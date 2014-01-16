@@ -53,7 +53,6 @@ function f6<T, U>(x: T, y:U) {
     }
 }
 
-// BUG 821629, should work, move to positive file when fixed
 function f8<T extends U, U extends V, V>(x: T, y: U) {
     if (true) {
         return x;

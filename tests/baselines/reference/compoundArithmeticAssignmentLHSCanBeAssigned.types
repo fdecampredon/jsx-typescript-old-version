@@ -1,0 +1,55 @@
+=== tests/cases/compiler/compoundArithmeticAssignmentLHSCanBeAssigned.ts ===
+Line 0 col 5 IdentifierName "E" = E
+Line 0 col 9 IdentifierName "a" = E
+Line 0 col 12 IdentifierName "b" = E
+Line 0 col 15 IdentifierName "c" = E
+Line 2 col 4 IdentifierName "a" = any
+Line 3 col 4 IdentifierName "b" = number
+Line 4 col 4 IdentifierName "c" = E
+Line 4 col 7 IdentifierName "E" = E
+Line 6 col 4 IdentifierName "x1" = any
+Line 7 col 0 MultiplyAssignmentExpression "x1 *= a" = number
+Line 7 col 0 IdentifierName "x1" = any
+Line 7 col 6 IdentifierName "a" = any
+Line 8 col 0 MultiplyAssignmentExpression "x1 *= b" = number
+Line 8 col 0 IdentifierName "x1" = any
+Line 8 col 6 IdentifierName "b" = number
+Line 9 col 0 MultiplyAssignmentExpression "x1 *= c" = number
+Line 9 col 0 IdentifierName "x1" = any
+Line 9 col 6 IdentifierName "c" = E
+Line 10 col 0 MultiplyAssignmentExpression "x1 *= null" = number
+Line 10 col 0 IdentifierName "x1" = any
+Line 11 col 0 MultiplyAssignmentExpression "x1 *= undefined" = number
+Line 11 col 0 IdentifierName "x1" = any
+Line 11 col 6 IdentifierName "undefined" = any
+Line 13 col 4 IdentifierName "x2" = number
+Line 14 col 0 MultiplyAssignmentExpression "x2 *= a" = number
+Line 14 col 0 IdentifierName "x2" = number
+Line 14 col 6 IdentifierName "a" = any
+Line 15 col 0 MultiplyAssignmentExpression "x2 *= b" = number
+Line 15 col 0 IdentifierName "x2" = number
+Line 15 col 6 IdentifierName "b" = number
+Line 16 col 0 MultiplyAssignmentExpression "x2 *= c" = number
+Line 16 col 0 IdentifierName "x2" = number
+Line 16 col 6 IdentifierName "c" = E
+Line 17 col 0 MultiplyAssignmentExpression "x2 *= null" = number
+Line 17 col 0 IdentifierName "x2" = number
+Line 18 col 0 MultiplyAssignmentExpression "x2 *= undefined" = number
+Line 18 col 0 IdentifierName "x2" = number
+Line 18 col 6 IdentifierName "undefined" = any
+Line 20 col 4 IdentifierName "x3" = E
+Line 20 col 8 IdentifierName "E" = E
+Line 21 col 0 MultiplyAssignmentExpression "x3 *= a" = number
+Line 21 col 0 IdentifierName "x3" = E
+Line 21 col 6 IdentifierName "a" = any
+Line 22 col 0 MultiplyAssignmentExpression "x3 *= b" = number
+Line 22 col 0 IdentifierName "x3" = E
+Line 22 col 6 IdentifierName "b" = number
+Line 23 col 0 MultiplyAssignmentExpression "x3 *= c" = number
+Line 23 col 0 IdentifierName "x3" = E
+Line 23 col 6 IdentifierName "c" = E
+Line 24 col 0 MultiplyAssignmentExpression "x3 *= null" = number
+Line 24 col 0 IdentifierName "x3" = E
+Line 25 col 0 MultiplyAssignmentExpression "x3 *= undefined" = number
+Line 25 col 0 IdentifierName "x3" = E
+Line 25 col 6 IdentifierName "undefined" = any

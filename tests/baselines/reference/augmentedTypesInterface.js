@@ -16,3 +16,4 @@ var i3;
 })(i3 || (i3 = {}));
 ;
 
+//import i4 = require('');  // error

@@ -1,3 +1,5 @@
+// used to be valid, now an error to do this
+
 interface IComparable<T> {
 }
 function f<T, I extends IComparable<T>>() {

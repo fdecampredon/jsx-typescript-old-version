@@ -35,7 +35,7 @@ class D5<T extends U, U extends V, V> extends C3<T> {
 
 class D6<T extends U, U extends V, V> extends C3<U> {
     [x: string]: U;
-    foo: T; // BUG 821629
+    foo: T;
 }
 
 class D7<T extends U, U extends V, V> extends C3<V> {
@@ -92,12 +92,12 @@ class D15<T extends U, U extends V, V extends Date> extends C3<T> {
 
 class D16<T extends U, U extends V, V extends Date> extends C3<U> {
     [x: string]: U;
-    foo: T; // BUG 821629
+    foo: T;
 }
 
 class D17<T extends U, U extends V, V extends Date> extends C3<V> {
     [x: string]: V;
-    foo: T; // BUG 821629
+    foo: T;
 }
 
 // test if U is a subtype of T, U, V, Date
@@ -119,7 +119,7 @@ class D20<T extends U, U extends V, V extends Date> extends C3<U> {
 
 class D21<T extends U, U extends V, V extends Date> extends C3<V> {
     [x: string]: V;
-    foo: U; // BUG 821629
+    foo: U;
 }
 
 // test if V is a subtype of T, U, V, Date

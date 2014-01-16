@@ -30,7 +30,7 @@ interface I5 extends Base {
 }
 
 interface I6 extends Base {
-    a2: (x: number) => number; // error, too many required params
+    a2: (x: number) => number; // ok, same number of params
 }
 
 
@@ -64,7 +64,7 @@ interface I13 extends Base {
 }
 
 interface I14 extends Base {
-    a4: (x: number, y: number) => number;  // error, too many required params
+    a4: (x: number, y: number) => number;  // ok, same number of params
 }
 
 
@@ -77,9 +77,9 @@ interface I16 extends Base {
 }
 
 interface I17 extends Base {
-    a5: (x: number) => number; // error, too many required params
+    a5: (x: number) => number; // ok, all present params match
 }
 
 interface I18 extends Base {
-    a5: (x: number, y: number) => number;  // error, too many required params
+    a5: (x: number, y: number) => number;  // ok, same number of params
 }

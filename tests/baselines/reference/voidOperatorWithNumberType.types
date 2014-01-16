@@ -1,0 +1,101 @@
+=== tests/cases/compiler/voidOperatorWithNumberType.ts ===
+Line 1 col 4 IdentifierName "NUMBER" = number
+Line 2 col 4 IdentifierName "NUMBER1" = number[]
+Line 2 col 24 ArrayLiteralExpression "[1, 2]" = number[]
+Line 4 col 9 IdentifierName "foo" = typeof foo
+Line 6 col 6 IdentifierName "A" = A
+Line 7 col 11 IdentifierName "a" = number
+Line 8 col 11 IdentifierName "foo" = () => number
+Line 10 col 7 IdentifierName "M" = M
+Line 11 col 15 IdentifierName "n" = number
+Line 14 col 4 IdentifierName "objA" = A
+Line 14 col 11 ObjectCreationExpression "new A()" = A
+Line 14 col 15 IdentifierName "A" = typeof A
+Line 17 col 4 IdentifierName "ResultIsAny1" = any
+Line 17 col 19 VoidExpression "void NUMBER" = any
+Line 17 col 24 IdentifierName "NUMBER" = number
+Line 18 col 4 IdentifierName "ResultIsAny2" = any
+Line 18 col 19 VoidExpression "void NUMBER1" = any
+Line 18 col 24 IdentifierName "NUMBER1" = number[]
+Line 21 col 4 IdentifierName "ResultIsAny3" = any
+Line 21 col 19 VoidExpression "void 1" = any
+Line 22 col 4 IdentifierName "ResultIsAny4" = any
+Line 22 col 19 VoidExpression "void { x: 1, y: 2}" = any
+Line 22 col 24 ObjectLiteralExpression "{ x: 1, y: 2}" = { x: number; y: number; }
+Line 22 col 26 IdentifierName "x" = number
+Line 22 col 32 IdentifierName "y" = number
+Line 23 col 4 IdentifierName "ResultIsAny5" = any
+Line 23 col 19 VoidExpression "void { x: 1, y: (n: number) => { return n; } }" = any
+Line 23 col 24 ObjectLiteralExpression "{ x: 1, y: (n: number) => { return n; } }" = { x: number; y: (n: number) => number; }
+Line 23 col 26 IdentifierName "x" = number
+Line 23 col 32 IdentifierName "y" = (n: number) => number
+Line 23 col 35 ParenthesizedArrowFunctionExpression "(n: number) => { return n; }" = (n: number) => number
+Line 23 col 36 IdentifierName "n" = number
+Line 23 col 59 IdentifierName "n" = number
+Line 26 col 4 IdentifierName "ResultIsAny6" = any
+Line 26 col 19 VoidExpression "void objA.a" = any
+Line 26 col 24 MemberAccessExpression "objA.a" = number
+Line 26 col 24 IdentifierName "objA" = A
+Line 26 col 29 IdentifierName "a" = number
+Line 27 col 4 IdentifierName "ResultIsAny7" = any
+Line 27 col 19 VoidExpression "void M.n" = any
+Line 27 col 24 MemberAccessExpression "M.n" = number
+Line 27 col 24 IdentifierName "M" = typeof M
+Line 27 col 26 IdentifierName "n" = number
+Line 28 col 4 IdentifierName "ResultIsAny8" = any
+Line 28 col 19 VoidExpression "void NUMBER1[0]" = any
+Line 28 col 24 ElementAccessExpression "NUMBER1[0]" = number
+Line 28 col 24 IdentifierName "NUMBER1" = number[]
+Line 29 col 4 IdentifierName "ResultIsAny9" = any
+Line 29 col 19 VoidExpression "void foo()" = any
+Line 29 col 24 InvocationExpression "foo()" = number
+Line 29 col 24 IdentifierName "foo" = typeof foo
+Line 30 col 4 IdentifierName "ResultIsAny10" = any
+Line 30 col 20 VoidExpression "void A.foo()" = any
+Line 30 col 25 InvocationExpression "A.foo()" = number
+Line 30 col 25 MemberAccessExpression "A.foo" = () => number
+Line 30 col 25 IdentifierName "A" = typeof A
+Line 30 col 27 IdentifierName "foo" = () => number
+Line 31 col 4 IdentifierName "ResultIsAny11" = any
+Line 31 col 20 VoidExpression "void (NUMBER + NUMBER)" = any
+Line 31 col 25 ParenthesizedExpression "(NUMBER + NUMBER)" = number
+Line 31 col 26 AddExpression "NUMBER + NUMBER" = number
+Line 31 col 26 IdentifierName "NUMBER" = number
+Line 31 col 35 IdentifierName "NUMBER" = number
+Line 34 col 4 IdentifierName "ResultIsAny12" = any
+Line 34 col 20 VoidExpression "void void NUMBER" = any
+Line 34 col 25 VoidExpression "void NUMBER" = any
+Line 34 col 30 IdentifierName "NUMBER" = number
+Line 35 col 4 IdentifierName "ResultIsAny13" = any
+Line 35 col 20 VoidExpression "void void void (NUMBER + NUMBER)" = any
+Line 35 col 25 VoidExpression "void void (NUMBER + NUMBER)" = any
+Line 35 col 30 VoidExpression "void (NUMBER + NUMBER)" = any
+Line 35 col 35 ParenthesizedExpression "(NUMBER + NUMBER)" = number
+Line 35 col 36 AddExpression "NUMBER + NUMBER" = number
+Line 35 col 36 IdentifierName "NUMBER" = number
+Line 35 col 45 IdentifierName "NUMBER" = number
+Line 36 col 0 VoidExpression "// miss assignment operators
+void 1" = any
+Line 39 col 0 VoidExpression "void NUMBER" = any
+Line 39 col 5 IdentifierName "NUMBER" = number
+Line 40 col 0 VoidExpression "void NUMBER1" = any
+Line 40 col 5 IdentifierName "NUMBER1" = number[]
+Line 41 col 0 VoidExpression "void foo()" = any
+Line 41 col 5 InvocationExpression "foo()" = number
+Line 41 col 5 IdentifierName "foo" = typeof foo
+Line 42 col 0 VoidExpression "void objA.a" = any
+Line 42 col 5 MemberAccessExpression "objA.a" = number
+Line 42 col 5 IdentifierName "objA" = A
+Line 42 col 10 IdentifierName "a" = number
+Line 43 col 0 VoidExpression "void M.n" = any
+Line 43 col 5 MemberAccessExpression "M.n" = number
+Line 43 col 5 IdentifierName "M" = typeof M
+Line 43 col 7 IdentifierName "n" = number
+Line 44 col 0 CommaExpression "void objA.a, M.n" = number
+Line 44 col 0 VoidExpression "void objA.a" = any
+Line 44 col 5 MemberAccessExpression "objA.a" = number
+Line 44 col 5 IdentifierName "objA" = A
+Line 44 col 10 IdentifierName "a" = number
+Line 44 col 13 MemberAccessExpression "M.n" = number
+Line 44 col 13 IdentifierName "M" = typeof M
+Line 44 col 15 IdentifierName "n" = number

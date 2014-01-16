@@ -4,6 +4,52 @@
 ///<reference path='..\references.ts' />
 
 module TypeScript {
+    export class WrapsTypeParameterCache {
+        private _wrapsTypeParameterCache = BitVector.getBitVector(/*allowedUndefined*/ true);
+
+        // 0 indicates that it does not wrap type parameter
+        // undefined indicates that the info wasnt available from cache
+        // rest indicates the valid type parameter id
+        public getWrapsTypeParameter(typeParameterArgumentMap: PullTypeSymbol[]): number {
+            // Find result from cache
+            var mapHasTypeParameterNotCached = false;
+            for (var typeParameterID in typeParameterArgumentMap) {
+                if (typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
+                    var cachedValue = this._wrapsTypeParameterCache.valueAt(typeParameterID);
+                    if (cachedValue) {
+                        // Cached value indicates that the type parameter is wrapped
+                        return typeParameterID;
+                    }
+                    mapHasTypeParameterNotCached = mapHasTypeParameterNotCached || cachedValue === undefined;
+                }
+            }
+
+            // If everything was cached, then this type doesnt wrap the type parameter
+            if (!mapHasTypeParameterNotCached) {
+                return 0;
+            }
+
+            return undefined;
+        }
+
+        public setWrapsTypeParameter(typeParameterArgumentMap: PullTypeSymbol[], wrappingTypeParameterID: number) {
+            if (wrappingTypeParameterID) {
+                // wrappingTypeParameterID is the known type parameter that is wrapped
+                // We dont know about other type parameters present in the map and hence we cant set their values
+                this._wrapsTypeParameterCache.setValueAt(wrappingTypeParameterID, true);
+            }
+            else {
+                // When the wrappingTypeParameterID = 0, it means that there wasnt any typeparameter in the map
+                // that was wrapped, and hence set values for all the ids as false, so that it could be used later
+                for (var typeParameterID in typeParameterArgumentMap) {
+                    if (typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
+                        this._wrapsTypeParameterCache.setValueAt(typeParameterID, false);
+                    }
+                }
+            }
+        }
+    }
+
     export module PullInstantiationHelpers {
         // This class helps in creating the type argument map
         // But it creates another copy only if the type argument map is changing

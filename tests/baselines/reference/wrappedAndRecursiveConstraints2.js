@@ -1,4 +1,3 @@
-// no errors expected
 var C = (function () {
     function C(x) {
     }
@@ -6,4 +5,4 @@ var C = (function () {
 })();
 
 var c = new C(1);
-var c = new C(new C(''));
+var c = new C(new C('')); // error

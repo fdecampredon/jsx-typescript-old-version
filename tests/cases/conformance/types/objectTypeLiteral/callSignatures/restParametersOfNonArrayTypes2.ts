@@ -1,5 +1,5 @@
 // Rest parameters must be an array type if they have a type annotation, 
-// BUG 824316, these should be allowed
+// user defined subtypes of array do not count, all of these are errors
 
 interface MyThing extends Array<any> { }
 interface MyThing2<T> extends Array<T> { }

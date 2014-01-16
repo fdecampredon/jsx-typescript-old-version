@@ -1,0 +1,8 @@
+mergedInterfacesWithInheritedPrivates2.ts(17,7): error TS2137: Class D declares interface A but does not implement it:
+	Types 'D' and 'C2' define property 'w' as private.
+mergedInterfacesWithInheritedPrivates2.ts(23,7): error TS2137: Class E declares interface A but does not implement it:
+	Type 'E' is missing property 'x' from type 'A'.
+mergedInterfacesWithInheritedPrivates2.ts(23,7): error TS2141: Class 'E' cannot extend class 'C2':
+	Property 'w' defined as public in type 'E' is defined as private in type 'C2'.
+mergedInterfacesWithInheritedPrivates2.ts(30,11): error TS2107: 'C.x' is inaccessible.
+mergedInterfacesWithInheritedPrivates2.ts(31,12): error TS2107: 'C2.w' is inaccessible.

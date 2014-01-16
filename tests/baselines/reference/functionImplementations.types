@@ -1,0 +1,177 @@
+=== tests/cases/compiler/functionImplementations.ts ===
+Line 1 col 4 IdentifierName "v" = void
+Line 1 col 14 InvocationExpression "function () { } ()" = void
+Line 1 col 14 FunctionExpression "function () { }" = () => void
+Line 4 col 4 IdentifierName "a" = any
+Line 4 col 13 FunctionExpression "function f() {
+    return f;
+}" = () => any
+Line 4 col 22 IdentifierName "f" = () => any
+Line 5 col 11 IdentifierName "f" = () => any
+Line 7 col 4 IdentifierName "a" = any
+Line 7 col 13 FunctionExpression "function f() {
+    return f();
+}" = () => any
+Line 7 col 22 IdentifierName "f" = () => any
+Line 8 col 11 InvocationExpression "f()" = any
+Line 8 col 11 IdentifierName "f" = () => any
+Line 12 col 4 IdentifierName "a" = any
+Line 12 col 13 FunctionExpression "function f() {
+    var x = f;
+    return x;
+}" = () => any
+Line 12 col 22 IdentifierName "f" = () => any
+Line 13 col 8 IdentifierName "x" = () => any
+Line 13 col 12 IdentifierName "f" = () => any
+Line 14 col 11 IdentifierName "x" = () => any
+Line 18 col 9 IdentifierName "rec1" = typeof rec1
+Line 19 col 11 InvocationExpression "rec2()" = any
+Line 19 col 11 IdentifierName "rec2" = typeof rec2
+Line 21 col 9 IdentifierName "rec2" = typeof rec2
+Line 22 col 11 InvocationExpression "rec1()" = any
+Line 22 col 11 IdentifierName "rec1" = typeof rec1
+Line 24 col 4 IdentifierName "a" = any
+Line 24 col 8 InvocationExpression "rec1()" = any
+Line 24 col 8 IdentifierName "rec1" = typeof rec1
+Line 25 col 4 IdentifierName "a" = any
+Line 25 col 8 InvocationExpression "rec2()" = any
+Line 25 col 8 IdentifierName "rec2" = typeof rec2
+Line 28 col 9 IdentifierName "rec3" = typeof rec3
+Line 29 col 11 InvocationExpression "rec4()" = number
+Line 29 col 11 IdentifierName "rec4" = typeof rec4
+Line 31 col 9 IdentifierName "rec4" = typeof rec4
+Line 32 col 11 InvocationExpression "rec3()" = number
+Line 32 col 11 IdentifierName "rec3" = typeof rec3
+Line 34 col 4 IdentifierName "n" = number
+Line 35 col 4 IdentifierName "n" = number
+Line 35 col 8 InvocationExpression "rec3()" = number
+Line 35 col 8 IdentifierName "rec3" = typeof rec3
+Line 36 col 4 IdentifierName "n" = number
+Line 36 col 8 InvocationExpression "rec4()" = number
+Line 36 col 8 IdentifierName "rec4" = typeof rec4
+Line 39 col 4 IdentifierName "n" = number
+Line 39 col 8 InvocationExpression "function () {
+    return 3;
+} ()" = number
+Line 39 col 8 FunctionExpression "function () {
+    return 3;
+}" = () => number
+Line 44 col 4 IdentifierName "nu" = any
+Line 45 col 4 IdentifierName "nu" = any
+Line 45 col 9 InvocationExpression "function () {
+    return null;
+} ()" = any
+Line 45 col 9 FunctionExpression "function () {
+    return null;
+}" = () => any
+Line 50 col 4 IdentifierName "un" = any
+Line 50 col 9 IdentifierName "undefined" = any
+Line 51 col 4 IdentifierName "un" = any
+Line 51 col 9 InvocationExpression "function () {
+    return undefined;
+} ()" = any
+Line 51 col 9 FunctionExpression "function () {
+    return undefined;
+}" = () => any
+Line 52 col 11 IdentifierName "undefined" = any
+Line 56 col 4 IdentifierName "n" = number
+Line 56 col 8 InvocationExpression "function <T>(x: T) {
+    return x;
+} (4)" = number
+Line 56 col 8 FunctionExpression "function <T>(x: T) {
+    return x;
+}" = <T>(x: T) => T
+Line 56 col 18 IdentifierName "T" = T
+Line 56 col 21 IdentifierName "x" = T
+Line 56 col 24 IdentifierName "T" = T
+Line 57 col 11 IdentifierName "x" = T
+Line 61 col 4 IdentifierName "n" = number
+Line 61 col 8 InvocationExpression "function <T extends {}>(x: T) {
+    return x;
+} (4)" = number
+Line 61 col 8 FunctionExpression "function <T extends {}>(x: T) {
+    return x;
+}" = <T extends {}>(x: T) => T
+Line 61 col 18 IdentifierName "T" = T
+Line 61 col 32 IdentifierName "x" = T
+Line 61 col 35 IdentifierName "T" = T
+Line 62 col 11 IdentifierName "x" = T
+Line 66 col 4 IdentifierName "n" = number
+Line 66 col 8 InvocationExpression "function () {
+    return 3;
+    return 5;
+}()" = number
+Line 66 col 8 FunctionExpression "function () {
+    return 3;
+    return 5;
+}" = () => number
+Line 72 col 6 IdentifierName "Base" = Base
+Line 72 col 21 IdentifierName "m" = any
+Line 73 col 6 IdentifierName "Derived" = Derived
+Line 73 col 22 IdentifierName "Base" = Base
+Line 73 col 37 IdentifierName "q" = any
+Line 74 col 4 IdentifierName "b" = Base
+Line 74 col 7 IdentifierName "Base" = Base
+Line 75 col 4 IdentifierName "b" = Base
+Line 75 col 8 InvocationExpression "function () {
+    return new Base(); return new Derived();
+} ()" = Base
+Line 75 col 8 FunctionExpression "function () {
+    return new Base(); return new Derived();
+}" = () => Base
+Line 76 col 11 ObjectCreationExpression "new Base()" = Base
+Line 76 col 15 IdentifierName "Base" = typeof Base
+Line 76 col 30 ObjectCreationExpression "new Derived()" = Derived
+Line 76 col 34 IdentifierName "Derived" = typeof Derived
+Line 80 col 4 IdentifierName "a" = any
+Line 80 col 8 InvocationExpression "function f() {
+    return new Base(); return new Derived(); return f(); // ?
+} ()" = any
+Line 80 col 8 FunctionExpression "function f() {
+    return new Base(); return new Derived(); return f(); // ?
+}" = () => any
+Line 80 col 17 IdentifierName "f" = () => any
+Line 81 col 11 ObjectCreationExpression "new Base()" = Base
+Line 81 col 15 IdentifierName "Base" = typeof Base
+Line 81 col 30 ObjectCreationExpression "new Derived()" = Derived
+Line 81 col 34 IdentifierName "Derived" = typeof Derived
+Line 81 col 52 InvocationExpression "f()" = any
+Line 81 col 52 IdentifierName "f" = () => any
+Line 83 col 0 EqualsExpression "// FunctionExpression with non -void return type annotation with a single throw statement
+undefined === function (): number {
+    throw undefined;
+}" = boolean
+Line 83 col 0 IdentifierName "// FunctionExpression with non -void return type annotation with a single throw statement
+undefined" = any
+Line 85 col 14 FunctionExpression "function (): number {
+    throw undefined;
+}" = () => number
+Line 86 col 10 IdentifierName "undefined" = any
+Line 90 col 9 IdentifierName "thisFunc" = typeof thisFunc
+Line 91 col 8 IdentifierName "x" = any
+Line 91 col 12 ThisKeyword "this" = any
+Line 92 col 8 IdentifierName "x" = any
+Line 96 col 9 IdentifierName "opt1" = typeof opt1
+Line 96 col 14 IdentifierName "n" = number
+Line 97 col 8 IdentifierName "m" = number
+Line 97 col 12 IdentifierName "n" = number
+Line 98 col 8 IdentifierName "m" = number
+Line 102 col 9 IdentifierName "opt2" = typeof opt2
+Line 102 col 14 IdentifierName "n" = { x: any; y: any; }
+Line 102 col 18 ObjectLiteralExpression "{ x: null, y: undefined }" = { x: any; y: any; }
+Line 102 col 20 IdentifierName "x" = any
+Line 102 col 29 IdentifierName "y" = any
+Line 102 col 32 IdentifierName "undefined" = any
+Line 103 col 8 IdentifierName "m" = { x: any; y: any; }
+Line 103 col 12 IdentifierName "n" = { x: any; y: any; }
+Line 104 col 8 IdentifierName "m" = { x: any; y: any; }
+Line 104 col 13 IdentifierName "x" = any
+Line 104 col 21 IdentifierName "y" = any
+Line 108 col 9 IdentifierName "opt3" = typeof opt3
+Line 108 col 14 IdentifierName "n" = number
+Line 108 col 25 IdentifierName "m" = number
+Line 108 col 29 IdentifierName "n" = number
+Line 109 col 8 IdentifierName "y" = number
+Line 109 col 12 IdentifierName "m" = number
+Line 110 col 8 IdentifierName "y" = number
+Line 117 col 9 IdentifierName "f6" = typeof f6

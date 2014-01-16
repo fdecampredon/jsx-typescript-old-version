@@ -1,0 +1,33 @@
+=== tests/cases/compiler/instanceofOperatorWithRHSIsSubtypeOfFunction.ts ===
+Line 0 col 10 IdentifierName "I" = I
+Line 0 col 20 IdentifierName "Function" = Function
+Line 2 col 4 IdentifierName "x" = any
+Line 3 col 4 IdentifierName "f1" = Function
+Line 3 col 8 IdentifierName "Function" = Function
+Line 4 col 4 IdentifierName "f2" = I
+Line 4 col 8 IdentifierName "I" = I
+Line 5 col 4 IdentifierName "f3" = () => void
+Line 6 col 4 IdentifierName "f4" = new() => number
+Line 8 col 4 IdentifierName "r1" = boolean
+Line 8 col 9 InstanceOfExpression "x instanceof f1" = boolean
+Line 8 col 9 IdentifierName "x" = any
+Line 8 col 22 IdentifierName "f1" = Function
+Line 9 col 4 IdentifierName "r2" = boolean
+Line 9 col 9 InstanceOfExpression "x instanceof f2" = boolean
+Line 9 col 9 IdentifierName "x" = any
+Line 9 col 22 IdentifierName "f2" = I
+Line 10 col 4 IdentifierName "r3" = boolean
+Line 10 col 9 InstanceOfExpression "x instanceof f3" = boolean
+Line 10 col 9 IdentifierName "x" = any
+Line 10 col 22 IdentifierName "f3" = () => void
+Line 11 col 4 IdentifierName "r4" = boolean
+Line 11 col 9 InstanceOfExpression "x instanceof f4" = boolean
+Line 11 col 9 IdentifierName "x" = any
+Line 11 col 22 IdentifierName "f4" = new() => number
+Line 12 col 4 IdentifierName "r5" = boolean
+Line 12 col 9 InstanceOfExpression "x instanceof null" = boolean
+Line 12 col 9 IdentifierName "x" = any
+Line 13 col 4 IdentifierName "r6" = boolean
+Line 13 col 9 InstanceOfExpression "x instanceof undefined" = boolean
+Line 13 col 9 IdentifierName "x" = any
+Line 13 col 22 IdentifierName "undefined" = any

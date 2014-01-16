@@ -773,7 +773,7 @@ module TypeScript {
                             var contextualType: PullTypeSymbol = null;
 
                             if (enclosingDecl && (enclosingDecl.kind & PullElementKind.SomeFunction)) {
-                                var typeAnnotation = getType(enclosingDeclAST);
+                                var typeAnnotation = ASTHelpers.getType(enclosingDeclAST);
                                 if (typeAnnotation) {
                                     // The containing function has a type annotation, propagate it as the contextual type
                                     var returnTypeSymbol = resolver.resolveTypeReference(typeAnnotation, resolutionContext);
@@ -785,8 +785,11 @@ module TypeScript {
                                 else {
                                     // No type annotation, check if there is a contextual type enforced on the function, and propagate that
                                     var currentContextualType = resolutionContext.getContextualType();
-                                    if (currentContextualType && currentContextualType.isFunction()) {
-                                        var currentContextualTypeSignatureSymbol = currentContextualType.getDeclarations()[0].getSignatureSymbol();
+                                if (currentContextualType && currentContextualType.isFunction()) {
+                                    var contextualSignatures = currentContextualType.kind == PullElementKind.ConstructorType
+                                        ? currentContextualType.getConstructSignatures()
+                                        : currentContextualType.getCallSignatures();
+                                    var currentContextualTypeSignatureSymbol = contextualSignatures[0];
                                         var currentContextualTypeReturnTypeSymbol = currentContextualTypeSignatureSymbol.returnType;
                                         if (currentContextualTypeReturnTypeSymbol) {
                                             inContextuallyTypedAssignment = true;
@@ -812,6 +815,10 @@ module TypeScript {
 
                     case SyntaxKind.WithStatement:
                         inWithBlock = true;
+                        break;
+
+                    case SyntaxKind.Block:
+                        inContextuallyTypedAssignment = false;
                         break;
                 }
 

@@ -1,0 +1,77 @@
+=== tests/cases/compiler/bestCommonTypeOfConditionalExpressions.ts ===
+Line 3 col 4 IdentifierName "a" = { x: number; y?: number; }
+Line 3 col 9 IdentifierName "x" = number
+Line 3 col 20 IdentifierName "y" = number
+Line 4 col 4 IdentifierName "b" = { x: number; z?: number; }
+Line 4 col 9 IdentifierName "x" = number
+Line 4 col 20 IdentifierName "z" = number
+Line 6 col 6 IdentifierName "Base" = Base
+Line 6 col 13 IdentifierName "foo" = string
+Line 7 col 6 IdentifierName "Derived" = Derived
+Line 7 col 22 IdentifierName "Base" = Base
+Line 7 col 29 IdentifierName "bar" = string
+Line 8 col 6 IdentifierName "Derived2" = Derived2
+Line 8 col 23 IdentifierName "Base" = Base
+Line 8 col 30 IdentifierName "baz" = string
+Line 9 col 4 IdentifierName "base" = Base
+Line 9 col 10 IdentifierName "Base" = Base
+Line 10 col 4 IdentifierName "derived" = Derived
+Line 10 col 13 IdentifierName "Derived" = Derived
+Line 11 col 4 IdentifierName "derived2" = Derived2
+Line 11 col 14 IdentifierName "Derived2" = Derived2
+Line 13 col 4 IdentifierName "r" = number
+Line 13 col 8 ConditionalExpression "true ? 1 : 2" = number
+Line 14 col 4 IdentifierName "r3" = {}
+Line 14 col 9 ConditionalExpression "true ? 1 : {}" = {}
+Line 14 col 20 ObjectLiteralExpression "{}" = {}
+Line 15 col 4 IdentifierName "r4" = { x: number; y?: number; }
+Line 15 col 9 ConditionalExpression "true ? a : b" = { x: number; y?: number; }
+Line 15 col 16 IdentifierName "a" = { x: number; y?: number; }
+Line 15 col 20 IdentifierName "b" = { x: number; z?: number; }
+Line 16 col 4 IdentifierName "r5" = { x: number; z?: number; }
+Line 16 col 9 ConditionalExpression "true ? b : a" = { x: number; z?: number; }
+Line 16 col 16 IdentifierName "b" = { x: number; z?: number; }
+Line 16 col 20 IdentifierName "a" = { x: number; y?: number; }
+Line 17 col 4 IdentifierName "r6" = (x: number) => void
+Line 17 col 9 ConditionalExpression "true ? (x: number) => { } : (x: Object) => { }" = (x: number) => void
+Line 17 col 16 ParenthesizedArrowFunctionExpression "(x: number) => { }" = (x: number) => void
+Line 17 col 17 IdentifierName "x" = number
+Line 17 col 37 ParenthesizedArrowFunctionExpression "(x: Object) => { }" = (x: Object) => void
+Line 17 col 38 IdentifierName "x" = Object
+Line 17 col 41 IdentifierName "Object" = Object
+Line 18 col 4 IdentifierName "r7" = (x: Object) => void
+Line 18 col 9 IdentifierName "x" = Object
+Line 18 col 12 IdentifierName "Object" = Object
+Line 18 col 30 ConditionalExpression "true ? (x: number) => { } : (x: Object) => { }" = (x: Object) => void
+Line 18 col 37 ParenthesizedArrowFunctionExpression "(x: number) => { }" = (x: number) => void
+Line 18 col 38 IdentifierName "x" = number
+Line 18 col 58 ParenthesizedArrowFunctionExpression "(x: Object) => { }" = (x: Object) => void
+Line 18 col 59 IdentifierName "x" = Object
+Line 18 col 62 IdentifierName "Object" = Object
+Line 19 col 4 IdentifierName "r8" = (x: Object) => void
+Line 19 col 9 ConditionalExpression "true ? (x: Object) => { } : (x: number) => { }" = (x: Object) => void
+Line 19 col 16 ParenthesizedArrowFunctionExpression "(x: Object) => { }" = (x: Object) => void
+Line 19 col 17 IdentifierName "x" = Object
+Line 19 col 20 IdentifierName "Object" = Object
+Line 19 col 37 ParenthesizedArrowFunctionExpression "(x: number) => { }" = (x: number) => void
+Line 19 col 38 IdentifierName "x" = number
+Line 20 col 4 IdentifierName "r10" = Base
+Line 20 col 9 IdentifierName "Base" = Base
+Line 20 col 16 ConditionalExpression "true ? derived : derived2" = Base
+Line 20 col 23 IdentifierName "derived" = Derived
+Line 20 col 33 IdentifierName "derived2" = Derived2
+Line 21 col 4 IdentifierName "r11" = Base
+Line 21 col 10 ConditionalExpression "true ? base : derived2" = Base
+Line 21 col 17 IdentifierName "base" = Base
+Line 21 col 24 IdentifierName "derived2" = Derived2
+Line 23 col 9 IdentifierName "foo5" = typeof foo5
+Line 23 col 14 IdentifierName "T" = T
+Line 23 col 17 IdentifierName "U" = U
+Line 23 col 20 IdentifierName "t" = T
+Line 23 col 23 IdentifierName "T" = T
+Line 23 col 26 IdentifierName "u" = U
+Line 23 col 29 IdentifierName "U" = U
+Line 23 col 33 IdentifierName "Object" = Object
+Line 24 col 11 ConditionalExpression "true ? t : u" = Object
+Line 24 col 18 IdentifierName "t" = T
+Line 24 col 22 IdentifierName "u" = U

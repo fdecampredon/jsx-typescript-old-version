@@ -101,9 +101,13 @@ class D14<T> extends Base {
 }
 
 
-class D15<T, U extends T> extends Base {
+class D15<T, U> extends Base {
     foo: U;
 }
+
+//class D15<T, U extends T> extends Base {
+//    foo: U;
+//}
 
 
 class D16 extends Base {

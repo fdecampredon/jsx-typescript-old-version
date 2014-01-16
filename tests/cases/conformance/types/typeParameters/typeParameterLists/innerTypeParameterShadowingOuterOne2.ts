@@ -13,8 +13,8 @@ class C<T extends Date> {
     }
 }
 
-class C2<T extends Date, U extends T> {
-    g<T extends Number, U extends T>() {
+class C2<T extends Date, U extends Date> {
+    g<T extends Number, U extends Number>() {
         var x: U;
         x.toFixed();
     }
@@ -24,3 +24,14 @@ class C2<T extends Date, U extends T> {
         x.getDate();
     }
 }
+//class C2<T extends Date, U extends T> {
+//    g<T extends Number, U extends T>() {
+//        var x: U;
+//        x.toFixed();
+//    }
+
+//    h() {
+//        var x: U;
+//        x.getDate();
+//    }
+//}

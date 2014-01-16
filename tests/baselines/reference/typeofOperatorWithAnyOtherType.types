@@ -1,0 +1,163 @@
+=== tests/cases/compiler/typeofOperatorWithAnyOtherType.ts ===
+Line 2 col 4 IdentifierName "ANY" = any
+Line 3 col 4 IdentifierName "ANY1" = any
+Line 4 col 4 IdentifierName "ANY2" = any[]
+Line 4 col 18 ArrayLiteralExpression "["", ""]" = any[]
+Line 5 col 4 IdentifierName "obj" = () => {}
+Line 6 col 4 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 6 col 11 ObjectLiteralExpression "{ x: "a", y: () => { }}" = { x: string; y: () => void; }
+Line 6 col 13 IdentifierName "x" = string
+Line 6 col 21 IdentifierName "y" = () => void
+Line 6 col 24 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 8 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 8 IdentifierName "a" = any
+Line 10 col 11 IdentifierName "a" = any
+Line 12 col 6 IdentifierName "A" = A
+Line 13 col 11 IdentifierName "a" = any
+Line 14 col 11 IdentifierName "foo" = () => any
+Line 15 col 12 IdentifierName "a" = any
+Line 16 col 15 IdentifierName "a" = any
+Line 19 col 7 IdentifierName "M" = M
+Line 20 col 15 IdentifierName "n" = any
+Line 22 col 4 IdentifierName "objA" = A
+Line 22 col 11 ObjectCreationExpression "new A()" = A
+Line 22 col 15 IdentifierName "A" = typeof A
+Line 25 col 4 IdentifierName "ResultIsString1" = string
+Line 25 col 22 TypeOfExpression "typeof ANY1" = string
+Line 25 col 29 IdentifierName "ANY1" = any
+Line 26 col 4 IdentifierName "ResultIsString2" = string
+Line 26 col 22 TypeOfExpression "typeof ANY2" = string
+Line 26 col 29 IdentifierName "ANY2" = any[]
+Line 27 col 4 IdentifierName "ResultIsString3" = string
+Line 27 col 22 TypeOfExpression "typeof A" = string
+Line 27 col 29 IdentifierName "A" = typeof A
+Line 28 col 4 IdentifierName "ResultIsString4" = string
+Line 28 col 22 TypeOfExpression "typeof M" = string
+Line 28 col 29 IdentifierName "M" = typeof M
+Line 29 col 4 IdentifierName "ResultIsString5" = string
+Line 29 col 22 TypeOfExpression "typeof obj" = string
+Line 29 col 29 IdentifierName "obj" = () => {}
+Line 30 col 4 IdentifierName "ResultIsString6" = string
+Line 30 col 22 TypeOfExpression "typeof obj1" = string
+Line 30 col 29 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 33 col 4 IdentifierName "ResultIsString7" = string
+Line 33 col 22 TypeOfExpression "typeof undefined" = string
+Line 33 col 29 IdentifierName "undefined" = any
+Line 34 col 4 IdentifierName "ResultIsString8" = string
+Line 34 col 22 TypeOfExpression "typeof null" = string
+Line 35 col 4 IdentifierName "ResultIsString9" = string
+Line 35 col 22 TypeOfExpression "typeof {}" = string
+Line 35 col 29 ObjectLiteralExpression "{}" = {}
+Line 38 col 4 IdentifierName "ResultIsString10" = string
+Line 38 col 23 TypeOfExpression "typeof ANY2[0]" = string
+Line 38 col 30 ElementAccessExpression "ANY2[0]" = any
+Line 38 col 30 IdentifierName "ANY2" = any[]
+Line 39 col 4 IdentifierName "ResultIsString11" = string
+Line 39 col 23 TypeOfExpression "typeof objA.a" = string
+Line 39 col 30 MemberAccessExpression "objA.a" = any
+Line 39 col 30 IdentifierName "objA" = A
+Line 39 col 35 IdentifierName "a" = any
+Line 40 col 4 IdentifierName "ResultIsString12" = string
+Line 40 col 23 TypeOfExpression "typeof obj1.x" = string
+Line 40 col 30 MemberAccessExpression "obj1.x" = string
+Line 40 col 30 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 40 col 35 IdentifierName "x" = string
+Line 41 col 4 IdentifierName "ResultIsString13" = string
+Line 41 col 23 TypeOfExpression "typeof M.n" = string
+Line 41 col 30 MemberAccessExpression "M.n" = any
+Line 41 col 30 IdentifierName "M" = typeof M
+Line 41 col 32 IdentifierName "n" = any
+Line 42 col 4 IdentifierName "ResultIsString14" = string
+Line 42 col 23 TypeOfExpression "typeof foo()" = string
+Line 42 col 30 InvocationExpression "foo()" = any
+Line 42 col 30 IdentifierName "foo" = typeof foo
+Line 43 col 4 IdentifierName "ResultIsString15" = string
+Line 43 col 23 TypeOfExpression "typeof A.foo()" = string
+Line 43 col 30 InvocationExpression "A.foo()" = any
+Line 43 col 30 MemberAccessExpression "A.foo" = () => any
+Line 43 col 30 IdentifierName "A" = typeof A
+Line 43 col 32 IdentifierName "foo" = () => any
+Line 44 col 4 IdentifierName "ResultIsString16" = string
+Line 44 col 23 TypeOfExpression "typeof (ANY + ANY1)" = string
+Line 44 col 30 ParenthesizedExpression "(ANY + ANY1)" = any
+Line 44 col 31 AddExpression "ANY + ANY1" = any
+Line 44 col 31 IdentifierName "ANY" = any
+Line 44 col 37 IdentifierName "ANY1" = any
+Line 45 col 4 IdentifierName "ResultIsString17" = string
+Line 45 col 23 TypeOfExpression "typeof (null + undefined)" = string
+Line 45 col 30 ParenthesizedExpression "(null + undefined)" = any
+Line 45 col 31 AddExpression "null + undefined" = any
+Line 45 col 38 IdentifierName "undefined" = any
+Line 46 col 4 IdentifierName "ResultIsString18" = string
+Line 46 col 23 TypeOfExpression "typeof (null + null)" = string
+Line 46 col 30 ParenthesizedExpression "(null + null)" = any
+Line 46 col 31 AddExpression "null + null" = any
+Line 47 col 4 IdentifierName "ResultIsString19" = string
+Line 47 col 23 TypeOfExpression "typeof (undefined + undefined)" = string
+Line 47 col 30 ParenthesizedExpression "(undefined + undefined)" = any
+Line 47 col 31 AddExpression "undefined + undefined" = any
+Line 47 col 31 IdentifierName "undefined" = any
+Line 47 col 43 IdentifierName "undefined" = any
+Line 50 col 4 IdentifierName "ResultIsString20" = string
+Line 50 col 23 TypeOfExpression "typeof typeof ANY" = string
+Line 50 col 30 TypeOfExpression "typeof ANY" = string
+Line 50 col 37 IdentifierName "ANY" = any
+Line 51 col 4 IdentifierName "ResultIsString21" = string
+Line 51 col 23 TypeOfExpression "typeof typeof typeof (ANY + ANY1)" = string
+Line 51 col 30 TypeOfExpression "typeof typeof (ANY + ANY1)" = string
+Line 51 col 37 TypeOfExpression "typeof (ANY + ANY1)" = string
+Line 51 col 44 ParenthesizedExpression "(ANY + ANY1)" = any
+Line 51 col 45 AddExpression "ANY + ANY1" = any
+Line 51 col 45 IdentifierName "ANY" = any
+Line 51 col 51 IdentifierName "ANY1" = any
+Line 52 col 0 TypeOfExpression "// miss assignment operators
+typeof ANY" = string
+Line 54 col 7 IdentifierName "ANY" = any
+Line 55 col 0 TypeOfExpression "typeof ANY1" = string
+Line 55 col 7 IdentifierName "ANY1" = any
+Line 56 col 0 TypeOfExpression "typeof ANY2[0]" = string
+Line 56 col 7 ElementAccessExpression "ANY2[0]" = any
+Line 56 col 7 IdentifierName "ANY2" = any[]
+Line 57 col 0 CommaExpression "typeof ANY, ANY1" = any
+Line 57 col 0 TypeOfExpression "typeof ANY" = string
+Line 57 col 7 IdentifierName "ANY" = any
+Line 57 col 12 IdentifierName "ANY1" = any
+Line 58 col 0 TypeOfExpression "typeof obj1" = string
+Line 58 col 7 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 59 col 0 TypeOfExpression "typeof obj1.x" = string
+Line 59 col 7 MemberAccessExpression "obj1.x" = string
+Line 59 col 7 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 59 col 12 IdentifierName "x" = string
+Line 60 col 0 TypeOfExpression "typeof objA.a" = string
+Line 60 col 7 MemberAccessExpression "objA.a" = any
+Line 60 col 7 IdentifierName "objA" = A
+Line 60 col 12 IdentifierName "a" = any
+Line 61 col 0 TypeOfExpression "typeof M.n" = string
+Line 61 col 7 MemberAccessExpression "M.n" = any
+Line 61 col 7 IdentifierName "M" = typeof M
+Line 61 col 9 IdentifierName "n" = any
+Line 64 col 4 IdentifierName "z" = any
+Line 65 col 4 IdentifierName "x" = any[]
+Line 66 col 4 IdentifierName "r" = () => any
+Line 67 col 3 TypeOfExpression "typeof ANY" = string
+Line 67 col 10 IdentifierName "ANY" = any
+Line 68 col 3 TypeOfExpression "typeof ANY2" = string
+Line 68 col 10 IdentifierName "ANY2" = any[]
+Line 69 col 3 TypeOfExpression "typeof foo" = string
+Line 69 col 10 IdentifierName "foo" = typeof foo
+Line 70 col 3 TypeOfExpression "typeof objA.a" = string
+Line 70 col 10 MemberAccessExpression "objA.a" = any
+Line 70 col 10 IdentifierName "objA" = A
+Line 70 col 15 IdentifierName "a" = any
+Line 71 col 3 TypeOfExpression "typeof A.foo" = string
+Line 71 col 10 MemberAccessExpression "A.foo" = () => any
+Line 71 col 10 IdentifierName "A" = typeof A
+Line 71 col 12 IdentifierName "foo" = () => any
+Line 72 col 3 TypeOfExpression "typeof M.n" = string
+Line 72 col 10 MemberAccessExpression "M.n" = any
+Line 72 col 10 IdentifierName "M" = typeof M
+Line 72 col 12 IdentifierName "n" = any
+Line 73 col 3 TypeOfExpression "typeof obj1.x" = string
+Line 73 col 10 MemberAccessExpression "obj1.x" = string
+Line 73 col 10 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 73 col 15 IdentifierName "x" = string

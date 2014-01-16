@@ -1,0 +1,459 @@
+=== tests/cases/compiler/comparisonOperatorWithSubtypeObjectOnInstantiatedCallSignature.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 1 col 11 IdentifierName "a" = string
+Line 4 col 6 IdentifierName "Derived" = Derived
+Line 4 col 22 IdentifierName "Base" = Base
+Line 5 col 11 IdentifierName "b" = string
+Line 8 col 4 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 8 col 10 IdentifierName "fn" = <T>(x: T) => T
+Line 8 col 13 IdentifierName "T" = T
+Line 8 col 16 IdentifierName "x" = T
+Line 8 col 19 IdentifierName "T" = T
+Line 8 col 23 IdentifierName "T" = T
+Line 9 col 4 IdentifierName "b1" = { fn(x: string): string; }
+Line 9 col 10 IdentifierName "fn" = (x: string) => string
+Line 9 col 13 IdentifierName "x" = string
+Line 11 col 4 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 11 col 10 IdentifierName "fn" = <T>(x: T) => T
+Line 11 col 13 IdentifierName "T" = T
+Line 11 col 16 IdentifierName "x" = T
+Line 11 col 19 IdentifierName "T" = T
+Line 11 col 23 IdentifierName "T" = T
+Line 12 col 4 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 12 col 10 IdentifierName "fn" = (x: string, y: number) => string
+Line 12 col 13 IdentifierName "x" = string
+Line 12 col 24 IdentifierName "y" = number
+Line 14 col 4 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 14 col 10 IdentifierName "fn" = <T, U>(x: T, y: U) => T
+Line 14 col 13 IdentifierName "T" = T
+Line 14 col 16 IdentifierName "U" = U
+Line 14 col 19 IdentifierName "x" = T
+Line 14 col 22 IdentifierName "T" = T
+Line 14 col 25 IdentifierName "y" = U
+Line 14 col 28 IdentifierName "U" = U
+Line 14 col 32 IdentifierName "T" = T
+Line 15 col 4 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 15 col 10 IdentifierName "fn" = (x: string, y: number) => string
+Line 15 col 13 IdentifierName "x" = string
+Line 15 col 24 IdentifierName "y" = number
+Line 17 col 4 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 17 col 10 IdentifierName "fn" = <T>(x?: T) => T
+Line 17 col 13 IdentifierName "T" = T
+Line 17 col 16 IdentifierName "x" = T
+Line 17 col 20 IdentifierName "T" = T
+Line 17 col 24 IdentifierName "T" = T
+Line 18 col 4 IdentifierName "b4" = { fn(x?: string): string; }
+Line 18 col 10 IdentifierName "fn" = (x?: string) => string
+Line 18 col 13 IdentifierName "x" = string
+Line 20 col 4 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 20 col 10 IdentifierName "fn" = <T>(...x: T[]) => T
+Line 20 col 13 IdentifierName "T" = T
+Line 20 col 19 IdentifierName "x" = T[]
+Line 20 col 22 IdentifierName "T" = T
+Line 20 col 28 IdentifierName "T" = T
+Line 21 col 4 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 21 col 10 IdentifierName "fn" = (...x: string[]) => string
+Line 21 col 16 IdentifierName "x" = string[]
+Line 23 col 4 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 23 col 10 IdentifierName "fn" = <T>(x: T, y: T) => T
+Line 23 col 13 IdentifierName "T" = T
+Line 23 col 16 IdentifierName "x" = T
+Line 23 col 19 IdentifierName "T" = T
+Line 23 col 22 IdentifierName "y" = T
+Line 23 col 25 IdentifierName "T" = T
+Line 23 col 29 IdentifierName "T" = T
+Line 24 col 4 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 24 col 10 IdentifierName "fn" = (x: string, y: number) => {}
+Line 24 col 13 IdentifierName "x" = string
+Line 24 col 24 IdentifierName "y" = number
+Line 27 col 4 IdentifierName "b7" = { fn(x: Base, y: Derived): Base; }
+Line 27 col 10 IdentifierName "fn" = (x: Base, y: Derived) => Base
+Line 27 col 13 IdentifierName "x" = Base
+Line 27 col 16 IdentifierName "Base" = Base
+Line 27 col 22 IdentifierName "y" = Derived
+Line 27 col 25 IdentifierName "Derived" = Derived
+Line 27 col 35 IdentifierName "Base" = Base
+Line 30 col 4 IdentifierName "r1a1" = boolean
+Line 30 col 11 LessThanExpression "a1 < b1" = boolean
+Line 30 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 30 col 16 IdentifierName "b1" = { fn(x: string): string; }
+Line 31 col 4 IdentifierName "r1a2" = boolean
+Line 31 col 11 LessThanExpression "a2 < b2" = boolean
+Line 31 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 31 col 16 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 32 col 4 IdentifierName "r1a3" = boolean
+Line 32 col 11 LessThanExpression "a3 < b3" = boolean
+Line 32 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 32 col 16 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 33 col 4 IdentifierName "r1a4" = boolean
+Line 33 col 11 LessThanExpression "a4 < b4" = boolean
+Line 33 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 33 col 16 IdentifierName "b4" = { fn(x?: string): string; }
+Line 34 col 4 IdentifierName "r1a5" = boolean
+Line 34 col 11 LessThanExpression "a5 < b5" = boolean
+Line 34 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 34 col 16 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 35 col 4 IdentifierName "r1a6" = boolean
+Line 35 col 11 LessThanExpression "a6 < b6" = boolean
+Line 35 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 35 col 16 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 38 col 4 IdentifierName "r1b1" = boolean
+Line 38 col 11 LessThanExpression "b1 < a1" = boolean
+Line 38 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 38 col 16 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 39 col 4 IdentifierName "r1b2" = boolean
+Line 39 col 11 LessThanExpression "b2 < a2" = boolean
+Line 39 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 39 col 16 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 40 col 4 IdentifierName "r1b3" = boolean
+Line 40 col 11 LessThanExpression "b3 < a3" = boolean
+Line 40 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 40 col 16 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 41 col 4 IdentifierName "r1b4" = boolean
+Line 41 col 11 LessThanExpression "b4 < a4" = boolean
+Line 41 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 41 col 16 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 42 col 4 IdentifierName "r1b5" = boolean
+Line 42 col 11 LessThanExpression "b5 < a5" = boolean
+Line 42 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 42 col 16 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 43 col 4 IdentifierName "r1b6" = boolean
+Line 43 col 11 LessThanExpression "b6 < a6" = boolean
+Line 43 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 43 col 16 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 47 col 4 IdentifierName "r2a1" = boolean
+Line 47 col 11 GreaterThanExpression "a1 > b1" = boolean
+Line 47 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 47 col 16 IdentifierName "b1" = { fn(x: string): string; }
+Line 48 col 4 IdentifierName "r2a2" = boolean
+Line 48 col 11 GreaterThanExpression "a2 > b2" = boolean
+Line 48 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 48 col 16 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 49 col 4 IdentifierName "r2a3" = boolean
+Line 49 col 11 GreaterThanExpression "a3 > b3" = boolean
+Line 49 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 49 col 16 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 50 col 4 IdentifierName "r2a4" = boolean
+Line 50 col 11 GreaterThanExpression "a4 > b4" = boolean
+Line 50 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 50 col 16 IdentifierName "b4" = { fn(x?: string): string; }
+Line 51 col 4 IdentifierName "r2a5" = boolean
+Line 51 col 11 GreaterThanExpression "a5 > b5" = boolean
+Line 51 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 51 col 16 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 52 col 4 IdentifierName "r2a6" = boolean
+Line 52 col 11 GreaterThanExpression "a6 > b6" = boolean
+Line 52 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 52 col 16 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 55 col 4 IdentifierName "r2b1" = boolean
+Line 55 col 11 GreaterThanExpression "b1 > a1" = boolean
+Line 55 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 55 col 16 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 56 col 4 IdentifierName "r2b2" = boolean
+Line 56 col 11 GreaterThanExpression "b2 > a2" = boolean
+Line 56 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 56 col 16 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 57 col 4 IdentifierName "r2b3" = boolean
+Line 57 col 11 GreaterThanExpression "b3 > a3" = boolean
+Line 57 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 57 col 16 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 58 col 4 IdentifierName "r2b4" = boolean
+Line 58 col 11 GreaterThanExpression "b4 > a4" = boolean
+Line 58 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 58 col 16 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 59 col 4 IdentifierName "r2b5" = boolean
+Line 59 col 11 GreaterThanExpression "b5 > a5" = boolean
+Line 59 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 59 col 16 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 60 col 4 IdentifierName "r2b6" = boolean
+Line 60 col 11 GreaterThanExpression "b6 > a6" = boolean
+Line 60 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 60 col 16 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 64 col 4 IdentifierName "r3a1" = boolean
+Line 64 col 11 LessThanOrEqualExpression "a1 <= b1" = boolean
+Line 64 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 64 col 17 IdentifierName "b1" = { fn(x: string): string; }
+Line 65 col 4 IdentifierName "r3a2" = boolean
+Line 65 col 11 LessThanOrEqualExpression "a2 <= b2" = boolean
+Line 65 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 65 col 17 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 66 col 4 IdentifierName "r3a3" = boolean
+Line 66 col 11 LessThanOrEqualExpression "a3 <= b3" = boolean
+Line 66 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 66 col 17 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 67 col 4 IdentifierName "r3a4" = boolean
+Line 67 col 11 LessThanOrEqualExpression "a4 <= b4" = boolean
+Line 67 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 67 col 17 IdentifierName "b4" = { fn(x?: string): string; }
+Line 68 col 4 IdentifierName "r3a5" = boolean
+Line 68 col 11 LessThanOrEqualExpression "a5 <= b5" = boolean
+Line 68 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 68 col 17 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 69 col 4 IdentifierName "r3a6" = boolean
+Line 69 col 11 LessThanOrEqualExpression "a6 <= b6" = boolean
+Line 69 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 69 col 17 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 72 col 4 IdentifierName "r3b1" = boolean
+Line 72 col 11 LessThanOrEqualExpression "b1 <= a1" = boolean
+Line 72 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 72 col 17 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 73 col 4 IdentifierName "r3b2" = boolean
+Line 73 col 11 LessThanOrEqualExpression "b2 <= a2" = boolean
+Line 73 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 73 col 17 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 74 col 4 IdentifierName "r3b3" = boolean
+Line 74 col 11 LessThanOrEqualExpression "b3 <= a3" = boolean
+Line 74 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 74 col 17 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 75 col 4 IdentifierName "r3b4" = boolean
+Line 75 col 11 LessThanOrEqualExpression "b4 <= a4" = boolean
+Line 75 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 75 col 17 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 76 col 4 IdentifierName "r3b5" = boolean
+Line 76 col 11 LessThanOrEqualExpression "b5 <= a5" = boolean
+Line 76 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 76 col 17 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 77 col 4 IdentifierName "r3b6" = boolean
+Line 77 col 11 LessThanOrEqualExpression "b6 <= a6" = boolean
+Line 77 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 77 col 17 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 81 col 4 IdentifierName "r4a1" = boolean
+Line 81 col 11 GreaterThanOrEqualExpression "a1 >= b1" = boolean
+Line 81 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 81 col 17 IdentifierName "b1" = { fn(x: string): string; }
+Line 82 col 4 IdentifierName "r4a2" = boolean
+Line 82 col 11 GreaterThanOrEqualExpression "a2 >= b2" = boolean
+Line 82 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 82 col 17 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 83 col 4 IdentifierName "r4a3" = boolean
+Line 83 col 11 GreaterThanOrEqualExpression "a3 >= b3" = boolean
+Line 83 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 83 col 17 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 84 col 4 IdentifierName "r4a4" = boolean
+Line 84 col 11 GreaterThanOrEqualExpression "a4 >= b4" = boolean
+Line 84 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 84 col 17 IdentifierName "b4" = { fn(x?: string): string; }
+Line 85 col 4 IdentifierName "r4a5" = boolean
+Line 85 col 11 GreaterThanOrEqualExpression "a5 >= b5" = boolean
+Line 85 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 85 col 17 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 86 col 4 IdentifierName "r4a6" = boolean
+Line 86 col 11 GreaterThanOrEqualExpression "a6 >= b6" = boolean
+Line 86 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 86 col 17 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 89 col 4 IdentifierName "r4b1" = boolean
+Line 89 col 11 GreaterThanOrEqualExpression "b1 >= a1" = boolean
+Line 89 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 89 col 17 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 90 col 4 IdentifierName "r4b2" = boolean
+Line 90 col 11 GreaterThanOrEqualExpression "b2 >= a2" = boolean
+Line 90 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 90 col 17 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 91 col 4 IdentifierName "r4b3" = boolean
+Line 91 col 11 GreaterThanOrEqualExpression "b3 >= a3" = boolean
+Line 91 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 91 col 17 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 92 col 4 IdentifierName "r4b4" = boolean
+Line 92 col 11 GreaterThanOrEqualExpression "b4 >= a4" = boolean
+Line 92 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 92 col 17 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 93 col 4 IdentifierName "r4b5" = boolean
+Line 93 col 11 GreaterThanOrEqualExpression "b5 >= a5" = boolean
+Line 93 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 93 col 17 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 94 col 4 IdentifierName "r4b6" = boolean
+Line 94 col 11 GreaterThanOrEqualExpression "b6 >= a6" = boolean
+Line 94 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 94 col 17 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 98 col 4 IdentifierName "r5a1" = boolean
+Line 98 col 11 EqualsWithTypeConversionExpression "a1 == b1" = boolean
+Line 98 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 98 col 17 IdentifierName "b1" = { fn(x: string): string; }
+Line 99 col 4 IdentifierName "r5a2" = boolean
+Line 99 col 11 EqualsWithTypeConversionExpression "a2 == b2" = boolean
+Line 99 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 99 col 17 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 100 col 4 IdentifierName "r5a3" = boolean
+Line 100 col 11 EqualsWithTypeConversionExpression "a3 == b3" = boolean
+Line 100 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 100 col 17 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 101 col 4 IdentifierName "r5a4" = boolean
+Line 101 col 11 EqualsWithTypeConversionExpression "a4 == b4" = boolean
+Line 101 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 101 col 17 IdentifierName "b4" = { fn(x?: string): string; }
+Line 102 col 4 IdentifierName "r5a5" = boolean
+Line 102 col 11 EqualsWithTypeConversionExpression "a5 == b5" = boolean
+Line 102 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 102 col 17 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 103 col 4 IdentifierName "r5a6" = boolean
+Line 103 col 11 EqualsWithTypeConversionExpression "a6 == b6" = boolean
+Line 103 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 103 col 17 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 106 col 4 IdentifierName "r5b1" = boolean
+Line 106 col 11 EqualsWithTypeConversionExpression "b1 == a1" = boolean
+Line 106 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 106 col 17 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 107 col 4 IdentifierName "r5b2" = boolean
+Line 107 col 11 EqualsWithTypeConversionExpression "b2 == a2" = boolean
+Line 107 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 107 col 17 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 108 col 4 IdentifierName "r5b3" = boolean
+Line 108 col 11 EqualsWithTypeConversionExpression "b3 == a3" = boolean
+Line 108 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 108 col 17 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 109 col 4 IdentifierName "r5b4" = boolean
+Line 109 col 11 EqualsWithTypeConversionExpression "b4 == a4" = boolean
+Line 109 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 109 col 17 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 110 col 4 IdentifierName "r5b5" = boolean
+Line 110 col 11 EqualsWithTypeConversionExpression "b5 == a5" = boolean
+Line 110 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 110 col 17 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 111 col 4 IdentifierName "r5b6" = boolean
+Line 111 col 11 EqualsWithTypeConversionExpression "b6 == a6" = boolean
+Line 111 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 111 col 17 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 115 col 4 IdentifierName "r6a1" = boolean
+Line 115 col 11 NotEqualsWithTypeConversionExpression "a1 != b1" = boolean
+Line 115 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 115 col 17 IdentifierName "b1" = { fn(x: string): string; }
+Line 116 col 4 IdentifierName "r6a2" = boolean
+Line 116 col 11 NotEqualsWithTypeConversionExpression "a2 != b2" = boolean
+Line 116 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 116 col 17 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 117 col 4 IdentifierName "r6a3" = boolean
+Line 117 col 11 NotEqualsWithTypeConversionExpression "a3 != b3" = boolean
+Line 117 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 117 col 17 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 118 col 4 IdentifierName "r6a4" = boolean
+Line 118 col 11 NotEqualsWithTypeConversionExpression "a4 != b4" = boolean
+Line 118 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 118 col 17 IdentifierName "b4" = { fn(x?: string): string; }
+Line 119 col 4 IdentifierName "r6a5" = boolean
+Line 119 col 11 NotEqualsWithTypeConversionExpression "a5 != b5" = boolean
+Line 119 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 119 col 17 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 120 col 4 IdentifierName "r6a6" = boolean
+Line 120 col 11 NotEqualsWithTypeConversionExpression "a6 != b6" = boolean
+Line 120 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 120 col 17 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 123 col 4 IdentifierName "r6b1" = boolean
+Line 123 col 11 NotEqualsWithTypeConversionExpression "b1 != a1" = boolean
+Line 123 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 123 col 17 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 124 col 4 IdentifierName "r6b2" = boolean
+Line 124 col 11 NotEqualsWithTypeConversionExpression "b2 != a2" = boolean
+Line 124 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 124 col 17 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 125 col 4 IdentifierName "r6b3" = boolean
+Line 125 col 11 NotEqualsWithTypeConversionExpression "b3 != a3" = boolean
+Line 125 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 125 col 17 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 126 col 4 IdentifierName "r6b4" = boolean
+Line 126 col 11 NotEqualsWithTypeConversionExpression "b4 != a4" = boolean
+Line 126 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 126 col 17 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 127 col 4 IdentifierName "r6b5" = boolean
+Line 127 col 11 NotEqualsWithTypeConversionExpression "b5 != a5" = boolean
+Line 127 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 127 col 17 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 128 col 4 IdentifierName "r6b6" = boolean
+Line 128 col 11 NotEqualsWithTypeConversionExpression "b6 != a6" = boolean
+Line 128 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 128 col 17 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 132 col 4 IdentifierName "r7a1" = boolean
+Line 132 col 11 EqualsExpression "a1 === b1" = boolean
+Line 132 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 132 col 18 IdentifierName "b1" = { fn(x: string): string; }
+Line 133 col 4 IdentifierName "r7a2" = boolean
+Line 133 col 11 EqualsExpression "a2 === b2" = boolean
+Line 133 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 133 col 18 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 134 col 4 IdentifierName "r7a3" = boolean
+Line 134 col 11 EqualsExpression "a3 === b3" = boolean
+Line 134 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 134 col 18 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 135 col 4 IdentifierName "r7a4" = boolean
+Line 135 col 11 EqualsExpression "a4 === b4" = boolean
+Line 135 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 135 col 18 IdentifierName "b4" = { fn(x?: string): string; }
+Line 136 col 4 IdentifierName "r7a5" = boolean
+Line 136 col 11 EqualsExpression "a5 === b5" = boolean
+Line 136 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 136 col 18 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 137 col 4 IdentifierName "r7a6" = boolean
+Line 137 col 11 EqualsExpression "a6 === b6" = boolean
+Line 137 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 137 col 18 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 140 col 4 IdentifierName "r7b1" = boolean
+Line 140 col 11 EqualsExpression "b1 === a1" = boolean
+Line 140 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 140 col 18 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 141 col 4 IdentifierName "r7b2" = boolean
+Line 141 col 11 EqualsExpression "b2 === a2" = boolean
+Line 141 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 141 col 18 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 142 col 4 IdentifierName "r7b3" = boolean
+Line 142 col 11 EqualsExpression "b3 === a3" = boolean
+Line 142 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 142 col 18 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 143 col 4 IdentifierName "r7b4" = boolean
+Line 143 col 11 EqualsExpression "b4 === a4" = boolean
+Line 143 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 143 col 18 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 144 col 4 IdentifierName "r7b5" = boolean
+Line 144 col 11 EqualsExpression "b5 === a5" = boolean
+Line 144 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 144 col 18 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 145 col 4 IdentifierName "r7b6" = boolean
+Line 145 col 11 EqualsExpression "b6 === a6" = boolean
+Line 145 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 145 col 18 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 149 col 4 IdentifierName "r8a1" = boolean
+Line 149 col 11 NotEqualsExpression "a1 !== b1" = boolean
+Line 149 col 11 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 149 col 18 IdentifierName "b1" = { fn(x: string): string; }
+Line 150 col 4 IdentifierName "r8a2" = boolean
+Line 150 col 11 NotEqualsExpression "a2 !== b2" = boolean
+Line 150 col 11 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 150 col 18 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 151 col 4 IdentifierName "r8a3" = boolean
+Line 151 col 11 NotEqualsExpression "a3 !== b3" = boolean
+Line 151 col 11 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 151 col 18 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 152 col 4 IdentifierName "r8a4" = boolean
+Line 152 col 11 NotEqualsExpression "a4 !== b4" = boolean
+Line 152 col 11 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 152 col 18 IdentifierName "b4" = { fn(x?: string): string; }
+Line 153 col 4 IdentifierName "r8a5" = boolean
+Line 153 col 11 NotEqualsExpression "a5 !== b5" = boolean
+Line 153 col 11 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 153 col 18 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 154 col 4 IdentifierName "r8a6" = boolean
+Line 154 col 11 NotEqualsExpression "a6 !== b6" = boolean
+Line 154 col 11 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }
+Line 154 col 18 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 157 col 4 IdentifierName "r8b1" = boolean
+Line 157 col 11 NotEqualsExpression "b1 !== a1" = boolean
+Line 157 col 11 IdentifierName "b1" = { fn(x: string): string; }
+Line 157 col 18 IdentifierName "a1" = { fn<T>(x: T): T; }
+Line 158 col 4 IdentifierName "r8b2" = boolean
+Line 158 col 11 NotEqualsExpression "b2 !== a2" = boolean
+Line 158 col 11 IdentifierName "b2" = { fn(x: string, y: number): string; }
+Line 158 col 18 IdentifierName "a2" = { fn<T>(x: T): T; }
+Line 159 col 4 IdentifierName "r8b3" = boolean
+Line 159 col 11 NotEqualsExpression "b3 !== a3" = boolean
+Line 159 col 11 IdentifierName "b3" = { fn(x: string, y: number): string; }
+Line 159 col 18 IdentifierName "a3" = { fn<T, U>(x: T, y: U): T; }
+Line 160 col 4 IdentifierName "r8b4" = boolean
+Line 160 col 11 NotEqualsExpression "b4 !== a4" = boolean
+Line 160 col 11 IdentifierName "b4" = { fn(x?: string): string; }
+Line 160 col 18 IdentifierName "a4" = { fn<T>(x?: T): T; }
+Line 161 col 4 IdentifierName "r8b5" = boolean
+Line 161 col 11 NotEqualsExpression "b5 !== a5" = boolean
+Line 161 col 11 IdentifierName "b5" = { fn(...x: string[]): string; }
+Line 161 col 18 IdentifierName "a5" = { fn<T>(...x: T[]): T; }
+Line 162 col 4 IdentifierName "r8b6" = boolean
+Line 162 col 11 NotEqualsExpression "b6 !== a6" = boolean
+Line 162 col 11 IdentifierName "b6" = { fn(x: string, y: number): {}; }
+Line 162 col 18 IdentifierName "a6" = { fn<T>(x: T, y: T): T; }

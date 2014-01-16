@@ -149,7 +149,7 @@ module TypeScript.Parser {
         TypeParameterList_TypeParameters = 1 << 19,
 
         FirstListParsingState = SourceUnit_ModuleElements,
-        LastListParsingState = TypeArgumentList_Types,
+        LastListParsingState = TypeParameterList_TypeParameters,
     }
 
     // Allows one to easily move over a syntax tree.  Used during incremental parsing to move over
@@ -4748,10 +4748,6 @@ module TypeScript.Parser {
             var currentToken = this.currentToken();
             var currentTokenKind = currentToken.tokenKind;
 
-            if (currentTokenKind === SyntaxKind.TypeOfKeyword) {
-                return this.parseTypeQuery();
-            }
-
             var type = this.parseNonArrayType(currentToken);
 
             while (this.currentToken().tokenKind === SyntaxKind.OpenBracketToken) {
@@ -4799,6 +4795,9 @@ module TypeScript.Parser {
                 // Constructor type:
                 case SyntaxKind.NewKeyword:
                     return this.parseConstructorType();
+
+                case SyntaxKind.TypeOfKeyword:
+                    return this.parseTypeQuery();
             }
 
             return this.parseNameOrGenericType();

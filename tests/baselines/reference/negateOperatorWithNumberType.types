@@ -1,0 +1,89 @@
+=== tests/cases/compiler/negateOperatorWithNumberType.ts ===
+Line 1 col 4 IdentifierName "NUMBER" = number
+Line 2 col 4 IdentifierName "NUMBER1" = number[]
+Line 2 col 24 ArrayLiteralExpression "[1, 2]" = number[]
+Line 4 col 9 IdentifierName "foo" = typeof foo
+Line 6 col 6 IdentifierName "A" = A
+Line 7 col 11 IdentifierName "a" = number
+Line 8 col 11 IdentifierName "foo" = () => number
+Line 10 col 7 IdentifierName "M" = M
+Line 11 col 15 IdentifierName "n" = number
+Line 14 col 4 IdentifierName "objA" = A
+Line 14 col 11 ObjectCreationExpression "new A()" = A
+Line 14 col 15 IdentifierName "A" = typeof A
+Line 17 col 4 IdentifierName "ResultIsNumber1" = number
+Line 17 col 22 NegateExpression "-NUMBER" = number
+Line 17 col 23 IdentifierName "NUMBER" = number
+Line 18 col 4 IdentifierName "ResultIsNumber2" = number
+Line 18 col 22 NegateExpression "-NUMBER1" = number
+Line 18 col 23 IdentifierName "NUMBER1" = number[]
+Line 21 col 4 IdentifierName "ResultIsNumber3" = number
+Line 21 col 22 NegateExpression "-1" = number
+Line 22 col 4 IdentifierName "ResultIsNumber4" = number
+Line 22 col 22 NegateExpression "-{ x: 1, y: 2}" = number
+Line 22 col 23 ObjectLiteralExpression "{ x: 1, y: 2}" = { x: number; y: number; }
+Line 22 col 25 IdentifierName "x" = number
+Line 22 col 31 IdentifierName "y" = number
+Line 23 col 4 IdentifierName "ResultIsNumber5" = number
+Line 23 col 22 NegateExpression "-{ x: 1, y: (n: number) => { return n; } }" = number
+Line 23 col 23 ObjectLiteralExpression "{ x: 1, y: (n: number) => { return n; } }" = { x: number; y: (n: number) => number; }
+Line 23 col 25 IdentifierName "x" = number
+Line 23 col 31 IdentifierName "y" = (n: number) => number
+Line 23 col 34 ParenthesizedArrowFunctionExpression "(n: number) => { return n; }" = (n: number) => number
+Line 23 col 35 IdentifierName "n" = number
+Line 23 col 58 IdentifierName "n" = number
+Line 26 col 4 IdentifierName "ResultIsNumber6" = number
+Line 26 col 22 NegateExpression "-objA.a" = number
+Line 26 col 23 MemberAccessExpression "objA.a" = number
+Line 26 col 23 IdentifierName "objA" = A
+Line 26 col 28 IdentifierName "a" = number
+Line 27 col 4 IdentifierName "ResultIsNumber7" = number
+Line 27 col 22 NegateExpression "-M.n" = number
+Line 27 col 23 MemberAccessExpression "M.n" = number
+Line 27 col 23 IdentifierName "M" = typeof M
+Line 27 col 25 IdentifierName "n" = number
+Line 28 col 4 IdentifierName "ResultIsNumber8" = number
+Line 28 col 22 NegateExpression "-NUMBER1[0]" = number
+Line 28 col 23 ElementAccessExpression "NUMBER1[0]" = number
+Line 28 col 23 IdentifierName "NUMBER1" = number[]
+Line 29 col 4 IdentifierName "ResultIsNumber9" = number
+Line 29 col 22 NegateExpression "-foo()" = number
+Line 29 col 23 InvocationExpression "foo()" = number
+Line 29 col 23 IdentifierName "foo" = typeof foo
+Line 30 col 4 IdentifierName "ResultIsNumber10" = number
+Line 30 col 23 NegateExpression "-A.foo()" = number
+Line 30 col 24 InvocationExpression "A.foo()" = number
+Line 30 col 24 MemberAccessExpression "A.foo" = () => number
+Line 30 col 24 IdentifierName "A" = typeof A
+Line 30 col 26 IdentifierName "foo" = () => number
+Line 31 col 4 IdentifierName "ResultIsNumber11" = number
+Line 31 col 23 NegateExpression "-(NUMBER - NUMBER)" = number
+Line 31 col 24 ParenthesizedExpression "(NUMBER - NUMBER)" = number
+Line 31 col 25 SubtractExpression "NUMBER - NUMBER" = number
+Line 31 col 25 IdentifierName "NUMBER" = number
+Line 31 col 34 IdentifierName "NUMBER" = number
+Line 32 col 0 NegateExpression "// miss assignment operators
+-1" = number
+Line 35 col 0 NegateExpression "-NUMBER" = number
+Line 35 col 1 IdentifierName "NUMBER" = number
+Line 36 col 0 NegateExpression "-NUMBER1" = number
+Line 36 col 1 IdentifierName "NUMBER1" = number[]
+Line 37 col 0 NegateExpression "-foo()" = number
+Line 37 col 1 InvocationExpression "foo()" = number
+Line 37 col 1 IdentifierName "foo" = typeof foo
+Line 38 col 0 NegateExpression "-objA.a" = number
+Line 38 col 1 MemberAccessExpression "objA.a" = number
+Line 38 col 1 IdentifierName "objA" = A
+Line 38 col 6 IdentifierName "a" = number
+Line 39 col 0 NegateExpression "-M.n" = number
+Line 39 col 1 MemberAccessExpression "M.n" = number
+Line 39 col 1 IdentifierName "M" = typeof M
+Line 39 col 3 IdentifierName "n" = number
+Line 40 col 0 CommaExpression "-objA.a, M.n" = number
+Line 40 col 0 NegateExpression "-objA.a" = number
+Line 40 col 1 MemberAccessExpression "objA.a" = number
+Line 40 col 1 IdentifierName "objA" = A
+Line 40 col 6 IdentifierName "a" = number
+Line 40 col 9 MemberAccessExpression "M.n" = number
+Line 40 col 9 IdentifierName "M" = typeof M
+Line 40 col 11 IdentifierName "n" = number

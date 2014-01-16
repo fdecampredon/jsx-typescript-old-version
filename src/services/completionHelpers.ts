@@ -167,13 +167,9 @@ module TypeScript.Services {
                     // If the user entered name for the symbol was quoted, removing the quotes is not enough, as the name could be an
                     // invalid identifer name. We need to check if whatever was inside the quotes is actually a valid identifier name.
                     displayName = TypeScript.stripStartAndEndQuotes(displayName);
-
-                    if (TypeScript.Scanner.isValidIdentifier(
-                        TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
-                        return displayName;
-                    }
                 }
-                else {
+
+                if (TypeScript.Scanner.isValidIdentifier(TypeScript.SimpleText.fromString(displayName), TypeScript.LanguageVersion.EcmaScript5)) {
                     return displayName;
                 }
             }

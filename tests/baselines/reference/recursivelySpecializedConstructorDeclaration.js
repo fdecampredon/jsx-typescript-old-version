@@ -31,3 +31,16 @@ var MsPortal;
     })(MsPortal.Controls || (MsPortal.Controls = {}));
     var Controls = MsPortal.Controls;
 })(MsPortal || (MsPortal = {}));
+// Generates:
+/*
+declare module MsPortal.Controls.Base.ItemList {
+interface Interface<TValue> {
+options: ViewModel<TValue>;
+}
+class ItemValue<T> {
+constructor(value: T);
+}
+class ViewModel<TValue> extends ItemValue<TValue> {
+}
+}
+*/

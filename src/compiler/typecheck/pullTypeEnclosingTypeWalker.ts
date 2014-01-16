@@ -56,7 +56,10 @@ module TypeScript {
                     // This may occur if we are trying to walk type parameter in the original declaration
                     return GenerativeTypeClassification.Unknown;
                 }
-                return currentType.getGenerativeTypeClassification(this.getEnclosingType());
+
+                var variableNeededToFixNodeJitterBug = this.getEnclosingType();
+
+                return currentType.getGenerativeTypeClassification(variableNeededToFixNodeJitterBug);
             }
 
             return GenerativeTypeClassification.Closed;
@@ -190,6 +193,24 @@ module TypeScript {
         }
 
         public postWalkSignature() {
+            if (this._canWalkStructure()) {
+                this._popSymbol();
+            }
+        }
+
+        public walkTypeArgument(index: number): void {
+            if (this._canWalkStructure()) {
+                var typeArgument: PullTypeSymbol = null;
+                var currentType = <PullTypeSymbol>this._getCurrentSymbol();
+                if (currentType) {
+                    var typeArguments = currentType.getTypeArguments();
+                    typeArgument = typeArguments ? typeArguments[index] : null;
+                }
+                this._pushSymbol(typeArgument);
+            }
+        }
+
+        public postWalkTypeArgument(): void {
             if (this._canWalkStructure()) {
                 this._popSymbol();
             }

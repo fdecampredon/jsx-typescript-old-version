@@ -376,6 +376,11 @@ var webhostJsPath = "tests/cases/webhost/webtsc.js";
 desc("Builds the web host");
 compileFile(webhostJsPath, [webhostPath], [tscFile, webhostPath], [], true);
 
+desc("Builds the tsc web host");
+task("webhost", [webhostJsPath], function() {
+    jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
+});
+
 // Fidelity Tests
 var fidelityTestsOutFile = "tests/Fidelity/program.js";
 var fidelityTestsInFile1 = "tests/Fidelity/Program.ts";

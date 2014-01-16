@@ -7,7 +7,7 @@ function f1<T extends U, U>(x: T, y: U) {
 
 // V > U > T
 function f2<T extends U, U extends V, V>(x: T, y: U, z: V) {
-    var r = true ? x : y; // BUG 821629
+    var r = true ? x : y;
     var r = true ? y : x;
 
     // ok
@@ -21,7 +21,7 @@ function f2<T extends U, U extends V, V>(x: T, y: U, z: V) {
 
 // Date > U > T
 function f3<T extends U, U extends Date>(x: T, y: U) {
-    var r = true ? x : y; // BUG 821629
+    var r = true ? x : y;
     var r = true ? y : x;
 
     // ok

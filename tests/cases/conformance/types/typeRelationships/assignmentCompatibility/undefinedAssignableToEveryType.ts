@@ -30,8 +30,13 @@ var o: <T>(x: T) => T = undefined;
 var p: Number = undefined;
 var q: String = undefined;
 
-function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+function foo<T, U, V extends Date>(x: T, y: U, z: V) {
     x = undefined;
     y = undefined;
     z = undefined;
 }
+//function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+//    x = undefined;
+//    y = undefined;
+//    z = undefined;
+//}

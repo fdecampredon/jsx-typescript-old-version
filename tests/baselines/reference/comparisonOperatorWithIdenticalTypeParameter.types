@@ -1,0 +1,37 @@
+=== tests/cases/compiler/comparisonOperatorWithIdenticalTypeParameter.ts ===
+Line 0 col 9 IdentifierName "foo" = typeof foo
+Line 0 col 13 IdentifierName "T" = T
+Line 0 col 16 IdentifierName "t" = T
+Line 0 col 19 IdentifierName "T" = T
+Line 1 col 8 IdentifierName "r1" = boolean
+Line 1 col 13 LessThanExpression "t < t" = boolean
+Line 1 col 13 IdentifierName "t" = T
+Line 1 col 17 IdentifierName "t" = T
+Line 2 col 8 IdentifierName "r2" = boolean
+Line 2 col 13 GreaterThanExpression "t > t" = boolean
+Line 2 col 13 IdentifierName "t" = T
+Line 2 col 17 IdentifierName "t" = T
+Line 3 col 8 IdentifierName "r3" = boolean
+Line 3 col 13 LessThanOrEqualExpression "t <= t" = boolean
+Line 3 col 13 IdentifierName "t" = T
+Line 3 col 18 IdentifierName "t" = T
+Line 4 col 8 IdentifierName "r4" = boolean
+Line 4 col 13 GreaterThanOrEqualExpression "t >= t" = boolean
+Line 4 col 13 IdentifierName "t" = T
+Line 4 col 18 IdentifierName "t" = T
+Line 5 col 8 IdentifierName "r5" = boolean
+Line 5 col 13 EqualsWithTypeConversionExpression "t == t" = boolean
+Line 5 col 13 IdentifierName "t" = T
+Line 5 col 18 IdentifierName "t" = T
+Line 6 col 8 IdentifierName "r6" = boolean
+Line 6 col 13 NotEqualsWithTypeConversionExpression "t != t" = boolean
+Line 6 col 13 IdentifierName "t" = T
+Line 6 col 18 IdentifierName "t" = T
+Line 7 col 8 IdentifierName "r7" = boolean
+Line 7 col 13 EqualsExpression "t === t" = boolean
+Line 7 col 13 IdentifierName "t" = T
+Line 7 col 19 IdentifierName "t" = T
+Line 8 col 8 IdentifierName "r8" = boolean
+Line 8 col 13 NotEqualsExpression "t !== t" = boolean
+Line 8 col 13 IdentifierName "t" = T
+Line 8 col 19 IdentifierName "t" = T

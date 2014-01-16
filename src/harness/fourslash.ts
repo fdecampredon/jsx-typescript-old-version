@@ -400,7 +400,8 @@ module FourSlash {
         public verifyMemberListCount(expectedCount: number, negative: boolean) {
             if (expectedCount === 0) {
                 if (negative) {
-                    this.scenarioActions.push('<ShowCompletionList ExpectsFailure="true" />');
+                    this.verifyMemberListIsEmpty(false);
+                    return;
                 } else {
                     this.scenarioActions.push('<ShowCompletionList />');
                 }

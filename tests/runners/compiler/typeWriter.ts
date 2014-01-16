@@ -51,7 +51,7 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
             var candidates: string[] = [];
 
             for (var i = 0; i < element.fullWidth(); i++) {
-                var ast = TypeScript.getAstAtPosition(this.document.sourceUnit(), element.fullStart() + i, false, false);
+                var ast = TypeScript.ASTHelpers.getAstAtPosition(this.document.sourceUnit(), element.fullStart() + i, false, false);
                 while (ast) {
                     if (ast.end() - ast.start() === element.width()) {
                         return ast;

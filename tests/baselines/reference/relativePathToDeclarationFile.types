@@ -1,0 +1,30 @@
+=== tests/cases/compiler/test/file1.ts ===
+Line 0 col 7 IdentifierName "foo" = foo
+Line 1 col 7 IdentifierName "other" = other
+Line 2 col 7 IdentifierName "relMod" = typeof Test
+Line 4 col 3 MemberAccessExpression "foo.M2.x" = boolean
+Line 4 col 3 MemberAccessExpression "foo.M2" = typeof M2
+Line 4 col 3 IdentifierName "foo" = foo
+Line 4 col 7 IdentifierName "M2" = typeof M2
+Line 4 col 10 IdentifierName "x" = boolean
+Line 5 col 5 IdentifierName "x" = Test
+Line 5 col 9 ObjectCreationExpression "new relMod(other.M2.x.charCodeAt(0))" = Test
+Line 5 col 13 IdentifierName "relMod" = typeof Test
+Line 5 col 20 InvocationExpression "other.M2.x.charCodeAt(0)" = number
+Line 5 col 20 MemberAccessExpression "other.M2.x.charCodeAt" = (index: number) => number
+Line 5 col 20 MemberAccessExpression "other.M2.x" = string
+Line 5 col 20 MemberAccessExpression "other.M2" = typeof M2
+Line 5 col 20 IdentifierName "other" = other
+Line 5 col 26 IdentifierName "M2" = typeof M2
+Line 5 col 29 IdentifierName "x" = string
+Line 5 col 31 IdentifierName "charCodeAt" = (index: number) => number
+=== tests/cases/compiler/test/foo.d.ts ===
+Line 0 col 22 IdentifierName "M2" = M2
+Line 1 col 12 IdentifierName "x" = boolean
+=== tests/cases/compiler/test/other.d.ts ===
+Line 0 col 22 IdentifierName "M2" = M2
+Line 1 col 12 IdentifierName "x" = string
+=== tests/cases/compiler/test/sub/relMod.d.ts ===
+Line 0 col 14 IdentifierName "Test" = Test
+Line 1 col 13 IdentifierName "x" = number
+Line 3 col 9 IdentifierName "Test" = typeof Test

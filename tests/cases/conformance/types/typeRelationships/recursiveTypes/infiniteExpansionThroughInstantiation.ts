@@ -13,13 +13,11 @@ interface OwnerList<U> extends List<List<U>> {
 
 var list: List<string>;
 var ownerList: OwnerList<string>;
-// BUG 843510
-list = ownerList; // should be error
+list = ownerList; 
 
 function other<T>(x: T) {
     var list: List<T>;
     var ownerList: OwnerList<T>;
-    // BUG 843510
-    list = ownerList; // should be error
+    list = ownerList; 
 
 }

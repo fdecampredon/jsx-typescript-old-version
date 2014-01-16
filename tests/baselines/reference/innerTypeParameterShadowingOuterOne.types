@@ -1,0 +1,41 @@
+=== tests/cases/compiler/innerTypeParameterShadowingOuterOne.ts ===
+Line 3 col 9 IdentifierName "f" = typeof f
+Line 3 col 11 IdentifierName "T" = T
+Line 3 col 21 IdentifierName "Date" = Date
+Line 4 col 13 IdentifierName "g" = <T extends Number>() => void
+Line 4 col 15 IdentifierName "T" = T
+Line 4 col 25 IdentifierName "Number" = Number
+Line 5 col 12 IdentifierName "x" = T
+Line 5 col 15 IdentifierName "T" = T
+Line 6 col 0 InvocationExpression "x.toFixed()" = string
+Line 6 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
+Line 6 col 0 IdentifierName "x" = T
+Line 6 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
+Line 8 col 8 IdentifierName "x" = T
+Line 8 col 11 IdentifierName "T" = T
+Line 9 col 0 InvocationExpression "x.getDate()" = number
+Line 9 col 0 MemberAccessExpression "x.getDate" = () => number
+Line 9 col 0 IdentifierName "x" = T
+Line 9 col 6 IdentifierName "getDate" = () => number
+Line 12 col 9 IdentifierName "f2" = typeof f2
+Line 12 col 12 IdentifierName "T" = T
+Line 12 col 22 IdentifierName "Date" = Date
+Line 12 col 28 IdentifierName "U" = U
+Line 12 col 38 IdentifierName "Date" = Date
+Line 13 col 13 IdentifierName "g" = <T extends Number, U extends Number>() => void
+Line 13 col 15 IdentifierName "T" = T
+Line 13 col 25 IdentifierName "Number" = Number
+Line 13 col 33 IdentifierName "U" = U
+Line 13 col 43 IdentifierName "Number" = Number
+Line 14 col 12 IdentifierName "x" = U
+Line 14 col 15 IdentifierName "U" = U
+Line 15 col 0 InvocationExpression "x.toFixed()" = string
+Line 15 col 0 MemberAccessExpression "x.toFixed" = (fractionDigits?: number) => string
+Line 15 col 0 IdentifierName "x" = U
+Line 15 col 10 IdentifierName "toFixed" = (fractionDigits?: number) => string
+Line 17 col 8 IdentifierName "x" = U
+Line 17 col 11 IdentifierName "U" = U
+Line 18 col 0 InvocationExpression "x.getDate()" = number
+Line 18 col 0 MemberAccessExpression "x.getDate" = () => number
+Line 18 col 0 IdentifierName "x" = U
+Line 18 col 6 IdentifierName "getDate" = () => number

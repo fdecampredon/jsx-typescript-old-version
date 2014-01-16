@@ -171,7 +171,7 @@ module TypeScript {
                     // We may have been in the 'name' portion of an module declaration.  If so, we want the actual 
                     // container of *that* module declaration.  
                     if (container.kind() === SyntaxKind.ModuleDeclaration &&
-                        isAnyNameOfModule(<ModuleDeclarationSyntax>container, declAST)) {
+                        ASTHelpers.isAnyNameOfModule(<ModuleDeclarationSyntax>container, declAST)) {
 
                         container = this.getEnclosingContainer(container);
                     }
@@ -304,7 +304,7 @@ module TypeScript {
                 return;
             }
 
-            var declComments: Comment[] = astOrSymbol.docComments ? astOrSymbol.docComments() : docComments(astOrSymbol);
+            var declComments: Comment[] = astOrSymbol.docComments ? astOrSymbol.docComments() : ASTHelpers.docComments(astOrSymbol);
             this.writeDeclarationComments(declComments, endLine);
         }
 
@@ -312,7 +312,7 @@ module TypeScript {
             if (declComments) {
                 var wroteComment = false;
                 for (var i = 0; i < declComments.length; i++) {
-                    if (isDocComment(declComments[i])) {
+                    if (ASTHelpers.isDocComment(declComments[i])) {
                         this.emitComment(declComments[i]);
                         wroteComment = true;
                     }
@@ -370,7 +370,7 @@ module TypeScript {
 
                 this.declFile.Write(varDecl.propertyName.text());
 
-                if (!hasModifier(getVariableDeclaratorModifiers(varDecl), PullElementFlags.Private)) {
+                if (!hasModifier(ASTHelpers.getVariableDeclaratorModifiers(varDecl), PullElementFlags.Private)) {
                     this.emitTypeOfVariableDeclaratorOrParameter(varDecl);
                 }
 
@@ -484,12 +484,13 @@ module TypeScript {
             this.declFile.Write("constructor");
 
             this.emitParameterList(/*isPrivate:*/ false, funcDecl.callSignature.parameterList);
+
             this.declFile.WriteLine(";");
         }
 
         private emitParameterList(isPrivate: boolean, parameterList: ParameterListSyntax): void {
             this.declFile.Write("(");
-            this.emitParameters(isPrivate, Parameters.fromParameterList(parameterList));
+            this.emitParameters(isPrivate, ASTHelpers.parametersFromParameterList(parameterList));
             this.declFile.Write(")");
         }
 
@@ -584,6 +585,7 @@ module TypeScript {
             this.emitTypeParameters(funcDecl.typeParameterList, funcSignature);
 
             this.emitIndent();
+
             this.emitParameterList(/*isPrivate:*/ false, funcDecl.parameterList);
 
             var returnType = funcSignature.returnType;
@@ -726,7 +728,7 @@ module TypeScript {
 
             this.emitIndent();
             this.declFile.Write("[");
-            this.emitParameters(/*isPrivate:*/ false, Parameters.fromParameter(funcDecl.parameter));
+            this.emitParameters(/*isPrivate:*/ false, ASTHelpers.parametersFromParameter(funcDecl.parameter));
             this.declFile.Write("]");
 
             var funcPullDecl = this.semanticInfoChain.getDeclForAST(funcDecl);
@@ -765,10 +767,10 @@ module TypeScript {
 
             var comments: Comment[] = [];
             if (accessors.getter) {
-                comments = comments.concat(docComments(accessors.getter));
+                comments = comments.concat(ASTHelpers.docComments(accessors.getter));
             }
             if (accessors.setter) {
-                comments = comments.concat(docComments(accessors.setter));
+                comments = comments.concat(ASTHelpers.docComments(accessors.setter));
             }
 
             this.writeDeclarationComments(comments);
@@ -962,18 +964,8 @@ module TypeScript {
                     this.declFile.WriteLine("require(" + (<ExternalModuleReferenceSyntax>importDeclAST.moduleReference).stringLiteral.text() + ");");
                 }
                 else {
-                    this.declFile.WriteLine(this.getFullName((<ModuleNameModuleReferenceSyntax>importDeclAST.moduleReference).moduleName) + ";");
+                    this.declFile.WriteLine(ASTHelpers.getNameOfIdenfierOrQualifiedName((<ModuleNameModuleReferenceSyntax>importDeclAST.moduleReference).moduleName) + ";");
                 }
-            }
-        }
-
-        public getFullName(name: ISyntaxElement): string {
-            if (name.kind() === SyntaxKind.IdentifierName) {
-                return (<ISyntaxToken>name).text();
-            }
-            else {
-                var dotExpr = <QualifiedNameSyntax>name;
-                return this.getFullName(dotExpr.left) + "." + this.getFullName(dotExpr.right);
             }
         }
 
@@ -1021,7 +1013,7 @@ module TypeScript {
                 this.declFile.Write(moduleDecl.stringLiteral.text());
             }
             else {
-                this.declFile.Write(this.getFullName(moduleDecl.name));
+                this.declFile.Write(ASTHelpers.getNameOfIdenfierOrQualifiedName(moduleDecl.name));
             }
 
             this.declFile.WriteLine(" {");

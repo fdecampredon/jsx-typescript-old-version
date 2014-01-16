@@ -39,7 +39,7 @@ module TypeScript {
     class FileLogger implements ILogger {
 
         private fileName: string;
-
+        
         constructor(public ioHost: IIO) {
             var file = "tsc." + Date.now() + ".log";
 
@@ -364,6 +364,7 @@ module TypeScript {
             });
 
             opts.flag('noResolve', {
+                experimental: true,
                 usage: {
                     locCode: DiagnosticCode.Skip_resolution_and_preprocessing,
                     args: null

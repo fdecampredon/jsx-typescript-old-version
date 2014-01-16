@@ -1,0 +1,10 @@
+=== tests/cases/compiler/logicalOrExpressionIsContextuallyTyped.ts ===
+Line 5 col 4 IdentifierName "r" = { a: string; }
+Line 5 col 9 IdentifierName "a" = string
+Line 5 col 23 LogicalOrExpression "{ a: '', b: 123 } || { a: '', b: true }" = { a: string; }
+Line 5 col 23 ObjectLiteralExpression "{ a: '', b: 123 }" = { a: string; b: number; }
+Line 5 col 25 IdentifierName "a" = string
+Line 5 col 32 IdentifierName "b" = number
+Line 5 col 44 ObjectLiteralExpression "{ a: '', b: true }" = { a: string; b: boolean; }
+Line 5 col 46 IdentifierName "a" = string
+Line 5 col 53 IdentifierName "b" = boolean

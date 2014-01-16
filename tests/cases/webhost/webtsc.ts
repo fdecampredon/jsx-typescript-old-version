@@ -8,6 +8,13 @@ module TypeScript.WebTsc {
     
     function getBrowserIO(env: IEnvironment, fso: any, currentDir: string, stdOut: ITextWriter, stdErr: ITextWriter): IIO {
         return {
+            appendFile: function (path: string, content: string) {
+                var txtFile = fso.OpenTextFile(path, 8 /* append */, true /* create if file doesn't exist */);
+                txtFile.Write(content);
+                txtFile.Close();
+            },
+
+
             readFile: function (path: string, codepage: number): FileInformation {
                 return env.readFile(path, codepage);
             },

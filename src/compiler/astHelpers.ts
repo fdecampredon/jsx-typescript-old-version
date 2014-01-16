@@ -16,6 +16,19 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
+    export interface IParameters {
+        length: number;
+        lastParameterIsRest(): boolean;
+        ast: ISyntaxElement;
+        astAt(index: number): ISyntaxElement;
+        identifierAt(index: number): ISyntaxToken;
+        typeAt(index: number): ISyntaxElement;
+        initializerAt(index: number): EqualsValueClauseSyntax;
+        isOptionalAt(index: number): boolean;
+    }
+}
+
+module TypeScript.ASTHelpers {
     export function scriptIsElided(sourceUnit: SourceUnitSyntax): boolean {
         return isDTSFile(sourceUnit.fileName()) || moduleMembersAreElided(sourceUnit.moduleElements);
     }
@@ -225,7 +238,7 @@ module TypeScript {
     }
 
     export function isDeclarationASTOrDeclarationNameAST(ast: ISyntaxElement) {
-        return isNameOfSomeDeclaration(ast) || isDeclarationAST(ast);
+        return isNameOfSomeDeclaration(ast) || ASTHelpers.isDeclarationAST(ast);
     }
 
     export function getEnclosingParameterForInitializer(ast: ISyntaxElement): ParameterSyntax {
@@ -243,7 +256,7 @@ module TypeScript {
                     // exit early
                     return null;
             }
-            
+
             current = current.parent;
         }
         return null;
@@ -308,60 +321,48 @@ module TypeScript {
         return false;
     }
 
-    export interface IParameters {
-        length: number;
-        lastParameterIsRest(): boolean;
-        ast: ISyntaxElement;
-        astAt(index: number): ISyntaxElement;
-        identifierAt(index: number): ISyntaxToken;
-        typeAt(index: number): ISyntaxElement;
-        initializerAt(index: number): EqualsValueClauseSyntax;
-        isOptionalAt(index: number): boolean;
+
+    export function parametersFromIdentifier(id: ISyntaxToken): IParameters {
+        return {
+            length: 1,
+            lastParameterIsRest: () => false,
+            ast: id,
+            astAt: (index: number) => id,
+            identifierAt: (index: number) => id,
+            typeAt: (index: number): ISyntaxElement => null,
+            initializerAt: (index: number): EqualsValueClauseSyntax => null,
+            isOptionalAt: (index: number) => false,
+        };
     }
 
-    export module Parameters {
-        export function fromIdentifier(id: ISyntaxToken): IParameters {
-            return {
-                length: 1,
-                lastParameterIsRest: () => false,
-                ast: id,
-                astAt: (index: number) => id,
-                identifierAt: (index: number) => id,
-                typeAt: (index: number): ISyntaxElement => null,
-                initializerAt: (index: number): EqualsValueClauseSyntax => null,
-                isOptionalAt: (index: number) => false,
-            }
-        }
+    export function parametersFromParameter(parameter: ParameterSyntax): IParameters {
+        return {
+            length: 1,
+            lastParameterIsRest: () => parameter.dotDotDotToken !== null,
+            ast: parameter,
+            astAt: (index: number) => parameter,
+            identifierAt: (index: number) => parameter.identifier,
+            typeAt: (index: number) => getType(parameter),
+            initializerAt: (index: number) => parameter.equalsValueClause,
+            isOptionalAt: (index: number) => parameterIsOptional(parameter),
+        };
+    }
 
-        export function fromParameter(parameter: ParameterSyntax): IParameters {
-            return {
-                length: 1,
-                lastParameterIsRest: () => parameter.dotDotDotToken !== null,
-                ast: parameter,
-                astAt: (index: number) => parameter,
-                identifierAt: (index: number) => parameter.identifier,
-                typeAt: (index: number) => getType(parameter),
-                initializerAt: (index: number) => parameter.equalsValueClause,
-                isOptionalAt: (index: number) => parameterIsOptional(parameter),
-            }
-        }
+    function parameterIsOptional(parameter: ParameterSyntax): boolean {
+        return parameter.questionToken !== null || parameter.equalsValueClause !== null;
+    }
 
-        function parameterIsOptional(parameter: ParameterSyntax): boolean {
-            return parameter.questionToken !== null || parameter.equalsValueClause !== null;
-        }
-
-        export function fromParameterList(list: ParameterListSyntax): IParameters {
-            return {
-                length: list.parameters.nonSeparatorCount(),
-                lastParameterIsRest: () => lastParameterIsRest(list),
-                ast: list.parameters,
-                astAt: (index: number) => list.parameters.nonSeparatorAt(index),
-                identifierAt: (index: number) => list.parameters.nonSeparatorAt(index).identifier,
-                typeAt: (index: number) => getType(list.parameters.nonSeparatorAt(index)),
-                initializerAt: (index: number) => list.parameters.nonSeparatorAt(index).equalsValueClause,
-                isOptionalAt: (index: number) => parameterIsOptional(list.parameters.nonSeparatorAt(index)),
-            }
-        }
+    export function parametersFromParameterList(list: ParameterListSyntax): IParameters {
+        return {
+            length: list.parameters.nonSeparatorCount(),
+            lastParameterIsRest: () => lastParameterIsRest(list),
+            ast: list.parameters,
+            astAt: (index: number) => list.parameters.nonSeparatorAt(index),
+            identifierAt: (index: number) => list.parameters.nonSeparatorAt(index).identifier,
+            typeAt: (index: number) => getType(list.parameters.nonSeparatorAt(index)),
+            initializerAt: (index: number) => list.parameters.nonSeparatorAt(index).equalsValueClause,
+            isOptionalAt: (index: number) => parameterIsOptional(list.parameters.nonSeparatorAt(index)),
+        };
     }
 
     export function isDeclarationAST(ast: ISyntaxElement): boolean {
@@ -543,14 +544,14 @@ module TypeScript {
             if (ast.kind() === SyntaxKind.VariableDeclarator) {
                 // Get the doc comments for a variable off of the variable statement.  That's what
                 // they'll be attached to in the tree.
-                comments = TypeScript.preComments(getVariableStatement(<VariableDeclaratorSyntax>ast));
+                comments = TypeScript.ASTHelpers.preComments(getVariableStatement(<VariableDeclaratorSyntax>ast));
             }
             else if (ast.kind() === SyntaxKind.Parameter) {
                 // First check if the parameter was written like so:
                 //      (
                 //          /** blah */ a,
                 //          /** blah */ b);
-                comments = TypeScript.preComments(ast);
+                comments = TypeScript.ASTHelpers.preComments(ast);
                 if (!comments) {
                     // Now check if it was written like so:
                     //      (/** blah */ a, /** blah */ b);
@@ -562,7 +563,7 @@ module TypeScript {
                 }
             }
             else {
-                comments = TypeScript.preComments(ast);
+                comments = TypeScript.ASTHelpers.preComments(ast);
             }
 
             if (comments && comments.length > 0) {
@@ -743,5 +744,16 @@ module TypeScript {
         }
 
         return false;
+    }
+
+    export function getNameOfIdenfierOrQualifiedName(name: ISyntaxElement): string {
+        if (name.kind() === SyntaxKind.IdentifierName) {
+            return (<ISyntaxToken>name).text();
+        }
+        else {
+            Debug.assert(name.kind() == SyntaxKind.QualifiedName);
+            var dotExpr = <QualifiedNameSyntax>name;
+            return getNameOfIdenfierOrQualifiedName(dotExpr.left) + "." + getNameOfIdenfierOrQualifiedName(dotExpr.right);
+        }
     }
 }

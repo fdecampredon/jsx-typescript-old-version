@@ -1,0 +1,531 @@
+=== tests/cases/compiler/comparisonOperatorWithOneOperandIsUndefined.ts ===
+Line 0 col 4 IdentifierName "x" = any
+Line 0 col 14 IdentifierName "undefined" = any
+Line 2 col 5 IdentifierName "E" = E
+Line 2 col 9 IdentifierName "a" = E
+Line 2 col 12 IdentifierName "b" = E
+Line 2 col 15 IdentifierName "c" = E
+Line 4 col 9 IdentifierName "foo" = typeof foo
+Line 4 col 13 IdentifierName "T" = T
+Line 4 col 16 IdentifierName "t" = T
+Line 4 col 19 IdentifierName "T" = T
+Line 5 col 8 IdentifierName "foo_r1" = boolean
+Line 5 col 17 LessThanExpression "t < x" = boolean
+Line 5 col 17 IdentifierName "t" = T
+Line 5 col 21 IdentifierName "x" = any
+Line 6 col 8 IdentifierName "foo_r2" = boolean
+Line 6 col 17 GreaterThanExpression "t > x" = boolean
+Line 6 col 17 IdentifierName "t" = T
+Line 6 col 21 IdentifierName "x" = any
+Line 7 col 8 IdentifierName "foo_r3" = boolean
+Line 7 col 17 LessThanOrEqualExpression "t <= x" = boolean
+Line 7 col 17 IdentifierName "t" = T
+Line 7 col 22 IdentifierName "x" = any
+Line 8 col 8 IdentifierName "foo_r4" = boolean
+Line 8 col 17 GreaterThanOrEqualExpression "t >= x" = boolean
+Line 8 col 17 IdentifierName "t" = T
+Line 8 col 22 IdentifierName "x" = any
+Line 9 col 8 IdentifierName "foo_r5" = boolean
+Line 9 col 17 EqualsWithTypeConversionExpression "t == x" = boolean
+Line 9 col 17 IdentifierName "t" = T
+Line 9 col 22 IdentifierName "x" = any
+Line 10 col 8 IdentifierName "foo_r6" = boolean
+Line 10 col 17 NotEqualsWithTypeConversionExpression "t != x" = boolean
+Line 10 col 17 IdentifierName "t" = T
+Line 10 col 22 IdentifierName "x" = any
+Line 11 col 8 IdentifierName "foo_r7" = boolean
+Line 11 col 17 EqualsExpression "t === x" = boolean
+Line 11 col 17 IdentifierName "t" = T
+Line 11 col 23 IdentifierName "x" = any
+Line 12 col 8 IdentifierName "foo_r8" = boolean
+Line 12 col 17 NotEqualsExpression "t !== x" = boolean
+Line 12 col 17 IdentifierName "t" = T
+Line 12 col 23 IdentifierName "x" = any
+Line 14 col 8 IdentifierName "foo_r1" = boolean
+Line 14 col 17 LessThanExpression "x < t" = boolean
+Line 14 col 17 IdentifierName "x" = any
+Line 14 col 21 IdentifierName "t" = T
+Line 15 col 8 IdentifierName "foo_r2" = boolean
+Line 15 col 17 GreaterThanExpression "x > t" = boolean
+Line 15 col 17 IdentifierName "x" = any
+Line 15 col 21 IdentifierName "t" = T
+Line 16 col 8 IdentifierName "foo_r3" = boolean
+Line 16 col 17 LessThanOrEqualExpression "x <= t" = boolean
+Line 16 col 17 IdentifierName "x" = any
+Line 16 col 22 IdentifierName "t" = T
+Line 17 col 8 IdentifierName "foo_r4" = boolean
+Line 17 col 17 GreaterThanOrEqualExpression "x >= t" = boolean
+Line 17 col 17 IdentifierName "x" = any
+Line 17 col 22 IdentifierName "t" = T
+Line 18 col 8 IdentifierName "foo_r5" = boolean
+Line 18 col 17 EqualsWithTypeConversionExpression "x == t" = boolean
+Line 18 col 17 IdentifierName "x" = any
+Line 18 col 22 IdentifierName "t" = T
+Line 19 col 8 IdentifierName "foo_r6" = boolean
+Line 19 col 17 NotEqualsWithTypeConversionExpression "x != t" = boolean
+Line 19 col 17 IdentifierName "x" = any
+Line 19 col 22 IdentifierName "t" = T
+Line 20 col 8 IdentifierName "foo_r7" = boolean
+Line 20 col 17 EqualsExpression "x === t" = boolean
+Line 20 col 17 IdentifierName "x" = any
+Line 20 col 23 IdentifierName "t" = T
+Line 21 col 8 IdentifierName "foo_r8" = boolean
+Line 21 col 17 NotEqualsExpression "x !== t" = boolean
+Line 21 col 17 IdentifierName "x" = any
+Line 21 col 23 IdentifierName "t" = T
+Line 24 col 4 IdentifierName "a" = boolean
+Line 25 col 4 IdentifierName "b" = number
+Line 26 col 4 IdentifierName "c" = string
+Line 27 col 4 IdentifierName "d" = void
+Line 28 col 4 IdentifierName "e" = E
+Line 28 col 7 IdentifierName "E" = E
+Line 29 col 4 IdentifierName "f" = {}
+Line 30 col 4 IdentifierName "g" = string[]
+Line 33 col 4 IdentifierName "r1a1" = boolean
+Line 33 col 11 LessThanExpression "x < a" = boolean
+Line 33 col 11 IdentifierName "x" = any
+Line 33 col 15 IdentifierName "a" = boolean
+Line 34 col 4 IdentifierName "r1a2" = boolean
+Line 34 col 11 LessThanExpression "x < b" = boolean
+Line 34 col 11 IdentifierName "x" = any
+Line 34 col 15 IdentifierName "b" = number
+Line 35 col 4 IdentifierName "r1a3" = boolean
+Line 35 col 11 LessThanExpression "x < c" = boolean
+Line 35 col 11 IdentifierName "x" = any
+Line 35 col 15 IdentifierName "c" = string
+Line 36 col 4 IdentifierName "r1a4" = boolean
+Line 36 col 11 LessThanExpression "x < d" = boolean
+Line 36 col 11 IdentifierName "x" = any
+Line 36 col 15 IdentifierName "d" = void
+Line 37 col 4 IdentifierName "r1a5" = boolean
+Line 37 col 11 LessThanExpression "x < e" = boolean
+Line 37 col 11 IdentifierName "x" = any
+Line 37 col 15 IdentifierName "e" = E
+Line 38 col 4 IdentifierName "r1a6" = boolean
+Line 38 col 11 LessThanExpression "x < f" = boolean
+Line 38 col 11 IdentifierName "x" = any
+Line 38 col 15 IdentifierName "f" = {}
+Line 39 col 4 IdentifierName "r1a7" = boolean
+Line 39 col 11 LessThanExpression "x < g" = boolean
+Line 39 col 11 IdentifierName "x" = any
+Line 39 col 15 IdentifierName "g" = string[]
+Line 41 col 4 IdentifierName "r1b1" = boolean
+Line 41 col 11 LessThanExpression "a < x" = boolean
+Line 41 col 11 IdentifierName "a" = boolean
+Line 41 col 15 IdentifierName "x" = any
+Line 42 col 4 IdentifierName "r1b2" = boolean
+Line 42 col 11 LessThanExpression "b < x" = boolean
+Line 42 col 11 IdentifierName "b" = number
+Line 42 col 15 IdentifierName "x" = any
+Line 43 col 4 IdentifierName "r1b3" = boolean
+Line 43 col 11 LessThanExpression "c < x" = boolean
+Line 43 col 11 IdentifierName "c" = string
+Line 43 col 15 IdentifierName "x" = any
+Line 44 col 4 IdentifierName "r1b4" = boolean
+Line 44 col 11 LessThanExpression "d < x" = boolean
+Line 44 col 11 IdentifierName "d" = void
+Line 44 col 15 IdentifierName "x" = any
+Line 45 col 4 IdentifierName "r1b5" = boolean
+Line 45 col 11 LessThanExpression "e < x" = boolean
+Line 45 col 11 IdentifierName "e" = E
+Line 45 col 15 IdentifierName "x" = any
+Line 46 col 4 IdentifierName "r1b6" = boolean
+Line 46 col 11 LessThanExpression "f < x" = boolean
+Line 46 col 11 IdentifierName "f" = {}
+Line 46 col 15 IdentifierName "x" = any
+Line 47 col 4 IdentifierName "r1b7" = boolean
+Line 47 col 11 LessThanExpression "g < x" = boolean
+Line 47 col 11 IdentifierName "g" = string[]
+Line 47 col 15 IdentifierName "x" = any
+Line 50 col 4 IdentifierName "r2a1" = boolean
+Line 50 col 11 GreaterThanExpression "x > a" = boolean
+Line 50 col 11 IdentifierName "x" = any
+Line 50 col 15 IdentifierName "a" = boolean
+Line 51 col 4 IdentifierName "r2a2" = boolean
+Line 51 col 11 GreaterThanExpression "x > b" = boolean
+Line 51 col 11 IdentifierName "x" = any
+Line 51 col 15 IdentifierName "b" = number
+Line 52 col 4 IdentifierName "r2a3" = boolean
+Line 52 col 11 GreaterThanExpression "x > c" = boolean
+Line 52 col 11 IdentifierName "x" = any
+Line 52 col 15 IdentifierName "c" = string
+Line 53 col 4 IdentifierName "r2a4" = boolean
+Line 53 col 11 GreaterThanExpression "x > d" = boolean
+Line 53 col 11 IdentifierName "x" = any
+Line 53 col 15 IdentifierName "d" = void
+Line 54 col 4 IdentifierName "r2a5" = boolean
+Line 54 col 11 GreaterThanExpression "x > e" = boolean
+Line 54 col 11 IdentifierName "x" = any
+Line 54 col 15 IdentifierName "e" = E
+Line 55 col 4 IdentifierName "r2a6" = boolean
+Line 55 col 11 GreaterThanExpression "x > f" = boolean
+Line 55 col 11 IdentifierName "x" = any
+Line 55 col 15 IdentifierName "f" = {}
+Line 56 col 4 IdentifierName "r2a7" = boolean
+Line 56 col 11 GreaterThanExpression "x > g" = boolean
+Line 56 col 11 IdentifierName "x" = any
+Line 56 col 15 IdentifierName "g" = string[]
+Line 58 col 4 IdentifierName "r2b1" = boolean
+Line 58 col 11 GreaterThanExpression "a > x" = boolean
+Line 58 col 11 IdentifierName "a" = boolean
+Line 58 col 15 IdentifierName "x" = any
+Line 59 col 4 IdentifierName "r2b2" = boolean
+Line 59 col 11 GreaterThanExpression "b > x" = boolean
+Line 59 col 11 IdentifierName "b" = number
+Line 59 col 15 IdentifierName "x" = any
+Line 60 col 4 IdentifierName "r2b3" = boolean
+Line 60 col 11 GreaterThanExpression "c > x" = boolean
+Line 60 col 11 IdentifierName "c" = string
+Line 60 col 15 IdentifierName "x" = any
+Line 61 col 4 IdentifierName "r2b4" = boolean
+Line 61 col 11 GreaterThanExpression "d > x" = boolean
+Line 61 col 11 IdentifierName "d" = void
+Line 61 col 15 IdentifierName "x" = any
+Line 62 col 4 IdentifierName "r2b5" = boolean
+Line 62 col 11 GreaterThanExpression "e > x" = boolean
+Line 62 col 11 IdentifierName "e" = E
+Line 62 col 15 IdentifierName "x" = any
+Line 63 col 4 IdentifierName "r2b6" = boolean
+Line 63 col 11 GreaterThanExpression "f > x" = boolean
+Line 63 col 11 IdentifierName "f" = {}
+Line 63 col 15 IdentifierName "x" = any
+Line 64 col 4 IdentifierName "r2b7" = boolean
+Line 64 col 11 GreaterThanExpression "g > x" = boolean
+Line 64 col 11 IdentifierName "g" = string[]
+Line 64 col 15 IdentifierName "x" = any
+Line 67 col 4 IdentifierName "r3a1" = boolean
+Line 67 col 11 LessThanOrEqualExpression "x <= a" = boolean
+Line 67 col 11 IdentifierName "x" = any
+Line 67 col 16 IdentifierName "a" = boolean
+Line 68 col 4 IdentifierName "r3a2" = boolean
+Line 68 col 11 LessThanOrEqualExpression "x <= b" = boolean
+Line 68 col 11 IdentifierName "x" = any
+Line 68 col 16 IdentifierName "b" = number
+Line 69 col 4 IdentifierName "r3a3" = boolean
+Line 69 col 11 LessThanOrEqualExpression "x <= c" = boolean
+Line 69 col 11 IdentifierName "x" = any
+Line 69 col 16 IdentifierName "c" = string
+Line 70 col 4 IdentifierName "r3a4" = boolean
+Line 70 col 11 LessThanOrEqualExpression "x <= d" = boolean
+Line 70 col 11 IdentifierName "x" = any
+Line 70 col 16 IdentifierName "d" = void
+Line 71 col 4 IdentifierName "r3a5" = boolean
+Line 71 col 11 LessThanOrEqualExpression "x <= e" = boolean
+Line 71 col 11 IdentifierName "x" = any
+Line 71 col 16 IdentifierName "e" = E
+Line 72 col 4 IdentifierName "r3a6" = boolean
+Line 72 col 11 LessThanOrEqualExpression "x <= f" = boolean
+Line 72 col 11 IdentifierName "x" = any
+Line 72 col 16 IdentifierName "f" = {}
+Line 73 col 4 IdentifierName "r3a7" = boolean
+Line 73 col 11 LessThanOrEqualExpression "x <= g" = boolean
+Line 73 col 11 IdentifierName "x" = any
+Line 73 col 16 IdentifierName "g" = string[]
+Line 75 col 4 IdentifierName "r3b1" = boolean
+Line 75 col 11 LessThanOrEqualExpression "a <= x" = boolean
+Line 75 col 11 IdentifierName "a" = boolean
+Line 75 col 16 IdentifierName "x" = any
+Line 76 col 4 IdentifierName "r3b2" = boolean
+Line 76 col 11 LessThanOrEqualExpression "b <= x" = boolean
+Line 76 col 11 IdentifierName "b" = number
+Line 76 col 16 IdentifierName "x" = any
+Line 77 col 4 IdentifierName "r3b3" = boolean
+Line 77 col 11 LessThanOrEqualExpression "c <= x" = boolean
+Line 77 col 11 IdentifierName "c" = string
+Line 77 col 16 IdentifierName "x" = any
+Line 78 col 4 IdentifierName "r3b4" = boolean
+Line 78 col 11 LessThanOrEqualExpression "d <= x" = boolean
+Line 78 col 11 IdentifierName "d" = void
+Line 78 col 16 IdentifierName "x" = any
+Line 79 col 4 IdentifierName "r3b5" = boolean
+Line 79 col 11 LessThanOrEqualExpression "e <= x" = boolean
+Line 79 col 11 IdentifierName "e" = E
+Line 79 col 16 IdentifierName "x" = any
+Line 80 col 4 IdentifierName "r3b6" = boolean
+Line 80 col 11 LessThanOrEqualExpression "f <= x" = boolean
+Line 80 col 11 IdentifierName "f" = {}
+Line 80 col 16 IdentifierName "x" = any
+Line 81 col 4 IdentifierName "r3b7" = boolean
+Line 81 col 11 LessThanOrEqualExpression "g <= x" = boolean
+Line 81 col 11 IdentifierName "g" = string[]
+Line 81 col 16 IdentifierName "x" = any
+Line 84 col 4 IdentifierName "r4a1" = boolean
+Line 84 col 11 GreaterThanOrEqualExpression "x >= a" = boolean
+Line 84 col 11 IdentifierName "x" = any
+Line 84 col 16 IdentifierName "a" = boolean
+Line 85 col 4 IdentifierName "r4a2" = boolean
+Line 85 col 11 GreaterThanOrEqualExpression "x >= b" = boolean
+Line 85 col 11 IdentifierName "x" = any
+Line 85 col 16 IdentifierName "b" = number
+Line 86 col 4 IdentifierName "r4a3" = boolean
+Line 86 col 11 GreaterThanOrEqualExpression "x >= c" = boolean
+Line 86 col 11 IdentifierName "x" = any
+Line 86 col 16 IdentifierName "c" = string
+Line 87 col 4 IdentifierName "r4a4" = boolean
+Line 87 col 11 GreaterThanOrEqualExpression "x >= d" = boolean
+Line 87 col 11 IdentifierName "x" = any
+Line 87 col 16 IdentifierName "d" = void
+Line 88 col 4 IdentifierName "r4a5" = boolean
+Line 88 col 11 GreaterThanOrEqualExpression "x >= e" = boolean
+Line 88 col 11 IdentifierName "x" = any
+Line 88 col 16 IdentifierName "e" = E
+Line 89 col 4 IdentifierName "r4a6" = boolean
+Line 89 col 11 GreaterThanOrEqualExpression "x >= f" = boolean
+Line 89 col 11 IdentifierName "x" = any
+Line 89 col 16 IdentifierName "f" = {}
+Line 90 col 4 IdentifierName "r4a7" = boolean
+Line 90 col 11 GreaterThanOrEqualExpression "x >= g" = boolean
+Line 90 col 11 IdentifierName "x" = any
+Line 90 col 16 IdentifierName "g" = string[]
+Line 92 col 4 IdentifierName "r4b1" = boolean
+Line 92 col 11 GreaterThanOrEqualExpression "a >= x" = boolean
+Line 92 col 11 IdentifierName "a" = boolean
+Line 92 col 16 IdentifierName "x" = any
+Line 93 col 4 IdentifierName "r4b2" = boolean
+Line 93 col 11 GreaterThanOrEqualExpression "b >= x" = boolean
+Line 93 col 11 IdentifierName "b" = number
+Line 93 col 16 IdentifierName "x" = any
+Line 94 col 4 IdentifierName "r4b3" = boolean
+Line 94 col 11 GreaterThanOrEqualExpression "c >= x" = boolean
+Line 94 col 11 IdentifierName "c" = string
+Line 94 col 16 IdentifierName "x" = any
+Line 95 col 4 IdentifierName "r4b4" = boolean
+Line 95 col 11 GreaterThanOrEqualExpression "d >= x" = boolean
+Line 95 col 11 IdentifierName "d" = void
+Line 95 col 16 IdentifierName "x" = any
+Line 96 col 4 IdentifierName "r4b5" = boolean
+Line 96 col 11 GreaterThanOrEqualExpression "e >= x" = boolean
+Line 96 col 11 IdentifierName "e" = E
+Line 96 col 16 IdentifierName "x" = any
+Line 97 col 4 IdentifierName "r4b6" = boolean
+Line 97 col 11 GreaterThanOrEqualExpression "f >= x" = boolean
+Line 97 col 11 IdentifierName "f" = {}
+Line 97 col 16 IdentifierName "x" = any
+Line 98 col 4 IdentifierName "r4b7" = boolean
+Line 98 col 11 GreaterThanOrEqualExpression "g >= x" = boolean
+Line 98 col 11 IdentifierName "g" = string[]
+Line 98 col 16 IdentifierName "x" = any
+Line 101 col 4 IdentifierName "r5a1" = boolean
+Line 101 col 11 EqualsWithTypeConversionExpression "x == a" = boolean
+Line 101 col 11 IdentifierName "x" = any
+Line 101 col 16 IdentifierName "a" = boolean
+Line 102 col 4 IdentifierName "r5a2" = boolean
+Line 102 col 11 EqualsWithTypeConversionExpression "x == b" = boolean
+Line 102 col 11 IdentifierName "x" = any
+Line 102 col 16 IdentifierName "b" = number
+Line 103 col 4 IdentifierName "r5a3" = boolean
+Line 103 col 11 EqualsWithTypeConversionExpression "x == c" = boolean
+Line 103 col 11 IdentifierName "x" = any
+Line 103 col 16 IdentifierName "c" = string
+Line 104 col 4 IdentifierName "r5a4" = boolean
+Line 104 col 11 EqualsWithTypeConversionExpression "x == d" = boolean
+Line 104 col 11 IdentifierName "x" = any
+Line 104 col 16 IdentifierName "d" = void
+Line 105 col 4 IdentifierName "r5a5" = boolean
+Line 105 col 11 EqualsWithTypeConversionExpression "x == e" = boolean
+Line 105 col 11 IdentifierName "x" = any
+Line 105 col 16 IdentifierName "e" = E
+Line 106 col 4 IdentifierName "r5a6" = boolean
+Line 106 col 11 EqualsWithTypeConversionExpression "x == f" = boolean
+Line 106 col 11 IdentifierName "x" = any
+Line 106 col 16 IdentifierName "f" = {}
+Line 107 col 4 IdentifierName "r5a7" = boolean
+Line 107 col 11 EqualsWithTypeConversionExpression "x == g" = boolean
+Line 107 col 11 IdentifierName "x" = any
+Line 107 col 16 IdentifierName "g" = string[]
+Line 109 col 4 IdentifierName "r5b1" = boolean
+Line 109 col 11 EqualsWithTypeConversionExpression "a == x" = boolean
+Line 109 col 11 IdentifierName "a" = boolean
+Line 109 col 16 IdentifierName "x" = any
+Line 110 col 4 IdentifierName "r5b2" = boolean
+Line 110 col 11 EqualsWithTypeConversionExpression "b == x" = boolean
+Line 110 col 11 IdentifierName "b" = number
+Line 110 col 16 IdentifierName "x" = any
+Line 111 col 4 IdentifierName "r5b3" = boolean
+Line 111 col 11 EqualsWithTypeConversionExpression "c == x" = boolean
+Line 111 col 11 IdentifierName "c" = string
+Line 111 col 16 IdentifierName "x" = any
+Line 112 col 4 IdentifierName "r5b4" = boolean
+Line 112 col 11 EqualsWithTypeConversionExpression "d == x" = boolean
+Line 112 col 11 IdentifierName "d" = void
+Line 112 col 16 IdentifierName "x" = any
+Line 113 col 4 IdentifierName "r5b5" = boolean
+Line 113 col 11 EqualsWithTypeConversionExpression "e == x" = boolean
+Line 113 col 11 IdentifierName "e" = E
+Line 113 col 16 IdentifierName "x" = any
+Line 114 col 4 IdentifierName "r5b6" = boolean
+Line 114 col 11 EqualsWithTypeConversionExpression "f == x" = boolean
+Line 114 col 11 IdentifierName "f" = {}
+Line 114 col 16 IdentifierName "x" = any
+Line 115 col 4 IdentifierName "r5b7" = boolean
+Line 115 col 11 EqualsWithTypeConversionExpression "g == x" = boolean
+Line 115 col 11 IdentifierName "g" = string[]
+Line 115 col 16 IdentifierName "x" = any
+Line 118 col 4 IdentifierName "r6a1" = boolean
+Line 118 col 11 NotEqualsWithTypeConversionExpression "x != a" = boolean
+Line 118 col 11 IdentifierName "x" = any
+Line 118 col 16 IdentifierName "a" = boolean
+Line 119 col 4 IdentifierName "r6a2" = boolean
+Line 119 col 11 NotEqualsWithTypeConversionExpression "x != b" = boolean
+Line 119 col 11 IdentifierName "x" = any
+Line 119 col 16 IdentifierName "b" = number
+Line 120 col 4 IdentifierName "r6a3" = boolean
+Line 120 col 11 NotEqualsWithTypeConversionExpression "x != c" = boolean
+Line 120 col 11 IdentifierName "x" = any
+Line 120 col 16 IdentifierName "c" = string
+Line 121 col 4 IdentifierName "r6a4" = boolean
+Line 121 col 11 NotEqualsWithTypeConversionExpression "x != d" = boolean
+Line 121 col 11 IdentifierName "x" = any
+Line 121 col 16 IdentifierName "d" = void
+Line 122 col 4 IdentifierName "r6a5" = boolean
+Line 122 col 11 NotEqualsWithTypeConversionExpression "x != e" = boolean
+Line 122 col 11 IdentifierName "x" = any
+Line 122 col 16 IdentifierName "e" = E
+Line 123 col 4 IdentifierName "r6a6" = boolean
+Line 123 col 11 NotEqualsWithTypeConversionExpression "x != f" = boolean
+Line 123 col 11 IdentifierName "x" = any
+Line 123 col 16 IdentifierName "f" = {}
+Line 124 col 4 IdentifierName "r6a7" = boolean
+Line 124 col 11 NotEqualsWithTypeConversionExpression "x != g" = boolean
+Line 124 col 11 IdentifierName "x" = any
+Line 124 col 16 IdentifierName "g" = string[]
+Line 126 col 4 IdentifierName "r6b1" = boolean
+Line 126 col 11 NotEqualsWithTypeConversionExpression "a != x" = boolean
+Line 126 col 11 IdentifierName "a" = boolean
+Line 126 col 16 IdentifierName "x" = any
+Line 127 col 4 IdentifierName "r6b2" = boolean
+Line 127 col 11 NotEqualsWithTypeConversionExpression "b != x" = boolean
+Line 127 col 11 IdentifierName "b" = number
+Line 127 col 16 IdentifierName "x" = any
+Line 128 col 4 IdentifierName "r6b3" = boolean
+Line 128 col 11 NotEqualsWithTypeConversionExpression "c != x" = boolean
+Line 128 col 11 IdentifierName "c" = string
+Line 128 col 16 IdentifierName "x" = any
+Line 129 col 4 IdentifierName "r6b4" = boolean
+Line 129 col 11 NotEqualsWithTypeConversionExpression "d != x" = boolean
+Line 129 col 11 IdentifierName "d" = void
+Line 129 col 16 IdentifierName "x" = any
+Line 130 col 4 IdentifierName "r6b5" = boolean
+Line 130 col 11 NotEqualsWithTypeConversionExpression "e != x" = boolean
+Line 130 col 11 IdentifierName "e" = E
+Line 130 col 16 IdentifierName "x" = any
+Line 131 col 4 IdentifierName "r6b6" = boolean
+Line 131 col 11 NotEqualsWithTypeConversionExpression "f != x" = boolean
+Line 131 col 11 IdentifierName "f" = {}
+Line 131 col 16 IdentifierName "x" = any
+Line 132 col 4 IdentifierName "r6b7" = boolean
+Line 132 col 11 NotEqualsWithTypeConversionExpression "g != x" = boolean
+Line 132 col 11 IdentifierName "g" = string[]
+Line 132 col 16 IdentifierName "x" = any
+Line 135 col 4 IdentifierName "r7a1" = boolean
+Line 135 col 11 EqualsExpression "x === a" = boolean
+Line 135 col 11 IdentifierName "x" = any
+Line 135 col 17 IdentifierName "a" = boolean
+Line 136 col 4 IdentifierName "r7a2" = boolean
+Line 136 col 11 EqualsExpression "x === b" = boolean
+Line 136 col 11 IdentifierName "x" = any
+Line 136 col 17 IdentifierName "b" = number
+Line 137 col 4 IdentifierName "r7a3" = boolean
+Line 137 col 11 EqualsExpression "x === c" = boolean
+Line 137 col 11 IdentifierName "x" = any
+Line 137 col 17 IdentifierName "c" = string
+Line 138 col 4 IdentifierName "r7a4" = boolean
+Line 138 col 11 EqualsExpression "x === d" = boolean
+Line 138 col 11 IdentifierName "x" = any
+Line 138 col 17 IdentifierName "d" = void
+Line 139 col 4 IdentifierName "r7a5" = boolean
+Line 139 col 11 EqualsExpression "x === e" = boolean
+Line 139 col 11 IdentifierName "x" = any
+Line 139 col 17 IdentifierName "e" = E
+Line 140 col 4 IdentifierName "r7a6" = boolean
+Line 140 col 11 EqualsExpression "x === f" = boolean
+Line 140 col 11 IdentifierName "x" = any
+Line 140 col 17 IdentifierName "f" = {}
+Line 141 col 4 IdentifierName "r7a7" = boolean
+Line 141 col 11 EqualsExpression "x === g" = boolean
+Line 141 col 11 IdentifierName "x" = any
+Line 141 col 17 IdentifierName "g" = string[]
+Line 143 col 4 IdentifierName "r7b1" = boolean
+Line 143 col 11 EqualsExpression "a === x" = boolean
+Line 143 col 11 IdentifierName "a" = boolean
+Line 143 col 17 IdentifierName "x" = any
+Line 144 col 4 IdentifierName "r7b2" = boolean
+Line 144 col 11 EqualsExpression "b === x" = boolean
+Line 144 col 11 IdentifierName "b" = number
+Line 144 col 17 IdentifierName "x" = any
+Line 145 col 4 IdentifierName "r7b3" = boolean
+Line 145 col 11 EqualsExpression "c === x" = boolean
+Line 145 col 11 IdentifierName "c" = string
+Line 145 col 17 IdentifierName "x" = any
+Line 146 col 4 IdentifierName "r7b4" = boolean
+Line 146 col 11 EqualsExpression "d === x" = boolean
+Line 146 col 11 IdentifierName "d" = void
+Line 146 col 17 IdentifierName "x" = any
+Line 147 col 4 IdentifierName "r7b5" = boolean
+Line 147 col 11 EqualsExpression "e === x" = boolean
+Line 147 col 11 IdentifierName "e" = E
+Line 147 col 17 IdentifierName "x" = any
+Line 148 col 4 IdentifierName "r7b6" = boolean
+Line 148 col 11 EqualsExpression "f === x" = boolean
+Line 148 col 11 IdentifierName "f" = {}
+Line 148 col 17 IdentifierName "x" = any
+Line 149 col 4 IdentifierName "r7b7" = boolean
+Line 149 col 11 EqualsExpression "g === x" = boolean
+Line 149 col 11 IdentifierName "g" = string[]
+Line 149 col 17 IdentifierName "x" = any
+Line 152 col 4 IdentifierName "r8a1" = boolean
+Line 152 col 11 NotEqualsExpression "x !== a" = boolean
+Line 152 col 11 IdentifierName "x" = any
+Line 152 col 17 IdentifierName "a" = boolean
+Line 153 col 4 IdentifierName "r8a2" = boolean
+Line 153 col 11 NotEqualsExpression "x !== b" = boolean
+Line 153 col 11 IdentifierName "x" = any
+Line 153 col 17 IdentifierName "b" = number
+Line 154 col 4 IdentifierName "r8a3" = boolean
+Line 154 col 11 NotEqualsExpression "x !== c" = boolean
+Line 154 col 11 IdentifierName "x" = any
+Line 154 col 17 IdentifierName "c" = string
+Line 155 col 4 IdentifierName "r8a4" = boolean
+Line 155 col 11 NotEqualsExpression "x !== d" = boolean
+Line 155 col 11 IdentifierName "x" = any
+Line 155 col 17 IdentifierName "d" = void
+Line 156 col 4 IdentifierName "r8a5" = boolean
+Line 156 col 11 NotEqualsExpression "x !== e" = boolean
+Line 156 col 11 IdentifierName "x" = any
+Line 156 col 17 IdentifierName "e" = E
+Line 157 col 4 IdentifierName "r8a6" = boolean
+Line 157 col 11 NotEqualsExpression "x !== f" = boolean
+Line 157 col 11 IdentifierName "x" = any
+Line 157 col 17 IdentifierName "f" = {}
+Line 158 col 4 IdentifierName "r8a7" = boolean
+Line 158 col 11 NotEqualsExpression "x !== g" = boolean
+Line 158 col 11 IdentifierName "x" = any
+Line 158 col 17 IdentifierName "g" = string[]
+Line 160 col 4 IdentifierName "r8b1" = boolean
+Line 160 col 11 NotEqualsExpression "a !== x" = boolean
+Line 160 col 11 IdentifierName "a" = boolean
+Line 160 col 17 IdentifierName "x" = any
+Line 161 col 4 IdentifierName "r8b2" = boolean
+Line 161 col 11 NotEqualsExpression "b !== x" = boolean
+Line 161 col 11 IdentifierName "b" = number
+Line 161 col 17 IdentifierName "x" = any
+Line 162 col 4 IdentifierName "r8b3" = boolean
+Line 162 col 11 NotEqualsExpression "c !== x" = boolean
+Line 162 col 11 IdentifierName "c" = string
+Line 162 col 17 IdentifierName "x" = any
+Line 163 col 4 IdentifierName "r8b4" = boolean
+Line 163 col 11 NotEqualsExpression "d !== x" = boolean
+Line 163 col 11 IdentifierName "d" = void
+Line 163 col 17 IdentifierName "x" = any
+Line 164 col 4 IdentifierName "r8b5" = boolean
+Line 164 col 11 NotEqualsExpression "e !== x" = boolean
+Line 164 col 11 IdentifierName "e" = E
+Line 164 col 17 IdentifierName "x" = any
+Line 165 col 4 IdentifierName "r8b6" = boolean
+Line 165 col 11 NotEqualsExpression "f !== x" = boolean
+Line 165 col 11 IdentifierName "f" = {}
+Line 165 col 17 IdentifierName "x" = any
+Line 166 col 4 IdentifierName "r8b7" = boolean
+Line 166 col 11 NotEqualsExpression "g !== x" = boolean
+Line 166 col 11 IdentifierName "g" = string[]
+Line 166 col 17 IdentifierName "x" = any

@@ -11,7 +11,7 @@ function foo2(t, u) {
 
 function foo3(t, u, v) {
     t = u; // error
-    u = t; // BUG 821629
+    u = t;
 
     t = v; // error
     v = t; // ok
@@ -25,12 +25,12 @@ function foo4(t, u, v) {
     t = v; // error
     t = new Date(); // error
 
-    u = t; // BUG 821629
+    u = t;
     u = v; // error
     u = new Date(); // error
 
-    v = t; // BUG 821629
-    v = u; // BUG 821629
+    v = t;
+    v = u;
     v = new Date(); // ok
 
     var d;
@@ -45,12 +45,12 @@ function foo5(t, u, v) {
     t = v; // error
     t = new Date(); // error
 
-    u = t; // BUG 821629
+    u = t;
     u = v; // error
     u = new Date(); // error
 
-    v = t; // BUG 821629
-    v = u; // BUG 821629
+    v = t;
+    v = u;
     v = new Date(); // ok
 
     var d;

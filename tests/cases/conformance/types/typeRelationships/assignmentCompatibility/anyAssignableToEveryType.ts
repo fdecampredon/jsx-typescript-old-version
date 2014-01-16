@@ -32,8 +32,14 @@ var o: <T>(x: T) => T = a;
 var p: Number = a;
 var q: String = a;
 
-function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+function foo<T, U /*extends T*/, V extends Date>(x: T, y: U, z: V) {
     x = a;
     y = a;
     z = a;
 }
+
+//function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+//    x = a;
+//    y = a;
+//    z = a;
+//}

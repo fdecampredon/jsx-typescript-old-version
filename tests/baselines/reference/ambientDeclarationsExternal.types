@@ -1,0 +1,12 @@
+=== tests/cases/compiler/consumer.ts ===
+Line 1 col 7 IdentifierName "imp1" = any
+Line 5 col 7 IdentifierName "imp3" = imp3
+Line 6 col 4 IdentifierName "n" = number
+Line 6 col 8 MemberAccessExpression "imp3.x" = number
+Line 6 col 8 IdentifierName "imp3" = imp3
+Line 6 col 13 IdentifierName "x" = number
+Line 7 col 4 IdentifierName "n" = number
+=== tests/cases/compiler/decls.ts ===
+Line 3 col 8 IdentifierName "x" = any
+Line 4 col 13 IdentifierName "x" = any
+Line 8 col 8 IdentifierName "x" = number

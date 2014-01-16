@@ -15,7 +15,7 @@ module ClassTypeParam {
 
             this.a2 = () => null; // ok, same T of required params
             this.a2 = (x?: T) => null; // ok, same T of required params
-            this.a2 = (x: T) => null; // error, too many required params
+            this.a2 = (x: T) => null; // ok, same number of params
 
             this.a3 = () => null; // ok, fewer required params
             this.a3 = (x?: T) => null; // ok, fewer required params
@@ -25,13 +25,13 @@ module ClassTypeParam {
             this.a4 = () => null; // ok, fewer required params
             this.a4 = (x?: T, y?: T) => null; // ok, fewer required params
             this.a4 = (x: T) => null; // ok, same T of required params
-            this.a4 = (x: T, y: T) => null;  // error, too many required params
+            this.a4 = (x: T, y: T) => null;  // ok, same number of params
 
 
             this.a5 = () => null; // ok, fewer required params
             this.a5 = (x?: T, y?: T) => null; // ok, fewer required params
-            this.a5 = (x: T) => null; // error, too many required params
-            this.a5 = (x: T, y: T) => null;  // error, too many required params
+            this.a5 = (x: T) => null; // ok, all present params match
+            this.a5 = (x: T, y: T) => null;  // ok, same number of params
         }
     }
 }
@@ -108,7 +108,7 @@ module GenericSignaturesValid {
 
             this.a2 = <T>() => null; // ok, same T of required params
             this.a2 = <T>(x?: T) => null; // ok, same T of required params
-            this.a2 = <T>(x: T) => null; // error, too many required params
+            this.a2 = <T>(x: T) => null; // ok, same number of params
 
             this.a3 = <T>() => null; // ok, fewer required params
             this.a3 = <T>(x?: T) => null; // ok, fewer required params
@@ -118,13 +118,13 @@ module GenericSignaturesValid {
             this.a4 = <T>() => null; // ok, fewer required params
             this.a4 = <T>(x?: T, y?: T) => null; // ok, fewer required params
             this.a4 = <T>(x: T) => null; // ok, same T of required params
-            this.a4 = <T>(x: T, y: T) => null;  // error, too many required params
+            this.a4 = <T>(x: T, y: T) => null;  // ok, same number of params
 
 
             this.a5 = <T>() => null; // ok, fewer required params
             this.a5 = <T>(x?: T, y?: T) => null; // ok, fewer required params
-            this.a5 = <T>(x: T) => null; // error, too many required params
-            this.a5 = <T>(x: T, y: T) => null;  // error, too many required params
+            this.a5 = <T>(x: T) => null; // ok, all present params match
+            this.a5 = <T>(x: T, y: T) => null;  // ok, same number of params
         }
     }
 }

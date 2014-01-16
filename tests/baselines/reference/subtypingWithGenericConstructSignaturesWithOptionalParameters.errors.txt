@@ -2,26 +2,10 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(20,15): error T
 	Types of property 'a' of types 'I3<T>' and 'Base<T>' are incompatible:
 		Construct signatures of types 'new(x: T) => T' and 'new() => T' are incompatible:
 			Call signature expects 0 or fewer parameters.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(33,15): error TS2143: Interface 'ClassTypeParam.I6<T>' cannot extend interface 'ClassTypeParam.Base<T>':
-	Types of property 'a2' of types 'I6<T>' and 'Base<T>' are incompatible:
-		Construct signatures of types 'new(x: T) => T' and 'new(x?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(50,15): error TS2143: Interface 'ClassTypeParam.I10<T>' cannot extend interface 'ClassTypeParam.Base<T>':
 	Types of property 'a3' of types 'I10<T>' and 'Base<T>' are incompatible:
 		Construct signatures of types 'new(x: T, y: T) => T' and 'new(x: T) => T' are incompatible:
 			Call signature expects 1 or fewer parameters.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(67,15): error TS2143: Interface 'ClassTypeParam.I14<T>' cannot extend interface 'ClassTypeParam.Base<T>':
-	Types of property 'a4' of types 'I14<T>' and 'Base<T>' are incompatible:
-		Construct signatures of types 'new(x: T, y: T) => T' and 'new(x: T, y?: T) => T' are incompatible:
-			Call signature expects 1 or fewer parameters.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(80,15): error TS2143: Interface 'ClassTypeParam.I17<T>' cannot extend interface 'ClassTypeParam.Base<T>':
-	Types of property 'a5' of types 'I17<T>' and 'Base<T>' are incompatible:
-		Construct signatures of types 'new(x: T) => T' and 'new(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(84,15): error TS2143: Interface 'ClassTypeParam.I18<T>' cannot extend interface 'ClassTypeParam.Base<T>':
-	Types of property 'a5' of types 'I18<T>' and 'Base<T>' are incompatible:
-		Construct signatures of types 'new(x: T, y: T) => T' and 'new(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(100,15): error TS2143: Interface 'GenericSignaturesInvalid.I1<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a' of types 'I1<T>' and 'Base2' are incompatible:
 		Construct signatures of types 'new() => T' and 'new<T>() => T' are incompatible.
@@ -40,8 +24,7 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(117,15): error 
 		Construct signatures of types 'new(x?: T) => T' and 'new<T>(x?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(121,15): error TS2143: Interface 'GenericSignaturesInvalid.I6<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a2' of types 'I6<T>' and 'Base2' are incompatible:
-		Construct signatures of types 'new(x: T) => T' and 'new<T>(x?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
+		Construct signatures of types 'new(x: T) => T' and 'new<T>(x?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(126,15): error TS2143: Interface 'GenericSignaturesInvalid.I7<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a3' of types 'I7<T>' and 'Base2' are incompatible:
 		Construct signatures of types 'new() => T' and 'new<T>(x: T) => T' are incompatible.
@@ -66,8 +49,7 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(151,15): error 
 		Construct signatures of types 'new(x: T) => T' and 'new<T>(x: T, y?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(155,15): error TS2143: Interface 'GenericSignaturesInvalid.I14<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a4' of types 'I14<T>' and 'Base2' are incompatible:
-		Construct signatures of types 'new(x: T, y: T) => T' and 'new<T>(x: T, y?: T) => T' are incompatible:
-			Call signature expects 1 or fewer parameters.
+		Construct signatures of types 'new(x: T, y: T) => T' and 'new<T>(x: T, y?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(160,15): error TS2143: Interface 'GenericSignaturesInvalid.I15<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a5' of types 'I15<T>' and 'Base2' are incompatible:
 		Construct signatures of types 'new() => T' and 'new<T>(x?: T, y?: T) => T' are incompatible.
@@ -76,12 +58,10 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(164,15): error 
 		Construct signatures of types 'new(x?: T, y?: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(168,15): error TS2143: Interface 'GenericSignaturesInvalid.I17<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a5' of types 'I17<T>' and 'Base2' are incompatible:
-		Construct signatures of types 'new(x: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
+		Construct signatures of types 'new(x: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(172,15): error TS2143: Interface 'GenericSignaturesInvalid.I18<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 	Types of property 'a5' of types 'I18<T>' and 'Base2' are incompatible:
-		Construct signatures of types 'new(x: T, y: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
+		Construct signatures of types 'new(x: T, y: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(192,15): error TS2143: Interface 'GenericSignaturesValid.I2' cannot extend interface 'GenericSignaturesValid.Base2':
 	Types of property 'a' of types 'I2' and 'Base2' are incompatible:
 		Construct signatures of types 'new<T>(x?: T) => T' and 'new<T>() => T' are incompatible.
@@ -92,10 +72,6 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(196,15): error 
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(201,15): error TS2143: Interface 'GenericSignaturesValid.I4' cannot extend interface 'GenericSignaturesValid.Base2':
 	Types of property 'a2' of types 'I4' and 'Base2' are incompatible:
 		Construct signatures of types 'new<T>() => T' and 'new<T>(x?: T) => T' are incompatible.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(209,15): error TS2143: Interface 'GenericSignaturesValid.I6' cannot extend interface 'GenericSignaturesValid.Base2':
-	Types of property 'a2' of types 'I6' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T) => T' and 'new<T>(x?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(214,15): error TS2143: Interface 'GenericSignaturesValid.I7' cannot extend interface 'GenericSignaturesValid.Base2':
 	Types of property 'a3' of types 'I7' and 'Base2' are incompatible:
 		Construct signatures of types 'new<T>() => T' and 'new<T>(x: T) => T' are incompatible.
@@ -106,18 +82,6 @@ subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(226,15): error 
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(231,15): error TS2143: Interface 'GenericSignaturesValid.I11' cannot extend interface 'GenericSignaturesValid.Base2':
 	Types of property 'a4' of types 'I11' and 'Base2' are incompatible:
 		Construct signatures of types 'new<T>() => T' and 'new<T>(x: T, y?: T) => T' are incompatible.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(243,15): error TS2143: Interface 'GenericSignaturesValid.I14' cannot extend interface 'GenericSignaturesValid.Base2':
-	Types of property 'a4' of types 'I14' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T, y: T) => T' and 'new<T>(x: T, y?: T) => T' are incompatible:
-			Call signature expects 1 or fewer parameters.
 subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(248,15): error TS2143: Interface 'GenericSignaturesValid.I15' cannot extend interface 'GenericSignaturesValid.Base2':
 	Types of property 'a5' of types 'I15' and 'Base2' are incompatible:
 		Construct signatures of types 'new<T>() => T' and 'new<T>(x?: T, y?: T) => T' are incompatible.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(256,15): error TS2143: Interface 'GenericSignaturesValid.I17' cannot extend interface 'GenericSignaturesValid.Base2':
-	Types of property 'a5' of types 'I17' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.
-subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(260,15): error TS2143: Interface 'GenericSignaturesValid.I18' cannot extend interface 'GenericSignaturesValid.Base2':
-	Types of property 'a5' of types 'I18' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T, y: T) => T' and 'new<T>(x?: T, y?: T) => T' are incompatible:
-			Call signature expects 0 or fewer parameters.

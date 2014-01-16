@@ -12,6 +12,7 @@ module TypeScript {
         public kind: PullElementKind;
         public name: string;
         private declDisplayName: string;
+        public semanticInfoChain: SemanticInfoChain;
 
         public declID = pullDeclID++;
         public flags: PullElementFlags = PullElementFlags.None;
@@ -33,10 +34,11 @@ module TypeScript {
         public childDeclNamespaceCache: IIndexable<PullDecl[]> = null;
         public childDeclTypeParameterCache: IIndexable<PullDecl[]> = null;
 
-        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags) {
+        constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, semanticInfoChain: SemanticInfoChain) {
             this.name = declName;
             this.kind = kind;
             this.flags = declFlags;
+            this.semanticInfoChain = semanticInfoChain;
 
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
@@ -52,10 +54,6 @@ module TypeScript {
         }
 
         public getParentDecl(): PullDecl {
-            throw Errors.abstract();
-        }
-
-        public semanticInfoChain(): SemanticInfoChain {
             throw Errors.abstract();
         }
 
@@ -102,12 +100,12 @@ module TypeScript {
         }
 
         public setSymbol(symbol: PullSymbol) {
-            this.semanticInfoChain().setSymbolForDecl(this, symbol);
+            this.semanticInfoChain.setSymbolForDecl(this, symbol);
         }
 
         public ensureSymbolIsBound() {
             if (!this.hasSymbol() && this.kind !== PullElementKind.Script) {
-                var binder = this.semanticInfoChain().getBinder();
+                var binder = this.semanticInfoChain.getBinder();
                 binder.bindDeclToPullSymbol(this);
             }
         }
@@ -119,25 +117,25 @@ module TypeScript {
 
             this.ensureSymbolIsBound();
 
-            return this.semanticInfoChain().getSymbolForDecl(this);
+            return this.semanticInfoChain.getSymbolForDecl(this);
         }
 
         public hasSymbol() {
-            var symbol = this.semanticInfoChain().getSymbolForDecl(this);
+            var symbol = this.semanticInfoChain.getSymbolForDecl(this);
             return !!symbol;
         }
 
         public setSignatureSymbol(signatureSymbol: PullSignatureSymbol): void {
-            this.semanticInfoChain().setSignatureSymbolForDecl(this, signatureSymbol);
+            this.semanticInfoChain.setSignatureSymbolForDecl(this, signatureSymbol);
         }
 
         public getSignatureSymbol(): PullSignatureSymbol { 
             this.ensureSymbolIsBound();
-            return this.semanticInfoChain().getSignatureSymbolForDecl(this);
+            return this.semanticInfoChain.getSignatureSymbolForDecl(this);
         }
 
         public hasSignatureSymbol() {
-            var signatureSymbol = this.semanticInfoChain().getSignatureSymbolForDecl(this);
+            var signatureSymbol = this.semanticInfoChain.getSignatureSymbolForDecl(this);
             return !!signatureSymbol;
         }
 
@@ -297,8 +295,11 @@ module TypeScript {
         }
 
         public ast(): ISyntaxElement {
-            var semanticInfoChain = this.semanticInfoChain();
-            return semanticInfoChain ? semanticInfoChain.getASTForDecl(this) : null;
+            return this.semanticInfoChain.getASTForDecl(this);
+        }
+
+        public isRootDecl() {
+            throw Errors.abstract();
         }
     }
 
@@ -309,13 +310,12 @@ module TypeScript {
     // the file name by queryign their parent.  In other words, a Root Decl allows us to trade
     // space for logarithmic speed. 
     export class RootPullDecl extends PullDecl {
-        private _semanticInfoChain: SemanticInfoChain;
         private _isExternalModule: boolean;
         private _fileName: string;
 
         constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, semanticInfoChain: SemanticInfoChain, isExternalModule: boolean) {
-            super(name, name, kind, declFlags);
-            this._semanticInfoChain = semanticInfoChain;
+            super(name, name, kind, declFlags, semanticInfoChain);
+            this.semanticInfoChain = semanticInfoChain;
             this._isExternalModule = isExternalModule;
             this._fileName = fileName;
         }
@@ -332,10 +332,6 @@ module TypeScript {
             return null;
         }
 
-        public semanticInfoChain(): SemanticInfoChain {
-            return this._semanticInfoChain;
-        }
-
         public isExternalModule(): boolean {
             return this._isExternalModule;
         }
@@ -344,19 +340,36 @@ module TypeScript {
         public getEnclosingDecl() {
             return this;
         }
+        public isRootDecl() {
+            return true;
+        }
     }
 
     export class NormalPullDecl extends PullDecl {
         private parentDecl: PullDecl = null;
+        public _rootDecl: RootPullDecl;
         private parentPath: PullDecl[] = null;
 
         constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, addToParent = true) {
-            super(declName, displayName, kind, declFlags);
+            super(declName, displayName, kind, declFlags, parentDecl ? parentDecl.semanticInfoChain : null);
 
             // Link to parent
             this.parentDecl = parentDecl;
             if (addToParent) {
                 parentDecl.addChildDecl(this);
+            }
+
+            if (this.parentDecl) {
+                if (this.parentDecl.isRootDecl()) {
+                    this._rootDecl = <RootPullDecl>this.parentDecl;
+                }
+                else {
+                    this._rootDecl = (<NormalPullDecl>this.parentDecl)._rootDecl;
+                }
+            } else {
+                // Synthetic
+                Debug.assert(this.isSynthesized());
+                this._rootDecl = null;
             }
 
             //if (!parentDecl && !this.isSynthesized() && kind !== PullElementKind.Primitive) {
@@ -365,7 +378,7 @@ module TypeScript {
         }
 
         public fileName(): string {
-            return this.parentDecl ? this.parentDecl.fileName() : "";
+            return this._rootDecl.fileName();
         }
 
         public getParentDecl(): PullDecl {
@@ -391,17 +404,16 @@ module TypeScript {
             return this.parentPath;
         }
 
-        public semanticInfoChain(): SemanticInfoChain {
-            var parent = this.getParentDecl();
-            return parent ? parent.semanticInfoChain() : null;
-        }
-
         public isExternalModule(): boolean {
             return false;
         }
 
         public getEnclosingDecl(): PullDecl {
             return this.parentDecl && this.parentDecl._getEnclosingDeclFromParentDecl();
+        }
+
+        public isRootDecl() {
+            return false;
         }
     }
 
@@ -427,22 +439,20 @@ module TypeScript {
     }
 
     export class PullSynthesizedDecl extends NormalPullDecl {
-        private _semanticInfoChain: SemanticInfoChain;
-
         // This is a synthesized decl; its life time should match that of the symbol using it, and 
         // not that of its parent decl. To enforce this we are not making it reachable from its 
         // parent, but will set the parent link.
         constructor(declName: string, displayName: string, kind: PullElementKind, declFlags: PullElementFlags, parentDecl: PullDecl, semanticInfoChain: SemanticInfoChain) {
             super(declName, displayName, kind, declFlags, parentDecl, /*addToParent*/ false);
-            this._semanticInfoChain = semanticInfoChain
-        }
-
-        public semanticInfoChain(): SemanticInfoChain {
-            return this._semanticInfoChain;
+            this.semanticInfoChain = semanticInfoChain;
         }
 
         public isSynthesized(): boolean {
             return true;
+        }
+
+        public fileName(): string {
+            return this._rootDecl ? this._rootDecl.fileName() : "";
         }
     }
 

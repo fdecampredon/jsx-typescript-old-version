@@ -1066,7 +1066,7 @@ module TypeScript {
     "code": 2185,
     "category": DiagnosticCategory.Error
   },
-  "Type reference '{0}' in extends clause does not reference constructor function for '{1}'.": {
+  "Type name '{0}' in extends clause does not reference constructor function for '{1}'.": {
     "code": 2186,
     "category": DiagnosticCategory.Error
   },
@@ -1378,15 +1378,15 @@ module TypeScript {
     "code": 4028,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Types '{0}' and '{1}' originating in inifinitely expanding type reference do not refer to same named type.": {
+  "Types '{0}' and '{1}' originating in infinitely expanding type reference do not refer to same named type.": {
     "code": 4029,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments.": {
+  "Types '{0}' and '{1}' originating in infinitely expanding type reference have incompatible type arguments.": {
     "code": 4030,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Types '{0}' and '{1}' originating in inifinitely expanding type reference have incompatible type arguments:{NL}{2}": {
+  "Types '{0}' and '{1}' originating in infinitely expanding type reference have incompatible type arguments:{NL}{2}": {
     "code": 4031,
     "category": DiagnosticCategory.NoPrefix
   },

@@ -101,6 +101,10 @@ function f18(x) {
     var r18 = true ? null : x;
 }
 
+//function f18<T, U extends T>(x: U) {
+//    var r18 = true ? x : null;
+//    var r18 = true ? null : x;
+//}
 var r19 = true ? new Object() : null;
 var r19 = true ? null : new Object();
 

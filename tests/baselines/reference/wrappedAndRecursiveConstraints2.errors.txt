@@ -1,2 +1,2 @@
-wrappedAndRecursiveConstraints2.ts(3,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-wrappedAndRecursiveConstraints2.ts(8,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'c' must be of type 'C<number>', but here has type 'C<C<string>>'.
+wrappedAndRecursiveConstraints2.ts(1,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+wrappedAndRecursiveConstraints2.ts(6,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'c' must be of type 'C<number>', but here has type 'C<C<string>>'.

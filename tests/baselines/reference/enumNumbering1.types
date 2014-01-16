@@ -1,0 +1,16 @@
+=== tests/cases/compiler/enumNumbering1.ts ===
+Line 0 col 5 IdentifierName "Test" = Test
+Line 1 col 0 IdentifierName "A" = Test
+Line 2 col 0 IdentifierName "B" = Test
+Line 3 col 0 IdentifierName "C" = Test
+Line 3 col 8 InvocationExpression "Math.floor(Math.random() * 1000)" = number
+Line 3 col 8 MemberAccessExpression "Math.floor" = (x: number) => number
+Line 3 col 8 IdentifierName "Math" = Math
+Line 3 col 13 IdentifierName "floor" = (x: number) => number
+Line 3 col 19 MultiplyExpression "Math.random() * 1000" = number
+Line 3 col 19 InvocationExpression "Math.random()" = number
+Line 3 col 19 MemberAccessExpression "Math.random" = () => number
+Line 3 col 19 IdentifierName "Math" = Math
+Line 3 col 24 IdentifierName "random" = () => number
+Line 4 col 0 IdentifierName "D" = Test
+Line 5 col 0 IdentifierName "E // Error but shouldn't be" = Test

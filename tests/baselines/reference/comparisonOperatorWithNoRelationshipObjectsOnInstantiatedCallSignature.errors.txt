@@ -1,0 +1,97 @@
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(28,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(32,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(33,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(34,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(35,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(36,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(37,12): error TS2009: Operator '<' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(39,12): error TS2009: Operator '<' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(40,12): error TS2009: Operator '<' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(41,12): error TS2009: Operator '<' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(42,12): error TS2009: Operator '<' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(43,12): error TS2009: Operator '<' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(44,12): error TS2009: Operator '<' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(47,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(48,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(49,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(50,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(51,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(52,12): error TS2009: Operator '>' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(54,12): error TS2009: Operator '>' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(55,12): error TS2009: Operator '>' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(56,12): error TS2009: Operator '>' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(57,12): error TS2009: Operator '>' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(58,12): error TS2009: Operator '>' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(59,12): error TS2009: Operator '>' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(62,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(63,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(64,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(65,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(66,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(67,12): error TS2009: Operator '<=' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(69,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(70,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(71,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(72,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(73,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(74,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(77,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(78,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(79,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(80,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(81,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(82,12): error TS2009: Operator '>=' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(84,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(85,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(86,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(87,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(88,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(89,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(92,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(93,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(94,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(95,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(96,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(97,12): error TS2009: Operator '==' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(99,12): error TS2009: Operator '==' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(100,12): error TS2009: Operator '==' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(101,12): error TS2009: Operator '==' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(102,12): error TS2009: Operator '==' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(103,12): error TS2009: Operator '==' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(104,12): error TS2009: Operator '==' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(107,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(108,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(109,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(110,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(111,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(112,12): error TS2009: Operator '!=' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(114,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(115,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(116,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(117,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(118,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(119,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(122,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(123,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(124,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(125,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(126,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(127,12): error TS2009: Operator '===' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(129,12): error TS2009: Operator '===' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(130,12): error TS2009: Operator '===' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(131,12): error TS2009: Operator '===' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(132,12): error TS2009: Operator '===' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(133,12): error TS2009: Operator '===' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(134,12): error TS2009: Operator '===' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(137,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(138,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T>(x: T): T; }' and '{ fn(x: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(139,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T>(x?: T): T; }' and '{ fn(x?: string): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(140,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T>(...x: T[]): T; }' and '{ fn(...x: string[]): number; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(141,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T>(x: T, y: T): T; }' and '{ fn(x: string, y: number): string; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(142,12): error TS2009: Operator '!==' cannot be applied to types '{ fn<T, U extends T>(x: T, y: U): T; }' and '{ fn(x: Base, y: C): Base; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(144,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(): string; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(145,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(x: string): number; }' and '{ fn<T>(x: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(146,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(x?: string): number; }' and '{ fn<T>(x?: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(147,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(...x: string[]): number; }' and '{ fn<T>(...x: T[]): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(148,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(x: string, y: number): string; }' and '{ fn<T>(x: T, y: T): T; }'.
+comparisonOperatorWithNoRelationshipObjectsOnInstantiatedCallSignature.ts(149,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(x: Base, y: C): Base; }' and '{ fn<T, U extends T>(x: T, y: U): T; }'.

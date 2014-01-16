@@ -1,0 +1,13 @@
+=== tests/cases/compiler/logicalOrExpressionIsNotContextuallyTyped.ts ===
+Line 6 col 4 IdentifierName "a" = (a: string) => string
+Line 6 col 8 IdentifierName "a" = string
+Line 9 col 4 IdentifierName "r" = (a: any) => any
+Line 9 col 8 LogicalOrExpression "a || ((a) => a.toLowerCase())" = (a: any) => any
+Line 9 col 8 IdentifierName "a" = (a: string) => string
+Line 9 col 13 ParenthesizedExpression "((a) => a.toLowerCase())" = (a: any) => any
+Line 9 col 14 ParenthesizedArrowFunctionExpression "(a) => a.toLowerCase()" = (a: any) => any
+Line 9 col 15 IdentifierName "a" = any
+Line 9 col 21 InvocationExpression "a.toLowerCase()" = any
+Line 9 col 21 MemberAccessExpression "a.toLowerCase" = any
+Line 9 col 21 IdentifierName "a" = any
+Line 9 col 23 IdentifierName "toLowerCase" = any

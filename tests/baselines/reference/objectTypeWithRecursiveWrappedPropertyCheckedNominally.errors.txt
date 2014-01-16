@@ -1,30 +1,30 @@
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(19,1): error TS2012: Cannot convert 'MyList<number>' to 'List<number>':
 	Types of property 'next' of types 'MyList<number>' and 'List<number>' are incompatible:
-		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in inifinitely expanding type reference do not refer to same named type.
+		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in infinitely expanding type reference do not refer to same named type.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(20,1): error TS2012: Cannot convert 'MyList<string>' to 'List<number>':
 	Types of property 'data' of types 'MyList<string>' and 'List<number>' are incompatible.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(22,1): error TS2012: Cannot convert 'MyList<number>' to 'List<string>':
 	Types of property 'data' of types 'MyList<number>' and 'List<string>' are incompatible.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(23,1): error TS2012: Cannot convert 'MyList<string>' to 'List<string>':
 	Types of property 'next' of types 'MyList<string>' and 'List<string>' are incompatible:
-		Types 'MyList<MyList<string>>' and 'List<List<string>>' originating in inifinitely expanding type reference do not refer to same named type.
+		Types 'MyList<MyList<string>>' and 'List<List<string>>' originating in infinitely expanding type reference do not refer to same named type.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(27,1): error TS2012: Cannot convert 'List<MyList<number>>' to 'List<List<number>>':
 	Types of property 'data' of types 'List<MyList<number>>' and 'List<List<number>>' are incompatible:
 		Types of property 'next' of types 'MyList<number>' and 'List<number>' are incompatible:
-			Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in inifinitely expanding type reference do not refer to same named type.
+			Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in infinitely expanding type reference do not refer to same named type.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(30,5): error TS2011: Cannot convert 'U' to 'T'.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(31,5): error TS2011: Cannot convert 'T' to 'U'.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(36,5): error TS2012: Cannot convert 'U' to 'List<number>':
 	Types of property 'next' of types 'MyList<number>' and 'List<number>' are incompatible:
-		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in inifinitely expanding type reference do not refer to same named type.
+		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in infinitely expanding type reference do not refer to same named type.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(37,5): error TS2012: Cannot convert 'T' to 'MyList<number>':
 	Types of property 'next' of types 'List<number>' and 'MyList<number>' are incompatible:
-		Types 'List<List<number>>' and 'MyList<MyList<number>>' originating in inifinitely expanding type reference do not refer to same named type.
+		Types 'List<List<number>>' and 'MyList<MyList<number>>' originating in infinitely expanding type reference do not refer to same named type.
 objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(41,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(43,5): error TS2011: Cannot convert 'U' to 'T'.
-objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(49,5): error TS2012: Cannot convert 'T' to 'List<number>':
+objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(42,5): error TS2011: Cannot convert 'U' to 'T'.
+objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(48,5): error TS2012: Cannot convert 'T' to 'List<number>':
 	Types of property 'next' of types 'MyList<number>' and 'List<number>' are incompatible:
-		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in inifinitely expanding type reference do not refer to same named type.
-objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(50,5): error TS2012: Cannot convert 'U' to 'List<number>':
+		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in infinitely expanding type reference do not refer to same named type.
+objectTypeWithRecursiveWrappedPropertyCheckedNominally.ts(49,5): error TS2012: Cannot convert 'U' to 'List<number>':
 	Types of property 'next' of types 'MyList<number>' and 'List<number>' are incompatible:
-		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in inifinitely expanding type reference do not refer to same named type.
+		Types 'MyList<MyList<number>>' and 'List<List<number>>' originating in infinitely expanding type reference do not refer to same named type.

@@ -1,0 +1,248 @@
+=== tests/cases/compiler/comparisonOperatorWithSubtypeEnumAndNumber.ts ===
+Line 0 col 5 IdentifierName "E" = E
+Line 0 col 9 IdentifierName "a" = E
+Line 0 col 12 IdentifierName "b" = E
+Line 0 col 15 IdentifierName "c" = E
+Line 2 col 4 IdentifierName "a" = E
+Line 2 col 7 IdentifierName "E" = E
+Line 3 col 4 IdentifierName "b" = number
+Line 6 col 4 IdentifierName "ra1" = boolean
+Line 6 col 10 LessThanExpression "a < b" = boolean
+Line 6 col 10 IdentifierName "a" = E
+Line 6 col 14 IdentifierName "b" = number
+Line 7 col 4 IdentifierName "ra2" = boolean
+Line 7 col 10 LessThanExpression "b < a" = boolean
+Line 7 col 10 IdentifierName "b" = number
+Line 7 col 14 IdentifierName "a" = E
+Line 8 col 4 IdentifierName "ra3" = boolean
+Line 8 col 10 LessThanExpression "E.a < b" = boolean
+Line 8 col 10 MemberAccessExpression "E.a" = E
+Line 8 col 10 IdentifierName "E" = typeof E
+Line 8 col 12 IdentifierName "a" = E
+Line 8 col 16 IdentifierName "b" = number
+Line 9 col 4 IdentifierName "ra4" = boolean
+Line 9 col 10 LessThanExpression "b < E.a" = boolean
+Line 9 col 10 IdentifierName "b" = number
+Line 9 col 14 MemberAccessExpression "E.a" = E
+Line 9 col 14 IdentifierName "E" = typeof E
+Line 9 col 16 IdentifierName "a" = E
+Line 10 col 4 IdentifierName "ra5" = boolean
+Line 10 col 10 LessThanExpression "E.a < 0" = boolean
+Line 10 col 10 MemberAccessExpression "E.a" = E
+Line 10 col 10 IdentifierName "E" = typeof E
+Line 10 col 12 IdentifierName "a" = E
+Line 11 col 4 IdentifierName "ra6" = boolean
+Line 11 col 10 LessThanExpression "0 < E.a" = boolean
+Line 11 col 14 MemberAccessExpression "E.a" = E
+Line 11 col 14 IdentifierName "E" = typeof E
+Line 11 col 16 IdentifierName "a" = E
+Line 14 col 4 IdentifierName "rb1" = boolean
+Line 14 col 10 GreaterThanExpression "a > b" = boolean
+Line 14 col 10 IdentifierName "a" = E
+Line 14 col 14 IdentifierName "b" = number
+Line 15 col 4 IdentifierName "rb2" = boolean
+Line 15 col 10 GreaterThanExpression "b > a" = boolean
+Line 15 col 10 IdentifierName "b" = number
+Line 15 col 14 IdentifierName "a" = E
+Line 16 col 4 IdentifierName "rb3" = boolean
+Line 16 col 10 GreaterThanExpression "E.a > b" = boolean
+Line 16 col 10 MemberAccessExpression "E.a" = E
+Line 16 col 10 IdentifierName "E" = typeof E
+Line 16 col 12 IdentifierName "a" = E
+Line 16 col 16 IdentifierName "b" = number
+Line 17 col 4 IdentifierName "rb4" = boolean
+Line 17 col 10 GreaterThanExpression "b > E.a" = boolean
+Line 17 col 10 IdentifierName "b" = number
+Line 17 col 14 MemberAccessExpression "E.a" = E
+Line 17 col 14 IdentifierName "E" = typeof E
+Line 17 col 16 IdentifierName "a" = E
+Line 18 col 4 IdentifierName "rb5" = boolean
+Line 18 col 10 GreaterThanExpression "E.a > 0" = boolean
+Line 18 col 10 MemberAccessExpression "E.a" = E
+Line 18 col 10 IdentifierName "E" = typeof E
+Line 18 col 12 IdentifierName "a" = E
+Line 19 col 4 IdentifierName "rb6" = boolean
+Line 19 col 10 GreaterThanExpression "0 > E.a" = boolean
+Line 19 col 14 MemberAccessExpression "E.a" = E
+Line 19 col 14 IdentifierName "E" = typeof E
+Line 19 col 16 IdentifierName "a" = E
+Line 22 col 4 IdentifierName "rc1" = boolean
+Line 22 col 10 LessThanOrEqualExpression "a <= b" = boolean
+Line 22 col 10 IdentifierName "a" = E
+Line 22 col 15 IdentifierName "b" = number
+Line 23 col 4 IdentifierName "rc2" = boolean
+Line 23 col 10 LessThanOrEqualExpression "b <= a" = boolean
+Line 23 col 10 IdentifierName "b" = number
+Line 23 col 15 IdentifierName "a" = E
+Line 24 col 4 IdentifierName "rc3" = boolean
+Line 24 col 10 LessThanOrEqualExpression "E.a <= b" = boolean
+Line 24 col 10 MemberAccessExpression "E.a" = E
+Line 24 col 10 IdentifierName "E" = typeof E
+Line 24 col 12 IdentifierName "a" = E
+Line 24 col 17 IdentifierName "b" = number
+Line 25 col 4 IdentifierName "rc4" = boolean
+Line 25 col 10 LessThanOrEqualExpression "b <= E.a" = boolean
+Line 25 col 10 IdentifierName "b" = number
+Line 25 col 15 MemberAccessExpression "E.a" = E
+Line 25 col 15 IdentifierName "E" = typeof E
+Line 25 col 17 IdentifierName "a" = E
+Line 26 col 4 IdentifierName "rc5" = boolean
+Line 26 col 10 LessThanOrEqualExpression "E.a <= 0" = boolean
+Line 26 col 10 MemberAccessExpression "E.a" = E
+Line 26 col 10 IdentifierName "E" = typeof E
+Line 26 col 12 IdentifierName "a" = E
+Line 27 col 4 IdentifierName "rc6" = boolean
+Line 27 col 10 LessThanOrEqualExpression "0 <= E.a" = boolean
+Line 27 col 15 MemberAccessExpression "E.a" = E
+Line 27 col 15 IdentifierName "E" = typeof E
+Line 27 col 17 IdentifierName "a" = E
+Line 30 col 4 IdentifierName "rd1" = boolean
+Line 30 col 10 GreaterThanOrEqualExpression "a >= b" = boolean
+Line 30 col 10 IdentifierName "a" = E
+Line 30 col 15 IdentifierName "b" = number
+Line 31 col 4 IdentifierName "rd2" = boolean
+Line 31 col 10 GreaterThanOrEqualExpression "b >= a" = boolean
+Line 31 col 10 IdentifierName "b" = number
+Line 31 col 15 IdentifierName "a" = E
+Line 32 col 4 IdentifierName "rd3" = boolean
+Line 32 col 10 GreaterThanOrEqualExpression "E.a >= b" = boolean
+Line 32 col 10 MemberAccessExpression "E.a" = E
+Line 32 col 10 IdentifierName "E" = typeof E
+Line 32 col 12 IdentifierName "a" = E
+Line 32 col 17 IdentifierName "b" = number
+Line 33 col 4 IdentifierName "rd4" = boolean
+Line 33 col 10 GreaterThanOrEqualExpression "b >= E.a" = boolean
+Line 33 col 10 IdentifierName "b" = number
+Line 33 col 15 MemberAccessExpression "E.a" = E
+Line 33 col 15 IdentifierName "E" = typeof E
+Line 33 col 17 IdentifierName "a" = E
+Line 34 col 4 IdentifierName "rd5" = boolean
+Line 34 col 10 GreaterThanOrEqualExpression "E.a >= 0" = boolean
+Line 34 col 10 MemberAccessExpression "E.a" = E
+Line 34 col 10 IdentifierName "E" = typeof E
+Line 34 col 12 IdentifierName "a" = E
+Line 35 col 4 IdentifierName "rd6" = boolean
+Line 35 col 10 GreaterThanOrEqualExpression "0 >= E.a" = boolean
+Line 35 col 15 MemberAccessExpression "E.a" = E
+Line 35 col 15 IdentifierName "E" = typeof E
+Line 35 col 17 IdentifierName "a" = E
+Line 38 col 4 IdentifierName "re1" = boolean
+Line 38 col 10 EqualsWithTypeConversionExpression "a == b" = boolean
+Line 38 col 10 IdentifierName "a" = E
+Line 38 col 15 IdentifierName "b" = number
+Line 39 col 4 IdentifierName "re2" = boolean
+Line 39 col 10 EqualsWithTypeConversionExpression "b == a" = boolean
+Line 39 col 10 IdentifierName "b" = number
+Line 39 col 15 IdentifierName "a" = E
+Line 40 col 4 IdentifierName "re3" = boolean
+Line 40 col 10 EqualsWithTypeConversionExpression "E.a == b" = boolean
+Line 40 col 10 MemberAccessExpression "E.a" = E
+Line 40 col 10 IdentifierName "E" = typeof E
+Line 40 col 12 IdentifierName "a" = E
+Line 40 col 17 IdentifierName "b" = number
+Line 41 col 4 IdentifierName "re4" = boolean
+Line 41 col 10 EqualsWithTypeConversionExpression "b == E.a" = boolean
+Line 41 col 10 IdentifierName "b" = number
+Line 41 col 15 MemberAccessExpression "E.a" = E
+Line 41 col 15 IdentifierName "E" = typeof E
+Line 41 col 17 IdentifierName "a" = E
+Line 42 col 4 IdentifierName "re5" = boolean
+Line 42 col 10 EqualsWithTypeConversionExpression "E.a == 0" = boolean
+Line 42 col 10 MemberAccessExpression "E.a" = E
+Line 42 col 10 IdentifierName "E" = typeof E
+Line 42 col 12 IdentifierName "a" = E
+Line 43 col 4 IdentifierName "re6" = boolean
+Line 43 col 10 EqualsWithTypeConversionExpression "0 == E.a" = boolean
+Line 43 col 15 MemberAccessExpression "E.a" = E
+Line 43 col 15 IdentifierName "E" = typeof E
+Line 43 col 17 IdentifierName "a" = E
+Line 46 col 4 IdentifierName "rf1" = boolean
+Line 46 col 10 NotEqualsWithTypeConversionExpression "a != b" = boolean
+Line 46 col 10 IdentifierName "a" = E
+Line 46 col 15 IdentifierName "b" = number
+Line 47 col 4 IdentifierName "rf2" = boolean
+Line 47 col 10 NotEqualsWithTypeConversionExpression "b != a" = boolean
+Line 47 col 10 IdentifierName "b" = number
+Line 47 col 15 IdentifierName "a" = E
+Line 48 col 4 IdentifierName "rf3" = boolean
+Line 48 col 10 NotEqualsWithTypeConversionExpression "E.a != b" = boolean
+Line 48 col 10 MemberAccessExpression "E.a" = E
+Line 48 col 10 IdentifierName "E" = typeof E
+Line 48 col 12 IdentifierName "a" = E
+Line 48 col 17 IdentifierName "b" = number
+Line 49 col 4 IdentifierName "rf4" = boolean
+Line 49 col 10 NotEqualsWithTypeConversionExpression "b != E.a" = boolean
+Line 49 col 10 IdentifierName "b" = number
+Line 49 col 15 MemberAccessExpression "E.a" = E
+Line 49 col 15 IdentifierName "E" = typeof E
+Line 49 col 17 IdentifierName "a" = E
+Line 50 col 4 IdentifierName "rf5" = boolean
+Line 50 col 10 NotEqualsWithTypeConversionExpression "E.a != 0" = boolean
+Line 50 col 10 MemberAccessExpression "E.a" = E
+Line 50 col 10 IdentifierName "E" = typeof E
+Line 50 col 12 IdentifierName "a" = E
+Line 51 col 4 IdentifierName "rf6" = boolean
+Line 51 col 10 NotEqualsWithTypeConversionExpression "0 != E.a" = boolean
+Line 51 col 15 MemberAccessExpression "E.a" = E
+Line 51 col 15 IdentifierName "E" = typeof E
+Line 51 col 17 IdentifierName "a" = E
+Line 54 col 4 IdentifierName "rg1" = boolean
+Line 54 col 10 EqualsExpression "a === b" = boolean
+Line 54 col 10 IdentifierName "a" = E
+Line 54 col 16 IdentifierName "b" = number
+Line 55 col 4 IdentifierName "rg2" = boolean
+Line 55 col 10 EqualsExpression "b === a" = boolean
+Line 55 col 10 IdentifierName "b" = number
+Line 55 col 16 IdentifierName "a" = E
+Line 56 col 4 IdentifierName "rg3" = boolean
+Line 56 col 10 EqualsExpression "E.a === b" = boolean
+Line 56 col 10 MemberAccessExpression "E.a" = E
+Line 56 col 10 IdentifierName "E" = typeof E
+Line 56 col 12 IdentifierName "a" = E
+Line 56 col 18 IdentifierName "b" = number
+Line 57 col 4 IdentifierName "rg4" = boolean
+Line 57 col 10 EqualsExpression "b === E.a" = boolean
+Line 57 col 10 IdentifierName "b" = number
+Line 57 col 16 MemberAccessExpression "E.a" = E
+Line 57 col 16 IdentifierName "E" = typeof E
+Line 57 col 18 IdentifierName "a" = E
+Line 58 col 4 IdentifierName "rg5" = boolean
+Line 58 col 10 EqualsExpression "E.a === 0" = boolean
+Line 58 col 10 MemberAccessExpression "E.a" = E
+Line 58 col 10 IdentifierName "E" = typeof E
+Line 58 col 12 IdentifierName "a" = E
+Line 59 col 4 IdentifierName "rg6" = boolean
+Line 59 col 10 EqualsExpression "0 === E.a" = boolean
+Line 59 col 16 MemberAccessExpression "E.a" = E
+Line 59 col 16 IdentifierName "E" = typeof E
+Line 59 col 18 IdentifierName "a" = E
+Line 62 col 4 IdentifierName "rh1" = boolean
+Line 62 col 10 NotEqualsExpression "a !== b" = boolean
+Line 62 col 10 IdentifierName "a" = E
+Line 62 col 16 IdentifierName "b" = number
+Line 63 col 4 IdentifierName "rh2" = boolean
+Line 63 col 10 NotEqualsExpression "b !== a" = boolean
+Line 63 col 10 IdentifierName "b" = number
+Line 63 col 16 IdentifierName "a" = E
+Line 64 col 4 IdentifierName "rh3" = boolean
+Line 64 col 10 NotEqualsExpression "E.a !== b" = boolean
+Line 64 col 10 MemberAccessExpression "E.a" = E
+Line 64 col 10 IdentifierName "E" = typeof E
+Line 64 col 12 IdentifierName "a" = E
+Line 64 col 18 IdentifierName "b" = number
+Line 65 col 4 IdentifierName "rh4" = boolean
+Line 65 col 10 NotEqualsExpression "b !== E.a" = boolean
+Line 65 col 10 IdentifierName "b" = number
+Line 65 col 16 MemberAccessExpression "E.a" = E
+Line 65 col 16 IdentifierName "E" = typeof E
+Line 65 col 18 IdentifierName "a" = E
+Line 66 col 4 IdentifierName "rh5" = boolean
+Line 66 col 10 NotEqualsExpression "E.a !== 0" = boolean
+Line 66 col 10 MemberAccessExpression "E.a" = E
+Line 66 col 10 IdentifierName "E" = typeof E
+Line 66 col 12 IdentifierName "a" = E
+Line 67 col 4 IdentifierName "rh6" = boolean
+Line 67 col 10 NotEqualsExpression "0 !== E.a" = boolean
+Line 67 col 16 MemberAccessExpression "E.a" = E
+Line 67 col 16 IdentifierName "E" = typeof E
+Line 67 col 18 IdentifierName "a" = E

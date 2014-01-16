@@ -1,0 +1,8 @@
+=== tests/cases/compiler/Bar.ts ===
+Line 0 col 7 IdentifierName "Error" = typeof Foo
+Line 1 col 6 IdentifierName "Bar" = Bar
+Line 1 col 18 IdentifierName "Error" = Foo
+Line 2 col 9 IdentifierName "Bar" = typeof Bar
+=== tests/cases/compiler/Foo.ts ===
+Line 1 col 6 IdentifierName "Foo" = Foo
+Line 2 col 9 IdentifierName "Foo" = typeof Foo

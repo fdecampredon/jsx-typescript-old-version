@@ -1,0 +1,18 @@
+=== tests/cases/compiler/genericAndNonGenericInterfaceWithTheSameName2.ts ===
+Line 2 col 7 IdentifierName "M" = M
+Line 3 col 14 IdentifierName "A" = M.A<T>
+Line 3 col 16 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "bar" = T
+Line 4 col 13 IdentifierName "T" = T
+Line 8 col 7 IdentifierName "M2" = M2
+Line 9 col 14 IdentifierName "A" = M2.A
+Line 10 col 0 IdentifierName "foo" = string
+Line 14 col 7 IdentifierName "N" = N
+Line 15 col 11 IdentifierName "M" = N.M
+Line 16 col 18 IdentifierName "A" = N.M.A<T>
+Line 16 col 20 IdentifierName "T" = T
+Line 17 col 0 IdentifierName "bar" = T
+Line 17 col 17 IdentifierName "T" = T
+Line 21 col 11 IdentifierName "M2" = N.M2
+Line 22 col 18 IdentifierName "A" = N.M2.A
+Line 23 col 0 IdentifierName "foo" = string

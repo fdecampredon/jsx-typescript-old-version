@@ -1,0 +1,32 @@
+=== tests/cases/compiler/contextualTypeAppliedToVarArgs.ts ===
+Line 0 col 9 IdentifierName "delegate" = typeof delegate
+Line 0 col 18 IdentifierName "instance" = any
+Line 0 col 33 IdentifierName "method" = (...args: any[]) => any
+Line 0 col 45 IdentifierName "args" = any[]
+Line 0 col 66 IdentifierName "data" = any
+Line 0 col 83 IdentifierName "args" = any[]
+Line 1 col 11 FunctionExpression "function () { }" = () => void
+Line 4 col 6 IdentifierName "Foo" = Foo
+Line 5 col 0 IdentifierName "Bar" = () => void
+Line 8 col 0 InvocationExpression "delegate(this, function (source, args2)
+        {
+            var a = source.node;
+            var b = args2.node;
+        } )" = (...args: any[]) => any
+Line 8 col 0 IdentifierName "delegate" = typeof delegate
+Line 8 col 17 ThisKeyword "this" = Foo
+Line 8 col 23 FunctionExpression "function (source, args2)
+        {
+            var a = source.node;
+            var b = args2.node;
+        }" = (source: any, args2: any) => void
+Line 8 col 33 IdentifierName "source" = any
+Line 8 col 41 IdentifierName "args2" = any
+Line 10 col 16 IdentifierName "a" = any
+Line 10 col 20 MemberAccessExpression "source.node" = any
+Line 10 col 20 IdentifierName "source" = any
+Line 10 col 27 IdentifierName "node" = any
+Line 11 col 16 IdentifierName "b" = any
+Line 11 col 20 MemberAccessExpression "args2.node" = any
+Line 11 col 20 IdentifierName "args2" = any
+Line 11 col 26 IdentifierName "node" = any

@@ -1,0 +1,143 @@
+=== tests/cases/compiler/bitwiseNotOperatorWithAnyOtherType.ts ===
+Line 2 col 4 IdentifierName "ANY" = any
+Line 3 col 4 IdentifierName "ANY1" = any
+Line 4 col 4 IdentifierName "ANY2" = any[]
+Line 4 col 18 ArrayLiteralExpression "["", ""]" = any[]
+Line 5 col 4 IdentifierName "obj" = () => {}
+Line 6 col 4 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 6 col 11 ObjectLiteralExpression "{ x:"", y: () => { }}" = { x: string; y: () => void; }
+Line 6 col 13 IdentifierName "x" = string
+Line 6 col 19 IdentifierName "y" = () => void
+Line 6 col 22 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 8 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 8 IdentifierName "a" = any
+Line 10 col 11 IdentifierName "a" = any
+Line 12 col 6 IdentifierName "A" = A
+Line 13 col 11 IdentifierName "a" = any
+Line 14 col 11 IdentifierName "foo" = () => any
+Line 15 col 12 IdentifierName "a" = any
+Line 16 col 15 IdentifierName "a" = any
+Line 19 col 7 IdentifierName "M" = M
+Line 20 col 15 IdentifierName "n" = any
+Line 22 col 4 IdentifierName "objA" = A
+Line 22 col 11 ObjectCreationExpression "new A()" = A
+Line 22 col 15 IdentifierName "A" = typeof A
+Line 25 col 4 IdentifierName "ResultIsNumber" = number
+Line 25 col 21 BitwiseNotExpression "~ANY1" = number
+Line 25 col 22 IdentifierName "ANY1" = any
+Line 26 col 4 IdentifierName "ResultIsNumber1" = number
+Line 26 col 22 BitwiseNotExpression "~ANY2" = number
+Line 26 col 23 IdentifierName "ANY2" = any[]
+Line 27 col 4 IdentifierName "ResultIsNumber2" = number
+Line 27 col 22 BitwiseNotExpression "~A" = number
+Line 27 col 23 IdentifierName "A" = typeof A
+Line 28 col 4 IdentifierName "ResultIsNumber3" = number
+Line 28 col 22 BitwiseNotExpression "~M" = number
+Line 28 col 23 IdentifierName "M" = typeof M
+Line 29 col 4 IdentifierName "ResultIsNumber4" = number
+Line 29 col 22 BitwiseNotExpression "~obj" = number
+Line 29 col 23 IdentifierName "obj" = () => {}
+Line 30 col 4 IdentifierName "ResultIsNumber5" = number
+Line 30 col 22 BitwiseNotExpression "~obj1" = number
+Line 30 col 23 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 33 col 4 IdentifierName "ResultIsNumber6" = number
+Line 33 col 22 BitwiseNotExpression "~undefined" = number
+Line 33 col 23 IdentifierName "undefined" = any
+Line 34 col 4 IdentifierName "ResultIsNumber7" = number
+Line 34 col 22 BitwiseNotExpression "~null" = number
+Line 37 col 4 IdentifierName "ResultIsNumber8" = number
+Line 37 col 22 BitwiseNotExpression "~ANY2[0]" = number
+Line 37 col 23 ElementAccessExpression "ANY2[0]" = any
+Line 37 col 23 IdentifierName "ANY2" = any[]
+Line 38 col 4 IdentifierName "ResultIsNumber9" = number
+Line 38 col 22 BitwiseNotExpression "~obj1.x" = number
+Line 38 col 23 MemberAccessExpression "obj1.x" = string
+Line 38 col 23 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 38 col 28 IdentifierName "x" = string
+Line 39 col 4 IdentifierName "ResultIsNumber10" = number
+Line 39 col 23 BitwiseNotExpression "~obj1.y" = number
+Line 39 col 24 MemberAccessExpression "obj1.y" = () => void
+Line 39 col 24 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 39 col 29 IdentifierName "y" = () => void
+Line 40 col 4 IdentifierName "ResultIsNumber11" = number
+Line 40 col 23 BitwiseNotExpression "~objA.a" = number
+Line 40 col 24 MemberAccessExpression "objA.a" = any
+Line 40 col 24 IdentifierName "objA" = A
+Line 40 col 29 IdentifierName "a" = any
+Line 41 col 4 IdentifierName "ResultIsNumber12" = number
+Line 41 col 23 BitwiseNotExpression "~M.n" = number
+Line 41 col 24 MemberAccessExpression "M.n" = any
+Line 41 col 24 IdentifierName "M" = typeof M
+Line 41 col 26 IdentifierName "n" = any
+Line 42 col 4 IdentifierName "ResultIsNumber13" = number
+Line 42 col 23 BitwiseNotExpression "~foo()" = number
+Line 42 col 24 InvocationExpression "foo()" = any
+Line 42 col 24 IdentifierName "foo" = typeof foo
+Line 43 col 4 IdentifierName "ResultIsNumber14" = number
+Line 43 col 23 BitwiseNotExpression "~A.foo()" = number
+Line 43 col 24 InvocationExpression "A.foo()" = any
+Line 43 col 24 MemberAccessExpression "A.foo" = () => any
+Line 43 col 24 IdentifierName "A" = typeof A
+Line 43 col 26 IdentifierName "foo" = () => any
+Line 44 col 4 IdentifierName "ResultIsNumber15" = number
+Line 44 col 23 BitwiseNotExpression "~(ANY + ANY1)" = number
+Line 44 col 24 ParenthesizedExpression "(ANY + ANY1)" = any
+Line 44 col 25 AddExpression "ANY + ANY1" = any
+Line 44 col 25 IdentifierName "ANY" = any
+Line 44 col 31 IdentifierName "ANY1" = any
+Line 45 col 4 IdentifierName "ResultIsNumber16" = number
+Line 45 col 23 BitwiseNotExpression "~(null + undefined)" = number
+Line 45 col 24 ParenthesizedExpression "(null + undefined)" = any
+Line 45 col 25 AddExpression "null + undefined" = any
+Line 45 col 32 IdentifierName "undefined" = any
+Line 46 col 4 IdentifierName "ResultIsNumber17" = number
+Line 46 col 23 BitwiseNotExpression "~(null + null)" = number
+Line 46 col 24 ParenthesizedExpression "(null + null)" = any
+Line 46 col 25 AddExpression "null + null" = any
+Line 47 col 4 IdentifierName "ResultIsNumber18" = number
+Line 47 col 23 BitwiseNotExpression "~(undefined + undefined)" = number
+Line 47 col 24 ParenthesizedExpression "(undefined + undefined)" = any
+Line 47 col 25 AddExpression "undefined + undefined" = any
+Line 47 col 25 IdentifierName "undefined" = any
+Line 47 col 37 IdentifierName "undefined" = any
+Line 50 col 4 IdentifierName "ResultIsNumber19" = number
+Line 50 col 23 BitwiseNotExpression "~~ANY" = number
+Line 50 col 24 BitwiseNotExpression "~ANY" = number
+Line 50 col 25 IdentifierName "ANY" = any
+Line 51 col 4 IdentifierName "ResultIsNumber20" = number
+Line 51 col 23 BitwiseNotExpression "~~~(ANY + ANY1)" = number
+Line 51 col 24 BitwiseNotExpression "~~(ANY + ANY1)" = number
+Line 51 col 25 BitwiseNotExpression "~(ANY + ANY1)" = number
+Line 51 col 26 ParenthesizedExpression "(ANY + ANY1)" = any
+Line 51 col 27 AddExpression "ANY + ANY1" = any
+Line 51 col 27 IdentifierName "ANY" = any
+Line 51 col 33 IdentifierName "ANY1" = any
+Line 52 col 0 BitwiseNotExpression "//miss assignment operators
+~ANY" = number
+Line 54 col 1 IdentifierName "ANY" = any
+Line 55 col 0 BitwiseNotExpression "~ANY1" = number
+Line 55 col 1 IdentifierName "ANY1" = any
+Line 56 col 0 BitwiseNotExpression "~ANY2[0]" = number
+Line 56 col 1 ElementAccessExpression "ANY2[0]" = any
+Line 56 col 1 IdentifierName "ANY2" = any[]
+Line 57 col 0 CommaExpression "~ANY, ANY1" = any
+Line 57 col 0 BitwiseNotExpression "~ANY" = number
+Line 57 col 1 IdentifierName "ANY" = any
+Line 57 col 6 IdentifierName "ANY1" = any
+Line 58 col 0 BitwiseNotExpression "~obj1.y" = number
+Line 58 col 1 MemberAccessExpression "obj1.y" = () => void
+Line 58 col 1 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 58 col 6 IdentifierName "y" = () => void
+Line 59 col 0 BitwiseNotExpression "~objA.a" = number
+Line 59 col 1 MemberAccessExpression "objA.a" = any
+Line 59 col 1 IdentifierName "objA" = A
+Line 59 col 6 IdentifierName "a" = any
+Line 60 col 0 BitwiseNotExpression "~M.n" = number
+Line 60 col 1 MemberAccessExpression "M.n" = any
+Line 60 col 1 IdentifierName "M" = typeof M
+Line 60 col 3 IdentifierName "n" = any
+Line 61 col 0 BitwiseNotExpression "~~obj1.x" = number
+Line 61 col 1 BitwiseNotExpression "~obj1.x" = number
+Line 61 col 2 MemberAccessExpression "obj1.x" = string
+Line 61 col 2 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 61 col 7 IdentifierName "x" = string

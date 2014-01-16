@@ -1,0 +1,107 @@
+=== tests/cases/compiler/negateOperatorWithAnyOtherType.ts ===
+Line 2 col 4 IdentifierName "ANY" = any
+Line 3 col 4 IdentifierName "ANY1" = any
+Line 4 col 4 IdentifierName "ANY2" = any[]
+Line 4 col 18 ArrayLiteralExpression "["", ""]" = any[]
+Line 5 col 4 IdentifierName "obj" = () => {}
+Line 6 col 4 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 6 col 11 ObjectLiteralExpression "{ x: "", y: () => { }}" = { x: string; y: () => void; }
+Line 6 col 13 IdentifierName "x" = string
+Line 6 col 20 IdentifierName "y" = () => void
+Line 6 col 23 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 8 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 8 IdentifierName "a" = any
+Line 10 col 11 IdentifierName "a" = any
+Line 12 col 6 IdentifierName "A" = A
+Line 13 col 11 IdentifierName "a" = any
+Line 14 col 11 IdentifierName "foo" = () => any
+Line 15 col 12 IdentifierName "a" = any
+Line 16 col 15 IdentifierName "a" = any
+Line 19 col 7 IdentifierName "M" = M
+Line 20 col 15 IdentifierName "n" = any
+Line 22 col 4 IdentifierName "objA" = A
+Line 22 col 11 ObjectCreationExpression "new A()" = A
+Line 22 col 15 IdentifierName "A" = typeof A
+Line 25 col 4 IdentifierName "ResultIsNumber1" = number
+Line 25 col 22 NegateExpression "-ANY1" = number
+Line 25 col 23 IdentifierName "ANY1" = any
+Line 26 col 4 IdentifierName "ResultIsNumber2" = number
+Line 26 col 22 NegateExpression "-ANY2" = number
+Line 26 col 23 IdentifierName "ANY2" = any[]
+Line 27 col 4 IdentifierName "ResultIsNumber3" = number
+Line 27 col 22 NegateExpression "-A" = number
+Line 27 col 23 IdentifierName "A" = typeof A
+Line 28 col 4 IdentifierName "ResultIsNumber4" = number
+Line 28 col 22 NegateExpression "-M" = number
+Line 28 col 23 IdentifierName "M" = typeof M
+Line 29 col 4 IdentifierName "ResultIsNumber5" = number
+Line 29 col 22 NegateExpression "-obj" = number
+Line 29 col 23 IdentifierName "obj" = () => {}
+Line 30 col 4 IdentifierName "ResultIsNumber6" = number
+Line 30 col 22 NegateExpression "-obj1" = number
+Line 30 col 23 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 33 col 4 IdentifierName "ResultIsNumber7" = number
+Line 33 col 22 NegateExpression "-undefined" = number
+Line 33 col 23 IdentifierName "undefined" = any
+Line 34 col 4 IdentifierName "ResultIsNumber" = number
+Line 34 col 21 NegateExpression "-null" = number
+Line 37 col 4 IdentifierName "ResultIsNumber8" = number
+Line 37 col 22 NegateExpression "-ANY2[0]" = number
+Line 37 col 23 ElementAccessExpression "ANY2[0]" = any
+Line 37 col 23 IdentifierName "ANY2" = any[]
+Line 38 col 4 IdentifierName "ResultIsNumber9" = number
+Line 38 col 22 NegateExpression "-obj1.x" = number
+Line 38 col 23 MemberAccessExpression "obj1.x" = string
+Line 38 col 23 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 38 col 28 IdentifierName "x" = string
+Line 39 col 4 IdentifierName "ResultIsNumber10" = number
+Line 39 col 23 NegateExpression "-obj1.y" = number
+Line 39 col 24 MemberAccessExpression "obj1.y" = () => void
+Line 39 col 24 IdentifierName "obj1" = { x: string; y: () => void; }
+Line 39 col 29 IdentifierName "y" = () => void
+Line 40 col 4 IdentifierName "ResultIsNumber11" = number
+Line 40 col 23 NegateExpression "-objA.a" = number
+Line 40 col 24 MemberAccessExpression "objA.a" = any
+Line 40 col 24 IdentifierName "objA" = A
+Line 40 col 29 IdentifierName "a" = any
+Line 41 col 4 IdentifierName "ResultIsNumber12" = number
+Line 41 col 23 NegateExpression "-M.n" = number
+Line 41 col 24 MemberAccessExpression "M.n" = any
+Line 41 col 24 IdentifierName "M" = typeof M
+Line 41 col 26 IdentifierName "n" = any
+Line 42 col 4 IdentifierName "ResultIsNumber13" = number
+Line 42 col 23 NegateExpression "-foo()" = number
+Line 42 col 24 InvocationExpression "foo()" = any
+Line 42 col 24 IdentifierName "foo" = typeof foo
+Line 43 col 4 IdentifierName "ResultIsNumber14" = number
+Line 43 col 23 NegateExpression "-A.foo()" = number
+Line 43 col 24 InvocationExpression "A.foo()" = any
+Line 43 col 24 MemberAccessExpression "A.foo" = () => any
+Line 43 col 24 IdentifierName "A" = typeof A
+Line 43 col 26 IdentifierName "foo" = () => any
+Line 44 col 4 IdentifierName "ResultIsNumber15" = number
+Line 44 col 23 NegateExpression "-(ANY - ANY1)" = number
+Line 44 col 24 ParenthesizedExpression "(ANY - ANY1)" = number
+Line 44 col 25 SubtractExpression "ANY - ANY1" = number
+Line 44 col 25 IdentifierName "ANY" = any
+Line 44 col 31 IdentifierName "ANY1" = any
+Line 45 col 0 NegateExpression "// miss assignment operators
+-ANY" = number
+Line 47 col 1 IdentifierName "ANY" = any
+Line 48 col 0 NegateExpression "-ANY1" = number
+Line 48 col 1 IdentifierName "ANY1" = any
+Line 49 col 0 NegateExpression "-ANY2[0]" = number
+Line 49 col 1 ElementAccessExpression "ANY2[0]" = any
+Line 49 col 1 IdentifierName "ANY2" = any[]
+Line 50 col 0 CommaExpression "-ANY, ANY1" = any
+Line 50 col 0 NegateExpression "-ANY" = number
+Line 50 col 1 IdentifierName "ANY" = any
+Line 50 col 6 IdentifierName "ANY1" = any
+Line 51 col 0 NegateExpression "-objA.a" = number
+Line 51 col 1 MemberAccessExpression "objA.a" = any
+Line 51 col 1 IdentifierName "objA" = A
+Line 51 col 6 IdentifierName "a" = any
+Line 52 col 0 NegateExpression "-M.n" = number
+Line 52 col 1 MemberAccessExpression "M.n" = any
+Line 52 col 1 IdentifierName "M" = typeof M
+Line 52 col 3 IdentifierName "n" = any

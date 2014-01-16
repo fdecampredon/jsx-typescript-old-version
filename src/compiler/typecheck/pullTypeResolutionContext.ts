@@ -490,6 +490,16 @@ module TypeScript {
             this.enclosingTypeWalker2.postWalkTypeParameterConstraint();
         }
 
+        public walkTypeArgument(index: number): void {
+            this.enclosingTypeWalker1.walkTypeArgument(index);
+            this.enclosingTypeWalker2.walkTypeArgument(index);
+        }
+
+        public postWalkTypeArgument(): void {
+            this.enclosingTypeWalker1.postWalkTypeArgument();
+            this.enclosingTypeWalker2.postWalkTypeArgument();
+        }
+
         public walkReturnTypes() {
             this.enclosingTypeWalker1.walkReturnType();
             this.enclosingTypeWalker2.walkReturnType();
@@ -533,10 +543,17 @@ module TypeScript {
             this.enclosingTypeWalker2 = tempEnclosingWalker1;
         }
 
-        public getGenerativeClassifications() {
+        public oneOfClassificationsIsInfinitelyExpanding() {
             var generativeClassification1 = this.enclosingTypeWalker1.getGenerativeClassification();
+            if (generativeClassification1 === GenerativeTypeClassification.InfinitelyExpanding) {
+                return true;
+            }
             var generativeClassification2 = this.enclosingTypeWalker2.getGenerativeClassification();
-            return { generativeClassification1: generativeClassification1, generativeClassification2: generativeClassification2 };
+            if (generativeClassification2 === GenerativeTypeClassification.InfinitelyExpanding) {
+                return true;
+            }
+
+            return false;
         }
 
         public resetEnclosingTypeWalkers() {

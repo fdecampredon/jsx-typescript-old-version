@@ -2,7 +2,7 @@ interface MyInterface {
     myMethod(...myList: any[]);
 }
 class MyClass implements MyInterface {
-    myMethod(myList: any[]) {
+    myMethod(myList: any[]) { // valid
     }
 }
 

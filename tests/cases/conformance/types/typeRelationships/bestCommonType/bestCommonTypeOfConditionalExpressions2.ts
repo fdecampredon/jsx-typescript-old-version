@@ -15,7 +15,6 @@ function foo<T, U>(t: T, u: U) {
     return true ? t : u;
 }
 
-// BUG 821629, should work, move to positive file when fixed
 function foo3<T extends U, U extends V, V>(t: T, u: U) {
     return true ? t : u;
 }

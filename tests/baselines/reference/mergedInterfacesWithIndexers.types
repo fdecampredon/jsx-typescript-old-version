@@ -1,0 +1,17 @@
+=== tests/cases/compiler/mergedInterfacesWithIndexers.ts ===
+Line 2 col 10 IdentifierName "A" = A
+Line 3 col 5 IdentifierName "x" = number
+Line 7 col 10 IdentifierName "A" = A
+Line 8 col 5 IdentifierName "x" = string
+Line 8 col 19 IdentifierName "length" = number
+Line 11 col 4 IdentifierName "a" = A
+Line 11 col 7 IdentifierName "A" = A
+Line 12 col 4 IdentifierName "r" = string
+Line 12 col 8 ElementAccessExpression "a[1]" = string
+Line 12 col 8 IdentifierName "a" = A
+Line 13 col 4 IdentifierName "r2" = { length: number; }
+Line 13 col 9 ElementAccessExpression "a['1']" = { length: number; }
+Line 13 col 9 IdentifierName "a" = A
+Line 14 col 4 IdentifierName "r3" = { length: number; }
+Line 14 col 9 ElementAccessExpression "a['hi']" = { length: number; }
+Line 14 col 9 IdentifierName "a" = A

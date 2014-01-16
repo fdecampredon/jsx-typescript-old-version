@@ -1,6 +1,2 @@
-derivedTypeCallingBaseImplWithOptionalParams.ts(4,7): error TS2137: Class MyClass declares interface MyInterface but does not implement it:
-	Types of property 'myMethod' of types 'MyClass' and 'MyInterface' are incompatible:
-		Call signatures of types '(myList: any[]) => void' and '(...myList: any[]) => any' are incompatible:
-			Call signature expects 0 or fewer parameters.
 derivedTypeCallingBaseImplWithOptionalParams.ts(13,3): error TS2081: Supplied parameters do not match any signature of call target.
 derivedTypeCallingBaseImplWithOptionalParams.ts(13,3): error TS2087: Could not select overload for 'call' expression.

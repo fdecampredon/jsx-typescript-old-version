@@ -36,7 +36,6 @@ function foo(t, u) {
     return true ? t : u;
 }
 
-// BUG 821629, should work, move to positive file when fixed
 function foo3(t, u) {
     return true ? t : u;
 }

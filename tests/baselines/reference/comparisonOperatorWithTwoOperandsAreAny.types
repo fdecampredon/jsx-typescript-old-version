@@ -1,0 +1,34 @@
+=== tests/cases/compiler/comparisonOperatorWithTwoOperandsAreAny.ts ===
+Line 0 col 4 IdentifierName "a" = any
+Line 2 col 4 IdentifierName "r1" = boolean
+Line 2 col 9 LessThanExpression "a < a" = boolean
+Line 2 col 9 IdentifierName "a" = any
+Line 2 col 13 IdentifierName "a" = any
+Line 3 col 4 IdentifierName "r2" = boolean
+Line 3 col 9 GreaterThanExpression "a > a" = boolean
+Line 3 col 9 IdentifierName "a" = any
+Line 3 col 13 IdentifierName "a" = any
+Line 4 col 4 IdentifierName "r3" = boolean
+Line 4 col 9 LessThanOrEqualExpression "a <= a" = boolean
+Line 4 col 9 IdentifierName "a" = any
+Line 4 col 14 IdentifierName "a" = any
+Line 5 col 4 IdentifierName "r4" = boolean
+Line 5 col 9 GreaterThanOrEqualExpression "a >= a" = boolean
+Line 5 col 9 IdentifierName "a" = any
+Line 5 col 14 IdentifierName "a" = any
+Line 6 col 4 IdentifierName "r5" = boolean
+Line 6 col 9 EqualsWithTypeConversionExpression "a == a" = boolean
+Line 6 col 9 IdentifierName "a" = any
+Line 6 col 14 IdentifierName "a" = any
+Line 7 col 4 IdentifierName "r6" = boolean
+Line 7 col 9 NotEqualsWithTypeConversionExpression "a != a" = boolean
+Line 7 col 9 IdentifierName "a" = any
+Line 7 col 14 IdentifierName "a" = any
+Line 8 col 4 IdentifierName "r7" = boolean
+Line 8 col 9 EqualsExpression "a === a" = boolean
+Line 8 col 9 IdentifierName "a" = any
+Line 8 col 15 IdentifierName "a" = any
+Line 9 col 4 IdentifierName "r8" = boolean
+Line 9 col 9 NotEqualsExpression "a !== a" = boolean
+Line 9 col 9 IdentifierName "a" = any
+Line 9 col 15 IdentifierName "a" = any

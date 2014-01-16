@@ -44,14 +44,36 @@ var C = (function () {
     return C;
 })();
 
+//class C<U extends T, T extends A> {
+//    f() {
+//        var x: U;
+//        // BUG 823818
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+//    g(x: U) {
+//        // BUG 823818
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+//}
 var r1 = (new C()).f();
 var r1b = (new C()).g(new B());
 
+//interface I<U extends T, T extends A> {
+//    foo: U;
+//}
 var i;
 var r2 = i.foo.foo();
 var r2b = i.foo['foo']();
 
 var a;
+
+//var a: {
+//    <U extends T, T extends A>(): U;
+//    <U extends T, T extends A>(x: U): U;
+//    <U extends T, T extends A>(x: U, y: T): U;
+//}
 var r3 = a().foo();
 var r3b = a()['foo']();
 
@@ -68,4 +90,11 @@ var b = {
     }
 };
 
+//var b = {
+//    foo: <U extends T, T extends A>(x: U, y: T) => {
+//        // BUG 823818
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+//}
 var r4 = b.foo(aB, aB); // no inferences for T so constraint isn't satisfied, error

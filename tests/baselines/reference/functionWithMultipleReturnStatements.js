@@ -48,7 +48,6 @@ function f6(x, y) {
     }
 }
 
-// BUG 821629, should work, move to positive file when fixed
 function f8(x, y) {
     if (true) {
         return x;

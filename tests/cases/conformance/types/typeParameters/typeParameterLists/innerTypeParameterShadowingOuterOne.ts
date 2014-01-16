@@ -10,11 +10,19 @@ function f<T extends Date>() {
     x.getDate();
 }
 
-function f2<T extends Date, U extends T>() {
-    function g<T extends Number, U extends T>() {
+function f2<T extends Date, U extends Date>() {
+    function g<T extends Number, U extends Number>() {
         var x: U;
         x.toFixed();
     }
     var x: U;
     x.getDate();
 }
+//function f2<T extends Date, U extends T>() {
+//    function g<T extends Number, U extends T>() {
+//        var x: U;
+//        x.toFixed();
+//    }
+//    var x: U;
+//    x.getDate();
+//}

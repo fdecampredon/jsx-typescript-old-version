@@ -28,7 +28,7 @@ interface I2B extends Base {
 }
 
 interface I3 extends Base {
-    a: (x: number) => number; // error, too many required params
+    a: (x: number) => number; // ok, all present params match
 }
 
 interface I3B extends Base {
@@ -58,11 +58,11 @@ interface I6B extends Base {
 }
 
 interface I6C extends Base {
-    a2: (x: number, ...args: string[]) => number; // should be type mismatch error
+    a2: (x: number, ...args: string[]) => number; // error
 }
 
 interface I6D extends Base {
-    a2: (x: number, y: number) => number; // error, too many required params
+    a2: (x: number, y: number) => number; // ok, all present params match
 }
 
 interface I6E extends Base {
@@ -84,21 +84,24 @@ interface I9 extends Base {
 }
 
 interface I10 extends Base {
-    a3: (x: number, y: string) => number;  // error, too many required params
+    a3: (x: number, y: string) => number;  // ok, all present params match
 }
 
 interface I10B extends Base {
-    a3: (x: number, y?: number, z?: number) => number;  // should be error
+    a3: (x: number, y?: number, z?: number) => number;  // error
 }
 
 interface I10C extends Base {
-    a3: (x: number, ...z: number[]) => number;  // should be error
+    a3: (x: number, ...z: number[]) => number;  // error
 }
 
 interface I10D extends Base {
-    a3: (x: string, y?: string, z?: string) => number;  // should be error, incompatible types
+    a3: (x: string, y?: string, z?: string) => number;  // error, incompatible types
 }
 
+interface I10E extends Base {
+    a3: (x: number, ...z: string[]) => number;  // error
+}
 
 interface I11 extends Base {
     a4: () => number; // ok, fewer required params
@@ -109,11 +112,11 @@ interface I12 extends Base {
 }
 
 interface I13 extends Base {
-    a4: (x: number) => number; // error, too many required params
+    a4: (x: number) => number; // ok, all present params match
 }
 
 interface I14 extends Base {
-    a4: (x: number, y?: number) => number;  // error, too many required params
+    a4: (x: number, y?: number) => number;  // error, second param has type mismatch
 }
 
 interface I15 extends Base {
@@ -121,5 +124,9 @@ interface I15 extends Base {
 }
 
 interface I16 extends Base {
-    a4: (x: number, ...args: string[]) => number;  // error, too many required params
+    a4: (x: number, ...args: string[]) => number;  // error, rest param has type mismatch
+}
+
+interface I17 extends Base {
+    a4: (...args: number[]) => number; // error
 }

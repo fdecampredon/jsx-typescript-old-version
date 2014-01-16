@@ -1,0 +1,13 @@
+=== tests/cases/compiler/additionOperatorWithOnlyNullValueOrUndefinedValue.ts ===
+Line 1 col 4 IdentifierName "r1" = any
+Line 1 col 9 AddExpression "null + null" = any
+Line 2 col 4 IdentifierName "r2" = any
+Line 2 col 9 AddExpression "null + undefined" = any
+Line 2 col 16 IdentifierName "undefined" = any
+Line 3 col 4 IdentifierName "r3" = any
+Line 3 col 9 AddExpression "undefined + null" = any
+Line 3 col 9 IdentifierName "undefined" = any
+Line 4 col 4 IdentifierName "r4" = any
+Line 4 col 9 AddExpression "undefined + undefined" = any
+Line 4 col 9 IdentifierName "undefined" = any
+Line 4 col 21 IdentifierName "undefined" = any

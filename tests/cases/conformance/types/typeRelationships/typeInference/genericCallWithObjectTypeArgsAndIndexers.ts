@@ -28,7 +28,7 @@ function other2<T extends Date>(arg: T) {
     var e = r2['1']; 
 }
 
-function other3<T extends U, U extends Date>(arg: T) {
+function other3<T extends Date, U extends Date>(arg: T) {
     var b: {
         [x: string]: Object;
         [x: number]: T;
@@ -39,3 +39,14 @@ function other3<T extends U, U extends Date>(arg: T) {
     // BUG 821629
     //var u: U = r2[1]; // ok
 }
+//function other3<T extends U, U extends Date>(arg: T) {
+//    var b: {
+//        [x: string]: Object;
+//        [x: number]: T;
+//    };
+//    var r2 = foo(b);
+//    var d = r2[1];
+//    var e = r2['1'];
+//    // BUG 821629
+//    //var u: U = r2[1]; // ok
+//}

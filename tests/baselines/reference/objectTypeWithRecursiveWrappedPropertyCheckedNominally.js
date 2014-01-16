@@ -40,9 +40,8 @@ function foo(t, u) {
 }
 
 function foo2(t, u) {
-    // BUG 821629?
     t = u; // error
-    u = t; // error
+    u = t; // was error, ok after constraint made illegal, doesn't matter
 
     var a;
     var b;

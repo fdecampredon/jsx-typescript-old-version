@@ -31,7 +31,7 @@ module ClassTypeParam {
     }
 
     interface I6<T> extends Base<T> {
-        a2: (x: T) => T; // error, too many required params
+        a2: (x: T) => T; // ok, same number of params
     }
 
 
@@ -65,7 +65,7 @@ module ClassTypeParam {
     }
 
     interface I14<T> extends Base<T> {
-        a4: (x: T, y: T) => T;  // error, too many required params
+        a4: (x: T, y: T) => T;  // ok, same number of params
     }
 
 
@@ -78,11 +78,11 @@ module ClassTypeParam {
     }
 
     interface I17<T> extends Base<T> {
-        a5: (x: T) => T; // error, too many required params
+        a5: (x: T) => T; // ok, all present params match
     }
 
     interface I18<T> extends Base<T> {
-        a5: (x: T, y: T) => T;  // error, too many required params
+        a5: (x: T, y: T) => T;  // ok, same number of params
     }
 }
 
@@ -207,7 +207,7 @@ module GenericSignaturesValid {
     }
 
     interface I6 extends Base2 {
-        a2: <T>(x: T) => T; // error, too many required params
+        a2: <T>(x: T) => T; // ok, same number of params
     }
 
 
@@ -254,10 +254,10 @@ module GenericSignaturesValid {
     }
 
     interface I17 extends Base2 {
-        a5: <T>(x: T) => T; // error, too many required params
+        a5: <T>(x: T) => T; // ok, all present params match
     }
 
     interface I18 extends Base2 {
-        a5: <T>(x: T, y: T) => T;  // error, too many required params
+        a5: <T>(x: T, y: T) => T;  // ok, same number of params
     }
 }

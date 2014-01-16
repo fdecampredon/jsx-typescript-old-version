@@ -25,7 +25,8 @@ function foo5<T, U>(t: T, u: U): Object {
     return true ? t : u;
 }
 
-function foo2<T extends U, U>(t: T, u: U) {
-    return true ? t : u;
-}
+//function foo2<T extends U, U>(t: T, u: U) {
+//    return true ? t : u;
+//}
+
 

@@ -1062,19 +1062,24 @@ module Harness {
                     }
                 });
 
+                var anySyntaxErrors = false;
                 units.forEach(u => {
-                    this.compiler.getSyntacticDiagnostics(u).forEach(d => this.addError(d));
+                    this.compiler.getSyntacticDiagnostics(u).forEach(d => {
+                        this.addError(d);
+                        anySyntaxErrors = true;
+                    });
                     this.compiler.getSemanticDiagnostics(u).forEach(d => this.addError(d));
                 });
 
-                // Emit (note: reportDiagnostics is what causes the emit to happen)
-                var emitDiagnostics = this.emitAll(this.ioHost);
-                emitDiagnostics.forEach(d => this.addError(d));
+                if (!anySyntaxErrors) {
+                    // Emit (note: reportDiagnostics is what causes the emit to happen)
+                    var emitDiagnostics = this.emitAll(this.ioHost);
+                    emitDiagnostics.forEach(d => this.addError(d));
 
-                // Emit declarations
-                var emitDeclarationsDiagnostics = this.emitAllDeclarations(this.ioHost);
-                emitDeclarationsDiagnostics.forEach(d => this.addError(d));
-
+                    // Emit declarations
+                    var emitDeclarationsDiagnostics = this.emitAllDeclarations(this.ioHost);
+                    emitDeclarationsDiagnostics.forEach(d => this.addError(d));
+                }
                 return this.errorList;
             }
 

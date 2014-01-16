@@ -50,13 +50,4 @@ module TypeScript {
                    this.endsLine === ast.endsLine;
         }
     }
-
-    export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
-        var ast = decl.ast();
-        return decl.semanticInfoChain().diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations);
-    }
-
-    function min(a: number, b: number): number {
-        return a <= b ? a : b;
-    }
 }

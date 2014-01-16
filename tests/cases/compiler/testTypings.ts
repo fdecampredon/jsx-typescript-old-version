@@ -1,11 +1,8 @@
+interface IComparable<T> {
+   compareTo(other: T);
+}
 
-
-
-    interface IComparable<T> {
-       compareTo(other: T);
-    }
-
-    declare function sort<U extends IComparable<U>>(items: U[]): U[];
+declare function sort<U extends IComparable<U>>(items: U[]): U[];
 
 
 

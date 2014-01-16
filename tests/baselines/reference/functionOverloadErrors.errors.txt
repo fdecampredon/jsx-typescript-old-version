@@ -1,0 +1,20 @@
+functionOverloadErrors.ts(2,14): error TS2174: Default arguments are only allowed in implementation.
+functionOverloadErrors.ts(7,1): error TS2144: Duplicate overload signature for 'fn2a'.
+functionOverloadErrors.ts(12,1): error TS2144: Duplicate overload signature for 'fn2b'.
+functionOverloadErrors.ts(18,1): error TS2175: Overloads cannot differ only by return type.
+functionOverloadErrors.ts(35,1): error TS2144: Duplicate overload signature for 'fn8'.
+functionOverloadErrors.ts(40,1): error TS2144: Duplicate overload signature for 'fn9'.
+functionOverloadErrors.ts(44,25): error TS2095: Could not find symbol 'Window'.
+functionOverloadErrors.ts(50,25): error TS2095: Could not find symbol 'Window'.
+functionOverloadErrors.ts(51,32): error TS2095: Could not find symbol 'window'.
+functionOverloadErrors.ts(65,5): error TS2150: Overload signatures must all be public or private.
+functionOverloadErrors.ts(68,5): error TS2150: Overload signatures must all be public or private.
+functionOverloadErrors.ts(75,5): error TS2151: Overload signatures must all be exported or not exported.
+functionOverloadErrors.ts(79,5): error TS2151: Overload signatures must all be exported or not exported.
+functionOverloadErrors.ts(85,1): error TS2152: Overload signatures must all be ambient or non-ambient.
+functionOverloadErrors.ts(90,1): error TS2152: Overload signatures must all be ambient or non-ambient.
+functionOverloadErrors.ts(94,1): error TS2149: Overload signature is not compatible with function definition:
+	Call signature expects 0 or fewer parameters.
+functionOverloadErrors.ts(99,1): error TS2148: Overload signature is not compatible with function definition.
+functionOverloadErrors.ts(103,1): error TS2148: Overload signature is not compatible with function definition.
+functionOverloadErrors.ts(116,19): error TS2174: Default arguments are only allowed in implementation.

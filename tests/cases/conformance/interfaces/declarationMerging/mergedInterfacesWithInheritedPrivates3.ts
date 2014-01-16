@@ -1,0 +1,39 @@
+class C {
+    private x: number;
+}
+
+class C2 {
+    private x: number;
+}
+
+interface A extends C {
+    y: string;
+}
+
+// BUG 858986
+interface A extends C2 { // should be error
+    z: string;
+}
+
+class D extends C implements A { // error
+    y: string;
+    z: string;
+}
+
+module M {
+    class C {
+        private x: string;
+    }
+
+    class C2 {
+        private x: number;
+    }
+
+    interface A extends C { // error, privates conflict
+        y: string;
+    }
+
+    interface A extends C2 {
+        z: string;
+    }
+}

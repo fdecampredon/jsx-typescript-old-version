@@ -6,6 +6,11 @@
 module TypeScript {
 
     export module PullHelpers {
+        export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
+            var ast = decl.ast();
+            return decl.semanticInfoChain.diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations);
+        }
+
         // This helps in case we would like to make sure we have type while we are resolving/infering types for it
         // without infering back to any because we incorrectly detected recursive resolution of function
         export function resolveDeclaredSymbolToUseType(symbol: PullSymbol) {
@@ -274,6 +279,5 @@ module TypeScript {
                 }
             }
         }
-
     }
 }

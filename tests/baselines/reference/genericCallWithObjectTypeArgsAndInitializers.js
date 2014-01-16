@@ -19,8 +19,6 @@ function foo5(x, y) {
 function foo6(x, y, z) {
     if (typeof z === "undefined") { z = y; }
 }
-
-// BUG 821629
 function foo7(x, y) {
     if (typeof y === "undefined") { y = x; }
 } // should be ok

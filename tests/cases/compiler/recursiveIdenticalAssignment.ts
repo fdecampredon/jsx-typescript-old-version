@@ -2,7 +2,7 @@ interface A<T> {
     x: A<T>
 }
 
-interface B<T extends B<B<T>>> {
+interface B<T extends B<B<T>>> { // error, constraint referencing itself
     x: B<T>
 }
 

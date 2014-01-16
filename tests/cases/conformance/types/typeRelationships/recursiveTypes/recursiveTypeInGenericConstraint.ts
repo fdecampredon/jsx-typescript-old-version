@@ -2,7 +2,7 @@ class G<T> {
     x: G<G<T>>; // infinitely expanding type reference
 }
 
-class Foo<T extends G<T>> {
+class Foo<T extends G<T>> { // error, constraint referencing itself
     bar: T;
 }
 

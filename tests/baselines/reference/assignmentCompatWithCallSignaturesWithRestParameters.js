@@ -26,7 +26,7 @@ a = function (x, y, z) {
 }; // ok, same number of required params
 a = function (x) {
     return 1;
-}; // error, too many required params
+}; // ok, rest param corresponds to infinite number of params
 a = function (x) {
     return 1;
 }; // error, incompatible type
@@ -64,7 +64,7 @@ a2 = function (x) {
 }; // should be type mismatch error
 a2 = function (x, y) {
     return 1;
-}; // error, too many required params
+}; // ok, rest param corresponds to infinite number of params
 a2 = function (x, y) {
     return 1;
 }; // ok, same number of required params
@@ -81,17 +81,17 @@ a3 = function (x) {
 }; // ok, same number of required params
 a3 = function (x, y) {
     return 1;
-}; // error, too many required params
+}; // ok, all present params match
 a3 = function (x, y, z) {
     return 1;
-}; // should be error
+}; // error
 a3 = function (x) {
     var z = [];
     for (var _i = 0; _i < (arguments.length - 1); _i++) {
         z[_i] = arguments[_i + 1];
     }
     return 1;
-}; // should be error
+}; // error
 a3 = function (x, y, z) {
     return 1;
 }; // error
@@ -105,10 +105,10 @@ a4 = function (x, y) {
 }; // error, type mismatch
 a4 = function (x) {
     return 1;
-}; // error, too many required params
+}; // ok, all present params match
 a4 = function (x, y) {
     return 1;
-}; // error, too many required params
+}; // error, second param has type mismatch
 a4 = function (x, y) {
     return 1;
 }; // ok, same number of required params with matching types
@@ -118,4 +118,4 @@ a4 = function (x) {
         args[_i] = arguments[_i + 1];
     }
     return 1;
-}; // error, too many required params
+}; // error, rest params have type mismatch

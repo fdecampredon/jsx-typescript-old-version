@@ -4,16 +4,6 @@
     "parseOptions": {
         "allowAutomaticSemicolonInsertion": true
     },
-    "diagnostics": [
-        {
-            "start": 15,
-            "length": 1,
-            "diagnosticCode": "'{0}' expected.",
-            "arguments": [
-                "="
-            ]
-        }
-    ],
     "sourceUnit": {
         "kind": "SourceUnit",
         "fullStart": 0,
@@ -42,7 +32,6 @@
                     "end": 17,
                     "fullWidth": 17,
                     "width": 17,
-                    "isIncrementallyUnusable": true,
                     "varKeyword": {
                         "kind": "VarKeyword",
                         "fullStart": 0,
@@ -73,7 +62,6 @@
                             "end": 17,
                             "fullWidth": 13,
                             "width": 13,
-                            "isIncrementallyUnusable": true,
                             "propertyName": {
                                 "kind": "IdentifierName",
                                 "fullStart": 4,
@@ -89,11 +77,11 @@
                             "typeAnnotation": {
                                 "kind": "TypeAnnotation",
                                 "fullStart": 5,
-                                "fullEnd": 15,
+                                "fullEnd": 17,
                                 "start": 5,
-                                "end": 15,
-                                "fullWidth": 10,
-                                "width": 10,
+                                "end": 17,
+                                "fullWidth": 12,
+                                "width": 12,
                                 "colonToken": {
                                     "kind": "ColonToken",
                                     "fullStart": 5,
@@ -116,75 +104,55 @@
                                     ]
                                 },
                                 "type": {
-                                    "kind": "TypeQuery",
+                                    "kind": "ArrayType",
                                     "fullStart": 7,
-                                    "fullEnd": 15,
-                                    "start": 7,
-                                    "end": 15,
-                                    "fullWidth": 8,
-                                    "width": 8,
-                                    "typeOfKeyword": {
-                                        "kind": "TypeOfKeyword",
-                                        "fullStart": 7,
-                                        "fullEnd": 14,
-                                        "start": 7,
-                                        "end": 13,
-                                        "fullWidth": 7,
-                                        "width": 6,
-                                        "text": "typeof",
-                                        "value": "typeof",
-                                        "valueText": "typeof",
-                                        "hasTrailingTrivia": true,
-                                        "trailingTrivia": [
-                                            {
-                                                "kind": "WhitespaceTrivia",
-                                                "fullStart": 13,
-                                                "fullEnd": 14,
-                                                "text": " "
-                                            }
-                                        ]
-                                    },
-                                    "name": {
-                                        "kind": "IdentifierName",
-                                        "fullStart": 14,
-                                        "fullEnd": 15,
-                                        "start": 14,
-                                        "end": 15,
-                                        "fullWidth": 1,
-                                        "width": 1,
-                                        "text": "A",
-                                        "value": "A",
-                                        "valueText": "A"
-                                    }
-                                }
-                            },
-                            "equalsValueClause": {
-                                "kind": "EqualsValueClause",
-                                "fullStart": 15,
-                                "fullEnd": 17,
-                                "start": 15,
-                                "end": 17,
-                                "fullWidth": 2,
-                                "width": 2,
-                                "isIncrementallyUnusable": true,
-                                "equalsToken": {
-                                    "kind": "EqualsToken",
-                                    "fullStart": 15,
-                                    "fullEnd": 15,
-                                    "start": 15,
-                                    "end": 15,
-                                    "fullWidth": 0,
-                                    "width": 0,
-                                    "text": ""
-                                },
-                                "value": {
-                                    "kind": "ArrayLiteralExpression",
-                                    "fullStart": 15,
                                     "fullEnd": 17,
-                                    "start": 15,
+                                    "start": 7,
                                     "end": 17,
-                                    "fullWidth": 2,
-                                    "width": 2,
+                                    "fullWidth": 10,
+                                    "width": 10,
+                                    "type": {
+                                        "kind": "TypeQuery",
+                                        "fullStart": 7,
+                                        "fullEnd": 15,
+                                        "start": 7,
+                                        "end": 15,
+                                        "fullWidth": 8,
+                                        "width": 8,
+                                        "typeOfKeyword": {
+                                            "kind": "TypeOfKeyword",
+                                            "fullStart": 7,
+                                            "fullEnd": 14,
+                                            "start": 7,
+                                            "end": 13,
+                                            "fullWidth": 7,
+                                            "width": 6,
+                                            "text": "typeof",
+                                            "value": "typeof",
+                                            "valueText": "typeof",
+                                            "hasTrailingTrivia": true,
+                                            "trailingTrivia": [
+                                                {
+                                                    "kind": "WhitespaceTrivia",
+                                                    "fullStart": 13,
+                                                    "fullEnd": 14,
+                                                    "text": " "
+                                                }
+                                            ]
+                                        },
+                                        "name": {
+                                            "kind": "IdentifierName",
+                                            "fullStart": 14,
+                                            "fullEnd": 15,
+                                            "start": 14,
+                                            "end": 15,
+                                            "fullWidth": 1,
+                                            "width": 1,
+                                            "text": "A",
+                                            "value": "A",
+                                            "valueText": "A"
+                                        }
+                                    },
                                     "openBracketToken": {
                                         "kind": "OpenBracketToken",
                                         "fullStart": 15,
@@ -197,7 +165,6 @@
                                         "value": "[",
                                         "valueText": "["
                                     },
-                                    "expressions": [],
                                     "closeBracketToken": {
                                         "kind": "CloseBracketToken",
                                         "fullStart": 16,

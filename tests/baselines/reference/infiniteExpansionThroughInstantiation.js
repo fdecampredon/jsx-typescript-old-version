@@ -3,14 +3,10 @@
 
 var list;
 var ownerList;
-
-// BUG 843510
-list = ownerList; // should be error
+list = ownerList;
 
 function other(x) {
     var list;
     var ownerList;
-
-    // BUG 843510
-    list = ownerList; // should be error
+    list = ownerList;
 }

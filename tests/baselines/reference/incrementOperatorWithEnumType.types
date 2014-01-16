@@ -1,0 +1,17 @@
+=== tests/cases/compiler/incrementOperatorWithEnumType.ts ===
+Line 2 col 5 IdentifierName "ENUM1" = ENUM1
+Line 5 col 4 IdentifierName "ResultIsNumber1" = number
+Line 5 col 22 PreIncrementExpression "++ENUM1[1]" = number
+Line 5 col 24 ElementAccessExpression "ENUM1[1]" = ENUM1
+Line 5 col 24 IdentifierName "ENUM1" = typeof ENUM1
+Line 6 col 4 IdentifierName "ResultIsNumber2" = number
+Line 6 col 22 PostIncrementExpression "ENUM1[1]++" = number
+Line 6 col 22 ElementAccessExpression "ENUM1[1]" = ENUM1
+Line 6 col 22 IdentifierName "ENUM1" = typeof ENUM1
+Line 7 col 0 PreIncrementExpression "// miss assignment operator
+++ENUM1[1]" = number
+Line 9 col 2 ElementAccessExpression "ENUM1[1]" = ENUM1
+Line 9 col 2 IdentifierName "ENUM1" = typeof ENUM1
+Line 10 col 0 PostIncrementExpression "ENUM1[1]++" = number
+Line 10 col 0 ElementAccessExpression "ENUM1[1]" = ENUM1
+Line 10 col 0 IdentifierName "ENUM1" = typeof ENUM1

@@ -11,5 +11,5 @@ class Base2 {
 }
 
 class Derived2 extends Base2 {
-    private static y: { foo: string; bar: string; }; // no error
+    private static y: { foo: string; bar: string; }; // error
 }

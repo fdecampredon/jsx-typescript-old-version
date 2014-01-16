@@ -1,0 +1,30 @@
+=== tests/cases/compiler/restParameterAssignmentCompatibility.ts ===
+Line 0 col 6 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "m" = (...p3: any[]) => void
+Line 1 col 9 IdentifierName "p3" = any[]
+Line 6 col 6 IdentifierName "S" = S
+Line 7 col 0 IdentifierName "m" = (p1: any, p2: any) => void
+Line 7 col 6 IdentifierName "p1" = any
+Line 7 col 10 IdentifierName "p2" = any
+Line 12 col 4 IdentifierName "t" = T
+Line 12 col 7 IdentifierName "T" = T
+Line 13 col 4 IdentifierName "s" = S
+Line 13 col 7 IdentifierName "S" = S
+Line 14 col 0 AssignmentExpression "// M is a non - specialized call or construct signature and S' contains a call or construct signature N where,
+//  the number of non-optional parameters in N is less than or equal to the total number of parameters in M,
+t = s" = S
+Line 14 col 0 IdentifierName "// M is a non - specialized call or construct signature and S' contains a call or construct signature N where,
+//  the number of non-optional parameters in N is less than or equal to the total number of parameters in M,
+t" = T
+Line 16 col 4 IdentifierName "s" = S
+Line 18 col 6 IdentifierName "T1" = T1
+Line 19 col 0 IdentifierName "m" = (p1?: any, p2?: any) => void
+Line 19 col 6 IdentifierName "p1" = any
+Line 19 col 11 IdentifierName "p2" = any
+Line 23 col 4 IdentifierName "t1" = T1
+Line 23 col 8 IdentifierName "T1" = T1
+Line 24 col 0 AssignmentExpression "// When comparing call or construct signatures, parameter names are ignored and rest parameters correspond to an unbounded expansion of optional parameters of the rest parameter element type.
+t1 = s" = S
+Line 24 col 0 IdentifierName "// When comparing call or construct signatures, parameter names are ignored and rest parameters correspond to an unbounded expansion of optional parameters of the rest parameter element type.
+t1" = T1
+Line 25 col 5 IdentifierName "s" = S

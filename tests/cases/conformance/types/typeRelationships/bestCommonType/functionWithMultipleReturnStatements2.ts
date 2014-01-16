@@ -44,13 +44,13 @@ function f6<T>(x: T) {
     }
 }
 
-function f7<T extends U, U>(x: T, y: U) {
-    if (true) {
-        return x;
-    } else {
-        return y;
-    }
-}
+//function f7<T extends U, U>(x: T, y: U) {
+//    if (true) {
+//        return x;
+//    } else {
+//        return y;
+//    }
+//}
 
 var a: { x: number; y?: number };
 var b: { x: number; z?: number };

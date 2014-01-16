@@ -51,7 +51,11 @@ interface F2 extends Function { foo: string; }
 var f2: F2;
 var r17 = foo(f2);
 
-function foo2<T extends { (): void }, U extends T>(x: T, y: U) {
+function foo2<T extends { (): void }, U extends { (): void }>(x: T, y: U) {
     foo(x);
     foo(y);
 }
+//function foo2<T extends { (): void }, U extends T>(x: T, y: U) {
+//    foo(x);
+//    foo(y);
+//}

@@ -1,0 +1,157 @@
+=== tests/cases/compiler/comparisonOperatorWithSubtypeObjectOnProperty.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 1 col 11 IdentifierName "a" = string
+Line 4 col 6 IdentifierName "Derived" = Derived
+Line 4 col 22 IdentifierName "Base" = Base
+Line 5 col 11 IdentifierName "b" = string
+Line 8 col 6 IdentifierName "A1" = A1
+Line 9 col 11 IdentifierName "a" = Base
+Line 9 col 14 IdentifierName "Base" = Base
+Line 10 col 11 IdentifierName "b" = Base
+Line 10 col 14 IdentifierName "Base" = Base
+Line 13 col 6 IdentifierName "B1" = B1
+Line 14 col 11 IdentifierName "a" = Base
+Line 14 col 14 IdentifierName "Base" = Base
+Line 15 col 11 IdentifierName "b" = Derived
+Line 15 col 14 IdentifierName "Derived" = Derived
+Line 18 col 6 IdentifierName "A2" = A2
+Line 19 col 12 IdentifierName "a" = any
+Line 22 col 6 IdentifierName "B2" = B2
+Line 22 col 17 IdentifierName "A2" = A2
+Line 23 col 12 IdentifierName "b" = any
+Line 26 col 4 IdentifierName "a1" = A1
+Line 26 col 8 IdentifierName "A1" = A1
+Line 27 col 4 IdentifierName "a2" = A2
+Line 27 col 8 IdentifierName "A2" = A2
+Line 28 col 4 IdentifierName "b1" = B1
+Line 28 col 8 IdentifierName "B1" = B1
+Line 29 col 4 IdentifierName "b2" = B2
+Line 29 col 8 IdentifierName "B2" = B2
+Line 32 col 4 IdentifierName "ra1" = boolean
+Line 32 col 10 LessThanExpression "a1 < b1" = boolean
+Line 32 col 10 IdentifierName "a1" = A1
+Line 32 col 15 IdentifierName "b1" = B1
+Line 33 col 4 IdentifierName "ra2" = boolean
+Line 33 col 10 LessThanExpression "a2 < b2" = boolean
+Line 33 col 10 IdentifierName "a2" = A2
+Line 33 col 15 IdentifierName "b2" = B2
+Line 34 col 4 IdentifierName "ra3" = boolean
+Line 34 col 10 LessThanExpression "b1 < a1" = boolean
+Line 34 col 10 IdentifierName "b1" = B1
+Line 34 col 15 IdentifierName "a1" = A1
+Line 35 col 4 IdentifierName "ra4" = boolean
+Line 35 col 10 LessThanExpression "b2 < a2" = boolean
+Line 35 col 10 IdentifierName "b2" = B2
+Line 35 col 15 IdentifierName "a2" = A2
+Line 38 col 4 IdentifierName "rb1" = boolean
+Line 38 col 10 GreaterThanExpression "a1 > b1" = boolean
+Line 38 col 10 IdentifierName "a1" = A1
+Line 38 col 15 IdentifierName "b1" = B1
+Line 39 col 4 IdentifierName "rb2" = boolean
+Line 39 col 10 GreaterThanExpression "a2 > b2" = boolean
+Line 39 col 10 IdentifierName "a2" = A2
+Line 39 col 15 IdentifierName "b2" = B2
+Line 40 col 4 IdentifierName "rb3" = boolean
+Line 40 col 10 GreaterThanExpression "b1 > a1" = boolean
+Line 40 col 10 IdentifierName "b1" = B1
+Line 40 col 15 IdentifierName "a1" = A1
+Line 41 col 4 IdentifierName "rb4" = boolean
+Line 41 col 10 GreaterThanExpression "b2 > a2" = boolean
+Line 41 col 10 IdentifierName "b2" = B2
+Line 41 col 15 IdentifierName "a2" = A2
+Line 44 col 4 IdentifierName "rc1" = boolean
+Line 44 col 10 LessThanOrEqualExpression "a1 <= b1" = boolean
+Line 44 col 10 IdentifierName "a1" = A1
+Line 44 col 16 IdentifierName "b1" = B1
+Line 45 col 4 IdentifierName "rc2" = boolean
+Line 45 col 10 LessThanOrEqualExpression "a2 <= b2" = boolean
+Line 45 col 10 IdentifierName "a2" = A2
+Line 45 col 16 IdentifierName "b2" = B2
+Line 46 col 4 IdentifierName "rc3" = boolean
+Line 46 col 10 LessThanOrEqualExpression "b1 <= a1" = boolean
+Line 46 col 10 IdentifierName "b1" = B1
+Line 46 col 16 IdentifierName "a1" = A1
+Line 47 col 4 IdentifierName "rc4" = boolean
+Line 47 col 10 LessThanOrEqualExpression "b2 <= a2" = boolean
+Line 47 col 10 IdentifierName "b2" = B2
+Line 47 col 16 IdentifierName "a2" = A2
+Line 50 col 4 IdentifierName "rd1" = boolean
+Line 50 col 10 GreaterThanOrEqualExpression "a1 >= b1" = boolean
+Line 50 col 10 IdentifierName "a1" = A1
+Line 50 col 16 IdentifierName "b1" = B1
+Line 51 col 4 IdentifierName "rd2" = boolean
+Line 51 col 10 GreaterThanOrEqualExpression "a2 >= b2" = boolean
+Line 51 col 10 IdentifierName "a2" = A2
+Line 51 col 16 IdentifierName "b2" = B2
+Line 52 col 4 IdentifierName "rd3" = boolean
+Line 52 col 10 GreaterThanOrEqualExpression "b1 >= a1" = boolean
+Line 52 col 10 IdentifierName "b1" = B1
+Line 52 col 16 IdentifierName "a1" = A1
+Line 53 col 4 IdentifierName "rd4" = boolean
+Line 53 col 10 GreaterThanOrEqualExpression "b2 >= a2" = boolean
+Line 53 col 10 IdentifierName "b2" = B2
+Line 53 col 16 IdentifierName "a2" = A2
+Line 56 col 4 IdentifierName "re1" = boolean
+Line 56 col 10 EqualsWithTypeConversionExpression "a1 == b1" = boolean
+Line 56 col 10 IdentifierName "a1" = A1
+Line 56 col 16 IdentifierName "b1" = B1
+Line 57 col 4 IdentifierName "re2" = boolean
+Line 57 col 10 EqualsWithTypeConversionExpression "a2 == b2" = boolean
+Line 57 col 10 IdentifierName "a2" = A2
+Line 57 col 16 IdentifierName "b2" = B2
+Line 58 col 4 IdentifierName "re3" = boolean
+Line 58 col 10 EqualsWithTypeConversionExpression "b1 == a1" = boolean
+Line 58 col 10 IdentifierName "b1" = B1
+Line 58 col 16 IdentifierName "a1" = A1
+Line 59 col 4 IdentifierName "re4" = boolean
+Line 59 col 10 EqualsWithTypeConversionExpression "b2 == a2" = boolean
+Line 59 col 10 IdentifierName "b2" = B2
+Line 59 col 16 IdentifierName "a2" = A2
+Line 62 col 4 IdentifierName "rf1" = boolean
+Line 62 col 10 NotEqualsWithTypeConversionExpression "a1 != b1" = boolean
+Line 62 col 10 IdentifierName "a1" = A1
+Line 62 col 16 IdentifierName "b1" = B1
+Line 63 col 4 IdentifierName "rf2" = boolean
+Line 63 col 10 NotEqualsWithTypeConversionExpression "a2 != b2" = boolean
+Line 63 col 10 IdentifierName "a2" = A2
+Line 63 col 16 IdentifierName "b2" = B2
+Line 64 col 4 IdentifierName "rf3" = boolean
+Line 64 col 10 NotEqualsWithTypeConversionExpression "b1 != a1" = boolean
+Line 64 col 10 IdentifierName "b1" = B1
+Line 64 col 16 IdentifierName "a1" = A1
+Line 65 col 4 IdentifierName "rf4" = boolean
+Line 65 col 10 NotEqualsWithTypeConversionExpression "b2 != a2" = boolean
+Line 65 col 10 IdentifierName "b2" = B2
+Line 65 col 16 IdentifierName "a2" = A2
+Line 68 col 4 IdentifierName "rg1" = boolean
+Line 68 col 10 EqualsExpression "a1 === b1" = boolean
+Line 68 col 10 IdentifierName "a1" = A1
+Line 68 col 17 IdentifierName "b1" = B1
+Line 69 col 4 IdentifierName "rg2" = boolean
+Line 69 col 10 EqualsExpression "a2 === b2" = boolean
+Line 69 col 10 IdentifierName "a2" = A2
+Line 69 col 17 IdentifierName "b2" = B2
+Line 70 col 4 IdentifierName "rg3" = boolean
+Line 70 col 10 EqualsExpression "b1 === a1" = boolean
+Line 70 col 10 IdentifierName "b1" = B1
+Line 70 col 17 IdentifierName "a1" = A1
+Line 71 col 4 IdentifierName "rg4" = boolean
+Line 71 col 10 EqualsExpression "b2 === a2" = boolean
+Line 71 col 10 IdentifierName "b2" = B2
+Line 71 col 17 IdentifierName "a2" = A2
+Line 74 col 4 IdentifierName "rh1" = boolean
+Line 74 col 10 NotEqualsExpression "a1 !== b1" = boolean
+Line 74 col 10 IdentifierName "a1" = A1
+Line 74 col 17 IdentifierName "b1" = B1
+Line 75 col 4 IdentifierName "rh2" = boolean
+Line 75 col 10 NotEqualsExpression "a2 !== b2" = boolean
+Line 75 col 10 IdentifierName "a2" = A2
+Line 75 col 17 IdentifierName "b2" = B2
+Line 76 col 4 IdentifierName "rh3" = boolean
+Line 76 col 10 NotEqualsExpression "b1 !== a1" = boolean
+Line 76 col 10 IdentifierName "b1" = B1
+Line 76 col 17 IdentifierName "a1" = A1
+Line 77 col 4 IdentifierName "rh4" = boolean
+Line 77 col 10 NotEqualsExpression "b2 !== a2" = boolean
+Line 77 col 10 IdentifierName "b2" = B2
+Line 77 col 17 IdentifierName "a2" = A2

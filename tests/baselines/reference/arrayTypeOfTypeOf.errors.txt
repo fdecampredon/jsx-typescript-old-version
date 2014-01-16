@@ -1,9 +1,7 @@
-arrayTypeOfTypeOf.ts(4,17): error TS1005: '=' expected.
 arrayTypeOfTypeOf.ts(6,22): error TS1005: '=' expected.
 arrayTypeOfTypeOf.ts(6,30): error TS1003: Identifier expected.
 arrayTypeOfTypeOf.ts(7,22): error TS1005: '=' expected.
 arrayTypeOfTypeOf.ts(7,32): error TS1003: Identifier expected.
-arrayTypeOfTypeOf.ts(4,5): error TS2011: Cannot convert 'any[]' to 'number'.
 arrayTypeOfTypeOf.ts(6,5): error TS2012: Cannot convert 'number' to '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':
 	Type 'Number' is missing property 'isArray' from type '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }'.
 arrayTypeOfTypeOf.ts(7,5): error TS2012: Cannot convert 'number' to '{ isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }':

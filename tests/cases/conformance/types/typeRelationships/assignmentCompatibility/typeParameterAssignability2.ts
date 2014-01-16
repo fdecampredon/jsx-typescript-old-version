@@ -12,7 +12,7 @@ function foo2<T extends U, U>(t: T, u: U) {
 
 function foo3<T extends U, U extends V, V>(t: T, u: U, v: V) {
     t = u; // error
-    u = t; // BUG 821629
+    u = t;
 
     t = v; // error
     v = t; // ok
@@ -26,12 +26,12 @@ function foo4<T extends U, U extends V, V extends Date>(t: T, u: U, v: V) {
     t = v; // error
     t = new Date(); // error
 
-    u = t; // BUG 821629
+    u = t;
     u = v; // error
     u = new Date(); // error
 
-    v = t; // BUG 821629
-    v = u; // BUG 821629
+    v = t;
+    v = u;
     v = new Date(); // ok
 
     var d: Date;
@@ -46,12 +46,12 @@ function foo5<V extends Date, U extends V, T extends U>(t: T, u: U, v: V) {
     t = v; // error
     t = new Date(); // error
 
-    u = t; // BUG 821629
+    u = t;
     u = v; // error
     u = new Date(); // error
 
-    v = t; // BUG 821629
-    v = u; // BUG 821629
+    v = t;
+    v = u;
     v = new Date(); // ok
 
     var d: Date;

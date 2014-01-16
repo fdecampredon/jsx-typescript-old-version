@@ -488,7 +488,7 @@ module TypeScript {
         var declFlags = PullElementFlags.None;
         var declType = PullElementKind.Variable;
 
-        var modifiers = getVariableDeclaratorModifiers(varDecl);
+        var modifiers = ASTHelpers.getVariableDeclaratorModifiers(varDecl);
         if ((hasModifier(modifiers, PullElementFlags.Exported) || isParsingAmbientModule(varDecl, context)) && !containingModuleHasExportAssignment(varDecl)) {
             declFlags |= PullElementFlags.Exported;
         }
@@ -1150,7 +1150,7 @@ module TypeScript {
     function computeEnumElementConstantValue(expression: ISyntaxElement, enumMemberDecls: PullEnumElementDecl[], context: DeclCollectionContext): number {
         Debug.assert(expression);
 
-        if (isIntegerLiteralAST(expression)) {
+        if (ASTHelpers.isIntegerLiteralAST(expression)) {
             // Always produce a value for an integer literal.
             var token: ISyntaxToken;
             switch (expression.kind()) {

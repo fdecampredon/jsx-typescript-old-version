@@ -1,0 +1,105 @@
+=== tests/cases/compiler/compoundAdditionAssignmentLHSCanBeAssigned.ts ===
+Line 0 col 5 IdentifierName "E" = E
+Line 0 col 9 IdentifierName "a" = E
+Line 0 col 12 IdentifierName "b" = E
+Line 2 col 4 IdentifierName "a" = any
+Line 3 col 4 IdentifierName "b" = void
+Line 5 col 4 IdentifierName "x1" = any
+Line 6 col 0 AddAssignmentExpression "x1 += a" = any
+Line 6 col 0 IdentifierName "x1" = any
+Line 6 col 6 IdentifierName "a" = any
+Line 7 col 0 AddAssignmentExpression "x1 += b" = any
+Line 7 col 0 IdentifierName "x1" = any
+Line 7 col 6 IdentifierName "b" = void
+Line 8 col 0 AddAssignmentExpression "x1 += true" = any
+Line 8 col 0 IdentifierName "x1" = any
+Line 9 col 0 AddAssignmentExpression "x1 += 0" = any
+Line 9 col 0 IdentifierName "x1" = any
+Line 10 col 0 AddAssignmentExpression "x1 += ''" = string
+Line 10 col 0 IdentifierName "x1" = any
+Line 11 col 0 AddAssignmentExpression "x1 += E.a" = any
+Line 11 col 0 IdentifierName "x1" = any
+Line 11 col 6 MemberAccessExpression "E.a" = E
+Line 11 col 6 IdentifierName "E" = typeof E
+Line 11 col 8 IdentifierName "a" = E
+Line 12 col 0 AddAssignmentExpression "x1 += {}" = any
+Line 12 col 0 IdentifierName "x1" = any
+Line 12 col 6 ObjectLiteralExpression "{}" = {}
+Line 13 col 0 AddAssignmentExpression "x1 += null" = any
+Line 13 col 0 IdentifierName "x1" = any
+Line 14 col 0 AddAssignmentExpression "x1 += undefined" = any
+Line 14 col 0 IdentifierName "x1" = any
+Line 14 col 6 IdentifierName "undefined" = any
+Line 16 col 4 IdentifierName "x2" = string
+Line 17 col 0 AddAssignmentExpression "x2 += a" = string
+Line 17 col 0 IdentifierName "x2" = string
+Line 17 col 6 IdentifierName "a" = any
+Line 18 col 0 AddAssignmentExpression "x2 += b" = string
+Line 18 col 0 IdentifierName "x2" = string
+Line 18 col 6 IdentifierName "b" = void
+Line 19 col 0 AddAssignmentExpression "x2 += true" = string
+Line 19 col 0 IdentifierName "x2" = string
+Line 20 col 0 AddAssignmentExpression "x2 += 0" = string
+Line 20 col 0 IdentifierName "x2" = string
+Line 21 col 0 AddAssignmentExpression "x2 += ''" = string
+Line 21 col 0 IdentifierName "x2" = string
+Line 22 col 0 AddAssignmentExpression "x2 += E.a" = string
+Line 22 col 0 IdentifierName "x2" = string
+Line 22 col 6 MemberAccessExpression "E.a" = E
+Line 22 col 6 IdentifierName "E" = typeof E
+Line 22 col 8 IdentifierName "a" = E
+Line 23 col 0 AddAssignmentExpression "x2 += {}" = string
+Line 23 col 0 IdentifierName "x2" = string
+Line 23 col 6 ObjectLiteralExpression "{}" = {}
+Line 24 col 0 AddAssignmentExpression "x2 += null" = string
+Line 24 col 0 IdentifierName "x2" = string
+Line 25 col 0 AddAssignmentExpression "x2 += undefined" = string
+Line 25 col 0 IdentifierName "x2" = string
+Line 25 col 6 IdentifierName "undefined" = any
+Line 27 col 4 IdentifierName "x3" = number
+Line 28 col 0 AddAssignmentExpression "x3 += a" = any
+Line 28 col 0 IdentifierName "x3" = number
+Line 28 col 6 IdentifierName "a" = any
+Line 29 col 0 AddAssignmentExpression "x3 += 0" = number
+Line 29 col 0 IdentifierName "x3" = number
+Line 30 col 0 AddAssignmentExpression "x3 += E.a" = number
+Line 30 col 0 IdentifierName "x3" = number
+Line 30 col 6 MemberAccessExpression "E.a" = E
+Line 30 col 6 IdentifierName "E" = typeof E
+Line 30 col 8 IdentifierName "a" = E
+Line 31 col 0 AddAssignmentExpression "x3 += null" = number
+Line 31 col 0 IdentifierName "x3" = number
+Line 32 col 0 AddAssignmentExpression "x3 += undefined" = number
+Line 32 col 0 IdentifierName "x3" = number
+Line 32 col 6 IdentifierName "undefined" = any
+Line 34 col 4 IdentifierName "x4" = E
+Line 34 col 8 IdentifierName "E" = E
+Line 35 col 0 AddAssignmentExpression "x4 += a" = any
+Line 35 col 0 IdentifierName "x4" = E
+Line 35 col 6 IdentifierName "a" = any
+Line 36 col 0 AddAssignmentExpression "x4 += 0" = number
+Line 36 col 0 IdentifierName "x4" = E
+Line 37 col 0 AddAssignmentExpression "x4 += E.a" = number
+Line 37 col 0 IdentifierName "x4" = E
+Line 37 col 6 MemberAccessExpression "E.a" = E
+Line 37 col 6 IdentifierName "E" = typeof E
+Line 37 col 8 IdentifierName "a" = E
+Line 38 col 0 AddAssignmentExpression "x4 += null" = number
+Line 38 col 0 IdentifierName "x4" = E
+Line 39 col 0 AddAssignmentExpression "x4 += undefined" = number
+Line 39 col 0 IdentifierName "x4" = E
+Line 39 col 6 IdentifierName "undefined" = any
+Line 41 col 4 IdentifierName "x5" = boolean
+Line 42 col 0 AddAssignmentExpression "x5 += a" = any
+Line 42 col 0 IdentifierName "x5" = boolean
+Line 42 col 6 IdentifierName "a" = any
+Line 44 col 4 IdentifierName "x6" = {}
+Line 45 col 0 AddAssignmentExpression "x6 += a" = any
+Line 45 col 0 IdentifierName "x6" = {}
+Line 45 col 6 IdentifierName "a" = any
+Line 46 col 0 AddAssignmentExpression "x6 += ''" = string
+Line 46 col 0 IdentifierName "x6" = {}
+Line 48 col 4 IdentifierName "x7" = void
+Line 49 col 0 AddAssignmentExpression "x7 += a" = any
+Line 49 col 0 IdentifierName "x7" = void
+Line 49 col 6 IdentifierName "a" = any

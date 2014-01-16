@@ -190,6 +190,9 @@ var D15 = (function (_super) {
     return D15;
 })(Base);
 
+//class D15<T, U extends T> extends Base {
+//    foo: U;
+//}
 var D16 = (function (_super) {
     __extends(D16, _super);
     function D16() {

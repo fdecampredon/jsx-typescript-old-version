@@ -111,10 +111,14 @@ interface I17<T> {
 }
 
 
-interface I18<T, U extends T> {
+interface I18<T, U> {
     [x: string]: any;
     foo: U;
 }
+//interface I18<T, U extends T> {
+//    [x: string]: any;
+//    foo: U;
+//}
 
 
 interface I19 {
