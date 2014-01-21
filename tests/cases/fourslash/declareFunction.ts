@@ -2,6 +2,7 @@
 
 //// /**/declare function
 
-// Bug 856400
 goTo.marker();
-// fs.debug.printNavigationItems();
+//verify there is no empty navigation item.
+verify.navigationItemsListCount(0, "^$"/*empty string*/)
+//fs.debug.printNavigationItems();

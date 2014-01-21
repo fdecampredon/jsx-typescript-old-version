@@ -171,15 +171,6 @@ module TypeScript {
             return indexToInsert < 0 ? currentSignatures.length : indexToInsert;
         }
 
-        private bindOtherDecls(currentlyBindingDecl: PullDecl, searchGlobally: boolean) {
-            // Get the other decls
-            var otherDecls = this.findDeclsInContext(currentlyBindingDecl, currentlyBindingDecl.kind, searchGlobally);
-
-            // Bind the other decls
-            this.inBindingOtherDeclsWalker.walkOtherPullDecls(currentlyBindingDecl, otherDecls,
-                otherDecl => otherDecl.ensureSymbolIsBound());
-        }
-
         //
         // decl binding
         //
@@ -341,8 +332,6 @@ module TypeScript {
             if (valueDecl) {
                 valueDecl.ensureSymbolIsBound();
             }
-
-            this.bindOtherDecls(enumContainerDecl, /*searchGlobally*/ true);
         }
 
         private bindEnumIndexerDeclsToPullSymbols(enumContainerDecl: PullDecl, enumContainerSymbol: PullContainerSymbol): void {
@@ -498,7 +487,7 @@ module TypeScript {
                         var sibling = siblingDecls[i];
 
                         var siblingIsSomeValue = hasFlag(sibling.kind, PullElementKind.SomeValue);
-                        var siblingIsFunctionOrHasImplictVarFlag = 
+                        var siblingIsFunctionOrHasImplictVarFlag =
                             hasFlag(sibling.kind, PullElementKind.SomeFunction) ||
                             hasFlag(sibling.flags, PullElementFlags.ImplicitVariable)
 
@@ -583,8 +572,6 @@ module TypeScript {
                     }
                 }
             }
-
-            this.bindOtherDecls(moduleContainerDecl, /*searchGlobally*/ true);
         }
 
         // aliases
@@ -644,7 +631,7 @@ module TypeScript {
             if (!container) {
                 return;
             }
-            
+
             var parentDecls = container.getDeclarations();
             for (var i = 0; i < parentDecls.length; ++i) {
                 var parentDecl = parentDecls[i];
@@ -676,6 +663,8 @@ module TypeScript {
 
             var parent = this.getParent(classDecl);
 
+            // TODO: we should in general get all the decls from the parent and bind all of them together,
+            // but thats a major change and we should fix it without losing perf, so adding just a todo here.
             this.ensurePriorDeclarationsAreBound(parent, classDecl);
 
             var parentDecl = classDecl.getParentDecl();
@@ -866,8 +855,6 @@ module TypeScript {
                 typeParameter.addDeclaration(typeParameters[i]);
                 typeParameters[i].setSymbol(typeParameter);
             }
-
-            this.bindOtherDecls(interfaceDecl, /*searchGlobally*/ true);
         }
 
         private bindObjectTypeDeclarationToPullSymbol(objectDecl: PullDecl) {
@@ -1202,8 +1189,6 @@ module TypeScript {
                     parent.addEnclosedNonMember(variableSymbol);
                 }
             }
-
-            this.bindOtherDecls(variableDeclaration, /*searchGlobally*/ false);
         }
 
         private bindCatchVariableToPullSymbol(variableDeclaration: PullDecl) {
@@ -1409,8 +1394,6 @@ module TypeScript {
 
             var parent = this.getParent(functionDeclaration, true);
 
-            this.ensurePriorDeclarationsAreBound(parent, functionDeclaration);
-
             var parentDecl = functionDeclaration.getParentDecl();
             var parentHadSymbol = false;
 
@@ -1519,8 +1502,6 @@ module TypeScript {
 
             // add the implicit call member for this function type
             functionTypeSymbol.appendCallSignature(signature);
-
-            this.bindOtherDecls(functionDeclaration, /*searchGlobally*/ false);
         }
 
         private bindFunctionExpressionToPullSymbol(functionExpressionDeclaration: PullDecl) {
@@ -1759,8 +1740,6 @@ module TypeScript {
             // add the implicit call member for this function type
             var signatureIndex = this.getIndexForInsertingSignatureAtEndOfEnclosingDeclInSignatureList(signature, methodTypeSymbol.getOwnCallSignatures());
             methodTypeSymbol.insertCallSignatureAtIndex(signature, signatureIndex);
-
-            this.bindOtherDecls(methodDeclaration, /*searchGlobally*/ false);
         }
 
         private bindStaticPrototypePropertyOfClass(classTypeSymbol: PullTypeSymbol, constructorTypeSymbol: PullTypeSymbol) {
@@ -1866,8 +1845,6 @@ module TypeScript {
             }
 
             constructorTypeSymbol.appendConstructSignature(constructSignature);
-
-            this.bindOtherDecls(constructorDeclaration, /*searchGlobally*/ false);
 
             // Create the constructorTypeSymbol
             this.bindStaticPrototypePropertyOfClass(parent, constructorTypeSymbol);
@@ -2172,18 +2149,72 @@ module TypeScript {
             setterTypeSymbol.appendCallSignature(signature);
         }
 
+        private getDeclsToBind(decl: PullDecl) {
+            var decls: PullDecl[];
+            switch (decl.kind) {
+                case PullElementKind.Enum:
+                case PullElementKind.DynamicModule:
+                case PullElementKind.Container:
+                case PullElementKind.Interface:
+                    decls = this.findDeclsInContext(decl, decl.kind, /*searchGlobally*/ true);
+                    break;
+
+                case PullElementKind.Variable:
+                case PullElementKind.Function:
+                case PullElementKind.Method:
+                case PullElementKind.ConstructorMethod:
+                    decls = this.findDeclsInContext(decl, decl.kind, /*searchGlobally*/ false);
+                    break;
+
+                default:
+                    decls = [decl];
+            }
+            Debug.assert(decls && decls.length > 0);
+            Debug.assert(ArrayUtilities.contains(decls, decl));
+            return decls;
+        }
+
+        private shouldBindDeclaration(decl: PullDecl) {
+            return !decl.hasBeenBound() && this.declsBeingBound.indexOf(decl.declID) < 0;
+        }
+
         // binding
         public bindDeclToPullSymbol(decl: PullDecl) {
-            if (decl.hasBeenBound()) {
-                // The decl has a symbol attached to it
-                return;
+            if (this.shouldBindDeclaration(decl)) {
+                // The decl does not have a symbol attached to it and
+                // its not already being bound
+                this.bindAllDeclsToPullSymbol(decl);
             }
+        }
 
-            if (this.declsBeingBound.indexOf(decl.declID) >= 0) {
-                // We are already binding it now
-                return;
+        private bindAllDeclsToPullSymbol(askedDecl: PullDecl) {
+            var allDecls = this.getDeclsToBind(askedDecl);
+            for (var i = 0; i < allDecls.length; i++) {
+                var decl = allDecls[i];
+                // This check is necessary for two reasons
+                // 1. This decl could be actually something we dont care to bind other decls corresponding to it 
+                //    and so it was already bound without binding other decls with same name corresponding to it (e.g parameter)
+                // 2. This was bound as part of some recursion
+                //    eg:
+                //      module A {
+                //          var o;
+                //      }
+                //      enum A {
+                //          /*quickInfoHere*/c
+                //      }
+                //      module A {
+                //          var p;
+                //      }
+                //     As part of binding the member declaration, we would bind enum and hence end up binding all value decls
+                //     which are instance vars from module declaration. As part of it, we would want to bind corresponding 
+                //     module declaration which in turn would try to bind all the var declarations
+                if (this.shouldBindDeclaration(decl)) {
+                    this.bindSingleDeclToPullSymbol(decl);
+                }
             }
+        }
 
+        private bindSingleDeclToPullSymbol(decl: PullDecl) {
             // Add it to the list in case we revisit it during binding
             this.declsBeingBound.push(decl.declID);
 
@@ -2300,10 +2331,5 @@ module TypeScript {
             Debug.assert(ArrayUtilities.last(this.declsBeingBound) === decl.declID);
             this.declsBeingBound.pop();
         }
-
-        //public bindTopLevelDecl() {
-        //    var topLevelDecl = this.semanticInfoChain.getTopLevelDecl(this.fileName);
-        //    this.bindDeclToPullSymbol(topLevelDecl);
-        //}
     }
 }

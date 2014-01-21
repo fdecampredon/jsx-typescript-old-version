@@ -1455,7 +1455,7 @@ module FourSlash {
             Check number of navigationItems which match both searchValue and matchKind.
             Report an error if expected value and actual value do not match.
         */
-        public verifyNavigationItemsCount(expected: number, searchValue: string, matchKind: string) {
+        public verifyNavigationItemsCount(expected: number, searchValue: string, matchKind?: string) {
             this.taoInvalidReason = 'verifyNavigationItemsCount NYI';
 
             var items = this.languageService.getNavigateToItems(searchValue);
@@ -1465,7 +1465,7 @@ module FourSlash {
             // Count only the match that match the same MatchKind
             for (var i = 0; i < items.length; ++i) {
                 item = items[i];
-                if (item.matchKind === matchKind) {
+                if (!matchKind || item.matchKind === matchKind) {
                     actual++;
                 }
             }

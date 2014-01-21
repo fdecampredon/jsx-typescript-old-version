@@ -13462,9 +13462,10 @@ module TypeScript {
             for (var i = 0; i < indexSignaturesFromThisBaseType.length; i++) {
                 var currentInheritedSignature = indexSignaturesFromThisBaseType[i];
 
-                // Skip the signature if it is shadowed in the derived type
                 var parameterTypeIsString = currentInheritedSignature.parameters[0].type === this.semanticInfoChain.stringTypeSymbol;
-                var parameterTypeIsNumber = !parameterTypeIsString;
+                var parameterTypeIsNumber = currentInheritedSignature.parameters[0].type === this.semanticInfoChain.numberTypeSymbol;
+
+                // Skip the signature if it is shadowed in the derived type
                 if (parameterTypeIsString && derivedTypeHasOwnStringSignature ||
                     parameterTypeIsNumber && derivedTypeHasOwnNumberSignature) {
                     continue;

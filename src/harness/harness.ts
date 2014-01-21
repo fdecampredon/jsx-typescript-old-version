@@ -770,15 +770,16 @@ module Harness {
 
         /** This is the harness's own version of the batch compiler that encapsulates state about resolution */
         export class HarnessCompiler implements TypeScript.IReferenceResolverHost {
+
             private inputFiles: string[] = [];
             private resolvedFiles: TypeScript.IResolvedFile[] = [];
             private compiler: TypeScript.TypeScriptCompiler;
             private fileNameToScriptSnapshot = new TypeScript.StringHashTable<TypeScript.IScriptSnapshot>();
-            public ioHost = new Harness.Compiler.EmitterIOHost();
             private sourcemapRecorder = new WriterAggregator();
-
             private errorList: TypeScript.Diagnostic[] = [];
             private useMinimalDefaultLib: boolean;
+
+            public ioHost = new Harness.Compiler.EmitterIOHost();
 
             constructor(options?: { useMinimalDefaultLib: boolean; noImplicitAny: boolean; }) {
                 this.compiler = new TypeScript.TypeScriptCompiler();

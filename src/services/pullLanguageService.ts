@@ -699,6 +699,7 @@ module TypeScript.Services {
         // The function will search all files (both close and open) in the solutions. SearchValue can be either one search term or multiple terms separated by comma.
         public getNavigateToItems(searchValue: string): NavigateToItem[] {
 
+            Debug.assert(searchValue !== null && searchValue !== undefined, "The searchValue argument was not supplied or null");
             // Split search value in terms array
             var terms = searchValue.split(" ");
             var regExpTerms: RegExp[] = new Array<RegExp>(terms.length);

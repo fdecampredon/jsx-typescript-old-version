@@ -389,6 +389,18 @@ module TypeScript {
         }
 
         public setTypeInContext(symbol: PullSymbol, type: PullTypeSymbol) {
+            // if type of symbol was already determined and it is error - do not replace it with something else
+            // otherwise it might cause problems in cases like:
+            // var bar: foo;
+            // class bar {}
+            // class foo {}
+            // Symbol for variable bar will get created first, then after binding class constructor of class bar conflict will be detected and symbol.type will be set to error.
+            // Later after binding type reference 'foo', symbol.type (that is now 'error') will be incorrectly replace with 'foo'.
+            // Since this symbol shared between explicit variable declaration and implicit variable for class constructor 
+            // we now ended up in situation where class constructor for 'baz' is type reference to 'foo' which is wrong.
+            if (symbol.type && symbol.type.isError() && !type.isError()) {
+                return;
+            }
             symbol.type = type;
 
             if (this.contextStack.length && this.inProvisionalResolution()) {

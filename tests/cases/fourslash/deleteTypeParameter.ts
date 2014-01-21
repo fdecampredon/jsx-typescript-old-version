@@ -11,5 +11,4 @@
 //// q1 = q2;
 
 goTo.marker();
-// Bug 859240: Stack overflow here
-// edit.deleteAtCaret(1);
+edit.deleteAtCaret(1);

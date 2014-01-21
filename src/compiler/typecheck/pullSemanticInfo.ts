@@ -356,27 +356,20 @@ module TypeScript {
             var decls: PullDecl[] = sentinelEmptyArray;
             var path: string;
             var foundDecls: PullDecl[] = sentinelEmptyArray;
-            var keepSearching = (declKind & PullElementKind.SomeContainer) || (declKind & PullElementKind.Interface);
 
             for (var i = 0; i < declPath.length; i++) {
                 path = declPath[i];
                 decls = sentinelEmptyArray;
 
+                var kind = (i === declPath.length - 1) ? declKind : PullElementKind.SomeContainer;
                 for (var j = 0; j < declsToSearch.length; j++) {
-                    //var kind = (i === declPath.length - 1) ? declKind : PullElementKind.SomeType;
-                    foundDecls = declsToSearch[j].searchChildDecls(path, declKind);
+                    foundDecls = declsToSearch[j].searchChildDecls(path, kind);
 
                     for (var k = 0; k < foundDecls.length; k++) {
                         if (decls === sentinelEmptyArray) {
                             decls = [];
                         }
                         decls[decls.length] = foundDecls[k];
-                    }
-
-                    // Unless we're searching for an interface or module, we've found the one true
-                    // decl, so don't bother searching the rest of the top-level decls
-                    if (foundDecls.length && !keepSearching) {
-                        break;
                     }
                 }
 

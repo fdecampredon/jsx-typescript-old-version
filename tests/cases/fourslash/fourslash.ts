@@ -331,7 +331,7 @@ module FourSlashInterface {
             FourSlash.currentTestState.verifGetScriptLexicalStructureListContains(name, kind, fileName, parentName);
         }
 
-        public navigationItemsListCount(count: number, searchValue: string, matchKind: string) {
+        public navigationItemsListCount(count: number, searchValue: string, matchKind?: string) {
             FourSlash.currentTestState.verifyNavigationItemsCount(count, searchValue, matchKind);
         }
 
@@ -449,8 +449,8 @@ module FourSlashInterface {
             FourSlash.currentTestState.printErrorList();
         }
 
-        public printNavigationItems(searchValue?: string) {
-            FourSlash.currentTestState.printNavigationItems();
+        public printNavigationItems(searchValue: string = ".*") {
+            FourSlash.currentTestState.printNavigationItems(searchValue);
         }
 
         public printScriptLexicalStructureItems() {

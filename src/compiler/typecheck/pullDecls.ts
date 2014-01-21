@@ -104,7 +104,7 @@ module TypeScript {
         }
 
         public ensureSymbolIsBound() {
-            if (!this.hasSymbol() && this.kind !== PullElementKind.Script) {
+            if (!this.hasBeenBound() && this.kind !== PullElementKind.Script) {
                 var binder = this.semanticInfoChain.getBinder();
                 binder.bindDeclToPullSymbol(this);
             }

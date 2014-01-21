@@ -10,5 +10,4 @@
 //// }
 
 goTo.marker();
-// Bug 859263: Error here
-// edit.insert(" ");
+edit.insert(" ");

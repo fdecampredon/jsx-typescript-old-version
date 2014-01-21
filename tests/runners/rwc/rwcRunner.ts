@@ -121,6 +121,7 @@ class RWCRunner extends RunnerBase {
 
                 it("compile it ", function () {
                     try {
+
                         // Compile the project
                         spec.compileList.forEach((item: string) => {
                             content = TypeScript.IO.readFile(spec.projectRoot + "/" + item, /*codepage*/ null).contents;
@@ -291,7 +292,7 @@ class RWCRunner extends RunnerBase {
                                 Harness.Assert.equal(result.stderr, "");
                                 Harness.Assert.equal(result.stdout, "");
                             } else {
-                                Harness.Assert.throwAssertError(new Error("_this check crashed!"));
+                                Harness.Assert.throwAssertError(new Error(spec.projectName + " '_this' check crashed!"));
                             }
                         });
                     } 
