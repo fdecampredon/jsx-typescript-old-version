@@ -325,8 +325,10 @@ module TypeScript {
                 }
             }
 
-            this.bindEnumIndexerDeclsToPullSymbols(enumContainerDecl, enumContainerSymbol);
-
+            if (createdNewSymbol) {
+                // if the enum container was created, add in the index signature
+                this.bindEnumIndexerDeclsToPullSymbols(enumContainerSymbol);
+            }
             var valueDecl = enumContainerDecl.getValueDecl();
 
             if (valueDecl) {
@@ -334,28 +336,23 @@ module TypeScript {
             }
         }
 
-        private bindEnumIndexerDeclsToPullSymbols(enumContainerDecl: PullDecl, enumContainerSymbol: PullContainerSymbol): void {
-            var indexSigDecl = enumContainerDecl.getChildDecls().filter(decl => decl.kind === PullElementKind.IndexSignature)[0];
-            var indexParamDecl = indexSigDecl.getChildDecls()[0];
+        private bindEnumIndexerDeclsToPullSymbols(enumContainerSymbol: PullContainerSymbol): void {
+            // Add synthetic index signature to the enum instance
+            var enumContainerInstanceTypeSymbol = enumContainerSymbol.getInstanceSymbol().type;
 
-            var syntheticIndexerParameterSymbol = new PullSymbol(indexParamDecl.name, PullElementKind.Parameter);
-
+            var syntheticIndexerParameterSymbol = new PullSymbol("x", PullElementKind.Parameter);
             syntheticIndexerParameterSymbol.type = this.semanticInfoChain.numberTypeSymbol;
             syntheticIndexerParameterSymbol.setResolved();
+            syntheticIndexerParameterSymbol.setIsSynthesized();
 
             var syntheticIndexerSignatureSymbol = new PullSignatureSymbol(PullElementKind.IndexSignature);
             syntheticIndexerSignatureSymbol.addParameter(syntheticIndexerParameterSymbol);
             syntheticIndexerSignatureSymbol.returnType = this.semanticInfoChain.stringTypeSymbol;
             syntheticIndexerSignatureSymbol.setResolved();
+            syntheticIndexerSignatureSymbol.setIsSynthesized();
 
-            var enumContainerInstanceTypeSymbol = enumContainerSymbol.getInstanceSymbol().type;
+
             enumContainerInstanceTypeSymbol.addIndexSignature(syntheticIndexerSignatureSymbol);
-
-            indexSigDecl.setSignatureSymbol(syntheticIndexerSignatureSymbol);
-            indexParamDecl.setSymbol(syntheticIndexerParameterSymbol);
-
-            syntheticIndexerSignatureSymbol.addDeclaration(indexSigDecl);
-            syntheticIndexerParameterSymbol.addDeclaration(indexParamDecl);
         }
 
         private bindModuleDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {

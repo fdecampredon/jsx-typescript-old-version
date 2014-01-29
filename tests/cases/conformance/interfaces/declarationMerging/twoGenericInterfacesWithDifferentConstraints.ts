@@ -23,8 +23,19 @@ module M2 {
 }
 
 module M2 {
-    // BUG 856468
-    interface A<T extends Number> { // should be error
+    interface A<T extends Number> { // ok, different declaration space from other M2.A
+        y: T;
+    }
+}
+
+module M3 {
+    export interface A<T extends Date> {
+        x: T;
+    }
+}
+
+module M3 {
+    export interface A<T extends Number> { // error
         y: T;
     }
 }

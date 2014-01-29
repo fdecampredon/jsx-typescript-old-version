@@ -25,8 +25,19 @@ module M2 {
 }
 
 module M2 {
-    // BUG 857614
-    interface B<U, T> { // should be error
+    interface B<U, T> { // ok, different declaration space than other M2
+        y: T;
+    }
+}
+
+module M3 {
+    export interface B<T, U> {
+        x: U;
+    }
+}
+
+module M3 {
+    export interface B<U, T> { // error
         y: T;
     }
 }

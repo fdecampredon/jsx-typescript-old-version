@@ -9,7 +9,5 @@ var G;
     var r = a();
     var r2 = a(true);
     var r3 = a(true, 2);
-
-    // BUG 856468
     var r4 = a(1, true);
 })(G || (G = {}));

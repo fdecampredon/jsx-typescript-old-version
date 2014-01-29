@@ -93,6 +93,8 @@ module TypeScript.Services.Breakpoints {
                     case TypeScript.SyntaxKind.GetAccessor:
                     case TypeScript.SyntaxKind.SetAccessor:
                     case TypeScript.SyntaxKind.FunctionExpression:
+                    case TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression:
+                    case TypeScript.SyntaxKind.SimpleArrowFunctionExpression:
                         if (!this.canHaveBreakpointInDeclaration(container)) {
                             return null;
                         }
@@ -219,6 +221,8 @@ module TypeScript.Services.Breakpoints {
                     case TypeScript.SyntaxKind.TryStatement:
                     case TypeScript.SyntaxKind.CatchClause:
                     case TypeScript.SyntaxKind.FinallyClause:
+                    case TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression:
+                    case TypeScript.SyntaxKind.SimpleArrowFunctionExpression:
                         return this.breakpointSpanOfLastStatementInBlock(originalContainer);
 
                     case TypeScript.SyntaxKind.SwitchStatement:
@@ -383,6 +387,7 @@ module TypeScript.Services.Breakpoints {
                 case TypeScript.SyntaxKind.MemberFunctionDeclaration:
                 case TypeScript.SyntaxKind.GetAccessor:
                 case TypeScript.SyntaxKind.SetAccessor:
+                case TypeScript.SyntaxKind.FunctionExpression:
                     return this.breakpointSpanOfDeclarationWithElements(positionedNode);
 
                 // Var, parameter and member variable declaration syntax
@@ -438,6 +443,13 @@ module TypeScript.Services.Breakpoints {
                 case TypeScript.SyntaxKind.FinallyClause:
                     return this.breakpointSpanOfFinallyClause(positionedNode);
 
+                // Arrow expressions
+                case TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression:
+                    return this.breakpointSpanOfParenthesizedArrowFunctionExpression(<ParenthesizedArrowFunctionExpressionSyntax>positionedNode);
+
+                case TypeScript.SyntaxKind.SimpleArrowFunctionExpression:
+                    return this.breakpointSpanOfSimpleArrowFunctionExpression(<SimpleArrowFunctionExpressionSyntax>positionedNode);
+
                 // Expressions or statements
                 default:
                     if (node.isStatement()) {
@@ -449,6 +461,29 @@ module TypeScript.Services.Breakpoints {
             }
         }
 
+        private isExpressionOfArrowExpressions(expression: ISyntaxElement): boolean {
+            if (!expression) {
+                return false;
+            }
+
+            var expressionParent = expression.parent;
+            if (expressionParent) {
+                if (expressionParent.kind() == TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression) {
+                    var parenthesizedArrowExpression = <TypeScript.ParenthesizedArrowFunctionExpressionSyntax>expressionParent;
+                    var expressionOfParenthesizedArrowExpression = parenthesizedArrowExpression.expression;
+                    return expressionOfParenthesizedArrowExpression == expression;
+                }
+                else if (expressionParent.kind() == TypeScript.SyntaxKind.SimpleArrowFunctionExpression) {
+                    var simpleArrowExpression = <TypeScript.SimpleArrowFunctionExpressionSyntax>expressionParent;
+                    var expressionOfSimpleArrowExpression = simpleArrowExpression.expression;
+                    return expressionOfSimpleArrowExpression == expression;
+                }
+                else if (expressionParent.kind() == TypeScript.SyntaxKind.CommaExpression) {
+                    return this.isExpressionOfArrowExpressions(expressionParent);
+                }
+            }
+            return false;
+        }
         
         private isInitializerOfForStatement(expressionNode: TypeScript.SyntaxNode): boolean {
             if (!expressionNode) {
@@ -517,6 +552,13 @@ module TypeScript.Services.Breakpoints {
             if (this.isInitializerOfForStatement(expressionNode) ||
                 this.isConditionOfForStatement(expressionNode) ||
                 this.isIncrememtorOfForStatement(expressionNode)) {
+                if (expressionNode.kind() == TypeScript.SyntaxKind.CommaExpression) {
+                    return this.breakpointOfLeftOfCommaExpression(expressionNode);
+                }
+                return createBreakpointSpanInfo(expressionNode);
+            }
+
+            if (this.isExpressionOfArrowExpressions(expressionNode)) {
                 if (expressionNode.kind() == TypeScript.SyntaxKind.CommaExpression) {
                     return this.breakpointOfLeftOfCommaExpression(expressionNode);
                 }
@@ -644,6 +686,14 @@ module TypeScript.Services.Breakpoints {
 
                 case TypeScript.SyntaxKind.FunctionExpression:
                     block = (<TypeScript.FunctionExpressionSyntax>node).block;
+                    break;
+
+                case TypeScript.SyntaxKind.ParenthesizedArrowFunctionExpression:
+                    block = (<TypeScript.ParenthesizedArrowFunctionExpressionSyntax>node).block;
+                    break;
+
+                case TypeScript.SyntaxKind.SimpleArrowFunctionExpression:
+                    block = (<TypeScript.SimpleArrowFunctionExpressionSyntax>node).block;
                     break;
 
                 default:
@@ -946,8 +996,31 @@ module TypeScript.Services.Breakpoints {
             return this.breakpointSpanOfFirstStatementInBlock(<TypeScript.SyntaxNode>finallyClause.block);
         }
 
-        private breakpointSpanOfContainingNode(positionedElement: TypeScript.ISyntaxElement): SpanInfo {
-            return this.breakpointSpanOf(Syntax.containingNode(positionedElement));
+        private breakpointSpanOfParenthesizedArrowFunctionExpression(arrowFunctionExpression: ParenthesizedArrowFunctionExpressionSyntax): SpanInfo {
+            if (arrowFunctionExpression.block) {
+                return this.breakpointSpanOfFirstStatementInBlock(arrowFunctionExpression.block);
+            }
+            else {
+                return this.breakpointSpanOf(arrowFunctionExpression.expression);
+            }
+        }
+
+        private breakpointSpanOfSimpleArrowFunctionExpression(arrowFunctionExpression: SimpleArrowFunctionExpressionSyntax): SpanInfo {
+            if (arrowFunctionExpression.block) {
+                return this.breakpointSpanOfFirstStatementInBlock(arrowFunctionExpression.block);
+            }
+            else {
+                return this.breakpointSpanOf(arrowFunctionExpression.expression);
+            }
+        }
+
+        private breakpointSpanOfContainingNode(positionedElement: ISyntaxElement): SpanInfo {
+            var current = positionedElement.parent;
+            while (!current.isNode()) {
+                current = current.parent;
+            }
+
+            return this.breakpointSpanOf(current);
         }
 
         private breakpointSpanIfStartsOnSameLine(positionedElement: TypeScript.ISyntaxElement): SpanInfo {

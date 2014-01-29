@@ -1,6 +1,5 @@
 // two interfaces with the same root module should merge
 // root module now multiple module declarations
-// BUG 856468
 var M2;
 (function (M2) {
     var a;

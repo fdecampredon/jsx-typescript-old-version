@@ -2537,9 +2537,7 @@ module TypeScript {
                     return;
 
                 case CompilerReservedName._i:
-                    if (isDeclaration) {
-                        this.checkIndexOfRestArgumentInitializationCollides(astWithName, context);
-                    }
+                    this.checkIndexOfRestArgumentInitializationCollides(astWithName, isDeclaration, context);
                     return;
 
                 case CompilerReservedName.require:
@@ -2598,13 +2596,39 @@ module TypeScript {
             }
         }
 
-        private checkIndexOfRestArgumentInitializationCollides(ast: ISyntaxElement, context: PullTypeResolutionContext) {
-            if (ast.kind() === SyntaxKind.Parameter) {
+        private checkIndexOfRestArgumentInitializationCollides(ast: ISyntaxElement, isDeclaration: boolean, context: PullTypeResolutionContext) {
+            if (!isDeclaration || ast.kind() === SyntaxKind.Parameter) {
                 var enclosingDecl = this.getEnclosingDeclForAST(ast);
-                if (hasFlag(enclosingDecl.kind, PullElementKind.SomeFunction)) {
-                    if (this.hasRestParameterCodeGen(enclosingDecl)) {
-                        // It is error to use the _i varible name
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Duplicate_identifier_i_Compiler_uses_i_to_initialize_rest_parameter));
+                var declPath = isDeclaration ? [enclosingDecl] : (enclosingDecl ? enclosingDecl.getParentPath() : []);
+                var resolvedSymbol: PullSymbol = null;
+                var resolvedSymbolContainer: PullTypeSymbol;
+                for (var i = declPath.length - 1; i >= 0; i--) {
+                    var decl = declPath[i];
+                    if (!isDeclaration) {
+                        // Get the symbol this ast would be resolved to
+                        if (!resolvedSymbol) {
+                            resolvedSymbol = this.resolveNameExpression(<ISyntaxToken>ast, context);
+                            if (resolvedSymbol.isError()) {
+                                return;
+                            }
+
+                            resolvedSymbolContainer = resolvedSymbol.getContainer();
+                        }
+
+                        // If the resolved symbol was declared in this decl, then it would always resolve to this symbol
+                        // so stop looking in the decls as it is valid usage of _i
+                        if (resolvedSymbolContainer && ArrayUtilities.contains(resolvedSymbolContainer.getDeclarations(), decl)) {
+                            break;
+                        }
+                    }
+
+                    if (hasFlag(decl.kind, PullElementKind.SomeFunction)) {
+                        if (this.hasRestParameterCodeGen(decl)) {
+                            // It is error to use the _i varible name
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, isDeclaration ?
+                                DiagnosticCode.Duplicate_identifier_i_Compiler_uses_i_to_initialize_rest_parameter :
+                                DiagnosticCode.Expression_resolves_to_variable_declaration_i_that_compiler_uses_to_initialize_rest_parameter));
+                        }
                     }
                 }
             }
@@ -3323,7 +3347,6 @@ module TypeScript {
 
         private checkSuperCaptureVariableCollides(superAST: ISyntaxElement, isDeclaration: boolean, context: PullTypeResolutionContext) {
             var enclosingDecl = this.getEnclosingDeclForAST(superAST);
-            var declPath = enclosingDecl.getParentPath();
 
             var classSymbol = this.getContextualClassSymbolForEnclosingDecl(superAST, enclosingDecl);
 
@@ -3769,9 +3792,9 @@ module TypeScript {
             // statement somewhere in its body.An exception to this rule is if the function 
             // implementation consists of a single ‘throw’ statement.
             if (block !== null && returnTypeAnnotation !== null && !hasReturn) {
-                var isVoidOrError = signature.returnType === this.semanticInfoChain.voidTypeSymbol || signature.returnType.isError();
+                var isVoidOrAny = this.isAnyOrEquivalent(signature.returnType) || signature.returnType === this.semanticInfoChain.voidTypeSymbol;
 
-                if (!isVoidOrError && !this.containsSingleThrowStatement(block)) {
+                if (!isVoidOrAny && !this.containsSingleThrowStatement(block)) {
                     var funcName = funcDecl.getDisplayName() || getLocalizedText(DiagnosticCode.expression, null);
 
                     context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(returnTypeAnnotation, DiagnosticCode.Function_0_declared_a_non_void_return_type_but_has_no_return_expression, [funcName]));

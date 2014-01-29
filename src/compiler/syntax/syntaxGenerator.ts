@@ -2129,8 +2129,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     var hasAnyTrivia = leading || trailing;
 
     var result = "    export class ";
-
-    var needsSourcetext = hasAnyTrivia || isVariableWidth;
+    var needsText = hasAnyTrivia || isVariableWidth;
 
     var className = isFixedWidth ? "FixedWidthToken" : "VariableWidthToken";
     className += leading && trailing ? "WithLeadingAndTrailingTrivia" :
@@ -2138,11 +2137,10 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
              !leading && trailing ? "WithTrailingTrivia" : "WithNoTrivia";
 
     result += className;
-
     result += " implements ISyntaxToken {\r\n";
 
-    if (needsSourcetext) {
-        result += "        private _sourceText: ISimpleText;\r\n";
+    if (needsText) {
+        result += "        private _fullText: string;\r\n";
     }
 
     result += "        private _fullStart: number;\r\n";
@@ -2153,10 +2151,6 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        private _leadingTriviaInfo: number;\r\n";
     }
 
-    if (isVariableWidth) {
-        result += "        private _textOrWidth: any;\r\n";
-    }
-
     if (trailing) {
         result += "        private _trailingTriviaInfo: number;\r\n";
     }
@@ -2165,21 +2159,17 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        private _syntaxID: number = 0;\r\n";
     result += "\r\n";
 
-    if (needsSourcetext) {
-        result += "        constructor(sourceText: ISimpleText, fullStart: number,";
-    }
-    else {
-        result += "        constructor(fullStart: number,";
+    result += "        constructor(";
+
+    if (needsText) {
+        result += "fullText: string, ";
     }
 
+    result += "fullStart: number, ";
     result += "kind: SyntaxKind";
 
     if (leading) {
         result += ", leadingTriviaInfo: number";
-    }
-
-    if (isVariableWidth) {
-        result += ", textOrWidth: any";
     }
 
     if (trailing) {
@@ -2188,8 +2178,8 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     result += ") {\r\n";
 
-    if (needsSourcetext) {
-        result += "            this._sourceText = sourceText;\r\n";
+    if (needsText) {
+        result += "            this._fullText = fullText;\r\n";
     }
 
     result += "            this._fullStart = fullStart;\r\n";
@@ -2197,10 +2187,6 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 
     if (leading) {
         result += "            this._leadingTriviaInfo = leadingTriviaInfo;\r\n";
-    }
-
-    if (isVariableWidth) {
-        result += "            this._textOrWidth = textOrWidth;\r\n";
     }
 
     if (trailing) {
@@ -2219,8 +2205,8 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        public clone(): ISyntaxToken {\r\n";
     result += "            return new " + className + "(\r\n";
 
-    if (needsSourcetext) {
-        result += "                this._sourceText,\r\n";
+    if (needsText) {
+        result += "                this._fullText,\r\n";
     }
 
     result += "                this._fullStart,\r\n";
@@ -2230,10 +2216,6 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += ",\r\n                this._leadingTriviaInfo";
     }
 
-    if (isVariableWidth) {
-        result += ",\r\n                this._textOrWidth";
-    }
-
     if (trailing) {
         result += ",\r\n                this._trailingTriviaInfo";
     }
@@ -2241,17 +2223,17 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += ");\r\n";
     result += "        }\r\n\r\n";
 
-    if (needsSourcetext) {
-        result += "        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {\r\n";
+    //if (needsSourcetext) {
+    //    result += "        public setFullStartAndText(fullStart: number, sourceText: ISimpleText): void {\r\n";
+    //    result += "            this._fullStart = fullStart;\r\n";
+    //    result += "            this._sourceText = sourceText;\r\n";
+    //    result += "        }\r\n\r\n";
+    //}
+    //else {
+        result += "        public setFullStart(fullStart: number): void {\r\n";
         result += "            this._fullStart = fullStart;\r\n";
-        result += "            this._sourceText = sourceText;\r\n";
         result += "        }\r\n\r\n";
-    }
-    else {
-        result += "        public setFullStartAndText(fullStart: number): void {\r\n";
-        result += "            this._fullStart = fullStart;\r\n";
-        result += "        }\r\n\r\n";
-    }
+    //}
 
     result += "        public syntaxTree(): SyntaxTree {\r\n";
     result += "            return this.parent.syntaxTree();\r\n";
@@ -2279,6 +2261,9 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     var leadingTriviaWidth = leading ? "getTriviaWidth(this._leadingTriviaInfo)" : "0";
     var trailingTriviaWidth = trailing ? "getTriviaWidth(this._trailingTriviaInfo)" : "0";
 
+    result += "        public fullWidth(): number { return this.fullText().length; }\r\n";
+
+    /*
     if (leading && trailing) {
         result += "        public fullWidth(): number { return " + leadingTriviaWidth + " + this.width() + " + trailingTriviaWidth + "; }\r\n";
     }
@@ -2291,13 +2276,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     else {
         result += "        public fullWidth(): number { return this.width(); }\r\n";
     }
-
-    if (isFixedWidth) {
-        result += "        public width(): number { return this.text().length; }\r\n\r\n";
-    }
-    else {
-        result += "        public width(): number { return typeof this._textOrWidth === 'number' ? this._textOrWidth : this._textOrWidth.length; }\r\n\r\n";
-    }
+    */
 
     result += "        public fullStart(): number { return this._fullStart; }\r\n";
 
@@ -2308,6 +2287,13 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        public start(): number { return this._fullStart; }\r\n";
     }
 
+    if (isFixedWidth) {
+        result += "        public width(): number { return this.text().length; }\r\n\r\n";
+    }
+    else {
+        result += "        public width(): number { return this.fullWidth() - this.leadingTriviaWidth() - this.trailingTriviaWidth(); }\r\n\r\n";
+    }
+
     result += "        public end(): number { return this.start() + this.width(); }\r\n";
     result += "        public fullEnd(): number { return this._fullStart + this.fullWidth(); } \r\n\r\n";
 
@@ -2315,18 +2301,11 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
         result += "        public text(): string { return SyntaxFacts.getText(this.tokenKind); }\r\n";
     }
     else {
-        result += "        public text(): string {\r\n";
-        result += "            if (typeof this._textOrWidth === 'number') {\r\n";
-        result += "                this._textOrWidth = this._sourceText.substr(\r\n";
-        result += "                    this.start(), this._textOrWidth, /*intern:*/ this.tokenKind === SyntaxKind.IdentifierName);\r\n";
-        result += "            }\r\n";
-        result += "\r\n";
-        result += "            return this._textOrWidth;\r\n";
-        result += "        }\r\n\r\n";
+        result += "        public text(): string { return this.fullText().substr(this.leadingTriviaWidth(), this.width()); }\r\n";
     }
 
-    if (needsSourcetext) {
-        result += "        public fullText(): string { return this._sourceText.substr(this._fullStart, this.fullWidth(), /*intern:*/ false); }\r\n\r\n";
+    if (needsText) {
+        result += "        public fullText(): string { return this._fullText; }\r\n\r\n";
     }
     else {
         result += "        public fullText(): string { return this.text(); }\r\n\r\n";
@@ -2359,7 +2338,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        public hasLeadingSkippedText(): boolean { return false; }\r\n";
     result += "        public leadingTriviaWidth(): number { return " + (leading ? "getTriviaWidth(this._leadingTriviaInfo)" : "0") + "; }\r\n";
     result += "        public leadingTrivia(): ISyntaxTriviaList { return " + (leading
-        ? "Scanner.scanTrivia(this, this._sourceText, this._fullStart, getTriviaWidth(this._leadingTriviaInfo), /*isTrailing:*/ false)"
+        ? "Scanner.scanTrivia(this, this._fullText, this._fullStart, 0, this.leadingTriviaWidth(), /*isTrailing:*/ false)"
         : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
 
     result += "        public hasTrailingTrivia(): boolean { return " + (trailing ? "true" : "false") + "; }\r\n";
@@ -2368,7 +2347,7 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
     result += "        public hasTrailingSkippedText(): boolean { return false; }\r\n";
     result += "        public trailingTriviaWidth(): number { return " + (trailing ? "getTriviaWidth(this._trailingTriviaInfo)" : "0") + "; }\r\n";
     result += "        public trailingTrivia(): ISyntaxTriviaList { return " + (trailing
-        ? "Scanner.scanTrivia(this, this._sourceText, this.end(), getTriviaWidth(this._trailingTriviaInfo), /*isTrailing:*/ true)"
+        ? "Scanner.scanTrivia(this, this._fullText, this._fullStart, this.leadingTriviaWidth() + this.width(), this.trailingTriviaWidth(), /*isTrailing:*/ true)"
         : "Syntax.emptyTriviaList") + "; }\r\n\r\n";
     result += "        public hasSkippedToken(): boolean { return false; }\r\n";
 
@@ -2443,12 +2422,13 @@ function generateTokens(): string {
     result += generateToken(/*isFixedWidth:*/ true, /*leading:*/ true, /*trailing:*/ true);
     result += "\r\n";
 
-    result += 
-"    function collectTokenTextElements(token: ISyntaxToken, elements: string[]): void {\r\n" +
-"        token.leadingTrivia().collectTextElements(elements);\r\n" +
-"        elements.push(token.text());\r\n" +
-"        token.trailingTrivia().collectTextElements(elements);\r\n" +
-"    }\r\n\r\n"
+    result +=
+    "    function collectTokenTextElements(token: ISyntaxToken, elements: string[]): void {\r\n" +
+    "        token.leadingTrivia().collectTextElements(elements);\r\n" +
+    "        elements.push(token.text());\r\n" +
+    "        token.trailingTrivia().collectTextElements(elements);\r\n" +
+    "    }\r\n" +
+    "\r\n";
 
     result += 
 "    function getTriviaWidth(value: number): number {\r\n" +

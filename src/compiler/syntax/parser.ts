@@ -597,8 +597,6 @@ module TypeScript.Parser {
     // prevent this level of reuse include substantially destructive operations like introducing
     // "/*" without a "*/" nearby to terminate the comment.
     class IncrementalParserSource implements IParserSource {
-        private _newText: ISimpleText;
-
         // The underlying parser source that we will use to scan tokens from any new text, or any 
         // tokens from the old tree that we decide we can't use for any reason.  We will also 
         // continue scanning tokens from this source until we've decided that we're resynchronized
@@ -635,7 +633,6 @@ module TypeScript.Parser {
         private _oldSourceUnitCursor: SyntaxCursor;
 
         constructor(oldSyntaxTree: SyntaxTree, textChangeRange: TextChangeRange, newText: ISimpleText) {
-            this._newText = newText;
             var oldSourceUnit = oldSyntaxTree.sourceUnit();
             this._oldSourceUnitCursor = new SyntaxCursor(oldSourceUnit);
 
@@ -781,7 +778,6 @@ module TypeScript.Parser {
             var position = this.absolutePosition();
             if (this.isPastChangeRange() && nodeOrToken.fullStart() !== position) {
                 this.setTokenPositionWalker.position = position;
-                this.setTokenPositionWalker.text = this._newText;
 
                 nodeOrToken.accept(this.setTokenPositionWalker);
             }
@@ -1074,11 +1070,10 @@ module TypeScript.Parser {
     // are reused in a different location because of an incremental parse.
     class SetTokenPositionWalker extends SyntaxWalker {
         public position: number;
-        public text: ISimpleText;
 
         public visitToken(token: ISyntaxToken): void {
             var position = this.position;
-            token.setFullStartAndText(position, this.text);
+            token.setFullStart(position);
 
             this.position += token.fullWidth();
         }
@@ -1569,7 +1564,7 @@ module TypeScript.Parser {
             // We've prepending this token with new leading trivia.  This means the full start of
             // the token is not where the scanner originally thought it was, but is instead at the
             // start of the first skipped token.
-            updatedToken.setFullStartAndText(skippedTokens[0].fullStart(), this.text);
+            updatedToken.setFullStart(skippedTokens[0].fullStart());
 
             // Don't need this array anymore.  Give it back so we can reuse it.
             this.returnArray(skippedTokens);
@@ -1615,7 +1610,7 @@ module TypeScript.Parser {
 
             // Because we removed the leading trivia from the skipped token, the full start of the
             // trimmed token is the start of the skipped token.
-            trimmedToken.setFullStartAndText(skippedToken.start(), null);
+            trimmedToken.setFullStart(skippedToken.start());
 
             array.push(Syntax.skippedTokenTrivia(trimmedToken));
 
@@ -3649,7 +3644,7 @@ module TypeScript.Parser {
 
                         // We're synthesizing a new operator token.  We need to ensure it starts at 
                         // the right position.
-                        operatorToken.setFullStartAndText(token0.fullStart(), this.text);
+                        operatorToken.setFullStart(token0.fullStart());
                     }
 
                     // Now skip the operator token we're on, or the tokens we merged.

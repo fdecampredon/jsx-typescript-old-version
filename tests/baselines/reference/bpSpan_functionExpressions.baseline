@@ -97,11 +97,8 @@
     greetings++;
     return greetings;
 }
-**Pos: 31 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
+**Pos: 31 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
 **Pos: 32 SpanInfo: null
 ** Statement: 
 **Pos: 33 SpanInfo: null
@@ -136,70 +133,34 @@
 ** Statement: 
 **Pos: 48 SpanInfo: null
 ** Statement: 
-**Pos: 49 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 50 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 51 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 52 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 53 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 54 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 55 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 56 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 57 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 58 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 59 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 60 SpanInfo: {"minChar":19,"limChar":103,"text":null}
-** Statement: var greet = (greeting: string): number => {
-    greetings++;
-    return greetings;
-}
-**Pos: 61 SpanInfo: null
-** Statement: 
-**Pos: 62 SpanInfo: null
-** Statement: 
+**Pos: 49 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 50 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 51 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 52 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 53 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 54 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 55 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 56 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 57 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 58 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 59 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 60 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 61 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
+**Pos: 62 SpanInfo: {"minChar":67,"limChar":78,"text":null}
+** Statement: greetings++
 **Pos: 63 SpanInfo: {"minChar":67,"limChar":78,"text":null}
 ** Statement: greetings++
 **Pos: 64 SpanInfo: {"minChar":67,"limChar":78,"text":null}
@@ -278,10 +239,10 @@
 ** Statement: return greetings
 **Pos: 101 SpanInfo: {"minChar":84,"limChar":100,"text":null}
 ** Statement: return greetings
-**Pos: 102 SpanInfo: null
-** Statement: 
-**Pos: 103 SpanInfo: null
-** Statement: 
+**Pos: 102 SpanInfo: {"minChar":84,"limChar":100,"text":null}
+** Statement: return greetings
+**Pos: 103 SpanInfo: {"minChar":84,"limChar":100,"text":null}
+** Statement: return greetings
 **Pos: 104 SpanInfo: {"minChar":104,"limChar":118,"text":null}
 ** Statement: greet("Hello")
 **Pos: 105 SpanInfo: {"minChar":104,"limChar":118,"text":null}
@@ -354,39 +315,113 @@
 ** Statement: var incrGreetings = () => greetings++
 **Pos: 139 SpanInfo: {"minChar":120,"limChar":157,"text":null}
 ** Statement: var incrGreetings = () => greetings++
-**Pos: 140 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 141 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 142 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 143 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 144 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 145 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 146 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 147 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 148 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 149 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 150 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 151 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 152 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 153 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 154 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 155 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 156 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
-**Pos: 157 SpanInfo: {"minChar":120,"limChar":157,"text":null}
-** Statement: var incrGreetings = () => greetings++
+**Pos: 140 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 141 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 142 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 143 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 144 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 145 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 146 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 147 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 148 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 149 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 150 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 151 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 152 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 153 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 154 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 155 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 156 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 157 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 158 SpanInfo: {"minChar":146,"limChar":157,"text":null}
+** Statement: greetings++
+**Pos: 159 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 160 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 161 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 162 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 163 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 164 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 165 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 166 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 167 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 168 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 169 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 170 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 171 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 172 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 173 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 174 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 175 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 176 SpanInfo: {"minChar":159,"limChar":194,"text":null}
+** Statement: var greetNewMsg = msg => greet(msg)
+**Pos: 177 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 178 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 179 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 180 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 181 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 182 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 183 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 184 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 185 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 186 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 187 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 188 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 189 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 190 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 191 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 192 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 193 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)
+**Pos: 194 SpanInfo: {"minChar":184,"limChar":194,"text":null}
+** Statement: greet(msg)

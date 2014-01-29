@@ -1,0 +1,106 @@
+promisePermutations2.ts(78,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction4' and '(value: string) => IPromise<string>' are incompatible.
+promisePermutations2.ts(78,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(81,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction4' and '(value: string) => IPromise<string>' are incompatible.
+promisePermutations2.ts(81,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(82,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction4P' and '(value: string) => Promise<string>' are incompatible.
+promisePermutations2.ts(82,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(83,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction4P' and '(value: string) => {}' are incompatible.
+promisePermutations2.ts(83,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(87,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction5' and '(value: string) => IPromise<{}>' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(87,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(90,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction5' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(90,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(91,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction5P' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(91,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(92,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction5P' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(92,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(96,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction6' and '(value: string) => IPromise<{}>' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(96,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(99,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction6' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(99,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(100,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction6P' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(100,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(101,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction6P' and '(value: string) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(101,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(105,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction7' and '(value: string) => IPromise<string>' are incompatible:
+		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
+promisePermutations2.ts(105,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(108,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction7' and '(value: string) => IPromise<string>' are incompatible:
+		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
+promisePermutations2.ts(108,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(109,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction7P' and '(value: string) => IPromise<{}>' are incompatible:
+		Types of property 'then' of types 'Promise<string>' and 'IPromise<{}>' are incompatible:
+			Call signatures of types '<U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void) => Promise<U>' and '{ <U>(success?: (value: {}) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: {}) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: {}) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: {}) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }' are incompatible:
+				Types of property 'then' of types 'Promise<IPromise<U>>' and 'IPromise<U>' are incompatible:
+					Call signatures of types '<U>(success?: (value: IPromise<U>) => U, error?: (error: any) => U, progress?: (progress: any) => void) => Promise<U>' and '{ <U>(success?: (value: U) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }' are incompatible:
+						Call signatures of types '(value: IPromise<U>) => IPromise<U>' and '(value: U) => IPromise<U>' are incompatible:
+							Type 'U' is missing property 'then' from type 'IPromise<U>'.
+						Call signatures of types '(value: U) => IPromise<U>' and '(value: IPromise<U>) => IPromise<U>' are incompatible:
+							Type 'U' is missing property 'then' from type 'IPromise<U>'.
+promisePermutations2.ts(109,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(110,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction7P' and '(value: string) => IPromise<string>' are incompatible:
+		Types of property 'then' of types 'Promise<string>' and 'IPromise<string>' are incompatible:
+			Call signatures of types '<U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void) => Promise<U>' and '{ <U>(success?: (value: string) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: string) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }' are incompatible:
+				Types of property 'then' of types 'Promise<IPromise<U>>' and 'IPromise<U>' are incompatible:
+					Call signatures of types '<U>(success?: (value: IPromise<U>) => U, error?: (error: any) => U, progress?: (progress: any) => void) => Promise<U>' and '{ <U>(success?: (value: U) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: U) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }' are incompatible:
+						Call signatures of types '(value: IPromise<U>) => IPromise<U>' and '(value: U) => IPromise<U>' are incompatible:
+							Type 'U' is missing property 'then' from type 'IPromise<U>'.
+						Call signatures of types '(value: U) => IPromise<U>' and '(value: IPromise<U>) => IPromise<U>' are incompatible:
+							Type 'U' is missing property 'then' from type 'IPromise<U>'.
+promisePermutations2.ts(110,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(116,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction8' and '(value: number) => IPromise<{}>' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(116,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(119,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction8' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(119,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(120,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction8P' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(120,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(121,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction8P' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(121,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(125,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction9' and '(value: number) => IPromise<{}>' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(125,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(131,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction9' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(131,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(132,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction9P' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(132,14): error TS2087: Could not select overload for 'call' expression.
+promisePermutations2.ts(133,14): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types 'typeof testFunction9P' and '(value: number) => {}' are incompatible:
+		Call signature expects 1 or fewer parameters.
+promisePermutations2.ts(133,14): error TS2087: Could not select overload for 'call' expression.

@@ -1,0 +1,40 @@
+=== tests/cases/compiler/promiseTest.ts ===
+Line 1 col 10 IdentifierName "Promise" = Promise<T>
+Line 1 col 18 IdentifierName "T" = T
+Line 2 col 0 IdentifierName "then" = { <A>(success?: (value: T) => Promise<A>): Promise<A>; <B>(success?: (value: T) => B): Promise<B>; }
+Line 2 col 9 IdentifierName "A" = A
+Line 2 col 12 IdentifierName "success" = (value: T) => Promise<A>
+Line 2 col 23 IdentifierName "value" = T
+Line 2 col 30 IdentifierName "T" = T
+Line 2 col 36 IdentifierName "Promise" = Promise<T>
+Line 2 col 44 IdentifierName "A" = A
+Line 2 col 49 IdentifierName "Promise" = Promise<T>
+Line 2 col 57 IdentifierName "A" = A
+Line 3 col 0 IdentifierName "then" = { <A>(success?: (value: T) => Promise<A>): Promise<A>; <B>(success?: (value: T) => B): Promise<B>; }
+Line 3 col 9 IdentifierName "B" = B
+Line 3 col 12 IdentifierName "success" = (value: T) => B
+Line 3 col 23 IdentifierName "value" = T
+Line 3 col 30 IdentifierName "T" = T
+Line 3 col 36 IdentifierName "B" = B
+Line 3 col 40 IdentifierName "Promise" = Promise<T>
+Line 3 col 48 IdentifierName "B" = B
+Line 4 col 0 IdentifierName "data" = T
+Line 4 col 10 IdentifierName "T" = T
+Line 7 col 4 IdentifierName "p" = Promise<number>
+Line 7 col 7 IdentifierName "Promise" = Promise<T>
+Line 8 col 4 IdentifierName "p2" = Promise<number>
+Line 8 col 9 InvocationExpression "p.then(function (x) {
+    return p;
+} )" = Promise<number>
+Line 8 col 9 MemberAccessExpression "p.then" = { <A>(success?: (value: number) => Promise<A>): Promise<A>; <B>(success?: (value: number) => B): Promise<B>; }
+Line 8 col 9 IdentifierName "p" = Promise<number>
+Line 8 col 11 IdentifierName "then" = { <A>(success?: (value: number) => Promise<A>): Promise<A>; <B>(success?: (value: number) => B): Promise<B>; }
+Line 8 col 16 FunctionExpression "function (x) {
+    return p;
+}" = (x: number) => Promise<number>
+Line 8 col 26 IdentifierName "x" = number
+Line 9 col 11 IdentifierName "p" = Promise<number>
+Line 12 col 4 IdentifierName "x" = number
+Line 12 col 8 MemberAccessExpression "p2.data" = number
+Line 12 col 8 IdentifierName "p2" = Promise<number>
+Line 12 col 11 IdentifierName "data" = number

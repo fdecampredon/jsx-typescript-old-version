@@ -132,9 +132,6 @@ module TypeScript {
         context.semanticInfoChain.setDeclForAST(enumDecl, enumDeclaration);
         context.semanticInfoChain.setASTForDecl(enumDeclaration, enumDecl);
 
-        var enumIndexerDecl = new NormalPullDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, enumDeclaration);
-        var enumIndexerParameter = new NormalPullDecl("x", "x", PullElementKind.Parameter, PullElementFlags.None, enumIndexerDecl);
-
         // create the value decl
         var valueDecl = new NormalPullDecl(enumDeclaration.name, enumDeclaration.getDisplayName(), PullElementKind.Variable, enumDeclaration.flags, context.getParent());
         enumDeclaration.setValueDecl(valueDecl);

@@ -1262,6 +1262,10 @@ module TypeScript {
     "code": 2234,
     "category": DiagnosticCategory.Error
   },
+  "Expression resolves to variable declaration '_i' that compiler uses to initialize rest parameter.": {
+    "code": 2235,
+    "category": DiagnosticCategory.Error
+  },
   "Type '{0}' is missing property '{1}' from type '{2}'.": {
     "code": 4000,
     "category": DiagnosticCategory.NoPrefix

@@ -508,6 +508,47 @@ module TypeScript.SimpleText {
         }
     }
 
+    class SubstrStringText implements ISimpleText {
+        private _lineMap: LineMap = null;
+
+        constructor(private value: string, private _from: number, private _length: number) {
+        }
+
+        public length(): number {
+            return this._length;
+        }
+
+        public copyTo(sourceIndex: number, destination: number[], destinationIndex: number, count: number): void {
+            StringUtilities.copyTo(this.value, sourceIndex + this._from, destination, destinationIndex, count);
+        }
+
+        private static charArray: number[] = ArrayUtilities.createArray<number>(1024, 0);
+
+        public substr(start: number, length: number, intern: boolean): string {
+            if (intern) {
+                throw Errors.notYetImplemented();
+            }
+
+            return this.value.substr(start + this._from, length);
+        }
+
+        public subText(span: TextSpan): ISimpleText {
+            return new SimpleSubText(this, span);
+        }
+
+        public charCodeAt(index: number): number {
+            return this.value.charCodeAt(index + this._from);
+        }
+
+        public lineMap(): LineMap {
+            if (!this._lineMap) {
+                this._lineMap = LineMap1.fromSimpleText(this);
+            }
+
+            return this._lineMap;
+        }
+    }
+
     // Class which wraps a host IScriptSnapshot and exposes an ISimpleText for newer compiler code. 
     class SimpleScriptSnapshotText implements ISimpleText {
 
@@ -538,6 +579,10 @@ module TypeScript.SimpleText {
         public lineMap(): LineMap {
             return new LineMap(() => this.scriptSnapshot.getLineStartPositions(), this.length());
         }
+    }
+
+    export function fromSubstr(value: string, from: number, length: number): ISimpleText {
+        return new SubstrStringText(value, from, length);
     }
 
     export function fromString(value: string): ISimpleText {

@@ -6,7 +6,7 @@ module TypeScript {
         tokenKind: SyntaxKind;
 
         // Adjusts the full start of this token.  Should only be called by the parser.
-        setFullStartAndText(fullStart: number, sourceText: ISimpleText): void;
+        setFullStart(fullStart: number): void;
 
         // Text for this token, not including leading or trailing trivia.
         text(): string;
@@ -363,7 +363,7 @@ module TypeScript.Syntax {
             return this._syntaxID;
         }
 
-        public setFullStartAndText(): void {
+        public setFullStart(): void {
             // An empty token is always at the -1 position.
         }
 
@@ -605,7 +605,7 @@ module TypeScript.Syntax {
             return this._syntaxID;
         }
 
-        public setFullStartAndText(fullStart: number): void {
+        public setFullStart(fullStart: number): void {
             this._fullStart = fullStart;
         }
 

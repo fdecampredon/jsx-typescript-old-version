@@ -1,0 +1,6 @@
+=== tests/cases/compiler/functionWithAnyReturnTypeAndNoReturnExpression.ts ===
+Line 1 col 9 IdentifierName "f" = typeof f
+Line 2 col 4 IdentifierName "f2" = () => any
+Line 2 col 20 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+Line 3 col 4 IdentifierName "f3" = () => any
+Line 3 col 9 ParenthesizedArrowFunctionExpression "(): any => { }" = () => any

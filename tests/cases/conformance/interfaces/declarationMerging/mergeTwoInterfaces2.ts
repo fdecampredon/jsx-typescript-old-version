@@ -1,7 +1,6 @@
 // two interfaces with the same root module should merge
 
 // root module now multiple module declarations
-// BUG 856468
 module M2 {
     export interface A {
         foo: string;

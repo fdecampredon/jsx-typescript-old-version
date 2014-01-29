@@ -7,7 +7,7 @@ var __extends = this.__extends || function (d, b) {
 var C1 = (function () {
     function C1() {
     }
-    C1.prototype.func = function (param /* Change param type to remove error */ ) {
+    C1.prototype.func = function (param) {
     };
     return C1;
 })();

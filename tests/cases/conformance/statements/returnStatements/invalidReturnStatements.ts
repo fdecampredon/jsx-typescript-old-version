@@ -3,7 +3,7 @@ function fn1(): number {  }
 function fn2(): string { }
 function fn3(): boolean { }
 function fn4(): Date {  }
-function fn7(): any {  } // should be error
+function fn7(): any {  } // should be valid: any includes void
 
 interface I { id: number }
 class C implements I {
