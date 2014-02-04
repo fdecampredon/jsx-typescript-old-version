@@ -9,6 +9,3 @@ subtypingWithConstructSignaturesWithSpecializedSignatures.ts(47,13): error TS213
 subtypingWithConstructSignaturesWithSpecializedSignatures.ts(70,15): error TS2143: Interface 'MemberWithCallSignature.I2' cannot extend interface 'MemberWithCallSignature.Base2':
 	Types of property 'a' of types 'I2' and 'Base2' are incompatible:
 		Construct signatures of types 'new(x: string) => string' and '{ new(x: 'a'): number; new(x: string): number; }' are incompatible.
-subtypingWithConstructSignaturesWithSpecializedSignatures.ts(76,15): error TS2143: Interface 'MemberWithCallSignature.I3' cannot extend interface 'MemberWithCallSignature.Base2':
-	Types of property 'a2' of types 'I3' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T) => string' and 'new<T>(x: T) => T' are incompatible.

@@ -13,13 +13,11 @@ class B extends A {
 class C<U extends A, T extends A> {
     f() {
         var x: U;
-        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
 
     g(x: U) {
-        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
@@ -27,13 +25,11 @@ class C<U extends A, T extends A> {
 //class C<U extends T, T extends A> {
 //    f() {
 //        var x: U;
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }
 
 //    g(x: U) {
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }
@@ -71,14 +67,12 @@ var r3d = a(aB, aB)['foo']();
 
 var b = {
     foo: <U extends A, T extends A>(x: U, y: T) => {
-        // BUG 823818
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
 }
 //var b = {
 //    foo: <U extends T, T extends A>(x: U, y: T) => {
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }

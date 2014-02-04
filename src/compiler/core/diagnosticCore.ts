@@ -20,6 +20,10 @@ module TypeScript {
             return this._fileName;
         }
 
+        public lineMap(): LineMap {
+            return this._lineMap;
+        }
+
         public line(): number {
             return this._lineMap ? this._lineMap.getLineNumberFromPosition(this.start()) : 0;
         }

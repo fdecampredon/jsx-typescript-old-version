@@ -153,12 +153,21 @@ module TypeScript {
                     return true;
                 }
 
-                if (containerKind === TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static)) {
+                if (containerKind === TypeScript.PullElementKind.ConstructorType && !symbol.anyDeclHasFlag(TypeScript.PullElementFlags.Static | TypeScript.PullElementFlags.Exported)) {
+                    // container kind can be ConstructorType when
+                    // - symbol represents static member of the class or exported value in the clodule
+                    // - symbol represents local varable in the constructor
+                    // 'IsSymbolLocal' should return true only for the second category
                     return true;
                 }
             }
 
             return false;
+        }
+
+        export function isExportedSymbolInClodule(symbol: PullSymbol) {
+            var container = symbol.getContainer();
+            return container && container.kind === TypeScript.PullElementKind.ConstructorType && symbolIsModule(container) && symbol.anyDeclHasFlag(PullElementFlags.Exported);
         }
 
         // Caller of walkPullTypeSymbolStructure should implement this interface to walk the members, signatures

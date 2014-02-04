@@ -5,8 +5,6 @@ var C = (function () {
     }
     C.prototype.f = function () {
         var x;
-
-        // BUG 823818
         var a = x['getDate']();
         return a + x.getDate();
     };

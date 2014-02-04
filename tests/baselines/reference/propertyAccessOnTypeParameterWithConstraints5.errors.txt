@@ -1,9 +1,9 @@
 propertyAccessOnTypeParameterWithConstraints5.ts(11,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-propertyAccessOnTypeParameterWithConstraints5.ts(15,32): error TS2094: The property 'notHere' does not exist on value of type 'A'.
+propertyAccessOnTypeParameterWithConstraints5.ts(15,32): error TS2094: The property 'notHere' does not exist on value of type 'U'.
 propertyAccessOnTypeParameterWithConstraints5.ts(21,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 propertyAccessOnTypeParameterWithConstraints5.ts(25,16): error TS2094: The property 'notHere' does not exist on value of type 'B'.
 propertyAccessOnTypeParameterWithConstraints5.ts(29,6): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 propertyAccessOnTypeParameterWithConstraints5.ts(32,22): error TS2094: The property 'notHere' does not exist on value of type '{}'.
 propertyAccessOnTypeParameterWithConstraints5.ts(36,11): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-propertyAccessOnTypeParameterWithConstraints5.ts(38,22): error TS2094: The property 'notHere' does not exist on value of type 'A'.
-propertyAccessOnTypeParameterWithConstraints5.ts(44,12): error TS2086: Type '{}' does not satisfy the constraint 'A' for type parameter 'T extends A'.
+propertyAccessOnTypeParameterWithConstraints5.ts(38,16): error TS2011: Cannot convert 'string' to 'U'.
+propertyAccessOnTypeParameterWithConstraints5.ts(38,22): error TS2094: The property 'notHere' does not exist on value of type 'U'.

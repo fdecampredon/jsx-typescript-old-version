@@ -1,8 +1,21 @@
 typeParameterAsTypeParameterConstraint2.ts(4,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-typeParameterAsTypeParameterConstraint2.ts(6,1): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends T'.
-typeParameterAsTypeParameterConstraint2.ts(7,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
-typeParameterAsTypeParameterConstraint2.ts(13,10): error TS2086: Type 'NumberVariant' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+typeParameterAsTypeParameterConstraint2.ts(6,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 2 which is of type 'string'.
+typeParameterAsTypeParameterConstraint2.ts(6,1): error TS2087: Could not select overload for 'call' expression.
+typeParameterAsTypeParameterConstraint2.ts(7,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 2 which is of type '{}'.
+typeParameterAsTypeParameterConstraint2.ts(7,1): error TS2087: Could not select overload for 'call' expression.
+typeParameterAsTypeParameterConstraint2.ts(13,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 2 which is of type 'NumberVariant'.
+typeParameterAsTypeParameterConstraint2.ts(13,10): error TS2087: Could not select overload for 'call' expression.
 typeParameterAsTypeParameterConstraint2.ts(15,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-typeParameterAsTypeParameterConstraint2.ts(16,1): error TS2086: Type '{ length: string; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
-typeParameterAsTypeParameterConstraint2.ts(17,1): error TS2086: Type '{ length: {}; }' does not satisfy the constraint '{ length: number; }' for type parameter 'U extends { length: T; }'.
-typeParameterAsTypeParameterConstraint2.ts(18,1): error TS2086: Type 'string[]' does not satisfy the constraint '{ length: any[]; }' for type parameter 'U extends { length: T; }'.
+typeParameterAsTypeParameterConstraint2.ts(16,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'length' of types '{ length: string; }' and '{ length: number; }' are incompatible.
+typeParameterAsTypeParameterConstraint2.ts(16,1): error TS2087: Could not select overload for 'call' expression.
+typeParameterAsTypeParameterConstraint2.ts(17,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'length' of types '{ length: {}; }' and '{ length: number; }' are incompatible.
+typeParameterAsTypeParameterConstraint2.ts(17,1): error TS2087: Could not select overload for 'call' expression.
+typeParameterAsTypeParameterConstraint2.ts(18,1): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 'length' of types 'string[]' and '{ length: any[]; }' are incompatible:
+		Type 'Number' is missing property 'concat' from type 'any[]'.
+typeParameterAsTypeParameterConstraint2.ts(18,1): error TS2087: Could not select overload for 'call' expression.

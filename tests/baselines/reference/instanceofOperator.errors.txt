@@ -1,7 +1,7 @@
 instanceofOperator.ts(6,7): error TS2000: Duplicate identifier 'Object'. Additional locations:
 	lib.d.ts(95,1)
 instanceofOperator.ts(11,1): error TS2120: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
-instanceofOperator.ts(14,16): error TS2121: The right-hand side of an 'instanceof' expression must be of type 'any' or a subtype of the 'Function' interface type.
-instanceofOperator.ts(15,19): error TS2121: The right-hand side of an 'instanceof' expression must be of type 'any' or a subtype of the 'Function' interface type.
+instanceofOperator.ts(14,16): error TS2121: The right-hand side of an 'instanceof' expression must be of type 'any' or of a type assignable to the 'Function' interface type.
+instanceofOperator.ts(15,19): error TS2121: The right-hand side of an 'instanceof' expression must be of type 'any' or of a type assignable to the 'Function' interface type.
 instanceofOperator.ts(18,1): error TS2120: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.
 instanceofOperator.ts(20,1): error TS2120: The left-hand side of an 'instanceof' expression must be of type 'any', an object type or a type parameter.

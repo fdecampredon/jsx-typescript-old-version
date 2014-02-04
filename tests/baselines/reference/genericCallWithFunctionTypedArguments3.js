@@ -10,4 +10,4 @@ var r = foo4(a);
 
 var b;
 
-var r2 = foo4(b); // {}, if b was used for inference then U would have some other type
+var r2 = foo4(b); // T is {} (candidates boolean and {}), U is any (candidates any and {})

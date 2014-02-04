@@ -1,10 +1,10 @@
-numericIndexerConstrainsPropertyDeclarations.ts(18,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(20,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(21,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(50,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(55,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(68,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
-numericIndexerConstrainsPropertyDeclarations.ts(73,5): error TS2169: All numerically named properties must be subtypes of numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(18,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(20,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(21,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(50,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(55,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(68,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
+numericIndexerConstrainsPropertyDeclarations.ts(73,5): error TS2169: All numerically named properties must be assignable to numeric indexer type 'string'.
 numericIndexerConstrainsPropertyDeclarations.ts(78,5): error TS2012: Cannot convert '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' to '{ [x: number]: string; }':
 	Index signatures of types '{ a: string; b: number; c: () => void; "d": string; "e": number; 1.0: string; 2.0: number; "3.0": string; "4.0": number; f: any; X: string; foo(): string; [x: number]: {}; }' and '{ [x: number]: string; }' are incompatible.
 numericIndexerConstrainsPropertyDeclarations.ts(88,9): error TS2095: Could not find symbol 'Myn'.

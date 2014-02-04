@@ -77,9 +77,19 @@ module TypeScript {
         enclosingScopeSymbol: PullSymbol;
     }
 
+    export enum EmitOutputResult {
+        Succeeded,
+        FailedBecauseOfSyntaxErrors,
+        FailedBecauseOfCompilerOptionsErrors,
+        FailedToGenerateDeclarationsBecauseOfSemanticErrors
+    }
+
     export class EmitOutput {
         public outputFiles: OutputFile[] = [];
-        public diagnostics: TypeScript.Diagnostic[] = [];
+        public emitOutputResult: EmitOutputResult;
+        constructor(emitOutputResult = EmitOutputResult.Succeeded) {
+            this.emitOutputResult = emitOutputResult;
+        }
     }
 
     export enum OutputFileType {
@@ -304,7 +314,7 @@ module TypeScript {
 
             var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
-                emitOutput.diagnostics.push(emitOptions.diagnostic());
+                emitOutput.emitOutputResult = EmitOutputResult.FailedBecauseOfCompilerOptionsErrors;
                 return emitOutput;
             }
 
@@ -336,7 +346,7 @@ module TypeScript {
 
             var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
-                emitOutput.diagnostics.push(emitOptions.diagnostic());
+                emitOutput.emitOutputResult = EmitOutputResult.FailedBecauseOfCompilerOptionsErrors;
                 return emitOutput;
             }
 
@@ -351,6 +361,12 @@ module TypeScript {
             else {
                 return this.emitAllDeclarations(resolvePath);
             }
+        }
+
+        public canEmitDeclarations(fileName: string) {
+            fileName = TypeScript.switchToForwardSlashes(fileName);
+            var document = this.getDocument(fileName);
+            return this._shouldEmitDeclarations(document);
         }
 
         static mapToFileNameExtension(extension: string, fileName: string, wholeFileNameReplaced: boolean) {
@@ -434,7 +450,7 @@ module TypeScript {
 
             var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
-                emitOutput.diagnostics.push(emitOptions.diagnostic());
+                emitOutput.emitOutputResult = EmitOutputResult.FailedBecauseOfCompilerOptionsErrors;
                 return emitOutput;
             }
 
@@ -468,7 +484,7 @@ module TypeScript {
 
             var emitOptions = new EmitOptions(this, resolvePath);
             if (emitOptions.diagnostic()) {
-                emitOutput.diagnostics.push(emitOptions.diagnostic());
+                emitOutput.emitOutputResult = EmitOutputResult.FailedBecauseOfCompilerOptionsErrors;
                 return emitOutput;
             }
 
@@ -558,6 +574,15 @@ module TypeScript {
             });
 
             return errors;
+        }
+
+        public getCompilerOptionsDiagnostics(): Diagnostic[] {
+            var emitOptions = new EmitOptions(this, /*resolvePath*/ null);
+            var emitDiagnostic = emitOptions.diagnostic();
+            if (emitDiagnostic) {
+                return [emitDiagnostic];
+            }
+            return sentinelEmptyArray;
         }
 
         public resolveAllFiles() {

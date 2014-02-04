@@ -468,11 +468,11 @@ module TypeScript.Syntax {
             return ArrayUtilities.any(this.nodeOrTokens, func);
         }
 
-        public firstOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
+        public firstOrDefault(func: (v: T, index: number) => boolean): T {
             return ArrayUtilities.firstOrDefault(this.nodeOrTokens, func);
         }
 
-        public lastOrDefault(func: (v: ISyntaxNodeOrToken, index: number) => boolean): T {
+        public lastOrDefault(func: (v: T, index: number) => boolean): T {
             return ArrayUtilities.lastOrDefault(this.nodeOrTokens, func);
         }
     }

@@ -36,7 +36,7 @@ Line 14 col 11 IdentifierName "foo" = number
 Line 14 col 15 IdentifierName "toString" = (radix?: number) => string
 Line 15 col 4 IdentifierName "r2b" = string
 Line 15 col 10 InvocationExpression "i.foo['toString']()" = string
-Line 15 col 10 ElementAccessExpression "i.foo['toString']" = () => string
+Line 15 col 10 ElementAccessExpression "i.foo['toString']" = (radix?: number) => string
 Line 15 col 10 MemberAccessExpression "i.foo" = number
 Line 15 col 10 IdentifierName "i" = I<number>
 Line 15 col 12 IdentifierName "foo" = number

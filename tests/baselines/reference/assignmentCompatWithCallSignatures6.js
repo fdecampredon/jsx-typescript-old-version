@@ -1,4 +1,4 @@
-// checking subtype relations for function types as it relates to contextual signature instantiation
+// checking assignment compatibility relations for function types. All valid
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -42,7 +42,7 @@ x.a2 = b2;
 b2 = x.a2;
 var b3;
 x.a3 = b3;
-b3 = x.a3; // error
+b3 = x.a3;
 var b4;
 x.a4 = b4;
 b4 = x.a4;
@@ -54,4 +54,4 @@ x.a11 = b11;
 b11 = x.a11;
 var b16;
 x.a16 = b16;
-b16 = x.a16; // error
+b16 = x.a16;

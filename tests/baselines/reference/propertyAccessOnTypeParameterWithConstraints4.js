@@ -16,8 +16,6 @@ var r2 = i.foo.notHere();
 var r2b = i.foo['notHere']();
 
 var a;
-
-// BUG 794164
 var r3 = a().notHere();
 var r3b = a()['notHere']();
 
@@ -26,7 +24,6 @@ var b = {
         var a = x['notHere']();
         return a + x.notHere();
     },
-    // BUG 794164
     bar: b.foo().notHere()
 };
 

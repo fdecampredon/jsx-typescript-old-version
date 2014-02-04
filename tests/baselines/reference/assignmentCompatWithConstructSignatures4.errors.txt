@@ -1,74 +1,28 @@
-assignmentCompatWithConstructSignatures4.ts(46,9): error TS2012: Cannot convert 'new<T, U>(x: T) => U[]' to 'new(x: number) => string[]':
-	Construct signatures of types 'new<T, U>(x: T) => U[]' and 'new(x: number) => string[]' are incompatible:
-		Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
-			Call signatures of types '() => {}' and '() => string' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(47,9): error TS2012: Cannot convert 'new(x: number) => string[]' to 'new<T, U>(x: T) => U[]':
-	Construct signatures of types 'new(x: number) => string[]' and 'new<T, U>(x: T) => U[]' are incompatible:
-		Types of property 'concat' of types 'string[]' and 'U[]' are incompatible:
-			Call signatures of types '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends U[]>(...items: U[]): U[]; (...items: U[]): U[]; }' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(50,9): error TS2012: Cannot convert 'new<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V' to 'new(x: (arg: Base) => Derived) => (r: Base) => Derived2':
-	Construct signatures of types 'new<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V' and 'new(x: (arg: Base) => Derived) => (r: Base) => Derived2' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(51,9): error TS2012: Cannot convert 'new(x: (arg: Base) => Derived) => (r: Base) => Derived2' to 'new<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V':
-	Construct signatures of types 'new(x: (arg: Base) => Derived) => (r: Base) => Derived2' and 'new<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V' are incompatible:
-		Call signatures of types '(r: Base) => Derived2' and '(r: T) => V' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(54,9): error TS2012: Cannot convert 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
+assignmentCompatWithConstructSignatures4.ts(52,9): error TS2012: Cannot convert 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
 	Construct signatures of types 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' and 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' are incompatible:
-		Call signatures of types '(arg2: { foo: number; }) => Derived' and '(arg2: Base) => Derived' are incompatible:
+		Call signatures of types '(arg2: { foo: number; }) => any' and '(arg2: Base) => Derived' are incompatible:
 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
 			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
-		Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => Derived' are incompatible:
+		Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => any' are incompatible:
 			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(55,9): error TS2012: Cannot convert 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
+assignmentCompatWithConstructSignatures4.ts(53,9): error TS2012: Cannot convert 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
 	Construct signatures of types 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' and 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' are incompatible:
-		Call signatures of types '(r: Base) => Derived' and '(r: T) => U' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(59,9): error TS2012: Cannot convert 'new<T extends Derived>(...x: T[]) => T' to 'new(...x: Base[]) => Base':
-	Construct signatures of types 'new<T extends Derived>(...x: T[]) => T' and 'new(...x: Base[]) => Base' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(60,9): error TS2012: Cannot convert 'new(...x: Base[]) => Base' to 'new<T extends Derived>(...x: T[]) => T':
-	Construct signatures of types 'new(...x: Base[]) => Base' and 'new<T extends Derived>(...x: T[]) => T' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(63,9): error TS2012: Cannot convert 'new<T extends Derived>(x: T, y: T) => T' to 'new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base':
-	Construct signatures of types 'new<T extends Derived>(x: T, y: T) => T' and 'new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(64,9): error TS2012: Cannot convert 'new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' to 'new<T extends Derived>(x: T, y: T) => T':
-	Construct signatures of types 'new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base' and 'new<T extends Derived>(x: T, y: T) => T' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(67,9): error TS2012: Cannot convert 'new<T extends Derived2[]>(x: Base[], y: Base[]) => T' to 'new(x: Base[], y: Derived2[]) => Derived[]':
-	Construct signatures of types 'new<T extends Derived2[]>(x: Base[], y: Base[]) => T' and 'new(x: Base[], y: Derived2[]) => Derived[]' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(68,9): error TS2012: Cannot convert 'new(x: Base[], y: Derived2[]) => Derived[]' to 'new<T extends Derived2[]>(x: Base[], y: Base[]) => T':
-	Construct signatures of types 'new(x: Base[], y: Derived2[]) => Derived[]' and 'new<T extends Derived2[]>(x: Base[], y: Base[]) => T' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(71,9): error TS2012: Cannot convert 'new<T>(x: { a: T; b: T; }) => T' to 'new(x: { a: string; b: number; }) => number':
-	Construct signatures of types 'new<T>(x: { a: T; b: T; }) => T' and 'new(x: { a: string; b: number; }) => number' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(72,9): error TS2012: Cannot convert 'new(x: { a: string; b: number; }) => number' to 'new<T>(x: { a: T; b: T; }) => T':
-	Construct signatures of types 'new(x: { a: string; b: number; }) => number' and 'new<T>(x: { a: T; b: T; }) => T' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(75,9): error TS2012: Cannot convert 'new<T extends Base>(x: { a: T; b: T; }) => number' to 'new(x: { a: string; b: number; }) => number':
-	Construct signatures of types 'new<T extends Base>(x: { a: T; b: T; }) => number' and 'new(x: { a: string; b: number; }) => number' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(76,9): error TS2012: Cannot convert 'new(x: { a: string; b: number; }) => number' to 'new<T extends Base>(x: { a: T; b: T; }) => number':
-	Construct signatures of types 'new(x: { a: string; b: number; }) => number' and 'new<T extends Base>(x: { a: T; b: T; }) => number' are incompatible:
-		Types of property 'a' of types '{ a: string; b: number; }' and '{ a: T; b: T; }' are incompatible.
-		Types of property 'a' of types '{ a: T; b: T; }' and '{ a: string; b: number; }' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(79,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => T[]' to '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }':
+		Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => any' are incompatible:
+			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
+			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
+		Call signatures of types '(arg2: { foo: number; }) => any' and '(arg2: Base) => Derived' are incompatible:
+			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
+			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
+assignmentCompatWithConstructSignatures4.ts(77,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => T[]' to '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }':
 	Construct signatures of types 'new<T>(x: (a: T) => T) => T[]' and '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' are incompatible:
-		Types of property 'pop' of types '{}[]' and 'number[]' are incompatible:
-			Call signatures of types '() => {}' and '() => number' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(80,9): error TS2012: Cannot convert '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' to 'new<T>(x: (a: T) => T) => T[]':
+		Type '{ new(a: number): number; new(a?: number): number; }' requires a construct signature, but type '(a: any) => any' lacks one.
+		Type '(a: any) => any' requires a call signature, but type '{ new(a: number): number; new(a?: number): number; }' lacks one.
+assignmentCompatWithConstructSignatures4.ts(78,9): error TS2012: Cannot convert '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' to 'new<T>(x: (a: T) => T) => T[]':
 	Construct signatures of types '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' and 'new<T>(x: (a: T) => T) => T[]' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(83,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => any[]' to '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }':
+assignmentCompatWithConstructSignatures4.ts(81,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => any[]' to '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }':
 	Construct signatures of types 'new<T>(x: (a: T) => T) => any[]' and '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' are incompatible:
-		Type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' requires a construct signature, but type '(a: {}) => {}' lacks one.
-		Type '(a: {}) => {}' requires a call signature, but type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' lacks one.
-assignmentCompatWithConstructSignatures4.ts(84,9): error TS2012: Cannot convert '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' to 'new<T>(x: (a: T) => T) => any[]':
+		Type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' requires a construct signature, but type '(a: any) => any' lacks one.
+		Type '(a: any) => any' requires a call signature, but type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' lacks one.
+assignmentCompatWithConstructSignatures4.ts(82,9): error TS2012: Cannot convert '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' to 'new<T>(x: (a: T) => T) => any[]':
 	Construct signatures of types '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' and 'new<T>(x: (a: T) => T) => any[]' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(91,9): error TS2012: Cannot convert 'new<T>(x: T) => string[]' to 'new<T>(x: T) => T[]':
-	Construct signatures of types 'new<T>(x: T) => string[]' and 'new<T>(x: T) => T[]' are incompatible:
-		Types of property 'concat' of types 'string[]' and 'T[]' are incompatible:
-			Call signatures of types '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(92,9): error TS2012: Cannot convert 'new<T>(x: T) => T[]' to 'new<T>(x: T) => string[]':
-	Construct signatures of types 'new<T>(x: T) => T[]' and 'new<T>(x: T) => string[]' are incompatible:
-		Types of property 'concat' of types 'T[]' and 'string[]' are incompatible:
-			Call signatures of types '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' and '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(97,9): error TS2012: Cannot convert 'new<T>(x: T) => T[]' to 'new<T>(x: T) => string[]':
-	Construct signatures of types 'new<T>(x: T) => T[]' and 'new<T>(x: T) => string[]' are incompatible:
-		Types of property 'concat' of types 'T[]' and 'string[]' are incompatible:
-			Call signatures of types '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' and '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' are incompatible.
-assignmentCompatWithConstructSignatures4.ts(98,9): error TS2012: Cannot convert 'new<T>(x: T) => string[]' to 'new<T>(x: T) => T[]':
-	Construct signatures of types 'new<T>(x: T) => string[]' and 'new<T>(x: T) => T[]' are incompatible:
-		Types of property 'concat' of types 'string[]' and 'T[]' are incompatible:
-			Call signatures of types '{ <U extends string[]>(...items: U[]): string[]; (...items: string[]): string[]; }' and '{ <U extends T[]>(...items: U[]): T[]; (...items: T[]): T[]; }' are incompatible.

@@ -4,8 +4,7 @@
 class C<T extends Date> {
     f() {
         var x: T;
-        // BUG 823818
-        var a = x['getDate'](); // should be string
+        var a = x['getDate'](); // number
         return a + x.getDate();
     }
 }
@@ -27,7 +26,7 @@ var r3b = a()['getDate']();
 
 var b = {
     foo: <T extends Date>(x: T) => {
-        var a = x['getDate'](); // should be string
+        var a = x['getDate'](); // number
         return a + x.getDate();
     }
 }

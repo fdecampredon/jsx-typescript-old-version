@@ -22,7 +22,7 @@ function foo2<T extends Date>(a: (x: T) => T, b: (x: T) => T) {
 
 function other3<T extends RegExp>(x: T) {
     var r7 = foo2((a: T) => a, (b: T) => b); // error
-    var r7b = foo2((a) => a, (b) => b); // error
+    var r7b = foo2((a) => a, (b) => b); // valid, T is inferred to be Date
 }
 
 enum E { A }

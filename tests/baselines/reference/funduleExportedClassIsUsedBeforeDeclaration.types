@@ -1,0 +1,13 @@
+=== tests/cases/compiler/funduleExportedClassIsUsedBeforeDeclaration.ts ===
+Line 0 col 10 IdentifierName "A" = A
+Line 1 col 8 IdentifierName "B" = B
+Line 1 col 10 IdentifierName "C" = B.C
+Line 3 col 17 IdentifierName "B" = typeof B
+Line 3 col 22 IdentifierName "B" = B
+Line 3 col 24 IdentifierName "C" = B.C
+Line 4 col 15 IdentifierName "B" = B
+Line 5 col 17 IdentifierName "C" = B.C
+Line 8 col 0 ObjectCreationExpression "new B.C()" = B.C
+Line 8 col 4 MemberAccessExpression "B.C" = typeof B.C
+Line 8 col 4 IdentifierName "B" = typeof B
+Line 8 col 6 IdentifierName "C" = typeof B.C

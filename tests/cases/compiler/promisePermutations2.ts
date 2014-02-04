@@ -70,7 +70,7 @@ var s3: Promise<number>;
 var s3a = s3.then(testFunction3, testFunction3, testFunction3);
 var s3b = s3.then(testFunction3P, testFunction3P, testFunction3P);
 var s3c = s3.then(testFunction3P, testFunction3, testFunction3);
-var s3d = s3.then(testFunction3P, testFunction3, testFunction3).then(testFunction3, testFunction3, testFunction3);
+var s3d = s3.then(testFunction3P, testFunction3, testFunction3).then(testFunction3, testFunction3, testFunction3); // Should error
 
 var r4: IPromise<string>;
 var sIPromise: (x: any) => IPromise<string>;

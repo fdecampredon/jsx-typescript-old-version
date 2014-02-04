@@ -9,6 +9,16 @@ module TypeScript.Services {
             return new TextSpan(ast.start(), ast.width());
         }
 
+        private static symbolDeclarationIntersectsPosition(symbol: PullSymbol, fileName: string, position: number) {
+            var decl = symbol.getDeclarations()[0];
+            if (decl.fileName() === fileName && this.getSpan(decl.ast()).intersectsWithPosition(position)) {
+                // This is the symbol declaration from the given position in the file
+                return true;
+            }
+
+            return false;
+        }
+
         public static filterContextualMembersList(contextualMemberSymbols: TypeScript.PullSymbol[], existingMembers: TypeScript.PullVisibleSymbolsInfo, fileName: string, position: number): TypeScript.PullSymbol[] {
             if (!existingMembers || !existingMembers.symbols || existingMembers.symbols.length === 0) {
                 return contextualMemberSymbols;
@@ -17,8 +27,7 @@ module TypeScript.Services {
             var existingMemberSymbols = existingMembers.symbols;
             var existingMemberNames = TypeScript.createIntrinsicsObject<boolean>();
             for (var i = 0, n = existingMemberSymbols.length; i < n; i++) {
-                var decl = existingMemberSymbols[i].getDeclarations()[0];
-                if (decl.fileName() === fileName && this.getSpan(decl.ast()).intersectsWithPosition(position)) {
+                if (this.symbolDeclarationIntersectsPosition(existingMemberSymbols[i], fileName, position)) {
                     // If this is the current item we are editing right now, do not filter it out
                     continue;
                 }
@@ -30,6 +39,10 @@ module TypeScript.Services {
             for (var j = 0, m = contextualMemberSymbols.length; j < m; j++) {
                 var contextualMemberSymbol = contextualMemberSymbols[j];
                 if (!existingMemberNames[TypeScript.stripStartAndEndQuotes(contextualMemberSymbol.getDisplayName())]) {
+                    if (this.symbolDeclarationIntersectsPosition(contextualMemberSymbol, fileName, position)) {
+                        // If this contextual member symbol was created as part of editing the current position, do not use it
+                        continue;
+                    }
                     filteredMembers.push(contextualMemberSymbol);
                 }
             }

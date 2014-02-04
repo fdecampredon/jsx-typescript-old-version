@@ -1,0 +1,382 @@
+=== tests/cases/compiler/assignmentCompatWithCallSignatures3.ts ===
+Line 2 col 6 IdentifierName "Base" = Base
+Line 2 col 13 IdentifierName "foo" = string
+Line 3 col 6 IdentifierName "Derived" = Derived
+Line 3 col 22 IdentifierName "Base" = Base
+Line 3 col 29 IdentifierName "bar" = string
+Line 4 col 6 IdentifierName "Derived2" = Derived2
+Line 4 col 23 IdentifierName "Derived" = Derived
+Line 4 col 33 IdentifierName "baz" = string
+Line 5 col 6 IdentifierName "OtherDerived" = OtherDerived
+Line 5 col 27 IdentifierName "Base" = Base
+Line 5 col 34 IdentifierName "bing" = string
+Line 7 col 4 IdentifierName "a" = (x: number) => number[]
+Line 7 col 8 IdentifierName "x" = number
+Line 8 col 4 IdentifierName "a2" = (x: number) => string[]
+Line 8 col 9 IdentifierName "x" = number
+Line 9 col 4 IdentifierName "a3" = (x: number) => void
+Line 9 col 9 IdentifierName "x" = number
+Line 10 col 4 IdentifierName "a4" = (x: string, y: number) => string
+Line 10 col 9 IdentifierName "x" = string
+Line 10 col 20 IdentifierName "y" = number
+Line 11 col 4 IdentifierName "a5" = (x: (arg: string) => number) => string
+Line 11 col 9 IdentifierName "x" = (arg: string) => number
+Line 11 col 13 IdentifierName "arg" = string
+Line 12 col 4 IdentifierName "a6" = (x: (arg: Base) => Derived) => Base
+Line 12 col 9 IdentifierName "x" = (arg: Base) => Derived
+Line 12 col 13 IdentifierName "arg" = Base
+Line 12 col 18 IdentifierName "Base" = Base
+Line 12 col 27 IdentifierName "Derived" = Derived
+Line 12 col 39 IdentifierName "Base" = Base
+Line 13 col 4 IdentifierName "a7" = (x: (arg: Base) => Derived) => (r: Base) => Derived
+Line 13 col 9 IdentifierName "x" = (arg: Base) => Derived
+Line 13 col 13 IdentifierName "arg" = Base
+Line 13 col 18 IdentifierName "Base" = Base
+Line 13 col 27 IdentifierName "Derived" = Derived
+Line 13 col 40 IdentifierName "r" = Base
+Line 13 col 43 IdentifierName "Base" = Base
+Line 13 col 52 IdentifierName "Derived" = Derived
+Line 14 col 4 IdentifierName "a8" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 14 col 9 IdentifierName "x" = (arg: Base) => Derived
+Line 14 col 13 IdentifierName "arg" = Base
+Line 14 col 18 IdentifierName "Base" = Base
+Line 14 col 27 IdentifierName "Derived" = Derived
+Line 14 col 36 IdentifierName "y" = (arg2: Base) => Derived
+Line 14 col 40 IdentifierName "arg2" = Base
+Line 14 col 46 IdentifierName "Base" = Base
+Line 14 col 55 IdentifierName "Derived" = Derived
+Line 14 col 68 IdentifierName "r" = Base
+Line 14 col 71 IdentifierName "Base" = Base
+Line 14 col 80 IdentifierName "Derived" = Derived
+Line 15 col 4 IdentifierName "a9" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 15 col 9 IdentifierName "x" = (arg: Base) => Derived
+Line 15 col 13 IdentifierName "arg" = Base
+Line 15 col 18 IdentifierName "Base" = Base
+Line 15 col 27 IdentifierName "Derived" = Derived
+Line 15 col 36 IdentifierName "y" = (arg2: Base) => Derived
+Line 15 col 40 IdentifierName "arg2" = Base
+Line 15 col 46 IdentifierName "Base" = Base
+Line 15 col 55 IdentifierName "Derived" = Derived
+Line 15 col 68 IdentifierName "r" = Base
+Line 15 col 71 IdentifierName "Base" = Base
+Line 15 col 80 IdentifierName "Derived" = Derived
+Line 16 col 4 IdentifierName "a10" = (...x: Derived[]) => Derived
+Line 16 col 13 IdentifierName "x" = Derived[]
+Line 16 col 16 IdentifierName "Derived" = Derived
+Line 16 col 30 IdentifierName "Derived" = Derived
+Line 17 col 4 IdentifierName "a11" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 17 col 10 IdentifierName "x" = { foo: string; }
+Line 17 col 15 IdentifierName "foo" = string
+Line 17 col 30 IdentifierName "y" = { foo: string; bar: string; }
+Line 17 col 35 IdentifierName "foo" = string
+Line 17 col 48 IdentifierName "bar" = string
+Line 17 col 66 IdentifierName "Base" = Base
+Line 18 col 4 IdentifierName "a12" = (x: Base[], y: Derived2[]) => Derived[]
+Line 18 col 10 IdentifierName "x" = Base[]
+Line 18 col 13 IdentifierName "Array" = Array<T>
+Line 18 col 19 IdentifierName "Base" = Base
+Line 18 col 26 IdentifierName "y" = Derived2[]
+Line 18 col 29 IdentifierName "Array" = Array<T>
+Line 18 col 35 IdentifierName "Derived2" = Derived2
+Line 18 col 49 IdentifierName "Array" = Array<T>
+Line 18 col 55 IdentifierName "Derived" = Derived
+Line 19 col 4 IdentifierName "a13" = (x: Base[], y: Derived[]) => Derived[]
+Line 19 col 10 IdentifierName "x" = Base[]
+Line 19 col 13 IdentifierName "Array" = Array<T>
+Line 19 col 19 IdentifierName "Base" = Base
+Line 19 col 26 IdentifierName "y" = Derived[]
+Line 19 col 29 IdentifierName "Array" = Array<T>
+Line 19 col 35 IdentifierName "Derived" = Derived
+Line 19 col 48 IdentifierName "Array" = Array<T>
+Line 19 col 54 IdentifierName "Derived" = Derived
+Line 20 col 4 IdentifierName "a14" = (x: { a: string; b: number; }) => Object
+Line 20 col 10 IdentifierName "x" = { a: string; b: number; }
+Line 20 col 15 IdentifierName "a" = string
+Line 20 col 26 IdentifierName "b" = number
+Line 20 col 42 IdentifierName "Object" = Object
+Line 21 col 4 IdentifierName "a15" = { (x: number): number[]; (x: string): string[]; }
+Line 22 col 5 IdentifierName "x" = number
+Line 23 col 5 IdentifierName "x" = string
+Line 25 col 4 IdentifierName "a16" = { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
+Line 26 col 5 IdentifierName "T" = T
+Line 26 col 15 IdentifierName "Derived" = Derived
+Line 26 col 24 IdentifierName "x" = T
+Line 26 col 27 IdentifierName "T" = T
+Line 27 col 5 IdentifierName "U" = U
+Line 27 col 15 IdentifierName "Base" = Base
+Line 27 col 21 IdentifierName "x" = U
+Line 27 col 24 IdentifierName "U" = U
+Line 29 col 4 IdentifierName "a17" = { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
+Line 30 col 5 IdentifierName "x" = (a: number) => number
+Line 30 col 9 IdentifierName "a" = number
+Line 31 col 5 IdentifierName "x" = (a: string) => string
+Line 31 col 9 IdentifierName "a" = string
+Line 33 col 4 IdentifierName "a18" = { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }
+Line 34 col 5 IdentifierName "x" = { (a: number): number; (a: string): string; }
+Line 35 col 9 IdentifierName "a" = number
+Line 36 col 9 IdentifierName "a" = string
+Line 38 col 5 IdentifierName "x" = { (a: boolean): boolean; (a: Date): Date; }
+Line 39 col 9 IdentifierName "a" = boolean
+Line 40 col 9 IdentifierName "a" = Date
+Line 40 col 12 IdentifierName "Date" = Date
+Line 40 col 19 IdentifierName "Date" = Date
+Line 44 col 4 IdentifierName "b" = <T>(x: T) => T[]
+Line 44 col 8 IdentifierName "T" = T
+Line 44 col 11 IdentifierName "x" = T
+Line 44 col 14 IdentifierName "T" = T
+Line 44 col 20 IdentifierName "T" = T
+Line 45 col 0 AssignmentExpression "a = b" = <T>(x: T) => T[]
+Line 45 col 0 IdentifierName "a" = (x: number) => number[]
+Line 45 col 4 IdentifierName "b" = <T>(x: T) => T[]
+Line 46 col 0 AssignmentExpression "b = a" = (x: number) => number[]
+Line 46 col 0 IdentifierName "b" = <T>(x: T) => T[]
+Line 46 col 4 IdentifierName "a" = (x: number) => number[]
+Line 47 col 4 IdentifierName "b2" = <T>(x: T) => string[]
+Line 47 col 9 IdentifierName "T" = T
+Line 47 col 12 IdentifierName "x" = T
+Line 47 col 15 IdentifierName "T" = T
+Line 48 col 0 AssignmentExpression "a2 = b2" = <T>(x: T) => string[]
+Line 48 col 0 IdentifierName "a2" = (x: number) => string[]
+Line 48 col 5 IdentifierName "b2" = <T>(x: T) => string[]
+Line 49 col 0 AssignmentExpression "b2 = a2" = (x: number) => string[]
+Line 49 col 0 IdentifierName "b2" = <T>(x: T) => string[]
+Line 49 col 5 IdentifierName "a2" = (x: number) => string[]
+Line 50 col 4 IdentifierName "b3" = <T>(x: T) => T
+Line 50 col 9 IdentifierName "T" = T
+Line 50 col 12 IdentifierName "x" = T
+Line 50 col 15 IdentifierName "T" = T
+Line 50 col 21 IdentifierName "T" = T
+Line 51 col 0 AssignmentExpression "a3 = b3" = <T>(x: T) => T
+Line 51 col 0 IdentifierName "a3" = (x: number) => void
+Line 51 col 5 IdentifierName "b3" = <T>(x: T) => T
+Line 52 col 0 AssignmentExpression "b3 = a3" = (x: number) => void
+Line 52 col 0 IdentifierName "b3" = <T>(x: T) => T
+Line 52 col 5 IdentifierName "a3" = (x: number) => void
+Line 53 col 4 IdentifierName "b4" = <T, U>(x: T, y: U) => T
+Line 53 col 9 IdentifierName "T" = T
+Line 53 col 12 IdentifierName "U" = U
+Line 53 col 15 IdentifierName "x" = T
+Line 53 col 18 IdentifierName "T" = T
+Line 53 col 21 IdentifierName "y" = U
+Line 53 col 24 IdentifierName "U" = U
+Line 53 col 30 IdentifierName "T" = T
+Line 54 col 0 AssignmentExpression "a4 = b4" = <T, U>(x: T, y: U) => T
+Line 54 col 0 IdentifierName "a4" = (x: string, y: number) => string
+Line 54 col 5 IdentifierName "b4" = <T, U>(x: T, y: U) => T
+Line 55 col 0 AssignmentExpression "b4 = a4" = (x: string, y: number) => string
+Line 55 col 0 IdentifierName "b4" = <T, U>(x: T, y: U) => T
+Line 55 col 5 IdentifierName "a4" = (x: string, y: number) => string
+Line 56 col 4 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
+Line 56 col 9 IdentifierName "T" = T
+Line 56 col 12 IdentifierName "U" = U
+Line 56 col 15 IdentifierName "x" = (arg: T) => U
+Line 56 col 19 IdentifierName "arg" = T
+Line 56 col 24 IdentifierName "T" = T
+Line 56 col 30 IdentifierName "U" = U
+Line 56 col 36 IdentifierName "T" = T
+Line 57 col 0 AssignmentExpression "a5 = b5" = <T, U>(x: (arg: T) => U) => T
+Line 57 col 0 IdentifierName "a5" = (x: (arg: string) => number) => string
+Line 57 col 5 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
+Line 58 col 0 AssignmentExpression "b5 = a5" = (x: (arg: string) => number) => string
+Line 58 col 0 IdentifierName "b5" = <T, U>(x: (arg: T) => U) => T
+Line 58 col 5 IdentifierName "a5" = (x: (arg: string) => number) => string
+Line 59 col 4 IdentifierName "b6" = <T extends Base, U extends Derived>(x: (arg: T) => U) => T
+Line 59 col 9 IdentifierName "T" = T
+Line 59 col 19 IdentifierName "Base" = Base
+Line 59 col 25 IdentifierName "U" = U
+Line 59 col 35 IdentifierName "Derived" = Derived
+Line 59 col 44 IdentifierName "x" = (arg: T) => U
+Line 59 col 48 IdentifierName "arg" = T
+Line 59 col 53 IdentifierName "T" = T
+Line 59 col 59 IdentifierName "U" = U
+Line 59 col 65 IdentifierName "T" = T
+Line 60 col 0 AssignmentExpression "a6 = b6" = <T extends Base, U extends Derived>(x: (arg: T) => U) => T
+Line 60 col 0 IdentifierName "a6" = (x: (arg: Base) => Derived) => Base
+Line 60 col 5 IdentifierName "b6" = <T extends Base, U extends Derived>(x: (arg: T) => U) => T
+Line 61 col 0 AssignmentExpression "b6 = a6" = (x: (arg: Base) => Derived) => Base
+Line 61 col 0 IdentifierName "b6" = <T extends Base, U extends Derived>(x: (arg: T) => U) => T
+Line 61 col 5 IdentifierName "a6" = (x: (arg: Base) => Derived) => Base
+Line 62 col 4 IdentifierName "b7" = <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+Line 62 col 9 IdentifierName "T" = T
+Line 62 col 19 IdentifierName "Base" = Base
+Line 62 col 25 IdentifierName "U" = U
+Line 62 col 35 IdentifierName "Derived" = Derived
+Line 62 col 44 IdentifierName "x" = (arg: T) => U
+Line 62 col 48 IdentifierName "arg" = T
+Line 62 col 53 IdentifierName "T" = T
+Line 62 col 59 IdentifierName "U" = U
+Line 62 col 66 IdentifierName "r" = T
+Line 62 col 69 IdentifierName "T" = T
+Line 62 col 75 IdentifierName "U" = U
+Line 63 col 0 AssignmentExpression "a7 = b7" = <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+Line 63 col 0 IdentifierName "a7" = (x: (arg: Base) => Derived) => (r: Base) => Derived
+Line 63 col 5 IdentifierName "b7" = <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+Line 64 col 0 AssignmentExpression "b7 = a7" = (x: (arg: Base) => Derived) => (r: Base) => Derived
+Line 64 col 0 IdentifierName "b7" = <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+Line 64 col 5 IdentifierName "a7" = (x: (arg: Base) => Derived) => (r: Base) => Derived
+Line 65 col 4 IdentifierName "b8" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+Line 65 col 9 IdentifierName "T" = T
+Line 65 col 19 IdentifierName "Base" = Base
+Line 65 col 25 IdentifierName "U" = U
+Line 65 col 35 IdentifierName "Derived" = Derived
+Line 65 col 44 IdentifierName "x" = (arg: T) => U
+Line 65 col 48 IdentifierName "arg" = T
+Line 65 col 53 IdentifierName "T" = T
+Line 65 col 59 IdentifierName "U" = U
+Line 65 col 62 IdentifierName "y" = (arg2: T) => U
+Line 65 col 66 IdentifierName "arg2" = T
+Line 65 col 72 IdentifierName "T" = T
+Line 65 col 78 IdentifierName "U" = U
+Line 65 col 85 IdentifierName "r" = T
+Line 65 col 88 IdentifierName "T" = T
+Line 65 col 94 IdentifierName "U" = U
+Line 66 col 0 AssignmentExpression "a8 = b8" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+Line 66 col 0 IdentifierName "a8" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 66 col 5 IdentifierName "b8" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+Line 67 col 0 AssignmentExpression "b8 = a8" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 67 col 0 IdentifierName "b8" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+Line 67 col 5 IdentifierName "a8" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 68 col 4 IdentifierName "b9" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+Line 68 col 9 IdentifierName "T" = T
+Line 68 col 19 IdentifierName "Base" = Base
+Line 68 col 25 IdentifierName "U" = U
+Line 68 col 35 IdentifierName "Derived" = Derived
+Line 68 col 44 IdentifierName "x" = (arg: T) => U
+Line 68 col 48 IdentifierName "arg" = T
+Line 68 col 53 IdentifierName "T" = T
+Line 68 col 59 IdentifierName "U" = U
+Line 68 col 62 IdentifierName "y" = (arg2: { foo: string; bing: number; }) => U
+Line 68 col 66 IdentifierName "arg2" = { foo: string; bing: number; }
+Line 68 col 74 IdentifierName "foo" = string
+Line 68 col 87 IdentifierName "bing" = number
+Line 68 col 106 IdentifierName "U" = U
+Line 68 col 113 IdentifierName "r" = T
+Line 68 col 116 IdentifierName "T" = T
+Line 68 col 122 IdentifierName "U" = U
+Line 69 col 0 AssignmentExpression "a9 = b9" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+Line 69 col 0 IdentifierName "a9" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 69 col 5 IdentifierName "b9" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+Line 70 col 0 AssignmentExpression "b9 = a9" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 70 col 0 IdentifierName "b9" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+Line 70 col 5 IdentifierName "a9" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 71 col 4 IdentifierName "b10" = <T extends Derived>(...x: T[]) => T
+Line 71 col 10 IdentifierName "T" = T
+Line 71 col 20 IdentifierName "Derived" = Derived
+Line 71 col 32 IdentifierName "x" = T[]
+Line 71 col 35 IdentifierName "T" = T
+Line 71 col 43 IdentifierName "T" = T
+Line 72 col 0 AssignmentExpression "a10 = b10" = <T extends Derived>(...x: T[]) => T
+Line 72 col 0 IdentifierName "a10" = (...x: Derived[]) => Derived
+Line 72 col 6 IdentifierName "b10" = <T extends Derived>(...x: T[]) => T
+Line 73 col 0 AssignmentExpression "b10 = a10" = (...x: Derived[]) => Derived
+Line 73 col 0 IdentifierName "b10" = <T extends Derived>(...x: T[]) => T
+Line 73 col 6 IdentifierName "a10" = (...x: Derived[]) => Derived
+Line 74 col 4 IdentifierName "b11" = <T extends Base>(x: T, y: T) => T
+Line 74 col 10 IdentifierName "T" = T
+Line 74 col 20 IdentifierName "Base" = Base
+Line 74 col 26 IdentifierName "x" = T
+Line 74 col 29 IdentifierName "T" = T
+Line 74 col 32 IdentifierName "y" = T
+Line 74 col 35 IdentifierName "T" = T
+Line 74 col 41 IdentifierName "T" = T
+Line 75 col 0 AssignmentExpression "a11 = b11" = <T extends Base>(x: T, y: T) => T
+Line 75 col 0 IdentifierName "a11" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 75 col 6 IdentifierName "b11" = <T extends Base>(x: T, y: T) => T
+Line 76 col 0 AssignmentExpression "b11 = a11" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 76 col 0 IdentifierName "b11" = <T extends Base>(x: T, y: T) => T
+Line 76 col 6 IdentifierName "a11" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 77 col 4 IdentifierName "b12" = <T extends Base[]>(x: Base[], y: T) => Derived[]
+Line 77 col 10 IdentifierName "T" = T
+Line 77 col 20 IdentifierName "Array" = Array<T>
+Line 77 col 26 IdentifierName "Base" = Base
+Line 77 col 33 IdentifierName "x" = Base[]
+Line 77 col 36 IdentifierName "Array" = Array<T>
+Line 77 col 42 IdentifierName "Base" = Base
+Line 77 col 49 IdentifierName "y" = T
+Line 77 col 52 IdentifierName "T" = T
+Line 77 col 58 IdentifierName "Array" = Array<T>
+Line 77 col 64 IdentifierName "Derived" = Derived
+Line 78 col 0 AssignmentExpression "a12 = b12" = <T extends Base[]>(x: Base[], y: T) => Derived[]
+Line 78 col 0 IdentifierName "a12" = (x: Base[], y: Derived2[]) => Derived[]
+Line 78 col 6 IdentifierName "b12" = <T extends Base[]>(x: Base[], y: T) => Derived[]
+Line 79 col 0 AssignmentExpression "b12 = a12" = (x: Base[], y: Derived2[]) => Derived[]
+Line 79 col 0 IdentifierName "b12" = <T extends Base[]>(x: Base[], y: T) => Derived[]
+Line 79 col 6 IdentifierName "a12" = (x: Base[], y: Derived2[]) => Derived[]
+Line 80 col 4 IdentifierName "b13" = <T extends Derived[]>(x: Base[], y: T) => T
+Line 80 col 10 IdentifierName "T" = T
+Line 80 col 20 IdentifierName "Array" = Array<T>
+Line 80 col 26 IdentifierName "Derived" = Derived
+Line 80 col 36 IdentifierName "x" = Base[]
+Line 80 col 39 IdentifierName "Array" = Array<T>
+Line 80 col 45 IdentifierName "Base" = Base
+Line 80 col 52 IdentifierName "y" = T
+Line 80 col 55 IdentifierName "T" = T
+Line 80 col 61 IdentifierName "T" = T
+Line 81 col 0 AssignmentExpression "a13 = b13" = <T extends Derived[]>(x: Base[], y: T) => T
+Line 81 col 0 IdentifierName "a13" = (x: Base[], y: Derived[]) => Derived[]
+Line 81 col 6 IdentifierName "b13" = <T extends Derived[]>(x: Base[], y: T) => T
+Line 82 col 0 AssignmentExpression "b13 = a13" = (x: Base[], y: Derived[]) => Derived[]
+Line 82 col 0 IdentifierName "b13" = <T extends Derived[]>(x: Base[], y: T) => T
+Line 82 col 6 IdentifierName "a13" = (x: Base[], y: Derived[]) => Derived[]
+Line 83 col 4 IdentifierName "b14" = <T>(x: { a: T; b: T; }) => T
+Line 83 col 10 IdentifierName "T" = T
+Line 83 col 13 IdentifierName "x" = { a: T; b: T; }
+Line 83 col 18 IdentifierName "a" = T
+Line 83 col 21 IdentifierName "T" = T
+Line 83 col 24 IdentifierName "b" = T
+Line 83 col 27 IdentifierName "T" = T
+Line 83 col 35 IdentifierName "T" = T
+Line 84 col 0 AssignmentExpression "a14 = b14" = <T>(x: { a: T; b: T; }) => T
+Line 84 col 0 IdentifierName "a14" = (x: { a: string; b: number; }) => Object
+Line 84 col 6 IdentifierName "b14" = <T>(x: { a: T; b: T; }) => T
+Line 85 col 0 AssignmentExpression "b14 = a14" = (x: { a: string; b: number; }) => Object
+Line 85 col 0 IdentifierName "b14" = <T>(x: { a: T; b: T; }) => T
+Line 85 col 6 IdentifierName "a14" = (x: { a: string; b: number; }) => Object
+Line 86 col 4 IdentifierName "b15" = <T>(x: T) => T[]
+Line 86 col 10 IdentifierName "T" = T
+Line 86 col 13 IdentifierName "x" = T
+Line 86 col 16 IdentifierName "T" = T
+Line 86 col 22 IdentifierName "T" = T
+Line 87 col 0 AssignmentExpression "a15 = b15" = <T>(x: T) => T[]
+Line 87 col 0 IdentifierName "a15" = { (x: number): number[]; (x: string): string[]; }
+Line 87 col 6 IdentifierName "b15" = <T>(x: T) => T[]
+Line 88 col 0 AssignmentExpression "b15 = a15" = { (x: number): number[]; (x: string): string[]; }
+Line 88 col 0 IdentifierName "b15" = <T>(x: T) => T[]
+Line 88 col 6 IdentifierName "a15" = { (x: number): number[]; (x: string): string[]; }
+Line 89 col 4 IdentifierName "b16" = <T extends Base>(x: T) => number[]
+Line 89 col 10 IdentifierName "T" = T
+Line 89 col 20 IdentifierName "Base" = Base
+Line 89 col 26 IdentifierName "x" = T
+Line 89 col 29 IdentifierName "T" = T
+Line 90 col 0 AssignmentExpression "a16 = b16" = <T extends Base>(x: T) => number[]
+Line 90 col 0 IdentifierName "a16" = { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
+Line 90 col 6 IdentifierName "b16" = <T extends Base>(x: T) => number[]
+Line 91 col 0 AssignmentExpression "b16 = a16" = { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
+Line 91 col 0 IdentifierName "b16" = <T extends Base>(x: T) => number[]
+Line 91 col 6 IdentifierName "a16" = { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
+Line 92 col 4 IdentifierName "b17" = <T>(x: (a: T) => T) => T[]
+Line 92 col 10 IdentifierName "T" = T
+Line 92 col 13 IdentifierName "x" = (a: T) => T
+Line 92 col 17 IdentifierName "a" = T
+Line 92 col 20 IdentifierName "T" = T
+Line 92 col 26 IdentifierName "T" = T
+Line 92 col 32 IdentifierName "T" = T
+Line 93 col 0 AssignmentExpression "a17 = b17" = <T>(x: (a: T) => T) => T[]
+Line 93 col 0 IdentifierName "a17" = { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
+Line 93 col 6 IdentifierName "b17" = <T>(x: (a: T) => T) => T[]
+Line 94 col 0 AssignmentExpression "b17 = a17" = { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
+Line 94 col 0 IdentifierName "b17" = <T>(x: (a: T) => T) => T[]
+Line 94 col 6 IdentifierName "a17" = { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
+Line 95 col 4 IdentifierName "b18" = <T>(x: (a: T) => T) => T[]
+Line 95 col 10 IdentifierName "T" = T
+Line 95 col 13 IdentifierName "x" = (a: T) => T
+Line 95 col 17 IdentifierName "a" = T
+Line 95 col 20 IdentifierName "T" = T
+Line 95 col 26 IdentifierName "T" = T
+Line 95 col 32 IdentifierName "T" = T
+Line 96 col 0 AssignmentExpression "a18 = b18" = <T>(x: (a: T) => T) => T[]
+Line 96 col 0 IdentifierName "a18" = { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }
+Line 96 col 6 IdentifierName "b18" = <T>(x: (a: T) => T) => T[]
+Line 97 col 0 AssignmentExpression "b18 = a18" = { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }
+Line 97 col 0 IdentifierName "b18" = <T>(x: (a: T) => T) => T[]
+Line 97 col 6 IdentifierName "a18" = { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }

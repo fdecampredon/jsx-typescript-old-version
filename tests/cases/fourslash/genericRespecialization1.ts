@@ -52,7 +52,7 @@
 ////         return ("My name is " + this.name + ", and my age is " + this.age + ".  I enjoy eating " + this.food.name + " and my variant is " + this.variant);
 ////     }
 //// }
-//// class GenericPlanet<T extends GenericMonster<any, any>> {
+//// class GenericPlanet<T extends GenericMonster</*2*/Cookie, any>> {
 ////     constructor(public name: string, public solarSystem: string, public species: T) { }
 //// }
 //// var cookie = new Cookie("Chocolate Chip", false);
@@ -71,4 +71,8 @@ edit.insertLine('');
 //debug.printErrorList();
 verify.numberOfErrorsInCurrentFile(0);
 //debug.printErrorList();
+goTo.marker('2');
+edit.deleteAtCaret("Cookie".length);
+edit.insert("any");
+verify.numberOfErrorsInCurrentFile(0);
 edit.insertLine('var narnia = new GenericPlanet2<Cookie, string>('); // shouldn't crash at this point

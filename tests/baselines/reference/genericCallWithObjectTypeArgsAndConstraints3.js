@@ -44,7 +44,7 @@ function f3(y, x) {
     return y(null);
 }
 
-// errors
+// all ok - T gets fixed too early, but then defaults to Base and everything works out
 var r4 = f3(function (x) {
     return x;
 }, new Base());

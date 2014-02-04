@@ -1,0 +1,26 @@
+=== tests/cases/compiler/typeArgumentInferenceWithConstraintAsCommonRoot.ts ===
+Line 0 col 10 IdentifierName "Animal" = Animal
+Line 0 col 19 IdentifierName "x" = any
+Line 1 col 10 IdentifierName "Giraffe" = Giraffe
+Line 1 col 26 IdentifierName "Animal" = Animal
+Line 1 col 35 IdentifierName "y" = any
+Line 2 col 10 IdentifierName "Elephant" = Elephant
+Line 2 col 27 IdentifierName "Animal" = Animal
+Line 2 col 36 IdentifierName "z" = any
+Line 3 col 9 IdentifierName "f" = typeof f
+Line 3 col 11 IdentifierName "T" = T
+Line 3 col 21 IdentifierName "Animal" = Animal
+Line 3 col 29 IdentifierName "x" = T
+Line 3 col 32 IdentifierName "T" = T
+Line 3 col 35 IdentifierName "y" = T
+Line 3 col 38 IdentifierName "T" = T
+Line 3 col 42 IdentifierName "T" = T
+Line 3 col 53 IdentifierName "undefined" = any
+Line 4 col 4 IdentifierName "g" = Giraffe
+Line 4 col 7 IdentifierName "Giraffe" = Giraffe
+Line 5 col 4 IdentifierName "e" = Elephant
+Line 5 col 7 IdentifierName "Elephant" = Elephant
+Line 6 col 0 InvocationExpression "f(g, e)" = Animal
+Line 6 col 0 IdentifierName "f" = typeof f
+Line 6 col 2 IdentifierName "g" = Giraffe
+Line 6 col 5 IdentifierName "e" = Elephant

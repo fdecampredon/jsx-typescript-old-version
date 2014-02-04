@@ -11,7 +11,10 @@ overloadResolutionConstructors.ts(77,5): error TS2085: Could not select overload
 overloadResolutionConstructors.ts(78,5): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'number' to argument 1 which is of type 'string'.
 overloadResolutionConstructors.ts(78,5): error TS2085: Could not select overload for 'new' expression.
-overloadResolutionConstructors.ts(88,5): error TS2086: Type 'Date' does not satisfy the constraint 'string' for type parameter 'U extends string'.
-overloadResolutionConstructors.ts(88,9): error TS2095: Could not find symbol 'Window'.
-overloadResolutionConstructors.ts(91,9): error TS2095: Could not find symbol 'window'.
-overloadResolutionConstructors.ts(92,15): error TS2095: Could not find symbol 'window'.
+overloadResolutionConstructors.ts(88,5): error TS2086: Type 'boolean' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+overloadResolutionConstructors.ts(91,5): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type 'boolean'.
+overloadResolutionConstructors.ts(91,5): error TS2085: Could not select overload for 'new' expression.
+overloadResolutionConstructors.ts(92,5): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'number' to argument 2 which is of type 'boolean'.
+overloadResolutionConstructors.ts(92,5): error TS2085: Could not select overload for 'new' expression.

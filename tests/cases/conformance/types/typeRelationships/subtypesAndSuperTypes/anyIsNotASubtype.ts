@@ -81,7 +81,7 @@ interface I13 {
 enum E { A }
 interface I14 {
     [x: string]: E;
-    foo: Eany;
+    foo: any;
 }
 
 

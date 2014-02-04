@@ -1,2 +1,5 @@
 promiseChaining.ts(9,69): error TS2094: The property 'length' does not exist on value of type '{}'.
-promiseChaining.ts(21,40): error TS2086: Type '{}' does not satisfy the constraint 'Function' for type parameter 'S extends Function'.
+promiseChaining.ts(21,40): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(x: Function) => string' and '(x: Function) => Function' are incompatible:
+		Type 'String' is missing property 'apply' from type 'Function'.
+promiseChaining.ts(21,40): error TS2087: Could not select overload for 'call' expression.

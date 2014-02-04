@@ -88,6 +88,7 @@ module TypeScript.Services {
 
         getSyntacticDiagnostics(fileName: string): string;
         getSemanticDiagnostics(fileName: string): string;
+        getCompilerOptionsDiagnostics(): string;
 
         getCompletionsAtPosition(fileName: string, position: number, isMemberCompletion: boolean): string;
         getCompletionEntryDetails(fileName: string, position: number, entryName: string): string;
@@ -370,6 +371,16 @@ module TypeScript.Services {
             };
         }
 
+        private realizeDiagnosticWithFileName(diagnostic: TypeScript.Diagnostic): { fileName: string; message: string; start: number; length: number; category: string; } {
+            return {
+                fileName:diagnostic.fileName(),
+                message: diagnostic.text(),
+                start: diagnostic.start(),
+                length: diagnostic.length(),
+                category: LanguageServiceShim.realizeDiagnosticCategory(diagnostic.info().category)
+            };
+        }
+
         public getSyntacticDiagnostics(fileName: string): string {
             return this.forwardJSONCall(
                 "getSyntacticDiagnostics(\"" + fileName + "\")",
@@ -385,6 +396,15 @@ module TypeScript.Services {
                 () => {
                     var errors = this.languageService.getSemanticDiagnostics(fileName);
                     return errors.map(LanguageServiceShim.realizeDiagnostic);
+                });
+        }
+
+        public getCompilerOptionsDiagnostics(): string {
+            return this.forwardJSONCall(
+                "getCompilerOptionsDiagnostics()",
+                () => {
+                    var errors = this.languageService.getCompilerOptionsDiagnostics();
+                    return errors.map(d => this.realizeDiagnosticWithFileName(d))
                 });
         }
 

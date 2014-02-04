@@ -1,5 +1,5 @@
 // Function typed arguments with multiple signatures must be passed an implementation that matches all of them
-// No inferences are made to or from such types
+// Inferences are made quadratic-pairwise to and from these overload sets
 var NonGenericParameter;
 (function (NonGenericParameter) {
     var a;

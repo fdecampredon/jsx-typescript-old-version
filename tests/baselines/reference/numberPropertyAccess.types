@@ -5,16 +5,16 @@ Line 1 col 8 InvocationExpression "x.toExponential()" = string
 Line 1 col 8 MemberAccessExpression "x.toExponential" = (fractionDigits?: number) => string
 Line 1 col 8 IdentifierName "x" = number
 Line 1 col 10 IdentifierName "toExponential" = (fractionDigits?: number) => string
-Line 3 col 4 IdentifierName "b" = boolean
-Line 3 col 8 InvocationExpression "x.hasOwnProperty('toFixed')" = boolean
-Line 3 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
-Line 3 col 8 IdentifierName "x" = number
-Line 3 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
-Line 5 col 4 IdentifierName "c" = any
-Line 5 col 8 InvocationExpression "x['toExponential']()" = any
-Line 5 col 8 ElementAccessExpression "x['toExponential']" = any
+Line 2 col 4 IdentifierName "b" = boolean
+Line 2 col 8 InvocationExpression "x.hasOwnProperty('toFixed')" = boolean
+Line 2 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
+Line 2 col 8 IdentifierName "x" = number
+Line 2 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
+Line 4 col 4 IdentifierName "c" = string
+Line 4 col 8 InvocationExpression "x['toExponential']()" = string
+Line 4 col 8 ElementAccessExpression "x['toExponential']" = (fractionDigits?: number) => string
+Line 4 col 8 IdentifierName "x" = number
+Line 5 col 4 IdentifierName "d" = boolean
+Line 5 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
+Line 5 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
 Line 5 col 8 IdentifierName "x" = number
-Line 6 col 4 IdentifierName "d" = boolean
-Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
-Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
-Line 6 col 8 IdentifierName "x" = number

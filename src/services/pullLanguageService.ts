@@ -162,7 +162,7 @@ module TypeScript.Services {
             }
 
             var isWriteAccess = this.isWriteAccess(node);
-            return [new ReferenceEntry(this.compiler.getCachedHostFileName(fileName), node.start(), node.end(), isWriteAccess)];
+            return [new ReferenceEntry(this._getHostFileName(fileName), node.start(), node.end(), isWriteAccess)];
         }
 
         public getImplementorsAtPosition(fileName: string, pos: number): ReferenceEntry[] {
@@ -301,7 +301,7 @@ module TypeScript.Services {
                         if (normalizedSymbol === symbol) {
                             var isWriteAccess = this.isWriteAccess(nameAST);
 
-                            result.push(new ReferenceEntry(this.compiler.getCachedHostFileName(fileName),
+                            result.push(new ReferenceEntry(this._getHostFileName(fileName),
                                 nameAST.start(), nameAST.end(), isWriteAccess));
                         }
                     }
@@ -342,7 +342,7 @@ module TypeScript.Services {
 
                         if (FindReferenceHelpers.compareSymbolsForLexicalIdentity(searchSymbol, symbol)) {
                             var isWriteAccess = this.isWriteAccess(nameAST);
-                            result.push(new ReferenceEntry(this.compiler.getCachedHostFileName(fileName), nameAST.start(), nameAST.end(), isWriteAccess));
+                            result.push(new ReferenceEntry(this._getHostFileName(fileName), nameAST.start(), nameAST.end(), isWriteAccess));
                         }
                     }
                 });
@@ -649,7 +649,7 @@ module TypeScript.Services {
         private addDeclaration(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declaration: TypeScript.PullDecl, result: DefinitionInfo[]): void {
             var ast = declaration.ast();
             result.push(new DefinitionInfo(
-                this.compiler.getCachedHostFileName(declaration.fileName()),
+                this._getHostFileName(declaration.fileName()),
                 ast.start(), ast.end(), symbolKind, symbolName, containerKind, containerName));
         }
 
@@ -783,7 +783,7 @@ module TypeScript.Services {
                         item.matchKind = matchKind;
                         item.kind = this.mapPullElementKind(declaration.kind);
                         item.kindModifiers = this.getScriptElementKindModifiersFromDecl(declaration);
-                        item.fileName = this.compiler.getCachedHostFileName(fileName);
+                        item.fileName = this._getHostFileName(fileName);
                         item.minChar = ast.start();
                         item.limChar = ast.end();
                         item.containerName = parentName || "";
@@ -881,6 +881,24 @@ module TypeScript.Services {
             return this.compiler.getSemanticDiagnostics(fileName);
         }
 
+        private _getHostSpecificDiagnosticWithFileName(diagnostic: Diagnostic) {
+            return new Diagnostic(this._getHostFileName(diagnostic.fileName()), diagnostic.lineMap(),
+                diagnostic.start(), diagnostic.length(), diagnostic.diagnosticKey(), diagnostic.arguments(),
+                diagnostic.additionalLocations());
+        }
+
+        public getCompilerOptionsDiagnostics(): TypeScript.Diagnostic[]{
+            var compilerOptionsDiagnostics = this.compiler.getCompilerOptionsDiagnostics();
+            return compilerOptionsDiagnostics.map(d => this._getHostSpecificDiagnosticWithFileName(d));
+        }
+
+        private _getHostFileName(fileName: string): string {
+            if (fileName) {
+                return this.compiler.getCachedHostFileName(fileName);
+            }
+            return fileName;
+        }
+
         public getEmitOutput(fileName: string): TypeScript.EmitOutput {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
@@ -895,7 +913,7 @@ module TypeScript.Services {
                 : this.getAllSyntacticDiagnostics();
             if (this.containErrors(syntacticDiagnostics)) {
                 // This file has at least one syntactic error, return and do not emit code.
-                return new TypeScript.EmitOutput();
+                return new TypeScript.EmitOutput(EmitOutputResult.FailedBecauseOfSyntaxErrors);
             }
 
             // Force a type check before emit to ensure that all symbols have been resolved
@@ -906,13 +924,16 @@ module TypeScript.Services {
             // Emit output files and source maps
             // Emit declarations, if there are no semantic errors
             var emitResult = this.compiler.emit(fileName, resolvePath);
-            if (!this.containErrors(emitResult.diagnostics) &&
-                !this.containErrors(semanticDiagnostics)) {
-
-                // Merge the results
-                var declarationEmitOutput = this.compiler.emitDeclarations(fileName, resolvePath);
-                emitResult.outputFiles.push.apply(emitResult.outputFiles, declarationEmitOutput.outputFiles);
-                emitResult.diagnostics.push.apply(emitResult.diagnostics, declarationEmitOutput.diagnostics);
+            if (emitResult.emitOutputResult == EmitOutputResult.Succeeded) {
+                if (!this.containErrors(semanticDiagnostics)) {
+                    // Merge the results
+                    var declarationEmitOutput = this.compiler.emitDeclarations(fileName, resolvePath);
+                    emitResult.outputFiles.push.apply(emitResult.outputFiles, declarationEmitOutput.outputFiles);
+                    Debug.assert(declarationEmitOutput.emitOutputResult == EmitOutputResult.Succeeded);
+                }
+                else if (this.compiler.canEmitDeclarations(fileName)) {
+                    emitResult.emitOutputResult = EmitOutputResult.FailedToGenerateDeclarationsBecauseOfSemanticErrors;
+                }
             }
 
             return emitResult;

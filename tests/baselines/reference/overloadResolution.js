@@ -95,8 +95,8 @@ fn4('', null);
 fn4(null, null); // Error
 
 // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
-fn4(window, null); // Error
-fn4(null, window); // Error
+fn4(true, null); // Error
+fn4(null, true); // Error
 
 
 function fn5() {

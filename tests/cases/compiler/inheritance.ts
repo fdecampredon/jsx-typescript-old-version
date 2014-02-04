@@ -18,7 +18,7 @@ class N {
     public y:number;
 }
 
-class ND extends N {    // change to type not a subtype
+class ND extends N { // any is assignable to number
     public y;
 }
 

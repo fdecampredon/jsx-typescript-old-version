@@ -8,14 +8,14 @@ noParams();
 // Generic call with parameters but none use type parameter type
 function noGenericParams(n) {
 }
-noGenericParams(''); // Error
+noGenericParams(''); // Valid
 noGenericParams('');
 noGenericParams(''); // Error
 
 // Generic call with multiple type parameters and only one used in parameter type annotation
 function someGenerics1(n, m) {
 }
-someGenerics1(3, 4); // Error
+someGenerics1(3, 4); // Valid
 someGenerics1(3, 4); // Error
 someGenerics1(3, 4); // Error
 someGenerics1(3, 4);
@@ -63,7 +63,7 @@ function someGenerics4(n, f) {
 }
 someGenerics4(4, function () {
     return null;
-}); // Error
+}); // Valid
 someGenerics4('', function () {
     return 3;
 });
@@ -77,7 +77,7 @@ function someGenerics5(n, f) {
 }
 someGenerics5(4, function () {
     return null;
-});
+}); // Valid
 someGenerics5('', function () {
     return 3;
 });
@@ -95,7 +95,7 @@ someGenerics6(function (n) {
     return n;
 }, function (n) {
     return n;
-}); // Error
+}); // Valid
 someGenerics6(function (n) {
     return n;
 }, function (n) {
@@ -127,7 +127,7 @@ someGenerics7(function (n) {
     return n;
 }, function (n) {
     return n;
-}); // Error
+}); // Valid, types of n are <any, string, any> respectively
 someGenerics7(function (n) {
     return n;
 }, function (n) {

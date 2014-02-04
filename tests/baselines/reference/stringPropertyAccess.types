@@ -10,15 +10,11 @@ Line 2 col 8 InvocationExpression "x.hasOwnProperty('charAt')" = boolean
 Line 2 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
 Line 2 col 8 IdentifierName "x" = string
 Line 2 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
-Line 4 col 4 IdentifierName "c" = any
-Line 4 col 8 InvocationExpression "x['charAt'](0)" = any
-Line 4 col 8 ElementAccessExpression "x['charAt']" = any
+Line 4 col 4 IdentifierName "c" = string
+Line 4 col 8 InvocationExpression "x['charAt'](0)" = string
+Line 4 col 8 ElementAccessExpression "x['charAt']" = (pos: number) => string
 Line 4 col 8 IdentifierName "x" = string
-Line 5 col 4 IdentifierName "d" = any
-Line 5 col 8 InvocationExpression "x['charAt']('invalid')" = any
-Line 5 col 8 ElementAccessExpression "x['charAt']" = any
+Line 5 col 4 IdentifierName "e" = boolean
+Line 5 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
+Line 5 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
 Line 5 col 8 IdentifierName "x" = string
-Line 6 col 4 IdentifierName "e" = boolean
-Line 6 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
-Line 6 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
-Line 6 col 8 IdentifierName "x" = string

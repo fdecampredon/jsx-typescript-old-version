@@ -390,6 +390,11 @@ module TypeScript.Services {
             return this.compiler.getSemanticDiagnostics(fileName);
         }
 
+        public getCompilerOptionsDiagnostics(): TypeScript.Diagnostic[] {
+            this.synchronizeHostData();
+            return this.compiler.getCompilerOptionsDiagnostics();
+        }
+
         public getSymbolInformationFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {
             this.synchronizeHostData();
             return this.compiler.pullGetSymbolInformationFromAST(ast, document);
@@ -438,6 +443,11 @@ module TypeScript.Services {
         public emitDeclarations(fileName: string, resolvePath: (path: string) => string): TypeScript.EmitOutput {
             this.synchronizeHostData();
             return this.compiler.emitDeclarations(fileName, resolvePath);
+        }
+
+        public canEmitDeclarations(fileName: string) {
+            this.synchronizeHostData();
+            return this.compiler.canEmitDeclarations(fileName);
         }
     }
 }

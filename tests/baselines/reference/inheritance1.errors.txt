@@ -6,8 +6,14 @@ inheritance1.ts(31,1): error TS2012: Cannot convert 'Control' to 'Button':
 	Type 'Control' is missing property 'select' from type 'Button'.
 inheritance1.ts(37,1): error TS2012: Cannot convert 'Control' to 'TextBox':
 	Type 'Control' is missing property 'select' from type 'TextBox'.
+inheritance1.ts(40,1): error TS2012: Cannot convert 'ImageBase' to 'SelectableControl':
+	Type 'ImageBase' is missing property 'select' from type 'SelectableControl'.
 inheritance1.ts(46,1): error TS2012: Cannot convert 'Image1' to 'SelectableControl':
 	Type 'Image1' is missing property 'select' from type 'SelectableControl'.
+inheritance1.ts(52,1): error TS2012: Cannot convert 'Locations' to 'SelectableControl':
+	Type 'Locations' is missing property 'state' from type 'SelectableControl'.
+inheritance1.ts(53,1): error TS2012: Cannot convert 'Locations' to 'Control':
+	Type 'Locations' is missing property 'state' from type 'Control'.
 inheritance1.ts(55,1): error TS2012: Cannot convert 'Control' to 'Locations':
 	Type 'Control' is missing property 'select' from type 'Locations'.
 inheritance1.ts(58,1): error TS2012: Cannot convert 'Locations1' to 'SelectableControl':

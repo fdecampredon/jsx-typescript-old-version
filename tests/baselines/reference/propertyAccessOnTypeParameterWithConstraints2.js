@@ -30,14 +30,11 @@ var C = (function () {
     }
     C.prototype.f = function () {
         var x;
-
-        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     };
 
     C.prototype.g = function (x) {
-        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     };
@@ -47,12 +44,10 @@ var C = (function () {
 //class C<U extends T, T extends A> {
 //    f() {
 //        var x: U;
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }
 //    g(x: U) {
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }
@@ -84,7 +79,6 @@ var r3d = a(aB, aB)['foo']();
 
 var b = {
     foo: function (x, y) {
-        // BUG 823818
         var a = x['foo']();
         return a + x.foo();
     }
@@ -92,7 +86,6 @@ var b = {
 
 //var b = {
 //    foo: <U extends T, T extends A>(x: U, y: T) => {
-//        // BUG 823818
 //        var a = x['foo'](); // should be string
 //        return a + x.foo();
 //    }

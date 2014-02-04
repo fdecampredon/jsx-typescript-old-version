@@ -81,11 +81,11 @@ new fn4(3, undefined); // Error
 new fn4('', null);
 
 // Generic overloads with constraints called with type arguments that do not satisfy the constraints
-new fn4<Window, Date>(null, null); // Error
+new fn4<boolean, Date>(null, null); // Error
 
 // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
-new fn4(window, null); // Error
-new fn4(null, window); // Error
+new fn4(true, null); // Error
+new fn4(null, true); // Error
 
 // Non - generic overloads where contextual typing of function arguments has errors
 class fn5 {

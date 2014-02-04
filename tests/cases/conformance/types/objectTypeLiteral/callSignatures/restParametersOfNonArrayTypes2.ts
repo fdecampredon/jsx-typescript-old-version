@@ -51,6 +51,6 @@ var a2: {
 
 var b2 = {
     foo(...x: MyThing2<string>) { },
-    a: function foo(...x: MyThing<2string>, ...y: MyThing2<string>) { },
+    a: function foo(...x: MyThing2<string>, ...y: MyThing2<string>) { },
     b: (...x: MyThing2<string>) => { }
 }

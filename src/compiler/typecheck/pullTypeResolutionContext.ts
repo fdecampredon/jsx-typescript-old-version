@@ -97,19 +97,6 @@ module TypeScript {
             }
         }
 
-        public getFixedTypeParameterSubstitutions(): PullTypeSymbol[] {
-            var fixedTypeParametersToTypesMap: PullTypeSymbol[] = [];
-
-            for (var infoKey in this.candidateCache) {
-                if (this.candidateCache.hasOwnProperty(infoKey)) {
-                    var info = this.candidateCache[infoKey];
-                    fixedTypeParametersToTypesMap[info.typeParameter.pullSymbolID] = info._inferredTypeAfterFixing;
-                }
-            }
-
-            return fixedTypeParametersToTypesMap;
-        }
-
         public _finalizeInferredTypeArguments(): PullTypeSymbol[]{
             var results: PullTypeSymbol[] = [];
             var typeParameters = this.signatureBeingInferred.getTypeParameters();
@@ -141,7 +128,8 @@ module TypeScript {
             resolver: PullTypeResolver,
             context: PullTypeResolutionContext,
             signatureBeingInferred: PullSignatureSymbol,
-            public argumentASTs: ISeparatedSyntaxList<IExpressionSyntax>) {
+            public argumentList: ArgumentListSyntax) {
+
             super(resolver, context, signatureBeingInferred);
         }
 
@@ -151,8 +139,8 @@ module TypeScript {
 
         public inferTypeArguments(): PullTypeSymbol[] {
             // Resolve all of the argument ASTs in the callback
-            this.signatureBeingInferred.forAllParameterTypes(/*length*/ this.argumentASTs.nonSeparatorCount(), (parameterType, argumentIndex) => {
-                var argumentAST = this.argumentASTs.nonSeparatorAt(argumentIndex);
+            this.signatureBeingInferred.forAllParameterTypes(/*length*/ this.argumentList.arguments.nonSeparatorCount(), (parameterType, argumentIndex) => {
+                var argumentAST = this.argumentList.arguments.nonSeparatorAt(argumentIndex);
 
                 this.context.pushInferentialType(parameterType, this);
                 var argumentType = this.resolver.resolveAST(argumentAST, /*isContextuallyTyped*/ true, this.context).type;

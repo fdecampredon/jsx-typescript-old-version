@@ -4,6 +4,3 @@ subtypingWithConstructSignatures.ts(23,15): error TS2143: Interface 'ConstructSi
 subtypingWithConstructSignatures.ts(61,15): error TS2143: Interface 'MemberWithConstructSignature.I2' cannot extend interface 'MemberWithConstructSignature.Base2':
 	Types of property 'a' of types 'I2' and 'Base2' are incompatible:
 		Construct signatures of types 'new(x: number) => string' and 'new(x: number) => number' are incompatible.
-subtypingWithConstructSignatures.ts(67,15): error TS2143: Interface 'MemberWithConstructSignature.I3' cannot extend interface 'MemberWithConstructSignature.Base2':
-	Types of property 'a2' of types 'I3' and 'Base2' are incompatible:
-		Construct signatures of types 'new<T>(x: T) => string' and 'new<T>(x: T) => T' are incompatible.

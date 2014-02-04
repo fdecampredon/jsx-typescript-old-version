@@ -1,0 +1,30 @@
+=== tests/cases/compiler/genericImplements.ts ===
+Line 0 col 6 IdentifierName "A" = A
+Line 0 col 10 IdentifierName "a" = any
+Line 1 col 6 IdentifierName "B" = B
+Line 1 col 10 IdentifierName "b" = any
+Line 2 col 10 IdentifierName "I" = I
+Line 3 col 0 IdentifierName "f" = <T extends A>() => T
+Line 3 col 6 IdentifierName "T" = T
+Line 3 col 16 IdentifierName "A" = A
+Line 3 col 22 IdentifierName "T" = T
+Line 7 col 6 IdentifierName "X" = X
+Line 7 col 19 IdentifierName "I" = I
+Line 8 col 0 IdentifierName "f" = <T extends B>() => T
+Line 8 col 6 IdentifierName "T" = T
+Line 8 col 16 IdentifierName "B" = B
+Line 8 col 22 IdentifierName "T" = T
+Line 8 col 33 IdentifierName "undefined" = any
+Line 12 col 6 IdentifierName "Y" = Y
+Line 12 col 19 IdentifierName "I" = I
+Line 13 col 0 IdentifierName "f" = <T extends A>() => T
+Line 13 col 6 IdentifierName "T" = T
+Line 13 col 16 IdentifierName "A" = A
+Line 13 col 22 IdentifierName "T" = T
+Line 13 col 33 IdentifierName "undefined" = any
+Line 17 col 6 IdentifierName "Z" = Z
+Line 17 col 19 IdentifierName "I" = I
+Line 18 col 0 IdentifierName "f" = <T>() => T
+Line 18 col 6 IdentifierName "T" = T
+Line 18 col 12 IdentifierName "T" = T
+Line 18 col 23 IdentifierName "undefined" = any

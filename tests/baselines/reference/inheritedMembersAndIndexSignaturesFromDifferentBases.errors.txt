@@ -1,9 +1,9 @@
 inheritedMembersAndIndexSignaturesFromDifferentBases.ts(17,11): error TS2189: Interface 'D' cannot simultaneously extend types 'C' and 'A':
-Type of property 'm' in type 'C' is not a subtype of string indexer type in type 'A'.
+Type of property 'm' in type 'C' is not assignable to string indexer type in type 'A'.
 	Type '{}' is missing property 'a' from type '{ a: any; }'.
 inheritedMembersAndIndexSignaturesFromDifferentBases.ts(23,11): error TS2189: Interface 'F' cannot simultaneously extend types 'E' and 'B':
-Type of property '0' in type 'E' is not a subtype of number indexer type in type 'B'.
+Type of property '0' in type 'E' is not assignable to number indexer type in type 'B'.
 	Type '{}' is missing property 'a' from type '{ a: any; b: any; }'.
 inheritedMembersAndIndexSignaturesFromDifferentBases.ts(25,11): error TS2189: Interface 'G' cannot simultaneously extend types 'E' and 'B':
-Type of property '0' in type 'E' is not a subtype of number indexer type in type 'B'.
+Type of property '0' in type 'E' is not assignable to number indexer type in type 'B'.
 	Type '{}' is missing property 'a' from type '{ a: any; b: any; }'.

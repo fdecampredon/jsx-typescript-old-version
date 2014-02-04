@@ -1,0 +1,34 @@
+=== tests/cases/compiler/typeArgInferenceWithNull.ts ===
+Line 2 col 9 IdentifierName "fn4" = typeof fn4
+Line 2 col 13 IdentifierName "T" = T
+Line 2 col 31 IdentifierName "n" = T
+Line 2 col 34 IdentifierName "T" = T
+Line 3 col 0 InvocationExpression "fn4(null)" = void
+Line 3 col 0 IdentifierName "fn4" = typeof fn4
+Line 5 col 9 IdentifierName "fn5" = typeof fn5
+Line 5 col 13 IdentifierName "T" = T
+Line 5 col 25 IdentifierName "x" = string
+Line 5 col 38 IdentifierName "n" = T
+Line 5 col 41 IdentifierName "T" = T
+Line 6 col 0 InvocationExpression "fn5({ x: null })" = void
+Line 6 col 0 IdentifierName "fn5" = typeof fn5
+Line 6 col 4 ObjectLiteralExpression "{ x: null }" = { x: any; }
+Line 6 col 6 IdentifierName "x" = any
+Line 8 col 9 IdentifierName "fn6" = typeof fn6
+Line 8 col 13 IdentifierName "T" = T
+Line 8 col 25 IdentifierName "x" = string
+Line 8 col 38 IdentifierName "n" = T
+Line 8 col 41 IdentifierName "T" = T
+Line 8 col 44 IdentifierName "fun" = (x: T) => void
+Line 8 col 50 IdentifierName "x" = T
+Line 8 col 53 IdentifierName "T" = T
+Line 8 col 65 IdentifierName "n2" = T
+Line 8 col 69 IdentifierName "T" = T
+Line 9 col 0 InvocationExpression "fn6({ x: null }, y => { }, { x: "" })" = void
+Line 9 col 0 IdentifierName "fn6" = typeof fn6
+Line 9 col 4 ObjectLiteralExpression "{ x: null }" = { x: any; }
+Line 9 col 6 IdentifierName "x" = any
+Line 9 col 17 SimpleArrowFunctionExpression "y => { }" = (y: { x: any; }) => void
+Line 9 col 17 IdentifierName "y" = { x: any; }
+Line 9 col 27 ObjectLiteralExpression "{ x: "" }" = { x: string; }
+Line 9 col 29 IdentifierName "x" = string

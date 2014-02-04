@@ -1,0 +1,56 @@
+=== tests/cases/compiler/topLevel.ts ===
+Line 0 col 10 IdentifierName "IPoint" = IPoint
+Line 1 col 0 IdentifierName "x" = number
+Line 2 col 0 IdentifierName "y" = number
+Line 5 col 6 IdentifierName "Point" = Point
+Line 5 col 23 IdentifierName "IPoint" = IPoint
+Line 6 col 23 IdentifierName "x" = any
+Line 6 col 32 IdentifierName "y" = any
+Line 7 col 11 IdentifierName "move" = (xo: number, yo: number) => Point
+Line 7 col 16 IdentifierName "xo" = number
+Line 7 col 26 IdentifierName "yo" = number
+Line 8 col 0 AddAssignmentExpression "this.x+=xo" = any
+Line 8 col 0 MemberAccessExpression "this.x" = any
+Line 8 col 0 ThisKeyword "this" = Point
+Line 8 col 6 IdentifierName "x" = any
+Line 8 col 9 IdentifierName "xo" = number
+Line 9 col 0 AddAssignmentExpression "this.y+=yo" = any
+Line 9 col 0 MemberAccessExpression "this.y" = any
+Line 9 col 0 ThisKeyword "this" = Point
+Line 9 col 6 IdentifierName "y" = any
+Line 9 col 9 IdentifierName "yo" = number
+Line 10 col 8 ThisKeyword "this" = Point
+Line 12 col 11 IdentifierName "toString" = () => string
+Line 13 col 8 ParenthesizedExpression "("("+this.x+","+this.y+")")" = string
+Line 13 col 9 AddExpression ""("+this.x+","+this.y+")"" = string
+Line 13 col 9 AddExpression ""("+this.x+","+this.y" = string
+Line 13 col 9 AddExpression ""("+this.x+","" = string
+Line 13 col 9 AddExpression ""("+this.x" = string
+Line 13 col 13 MemberAccessExpression "this.x" = any
+Line 13 col 13 ThisKeyword "this" = Point
+Line 13 col 18 IdentifierName "x" = any
+Line 13 col 24 MemberAccessExpression "this.y" = any
+Line 13 col 24 ThisKeyword "this" = Point
+Line 13 col 29 IdentifierName "y" = any
+Line 17 col 4 IdentifierName "result" = string
+Line 18 col 0 AddAssignmentExpression "result+=(new Point(3,4).move(2,2))" = string
+Line 18 col 0 IdentifierName "result" = string
+Line 18 col 8 ParenthesizedExpression "(new Point(3,4).move(2,2))" = Point
+Line 18 col 9 InvocationExpression "new Point(3,4).move(2,2)" = Point
+Line 18 col 9 MemberAccessExpression "new Point(3,4).move" = (xo: number, yo: number) => Point
+Line 18 col 9 ObjectCreationExpression "new Point(3,4)" = Point
+Line 18 col 13 IdentifierName "Point" = typeof Point
+Line 18 col 24 IdentifierName "move" = (xo: number, yo: number) => Point
+Line 20 col 7 IdentifierName "M" = M
+Line 21 col 15 IdentifierName "origin" = Point
+Line 21 col 22 ObjectCreationExpression "new Point(0,0)" = Point
+Line 21 col 26 IdentifierName "Point" = typeof Point
+Line 23 col 0 AddAssignmentExpression "result+=(M.origin.move(1,1))" = string
+Line 23 col 0 IdentifierName "result" = string
+Line 24 col 8 ParenthesizedExpression "(M.origin.move(1,1))" = Point
+Line 24 col 9 InvocationExpression "M.origin.move(1,1)" = Point
+Line 24 col 9 MemberAccessExpression "M.origin.move" = (xo: number, yo: number) => Point
+Line 24 col 9 MemberAccessExpression "M.origin" = Point
+Line 24 col 9 IdentifierName "M" = typeof M
+Line 24 col 11 IdentifierName "origin" = Point
+Line 24 col 18 IdentifierName "move" = (xo: number, yo: number) => Point

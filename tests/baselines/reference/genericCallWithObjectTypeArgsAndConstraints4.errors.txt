@@ -1,5 +1,7 @@
 genericCallWithObjectTypeArgsAndConstraints4.ts(12,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-genericCallWithObjectTypeArgsAndConstraints4.ts(19,10): error TS2086: Type 'C' does not satisfy the constraint 'D' for type parameter 'U extends T'.
+genericCallWithObjectTypeArgsAndConstraints4.ts(19,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Type 'C' is missing property 'y' from type 'D'.
+genericCallWithObjectTypeArgsAndConstraints4.ts(19,10): error TS2087: Could not select overload for 'call' expression.
 genericCallWithObjectTypeArgsAndConstraints4.ts(28,19): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
 genericCallWithObjectTypeArgsAndConstraints4.ts(30,14): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'T' to argument 1 which is of type 'C'.

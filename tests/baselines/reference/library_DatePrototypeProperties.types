@@ -29,11 +29,11 @@ Line 5 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number
 Line 5 col 5 IdentifierName "prototype" = Date
 Line 5 col 15 IdentifierName "toTimeString" = () => string
 Line 6 col 0 InvocationExpression "Date.prototype.toLocaleString()" = string
-Line 6 col 0 MemberAccessExpression "Date.prototype.toLocaleString" = () => string
+Line 6 col 0 MemberAccessExpression "Date.prototype.toLocaleString" = { (locales?: string[], options?: Intl.DateTimeFormatOptions): string; (locale?: string, options?: Intl.DateTimeFormatOptions): string; (): string; }
 Line 6 col 0 MemberAccessExpression "Date.prototype" = Date
 Line 6 col 0 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
 Line 6 col 5 IdentifierName "prototype" = Date
-Line 6 col 15 IdentifierName "toLocaleString" = () => string
+Line 6 col 15 IdentifierName "toLocaleString" = { (locales?: string[], options?: Intl.DateTimeFormatOptions): string; (locale?: string, options?: Intl.DateTimeFormatOptions): string; (): string; }
 Line 7 col 0 InvocationExpression "Date.prototype.toLocaleDateString()" = string
 Line 7 col 0 MemberAccessExpression "Date.prototype.toLocaleDateString" = () => string
 Line 7 col 0 MemberAccessExpression "Date.prototype" = Date

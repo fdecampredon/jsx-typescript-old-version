@@ -1,16 +1,4 @@
-genericCallWithOverloadedConstructorTypedArguments2.ts(15,14): error TS2082: Supplied parameters do not match any signature of call target:
-	Construct signatures of types 'new<T, U>(x: T) => U' and '{ new(x: boolean): boolean; new(x: string): string; }' are incompatible.
-genericCallWithOverloadedConstructorTypedArguments2.ts(15,14): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedConstructorTypedArguments2.ts(24,14): error TS2082: Supplied parameters do not match any signature of call target:
-	Construct signatures of types 'new<T>(x: T) => T' and '{ new(x: {}): string; new(x: number): {}; }' are incompatible.
-genericCallWithOverloadedConstructorTypedArguments2.ts(24,14): error TS2087: Could not select overload for 'call' expression.
 genericCallWithOverloadedConstructorTypedArguments2.ts(31,15): error TS2082: Supplied parameters do not match any signature of call target:
 	Construct signatures of types 'new<T>(x: T, y: T) => string' and '{ new(x: {}): string; new(x: {}, y?: {}): string; }' are incompatible:
 		Call signature expects 1 or fewer parameters.
 genericCallWithOverloadedConstructorTypedArguments2.ts(31,15): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedConstructorTypedArguments2.ts(37,15): error TS2082: Supplied parameters do not match any signature of call target:
-	Construct signatures of types 'new<T>(x: T) => T' and '{ new(x: number): string; new(x: number, y?: number): string; }' are incompatible.
-genericCallWithOverloadedConstructorTypedArguments2.ts(37,15): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedConstructorTypedArguments2.ts(39,15): error TS2082: Supplied parameters do not match any signature of call target:
-	Construct signatures of types '{ new<T>(x: T): number; new<T>(x: number): T; }' and '{ new(x: number): string; new(x: number, y?: number): string; }' are incompatible.
-genericCallWithOverloadedConstructorTypedArguments2.ts(39,15): error TS2087: Could not select overload for 'call' expression.

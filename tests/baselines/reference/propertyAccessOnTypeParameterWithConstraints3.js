@@ -67,4 +67,4 @@ var b = {
     }
 };
 
-var r4 = b.foo(new B()); // error, no inferences for U so it doesn't satisfy constraint
+var r4 = b.foo(new B()); // valid call to an invalid function

@@ -26,6 +26,8 @@ module TypeScript {
         // value set to the constructor or instance type.  We can use this field to make sure that on
         // edits and updates we don't leak the val decl or symbol
         private synthesizedValDecl: PullDecl = null;
+        // backreference from the value decl back to non-value part
+        private containerDecl: PullDecl = null;
 
         // Caches
         // Mappings from names to decls.  Public only for diffing purposes.
@@ -143,9 +145,14 @@ module TypeScript {
 
         public setFlag(flags: PullElementFlags) { this.flags |= flags; }
 
-        public setValueDecl(valDecl: PullDecl) { this.synthesizedValDecl = valDecl; }
+        public setValueDecl(valDecl: PullDecl) {
+            this.synthesizedValDecl = valDecl;
+            valDecl.containerDecl = this;
+        }
 
         public getValueDecl() { return this.synthesizedValDecl; }
+
+        public getContainerDecl() { return this.containerDecl; }
 
         private getChildDeclCache(declKind: PullElementKind): IIndexable<PullDecl[]> {
             if (declKind === PullElementKind.TypeParameter) {
@@ -391,7 +398,8 @@ module TypeScript {
                 var parentDecl = this.parentDecl;
 
                 while (parentDecl) {
-                    if (parentDecl && path[path.length - 1] !== parentDecl && !(parentDecl.kind & PullElementKind.ObjectLiteral)) {
+                    if (parentDecl && path[path.length - 1] !== parentDecl
+                        && !(parentDecl.kind & (PullElementKind.ObjectLiteral | PullElementKind.ObjectType))) {
                         path.unshift(parentDecl);
                     }
 

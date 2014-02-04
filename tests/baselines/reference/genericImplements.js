@@ -11,7 +11,7 @@ var B = (function () {
 })();
 ;
 
-// ERROR
+// OK
 var X = (function () {
     function X() {
     }
@@ -31,7 +31,7 @@ var Y = (function () {
     return Y;
 })();
 
-// ERROR
+// OK
 var Z = (function () {
     function Z() {
     }

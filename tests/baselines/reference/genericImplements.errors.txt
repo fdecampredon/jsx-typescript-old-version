@@ -1,6 +1,0 @@
-genericImplements.ts(8,7): error TS2137: Class X declares interface I but does not implement it:
-	Types of property 'f' of types 'X' and 'I' are incompatible:
-		Call signatures of types '<T extends B>() => T' and '<T extends A>() => T' are incompatible.
-genericImplements.ts(18,7): error TS2137: Class Z declares interface I but does not implement it:
-	Types of property 'f' of types 'Z' and 'I' are incompatible:
-		Call signatures of types '<T>() => T' and '<T extends A>() => T' are incompatible.

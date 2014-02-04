@@ -1,0 +1,3 @@
+derivedClassTransitivity3.ts(18,1): error TS2012: Cannot convert 'E<string>' to 'C<string>':
+	Types of property 'foo' of types 'E<string>' and 'C<string>' are incompatible:
+		Call signatures of types '(x: string, y?: number) => void' and '(x: string, y: string) => void' are incompatible.

@@ -1,0 +1,30 @@
+=== tests/cases/compiler/functionOverloadsRecursiveGenericReturnType.ts ===
+Line 0 col 6 IdentifierName "B" = B<V>
+Line 0 col 8 IdentifierName "V" = V
+Line 1 col 12 IdentifierName "id" = V
+Line 1 col 16 IdentifierName "V" = V
+Line 4 col 6 IdentifierName "A" = A<U>
+Line 4 col 8 IdentifierName "U" = U
+Line 5 col 0 IdentifierName "GetEnumerator" = () => B<U>
+Line 5 col 25 IdentifierName "B" = B<V>
+Line 5 col 27 IdentifierName "U" = U
+Line 8 col 9 IdentifierName "Choice" = typeof Choice
+Line 8 col 16 IdentifierName "T" = T
+Line 8 col 19 IdentifierName "args" = T[]
+Line 8 col 25 IdentifierName "T" = T
+Line 8 col 31 IdentifierName "A" = A<U>
+Line 8 col 33 IdentifierName "T" = T
+Line 9 col 9 IdentifierName "Choice" = typeof Choice
+Line 9 col 16 IdentifierName "T" = T
+Line 9 col 22 IdentifierName "v_args" = T[]
+Line 9 col 30 IdentifierName "T" = T
+Line 9 col 36 IdentifierName "A" = A<U>
+Line 9 col 38 IdentifierName "T" = T
+Line 10 col 9 IdentifierName "Choice" = typeof Choice
+Line 10 col 16 IdentifierName "T" = T
+Line 10 col 22 IdentifierName "v_args" = any[]
+Line 10 col 38 IdentifierName "A" = A<U>
+Line 10 col 40 IdentifierName "T" = T
+Line 11 col 11 ObjectCreationExpression "new A<T>()" = A<T>
+Line 11 col 15 IdentifierName "A" = typeof A
+Line 11 col 17 IdentifierName "T" = T

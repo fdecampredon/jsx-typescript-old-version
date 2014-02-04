@@ -219,7 +219,11 @@ module TypeScript {
         private inWithBlock = false;
 
         public document: Document = null;
-        private copyrightElement: ISyntaxElement = null;
+
+        // If we choose to detach comments from an element (for example, the Copyright comments),
+        // then keep track of that element so that we don't emit all on the comments on it when
+        // we visit it.
+        private detachedCommentsElement: ISyntaxElement = null;
 
         constructor(public emittingFileName: string,
             public outfile: TextWriter,
@@ -509,11 +513,12 @@ module TypeScript {
             if (pre) {
                 var preComments = TypeScript.ASTHelpers.preComments(ast);
 
-                if (preComments && ast === this.copyrightElement) {
+                if (preComments && ast === this.detachedCommentsElement) {
                     // We're emitting the comments for the first script element.  Skip any 
                     // copyright comments, as we'll already have emitted those.
-                    var copyrightComments = this.getCopyrightComments();
-                    preComments = preComments.slice(copyrightComments.length);
+                    var detachedComments = this.getDetachedComments(ast);
+                    preComments = preComments.slice(detachedComments.length);
+                    this.detachedCommentsElement = null;
                 }
 
                 // We're emitting comments on an elided element.  Only keep the comment if it is
@@ -704,6 +709,15 @@ module TypeScript {
             }
 
             this.indenter.increaseIndent();
+
+            if (block) {
+                // We want any detached statements at the start of hte block to stay at the start.
+                // This is important for features like VSDoc which place their comments inside a
+                // block, but can't have them preceded by things like "var _this = this" when we
+                // emit.
+
+                this.emitDetachedComments(block.statements);
+            }
 
             // Parameter list parameters with defaults could capture this
             if (this.shouldCaptureThis(funcDecl)) {
@@ -2160,15 +2174,15 @@ module TypeScript {
             }
         }
 
-        // We consider a sequence of comments to be a copyright header if there are no blank lines 
+        // We consider a sequence of comments to be a detached from an ast if there are no blank lines 
         // between them, and there is a blank line after the last one and the node they're attached 
         // to.
-        private getCopyrightComments(): Comment[] {
-            var preComments = ASTHelpers.preComments(this.copyrightElement);
+        private getDetachedComments(element: ISyntaxElement): Comment[] {
+            var preComments = TypeScript.ASTHelpers.preComments(element);
             if (preComments) {
                 var lineMap = this.document.lineMap();
 
-                var copyrightComments: Comment[] = [];
+                var detachedComments: Comment[] = [];
                 var lastComment: Comment = null;
 
                 for (var i = 0, n = preComments.length; i < n; i++) {
@@ -2182,21 +2196,21 @@ module TypeScript {
                             // There was a blank line between the last comment and this comment.  This
                             // comment is not part of the copyright comments.  Return what we have so 
                             // far.
-                            return copyrightComments;
+                            return detachedComments;
                         }
                     }
 
-                    copyrightComments.push(comment);
+                    detachedComments.push(comment);
                     lastComment = comment;
                 }
 
                 // All comments look like they could have been part of the copyright header.  Make
                 // sure there is at least one blank line between it and the node.  If not, it's not
                 // a copyright header.
-                var lastCommentLine = lineMap.getLineNumberFromPosition(ArrayUtilities.last(copyrightComments).end());
-                var astLine = lineMap.getLineNumberFromPosition(this.copyrightElement.start());
+                var lastCommentLine = lineMap.getLineNumberFromPosition(ArrayUtilities.last(detachedComments).end());
+                var astLine = lineMap.getLineNumberFromPosition(element.start());
                 if (astLine >= lastCommentLine + 2) {
-                    return copyrightComments;
+                    return detachedComments;
                 }
             }
 
@@ -2205,12 +2219,15 @@ module TypeScript {
         }
 
         private emitPossibleCopyrightHeaders(script: SourceUnitSyntax): void {
-            var list = script.moduleElements;
+            this.emitDetachedComments(script.moduleElements);
+        }
+
+        private emitDetachedComments(list: ISyntaxList<ISyntaxNodeOrToken>): void {
             if (list.childCount() > 0) {
                 var firstElement = list.childAt(0);
 
-                this.copyrightElement = firstElement;
-                this.emitCommentsArray(this.getCopyrightComments(), /*trailing:*/ false);
+                this.detachedCommentsElement = firstElement;
+                this.emitCommentsArray(this.getDetachedComments(this.detachedCommentsElement), /*trailing:*/ false);
             }
         }
 

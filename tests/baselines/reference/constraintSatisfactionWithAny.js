@@ -1,4 +1,4 @@
-// any satisfies any constraint, no errors expected
+// any is not a valid type argument unless there is no constraint, or the constraint is any
 function foo(x) {
     return null;
 }

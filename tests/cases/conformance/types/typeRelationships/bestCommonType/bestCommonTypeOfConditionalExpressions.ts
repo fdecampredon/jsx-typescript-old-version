@@ -22,11 +22,5 @@ var r10: Base = true ? derived : derived2; // no error since we use the contextu
 var r11 = true ? base : derived2;
 
 function foo5<T, U>(t: T, u: U): Object {
-    return true ? t : u;
+    return true ? t : u; // BCT is Object
 }
-
-//function foo2<T extends U, U>(t: T, u: U) {
-//    return true ? t : u;
-//}
-
-

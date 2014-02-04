@@ -14,3 +14,5 @@ var a: {
 
 var b = <U extends T, T extends U>() => { }
 var b2 = <T extends U, U extends V, V extends T>() => { }
+
+class D<U extends T, T extends V, V extends T> { }

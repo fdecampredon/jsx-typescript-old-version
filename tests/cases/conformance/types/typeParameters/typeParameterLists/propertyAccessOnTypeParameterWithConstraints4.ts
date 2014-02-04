@@ -18,7 +18,6 @@ var r2b = i.foo['notHere']();
 var a: {
     <T extends Date>(): T;
 }
-// BUG 794164
 var r3: string = a().notHere();
 var r3b: string = a()['notHere']();
 
@@ -27,7 +26,6 @@ var b = {
         var a = x['notHere'](); // should be string
         return a + x.notHere();
     },
-    // BUG 794164
     bar: b.foo().notHere()
 }
 

@@ -1,5 +1,5 @@
 // Function typed arguments with multiple signatures must be passed an implementation that matches all of them
-// No inferences are made to or from such types
+// Inferences are made quadratic-pairwise to and from these overload sets
 
 module NonGenericParameter {
     var a: {
@@ -11,7 +11,7 @@ module NonGenericParameter {
         return cb;
     }
 
-    var r3 = foo4(<T, U>(x: T) => { var r: U; return r }); // error
+    var r3 = foo4(<T, U>(x: T) => { var r: U; return r }); // ok
 }
 
 module GenericParameter {
@@ -19,7 +19,7 @@ module GenericParameter {
         return cb;
     }
 
-    var r6 = foo5(<T>(x: T) => x); // error
+    var r6 = foo5(<T>(x: T) => x); // ok
 
     function foo6<T>(cb: { (x: T): string; (x: T, y?: T): string }) {
         return cb;
@@ -31,7 +31,7 @@ module GenericParameter {
         return cb;
     }
 
-    var r13 = foo7(1, <T>(x: T) => x); // error
+    var r13 = foo7(1, <T>(x: T) => x); // ok
     var a: { <T>(x: T): number; <T>(x: number): T; }
-    var r14 = foo7(1, a); // error
+    var r14 = foo7(1, a); // ok
 }

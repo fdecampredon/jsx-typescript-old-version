@@ -1,16 +1,4 @@
-genericCallWithOverloadedFunctionTypedArguments2.ts(14,14): error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '<T, U>(x: T) => U' and '{ (x: boolean): boolean; (x: string): string; }' are incompatible.
-genericCallWithOverloadedFunctionTypedArguments2.ts(14,14): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedFunctionTypedArguments2.ts(22,14): error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '<T>(x: T) => T' and '{ (x: {}): string; (x: number): {}; }' are incompatible.
-genericCallWithOverloadedFunctionTypedArguments2.ts(22,14): error TS2087: Could not select overload for 'call' expression.
 genericCallWithOverloadedFunctionTypedArguments2.ts(28,15): error TS2082: Supplied parameters do not match any signature of call target:
 	Call signatures of types '<T>(x: T, y: T) => string' and '{ (x: {}): string; (x: {}, y?: {}): string; }' are incompatible:
 		Call signature expects 1 or fewer parameters.
 genericCallWithOverloadedFunctionTypedArguments2.ts(28,15): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedFunctionTypedArguments2.ts(34,15): error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '<T>(x: T) => T' and '{ (x: number): string; (x: number, y?: number): string; }' are incompatible.
-genericCallWithOverloadedFunctionTypedArguments2.ts(34,15): error TS2087: Could not select overload for 'call' expression.
-genericCallWithOverloadedFunctionTypedArguments2.ts(36,15): error TS2082: Supplied parameters do not match any signature of call target:
-	Call signatures of types '{ <T>(x: T): number; <T>(x: number): T; }' and '{ (x: number): string; (x: number, y?: number): string; }' are incompatible.
-genericCallWithOverloadedFunctionTypedArguments2.ts(36,15): error TS2087: Could not select overload for 'call' expression.

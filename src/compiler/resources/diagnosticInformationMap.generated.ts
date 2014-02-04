@@ -822,7 +822,7 @@ module TypeScript {
     "code": 2120,
     "category": DiagnosticCategory.Error
   },
-  "The right-hand side of an 'instanceof' expression must be of type 'any' or a subtype of the 'Function' interface type.": {
+  "The right-hand side of an 'instanceof' expression must be of type 'any' or of a type assignable to the 'Function' interface type.": {
     "code": 2121,
     "category": DiagnosticCategory.Error
   },
@@ -838,7 +838,7 @@ module TypeScript {
     "code": 2124,
     "category": DiagnosticCategory.Error
   },
-  "Function '{0}' declared a non-void return type, but has no return expression.": {
+  "Type '{0}' does not have type parameters.": {
     "code": 2125,
     "category": DiagnosticCategory.Error
   },
@@ -946,7 +946,7 @@ module TypeScript {
     "code": 2153,
     "category": DiagnosticCategory.Error
   },
-  "Specialized overload signature is not subtype of any non-specialized signature.": {
+  "Specialized overload signature is not assignable to any non-specialized signature.": {
     "code": 2154,
     "category": DiagnosticCategory.Error
   },
@@ -990,27 +990,27 @@ module TypeScript {
     "code": 2166,
     "category": DiagnosticCategory.Error
   },
-  "Numeric indexer type '{0}' must be a subtype of string indexer type '{1}'.": {
+  "Numeric indexer type '{0}' must be assignable to string indexer type '{1}'.": {
     "code": 2167,
     "category": DiagnosticCategory.Error
   },
-  "Numeric indexer type '{0}' must be a subtype of string indexer type '{1}':{NL}{2}": {
+  "Numeric indexer type '{0}' must be assignable to string indexer type '{1}':{NL}{2}": {
     "code": 2168,
     "category": DiagnosticCategory.Error
   },
-  "All numerically named properties must be subtypes of numeric indexer type '{0}'.": {
+  "All numerically named properties must be assignable to numeric indexer type '{0}'.": {
     "code": 2169,
     "category": DiagnosticCategory.Error
   },
-  "All numerically named properties must be subtypes of numeric indexer type '{0}':{NL}{1}": {
+  "All numerically named properties must be assignable to numeric indexer type '{0}':{NL}{1}": {
     "code": 2170,
     "category": DiagnosticCategory.Error
   },
-  "All named properties must be subtypes of string indexer type '{0}'.": {
+  "All named properties must be assignable to string indexer type '{0}'.": {
     "code": 2171,
     "category": DiagnosticCategory.Error
   },
-  "All named properties must be subtypes of string indexer type '{0}':{NL}{1}": {
+  "All named properties must be assignable to string indexer type '{0}':{NL}{1}": {
     "code": 2172,
     "category": DiagnosticCategory.Error
   },
@@ -1406,15 +1406,15 @@ module TypeScript {
     "code": 4034,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Type of number indexer in type '{0}' is not a subtype of string indexer type in type '{1}'.{NL}{2}": {
+  "Type of number indexer in type '{0}' is not assignable to string indexer type in type '{1}'.{NL}{2}": {
     "code": 4035,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Type of property '{0}' in type '{1}' is not a subtype of string indexer type in type '{2}'.{NL}{3}": {
+  "Type of property '{0}' in type '{1}' is not assignable to string indexer type in type '{2}'.{NL}{3}": {
     "code": 4036,
     "category": DiagnosticCategory.NoPrefix
   },
-  "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
+  "Type of property '{0}' in type '{1}' is not assignable to number indexer type in type '{2}'.{NL}{3}": {
     "code": 4037,
     "category": DiagnosticCategory.NoPrefix
   },

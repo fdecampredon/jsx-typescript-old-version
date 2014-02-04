@@ -9,6 +9,9 @@ module TypeScript {
         InfinitelyExpanding
     }
 
+    export interface TypeArgumentMap {
+        [n: number]: PullTypeSymbol;
+    }
 
     // Type references and instantiated type references
     export class PullTypeReferenceSymbol extends PullTypeSymbol {
@@ -427,7 +430,7 @@ module TypeScript {
         // The typeParameterArgumentMap parameter represents a mapping of PUllSymbolID strings of type parameters to type argument symbols
         // The instantiateFunctionTypeParameters parameter is set to true when a signature is being specialized at a call site, or if its
         // type parameters need to otherwise be specialized (say, during a type relationship check)
-        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterArgumentMap: PullTypeSymbol[]): PullInstantiatedTypeReferenceSymbol {
+        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterArgumentMap: TypeArgumentMap): PullInstantiatedTypeReferenceSymbol {
             Debug.assert(resolver);
 
             // check for an existing instantiation
@@ -495,7 +498,7 @@ module TypeScript {
             return instantiation;
         }
 
-        constructor(public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: PullTypeSymbol[],
+        constructor(public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: TypeArgumentMap,
             public isInstanceReferenceType: boolean) {
             super(referencedTypeSymbol);
 
@@ -506,7 +509,7 @@ module TypeScript {
             return (<PullTypeSymbol>this.getRootSymbol()).isGeneric();
         }
 
-        public getTypeParameterArgumentMap(): PullTypeSymbol[] {
+        public getTypeParameterArgumentMap(): TypeArgumentMap {
             return this._typeParameterArgumentMap;
         }
 
@@ -697,6 +700,9 @@ module TypeScript {
             if (!this._instantiatedConstructorMethod) {
                 var referencedConstructorMethod = this.referencedTypeSymbol.getConstructorMethod();
                 this._instantiatedConstructorMethod = new PullSymbol(referencedConstructorMethod.name, referencedConstructorMethod.kind);
+                this._instantiatedConstructorMethod.setRootSymbol(referencedConstructorMethod);
+                this._instantiatedConstructorMethod.setResolved();
+
                 this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedConstructorMethod.type, this._typeParameterArgumentMap);
             }
 
@@ -810,11 +816,11 @@ module TypeScript {
     }
 
     export class PullInstantiatedSignatureSymbol extends PullSignatureSymbol {
-        public getTypeParameterArgumentMap(): PullTypeSymbol[]{
+        public getTypeParameterArgumentMap(): TypeArgumentMap{
             return this._typeParameterArgumentMap;
         }
 
-        constructor(rootSignature: PullSignatureSymbol, private _typeParameterArgumentMap: PullTypeSymbol[]) {
+        constructor(rootSignature: PullSignatureSymbol, private _typeParameterArgumentMap: TypeArgumentMap) {
             super(rootSignature.kind, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;

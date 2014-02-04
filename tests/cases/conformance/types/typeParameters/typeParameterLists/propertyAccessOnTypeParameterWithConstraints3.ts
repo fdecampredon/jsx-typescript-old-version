@@ -42,8 +42,8 @@ var a: {
 var r3 = a().foo(); // error, no inferences for U so it doesn't satisfy constraint
 var r3b = a()['foo']();
 // parameter supplied for type argument inference for U
-var r3c = a(new B()).foo(); // error, no inferences for T so it doesn't satisfy constraint
-var r3d = a(new B())['foo'](); // error, no inferences for T so it doesn't satisfy constraint
+var r3c = a(new B()).foo(); // valid call to an invalid function, U is inferred as B, which has a foo
+var r3d = a(new B())['foo'](); // valid call to an invalid function, U is inferred as B, which has a foo
 
 var b = {
     foo: <U extends A, T extends U>(x: T) => {
@@ -53,4 +53,4 @@ var b = {
     }
 }
 
-var r4 = b.foo(new B()); // error, no inferences for U so it doesn't satisfy constraint
+var r4 = b.foo(new B()); // valid call to an invalid function

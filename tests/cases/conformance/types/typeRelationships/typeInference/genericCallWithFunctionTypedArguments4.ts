@@ -12,11 +12,11 @@ function foo4<T, U>(cb: new(x: T) => U) {
     return u;
 }
 
-var r = foo4(a); // {}, if a was used for inference then U would have some other type
+var r = foo4(a); // T is {} (candidates boolean and string), U is {} (candidates C and D)
 
 var b: {
     new<T>(x: boolean): T;
     new<T>(x: T): any;
 }
 
-var r2 = foo4(b); // {}, if b was used for inference then U would have some other type
+var r2 = foo4(b); // T is {} (candidates boolean and {}), U is any (candidates any and {})

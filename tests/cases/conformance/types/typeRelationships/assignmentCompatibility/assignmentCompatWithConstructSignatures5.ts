@@ -1,4 +1,4 @@
-// checking assignment compat for function types as it relates to contextual signature instantiation
+// checking assignment compat for function types. All valid
 
 class Base { foo: string; }
 class Derived extends Base { bar: string; }
@@ -30,35 +30,35 @@ var a18: {
 };
 
 var b: new <T>(x: T) => T[]; 
-a = b; // ok, instantiation of N is a subtype of M, T is number
+a = b; // ok
 b = a; // ok
 var b2: new <T>(x: T) => string[]; 
 a2 = b2; // ok
 b2 = a2; // ok
 var b3: new <T>(x: T) => T; 
-a3 = b3; // ok since Base returns void
-b3 = a3; // error
+a3 = b3; // ok
+b3 = a3; // ok
 var b4: new <T, U>(x: T, y: U) => string; 
-a4 = b4; // ok, instantiation of N is a subtype of M, T is string, U is number
+a4 = b4; // ok
 b4 = a4; // ok
 var b5: new <T, U>(x: new (arg: T) => U) => T; 
-a5 = b5; // ok, U is in a parameter position so inferences can be made
+a5 = b5; // ok
 b5 = a5; // ok
 var b6: new <T extends Base, U extends Derived>(x: new (arg: T) => U) => T; 
-a6 = b6; // ok, same as a5 but with object type hierarchy
+a6 = b6; // ok
 b6 = a6; // ok
 var b11: new <T, U>(x: { foo: T }, y: { foo: U; bar: U }) => Base; 
 a11 = b11; // ok
 b11 = a11; // ok
 var b15: new <U, V>(x: { a: U; b: V; }) => U[]; 
-a15 = b15; // ok, T = U, T = V
-b15 = a15; // error
+a15 = b15; // ok
+b15 = a15; // ok
 var b16: new <T>(x: { a: T; b: T }) => T[]; 
-a15 = b16; // ok, more general parameter type
-b15 = a16; // error
+a15 = b16; // ok
+b15 = a16; // ok
 var b17: new <T>(x: new (a: T) => T) => T[]; 
 a17 = b17; // ok
-b17 = a17; // error
+b17 = a17; // ok
 var b18: new (x: new <T>(a: T) => T) => any[]; 
 a18 = b18; // ok
 b18 = a18; // ok

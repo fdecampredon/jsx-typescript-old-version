@@ -66,7 +66,7 @@ function foo5c(x: D<Number, Number>); // ok
 function foo5c(x: any) { }
 
 function foo6c(x: C<String, String>);
-function foo6c(x: D<any, Number>); // ok
+function foo6c(x: D<any, Number>); // error, "any" does not satisfy the constraint
 function foo6c(x: any) { }
 
 function foo6(x: A);

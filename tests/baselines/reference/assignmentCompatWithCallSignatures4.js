@@ -1,5 +1,4 @@
-// checking subtype relations for function types as it relates to contextual signature instantiation
-// error cases
+// These are mostly permitted with the current loose rules. All ok unless otherwise noted.
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -50,43 +49,43 @@ var Errors;
         var a17;
 
         var b2;
-        a2 = b2; // error, contextual signature instantiation doesn't relate return types so U is {}, not a subtype of string[]
-        b2 = a2; // error
+        a2 = b2;
+        b2 = a2;
 
         var b7;
-        a7 = b7; // error, no inferences for V so it doesn't satisfy its constraints and contextual signature instantiation fails
-        b7 = a7; // error
+        a7 = b7;
+        b7 = a7;
 
         var b8;
-        a8 = b8; // error, type mismatch
-        b8 = a8; // error
+        a8 = b8; // error, { foo: number } and Base are incompatible
+        b8 = a8; // error, { foo: number } and Base are incompatible
 
         var b10;
-        a10 = b10; // error, more specific type in derived parameter type
-        b10 = a10; // error
+        a10 = b10;
+        b10 = a10;
 
         var b11;
-        a11 = b11; // error
-        b11 = a11; // error
+        a11 = b11;
+        b11 = a11;
 
         var b12;
-        a12 = b12; // error, no inferences for T, fails constraint satisfaction, fails contextual signature instantiation
-        b12 = a12; // error
+        a12 = b12;
+        b12 = a12;
 
         var b15;
-        a15 = b15; // error, T is {} which isn't an acceptable return type
-        b15 = a15; // error
+        a15 = b15;
+        b15 = a15;
 
         var b15a;
-        a15 = b15a; // error, T is {} which doesn't satisfy constraint check
-        b15a = a15; // error
+        a15 = b15a;
+        b15a = a15;
 
         var b16;
-        a16 = b16; // error, cannot make inferences for T because multiple signatures to infer from, {} not compatible with base signature
-        b16 = a16; // error
+        a16 = b16;
+        b16 = a16;
 
         var b17;
-        a17 = b17; // error
+        a17 = b17;
         b17 = a17;
     })(WithNonGenericSignaturesInBaseType || (WithNonGenericSignaturesInBaseType = {}));
 
@@ -95,13 +94,13 @@ var Errors;
         // target type has generic call signature
         var a2;
         var b2;
-        a2 = b2; // error
-        b2 = a2; // error
+        a2 = b2;
+        b2 = a2;
 
         // target type has generic call signature
         var a3;
         var b3;
-        a3 = b3; // error
-        b3 = a3; // error
+        a3 = b3;
+        b3 = a3;
     })(WithGenericSignaturesInBaseType || (WithGenericSignaturesInBaseType = {}));
 })(Errors || (Errors = {}));

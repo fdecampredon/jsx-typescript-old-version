@@ -18,10 +18,10 @@ Line 7 col 16 MemberAccessExpression "x.doOtherStuff" = <T>(x: T) => T
 Line 7 col 16 IdentifierName "x" = number
 Line 7 col 18 IdentifierName "doOtherStuff" = <T>(x: T) => T
 Line 8 col 4 IdentifierName "c" = string
-Line 8 col 16 InvocationExpression "x['doStuff']()" = any
-Line 8 col 16 ElementAccessExpression "x['doStuff']" = any
+Line 8 col 16 InvocationExpression "x['doStuff']()" = string
+Line 8 col 16 ElementAccessExpression "x['doStuff']" = () => string
 Line 8 col 16 IdentifierName "x" = number
 Line 9 col 4 IdentifierName "d" = string
-Line 9 col 16 InvocationExpression "x['doOtherStuff']('hm')" = any
-Line 9 col 16 ElementAccessExpression "x['doOtherStuff']" = any
+Line 9 col 16 InvocationExpression "x['doOtherStuff']('hm')" = string
+Line 9 col 16 ElementAccessExpression "x['doOtherStuff']" = <T>(x: T) => T
 Line 9 col 16 IdentifierName "x" = number

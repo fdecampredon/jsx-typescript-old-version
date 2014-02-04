@@ -1,0 +1,13 @@
+=== tests/cases/compiler/constructorFunctionTypeIsAssignableToBaseType.ts ===
+Line 0 col 6 IdentifierName "Base" = Base
+Line 1 col 11 IdentifierName "foo" = { bar: Object; }
+Line 2 col 0 IdentifierName "bar" = Object
+Line 2 col 13 IdentifierName "Object" = Object
+Line 6 col 6 IdentifierName "Derived" = Derived
+Line 6 col 22 IdentifierName "Base" = Base
+Line 8 col 11 IdentifierName "foo" = { bar: number; }
+Line 9 col 0 IdentifierName "bar" = number
+Line 13 col 6 IdentifierName "Derived2" = Derived2
+Line 13 col 23 IdentifierName "Base" = Base
+Line 15 col 11 IdentifierName "foo" = { bar: any; }
+Line 16 col 0 IdentifierName "bar" = any

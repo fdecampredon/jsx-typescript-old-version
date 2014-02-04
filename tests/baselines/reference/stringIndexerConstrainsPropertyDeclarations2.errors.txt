@@ -1,14 +1,14 @@
-stringIndexerConstrainsPropertyDeclarations2.ts(15,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(15,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-stringIndexerConstrainsPropertyDeclarations2.ts(16,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(16,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
-stringIndexerConstrainsPropertyDeclarations2.ts(23,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(23,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-stringIndexerConstrainsPropertyDeclarations2.ts(24,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(24,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
-stringIndexerConstrainsPropertyDeclarations2.ts(31,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(31,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'Number' is missing property 'foo' from type 'A'.
-stringIndexerConstrainsPropertyDeclarations2.ts(32,5): error TS2172: All named properties must be subtypes of string indexer type 'A':
+stringIndexerConstrainsPropertyDeclarations2.ts(32,5): error TS2172: All named properties must be assignable to string indexer type 'A':
 	Type 'String' is missing property 'foo' from type 'A'.
 stringIndexerConstrainsPropertyDeclarations2.ts(36,5): error TS2012: Cannot convert '{ a: typeof A; b: typeof B; [x: string]: {}; }' to '{ [x: string]: A; }':
 	Index signatures of types '{ a: typeof A; b: typeof B; [x: string]: {}; }' and '{ [x: string]: A; }' are incompatible:

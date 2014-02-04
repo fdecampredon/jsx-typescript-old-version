@@ -1,0 +1,32 @@
+=== tests/cases/compiler/contextualSignatureInstatiationContravariance.ts ===
+Line 0 col 10 IdentifierName "Animal" = Animal
+Line 0 col 19 IdentifierName "x" = any
+Line 1 col 10 IdentifierName "Giraffe" = Giraffe
+Line 1 col 26 IdentifierName "Animal" = Animal
+Line 1 col 35 IdentifierName "y" = any
+Line 2 col 10 IdentifierName "Elephant" = Elephant
+Line 2 col 27 IdentifierName "Animal" = Animal
+Line 2 col 36 IdentifierName "y2" = any
+Line 4 col 4 IdentifierName "f2" = <T extends Animal>(x: T, y: T) => void
+Line 4 col 9 IdentifierName "T" = T
+Line 4 col 19 IdentifierName "Animal" = Animal
+Line 4 col 27 IdentifierName "x" = T
+Line 4 col 30 IdentifierName "T" = T
+Line 4 col 33 IdentifierName "y" = T
+Line 4 col 36 IdentifierName "T" = T
+Line 6 col 4 IdentifierName "g2" = (g: Giraffe, e: Elephant) => void
+Line 6 col 9 IdentifierName "g" = Giraffe
+Line 6 col 12 IdentifierName "Giraffe" = Giraffe
+Line 6 col 21 IdentifierName "e" = Elephant
+Line 6 col 24 IdentifierName "Elephant" = Elephant
+Line 7 col 0 AssignmentExpression "g2 = f2" = <T extends Animal>(x: T, y: T) => void
+Line 7 col 0 IdentifierName "g2" = (g: Giraffe, e: Elephant) => void
+Line 7 col 5 IdentifierName "f2" = <T extends Animal>(x: T, y: T) => void
+Line 9 col 4 IdentifierName "h2" = (g1: Giraffe, g2: Giraffe) => void
+Line 9 col 9 IdentifierName "g1" = Giraffe
+Line 9 col 13 IdentifierName "Giraffe" = Giraffe
+Line 9 col 22 IdentifierName "g2" = Giraffe
+Line 9 col 26 IdentifierName "Giraffe" = Giraffe
+Line 10 col 0 AssignmentExpression "h2 = f2" = <T extends Animal>(x: T, y: T) => void
+Line 10 col 0 IdentifierName "h2" = (g1: Giraffe, g2: Giraffe) => void
+Line 10 col 5 IdentifierName "f2" = <T extends Animal>(x: T, y: T) => void

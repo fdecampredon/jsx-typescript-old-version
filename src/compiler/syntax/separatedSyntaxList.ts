@@ -380,7 +380,7 @@ module TypeScript.Syntax {
                 throw Errors.argumentOutOfRange("index");
             }
 
-            return this.elements[value];
+            return <T>this.elements[value];
         }
 
         public separatorAt(index: number): ISyntaxToken {
@@ -389,7 +389,7 @@ module TypeScript.Syntax {
                 throw Errors.argumentOutOfRange("index");
             }
 
-            return <ISyntaxToken><ISyntaxNodeOrToken>this.elements[value];
+            return <ISyntaxToken>this.elements[value];
         }
 
         public firstToken(): ISyntaxToken {

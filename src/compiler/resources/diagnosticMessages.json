@@ -819,7 +819,7 @@
         "category": "Error",
         "code": 2120
     },
-    "The right-hand side of an 'instanceof' expression must be of type 'any' or a subtype of the 'Function' interface type.": {
+    "The right-hand side of an 'instanceof' expression must be of type 'any' or of a type assignable to the 'Function' interface type.": {
         "category": "Error",
         "code": 2121
     },
@@ -835,7 +835,7 @@
         "category": "Error",
         "code": 2124
     },
-    "Function '{0}' declared a non-void return type, but has no return expression.": {
+    "Type '{0}' does not have type parameters.": {
         "category": "Error",
         "code": 2125
     },
@@ -943,7 +943,7 @@
         "category": "Error",
         "code": 2153
     },
-    "Specialized overload signature is not subtype of any non-specialized signature.": {
+    "Specialized overload signature is not assignable to any non-specialized signature.": {
         "category": "Error",
         "code": 2154
     },
@@ -987,27 +987,27 @@
         "category": "Error",
         "code": 2166
     },
-    "Numeric indexer type '{0}' must be a subtype of string indexer type '{1}'.": {
+    "Numeric indexer type '{0}' must be assignable to string indexer type '{1}'.": {
         "category": "Error",
         "code": 2167
     },
-    "Numeric indexer type '{0}' must be a subtype of string indexer type '{1}':{NL}{2}": {
+    "Numeric indexer type '{0}' must be assignable to string indexer type '{1}':{NL}{2}": {
         "category": "Error",
         "code": 2168
     },
-    "All numerically named properties must be subtypes of numeric indexer type '{0}'.": {
+    "All numerically named properties must be assignable to numeric indexer type '{0}'.": {
         "category": "Error",
         "code": 2169
     },
-    "All numerically named properties must be subtypes of numeric indexer type '{0}':{NL}{1}": {
+    "All numerically named properties must be assignable to numeric indexer type '{0}':{NL}{1}": {
         "category": "Error",
         "code": 2170
     },
-    "All named properties must be subtypes of string indexer type '{0}'.": {
+    "All named properties must be assignable to string indexer type '{0}'.": {
         "category": "Error",
         "code": 2171
     },
-    "All named properties must be subtypes of string indexer type '{0}':{NL}{1}": {
+    "All named properties must be assignable to string indexer type '{0}':{NL}{1}": {
         "category": "Error",
         "code": 2172
     },
@@ -1263,7 +1263,7 @@
         "category": "Error",
         "code": 2235
     },
-    "Type '{0}' is missing property '{1}' from type '{2}'.": {
+     "Type '{0}' is missing property '{1}' from type '{2}'.": {
         "category": "NoPrefix",
         "code": 4000
     },
@@ -1403,15 +1403,15 @@
         "category": "NoPrefix",
         "code": 4034
     },
-    "Type of number indexer in type '{0}' is not a subtype of string indexer type in type '{1}'.{NL}{2}": {
+    "Type of number indexer in type '{0}' is not assignable to string indexer type in type '{1}'.{NL}{2}": {
         "category": "NoPrefix",
         "code": 4035
     },
-    "Type of property '{0}' in type '{1}' is not a subtype of string indexer type in type '{2}'.{NL}{3}": {
+    "Type of property '{0}' in type '{1}' is not assignable to string indexer type in type '{2}'.{NL}{3}": {
         "category": "NoPrefix",
         "code": 4036
     },
-    "Type of property '{0}' in type '{1}' is not a subtype of number indexer type in type '{2}'.{NL}{3}": {
+    "Type of property '{0}' in type '{1}' is not assignable to number indexer type in type '{2}'.{NL}{3}": {
         "category": "NoPrefix",
         "code": 4037
     },

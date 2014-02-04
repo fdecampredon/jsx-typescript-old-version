@@ -101,8 +101,8 @@ new fn4('', null);
 new fn4(null, null); // Error
 
 // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
-new fn4(window, null); // Error
-new fn4(null, window); // Error
+new fn4(true, null); // Error
+new fn4(null, true); // Error
 
 // Non - generic overloads where contextual typing of function arguments has errors
 var fn5 = (function () {

@@ -1,1 +1,3 @@
-wrappedAndRecursiveConstraints4.ts(13,10): error TS2086: Type '{ length: number; charAt: (x: number) => void; }' does not satisfy the constraint 'string' for type parameter 'V extends string'.
+wrappedAndRecursiveConstraints4.ts(13,10): error TS2082: Supplied parameters do not match any signature of call target:
+	Could not apply type 'string' to argument 1 which is of type '{ length: number; charAt: (x: number) => void; }'.
+wrappedAndRecursiveConstraints4.ts(13,10): error TS2087: Could not select overload for 'call' expression.

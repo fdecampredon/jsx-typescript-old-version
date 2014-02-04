@@ -1,0 +1,48 @@
+=== tests/cases/compiler/contextualSignatureInstantiation1.ts ===
+Line 0 col 17 IdentifierName "map" = typeof map
+Line 0 col 21 IdentifierName "S" = S
+Line 0 col 24 IdentifierName "T" = T
+Line 0 col 27 IdentifierName "f" = (x: S) => T
+Line 0 col 31 IdentifierName "x" = S
+Line 0 col 34 IdentifierName "S" = S
+Line 0 col 40 IdentifierName "T" = T
+Line 0 col 45 IdentifierName "a" = S[]
+Line 0 col 48 IdentifierName "S" = S
+Line 0 col 56 IdentifierName "T" = T
+Line 1 col 4 IdentifierName "e" = <K>(x: string, y?: K) => number
+Line 1 col 8 ParenthesizedArrowFunctionExpression "<K>(x: string, y?: K) => x.length" = <K>(x: string, y?: K) => number
+Line 1 col 9 IdentifierName "K" = K
+Line 1 col 12 IdentifierName "x" = string
+Line 1 col 23 IdentifierName "y" = K
+Line 1 col 27 IdentifierName "K" = K
+Line 1 col 33 MemberAccessExpression "x.length" = number
+Line 1 col 33 IdentifierName "x" = string
+Line 1 col 35 IdentifierName "length" = number
+Line 2 col 4 IdentifierName "r99" = (a: {}[]) => number[]
+Line 2 col 10 InvocationExpression "map(e)" = (a: {}[]) => number[]
+Line 2 col 10 IdentifierName "map" = typeof map
+Line 2 col 14 IdentifierName "e" = <K>(x: string, y?: K) => number
+Line 4 col 17 IdentifierName "map2" = typeof map2
+Line 4 col 22 IdentifierName "S" = S
+Line 4 col 34 IdentifierName "length" = number
+Line 4 col 52 IdentifierName "T" = T
+Line 4 col 55 IdentifierName "f" = (x: S) => T
+Line 4 col 59 IdentifierName "x" = S
+Line 4 col 62 IdentifierName "S" = S
+Line 4 col 68 IdentifierName "T" = T
+Line 4 col 73 IdentifierName "a" = S[]
+Line 4 col 76 IdentifierName "S" = S
+Line 4 col 84 IdentifierName "T" = T
+Line 5 col 4 IdentifierName "e2" = <K>(x: string, y?: K) => number
+Line 5 col 9 ParenthesizedArrowFunctionExpression "<K>(x: string, y?: K) => x.length" = <K>(x: string, y?: K) => number
+Line 5 col 10 IdentifierName "K" = K
+Line 5 col 13 IdentifierName "x" = string
+Line 5 col 24 IdentifierName "y" = K
+Line 5 col 28 IdentifierName "K" = K
+Line 5 col 34 MemberAccessExpression "x.length" = number
+Line 5 col 34 IdentifierName "x" = string
+Line 5 col 36 IdentifierName "length" = number
+Line 6 col 4 IdentifierName "r100" = (a: { length: number; }[]) => number[]
+Line 6 col 11 InvocationExpression "map2(e2)" = (a: { length: number; }[]) => number[]
+Line 6 col 11 IdentifierName "map2" = typeof map2
+Line 6 col 16 IdentifierName "e2" = <K>(x: string, y?: K) => number

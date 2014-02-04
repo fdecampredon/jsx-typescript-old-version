@@ -53,7 +53,7 @@ module Errors {
         }
 
         interface I3 extends A {
-            // error, no inferences for V so it doesn't satisfy its constraints and contextual signature instantiation fails
+            // valid, no inferences for V so it defaults to Derived2
             a7: <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V;
         }
 
@@ -62,15 +62,15 @@ module Errors {
         }
 
         interface I4B extends A {
-            a10: <T extends Derived>(...x: T[]) => T; // error, more specific type in derived parameter type
+            a10: <T extends Derived>(...x: T[]) => T; // valid, parameter covariance works even after contextual signature instantiation
         }
 
         interface I4C extends A {
-            a11: <T extends Derived>(x: T, y: T) => T; // error
+            a11: <T extends Derived>(x: T, y: T) => T; // valid, even though x is a Base, parameter covariance works even after contextual signature instantiation
         }
 
         interface I4E extends A {
-            a12: <T extends Array<Derived2>>(x: Array<Base>, y: Array<Base>) => T; // error, no inferences for T, fails constraint satisfaction, fails contextual signature instantiation
+            a12: <T extends Array<Derived2>>(x: Array<Base>, y: Array<Base>) => T; // valid, no inferences for T, defaults to Array<Derived2>
         }
 
         interface I6 extends A {
@@ -78,16 +78,16 @@ module Errors {
         }
 
         interface I7 extends A {
-            a15: <T extends Base>(x: { a: T; b: T }) => number; // error, T is {} which doesn't satisfy constraint check
+            a15: <T extends Base>(x: { a: T; b: T }) => number; // error, T defaults to Base, which is not compatible with number or string
         }
 
         interface I8 extends A {
-            // error, cannot make inferences for T because multiple signatures to infer from, {} not compatible with base signature
+            // ok, we relate each signature of a16 to b16, and within that, we make inferences from two different signatures in the respective A.a16 signature
             a16: <T>(x: (a: T) => T) => T[];
         }
 
         interface I9 extends A {
-            a17: <T>(x: (a: T) => T) => any[]; // error
+            a17: <T>(x: (a: T) => T) => any[]; // valid, target is more constrained than source, so it is safe in the traditional constraint-contravariant fashion
         }
     }
 

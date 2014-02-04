@@ -2,7 +2,6 @@
 // Here the multiple overloads come from multiple bases.
 
 interface Base<T> {
-    foo: T;
     (x: number): string;
 }
 

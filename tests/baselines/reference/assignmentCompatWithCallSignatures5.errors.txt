@@ -1,6 +1,0 @@
-assignmentCompatWithCallSignatures5.ts(40,1): error TS2012: Cannot convert '<T>(x: T) => void' to '<T>(x: T) => T':
-	Call signatures of types '<T>(x: T) => void' and '<T>(x: T) => T' are incompatible.
-assignmentCompatWithCallSignatures5.ts(58,1): error TS2012: Cannot convert '<T extends Base>(x: { a: T; b: T; }) => T[]' to '<U, V>(x: { a: U; b: V; }) => U[]':
-	Call signatures of types '<T extends Base>(x: { a: T; b: T; }) => T[]' and '<U, V>(x: { a: U; b: V; }) => U[]' are incompatible.
-assignmentCompatWithCallSignatures5.ts(61,1): error TS2012: Cannot convert '{ <T extends Derived>(x: (a: T) => T): T[]; <T extends Base>(x: (a: T) => T): T[]; }' to '<T>(x: (a: T) => T) => T[]':
-	Call signatures of types '{ <T extends Derived>(x: (a: T) => T): T[]; <T extends Base>(x: (a: T) => T): T[]; }' and '<T>(x: (a: T) => T) => T[]' are incompatible.

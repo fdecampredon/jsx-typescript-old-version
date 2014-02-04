@@ -1,0 +1,9 @@
+=== tests/cases/compiler/cloduleAndTypeParameters.ts ===
+Line 0 col 6 IdentifierName "Foo" = Foo<T>
+Line 0 col 10 IdentifierName "T" = T
+Line 0 col 20 IdentifierName "Foo" = Foo
+Line 0 col 24 IdentifierName "Bar" = Foo.Bar
+Line 5 col 7 IdentifierName "Foo" = Foo
+Line 6 col 19 IdentifierName "Bar" = Foo.Bar
+Line 7 col 0 IdentifierName "bar" = () => void
+Line 10 col 15 IdentifierName "Baz" = Foo.Baz

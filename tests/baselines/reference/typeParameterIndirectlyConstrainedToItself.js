@@ -20,3 +20,9 @@ var b = function () {
 };
 var b2 = function () {
 };
+
+var D = (function () {
+    function D() {
+    }
+    return D;
+})();

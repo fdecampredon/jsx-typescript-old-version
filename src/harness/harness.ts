@@ -998,7 +998,7 @@ module Harness {
                 this.compiler.updateFile(unitName, TypeScript.ScriptSnapshot.fromString(code), /*version:*/ 0, /*isOpen:*/ true, null);
             }
 
-            public emitAll(ioHost?: IEmitterIOHost): TypeScript.Diagnostic[] {
+            public emitAll(ioHost?: IEmitterIOHost) {
                 var host = typeof ioHost === "undefined" ? this.ioHost : ioHost;
 
                 this.sourcemapRecorder.reset();
@@ -1023,15 +1023,11 @@ module Harness {
 
                     o.sourceMapEntries.forEach(s => sourceMapEmitterCallback(s.emittedFile, s.emittedLine, s.emittedColumn, s.sourceFile, s.sourceLine, s.sourceColumn, s.sourceName));
                 });
-
-                return output.diagnostics;
             }
 
             public emitAllDeclarations(ioHost: IEmitterIOHost) {
                 var output = this.compiler.emitAllDeclarations((path: string) => ioHost.resolvePath(path));
                 output.outputFiles.forEach(o => ioHost.writeFile(o.name, o.text, o.writeByteOrderMark));
-
-                return output.diagnostics;
             }
 
             /** If the compiler already contains the contents of interest, this will re-emit for AMD without re-adding or recompiling the current compiler units */
@@ -1073,13 +1069,13 @@ module Harness {
                 });
 
                 if (!anySyntaxErrors) {
-                    // Emit (note: reportDiagnostics is what causes the emit to happen)
-                    var emitDiagnostics = this.emitAll(this.ioHost);
-                    emitDiagnostics.forEach(d => this.addError(d));
+                    this.compiler.getCompilerOptionsDiagnostics().forEach(d => this.addError(d));
 
+                    // Emit (note: reportDiagnostics is what causes the emit to happen)
+                    this.emitAll(this.ioHost);
+                    
                     // Emit declarations
-                    var emitDeclarationsDiagnostics = this.emitAllDeclarations(this.ioHost);
-                    emitDeclarationsDiagnostics.forEach(d => this.addError(d));
+                    this.emitAllDeclarations(this.ioHost);
                 }
                 return this.errorList;
             }

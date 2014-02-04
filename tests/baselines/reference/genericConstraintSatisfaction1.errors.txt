@@ -1,1 +1,3 @@
-genericConstraintSatisfaction1.ts(6,3): error TS2086: Type '{ s: number; }' does not satisfy the constraint '{ s: string; }' for type parameter 'T extends { s: string; }'.
+genericConstraintSatisfaction1.ts(6,3): error TS2082: Supplied parameters do not match any signature of call target:
+	Types of property 's' of types '{ s: number; }' and '{ s: string; }' are incompatible.
+genericConstraintSatisfaction1.ts(6,3): error TS2087: Could not select overload for 'call' expression.

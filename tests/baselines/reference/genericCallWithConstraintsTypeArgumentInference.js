@@ -49,8 +49,7 @@ function foo2c() {
     return x;
 }
 
-// BUG 835476
-//var r3 = foo2b(d1); // {}
+var r3 = foo2b(d1);
 var r3b = foo2c();
 
 var C = (function () {
@@ -116,7 +115,5 @@ var r7 = i.foo4(d1, d2);
 var r8 = i.foo5(d1, d2);
 var r8b = i.foo5(d2, d2);
 var r9 = i.foo6();
-
-// BUG 835476
-//var r10 = i.foo7(d1); // {}
+var r10 = i.foo7(d1);
 var r11 = i.foo8();

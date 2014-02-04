@@ -1,6 +1,0 @@
-assignmentCompatWithConstructSignatures5.ts(40,1): error TS2012: Cannot convert 'new<T>(x: T) => void' to 'new<T>(x: T) => T':
-	Construct signatures of types 'new<T>(x: T) => void' and 'new<T>(x: T) => T' are incompatible.
-assignmentCompatWithConstructSignatures5.ts(58,1): error TS2012: Cannot convert 'new<T extends Base>(x: { a: T; b: T; }) => T[]' to 'new<U, V>(x: { a: U; b: V; }) => U[]':
-	Construct signatures of types 'new<T extends Base>(x: { a: T; b: T; }) => T[]' and 'new<U, V>(x: { a: U; b: V; }) => U[]' are incompatible.
-assignmentCompatWithConstructSignatures5.ts(61,1): error TS2012: Cannot convert '{ new<T extends Derived>(x: new(a: T) => T): T[]; new<T extends Base>(x: new(a: T) => T): T[]; }' to 'new<T>(x: new(a: T) => T) => T[]':
-	Construct signatures of types '{ new<T extends Derived>(x: new(a: T) => T): T[]; new<T extends Base>(x: new(a: T) => T): T[]; }' and 'new<T>(x: new(a: T) => T) => T[]' are incompatible.

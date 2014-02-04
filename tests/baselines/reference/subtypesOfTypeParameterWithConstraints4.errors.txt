@@ -8,18 +8,18 @@ subtypesOfTypeParameterWithConstraints4.ts(26,14): error TS2226: Type of conditi
 subtypesOfTypeParameterWithConstraints4.ts(27,14): error TS2226: Type of conditional '{}' must be identical to 'Foo' or 'V'.
 subtypesOfTypeParameterWithConstraints4.ts(45,7): error TS2141: Class 'D3<T, U, V>' cannot extend class 'B1<Foo>':
 	Types of property 'foo' of types 'D3<T, U, V>' and 'B1<Foo>' are incompatible:
-		Type 'V' is missing property 'foo' from type 'Foo'.
-subtypesOfTypeParameterWithConstraints4.ts(47,5): error TS2172: All named properties must be subtypes of string indexer type 'Foo':
-	Type 'V' is missing property 'foo' from type 'Foo'.
+		Type '{}' is missing property 'foo' from type 'Foo'.
+subtypesOfTypeParameterWithConstraints4.ts(47,5): error TS2172: All named properties must be assignable to string indexer type 'Foo':
+	Type '{}' is missing property 'foo' from type 'Foo'.
 subtypesOfTypeParameterWithConstraints4.ts(55,7): error TS2141: Class 'D5<T, U, V>' cannot extend class 'B1<T>':
 	Types of property 'foo' of types 'D5<T, U, V>' and 'B1<T>' are incompatible.
-subtypesOfTypeParameterWithConstraints4.ts(57,5): error TS2171: All named properties must be subtypes of string indexer type 'T'.
+subtypesOfTypeParameterWithConstraints4.ts(57,5): error TS2171: All named properties must be assignable to string indexer type 'T'.
 subtypesOfTypeParameterWithConstraints4.ts(60,7): error TS2141: Class 'D6<T, U, V>' cannot extend class 'B1<T>':
 	Types of property 'foo' of types 'D6<T, U, V>' and 'B1<T>' are incompatible.
-subtypesOfTypeParameterWithConstraints4.ts(62,5): error TS2171: All named properties must be subtypes of string indexer type 'T'.
+subtypesOfTypeParameterWithConstraints4.ts(62,5): error TS2171: All named properties must be assignable to string indexer type 'T'.
 subtypesOfTypeParameterWithConstraints4.ts(65,7): error TS2141: Class 'D7<T, U, V>' cannot extend class 'B1<U>':
 	Types of property 'foo' of types 'D7<T, U, V>' and 'B1<U>' are incompatible.
-subtypesOfTypeParameterWithConstraints4.ts(67,5): error TS2171: All named properties must be subtypes of string indexer type 'U'.
+subtypesOfTypeParameterWithConstraints4.ts(67,5): error TS2171: All named properties must be assignable to string indexer type 'U'.
 subtypesOfTypeParameterWithConstraints4.ts(75,7): error TS2141: Class 'D9<T, U, V>' cannot extend class 'B1<U>':
 	Types of property 'foo' of types 'D9<T, U, V>' and 'B1<U>' are incompatible.
-subtypesOfTypeParameterWithConstraints4.ts(77,5): error TS2171: All named properties must be subtypes of string indexer type 'U'.
+subtypesOfTypeParameterWithConstraints4.ts(77,5): error TS2171: All named properties must be assignable to string indexer type 'U'.

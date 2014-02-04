@@ -1,4 +1,4 @@
-// Valid uses of type parameters  as the type argument for other generics
+// These are all errors because type parameters cannot reference other type parameters from the same list
 
 function foo<T, U>(x: T, y: U) {
     foo<U, U>(y, y);

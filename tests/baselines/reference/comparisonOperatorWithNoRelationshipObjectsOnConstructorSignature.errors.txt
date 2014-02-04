@@ -4,109 +4,93 @@ comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(37,12): err
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(38,12): error TS2009: Operator '<' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(39,12): error TS2009: Operator '<' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(40,12): error TS2009: Operator '<' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(41,12): error TS2009: Operator '<' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(43,12): error TS2009: Operator '<' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(44,12): error TS2009: Operator '<' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(45,12): error TS2009: Operator '<' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(46,12): error TS2009: Operator '<' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(47,12): error TS2009: Operator '<' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(48,12): error TS2009: Operator '<' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(49,12): error TS2009: Operator '<' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(52,12): error TS2009: Operator '>' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(53,12): error TS2009: Operator '>' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(54,12): error TS2009: Operator '>' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(55,12): error TS2009: Operator '>' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(56,12): error TS2009: Operator '>' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(57,12): error TS2009: Operator '>' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(58,12): error TS2009: Operator '>' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(60,12): error TS2009: Operator '>' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(61,12): error TS2009: Operator '>' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(62,12): error TS2009: Operator '>' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(63,12): error TS2009: Operator '>' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(64,12): error TS2009: Operator '>' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(65,12): error TS2009: Operator '>' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(66,12): error TS2009: Operator '>' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(69,12): error TS2009: Operator '<=' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(70,12): error TS2009: Operator '<=' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(71,12): error TS2009: Operator '<=' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(72,12): error TS2009: Operator '<=' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(73,12): error TS2009: Operator '<=' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(74,12): error TS2009: Operator '<=' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(75,12): error TS2009: Operator '<=' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(77,12): error TS2009: Operator '<=' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(78,12): error TS2009: Operator '<=' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(79,12): error TS2009: Operator '<=' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(80,12): error TS2009: Operator '<=' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(81,12): error TS2009: Operator '<=' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(82,12): error TS2009: Operator '<=' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(83,12): error TS2009: Operator '<=' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(86,12): error TS2009: Operator '>=' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(87,12): error TS2009: Operator '>=' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(88,12): error TS2009: Operator '>=' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(89,12): error TS2009: Operator '>=' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(90,12): error TS2009: Operator '>=' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(91,12): error TS2009: Operator '>=' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(92,12): error TS2009: Operator '>=' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(94,12): error TS2009: Operator '>=' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(95,12): error TS2009: Operator '>=' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(96,12): error TS2009: Operator '>=' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(97,12): error TS2009: Operator '>=' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(98,12): error TS2009: Operator '>=' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(99,12): error TS2009: Operator '>=' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(100,12): error TS2009: Operator '>=' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(103,12): error TS2009: Operator '==' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(104,12): error TS2009: Operator '==' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(105,12): error TS2009: Operator '==' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(106,12): error TS2009: Operator '==' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(107,12): error TS2009: Operator '==' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(108,12): error TS2009: Operator '==' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(109,12): error TS2009: Operator '==' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(111,12): error TS2009: Operator '==' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(112,12): error TS2009: Operator '==' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(113,12): error TS2009: Operator '==' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(114,12): error TS2009: Operator '==' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(115,12): error TS2009: Operator '==' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(116,12): error TS2009: Operator '==' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(117,12): error TS2009: Operator '==' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(120,12): error TS2009: Operator '!=' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(121,12): error TS2009: Operator '!=' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(122,12): error TS2009: Operator '!=' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(123,12): error TS2009: Operator '!=' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(124,12): error TS2009: Operator '!=' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(125,12): error TS2009: Operator '!=' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(126,12): error TS2009: Operator '!=' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(128,12): error TS2009: Operator '!=' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(129,12): error TS2009: Operator '!=' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(130,12): error TS2009: Operator '!=' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(131,12): error TS2009: Operator '!=' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(132,12): error TS2009: Operator '!=' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(133,12): error TS2009: Operator '!=' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(134,12): error TS2009: Operator '!=' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(137,12): error TS2009: Operator '===' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(138,12): error TS2009: Operator '===' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(139,12): error TS2009: Operator '===' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(140,12): error TS2009: Operator '===' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(141,12): error TS2009: Operator '===' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(142,12): error TS2009: Operator '===' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(143,12): error TS2009: Operator '===' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(145,12): error TS2009: Operator '===' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(146,12): error TS2009: Operator '===' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(147,12): error TS2009: Operator '===' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(148,12): error TS2009: Operator '===' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(149,12): error TS2009: Operator '===' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(150,12): error TS2009: Operator '===' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(151,12): error TS2009: Operator '===' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(154,12): error TS2009: Operator '!==' cannot be applied to types '{ fn(): Base; }' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(155,12): error TS2009: Operator '!==' cannot be applied to types 'new(a: number, b: string) => Base' and 'new(a: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(156,12): error TS2009: Operator '!==' cannot be applied to types 'new(a: Base, b: string) => Base' and 'new(a: Derived, b: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(157,12): error TS2009: Operator '!==' cannot be applied to types 'new() => Base' and 'new() => C'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(158,12): error TS2009: Operator '!==' cannot be applied to types 'new(a?: Base) => Base' and 'new(a?: C) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(159,12): error TS2009: Operator '!==' cannot be applied to types 'new(...a: Base[]) => Base' and 'new(...a: C[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(160,12): error TS2009: Operator '!==' cannot be applied to types 'new<T>(t: T) => T' and 'new<T>(t: T[]) => T'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(162,12): error TS2009: Operator '!==' cannot be applied to types 'new() => Base' and '{ fn(): Base; }'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(163,12): error TS2009: Operator '!==' cannot be applied to types 'new(a: string) => Base' and 'new(a: number, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(164,12): error TS2009: Operator '!==' cannot be applied to types 'new(a: Derived, b: Base) => Base' and 'new(a: Base, b: string) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(165,12): error TS2009: Operator '!==' cannot be applied to types 'new() => C' and 'new() => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(166,12): error TS2009: Operator '!==' cannot be applied to types 'new(a?: C) => Base' and 'new(a?: Base) => Base'.
 comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(167,12): error TS2009: Operator '!==' cannot be applied to types 'new(...a: C[]) => Base' and 'new(...a: Base[]) => Base'.
-comparisonOperatorWithNoRelationshipObjectsOnConstructorSignature.ts(168,12): error TS2009: Operator '!==' cannot be applied to types 'new<T>(t: T[]) => T' and 'new<T>(t: T) => T'.

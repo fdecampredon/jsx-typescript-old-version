@@ -5,7 +5,7 @@ interface IComparable<T> {
 function f<T, I extends IComparable<T>>() {
 }
 
-interface I1<T, U extends I1<T, any>> {
+interface I1<T, U extends I1<T, any>> { // Error, any does not satisfy the constraint I1<T, any>
 }
 interface I2<T, U extends T> {
 }

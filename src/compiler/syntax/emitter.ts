@@ -66,13 +66,13 @@ module TypeScript.Emitter1 {
                 return node;
             }
             else if (indentAmount > 0) {
-                return SyntaxIndenter.indentNode(node,
+                return <T><any>SyntaxIndenter.indentNode(node,
                 /*indentFirstToken:*/ changeFirstToken, /*indentAmount:*/ indentAmount,
                     this.options);
             }
             else {
                 // Dedent the node.  But don't allow it go before the minimum indent amount.
-                return SyntaxDedenter.dedentNode(node,
+                return <T><any>SyntaxDedenter.dedentNode(node,
                 /*dedentFirstToken:*/ changeFirstToken, /*dedentAmount:*/-indentAmount,
                     /*minimumColumn:*/this.options.indentSpaces, this.options);
             }

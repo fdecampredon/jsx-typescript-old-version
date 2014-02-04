@@ -78,11 +78,11 @@ fn4(3, undefined);
 fn4('', null);
 
 // Generic overloads with constraints called with type arguments that do not satisfy the constraints
-fn4<Window, Date>(null, null); // Error
+fn4<boolean, Date>(null, null); // Error
 
 // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
-fn4(window, null); // Error
-fn4(null, window); // Error
+fn4(true, null); // Error
+fn4(null, true); // Error
 
 // Non - generic overloads where contextual typing of function arguments has errors
 function fn5(f: (n: string) => void): string;

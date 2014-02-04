@@ -355,16 +355,103 @@ module TypeScript {
             enumContainerInstanceTypeSymbol.addIndexSignature(syntheticIndexerSignatureSymbol);
         }
 
+        private findExistingVariableSymbolForModuleValueDecl(decl: PullDecl): PullSymbol {
+            var isExported = hasFlag(decl.flags, PullElementFlags.Exported);
+            var modName = decl.name;
+            var parentInstanceSymbol = this.getParent(decl, true);
+            var parentDecl = decl.getParentDecl();
+
+            var variableSymbol: PullSymbol = null;
+            // search for a complementary instance symbol first
+            if (parentInstanceSymbol) {
+                if (isExported) {
+                    // We search twice because export visibility does not need to agree
+                    variableSymbol = parentInstanceSymbol.findMember(modName, /*lookInParent*/ false);
+
+                    if (!variableSymbol) {
+                        variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+                    }
+                }
+                else {
+                    variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
+
+                    if (!variableSymbol) {
+                        variableSymbol = parentInstanceSymbol.findMember(modName, /*lookInParent*/ false);
+                    }
+                }
+
+                // use currentModuleValueDecl to emphasise that we are merging value side of the module
+                if (variableSymbol) {
+                    var declarations = variableSymbol.getDeclarations();
+
+                    if (declarations.length) {
+
+                        var variableSymbolParentDecl = declarations[0].getParentDecl();
+                        var isExportedOrHasTheSameParent = isExported || (parentDecl === variableSymbolParentDecl);
+                        // previously defined variable symbol can be reused if 
+                        // - current decl is either exported or has the same parent with the previosly defined symbol
+                        // AND
+                        // exports match for both current and previous decl
+                        var canReuseVariableSymbol = isExportedOrHasTheSameParent && this.checkThatExportsMatch(decl, variableSymbol, false);
+
+                        if (!canReuseVariableSymbol) {
+                            variableSymbol = null;
+                        }
+                    }
+                }
+            }
+            else if (!isExported) {
+                // Search locally to this file for a declaration that's suitable for augmentation.
+                // Note: we have to check all declarations because it may be hte case (due to
+                // recursive binding), that a later module gets bound before us.  
+                var siblingDecls = parentDecl.getChildDecls();
+
+                for (var i = 0; i < siblingDecls.length; i++) {
+                    var sibling = siblingDecls[i];
+
+                    var siblingIsSomeValue = hasFlag(sibling.kind, PullElementKind.SomeValue);
+                    var siblingIsFunctionOrHasImplictVarFlag =
+                        hasFlag(sibling.kind, PullElementKind.SomeFunction) ||
+                        hasFlag(sibling.flags, PullElementFlags.ImplicitVariable)
+
+                        // We need to determine of this sibling is something this module definition can augment
+                        // Augmentable items are: Function declarations, Classes (whos value decl is its constructor method), Enums
+                        var isSiblingAnAugmentableVariable =
+                        sibling !== decl &&
+                        sibling !== decl.getValueDecl() &&
+                        sibling.name === modName &&
+                        siblingIsSomeValue &&
+                        siblingIsFunctionOrHasImplictVarFlag;
+
+                    if (isSiblingAnAugmentableVariable) {
+
+                        // IMPORTANT: We don't want to just call sibling.getSymbol() here.  
+                        // That would force the sibling to get bound.  Something we don't want
+                        // to do while binding ourselves (to avoid recursion issues).
+                        if (sibling.hasSymbol()) {
+                            variableSymbol = sibling.getSymbol();
+                            if (variableSymbol.isContainer()) {
+                                variableSymbol = (<PullContainerSymbol>variableSymbol).getInstanceSymbol();
+                            }
+                            else if (variableSymbol && variableSymbol.isType()) {
+                                variableSymbol = (<PullTypeSymbol>variableSymbol).getConstructorMethod();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+            return variableSymbol;
+        }
+
         private bindModuleDeclarationToPullSymbol(moduleContainerDecl: PullDecl) {
-            // 1. Test for existing decl - if it exists, use its symbol
-            // 2. If no other decl exists, create a new symbol and use that one
+            // 1. Test for existing symbol - if it exists, use its symbol
+            // 2. If no other symbols exists, create a new symbol and use that one
 
             var modName = moduleContainerDecl.name;
 
             var moduleContainerTypeSymbol: PullContainerSymbol = null;
-            var moduleInstanceSymbol: PullSymbol = null;
-            var moduleInstanceTypeSymbol: PullTypeSymbol = null;
-
             var moduleKind = moduleContainerDecl.kind;
 
             var parent = this.getParent(moduleContainerDecl);
@@ -374,7 +461,7 @@ module TypeScript {
             var moduleDeclAST: ISyntaxElement = ASTHelpers.getEnclosingModuleDeclaration(moduleNameAST);
 
             if (!moduleDeclAST) {
-                Debug.assert(moduleContainerDecl.kind === PullElementKind.DynamicModule);
+                Debug.assert(moduleKind === PullElementKind.DynamicModule);
                 Debug.assert(moduleNameAST.kind() === SyntaxKind.SourceUnit);
                 // This is the module decl for the top level synthesized external module.
                 moduleDeclAST = moduleNameAST;
@@ -413,10 +500,7 @@ module TypeScript {
                 }
             }
 
-            if (moduleContainerTypeSymbol) {
-                moduleInstanceSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
-            }
-            else {
+            if (!moduleContainerTypeSymbol) {
                 moduleContainerTypeSymbol = new PullContainerSymbol(modName, moduleKind);
                 createdNewSymbol = true;
 
@@ -432,113 +516,7 @@ module TypeScript {
             this.semanticInfoChain.setSymbolForAST(moduleNameAST, moduleContainerTypeSymbol);
             this.semanticInfoChain.setSymbolForAST(moduleDeclAST, moduleContainerTypeSymbol);
 
-            var variableSymbol: PullSymbol = null;
             var currentModuleValueDecl = moduleContainerDecl.getValueDecl();
-
-            if (!moduleInstanceSymbol && isInitializedModule) {
-                // search for a complementary instance symbol first
-                if (parentInstanceSymbol) {
-                    if (isExported) {
-                        // We search twice because export visibility does not need to agree
-                        variableSymbol = parentInstanceSymbol.findMember(modName, /*lookInParent*/ false);
-
-                        if (!variableSymbol) {
-                            variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
-                        }
-                    }
-                    else {
-                        variableSymbol = parentInstanceSymbol.findContainedNonMember(modName);
-
-                        if (!variableSymbol) {
-                            variableSymbol = parentInstanceSymbol.findMember(modName, /*lookInParent*/ false);
-                        }
-                    }
-
-                    // use currentModuleValueDecl to emphasise that we are merging value side of the module
-                    if (variableSymbol && currentModuleValueDecl) {
-                        var declarations = variableSymbol.getDeclarations();
-
-                        if (declarations.length) {
-
-                            var variableSymbolParentDecl = declarations[0].getParentDecl();
-                            var isExportedOrHasTheSameParent = isExported || (parentDecl === variableSymbolParentDecl);
-                            // previously defined variable symbol can be reused if 
-                            // - current decl is either exported or has the same parent with the previosly defined symbol
-                            // AND
-                            // exports match for both current and previous decl
-                            var canReuseVariableSymbol = isExportedOrHasTheSameParent && this.checkThatExportsMatch(currentModuleValueDecl, variableSymbol, false);
-
-                            if (!canReuseVariableSymbol) {
-                                variableSymbol = null;
-                            }
-                        }
-                    }
-                }
-                else if (!isExported) {
-                    // Search locally to this file for a declaration that's suitable for augmentation.
-                    // Note: we have to check all declarations because it may be hte case (due to
-                    // recursive binding), that a later module gets bound before us.  
-                    var siblingDecls = parentDecl.getChildDecls();
-
-                    for (var i = 0; i < siblingDecls.length; i++) {
-                        var sibling = siblingDecls[i];
-
-                        var siblingIsSomeValue = hasFlag(sibling.kind, PullElementKind.SomeValue);
-                        var siblingIsFunctionOrHasImplictVarFlag =
-                            hasFlag(sibling.kind, PullElementKind.SomeFunction) ||
-                            hasFlag(sibling.flags, PullElementFlags.ImplicitVariable)
-
-                        // We need to determine of this sibling is something this module definition can augment
-                        // Augmentable items are: Function declarations, Classes (whos value decl is its constructor method), Enums
-                        var isSiblingAnAugmentableVariable =
-                            sibling !== moduleContainerDecl &&
-                            sibling !== currentModuleValueDecl &&
-                            sibling.name === modName &&
-                            siblingIsSomeValue &&
-                            siblingIsFunctionOrHasImplictVarFlag;
-
-                        if (isSiblingAnAugmentableVariable) {
-
-                            // IMPORTANT: We don't want to just call sibling.getSymbol() here.  
-                            // That would force the sibling to get bound.  Something we don't want
-                            // to do while binding ourselves (to avoid recursion issues).
-                            if (sibling.hasSymbol()) {
-                                variableSymbol = sibling.getSymbol();
-                                if (variableSymbol.isContainer()) {
-                                    variableSymbol = (<PullContainerSymbol>variableSymbol).getInstanceSymbol();
-                                }
-                                else if (variableSymbol && variableSymbol.isType()) {
-                                    variableSymbol = (<PullTypeSymbol>variableSymbol).getConstructorMethod();
-                                }
-
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                // The instance symbol is further set up in bindVariableDeclaration
-                if (variableSymbol) {
-                    moduleInstanceSymbol = variableSymbol;
-                    moduleInstanceTypeSymbol = variableSymbol.type;
-                }
-                else {
-                    moduleInstanceSymbol = new PullSymbol(modName, PullElementKind.Variable);
-                }
-
-                moduleContainerTypeSymbol.setInstanceSymbol(moduleInstanceSymbol);
-
-                if (!moduleInstanceTypeSymbol) {
-                    moduleInstanceTypeSymbol = new PullTypeSymbol("", PullElementKind.ObjectType);
-                    moduleInstanceSymbol.type = moduleInstanceTypeSymbol;
-                }
-
-                moduleInstanceTypeSymbol.addDeclaration(moduleContainerDecl);
-
-                if (!moduleInstanceTypeSymbol.getAssociatedContainerType()) {
-                    moduleInstanceTypeSymbol.setAssociatedContainerType(moduleContainerTypeSymbol);
-                }
-            }
 
             // If we have an enum with more than one declaration, then this enum's first element
             // must have an initializer.
@@ -555,19 +533,49 @@ module TypeScript {
                 }
             }
 
+            // do not create symbol for the module instance upfront - in some cases it can be harmful.
+            // var x: B.C; // 1
+            // declare function B(): B.C;
+            // declare module B {
+            //   export class C {
+            //   }
+            //}
+            // When binding B.C in line 1 we first will bind module B as container (*) ->then we'll bind value side of the module.
+            // During binding of the value side will discover that there are 2 value declarations with name B in scope, one - function, another - value decl for the module.
+            // Function will be bound first so when we start binding module value decl - we'll find existing symbol that correspond for function and reuse it.
+            // If we create instance symbol at point (*) - it will never be used.
+            // To avoid this problem we'll bind value decl first and then check if it has symbol - if yes - this symbol will be used as module instance symbol
             if (currentModuleValueDecl) {
                 currentModuleValueDecl.ensureSymbolIsBound();
-                // We associate the value decl to the module instance symbol. This should have
-                // already been achieved by ensureSymbolIsBound, but if bindModuleDeclarationToPullSymbol
-                // was called recursively while in the middle of binding the value decl, the cycle
-                // will be short-circuited. With a more organized binding pattern, this situation
-                // shouldn't be possible.
-                if (!currentModuleValueDecl.hasSymbol()) {
-                    currentModuleValueDecl.setSymbol(moduleInstanceSymbol);
-                    if (!moduleInstanceSymbol.hasDeclaration(currentModuleValueDecl)) {
-                        moduleInstanceSymbol.addDeclaration(currentModuleValueDecl);
+
+                var instanceSymbol: PullSymbol = null;
+                var instanceTypeSymbol: PullTypeSymbol = null;
+                if (currentModuleValueDecl.hasSymbol()) {
+                    instanceSymbol = currentModuleValueDecl.getSymbol();
+                }
+                else {
+                    // We associate the value decl to the module instance symbol. This should have
+                    // already been achieved by ensureSymbolIsBound, but if bindModuleDeclarationToPullSymbol
+                    // was called recursively while in the middle of binding the value decl, the cycle
+                    // will be short-circuited. With a more organized binding pattern, this situation
+                    // shouldn't be possible.
+                    instanceSymbol = new PullSymbol(modName, PullElementKind.Variable);
+                    currentModuleValueDecl.setSymbol(instanceSymbol);
+                    if (!instanceSymbol.hasDeclaration(currentModuleValueDecl)) {
+                        instanceSymbol.addDeclaration(currentModuleValueDecl);
                     }
                 }
+
+                if (!instanceSymbol.type) {
+                    instanceSymbol.type = new PullTypeSymbol("", PullElementKind.ObjectType);
+                }
+
+                moduleContainerTypeSymbol.setInstanceSymbol(instanceSymbol);
+
+                if (!instanceSymbol.type.getAssociatedContainerType()) {
+                    instanceSymbol.type.setAssociatedContainerType(moduleContainerTypeSymbol);
+                }
+
             }
         }
 
@@ -699,23 +707,23 @@ module TypeScript {
                 }
             }
 
-            var typeParameters = classDecl.getTypeParameters();
+            var typeParameterDecls = classDecl.getTypeParameters();
 
             // PULLREVIEW: Now that we clean type parameters, searching is redundant
-            for (var i = 0; i < typeParameters.length; i++) {
+            for (var i = 0; i < typeParameterDecls.length; i++) {
 
-                var typeParameter = classSymbol.findTypeParameter(typeParameters[i].name);
+                var typeParameterSymbol = classSymbol.findTypeParameter(typeParameterDecls[i].name);
 
-                if (typeParameter) {
-                    var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameter.getDeclarations()[0]);
-                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameter.getName()]);
+                if (typeParameterSymbol) {
+                    var typeParameterAST = this.semanticInfoChain.getASTForDecl(typeParameterSymbol.getDeclarations()[0]);
+                    this.semanticInfoChain.addDiagnosticFromAST(typeParameterAST, DiagnosticCode.Duplicate_identifier_0, [typeParameterSymbol.getName()]);
                 }
 
-                typeParameter = new PullTypeParameterSymbol(typeParameters[i].name);
+                typeParameterSymbol = new PullTypeParameterSymbol(typeParameterDecls[i].name);
 
-                classSymbol.addTypeParameter(typeParameter);
-                typeParameter.addDeclaration(typeParameters[i]);
-                typeParameters[i].setSymbol(typeParameter);
+                classSymbol.addTypeParameter(typeParameterSymbol);
+                typeParameterSymbol.addDeclaration(typeParameterDecls[i]);
+                typeParameterDecls[i].setSymbol(typeParameterSymbol);
             }
 
             constructorSymbol = classSymbol.getConstructorMethod();
@@ -763,7 +771,7 @@ module TypeScript {
             }
 
             // Create the constructorTypeSymbol
-            this.bindStaticPrototypePropertyOfClass(classSymbol, constructorTypeSymbol);
+            this.bindStaticPrototypePropertyOfClass(classAST, classSymbol, constructorTypeSymbol);
         }
 
         // interfaces
@@ -949,8 +957,11 @@ module TypeScript {
             var isModuleValue = (declFlags & (PullElementFlags.InitializedModule)) !== 0;
             var isEnumValue = (declFlags & PullElementFlags.Enum) !== 0;
             var isClassConstructorVariable = (declFlags & PullElementFlags.ClassConstructorVariable) !== 0;
-
             variableSymbol = this.getExistingSymbol(variableDeclaration, PullElementKind.SomeValue, parent);
+
+            if (!variableSymbol && isModuleValue) {
+                variableSymbol = this.findExistingVariableSymbolForModuleValueDecl(variableDeclaration.getContainerDecl());
+            }
 
             if (variableSymbol && !variableSymbol.isType()) {
                 parentHadSymbol = true;
@@ -1053,21 +1064,8 @@ module TypeScript {
                     }
 
                     if (!classTypeSymbol) {
-                        var parentDecl = variableDeclaration.getParentDecl();
-
-                        if (parentDecl) {
-                            var childDecls = parentDecl.searchChildDecls(declName, PullElementKind.SomeType);
-
-                            if (childDecls.length) {
-
-                                for (var i = 0; i < childDecls.length; i++) {
-                                    if (childDecls[i].getValueDecl() === variableDeclaration) {
-                                        classTypeSymbol = <PullTypeSymbol>childDecls[i].getSymbol();
-                                    }
-                                }
-                            }
-                        }
-
+                        var containerDecl = variableDeclaration.getContainerDecl()
+                        classTypeSymbol = <PullTypeSymbol>containerDecl.getSymbol();
                         if (!classTypeSymbol) {
                             classTypeSymbol = <PullTypeSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeType, variableDeclaration);
                         }
@@ -1124,21 +1122,8 @@ module TypeScript {
                     }
 
                     if (!moduleContainerTypeSymbol) {
-                        var parentDecl = variableDeclaration.getParentDecl();
-
-                        if (parentDecl) {
-                            var searchKind = (declFlags & (PullElementFlags.InitializedModule | PullElementFlags.InitializedDynamicModule)) ? PullElementKind.SomeContainer : PullElementKind.Enum;
-                            var childDecls = parentDecl.searchChildDecls(declName, searchKind);
-
-                            if (childDecls.length) {
-
-                                for (var i = 0; i < childDecls.length; i++) {
-                                    if (childDecls[i].getValueDecl() === variableDeclaration) {
-                                        moduleContainerTypeSymbol = <PullContainerSymbol>childDecls[i].getSymbol();
-                                    }
-                                }
-                            }
-                        }
+                        var containerDecl = variableDeclaration.getContainerDecl();
+                        moduleContainerTypeSymbol = <PullContainerSymbol>containerDecl.getSymbol();
                         if (!moduleContainerTypeSymbol) {
                             moduleContainerTypeSymbol = <PullContainerSymbol>this.semanticInfoChain.findTopLevelSymbol(declName, PullElementKind.SomeContainer, variableDeclaration);
 
@@ -1154,7 +1139,10 @@ module TypeScript {
 
                     if (moduleContainerTypeSymbol) {
                         variableSymbol = moduleContainerTypeSymbol.getInstanceSymbol();
-
+                        if (!variableSymbol) {
+                            variableSymbol = new PullSymbol(declName, declKind);
+                            variableSymbol.type = new PullTypeSymbol("", PullElementKind.ObjectType);
+                        }
                         // If this method calls bindModuleDeclarationToPullSymbol recursively,
                         // we may associate the variable decl with its symbol in that recursive
                         // call before we do it here. Therefore, make sure the symbol doesn't already
@@ -1175,6 +1163,11 @@ module TypeScript {
                     variableSymbol.addDeclaration(variableDeclaration);
                 }
                 variableDeclaration.setSymbol(variableSymbol);
+            }
+
+            var containerDecl = variableDeclaration.getContainerDecl();
+            if (variableSymbol && variableSymbol.type && containerDecl && !variableSymbol.type.hasDeclaration(containerDecl)) {
+                variableSymbol.type.addDeclaration(containerDecl)
             }
 
             if (parent && !parentHadSymbol) {
@@ -1739,7 +1732,7 @@ module TypeScript {
             methodTypeSymbol.insertCallSignatureAtIndex(signature, signatureIndex);
         }
 
-        private bindStaticPrototypePropertyOfClass(classTypeSymbol: PullTypeSymbol, constructorTypeSymbol: PullTypeSymbol) {
+        private bindStaticPrototypePropertyOfClass(classAST: ClassDeclarationSyntax, classTypeSymbol: PullTypeSymbol, constructorTypeSymbol: PullTypeSymbol) {
             var prototypeStr = "prototype";
 
             var prototypeSymbol = constructorTypeSymbol.findMember(prototypeStr, /*lookInParent*/ false);
@@ -1843,8 +1836,6 @@ module TypeScript {
 
             constructorTypeSymbol.appendConstructSignature(constructSignature);
 
-            // Create the constructorTypeSymbol
-            this.bindStaticPrototypePropertyOfClass(parent, constructorTypeSymbol);
         }
 
         private bindConstructSignatureDeclarationToPullSymbol(constructSignatureDeclaration: PullDecl) {

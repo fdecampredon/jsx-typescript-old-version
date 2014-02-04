@@ -28,9 +28,8 @@ function foo2c<T extends Base, U extends Derived>() {
     return x;
 }
 
-// BUG 835476
-//var r3 = foo2b(d1); // {}
-var r3b = foo2c(); // {}
+var r3 = foo2b(d1); // Base
+var r3b = foo2c(); // Base
 
 class C<T extends Base, U extends Derived> {
     constructor(public t: T, public u: U) {
@@ -79,10 +78,10 @@ var r6 = c.foo3(d1, d1); // Derived
 var r7 = c.foo4(d1, d2); // Base
 var r8 = c.foo5(d1, d2); // Derived
 var r8b = c.foo5(d2, d2); // Derived2
-var r9 = c.foo6(); // {}
+var r9 = c.foo6(); // Derived
 // BUG 835476
 //var r10 = c.foo7(d1); // {}
-var r11 = c.foo8(); // {}
+var r11 = c.foo8(); // Base
 
 interface I<T extends Base, U extends Derived> {
     new (t: T, u: U);
@@ -103,7 +102,6 @@ var r6 = i.foo3(d1, d1); // Derived
 var r7 = i.foo4(d1, d2); // Base
 var r8 = i.foo5(d1, d2); // Derived
 var r8b = i.foo5(d2, d2); // Derived2
-var r9 = i.foo6(); // {}
-// BUG 835476
-//var r10 = i.foo7(d1); // {}
-var r11 = i.foo8(); // {}
+var r9 = i.foo6(); // Derived
+var r10 = i.foo7(d1); // Base
+var r11 = i.foo8(); // Base

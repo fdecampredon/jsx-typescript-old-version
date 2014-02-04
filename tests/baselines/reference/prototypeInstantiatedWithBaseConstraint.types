@@ -1,0 +1,12 @@
+=== tests/cases/compiler/prototypeInstantiatedWithBaseConstraint.ts ===
+Line 0 col 6 IdentifierName "C" = C<T>
+Line 0 col 8 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "x" = T
+Line 1 col 7 IdentifierName "T" = T
+Line 3 col 0 MemberAccessExpression "C.prototype.x.boo" = any
+Line 3 col 0 MemberAccessExpression "C.prototype.x" = any
+Line 3 col 0 MemberAccessExpression "C.prototype" = C<any>
+Line 3 col 0 IdentifierName "C" = typeof C
+Line 4 col 2 IdentifierName "prototype" = C<any>
+Line 4 col 12 IdentifierName "x" = any
+Line 4 col 14 IdentifierName "boo" = any

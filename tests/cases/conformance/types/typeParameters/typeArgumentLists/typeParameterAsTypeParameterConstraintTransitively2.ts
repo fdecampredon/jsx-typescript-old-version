@@ -1,5 +1,5 @@
-// using a type parameter as a constraint for a type parameter is valid
-// these invocations are all errors
+// using a type parameter as a constraint for a type parameter is invalid
+// these should be errors at the type parameter constraint declarations, and have no downstream errors
 
 interface A { foo: number }
 interface B extends A { bar: string; }

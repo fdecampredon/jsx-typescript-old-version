@@ -1,7 +1,9 @@
-restParametersOfNonArrayTypes2.ts(54,35): error TS1008: Unexpected token; 'type' expected.
-restParametersOfNonArrayTypes2.ts(54,36): error TS1005: ',' expected.
-restParametersOfNonArrayTypes2.ts(54,42): error TS1005: ',' expected.
-restParametersOfNonArrayTypes2.ts(54,43): error TS1008: Unexpected token; 'parameter' expected.
+restParametersOfNonArrayTypes2.ts(9,11): error TS1014: Rest parameter must be last in list.
+restParametersOfNonArrayTypes2.ts(17,9): error TS1014: Rest parameter must be last in list.
+restParametersOfNonArrayTypes2.ts(27,21): error TS1014: Rest parameter must be last in list.
+restParametersOfNonArrayTypes2.ts(36,11): error TS1014: Rest parameter must be last in list.
+restParametersOfNonArrayTypes2.ts(44,9): error TS1014: Rest parameter must be last in list.
+restParametersOfNonArrayTypes2.ts(54,21): error TS1014: Rest parameter must be last in list.
 restParametersOfNonArrayTypes2.ts(7,14): error TS2162: Rest parameters must be array types.
 restParametersOfNonArrayTypes2.ts(8,22): error TS2162: Rest parameters must be array types.
 restParametersOfNonArrayTypes2.ts(9,26): error TS2162: Rest parameters must be array types.
@@ -22,7 +24,5 @@ restParametersOfNonArrayTypes2.ts(44,33): error TS2162: Rest parameters must be 
 restParametersOfNonArrayTypes2.ts(48,6): error TS2162: Rest parameters must be array types.
 restParametersOfNonArrayTypes2.ts(49,9): error TS2162: Rest parameters must be array types.
 restParametersOfNonArrayTypes2.ts(53,9): error TS2162: Rest parameters must be array types.
-restParametersOfNonArrayTypes2.ts(54,21): error TS2012: Cannot convert 'number' to 'MyThing':
-	Type 'Number' is missing property 'concat' from type 'MyThing'.
 restParametersOfNonArrayTypes2.ts(54,45): error TS2162: Rest parameters must be array types.
 restParametersOfNonArrayTypes2.ts(55,9): error TS2162: Rest parameters must be array types.
