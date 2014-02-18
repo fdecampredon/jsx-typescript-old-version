@@ -10466,7 +10466,6 @@ module TypeScript {
                     if (!(targetProp.isOptional)) {
                         if (comparisonInfo) { // only surface the first error
                             var enclosingSymbol = this.getEnclosingSymbolForAST(ast);
-                            comparisonInfo.flags |= TypeRelationshipFlags.RequiredPropertyIsMissing;
                             comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Type_0_is_missing_property_1_from_type_2,
                                 [source.toString(enclosingSymbol), targetProp.getScopedNameEx().toString(), target.toString(enclosingSymbol)]));
                         }
@@ -10691,7 +10690,6 @@ module TypeScript {
                             : DiagnosticCode.Property_0_defined_as_private_in_type_1_is_defined_as_public_in_type_2
                     }
                     comparisonInfo.addMessage(getDiagnosticMessage(code, [names.propertyName, names.sourceTypeName, names.targetTypeName]));
-                    comparisonInfo.flags |= TypeRelationshipFlags.InconsistantPropertyAccesibility;
                 }
                 return false;
             }
@@ -10704,7 +10702,6 @@ module TypeScript {
                     if (comparisonInfo) {
                         var names = getNames(/*takeTypesFromPropertyContainers*/ true);
                         // Both types define property with same name as private
-                        comparisonInfo.flags |= TypeRelationshipFlags.InconsistantPropertyAccesibility;
                         var code = sourceAndTargetAreConstructors
                             ? DiagnosticCode.Types_0_and_1_define_static_property_2_as_private
                             : DiagnosticCode.Types_0_and_1_define_property_2_as_private;
@@ -10719,7 +10716,6 @@ module TypeScript {
             if (sourceProp.isOptional && !targetProp.isOptional) {
                 if (comparisonInfo) {
                     var names = getNames(/*takeTypesFromPropertyContainers*/ true);
-                    comparisonInfo.flags |= TypeRelationshipFlags.RequiredPropertyIsMissing;
                     comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Property_0_defined_as_optional_in_type_1_but_is_required_in_type_2,
                         [names.propertyName, names.sourceTypeName, names.targetTypeName]));
                 }
@@ -10751,7 +10747,6 @@ module TypeScript {
             // Update error message correctly
             if (!isSourcePropertyRelatableToTargetProperty && comparisonInfo) {
                 var enclosingSymbol = this.getEnclosingSymbolForAST(ast);
-                comparisonInfo.flags |= TypeRelationshipFlags.IncompatiblePropertyTypes;
                 var message: string;
                 var names = getNames(/*takeTypesFromPropertyContainers*/ false);
                 if (comparisonInfoPropertyTypeCheck && comparisonInfoPropertyTypeCheck.message) {
@@ -10807,7 +10802,6 @@ module TypeScript {
                             var lacksSig = !targetCallSigs.length ? target.toString(enclosingSymbol) : source.toString(enclosingSymbol);
                             message = getDiagnosticMessage(DiagnosticCode.Type_0_requires_a_call_signature_but_type_1_lacks_one, [hasSig, lacksSig]);
                         }
-                        comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleSignatures;
                         comparisonInfo.addMessage(message);
                     }
                     return false;
@@ -10850,7 +10844,6 @@ module TypeScript {
                             var lacksSig = !targetConstructSigs.length ? target.toString(enclosingSymbol) : source.toString(enclosingSymbol);
                             message = getDiagnosticMessage(DiagnosticCode.Type_0_requires_a_construct_signature_but_type_1_lacks_one, [hasSig, lacksSig]);
                         }
-                        comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleSignatures;
                         comparisonInfo.addMessage(message);
                     }
                     return false;
@@ -10947,7 +10940,6 @@ module TypeScript {
                             message = getDiagnosticMessage(DiagnosticCode.Index_signatures_of_types_0_and_1_are_incompatible,
                                 [source.toString(enclosingSymbol), target.toString(enclosingSymbol)]);
                         }
-                        comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleSignatures;
                         comparisonInfo.addMessage(message);
                     }
                     return false;
@@ -11056,7 +11048,6 @@ module TypeScript {
 
             if (!targetSig.hasVarArgs && sourceNonOptionalParamCount > targetParameters.length) {
                 if (comparisonInfo) {
-                    comparisonInfo.flags |= TypeRelationshipFlags.SourceSignatureHasTooManyParameters;
                     comparisonInfo.addMessage(getDiagnosticMessage(DiagnosticCode.Call_signature_expects_0_or_fewer_parameters, [targetParameters.length]));
                 }
                 return false;
@@ -11089,12 +11080,6 @@ module TypeScript {
                     isComparingInstantiatedSignatures);
                 context.postWalkReturnTypes();
                 if (!returnTypesAreRelatable) {
-                    if (comparisonInfo) {
-                        comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleReturnTypes;
-                        // No need to print this one here - it's printed as part of the signature error in sourceIsRelatableToTarget
-                        //comparisonInfo.addMessage("Incompatible return types: '" + sourceReturnType.getTypeName() + "' and '" + targetReturnType.getTypeName() + "'");
-                    }
-
                     return false;
                 }
             }
@@ -11111,12 +11096,6 @@ module TypeScript {
                     context.swapEnclosingTypeWalkers();
                 }
                 context.postWalkParameterTypes();
-
-                if (!areParametersRelatable) {
-                    if (comparisonInfo) {
-                        comparisonInfo.flags |= TypeRelationshipFlags.IncompatibleParameterTypes;
-                    }
-                }
 
                 return areParametersRelatable;
             });
@@ -13726,14 +13705,12 @@ module TypeScript {
 
     export class TypeComparisonInfo {
         public onlyCaptureFirstError = false;
-        public flags: TypeRelationshipFlags = TypeRelationshipFlags.SuccessfulComparison;
         public message = "";
         public stringConstantVal: ISyntaxElement = null;
         private indent = 1;
 
         constructor(sourceComparisonInfo?: TypeComparisonInfo, useSameIndent?: boolean) {
             if (sourceComparisonInfo) {
-                this.flags = sourceComparisonInfo.flags;
                 this.onlyCaptureFirstError = sourceComparisonInfo.onlyCaptureFirstError;
                 this.stringConstantVal = sourceComparisonInfo.stringConstantVal;
                 this.indent = sourceComparisonInfo.indent;
