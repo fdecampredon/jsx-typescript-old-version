@@ -1,0 +1,28 @@
+=== tests/cases/compiler/typeOfThisInAccessor.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 8 IdentifierName "x" = number
+Line 2 col 12 IdentifierName "r" = C
+Line 2 col 16 ThisKeyword "this" = C
+Line 6 col 15 IdentifierName "y" = number
+Line 7 col 12 IdentifierName "r2" = typeof C
+Line 7 col 17 ThisKeyword "this" = typeof C
+Line 12 col 6 IdentifierName "D" = D<T>
+Line 12 col 8 IdentifierName "T" = T
+Line 13 col 0 IdentifierName "a" = T
+Line 13 col 7 IdentifierName "T" = T
+Line 14 col 8 IdentifierName "x" = number
+Line 15 col 12 IdentifierName "r" = D<T>
+Line 15 col 16 ThisKeyword "this" = D<T>
+Line 19 col 15 IdentifierName "y" = number
+Line 20 col 12 IdentifierName "r2" = typeof D
+Line 20 col 17 ThisKeyword "this" = typeof D
+Line 25 col 4 IdentifierName "x" = { a: number; }
+Line 25 col 8 ObjectLiteralExpression "{
+    get a() {
+        var r3 = this; // any
+        return 1;
+    }
+}" = { a: number; }
+Line 26 col 8 IdentifierName "a" = number
+Line 27 col 12 IdentifierName "r3" = any
+Line 27 col 17 ThisKeyword "this" = any

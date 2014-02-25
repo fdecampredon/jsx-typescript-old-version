@@ -403,57 +403,110 @@ module TypeScript {
             return path;
         }
 
-        public findCommonAncestorPath(b: PullSymbol): PullSymbol[] {
-            var aPath = this.pathToRoot();
-            if (aPath.length === 1) {
-                // Global symbol
-                return aPath;
-            }
-
-            var bPath: PullSymbol[];
-            if (b) {
-                bPath = b.pathToRoot();
-            }
-            else {
-                return aPath;
-            }
-
-            var commonNodeIndex = -1;
-            for (var i = 0, aLen = aPath.length; i < aLen; i++) {
-                var aNode = aPath[i];
-                for (var j = 0, bLen = bPath.length; j < bLen; j++) {
-                    var bNode = bPath[j];
-                    if (aNode === bNode) {
-                        var aDecl: PullDecl = null;
-                        if (i > 0) {
-                            var decls = aPath[i - 1].getDeclarations();
-                            if (decls.length) {
-                                aDecl = decls[0].getParentDecl();
-                            }
+        private static unqualifiedNameReferencesDifferentSymbolInScope(symbol: PullSymbol, scopePath: PullSymbol[], endScopePathIndex: number) {
+            // Declaration path is reverse of symbol path
+            // That is for symbol A.B.C.W the symbolPath = W C B A 
+            // while declPath = A B C W
+            var declPath = scopePath[0].getDeclarations()[0].getParentPath();
+            for (var i = 0, declIndex = declPath.length - 1; i <= endScopePathIndex; i++, declIndex--) {
+                // We should be doing this for all that is type/namespace/value kinds but for now we do this only for 
+                // containers and types in another container
+                if (scopePath[i].isContainer()) {
+                    var scopeContainer = <PullContainerSymbol>scopePath[i];
+                    if (symbol.isContainer()) {
+                        // Non exported container 
+                        var memberSymbol = scopeContainer.findContainedNonMemberContainer(symbol.name, PullElementKind.SomeContainer);
+                        if (memberSymbol
+                            && memberSymbol != symbol
+                            && memberSymbol.getDeclarations()[0].getParentDecl() == declPath[declIndex]) {
+                            // If we found different non exported symbol that is originating in same parent
+                            // So symbol with this name would refer to the memberSymbol instead of symbol
+                            return true;
                         }
-                        var bDecl: PullDecl = null;
-                        if (j > 0) {
-                            var decls = bPath[j - 1].getDeclarations();
-                            if (decls.length) {
-                                bDecl = decls[0].getParentDecl();
-                            }
+
+                        // Exported container
+                        var memberSymbol = scopeContainer.findNestedContainer(symbol.name, PullElementKind.SomeContainer);
+                        if (memberSymbol && memberSymbol != symbol) {
+                            return true;
                         }
-                        if (!aDecl || !bDecl || aDecl === bDecl) {
-                            commonNodeIndex = i;
-                            break;
+                    }
+                    else if (symbol.isType()) {
+                        // Non exported type 
+                        var memberSymbol = scopeContainer.findContainedNonMemberType(symbol.name, PullElementKind.SomeType);
+                        var symbolRootType = PullHelpers.getRootType(<PullTypeSymbol>symbol);
+                        if (memberSymbol
+                            && PullHelpers.getRootType(memberSymbol) != symbolRootType
+                            && memberSymbol.getDeclarations()[0].getParentDecl() == declPath[declIndex]) {
+                            // If we found different non exported symbol that is originating in same parent
+                            // So symbol with this name would refer to the memberSymbol instead of symbol
+                            return true;
+                        }
+
+                        // Exported type
+                        var memberSymbol = scopeContainer.findNestedType(symbol.name, PullElementKind.SomeType);
+                        if (memberSymbol && PullHelpers.getRootType(memberSymbol) != symbolRootType) {
+                            return true;
                         }
                     }
                 }
-                if (commonNodeIndex >= 0) {
-                    break;
+            }
+
+            return false;
+        }
+
+        // Find the path of this symbol in common ancestor of this symbol and b Symbol
+        private findQualifyingSymbolPathInScopeSymbol(scopeSymbol: PullSymbol): PullSymbol[] {
+            var thisPath = this.pathToRoot();
+            if (thisPath.length === 1) {
+                // Global symbol
+                return thisPath;
+            }
+
+            var scopeSymbolPath: PullSymbol[];
+            if (scopeSymbol) {
+                scopeSymbolPath = scopeSymbol.pathToRoot();
+            }
+            else {
+                // If scopeSymbol wasnt provided, then the path is full path
+                return thisPath;
+            }
+
+            var thisCommonAncestorIndex = ArrayUtilities.indexOf(thisPath, thisNode => ArrayUtilities.contains(scopeSymbolPath, thisNode));
+            if (thisCommonAncestorIndex > 0) {
+                // If the symbols matched that does not mean we can use the symbol before the common ancestor directly.
+                // e.g
+                //module A.C {
+                //    export interface Z {
+                //    }
+                //}
+                //module A.B.C {
+                //    export class W implements A.C.Z /*This*/ {
+                //    }
+                //}
+                // When trying to get Name of A.C.Z in the context A.B.C.W 
+                // We find that thisPath = [Z C A] and scopeSymbolPath = [W C B A]
+                // thisCommonAncestorIndex = 2
+                // But we cant use (thisCommonAncestorIndex - 1)C of C.Z as the reference path because 
+                // C in A.B.C.W references A.B.C rather than A.C
+
+                var thisCommonAncestor = thisPath[thisCommonAncestorIndex];
+                var scopeCommonAncestorIndex = ArrayUtilities.indexOf(scopeSymbolPath, scopeNode => scopeNode === thisCommonAncestor);
+                Debug.assert(thisPath.length - thisCommonAncestorIndex === scopeSymbolPath.length - scopeCommonAncestorIndex);
+
+                for (; thisCommonAncestorIndex < thisPath.length; thisCommonAncestorIndex++, scopeCommonAncestorIndex++) {
+                    if (!PullSymbol.unqualifiedNameReferencesDifferentSymbolInScope(
+                        thisPath[thisCommonAncestorIndex - 1], scopeSymbolPath, scopeCommonAncestorIndex)) {
+                        // scope symbol can reference symbol at index commonAncestor - 1 by name itself
+                        break;
+                    }
                 }
             }
 
-            if (commonNodeIndex >= 0) {
-                return aPath.slice(0, commonNodeIndex);
+            if (thisCommonAncestorIndex >= 0 && thisCommonAncestorIndex < thisPath.length) {
+                return thisPath.slice(0, thisCommonAncestorIndex);
             }
             else {
-                return aPath;
+                return thisPath;
             }
         }
 
@@ -501,7 +554,7 @@ module TypeScript {
         }
 
         public getScopedName(scopeSymbol?: PullSymbol, skipTypeParametersInName?: boolean, useConstraintInName?: boolean, skipInternalAliasName?: boolean): string {
-            var path = this.findCommonAncestorPath(scopeSymbol);
+            var path = this.findQualifyingSymbolPathInScopeSymbol(scopeSymbol);
             var fullName = "";
 
             var aliasFullName = this.getAliasSymbolName(scopeSymbol, (symbol) => symbol.getScopedName(scopeSymbol, skipTypeParametersInName, useConstraintInName, skipInternalAliasName),

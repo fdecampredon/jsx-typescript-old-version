@@ -1,0 +1,10 @@
+=== tests/cases/compiler/staticMemberInitialization.ts ===
+Line 0 col 6 IdentifierName "C" = C
+Line 1 col 11 IdentifierName "x" = number
+Line 4 col 4 IdentifierName "c" = C
+Line 4 col 8 ObjectCreationExpression "new C()" = C
+Line 4 col 12 IdentifierName "C" = typeof C
+Line 5 col 4 IdentifierName "r" = number
+Line 5 col 8 MemberAccessExpression "C.x" = number
+Line 5 col 8 IdentifierName "C" = typeof C
+Line 5 col 10 IdentifierName "x" = number

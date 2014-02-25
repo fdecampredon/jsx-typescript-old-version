@@ -1,0 +1,400 @@
+=== tests/cases/compiler/subtypingWithConstructSignatures3.ts ===
+Line 3 col 7 IdentifierName "Errors" = Errors
+Line 4 col 10 IdentifierName "Base" = Errors.Base
+Line 4 col 17 IdentifierName "foo" = string
+Line 5 col 10 IdentifierName "Derived" = Errors.Derived
+Line 5 col 26 IdentifierName "Base" = Errors.Base
+Line 5 col 33 IdentifierName "bar" = string
+Line 6 col 10 IdentifierName "Derived2" = Errors.Derived2
+Line 6 col 27 IdentifierName "Derived" = Errors.Derived
+Line 6 col 37 IdentifierName "baz" = string
+Line 7 col 10 IdentifierName "OtherDerived" = Errors.OtherDerived
+Line 7 col 31 IdentifierName "Base" = Errors.Base
+Line 7 col 38 IdentifierName "bing" = string
+Line 9 col 21 IdentifierName "foo2" = typeof Errors.foo2
+Line 9 col 26 IdentifierName "a2" = new(x: number) => string[]
+Line 9 col 35 IdentifierName "x" = number
+Line 9 col 67 IdentifierName "a2" = new(x: number) => string[]
+Line 10 col 21 IdentifierName "foo2" = typeof Errors.foo2
+Line 10 col 26 IdentifierName "a2" = any
+Line 12 col 21 IdentifierName "foo7" = typeof Errors.foo7
+Line 12 col 26 IdentifierName "a2" = new(x: new(arg: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived2
+Line 12 col 35 IdentifierName "x" = new(arg: Errors.Base) => Errors.Derived
+Line 12 col 43 IdentifierName "arg" = Errors.Base
+Line 12 col 48 IdentifierName "Base" = Errors.Base
+Line 12 col 57 IdentifierName "Derived" = Errors.Derived
+Line 12 col 74 IdentifierName "r" = Errors.Base
+Line 12 col 77 IdentifierName "Base" = Errors.Base
+Line 12 col 86 IdentifierName "Derived2" = Errors.Derived2
+Line 12 col 104 IdentifierName "a2" = new(x: new(arg: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived2
+Line 13 col 21 IdentifierName "foo7" = typeof Errors.foo7
+Line 13 col 26 IdentifierName "a2" = any
+Line 15 col 21 IdentifierName "foo8" = typeof Errors.foo8
+Line 15 col 26 IdentifierName "a2" = new(x: new(arg: Errors.Base) => Errors.Derived, y: new(arg2: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived
+Line 15 col 35 IdentifierName "x" = new(arg: Errors.Base) => Errors.Derived
+Line 15 col 43 IdentifierName "arg" = Errors.Base
+Line 15 col 48 IdentifierName "Base" = Errors.Base
+Line 15 col 57 IdentifierName "Derived" = Errors.Derived
+Line 15 col 66 IdentifierName "y" = new(arg2: Errors.Base) => Errors.Derived
+Line 15 col 74 IdentifierName "arg2" = Errors.Base
+Line 15 col 80 IdentifierName "Base" = Errors.Base
+Line 15 col 89 IdentifierName "Derived" = Errors.Derived
+Line 15 col 106 IdentifierName "r" = Errors.Base
+Line 15 col 109 IdentifierName "Base" = Errors.Base
+Line 15 col 118 IdentifierName "Derived" = Errors.Derived
+Line 15 col 135 IdentifierName "a2" = new(x: new(arg: Errors.Base) => Errors.Derived, y: new(arg2: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived
+Line 16 col 21 IdentifierName "foo8" = typeof Errors.foo8
+Line 16 col 26 IdentifierName "a2" = any
+Line 18 col 21 IdentifierName "foo10" = typeof Errors.foo10
+Line 18 col 27 IdentifierName "a2" = new(...x: Errors.Base[]) => Errors.Base
+Line 18 col 39 IdentifierName "x" = Errors.Base[]
+Line 18 col 42 IdentifierName "Base" = Errors.Base
+Line 18 col 53 IdentifierName "Base" = Errors.Base
+Line 18 col 67 IdentifierName "a2" = new(...x: Errors.Base[]) => Errors.Base
+Line 19 col 21 IdentifierName "foo10" = typeof Errors.foo10
+Line 19 col 27 IdentifierName "a2" = any
+Line 21 col 21 IdentifierName "foo11" = typeof Errors.foo11
+Line 21 col 27 IdentifierName "a2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 21 col 36 IdentifierName "x" = { foo: string; }
+Line 21 col 41 IdentifierName "foo" = string
+Line 21 col 56 IdentifierName "y" = { foo: string; bar: string; }
+Line 21 col 61 IdentifierName "foo" = string
+Line 21 col 74 IdentifierName "bar" = string
+Line 21 col 92 IdentifierName "Base" = Errors.Base
+Line 21 col 106 IdentifierName "a2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 22 col 21 IdentifierName "foo11" = typeof Errors.foo11
+Line 22 col 27 IdentifierName "a2" = any
+Line 24 col 21 IdentifierName "foo12" = typeof Errors.foo12
+Line 24 col 27 IdentifierName "a2" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 24 col 36 IdentifierName "x" = Errors.Base[]
+Line 24 col 39 IdentifierName "Array" = Array<T>
+Line 24 col 45 IdentifierName "Base" = Errors.Base
+Line 24 col 52 IdentifierName "y" = Errors.Derived2[]
+Line 24 col 55 IdentifierName "Array" = Array<T>
+Line 24 col 61 IdentifierName "Derived2" = Errors.Derived2
+Line 24 col 75 IdentifierName "Array" = Array<T>
+Line 24 col 81 IdentifierName "Derived" = Errors.Derived
+Line 24 col 99 IdentifierName "a2" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 25 col 21 IdentifierName "foo12" = typeof Errors.foo12
+Line 25 col 27 IdentifierName "a2" = any
+Line 27 col 21 IdentifierName "foo15" = typeof Errors.foo15
+Line 27 col 27 IdentifierName "a2" = new(x: { a: string; b: number; }) => number
+Line 27 col 36 IdentifierName "x" = { a: string; b: number; }
+Line 27 col 41 IdentifierName "a" = string
+Line 27 col 52 IdentifierName "b" = number
+Line 27 col 84 IdentifierName "a2" = new(x: { a: string; b: number; }) => number
+Line 28 col 21 IdentifierName "foo15" = typeof Errors.foo15
+Line 28 col 27 IdentifierName "a2" = any
+Line 30 col 21 IdentifierName "foo16" = typeof Errors.foo16
+Line 30 col 27 IdentifierName "a2" = { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
+Line 32 col 13 IdentifierName "x" = { new(a: number): number; new(a?: number): number; }
+Line 33 col 17 IdentifierName "a" = number
+Line 34 col 17 IdentifierName "a" = number
+Line 36 col 13 IdentifierName "x" = { new(a: boolean): boolean; new(a?: boolean): boolean; }
+Line 37 col 17 IdentifierName "a" = boolean
+Line 38 col 17 IdentifierName "a" = boolean
+Line 40 col 15 IdentifierName "a2" = { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
+Line 41 col 21 IdentifierName "foo16" = typeof Errors.foo16
+Line 41 col 27 IdentifierName "a2" = any
+Line 43 col 21 IdentifierName "foo17" = typeof Errors.foo17
+Line 43 col 27 IdentifierName "a2" = { new(x: { new<T extends Errors.Derived>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; new(x: { new<T extends Errors.Derived2>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; }
+Line 44 col 13 IdentifierName "x" = { new<T extends Errors.Derived>(a: T): T; new<T extends Errors.Base>(a: T): T; }
+Line 45 col 17 IdentifierName "T" = T
+Line 45 col 27 IdentifierName "Derived" = Errors.Derived
+Line 45 col 36 IdentifierName "a" = T
+Line 45 col 39 IdentifierName "T" = T
+Line 45 col 43 IdentifierName "T" = T
+Line 46 col 17 IdentifierName "T" = T
+Line 46 col 27 IdentifierName "Base" = Errors.Base
+Line 46 col 33 IdentifierName "a" = T
+Line 46 col 36 IdentifierName "T" = T
+Line 46 col 40 IdentifierName "T" = T
+Line 48 col 13 IdentifierName "x" = { new<T extends Errors.Derived2>(a: T): T; new<T extends Errors.Base>(a: T): T; }
+Line 49 col 17 IdentifierName "T" = T
+Line 49 col 27 IdentifierName "Derived2" = Errors.Derived2
+Line 49 col 37 IdentifierName "a" = T
+Line 49 col 40 IdentifierName "T" = T
+Line 49 col 44 IdentifierName "T" = T
+Line 50 col 17 IdentifierName "T" = T
+Line 50 col 27 IdentifierName "Base" = Errors.Base
+Line 50 col 33 IdentifierName "a" = T
+Line 50 col 36 IdentifierName "T" = T
+Line 50 col 40 IdentifierName "T" = T
+Line 52 col 15 IdentifierName "a2" = { new(x: { new<T extends Errors.Derived>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; new(x: { new<T extends Errors.Derived2>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; }
+Line 53 col 21 IdentifierName "foo17" = typeof Errors.foo17
+Line 53 col 27 IdentifierName "a2" = any
+Line 55 col 8 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
+Line 55 col 21 IdentifierName "T" = T
+Line 55 col 24 IdentifierName "U" = U
+Line 55 col 27 IdentifierName "x" = T
+Line 55 col 30 IdentifierName "T" = T
+Line 55 col 36 IdentifierName "U" = U
+Line 56 col 8 IdentifierName "r1arg2" = new(x: number) => string[]
+Line 56 col 21 IdentifierName "x" = number
+Line 57 col 8 IdentifierName "r1" = any
+Line 57 col 13 InvocationExpression "foo2(r1arg1)" = any
+Line 57 col 13 IdentifierName "foo2" = typeof Errors.foo2
+Line 57 col 18 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
+Line 58 col 8 IdentifierName "r1a" = { new<T, U>(x: T): U[]; }[]
+Line 58 col 14 ArrayLiteralExpression "[r1arg2, r1arg1]" = { new<T, U>(x: T): U[]; }[]
+Line 58 col 15 IdentifierName "r1arg2" = new(x: number) => string[]
+Line 58 col 23 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
+Line 59 col 8 IdentifierName "r1b" = { new<T, U>(x: T): U[]; }[]
+Line 59 col 14 ArrayLiteralExpression "[r1arg1, r1arg2]" = { new<T, U>(x: T): U[]; }[]
+Line 59 col 15 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
+Line 59 col 23 IdentifierName "r1arg2" = new(x: number) => string[]
+Line 61 col 8 IdentifierName "r2arg1" = new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U) => new(r: T) => V
+Line 61 col 21 IdentifierName "T" = T
+Line 61 col 31 IdentifierName "Base" = Errors.Base
+Line 61 col 37 IdentifierName "U" = U
+Line 61 col 47 IdentifierName "Derived" = Errors.Derived
+Line 61 col 56 IdentifierName "V" = V
+Line 61 col 66 IdentifierName "Derived2" = Errors.Derived2
+Line 61 col 76 IdentifierName "x" = new(arg: T) => U
+Line 61 col 84 IdentifierName "arg" = T
+Line 61 col 89 IdentifierName "T" = T
+Line 61 col 95 IdentifierName "U" = U
+Line 61 col 106 IdentifierName "r" = T
+Line 61 col 109 IdentifierName "T" = T
+Line 61 col 115 IdentifierName "V" = V
+Line 62 col 8 IdentifierName "r2arg2" = new(x: new(arg: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived2
+Line 62 col 21 IdentifierName "x" = new(arg: Errors.Base) => Errors.Derived
+Line 62 col 29 IdentifierName "arg" = Errors.Base
+Line 62 col 34 IdentifierName "Base" = Errors.Base
+Line 62 col 43 IdentifierName "Derived" = Errors.Derived
+Line 62 col 60 IdentifierName "r" = Errors.Base
+Line 62 col 63 IdentifierName "Base" = Errors.Base
+Line 62 col 72 IdentifierName "Derived2" = Errors.Derived2
+Line 63 col 8 IdentifierName "r2" = any
+Line 63 col 13 InvocationExpression "foo7(r2arg1)" = any
+Line 63 col 13 IdentifierName "foo7" = typeof Errors.foo7
+Line 63 col 18 IdentifierName "r2arg1" = new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U) => new(r: T) => V
+Line 64 col 8 IdentifierName "r2a" = { new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+Line 64 col 14 ArrayLiteralExpression "[r2arg2, r2arg1]" = { new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+Line 64 col 15 IdentifierName "r2arg2" = new(x: new(arg: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived2
+Line 64 col 23 IdentifierName "r2arg1" = new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U) => new(r: T) => V
+Line 65 col 8 IdentifierName "r2b" = { new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+Line 65 col 14 ArrayLiteralExpression "[r2arg1, r2arg2]" = { new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+Line 65 col 15 IdentifierName "r2arg1" = new<T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: new(arg: T) => U) => new(r: T) => V
+Line 65 col 23 IdentifierName "r2arg2" = new(x: new(arg: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived2
+Line 67 col 8 IdentifierName "r3arg1" = new<T extends Errors.Base, U extends Errors.Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+Line 67 col 21 IdentifierName "T" = T
+Line 67 col 31 IdentifierName "Base" = Errors.Base
+Line 67 col 37 IdentifierName "U" = U
+Line 67 col 47 IdentifierName "Derived" = Errors.Derived
+Line 67 col 56 IdentifierName "x" = new(arg: T) => U
+Line 67 col 64 IdentifierName "arg" = T
+Line 67 col 69 IdentifierName "T" = T
+Line 67 col 75 IdentifierName "U" = U
+Line 67 col 78 IdentifierName "y" = (arg2: { foo: number; }) => U
+Line 67 col 82 IdentifierName "arg2" = { foo: number; }
+Line 67 col 90 IdentifierName "foo" = number
+Line 67 col 109 IdentifierName "U" = U
+Line 67 col 120 IdentifierName "r" = T
+Line 67 col 123 IdentifierName "T" = T
+Line 67 col 129 IdentifierName "U" = U
+Line 68 col 8 IdentifierName "r3arg2" = new(x: (arg: Errors.Base) => Errors.Derived, y: new(arg2: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived
+Line 68 col 21 IdentifierName "x" = (arg: Errors.Base) => Errors.Derived
+Line 68 col 25 IdentifierName "arg" = Errors.Base
+Line 68 col 30 IdentifierName "Base" = Errors.Base
+Line 68 col 39 IdentifierName "Derived" = Errors.Derived
+Line 68 col 48 IdentifierName "y" = new(arg2: Errors.Base) => Errors.Derived
+Line 68 col 56 IdentifierName "arg2" = Errors.Base
+Line 68 col 62 IdentifierName "Base" = Errors.Base
+Line 68 col 71 IdentifierName "Derived" = Errors.Derived
+Line 68 col 88 IdentifierName "r" = Errors.Base
+Line 68 col 91 IdentifierName "Base" = Errors.Base
+Line 68 col 100 IdentifierName "Derived" = Errors.Derived
+Line 69 col 8 IdentifierName "r3" = any
+Line 69 col 13 InvocationExpression "foo8(r3arg1)" = any
+Line 69 col 13 IdentifierName "foo8" = typeof Errors.foo8
+Line 69 col 18 IdentifierName "r3arg1" = new<T extends Errors.Base, U extends Errors.Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+Line 70 col 8 IdentifierName "r3a" = {}[]
+Line 70 col 14 ArrayLiteralExpression "[r3arg2, r3arg1]" = {}[]
+Line 70 col 15 IdentifierName "r3arg2" = new(x: (arg: Errors.Base) => Errors.Derived, y: new(arg2: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived
+Line 70 col 23 IdentifierName "r3arg1" = new<T extends Errors.Base, U extends Errors.Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+Line 71 col 8 IdentifierName "r3b" = {}[]
+Line 71 col 14 ArrayLiteralExpression "[r3arg1, r3arg2]" = {}[]
+Line 71 col 15 IdentifierName "r3arg1" = new<T extends Errors.Base, U extends Errors.Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+Line 71 col 23 IdentifierName "r3arg2" = new(x: (arg: Errors.Base) => Errors.Derived, y: new(arg2: Errors.Base) => Errors.Derived) => new(r: Errors.Base) => Errors.Derived
+Line 73 col 8 IdentifierName "r4arg1" = new<T extends Errors.Derived>(...x: T[]) => T
+Line 73 col 21 IdentifierName "T" = T
+Line 73 col 31 IdentifierName "Derived" = Errors.Derived
+Line 73 col 43 IdentifierName "x" = T[]
+Line 73 col 46 IdentifierName "T" = T
+Line 73 col 54 IdentifierName "T" = T
+Line 74 col 8 IdentifierName "r4arg2" = new(...x: Errors.Base[]) => Errors.Base
+Line 74 col 24 IdentifierName "x" = Errors.Base[]
+Line 74 col 27 IdentifierName "Base" = Errors.Base
+Line 74 col 38 IdentifierName "Base" = Errors.Base
+Line 75 col 8 IdentifierName "r4" = any
+Line 75 col 13 InvocationExpression "foo10(r4arg1)" = any
+Line 75 col 13 IdentifierName "foo10" = typeof Errors.foo10
+Line 75 col 19 IdentifierName "r4arg1" = new<T extends Errors.Derived>(...x: T[]) => T
+Line 76 col 8 IdentifierName "r4a" = { new<T extends Errors.Derived>(...x: T[]): T; }[]
+Line 76 col 14 ArrayLiteralExpression "[r4arg2, r4arg1]" = { new<T extends Errors.Derived>(...x: T[]): T; }[]
+Line 76 col 15 IdentifierName "r4arg2" = new(...x: Errors.Base[]) => Errors.Base
+Line 76 col 23 IdentifierName "r4arg1" = new<T extends Errors.Derived>(...x: T[]) => T
+Line 77 col 8 IdentifierName "r4b" = { new<T extends Errors.Derived>(...x: T[]): T; }[]
+Line 77 col 14 ArrayLiteralExpression "[r4arg1, r4arg2]" = { new<T extends Errors.Derived>(...x: T[]): T; }[]
+Line 77 col 15 IdentifierName "r4arg1" = new<T extends Errors.Derived>(...x: T[]) => T
+Line 77 col 23 IdentifierName "r4arg2" = new(...x: Errors.Base[]) => Errors.Base
+Line 79 col 8 IdentifierName "r5arg1" = new<T extends Errors.Derived>(x: T, y: T) => T
+Line 79 col 21 IdentifierName "T" = T
+Line 79 col 31 IdentifierName "Derived" = Errors.Derived
+Line 79 col 40 IdentifierName "x" = T
+Line 79 col 43 IdentifierName "T" = T
+Line 79 col 46 IdentifierName "y" = T
+Line 79 col 49 IdentifierName "T" = T
+Line 79 col 55 IdentifierName "T" = T
+Line 80 col 8 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 80 col 21 IdentifierName "x" = { foo: string; }
+Line 80 col 26 IdentifierName "foo" = string
+Line 80 col 41 IdentifierName "y" = { foo: string; bar: string; }
+Line 80 col 46 IdentifierName "foo" = string
+Line 80 col 59 IdentifierName "bar" = string
+Line 80 col 77 IdentifierName "Base" = Errors.Base
+Line 81 col 8 IdentifierName "r5" = any
+Line 81 col 13 InvocationExpression "foo11(r5arg1)" = any
+Line 81 col 13 IdentifierName "foo11" = typeof Errors.foo11
+Line 81 col 19 IdentifierName "r5arg1" = new<T extends Errors.Derived>(x: T, y: T) => T
+Line 82 col 8 IdentifierName "r5a" = { new<T extends Errors.Derived>(x: T, y: T): T; }[]
+Line 82 col 14 ArrayLiteralExpression "[r5arg2, r5arg1]" = { new<T extends Errors.Derived>(x: T, y: T): T; }[]
+Line 82 col 15 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 82 col 23 IdentifierName "r5arg1" = new<T extends Errors.Derived>(x: T, y: T) => T
+Line 83 col 8 IdentifierName "r5b" = { new<T extends Errors.Derived>(x: T, y: T): T; }[]
+Line 83 col 14 ArrayLiteralExpression "[r5arg1, r5arg2]" = { new<T extends Errors.Derived>(x: T, y: T): T; }[]
+Line 83 col 15 IdentifierName "r5arg1" = new<T extends Errors.Derived>(x: T, y: T) => T
+Line 83 col 23 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 85 col 8 IdentifierName "r6arg1" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 85 col 21 IdentifierName "x" = Errors.Base[]
+Line 85 col 24 IdentifierName "Array" = Array<T>
+Line 85 col 30 IdentifierName "Base" = Errors.Base
+Line 85 col 37 IdentifierName "y" = Errors.Derived2[]
+Line 85 col 40 IdentifierName "Array" = Array<T>
+Line 85 col 46 IdentifierName "Derived2" = Errors.Derived2
+Line 85 col 60 IdentifierName "Array" = Array<T>
+Line 85 col 66 IdentifierName "Derived" = Errors.Derived
+Line 86 col 8 IdentifierName "r6arg2" = new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
+Line 86 col 21 IdentifierName "T" = T
+Line 86 col 31 IdentifierName "Array" = Array<T>
+Line 86 col 37 IdentifierName "Derived2" = Errors.Derived2
+Line 86 col 48 IdentifierName "x" = Errors.Base[]
+Line 86 col 51 IdentifierName "Array" = Array<T>
+Line 86 col 57 IdentifierName "Base" = Errors.Base
+Line 86 col 64 IdentifierName "y" = Errors.Base[]
+Line 86 col 67 IdentifierName "Array" = Array<T>
+Line 86 col 73 IdentifierName "Base" = Errors.Base
+Line 86 col 83 IdentifierName "T" = T
+Line 87 col 8 IdentifierName "r6" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 87 col 13 InvocationExpression "foo12(r6arg1)" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 87 col 13 IdentifierName "foo12" = typeof Errors.foo12
+Line 87 col 19 IdentifierName "r6arg1" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 88 col 8 IdentifierName "r6a" = { new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
+Line 88 col 14 ArrayLiteralExpression "[r6arg2, r6arg1]" = { new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
+Line 88 col 15 IdentifierName "r6arg2" = new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
+Line 88 col 23 IdentifierName "r6arg1" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 89 col 8 IdentifierName "r6b" = { new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
+Line 89 col 14 ArrayLiteralExpression "[r6arg1, r6arg2]" = { new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
+Line 89 col 15 IdentifierName "r6arg1" = new(x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
+Line 89 col 23 IdentifierName "r6arg2" = new<T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
+Line 91 col 8 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
+Line 91 col 21 IdentifierName "T" = T
+Line 91 col 24 IdentifierName "x" = { a: T; b: T; }
+Line 91 col 29 IdentifierName "a" = T
+Line 91 col 32 IdentifierName "T" = T
+Line 91 col 35 IdentifierName "b" = T
+Line 91 col 38 IdentifierName "T" = T
+Line 91 col 46 IdentifierName "T" = T
+Line 92 col 8 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
+Line 92 col 21 IdentifierName "x" = { a: string; b: number; }
+Line 92 col 26 IdentifierName "a" = string
+Line 92 col 37 IdentifierName "b" = number
+Line 93 col 8 IdentifierName "r7" = any
+Line 93 col 13 InvocationExpression "foo15(r7arg1)" = any
+Line 93 col 13 IdentifierName "foo15" = typeof Errors.foo15
+Line 93 col 19 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
+Line 94 col 8 IdentifierName "r7a" = { new<T>(x: { a: T; b: T; }): T; }[]
+Line 94 col 14 ArrayLiteralExpression "[r7arg2, r7arg1]" = { new<T>(x: { a: T; b: T; }): T; }[]
+Line 94 col 15 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
+Line 94 col 23 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
+Line 95 col 8 IdentifierName "r7b" = { new<T>(x: { a: T; b: T; }): T; }[]
+Line 95 col 14 ArrayLiteralExpression "[r7arg1, r7arg2]" = { new<T>(x: { a: T; b: T; }): T; }[]
+Line 95 col 15 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
+Line 95 col 23 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
+Line 97 col 8 IdentifierName "r7arg3" = new<T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 97 col 21 IdentifierName "T" = T
+Line 97 col 31 IdentifierName "Base" = Errors.Base
+Line 97 col 37 IdentifierName "x" = { a: T; b: T; }
+Line 97 col 42 IdentifierName "a" = T
+Line 97 col 45 IdentifierName "T" = T
+Line 97 col 48 IdentifierName "b" = T
+Line 97 col 51 IdentifierName "T" = T
+Line 98 col 8 IdentifierName "r7c" = new(x: { a: string; b: number; }) => number
+Line 98 col 14 InvocationExpression "foo15(r7arg3)" = new(x: { a: string; b: number; }) => number
+Line 98 col 14 IdentifierName "foo15" = typeof Errors.foo15
+Line 98 col 20 IdentifierName "r7arg3" = new<T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 99 col 8 IdentifierName "r7d" = { new(x: { a: string; b: number; }): number; }[]
+Line 99 col 14 ArrayLiteralExpression "[r7arg2, r7arg3]" = { new(x: { a: string; b: number; }): number; }[]
+Line 99 col 15 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
+Line 99 col 23 IdentifierName "r7arg3" = new<T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 100 col 8 IdentifierName "r7e" = { new<T extends Errors.Base>(x: { a: T; b: T; }): number; }[]
+Line 100 col 14 ArrayLiteralExpression "[r7arg3, r7arg2]" = { new<T extends Errors.Base>(x: { a: T; b: T; }): number; }[]
+Line 100 col 15 IdentifierName "r7arg3" = new<T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 100 col 23 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
+Line 102 col 8 IdentifierName "r8arg" = new<T>(x: new(a: T) => T) => T[]
+Line 102 col 20 IdentifierName "T" = T
+Line 102 col 23 IdentifierName "x" = new(a: T) => T
+Line 102 col 31 IdentifierName "a" = T
+Line 102 col 34 IdentifierName "T" = T
+Line 102 col 40 IdentifierName "T" = T
+Line 102 col 46 IdentifierName "T" = T
+Line 103 col 8 IdentifierName "r8" = any
+Line 103 col 13 InvocationExpression "foo16(r8arg)" = any
+Line 103 col 13 IdentifierName "foo16" = typeof Errors.foo16
+Line 103 col 19 IdentifierName "r8arg" = new<T>(x: new(a: T) => T) => T[]
+Line 105 col 8 IdentifierName "r9arg" = new<T>(x: new(a: T) => T) => any[]
+Line 105 col 20 IdentifierName "T" = T
+Line 105 col 23 IdentifierName "x" = new(a: T) => T
+Line 105 col 31 IdentifierName "a" = T
+Line 105 col 34 IdentifierName "T" = T
+Line 105 col 40 IdentifierName "T" = T
+Line 106 col 8 IdentifierName "r9" = { new(x: { new<T extends Errors.Derived>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; new(x: { new<T extends Errors.Derived2>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; }
+Line 106 col 13 InvocationExpression "foo17(r9arg)" = { new(x: { new<T extends Errors.Derived>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; new(x: { new<T extends Errors.Derived2>(a: T): T; new<T extends Errors.Base>(a: T): T; }): any[]; }
+Line 106 col 13 IdentifierName "foo17" = typeof Errors.foo17
+Line 106 col 19 IdentifierName "r9arg" = new<T>(x: new(a: T) => T) => any[]
+Line 109 col 7 IdentifierName "WithGenericSignaturesInBaseType" = WithGenericSignaturesInBaseType
+Line 110 col 21 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 110 col 26 IdentifierName "a2" = new<T>(x: T) => T[]
+Line 110 col 35 IdentifierName "T" = T
+Line 110 col 38 IdentifierName "x" = T
+Line 110 col 41 IdentifierName "T" = T
+Line 110 col 47 IdentifierName "T" = T
+Line 110 col 60 IdentifierName "a2" = new<T>(x: T) => T[]
+Line 111 col 21 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 111 col 26 IdentifierName "a2" = any
+Line 112 col 8 IdentifierName "r2arg2" = new<T>(x: T) => string[]
+Line 112 col 21 IdentifierName "T" = T
+Line 112 col 24 IdentifierName "x" = T
+Line 112 col 27 IdentifierName "T" = T
+Line 113 col 8 IdentifierName "r2" = new<T>(x: T) => T[]
+Line 113 col 13 InvocationExpression "foo2(r2arg2)" = new<T>(x: T) => T[]
+Line 113 col 13 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 113 col 18 IdentifierName "r2arg2" = new<T>(x: T) => string[]
+Line 115 col 21 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 115 col 26 IdentifierName "a2" = new<T>(x: T) => string[]
+Line 115 col 35 IdentifierName "T" = T
+Line 115 col 38 IdentifierName "x" = T
+Line 115 col 41 IdentifierName "T" = T
+Line 115 col 65 IdentifierName "a2" = new<T>(x: T) => string[]
+Line 116 col 21 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 116 col 26 IdentifierName "a2" = any
+Line 117 col 8 IdentifierName "r3arg2" = new<T>(x: T) => T[]
+Line 117 col 21 IdentifierName "T" = T
+Line 117 col 24 IdentifierName "x" = T
+Line 117 col 27 IdentifierName "T" = T
+Line 117 col 33 IdentifierName "T" = T
+Line 118 col 8 IdentifierName "r3" = any
+Line 118 col 13 InvocationExpression "foo3(r3arg2)" = any
+Line 118 col 13 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 118 col 18 IdentifierName "r3arg2" = new<T>(x: T) => T[]

@@ -1,0 +1,19 @@
+=== tests/cases/compiler/interfaceWithOverloadedCallAndConstructSignatures.ts ===
+Line 0 col 10 IdentifierName "Foo" = Foo
+Line 2 col 5 IdentifierName "x" = string
+Line 5 col 9 IdentifierName "x" = string
+Line 5 col 21 IdentifierName "Object" = Object
+Line 8 col 4 IdentifierName "f" = Foo
+Line 8 col 7 IdentifierName "Foo" = Foo
+Line 9 col 4 IdentifierName "r1" = number
+Line 9 col 9 InvocationExpression "f()" = number
+Line 9 col 9 IdentifierName "f" = Foo
+Line 10 col 4 IdentifierName "r2" = number
+Line 10 col 9 InvocationExpression "f('')" = number
+Line 10 col 9 IdentifierName "f" = Foo
+Line 11 col 4 IdentifierName "r3" = any
+Line 11 col 9 ObjectCreationExpression "new f()" = any
+Line 11 col 13 IdentifierName "f" = Foo
+Line 12 col 4 IdentifierName "r4" = Object
+Line 12 col 9 ObjectCreationExpression "new f('')" = Object
+Line 12 col 13 IdentifierName "f" = Foo

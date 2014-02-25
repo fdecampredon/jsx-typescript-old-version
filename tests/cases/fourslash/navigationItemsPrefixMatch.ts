@@ -6,20 +6,20 @@
 ////    // Class
 ////    {| "itemName": "Point", "kind": "class", "parentName": "Shapes" |}export class Point {
 ////        // Instance member
-////        {| "itemName": "origin", "kind": "property", "parentName": "Shapes.Point", "matchKind": "prefix"|}private originality = 0.0;
+////        {| "itemName": "originality", "kind": "property", "parentName": "Shapes.Point", "matchKind": "prefix"|}private originality = 0.0;
 ////
-////        {| "itemName": "distanceFromOrigin", "kind": "property", "parentName": "Shapes.Point", "matchKind": "prefix"|}private distanceFromOrig = 0.0;
+////        {| "itemName": "distanceFromOrig", "kind": "property", "parentName": "Shapes.Point", "matchKind": "prefix"|}private distanceFromOrig = 0.0;
 ////
 ////        // Getter
-////        {| "itemName": "distance", "kind": "getter", "parentName": "Shapes.Point", "matchKind": "prefix" |}get distanceFarFarAway(): number { return 0; }
+////        {| "itemName": "distanceFarFarAway", "kind": "getter", "parentName": "Shapes.Point", "matchKind": "prefix" |}get distanceFarFarAway(): number { return 0; }
 ////    }
 ////}
 ////
 ////// Local variables
-////{| "itemName": "point", "kind": "var", "parentName": "", "matchKind": "prefix"  |}var pointsSquareBox = new Shapes.Point();
+////{| "itemName": "pointsSquareBox", "kind": "var", "parentName": "", "matchKind": "prefix"  |}var pointsSquareBox = new Shapes.Point();
 
 //// Testing for exact matching of navigationItems
-var searchValue = "origin distance points";
+var searchValue = "origin distance points shape";
 
 test.markers().forEach((marker) => {
     if (marker.data) {

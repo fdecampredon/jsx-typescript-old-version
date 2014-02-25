@@ -102,9 +102,7 @@ var r7 = c.foo4(d1, d2);
 var r8 = c.foo5(d1, d2);
 var r8b = c.foo5(d2, d2);
 var r9 = c.foo6();
-
-// BUG 835476
-//var r10 = c.foo7(d1); // {}
+var r10 = c.foo7(d1);
 var r11 = c.foo8();
 
 var i;

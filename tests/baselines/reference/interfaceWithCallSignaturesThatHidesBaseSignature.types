@@ -1,0 +1,12 @@
+=== tests/cases/compiler/interfaceWithCallSignaturesThatHidesBaseSignature.ts ===
+Line 0 col 10 IdentifierName "Foo" = Foo
+Line 1 col 10 IdentifierName "a" = number
+Line 4 col 10 IdentifierName "Derived" = Derived
+Line 4 col 26 IdentifierName "Foo" = Foo
+Line 5 col 10 IdentifierName "a" = number
+Line 5 col 21 IdentifierName "b" = number
+Line 8 col 4 IdentifierName "d" = Derived
+Line 8 col 7 IdentifierName "Derived" = Derived
+Line 9 col 4 IdentifierName "r" = { a: number; b: number; }
+Line 9 col 8 InvocationExpression "d()" = { a: number; b: number; }
+Line 9 col 8 IdentifierName "d" = Derived

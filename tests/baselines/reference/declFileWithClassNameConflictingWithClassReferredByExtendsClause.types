@@ -1,0 +1,26 @@
+=== tests/cases/compiler/declFileWithClassNameConflictingWithClassReferredByExtendsClause.ts ===
+Line 1 col 15 IdentifierName "A" = A
+Line 1 col 17 IdentifierName "B" = A.B
+Line 1 col 19 IdentifierName "Base" = A.B.Base
+Line 2 col 17 IdentifierName "W" = A.B.Base.W
+Line 3 col 0 IdentifierName "id" = number
+Line 6 col 7 IdentifierName "X" = X
+Line 6 col 9 IdentifierName "Y" = X.Y
+Line 6 col 11 IdentifierName "base" = X.Y.base
+Line 8 col 17 IdentifierName "W" = X.Y.base.W
+Line 8 col 27 IdentifierName "A" = A
+Line 8 col 29 IdentifierName "B" = A.B
+Line 8 col 31 IdentifierName "Base" = A.B.Base
+Line 8 col 36 IdentifierName "W" = A.B.Base.W
+Line 9 col 0 IdentifierName "name" = string
+Line 13 col 7 IdentifierName "X" = X
+Line 13 col 9 IdentifierName "Y" = X.Y
+Line 13 col 11 IdentifierName "base" = X.Y.base
+Line 13 col 16 IdentifierName "Z" = X.Y.base.Z
+Line 15 col 17 IdentifierName "W" = X.Y.base.Z.W<TValue>
+Line 15 col 19 IdentifierName "TValue" = TValue
+Line 15 col 35 IdentifierName "X" = X
+Line 15 col 37 IdentifierName "Y" = X.Y
+Line 15 col 39 IdentifierName "base" = X.Y.base
+Line 15 col 44 IdentifierName "W" = X.Y.base.W
+Line 16 col 0 IdentifierName "value" = boolean

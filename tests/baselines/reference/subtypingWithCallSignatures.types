@@ -1,0 +1,40 @@
+=== tests/cases/compiler/subtypingWithCallSignatures.ts ===
+Line 0 col 7 IdentifierName "CallSignature" = CallSignature
+Line 1 col 21 IdentifierName "foo1" = typeof CallSignature.foo1
+Line 1 col 26 IdentifierName "cb" = (x: number) => void
+Line 1 col 31 IdentifierName "x" = number
+Line 1 col 59 IdentifierName "cb" = (x: number) => void
+Line 2 col 21 IdentifierName "foo1" = typeof CallSignature.foo1
+Line 2 col 26 IdentifierName "cb" = any
+Line 3 col 8 IdentifierName "r" = (x: number) => void
+Line 3 col 12 InvocationExpression "foo1((x: number) => 1)" = (x: number) => void
+Line 3 col 12 IdentifierName "foo1" = typeof CallSignature.foo1
+Line 3 col 17 ParenthesizedArrowFunctionExpression "(x: number) => 1" = (x: number) => number
+Line 3 col 18 IdentifierName "x" = number
+Line 4 col 8 IdentifierName "r2" = (x: number) => void
+Line 4 col 13 InvocationExpression "foo1(<T>(x: T) => '')" = (x: number) => void
+Line 4 col 13 IdentifierName "foo1" = typeof CallSignature.foo1
+Line 4 col 18 ParenthesizedArrowFunctionExpression "<T>(x: T) => ''" = <T>(x: T) => string
+Line 4 col 19 IdentifierName "T" = T
+Line 4 col 22 IdentifierName "x" = T
+Line 4 col 25 IdentifierName "T" = T
+Line 6 col 21 IdentifierName "foo2" = typeof CallSignature.foo2
+Line 6 col 26 IdentifierName "cb" = (x: number, y: number) => void
+Line 6 col 31 IdentifierName "x" = number
+Line 6 col 42 IdentifierName "y" = number
+Line 6 col 70 IdentifierName "cb" = (x: number, y: number) => void
+Line 7 col 21 IdentifierName "foo2" = typeof CallSignature.foo2
+Line 7 col 26 IdentifierName "cb" = any
+Line 8 col 8 IdentifierName "r3" = (x: number, y: number) => void
+Line 8 col 13 InvocationExpression "foo2((x: number, y: number) => 1)" = (x: number, y: number) => void
+Line 8 col 13 IdentifierName "foo2" = typeof CallSignature.foo2
+Line 8 col 18 ParenthesizedArrowFunctionExpression "(x: number, y: number) => 1" = (x: number, y: number) => number
+Line 8 col 19 IdentifierName "x" = number
+Line 8 col 30 IdentifierName "y" = number
+Line 9 col 8 IdentifierName "r4" = (x: number, y: number) => void
+Line 9 col 13 InvocationExpression "foo2(<T>(x: T) => '')" = (x: number, y: number) => void
+Line 9 col 13 IdentifierName "foo2" = typeof CallSignature.foo2
+Line 9 col 18 ParenthesizedArrowFunctionExpression "<T>(x: T) => ''" = <T>(x: T) => string
+Line 9 col 19 IdentifierName "T" = T
+Line 9 col 22 IdentifierName "x" = T
+Line 9 col 25 IdentifierName "T" = T

@@ -1,0 +1,9 @@
+=== tests/cases/compiler/declareDottedModuleName.ts ===
+Line 0 col 7 IdentifierName "M" = M
+Line 1 col 11 IdentifierName "P" = M.P
+Line 1 col 13 IdentifierName "Q" = M.P.Q
+Line 4 col 7 IdentifierName "M" = M
+Line 5 col 18 IdentifierName "R" = M.R
+Line 5 col 20 IdentifierName "S" = M.R.S
+Line 8 col 7 IdentifierName "T" = T
+Line 8 col 9 IdentifierName "U" = T.U

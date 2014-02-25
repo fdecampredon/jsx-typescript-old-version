@@ -7,5 +7,6 @@ interfaceAssignmentCompat.ts(37,29): error TS2094: The property '_map' does not 
 interfaceAssignmentCompat.ts(42,13): error TS2012: Cannot convert 'IEye' to 'IFrenchEye':
 	Type 'IEye' is missing property 'coleur' from type 'IFrenchEye'.
 interfaceAssignmentCompat.ts(44,9): error TS2012: Cannot convert 'IEye[]' to 'IFrenchEye[]':
-	Types of property 'concat' of types 'IEye[]' and 'IFrenchEye[]' are incompatible:
-		Call signatures of types '{ <U extends IEye[]>(...items: U[]): IEye[]; (...items: IEye[]): IEye[]; }' and '{ <U extends IFrenchEye[]>(...items: U[]): IFrenchEye[]; (...items: IFrenchEye[]): IFrenchEye[]; }' are incompatible.
+	Types of property 'pop' of types 'IEye[]' and 'IFrenchEye[]' are incompatible:
+		Call signatures of types '() => IEye' and '() => IFrenchEye' are incompatible:
+			Type 'IEye' is missing property 'coleur' from type 'IFrenchEye'.

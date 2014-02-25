@@ -7,4 +7,4 @@ interfaceDeclaration1.ts(35,7): error TS2137: Class C1 declares interface I3 but
 	Type 'C1' is missing property 'prototype' from type 'I3'.
 interfaceDeclaration1.ts(41,11): error TS2101: Interface 'i8' is recursively referenced as a base type of itself.
 interfaceDeclaration1.ts(52,11): error TS2189: Interface 'i12' cannot simultaneously extend types 'i10' and 'i11':
-Types of property 'foo' of types 'i10' and 'i11' are not identical.
+Named properties 'foo' of types 'i10' and 'i11' are not identical.

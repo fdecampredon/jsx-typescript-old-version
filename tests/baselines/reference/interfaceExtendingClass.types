@@ -1,0 +1,30 @@
+=== tests/cases/compiler/interfaceExtendingClass.ts ===
+Line 0 col 6 IdentifierName "Foo" = Foo
+Line 1 col 0 IdentifierName "x" = string
+Line 2 col 0 IdentifierName "y" = () => void
+Line 3 col 8 IdentifierName "Z" = number
+Line 6 col 5 IdentifierName "x" = string
+Line 6 col 17 IdentifierName "Object" = Object
+Line 9 col 10 IdentifierName "I" = I
+Line 9 col 20 IdentifierName "Foo" = Foo
+Line 12 col 4 IdentifierName "i" = I
+Line 12 col 7 IdentifierName "I" = I
+Line 13 col 4 IdentifierName "r1" = string
+Line 13 col 9 MemberAccessExpression "i.x" = string
+Line 13 col 9 IdentifierName "i" = I
+Line 13 col 11 IdentifierName "x" = string
+Line 14 col 4 IdentifierName "r2" = void
+Line 14 col 9 InvocationExpression "i.y()" = void
+Line 14 col 9 MemberAccessExpression "i.y" = () => void
+Line 14 col 9 IdentifierName "i" = I
+Line 14 col 11 IdentifierName "y" = () => void
+Line 15 col 4 IdentifierName "r3" = number
+Line 15 col 9 MemberAccessExpression "i.Z" = number
+Line 15 col 9 IdentifierName "i" = I
+Line 15 col 11 IdentifierName "Z" = number
+Line 17 col 4 IdentifierName "f" = Foo
+Line 17 col 7 IdentifierName "Foo" = Foo
+Line 17 col 13 IdentifierName "i" = I
+Line 18 col 0 AssignmentExpression "i = f" = Foo
+Line 18 col 0 IdentifierName "i" = I
+Line 18 col 4 IdentifierName "f" = Foo

@@ -1,0 +1,17 @@
+interfaceWithMultipleBaseTypes.ts(21,11): error TS2143: Interface 'Derived2' cannot extend interface 'Base2':
+	Types of property 'x' of types 'Derived2' and 'Base2' are incompatible:
+		Types of property 'b' of types '{ a: string; b: number; }' and '{ b: string; }' are incompatible.
+interfaceWithMultipleBaseTypes.ts(52,15): error TS2189: Interface 'Derived3' cannot simultaneously extend types 'Generic.Base1<number>' and 'Generic.Base2<number>':
+Named properties 'x' of types 'Generic.Base1<number>' and 'Generic.Base2<number>' are not identical.
+interfaceWithMultipleBaseTypes.ts(54,15): error TS2143: Interface 'Generic.Derived4<T>' cannot extend interface 'Generic.Base2<number>':
+	Types of property 'x' of types 'Derived4<T>' and 'Base2<number>' are incompatible:
+		Types of property 'b' of types '{ a: T; b: T; }' and '{ b: number; }' are incompatible.
+interfaceWithMultipleBaseTypes.ts(54,15): error TS2143: Interface 'Generic.Derived4<T>' cannot extend interface 'Generic.Base1<number>':
+	Types of property 'x' of types 'Derived4<T>' and 'Base1<number>' are incompatible:
+		Types of property 'a' of types '{ a: T; b: T; }' and '{ a: number; }' are incompatible.
+interfaceWithMultipleBaseTypes.ts(60,15): error TS2143: Interface 'Generic.Derived5<T>' cannot extend interface 'Generic.Base2<T>':
+	Types of property 'x' of types 'Derived5<T>' and 'Base2<T>' are incompatible:
+		Type '{}' is missing property 'b' from type '{ b: T; }'.
+interfaceWithMultipleBaseTypes.ts(60,15): error TS2143: Interface 'Generic.Derived5<T>' cannot extend interface 'Generic.Base1<T>':
+	Types of property 'x' of types 'Derived5<T>' and 'Base1<T>' are incompatible:
+		Type '{}' is missing property 'a' from type '{ a: T; }'.

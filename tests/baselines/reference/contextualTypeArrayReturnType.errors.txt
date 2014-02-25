@@ -1,5 +1,6 @@
 contextualTypeArrayReturnType.ts(13,5): error TS2012: Cannot convert '{ initialLeftPageTransforms: (width: number) => { 'ry': any; }[]; }' to 'IBookStyle':
 	Types of property 'initialLeftPageTransforms' of types '{ initialLeftPageTransforms: (width: number) => { 'ry': any; }[]; }' and 'IBookStyle' are incompatible:
 		Call signatures of types '(width: number) => { 'ry': any; }[]' and '(width: number) => NamedTransform[]' are incompatible:
-			Types of property 'concat' of types '{ 'ry': any; }[]' and 'NamedTransform[]' are incompatible:
-				Call signatures of types '{ <U extends { 'ry': any; }[]>(...items: U[]): { 'ry': any; }[]; (...items: { 'ry': any; }[]): { 'ry': any; }[]; }' and '{ <U extends NamedTransform[]>(...items: U[]): NamedTransform[]; (...items: NamedTransform[]): NamedTransform[]; }' are incompatible.
+			Types of property 'pop' of types '{ 'ry': any; }[]' and 'NamedTransform[]' are incompatible:
+				Call signatures of types '() => { 'ry': any; }' and '() => NamedTransform' are incompatible:
+					Index signatures of types '{ 'ry': any; }' and 'NamedTransform' are incompatible.

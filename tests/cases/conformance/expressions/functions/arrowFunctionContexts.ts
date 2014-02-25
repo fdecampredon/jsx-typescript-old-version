@@ -29,7 +29,7 @@ var arr: { (n: number): string; }[]; // Incorrect error here (bug 829597)
 // Arrow function as enum value
 enum E {
     x = () => 4, // Error expected
-    y = (() => this).length
+    y = (() => this).length // error, can't use this in enum
 }
 
 // Arrow function as module variable initializer

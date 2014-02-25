@@ -106,6 +106,7 @@ module TypeScript.Services {
         public fileName: string = "";
         public minChar: number = -1;
         public limChar: number = -1;
+        public additionalSpans: SpanInfo[] = null;
         public containerName: string = "";
         public containerKind: string = "";  // see ScriptElementKind
     }

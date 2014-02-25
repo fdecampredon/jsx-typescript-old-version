@@ -79,8 +79,7 @@ var r7 = c.foo4(d1, d2); // Base
 var r8 = c.foo5(d1, d2); // Derived
 var r8b = c.foo5(d2, d2); // Derived2
 var r9 = c.foo6(); // Derived
-// BUG 835476
-//var r10 = c.foo7(d1); // {}
+var r10 = c.foo7(d1); // Base
 var r11 = c.foo8(); // Base
 
 interface I<T extends Base, U extends Derived> {

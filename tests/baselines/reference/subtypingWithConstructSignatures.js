@@ -1,13 +1,12 @@
-// Checking basic subtype relations with construct signatures
+var ConstructSignature;
+(function (ConstructSignature) {
+    var rarg1;
+    var r = foo1(rarg1);
+    var rarg2;
+    var r2 = foo1(rarg2);
 
-var MemberWithConstructSignature;
-(function (MemberWithConstructSignature) {
-    var b;
-    var r = new b.a(1);
-
-    
-
-    
-
-    
-})(MemberWithConstructSignature || (MemberWithConstructSignature = {}));
+    var r3arg1;
+    var r3 = foo2(r3arg1);
+    var r4arg1;
+    var r4 = foo2(r4arg1);
+})(ConstructSignature || (ConstructSignature = {}));

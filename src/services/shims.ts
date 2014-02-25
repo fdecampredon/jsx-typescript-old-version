@@ -640,6 +640,7 @@ module TypeScript.Services {
                 fileName: string;
                 minChar: number;
                 limChar: number;
+                additionalSpans?: { start: number; end: number; }[];
             }[] = [];
 
             for (var i = 0; i < items.length; i++) {
@@ -654,7 +655,8 @@ module TypeScript.Services {
                     matchKind: item.matchKind,
                     fileName: item.fileName,
                     minChar: item.minChar,
-                    limChar: item.limChar
+                    limChar: item.limChar,
+                    additionalSpans: item.additionalSpans ? item.additionalSpans.map(i => { return { start: i.minChar, end: i.limChar }; }) : undefined
                 });
             }
 

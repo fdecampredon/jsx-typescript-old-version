@@ -138,8 +138,8 @@ class CompilerBaselineRunner extends RunnerBase {
                 harnessCompiler.compileFiles(
                     [declFile],
                     declOtherFiles,
-                    function (result) {
-                        declErrors = result.errors.map(err => this.getDiagnosticText(err) + "\r\n");
+                    (result) => {
+                        declErrors = result.errors.map(err => this._getDiagnosticText(err) + "\r\n");
                     },
                     function (settings) {
                         harnessCompiler.setCompilerSettings(tcSettings);

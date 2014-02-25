@@ -756,4 +756,18 @@ module TypeScript.ASTHelpers {
             return getNameOfIdenfierOrQualifiedName(dotExpr.left) + "." + getNameOfIdenfierOrQualifiedName(dotExpr.right);
         }
     }
+
+    export function getModuleNames(name: ISyntaxElement, result?: ISyntaxToken[]): ISyntaxToken[] {
+        result = result || [];
+
+        if (name.kind() === SyntaxKind.QualifiedName) {
+            getModuleNames((<QualifiedNameSyntax>name).left, result);
+            result.push((<QualifiedNameSyntax>name).right);
+        }
+        else {
+            result.push(<ISyntaxToken>name);
+        }
+
+        return result;
+    }
 }

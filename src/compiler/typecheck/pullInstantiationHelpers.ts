@@ -203,11 +203,39 @@ module TypeScript {
         }
 
         export function createTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[]): TypeArgumentMap {
-            var typeArgumentMap: TypeArgumentMap = {};
+            return updateTypeParameterArgumentMap(typeParameters, typeArguments, {});
+        }
+
+        export function updateTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], typeParameterArgumentMap: TypeArgumentMap): TypeArgumentMap {
             for (var i = 0; i < typeParameters.length; i++) {
-                typeArgumentMap[typeParameters[i].pullSymbolID] = typeArguments[i];
+                // The reason we call getRootSymbol below is to handle the case where a signature
+                // has a type parameter constrained to an outer type parameter. Because signatures
+                // are instantiated from the root signature, the map needs to be in terms of the root
+                // type parameter. For example,
+                // interface I<T> {
+                //     foo<U extends T>(u: U): U;
+                // }
+                // var i: I<string>;
+                // var f = i.foo(""); // f should be string
+                //
+                // When we instantiate T to string, we create a new U, but instantiations of the
+                // signature must be against the root U.
+                // Note that when this type of situation does not apply, getRootSymbol is the
+                // identity function.
+                typeParameterArgumentMap[typeParameters[i].getRootSymbol().pullSymbolID] = typeArguments[i];
             }
-            return typeArgumentMap;
+            return typeParameterArgumentMap;
+        }
+
+        export function updateMutableTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], mutableMap: MutableTypeArgumentMap): void {
+            for (var i = 0; i < typeParameters.length; i++) {
+                // See comment in updateTypeParameterArgumentMap for why we use getRootSymbol
+                var typeParameterId = typeParameters[i].getRootSymbol().pullSymbolID;
+                if (mutableMap.typeParameterArgumentMap[typeParameterId] !== typeArguments[i]) {
+                    mutableMap.ensureTypeArgumentCopy();
+                    mutableMap.typeParameterArgumentMap[typeParameterId] = typeArguments[i];
+                }
+            }
         }
 
         export function twoTypesAreInstantiationsOfSameNamedGenericType(type1: PullTypeSymbol, type2: PullTypeSymbol) {

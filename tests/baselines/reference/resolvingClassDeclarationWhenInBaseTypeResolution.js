@@ -6490,7 +6490,7 @@ declare module julianae {
 declare module ruatanica {
     class hector<T0, T1> {
         public humulis(): julianae.steerii;
-        public eurycerus(): panamensis.linulus<ruatanica.Praseodymium<Lanthanum.jugularis, dammermani.melanops>, lavali.wilsoni>;
+        public eurycerus(): panamensis.linulus<Praseodymium<Lanthanum.jugularis, dammermani.melanops>, lavali.wilsoni>;
     }
 }
 declare module Lanthanum {
@@ -6628,7 +6628,7 @@ declare module quasiater {
         public crassicaudatus(): samarensis.cahirinus<macrorhinos.daphaenodon, argurus.luctuosa>;
         public mulatta(): argurus.oreas;
         public ansorgei(): rendalli.moojeni<panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>, gabriellae.echinatus>;
-        public Copper(): argurus.netscheri<quasiater.carolinensis, dogramacii.kaiseri>;
+        public Copper(): argurus.netscheri<carolinensis, dogramacii.kaiseri>;
     }
 }
 declare module ruatanica {
@@ -6749,10 +6749,10 @@ declare module lutreolus {
         public culionensis(): argurus.dauricus<ruatanica.americanus, rionegrensis.caniventer>;
         public scrofa(): petrophilus.sodyi<gabriellae.amicus, julianae.sumatrana>;
         public fernandoni(): quasiater.carolinensis;
-        public Tin(): sagitta.leptoceros<lutreolus.punicus, daubentonii.arboreus<quasiater.carolinensis, rionegrensis.caniventer>>;
-        public marmorata(): panamensis.setulosus<quasiater.carolinensis, daubentonii.arboreus<dogramacii.kaiseri, lutreolus.punicus>>;
+        public Tin(): sagitta.leptoceros<punicus, daubentonii.arboreus<quasiater.carolinensis, rionegrensis.caniventer>>;
+        public marmorata(): panamensis.setulosus<quasiater.carolinensis, daubentonii.arboreus<dogramacii.kaiseri, punicus>>;
         public tavaratra(): Lanthanum.nitidus<howi.marcanoi, macrorhinos.daphaenodon>;
-        public peregrina(): daubentonii.nesiotes<macrorhinos.konganensis, lutreolus.punicus>;
+        public peregrina(): daubentonii.nesiotes<macrorhinos.konganensis, punicus>;
         public frontalis(): macrorhinos.marmosurus<ruatanica.hector<julianae.sumatrana, samarensis.pelurus<Lanthanum.jugularis, sagitta.walkeri>>, samarensis.pallidus>;
         public cuniculus(): patas.uralensis;
         public magdalenae(): julianae.gerbillus<rionegrensis.caniventer, rendalli.crenulata<rendalli.zuluensis, dogramacii.robustulus>>;
@@ -6769,9 +6769,9 @@ declare module argurus {
         public darienensis(): trivirgatus.oconnelli;
         public hardwickii(): macrorhinos.daphaenodon;
         public albifrons(): rionegrensis.veraecrucis<lavali.lepturus, julianae.durangae>;
-        public jacobitus(): caurinus.johorensis<macrorhinos.konganensis, caurinus.johorensis<argurus.peninsulae, daubentonii.arboreus<argurus.germaini, sagitta.stolzmanni>>>;
-        public guentheri(): rendalli.moojeni<lutreolus.foina, argurus.oreas>;
-        public mahomet(): imperfecta.ciliolabrum<argurus.germaini, lutreolus.foina>;
+        public jacobitus(): caurinus.johorensis<macrorhinos.konganensis, caurinus.johorensis<peninsulae, daubentonii.arboreus<germaini, sagitta.stolzmanni>>>;
+        public guentheri(): rendalli.moojeni<lutreolus.foina, oreas>;
+        public mahomet(): imperfecta.ciliolabrum<germaini, lutreolus.foina>;
         public misionensis(): macrorhinos.marmosurus<daubentonii.arboreus<quasiater.carolinensis, rionegrensis.caniventer>, gabriellae.echinatus>;
     }
 }
@@ -6779,7 +6779,7 @@ declare module nigra {
     class dolichurus<T0, T1> {
         public solomonis(): panglima.abidi<quasiater.carolinensis, rendalli.crenulata<gabriellae.klossii<julianae.nudicaudus, dogramacii.aurata>, argurus.netscheri<minutus.inez<argurus.peninsulae, julianae.nudicaudus>, julianae.oralis<lavali.xanthognathus, argurus.oreas>>>>;
         public alfredi(): caurinus.psilurus;
-        public morrisi(): ruatanica.hector<trivirgatus.oconnelli, sagitta.cinereus<nigra.caucasica<julianae.sumatrana, trivirgatus.oconnelli>, quasiater.wattsi<julianae.galapagoensis, panamensis.linulus<lavali.xanthognathus, macrorhinos.konganensis>>>>;
+        public morrisi(): ruatanica.hector<trivirgatus.oconnelli, sagitta.cinereus<caucasica<julianae.sumatrana, trivirgatus.oconnelli>, quasiater.wattsi<julianae.galapagoensis, panamensis.linulus<lavali.xanthognathus, macrorhinos.konganensis>>>>;
         public lekaguli(): Lanthanum.nitidus<dammermani.melanops, lavali.lepturus>;
         public dimissus(): imperfecta.subspinosus;
         public phaeotis(): julianae.sumatrana;
@@ -6827,7 +6827,7 @@ declare module minutus {
         public rusticus(): dogramacii.aurata;
         public latona(): daubentonii.nesiotes<dammermani.melanops, Lanthanum.megalonyx>;
         public famulus(): patas.uralensis;
-        public flaviceps(): minutus.inez<argurus.oreas, panglima.fundatus<gabriellae.amicus, lutreolus.foina>>;
+        public flaviceps(): inez<argurus.oreas, panglima.fundatus<gabriellae.amicus, lutreolus.foina>>;
         public paradoxolophus(): nigra.dolichurus<lutreolus.schlegeli, chrysaeolus.sarasinorum<Lanthanum.jugularis, imperfecta.subspinosus>>;
         public Osmium(): lavali.wilsoni;
         public vulgaris(): Lanthanum.nitidus<lavali.lepturus, julianae.acariensis>;
@@ -6841,7 +6841,7 @@ declare module caurinus {
         public martiniquensis(): ruatanica.hector<julianae.sumatrana, macrorhinos.marmosurus<dammermani.melanops, mahaganus<julianae.nudicaudus, lavali.otion>>>;
         public devius(): samarensis.pelurus<dogramacii.aurata, minutus.inez<minutus.inez<sagitta.stolzmanni, dammermani.melanops>, trivirgatus.falconeri>>;
         public masalai(): argurus.oreas;
-        public kathleenae(): nigra.dolichurus<patas.uralensis, caurinus.psilurus>;
+        public kathleenae(): nigra.dolichurus<patas.uralensis, psilurus>;
         public simulus(): gabriellae.echinatus;
         public nigrovittatus(): mahaganus<gabriellae.echinatus, petrophilus.rosalia<Lanthanum.megalonyx, panglima.abidi<dogramacii.kaiseri, lavali.wilsoni>>>;
         public senegalensis(): gabriellae.klossii<howi.coludo<lavali.lepturus, lutreolus.punicus>, dammermani.melanops>;
@@ -6855,7 +6855,7 @@ declare module macrorhinos {
 }
 declare module howi {
     class angulatus<T0, T1> extends sagitta.stolzmanni {
-        public pennatus(): howi.marcanoi;
+        public pennatus(): marcanoi;
     }
 }
 declare module daubentonii {
@@ -6903,13 +6903,13 @@ declare module panamensis {
 }
 declare module nigra {
     class gracilis<T0, T1> {
-        public weddellii(): nigra.dolichurus<dogramacii.aurata, julianae.steerii>;
+        public weddellii(): dolichurus<dogramacii.aurata, julianae.steerii>;
         public echinothrix(): Lanthanum.nitidus<panglima.amphibius<caurinus.megaphyllus, lavali.lepturus>, argurus.oreas>;
         public garridoi(): dogramacii.koepckeae;
-        public rouxii(): gracilis<argurus.dauricus<macrorhinos.konganensis, patas.uralensis>, nigra.thalia<patas.uralensis, julianae.galapagoensis>>;
+        public rouxii(): gracilis<argurus.dauricus<macrorhinos.konganensis, patas.uralensis>, thalia<patas.uralensis, julianae.galapagoensis>>;
         public aurita(): sagitta.stolzmanni;
         public geoffrensis(): rionegrensis.caniventer;
-        public theresa(): macrorhinos.marmosurus<argurus.netscheri<dammermani.siberu<lutreolus.foina, samarensis.pallidus>, argurus.luctuosa>, nigra.dolichurus<lavali.lepturus, samarensis.pallidus>>;
+        public theresa(): macrorhinos.marmosurus<argurus.netscheri<dammermani.siberu<lutreolus.foina, samarensis.pallidus>, argurus.luctuosa>, dolichurus<lavali.lepturus, samarensis.pallidus>>;
         public melanocarpus(): julianae.albidens<dammermani.siberu<lutreolus.foina, samarensis.pallidus>, julianae.sumatrana>;
         public dubiaquercus(): dogramacii.robustulus;
         public pectoralis(): julianae.sumatrana;
@@ -6965,7 +6965,7 @@ declare module samarensis {
     }
 }
 declare module sagitta {
-    class leptoceros<T0, T1> extends caurinus.johorensis<argurus.peninsulae, daubentonii.arboreus<argurus.germaini, sagitta.stolzmanni>> {
+    class leptoceros<T0, T1> extends caurinus.johorensis<argurus.peninsulae, daubentonii.arboreus<argurus.germaini, stolzmanni>> {
         public victus(): rionegrensis.caniventer;
         public hoplomyoides(): panglima.fundatus<julianae.gerbillus<imperfecta.subspinosus, julianae.durangae>, nigra.gracilis<argurus.luctuosa, imperfecta.subspinosus>>;
         public gratiosus(): lavali.lepturus;
@@ -7005,7 +7005,7 @@ declare module argurus {
         public leucoptera(): petrophilus.rosalia<dogramacii.koepckeae, lutreolus.foina>;
         public ochraventer(): sagitta.walkeri;
         public tephromelas(): Lanthanum.jugularis;
-        public cracens(): argurus.gilbertii<lavali.thaeleri, lutreolus.punicus>;
+        public cracens(): gilbertii<lavali.thaeleri, lutreolus.punicus>;
         public jamaicensis(): nigra.thalia<howi.marcanoi, rionegrensis.veraecrucis<trivirgatus.falconeri, quasiater.carolinensis>>;
         public gymnocaudus(): dogramacii.aurata;
         public mayori(): sagitta.stolzmanni;
@@ -7018,9 +7018,9 @@ declare module argurus {
         public fagani(): trivirgatus.oconnelli;
         public papuanus(): panglima.fundatus<quasiater.carolinensis, macrorhinos.daphaenodon>;
         public timidus(): dammermani.melanops;
-        public nghetinhensis(): gabriellae.klossii<argurus.luctuosa, julianae.steerii>;
+        public nghetinhensis(): gabriellae.klossii<luctuosa, julianae.steerii>;
         public barbei(): samarensis.cahirinus<lavali.lepturus, quasiater.carolinensis>;
-        public univittatus(): argurus.peninsulae;
+        public univittatus(): peninsulae;
     }
 }
 declare module daubentonii {
@@ -7065,7 +7065,7 @@ declare module provocax {
 declare module sagitta {
     class sicarius<T0, T1> {
         public Chlorine(): samarensis.cahirinus<nigra.gracilis<argurus.luctuosa, imperfecta.subspinosus>, dogramacii.robustulus>;
-        public simulator(): macrorhinos.marmosurus<Lanthanum.nitidus<dammermani.melanops, lavali.lepturus>, macrorhinos.marmosurus<rendalli.moojeni<panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>, gabriellae.echinatus>, sagitta.stolzmanni>>;
+        public simulator(): macrorhinos.marmosurus<Lanthanum.nitidus<dammermani.melanops, lavali.lepturus>, macrorhinos.marmosurus<rendalli.moojeni<panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>, gabriellae.echinatus>, stolzmanni>>;
     }
 }
 declare module howi {
@@ -7076,7 +7076,7 @@ declare module howi {
         public martinsi(): dogramacii.aurata;
         public beatrix(): imperfecta.ciliolabrum<provocax.melanoleuca, panglima.amphibius<minutus.inez<rendalli.moojeni<panglima.amphibius<trivirgatus.falconeri, caurinus.psilurus>, gabriellae.echinatus>, dogramacii.aurata>, imperfecta.ciliolabrum<quasiater.carolinensis, lavali.beisa>>>;
         public griseoventer(): argurus.oreas;
-        public zerda(): quasiater.wattsi<julianae.oralis<julianae.steerii, lavali.lepturus>, howi.coludo<julianae.steerii, julianae.gerbillus<lavali.thaeleri, quasiater.carolinensis>>>;
+        public zerda(): quasiater.wattsi<julianae.oralis<julianae.steerii, lavali.lepturus>, coludo<julianae.steerii, julianae.gerbillus<lavali.thaeleri, quasiater.carolinensis>>>;
         public yucatanicus(): julianae.nudicaudus;
         public nigrita(): argurus.peninsulae;
         public jouvenetae(): argurus.dauricus<argurus.germaini, julianae.durangae>;
@@ -7090,9 +7090,9 @@ declare module argurus {
     class gilbertii<T0, T1> {
         public nasutus(): lavali.lepturus;
         public poecilops(): julianae.steerii;
-        public sondaicus(): samarensis.fuscus<argurus.peninsulae, lavali.lepturus>;
+        public sondaicus(): samarensis.fuscus<peninsulae, lavali.lepturus>;
         public auriventer(): petrophilus.rosalia<lavali.xanthognathus, trivirgatus.oconnelli>;
-        public cherriei(): ruatanica.Praseodymium<Lanthanum.jugularis, argurus.oreas>;
+        public cherriei(): ruatanica.Praseodymium<Lanthanum.jugularis, oreas>;
         public lindberghi(): minutus.inez<rendalli.zuluensis, rionegrensis.caniventer>;
         public pipistrellus(): quasiater.carolinensis;
         public paranus(): lutreolus.punicus;
@@ -7112,12 +7112,12 @@ declare module lutreolus {
         public lar(): caurinus.mahaganus<julianae.nudicaudus, lavali.otion>;
         public erica(): dogramacii.koepckeae;
         public trichura(): macrorhinos.konganensis;
-        public lemniscatus(): panglima.fundatus<gabriellae.amicus, lutreolus.foina>;
+        public lemniscatus(): panglima.fundatus<gabriellae.amicus, foina>;
         public aspalax(): panamensis.linulus<lavali.xanthognathus, macrorhinos.konganensis>;
         public marshalli(): julianae.nudicaudus;
         public Zinc(): julianae.galapagoensis;
         public monochromos(): howi.coludo<lavali.lepturus, punicus>;
-        public purinus(): ruatanica.hector<lutreolus.schlegeli, provocax.melanoleuca>;
+        public purinus(): ruatanica.hector<schlegeli, provocax.melanoleuca>;
         public ischyrus(): lavali.lepturus;
         public tenuis(): macrorhinos.daphaenodon;
         public Helium(): julianae.acariensis;
@@ -7145,8 +7145,8 @@ declare module sagitta {
         public dorsalis(): petrophilus.sodyi<argurus.luctuosa, julianae.sumatrana>;
         public fimbriatus(): provocax.melanoleuca;
         public sara(): nigra.gracilis<argurus.luctuosa, imperfecta.subspinosus>;
-        public epimelas(): sagitta.stolzmanni;
-        public pittieri(): samarensis.fuscus<quasiater.carolinensis, sagitta.stolzmanni>;
+        public epimelas(): stolzmanni;
+        public pittieri(): samarensis.fuscus<quasiater.carolinensis, stolzmanni>;
     }
 }
 declare module nigra {
@@ -7244,7 +7244,7 @@ declare module minutus {
 }
 declare module lutreolus {
     class foina {
-        public tarfayensis(): lutreolus.punicus;
+        public tarfayensis(): punicus;
         public Promethium(): samarensis.pelurus<argurus.germaini, julianae.durangae>;
         public salinae(): gabriellae.klossii<macrorhinos.konganensis, quasiater.carolinensis>;
         public kerri(): howi.coludo<quasiater.carolinensis, minutus.portoricensis>;
@@ -7256,7 +7256,7 @@ declare module lutreolus {
         public layardi(): julianae.albidens<howi.marcanoi, dogramacii.koepckeae>;
         public bishopi(): dogramacii.aurata;
         public apodemoides(): caurinus.psilurus;
-        public argentiventer(): trivirgatus.mixtus<gabriellae.amicus, lutreolus.punicus>;
+        public argentiventer(): trivirgatus.mixtus<gabriellae.amicus, punicus>;
     }
 }
 declare module lutreolus {
@@ -7264,7 +7264,7 @@ declare module lutreolus {
         public antinorii(): petrophilus.sodyi<quasiater.carolinensis, argurus.germaini>;
         public voi(): caurinus.johorensis<dammermani.melanops, macrorhinos.konganensis>;
         public mussoi(): quasiater.carolinensis;
-        public truncatus(): trivirgatus.lotor<sagitta.stolzmanni, lutreolus.foina>;
+        public truncatus(): trivirgatus.lotor<sagitta.stolzmanni, foina>;
         public achates(): provocax.melanoleuca;
         public praedatrix(): howi.angulatus<dogramacii.kaiseri, julianae.steerii>;
         public mzabi(): quasiater.wattsi<trivirgatus.lotor<julianae.steerii, samarensis.pallidus>, minutus.inez<trivirgatus.oconnelli, Lanthanum.jugularis>>;
@@ -7319,14 +7319,14 @@ declare module dammermani {
 }
 declare module argurus {
     class peninsulae extends patas.uralensis {
-        public aitkeni(): trivirgatus.mixtus<argurus.dauricus<dogramacii.aurata, dammermani.melanops>, panglima.amphibius<lavali.lepturus, quasiater.carolinensis>>;
+        public aitkeni(): trivirgatus.mixtus<dauricus<dogramacii.aurata, dammermani.melanops>, panglima.amphibius<lavali.lepturus, quasiater.carolinensis>>;
         public novaeangliae(): lavali.xanthognathus;
         public olallae(): julianae.sumatrana;
         public anselli(): dogramacii.aurata;
         public timminsi(): macrorhinos.konganensis;
         public sordidus(): rendalli.moojeni<macrorhinos.konganensis, gabriellae.echinatus>;
         public telfordi(): trivirgatus.oconnelli;
-        public cavernarum(): minutus.inez<gabriellae.echinatus, argurus.luctuosa>;
+        public cavernarum(): minutus.inez<gabriellae.echinatus, luctuosa>;
     }
 }
 declare module argurus {
@@ -7334,11 +7334,11 @@ declare module argurus {
         public gravis(): nigra.caucasica<rendalli.crenulata<trivirgatus.falconeri, howi.marcanoi>, dogramacii.kaiseri>;
         public ruschii(): imperfecta.lasiurus<howi.marcanoi, imperfecta.ciliolabrum<Lanthanum.megalonyx, petrophilus.minutilla>>;
         public tricuspidatus(): lavali.wilsoni;
-        public fernandezi(): dammermani.siberu<nigra.thalia<lutreolus.schlegeli, julianae.sumatrana>, panglima.abidi<lutreolus.foina, argurus.peninsulae>>;
+        public fernandezi(): dammermani.siberu<nigra.thalia<lutreolus.schlegeli, julianae.sumatrana>, panglima.abidi<lutreolus.foina, peninsulae>>;
         public colletti(): samarensis.pallidus;
         public microbullatus(): lutreolus.schlegeli;
         public eburneae(): chrysaeolus.sarasinorum<macrorhinos.konganensis, julianae.acariensis>;
-        public tatei(): argurus.pygmaea<argurus.oreas, panglima.fundatus<quasiater.carolinensis, macrorhinos.daphaenodon>>;
+        public tatei(): pygmaea<oreas, panglima.fundatus<quasiater.carolinensis, macrorhinos.daphaenodon>>;
         public millardi(): sagitta.walkeri;
         public pruinosus(): trivirgatus.falconeri;
         public delator(): netscheri<dogramacii.kaiseri, lavali.lepturus>;
@@ -7347,8 +7347,8 @@ declare module argurus {
     }
 }
 declare module ruatanica {
-    class Praseodymium<T0, T1> extends ruatanica.hector<lutreolus.punicus, gabriellae.amicus> {
-        public clara(): panglima.amphibius<imperfecta.ciliolabrum<quasiater.carolinensis, lavali.beisa>, argurus.dauricus<ruatanica.americanus, rionegrensis.caniventer>>;
+    class Praseodymium<T0, T1> extends hector<lutreolus.punicus, gabriellae.amicus> {
+        public clara(): panglima.amphibius<imperfecta.ciliolabrum<quasiater.carolinensis, lavali.beisa>, argurus.dauricus<americanus, rionegrensis.caniventer>>;
         public spectabilis(): petrophilus.sodyi<rionegrensis.caniventer, quasiater.carolinensis>;
         public kamensis(): trivirgatus.lotor<panamensis.linulus<dogramacii.kaiseri, minutus.portoricensis>, lavali.lepturus>;
         public ruddi(): lutreolus.foina;

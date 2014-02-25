@@ -1151,7 +1151,7 @@ module TypeScript {
             }
             else {
 
-                var moduleNames = getModuleNames(ast.name);
+                var moduleNames = ASTHelpers.getModuleNames(ast.name);
                 for (var i = 0, n = moduleNames.length; i < n; i++) {
                     result = this.resolveSingleModuleDeclaration(ast, moduleNames[i], context);
                 }
@@ -1232,7 +1232,7 @@ module TypeScript {
                 this.typeCheckSingleModuleDeclaration(ast, ast.stringLiteral, context);
             }
             else {
-                var moduleNames = getModuleNames(ast.name);
+                var moduleNames = ASTHelpers.getModuleNames(ast.name);
                 for (var i = 0, n = moduleNames.length; i < n; i++) {
                     this.typeCheckSingleModuleDeclaration(ast, moduleNames[i], context);
                 }
@@ -3281,6 +3281,18 @@ module TypeScript {
                 var wrapperDecl = this.getEnclosingDecl(decl);
                 wrapperDecl = wrapperDecl || enclosingDecl;
 
+                // error should be reported if
+                // - container decl is not ambient
+                // OR
+                // - container decl is ambient and self decl is not private (is provided)
+                var needReportError = (containerDecl: PullDecl, selfDecl?: PullDecl) => {
+                    if (!hasFlag(containerDecl.flags, PullElementFlags.Ambient)) {
+                        return true;
+                    }
+
+                    return selfDecl && !hasFlag(selfDecl.flags, PullElementFlags.Private)
+                };
+
                 // check what enclosingDecl the varDecl is in and report an appropriate error message
                 // varDecl is a function/constructor/constructor-signature parameter
                 if ((wrapperDecl.kind === TypeScript.PullElementKind.Function ||
@@ -3294,35 +3306,29 @@ module TypeScript {
                     // check if the parent of wrapperDecl is ambient class declaration
                     var parentDecl = wrapperDecl.getParentDecl();
                     // parentDecl is not an ambient declaration; so report an error
-                    if (!TypeScript.hasFlag(parentDecl.flags, TypeScript.PullElementFlags.Ambient)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
-                            DiagnosticCode.Parameter_0_of_1_implicitly_has_an_any_type, [name.text(), enclosingDecl.name]));
-                    }
-                    // parentDecl is an ambient declaration, but the wrapperDecl(method) is a not private; so report an error
-                    else if (TypeScript.hasFlag(parentDecl.flags, TypeScript.PullElementFlags.Ambient) &&
-                        !TypeScript.hasFlag(wrapperDecl.flags, TypeScript.PullElementFlags.Private)) {
+                    // OR
+                    //parentDecl is an ambient declaration, but the wrapperDecl(method) is a not private; so report an error
+                    if (needReportError(parentDecl, wrapperDecl)) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
                             DiagnosticCode.Parameter_0_of_1_implicitly_has_an_any_type, [name.text(), enclosingDecl.name]));
                     }
                 }
                 // varDecl is a property in object type
                 else if (decl.kind === TypeScript.PullElementKind.Property && !declSymbol.getContainer().isNamedTypeSymbol()) {
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
-                        DiagnosticCode.Member_0_of_object_type_implicitly_has_an_any_type, [name.text()]));
+                    if (needReportError(wrapperDecl, decl)) {
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
+                            DiagnosticCode.Member_0_of_object_type_implicitly_has_an_any_type, [name.text()]));
+                    }
                 }
-                // varDecl is a variable declartion or class/interface property; Ignore variable in catch block or in the ForIn Statement
+                // varDecl is a variable declaration or class/interface property; Ignore variable in catch block or in the ForIn Statement
                 else if (wrapperDecl.kind !== TypeScript.PullElementKind.CatchBlock) {
                     // varDecl is not declared in ambient declaration; so report an error
-                    if (!TypeScript.hasFlag(wrapperDecl.flags, TypeScript.PullElementFlags.Ambient)) {
+                    // OR
+                    // varDecl is declared in ambient declaration but it is not private; so report an error
+                    if (needReportError(wrapperDecl) || !hasModifier(modifiers, PullElementFlags.Private)) {
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
                             DiagnosticCode.Variable_0_implicitly_has_an_any_type, [name.text()]));
-                    }
-                    // varDecl is delcared in ambient declaration but it is not private; so report an error
-                    else if (TypeScript.hasFlag(wrapperDecl.flags, TypeScript.PullElementFlags.Ambient) &&
-                        !TypeScript.hasModifier(modifiers, PullElementFlags.Private)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(varDeclOrParameter,
-                            DiagnosticCode.Variable_0_implicitly_has_an_any_type, [name.text()]));
-                    }
+                    }                    
                 }
             }
 
@@ -3525,7 +3531,8 @@ module TypeScript {
                     case SyntaxKind.SimpleArrowFunctionExpression:
                     case SyntaxKind.ParenthesizedArrowFunctionExpression:
                     case SyntaxKind.FunctionExpression:
-                        // don't recurse into a function decl - we don't want to confuse a nested
+                    case SyntaxKind.ObjectLiteralExpression:
+                        // don't recurse into a function\object literal decl - we don't want to confuse a nested
                         // return type with the top-level function's return type
                         go = false;
                         break;
@@ -3711,13 +3718,23 @@ module TypeScript {
             if (constructorDecl.block) {
                 var foundSuperCall = false;
                 var pre = (ast: ISyntaxElement, walker: IAstWalker) => {
-                    // If we hit a super invocation, then we're done.  Stop everything we're doing.
-                    // Note 1: there is no restriction on there being multiple super calls.
-                    // Note 2: The restriction about super calls not being permitted in a local 
-                    // function is checked in typeCheckSuperExpression
-                    if (this.isSuperInvocationExpression(ast)) {
-                        foundSuperCall = true;
-                        walker.options.stopWalking = true;
+                    switch (ast.kind()) {
+                        // do not dive inside functions/object literals - super calls inside them are illegal and should not be considered valid search results
+                        case SyntaxKind.FunctionDeclaration:
+                        case SyntaxKind.SimpleArrowFunctionExpression:
+                        case SyntaxKind.ParenthesizedArrowFunctionExpression:
+                        case SyntaxKind.FunctionExpression:
+                        case SyntaxKind.ObjectLiteralExpression:
+                            walker.options.goChildren = false;
+                        default:
+                            // If we hit a super invocation, then we're done.  Stop everything we're doing.
+                            // Note 1: there is no restriction on there being multiple super calls.
+                            // Note 2: The restriction about super calls not being permitted in a local 
+                            // function is checked in typeCheckSuperExpression
+                            if (this.isSuperInvocationExpression(ast)) {
+                                foundSuperCall = true;
+                                walker.options.stopWalking = true;
+                            }
                     }
                 }
 
@@ -7575,6 +7592,11 @@ module TypeScript {
                         return;
                     }
                 }
+                else if (currentDecl.kind === PullElementKind.Enum)
+                {
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(thisExpression, DiagnosticCode.this_cannot_be_referenced_in_current_location));
+                    return;
+                }
                 else if (currentDecl.kind === PullElementKind.ConstructorMethod) {
                     // October 11, 2013
                     // The first statement in the body of a constructor must be a super call if 
@@ -7727,7 +7749,6 @@ module TypeScript {
                         return;
                     }
                 }
-
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_property_access_is_permitted_only_in_a_constructor_member_function_or_member_accessor_of_a_derived_class));
                 return;
             }
@@ -7744,30 +7765,26 @@ module TypeScript {
                 //      The constructor declares parameter properties or the containing class 
                 //      declares instance member variables with initializers.
 
-                for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
-                    if (this.isFunctionOrNonArrowFunctionExpression(currentDecl)) {
-                        break;
-                    }
-                    else if (currentDecl.kind === PullElementKind.ConstructorMethod) {
-                        // We were in a constructor.  That's good.
-                        var classDecl = currentDecl.getParentDecl();
+                if (enclosingDecl.kind === PullElementKind.ConstructorMethod) {
+                    // We were in a constructor.  That's good.
+                    var classDecl = enclosingDecl.getParentDecl();
 
-                        if (!this.enclosingClassIsDerived(classDecl)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
-                            return;
-                        }
-                        else if (this.inConstructorParameterList(ast)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
-                            return;
-                        }
-
-                        // Nothing wrong with how we were referenced.  Note: the check if we're the
-                        // first statement in the constructor happens in typeCheckConstructorDeclaration.
+                    if (!this.enclosingClassIsDerived(classDecl)) {
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
                         return;
                     }
+                    else if (this.inConstructorParameterList(ast)) {
+                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
+                        return;
+                    }
+
+                    // Nothing wrong with how we were referenced.  Note: the check if we're the
+                    // first statement in the constructor happens in typeCheckConstructorDeclaration.
                 }
-                
-                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_local_functions_inside_constructors));
+                else {
+                    // SPEC NOV 18: Super calls are not permitted outside constructors or in local functions inside constructors.
+                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_nested_functions_inside_constructors));
+                }
             }
         }
 
@@ -8704,7 +8721,6 @@ module TypeScript {
             }
 
             var explicitTypeArgs: PullTypeSymbol[] = null;
-            var typeReplacementMap: TypeArgumentMap = null;
             var couldNotFindGenericOverload = false;
             var couldNotAssignToConstraint: boolean;
             var constraintDiagnostic: Diagnostic = null;
@@ -8777,14 +8793,8 @@ module TypeScript {
                     // When specializing the constraints, seed the replacement map with any substitutions already specified by
                     // the target function's type
                     var mutableTypeReplacementMap = new PullInstantiationHelpers.MutableTypeArgumentMap(targetTypeReplacementMap ? targetTypeReplacementMap : []);
-                    for (var j = 0; j < typeParameters.length; j++) {
-                        var typeParameterId = typeParameters[j].getRootSymbol().pullSymbolID;
-                        if (mutableTypeReplacementMap.typeParameterArgumentMap[typeParameterId] != inferredOrExplicitTypeArgs[j]) {
-                            mutableTypeReplacementMap.ensureTypeArgumentCopy();
-                            mutableTypeReplacementMap.typeParameterArgumentMap[typeParameterId] = inferredOrExplicitTypeArgs[j];
-                        }
-                    }
-                    typeReplacementMap = mutableTypeReplacementMap.typeParameterArgumentMap;
+                    PullInstantiationHelpers.updateMutableTypeParameterArgumentMap(typeParameters, inferredOrExplicitTypeArgs, mutableTypeReplacementMap);
+                    var typeReplacementMap = mutableTypeReplacementMap.typeParameterArgumentMap;
 
                     if (explicitTypeArgs) {
                         for (var j = 0; j < typeParameters.length; j++) {
@@ -9050,7 +9060,6 @@ module TypeScript {
             var constructSignatures = targetTypeSymbol.getConstructSignatures();
 
             var explicitTypeArgs: PullTypeSymbol[] = null;
-            var typeReplacementMap: PullTypeSymbol[] = null;
             var usedCallSignaturesInstead = false;
             var couldNotAssignToConstraint: boolean;
             var constraintDiagnostic: Diagnostic = null;
@@ -9139,22 +9148,13 @@ module TypeScript {
                             }
 
                             // if we could infer Args, or we have type arguments, then attempt to specialize the signature
-                            typeReplacementMap = [];
                             Debug.assert(inferredOrExplicitTypeArgs && inferredOrExplicitTypeArgs.length == typeParameters.length);
 
                             // When specializing the constraints, seed the replacement map with any substitutions already specified by
                             // the target function's type
-                            if (targetTypeReplacementMap) {
-                                for (var symbolID in targetTypeReplacementMap) {
-                                    if (targetTypeReplacementMap.hasOwnProperty(symbolID)) {
-                                        typeReplacementMap[symbolID] = targetTypeReplacementMap[symbolID];
-                                    }
-                                }
-                            }
-
-                            for (var j = 0; j < typeParameters.length; j++) {
-                                typeReplacementMap[typeParameters[j].pullSymbolID] = inferredOrExplicitTypeArgs[j];
-                            }
+                            var mutableTypeReplacementMap = new PullInstantiationHelpers.MutableTypeArgumentMap(targetTypeReplacementMap ? targetTypeReplacementMap : []);
+                            PullInstantiationHelpers.updateMutableTypeParameterArgumentMap(typeParameters, inferredOrExplicitTypeArgs, mutableTypeReplacementMap);
+                            var typeReplacementMap = mutableTypeReplacementMap.typeParameterArgumentMap;
 
                             if (explicitTypeArgs) {
                                 for (var j = 0; j < typeParameters.length; j++) {
@@ -9388,9 +9388,7 @@ module TypeScript {
                 }
             }
 
-            for (var i = 0; i < typeParameters.length; i++) {
-                typeReplacementMap[typeParameters[i].pullSymbolID] = inferredTypeArgs[i];
-            }
+            PullInstantiationHelpers.updateTypeParameterArgumentMap(typeParameters, inferredTypeArgs, typeReplacementMap);
 
             return this.instantiateSignature(signatureAToInstantiate, typeReplacementMap);
         }
@@ -9777,38 +9775,11 @@ module TypeScript {
                     // Spec section 3.8.2:
                     // Two members are considered identical when
                     // they are public properties with identical names, optionality, and types,
-                    // they are private properties originating in the same declaration and having identical types,
-
+                    // they are private properties originating in the same declaration and having identical types
                     t1MemberSymbol = t1Members[iMember];
                     t2MemberSymbol = this.getNamedPropertySymbol(t1MemberSymbol.name, PullElementKind.SomeValue, t2);
                     
-                    if (!t2MemberSymbol || (t1MemberSymbol.isOptional !== t2MemberSymbol.isOptional)) {
-                        return false;
-                    }
-
-                    var t1MemberSymbolIsPrivate = t1MemberSymbol.anyDeclHasFlag(PullElementFlags.Private);
-                    var t2MemberSymbolIsPrivate = t2MemberSymbol.anyDeclHasFlag(PullElementFlags.Private);
-
-                    // if visibility doesn't match, the types don't match
-                    if (t1MemberSymbolIsPrivate !== t2MemberSymbolIsPrivate) {
-                        return false;
-                    }
-                    // if both are private members, test to ensure that they share a declaration
-                    else if (t2MemberSymbolIsPrivate && t1MemberSymbolIsPrivate) {
-                        var t1MemberSymbolDecl = t1MemberSymbol.getDeclarations()[0];
-                        var sourceDecl = t2MemberSymbol.getDeclarations()[0];
-                        if (t1MemberSymbolDecl !== sourceDecl) {
-                            return false;
-                        }
-                    }
-
-                    t1MemberType = t1MemberSymbol.type;
-                    t2MemberType = t2MemberSymbol.type;
-
-                    context.walkMemberTypes(t1MemberSymbol.name);
-                    var areMemberTypesIdentical = this.typesAreIdenticalInEnclosingTypes(t1MemberType, t2MemberType, context);
-                    context.postWalkMemberTypes();
-                    if (!areMemberTypesIdentical) {
+                    if (!this.propertiesAreIdentical(t1MemberSymbol, t2MemberSymbol, context)) {
                         return false;
                     }
                 }
@@ -9839,6 +9810,53 @@ module TypeScript {
             }
 
             return true;
+        }
+
+        private propertiesAreIdentical(propertySymbol1: PullSymbol, propertySymbol2: PullSymbol, context: PullTypeResolutionContext): boolean {
+            // Spec section 3.8.2:
+            // Two members are considered identical when
+            // they are public properties with identical names, optionality, and types,
+            // they are private properties originating in the same declaration and having identical types
+            if (!propertySymbol2 || (propertySymbol1.isOptional !== propertySymbol2.isOptional)) {
+                return false;
+            }
+
+            var t1MemberSymbolIsPrivate = propertySymbol1.anyDeclHasFlag(PullElementFlags.Private);
+            var t2MemberSymbolIsPrivate = propertySymbol2.anyDeclHasFlag(PullElementFlags.Private);
+
+            // if visibility doesn't match, the types don't match
+            if (t1MemberSymbolIsPrivate !== t2MemberSymbolIsPrivate) {
+                return false;
+            }
+            // if both are private members, test to ensure that they share a declaration
+            else if (t2MemberSymbolIsPrivate && t1MemberSymbolIsPrivate) {
+                var t1MemberSymbolDecl = propertySymbol1.getDeclarations()[0];
+                var sourceDecl = propertySymbol2.getDeclarations()[0];
+                if (t1MemberSymbolDecl !== sourceDecl) {
+                    return false;
+                }
+            }
+
+            var t1MemberType = propertySymbol1.type;
+            var t2MemberType = propertySymbol2.type;
+
+            context.walkMemberTypes(propertySymbol1.name);
+            var areMemberTypesIdentical = this.typesAreIdenticalInEnclosingTypes(t1MemberType, t2MemberType, context);
+            context.postWalkMemberTypes();
+            return areMemberTypesIdentical;
+        }
+
+        private propertiesAreIdenticalWithNewEnclosingTypes(
+            type1: PullTypeSymbol,
+            type2: PullTypeSymbol,
+            property1: PullSymbol,
+            property2: PullSymbol,
+            context: PullTypeResolutionContext): boolean {
+            var enclosingWalkers = context.resetEnclosingTypeWalkers();
+            context.setEnclosingTypes(type1, type2);
+            var arePropertiesIdentical = this.propertiesAreIdentical(property1, property2, context);
+            context.setEnclosingTypeWalkers(enclosingWalkers);
+            return arePropertiesIdentical;
         }
 
         private signatureGroupsAreIdentical(sg1: PullSignatureSymbol[], sg2: PullSignatureSymbol[],
@@ -13247,7 +13265,7 @@ module TypeScript {
             for (var i = 0; i < baseTypes.length; i++) {
                 // Check the member identity and the index signature identity between this base
                 // and bases checked so far. Only report the first error.
-                if (this.checkNamedPropertyTypeIdentityBetweenBases(name, typeSymbol, baseTypes[i], inheritedMembersMap, context) ||
+                if (this.checkNamedPropertyIdentityBetweenBases(name, typeSymbol, baseTypes[i], inheritedMembersMap, context) ||
                     this.checkIndexSignatureIdentityBetweenBases(name, typeSymbol, baseTypes[i], inheritedIndexSignatures, typeHasOwnNumberIndexer, typeHasOwnStringIndexer, context)) {
                     return;
                 }
@@ -13264,7 +13282,7 @@ module TypeScript {
 
         // This method returns true if there was an error given, and false if there was no error.
         // The boolean value is used by the caller for short circuiting.
-        private checkNamedPropertyTypeIdentityBetweenBases(
+        private checkNamedPropertyIdentityBetweenBases(
             interfaceName: ISyntaxToken,
             interfaceSymbol: PullTypeSymbol,
             baseTypeSymbol: PullTypeSymbol,
@@ -13284,12 +13302,12 @@ module TypeScript {
 
                 this.resolveDeclaredSymbol(member, context);
 
-                // Error if there is already a member in the bag with that name, and it doesn't have the same type
+                // Error if there is already a member in the bag with that name, and it is not identical
                 if (inheritedMembersMap[memberName]) {
                     var prevMember = inheritedMembersMap[memberName];
                     if (prevMember.baseOrigin !== baseTypeSymbol &&
-                        !this.typesAreIdentical(member.type, prevMember.memberSymbol.type, context)) {
-                        var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Types_of_property_0_of_types_1_and_2_are_not_identical,
+                        !this.propertiesAreIdenticalWithNewEnclosingTypes(baseTypeSymbol, prevMember.baseOrigin, member, prevMember.memberSymbol, context)) {
+                        var innerDiagnostic = getDiagnosticMessage(DiagnosticCode.Named_properties_0_of_types_1_and_2_are_not_identical,
                             [memberName, prevMember.baseOrigin.getScopedName(), baseTypeSymbol.getScopedName()]);
                         context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(interfaceName,
                             DiagnosticCode.Interface_0_cannot_simultaneously_extend_types_1_and_2_NL_3,

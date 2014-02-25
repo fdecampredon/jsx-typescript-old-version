@@ -1,0 +1,11 @@
+=== tests/cases/compiler/inheritSameNamePrivatePropertiesFromSameOrigin.ts ===
+Line 0 col 6 IdentifierName "B" = B
+Line 1 col 12 IdentifierName "x" = number
+Line 3 col 6 IdentifierName "C" = C
+Line 3 col 16 IdentifierName "B" = B
+Line 5 col 6 IdentifierName "C2" = C2
+Line 5 col 17 IdentifierName "B" = B
+Line 7 col 10 IdentifierName "A" = A
+Line 7 col 20 IdentifierName "C" = C
+Line 7 col 23 IdentifierName "C2" = C2
+Line 8 col 0 IdentifierName "y" = string

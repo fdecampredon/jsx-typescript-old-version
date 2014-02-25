@@ -146,7 +146,15 @@ module TypeScript {
                                 updatedPath = true;
 
                                 if (j === 0) {
-                                    if (this._outputDirectory || this._sourceMapRootDirectory) {
+                                    var isDynamicModuleCompilation = ArrayUtilities.any(fileNames, fileName => {
+                                        document = compiler.getDocument(fileName);
+                                        return !document.isDeclareFile() && document.isExternalModule();
+                                    });
+
+                                    if (this._outputDirectory || // there is --outDir specified
+                                        this._sourceRootDirectory || // there is --sourceRoot specified
+                                        (this._sourceMapRootDirectory && // there is --map Specified and there would be multiple js files generated
+                                        (!this._sharedOutputFile || isDynamicModuleCompilation))) {
                                         // Its error to not have common path
                                         this._diagnostic = new Diagnostic(null, null, 0, 0, DiagnosticCode.Cannot_find_the_common_subdirectory_path_for_the_input_files, null);
                                         return;
@@ -215,7 +223,7 @@ module TypeScript {
         public captureThisStmtString = "var _this = this;";
         private currentVariableDeclaration: VariableDeclarationSyntax;
         private declStack: PullDecl[] = [];
-        private exportAssignmentIdentifier: string = null;
+        private exportAssignment: ExportAssignmentSyntax = null;
         private inWithBlock = false;
 
         public document: Document = null;
@@ -249,12 +257,12 @@ module TypeScript {
             return enclosingDecl;
         }
 
-        public setExportAssignmentIdentifier(id: string) {
-            this.exportAssignmentIdentifier = id;
+        public setExportAssignment(exportAssignment: ExportAssignmentSyntax) {
+            this.exportAssignment = exportAssignment;
         }
 
-        public getExportAssignmentIdentifier() {
-            return this.exportAssignmentIdentifier;
+        public getExportAssignment() {
+            return this.exportAssignment;
         }
 
         public setDocument(document: Document) {
@@ -1067,7 +1075,7 @@ module TypeScript {
                 this.emitSingleModuleDeclaration(moduleDecl, moduleDecl.stringLiteral);
             }
             else {
-                var moduleNames = getModuleNames(moduleDecl.name);
+                var moduleNames = ASTHelpers.getModuleNames(moduleDecl.name);
                 this.emitSingleModuleDeclaration(moduleDecl, moduleNames[0]);
             }
         }
@@ -1132,8 +1140,9 @@ module TypeScript {
                 this.emitList(moduleDecl.moduleElements);
             }
             else {
-                var moduleNames = getModuleNames(moduleDecl.name);
+                var moduleNames = ASTHelpers.getModuleNames(moduleDecl.name);
                 var nameIndex = moduleNames.indexOf(<ISyntaxToken>moduleName);
+
                 Debug.assert(nameIndex >= 0);
 
                 if (isLastName) {
@@ -2279,7 +2288,7 @@ module TypeScript {
 
                 // if the external module has an "export =" identifier, we'll
                 // set it in the ExportAssignment emit method
-                this.setExportAssignmentIdentifier(null);
+                this.setExportAssignment(null);
 
                 if(this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) {
                     this.indenter.increaseIndent();
@@ -2302,22 +2311,25 @@ module TypeScript {
                 }
 
                 if (isNonElidedExternalModule) {
-                    var exportAssignmentIdentifier = this.getExportAssignmentIdentifier();
+                    var exportAssignment = this.getExportAssignment();
+                    var exportAssignmentIdentifierText = exportAssignment ? exportAssignment.identifier.text() : null;
                     var exportAssignmentValueSymbol = (<PullContainerSymbol>externalModule.getSymbol()).getExportAssignedValueSymbol();
 
                     if (this.emitOptions.compilationSettings().moduleGenTarget() === ModuleGenTarget.Asynchronous) { // AMD
-                        if (exportAssignmentIdentifier && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {
+                        if (exportAssignmentIdentifierText && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {
                             // indent was decreased for AMD above
                             this.indenter.increaseIndent();
                             this.emitIndent();
-                            this.writeLineToOutput("return " + exportAssignmentIdentifier + ";");
+                            this.writeToOutputWithSourceMapRecord("return " + exportAssignmentIdentifierText, exportAssignment);
+                            this.writeLineToOutput(";");
                             this.indenter.decreaseIndent();
                         }
                         this.writeToOutput("});");
                     }
-                    else if (exportAssignmentIdentifier && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {
+                    else if (exportAssignmentIdentifierText && exportAssignmentValueSymbol && !(exportAssignmentValueSymbol.kind & PullElementKind.SomeTypeReference)) {
                         this.emitIndent();
-                        this.writeToOutput("module.exports = " + exportAssignmentIdentifier + ";");
+                        this.writeToOutputWithSourceMapRecord("module.exports = " + exportAssignmentIdentifierText, exportAssignment);
+                        this.writeToOutput(";");
                     }
 
                     this.recordSourceMappingEnd(sourceUnit);
@@ -2492,7 +2504,8 @@ module TypeScript {
             if (hasBaseClass) {
                 baseTypeReference = ASTHelpers.getExtendsHeritageClause(classDecl.heritageClauses).typeNames.nonSeparatorAt(0);
                 this.emitIndent();
-                this.writeLineToOutput("__extends(" + className + ", _super);");
+                this.writeToOutputWithSourceMapRecord("__extends(" + className + ", _super)", baseTypeReference);
+                this.writeLineToOutput(";");
             }
 
             this.emitIndent();
@@ -2513,7 +2526,8 @@ module TypeScript {
                 this.recordSourceMappingNameStart("constructor");
                 if (hasBaseClass) {
                     this.emitIndent();
-                    this.writeLineToOutput("_super.apply(this, arguments);");
+                    this.writeToOutputWithSourceMapRecord("_super.apply(this, arguments)", baseTypeReference);
+                    this.writeLineToOutput(";");
                 }
 
                 if (this.shouldCaptureThis(classDecl)) {
@@ -2524,7 +2538,8 @@ module TypeScript {
 
                 this.indenter.decreaseIndent();
                 this.emitIndent();
-                this.writeLineToOutput("}");
+                this.writeToOutputWithSourceMapRecord("}", classDecl.closeBraceToken);
+                this.writeLineToOutput("");
 
                 this.recordSourceMappingNameEnd();
                 this.recordSourceMappingEnd(classDecl);
@@ -3503,7 +3518,7 @@ module TypeScript {
                 case SyntaxKind.ImportDeclaration:
                     return this.emitImportDeclaration(<ImportDeclarationSyntax>ast);
                 case SyntaxKind.ExportAssignment:
-                    return this.setExportAssignmentIdentifier((<ExportAssignmentSyntax>ast).identifier.text());
+                    return this.setExportAssignment(<ExportAssignmentSyntax>ast);
                 case SyntaxKind.ClassDeclaration:
                     return this.emitClassDeclaration(<ClassDeclarationSyntax>ast);
                 case SyntaxKind.InterfaceDeclaration:

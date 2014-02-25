@@ -10,224 +10,400 @@ Line 4 col 33 IdentifierName "baz" = string
 Line 5 col 6 IdentifierName "OtherDerived" = OtherDerived
 Line 5 col 27 IdentifierName "Base" = Base
 Line 5 col 34 IdentifierName "bing" = string
-Line 7 col 10 IdentifierName "A" = A
-Line 8 col 0 IdentifierName "// M's
-    a" = new<T>(x: T) => T[]
-Line 9 col 12 IdentifierName "T" = T
-Line 9 col 15 IdentifierName "x" = T
-Line 9 col 18 IdentifierName "T" = T
-Line 9 col 24 IdentifierName "T" = T
-Line 10 col 0 IdentifierName "a2" = new<T>(x: T) => string[]
-Line 10 col 13 IdentifierName "T" = T
-Line 10 col 16 IdentifierName "x" = T
-Line 10 col 19 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "a3" = new<T>(x: T) => void
-Line 11 col 13 IdentifierName "T" = T
-Line 11 col 16 IdentifierName "x" = T
-Line 11 col 19 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "a4" = new<T, U>(x: T, y: U) => string
-Line 12 col 13 IdentifierName "T" = T
-Line 12 col 16 IdentifierName "U" = U
-Line 12 col 19 IdentifierName "x" = T
-Line 12 col 22 IdentifierName "T" = T
-Line 12 col 25 IdentifierName "y" = U
-Line 12 col 28 IdentifierName "U" = U
-Line 13 col 0 IdentifierName "a5" = new<T, U>(x: (arg: T) => U) => T
-Line 13 col 13 IdentifierName "T" = T
-Line 13 col 16 IdentifierName "U" = U
-Line 13 col 19 IdentifierName "x" = (arg: T) => U
-Line 13 col 23 IdentifierName "arg" = T
-Line 13 col 28 IdentifierName "T" = T
-Line 13 col 34 IdentifierName "U" = U
-Line 13 col 40 IdentifierName "T" = T
-Line 14 col 0 IdentifierName "a6" = new<T extends Base>(x: (arg: T) => Derived) => T
-Line 14 col 13 IdentifierName "T" = T
-Line 14 col 23 IdentifierName "Base" = Base
-Line 14 col 29 IdentifierName "x" = (arg: T) => Derived
-Line 14 col 33 IdentifierName "arg" = T
-Line 14 col 38 IdentifierName "T" = T
-Line 14 col 44 IdentifierName "Derived" = Derived
-Line 14 col 56 IdentifierName "T" = T
-Line 15 col 0 IdentifierName "a11" = new<T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
-Line 15 col 14 IdentifierName "T" = T
-Line 15 col 17 IdentifierName "x" = { foo: T; }
-Line 15 col 22 IdentifierName "foo" = T
-Line 15 col 27 IdentifierName "T" = T
-Line 15 col 32 IdentifierName "y" = { foo: T; bar: T; }
-Line 15 col 37 IdentifierName "foo" = T
-Line 15 col 42 IdentifierName "T" = T
-Line 15 col 45 IdentifierName "bar" = T
-Line 15 col 50 IdentifierName "T" = T
-Line 15 col 58 IdentifierName "Base" = Base
-Line 16 col 0 IdentifierName "a15" = new<T>(x: { a: T; b: T; }) => T[]
-Line 16 col 14 IdentifierName "T" = T
-Line 16 col 17 IdentifierName "x" = { a: T; b: T; }
-Line 16 col 22 IdentifierName "a" = T
-Line 16 col 25 IdentifierName "T" = T
-Line 16 col 28 IdentifierName "b" = T
+Line 7 col 17 IdentifierName "foo1" = typeof foo1
+Line 7 col 22 IdentifierName "a" = new<T>(x: T) => T[]
+Line 7 col 30 IdentifierName "T" = T
+Line 7 col 33 IdentifierName "x" = T
+Line 7 col 36 IdentifierName "T" = T
+Line 7 col 42 IdentifierName "T" = T
+Line 8 col 17 IdentifierName "foo1" = typeof foo1
+Line 8 col 22 IdentifierName "a" = any
+Line 10 col 17 IdentifierName "foo2" = typeof foo2
+Line 10 col 22 IdentifierName "a2" = new<T>(x: T) => string[]
+Line 10 col 31 IdentifierName "T" = T
+Line 10 col 34 IdentifierName "x" = T
+Line 10 col 37 IdentifierName "T" = T
+Line 11 col 17 IdentifierName "foo2" = typeof foo2
+Line 11 col 22 IdentifierName "a" = any
+Line 13 col 17 IdentifierName "foo3" = typeof foo3
+Line 13 col 22 IdentifierName "a3" = new<T>(x: T) => void
+Line 13 col 31 IdentifierName "T" = T
+Line 13 col 34 IdentifierName "x" = T
+Line 13 col 37 IdentifierName "T" = T
+Line 14 col 17 IdentifierName "foo3" = typeof foo3
+Line 14 col 22 IdentifierName "a" = any
+Line 16 col 17 IdentifierName "foo4" = typeof foo4
+Line 16 col 22 IdentifierName "a4" = new<T, U>(x: T, y: U) => string
 Line 16 col 31 IdentifierName "T" = T
-Line 16 col 39 IdentifierName "T" = T
-Line 17 col 0 IdentifierName "a16" = new<T extends Base>(x: { a: T; b: T; }) => T[]
-Line 17 col 14 IdentifierName "T" = T
-Line 17 col 24 IdentifierName "Base" = Base
-Line 17 col 30 IdentifierName "x" = { a: T; b: T; }
-Line 17 col 35 IdentifierName "a" = T
-Line 17 col 38 IdentifierName "T" = T
-Line 17 col 41 IdentifierName "b" = T
-Line 17 col 44 IdentifierName "T" = T
-Line 17 col 52 IdentifierName "T" = T
-Line 18 col 0 IdentifierName "a17" = { new<T extends Base>(x: T): T[]; new<U extends Derived>(x: U): U[]; }
-Line 19 col 13 IdentifierName "T" = T
-Line 19 col 23 IdentifierName "Base" = Base
-Line 19 col 29 IdentifierName "x" = T
-Line 19 col 32 IdentifierName "T" = T
-Line 19 col 36 IdentifierName "T" = T
-Line 20 col 13 IdentifierName "U" = U
-Line 20 col 23 IdentifierName "Derived" = Derived
-Line 20 col 32 IdentifierName "x" = U
-Line 20 col 35 IdentifierName "U" = U
-Line 20 col 39 IdentifierName "U" = U
-Line 22 col 0 IdentifierName "a18" = { new<T extends Derived>(x: T): number[]; new<U extends Base>(x: U): number[]; }
-Line 23 col 13 IdentifierName "T" = T
-Line 23 col 23 IdentifierName "Derived" = Derived
-Line 23 col 32 IdentifierName "x" = T
-Line 23 col 35 IdentifierName "T" = T
-Line 24 col 13 IdentifierName "U" = U
-Line 24 col 23 IdentifierName "Base" = Base
-Line 24 col 29 IdentifierName "x" = U
-Line 24 col 32 IdentifierName "U" = U
-Line 26 col 0 IdentifierName "a19" = { new<T extends Derived>(x: new(a: T) => T): T[]; new<U extends Base>(x: new(a: U) => U): U[]; }
-Line 27 col 13 IdentifierName "T" = T
-Line 27 col 23 IdentifierName "Derived" = Derived
-Line 27 col 32 IdentifierName "x" = new(a: T) => T
-Line 27 col 40 IdentifierName "a" = T
-Line 27 col 43 IdentifierName "T" = T
-Line 27 col 49 IdentifierName "T" = T
-Line 27 col 53 IdentifierName "T" = T
-Line 28 col 13 IdentifierName "U" = U
-Line 28 col 23 IdentifierName "Base" = Base
-Line 28 col 29 IdentifierName "x" = new(a: U) => U
-Line 28 col 37 IdentifierName "a" = U
-Line 28 col 40 IdentifierName "U" = U
-Line 28 col 46 IdentifierName "U" = U
-Line 28 col 50 IdentifierName "U" = U
-Line 30 col 0 IdentifierName "a20" = { new(x: { new<T extends Derived>(a: T): T; new<U extends Base>(a: U): U; }): any[]; new(x: { new<T extends Base>(a: T): T; new<U extends Derived2>(a: U): U; }): any[]; }
-Line 31 col 13 IdentifierName "x" = { new<T extends Derived>(a: T): T; new<U extends Base>(a: U): U; }
-Line 32 col 17 IdentifierName "T" = T
-Line 32 col 27 IdentifierName "Derived" = Derived
-Line 32 col 36 IdentifierName "a" = T
-Line 32 col 39 IdentifierName "T" = T
-Line 32 col 43 IdentifierName "T" = T
-Line 33 col 17 IdentifierName "U" = U
-Line 33 col 27 IdentifierName "Base" = Base
-Line 33 col 33 IdentifierName "a" = U
-Line 33 col 36 IdentifierName "U" = U
-Line 33 col 40 IdentifierName "U" = U
-Line 35 col 13 IdentifierName "x" = { new<T extends Base>(a: T): T; new<U extends Derived2>(a: U): U; }
-Line 36 col 17 IdentifierName "T" = T
-Line 36 col 27 IdentifierName "Base" = Base
+Line 16 col 34 IdentifierName "U" = U
+Line 16 col 37 IdentifierName "x" = T
+Line 16 col 40 IdentifierName "T" = T
+Line 16 col 43 IdentifierName "y" = U
+Line 16 col 46 IdentifierName "U" = U
+Line 17 col 17 IdentifierName "foo4" = typeof foo4
+Line 17 col 22 IdentifierName "a" = any
+Line 19 col 17 IdentifierName "foo5" = typeof foo5
+Line 19 col 22 IdentifierName "a5" = new<T, U>(x: new(arg: T) => U) => T
+Line 19 col 31 IdentifierName "T" = T
+Line 19 col 34 IdentifierName "U" = U
+Line 19 col 37 IdentifierName "x" = new(arg: T) => U
+Line 19 col 45 IdentifierName "arg" = T
+Line 19 col 50 IdentifierName "T" = T
+Line 19 col 56 IdentifierName "U" = U
+Line 19 col 62 IdentifierName "T" = T
+Line 20 col 17 IdentifierName "foo5" = typeof foo5
+Line 20 col 22 IdentifierName "a" = any
+Line 22 col 17 IdentifierName "foo6" = typeof foo6
+Line 22 col 22 IdentifierName "a6" = new<T extends Base>(x: new(arg: T) => Derived) => T
+Line 22 col 31 IdentifierName "T" = T
+Line 22 col 41 IdentifierName "Base" = Base
+Line 22 col 47 IdentifierName "x" = new(arg: T) => Derived
+Line 22 col 55 IdentifierName "arg" = T
+Line 22 col 60 IdentifierName "T" = T
+Line 22 col 66 IdentifierName "Derived" = Derived
+Line 22 col 78 IdentifierName "T" = T
+Line 23 col 17 IdentifierName "foo6" = typeof foo6
+Line 23 col 22 IdentifierName "a" = any
+Line 25 col 17 IdentifierName "foo11" = typeof foo11
+Line 25 col 23 IdentifierName "a11" = new<T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+Line 25 col 33 IdentifierName "T" = T
+Line 25 col 36 IdentifierName "x" = { foo: T; }
+Line 25 col 41 IdentifierName "foo" = T
+Line 25 col 46 IdentifierName "T" = T
+Line 25 col 51 IdentifierName "y" = { foo: T; bar: T; }
+Line 25 col 56 IdentifierName "foo" = T
+Line 25 col 61 IdentifierName "T" = T
+Line 25 col 64 IdentifierName "bar" = T
+Line 25 col 69 IdentifierName "T" = T
+Line 25 col 77 IdentifierName "Base" = Base
+Line 26 col 17 IdentifierName "foo11" = typeof foo11
+Line 26 col 23 IdentifierName "a" = any
+Line 28 col 17 IdentifierName "foo15" = typeof foo15
+Line 28 col 23 IdentifierName "a15" = new<T>(x: { a: T; b: T; }) => T[]
+Line 28 col 33 IdentifierName "T" = T
+Line 28 col 36 IdentifierName "x" = { a: T; b: T; }
+Line 28 col 41 IdentifierName "a" = T
+Line 28 col 44 IdentifierName "T" = T
+Line 28 col 47 IdentifierName "b" = T
+Line 28 col 50 IdentifierName "T" = T
+Line 28 col 58 IdentifierName "T" = T
+Line 29 col 17 IdentifierName "foo15" = typeof foo15
+Line 29 col 23 IdentifierName "a" = any
+Line 31 col 17 IdentifierName "foo16" = typeof foo16
+Line 31 col 23 IdentifierName "a16" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 31 col 33 IdentifierName "T" = T
+Line 31 col 43 IdentifierName "Base" = Base
+Line 31 col 49 IdentifierName "x" = { a: T; b: T; }
+Line 31 col 54 IdentifierName "a" = T
+Line 31 col 57 IdentifierName "T" = T
+Line 31 col 60 IdentifierName "b" = T
+Line 31 col 63 IdentifierName "T" = T
+Line 31 col 71 IdentifierName "T" = T
+Line 32 col 17 IdentifierName "foo16" = typeof foo16
+Line 32 col 23 IdentifierName "a" = any
+Line 34 col 17 IdentifierName "foo17" = typeof foo17
+Line 34 col 23 IdentifierName "a17" = { new<T extends Derived>(x: new(a: T) => T): T[]; new<T extends Base>(x: new(a: T) => T): T[]; }
+Line 35 col 9 IdentifierName "T" = T
+Line 35 col 19 IdentifierName "Derived" = Derived
+Line 35 col 28 IdentifierName "x" = new(a: T) => T
+Line 35 col 36 IdentifierName "a" = T
+Line 35 col 39 IdentifierName "T" = T
+Line 35 col 45 IdentifierName "T" = T
+Line 35 col 49 IdentifierName "T" = T
+Line 36 col 9 IdentifierName "T" = T
+Line 36 col 19 IdentifierName "Base" = Base
+Line 36 col 25 IdentifierName "x" = new(a: T) => T
 Line 36 col 33 IdentifierName "a" = T
 Line 36 col 36 IdentifierName "T" = T
-Line 36 col 40 IdentifierName "T" = T
-Line 37 col 17 IdentifierName "U" = U
-Line 37 col 27 IdentifierName "Derived2" = Derived2
-Line 37 col 37 IdentifierName "a" = U
-Line 37 col 40 IdentifierName "U" = U
-Line 37 col 44 IdentifierName "U" = U
-Line 43 col 10 IdentifierName "I" = I
-Line 43 col 20 IdentifierName "A" = A
-Line 44 col 0 IdentifierName "// N's
-    a" = new<T>(x: T) => T[]
-Line 45 col 12 IdentifierName "T" = T
-Line 45 col 15 IdentifierName "x" = T
-Line 45 col 18 IdentifierName "T" = T
-Line 45 col 24 IdentifierName "T" = T
-Line 46 col 0 IdentifierName "a2" = new<T>(x: T) => string[]
+Line 36 col 42 IdentifierName "T" = T
+Line 36 col 46 IdentifierName "T" = T
+Line 38 col 17 IdentifierName "foo17" = typeof foo17
+Line 38 col 23 IdentifierName "a" = any
+Line 40 col 17 IdentifierName "foo18" = typeof foo18
+Line 40 col 23 IdentifierName "a18" = { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
+Line 41 col 9 IdentifierName "x" = { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }
+Line 42 col 13 IdentifierName "T" = T
+Line 42 col 23 IdentifierName "Derived" = Derived
+Line 42 col 32 IdentifierName "a" = T
+Line 42 col 35 IdentifierName "T" = T
+Line 42 col 39 IdentifierName "T" = T
+Line 43 col 13 IdentifierName "T" = T
+Line 43 col 23 IdentifierName "Base" = Base
+Line 43 col 29 IdentifierName "a" = T
+Line 43 col 32 IdentifierName "T" = T
+Line 43 col 36 IdentifierName "T" = T
+Line 45 col 9 IdentifierName "x" = { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }
 Line 46 col 13 IdentifierName "T" = T
-Line 46 col 16 IdentifierName "x" = T
-Line 46 col 19 IdentifierName "T" = T
-Line 47 col 0 IdentifierName "a3" = new<T>(x: T) => T
+Line 46 col 23 IdentifierName "Derived2" = Derived2
+Line 46 col 33 IdentifierName "a" = T
+Line 46 col 36 IdentifierName "T" = T
+Line 46 col 40 IdentifierName "T" = T
 Line 47 col 13 IdentifierName "T" = T
-Line 47 col 16 IdentifierName "x" = T
-Line 47 col 19 IdentifierName "T" = T
-Line 47 col 25 IdentifierName "T" = T
-Line 48 col 0 IdentifierName "a4" = new<T, U>(x: T, y: U) => string
-Line 48 col 13 IdentifierName "T" = T
-Line 48 col 16 IdentifierName "U" = U
-Line 48 col 19 IdentifierName "x" = T
-Line 48 col 22 IdentifierName "T" = T
-Line 48 col 25 IdentifierName "y" = U
-Line 48 col 28 IdentifierName "U" = U
-Line 49 col 0 IdentifierName "a5" = new<T, U>(x: (arg: T) => U) => T
-Line 49 col 13 IdentifierName "T" = T
-Line 49 col 16 IdentifierName "U" = U
-Line 49 col 19 IdentifierName "x" = (arg: T) => U
-Line 49 col 23 IdentifierName "arg" = T
-Line 49 col 28 IdentifierName "T" = T
-Line 49 col 34 IdentifierName "U" = U
-Line 49 col 40 IdentifierName "T" = T
-Line 50 col 0 IdentifierName "a6" = new<T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 50 col 13 IdentifierName "T" = T
-Line 50 col 23 IdentifierName "Base" = Base
-Line 50 col 29 IdentifierName "U" = U
-Line 50 col 39 IdentifierName "Derived" = Derived
-Line 50 col 48 IdentifierName "x" = (arg: T) => U
-Line 50 col 52 IdentifierName "arg" = T
-Line 50 col 57 IdentifierName "T" = T
-Line 50 col 63 IdentifierName "U" = U
-Line 50 col 69 IdentifierName "T" = T
-Line 51 col 0 IdentifierName "a11" = new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
-Line 51 col 14 IdentifierName "T" = T
-Line 51 col 17 IdentifierName "U" = U
-Line 51 col 20 IdentifierName "x" = { foo: T; }
-Line 51 col 25 IdentifierName "foo" = T
-Line 51 col 30 IdentifierName "T" = T
-Line 51 col 35 IdentifierName "y" = { foo: U; bar: U; }
-Line 51 col 40 IdentifierName "foo" = U
-Line 51 col 45 IdentifierName "U" = U
-Line 51 col 48 IdentifierName "bar" = U
-Line 51 col 53 IdentifierName "U" = U
-Line 51 col 61 IdentifierName "Base" = Base
-Line 52 col 0 IdentifierName "a15" = new<U, V>(x: { a: U; b: V; }) => U[]
-Line 52 col 14 IdentifierName "U" = U
-Line 52 col 17 IdentifierName "V" = V
-Line 52 col 20 IdentifierName "x" = { a: U; b: V; }
-Line 52 col 25 IdentifierName "a" = U
-Line 52 col 28 IdentifierName "U" = U
-Line 52 col 31 IdentifierName "b" = V
-Line 52 col 34 IdentifierName "V" = V
-Line 52 col 43 IdentifierName "U" = U
-Line 53 col 0 IdentifierName "a16" = new<T>(x: { a: T; b: T; }) => T[]
-Line 53 col 14 IdentifierName "T" = T
-Line 53 col 17 IdentifierName "x" = { a: T; b: T; }
-Line 53 col 22 IdentifierName "a" = T
-Line 53 col 25 IdentifierName "T" = T
-Line 53 col 28 IdentifierName "b" = T
-Line 53 col 31 IdentifierName "T" = T
-Line 53 col 39 IdentifierName "T" = T
-Line 54 col 0 IdentifierName "a17" = new<T extends Base>(x: T) => T[]
-Line 54 col 14 IdentifierName "T" = T
-Line 54 col 24 IdentifierName "Base" = Base
-Line 54 col 30 IdentifierName "x" = T
-Line 54 col 33 IdentifierName "T" = T
-Line 54 col 39 IdentifierName "T" = T
-Line 55 col 0 IdentifierName "a18" = new<T extends Base>(x: T) => number[]
-Line 55 col 14 IdentifierName "T" = T
-Line 55 col 24 IdentifierName "Base" = Base
-Line 55 col 30 IdentifierName "x" = T
-Line 55 col 33 IdentifierName "T" = T
-Line 56 col 0 IdentifierName "a19" = new<T extends Base>(x: new(a: T) => T) => T[]
-Line 56 col 14 IdentifierName "T" = T
-Line 56 col 24 IdentifierName "Base" = Base
-Line 56 col 30 IdentifierName "x" = new(a: T) => T
-Line 56 col 38 IdentifierName "a" = T
-Line 56 col 41 IdentifierName "T" = T
-Line 56 col 47 IdentifierName "T" = T
-Line 56 col 53 IdentifierName "T" = T
-Line 57 col 0 IdentifierName "a20" = new(x: new<T extends Base>(a: T) => T) => any[]
-Line 57 col 14 IdentifierName "x" = new<T extends Base>(a: T) => T
-Line 57 col 22 IdentifierName "T" = T
-Line 57 col 32 IdentifierName "Base" = Base
-Line 57 col 38 IdentifierName "a" = T
-Line 57 col 41 IdentifierName "T" = T
-Line 57 col 47 IdentifierName "T" = T
+Line 47 col 23 IdentifierName "Base" = Base
+Line 47 col 29 IdentifierName "a" = T
+Line 47 col 32 IdentifierName "T" = T
+Line 47 col 36 IdentifierName "T" = T
+Line 50 col 17 IdentifierName "foo18" = typeof foo18
+Line 50 col 23 IdentifierName "a" = any
+Line 52 col 4 IdentifierName "r1arg" = new<T>(x: T) => T[]
+Line 52 col 16 IdentifierName "T" = T
+Line 52 col 19 IdentifierName "x" = T
+Line 52 col 22 IdentifierName "T" = T
+Line 52 col 28 IdentifierName "T" = T
+Line 53 col 4 IdentifierName "r1arg2" = new<T>(x: T) => T[]
+Line 53 col 17 IdentifierName "T" = T
+Line 53 col 20 IdentifierName "x" = T
+Line 53 col 23 IdentifierName "T" = T
+Line 53 col 29 IdentifierName "T" = T
+Line 54 col 4 IdentifierName "r1" = any
+Line 54 col 9 InvocationExpression "foo1(r1arg)" = any
+Line 54 col 9 IdentifierName "foo1" = typeof foo1
+Line 54 col 14 IdentifierName "r1arg" = new<T>(x: T) => T[]
+Line 55 col 4 IdentifierName "r1a" = { new<T>(x: T): T[]; }[]
+Line 55 col 10 ArrayLiteralExpression "[r1arg, r1arg2]" = { new<T>(x: T): T[]; }[]
+Line 55 col 11 IdentifierName "r1arg" = new<T>(x: T) => T[]
+Line 55 col 18 IdentifierName "r1arg2" = new<T>(x: T) => T[]
+Line 56 col 4 IdentifierName "r1b" = { new<T>(x: T): T[]; }[]
+Line 56 col 10 ArrayLiteralExpression "[r1arg2, r1arg]" = { new<T>(x: T): T[]; }[]
+Line 56 col 11 IdentifierName "r1arg2" = new<T>(x: T) => T[]
+Line 56 col 19 IdentifierName "r1arg" = new<T>(x: T) => T[]
+Line 58 col 4 IdentifierName "r2arg" = new<T>(x: T) => string[]
+Line 58 col 16 IdentifierName "T" = T
+Line 58 col 19 IdentifierName "x" = T
+Line 58 col 22 IdentifierName "T" = T
+Line 59 col 4 IdentifierName "r2arg2" = new<T>(x: T) => string[]
+Line 59 col 17 IdentifierName "T" = T
+Line 59 col 20 IdentifierName "x" = T
+Line 59 col 23 IdentifierName "T" = T
+Line 60 col 4 IdentifierName "r2" = any
+Line 60 col 9 InvocationExpression "foo2(r2arg)" = any
+Line 60 col 9 IdentifierName "foo2" = typeof foo2
+Line 60 col 14 IdentifierName "r2arg" = new<T>(x: T) => string[]
+Line 61 col 4 IdentifierName "r2a" = { new<T>(x: T): string[]; }[]
+Line 61 col 10 ArrayLiteralExpression "[r2arg, r2arg2]" = { new<T>(x: T): string[]; }[]
+Line 61 col 11 IdentifierName "r2arg" = new<T>(x: T) => string[]
+Line 61 col 18 IdentifierName "r2arg2" = new<T>(x: T) => string[]
+Line 62 col 4 IdentifierName "r2b" = { new<T>(x: T): string[]; }[]
+Line 62 col 10 ArrayLiteralExpression "[r2arg2, r2arg]" = { new<T>(x: T): string[]; }[]
+Line 62 col 11 IdentifierName "r2arg2" = new<T>(x: T) => string[]
+Line 62 col 19 IdentifierName "r2arg" = new<T>(x: T) => string[]
+Line 64 col 4 IdentifierName "r3arg" = new<T>(x: T) => T
+Line 64 col 16 IdentifierName "T" = T
+Line 64 col 19 IdentifierName "x" = T
+Line 64 col 22 IdentifierName "T" = T
+Line 64 col 28 IdentifierName "T" = T
+Line 65 col 4 IdentifierName "r3arg2" = new<T>(x: T) => void
+Line 65 col 17 IdentifierName "T" = T
+Line 65 col 20 IdentifierName "x" = T
+Line 65 col 23 IdentifierName "T" = T
+Line 66 col 4 IdentifierName "r3" = any
+Line 66 col 9 InvocationExpression "foo3(r3arg)" = any
+Line 66 col 9 IdentifierName "foo3" = typeof foo3
+Line 66 col 14 IdentifierName "r3arg" = new<T>(x: T) => T
+Line 67 col 4 IdentifierName "r3a" = { new<T>(x: T): T; }[]
+Line 67 col 10 ArrayLiteralExpression "[r3arg, r3arg2]" = { new<T>(x: T): T; }[]
+Line 67 col 11 IdentifierName "r3arg" = new<T>(x: T) => T
+Line 67 col 18 IdentifierName "r3arg2" = new<T>(x: T) => void
+Line 68 col 4 IdentifierName "r3b" = { new<T>(x: T): void; }[]
+Line 68 col 10 ArrayLiteralExpression "[r3arg2, r3arg]" = { new<T>(x: T): void; }[]
+Line 68 col 11 IdentifierName "r3arg2" = new<T>(x: T) => void
+Line 68 col 19 IdentifierName "r3arg" = new<T>(x: T) => T
+Line 70 col 4 IdentifierName "r4arg" = new<T, U>(x: T, y: U) => string
+Line 70 col 16 IdentifierName "T" = T
+Line 70 col 19 IdentifierName "U" = U
+Line 70 col 22 IdentifierName "x" = T
+Line 70 col 25 IdentifierName "T" = T
+Line 70 col 28 IdentifierName "y" = U
+Line 70 col 31 IdentifierName "U" = U
+Line 71 col 4 IdentifierName "r4arg2" = new<T, U>(x: T, y: U) => string
+Line 71 col 17 IdentifierName "T" = T
+Line 71 col 20 IdentifierName "U" = U
+Line 71 col 23 IdentifierName "x" = T
+Line 71 col 26 IdentifierName "T" = T
+Line 71 col 29 IdentifierName "y" = U
+Line 71 col 32 IdentifierName "U" = U
+Line 72 col 4 IdentifierName "r4" = any
+Line 72 col 9 InvocationExpression "foo4(r4arg)" = any
+Line 72 col 9 IdentifierName "foo4" = typeof foo4
+Line 72 col 14 IdentifierName "r4arg" = new<T, U>(x: T, y: U) => string
+Line 73 col 4 IdentifierName "r4a" = { new<T, U>(x: T, y: U): string; }[]
+Line 73 col 10 ArrayLiteralExpression "[r4arg, r4arg2]" = { new<T, U>(x: T, y: U): string; }[]
+Line 73 col 11 IdentifierName "r4arg" = new<T, U>(x: T, y: U) => string
+Line 73 col 18 IdentifierName "r4arg2" = new<T, U>(x: T, y: U) => string
+Line 74 col 4 IdentifierName "r4b" = { new<T, U>(x: T, y: U): string; }[]
+Line 74 col 10 ArrayLiteralExpression "[r4arg2, r4arg]" = { new<T, U>(x: T, y: U): string; }[]
+Line 74 col 11 IdentifierName "r4arg2" = new<T, U>(x: T, y: U) => string
+Line 74 col 19 IdentifierName "r4arg" = new<T, U>(x: T, y: U) => string
+Line 76 col 4 IdentifierName "r5arg" = new<T, U>(x: new(arg: T) => U) => T
+Line 76 col 16 IdentifierName "T" = T
+Line 76 col 19 IdentifierName "U" = U
+Line 76 col 22 IdentifierName "x" = new(arg: T) => U
+Line 76 col 30 IdentifierName "arg" = T
+Line 76 col 35 IdentifierName "T" = T
+Line 76 col 41 IdentifierName "U" = U
+Line 76 col 47 IdentifierName "T" = T
+Line 77 col 4 IdentifierName "r5arg2" = new<T, U>(x: new(arg: T) => U) => T
+Line 77 col 17 IdentifierName "T" = T
+Line 77 col 20 IdentifierName "U" = U
+Line 77 col 23 IdentifierName "x" = new(arg: T) => U
+Line 77 col 31 IdentifierName "arg" = T
+Line 77 col 36 IdentifierName "T" = T
+Line 77 col 42 IdentifierName "U" = U
+Line 77 col 48 IdentifierName "T" = T
+Line 78 col 4 IdentifierName "r5" = any
+Line 78 col 9 InvocationExpression "foo5(r5arg)" = any
+Line 78 col 9 IdentifierName "foo5" = typeof foo5
+Line 78 col 14 IdentifierName "r5arg" = new<T, U>(x: new(arg: T) => U) => T
+Line 79 col 4 IdentifierName "r5a" = { new<T, U>(x: new(arg: T) => U): T; }[]
+Line 79 col 10 ArrayLiteralExpression "[r5arg, r5arg2]" = { new<T, U>(x: new(arg: T) => U): T; }[]
+Line 79 col 11 IdentifierName "r5arg" = new<T, U>(x: new(arg: T) => U) => T
+Line 79 col 18 IdentifierName "r5arg2" = new<T, U>(x: new(arg: T) => U) => T
+Line 80 col 4 IdentifierName "r5b" = { new<T, U>(x: new(arg: T) => U): T; }[]
+Line 80 col 10 ArrayLiteralExpression "[r5arg2, r5arg]" = { new<T, U>(x: new(arg: T) => U): T; }[]
+Line 80 col 11 IdentifierName "r5arg2" = new<T, U>(x: new(arg: T) => U) => T
+Line 80 col 19 IdentifierName "r5arg" = new<T, U>(x: new(arg: T) => U) => T
+Line 82 col 4 IdentifierName "r6arg" = new<T extends Base, U extends Derived>(x: new(arg: T) => U) => T
+Line 82 col 16 IdentifierName "T" = T
+Line 82 col 26 IdentifierName "Base" = Base
+Line 82 col 32 IdentifierName "U" = U
+Line 82 col 42 IdentifierName "Derived" = Derived
+Line 82 col 51 IdentifierName "x" = new(arg: T) => U
+Line 82 col 59 IdentifierName "arg" = T
+Line 82 col 64 IdentifierName "T" = T
+Line 82 col 70 IdentifierName "U" = U
+Line 82 col 76 IdentifierName "T" = T
+Line 83 col 4 IdentifierName "r6arg2" = new<T extends Base>(x: new(arg: T) => Derived) => T
+Line 83 col 17 IdentifierName "T" = T
+Line 83 col 27 IdentifierName "Base" = Base
+Line 83 col 33 IdentifierName "x" = new(arg: T) => Derived
+Line 83 col 41 IdentifierName "arg" = T
+Line 83 col 46 IdentifierName "T" = T
+Line 83 col 52 IdentifierName "Derived" = Derived
+Line 83 col 64 IdentifierName "T" = T
+Line 84 col 4 IdentifierName "r6" = any
+Line 84 col 9 InvocationExpression "foo6(r6arg)" = any
+Line 84 col 9 IdentifierName "foo6" = typeof foo6
+Line 84 col 14 IdentifierName "r6arg" = new<T extends Base, U extends Derived>(x: new(arg: T) => U) => T
+Line 85 col 4 IdentifierName "r6a" = { new<T extends Base, U extends Derived>(x: new(arg: T) => U): T; }[]
+Line 85 col 10 ArrayLiteralExpression "[r6arg, r6arg2]" = { new<T extends Base, U extends Derived>(x: new(arg: T) => U): T; }[]
+Line 85 col 11 IdentifierName "r6arg" = new<T extends Base, U extends Derived>(x: new(arg: T) => U) => T
+Line 85 col 18 IdentifierName "r6arg2" = new<T extends Base>(x: new(arg: T) => Derived) => T
+Line 86 col 4 IdentifierName "r6b" = { new<T extends Base>(x: new(arg: T) => Derived): T; }[]
+Line 86 col 10 ArrayLiteralExpression "[r6arg2, r6arg]" = { new<T extends Base>(x: new(arg: T) => Derived): T; }[]
+Line 86 col 11 IdentifierName "r6arg2" = new<T extends Base>(x: new(arg: T) => Derived) => T
+Line 86 col 19 IdentifierName "r6arg" = new<T extends Base, U extends Derived>(x: new(arg: T) => U) => T
+Line 88 col 4 IdentifierName "r11arg" = new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+Line 88 col 17 IdentifierName "T" = T
+Line 88 col 20 IdentifierName "U" = U
+Line 88 col 23 IdentifierName "x" = { foo: T; }
+Line 88 col 28 IdentifierName "foo" = T
+Line 88 col 33 IdentifierName "T" = T
+Line 88 col 38 IdentifierName "y" = { foo: U; bar: U; }
+Line 88 col 43 IdentifierName "foo" = U
+Line 88 col 48 IdentifierName "U" = U
+Line 88 col 51 IdentifierName "bar" = U
+Line 88 col 56 IdentifierName "U" = U
+Line 88 col 64 IdentifierName "Base" = Base
+Line 89 col 4 IdentifierName "r11arg2" = new<T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+Line 89 col 18 IdentifierName "T" = T
+Line 89 col 21 IdentifierName "x" = { foo: T; }
+Line 89 col 26 IdentifierName "foo" = T
+Line 89 col 31 IdentifierName "T" = T
+Line 89 col 36 IdentifierName "y" = { foo: T; bar: T; }
+Line 89 col 41 IdentifierName "foo" = T
+Line 89 col 46 IdentifierName "T" = T
+Line 89 col 49 IdentifierName "bar" = T
+Line 89 col 54 IdentifierName "T" = T
+Line 89 col 62 IdentifierName "Base" = Base
+Line 90 col 4 IdentifierName "r11" = any
+Line 90 col 10 InvocationExpression "foo11(r11arg)" = any
+Line 90 col 10 IdentifierName "foo11" = typeof foo11
+Line 90 col 16 IdentifierName "r11arg" = new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+Line 91 col 4 IdentifierName "r11a" = { new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }): Base; }[]
+Line 91 col 11 ArrayLiteralExpression "[r11arg, r11arg2]" = { new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }): Base; }[]
+Line 91 col 12 IdentifierName "r11arg" = new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+Line 91 col 20 IdentifierName "r11arg2" = new<T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+Line 92 col 4 IdentifierName "r11b" = { new<T>(x: { foo: T; }, y: { foo: T; bar: T; }): Base; }[]
+Line 92 col 11 ArrayLiteralExpression "[r11arg2, r11arg]" = { new<T>(x: { foo: T; }, y: { foo: T; bar: T; }): Base; }[]
+Line 92 col 12 IdentifierName "r11arg2" = new<T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+Line 92 col 21 IdentifierName "r11arg" = new<T, U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+Line 94 col 4 IdentifierName "r15arg" = new<U, V>(x: { a: U; b: V; }) => U[]
+Line 94 col 17 IdentifierName "U" = U
+Line 94 col 20 IdentifierName "V" = V
+Line 94 col 23 IdentifierName "x" = { a: U; b: V; }
+Line 94 col 28 IdentifierName "a" = U
+Line 94 col 31 IdentifierName "U" = U
+Line 94 col 34 IdentifierName "b" = V
+Line 94 col 37 IdentifierName "V" = V
+Line 94 col 46 IdentifierName "U" = U
+Line 95 col 4 IdentifierName "r15arg2" = new<T>(x: { a: T; b: T; }) => T[]
+Line 95 col 18 IdentifierName "T" = T
+Line 95 col 21 IdentifierName "x" = { a: T; b: T; }
+Line 95 col 26 IdentifierName "a" = T
+Line 95 col 29 IdentifierName "T" = T
+Line 95 col 32 IdentifierName "b" = T
+Line 95 col 35 IdentifierName "T" = T
+Line 95 col 43 IdentifierName "T" = T
+Line 96 col 4 IdentifierName "r15" = any
+Line 96 col 10 InvocationExpression "foo15(r15arg)" = any
+Line 96 col 10 IdentifierName "foo15" = typeof foo15
+Line 96 col 16 IdentifierName "r15arg" = new<U, V>(x: { a: U; b: V; }) => U[]
+Line 97 col 4 IdentifierName "r15a" = { new<U, V>(x: { a: U; b: V; }): U[]; }[]
+Line 97 col 11 ArrayLiteralExpression "[r15arg, r15arg2]" = { new<U, V>(x: { a: U; b: V; }): U[]; }[]
+Line 97 col 12 IdentifierName "r15arg" = new<U, V>(x: { a: U; b: V; }) => U[]
+Line 97 col 20 IdentifierName "r15arg2" = new<T>(x: { a: T; b: T; }) => T[]
+Line 98 col 4 IdentifierName "r15b" = { new<T>(x: { a: T; b: T; }): T[]; }[]
+Line 98 col 11 ArrayLiteralExpression "[r15arg2, r15arg]" = { new<T>(x: { a: T; b: T; }): T[]; }[]
+Line 98 col 12 IdentifierName "r15arg2" = new<T>(x: { a: T; b: T; }) => T[]
+Line 98 col 21 IdentifierName "r15arg" = new<U, V>(x: { a: U; b: V; }) => U[]
+Line 100 col 4 IdentifierName "r16arg" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 100 col 17 IdentifierName "T" = T
+Line 100 col 27 IdentifierName "Base" = Base
+Line 100 col 33 IdentifierName "x" = { a: T; b: T; }
+Line 100 col 38 IdentifierName "a" = T
+Line 100 col 41 IdentifierName "T" = T
+Line 100 col 44 IdentifierName "b" = T
+Line 100 col 47 IdentifierName "T" = T
+Line 100 col 55 IdentifierName "T" = T
+Line 101 col 4 IdentifierName "r16arg2" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 101 col 18 IdentifierName "T" = T
+Line 101 col 28 IdentifierName "Base" = Base
+Line 101 col 34 IdentifierName "x" = { a: T; b: T; }
+Line 101 col 39 IdentifierName "a" = T
+Line 101 col 42 IdentifierName "T" = T
+Line 101 col 45 IdentifierName "b" = T
+Line 101 col 48 IdentifierName "T" = T
+Line 101 col 56 IdentifierName "T" = T
+Line 102 col 4 IdentifierName "r16" = any
+Line 102 col 10 InvocationExpression "foo16(r16arg)" = any
+Line 102 col 10 IdentifierName "foo16" = typeof foo16
+Line 102 col 16 IdentifierName "r16arg" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 103 col 4 IdentifierName "r16a" = { new<T extends Base>(x: { a: T; b: T; }): T[]; }[]
+Line 103 col 11 ArrayLiteralExpression "[r16arg, r16arg2]" = { new<T extends Base>(x: { a: T; b: T; }): T[]; }[]
+Line 103 col 12 IdentifierName "r16arg" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 103 col 20 IdentifierName "r16arg2" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 104 col 4 IdentifierName "r16b" = { new<T extends Base>(x: { a: T; b: T; }): T[]; }[]
+Line 104 col 11 ArrayLiteralExpression "[r16arg2, r16arg]" = { new<T extends Base>(x: { a: T; b: T; }): T[]; }[]
+Line 104 col 12 IdentifierName "r16arg2" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 104 col 21 IdentifierName "r16arg" = new<T extends Base>(x: { a: T; b: T; }) => T[]
+Line 106 col 4 IdentifierName "r17arg" = new<T>(x: new(a: T) => T) => T[]
+Line 106 col 17 IdentifierName "T" = T
+Line 106 col 20 IdentifierName "x" = new(a: T) => T
+Line 106 col 28 IdentifierName "a" = T
+Line 106 col 31 IdentifierName "T" = T
+Line 106 col 37 IdentifierName "T" = T
+Line 106 col 43 IdentifierName "T" = T
+Line 107 col 4 IdentifierName "r17" = any
+Line 107 col 10 InvocationExpression "foo17(r17arg)" = any
+Line 107 col 10 IdentifierName "foo17" = typeof foo17
+Line 107 col 16 IdentifierName "r17arg" = new<T>(x: new(a: T) => T) => T[]
+Line 109 col 4 IdentifierName "r18arg" = new(x: new<T>(a: T) => T) => any[]
+Line 109 col 17 IdentifierName "x" = new<T>(a: T) => T
+Line 109 col 25 IdentifierName "T" = T
+Line 109 col 28 IdentifierName "a" = T
+Line 109 col 31 IdentifierName "T" = T
+Line 109 col 37 IdentifierName "T" = T
+Line 110 col 4 IdentifierName "r18" = any
+Line 110 col 10 InvocationExpression "foo18(r18arg)" = any
+Line 110 col 10 IdentifierName "foo18" = typeof foo18
+Line 110 col 16 IdentifierName "r18arg" = new(x: new<T>(a: T) => T) => any[]

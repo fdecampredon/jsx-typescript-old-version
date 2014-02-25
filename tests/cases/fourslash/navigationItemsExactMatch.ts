@@ -8,7 +8,7 @@
 ////        // Instance member
 ////        {| "itemName": "origin", "kind": "property", "parentName": "Shapes.Point", "matchKind": "exact"|}private origin = 0.0;
 ////        
-////        {| "itemName": "distanceFromOrigin", "kind": "property", "parentName": "Shapes.Point", "matchKind": "exact"|}private distanceFromOrigin = 0.0;
+////        {| "itemName": "distFromZero", "kind": "property", "parentName": "Shapes.Point", "matchKind": "exact"|}private distFromZero = 0.0;
 ////
 ////        // Getter
 ////        {| "itemName": "distance", "kind": "getter", "parentName": "Shapes.Point", "matchKind": "exact" |}get distance(): number { return 0; }
@@ -19,7 +19,7 @@
 ////{| "itemName": "point", "kind": "var", "parentName": "", "matchKind": "exact"  |}var point = new Shapes.Point();
 
 //// Testing for exact matching of navigationItems
-var searchValue = "origin distance point";
+var searchValue = "origin distance point distFromZero";
 
 test.markers().forEach((marker) => {
     if (marker.data) {

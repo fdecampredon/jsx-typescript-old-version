@@ -436,6 +436,12 @@ module TypeScript {
                 symbol = decl.getSymbol();
 
                 if (symbol) {
+                    // This is just a workaround for making sure all the declarations are bound 
+                    // It can be removed later when binder can deal with all declarations of any type
+                    for (var i = 1; i < decls.length; i++) {
+                        decls[i].ensureSymbolIsBound();
+                    }
+
                     this.symbolCache[cacheID] = symbol;
                 }
             }

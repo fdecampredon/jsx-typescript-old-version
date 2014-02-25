@@ -1,18 +1,90 @@
+/// <reference path="typescriptServices.ts" />
 module TypeScript.Services {
+    interface LexicalScope {
+        items: TypeScript.IIndexable<NavigateToItem>;
+        itemNames: string[];
+        childScopes: TypeScript.IIndexable<LexicalScope>;
+        childScopeNames: string[];
+    }
+
     export class GetScriptLexicalStructureWalker extends TypeScript.SyntaxWalker {
         private nameStack: string[] = [];
         private kindStack: string[] = [];
 
-        constructor(private items: NavigateToItem[], private fileName: string) {
+        private parentScopes: LexicalScope[] = [];
+        private currentScope: LexicalScope;
+
+        private createScope(): LexicalScope {
+            return {
+                items: TypeScript.createIntrinsicsObject<NavigateToItem>(),
+                childScopes: TypeScript.createIntrinsicsObject<LexicalScope>(),
+                childScopeNames: [],
+                itemNames: []
+            };
+        }
+
+        private pushNewContainerScope(containerName: string, kind: string): LexicalScope {
+            Debug.assert(containerName, "No scope name provided");
+
+            var key = kind + "+" + containerName;
+            this.nameStack.push(containerName);
+            this.kindStack.push(kind);
+
+            var parentScope = this.currentScope;
+            this.parentScopes.push(parentScope);
+
+            var scope = parentScope.childScopes[key];
+            if (!scope) {
+                scope = this.createScope()
+                parentScope.childScopes[key] = scope;
+                parentScope.childScopeNames.push(key);
+            }
+
+            this.currentScope = scope;
+            return parentScope;
+        }
+
+        private popScope() {
+            Debug.assert(this.parentScopes.length > 0, "No parent scopes to return to")
+            this.currentScope = this.parentScopes.pop();
+            this.kindStack.pop();
+            this.nameStack.pop();
+        }
+
+        constructor(private fileName: string) {
             super();
+            this.currentScope = this.createScope();
+        }
+
+        private collectItems(items: NavigateToItem[], scope = this.currentScope) {
+            scope.itemNames.forEach(item => {
+                items.push(scope.items[item]);
+            });
+
+            scope.childScopeNames.forEach(childScope => {
+                this.collectItems(items, scope.childScopes[childScope]);
+            });
         }
 
         static getListsOfAllScriptLexicalStructure(items: NavigateToItem[], fileName: string, unit: TypeScript.SourceUnitSyntax) {
-            var visitor = new GetScriptLexicalStructureWalker(items, fileName);
+            var visitor = new GetScriptLexicalStructureWalker(fileName);
             unit.accept(visitor);
+            visitor.collectItems(items);
         }
 
-        private createItem(node: TypeScript.SyntaxNode, modifiers: TypeScript.ISyntaxList<ISyntaxToken>, kind: string, name: string): void {
+        private createItem(
+                node: TypeScript.SyntaxNode,
+                modifiers: TypeScript.ISyntaxList < ISyntaxToken>,
+                kind: string,
+                name: string): void {
+
+            var key = kind + "+" + name;
+
+            if (this.currentScope.items[key] !== undefined) {
+                this.addAdditionalSpan(node, key);
+                return;
+            }
+
             var item = new NavigateToItem();
             item.name = name;
             item.kind = kind;
@@ -24,7 +96,27 @@ module TypeScript.Services {
             item.containerName = this.nameStack.join(".");
             item.containerKind = this.kindStack.length === 0 ? "" : TypeScript.ArrayUtilities.last(this.kindStack);
 
-            this.items.push(item);
+            this.currentScope.items[key] = item;
+            this.currentScope.itemNames.push(key);
+        }
+
+        private addAdditionalSpan(
+            node: TypeScript.SyntaxNode,
+            key: string) {
+
+            var item = this.currentScope.items[key]
+            Debug.assert(item !== undefined);
+
+            var start = node.start();
+            var span = new SpanInfo(start, start + node.width());
+
+
+            if (item.additionalSpans) {
+                item.additionalSpans.push(span);
+            }
+            else {
+                item.additionalSpans = [span];
+            }
         }
 
         private getKindModifiers(modifiers: TypeScript.ISyntaxList<ISyntaxToken>): string {
@@ -56,15 +148,14 @@ module TypeScript.Services {
                     : TypeScript.Syntax.list([TypeScript.Syntax.token(TypeScript.SyntaxKind.ExportKeyword)]);
                 var name = names[nameIndex];
                 var kind = ScriptElementKind.moduleElement;
+
                 this.createItem(node, node.modifiers, kind, name);
 
-                this.nameStack.push(name);
-                this.kindStack.push(kind);
+                this.pushNewContainerScope(name, kind);
 
                 this.visitModuleDeclarationWorker(node, names, nameIndex + 1);
 
-                this.nameStack.pop();
-                this.kindStack.pop();
+                this.popScope();
             }
         }
 
@@ -98,13 +189,11 @@ module TypeScript.Services {
 
             this.createItem(node, node.modifiers, kind, name);
 
-            this.nameStack.push(name);
-            this.kindStack.push(kind);
+            this.pushNewContainerScope(name, kind);
 
             super.visitClassDeclaration(node);
 
-            this.nameStack.pop();
-            this.kindStack.pop();
+            this.popScope();
         }
 
         public visitInterfaceDeclaration(node: TypeScript.InterfaceDeclarationSyntax): void {
@@ -113,13 +202,11 @@ module TypeScript.Services {
 
             this.createItem(node, node.modifiers, kind, name);
 
-            this.nameStack.push(name);
-            this.kindStack.push(kind);
+            this.pushNewContainerScope(name, kind);
 
             super.visitInterfaceDeclaration(node);
 
-            this.nameStack.pop();
-            this.kindStack.pop();
+            this.popScope();
         }
 
         public visitObjectType(node: TypeScript.ObjectTypeSyntax): void {
@@ -136,13 +223,11 @@ module TypeScript.Services {
 
             this.createItem(node, node.modifiers, kind, name);
 
-            this.nameStack.push(name);
-            this.kindStack.push(kind);
+            this.pushNewContainerScope(name, kind);
 
             super.visitEnumDeclaration(node);
 
-            this.nameStack.pop();
-            this.kindStack.pop();
+            this.popScope();
         }
 
         public visitConstructorDeclaration(node: TypeScript.ConstructorDeclarationSyntax): void {

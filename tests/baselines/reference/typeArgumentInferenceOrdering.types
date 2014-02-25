@@ -1,0 +1,22 @@
+=== tests/cases/compiler/typeArgumentInferenceOrdering.ts ===
+Line 0 col 9 IdentifierName "foo" = typeof foo
+Line 0 col 13 IdentifierName "T" = T
+Line 0 col 16 IdentifierName "f" = { y: T; }
+Line 0 col 21 IdentifierName "y" = T
+Line 0 col 24 IdentifierName "T" = T
+Line 0 col 30 IdentifierName "T" = T
+Line 1 col 4 IdentifierName "x" = () => Goo
+Line 1 col 8 MemberAccessExpression "foo(new C()).x" = () => Goo
+Line 1 col 8 InvocationExpression "foo(new C())" = I
+Line 1 col 8 IdentifierName "foo" = typeof foo
+Line 1 col 12 ObjectCreationExpression "new C()" = C
+Line 1 col 16 IdentifierName "C" = typeof C
+Line 1 col 21 IdentifierName "x" = () => Goo
+Line 3 col 6 IdentifierName "C" = C
+Line 4 col 0 IdentifierName "y" = I
+Line 4 col 7 IdentifierName "I" = I
+Line 7 col 10 IdentifierName "I" = I
+Line 8 col 0 IdentifierName "x" = () => Goo
+Line 8 col 9 IdentifierName "Goo" = Goo
+Line 11 col 10 IdentifierName "Goo" = Goo
+Line 12 col 0 IdentifierName "p" = string

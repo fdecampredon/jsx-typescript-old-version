@@ -1,0 +1,8 @@
+=== tests/cases/compiler/app.ts ===
+Line 1 col 4 IdentifierName "x" = Something
+Line 1 col 8 ObjectCreationExpression "new Something()" = Something
+Line 1 col 12 IdentifierName "Something" = typeof Something
+=== tests/cases/compiler/test.d.ts ===
+Line 0 col 14 IdentifierName "Something" = Something
+Line 2 col 19 IdentifierName "someStaticVar" = any
+Line 3 col 12 IdentifierName "someVar" = any

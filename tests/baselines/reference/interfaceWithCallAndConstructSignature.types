@@ -1,0 +1,10 @@
+=== tests/cases/compiler/interfaceWithCallAndConstructSignature.ts ===
+Line 0 col 10 IdentifierName "Foo" = Foo
+Line 5 col 4 IdentifierName "f" = Foo
+Line 5 col 7 IdentifierName "Foo" = Foo
+Line 6 col 4 IdentifierName "r" = number
+Line 6 col 8 InvocationExpression "f()" = number
+Line 6 col 8 IdentifierName "f" = Foo
+Line 7 col 4 IdentifierName "r2" = any
+Line 7 col 9 ObjectCreationExpression "new f()" = any
+Line 7 col 13 IdentifierName "f" = Foo

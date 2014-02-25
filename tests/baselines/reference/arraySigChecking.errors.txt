@@ -3,5 +3,8 @@ arraySigChecking.ts(18,5): error TS2012: Cannot convert '{}[]' to 'string[]':
 	Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
 		Call signatures of types '() => {}' and '() => string' are incompatible.
 arraySigChecking.ts(22,1): error TS2012: Cannot convert '{}[][]' to 'number[][][]':
-	Types of property 'concat' of types '{}[][]' and 'number[][][]' are incompatible:
-		Call signatures of types '{ <U extends {}[][]>(...items: U[]): {}[][]; (...items: {}[][]): {}[][]; }' and '{ <U extends number[][][]>(...items: U[]): number[][][]; (...items: number[][][]): number[][][]; }' are incompatible.
+	Types of property 'pop' of types '{}[][]' and 'number[][][]' are incompatible:
+		Call signatures of types '() => {}[]' and '() => number[][]' are incompatible:
+			Types of property 'pop' of types '{}[]' and 'number[][]' are incompatible:
+				Call signatures of types '() => {}' and '() => number[]' are incompatible:
+					Type '{}' is missing property 'concat' from type 'number[]'.

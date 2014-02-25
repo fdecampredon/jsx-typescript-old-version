@@ -327,16 +327,40 @@ module FourSlashInterface {
             FourSlash.currentTestState.verifyGetScriptLexicalStructureListCount(count);
         }
 
-        public getScriptLexicalStructureListContains(name: string, kind: string, fileName?: string, parentName?: string) {
-            FourSlash.currentTestState.verifGetScriptLexicalStructureListContains(name, kind, fileName, parentName);
+        public getScriptLexicalStructureListContains(
+            name: string,
+            kind: string,
+            fileName?: string,
+            parentName?: string,
+            isAdditionalSpan?: boolean,
+            markerPosition?: number) {
+            FourSlash.currentTestState.verifGetScriptLexicalStructureListContains(
+                name,
+                kind,
+                fileName,
+                parentName,
+                isAdditionalSpan,
+                markerPosition);
         }
 
         public navigationItemsListCount(count: number, searchValue: string, matchKind?: string) {
             FourSlash.currentTestState.verifyNavigationItemsCount(count, searchValue, matchKind);
         }
 
-        public navigationItemsListContains(name: string, kind: string, searchValue: string, matchKind: string, fileName?: string, parenetName?: string) {
-            FourSlash.currentTestState.verifyNavigationItemsListContains(name, kind, searchValue, matchKind, fileName, parenetName);
+        public navigationItemsListContains(
+            name: string,
+            kind: string,
+            searchValue: string,
+            matchKind: string,
+            fileName?: string,
+            parenetName?: string) {
+            FourSlash.currentTestState.verifyNavigationItemsListContains(
+                name,
+                kind,
+                searchValue,
+                matchKind,
+                fileName,
+                parenetName);
         }
 
         public occurrencesAtPositionContains(range: Range, isWriteAccess?: boolean) {

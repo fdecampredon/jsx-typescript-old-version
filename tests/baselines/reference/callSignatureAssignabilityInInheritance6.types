@@ -1,0 +1,141 @@
+=== tests/cases/compiler/callSignatureAssignabilityInInheritance6.ts ===
+Line 4 col 6 IdentifierName "Base" = Base
+Line 4 col 13 IdentifierName "foo" = string
+Line 5 col 6 IdentifierName "Derived" = Derived
+Line 5 col 22 IdentifierName "Base" = Base
+Line 5 col 29 IdentifierName "bar" = string
+Line 6 col 6 IdentifierName "Derived2" = Derived2
+Line 6 col 23 IdentifierName "Derived" = Derived
+Line 6 col 33 IdentifierName "baz" = string
+Line 7 col 6 IdentifierName "OtherDerived" = OtherDerived
+Line 7 col 27 IdentifierName "Base" = Base
+Line 7 col 34 IdentifierName "bing" = string
+Line 9 col 10 IdentifierName "A" = A
+Line 10 col 0 IdentifierName "// M's
+    a" = <T>(x: T) => T[]
+Line 11 col 8 IdentifierName "T" = T
+Line 11 col 11 IdentifierName "x" = T
+Line 11 col 14 IdentifierName "T" = T
+Line 11 col 20 IdentifierName "T" = T
+Line 12 col 0 IdentifierName "a2" = <T>(x: T) => string[]
+Line 12 col 9 IdentifierName "T" = T
+Line 12 col 12 IdentifierName "x" = T
+Line 12 col 15 IdentifierName "T" = T
+Line 13 col 0 IdentifierName "a3" = <T>(x: T) => void
+Line 13 col 9 IdentifierName "T" = T
+Line 13 col 12 IdentifierName "x" = T
+Line 13 col 15 IdentifierName "T" = T
+Line 14 col 0 IdentifierName "a4" = <T, U>(x: T, y: U) => string
+Line 14 col 9 IdentifierName "T" = T
+Line 14 col 11 IdentifierName "U" = U
+Line 14 col 14 IdentifierName "x" = T
+Line 14 col 17 IdentifierName "T" = T
+Line 14 col 20 IdentifierName "y" = U
+Line 14 col 23 IdentifierName "U" = U
+Line 15 col 0 IdentifierName "a5" = <T, U>(x: (arg: T) => U) => T
+Line 15 col 9 IdentifierName "T" = T
+Line 15 col 11 IdentifierName "U" = U
+Line 15 col 14 IdentifierName "x" = (arg: T) => U
+Line 15 col 18 IdentifierName "arg" = T
+Line 15 col 23 IdentifierName "T" = T
+Line 15 col 29 IdentifierName "U" = U
+Line 15 col 35 IdentifierName "T" = T
+Line 16 col 0 IdentifierName "a6" = <T extends Base>(x: (arg: T) => Derived) => T
+Line 16 col 9 IdentifierName "T" = T
+Line 16 col 19 IdentifierName "Base" = Base
+Line 16 col 25 IdentifierName "x" = (arg: T) => Derived
+Line 16 col 29 IdentifierName "arg" = T
+Line 16 col 34 IdentifierName "T" = T
+Line 16 col 40 IdentifierName "Derived" = Derived
+Line 16 col 52 IdentifierName "T" = T
+Line 17 col 0 IdentifierName "a11" = <T>(x: { foo: T; }, y: { foo: T; bar: T; }) => Base
+Line 17 col 10 IdentifierName "T" = T
+Line 17 col 13 IdentifierName "x" = { foo: T; }
+Line 17 col 18 IdentifierName "foo" = T
+Line 17 col 23 IdentifierName "T" = T
+Line 17 col 28 IdentifierName "y" = { foo: T; bar: T; }
+Line 17 col 33 IdentifierName "foo" = T
+Line 17 col 38 IdentifierName "T" = T
+Line 17 col 41 IdentifierName "bar" = T
+Line 17 col 46 IdentifierName "T" = T
+Line 17 col 54 IdentifierName "Base" = Base
+Line 18 col 0 IdentifierName "a15" = <T>(x: { a: T; b: T; }) => T[]
+Line 18 col 10 IdentifierName "T" = T
+Line 18 col 13 IdentifierName "x" = { a: T; b: T; }
+Line 18 col 18 IdentifierName "a" = T
+Line 18 col 21 IdentifierName "T" = T
+Line 18 col 24 IdentifierName "b" = T
+Line 18 col 27 IdentifierName "T" = T
+Line 18 col 35 IdentifierName "T" = T
+Line 19 col 0 IdentifierName "a16" = <T extends Base>(x: { a: T; b: T; }) => T[]
+Line 19 col 10 IdentifierName "T" = T
+Line 19 col 20 IdentifierName "Base" = Base
+Line 19 col 26 IdentifierName "x" = { a: T; b: T; }
+Line 19 col 31 IdentifierName "a" = T
+Line 19 col 34 IdentifierName "T" = T
+Line 19 col 37 IdentifierName "b" = T
+Line 19 col 40 IdentifierName "T" = T
+Line 19 col 48 IdentifierName "T" = T
+Line 23 col 10 IdentifierName "I" = I<T>
+Line 23 col 12 IdentifierName "T" = T
+Line 23 col 23 IdentifierName "A" = A
+Line 24 col 0 IdentifierName "a" = (x: T) => T[]
+Line 24 col 8 IdentifierName "x" = T
+Line 24 col 11 IdentifierName "T" = T
+Line 24 col 17 IdentifierName "T" = T
+Line 27 col 10 IdentifierName "I2" = I2<T>
+Line 27 col 13 IdentifierName "T" = T
+Line 27 col 24 IdentifierName "A" = A
+Line 28 col 0 IdentifierName "a2" = (x: T) => string[]
+Line 28 col 9 IdentifierName "x" = T
+Line 28 col 12 IdentifierName "T" = T
+Line 31 col 10 IdentifierName "I3" = I3<T>
+Line 31 col 13 IdentifierName "T" = T
+Line 31 col 24 IdentifierName "A" = A
+Line 32 col 0 IdentifierName "a3" = (x: T) => T
+Line 32 col 9 IdentifierName "x" = T
+Line 32 col 12 IdentifierName "T" = T
+Line 32 col 18 IdentifierName "T" = T
+Line 35 col 10 IdentifierName "I4" = I4<T>
+Line 35 col 13 IdentifierName "T" = T
+Line 35 col 24 IdentifierName "A" = A
+Line 36 col 0 IdentifierName "a4" = <U>(x: T, y: U) => string
+Line 36 col 9 IdentifierName "U" = U
+Line 36 col 12 IdentifierName "x" = T
+Line 36 col 15 IdentifierName "T" = T
+Line 36 col 18 IdentifierName "y" = U
+Line 36 col 21 IdentifierName "U" = U
+Line 39 col 10 IdentifierName "I5" = I5<T>
+Line 39 col 13 IdentifierName "T" = T
+Line 39 col 24 IdentifierName "A" = A
+Line 40 col 0 IdentifierName "a5" = <U>(x: (arg: T) => U) => T
+Line 40 col 9 IdentifierName "U" = U
+Line 40 col 12 IdentifierName "x" = (arg: T) => U
+Line 40 col 16 IdentifierName "arg" = T
+Line 40 col 21 IdentifierName "T" = T
+Line 40 col 27 IdentifierName "U" = U
+Line 40 col 33 IdentifierName "T" = T
+Line 43 col 10 IdentifierName "I7" = I7<T>
+Line 43 col 13 IdentifierName "T" = T
+Line 43 col 24 IdentifierName "A" = A
+Line 44 col 0 IdentifierName "a11" = <U>(x: { foo: T; }, y: { foo: U; bar: U; }) => Base
+Line 44 col 10 IdentifierName "U" = U
+Line 44 col 13 IdentifierName "x" = { foo: T; }
+Line 44 col 18 IdentifierName "foo" = T
+Line 44 col 23 IdentifierName "T" = T
+Line 44 col 28 IdentifierName "y" = { foo: U; bar: U; }
+Line 44 col 33 IdentifierName "foo" = U
+Line 44 col 38 IdentifierName "U" = U
+Line 44 col 41 IdentifierName "bar" = U
+Line 44 col 46 IdentifierName "U" = U
+Line 44 col 54 IdentifierName "Base" = Base
+Line 47 col 10 IdentifierName "I9" = I9<T>
+Line 47 col 13 IdentifierName "T" = T
+Line 47 col 24 IdentifierName "A" = A
+Line 48 col 0 IdentifierName "a16" = (x: { a: T; b: T; }) => T[]
+Line 48 col 10 IdentifierName "x" = { a: T; b: T; }
+Line 48 col 15 IdentifierName "a" = T
+Line 48 col 18 IdentifierName "T" = T
+Line 48 col 21 IdentifierName "b" = T
+Line 48 col 24 IdentifierName "T" = T
+Line 48 col 32 IdentifierName "T" = T

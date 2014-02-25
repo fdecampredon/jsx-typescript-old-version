@@ -1,0 +1,17 @@
+=== tests/cases/compiler/accessorWithES5.ts ===
+Line 1 col 6 IdentifierName "C" = C
+Line 2 col 8 IdentifierName "x" = number
+Line 7 col 6 IdentifierName "D" = D
+Line 8 col 8 IdentifierName "x" = any
+Line 8 col 10 IdentifierName "v" = any
+Line 12 col 4 IdentifierName "x" = { a: number; }
+Line 12 col 8 ObjectLiteralExpression "{
+    get a() { return 1 }
+}" = { a: number; }
+Line 13 col 8 IdentifierName "a" = number
+Line 16 col 4 IdentifierName "y" = { b: any; }
+Line 16 col 8 ObjectLiteralExpression "{
+    set b(v) { }
+}" = { b: any; }
+Line 17 col 8 IdentifierName "b" = any
+Line 17 col 10 IdentifierName "v" = any

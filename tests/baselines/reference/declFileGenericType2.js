@@ -54,16 +54,16 @@ declare module templa.mvc {
     }
 }
 declare module templa.mvc {
-    interface IController<ModelType extends mvc.IModel> {
+    interface IController<ModelType extends IModel> {
     }
 }
 declare module templa.mvc {
-    class AbstractController<ModelType extends mvc.IModel> implements mvc.IController<ModelType> {
+    class AbstractController<ModelType extends IModel> implements IController<ModelType> {
     }
 }
 declare module templa.mvc.composite {
-    interface ICompositeControllerModel extends mvc.IModel {
-        getControllers(): mvc.IController<mvc.IModel>[];
+    interface ICompositeControllerModel extends IModel {
+        getControllers(): IController<IModel>[];
     }
 }
 declare module templa.dom.mvc {
@@ -71,12 +71,12 @@ declare module templa.dom.mvc {
     }
 }
 declare module templa.dom.mvc {
-    class AbstractElementController<ModelType extends templa.mvc.IModel> extends templa.mvc.AbstractController<ModelType> implements mvc.IElementController<ModelType> {
+    class AbstractElementController<ModelType extends templa.mvc.IModel> extends templa.mvc.AbstractController<ModelType> implements IElementController<ModelType> {
         constructor();
     }
 }
 declare module templa.dom.mvc.composite {
-    class AbstractCompositeElementController<ModelType extends templa.mvc.composite.ICompositeControllerModel> extends mvc.AbstractElementController<ModelType> {
+    class AbstractCompositeElementController<ModelType extends templa.mvc.composite.ICompositeControllerModel> extends AbstractElementController<ModelType> {
         public _controllers: templa.mvc.IController<templa.mvc.IModel>[];
         constructor();
     }

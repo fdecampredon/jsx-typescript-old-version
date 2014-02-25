@@ -1,0 +1,54 @@
+=== tests/cases/compiler/promisesWithConstraints.ts ===
+Line 0 col 10 IdentifierName "Promise" = Promise<T>
+Line 0 col 18 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "then" = <U>(cb: (x: T) => Promise<U>) => Promise<U>
+Line 1 col 9 IdentifierName "U" = U
+Line 1 col 12 IdentifierName "cb" = (x: T) => Promise<U>
+Line 1 col 17 IdentifierName "x" = T
+Line 1 col 20 IdentifierName "T" = T
+Line 1 col 26 IdentifierName "Promise" = Promise<T>
+Line 1 col 34 IdentifierName "U" = U
+Line 1 col 39 IdentifierName "Promise" = Promise<T>
+Line 1 col 47 IdentifierName "U" = U
+Line 4 col 10 IdentifierName "CPromise" = CPromise<T>
+Line 4 col 19 IdentifierName "T" = T
+Line 4 col 31 IdentifierName "x" = any
+Line 5 col 0 IdentifierName "then" = <U extends { x: any; }>(cb: (x: T) => Promise<U>) => Promise<U>
+Line 5 col 9 IdentifierName "U" = U
+Line 5 col 21 IdentifierName "x" = any
+Line 5 col 32 IdentifierName "cb" = (x: T) => Promise<U>
+Line 5 col 37 IdentifierName "x" = T
+Line 5 col 40 IdentifierName "T" = T
+Line 5 col 46 IdentifierName "Promise" = Promise<T>
+Line 5 col 54 IdentifierName "U" = U
+Line 5 col 59 IdentifierName "Promise" = Promise<T>
+Line 5 col 67 IdentifierName "U" = U
+Line 8 col 10 IdentifierName "Foo" = Foo
+Line 8 col 16 IdentifierName "x" = any
+Line 9 col 10 IdentifierName "Bar" = Bar
+Line 9 col 16 IdentifierName "x" = any
+Line 9 col 19 IdentifierName "y" = any
+Line 11 col 4 IdentifierName "a" = Promise<Foo>
+Line 11 col 7 IdentifierName "Promise" = Promise<T>
+Line 11 col 15 IdentifierName "Foo" = Foo
+Line 12 col 4 IdentifierName "b" = Promise<Bar>
+Line 12 col 7 IdentifierName "Promise" = Promise<T>
+Line 12 col 15 IdentifierName "Bar" = Bar
+Line 13 col 0 AssignmentExpression "a = b" = Promise<Bar>
+Line 13 col 0 IdentifierName "a" = Promise<Foo>
+Line 13 col 4 IdentifierName "b" = Promise<Bar>
+Line 14 col 0 AssignmentExpression "b = a" = Promise<Foo>
+Line 14 col 0 IdentifierName "b" = Promise<Bar>
+Line 14 col 4 IdentifierName "a" = Promise<Foo>
+Line 16 col 4 IdentifierName "a2" = CPromise<Foo>
+Line 16 col 8 IdentifierName "CPromise" = CPromise<T>
+Line 16 col 17 IdentifierName "Foo" = Foo
+Line 17 col 4 IdentifierName "b2" = CPromise<Bar>
+Line 17 col 8 IdentifierName "CPromise" = CPromise<T>
+Line 17 col 17 IdentifierName "Bar" = Bar
+Line 18 col 0 AssignmentExpression "a2 = b2" = CPromise<Bar>
+Line 18 col 0 IdentifierName "a2" = CPromise<Foo>
+Line 18 col 5 IdentifierName "b2" = CPromise<Bar>
+Line 19 col 0 AssignmentExpression "b2 = a2" = CPromise<Foo>
+Line 19 col 0 IdentifierName "b2" = CPromise<Bar>
+Line 19 col 5 IdentifierName "a2" = CPromise<Foo>
