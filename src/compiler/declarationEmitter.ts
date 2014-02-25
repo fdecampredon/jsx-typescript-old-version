@@ -168,14 +168,6 @@ module TypeScript {
                     var declAST = this.semanticInfoChain.getASTForDecl(pullDecl);
                     var container = this.getEnclosingContainer(declAST);
 
-                    // We may have been in the 'name' portion of an module declaration.  If so, we want the actual 
-                    // container of *that* module declaration.  
-                    if (container.kind() === SyntaxKind.ModuleDeclaration &&
-                        ASTHelpers.isAnyNameOfModule(<ModuleDeclaration>container, declAST)) {
-
-                        container = this.getEnclosingContainer(container);
-                    }
-
                     var isExternalModule = container.kind() === SyntaxKind.SourceUnit && this.document.isExternalModule();
 
                     // Emit export only for global export statements. 
@@ -875,6 +867,13 @@ module TypeScript {
         }
 
         private getEnclosingContainer(ast: AST): AST {
+            // If the passed in as is the 'name' portion of an module declaration.  
+            // If so, we want the actual container of *that* module declaration.  
+            var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(ast);
+            if (ASTHelpers.isAnyNameOfModule(enclosingModule, ast)) {
+                ast = enclosingModule;
+            }
+
             ast = ast.parent;
             while (ast) {
                 if (ast.kind() === SyntaxKind.ClassDeclaration ||
@@ -1002,14 +1001,19 @@ module TypeScript {
         }
 
         private emitDeclarationsForModuleDeclaration(moduleDecl: ModuleDeclaration) {
-            if (!this.canEmitDeclarations(moduleDecl)) {
+            // If module is defined as A.B.C 
+            // The whole moduleDecl will have the pullDecl corresponding to innermost
+            // Which would always be exported and hence would need to be emitted
+            // But we really want to check if module A needs to be emitted and hence use
+            // the leftmost name to determine if this needs to be emitted
+            // Since the module name will have the correct decl, it is always used to determine
+            // if this ast needs to be emitted or not
+            var name: AST = moduleDecl.stringLiteral || ArrayUtilities.first(ASTHelpers.getModuleNames(moduleDecl.name));
+            if (!this.canEmitDeclarations(name)) {
                 return;
             }
 
-            var modulePullDecl = this.semanticInfoChain.getDeclForAST(moduleDecl);
             this.emitDeclarationComments(moduleDecl);
-
-            var name: AST = moduleDecl.stringLiteral || ArrayUtilities.first(getModuleNames(moduleDecl.name));
             this.emitDeclFlags(name, "module");
 
             if (moduleDecl.stringLiteral) {

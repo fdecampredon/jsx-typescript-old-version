@@ -1151,7 +1151,7 @@ module TypeScript {
             }
             else {
 
-                var moduleNames = getModuleNames(ast.name);
+                var moduleNames = ASTHelpers.getModuleNames(ast.name);
                 for (var i = 0, n = moduleNames.length; i < n; i++) {
                     result = this.resolveSingleModuleDeclaration(ast, moduleNames[i], context);
                 }
@@ -1232,7 +1232,7 @@ module TypeScript {
                 this.typeCheckSingleModuleDeclaration(ast, ast.stringLiteral, context);
             }
             else {
-                var moduleNames = getModuleNames(ast.name);
+                var moduleNames = ASTHelpers.getModuleNames(ast.name);
                 for (var i = 0, n = moduleNames.length; i < n; i++) {
                     this.typeCheckSingleModuleDeclaration(ast, moduleNames[i], context);
                 }

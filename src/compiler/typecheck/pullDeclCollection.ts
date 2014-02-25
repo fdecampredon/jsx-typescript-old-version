@@ -187,7 +187,7 @@ module TypeScript {
         }
         else {
             // Module has a name or dotted name.
-            var moduleNames = getModuleNames(moduleDecl.name);
+            var moduleNames = ASTHelpers.getModuleNames(moduleDecl.name);
             for (var i = 0, n = moduleNames.length; i < n; i++) {
                 var moduleName = moduleNames[i];
 
@@ -218,20 +218,6 @@ module TypeScript {
                 context.pushParent(decl);
             }
         }
-    }
-
-    export function getModuleNames(name: AST, result?: Identifier[]): Identifier[] {
-        result = result || [];
-
-        if (name.kind() === SyntaxKind.QualifiedName) {
-            getModuleNames((<QualifiedName>name).left, result);
-            result.push((<QualifiedName>name).right);
-        }
-        else {
-            result.push(<Identifier>name);
-        }
-
-        return result;
     }
 
     function createModuleVariableDecl(decl: PullDecl, moduleNameAST: AST, context: DeclCollectionContext): void {
@@ -1067,7 +1053,7 @@ module TypeScript {
                 context.popParent();
             }
             else {
-                var moduleNames = getModuleNames(moduleDeclaration.name);
+                var moduleNames = ASTHelpers.getModuleNames(moduleDeclaration.name);
                 for (var i = moduleNames.length - 1; i >= 0; i--) {
                     var moduleName = moduleNames[i];
                     Debug.assert(currentDecl.ast() === moduleName);

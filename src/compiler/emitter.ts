@@ -1072,7 +1072,7 @@ module TypeScript {
                 this.emitSingleModuleDeclaration(moduleDecl, moduleDecl.stringLiteral);
             }
             else {
-                var moduleNames = getModuleNames(moduleDecl.name);
+                var moduleNames = ASTHelpers.getModuleNames(moduleDecl.name);
                 this.emitSingleModuleDeclaration(moduleDecl, moduleNames[0]);
             }
         }
@@ -1137,7 +1137,7 @@ module TypeScript {
                 this.emitList(moduleDecl.moduleElements);
             }
             else {
-                var moduleNames = getModuleNames(moduleDecl.name);
+                var moduleNames = ASTHelpers.getModuleNames(moduleDecl.name);
                 var nameIndex = moduleNames.indexOf(<Identifier>moduleName);
                 Debug.assert(nameIndex >= 0);
 
