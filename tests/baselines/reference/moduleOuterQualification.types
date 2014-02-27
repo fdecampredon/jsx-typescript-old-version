@@ -1,0 +1,7 @@
+=== tests/cases/compiler/moduleOuterQualification.ts ===
+Line 1 col 15 IdentifierName "outer" = outer
+Line 2 col 12 IdentifierName "Beta" = outer.Beta
+Line 3 col 9 IdentifierName "inner" = outer.inner
+Line 5 col 21 IdentifierName "Beta" = outer.inner.Beta
+Line 5 col 34 IdentifierName "outer" = outer
+Line 5 col 40 IdentifierName "Beta" = outer.Beta
