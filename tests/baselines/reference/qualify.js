@@ -11,7 +11,7 @@ var M;
 (function (M) {
     (function (N) {
         var y = M.m;
-        var x = M.N.n + y;
+        var x = N.n + y;
     })(M.N || (M.N = {}));
     var N = M.N;
 })(M || (M = {}));

@@ -10,7 +10,7 @@ var A;
     A.Point = Point;
 
     (function (B) {
-        B.Origin = new A.Point(0, 0);
+        B.Origin = new Point(0, 0);
 
         var Line = (function () {
             function Line(start, end) {

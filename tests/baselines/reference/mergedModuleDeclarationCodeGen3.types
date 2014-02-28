@@ -1,0 +1,12 @@
+=== tests/cases/compiler/mergedModuleDeclarationCodeGen3.ts ===
+Line 0 col 7 IdentifierName "my" = my
+Line 0 col 10 IdentifierName "data" = my.data
+Line 1 col 20 IdentifierName "buz" = typeof my.data.buz
+Line 3 col 7 IdentifierName "my" = my
+Line 3 col 10 IdentifierName "data" = my.data
+Line 3 col 15 IdentifierName "foo" = my.data.foo
+Line 4 col 13 IdentifierName "data" = typeof my.data.foo.data
+Line 4 col 18 IdentifierName "my" = any
+Line 4 col 22 IdentifierName "foo" = any
+Line 5 col 0 InvocationExpression "buz()" = void
+Line 5 col 0 IdentifierName "buz" = typeof my.data.buz

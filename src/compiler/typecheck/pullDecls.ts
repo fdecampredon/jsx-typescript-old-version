@@ -347,6 +347,7 @@ module TypeScript {
         public getEnclosingDecl() {
             return this;
         }
+
         public isRootDecl() {
             return true;
         }

@@ -1738,68 +1738,46 @@ module TypeScript {
             return false;
         }
 
-        // Gets the decl path that needs to be emitted for the symbol in the enclosing context
-        private getPotentialDeclPathInfoForEmit(pullSymbol: PullSymbol) {
-            var decl = pullSymbol.getDeclarations()[0];
-            var parentDecl = decl.getParentDecl();
-            var symbolContainerDeclPath = parentDecl ? parentDecl.getParentPath() : <PullDecl[]>[];
-
+        // In some cases, when emitting a name, the emitter needs to qualify a symbol
+        // name by first emitting its parent's name. This generally happens when the
+        // name referenced is in scope in TypeScript, but not in Javascript. This is true
+        // in any of the following 3 cases:
+        // - It is an enum member, even if accessed from within the enum declaration in which it is defined
+        // - It is an exported var, even if accessed from within the module declaration in which it is defined
+        // - It is an exported member of the current module, but is never defined in this particular module
+        // declaration (i.e. it is only defined in other components of the same merged module)
+        private shouldQualifySymbolNameWithParentName(symbol: PullSymbol): boolean {
             var enclosingContextDeclPath = this.declStack;
-            var commonNodeIndex = -1;
+            var symbolDeclarations = symbol.getDeclarations();
+            for (var i = 0; i < symbolDeclarations.length; i++) {
+                var currentDecl = symbolDeclarations[i];
+                var declParent = currentDecl.getParentDecl();
 
-            // Find the container decl path and the declStack of the context
-            if (enclosingContextDeclPath.length) {
-                for (var i = symbolContainerDeclPath.length - 1; i >= 0; i--) {
-                    var symbolContainerDeclPathNode = symbolContainerDeclPath[i];
-                    for (var j = enclosingContextDeclPath.length - 1; j >= 0; j--) {
-                        var enclosingContextDeclPathNode = enclosingContextDeclPath[j];
-                        if (symbolContainerDeclPathNode === enclosingContextDeclPathNode) {
-                            commonNodeIndex = i;
-                            break;
-                        }
-                    }
+                if (currentDecl.kind === PullElementKind.EnumMember) {
+                    return true;
+                }
 
-                    if (commonNodeIndex >= 0) {
-                        break;
-                    }
+                // All decls of the same symbol must agree on whether they are exported
+                // If one decl is not exported, none of them are, and it is safe to
+                // assume it is just a local
+                if (!hasFlag(currentDecl.flags, PullElementFlags.Exported)) {
+                    return false;
+                }
+
+                // Section 10.6:
+                // When a variable is exported, all references to the variable in the body of the
+                // module are replaced with
+                //    <ModuleName>.< VariableName>
+                if (currentDecl.kind === PullElementKind.Variable && !hasFlag(currentDecl.flags, PullElementFlags.ImplicitVariable)) {
+                    return true;
+                }
+
+                if (ArrayUtilities.contains(this.declStack, declParent)) {
+                    return false;
                 }
             }
 
-            // We can emit dotted names only of exported declarations, so find the index to start emitting dotted name
-            var startingIndex = symbolContainerDeclPath.length - 1
-            for (var i = startingIndex - 1; i > commonNodeIndex; i--) {
-                if (symbolContainerDeclPath[i + 1].flags & PullElementFlags.Exported) {
-                    startingIndex = i;
-                }
-                else {
-                    break;
-                }
-            }
-            return { potentialPath: symbolContainerDeclPath, startingIndex: startingIndex };
-        }
-
-        // Emit the dotted names using the decl path
-        private emitDottedNameFromDeclPath(declPath: PullDecl[], startingIndex: number, lastIndex: number) {
-            for (var i = startingIndex; i <= lastIndex; i++) {
-                if (declPath[i].kind === PullElementKind.DynamicModule ||
-                    declPath[i].flags & PullElementFlags.InitializedDynamicModule) {
-                    this.writeToOutput("exports.");
-                }
-                else {
-                    // Get the name of the decl that would need to referenced and is conflict free.
-                    this.writeToOutput(this.getModuleName(declPath[i], /* changeNameIfAnyDeclarationInContext */ true) + ".");
-                }
-            }
-        }
-
-        // Emits the container name of the symbol in the given enclosing context
-        private emitSymbolContainerNameInEnclosingContext(pullSymbol: PullSymbol) {
-            var declPathInfo = this.getPotentialDeclPathInfoForEmit(pullSymbol);
-            var potentialDeclPath = declPathInfo.potentialPath;
-            var startingIndex = declPathInfo.startingIndex;
-
-            // Emit dotted names for the path
-            this.emitDottedNameFromDeclPath(potentialDeclPath, startingIndex, potentialDeclPath.length - 1);
+            return true;
         }
 
         // Get the symbol information to be used for emitting the ast
@@ -1837,29 +1815,13 @@ module TypeScript {
                     if (pullSymbolContainer) {
                         var pullSymbolContainerKind = pullSymbolContainer.kind;
 
-                        if (pullSymbolContainerKind === PullElementKind.Class) {
-                            if (pullSymbol.anyDeclHasFlag(PullElementFlags.Static)) {
-                                // This is static symbol
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            }
-                            else if (pullSymbolKind === PullElementKind.Property) {
-                                this.emitThis();
-                                this.writeToOutput(".");
-                            }
-                        }
-                        else if (PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === PullElementKind.Enum ||
+                        if (PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === PullElementKind.Enum ||
                             pullSymbolContainer.anyDeclHasFlag(PullElementFlags.InitializedModule | PullElementFlags.Enum)) {
-                            // If property or, say, a constructor being invoked locally within the module of its definition
-                            if (pullSymbolKind === PullElementKind.Property || pullSymbolKind === PullElementKind.EnumMember) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            }
-                            else if (pullSymbol.anyDeclHasFlag(PullElementFlags.Exported) &&
-                                pullSymbolKind === PullElementKind.Variable &&
-                                !pullSymbol.anyDeclHasFlag(PullElementFlags.InitializedModule | PullElementFlags.Enum)) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            }
-                            else if (pullSymbol.anyDeclHasFlag(PullElementFlags.Exported) && !this.symbolIsUsedInItsEnclosingContainer(pullSymbol)) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
+                            var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(pullSymbol);
+                            if (needToEmitParentName) {
+                                var parentDecl = pullSymbol.getDeclarations()[0].getParentDecl();
+                                Debug.assert(parentDecl && !parentDecl.isRootDecl());
+                                this.writeToOutput(this.getModuleName(parentDecl, /* changeNameIfAnyDeclarationInContext */ true) + ".");
                             }
                         }
                         else if (pullSymbolContainerKind === PullElementKind.DynamicModule ||
@@ -2913,49 +2875,27 @@ module TypeScript {
         }
 
         // Emit the member access expression using the declPath
-        private emitDottedNameMemberAccessExpressionWorker(expression: MemberAccessExpressionSyntax, potentialPath: PullDecl[], startingIndex: number, lastIndex: number) {
+        private emitDottedNameMemberAccessExpression(expression: MemberAccessExpressionSyntax) {
             this.recordSourceMappingStart(expression);
             if (expression.expression.kind() === SyntaxKind.MemberAccessExpression) {
                 // Emit the dotted name access expression
-                this.emitDottedNameMemberAccessExpressionRecurse(<MemberAccessExpressionSyntax>expression.expression, potentialPath, startingIndex, lastIndex - 1);
+                this.emitDottedNameMemberAccessExpressionRecurse(<MemberAccessExpressionSyntax>expression.expression);
             }
             else { // Name
-                this.emitComments(expression.expression, true);
-                this.recordSourceMappingStart(expression.expression);
-
-                // Emit the qualifying name fo the expression.expression
-                this.emitDottedNameFromDeclPath(potentialPath, startingIndex, lastIndex - 2); // We would be emitting two identifiers as part of member access
-                // Emit expression.expression
-                this.writeToOutput((<ISyntaxToken>expression.expression).text());
-
-                this.recordSourceMappingEnd(expression.expression);
-                this.emitComments(expression.expression, false);
+                this.emitName(<ISyntaxToken>expression.expression, /*addThis*/ true);
             }
 
             this.writeToOutput(".");
-            this.emitName(expression.name, false);
+            this.emitName(expression.name, /*addThis*/ false);
 
             this.recordSourceMappingEnd(expression);
         }
 
         // Set the right indices for the recursive member access expression before emitting it using the decl path
-        private emitDottedNameMemberAccessExpressionRecurse(expression: MemberAccessExpressionSyntax, potentialPath: PullDecl[], startingIndex: number, lastIndex: number) {
+        private emitDottedNameMemberAccessExpressionRecurse(expression: MemberAccessExpressionSyntax) {
             this.emitComments(expression, true);
-
-            if (lastIndex - startingIndex < 1) { // Member expression emits alteast two identifiers
-                startingIndex = lastIndex - 1;
-                Debug.assert(startingIndex >= 0);
-            } 
-
-            this.emitDottedNameMemberAccessExpressionWorker(expression, potentialPath, startingIndex, lastIndex);
+            this.emitDottedNameMemberAccessExpression(expression);
             this.emitComments(expression, false);
-        }
-
-        private emitDottedNameMemberAccessExpression(expression: MemberAccessExpressionSyntax) {
-            var memberAccessSymbol = this.getSymbolForEmit(expression).symbol;
-            // Get the decl path info to emit this expression using declPath
-            var potentialDeclInfo = this.getPotentialDeclPathInfoForEmit(memberAccessSymbol);
-            this.emitDottedNameMemberAccessExpressionWorker(expression, potentialDeclInfo.potentialPath, potentialDeclInfo.startingIndex, potentialDeclInfo.potentialPath.length);
         }
 
         public emitMemberAccessExpression(expression: MemberAccessExpressionSyntax): void {

@@ -2,7 +2,7 @@
     (function (_Y) {
         var A = (function () {
             function A(Y) {
-                new X._Y.B();
+                new _Y.B();
             }
             return A;
         })();

@@ -5,7 +5,7 @@ var M;
     M.f = f;
     f();
     M.f();
-    var r = M.f.hello;
+    var r = f.hello;
 })(M || (M = {}));
 
 var M;
@@ -14,7 +14,7 @@ var M;
         f.hello = 1;
     })(M.f || (M.f = {}));
     var f = M.f;
-    M.f();
+    f();
     M.f();
     var r = f.hello;
 })(M || (M = {}));

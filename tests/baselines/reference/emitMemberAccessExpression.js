@@ -9,7 +9,7 @@ var Microsoft;
                 function _Person() {
                 }
                 _Person.prototype.populate = function (raw) {
-                    var res = Microsoft.PeopleAtWork.Model.KnockoutExtentions;
+                    var res = Model.KnockoutExtentions;
                 };
                 return _Person;
             })();

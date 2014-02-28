@@ -28,7 +28,7 @@ var A;
                     _super.apply(this, arguments);
                 }
                 return ContextMenu;
-            })(A.B.EventManager);
+            })(B.EventManager);
             C.ContextMenu = ContextMenu;
         })(B.C || (B.C = {}));
         var C = B.C;

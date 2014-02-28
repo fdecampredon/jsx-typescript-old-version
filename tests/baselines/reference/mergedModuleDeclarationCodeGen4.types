@@ -1,0 +1,17 @@
+=== tests/cases/compiler/mergedModuleDeclarationCodeGen4.ts ===
+Line 0 col 7 IdentifierName "superContain" = superContain
+Line 1 col 18 IdentifierName "contain" = superContain.contain
+Line 2 col 22 IdentifierName "my" = superContain.contain.my
+Line 2 col 25 IdentifierName "buz" = superContain.contain.my.buz
+Line 3 col 26 IdentifierName "data" = superContain.contain.my.buz.data
+Line 4 col 32 IdentifierName "foo" = typeof superContain.contain.my.buz.data.foo
+Line 7 col 22 IdentifierName "my" = superContain.contain.my
+Line 7 col 25 IdentifierName "buz" = superContain.contain.my.buz
+Line 8 col 26 IdentifierName "data" = superContain.contain.my.buz.data
+Line 9 col 32 IdentifierName "bar" = typeof superContain.contain.my.buz.data.bar
+Line 9 col 36 IdentifierName "contain" = any
+Line 9 col 45 IdentifierName "my" = any
+Line 9 col 49 IdentifierName "buz" = any
+Line 9 col 54 IdentifierName "data" = any
+Line 10 col 0 InvocationExpression "foo()" = void
+Line 10 col 0 IdentifierName "foo" = typeof superContain.contain.my.buz.data.foo
