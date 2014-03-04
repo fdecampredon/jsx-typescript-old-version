@@ -53,9 +53,11 @@ class RWCRunner extends RunnerBase {
     }
 
     private removeRootPath(path: string): string {
-        
-        var idx = path.indexOf(this.sourcePath) + this.sourcePath.length;
-        return path.substr(idx);
+
+        // some error message contain the path, we should use a regex to normalize all instances 
+        var fullpath = TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(this.sourcePath));
+
+        return path.replace(new RegExp(fullpath, "gi"), "")
     }
 
     /** Setup the runner's tests so that they are ready to be executed by the harness
