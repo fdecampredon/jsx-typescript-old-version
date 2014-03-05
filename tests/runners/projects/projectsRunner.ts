@@ -54,7 +54,7 @@ class HarnessBatch implements TypeScript.IReferenceResolverHost {
 
         // Add the library file if needed
         if (!this.compilationSettings.noLib() && !resolutionResults.seenNoDefaultLibTag) {
-            var libraryPath = Harness.userSpecifiedroot + 'tests/minimal.lib.d.ts';
+            var libraryPath = Harness.libFolder + 'lib.core.d.ts';
             resolvedFiles.unshift({ path: libraryPath, referencedFiles: [], importedFiles: [] });
         }
 

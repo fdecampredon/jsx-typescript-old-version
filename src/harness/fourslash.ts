@@ -187,7 +187,7 @@ module FourSlash {
                 var resolvedFiles = harnessCompiler.resolve();
 
                 resolvedFiles.forEach(file => {
-                    if (file.path.indexOf('lib.d.ts') === -1) {
+                    if (!Harness.isLibraryFile(file.path)) {
                         var fixedPath = file.path.substr(file.path.indexOf('tests/'));
                         var content = harnessCompiler.getContentForFile(fixedPath);
                         this.languageServiceShimHost.addScript(fixedPath, content);

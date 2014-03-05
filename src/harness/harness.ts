@@ -58,6 +58,7 @@ module Harness {
     // Settings 
     export var userSpecifiedroot = "";
     var global = <any>Function("return this").call(null);
+    export var libFolder: string = global['WScript'] ? TypeScript.filePath(global['WScript'].ScriptFullName) : (__dirname + '/');
 
     export function getFileName(fullPath: string) {
         return fullPath.replace(/^.*[\\\/]/, '');
@@ -764,9 +765,8 @@ module Harness {
             }
         }
 
-        var libFolder: string = global['WScript'] ? TypeScript.filePath(global['WScript'].ScriptFullName) : (__dirname + '/');
         export var libText = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "lib.d.ts", /*codepage:*/ null).contents : '';
-        export var libTextMinimal = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "../../tests/minimal.lib.d.ts", /*codepage:*/ null).contents : '';
+        export var libTextMinimal = TypeScript.IO ? TypeScript.IO.readFile(libFolder + "lib.core.d.ts", /*codepage:*/ null).contents : '';
 
         /** This is the harness's own version of the batch compiler that encapsulates state about resolution */
         export class HarnessCompiler implements TypeScript.IReferenceResolverHost {
@@ -828,7 +828,7 @@ module Harness {
                     }
                 }
 
-                var libPath = this.useMinimalDefaultLib ? libFolder + "../../tests/minimal.lib.d.ts" : libFolder + "lib.d.ts";
+                var libPath = this.useMinimalDefaultLib ? libFolder + "lib.core.d.ts" : libFolder + "lib.d.ts";
                 var libraryResolvedFile: TypeScript.IResolvedFile = {
                     path: libPath,
                     referencedFiles: [],
@@ -852,7 +852,7 @@ module Harness {
             public compile(options?: { noResolve: boolean }) {
                 // TODO: unsure I actually need resolve = false for unit tests
                 var addScriptSnapshot = (path: string, referencedFiles?: string[]) => {
-                    if (path.indexOf('lib.d.ts') === -1) {
+                    if (!isLibraryFile(path)) {
                         var scriptSnapshot = this.getScriptSnapshot(path);
                         this.compiler.addFile(path, scriptSnapshot, /*BOM*/ null, /*version:*/ 0, /*isOpen:*/ false, referencedFiles);
                     }
@@ -947,7 +947,7 @@ module Harness {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0, n = fileNames.length; i < n; i++) {
                     var fileName = fileNames[i];
-                    if (fileName.indexOf("lib.d.ts") < 0) {
+                    if (!isLibraryFile(fileName)) {
                         this.compiler.removeFile(fileNames[i]);
                     }
                 }
@@ -960,7 +960,7 @@ module Harness {
             public getAllFilesInCompiler() {
                 // returns what's actually in the compiler, not the contents of this.fileNameToSriptSnapshot because the latter
                 // really means what's 'on the filesystem' not in compiler
-                return this.compiler.fileNames().filter(file => file.indexOf('lib.d.ts') === -1);
+                return this.compiler.fileNames().filter(file => !isLibraryFile(file));
             }
 
             public getDocumentFromCompiler(documentName: string) {
@@ -1969,6 +1969,10 @@ module Harness {
                 });
             }
         }
+    }
+
+    export function isLibraryFile(filePath: string): boolean {
+        return filePath.indexOf('lib.d.ts') >= 0 || filePath.indexOf('lib.core.d.ts') >= 0;
     }
 
     if (Error) (<any>Error).stackTraceLimit = 100;
