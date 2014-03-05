@@ -218,19 +218,19 @@ var harnessSources = [
 	path.join(runnersDirectory, "../cases/unittests/compiler/propertySignatureTests.ts"),
 ];
 
-var libraryFiles = [
-	"lib.d.ts",
-	"jquery.d.ts",
-	"winjs.d.ts",
-	"winrt.d.ts"
+var librarySourceMap = [
+		{ target: "lib.core.d.ts", sources: ["lib.core.d.ts"] },
+		{ target: "lib.dom.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "dom.generated.d.ts"], },
+		{ target: "lib.webworker.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "webworker.generated.d.ts"], },
+		{ target: "lib.scripthost.d.ts", sources: ["importcore.d.ts", "scripthost.d.ts"], },
+		{ target: "lib.d.ts", sources: ["lib.core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "scripthost.d.ts"], },
+		{ target: "jquery.d.ts", sources: ["jquery.d.ts"], },
+		{ target: "winjs.d.ts", sources: ["winjs.d.ts"], },
+		{ target: "winrt.d.ts", sources: ["winrt.d.ts"] }
 ];
 
-var librarySources = libraryFiles.map(function (f) {
-	return path.join(libraryDirectory, f);
-});
-
-var libraryTargets = libraryFiles.map(function (f) {
-	return path.join(builtLocalDirectory, f);
+var libraryTargets = librarySourceMap.map(function (f) {
+	return path.join(builtLocalDirectory, f.target);
 });
 
 // Prepends the contents of prefixFile to destinationFile
@@ -244,6 +244,25 @@ function prependFile(prefixFile, destinationFile) {
 	var temp = "temptemp";
 	jake.cpR(prefixFile, temp);
 	fs.appendFileSync(temp, fs.readFileSync(destinationFile));
+	fs.renameSync(temp, destinationFile);
+}
+
+// concatenate a list of sourceFiles to a destinationFile
+function concatenateFiles(destinationFile, sourceFiles) {
+	var temp = "temptemp";
+	// Copy the first file to temp
+	if (!fs.existsSync(sourceFiles[0])) {
+		fail(sourceFiles[0] + " does not exist!");
+	}
+	jake.cpR(sourceFiles[0], temp);
+	// append all files in sequence
+	for (var i = 1; i < sourceFiles.length; i++) {
+		if (!fs.existsSync(sourceFiles[i])) {
+				fail(sourceFiles[i] + " does not exist!");
+		}
+		fs.appendFileSync(temp, fs.readFileSync(sourceFiles[i]));
+	}
+	// Move the file to the final destination
 	fs.renameSync(temp, destinationFile);
 }
 
@@ -292,8 +311,13 @@ directory(builtLocalDirectory);
 
 for (var i in libraryTargets) {
 	(function (i) {
-		file(libraryTargets[i], [builtLocalDirectory, librarySources[i]], function() {
-			jake.cpR(librarySources[i], builtLocalDirectory);
+		var entry = librarySourceMap[i];
+		var target = libraryTargets[i];
+		var sources = [copyright].concat(entry.sources.map(function (s) {
+			return path.join(libraryDirectory, s);
+		}));
+		file(target, [builtLocalDirectory].concat(sources), function() {
+			concatenateFiles(target, sources);
 		});
 	})(i);
 }
@@ -307,14 +331,18 @@ compileFile(tscFile, compilerSources.concat(tscSources), [builtLocalDirectory, c
 var serviceFile = path.join(builtLocalDirectory, "typescriptServices.js");
 compileFile(serviceFile, compilerSources.concat(servicesSources), [builtLocalDirectory, thirdParty, copyright].concat(compilerSources).concat(servicesSources), [thirdParty, copyright]);
 
+// Lib target to build the library files
+desc("Builds the library targets");
+task("lib", libraryTargets);
+
 // Local target to build the compiler and services
 desc("Builds the full compiler and services");
-task("local", libraryTargets.concat([typescriptFile, tscFile, serviceFile]));
+task("local", ["lib", typescriptFile, tscFile, serviceFile]);
 
 // Local target to build the compiler and services
 desc("Emit debug mode files with sourcemaps");
 task("setDebugMode", function() {
-    useDebugMode = true;
+		useDebugMode = true;
 });
 
 // Local target to build the compiler and services
@@ -330,7 +358,6 @@ task("clean", function() {
 	jake.rmRf(builtDirectory);
 });
 
-
 // Makes a new LKG. This target does not build anything, but errors if not all the outputs are present in the built/local directory
 desc("Makes a new LKG out of the built js files");
 task("LKG", libraryTargets, function() {
@@ -340,11 +367,11 @@ task("LKG", libraryTargets, function() {
 	});
 	if (missingFiles.length > 0) {
 		fail("Cannot replace the LKG unless all built targets are present in directory " + builtLocalDirectory +
-			    ". The following files are missing:\n" + missingFiles.join("\n"));
+					". The following files are missing:\n" + missingFiles.join("\n"));
 	}
 	// Copy all the targets into the LKG directory
 	jake.mkdirP(LKGDirectory);
-	for (var i in librarySources) {
+	for (var i in libraryTargets) {
 		jake.cpR(libraryTargets[i], LKGDirectory);
 	}
 	for (i in expectedFiles) {
@@ -361,8 +388,8 @@ directory(builtTestDirectory);
 
 // Task to build the tests infrastructure using the built compiler
 var run = path.join(builtTestDirectory, "run.js");
-var json2 = path.join(harnessDirectory, "external/json2.js")   
-compileFile(run, harnessSources, [builtTestDirectory, tscFile].concat(libraryTargets).concat(harnessSources), [json2], true);  
+var json2 = path.join(harnessDirectory, "external/json2.js")	 
+compileFile(run, harnessSources, [builtTestDirectory, tscFile].concat(libraryTargets).concat(harnessSources), [json2], true);	
 
 
 // Webharness
@@ -378,7 +405,7 @@ compileFile(webhostJsPath, [webhostPath], [tscFile, webhostPath], [], true);
 
 desc("Builds the tsc web host");
 task("webhost", [webhostJsPath], function() {
-    jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
+		jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
 });
 
 // Fidelity Tests
@@ -401,6 +428,7 @@ task("tests", [run, serviceFile, fidelityTestsOutFile, perfCompilerPath].concat(
 	// Copy the language service over to the test directory
 	jake.cpR(serviceFile, builtTestDirectory);
 	jake.cpR(path.join(libraryDirectory, "lib.d.ts"), builtTestDirectory);
+	jake.cpR(path.join(libraryDirectory, "lib.core.d.ts"), builtTestDirectory);
 
 	jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
 });
@@ -412,7 +440,7 @@ task("runtests", ["local", "tests", builtTestDirectory], function() {
 		jake.rmRf(localBaseline);
 	}
 
-    // Clean the local Rwc baselines directory
+		// Clean the local Rwc baselines directory
 	if (fs.existsSync(localRwcBaseline)) {
 		jake.rmRf(localRwcBaseline);
 	}
@@ -421,7 +449,7 @@ task("runtests", ["local", "tests", builtTestDirectory], function() {
 	host = process.env.host || process.env.TYPESCRIPT_HOST || "node";
 	tests = process.env.test || process.env.tests;
 	tests = tests ? tests.split(',').join(' ') : ([].slice.call(arguments).join(' ') || "");
-        var cmd = host + " " + run + " " + tests;
+				var cmd = host + " " + run + " " + tests;
 	console.log(cmd);
 	var ex = jake.createExec([cmd]);
 	// Add listeners for output and error
@@ -461,7 +489,7 @@ task("baseline-accept-rwc", function() {
 	jake.rmRf(refRwcBaseline);
 	fs.renameSync(localRwcBaseline, refRwcBaseline);
 });
-                                          
+																					
 // Syntax Generator
 var syntaxGeneratorOutFile = compilerDirectory + "syntax/SyntaxGenerator.js";
 var syntaxGeneratorInFile = compilerDirectory + "syntax/SyntaxGenerator.ts";
