@@ -4,6 +4,7 @@ var CCC = (function () {
         this.y = aaa;
         this.y = ''; // was: error, cannot assign string to number
     }
+    CCC.staticY = aaa;
     return CCC;
 })();
 

@@ -1082,7 +1082,7 @@ module Harness {
                 });
 
                 if (!anySyntaxErrors) {
-                    this.compiler.getCompilerOptionsDiagnostics().forEach(d => this.addError(d));
+                    this.compiler.getCompilerOptionsDiagnostics(this.ioHost.resolvePath).forEach(d => this.addError(d));
 
                     // Emit (note: reportDiagnostics is what causes the emit to happen)
                     this.emitAll(this.ioHost);

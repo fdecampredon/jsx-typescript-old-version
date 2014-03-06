@@ -1,6 +1,7 @@
 var aaa = 1;
 class CCC {
     y: number = aaa;
+    static staticY: number = aaa; // This shouldnt be error
     constructor(aaa) {
         this.y = ''; // was: error, cannot assign string to number
     }

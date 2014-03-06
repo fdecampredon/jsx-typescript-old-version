@@ -390,9 +390,9 @@ module TypeScript.Services {
             return this.compiler.getSemanticDiagnostics(fileName);
         }
 
-        public getCompilerOptionsDiagnostics(): TypeScript.Diagnostic[] {
+        public getCompilerOptionsDiagnostics(resolvePath: (path: string) => string): TypeScript.Diagnostic[] {
             this.synchronizeHostData();
-            return this.compiler.getCompilerOptionsDiagnostics();
+            return this.compiler.getCompilerOptionsDiagnostics(resolvePath);
         }
 
         public getSymbolInformationFromAST(ast: TypeScript.ISyntaxElement, document: TypeScript.Document) {

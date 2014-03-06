@@ -888,7 +888,8 @@ module TypeScript.Services {
         }
 
         public getCompilerOptionsDiagnostics(): TypeScript.Diagnostic[]{
-            var compilerOptionsDiagnostics = this.compiler.getCompilerOptionsDiagnostics();
+            var resolvePath = (fileName: string) => this.host.resolveRelativePath(fileName, null);
+            var compilerOptionsDiagnostics = this.compiler.getCompilerOptionsDiagnostics(resolvePath);
             return compilerOptionsDiagnostics.map(d => this._getHostSpecificDiagnosticWithFileName(d));
         }
 

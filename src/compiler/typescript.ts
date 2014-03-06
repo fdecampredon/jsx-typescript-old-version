@@ -576,8 +576,8 @@ module TypeScript {
             return errors;
         }
 
-        public getCompilerOptionsDiagnostics(): Diagnostic[] {
-            var emitOptions = new EmitOptions(this, /*resolvePath*/ null);
+        public getCompilerOptionsDiagnostics(resolvePath: (path: string) => string): Diagnostic[] {
+            var emitOptions = new EmitOptions(this, resolvePath);
             var emitDiagnostic = emitOptions.diagnostic();
             if (emitDiagnostic) {
                 return [emitDiagnostic];

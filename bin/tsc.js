@@ -56506,8 +56506,8 @@ var TypeScript;
             return errors;
         };
 
-        TypeScriptCompiler.prototype.getCompilerOptionsDiagnostics = function () {
-            var emitOptions = new TypeScript.EmitOptions(this, null);
+        TypeScriptCompiler.prototype.getCompilerOptionsDiagnostics = function (resolvePath) {
+            var emitOptions = new TypeScript.EmitOptions(this, resolvePath);
             var emitDiagnostic = emitOptions.diagnostic();
             if (emitDiagnostic) {
                 return [emitDiagnostic];

@@ -6442,10 +6442,11 @@ module TypeScript {
             return null;
         }
 
-        private checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST: ISyntaxToken): Diagnostic {
+        private checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST: ISyntaxToken,
+            nameSymbol: PullSymbol, context: PullTypeResolutionContext): boolean {
             var id = nameAST.valueText();
             if (id.length === 0) {
-                return null;
+                return false;
             }
 
             // SPEC: Nov 18, 2013
@@ -6462,21 +6463,21 @@ module TypeScript {
 
                     if (constructorDecl) {
                         var childDecls = constructorDecl.searchChildDecls(id, PullElementKind.SomeValue);
-
                         if (childDecls.length) {
-                            var memberVariableSymbol = memberVariableDecl.getSymbol();
-                            // name that was used in initializer was resolved in the scope of constructor.
-                            // delay error reporting:
-                            // - if this name won't be found in other scopes then we'll print normal 'Could not find symbol' error
-                            // - otherwise we'll report more specific error about shadowing value from the outer scope
-                            return this.semanticInfoChain.diagnosticFromAST(nameAST,
-                                DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor,
-                                [memberVariableSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()])
+                            // Check if symbol is from scope that is outer to constructor's outer scope
+                            if (PullHelpers.isSymbolDeclaredInScopeChain(nameSymbol, constructorDecl.getSymbol().getContainer())) {
+                                var memberVariableSymbol = memberVariableDecl.getSymbol();
+                                // Currently name was resolved to something from outerscope of the class                                // But constructor contains same parameter name, and hence this member initializer                                // when moved into constructor function in generated js would resolve to the constructor                                 // parameter but thats not what user intended. Report error
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST,
+                                    DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor,
+                                    [memberVariableSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()]));
+                                return true;
+                            }
                         }
                     }
                 }
             }
-            return null;
+            return false;
         }
 
         private computeNameExpression(nameAST: ISyntaxToken, context: PullTypeResolutionContext): PullSymbol {
@@ -6495,8 +6496,6 @@ module TypeScript {
                     enclosingDecl = valueDecl;
                 }
             }
-
-            var diagnosticForInitializer = this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST);
 
             // First check if this is the name child of a declaration. If it is, no need to search for a name in scope since this is not a reference.
             if (ASTHelpers.isDeclarationASTOrDeclarationNameAST(nameAST)) {
@@ -6533,8 +6532,7 @@ module TypeScript {
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
             }
-            else if (diagnosticForInitializer) {
-                context.postDiagnostic(diagnosticForInitializer);
+            else if (this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST, nameSymbol, context)) {
                 return this.getNewErrorTypeSymbol(id);
             }
 

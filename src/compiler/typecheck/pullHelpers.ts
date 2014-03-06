@@ -170,6 +170,29 @@ module TypeScript {
             return container && container.kind === TypeScript.PullElementKind.ConstructorType && symbolIsModule(container) && symbol.anyDeclHasFlag(PullElementFlags.Exported);
         }
 
+        export function isSymbolDeclaredInScopeChain(symbol: PullSymbol, scopeSymbol: PullSymbol): boolean {
+            Debug.assert(symbol);
+            var symbolDeclarationScope = symbol.getContainer();
+
+            // If we are looking for something other than global scope, look in the scope chain
+            while (scopeSymbol) {
+                // symbol is declared in same as scope symbol
+                if (scopeSymbol === symbolDeclarationScope) {
+                    return true;
+                }
+
+                // look in the outer scope of scopeSymbol
+                scopeSymbol = scopeSymbol.getContainer();
+            }
+
+            if (scopeSymbol === null && symbolDeclarationScope === null) {
+                // Both are global scopes.
+                return true;
+            }
+
+            return false;
+        }
+
         // Caller of walkPullTypeSymbolStructure should implement this interface to walk the members, signatures
         export interface PullTypeSymbolStructureWalker {
             memberSymbolWalk(memberSymbol: PullSymbol): boolean;

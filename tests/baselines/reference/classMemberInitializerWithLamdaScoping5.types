@@ -1,0 +1,17 @@
+=== tests/cases/compiler/classMemberInitializerWithLamdaScoping5.ts ===
+Line 0 col 12 IdentifierName "console" = { log(message?: any, ...optionalParams: any[]): void; }
+Line 1 col 0 IdentifierName "log" = (message?: any, ...optionalParams: any[]) => void
+Line 1 col 8 IdentifierName "message" = any
+Line 1 col 26 IdentifierName "optionalParams" = any[]
+Line 3 col 6 IdentifierName "Greeter" = Greeter
+Line 4 col 16 IdentifierName "message" = string
+Line 6 col 0 IdentifierName "messageHandler" = (message: string) => void
+Line 7 col 21 ParenthesizedArrowFunctionExpression "(message: string) => {
+        console.log(message); // This shouldnt be error
+    }" = (message: string) => void
+Line 7 col 22 IdentifierName "message" = string
+Line 8 col 0 InvocationExpression "console.log(message)" = void
+Line 8 col 0 MemberAccessExpression "console.log" = (message?: any, ...optionalParams: any[]) => void
+Line 8 col 0 IdentifierName "console" = { log(message?: any, ...optionalParams: any[]): void; }
+Line 8 col 16 IdentifierName "log" = (message?: any, ...optionalParams: any[]) => void
+Line 8 col 20 IdentifierName "message" = string

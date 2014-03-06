@@ -56591,8 +56591,8 @@ var TypeScript;
             return errors;
         };
 
-        TypeScriptCompiler.prototype.getCompilerOptionsDiagnostics = function () {
-            var emitOptions = new TypeScript.EmitOptions(this, null);
+        TypeScriptCompiler.prototype.getCompilerOptionsDiagnostics = function (resolvePath) {
+            var emitOptions = new TypeScript.EmitOptions(this, resolvePath);
             var emitDiagnostic = emitOptions.diagnostic();
             if (emitDiagnostic) {
                 return [emitDiagnostic];
@@ -61323,9 +61323,9 @@ var TypeScript;
                 return this.compiler.getSemanticDiagnostics(fileName);
             };
 
-            LanguageServiceCompiler.prototype.getCompilerOptionsDiagnostics = function () {
+            LanguageServiceCompiler.prototype.getCompilerOptionsDiagnostics = function (resolvePath) {
                 this.synchronizeHostData();
-                return this.compiler.getCompilerOptionsDiagnostics();
+                return this.compiler.getCompilerOptionsDiagnostics(resolvePath);
             };
 
             LanguageServiceCompiler.prototype.getSymbolInformationFromAST = function (ast, document) {
@@ -62753,7 +62753,10 @@ var TypeScript;
 
             LanguageService.prototype.getCompilerOptionsDiagnostics = function () {
                 var _this = this;
-                var compilerOptionsDiagnostics = this.compiler.getCompilerOptionsDiagnostics();
+                var resolvePath = function (fileName) {
+                    return _this.host.resolveRelativePath(fileName, null);
+                };
+                var compilerOptionsDiagnostics = this.compiler.getCompilerOptionsDiagnostics(resolvePath);
                 return compilerOptionsDiagnostics.map(function (d) {
                     return _this._getHostSpecificDiagnosticWithFileName(d);
                 });
