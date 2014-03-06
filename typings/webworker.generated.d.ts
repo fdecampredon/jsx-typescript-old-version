@@ -1,7 +1,4 @@
 
-/////////////////////////////
-/// WorkerGlobalScope APIs 
-/////////////////////////////
 
 interface Console {
     info(message?: any, ...optionalParams: any[]): void;

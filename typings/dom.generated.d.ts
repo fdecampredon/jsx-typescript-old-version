@@ -1,7 +1,4 @@
 
-/////////////////////////////
-/// IE DOM APIs 
-/////////////////////////////
 
 interface PositionOptions {
     enableHighAccuracy?: boolean;
@@ -4880,6 +4877,7 @@ interface Screen extends EventTarget {
     pixelDepth: number;
     msOrientation: string;
     onmsorientationchange: (ev: any) => any;
+    msLockOrientation(orientation: string): boolean;
     msLockOrientation(orientations: string[]): boolean;
     msUnlockOrientation(): void;
     addEventListener(type: "msorientationchange", listener: (ev: any) => any, useCapture?: boolean): void;
@@ -11022,12 +11020,16 @@ interface WebGLRenderingContext {
     canvas: HTMLCanvasElement;
     getUniformLocation(program: WebGLProgram, name: string): WebGLUniformLocation;
     bindTexture(target: number, texture: WebGLTexture): void;
+    bufferData(target: number, data: ArrayBufferView, usage: number): void;
+    bufferData(target: number, data: ArrayBuffer, usage: number): void;
     bufferData(target: number, size: number, usage: number): void;
     depthMask(flag: boolean): void;
     getUniform(program: WebGLProgram, location: WebGLUniformLocation): any;
+    vertexAttrib3fv(indx: number, values: number[]): void;
     vertexAttrib3fv(indx: number, values: Float32Array): void;
     linkProgram(program: WebGLProgram): void;
     getSupportedExtensions(): string[];
+    bufferSubData(target: number, offset: number, data: ArrayBuffer): void;
     bufferSubData(target: number, offset: number, data: ArrayBufferView): void;
     vertexAttribPointer(indx: number, size: number, type: number, normalized: boolean, stride: number, offset: number): void;
     polygonOffset(factor: number, units: number): void;
@@ -11039,11 +11041,13 @@ interface WebGLRenderingContext {
     depthRange(zNear: number, zFar: number): void;
     cullFace(mode: number): void;
     createFramebuffer(): WebGLFramebuffer;
+    uniformMatrix4fv(location: WebGLUniformLocation, transpose: boolean, value: number[]): void;
     uniformMatrix4fv(location: WebGLUniformLocation, transpose: boolean, value: Float32Array): void;
     framebufferTexture2D(target: number, attachment: number, textarget: number, texture: WebGLTexture, level: number): void;
     deleteFramebuffer(framebuffer: WebGLFramebuffer): void;
     colorMask(red: boolean, green: boolean, blue: boolean, alpha: boolean): void;
     compressedTexImage2D(target: number, level: number, internalformat: number, width: number, height: number, border: number, data: ArrayBufferView): void;
+    uniformMatrix2fv(location: WebGLUniformLocation, transpose: boolean, value: number[]): void;
     uniformMatrix2fv(location: WebGLUniformLocation, transpose: boolean, value: Float32Array): void;
     getExtension(name: string): any;
     createProgram(): WebGLProgram;
@@ -11051,14 +11055,23 @@ interface WebGLRenderingContext {
     getAttachedShaders(program: WebGLProgram): WebGLShader[];
     enable(cap: number): void;
     blendEquation(mode: number): void;
+    texImage2D(target: number, level: number, internalformat: number, width: number, height: number, border: number, format: number, type: number, pixels: ArrayBufferView): void;
+    texImage2D(target: number, level: number, internalformat: number, format: number, type: number, image: HTMLImageElement): void;
+    texImage2D(target: number, level: number, internalformat: number, format: number, type: number, canvas: HTMLCanvasElement): void;
+    texImage2D(target: number, level: number, internalformat: number, format: number, type: number, video: HTMLVideoElement): void;
     texImage2D(target: number, level: number, internalformat: number, format: number, type: number, pixels: ImageData): void;
     createBuffer(): WebGLBuffer;
     deleteTexture(texture: WebGLTexture): void;
     useProgram(program: WebGLProgram): void;
+    vertexAttrib2fv(indx: number, values: number[]): void;
     vertexAttrib2fv(indx: number, values: Float32Array): void;
     checkFramebufferStatus(target: number): number;
     frontFace(mode: number): void;
     getBufferParameter(target: number, pname: number): any;
+    texSubImage2D(target: number, level: number, xoffset: number, yoffset: number, width: number, height: number, format: number, type: number, pixels: ArrayBufferView): void;
+    texSubImage2D(target: number, level: number, xoffset: number, yoffset: number, format: number, type: number, image: HTMLImageElement): void;
+    texSubImage2D(target: number, level: number, xoffset: number, yoffset: number, format: number, type: number, canvas: HTMLCanvasElement): void;
+    texSubImage2D(target: number, level: number, xoffset: number, yoffset: number, format: number, type: number, video: HTMLVideoElement): void;
     texSubImage2D(target: number, level: number, xoffset: number, yoffset: number, format: number, type: number, pixels: ImageData): void;
     copyTexImage2D(target: number, level: number, internalformat: number, x: number, y: number, width: number, height: number, border: number): void;
     getVertexAttribOffset(index: number, pname: number): number;
@@ -11066,6 +11079,7 @@ interface WebGLRenderingContext {
     blendFunc(sfactor: number, dfactor: number): void;
     drawElements(mode: number, count: number, type: number, offset: number): void;
     isFramebuffer(framebuffer: WebGLFramebuffer): boolean;
+    uniform3iv(location: WebGLUniformLocation, v: number[]): void;
     uniform3iv(location: WebGLUniformLocation, v: Int32Array): void;
     lineWidth(width: number): void;
     getShaderInfoLog(shader: WebGLShader): string;
@@ -11077,8 +11091,10 @@ interface WebGLRenderingContext {
     bindFramebuffer(target: number, framebuffer: WebGLFramebuffer): void;
     compressedTexSubImage2D(target: number, level: number, xoffset: number, yoffset: number, width: number, height: number, format: number, data: ArrayBufferView): void;
     isContextLost(): boolean;
+    uniform1iv(location: WebGLUniformLocation, v: number[]): void;
     uniform1iv(location: WebGLUniformLocation, v: Int32Array): void;
     getRenderbufferParameter(target: number, pname: number): any;
+    uniform2fv(location: WebGLUniformLocation, v: number[]): void;
     uniform2fv(location: WebGLUniformLocation, v: Float32Array): void;
     isTexture(texture: WebGLTexture): boolean;
     getError(): number;
@@ -11099,10 +11115,14 @@ interface WebGLRenderingContext {
     getShaderSource(shader: WebGLShader): string;
     generateMipmap(target: number): void;
     bindAttribLocation(program: WebGLProgram, index: number, name: string): void;
+    uniform1fv(location: WebGLUniformLocation, v: number[]): void;
     uniform1fv(location: WebGLUniformLocation, v: Float32Array): void;
+    uniform2iv(location: WebGLUniformLocation, v: number[]): void;
     uniform2iv(location: WebGLUniformLocation, v: Int32Array): void;
     stencilOp(fail: number, zfail: number, zpass: number): void;
+    uniform4fv(location: WebGLUniformLocation, v: number[]): void;
     uniform4fv(location: WebGLUniformLocation, v: Float32Array): void;
+    vertexAttrib1fv(indx: number, values: number[]): void;
     vertexAttrib1fv(indx: number, values: Float32Array): void;
     flush(): void;
     uniform4f(location: WebGLUniformLocation, x: number, y: number, z: number, w: number): void;
@@ -11114,6 +11134,7 @@ interface WebGLRenderingContext {
     stencilFunc(func: number, ref: number, mask: number): void;
     pixelStorei(pname: number, param: number): void;
     disable(cap: number): void;
+    vertexAttrib4fv(indx: number, values: number[]): void;
     vertexAttrib4fv(indx: number, values: Float32Array): void;
     createRenderbuffer(): WebGLRenderbuffer;
     isBuffer(buffer: WebGLBuffer): boolean;
@@ -11133,9 +11154,11 @@ interface WebGLRenderingContext {
     viewport(x: number, y: number, width: number, height: number): void;
     detachShader(program: WebGLProgram, shader: WebGLShader): void;
     uniform1f(location: WebGLUniformLocation, x: number): void;
+    uniformMatrix3fv(location: WebGLUniformLocation, transpose: boolean, value: number[]): void;
     uniformMatrix3fv(location: WebGLUniformLocation, transpose: boolean, value: Float32Array): void;
     deleteBuffer(buffer: WebGLBuffer): void;
     copyTexSubImage2D(target: number, level: number, xoffset: number, yoffset: number, x: number, y: number, width: number, height: number): void;
+    uniform3fv(location: WebGLUniformLocation, v: number[]): void;
     uniform3fv(location: WebGLUniformLocation, v: Float32Array): void;
     stencilMaskSeparate(face: number, mask: number): void;
     attachShader(program: WebGLProgram, shader: WebGLShader): void;
@@ -11155,6 +11178,7 @@ interface WebGLRenderingContext {
     isProgram(program: WebGLProgram): boolean;
     createShader(type: number): WebGLShader;
     bindRenderbuffer(target: number, renderbuffer: WebGLRenderbuffer): void;
+    uniform4iv(location: WebGLUniformLocation, v: number[]): void;
     uniform4iv(location: WebGLUniformLocation, v: Int32Array): void;
     DEPTH_FUNC: number;
     DEPTH_COMPONENT16: number;
