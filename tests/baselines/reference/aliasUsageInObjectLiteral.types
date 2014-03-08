@@ -1,0 +1,36 @@
+=== tests/cases/compiler/aliasUsageInObjectLiteral_main.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 7 IdentifierName "moduleA" = moduleA
+Line 2 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 3 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
+Line 3 col 31 IdentifierName "Backbone" = typeof Backbone
+Line 3 col 40 IdentifierName "Model" = typeof Backbone.Model
+Line 5 col 4 IdentifierName "a" = { x: typeof moduleA; }
+Line 5 col 9 IdentifierName "x" = typeof moduleA
+Line 5 col 19 IdentifierName "moduleA" = typeof moduleA
+Line 5 col 31 ObjectLiteralExpression "{ x: moduleA }" = { x: typeof moduleA; }
+Line 5 col 33 IdentifierName "x" = typeof moduleA
+Line 5 col 36 IdentifierName "moduleA" = typeof moduleA
+Line 6 col 4 IdentifierName "b" = { x: IHasVisualizationModel; }
+Line 6 col 9 IdentifierName "x" = IHasVisualizationModel
+Line 6 col 12 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 6 col 39 ObjectLiteralExpression "{ x: moduleA }" = { x: typeof moduleA; }
+Line 6 col 41 IdentifierName "x" = typeof moduleA
+Line 6 col 44 IdentifierName "moduleA" = typeof moduleA
+Line 7 col 4 IdentifierName "c" = { y: { z: IHasVisualizationModel; }; }
+Line 7 col 9 IdentifierName "y" = { z: IHasVisualizationModel; }
+Line 7 col 14 IdentifierName "z" = IHasVisualizationModel
+Line 7 col 17 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 7 col 46 ObjectLiteralExpression "{ y: { z: moduleA } }" = { y: { z: typeof moduleA; }; }
+Line 7 col 48 IdentifierName "y" = { z: typeof moduleA; }
+Line 7 col 51 ObjectLiteralExpression "{ z: moduleA }" = { z: typeof moduleA; }
+Line 7 col 53 IdentifierName "z" = typeof moduleA
+Line 7 col 56 IdentifierName "moduleA" = typeof moduleA
+=== tests/cases/compiler/aliasUsageInObjectLiteral_backbone.ts ===
+Line 0 col 13 IdentifierName "Model" = Model
+Line 1 col 11 IdentifierName "someData" = string
+=== tests/cases/compiler/aliasUsageInObjectLiteral_moduleA.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model

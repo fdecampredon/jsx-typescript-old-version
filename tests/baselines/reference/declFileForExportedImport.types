@@ -2,13 +2,13 @@
 Line 1 col 14 IdentifierName "a" = a
 Line 2 col 4 IdentifierName "y" = number
 Line 2 col 8 MemberAccessExpression "a.x" = number
-Line 2 col 8 IdentifierName "a" = a
+Line 2 col 8 IdentifierName "a" = typeof a
 Line 2 col 10 IdentifierName "x" = number
 Line 4 col 14 IdentifierName "b" = b
-Line 4 col 18 IdentifierName "a" = tests/cases/compiler/declFileForExportedImport_0.ts
+Line 4 col 18 IdentifierName "a" = a
 Line 5 col 4 IdentifierName "z" = number
 Line 5 col 8 MemberAccessExpression "b.x" = number
-Line 5 col 8 IdentifierName "b" = b
+Line 5 col 8 IdentifierName "b" = typeof a
 Line 5 col 10 IdentifierName "x" = number
 === tests/cases/compiler/declFileForExportedImport_0.ts ===
 Line 0 col 11 IdentifierName "x" = number

@@ -1,6 +1,6 @@
 === tests/cases/compiler/global.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 1 col 20 IdentifierName "f" = typeof M.f
+Line 1 col 20 IdentifierName "f" = typeof f
 Line 1 col 22 IdentifierName "y" = number
 Line 2 col 15 AddExpression "x+y" = number
 Line 2 col 15 IdentifierName "x" = number

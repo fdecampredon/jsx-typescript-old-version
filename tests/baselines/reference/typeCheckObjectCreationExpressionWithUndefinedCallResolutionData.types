@@ -1,9 +1,9 @@
 === tests/cases/compiler/file2.ts ===
 Line 0 col 7 IdentifierName "f" = f
 Line 1 col 0 InvocationExpression "f.foo()" = any
-Line 1 col 0 MemberAccessExpression "f.foo" = typeof foo
-Line 1 col 0 IdentifierName "f" = f
-Line 1 col 2 IdentifierName "foo" = typeof foo
+Line 1 col 0 MemberAccessExpression "f.foo" = typeof f.foo
+Line 1 col 0 IdentifierName "f" = typeof f
+Line 1 col 2 IdentifierName "foo" = typeof f.foo
 === tests/cases/compiler/file1.ts ===
 Line 0 col 16 IdentifierName "foo" = typeof foo
 Line 1 col 4 IdentifierName "classes" = any

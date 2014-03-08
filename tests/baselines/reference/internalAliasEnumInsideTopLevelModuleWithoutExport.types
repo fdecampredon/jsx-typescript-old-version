@@ -1,10 +1,10 @@
 === tests/cases/compiler/internalAliasEnumInsideTopLevelModuleWithoutExport.ts ===
 Line 0 col 14 IdentifierName "a" = a
-Line 1 col 16 IdentifierName "weekend" = a.weekend
-Line 2 col 0 IdentifierName "Friday" = a.weekend
-Line 3 col 0 IdentifierName "Saturday" = a.weekend
-Line 4 col 0 IdentifierName "Sunday" = a.weekend
-Line 8 col 7 IdentifierName "b" = typeof a.weekend
+Line 1 col 16 IdentifierName "weekend" = weekend
+Line 2 col 0 IdentifierName "Friday" = weekend
+Line 3 col 0 IdentifierName "Saturday" = weekend
+Line 4 col 0 IdentifierName "Sunday" = weekend
+Line 8 col 7 IdentifierName "b" = b
 Line 8 col 11 IdentifierName "a" = a
 Line 8 col 13 IdentifierName "weekend" = a.weekend
 Line 9 col 11 IdentifierName "bVal" = a.weekend

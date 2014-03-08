@@ -1,16 +1,16 @@
 === tests/cases/compiler/internalAliasUninitializedModuleInsideLocalModuleWithExport.ts ===
 Line 0 col 14 IdentifierName "a" = a
-Line 1 col 18 IdentifierName "b" = a.b
-Line 2 col 25 IdentifierName "I" = a.b.I
+Line 1 col 18 IdentifierName "b" = b
+Line 2 col 25 IdentifierName "I" = I
 Line 3 col 0 IdentifierName "foo" = () => any
 Line 8 col 14 IdentifierName "c" = c
-Line 9 col 18 IdentifierName "b" = c.b
+Line 9 col 18 IdentifierName "b" = b
 Line 9 col 22 IdentifierName "a" = a
 Line 9 col 24 IdentifierName "b" = any
-Line 10 col 15 IdentifierName "x" = a.b.I
-Line 10 col 18 IdentifierName "b" = c.b
-Line 10 col 20 IdentifierName "I" = a.b.I
+Line 10 col 15 IdentifierName "x" = b.I
+Line 10 col 18 IdentifierName "b" = b
+Line 10 col 20 IdentifierName "I" = b.I
 Line 11 col 0 InvocationExpression "x.foo()" = any
 Line 11 col 0 MemberAccessExpression "x.foo" = () => any
-Line 11 col 0 IdentifierName "x" = a.b.I
+Line 11 col 0 IdentifierName "x" = b.I
 Line 11 col 6 IdentifierName "foo" = () => any

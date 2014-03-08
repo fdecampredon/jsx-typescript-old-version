@@ -1,0 +1,35 @@
+=== tests/cases/compiler/aliasUsageInGenericFunction_main.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 7 IdentifierName "moduleA" = moduleA
+Line 2 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 3 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
+Line 3 col 31 IdentifierName "Backbone" = typeof Backbone
+Line 3 col 40 IdentifierName "Model" = typeof Backbone.Model
+Line 5 col 9 IdentifierName "foo" = typeof foo
+Line 5 col 13 IdentifierName "T" = T
+Line 5 col 25 IdentifierName "a" = IHasVisualizationModel
+Line 5 col 28 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 5 col 54 IdentifierName "x" = T
+Line 5 col 57 IdentifierName "T" = T
+Line 6 col 11 IdentifierName "x" = T
+Line 8 col 4 IdentifierName "r" = { a: typeof moduleA; }
+Line 8 col 8 InvocationExpression "foo({ a: moduleA })" = { a: typeof moduleA; }
+Line 8 col 8 IdentifierName "foo" = typeof foo
+Line 8 col 12 ObjectLiteralExpression "{ a: moduleA }" = { a: typeof moduleA; }
+Line 8 col 14 IdentifierName "a" = typeof moduleA
+Line 8 col 17 IdentifierName "moduleA" = typeof moduleA
+Line 9 col 4 IdentifierName "r2" = { a: IHasVisualizationModel; }
+Line 9 col 9 InvocationExpression "foo({ a: <IHasVisualizationModel>null })" = { a: IHasVisualizationModel; }
+Line 9 col 9 IdentifierName "foo" = typeof foo
+Line 9 col 13 ObjectLiteralExpression "{ a: <IHasVisualizationModel>null }" = { a: IHasVisualizationModel; }
+Line 9 col 15 IdentifierName "a" = IHasVisualizationModel
+Line 9 col 18 CastExpression "<IHasVisualizationModel>null" = IHasVisualizationModel
+Line 9 col 19 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+=== tests/cases/compiler/aliasUsageInGenericFunction_backbone.ts ===
+Line 0 col 13 IdentifierName "Model" = Model
+Line 1 col 11 IdentifierName "someData" = string
+=== tests/cases/compiler/aliasUsageInGenericFunction_moduleA.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model

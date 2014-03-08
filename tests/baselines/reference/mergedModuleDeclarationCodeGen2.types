@@ -2,12 +2,12 @@
 Line 0 col 7 IdentifierName "my" = my
 Line 0 col 10 IdentifierName "data" = my.data
 Line 0 col 15 IdentifierName "foo" = my.data.foo
-Line 1 col 20 IdentifierName "buz" = typeof my.data.foo.buz
+Line 1 col 20 IdentifierName "buz" = typeof buz
 Line 3 col 7 IdentifierName "my" = my
 Line 3 col 10 IdentifierName "data" = my.data
-Line 4 col 13 IdentifierName "data" = typeof my.data.data
+Line 4 col 13 IdentifierName "data" = typeof data
 Line 4 col 18 IdentifierName "my" = any
 Line 5 col 0 InvocationExpression "foo.buz()" = void
-Line 5 col 0 MemberAccessExpression "foo.buz" = typeof my.data.foo.buz
-Line 5 col 0 IdentifierName "foo" = typeof my.data.foo
-Line 5 col 12 IdentifierName "buz" = typeof my.data.foo.buz
+Line 5 col 0 MemberAccessExpression "foo.buz" = typeof foo.buz
+Line 5 col 0 IdentifierName "foo" = typeof foo
+Line 5 col 12 IdentifierName "buz" = typeof foo.buz

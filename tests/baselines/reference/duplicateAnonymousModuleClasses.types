@@ -1,14 +1,14 @@
 === tests/cases/compiler/duplicateAnonymousModuleClasses.ts ===
 Line 0 col 7 IdentifierName "F" = F
-Line 2 col 10 IdentifierName "Helper" = F.Helper
+Line 2 col 10 IdentifierName "Helper" = Helper
 Line 9 col 7 IdentifierName "F" = F
-Line 12 col 10 IdentifierName "Helper" = F.Helper
+Line 12 col 10 IdentifierName "Helper" = Helper
 Line 18 col 7 IdentifierName "Foo" = Foo
-Line 20 col 10 IdentifierName "Helper" = Foo.Helper
+Line 20 col 10 IdentifierName "Helper" = Helper
 Line 27 col 7 IdentifierName "Foo" = Foo
-Line 30 col 10 IdentifierName "Helper" = Foo.Helper
+Line 30 col 10 IdentifierName "Helper" = Helper
 Line 36 col 7 IdentifierName "Gar" = Gar
-Line 37 col 11 IdentifierName "Foo" = Gar.Foo
-Line 39 col 14 IdentifierName "Helper" = Gar.Foo.Helper
-Line 46 col 11 IdentifierName "Foo" = Gar.Foo
-Line 49 col 14 IdentifierName "Helper" = Gar.Foo.Helper
+Line 37 col 11 IdentifierName "Foo" = Foo
+Line 39 col 14 IdentifierName "Helper" = Helper
+Line 46 col 11 IdentifierName "Foo" = Foo
+Line 49 col 14 IdentifierName "Helper" = Helper

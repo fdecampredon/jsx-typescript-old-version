@@ -1,6 +1,6 @@
 === tests/cases/compiler/instantiatedModule.ts ===
 Line 2 col 7 IdentifierName "M" = M
-Line 3 col 21 IdentifierName "Point" = M.Point
+Line 3 col 21 IdentifierName "Point" = Point
 Line 3 col 29 IdentifierName "x" = number
 Line 3 col 40 IdentifierName "y" = number
 Line 4 col 15 IdentifierName "Point" = number
@@ -24,11 +24,11 @@ Line 16 col 4 IdentifierName "p1" = M.Point
 Line 16 col 8 IdentifierName "M" = M
 Line 16 col 10 IdentifierName "Point" = M.Point
 Line 20 col 7 IdentifierName "M2" = M2
-Line 21 col 17 IdentifierName "Point" = M2.Point
+Line 21 col 17 IdentifierName "Point" = Point
 Line 22 col 0 IdentifierName "x" = number
 Line 23 col 0 IdentifierName "y" = number
-Line 24 col 15 IdentifierName "Origin" = () => M2.Point
-Line 24 col 25 IdentifierName "Point" = M2.Point
+Line 24 col 15 IdentifierName "Origin" = () => Point
+Line 24 col 25 IdentifierName "Point" = Point
 Line 25 col 19 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
 Line 25 col 21 IdentifierName "x" = number
 Line 25 col 27 IdentifierName "y" = number
@@ -71,9 +71,9 @@ Line 42 col 13 MemberAccessExpression "M2.Point" = typeof M2.Point
 Line 42 col 13 IdentifierName "M2" = typeof M2
 Line 42 col 16 IdentifierName "Point" = typeof M2.Point
 Line 44 col 7 IdentifierName "M3" = M3
-Line 45 col 16 IdentifierName "Color" = M3.Color
-Line 45 col 24 IdentifierName "Blue" = M3.Color
-Line 45 col 30 IdentifierName "Red" = M3.Color
+Line 45 col 16 IdentifierName "Color" = Color
+Line 45 col 24 IdentifierName "Blue" = Color
+Line 45 col 30 IdentifierName "Red" = Color
 Line 48 col 4 IdentifierName "m3" = typeof M3
 Line 48 col 15 IdentifierName "M3" = typeof M3
 Line 49 col 4 IdentifierName "m3" = typeof M3

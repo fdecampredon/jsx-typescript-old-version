@@ -1,17 +1,17 @@
 === tests/cases/compiler/declareExternalModuleWithExportAssignedFundule.ts ===
-Line 2 col 13 IdentifierName "express" = typeof "express".express
-Line 4 col 13 IdentifierName "express" = typeof "express".express
-Line 4 col 24 IdentifierName "express" = "express".express
-Line 4 col 32 IdentifierName "ExpressServer" = "express".express.ExpressServer
-Line 6 col 11 IdentifierName "express" = "express".express
-Line 8 col 25 IdentifierName "ExpressServer" = "express".express.ExpressServer
-Line 9 col 0 IdentifierName "enable" = (name: string) => "express".express.ExpressServer
+Line 2 col 13 IdentifierName "express" = typeof express
+Line 4 col 13 IdentifierName "express" = typeof express
+Line 4 col 24 IdentifierName "express" = express
+Line 4 col 32 IdentifierName "ExpressServer" = express.ExpressServer
+Line 6 col 11 IdentifierName "express" = express
+Line 8 col 25 IdentifierName "ExpressServer" = ExpressServer
+Line 9 col 0 IdentifierName "enable" = (name: string) => ExpressServer
 Line 10 col 19 IdentifierName "name" = string
-Line 10 col 34 IdentifierName "ExpressServer" = "express".express.ExpressServer
+Line 10 col 34 IdentifierName "ExpressServer" = ExpressServer
 Line 11 col 0 IdentifierName "post" = (path: RegExp, handler: (req: Function) => void) => void
 Line 12 col 17 IdentifierName "path" = RegExp
 Line 12 col 23 IdentifierName "RegExp" = RegExp
 Line 12 col 31 IdentifierName "handler" = (req: Function) => void
 Line 12 col 41 IdentifierName "req" = Function
 Line 12 col 46 IdentifierName "Function" = Function
-Line 16 col 21 IdentifierName "ExpressServerRequest" = "express".express.ExpressServerRequest
+Line 16 col 21 IdentifierName "ExpressServerRequest" = ExpressServerRequest

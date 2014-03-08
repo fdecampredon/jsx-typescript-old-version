@@ -1,8 +1,8 @@
 === tests/cases/compiler/internalImportUnInstantiatedModuleNotReferencingInstanceNoConflict.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "X" = A.X
+Line 1 col 21 IdentifierName "X" = X
 Line 1 col 25 IdentifierName "s" = string
 Line 4 col 7 IdentifierName "B" = B
 Line 5 col 8 IdentifierName "A" = number
-Line 6 col 11 IdentifierName "Y" = B.Y
+Line 6 col 11 IdentifierName "Y" = Y
 Line 6 col 15 IdentifierName "A" = A

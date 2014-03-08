@@ -1,11 +1,11 @@
 === tests/cases/compiler/exportAssignmentClass_B.ts ===
-Line 0 col 7 IdentifierName "D" = typeof C
-Line 2 col 4 IdentifierName "d" = C
-Line 2 col 8 ObjectCreationExpression "new D()" = C
-Line 2 col 12 IdentifierName "D" = typeof C
+Line 0 col 7 IdentifierName "D" = D
+Line 2 col 4 IdentifierName "d" = D
+Line 2 col 8 ObjectCreationExpression "new D()" = D
+Line 2 col 12 IdentifierName "D" = typeof D
 Line 3 col 4 IdentifierName "x" = number
 Line 3 col 8 MemberAccessExpression "d.p" = number
-Line 3 col 8 IdentifierName "d" = C
+Line 3 col 8 IdentifierName "d" = D
 Line 3 col 10 IdentifierName "p" = number
 === tests/cases/compiler/exportAssignmentClass_A.ts ===
 Line 0 col 6 IdentifierName "C" = C

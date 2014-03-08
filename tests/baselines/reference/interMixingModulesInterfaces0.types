@@ -1,9 +1,9 @@
 === tests/cases/compiler/interMixingModulesInterfaces0.ts ===
 Line 2 col 7 IdentifierName "A" = A
-Line 4 col 18 IdentifierName "B" = A.B
-Line 5 col 24 IdentifierName "createB" = typeof A.B.createB
-Line 5 col 35 IdentifierName "B" = A.B
-Line 10 col 21 IdentifierName "B" = A.B
+Line 4 col 18 IdentifierName "B" = B
+Line 5 col 24 IdentifierName "createB" = typeof createB
+Line 5 col 35 IdentifierName "B" = B
+Line 10 col 21 IdentifierName "B" = B
 Line 11 col 0 IdentifierName "name" = string
 Line 12 col 0 IdentifierName "value" = number
 Line 16 col 4 IdentifierName "x" = A.B

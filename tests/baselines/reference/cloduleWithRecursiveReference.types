@@ -1,8 +1,8 @@
 === tests/cases/compiler/cloduleWithRecursiveReference.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 2 col 15 IdentifierName "C" = M.C
-Line 3 col 16 IdentifierName "C" = M.C
-Line 4 col 15 IdentifierName "C" = typeof M.C
-Line 4 col 19 MemberAccessExpression "M.C" = typeof M.C
+Line 2 col 15 IdentifierName "C" = C
+Line 3 col 16 IdentifierName "C" = C
+Line 4 col 15 IdentifierName "C" = typeof C
+Line 4 col 19 MemberAccessExpression "M.C" = typeof C
 Line 4 col 19 IdentifierName "M" = typeof M
-Line 4 col 21 IdentifierName "C" = typeof M.C
+Line 4 col 21 IdentifierName "C" = typeof C

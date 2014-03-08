@@ -1,24 +1,24 @@
 === tests/cases/compiler/arrayTypeInSignatureOfInterfaceAndClass.ts ===
 Line 0 col 15 IdentifierName "WinJS" = WinJS
-Line 1 col 10 IdentifierName "Promise" = WinJS.Promise<T>
+Line 1 col 10 IdentifierName "Promise" = Promise<T>
 Line 1 col 18 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "then" = <U>(success?: (value: T) => WinJS.Promise<U>, error?: (error: any) => WinJS.Promise<U>, progress?: (progress: any) => void) => WinJS.Promise<U>
+Line 2 col 0 IdentifierName "then" = <U>(success?: (value: T) => Promise<U>, error?: (error: any) => Promise<U>, progress?: (progress: any) => void) => Promise<U>
 Line 2 col 13 IdentifierName "U" = U
-Line 2 col 16 IdentifierName "success" = (value: T) => WinJS.Promise<U>
+Line 2 col 16 IdentifierName "success" = (value: T) => Promise<U>
 Line 2 col 27 IdentifierName "value" = T
 Line 2 col 34 IdentifierName "T" = T
-Line 2 col 40 IdentifierName "Promise" = WinJS.Promise<T>
+Line 2 col 40 IdentifierName "Promise" = Promise<T>
 Line 2 col 48 IdentifierName "U" = U
-Line 2 col 52 IdentifierName "error" = (error: any) => WinJS.Promise<U>
+Line 2 col 52 IdentifierName "error" = (error: any) => Promise<U>
 Line 2 col 61 IdentifierName "error" = any
-Line 2 col 76 IdentifierName "Promise" = WinJS.Promise<T>
+Line 2 col 76 IdentifierName "Promise" = Promise<T>
 Line 2 col 84 IdentifierName "U" = U
 Line 2 col 88 IdentifierName "progress" = (progress: any) => void
 Line 2 col 100 IdentifierName "progress" = any
-Line 2 col 125 IdentifierName "Promise" = WinJS.Promise<T>
+Line 2 col 125 IdentifierName "Promise" = Promise<T>
 Line 2 col 133 IdentifierName "U" = U
 Line 5 col 15 IdentifierName "Data" = Data
-Line 6 col 21 IdentifierName "IListItem" = Data.IListItem<T>
+Line 6 col 21 IdentifierName "IListItem" = IListItem<T>
 Line 6 col 31 IdentifierName "T" = T
 Line 7 col 0 IdentifierName "itemIndex" = number
 Line 8 col 0 IdentifierName "key" = any
@@ -29,24 +29,24 @@ Line 11 col 0 IdentifierName "isHeader" = boolean
 Line 12 col 0 IdentifierName "cached" = boolean
 Line 13 col 0 IdentifierName "isNonSourceData" = boolean
 Line 14 col 0 IdentifierName "preventAugmentation" = boolean
-Line 16 col 21 IdentifierName "IVirtualList" = Data.IVirtualList<T>
+Line 16 col 21 IdentifierName "IVirtualList" = IVirtualList<T>
 Line 16 col 34 IdentifierName "T" = T
 Line 17 col 0 IdentifierName "//removeIndices: WinJS.Promise<IListItem<T>[]>;
-        removeIndices" = (indices: number[], options?: any) => WinJS.Promise<Data.IListItem<T>[]>
+        removeIndices" = (indices: number[], options?: any) => WinJS.Promise<IListItem<T>[]>
 Line 18 col 22 IdentifierName "indices" = number[]
 Line 18 col 41 IdentifierName "options" = any
 Line 18 col 57 IdentifierName "WinJS" = WinJS
 Line 18 col 63 IdentifierName "Promise" = WinJS.Promise<T>
-Line 18 col 71 IdentifierName "IListItem" = Data.IListItem<T>
+Line 18 col 71 IdentifierName "IListItem" = IListItem<T>
 Line 18 col 81 IdentifierName "T" = T
-Line 20 col 17 IdentifierName "VirtualList" = Data.VirtualList<T>
+Line 20 col 17 IdentifierName "VirtualList" = VirtualList<T>
 Line 20 col 29 IdentifierName "T" = T
-Line 20 col 43 IdentifierName "IVirtualList" = Data.IVirtualList<T>
+Line 20 col 43 IdentifierName "IVirtualList" = IVirtualList<T>
 Line 20 col 56 IdentifierName "T" = T
-Line 22 col 15 IdentifierName "removeIndices" = (indices: number[], options?: any) => WinJS.Promise<Data.IListItem<T>[]>
+Line 22 col 15 IdentifierName "removeIndices" = (indices: number[], options?: any) => WinJS.Promise<IListItem<T>[]>
 Line 22 col 29 IdentifierName "indices" = number[]
 Line 22 col 48 IdentifierName "options" = any
 Line 22 col 64 IdentifierName "WinJS" = WinJS
 Line 22 col 70 IdentifierName "Promise" = WinJS.Promise<T>
-Line 22 col 78 IdentifierName "IListItem" = Data.IListItem<T>
+Line 22 col 78 IdentifierName "IListItem" = IListItem<T>
 Line 22 col 88 IdentifierName "T" = T

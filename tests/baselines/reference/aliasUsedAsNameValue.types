@@ -9,11 +9,11 @@ Line 5 col 15 FunctionExpression "function () {
 Line 6 col 0 InvocationExpression "//var x = mod.id; // TODO needed hack that mod is loaded
     b.b(mod)" = any
 Line 6 col 0 MemberAccessExpression "//var x = mod.id; // TODO needed hack that mod is loaded
-    b.b" = typeof b
+    b.b" = typeof b.b
 Line 6 col 0 IdentifierName "//var x = mod.id; // TODO needed hack that mod is loaded
-    b" = b
-Line 7 col 6 IdentifierName "b" = typeof b
-Line 7 col 8 IdentifierName "mod" = mod
+    b" = typeof b
+Line 7 col 6 IdentifierName "b" = typeof b.b
+Line 7 col 8 IdentifierName "mod" = typeof mod
 === tests/cases/compiler/aliasUsedAsNameValue_0.ts ===
 Line 0 col 11 IdentifierName "id" = number
 === tests/cases/compiler/aliasUsedAsNameValue_1.ts ===

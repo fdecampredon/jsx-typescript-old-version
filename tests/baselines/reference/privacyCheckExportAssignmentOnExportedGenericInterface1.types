@@ -1,6 +1,6 @@
 === tests/cases/compiler/privacyCheckExportAssignmentOnExportedGenericInterface1.ts ===
 Line 0 col 7 IdentifierName "Foo" = Foo
-Line 1 col 21 IdentifierName "A" = Foo.A<T>
+Line 1 col 21 IdentifierName "A" = A<T>
 Line 1 col 23 IdentifierName "T" = T
 Line 4 col 10 IdentifierName "Foo" = Foo<T>
 Line 4 col 14 IdentifierName "T" = T

@@ -1,131 +1,131 @@
 === tests/cases/compiler/typeResolution.ts ===
 Line 0 col 14 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 1 col 18 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 2 col 22 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 3 col 25 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 1 col 18 IdentifierName "SubModule1" = SubModule1
+Line 2 col 22 IdentifierName "SubSubModule1" = SubSubModule1
+Line 3 col 25 IdentifierName "ClassA" = ClassA
 Line 4 col 23 IdentifierName "AisIn1_1_1" = () => void
-Line 6 col 24 IdentifierName "a1" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 6 col 28 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 6 col 24 IdentifierName "a1" = ClassA
+Line 6 col 28 IdentifierName "ClassA" = ClassA
 Line 6 col 36 InvocationExpression "a1.AisIn1_1_1()" = void
 Line 6 col 36 MemberAccessExpression "a1.AisIn1_1_1" = () => void
-Line 6 col 36 IdentifierName "a1" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 6 col 36 IdentifierName "a1" = ClassA
 Line 6 col 39 IdentifierName "AisIn1_1_1" = () => void
-Line 7 col 24 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 7 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 7 col 42 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 7 col 24 IdentifierName "a2" = ClassA
+Line 7 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 7 col 42 IdentifierName "ClassA" = ClassA
 Line 7 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
 Line 7 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 7 col 50 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 7 col 50 IdentifierName "a2" = ClassA
 Line 7 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 8 col 24 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 8 col 28 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 8 col 39 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 8 col 53 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 8 col 24 IdentifierName "a3" = ClassA
+Line 8 col 28 IdentifierName "SubModule1" = SubModule1
+Line 8 col 39 IdentifierName "SubSubModule1" = SubSubModule1
+Line 8 col 53 IdentifierName "ClassA" = ClassA
 Line 8 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
 Line 8 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 8 col 61 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 8 col 61 IdentifierName "a3" = ClassA
 Line 8 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 9 col 24 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 9 col 24 IdentifierName "a4" = ClassA
 Line 9 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 9 col 44 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 9 col 55 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 9 col 69 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 9 col 44 IdentifierName "SubModule1" = SubModule1
+Line 9 col 55 IdentifierName "SubSubModule1" = SubSubModule1
+Line 9 col 69 IdentifierName "ClassA" = ClassA
 Line 9 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
 Line 9 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 9 col 77 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 9 col 77 IdentifierName "a4" = ClassA
 Line 9 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 12 col 24 IdentifierName "b1" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
-Line 12 col 28 IdentifierName "ClassB" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 12 col 24 IdentifierName "b1" = ClassB
+Line 12 col 28 IdentifierName "ClassB" = ClassB
 Line 12 col 36 InvocationExpression "b1.BisIn1_1_1()" = void
 Line 12 col 36 MemberAccessExpression "b1.BisIn1_1_1" = () => void
-Line 12 col 36 IdentifierName "b1" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 12 col 36 IdentifierName "b1" = ClassB
 Line 12 col 39 IdentifierName "BisIn1_1_1" = () => void
-Line 13 col 24 IdentifierName "b2" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 13 col 24 IdentifierName "b2" = ClassB
 Line 13 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 13 col 44 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 13 col 55 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 13 col 69 IdentifierName "ClassB" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 13 col 44 IdentifierName "SubModule1" = SubModule1
+Line 13 col 55 IdentifierName "SubSubModule1" = SubSubModule1
+Line 13 col 69 IdentifierName "ClassB" = ClassB
 Line 13 col 77 InvocationExpression "b2.BisIn1_1_1()" = void
 Line 13 col 77 MemberAccessExpression "b2.BisIn1_1_1" = () => void
-Line 13 col 77 IdentifierName "b2" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 13 col 77 IdentifierName "b2" = ClassB
 Line 13 col 80 IdentifierName "BisIn1_1_1" = () => void
-Line 16 col 24 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 16 col 24 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 16 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 16 col 44 IdentifierName "SubModule2" = TopLevelModule1.SubModule2
-Line 16 col 55 IdentifierName "SubSubModule2" = TopLevelModule1.SubModule2.SubSubModule2
-Line 16 col 69 IdentifierName "ClassA" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 16 col 44 IdentifierName "SubModule2" = SubModule2
+Line 16 col 55 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
+Line 16 col 69 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
 Line 16 col 77 InvocationExpression "c1.AisIn1_2_2()" = void
 Line 16 col 77 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 16 col 77 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 16 col 77 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 16 col 80 IdentifierName "AisIn1_2_2" = () => void
-Line 19 col 24 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 19 col 28 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 19 col 24 IdentifierName "d1" = InterfaceX
+Line 19 col 28 IdentifierName "InterfaceX" = InterfaceX
 Line 19 col 40 InvocationExpression "d1.XisIn1_1_1()" = any
 Line 19 col 40 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 19 col 40 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 19 col 40 IdentifierName "d1" = InterfaceX
 Line 19 col 43 IdentifierName "XisIn1_1_1" = () => any
-Line 20 col 24 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 20 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 20 col 42 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 20 col 24 IdentifierName "d2" = InterfaceX
+Line 20 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 20 col 42 IdentifierName "InterfaceX" = InterfaceX
 Line 20 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
 Line 20 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 20 col 54 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 20 col 54 IdentifierName "d2" = InterfaceX
 Line 20 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 23 col 25 IdentifierName "ClassB" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 23 col 25 IdentifierName "ClassB" = ClassB
 Line 24 col 23 IdentifierName "BisIn1_1_1" = () => void
-Line 28 col 24 IdentifierName "a1" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 28 col 28 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 28 col 24 IdentifierName "a1" = ClassA
+Line 28 col 28 IdentifierName "ClassA" = ClassA
 Line 28 col 36 InvocationExpression "a1.AisIn1_1_1()" = void
 Line 28 col 36 MemberAccessExpression "a1.AisIn1_1_1" = () => void
-Line 28 col 36 IdentifierName "a1" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 28 col 36 IdentifierName "a1" = ClassA
 Line 28 col 39 IdentifierName "AisIn1_1_1" = () => void
-Line 29 col 24 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 29 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 29 col 42 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 29 col 24 IdentifierName "a2" = ClassA
+Line 29 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 29 col 42 IdentifierName "ClassA" = ClassA
 Line 29 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
 Line 29 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 29 col 50 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 29 col 50 IdentifierName "a2" = ClassA
 Line 29 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 30 col 24 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 30 col 28 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 30 col 39 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 30 col 53 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 30 col 24 IdentifierName "a3" = ClassA
+Line 30 col 28 IdentifierName "SubModule1" = SubModule1
+Line 30 col 39 IdentifierName "SubSubModule1" = SubSubModule1
+Line 30 col 53 IdentifierName "ClassA" = ClassA
 Line 30 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
 Line 30 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 30 col 61 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 30 col 61 IdentifierName "a3" = ClassA
 Line 30 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 31 col 24 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 31 col 24 IdentifierName "a4" = ClassA
 Line 31 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 31 col 44 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 31 col 55 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 31 col 69 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 31 col 44 IdentifierName "SubModule1" = SubModule1
+Line 31 col 55 IdentifierName "SubSubModule1" = SubSubModule1
+Line 31 col 69 IdentifierName "ClassA" = ClassA
 Line 31 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
 Line 31 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 31 col 77 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 31 col 77 IdentifierName "a4" = ClassA
 Line 31 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 34 col 24 IdentifierName "b1" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
-Line 34 col 28 IdentifierName "ClassB" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 34 col 24 IdentifierName "b1" = ClassB
+Line 34 col 28 IdentifierName "ClassB" = ClassB
 Line 34 col 36 InvocationExpression "b1.BisIn1_1_1()" = void
 Line 34 col 36 MemberAccessExpression "b1.BisIn1_1_1" = () => void
-Line 34 col 36 IdentifierName "b1" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 34 col 36 IdentifierName "b1" = ClassB
 Line 34 col 39 IdentifierName "BisIn1_1_1" = () => void
-Line 35 col 24 IdentifierName "b2" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 35 col 24 IdentifierName "b2" = ClassB
 Line 35 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 35 col 44 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 35 col 55 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 35 col 69 IdentifierName "ClassB" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 35 col 44 IdentifierName "SubModule1" = SubModule1
+Line 35 col 55 IdentifierName "SubSubModule1" = SubSubModule1
+Line 35 col 69 IdentifierName "ClassB" = ClassB
 Line 35 col 77 InvocationExpression "b2.BisIn1_1_1()" = void
 Line 35 col 77 MemberAccessExpression "b2.BisIn1_1_1" = () => void
-Line 35 col 77 IdentifierName "b2" = TopLevelModule1.SubModule1.SubSubModule1.ClassB
+Line 35 col 77 IdentifierName "b2" = ClassB
 Line 35 col 80 IdentifierName "BisIn1_1_1" = () => void
-Line 38 col 24 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 38 col 24 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 38 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 38 col 44 IdentifierName "SubModule2" = TopLevelModule1.SubModule2
-Line 38 col 55 IdentifierName "SubSubModule2" = TopLevelModule1.SubModule2.SubSubModule2
-Line 38 col 69 IdentifierName "ClassA" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 38 col 44 IdentifierName "SubModule2" = SubModule2
+Line 38 col 55 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
+Line 38 col 69 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
 Line 38 col 77 InvocationExpression "c1.AisIn1_2_2()" = void
 Line 38 col 77 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 38 col 77 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 38 col 77 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 38 col 80 IdentifierName "AisIn1_2_2" = () => void
 Line 39 col 24 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
 Line 39 col 28 IdentifierName "TopLevelModule2" = TopLevelModule2
@@ -135,46 +135,46 @@ Line 39 col 63 InvocationExpression "c2.AisIn2_3()" = void
 Line 39 col 63 MemberAccessExpression "c2.AisIn2_3" = () => void
 Line 39 col 63 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
 Line 39 col 66 IdentifierName "AisIn2_3" = () => void
-Line 42 col 24 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 42 col 28 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 42 col 24 IdentifierName "d1" = InterfaceX
+Line 42 col 28 IdentifierName "InterfaceX" = InterfaceX
 Line 42 col 40 InvocationExpression "d1.XisIn1_1_1()" = any
 Line 42 col 40 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 42 col 40 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 42 col 40 IdentifierName "d1" = InterfaceX
 Line 42 col 43 IdentifierName "XisIn1_1_1" = () => any
-Line 43 col 24 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 43 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 43 col 42 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 43 col 24 IdentifierName "d2" = InterfaceX
+Line 43 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 43 col 42 IdentifierName "InterfaceX" = InterfaceX
 Line 43 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
 Line 43 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 43 col 54 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 43 col 54 IdentifierName "d2" = InterfaceX
 Line 43 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 46 col 29 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 46 col 29 IdentifierName "InterfaceX" = InterfaceX
 Line 46 col 42 IdentifierName "XisIn1_1_1" = () => any
-Line 47 col 18 IdentifierName "NonExportedClassQ" = TopLevelModule1.SubModule1.SubSubModule1.NonExportedClassQ
+Line 47 col 18 IdentifierName "NonExportedClassQ" = NonExportedClassQ
 Line 49 col 29 IdentifierName "QQ" = () => void
-Line 51 col 28 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 51 col 28 IdentifierName "a4" = ClassA
 Line 51 col 32 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 51 col 48 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 51 col 59 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 51 col 73 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 51 col 48 IdentifierName "SubModule1" = SubModule1
+Line 51 col 59 IdentifierName "SubSubModule1" = SubSubModule1
+Line 51 col 73 IdentifierName "ClassA" = ClassA
 Line 51 col 81 InvocationExpression "a4.AisIn1_1_1()" = void
 Line 51 col 81 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 51 col 81 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 51 col 81 IdentifierName "a4" = ClassA
 Line 51 col 84 IdentifierName "AisIn1_1_1" = () => void
-Line 52 col 28 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 52 col 28 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 52 col 32 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 52 col 48 IdentifierName "SubModule2" = TopLevelModule1.SubModule2
-Line 52 col 59 IdentifierName "SubSubModule2" = TopLevelModule1.SubModule2.SubSubModule2
-Line 52 col 73 IdentifierName "ClassA" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 52 col 48 IdentifierName "SubModule2" = SubModule2
+Line 52 col 59 IdentifierName "SubSubModule2" = SubModule2.SubSubModule2
+Line 52 col 73 IdentifierName "ClassA" = SubModule2.SubSubModule2.ClassA
 Line 52 col 81 InvocationExpression "c1.AisIn1_2_2()" = void
 Line 52 col 81 MemberAccessExpression "c1.AisIn1_2_2" = () => void
-Line 52 col 81 IdentifierName "c1" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 52 col 81 IdentifierName "c1" = SubModule2.SubSubModule2.ClassA
 Line 52 col 84 IdentifierName "AisIn1_2_2" = () => void
-Line 53 col 28 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 53 col 32 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 53 col 28 IdentifierName "d1" = InterfaceX
+Line 53 col 32 IdentifierName "InterfaceX" = InterfaceX
 Line 53 col 44 InvocationExpression "d1.XisIn1_1_1()" = any
 Line 53 col 44 MemberAccessExpression "d1.XisIn1_1_1" = () => any
-Line 53 col 44 IdentifierName "d1" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 53 col 44 IdentifierName "d1" = InterfaceX
 Line 53 col 47 IdentifierName "XisIn1_1_1" = () => any
 Line 54 col 28 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
 Line 54 col 32 IdentifierName "TopLevelModule2" = TopLevelModule2
@@ -184,59 +184,59 @@ Line 54 col 67 InvocationExpression "c2.AisIn2_3()" = void
 Line 54 col 67 MemberAccessExpression "c2.AisIn2_3" = () => void
 Line 54 col 67 IdentifierName "c2" = TopLevelModule2.SubModule3.ClassA
 Line 54 col 70 IdentifierName "AisIn2_3" = () => void
-Line 61 col 14 IdentifierName "ClassA" = TopLevelModule1.SubModule1.ClassA
+Line 61 col 14 IdentifierName "ClassA" = ClassA
 Line 63 col 25 IdentifierName "AA" = () => void
-Line 64 col 24 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 64 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 64 col 42 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 64 col 24 IdentifierName "a2" = SubSubModule1.ClassA
+Line 64 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 64 col 42 IdentifierName "ClassA" = SubSubModule1.ClassA
 Line 64 col 50 InvocationExpression "a2.AisIn1_1_1()" = void
 Line 64 col 50 MemberAccessExpression "a2.AisIn1_1_1" = () => void
-Line 64 col 50 IdentifierName "a2" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 64 col 50 IdentifierName "a2" = SubSubModule1.ClassA
 Line 64 col 53 IdentifierName "AisIn1_1_1" = () => void
-Line 65 col 24 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
-Line 65 col 28 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 65 col 39 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 65 col 53 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 65 col 24 IdentifierName "a3" = SubSubModule1.ClassA
+Line 65 col 28 IdentifierName "SubModule1" = SubModule1
+Line 65 col 39 IdentifierName "SubSubModule1" = SubSubModule1
+Line 65 col 53 IdentifierName "ClassA" = SubSubModule1.ClassA
 Line 65 col 61 InvocationExpression "a3.AisIn1_1_1()" = void
 Line 65 col 61 MemberAccessExpression "a3.AisIn1_1_1" = () => void
-Line 65 col 61 IdentifierName "a3" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 65 col 61 IdentifierName "a3" = SubSubModule1.ClassA
 Line 65 col 64 IdentifierName "AisIn1_1_1" = () => void
-Line 66 col 24 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 66 col 24 IdentifierName "a4" = SubSubModule1.ClassA
 Line 66 col 28 IdentifierName "TopLevelModule1" = TopLevelModule1
-Line 66 col 44 IdentifierName "SubModule1" = TopLevelModule1.SubModule1
-Line 66 col 55 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 66 col 69 IdentifierName "ClassA" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 66 col 44 IdentifierName "SubModule1" = SubModule1
+Line 66 col 55 IdentifierName "SubSubModule1" = SubSubModule1
+Line 66 col 69 IdentifierName "ClassA" = SubSubModule1.ClassA
 Line 66 col 77 InvocationExpression "a4.AisIn1_1_1()" = void
 Line 66 col 77 MemberAccessExpression "a4.AisIn1_1_1" = () => void
-Line 66 col 77 IdentifierName "a4" = TopLevelModule1.SubModule1.SubSubModule1.ClassA
+Line 66 col 77 IdentifierName "a4" = SubSubModule1.ClassA
 Line 66 col 80 IdentifierName "AisIn1_1_1" = () => void
-Line 69 col 24 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
-Line 69 col 28 IdentifierName "SubSubModule1" = TopLevelModule1.SubModule1.SubSubModule1
-Line 69 col 42 IdentifierName "InterfaceX" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 69 col 24 IdentifierName "d2" = SubSubModule1.InterfaceX
+Line 69 col 28 IdentifierName "SubSubModule1" = SubSubModule1
+Line 69 col 42 IdentifierName "InterfaceX" = SubSubModule1.InterfaceX
 Line 69 col 54 InvocationExpression "d2.XisIn1_1_1()" = any
 Line 69 col 54 MemberAccessExpression "d2.XisIn1_1_1" = () => any
-Line 69 col 54 IdentifierName "d2" = TopLevelModule1.SubModule1.SubSubModule1.InterfaceX
+Line 69 col 54 IdentifierName "d2" = SubSubModule1.InterfaceX
 Line 69 col 57 IdentifierName "XisIn1_1_1" = () => any
-Line 75 col 18 IdentifierName "SubModule2" = TopLevelModule1.SubModule2
-Line 76 col 22 IdentifierName "SubSubModule2" = TopLevelModule1.SubModule2.SubSubModule2
-Line 78 col 25 IdentifierName "ClassA" = TopLevelModule1.SubModule2.SubSubModule2.ClassA
+Line 75 col 18 IdentifierName "SubModule2" = SubModule2
+Line 76 col 22 IdentifierName "SubSubModule2" = SubSubModule2
+Line 78 col 25 IdentifierName "ClassA" = ClassA
 Line 78 col 41 IdentifierName "AisIn1_2_2" = () => void
-Line 79 col 25 IdentifierName "ClassB" = TopLevelModule1.SubModule2.SubSubModule2.ClassB
+Line 79 col 25 IdentifierName "ClassB" = ClassB
 Line 79 col 41 IdentifierName "BisIn1_2_2" = () => void
-Line 80 col 25 IdentifierName "ClassC" = TopLevelModule1.SubModule2.SubSubModule2.ClassC
+Line 80 col 25 IdentifierName "ClassC" = ClassC
 Line 80 col 41 IdentifierName "CisIn1_2_2" = () => void
-Line 81 col 29 IdentifierName "InterfaceY" = TopLevelModule1.SubModule2.SubSubModule2.InterfaceY
+Line 81 col 29 IdentifierName "InterfaceY" = InterfaceY
 Line 81 col 42 IdentifierName "YisIn1_2_2" = () => any
-Line 82 col 22 IdentifierName "NonExportedInterfaceQ" = TopLevelModule1.SubModule2.SubSubModule2.NonExportedInterfaceQ
-Line 85 col 25 IdentifierName "InterfaceY" = TopLevelModule1.SubModule2.InterfaceY
+Line 82 col 22 IdentifierName "NonExportedInterfaceQ" = NonExportedInterfaceQ
+Line 85 col 25 IdentifierName "InterfaceY" = InterfaceY
 Line 85 col 38 IdentifierName "YisIn1_2" = () => any
-Line 88 col 10 IdentifierName "ClassA" = TopLevelModule1.ClassA
+Line 88 col 10 IdentifierName "ClassA" = ClassA
 Line 89 col 15 IdentifierName "AisIn1" = () => void
-Line 92 col 14 IdentifierName "InterfaceY" = TopLevelModule1.InterfaceY
+Line 92 col 14 IdentifierName "InterfaceY" = InterfaceY
 Line 93 col 0 IdentifierName "YisIn1" = () => any
-Line 96 col 11 IdentifierName "NotExportedModule" = TopLevelModule1.NotExportedModule
-Line 97 col 21 IdentifierName "ClassA" = TopLevelModule1.NotExportedModule.ClassA
+Line 96 col 11 IdentifierName "NotExportedModule" = NotExportedModule
+Line 97 col 21 IdentifierName "ClassA" = ClassA
 Line 101 col 7 IdentifierName "TopLevelModule2" = TopLevelModule2
-Line 102 col 18 IdentifierName "SubModule3" = TopLevelModule2.SubModule3
-Line 103 col 21 IdentifierName "ClassA" = TopLevelModule2.SubModule3.ClassA
+Line 102 col 18 IdentifierName "SubModule3" = SubModule3
+Line 103 col 21 IdentifierName "ClassA" = ClassA
 Line 104 col 19 IdentifierName "AisIn2_3" = () => void

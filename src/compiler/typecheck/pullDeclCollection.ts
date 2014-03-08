@@ -18,16 +18,20 @@ module TypeScript {
         public popParent() { this.parentChain.length--; }
     }
 
+    function moduleElementsHasExportAssignment(moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
+        return moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
+    }
+
     function containingModuleHasExportAssignment(ast: ISyntaxElement): boolean {
         ast = ast.parent;
         while (ast) {
             if (ast.kind() === SyntaxKind.ModuleDeclaration) {
                 var moduleDecl = <ModuleDeclarationSyntax>ast;
-                return moduleDecl.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
+                return moduleElementsHasExportAssignment(moduleDecl.moduleElements);
             }
             else if (ast.kind() === SyntaxKind.SourceUnit) {
                 var sourceUnit = <SourceUnitSyntax>ast;
-                return sourceUnit.moduleElements.any(m => m.kind() === SyntaxKind.ExportAssignment);
+                return moduleElementsHasExportAssignment(sourceUnit.moduleElements);
             }
 
             ast = ast.parent;
@@ -104,7 +108,7 @@ module TypeScript {
             // the script node will point at the external module declaration.
             context.semanticInfoChain.setDeclForAST(sourceUnit, decl);
 
-            if (moduleContainsExecutableCode) {
+            if (!moduleElementsHasExportAssignment(sourceUnit.moduleElements) || moduleContainsExecutableCode) {
                 createModuleVariableDecl(decl, sourceUnit, context);
             }
 
@@ -179,7 +183,7 @@ module TypeScript {
             context.semanticInfoChain.setDeclForAST(moduleDecl.stringLiteral, decl);
             context.semanticInfoChain.setASTForDecl(decl, moduleDecl.stringLiteral);
 
-            if (moduleContainsExecutableCode) {
+            if (!moduleElementsHasExportAssignment(moduleDecl.moduleElements) || moduleContainsExecutableCode) {
                 createModuleVariableDecl(decl, moduleDecl.stringLiteral, context);
             }
 
@@ -258,7 +262,8 @@ module TypeScript {
                     return true;
                 }
             }
-            else if (member.kind() !== SyntaxKind.InterfaceDeclaration) {
+            else if (member.kind() !== SyntaxKind.InterfaceDeclaration && member.kind() !== SyntaxKind.ExportAssignment) {
+                // In case of export assignment we should be really checking meaning of Export assignment identifier, but thats TODO for later
                 // If we contain anything that's not an interface declaration, then we contain
                 // executable code.
                 return true;

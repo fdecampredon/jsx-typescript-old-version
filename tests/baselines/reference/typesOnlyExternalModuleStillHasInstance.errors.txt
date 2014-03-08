@@ -1,1 +1,2 @@
-foo_1.ts(5,5): error TS2124: Tried to set variable type to uninitialized module type 'foo0'.
+foo_1.ts(5,5): error TS2012: Cannot convert 'typeof foo0' to '{ M2: Object; }':
+	Type 'typeof foo0' is missing property 'M2' from type '{ M2: Object; }'.

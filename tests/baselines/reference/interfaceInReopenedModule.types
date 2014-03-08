@@ -1,7 +1,7 @@
 === tests/cases/compiler/interfaceInReopenedModule.ts ===
 Line 0 col 7 IdentifierName "m" = m
 Line 4 col 7 IdentifierName "m" = m
-Line 5 col 14 IdentifierName "f" = m.f
-Line 6 col 17 IdentifierName "n" = m.n
-Line 7 col 16 IdentifierName "n" = m.f
-Line 7 col 19 IdentifierName "f" = m.f
+Line 5 col 14 IdentifierName "f" = f
+Line 6 col 17 IdentifierName "n" = n
+Line 7 col 16 IdentifierName "n" = f
+Line 7 col 19 IdentifierName "f" = f

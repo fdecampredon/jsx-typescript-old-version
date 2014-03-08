@@ -1,11 +1,11 @@
 === tests/cases/compiler/declFileModuleContinuation.ts ===
 Line 0 col 7 IdentifierName "A" = A
 Line 0 col 9 IdentifierName "C" = A.C
-Line 1 col 21 IdentifierName "Z" = A.C.Z
+Line 1 col 21 IdentifierName "Z" = Z
 Line 5 col 7 IdentifierName "A" = A
 Line 5 col 9 IdentifierName "B" = A.B
 Line 5 col 11 IdentifierName "C" = A.B.C
-Line 6 col 17 IdentifierName "W" = A.B.C.W
+Line 6 col 17 IdentifierName "W" = W
 Line 6 col 30 IdentifierName "A" = A
 Line 6 col 32 IdentifierName "C" = A.C
 Line 6 col 34 IdentifierName "Z" = A.C.Z

@@ -1,18 +1,18 @@
 === tests/cases/compiler/declaredExternalModule.ts ===
-Line 2 col 14 IdentifierName "connectModule" = 'connect'.connectModule
+Line 2 col 14 IdentifierName "connectModule" = connectModule
 Line 4 col 9 IdentifierName "res" = any
 Line 4 col 14 IdentifierName "req" = any
 Line 4 col 19 IdentifierName "next" = any
-Line 8 col 14 IdentifierName "connectExport" = 'connect'.connectExport
-Line 9 col 0 IdentifierName "use" = (mod: 'connect'.connectModule) => 'connect'.connectExport
-Line 10 col 14 IdentifierName "mod" = 'connect'.connectModule
-Line 10 col 19 IdentifierName "connectModule" = 'connect'.connectModule
-Line 10 col 37 IdentifierName "connectExport" = 'connect'.connectExport
+Line 8 col 14 IdentifierName "connectExport" = connectExport
+Line 9 col 0 IdentifierName "use" = (mod: connectModule) => connectExport
+Line 10 col 14 IdentifierName "mod" = connectModule
+Line 10 col 19 IdentifierName "connectModule" = connectModule
+Line 10 col 37 IdentifierName "connectExport" = connectExport
 Line 11 col 0 IdentifierName "listen" = (port: number) => void
 Line 12 col 17 IdentifierName "port" = number
-Line 16 col 8 IdentifierName "server" = { test1: 'connect'.connectModule; test2(): 'connect'.connectModule; (): 'connect'.connectExport; }
-Line 18 col 12 IdentifierName "connectExport" = 'connect'.connectExport
-Line 19 col 0 IdentifierName "test1" = 'connect'.connectModule
-Line 20 col 15 IdentifierName "connectModule" = 'connect'.connectModule
-Line 21 col 0 IdentifierName "test2" = () => 'connect'.connectModule
-Line 22 col 17 IdentifierName "connectModule" = 'connect'.connectModule
+Line 16 col 8 IdentifierName "server" = { test1: connectModule; test2(): connectModule; (): connectExport; }
+Line 18 col 12 IdentifierName "connectExport" = connectExport
+Line 19 col 0 IdentifierName "test1" = connectModule
+Line 20 col 15 IdentifierName "connectModule" = connectModule
+Line 21 col 0 IdentifierName "test2" = () => connectModule
+Line 22 col 17 IdentifierName "connectModule" = connectModule

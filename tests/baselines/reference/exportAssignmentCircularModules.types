@@ -1,24 +1,24 @@
 === tests/cases/compiler/foo_2.ts ===
-Line 0 col 7 IdentifierName "foo0" = typeof Foo
+Line 0 col 7 IdentifierName "foo0" = foo0
 Line 1 col 7 IdentifierName "Foo" = Foo
 Line 2 col 12 IdentifierName "x" = any
 Line 2 col 16 MemberAccessExpression "foo0.x" = any
-Line 2 col 16 IdentifierName "foo0" = typeof Foo
+Line 2 col 16 IdentifierName "foo0" = typeof foo0
 Line 2 col 21 IdentifierName "x" = any
 Line 4 col 9 IdentifierName "Foo" = typeof Foo
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 7 IdentifierName "foo1" = typeof Foo
+Line 0 col 7 IdentifierName "foo1" = foo1
 Line 1 col 7 IdentifierName "Foo" = Foo
 Line 2 col 12 IdentifierName "x" = any
 Line 2 col 16 MemberAccessExpression "foo1.x" = any
-Line 2 col 16 IdentifierName "foo1" = typeof Foo
+Line 2 col 16 IdentifierName "foo1" = typeof foo1
 Line 2 col 21 IdentifierName "x" = any
 Line 4 col 9 IdentifierName "Foo" = typeof Foo
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo2" = typeof Foo
+Line 0 col 7 IdentifierName "foo2" = foo2
 Line 1 col 7 IdentifierName "Foo" = Foo
 Line 2 col 12 IdentifierName "x" = any
 Line 2 col 16 MemberAccessExpression "foo2.x" = any
-Line 2 col 16 IdentifierName "foo2" = typeof Foo
+Line 2 col 16 IdentifierName "foo2" = typeof foo2
 Line 2 col 21 IdentifierName "x" = any
 Line 4 col 9 IdentifierName "Foo" = typeof Foo

@@ -1,16 +1,16 @@
 === tests/cases/compiler/circularImportAlias.ts ===
 Line 2 col 7 IdentifierName "B" = B
-Line 3 col 18 IdentifierName "a" = typeof A
-Line 3 col 22 IdentifierName "A" = A
-Line 4 col 17 IdentifierName "D" = B.D
-Line 4 col 27 IdentifierName "a" = B.a
+Line 3 col 18 IdentifierName "a" = a
+Line 3 col 22 IdentifierName "A" = a
+Line 4 col 17 IdentifierName "D" = D
+Line 4 col 27 IdentifierName "a" = a
 Line 4 col 29 IdentifierName "C" = A.C
 Line 5 col 0 IdentifierName "id" = number
 Line 9 col 7 IdentifierName "A" = A
-Line 10 col 17 IdentifierName "C" = A.C
+Line 10 col 17 IdentifierName "C" = C
 Line 10 col 21 IdentifierName "name" = string
-Line 11 col 18 IdentifierName "b" = typeof B
-Line 11 col 22 IdentifierName "B" = B
+Line 11 col 18 IdentifierName "b" = b
+Line 11 col 22 IdentifierName "B" = b
 Line 14 col 4 IdentifierName "c" = { name: string; }
 Line 14 col 9 IdentifierName "name" = string
 Line 15 col 4 IdentifierName "c" = A.C

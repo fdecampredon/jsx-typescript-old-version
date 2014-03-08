@@ -1,7 +1,7 @@
 === tests/cases/compiler/duplicateAnonymousInners1.ts ===
 Line 0 col 7 IdentifierName "Foo" = Foo
-Line 2 col 10 IdentifierName "Helper" = Foo.Helper
-Line 6 col 10 IdentifierName "Inner" = Foo.Inner
+Line 2 col 10 IdentifierName "Helper" = Helper
+Line 6 col 10 IdentifierName "Inner" = Inner
 Line 9 col 15 IdentifierName "Outer" = number
 Line 13 col 7 IdentifierName "Foo" = Foo
-Line 16 col 10 IdentifierName "Helper" = Foo.Helper
+Line 16 col 10 IdentifierName "Helper" = Helper

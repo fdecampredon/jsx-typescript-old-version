@@ -1,21 +1,21 @@
 === tests/cases/compiler/assignmentCompatWithObjectMembers.ts ===
 Line 3 col 7 IdentifierName "SimpleTypes" = SimpleTypes
-Line 4 col 10 IdentifierName "S" = SimpleTypes.S
+Line 4 col 10 IdentifierName "S" = S
 Line 4 col 14 IdentifierName "foo" = string
-Line 5 col 10 IdentifierName "T" = SimpleTypes.T
+Line 5 col 10 IdentifierName "T" = T
 Line 5 col 14 IdentifierName "foo" = string
-Line 6 col 8 IdentifierName "s" = SimpleTypes.S
-Line 6 col 11 IdentifierName "S" = SimpleTypes.S
-Line 7 col 8 IdentifierName "t" = SimpleTypes.T
-Line 7 col 11 IdentifierName "T" = SimpleTypes.T
-Line 9 col 14 IdentifierName "S2" = SimpleTypes.S2
+Line 6 col 8 IdentifierName "s" = S
+Line 6 col 11 IdentifierName "S" = S
+Line 7 col 8 IdentifierName "t" = T
+Line 7 col 11 IdentifierName "T" = T
+Line 9 col 14 IdentifierName "S2" = S2
 Line 9 col 19 IdentifierName "foo" = string
-Line 10 col 14 IdentifierName "T2" = SimpleTypes.T2
+Line 10 col 14 IdentifierName "T2" = T2
 Line 10 col 19 IdentifierName "foo" = string
-Line 11 col 8 IdentifierName "s2" = SimpleTypes.S2
-Line 11 col 12 IdentifierName "S2" = SimpleTypes.S2
-Line 12 col 8 IdentifierName "t2" = SimpleTypes.T2
-Line 12 col 12 IdentifierName "T2" = SimpleTypes.T2
+Line 11 col 8 IdentifierName "s2" = S2
+Line 11 col 12 IdentifierName "S2" = S2
+Line 12 col 8 IdentifierName "t2" = T2
+Line 12 col 12 IdentifierName "T2" = T2
 Line 14 col 8 IdentifierName "a" = { foo: string; }
 Line 14 col 13 IdentifierName "foo" = string
 Line 15 col 8 IdentifierName "b" = { foo: string; }
@@ -26,32 +26,32 @@ Line 17 col 15 IdentifierName "foo" = string
 Line 18 col 8 IdentifierName "b2" = { foo: string; }
 Line 18 col 13 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
 Line 18 col 15 IdentifierName "foo" = string
-Line 19 col 0 AssignmentExpression "s = t" = SimpleTypes.T
-Line 19 col 0 IdentifierName "s" = SimpleTypes.S
-Line 20 col 8 IdentifierName "t" = SimpleTypes.T
-Line 21 col 0 AssignmentExpression "t = s" = SimpleTypes.S
-Line 21 col 0 IdentifierName "t" = SimpleTypes.T
-Line 21 col 8 IdentifierName "s" = SimpleTypes.S
-Line 22 col 0 AssignmentExpression "s = s2" = SimpleTypes.S2
-Line 22 col 0 IdentifierName "s" = SimpleTypes.S
-Line 22 col 8 IdentifierName "s2" = SimpleTypes.S2
+Line 19 col 0 AssignmentExpression "s = t" = T
+Line 19 col 0 IdentifierName "s" = S
+Line 20 col 8 IdentifierName "t" = T
+Line 21 col 0 AssignmentExpression "t = s" = S
+Line 21 col 0 IdentifierName "t" = T
+Line 21 col 8 IdentifierName "s" = S
+Line 22 col 0 AssignmentExpression "s = s2" = S2
+Line 22 col 0 IdentifierName "s" = S
+Line 22 col 8 IdentifierName "s2" = S2
 Line 23 col 0 AssignmentExpression "s = a2" = { foo: string; }
-Line 23 col 0 IdentifierName "s" = SimpleTypes.S
+Line 23 col 0 IdentifierName "s" = S
 Line 23 col 8 IdentifierName "a2" = { foo: string; }
-Line 24 col 0 AssignmentExpression "s2 = t2" = SimpleTypes.T2
-Line 24 col 0 IdentifierName "s2" = SimpleTypes.S2
-Line 25 col 9 IdentifierName "t2" = SimpleTypes.T2
-Line 26 col 0 AssignmentExpression "t2 = s2" = SimpleTypes.S2
-Line 26 col 0 IdentifierName "t2" = SimpleTypes.T2
-Line 26 col 9 IdentifierName "s2" = SimpleTypes.S2
-Line 27 col 0 AssignmentExpression "s2 = t" = SimpleTypes.T
-Line 27 col 0 IdentifierName "s2" = SimpleTypes.S2
-Line 27 col 9 IdentifierName "t" = SimpleTypes.T
+Line 24 col 0 AssignmentExpression "s2 = t2" = T2
+Line 24 col 0 IdentifierName "s2" = S2
+Line 25 col 9 IdentifierName "t2" = T2
+Line 26 col 0 AssignmentExpression "t2 = s2" = S2
+Line 26 col 0 IdentifierName "t2" = T2
+Line 26 col 9 IdentifierName "s2" = S2
+Line 27 col 0 AssignmentExpression "s2 = t" = T
+Line 27 col 0 IdentifierName "s2" = S2
+Line 27 col 9 IdentifierName "t" = T
 Line 28 col 0 AssignmentExpression "s2 = b" = { foo: string; }
-Line 28 col 0 IdentifierName "s2" = SimpleTypes.S2
+Line 28 col 0 IdentifierName "s2" = S2
 Line 28 col 9 IdentifierName "b" = { foo: string; }
 Line 29 col 0 AssignmentExpression "s2 = a2" = { foo: string; }
-Line 29 col 0 IdentifierName "s2" = SimpleTypes.S2
+Line 29 col 0 IdentifierName "s2" = S2
 Line 29 col 9 IdentifierName "a2" = { foo: string; }
 Line 30 col 0 AssignmentExpression "a = b" = { foo: string; }
 Line 30 col 0 IdentifierName "a" = { foo: string; }
@@ -59,12 +59,12 @@ Line 31 col 8 IdentifierName "b" = { foo: string; }
 Line 32 col 0 AssignmentExpression "b = a" = { foo: string; }
 Line 32 col 0 IdentifierName "b" = { foo: string; }
 Line 32 col 8 IdentifierName "a" = { foo: string; }
-Line 33 col 0 AssignmentExpression "a = s" = SimpleTypes.S
+Line 33 col 0 AssignmentExpression "a = s" = S
 Line 33 col 0 IdentifierName "a" = { foo: string; }
-Line 33 col 8 IdentifierName "s" = SimpleTypes.S
-Line 34 col 0 AssignmentExpression "a = s2" = SimpleTypes.S2
+Line 33 col 8 IdentifierName "s" = S
+Line 34 col 0 AssignmentExpression "a = s2" = S2
 Line 34 col 0 IdentifierName "a" = { foo: string; }
-Line 34 col 8 IdentifierName "s2" = SimpleTypes.S2
+Line 34 col 8 IdentifierName "s2" = S2
 Line 35 col 0 AssignmentExpression "a = a2" = { foo: string; }
 Line 35 col 0 IdentifierName "a" = { foo: string; }
 Line 35 col 8 IdentifierName "a2" = { foo: string; }
@@ -77,33 +77,33 @@ Line 38 col 9 IdentifierName "a2" = { foo: string; }
 Line 39 col 0 AssignmentExpression "a2 = b" = { foo: string; }
 Line 39 col 0 IdentifierName "a2" = { foo: string; }
 Line 39 col 9 IdentifierName "b" = { foo: string; }
-Line 40 col 0 AssignmentExpression "a2 = t2" = SimpleTypes.T2
+Line 40 col 0 AssignmentExpression "a2 = t2" = T2
 Line 40 col 0 IdentifierName "a2" = { foo: string; }
-Line 40 col 9 IdentifierName "t2" = SimpleTypes.T2
-Line 41 col 0 AssignmentExpression "a2 = t" = SimpleTypes.T
+Line 40 col 9 IdentifierName "t2" = T2
+Line 41 col 0 AssignmentExpression "a2 = t" = T
 Line 41 col 0 IdentifierName "a2" = { foo: string; }
-Line 41 col 9 IdentifierName "t" = SimpleTypes.T
+Line 41 col 9 IdentifierName "t" = T
 Line 44 col 7 IdentifierName "ObjectTypes" = ObjectTypes
-Line 45 col 10 IdentifierName "S" = ObjectTypes.S
-Line 45 col 14 IdentifierName "foo" = ObjectTypes.S
-Line 45 col 19 IdentifierName "S" = ObjectTypes.S
-Line 46 col 10 IdentifierName "T" = ObjectTypes.T
-Line 46 col 14 IdentifierName "foo" = ObjectTypes.T
-Line 46 col 19 IdentifierName "T" = ObjectTypes.T
-Line 47 col 8 IdentifierName "s" = ObjectTypes.S
-Line 47 col 11 IdentifierName "S" = ObjectTypes.S
-Line 48 col 8 IdentifierName "t" = ObjectTypes.T
-Line 48 col 11 IdentifierName "T" = ObjectTypes.T
-Line 50 col 14 IdentifierName "S2" = ObjectTypes.S2
-Line 50 col 19 IdentifierName "foo" = ObjectTypes.S2
-Line 50 col 24 IdentifierName "S2" = ObjectTypes.S2
-Line 51 col 14 IdentifierName "T2" = ObjectTypes.T2
-Line 51 col 19 IdentifierName "foo" = ObjectTypes.T2
-Line 51 col 24 IdentifierName "T2" = ObjectTypes.T2
-Line 52 col 8 IdentifierName "s2" = ObjectTypes.S2
-Line 52 col 12 IdentifierName "S2" = ObjectTypes.S2
-Line 53 col 8 IdentifierName "t2" = ObjectTypes.T2
-Line 53 col 12 IdentifierName "T2" = ObjectTypes.T2
+Line 45 col 10 IdentifierName "S" = S
+Line 45 col 14 IdentifierName "foo" = S
+Line 45 col 19 IdentifierName "S" = S
+Line 46 col 10 IdentifierName "T" = T
+Line 46 col 14 IdentifierName "foo" = T
+Line 46 col 19 IdentifierName "T" = T
+Line 47 col 8 IdentifierName "s" = S
+Line 47 col 11 IdentifierName "S" = S
+Line 48 col 8 IdentifierName "t" = T
+Line 48 col 11 IdentifierName "T" = T
+Line 50 col 14 IdentifierName "S2" = S2
+Line 50 col 19 IdentifierName "foo" = S2
+Line 50 col 24 IdentifierName "S2" = S2
+Line 51 col 14 IdentifierName "T2" = T2
+Line 51 col 19 IdentifierName "foo" = T2
+Line 51 col 24 IdentifierName "T2" = T2
+Line 52 col 8 IdentifierName "s2" = S2
+Line 52 col 12 IdentifierName "S2" = S2
+Line 53 col 8 IdentifierName "t2" = T2
+Line 53 col 12 IdentifierName "T2" = T2
 Line 55 col 8 IdentifierName "a" = { foo: any; }
 Line 55 col 13 IdentifierName "foo" = any
 Line 55 col 25 IdentifierName "a" = { foo: any; }
@@ -118,32 +118,32 @@ Line 59 col 8 IdentifierName "b2" = { foo: any; }
 Line 59 col 13 ObjectLiteralExpression "{ foo: b2 }" = { foo: any; }
 Line 59 col 15 IdentifierName "foo" = any
 Line 59 col 20 IdentifierName "b2" = { foo: any; }
-Line 60 col 0 AssignmentExpression "s = t" = ObjectTypes.T
-Line 60 col 0 IdentifierName "s" = ObjectTypes.S
-Line 61 col 8 IdentifierName "t" = ObjectTypes.T
-Line 62 col 0 AssignmentExpression "t = s" = ObjectTypes.S
-Line 62 col 0 IdentifierName "t" = ObjectTypes.T
-Line 62 col 8 IdentifierName "s" = ObjectTypes.S
-Line 63 col 0 AssignmentExpression "s = s2" = ObjectTypes.S2
-Line 63 col 0 IdentifierName "s" = ObjectTypes.S
-Line 63 col 8 IdentifierName "s2" = ObjectTypes.S2
+Line 60 col 0 AssignmentExpression "s = t" = T
+Line 60 col 0 IdentifierName "s" = S
+Line 61 col 8 IdentifierName "t" = T
+Line 62 col 0 AssignmentExpression "t = s" = S
+Line 62 col 0 IdentifierName "t" = T
+Line 62 col 8 IdentifierName "s" = S
+Line 63 col 0 AssignmentExpression "s = s2" = S2
+Line 63 col 0 IdentifierName "s" = S
+Line 63 col 8 IdentifierName "s2" = S2
 Line 64 col 0 AssignmentExpression "s = a2" = { foo: any; }
-Line 64 col 0 IdentifierName "s" = ObjectTypes.S
+Line 64 col 0 IdentifierName "s" = S
 Line 64 col 8 IdentifierName "a2" = { foo: any; }
-Line 65 col 0 AssignmentExpression "s2 = t2" = ObjectTypes.T2
-Line 65 col 0 IdentifierName "s2" = ObjectTypes.S2
-Line 66 col 9 IdentifierName "t2" = ObjectTypes.T2
-Line 67 col 0 AssignmentExpression "t2 = s2" = ObjectTypes.S2
-Line 67 col 0 IdentifierName "t2" = ObjectTypes.T2
-Line 67 col 9 IdentifierName "s2" = ObjectTypes.S2
-Line 68 col 0 AssignmentExpression "s2 = t" = ObjectTypes.T
-Line 68 col 0 IdentifierName "s2" = ObjectTypes.S2
-Line 68 col 9 IdentifierName "t" = ObjectTypes.T
+Line 65 col 0 AssignmentExpression "s2 = t2" = T2
+Line 65 col 0 IdentifierName "s2" = S2
+Line 66 col 9 IdentifierName "t2" = T2
+Line 67 col 0 AssignmentExpression "t2 = s2" = S2
+Line 67 col 0 IdentifierName "t2" = T2
+Line 67 col 9 IdentifierName "s2" = S2
+Line 68 col 0 AssignmentExpression "s2 = t" = T
+Line 68 col 0 IdentifierName "s2" = S2
+Line 68 col 9 IdentifierName "t" = T
 Line 69 col 0 AssignmentExpression "s2 = b" = { foo: any; }
-Line 69 col 0 IdentifierName "s2" = ObjectTypes.S2
+Line 69 col 0 IdentifierName "s2" = S2
 Line 69 col 9 IdentifierName "b" = { foo: any; }
 Line 70 col 0 AssignmentExpression "s2 = a2" = { foo: any; }
-Line 70 col 0 IdentifierName "s2" = ObjectTypes.S2
+Line 70 col 0 IdentifierName "s2" = S2
 Line 70 col 9 IdentifierName "a2" = { foo: any; }
 Line 71 col 0 AssignmentExpression "a = b" = { foo: any; }
 Line 71 col 0 IdentifierName "a" = { foo: any; }
@@ -151,12 +151,12 @@ Line 72 col 8 IdentifierName "b" = { foo: any; }
 Line 73 col 0 AssignmentExpression "b = a" = { foo: any; }
 Line 73 col 0 IdentifierName "b" = { foo: any; }
 Line 73 col 8 IdentifierName "a" = { foo: any; }
-Line 74 col 0 AssignmentExpression "a = s" = ObjectTypes.S
+Line 74 col 0 AssignmentExpression "a = s" = S
 Line 74 col 0 IdentifierName "a" = { foo: any; }
-Line 74 col 8 IdentifierName "s" = ObjectTypes.S
-Line 75 col 0 AssignmentExpression "a = s2" = ObjectTypes.S2
+Line 74 col 8 IdentifierName "s" = S
+Line 75 col 0 AssignmentExpression "a = s2" = S2
 Line 75 col 0 IdentifierName "a" = { foo: any; }
-Line 75 col 8 IdentifierName "s2" = ObjectTypes.S2
+Line 75 col 8 IdentifierName "s2" = S2
 Line 76 col 0 AssignmentExpression "a = a2" = { foo: any; }
 Line 76 col 0 IdentifierName "a" = { foo: any; }
 Line 76 col 8 IdentifierName "a2" = { foo: any; }
@@ -169,9 +169,9 @@ Line 79 col 9 IdentifierName "a2" = { foo: any; }
 Line 80 col 0 AssignmentExpression "a2 = b" = { foo: any; }
 Line 80 col 0 IdentifierName "a2" = { foo: any; }
 Line 80 col 9 IdentifierName "b" = { foo: any; }
-Line 81 col 0 AssignmentExpression "a2 = t2" = ObjectTypes.T2
+Line 81 col 0 AssignmentExpression "a2 = t2" = T2
 Line 81 col 0 IdentifierName "a2" = { foo: any; }
-Line 81 col 9 IdentifierName "t2" = ObjectTypes.T2
-Line 82 col 0 AssignmentExpression "a2 = t" = ObjectTypes.T
+Line 81 col 9 IdentifierName "t2" = T2
+Line 82 col 0 AssignmentExpression "a2 = t" = T
 Line 82 col 0 IdentifierName "a2" = { foo: any; }
-Line 82 col 9 IdentifierName "t" = ObjectTypes.T
+Line 82 col 9 IdentifierName "t" = T

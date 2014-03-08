@@ -1,91 +1,91 @@
 === tests/cases/compiler/subtypingWithCallSignatures3.ts ===
 Line 3 col 7 IdentifierName "Errors" = Errors
-Line 4 col 10 IdentifierName "Base" = Errors.Base
+Line 4 col 10 IdentifierName "Base" = Base
 Line 4 col 17 IdentifierName "foo" = string
-Line 5 col 10 IdentifierName "Derived" = Errors.Derived
-Line 5 col 26 IdentifierName "Base" = Errors.Base
+Line 5 col 10 IdentifierName "Derived" = Derived
+Line 5 col 26 IdentifierName "Base" = Base
 Line 5 col 33 IdentifierName "bar" = string
-Line 6 col 10 IdentifierName "Derived2" = Errors.Derived2
-Line 6 col 27 IdentifierName "Derived" = Errors.Derived
+Line 6 col 10 IdentifierName "Derived2" = Derived2
+Line 6 col 27 IdentifierName "Derived" = Derived
 Line 6 col 37 IdentifierName "baz" = string
-Line 7 col 10 IdentifierName "OtherDerived" = Errors.OtherDerived
-Line 7 col 31 IdentifierName "Base" = Errors.Base
+Line 7 col 10 IdentifierName "OtherDerived" = OtherDerived
+Line 7 col 31 IdentifierName "Base" = Base
 Line 7 col 38 IdentifierName "bing" = string
-Line 9 col 21 IdentifierName "foo2" = typeof Errors.foo2
+Line 9 col 21 IdentifierName "foo2" = typeof foo2
 Line 9 col 26 IdentifierName "a2" = (x: number) => string[]
 Line 9 col 31 IdentifierName "x" = number
 Line 9 col 63 IdentifierName "a2" = (x: number) => string[]
-Line 10 col 21 IdentifierName "foo2" = typeof Errors.foo2
+Line 10 col 21 IdentifierName "foo2" = typeof foo2
 Line 10 col 26 IdentifierName "a2" = any
-Line 12 col 21 IdentifierName "foo7" = typeof Errors.foo7
-Line 12 col 26 IdentifierName "a2" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 12 col 31 IdentifierName "x" = (arg: Errors.Base) => Errors.Derived
-Line 12 col 35 IdentifierName "arg" = Errors.Base
-Line 12 col 40 IdentifierName "Base" = Errors.Base
-Line 12 col 49 IdentifierName "Derived" = Errors.Derived
-Line 12 col 62 IdentifierName "r" = Errors.Base
-Line 12 col 65 IdentifierName "Base" = Errors.Base
-Line 12 col 74 IdentifierName "Derived2" = Errors.Derived2
-Line 12 col 92 IdentifierName "a2" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 13 col 21 IdentifierName "foo7" = typeof Errors.foo7
+Line 12 col 21 IdentifierName "foo7" = typeof foo7
+Line 12 col 26 IdentifierName "a2" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 12 col 31 IdentifierName "x" = (arg: Base) => Derived
+Line 12 col 35 IdentifierName "arg" = Base
+Line 12 col 40 IdentifierName "Base" = Base
+Line 12 col 49 IdentifierName "Derived" = Derived
+Line 12 col 62 IdentifierName "r" = Base
+Line 12 col 65 IdentifierName "Base" = Base
+Line 12 col 74 IdentifierName "Derived2" = Derived2
+Line 12 col 92 IdentifierName "a2" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 13 col 21 IdentifierName "foo7" = typeof foo7
 Line 13 col 26 IdentifierName "a2" = any
-Line 15 col 21 IdentifierName "foo8" = typeof Errors.foo8
-Line 15 col 26 IdentifierName "a2" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 15 col 31 IdentifierName "x" = (arg: Errors.Base) => Errors.Derived
-Line 15 col 35 IdentifierName "arg" = Errors.Base
-Line 15 col 40 IdentifierName "Base" = Errors.Base
-Line 15 col 49 IdentifierName "Derived" = Errors.Derived
-Line 15 col 58 IdentifierName "y" = (arg2: Errors.Base) => Errors.Derived
-Line 15 col 62 IdentifierName "arg2" = Errors.Base
-Line 15 col 68 IdentifierName "Base" = Errors.Base
-Line 15 col 77 IdentifierName "Derived" = Errors.Derived
-Line 15 col 90 IdentifierName "r" = Errors.Base
-Line 15 col 93 IdentifierName "Base" = Errors.Base
-Line 15 col 102 IdentifierName "Derived" = Errors.Derived
-Line 15 col 119 IdentifierName "a2" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 16 col 21 IdentifierName "foo8" = typeof Errors.foo8
+Line 15 col 21 IdentifierName "foo8" = typeof foo8
+Line 15 col 26 IdentifierName "a2" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 15 col 31 IdentifierName "x" = (arg: Base) => Derived
+Line 15 col 35 IdentifierName "arg" = Base
+Line 15 col 40 IdentifierName "Base" = Base
+Line 15 col 49 IdentifierName "Derived" = Derived
+Line 15 col 58 IdentifierName "y" = (arg2: Base) => Derived
+Line 15 col 62 IdentifierName "arg2" = Base
+Line 15 col 68 IdentifierName "Base" = Base
+Line 15 col 77 IdentifierName "Derived" = Derived
+Line 15 col 90 IdentifierName "r" = Base
+Line 15 col 93 IdentifierName "Base" = Base
+Line 15 col 102 IdentifierName "Derived" = Derived
+Line 15 col 119 IdentifierName "a2" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 16 col 21 IdentifierName "foo8" = typeof foo8
 Line 16 col 26 IdentifierName "a2" = any
-Line 18 col 21 IdentifierName "foo10" = typeof Errors.foo10
-Line 18 col 27 IdentifierName "a2" = (...x: Errors.Base[]) => Errors.Base
-Line 18 col 35 IdentifierName "x" = Errors.Base[]
-Line 18 col 38 IdentifierName "Base" = Errors.Base
-Line 18 col 49 IdentifierName "Base" = Errors.Base
-Line 18 col 63 IdentifierName "a2" = (...x: Errors.Base[]) => Errors.Base
-Line 19 col 21 IdentifierName "foo10" = typeof Errors.foo10
+Line 18 col 21 IdentifierName "foo10" = typeof foo10
+Line 18 col 27 IdentifierName "a2" = (...x: Base[]) => Base
+Line 18 col 35 IdentifierName "x" = Base[]
+Line 18 col 38 IdentifierName "Base" = Base
+Line 18 col 49 IdentifierName "Base" = Base
+Line 18 col 63 IdentifierName "a2" = (...x: Base[]) => Base
+Line 19 col 21 IdentifierName "foo10" = typeof foo10
 Line 19 col 27 IdentifierName "a2" = any
-Line 21 col 21 IdentifierName "foo11" = typeof Errors.foo11
-Line 21 col 27 IdentifierName "a2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 21 col 21 IdentifierName "foo11" = typeof foo11
+Line 21 col 27 IdentifierName "a2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
 Line 21 col 32 IdentifierName "x" = { foo: string; }
 Line 21 col 37 IdentifierName "foo" = string
 Line 21 col 52 IdentifierName "y" = { foo: string; bar: string; }
 Line 21 col 57 IdentifierName "foo" = string
 Line 21 col 70 IdentifierName "bar" = string
-Line 21 col 88 IdentifierName "Base" = Errors.Base
-Line 21 col 102 IdentifierName "a2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
-Line 22 col 21 IdentifierName "foo11" = typeof Errors.foo11
+Line 21 col 88 IdentifierName "Base" = Base
+Line 21 col 102 IdentifierName "a2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 22 col 21 IdentifierName "foo11" = typeof foo11
 Line 22 col 27 IdentifierName "a2" = any
-Line 24 col 21 IdentifierName "foo12" = typeof Errors.foo12
-Line 24 col 27 IdentifierName "a2" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 24 col 32 IdentifierName "x" = Errors.Base[]
+Line 24 col 21 IdentifierName "foo12" = typeof foo12
+Line 24 col 27 IdentifierName "a2" = (x: Base[], y: Derived2[]) => Derived[]
+Line 24 col 32 IdentifierName "x" = Base[]
 Line 24 col 35 IdentifierName "Array" = Array<T>
-Line 24 col 41 IdentifierName "Base" = Errors.Base
-Line 24 col 48 IdentifierName "y" = Errors.Derived2[]
+Line 24 col 41 IdentifierName "Base" = Base
+Line 24 col 48 IdentifierName "y" = Derived2[]
 Line 24 col 51 IdentifierName "Array" = Array<T>
-Line 24 col 57 IdentifierName "Derived2" = Errors.Derived2
+Line 24 col 57 IdentifierName "Derived2" = Derived2
 Line 24 col 71 IdentifierName "Array" = Array<T>
-Line 24 col 77 IdentifierName "Derived" = Errors.Derived
-Line 24 col 95 IdentifierName "a2" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 25 col 21 IdentifierName "foo12" = typeof Errors.foo12
+Line 24 col 77 IdentifierName "Derived" = Derived
+Line 24 col 95 IdentifierName "a2" = (x: Base[], y: Derived2[]) => Derived[]
+Line 25 col 21 IdentifierName "foo12" = typeof foo12
 Line 25 col 27 IdentifierName "a2" = any
-Line 27 col 21 IdentifierName "foo15" = typeof Errors.foo15
+Line 27 col 21 IdentifierName "foo15" = typeof foo15
 Line 27 col 27 IdentifierName "a2" = (x: { a: string; b: number; }) => number
 Line 27 col 32 IdentifierName "x" = { a: string; b: number; }
 Line 27 col 37 IdentifierName "a" = string
 Line 27 col 48 IdentifierName "b" = number
 Line 27 col 80 IdentifierName "a2" = (x: { a: string; b: number; }) => number
-Line 28 col 21 IdentifierName "foo15" = typeof Errors.foo15
+Line 28 col 21 IdentifierName "foo15" = typeof foo15
 Line 28 col 27 IdentifierName "a2" = any
-Line 30 col 21 IdentifierName "foo16" = typeof Errors.foo16
+Line 30 col 21 IdentifierName "foo16" = typeof foo16
 Line 30 col 27 IdentifierName "a2" = { (x: { (a: number): number; (a?: number): number; }): number[]; (x: { (a: boolean): boolean; (a?: boolean): boolean; }): boolean[]; }
 Line 32 col 9 IdentifierName "x" = { (a: number): number; (a?: number): number; }
 Line 33 col 13 IdentifierName "a" = number
@@ -94,38 +94,38 @@ Line 36 col 9 IdentifierName "x" = { (a: boolean): boolean; (a?: boolean): boole
 Line 37 col 13 IdentifierName "a" = boolean
 Line 38 col 13 IdentifierName "a" = boolean
 Line 40 col 15 IdentifierName "a2" = { (x: { (a: number): number; (a?: number): number; }): number[]; (x: { (a: boolean): boolean; (a?: boolean): boolean; }): boolean[]; }
-Line 41 col 21 IdentifierName "foo16" = typeof Errors.foo16
+Line 41 col 21 IdentifierName "foo16" = typeof foo16
 Line 41 col 27 IdentifierName "a2" = any
-Line 43 col 21 IdentifierName "foo17" = typeof Errors.foo17
-Line 43 col 27 IdentifierName "a2" = { (x: { <T extends Errors.Derived>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; (x: { <T extends Errors.Derived2>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; }
-Line 44 col 9 IdentifierName "x" = { <T extends Errors.Derived>(a: T): T; <T extends Errors.Base>(a: T): T; }
+Line 43 col 21 IdentifierName "foo17" = typeof foo17
+Line 43 col 27 IdentifierName "a2" = { (x: { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[]; }
+Line 44 col 9 IdentifierName "x" = { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }
 Line 45 col 13 IdentifierName "T" = T
-Line 45 col 23 IdentifierName "Derived" = Errors.Derived
+Line 45 col 23 IdentifierName "Derived" = Derived
 Line 45 col 32 IdentifierName "a" = T
 Line 45 col 35 IdentifierName "T" = T
 Line 45 col 39 IdentifierName "T" = T
 Line 46 col 13 IdentifierName "T" = T
-Line 46 col 23 IdentifierName "Base" = Errors.Base
+Line 46 col 23 IdentifierName "Base" = Base
 Line 46 col 29 IdentifierName "a" = T
 Line 46 col 32 IdentifierName "T" = T
 Line 46 col 36 IdentifierName "T" = T
-Line 48 col 9 IdentifierName "x" = { <T extends Errors.Derived2>(a: T): T; <T extends Errors.Base>(a: T): T; }
+Line 48 col 9 IdentifierName "x" = { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }
 Line 49 col 13 IdentifierName "T" = T
-Line 49 col 23 IdentifierName "Derived2" = Errors.Derived2
+Line 49 col 23 IdentifierName "Derived2" = Derived2
 Line 49 col 33 IdentifierName "a" = T
 Line 49 col 36 IdentifierName "T" = T
 Line 49 col 40 IdentifierName "T" = T
 Line 50 col 13 IdentifierName "T" = T
-Line 50 col 23 IdentifierName "Base" = Errors.Base
+Line 50 col 23 IdentifierName "Base" = Base
 Line 50 col 29 IdentifierName "a" = T
 Line 50 col 32 IdentifierName "T" = T
 Line 50 col 36 IdentifierName "T" = T
-Line 52 col 15 IdentifierName "a2" = { (x: { <T extends Errors.Derived>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; (x: { <T extends Errors.Derived2>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; }
-Line 53 col 21 IdentifierName "foo17" = typeof Errors.foo17
+Line 52 col 15 IdentifierName "a2" = { (x: { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[]; }
+Line 53 col 21 IdentifierName "foo17" = typeof foo17
 Line 53 col 27 IdentifierName "a2" = any
 Line 55 col 8 IdentifierName "r1" = any
 Line 55 col 13 InvocationExpression "foo2(<T, U>(x: T) => <U[]>null)" = any
-Line 55 col 13 IdentifierName "foo2" = typeof Errors.foo2
+Line 55 col 13 IdentifierName "foo2" = typeof foo2
 Line 55 col 18 ParenthesizedArrowFunctionExpression "<T, U>(x: T) => <U[]>null" = <T, U>(x: T) => U[]
 Line 55 col 19 IdentifierName "T" = T
 Line 55 col 22 IdentifierName "U" = U
@@ -157,14 +157,14 @@ Line 57 col 32 IdentifierName "U" = U
 Line 57 col 42 ParenthesizedArrowFunctionExpression "(x: number) => ['']" = (x: number) => string[]
 Line 57 col 43 IdentifierName "x" = number
 Line 57 col 57 ArrayLiteralExpression "['']" = string[]
-Line 59 col 8 IdentifierName "r2arg" = <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U) => (r: T) => V
-Line 59 col 16 ParenthesizedArrowFunctionExpression "<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => <V>null" = <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U) => (r: T) => V
+Line 59 col 8 IdentifierName "r2arg" = <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V
+Line 59 col 16 ParenthesizedArrowFunctionExpression "<T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => <V>null" = <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V
 Line 59 col 17 IdentifierName "T" = T
-Line 59 col 27 IdentifierName "Base" = Errors.Base
+Line 59 col 27 IdentifierName "Base" = Base
 Line 59 col 33 IdentifierName "U" = U
-Line 59 col 43 IdentifierName "Derived" = Errors.Derived
+Line 59 col 43 IdentifierName "Derived" = Derived
 Line 59 col 52 IdentifierName "V" = V
-Line 59 col 62 IdentifierName "Derived2" = Errors.Derived2
+Line 59 col 62 IdentifierName "Derived2" = Derived2
 Line 59 col 72 IdentifierName "x" = (arg: T) => U
 Line 59 col 76 IdentifierName "arg" = T
 Line 59 col 81 IdentifierName "T" = T
@@ -174,35 +174,35 @@ Line 59 col 94 IdentifierName "r" = T
 Line 59 col 97 IdentifierName "T" = T
 Line 59 col 103 CastExpression "<V>null" = V
 Line 59 col 104 IdentifierName "V" = V
-Line 60 col 8 IdentifierName "r2arg2" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 60 col 17 ParenthesizedArrowFunctionExpression "(x: (arg: Base) => Derived) => (r: Base) => <Derived2>null" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 60 col 18 IdentifierName "x" = (arg: Errors.Base) => Errors.Derived
-Line 60 col 22 IdentifierName "arg" = Errors.Base
-Line 60 col 27 IdentifierName "Base" = Errors.Base
-Line 60 col 36 IdentifierName "Derived" = Errors.Derived
-Line 60 col 48 ParenthesizedArrowFunctionExpression "(r: Base) => <Derived2>null" = (r: Errors.Base) => Errors.Derived2
-Line 60 col 49 IdentifierName "r" = Errors.Base
-Line 60 col 52 IdentifierName "Base" = Errors.Base
-Line 60 col 61 CastExpression "<Derived2>null" = Errors.Derived2
-Line 60 col 62 IdentifierName "Derived2" = Errors.Derived2
+Line 60 col 8 IdentifierName "r2arg2" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 60 col 17 ParenthesizedArrowFunctionExpression "(x: (arg: Base) => Derived) => (r: Base) => <Derived2>null" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 60 col 18 IdentifierName "x" = (arg: Base) => Derived
+Line 60 col 22 IdentifierName "arg" = Base
+Line 60 col 27 IdentifierName "Base" = Base
+Line 60 col 36 IdentifierName "Derived" = Derived
+Line 60 col 48 ParenthesizedArrowFunctionExpression "(r: Base) => <Derived2>null" = (r: Base) => Derived2
+Line 60 col 49 IdentifierName "r" = Base
+Line 60 col 52 IdentifierName "Base" = Base
+Line 60 col 61 CastExpression "<Derived2>null" = Derived2
+Line 60 col 62 IdentifierName "Derived2" = Derived2
 Line 61 col 8 IdentifierName "r2" = any
 Line 61 col 13 InvocationExpression "foo7(r2arg)" = any
-Line 61 col 13 IdentifierName "foo7" = typeof Errors.foo7
-Line 61 col 18 IdentifierName "r2arg" = <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U) => (r: T) => V
-Line 62 col 8 IdentifierName "r2a" = { <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U): (r: T) => V; }[]
-Line 62 col 14 ArrayLiteralExpression "[r2arg2, r2arg]" = { <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U): (r: T) => V; }[]
-Line 62 col 15 IdentifierName "r2arg2" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 62 col 23 IdentifierName "r2arg" = <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U) => (r: T) => V
-Line 63 col 8 IdentifierName "r2b" = { <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U): (r: T) => V; }[]
-Line 63 col 14 ArrayLiteralExpression "[r2arg, r2arg2]" = { <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U): (r: T) => V; }[]
-Line 63 col 15 IdentifierName "r2arg" = <T extends Errors.Base, U extends Errors.Derived, V extends Errors.Derived2>(x: (arg: T) => U) => (r: T) => V
-Line 63 col 22 IdentifierName "r2arg2" = (x: (arg: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived2
-Line 65 col 8 IdentifierName "r3arg" = <T extends Errors.Base, U extends Errors.Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
-Line 65 col 16 ParenthesizedArrowFunctionExpression "<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => <U>null" = <T extends Errors.Base, U extends Errors.Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
+Line 61 col 13 IdentifierName "foo7" = typeof foo7
+Line 61 col 18 IdentifierName "r2arg" = <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V
+Line 62 col 8 IdentifierName "r2a" = { <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U): (r: T) => V; }[]
+Line 62 col 14 ArrayLiteralExpression "[r2arg2, r2arg]" = { <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U): (r: T) => V; }[]
+Line 62 col 15 IdentifierName "r2arg2" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 62 col 23 IdentifierName "r2arg" = <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V
+Line 63 col 8 IdentifierName "r2b" = { <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U): (r: T) => V; }[]
+Line 63 col 14 ArrayLiteralExpression "[r2arg, r2arg2]" = { <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U): (r: T) => V; }[]
+Line 63 col 15 IdentifierName "r2arg" = <T extends Base, U extends Derived, V extends Derived2>(x: (arg: T) => U) => (r: T) => V
+Line 63 col 22 IdentifierName "r2arg2" = (x: (arg: Base) => Derived) => (r: Base) => Derived2
+Line 65 col 8 IdentifierName "r3arg" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
+Line 65 col 16 ParenthesizedArrowFunctionExpression "<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => <U>null" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
 Line 65 col 17 IdentifierName "T" = T
-Line 65 col 27 IdentifierName "Base" = Errors.Base
+Line 65 col 27 IdentifierName "Base" = Base
 Line 65 col 33 IdentifierName "U" = U
-Line 65 col 43 IdentifierName "Derived" = Errors.Derived
+Line 65 col 43 IdentifierName "Derived" = Derived
 Line 65 col 52 IdentifierName "x" = (arg: T) => U
 Line 65 col 56 IdentifierName "arg" = T
 Line 65 col 61 IdentifierName "T" = T
@@ -216,126 +216,126 @@ Line 65 col 108 IdentifierName "r" = T
 Line 65 col 111 IdentifierName "T" = T
 Line 65 col 117 CastExpression "<U>null" = U
 Line 65 col 118 IdentifierName "U" = U
-Line 66 col 8 IdentifierName "r3arg2" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 66 col 17 ParenthesizedArrowFunctionExpression "(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => <Derived>null" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 66 col 18 IdentifierName "x" = (arg: Errors.Base) => Errors.Derived
-Line 66 col 22 IdentifierName "arg" = Errors.Base
-Line 66 col 27 IdentifierName "Base" = Errors.Base
-Line 66 col 36 IdentifierName "Derived" = Errors.Derived
-Line 66 col 45 IdentifierName "y" = (arg2: Errors.Base) => Errors.Derived
-Line 66 col 49 IdentifierName "arg2" = Errors.Base
-Line 66 col 55 IdentifierName "Base" = Errors.Base
-Line 66 col 64 IdentifierName "Derived" = Errors.Derived
-Line 66 col 76 ParenthesizedArrowFunctionExpression "(r: Base) => <Derived>null" = (r: Errors.Base) => Errors.Derived
-Line 66 col 77 IdentifierName "r" = Errors.Base
-Line 66 col 80 IdentifierName "Base" = Errors.Base
-Line 66 col 89 CastExpression "<Derived>null" = Errors.Derived
-Line 66 col 90 IdentifierName "Derived" = Errors.Derived
+Line 66 col 8 IdentifierName "r3arg2" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 66 col 17 ParenthesizedArrowFunctionExpression "(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => <Derived>null" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 66 col 18 IdentifierName "x" = (arg: Base) => Derived
+Line 66 col 22 IdentifierName "arg" = Base
+Line 66 col 27 IdentifierName "Base" = Base
+Line 66 col 36 IdentifierName "Derived" = Derived
+Line 66 col 45 IdentifierName "y" = (arg2: Base) => Derived
+Line 66 col 49 IdentifierName "arg2" = Base
+Line 66 col 55 IdentifierName "Base" = Base
+Line 66 col 64 IdentifierName "Derived" = Derived
+Line 66 col 76 ParenthesizedArrowFunctionExpression "(r: Base) => <Derived>null" = (r: Base) => Derived
+Line 66 col 77 IdentifierName "r" = Base
+Line 66 col 80 IdentifierName "Base" = Base
+Line 66 col 89 CastExpression "<Derived>null" = Derived
+Line 66 col 90 IdentifierName "Derived" = Derived
 Line 67 col 8 IdentifierName "r3" = any
 Line 67 col 13 InvocationExpression "foo8(r3arg)" = any
-Line 67 col 13 IdentifierName "foo8" = typeof Errors.foo8
-Line 67 col 18 IdentifierName "r3arg" = <T extends Errors.Base, U extends Errors.Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
+Line 67 col 13 IdentifierName "foo8" = typeof foo8
+Line 67 col 18 IdentifierName "r3arg" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
 Line 68 col 8 IdentifierName "r3a" = {}[]
 Line 68 col 14 ArrayLiteralExpression "[r3arg2, r3arg]" = {}[]
-Line 68 col 15 IdentifierName "r3arg2" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 68 col 23 IdentifierName "r3arg" = <T extends Errors.Base, U extends Errors.Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
+Line 68 col 15 IdentifierName "r3arg2" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 68 col 23 IdentifierName "r3arg" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
 Line 69 col 8 IdentifierName "r3b" = {}[]
 Line 69 col 14 ArrayLiteralExpression "[r3arg, r3arg2]" = {}[]
-Line 69 col 15 IdentifierName "r3arg" = <T extends Errors.Base, U extends Errors.Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
-Line 69 col 22 IdentifierName "r3arg2" = (x: (arg: Errors.Base) => Errors.Derived, y: (arg2: Errors.Base) => Errors.Derived) => (r: Errors.Base) => Errors.Derived
-Line 71 col 8 IdentifierName "r4arg" = <T extends Errors.Derived>(...x: T[]) => T
-Line 71 col 16 ParenthesizedArrowFunctionExpression "<T extends Derived>(...x: T[]) => <T>null" = <T extends Errors.Derived>(...x: T[]) => T
+Line 69 col 15 IdentifierName "r3arg" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U
+Line 69 col 22 IdentifierName "r3arg2" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+Line 71 col 8 IdentifierName "r4arg" = <T extends Derived>(...x: T[]) => T
+Line 71 col 16 ParenthesizedArrowFunctionExpression "<T extends Derived>(...x: T[]) => <T>null" = <T extends Derived>(...x: T[]) => T
 Line 71 col 17 IdentifierName "T" = T
-Line 71 col 27 IdentifierName "Derived" = Errors.Derived
+Line 71 col 27 IdentifierName "Derived" = Derived
 Line 71 col 39 IdentifierName "x" = T[]
 Line 71 col 42 IdentifierName "T" = T
 Line 71 col 50 CastExpression "<T>null" = T
 Line 71 col 51 IdentifierName "T" = T
-Line 72 col 8 IdentifierName "r4arg2" = (...x: Errors.Base[]) => Errors.Base
-Line 72 col 17 ParenthesizedArrowFunctionExpression "(...x: Base[]) => <Base>null" = (...x: Errors.Base[]) => Errors.Base
-Line 72 col 21 IdentifierName "x" = Errors.Base[]
-Line 72 col 24 IdentifierName "Base" = Errors.Base
-Line 72 col 35 CastExpression "<Base>null" = Errors.Base
-Line 72 col 36 IdentifierName "Base" = Errors.Base
+Line 72 col 8 IdentifierName "r4arg2" = (...x: Base[]) => Base
+Line 72 col 17 ParenthesizedArrowFunctionExpression "(...x: Base[]) => <Base>null" = (...x: Base[]) => Base
+Line 72 col 21 IdentifierName "x" = Base[]
+Line 72 col 24 IdentifierName "Base" = Base
+Line 72 col 35 CastExpression "<Base>null" = Base
+Line 72 col 36 IdentifierName "Base" = Base
 Line 73 col 8 IdentifierName "r4" = any
 Line 73 col 13 InvocationExpression "foo10(r4arg)" = any
-Line 73 col 13 IdentifierName "foo10" = typeof Errors.foo10
-Line 73 col 19 IdentifierName "r4arg" = <T extends Errors.Derived>(...x: T[]) => T
-Line 74 col 8 IdentifierName "r4a" = { <T extends Errors.Derived>(...x: T[]): T; }[]
-Line 74 col 14 ArrayLiteralExpression "[r4arg2, r4arg]" = { <T extends Errors.Derived>(...x: T[]): T; }[]
-Line 74 col 15 IdentifierName "r4arg2" = (...x: Errors.Base[]) => Errors.Base
-Line 74 col 23 IdentifierName "r4arg" = <T extends Errors.Derived>(...x: T[]) => T
-Line 75 col 8 IdentifierName "r4b" = { <T extends Errors.Derived>(...x: T[]): T; }[]
-Line 75 col 14 ArrayLiteralExpression "[r4arg, r4arg2]" = { <T extends Errors.Derived>(...x: T[]): T; }[]
-Line 75 col 15 IdentifierName "r4arg" = <T extends Errors.Derived>(...x: T[]) => T
-Line 75 col 22 IdentifierName "r4arg2" = (...x: Errors.Base[]) => Errors.Base
-Line 77 col 8 IdentifierName "r5arg" = <T extends Errors.Derived>(x: T, y: T) => T
-Line 77 col 16 ParenthesizedArrowFunctionExpression "<T extends Derived>(x: T, y: T) => <T>null" = <T extends Errors.Derived>(x: T, y: T) => T
+Line 73 col 13 IdentifierName "foo10" = typeof foo10
+Line 73 col 19 IdentifierName "r4arg" = <T extends Derived>(...x: T[]) => T
+Line 74 col 8 IdentifierName "r4a" = { <T extends Derived>(...x: T[]): T; }[]
+Line 74 col 14 ArrayLiteralExpression "[r4arg2, r4arg]" = { <T extends Derived>(...x: T[]): T; }[]
+Line 74 col 15 IdentifierName "r4arg2" = (...x: Base[]) => Base
+Line 74 col 23 IdentifierName "r4arg" = <T extends Derived>(...x: T[]) => T
+Line 75 col 8 IdentifierName "r4b" = { <T extends Derived>(...x: T[]): T; }[]
+Line 75 col 14 ArrayLiteralExpression "[r4arg, r4arg2]" = { <T extends Derived>(...x: T[]): T; }[]
+Line 75 col 15 IdentifierName "r4arg" = <T extends Derived>(...x: T[]) => T
+Line 75 col 22 IdentifierName "r4arg2" = (...x: Base[]) => Base
+Line 77 col 8 IdentifierName "r5arg" = <T extends Derived>(x: T, y: T) => T
+Line 77 col 16 ParenthesizedArrowFunctionExpression "<T extends Derived>(x: T, y: T) => <T>null" = <T extends Derived>(x: T, y: T) => T
 Line 77 col 17 IdentifierName "T" = T
-Line 77 col 27 IdentifierName "Derived" = Errors.Derived
+Line 77 col 27 IdentifierName "Derived" = Derived
 Line 77 col 36 IdentifierName "x" = T
 Line 77 col 39 IdentifierName "T" = T
 Line 77 col 42 IdentifierName "y" = T
 Line 77 col 45 IdentifierName "T" = T
 Line 77 col 51 CastExpression "<T>null" = T
 Line 77 col 52 IdentifierName "T" = T
-Line 78 col 8 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
-Line 78 col 17 ParenthesizedArrowFunctionExpression "(x: { foo: string }, y: { foo: string; bar: string }) => <Base>null" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
+Line 78 col 8 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 78 col 17 ParenthesizedArrowFunctionExpression "(x: { foo: string }, y: { foo: string; bar: string }) => <Base>null" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
 Line 78 col 18 IdentifierName "x" = { foo: string; }
 Line 78 col 23 IdentifierName "foo" = string
 Line 78 col 38 IdentifierName "y" = { foo: string; bar: string; }
 Line 78 col 43 IdentifierName "foo" = string
 Line 78 col 56 IdentifierName "bar" = string
-Line 78 col 74 CastExpression "<Base>null" = Errors.Base
-Line 78 col 75 IdentifierName "Base" = Errors.Base
+Line 78 col 74 CastExpression "<Base>null" = Base
+Line 78 col 75 IdentifierName "Base" = Base
 Line 79 col 8 IdentifierName "r5" = any
 Line 79 col 13 InvocationExpression "foo11(r5arg)" = any
-Line 79 col 13 IdentifierName "foo11" = typeof Errors.foo11
-Line 79 col 19 IdentifierName "r5arg" = <T extends Errors.Derived>(x: T, y: T) => T
-Line 80 col 8 IdentifierName "r5a" = { <T extends Errors.Derived>(x: T, y: T): T; }[]
-Line 80 col 14 ArrayLiteralExpression "[r5arg2, r5arg]" = { <T extends Errors.Derived>(x: T, y: T): T; }[]
-Line 80 col 15 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
-Line 80 col 23 IdentifierName "r5arg" = <T extends Errors.Derived>(x: T, y: T) => T
-Line 81 col 8 IdentifierName "r5b" = { <T extends Errors.Derived>(x: T, y: T): T; }[]
-Line 81 col 14 ArrayLiteralExpression "[r5arg, r5arg2]" = { <T extends Errors.Derived>(x: T, y: T): T; }[]
-Line 81 col 15 IdentifierName "r5arg" = <T extends Errors.Derived>(x: T, y: T) => T
-Line 81 col 22 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Errors.Base
-Line 83 col 8 IdentifierName "r6arg" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 83 col 16 ParenthesizedArrowFunctionExpression "(x: Array<Base>, y: Array<Derived2>) => <Array<Derived>>null" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 83 col 17 IdentifierName "x" = Errors.Base[]
+Line 79 col 13 IdentifierName "foo11" = typeof foo11
+Line 79 col 19 IdentifierName "r5arg" = <T extends Derived>(x: T, y: T) => T
+Line 80 col 8 IdentifierName "r5a" = { <T extends Derived>(x: T, y: T): T; }[]
+Line 80 col 14 ArrayLiteralExpression "[r5arg2, r5arg]" = { <T extends Derived>(x: T, y: T): T; }[]
+Line 80 col 15 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 80 col 23 IdentifierName "r5arg" = <T extends Derived>(x: T, y: T) => T
+Line 81 col 8 IdentifierName "r5b" = { <T extends Derived>(x: T, y: T): T; }[]
+Line 81 col 14 ArrayLiteralExpression "[r5arg, r5arg2]" = { <T extends Derived>(x: T, y: T): T; }[]
+Line 81 col 15 IdentifierName "r5arg" = <T extends Derived>(x: T, y: T) => T
+Line 81 col 22 IdentifierName "r5arg2" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+Line 83 col 8 IdentifierName "r6arg" = (x: Base[], y: Derived2[]) => Derived[]
+Line 83 col 16 ParenthesizedArrowFunctionExpression "(x: Array<Base>, y: Array<Derived2>) => <Array<Derived>>null" = (x: Base[], y: Derived2[]) => Derived[]
+Line 83 col 17 IdentifierName "x" = Base[]
 Line 83 col 20 IdentifierName "Array" = Array<T>
-Line 83 col 26 IdentifierName "Base" = Errors.Base
-Line 83 col 33 IdentifierName "y" = Errors.Derived2[]
+Line 83 col 26 IdentifierName "Base" = Base
+Line 83 col 33 IdentifierName "y" = Derived2[]
 Line 83 col 36 IdentifierName "Array" = Array<T>
-Line 83 col 42 IdentifierName "Derived2" = Errors.Derived2
-Line 83 col 56 CastExpression "<Array<Derived>>null" = Errors.Derived[]
+Line 83 col 42 IdentifierName "Derived2" = Derived2
+Line 83 col 56 CastExpression "<Array<Derived>>null" = Derived[]
 Line 83 col 57 IdentifierName "Array" = Array<T>
-Line 83 col 63 IdentifierName "Derived" = Errors.Derived
-Line 84 col 8 IdentifierName "r6arg2" = <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
-Line 84 col 17 ParenthesizedArrowFunctionExpression "<T extends Array<Derived2>>(x: Array<Base>, y: Array<Base>) => <T>null" = <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
+Line 83 col 63 IdentifierName "Derived" = Derived
+Line 84 col 8 IdentifierName "r6arg2" = <T extends Derived2[]>(x: Base[], y: Base[]) => T
+Line 84 col 17 ParenthesizedArrowFunctionExpression "<T extends Array<Derived2>>(x: Array<Base>, y: Array<Base>) => <T>null" = <T extends Derived2[]>(x: Base[], y: Base[]) => T
 Line 84 col 18 IdentifierName "T" = T
 Line 84 col 28 IdentifierName "Array" = Array<T>
-Line 84 col 34 IdentifierName "Derived2" = Errors.Derived2
-Line 84 col 45 IdentifierName "x" = Errors.Base[]
+Line 84 col 34 IdentifierName "Derived2" = Derived2
+Line 84 col 45 IdentifierName "x" = Base[]
 Line 84 col 48 IdentifierName "Array" = Array<T>
-Line 84 col 54 IdentifierName "Base" = Errors.Base
-Line 84 col 61 IdentifierName "y" = Errors.Base[]
+Line 84 col 54 IdentifierName "Base" = Base
+Line 84 col 61 IdentifierName "y" = Base[]
 Line 84 col 64 IdentifierName "Array" = Array<T>
-Line 84 col 70 IdentifierName "Base" = Errors.Base
+Line 84 col 70 IdentifierName "Base" = Base
 Line 84 col 80 CastExpression "<T>null" = T
 Line 84 col 81 IdentifierName "T" = T
-Line 85 col 8 IdentifierName "r6" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 85 col 13 InvocationExpression "foo12(r6arg)" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 85 col 13 IdentifierName "foo12" = typeof Errors.foo12
-Line 85 col 19 IdentifierName "r6arg" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 86 col 8 IdentifierName "r6a" = { <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
-Line 86 col 14 ArrayLiteralExpression "[r6arg2, r6arg]" = { <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
-Line 86 col 15 IdentifierName "r6arg2" = <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
-Line 86 col 23 IdentifierName "r6arg" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 87 col 8 IdentifierName "r6b" = { <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
-Line 87 col 14 ArrayLiteralExpression "[r6arg, r6arg2]" = { <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]): T; }[]
-Line 87 col 15 IdentifierName "r6arg" = (x: Errors.Base[], y: Errors.Derived2[]) => Errors.Derived[]
-Line 87 col 22 IdentifierName "r6arg2" = <T extends Errors.Derived2[]>(x: Errors.Base[], y: Errors.Base[]) => T
+Line 85 col 8 IdentifierName "r6" = (x: Base[], y: Derived2[]) => Derived[]
+Line 85 col 13 InvocationExpression "foo12(r6arg)" = (x: Base[], y: Derived2[]) => Derived[]
+Line 85 col 13 IdentifierName "foo12" = typeof foo12
+Line 85 col 19 IdentifierName "r6arg" = (x: Base[], y: Derived2[]) => Derived[]
+Line 86 col 8 IdentifierName "r6a" = { <T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+Line 86 col 14 ArrayLiteralExpression "[r6arg2, r6arg]" = { <T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+Line 86 col 15 IdentifierName "r6arg2" = <T extends Derived2[]>(x: Base[], y: Base[]) => T
+Line 86 col 23 IdentifierName "r6arg" = (x: Base[], y: Derived2[]) => Derived[]
+Line 87 col 8 IdentifierName "r6b" = { <T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+Line 87 col 14 ArrayLiteralExpression "[r6arg, r6arg2]" = { <T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+Line 87 col 15 IdentifierName "r6arg" = (x: Base[], y: Derived2[]) => Derived[]
+Line 87 col 22 IdentifierName "r6arg2" = <T extends Derived2[]>(x: Base[], y: Base[]) => T
 Line 89 col 8 IdentifierName "r7arg" = <T>(x: { a: T; b: T; }) => T
 Line 89 col 16 ParenthesizedArrowFunctionExpression "<T>(x: { a: T; b: T }) => <T>null" = <T>(x: { a: T; b: T; }) => T
 Line 89 col 17 IdentifierName "T" = T
@@ -353,7 +353,7 @@ Line 90 col 23 IdentifierName "a" = string
 Line 90 col 34 IdentifierName "b" = number
 Line 91 col 8 IdentifierName "r7" = any
 Line 91 col 13 InvocationExpression "foo15(r7arg)" = any
-Line 91 col 13 IdentifierName "foo15" = typeof Errors.foo15
+Line 91 col 13 IdentifierName "foo15" = typeof foo15
 Line 91 col 19 IdentifierName "r7arg" = <T>(x: { a: T; b: T; }) => T
 Line 92 col 8 IdentifierName "r7a" = { <T>(x: { a: T; b: T; }): T; }[]
 Line 92 col 14 ArrayLiteralExpression "[r7arg2, r7arg]" = { <T>(x: { a: T; b: T; }): T; }[]
@@ -363,10 +363,10 @@ Line 93 col 8 IdentifierName "r7b" = { <T>(x: { a: T; b: T; }): T; }[]
 Line 93 col 14 ArrayLiteralExpression "[r7arg, r7arg2]" = { <T>(x: { a: T; b: T; }): T; }[]
 Line 93 col 15 IdentifierName "r7arg" = <T>(x: { a: T; b: T; }) => T
 Line 93 col 22 IdentifierName "r7arg2" = (x: { a: string; b: number; }) => number
-Line 95 col 8 IdentifierName "r7arg3" = <T extends Errors.Base>(x: { a: T; b: T; }) => number
-Line 95 col 17 ParenthesizedArrowFunctionExpression "<T extends Base>(x: { a: T; b: T }) => 1" = <T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 95 col 8 IdentifierName "r7arg3" = <T extends Base>(x: { a: T; b: T; }) => number
+Line 95 col 17 ParenthesizedArrowFunctionExpression "<T extends Base>(x: { a: T; b: T }) => 1" = <T extends Base>(x: { a: T; b: T; }) => number
 Line 95 col 18 IdentifierName "T" = T
-Line 95 col 28 IdentifierName "Base" = Errors.Base
+Line 95 col 28 IdentifierName "Base" = Base
 Line 95 col 34 IdentifierName "x" = { a: T; b: T; }
 Line 95 col 39 IdentifierName "a" = T
 Line 95 col 42 IdentifierName "T" = T
@@ -374,15 +374,15 @@ Line 95 col 45 IdentifierName "b" = T
 Line 95 col 48 IdentifierName "T" = T
 Line 96 col 8 IdentifierName "r7c" = (x: { a: string; b: number; }) => number
 Line 96 col 14 InvocationExpression "foo15(r7arg3)" = (x: { a: string; b: number; }) => number
-Line 96 col 14 IdentifierName "foo15" = typeof Errors.foo15
-Line 96 col 20 IdentifierName "r7arg3" = <T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 96 col 14 IdentifierName "foo15" = typeof foo15
+Line 96 col 20 IdentifierName "r7arg3" = <T extends Base>(x: { a: T; b: T; }) => number
 Line 97 col 8 IdentifierName "r7d" = { (x: { a: string; b: number; }): number; }[]
 Line 97 col 14 ArrayLiteralExpression "[r7arg2, r7arg3]" = { (x: { a: string; b: number; }): number; }[]
 Line 97 col 15 IdentifierName "r7arg2" = (x: { a: string; b: number; }) => number
-Line 97 col 23 IdentifierName "r7arg3" = <T extends Errors.Base>(x: { a: T; b: T; }) => number
-Line 98 col 8 IdentifierName "r7e" = { <T extends Errors.Base>(x: { a: T; b: T; }): number; }[]
-Line 98 col 14 ArrayLiteralExpression "[r7arg3, r7arg2]" = { <T extends Errors.Base>(x: { a: T; b: T; }): number; }[]
-Line 98 col 15 IdentifierName "r7arg3" = <T extends Errors.Base>(x: { a: T; b: T; }) => number
+Line 97 col 23 IdentifierName "r7arg3" = <T extends Base>(x: { a: T; b: T; }) => number
+Line 98 col 8 IdentifierName "r7e" = { <T extends Base>(x: { a: T; b: T; }): number; }[]
+Line 98 col 14 ArrayLiteralExpression "[r7arg3, r7arg2]" = { <T extends Base>(x: { a: T; b: T; }): number; }[]
+Line 98 col 15 IdentifierName "r7arg3" = <T extends Base>(x: { a: T; b: T; }) => number
 Line 98 col 23 IdentifierName "r7arg2" = (x: { a: string; b: number; }) => number
 Line 100 col 8 IdentifierName "r8arg" = <T>(x: (a: T) => T) => T[]
 Line 100 col 16 ParenthesizedArrowFunctionExpression "<T>(x: (a: T) => T) => <T[]>null" = <T>(x: (a: T) => T) => T[]
@@ -395,7 +395,7 @@ Line 100 col 39 CastExpression "<T[]>null" = T[]
 Line 100 col 40 IdentifierName "T" = T
 Line 101 col 8 IdentifierName "r8" = any
 Line 101 col 13 InvocationExpression "foo16(r8arg)" = any
-Line 101 col 13 IdentifierName "foo16" = typeof Errors.foo16
+Line 101 col 13 IdentifierName "foo16" = typeof foo16
 Line 101 col 19 IdentifierName "r8arg" = <T>(x: (a: T) => T) => T[]
 Line 103 col 8 IdentifierName "r9arg" = <T>(x: (a: T) => T) => any[]
 Line 103 col 16 ParenthesizedArrowFunctionExpression "<T>(x: (a: T) => T) => <any[]>null" = <T>(x: (a: T) => T) => any[]
@@ -405,19 +405,19 @@ Line 103 col 24 IdentifierName "a" = T
 Line 103 col 27 IdentifierName "T" = T
 Line 103 col 33 IdentifierName "T" = T
 Line 103 col 39 CastExpression "<any[]>null" = any[]
-Line 104 col 8 IdentifierName "r9" = { (x: { <T extends Errors.Derived>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; (x: { <T extends Errors.Derived2>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; }
-Line 104 col 13 InvocationExpression "foo17(r9arg)" = { (x: { <T extends Errors.Derived>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; (x: { <T extends Errors.Derived2>(a: T): T; <T extends Errors.Base>(a: T): T; }): any[]; }
-Line 104 col 13 IdentifierName "foo17" = typeof Errors.foo17
+Line 104 col 8 IdentifierName "r9" = { (x: { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[]; }
+Line 104 col 13 InvocationExpression "foo17(r9arg)" = { (x: { <T extends Derived>(a: T): T; <T extends Base>(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[]; }
+Line 104 col 13 IdentifierName "foo17" = typeof foo17
 Line 104 col 19 IdentifierName "r9arg" = <T>(x: (a: T) => T) => any[]
 Line 107 col 7 IdentifierName "WithGenericSignaturesInBaseType" = WithGenericSignaturesInBaseType
-Line 108 col 21 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 108 col 21 IdentifierName "foo2" = typeof foo2
 Line 108 col 26 IdentifierName "a2" = <T>(x: T) => T[]
 Line 108 col 31 IdentifierName "T" = T
 Line 108 col 34 IdentifierName "x" = T
 Line 108 col 37 IdentifierName "T" = T
 Line 108 col 43 IdentifierName "T" = T
 Line 108 col 56 IdentifierName "a2" = <T>(x: T) => T[]
-Line 109 col 21 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 109 col 21 IdentifierName "foo2" = typeof foo2
 Line 109 col 26 IdentifierName "a2" = any
 Line 110 col 8 IdentifierName "r2arg2" = <T>(x: T) => string[]
 Line 110 col 17 ParenthesizedArrowFunctionExpression "<T>(x: T) => ['']" = <T>(x: T) => string[]
@@ -427,15 +427,15 @@ Line 110 col 24 IdentifierName "T" = T
 Line 110 col 30 ArrayLiteralExpression "['']" = string[]
 Line 111 col 8 IdentifierName "r2" = <T>(x: T) => T[]
 Line 111 col 13 InvocationExpression "foo2(r2arg2)" = <T>(x: T) => T[]
-Line 111 col 13 IdentifierName "foo2" = typeof WithGenericSignaturesInBaseType.foo2
+Line 111 col 13 IdentifierName "foo2" = typeof foo2
 Line 111 col 18 IdentifierName "r2arg2" = <T>(x: T) => string[]
-Line 113 col 21 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 113 col 21 IdentifierName "foo3" = typeof foo3
 Line 113 col 26 IdentifierName "a2" = <T>(x: T) => string[]
 Line 113 col 31 IdentifierName "T" = T
 Line 113 col 34 IdentifierName "x" = T
 Line 113 col 37 IdentifierName "T" = T
 Line 113 col 61 IdentifierName "a2" = <T>(x: T) => string[]
-Line 114 col 21 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 114 col 21 IdentifierName "foo3" = typeof foo3
 Line 114 col 26 IdentifierName "a2" = any
 Line 115 col 8 IdentifierName "r3arg2" = <T>(x: T) => T[]
 Line 115 col 17 ParenthesizedArrowFunctionExpression "<T>(x: T) => <T[]>null" = <T>(x: T) => T[]
@@ -446,5 +446,5 @@ Line 115 col 30 CastExpression "<T[]>null" = T[]
 Line 115 col 31 IdentifierName "T" = T
 Line 116 col 8 IdentifierName "r3" = any
 Line 116 col 13 InvocationExpression "foo3(r3arg2)" = any
-Line 116 col 13 IdentifierName "foo3" = typeof WithGenericSignaturesInBaseType.foo3
+Line 116 col 13 IdentifierName "foo3" = typeof foo3
 Line 116 col 18 IdentifierName "r3arg2" = <T>(x: T) => T[]

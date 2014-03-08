@@ -1,27 +1,27 @@
 === tests/cases/compiler/externalModuleAssignToVar_core.ts ===
 Line 1 col 7 IdentifierName "ext" = ext
-Line 2 col 4 IdentifierName "y1" = { C: new() => C; }
-Line 2 col 10 IdentifierName "C" = new() => C
+Line 2 col 4 IdentifierName "y1" = { C: new() => ext.C; }
+Line 2 col 10 IdentifierName "C" = new() => ext.C
 Line 2 col 22 IdentifierName "ext" = ext
-Line 2 col 26 IdentifierName "C" = C
-Line 2 col 33 IdentifierName "ext" = ext
-Line 3 col 0 AssignmentExpression "y1 = ext" = typeof tests/cases/compiler/externalModuleAssignToVar_core_require.ts
-Line 3 col 0 IdentifierName "y1" = { C: new() => C; }
-Line 3 col 5 IdentifierName "ext" = ext
-Line 5 col 7 IdentifierName "ext2" = typeof C
-Line 6 col 4 IdentifierName "y2" = new() => C
+Line 2 col 26 IdentifierName "C" = ext.C
+Line 2 col 33 IdentifierName "ext" = typeof ext
+Line 3 col 0 AssignmentExpression "y1 = ext" = typeof ext
+Line 3 col 0 IdentifierName "y1" = { C: new() => ext.C; }
+Line 3 col 5 IdentifierName "ext" = typeof ext
+Line 5 col 7 IdentifierName "ext2" = ext2
+Line 6 col 4 IdentifierName "y2" = new() => ext2
 Line 6 col 17 IdentifierName "ext2" = ext2
-Line 6 col 24 IdentifierName "ext2" = typeof C
-Line 7 col 0 AssignmentExpression "y2 = ext2" = typeof C
-Line 7 col 0 IdentifierName "y2" = new() => C
-Line 7 col 5 IdentifierName "ext2" = typeof C
-Line 9 col 7 IdentifierName "ext3" = typeof D
-Line 10 col 4 IdentifierName "y3" = new() => D
+Line 6 col 24 IdentifierName "ext2" = typeof ext2
+Line 7 col 0 AssignmentExpression "y2 = ext2" = typeof ext2
+Line 7 col 0 IdentifierName "y2" = new() => ext2
+Line 7 col 5 IdentifierName "ext2" = typeof ext2
+Line 9 col 7 IdentifierName "ext3" = ext3
+Line 10 col 4 IdentifierName "y3" = new() => ext3
 Line 10 col 18 IdentifierName "ext3" = ext3
-Line 10 col 25 IdentifierName "ext3" = typeof D
-Line 11 col 0 AssignmentExpression "y3 = ext3" = typeof D
-Line 11 col 0 IdentifierName "y3" = new() => D
-Line 11 col 5 IdentifierName "ext3" = typeof D
+Line 10 col 25 IdentifierName "ext3" = typeof ext3
+Line 11 col 0 AssignmentExpression "y3 = ext3" = typeof ext3
+Line 11 col 0 IdentifierName "y3" = new() => ext3
+Line 11 col 5 IdentifierName "ext3" = typeof ext3
 === tests/cases/compiler/externalModuleAssignToVar_ext.ts ===
 Line 0 col 6 IdentifierName "D" = D
 Line 0 col 10 IdentifierName "foo" = string

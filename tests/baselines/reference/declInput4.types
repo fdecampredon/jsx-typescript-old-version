@@ -1,20 +1,20 @@
 === tests/cases/compiler/declInput4.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 1 col 10 IdentifierName "C" = M.C
-Line 2 col 17 IdentifierName "E" = M.E
-Line 3 col 21 IdentifierName "I1" = M.I1
-Line 4 col 14 IdentifierName "I2" = M.I2
-Line 5 col 17 IdentifierName "D" = M.D
+Line 1 col 10 IdentifierName "C" = C
+Line 2 col 17 IdentifierName "E" = E
+Line 3 col 21 IdentifierName "I1" = I1
+Line 4 col 14 IdentifierName "I2" = I2
+Line 5 col 17 IdentifierName "D" = D
 Line 6 col 15 IdentifierName "m1" = number
 Line 7 col 15 IdentifierName "m2" = string
-Line 8 col 15 IdentifierName "m23" = M.E
-Line 8 col 20 IdentifierName "E" = M.E
-Line 9 col 15 IdentifierName "m24" = M.I1
-Line 9 col 20 IdentifierName "I1" = M.I1
-Line 10 col 15 IdentifierName "m232" = () => M.E
-Line 10 col 23 IdentifierName "E" = M.E
-Line 11 col 15 IdentifierName "m242" = () => M.I1
-Line 11 col 23 IdentifierName "I1" = M.I1
-Line 12 col 15 IdentifierName "m26" = (i: M.I1) => void
-Line 12 col 19 IdentifierName "i" = M.I1
-Line 12 col 21 IdentifierName "I1" = M.I1
+Line 8 col 15 IdentifierName "m23" = E
+Line 8 col 20 IdentifierName "E" = E
+Line 9 col 15 IdentifierName "m24" = I1
+Line 9 col 20 IdentifierName "I1" = I1
+Line 10 col 15 IdentifierName "m232" = () => E
+Line 10 col 23 IdentifierName "E" = E
+Line 11 col 15 IdentifierName "m242" = () => I1
+Line 11 col 23 IdentifierName "I1" = I1
+Line 12 col 15 IdentifierName "m26" = (i: I1) => void
+Line 12 col 19 IdentifierName "i" = I1
+Line 12 col 21 IdentifierName "I1" = I1

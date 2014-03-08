@@ -4,10 +4,10 @@ Line 1 col 7 IdentifierName "fum" = fum
 Line 2 col 4 IdentifierName "z" = number
 Line 2 col 8 AddExpression "foo.x + fum.y" = number
 Line 2 col 8 MemberAccessExpression "foo.x" = number
-Line 2 col 8 IdentifierName "foo" = foo
+Line 2 col 8 IdentifierName "foo" = typeof foo
 Line 2 col 12 IdentifierName "x" = number
 Line 2 col 16 MemberAccessExpression "fum.y" = number
-Line 2 col 16 IdentifierName "fum" = fum
+Line 2 col 16 IdentifierName "fum" = typeof fum
 Line 2 col 20 IdentifierName "y" = number
 === tests/cases/compiler/vs/foo_0.ts ===
 Line 0 col 11 IdentifierName "x" = number

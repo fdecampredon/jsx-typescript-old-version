@@ -117,7 +117,7 @@ module TypeScript {
                                 return aliasSymbols;
                             }
 
-                            if (!skipScopeSymbolAliasesLookIn && this.isExternalModuleReferenceAlias(symbol) &&
+                            if (!skipScopeSymbolAliasesLookIn && PullSymbol._isExternalModuleReferenceAlias(symbol) &&
                                 (!symbol.assignedContainer().hasExportAssignment() ||
                                 (symbol.assignedContainer().getExportAssignedContainerSymbol() && symbol.assignedContainer().getExportAssignedContainerSymbol().kind === PullElementKind.DynamicModule))) {// It is a dynamic module)) {
                                 scopeSymbolAliasesToLookIn.push(symbol);
@@ -160,7 +160,7 @@ module TypeScript {
             return null;
         }
 
-        private isExternalModuleReferenceAlias(aliasSymbol: PullTypeAliasSymbol) {
+        public static _isExternalModuleReferenceAlias(aliasSymbol: PullTypeAliasSymbol) {
             if (aliasSymbol) {
                 // Has value symbol
                 if (aliasSymbol.assignedValue()) {
@@ -216,7 +216,7 @@ module TypeScript {
 
             var externalAliases = this.getExternalAliasedSymbols(scopeSymbol);
             // Use only alias symbols to the dynamic module
-            if (externalAliases && this.isExternalModuleReferenceAlias(externalAliases[externalAliases.length - 1])) {
+            if (externalAliases && PullSymbol._isExternalModuleReferenceAlias(externalAliases[externalAliases.length - 1])) {
                 var aliasFullName = aliasNameGetter(externalAliases[0]);
                 if (!aliasFullName) {
                     return null;
@@ -2667,13 +2667,13 @@ module TypeScript {
             var constructSignatures = this.getConstructSignatures();
             var indexSignatures = this.getIndexSignatures();
 
-            if (members.length > 0 || callSignatures.length > 0 || constructSignatures.length > 0 || indexSignatures.length > 0) {
-                var typeOfSymbol = this.getTypeOfSymbol();
-                if (typeOfSymbol) {
-                    var nameForTypeOf = typeOfSymbol.getScopedNameEx(scopeSymbol, /*skipTypeParametersInName*/ true);
-                    return MemberName.create(nameForTypeOf, "typeof ", "");
-                }
+            var typeOfSymbol = this.getTypeOfSymbol();
+            if (typeOfSymbol) {
+                var nameForTypeOf = typeOfSymbol.getScopedNameEx(scopeSymbol, /*skipTypeParametersInName*/ true);
+                return MemberName.create(nameForTypeOf, "typeof ", "");
+            }
 
+            if (members.length > 0 || callSignatures.length > 0 || constructSignatures.length > 0 || indexSignatures.length > 0) {
                 if (this._inMemberTypeNameEx) {
                     // If recursive without type name possible if function expression type
                     return MemberName.create("any");
@@ -3218,10 +3218,14 @@ module TypeScript {
             }
 
             if (this._assignedContainer) {
-                this.retrievingExportAssignment = true;
-                var sym = this._assignedContainer.getExportAssignedValueSymbol();
-                this.retrievingExportAssignment = false;
-                return sym;
+                if (this._assignedContainer.hasExportAssignment()) {
+                    this.retrievingExportAssignment = true;
+                    var sym = this._assignedContainer.getExportAssignedValueSymbol();
+                    this.retrievingExportAssignment = false;
+                    return sym;
+                }
+
+                return this._assignedContainer.getInstanceSymbol();
             }
 
             return null;

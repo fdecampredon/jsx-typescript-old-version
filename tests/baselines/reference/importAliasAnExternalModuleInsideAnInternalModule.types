@@ -1,14 +1,14 @@
 === tests/cases/compiler/importAliasAnExternalModuleInsideAnInternalModule_file1.ts ===
 Line 0 col 7 IdentifierName "r" = r
 Line 1 col 7 IdentifierName "m_private" = m_private
-Line 3 col 18 IdentifierName "C" = m_private.C
-Line 3 col 22 IdentifierName "r" = tests/cases/compiler/importAliasAnExternalModuleInsideAnInternalModule_file0.ts
+Line 3 col 18 IdentifierName "C" = C
+Line 3 col 22 IdentifierName "r" = C
 Line 4 col 0 InvocationExpression "C.m.foo()" = void
-Line 4 col 0 MemberAccessExpression "C.m.foo" = typeof m.foo
-Line 4 col 0 MemberAccessExpression "C.m" = typeof m
-Line 4 col 0 IdentifierName "C" = m_private.C
-Line 4 col 6 IdentifierName "m" = typeof m
-Line 4 col 8 IdentifierName "foo" = typeof m.foo
+Line 4 col 0 MemberAccessExpression "C.m.foo" = typeof C.m.foo
+Line 4 col 0 MemberAccessExpression "C.m" = typeof C.m
+Line 4 col 0 IdentifierName "C" = typeof C
+Line 4 col 6 IdentifierName "m" = typeof C.m
+Line 4 col 8 IdentifierName "foo" = typeof C.m.foo
 === tests/cases/compiler/importAliasAnExternalModuleInsideAnInternalModule_file0.ts ===
 Line 0 col 14 IdentifierName "m" = m
-Line 1 col 20 IdentifierName "foo" = typeof m.foo
+Line 1 col 20 IdentifierName "foo" = typeof foo

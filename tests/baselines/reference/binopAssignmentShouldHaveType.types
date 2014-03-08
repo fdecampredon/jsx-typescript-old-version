@@ -1,7 +1,7 @@
 === tests/cases/compiler/binopAssignmentShouldHaveType.ts ===
 Line 0 col 12 IdentifierName "console" = any
 Line 2 col 7 IdentifierName "Test" = Test
-Line 3 col 14 IdentifierName "Bug" = Test.Bug
+Line 3 col 14 IdentifierName "Bug" = Bug
 Line 4 col 0 IdentifierName "getName" = () => string
 Line 7 col 0 IdentifierName "bug" = () => void
 Line 8 col 7 IdentifierName "name" = string
@@ -12,7 +12,7 @@ Line 9 col 8 AssignmentExpression "name= this.getName()" = string
 Line 9 col 8 IdentifierName "name" = string
 Line 9 col 14 InvocationExpression "this.getName()" = string
 Line 9 col 14 MemberAccessExpression "this.getName" = () => string
-Line 9 col 14 ThisKeyword "this" = Test.Bug
+Line 9 col 14 ThisKeyword "this" = Bug
 Line 9 col 19 IdentifierName "getName" = () => string
 Line 9 col 30 IdentifierName "length" = number
 Line 10 col 0 InvocationExpression "console.log(name)" = any

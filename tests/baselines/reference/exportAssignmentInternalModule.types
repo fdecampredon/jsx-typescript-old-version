@@ -1,8 +1,8 @@
 === tests/cases/compiler/exportAssignmentInternalModule_B.ts ===
-Line 0 col 7 IdentifierName "modM" = typeof M
+Line 0 col 7 IdentifierName "modM" = modM
 Line 2 col 4 IdentifierName "n" = number
 Line 2 col 16 MemberAccessExpression "modM.x" = any
-Line 2 col 16 IdentifierName "modM" = typeof M
+Line 2 col 16 IdentifierName "modM" = typeof modM
 Line 2 col 21 IdentifierName "x" = any
 === tests/cases/compiler/exportAssignmentInternalModule_A.ts ===
 Line 0 col 7 IdentifierName "M" = M

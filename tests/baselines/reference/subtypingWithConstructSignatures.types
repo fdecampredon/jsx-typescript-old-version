@@ -1,16 +1,16 @@
 === tests/cases/compiler/subtypingWithConstructSignatures.ts ===
 Line 0 col 7 IdentifierName "ConstructSignature" = ConstructSignature
-Line 1 col 21 IdentifierName "foo1" = typeof ConstructSignature.foo1
+Line 1 col 21 IdentifierName "foo1" = typeof foo1
 Line 1 col 26 IdentifierName "cb" = new(x: number) => void
 Line 1 col 35 IdentifierName "x" = number
 Line 1 col 63 IdentifierName "cb" = new(x: number) => void
-Line 2 col 21 IdentifierName "foo1" = typeof ConstructSignature.foo1
+Line 2 col 21 IdentifierName "foo1" = typeof foo1
 Line 2 col 26 IdentifierName "cb" = any
 Line 3 col 8 IdentifierName "rarg1" = new(x: number) => number
 Line 3 col 20 IdentifierName "x" = number
 Line 4 col 8 IdentifierName "r" = new(x: number) => void
 Line 4 col 12 InvocationExpression "foo1(rarg1)" = new(x: number) => void
-Line 4 col 12 IdentifierName "foo1" = typeof ConstructSignature.foo1
+Line 4 col 12 IdentifierName "foo1" = typeof foo1
 Line 4 col 17 IdentifierName "rarg1" = new(x: number) => number
 Line 5 col 8 IdentifierName "rarg2" = new<T>(x: T) => string
 Line 5 col 20 IdentifierName "T" = T
@@ -18,21 +18,21 @@ Line 5 col 23 IdentifierName "x" = T
 Line 5 col 26 IdentifierName "T" = T
 Line 6 col 8 IdentifierName "r2" = new(x: number) => void
 Line 6 col 13 InvocationExpression "foo1(rarg2)" = new(x: number) => void
-Line 6 col 13 IdentifierName "foo1" = typeof ConstructSignature.foo1
+Line 6 col 13 IdentifierName "foo1" = typeof foo1
 Line 6 col 18 IdentifierName "rarg2" = new<T>(x: T) => string
-Line 8 col 21 IdentifierName "foo2" = typeof ConstructSignature.foo2
+Line 8 col 21 IdentifierName "foo2" = typeof foo2
 Line 8 col 26 IdentifierName "cb" = new(x: number, y: number) => void
 Line 8 col 35 IdentifierName "x" = number
 Line 8 col 46 IdentifierName "y" = number
 Line 8 col 74 IdentifierName "cb" = new(x: number, y: number) => void
-Line 9 col 21 IdentifierName "foo2" = typeof ConstructSignature.foo2
+Line 9 col 21 IdentifierName "foo2" = typeof foo2
 Line 9 col 26 IdentifierName "cb" = any
 Line 10 col 8 IdentifierName "r3arg1" = new(x: number, y: number) => number
 Line 10 col 21 IdentifierName "x" = number
 Line 10 col 32 IdentifierName "y" = number
 Line 11 col 8 IdentifierName "r3" = new(x: number, y: number) => void
 Line 11 col 13 InvocationExpression "foo2(r3arg1)" = new(x: number, y: number) => void
-Line 11 col 13 IdentifierName "foo2" = typeof ConstructSignature.foo2
+Line 11 col 13 IdentifierName "foo2" = typeof foo2
 Line 11 col 18 IdentifierName "r3arg1" = new(x: number, y: number) => number
 Line 12 col 8 IdentifierName "r4arg1" = new<T>(x: T) => string
 Line 12 col 21 IdentifierName "T" = T
@@ -40,5 +40,5 @@ Line 12 col 24 IdentifierName "x" = T
 Line 12 col 27 IdentifierName "T" = T
 Line 13 col 8 IdentifierName "r4" = new(x: number, y: number) => void
 Line 13 col 13 InvocationExpression "foo2(r4arg1)" = new(x: number, y: number) => void
-Line 13 col 13 IdentifierName "foo2" = typeof ConstructSignature.foo2
+Line 13 col 13 IdentifierName "foo2" = typeof foo2
 Line 13 col 18 IdentifierName "r4arg1" = new<T>(x: T) => string

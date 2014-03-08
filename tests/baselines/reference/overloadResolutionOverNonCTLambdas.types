@@ -1,7 +1,7 @@
 === tests/cases/compiler/overloadResolutionOverNonCTLambdas.ts ===
 Line 0 col 7 IdentifierName "Bugs" = Bugs
-Line 1 col 8 IdentifierName "A" = Bugs.A
-Line 5 col 11 IdentifierName "bug2" = typeof Bugs.bug2
+Line 1 col 8 IdentifierName "A" = A
+Line 5 col 11 IdentifierName "bug2" = typeof bug2
 Line 5 col 16 IdentifierName "message" = string
 Line 5 col 35 IdentifierName "args" = any[]
 Line 6 col 8 IdentifierName "result" = string

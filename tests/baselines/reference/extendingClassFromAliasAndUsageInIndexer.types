@@ -1,0 +1,41 @@
+=== tests/cases/compiler/extendingClassFromAliasAndUsageInIndexer_main.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 7 IdentifierName "moduleA" = moduleA
+Line 2 col 7 IdentifierName "moduleB" = moduleB
+Line 3 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 4 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
+Line 4 col 31 IdentifierName "Backbone" = typeof Backbone
+Line 4 col 40 IdentifierName "Model" = typeof Backbone.Model
+Line 6 col 4 IdentifierName "moduleATyped" = IHasVisualizationModel
+Line 6 col 18 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 6 col 43 IdentifierName "moduleA" = typeof moduleA
+Line 7 col 4 IdentifierName "moduleMap" = { [key: string]: IHasVisualizationModel; }
+Line 7 col 18 IdentifierName "key" = string
+Line 7 col 32 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 7 col 59 ObjectLiteralExpression "{
+    "moduleA": moduleA,
+    "moduleB": moduleB
+}" = { "moduleA": typeof moduleA; "moduleB": typeof moduleB; [key: string]: IHasVisualizationModel; }
+Line 8 col 15 IdentifierName "moduleA" = typeof moduleA
+Line 9 col 15 IdentifierName "moduleB" = typeof moduleB
+Line 11 col 4 IdentifierName "moduleName" = string
+Line 12 col 4 IdentifierName "visModel" = Backbone.Model
+Line 12 col 15 ObjectCreationExpression "new moduleMap[moduleName].VisualizationModel()" = Backbone.Model
+Line 12 col 19 MemberAccessExpression "moduleMap[moduleName].VisualizationModel" = typeof Backbone.Model
+Line 12 col 19 ElementAccessExpression "moduleMap[moduleName]" = IHasVisualizationModel
+Line 12 col 19 IdentifierName "moduleMap" = { [key: string]: IHasVisualizationModel; }
+Line 12 col 29 IdentifierName "moduleName" = string
+Line 12 col 41 IdentifierName "VisualizationModel" = typeof Backbone.Model
+=== tests/cases/compiler/extendingClassFromAliasAndUsageInIndexer_backbone.ts ===
+Line 0 col 13 IdentifierName "Model" = Model
+Line 1 col 11 IdentifierName "someData" = string
+=== tests/cases/compiler/extendingClassFromAliasAndUsageInIndexer_moduleA.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model
+=== tests/cases/compiler/extendingClassFromAliasAndUsageInIndexer_moduleB.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model

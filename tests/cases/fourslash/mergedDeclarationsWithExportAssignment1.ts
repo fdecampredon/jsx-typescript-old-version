@@ -19,7 +19,7 @@
 edit.insert('');
 
 goTo.marker('1');
-verify.quickInfoIs('typeof Foo');
+verify.quickInfoIs('Foo');
 
 goTo.marker('2');
 verify.completionListContains('Foo');

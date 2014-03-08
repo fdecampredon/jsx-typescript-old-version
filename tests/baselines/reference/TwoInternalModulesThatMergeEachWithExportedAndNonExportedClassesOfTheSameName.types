@@ -1,10 +1,10 @@
 === tests/cases/compiler/TwoInternalModulesThatMergeEachWithExportedAndNonExportedClassesOfTheSameName.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 17 IdentifierName "Point" = A.Point
+Line 1 col 17 IdentifierName "Point" = Point
 Line 2 col 0 IdentifierName "x" = number
 Line 3 col 0 IdentifierName "y" = number
 Line 7 col 7 IdentifierName "A" = A
-Line 8 col 10 IdentifierName "Point" = A.Point
+Line 8 col 10 IdentifierName "Point" = Point
 Line 9 col 0 IdentifierName "fromCarthesian" = (p: A.Point) => { x: number; y: number; }
 Line 9 col 23 IdentifierName "p" = A.Point
 Line 9 col 26 IdentifierName "A" = A
@@ -27,12 +27,12 @@ Line 17 col 9 IdentifierName "Point" = A.Point
 Line 19 col 7 IdentifierName "X" = X
 Line 19 col 9 IdentifierName "Y" = X.Y
 Line 19 col 11 IdentifierName "Z" = X.Y.Z
-Line 20 col 17 IdentifierName "Line" = X.Y.Z.Line
+Line 20 col 17 IdentifierName "Line" = Line
 Line 21 col 0 IdentifierName "length" = number
 Line 25 col 7 IdentifierName "X" = X
-Line 26 col 18 IdentifierName "Y" = X.Y
-Line 27 col 22 IdentifierName "Z" = X.Y.Z
-Line 28 col 18 IdentifierName "Line" = X.Y.Z.Line
+Line 26 col 18 IdentifierName "Y" = Y
+Line 27 col 22 IdentifierName "Z" = Z
+Line 28 col 18 IdentifierName "Line" = Line
 Line 29 col 0 IdentifierName "name" = string
 Line 36 col 4 IdentifierName "l" = { length: number; }
 Line 36 col 9 IdentifierName "length" = number

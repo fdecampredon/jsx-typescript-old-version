@@ -1,6 +1,6 @@
 === tests/cases/compiler/collisionCodeGenModuleWithEnumMemberConflict.ts ===
 Line 0 col 7 IdentifierName "m1" = m1
-Line 1 col 9 IdentifierName "e" = m1.e
-Line 2 col 0 IdentifierName "m1" = m1.e
-Line 3 col 0 IdentifierName "m2" = m1.e
-Line 3 col 13 IdentifierName "m1" = m1.e
+Line 1 col 9 IdentifierName "e" = e
+Line 2 col 0 IdentifierName "m1" = e
+Line 3 col 0 IdentifierName "m2" = e
+Line 3 col 13 IdentifierName "m1" = e

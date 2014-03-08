@@ -1,12 +1,12 @@
 === tests/cases/compiler/part1.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "Point" = A.Point
+Line 1 col 21 IdentifierName "Point" = Point
 Line 2 col 0 IdentifierName "x" = number
 Line 3 col 0 IdentifierName "y" = number
-Line 6 col 18 IdentifierName "Utils" = A.Utils
-Line 7 col 24 IdentifierName "mirror" = typeof A.Utils.mirror
+Line 6 col 18 IdentifierName "Utils" = Utils
+Line 7 col 24 IdentifierName "mirror" = typeof mirror
 Line 7 col 31 IdentifierName "T" = T
-Line 7 col 41 IdentifierName "Point" = A.Point
+Line 7 col 41 IdentifierName "Point" = Point
 Line 7 col 48 IdentifierName "p" = T
 Line 7 col 51 IdentifierName "T" = T
 Line 8 col 19 ObjectLiteralExpression "{ x: p.y, y: p.x }" = { x: number; y: number; }
@@ -18,20 +18,20 @@ Line 8 col 29 IdentifierName "y" = number
 Line 8 col 32 MemberAccessExpression "p.x" = number
 Line 8 col 32 IdentifierName "p" = T
 Line 8 col 34 IdentifierName "x" = number
-Line 11 col 15 IdentifierName "Origin" = A.Point
-Line 11 col 23 IdentifierName "Point" = A.Point
+Line 11 col 15 IdentifierName "Origin" = Point
+Line 11 col 23 IdentifierName "Point" = Point
 Line 11 col 31 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
 Line 11 col 33 IdentifierName "x" = number
 Line 11 col 39 IdentifierName "y" = number
 === tests/cases/compiler/part2.ts ===
 Line 0 col 7 IdentifierName "A" = A
 Line 2 col 8 IdentifierName "Origin" = string
-Line 4 col 18 IdentifierName "Utils" = A.Utils
-Line 5 col 21 IdentifierName "Plane" = A.Utils.Plane
-Line 6 col 31 IdentifierName "tl" = A.Point
-Line 6 col 35 IdentifierName "Point" = A.Point
-Line 6 col 49 IdentifierName "br" = A.Point
-Line 6 col 53 IdentifierName "Point" = A.Point
+Line 4 col 18 IdentifierName "Utils" = Utils
+Line 5 col 21 IdentifierName "Plane" = Plane
+Line 6 col 31 IdentifierName "tl" = Point
+Line 6 col 35 IdentifierName "Point" = Point
+Line 6 col 49 IdentifierName "br" = Point
+Line 6 col 53 IdentifierName "Point" = Point
 === tests/cases/compiler/part3.ts ===
 Line 2 col 4 IdentifierName "o" = { x: number; y: number; }
 Line 2 col 9 IdentifierName "x" = number

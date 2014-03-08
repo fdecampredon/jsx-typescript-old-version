@@ -1,7 +1,7 @@
 === tests/cases/compiler/consumer.ts ===
-Line 0 col 7 IdentifierName "x" = typeof M2
+Line 0 col 7 IdentifierName "x" = x
 Line 1 col 0 MemberAccessExpression "x.X // .ts should be picked" = number
-Line 1 col 0 IdentifierName "x" = typeof M2
+Line 1 col 0 IdentifierName "x" = typeof x
 Line 1 col 2 IdentifierName "X // .ts should be picked" = number
 === tests/cases/compiler/foo.ts ===
 Line 0 col 7 IdentifierName "M2" = M2

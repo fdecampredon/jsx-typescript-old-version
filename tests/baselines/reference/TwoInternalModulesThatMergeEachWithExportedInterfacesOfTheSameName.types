@@ -1,14 +1,14 @@
 === tests/cases/compiler/TwoInternalModulesThatMergeEachWithExportedInterfacesOfTheSameName.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "Point" = A.Point
+Line 1 col 21 IdentifierName "Point" = Point
 Line 2 col 0 IdentifierName "x" = number
 Line 3 col 0 IdentifierName "y" = number
-Line 4 col 0 IdentifierName "toCarth" = () => A.Point
-Line 4 col 19 IdentifierName "Point" = A.Point
+Line 4 col 0 IdentifierName "toCarth" = () => Point
+Line 4 col 19 IdentifierName "Point" = Point
 Line 8 col 7 IdentifierName "A" = A
-Line 9 col 21 IdentifierName "Point" = A.Point
-Line 10 col 0 IdentifierName "fromCarth" = () => A.Point
-Line 10 col 21 IdentifierName "Point" = A.Point
+Line 9 col 21 IdentifierName "Point" = Point
+Line 10 col 0 IdentifierName "fromCarth" = () => Point
+Line 10 col 21 IdentifierName "Point" = Point
 Line 15 col 4 IdentifierName "p" = { x: number; y: number; toCarth(): A.Point; fromCarth(): A.Point; }
 Line 15 col 9 IdentifierName "x" = number
 Line 15 col 20 IdentifierName "y" = number
@@ -24,7 +24,7 @@ Line 16 col 9 IdentifierName "Point" = A.Point
 Line 18 col 7 IdentifierName "X" = X
 Line 18 col 9 IdentifierName "Y" = X.Y
 Line 18 col 11 IdentifierName "Z" = X.Y.Z
-Line 19 col 21 IdentifierName "Line" = X.Y.Z.Line
+Line 19 col 21 IdentifierName "Line" = Line
 Line 20 col 13 IdentifierName "start" = A.Point
 Line 20 col 20 IdentifierName "A" = A
 Line 20 col 22 IdentifierName "Point" = A.Point
@@ -32,9 +32,9 @@ Line 20 col 29 IdentifierName "end" = A.Point
 Line 20 col 34 IdentifierName "A" = A
 Line 20 col 36 IdentifierName "Point" = A.Point
 Line 24 col 7 IdentifierName "X" = X
-Line 25 col 18 IdentifierName "Y" = X.Y
-Line 25 col 20 IdentifierName "Z" = X.Y.Z
-Line 26 col 25 IdentifierName "Line" = X.Y.Z.Line
+Line 25 col 18 IdentifierName "Y" = Y
+Line 25 col 20 IdentifierName "Z" = Y.Z
+Line 26 col 25 IdentifierName "Line" = Line
 Line 27 col 0 IdentifierName "start" = A.Point
 Line 27 col 19 IdentifierName "A" = A
 Line 27 col 21 IdentifierName "Point" = A.Point

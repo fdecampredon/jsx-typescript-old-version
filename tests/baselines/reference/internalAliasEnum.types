@@ -1,15 +1,15 @@
 === tests/cases/compiler/internalAliasEnum.ts ===
 Line 0 col 7 IdentifierName "a" = a
-Line 1 col 16 IdentifierName "weekend" = a.weekend
-Line 2 col 0 IdentifierName "Friday" = a.weekend
-Line 3 col 0 IdentifierName "Saturday" = a.weekend
-Line 4 col 0 IdentifierName "Sunday" = a.weekend
+Line 1 col 16 IdentifierName "weekend" = weekend
+Line 2 col 0 IdentifierName "Friday" = weekend
+Line 3 col 0 IdentifierName "Saturday" = weekend
+Line 4 col 0 IdentifierName "Sunday" = weekend
 Line 8 col 7 IdentifierName "c" = c
-Line 9 col 11 IdentifierName "b" = typeof a.weekend
+Line 9 col 11 IdentifierName "b" = b
 Line 9 col 15 IdentifierName "a" = a
 Line 9 col 17 IdentifierName "weekend" = a.weekend
 Line 10 col 15 IdentifierName "bVal" = a.weekend
-Line 10 col 21 IdentifierName "b" = c.b
+Line 10 col 21 IdentifierName "b" = b
 Line 10 col 25 MemberAccessExpression "b.Sunday" = a.weekend
 Line 10 col 25 IdentifierName "b" = typeof a.weekend
 Line 10 col 27 IdentifierName "Sunday" = a.weekend

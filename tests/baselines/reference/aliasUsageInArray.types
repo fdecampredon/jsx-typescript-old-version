@@ -1,0 +1,23 @@
+=== tests/cases/compiler/aliasUsageInArray_main.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 7 IdentifierName "moduleA" = moduleA
+Line 2 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 3 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
+Line 3 col 31 IdentifierName "Backbone" = typeof Backbone
+Line 3 col 40 IdentifierName "Model" = typeof Backbone.Model
+Line 6 col 4 IdentifierName "xs" = IHasVisualizationModel[]
+Line 6 col 8 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 6 col 35 ArrayLiteralExpression "[moduleA]" = IHasVisualizationModel[]
+Line 6 col 36 IdentifierName "moduleA" = typeof moduleA
+Line 7 col 4 IdentifierName "xs2" = typeof moduleA[]
+Line 7 col 16 IdentifierName "moduleA" = typeof moduleA
+Line 7 col 28 ArrayLiteralExpression "[moduleA]" = typeof moduleA[]
+Line 7 col 29 IdentifierName "moduleA" = typeof moduleA
+=== tests/cases/compiler/aliasUsageInArray_backbone.ts ===
+Line 0 col 13 IdentifierName "Model" = Model
+Line 1 col 11 IdentifierName "someData" = string
+=== tests/cases/compiler/aliasUsageInArray_moduleA.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model

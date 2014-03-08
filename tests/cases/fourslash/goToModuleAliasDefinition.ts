@@ -4,7 +4,7 @@
 //// /*2*/export class Foo {}
 
 // @Filename: b.ts
-//// /*bug*/import n = module('a');
+//// /*bug*/import n = require('a');
 //// var x = new /*1*/n.Foo();
 
 goTo.marker('1');

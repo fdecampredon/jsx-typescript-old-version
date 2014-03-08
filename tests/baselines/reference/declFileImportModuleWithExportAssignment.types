@@ -1,22 +1,22 @@
 === tests/cases/compiler/declFileImportModuleWithExportAssignment_1.ts ===
-Line 1 col 7 IdentifierName "a1" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
-Line 2 col 11 IdentifierName "a" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
-Line 2 col 15 IdentifierName "a1" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
+Line 1 col 7 IdentifierName "a1" = a1
+Line 2 col 11 IdentifierName "a" = { test1: a1.connectModule; test2(): a1.connectModule; (): a1.connectExport; }
+Line 2 col 15 IdentifierName "a1" = { test1: a1.connectModule; test2(): a1.connectModule; (): a1.connectExport; }
 Line 3 col 0 InvocationExpression "a.test1(null, null, null)" = void
-Line 3 col 0 MemberAccessExpression "a.test1" = m2.connectModule
-Line 3 col 0 IdentifierName "a" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
-Line 3 col 2 IdentifierName "test1" = m2.connectModule
+Line 3 col 0 MemberAccessExpression "a.test1" = a1.connectModule
+Line 3 col 0 IdentifierName "a" = { test1: a1.connectModule; test2(): a1.connectModule; (): a1.connectExport; }
+Line 3 col 2 IdentifierName "test1" = a1.connectModule
 === tests/cases/compiler/declFileImportModuleWithExportAssignment_0.ts ===
 Line 1 col 7 IdentifierName "m2" = m2
-Line 2 col 21 IdentifierName "connectModule" = m2.connectModule
+Line 2 col 21 IdentifierName "connectModule" = connectModule
 Line 3 col 9 IdentifierName "res" = any
 Line 3 col 14 IdentifierName "req" = any
 Line 3 col 19 IdentifierName "next" = any
-Line 5 col 21 IdentifierName "connectExport" = m2.connectExport
-Line 6 col 0 IdentifierName "use" = (mod: m2.connectModule) => m2.connectExport
-Line 6 col 14 IdentifierName "mod" = m2.connectModule
-Line 6 col 19 IdentifierName "connectModule" = m2.connectModule
-Line 6 col 37 IdentifierName "connectExport" = m2.connectExport
+Line 5 col 21 IdentifierName "connectExport" = connectExport
+Line 6 col 0 IdentifierName "use" = (mod: connectModule) => connectExport
+Line 6 col 14 IdentifierName "mod" = connectModule
+Line 6 col 19 IdentifierName "connectModule" = connectModule
+Line 6 col 37 IdentifierName "connectExport" = connectExport
 Line 7 col 0 IdentifierName "listen" = (port: number) => void
 Line 7 col 17 IdentifierName "port" = number
 Line 11 col 4 IdentifierName "m2" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }

@@ -1,403 +1,403 @@
 === tests/cases/compiler/genericClassWithStaticFactory.ts ===
 Line 0 col 7 IdentifierName "Editor" = Editor
-Line 2 col 17 IdentifierName "List" = Editor.List<T>
+Line 2 col 17 IdentifierName "List" = List<T>
 Line 2 col 22 IdentifierName "T" = T
-Line 3 col 15 IdentifierName "next" = Editor.List<T>
-Line 3 col 21 IdentifierName "List" = Editor.List<T>
+Line 3 col 15 IdentifierName "next" = List<T>
+Line 3 col 21 IdentifierName "List" = List<T>
 Line 3 col 26 IdentifierName "T" = T
-Line 4 col 15 IdentifierName "prev" = Editor.List<T>
-Line 4 col 21 IdentifierName "List" = Editor.List<T>
+Line 4 col 15 IdentifierName "prev" = List<T>
+Line 4 col 21 IdentifierName "List" = List<T>
 Line 4 col 26 IdentifierName "T" = T
-Line 5 col 16 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 5 col 29 IdentifierName "ListFactory" = Editor.ListFactory<T>
+Line 5 col 16 IdentifierName "listFactory" = ListFactory<T>
+Line 5 col 29 IdentifierName "ListFactory" = ListFactory<T>
 Line 5 col 41 IdentifierName "T" = T
 Line 7 col 27 IdentifierName "isHead" = boolean
 Line 7 col 51 IdentifierName "data" = T
 Line 7 col 57 IdentifierName "T" = T
-Line 8 col 0 AssignmentExpression "this.listFactory = new ListFactory<T>()" = Editor.ListFactory<T>
-Line 8 col 0 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 8 col 0 ThisKeyword "this" = Editor.List<T>
-Line 8 col 17 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 8 col 31 ObjectCreationExpression "new ListFactory<T>()" = Editor.ListFactory<T>
-Line 8 col 35 IdentifierName "ListFactory" = typeof Editor.ListFactory
+Line 8 col 0 AssignmentExpression "this.listFactory = new ListFactory<T>()" = ListFactory<T>
+Line 8 col 0 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 8 col 0 ThisKeyword "this" = List<T>
+Line 8 col 17 IdentifierName "listFactory" = ListFactory<T>
+Line 8 col 31 ObjectCreationExpression "new ListFactory<T>()" = ListFactory<T>
+Line 8 col 35 IdentifierName "ListFactory" = typeof ListFactory
 Line 8 col 47 IdentifierName "T" = T
-Line 12 col 15 IdentifierName "add" = (data: T) => Editor.List<T>
+Line 12 col 15 IdentifierName "add" = (data: T) => List<T>
 Line 12 col 19 IdentifierName "data" = T
 Line 12 col 25 IdentifierName "T" = T
-Line 12 col 29 IdentifierName "List" = Editor.List<T>
+Line 12 col 29 IdentifierName "List" = List<T>
 Line 12 col 34 IdentifierName "T" = T
-Line 13 col 16 IdentifierName "entry" = Editor.List<T>
-Line 13 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = Editor.List<T>
-Line 13 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => Editor.List<T>
-Line 13 col 24 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 13 col 24 ThisKeyword "this" = Editor.List<T>
-Line 13 col 29 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 13 col 41 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
+Line 13 col 16 IdentifierName "entry" = List<T>
+Line 13 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = List<T>
+Line 13 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => List<T>
+Line 13 col 24 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 13 col 24 ThisKeyword "this" = List<T>
+Line 13 col 29 IdentifierName "listFactory" = ListFactory<T>
+Line 13 col 41 IdentifierName "MakeEntry" = <T>(data: T) => List<T>
 Line 13 col 51 IdentifierName "data" = T
-Line 14 col 0 AssignmentExpression "this.prev.next = entry" = Editor.List<T>
-Line 14 col 0 MemberAccessExpression "this.prev.next" = Editor.List<T>
-Line 14 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 14 col 0 ThisKeyword "this" = Editor.List<T>
-Line 15 col 17 IdentifierName "prev" = Editor.List<T>
-Line 15 col 22 IdentifierName "next" = Editor.List<T>
-Line 15 col 29 IdentifierName "entry" = Editor.List<T>
-Line 16 col 0 AssignmentExpression "entry.next = this" = Editor.List<T>
-Line 16 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 16 col 0 IdentifierName "entry" = Editor.List<T>
-Line 16 col 18 IdentifierName "next" = Editor.List<T>
-Line 16 col 25 ThisKeyword "this" = Editor.List<T>
-Line 17 col 0 AssignmentExpression "entry.prev = this.prev" = Editor.List<T>
-Line 17 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 17 col 0 IdentifierName "entry" = Editor.List<T>
-Line 17 col 18 IdentifierName "prev" = Editor.List<T>
-Line 17 col 25 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 17 col 25 ThisKeyword "this" = Editor.List<T>
-Line 17 col 30 IdentifierName "prev" = Editor.List<T>
-Line 18 col 0 AssignmentExpression "this.prev = entry" = Editor.List<T>
-Line 18 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 18 col 0 ThisKeyword "this" = Editor.List<T>
-Line 18 col 17 IdentifierName "prev" = Editor.List<T>
-Line 18 col 24 IdentifierName "entry" = Editor.List<T>
-Line 19 col 19 IdentifierName "entry" = Editor.List<T>
+Line 14 col 0 AssignmentExpression "this.prev.next = entry" = List<T>
+Line 14 col 0 MemberAccessExpression "this.prev.next" = List<T>
+Line 14 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 14 col 0 ThisKeyword "this" = List<T>
+Line 15 col 17 IdentifierName "prev" = List<T>
+Line 15 col 22 IdentifierName "next" = List<T>
+Line 15 col 29 IdentifierName "entry" = List<T>
+Line 16 col 0 AssignmentExpression "entry.next = this" = List<T>
+Line 16 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 16 col 0 IdentifierName "entry" = List<T>
+Line 16 col 18 IdentifierName "next" = List<T>
+Line 16 col 25 ThisKeyword "this" = List<T>
+Line 17 col 0 AssignmentExpression "entry.prev = this.prev" = List<T>
+Line 17 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 17 col 0 IdentifierName "entry" = List<T>
+Line 17 col 18 IdentifierName "prev" = List<T>
+Line 17 col 25 MemberAccessExpression "this.prev" = List<T>
+Line 17 col 25 ThisKeyword "this" = List<T>
+Line 17 col 30 IdentifierName "prev" = List<T>
+Line 18 col 0 AssignmentExpression "this.prev = entry" = List<T>
+Line 18 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 18 col 0 ThisKeyword "this" = List<T>
+Line 18 col 17 IdentifierName "prev" = List<T>
+Line 18 col 24 IdentifierName "entry" = List<T>
+Line 19 col 19 IdentifierName "entry" = List<T>
 Line 22 col 15 IdentifierName "count" = () => number
-Line 23 col 16 IdentifierName "entry" = Editor.List<T>
-Line 23 col 23 IdentifierName "List" = Editor.List<T>
+Line 23 col 16 IdentifierName "entry" = List<T>
+Line 23 col 23 IdentifierName "List" = List<T>
 Line 23 col 28 IdentifierName "T" = T
 Line 24 col 16 IdentifierName "i" = number
-Line 25 col 0 AssignmentExpression "entry = this.next" = Editor.List<T>
-Line 25 col 0 IdentifierName "entry" = Editor.List<T>
-Line 26 col 20 MemberAccessExpression "this.next" = Editor.List<T>
-Line 26 col 20 ThisKeyword "this" = Editor.List<T>
-Line 26 col 25 IdentifierName "next" = Editor.List<T>
+Line 25 col 0 AssignmentExpression "entry = this.next" = List<T>
+Line 25 col 0 IdentifierName "entry" = List<T>
+Line 26 col 20 MemberAccessExpression "this.next" = List<T>
+Line 26 col 20 ThisKeyword "this" = List<T>
+Line 26 col 25 IdentifierName "next" = List<T>
 Line 27 col 17 AssignmentExpression "i = 0" = number
 Line 27 col 17 IdentifierName "i" = number
 Line 27 col 24 LogicalNotExpression "!(entry.isHead)" = boolean
 Line 27 col 25 ParenthesizedExpression "(entry.isHead)" = boolean
 Line 27 col 26 MemberAccessExpression "entry.isHead" = boolean
-Line 27 col 26 IdentifierName "entry" = Editor.List<T>
+Line 27 col 26 IdentifierName "entry" = List<T>
 Line 27 col 32 IdentifierName "isHead" = boolean
 Line 27 col 41 PostIncrementExpression "i++" = number
 Line 27 col 41 IdentifierName "i" = number
-Line 28 col 0 AssignmentExpression "entry = entry.next" = Editor.List<T>
-Line 28 col 0 IdentifierName "entry" = Editor.List<T>
-Line 28 col 24 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 28 col 24 IdentifierName "entry" = Editor.List<T>
-Line 28 col 30 IdentifierName "next" = Editor.List<T>
+Line 28 col 0 AssignmentExpression "entry = entry.next" = List<T>
+Line 28 col 0 IdentifierName "entry" = List<T>
+Line 28 col 24 MemberAccessExpression "entry.next" = List<T>
+Line 28 col 24 IdentifierName "entry" = List<T>
+Line 28 col 30 IdentifierName "next" = List<T>
 Line 31 col 19 ParenthesizedExpression "(i)" = number
 Line 31 col 20 IdentifierName "i" = number
 Line 34 col 15 IdentifierName "isEmpty" = () => boolean
 Line 35 col 19 ParenthesizedExpression "(this.next == this)" = boolean
 Line 35 col 20 EqualsWithTypeConversionExpression "this.next == this" = boolean
-Line 35 col 20 MemberAccessExpression "this.next" = Editor.List<T>
-Line 35 col 20 ThisKeyword "this" = Editor.List<T>
-Line 35 col 25 IdentifierName "next" = Editor.List<T>
-Line 35 col 33 ThisKeyword "this" = Editor.List<T>
+Line 35 col 20 MemberAccessExpression "this.next" = List<T>
+Line 35 col 20 ThisKeyword "this" = List<T>
+Line 35 col 25 IdentifierName "next" = List<T>
+Line 35 col 33 ThisKeyword "this" = List<T>
 Line 38 col 15 IdentifierName "first" = () => T
 Line 38 col 24 IdentifierName "T" = T
 Line 39 col 16 InvocationExpression "this.isEmpty()" = boolean
 Line 39 col 16 MemberAccessExpression "this.isEmpty" = () => boolean
-Line 39 col 16 ThisKeyword "this" = Editor.List<T>
+Line 39 col 16 ThisKeyword "this" = List<T>
 Line 39 col 21 IdentifierName "isEmpty" = () => boolean
 Line 41 col 23 MemberAccessExpression "this.next.data" = T
-Line 41 col 23 MemberAccessExpression "this.next" = Editor.List<T>
-Line 41 col 23 ThisKeyword "this" = Editor.List<T>
-Line 41 col 28 IdentifierName "next" = Editor.List<T>
+Line 41 col 23 MemberAccessExpression "this.next" = List<T>
+Line 41 col 23 ThisKeyword "this" = List<T>
+Line 41 col 28 IdentifierName "next" = List<T>
 Line 41 col 33 IdentifierName "data" = T
-Line 48 col 15 IdentifierName "pushEntry" = (entry: Editor.List<T>) => void
-Line 48 col 25 IdentifierName "entry" = Editor.List<T>
-Line 48 col 32 IdentifierName "List" = Editor.List<T>
+Line 48 col 15 IdentifierName "pushEntry" = (entry: List<T>) => void
+Line 48 col 25 IdentifierName "entry" = List<T>
+Line 48 col 32 IdentifierName "List" = List<T>
 Line 48 col 37 IdentifierName "T" = T
 Line 49 col 0 AssignmentExpression "entry.isHead = false" = boolean
 Line 49 col 0 MemberAccessExpression "entry.isHead" = boolean
-Line 49 col 0 IdentifierName "entry" = Editor.List<T>
+Line 49 col 0 IdentifierName "entry" = List<T>
 Line 49 col 18 IdentifierName "isHead" = boolean
-Line 50 col 0 AssignmentExpression "entry.next = this.next" = Editor.List<T>
-Line 50 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 50 col 0 IdentifierName "entry" = Editor.List<T>
-Line 50 col 18 IdentifierName "next" = Editor.List<T>
-Line 50 col 25 MemberAccessExpression "this.next" = Editor.List<T>
-Line 50 col 25 ThisKeyword "this" = Editor.List<T>
-Line 50 col 30 IdentifierName "next" = Editor.List<T>
-Line 51 col 0 AssignmentExpression "entry.prev = this" = Editor.List<T>
-Line 51 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 51 col 0 IdentifierName "entry" = Editor.List<T>
-Line 51 col 18 IdentifierName "prev" = Editor.List<T>
-Line 51 col 25 ThisKeyword "this" = Editor.List<T>
-Line 52 col 0 AssignmentExpression "this.next = entry" = Editor.List<T>
-Line 52 col 0 MemberAccessExpression "this.next" = Editor.List<T>
-Line 52 col 0 ThisKeyword "this" = Editor.List<T>
-Line 52 col 17 IdentifierName "next" = Editor.List<T>
-Line 52 col 24 IdentifierName "entry" = Editor.List<T>
-Line 53 col 0 AssignmentExpression "entry.next.prev = entry" = Editor.List<T>
-Line 53 col 0 MemberAccessExpression "entry.next.prev" = Editor.List<T>
-Line 53 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 53 col 0 IdentifierName "entry" = Editor.List<T>
-Line 53 col 18 IdentifierName "next" = Editor.List<T>
-Line 53 col 23 IdentifierName "prev" = Editor.List<T>
-Line 53 col 30 IdentifierName "entry" = Editor.List<T>
+Line 50 col 0 AssignmentExpression "entry.next = this.next" = List<T>
+Line 50 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 50 col 0 IdentifierName "entry" = List<T>
+Line 50 col 18 IdentifierName "next" = List<T>
+Line 50 col 25 MemberAccessExpression "this.next" = List<T>
+Line 50 col 25 ThisKeyword "this" = List<T>
+Line 50 col 30 IdentifierName "next" = List<T>
+Line 51 col 0 AssignmentExpression "entry.prev = this" = List<T>
+Line 51 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 51 col 0 IdentifierName "entry" = List<T>
+Line 51 col 18 IdentifierName "prev" = List<T>
+Line 51 col 25 ThisKeyword "this" = List<T>
+Line 52 col 0 AssignmentExpression "this.next = entry" = List<T>
+Line 52 col 0 MemberAccessExpression "this.next" = List<T>
+Line 52 col 0 ThisKeyword "this" = List<T>
+Line 52 col 17 IdentifierName "next" = List<T>
+Line 52 col 24 IdentifierName "entry" = List<T>
+Line 53 col 0 AssignmentExpression "entry.next.prev = entry" = List<T>
+Line 53 col 0 MemberAccessExpression "entry.next.prev" = List<T>
+Line 53 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 53 col 0 IdentifierName "entry" = List<T>
+Line 53 col 18 IdentifierName "next" = List<T>
+Line 53 col 23 IdentifierName "prev" = List<T>
+Line 53 col 30 IdentifierName "entry" = List<T>
 Line 56 col 15 IdentifierName "push" = (data: T) => void
 Line 56 col 20 IdentifierName "data" = T
 Line 56 col 26 IdentifierName "T" = T
-Line 57 col 16 IdentifierName "entry" = Editor.List<T>
-Line 57 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = Editor.List<T>
-Line 57 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => Editor.List<T>
-Line 57 col 24 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 57 col 24 ThisKeyword "this" = Editor.List<T>
-Line 57 col 29 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 57 col 41 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
+Line 57 col 16 IdentifierName "entry" = List<T>
+Line 57 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = List<T>
+Line 57 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => List<T>
+Line 57 col 24 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 57 col 24 ThisKeyword "this" = List<T>
+Line 57 col 29 IdentifierName "listFactory" = ListFactory<T>
+Line 57 col 41 IdentifierName "MakeEntry" = <T>(data: T) => List<T>
 Line 57 col 51 IdentifierName "data" = T
 Line 58 col 0 AssignmentExpression "entry.data = data" = T
 Line 58 col 0 MemberAccessExpression "entry.data" = T
-Line 58 col 0 IdentifierName "entry" = Editor.List<T>
+Line 58 col 0 IdentifierName "entry" = List<T>
 Line 58 col 18 IdentifierName "data" = T
 Line 58 col 25 IdentifierName "data" = T
 Line 59 col 0 AssignmentExpression "entry.isHead = false" = boolean
 Line 59 col 0 MemberAccessExpression "entry.isHead" = boolean
-Line 59 col 0 IdentifierName "entry" = Editor.List<T>
+Line 59 col 0 IdentifierName "entry" = List<T>
 Line 59 col 18 IdentifierName "isHead" = boolean
-Line 60 col 0 AssignmentExpression "entry.next = this.next" = Editor.List<T>
-Line 60 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 60 col 0 IdentifierName "entry" = Editor.List<T>
-Line 60 col 18 IdentifierName "next" = Editor.List<T>
-Line 60 col 25 MemberAccessExpression "this.next" = Editor.List<T>
-Line 60 col 25 ThisKeyword "this" = Editor.List<T>
-Line 60 col 30 IdentifierName "next" = Editor.List<T>
-Line 61 col 0 AssignmentExpression "entry.prev = this" = Editor.List<T>
-Line 61 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 61 col 0 IdentifierName "entry" = Editor.List<T>
-Line 61 col 18 IdentifierName "prev" = Editor.List<T>
-Line 61 col 25 ThisKeyword "this" = Editor.List<T>
-Line 62 col 0 AssignmentExpression "this.next = entry" = Editor.List<T>
-Line 62 col 0 MemberAccessExpression "this.next" = Editor.List<T>
-Line 62 col 0 ThisKeyword "this" = Editor.List<T>
-Line 62 col 17 IdentifierName "next" = Editor.List<T>
-Line 62 col 24 IdentifierName "entry" = Editor.List<T>
-Line 63 col 0 AssignmentExpression "entry.next.prev = entry" = Editor.List<T>
-Line 63 col 0 MemberAccessExpression "entry.next.prev" = Editor.List<T>
-Line 63 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 63 col 0 IdentifierName "entry" = Editor.List<T>
-Line 63 col 18 IdentifierName "next" = Editor.List<T>
-Line 63 col 23 IdentifierName "prev" = Editor.List<T>
-Line 63 col 30 IdentifierName "entry" = Editor.List<T>
-Line 66 col 15 IdentifierName "popEntry" = (head: Editor.List<T>) => Editor.List<T>
-Line 66 col 24 IdentifierName "head" = Editor.List<T>
-Line 66 col 30 IdentifierName "List" = Editor.List<T>
+Line 60 col 0 AssignmentExpression "entry.next = this.next" = List<T>
+Line 60 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 60 col 0 IdentifierName "entry" = List<T>
+Line 60 col 18 IdentifierName "next" = List<T>
+Line 60 col 25 MemberAccessExpression "this.next" = List<T>
+Line 60 col 25 ThisKeyword "this" = List<T>
+Line 60 col 30 IdentifierName "next" = List<T>
+Line 61 col 0 AssignmentExpression "entry.prev = this" = List<T>
+Line 61 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 61 col 0 IdentifierName "entry" = List<T>
+Line 61 col 18 IdentifierName "prev" = List<T>
+Line 61 col 25 ThisKeyword "this" = List<T>
+Line 62 col 0 AssignmentExpression "this.next = entry" = List<T>
+Line 62 col 0 MemberAccessExpression "this.next" = List<T>
+Line 62 col 0 ThisKeyword "this" = List<T>
+Line 62 col 17 IdentifierName "next" = List<T>
+Line 62 col 24 IdentifierName "entry" = List<T>
+Line 63 col 0 AssignmentExpression "entry.next.prev = entry" = List<T>
+Line 63 col 0 MemberAccessExpression "entry.next.prev" = List<T>
+Line 63 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 63 col 0 IdentifierName "entry" = List<T>
+Line 63 col 18 IdentifierName "next" = List<T>
+Line 63 col 23 IdentifierName "prev" = List<T>
+Line 63 col 30 IdentifierName "entry" = List<T>
+Line 66 col 15 IdentifierName "popEntry" = (head: List<T>) => List<T>
+Line 66 col 24 IdentifierName "head" = List<T>
+Line 66 col 30 IdentifierName "List" = List<T>
 Line 66 col 35 IdentifierName "T" = T
-Line 66 col 40 IdentifierName "List" = Editor.List<T>
+Line 66 col 40 IdentifierName "List" = List<T>
 Line 66 col 45 IdentifierName "T" = T
 Line 67 col 16 MemberAccessExpression "this.next.isHead" = boolean
-Line 67 col 16 MemberAccessExpression "this.next" = Editor.List<T>
-Line 67 col 16 ThisKeyword "this" = Editor.List<T>
-Line 67 col 21 IdentifierName "next" = Editor.List<T>
+Line 67 col 16 MemberAccessExpression "this.next" = List<T>
+Line 67 col 16 ThisKeyword "this" = List<T>
+Line 67 col 21 IdentifierName "next" = List<T>
 Line 67 col 26 IdentifierName "isHead" = boolean
-Line 71 col 23 InvocationExpression "this.listFactory.RemoveEntry(this.next)" = Editor.List<T>
-Line 71 col 23 MemberAccessExpression "this.listFactory.RemoveEntry" = <T>(entry: Editor.List<T>) => Editor.List<T>
-Line 71 col 23 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 71 col 23 ThisKeyword "this" = Editor.List<T>
-Line 71 col 28 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 71 col 40 IdentifierName "RemoveEntry" = <T>(entry: Editor.List<T>) => Editor.List<T>
-Line 71 col 52 MemberAccessExpression "this.next" = Editor.List<T>
-Line 71 col 52 ThisKeyword "this" = Editor.List<T>
-Line 71 col 57 IdentifierName "next" = Editor.List<T>
-Line 75 col 15 IdentifierName "insertEntry" = (entry: Editor.List<T>) => Editor.List<T>
-Line 75 col 27 IdentifierName "entry" = Editor.List<T>
-Line 75 col 34 IdentifierName "List" = Editor.List<T>
+Line 71 col 23 InvocationExpression "this.listFactory.RemoveEntry(this.next)" = List<T>
+Line 71 col 23 MemberAccessExpression "this.listFactory.RemoveEntry" = <T>(entry: List<T>) => List<T>
+Line 71 col 23 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 71 col 23 ThisKeyword "this" = List<T>
+Line 71 col 28 IdentifierName "listFactory" = ListFactory<T>
+Line 71 col 40 IdentifierName "RemoveEntry" = <T>(entry: List<T>) => List<T>
+Line 71 col 52 MemberAccessExpression "this.next" = List<T>
+Line 71 col 52 ThisKeyword "this" = List<T>
+Line 71 col 57 IdentifierName "next" = List<T>
+Line 75 col 15 IdentifierName "insertEntry" = (entry: List<T>) => List<T>
+Line 75 col 27 IdentifierName "entry" = List<T>
+Line 75 col 34 IdentifierName "List" = List<T>
 Line 75 col 39 IdentifierName "T" = T
-Line 75 col 44 IdentifierName "List" = Editor.List<T>
+Line 75 col 44 IdentifierName "List" = List<T>
 Line 75 col 49 IdentifierName "T" = T
 Line 76 col 0 AssignmentExpression "entry.isHead = false" = boolean
 Line 76 col 0 MemberAccessExpression "entry.isHead" = boolean
-Line 76 col 0 IdentifierName "entry" = Editor.List<T>
+Line 76 col 0 IdentifierName "entry" = List<T>
 Line 76 col 18 IdentifierName "isHead" = boolean
-Line 77 col 0 AssignmentExpression "this.prev.next = entry" = Editor.List<T>
-Line 77 col 0 MemberAccessExpression "this.prev.next" = Editor.List<T>
-Line 77 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 77 col 0 ThisKeyword "this" = Editor.List<T>
-Line 77 col 17 IdentifierName "prev" = Editor.List<T>
-Line 77 col 22 IdentifierName "next" = Editor.List<T>
-Line 77 col 29 IdentifierName "entry" = Editor.List<T>
-Line 78 col 0 AssignmentExpression "entry.next = this" = Editor.List<T>
-Line 78 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 78 col 0 IdentifierName "entry" = Editor.List<T>
-Line 78 col 18 IdentifierName "next" = Editor.List<T>
-Line 78 col 25 ThisKeyword "this" = Editor.List<T>
-Line 79 col 0 AssignmentExpression "entry.prev = this.prev" = Editor.List<T>
-Line 79 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 79 col 0 IdentifierName "entry" = Editor.List<T>
-Line 79 col 18 IdentifierName "prev" = Editor.List<T>
-Line 79 col 25 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 79 col 25 ThisKeyword "this" = Editor.List<T>
-Line 79 col 30 IdentifierName "prev" = Editor.List<T>
-Line 80 col 0 AssignmentExpression "this.prev = entry" = Editor.List<T>
-Line 80 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 80 col 0 ThisKeyword "this" = Editor.List<T>
-Line 80 col 17 IdentifierName "prev" = Editor.List<T>
-Line 80 col 24 IdentifierName "entry" = Editor.List<T>
-Line 81 col 19 IdentifierName "entry" = Editor.List<T>
-Line 84 col 15 IdentifierName "insertAfter" = (data: T) => Editor.List<T>
+Line 77 col 0 AssignmentExpression "this.prev.next = entry" = List<T>
+Line 77 col 0 MemberAccessExpression "this.prev.next" = List<T>
+Line 77 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 77 col 0 ThisKeyword "this" = List<T>
+Line 77 col 17 IdentifierName "prev" = List<T>
+Line 77 col 22 IdentifierName "next" = List<T>
+Line 77 col 29 IdentifierName "entry" = List<T>
+Line 78 col 0 AssignmentExpression "entry.next = this" = List<T>
+Line 78 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 78 col 0 IdentifierName "entry" = List<T>
+Line 78 col 18 IdentifierName "next" = List<T>
+Line 78 col 25 ThisKeyword "this" = List<T>
+Line 79 col 0 AssignmentExpression "entry.prev = this.prev" = List<T>
+Line 79 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 79 col 0 IdentifierName "entry" = List<T>
+Line 79 col 18 IdentifierName "prev" = List<T>
+Line 79 col 25 MemberAccessExpression "this.prev" = List<T>
+Line 79 col 25 ThisKeyword "this" = List<T>
+Line 79 col 30 IdentifierName "prev" = List<T>
+Line 80 col 0 AssignmentExpression "this.prev = entry" = List<T>
+Line 80 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 80 col 0 ThisKeyword "this" = List<T>
+Line 80 col 17 IdentifierName "prev" = List<T>
+Line 80 col 24 IdentifierName "entry" = List<T>
+Line 81 col 19 IdentifierName "entry" = List<T>
+Line 84 col 15 IdentifierName "insertAfter" = (data: T) => List<T>
 Line 84 col 27 IdentifierName "data" = T
 Line 84 col 33 IdentifierName "T" = T
-Line 84 col 37 IdentifierName "List" = Editor.List<T>
+Line 84 col 37 IdentifierName "List" = List<T>
 Line 84 col 42 IdentifierName "T" = T
-Line 85 col 16 IdentifierName "entry" = Editor.List<T>
-Line 85 col 23 IdentifierName "List" = Editor.List<T>
+Line 85 col 16 IdentifierName "entry" = List<T>
+Line 85 col 23 IdentifierName "List" = List<T>
 Line 85 col 28 IdentifierName "T" = T
-Line 85 col 33 InvocationExpression "this.listFactory.MakeEntry(data)" = Editor.List<T>
-Line 85 col 33 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => Editor.List<T>
-Line 85 col 33 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 85 col 33 ThisKeyword "this" = Editor.List<T>
-Line 85 col 38 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 85 col 50 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
+Line 85 col 33 InvocationExpression "this.listFactory.MakeEntry(data)" = List<T>
+Line 85 col 33 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => List<T>
+Line 85 col 33 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 85 col 33 ThisKeyword "this" = List<T>
+Line 85 col 38 IdentifierName "listFactory" = ListFactory<T>
+Line 85 col 50 IdentifierName "MakeEntry" = <T>(data: T) => List<T>
 Line 85 col 60 IdentifierName "data" = T
-Line 86 col 0 AssignmentExpression "entry.next = this.next" = Editor.List<T>
-Line 86 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 86 col 0 IdentifierName "entry" = Editor.List<T>
-Line 86 col 18 IdentifierName "next" = Editor.List<T>
-Line 86 col 25 MemberAccessExpression "this.next" = Editor.List<T>
-Line 86 col 25 ThisKeyword "this" = Editor.List<T>
-Line 86 col 30 IdentifierName "next" = Editor.List<T>
-Line 87 col 0 AssignmentExpression "entry.prev = this" = Editor.List<T>
-Line 87 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 87 col 0 IdentifierName "entry" = Editor.List<T>
-Line 87 col 18 IdentifierName "prev" = Editor.List<T>
-Line 87 col 25 ThisKeyword "this" = Editor.List<T>
-Line 88 col 0 AssignmentExpression "this.next = entry" = Editor.List<T>
-Line 88 col 0 MemberAccessExpression "this.next" = Editor.List<T>
-Line 88 col 0 ThisKeyword "this" = Editor.List<T>
-Line 88 col 17 IdentifierName "next" = Editor.List<T>
-Line 88 col 24 IdentifierName "entry" = Editor.List<T>
-Line 89 col 0 AssignmentExpression "entry.next.prev = entry" = Editor.List<T>
-Line 89 col 0 MemberAccessExpression "entry.next.prev" = Editor.List<T>
-Line 89 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 89 col 0 IdentifierName "entry" = Editor.List<T>
-Line 89 col 18 IdentifierName "next" = Editor.List<T>
-Line 89 col 23 IdentifierName "prev" = Editor.List<T>
-Line 89 col 30 IdentifierName "entry" = Editor.List<T>
-Line 90 col 19 IdentifierName "entry" = Editor.List<T>
-Line 93 col 15 IdentifierName "insertEntryBefore" = (entry: Editor.List<T>) => Editor.List<T>
-Line 93 col 33 IdentifierName "entry" = Editor.List<T>
-Line 93 col 40 IdentifierName "List" = Editor.List<T>
+Line 86 col 0 AssignmentExpression "entry.next = this.next" = List<T>
+Line 86 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 86 col 0 IdentifierName "entry" = List<T>
+Line 86 col 18 IdentifierName "next" = List<T>
+Line 86 col 25 MemberAccessExpression "this.next" = List<T>
+Line 86 col 25 ThisKeyword "this" = List<T>
+Line 86 col 30 IdentifierName "next" = List<T>
+Line 87 col 0 AssignmentExpression "entry.prev = this" = List<T>
+Line 87 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 87 col 0 IdentifierName "entry" = List<T>
+Line 87 col 18 IdentifierName "prev" = List<T>
+Line 87 col 25 ThisKeyword "this" = List<T>
+Line 88 col 0 AssignmentExpression "this.next = entry" = List<T>
+Line 88 col 0 MemberAccessExpression "this.next" = List<T>
+Line 88 col 0 ThisKeyword "this" = List<T>
+Line 88 col 17 IdentifierName "next" = List<T>
+Line 88 col 24 IdentifierName "entry" = List<T>
+Line 89 col 0 AssignmentExpression "entry.next.prev = entry" = List<T>
+Line 89 col 0 MemberAccessExpression "entry.next.prev" = List<T>
+Line 89 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 89 col 0 IdentifierName "entry" = List<T>
+Line 89 col 18 IdentifierName "next" = List<T>
+Line 89 col 23 IdentifierName "prev" = List<T>
+Line 89 col 30 IdentifierName "entry" = List<T>
+Line 90 col 19 IdentifierName "entry" = List<T>
+Line 93 col 15 IdentifierName "insertEntryBefore" = (entry: List<T>) => List<T>
+Line 93 col 33 IdentifierName "entry" = List<T>
+Line 93 col 40 IdentifierName "List" = List<T>
 Line 93 col 45 IdentifierName "T" = T
-Line 93 col 50 IdentifierName "List" = Editor.List<T>
+Line 93 col 50 IdentifierName "List" = List<T>
 Line 93 col 55 IdentifierName "T" = T
-Line 94 col 0 AssignmentExpression "this.prev.next = entry" = Editor.List<T>
-Line 94 col 0 MemberAccessExpression "this.prev.next" = Editor.List<T>
-Line 94 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 94 col 0 ThisKeyword "this" = Editor.List<T>
-Line 94 col 17 IdentifierName "prev" = Editor.List<T>
-Line 94 col 22 IdentifierName "next" = Editor.List<T>
-Line 94 col 29 IdentifierName "entry" = Editor.List<T>
-Line 95 col 0 AssignmentExpression "entry.next = this" = Editor.List<T>
-Line 95 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 95 col 0 IdentifierName "entry" = Editor.List<T>
-Line 96 col 18 IdentifierName "next" = Editor.List<T>
-Line 96 col 25 ThisKeyword "this" = Editor.List<T>
-Line 97 col 0 AssignmentExpression "entry.prev = this.prev" = Editor.List<T>
-Line 97 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 97 col 0 IdentifierName "entry" = Editor.List<T>
-Line 97 col 18 IdentifierName "prev" = Editor.List<T>
-Line 97 col 25 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 97 col 25 ThisKeyword "this" = Editor.List<T>
-Line 97 col 30 IdentifierName "prev" = Editor.List<T>
-Line 98 col 0 AssignmentExpression "this.prev = entry" = Editor.List<T>
-Line 98 col 0 MemberAccessExpression "this.prev" = Editor.List<T>
-Line 98 col 0 ThisKeyword "this" = Editor.List<T>
-Line 98 col 17 IdentifierName "prev" = Editor.List<T>
-Line 98 col 24 IdentifierName "entry" = Editor.List<T>
-Line 99 col 19 IdentifierName "entry" = Editor.List<T>
-Line 102 col 15 IdentifierName "insertBefore" = (data: T) => Editor.List<T>
+Line 94 col 0 AssignmentExpression "this.prev.next = entry" = List<T>
+Line 94 col 0 MemberAccessExpression "this.prev.next" = List<T>
+Line 94 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 94 col 0 ThisKeyword "this" = List<T>
+Line 94 col 17 IdentifierName "prev" = List<T>
+Line 94 col 22 IdentifierName "next" = List<T>
+Line 94 col 29 IdentifierName "entry" = List<T>
+Line 95 col 0 AssignmentExpression "entry.next = this" = List<T>
+Line 95 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 95 col 0 IdentifierName "entry" = List<T>
+Line 96 col 18 IdentifierName "next" = List<T>
+Line 96 col 25 ThisKeyword "this" = List<T>
+Line 97 col 0 AssignmentExpression "entry.prev = this.prev" = List<T>
+Line 97 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 97 col 0 IdentifierName "entry" = List<T>
+Line 97 col 18 IdentifierName "prev" = List<T>
+Line 97 col 25 MemberAccessExpression "this.prev" = List<T>
+Line 97 col 25 ThisKeyword "this" = List<T>
+Line 97 col 30 IdentifierName "prev" = List<T>
+Line 98 col 0 AssignmentExpression "this.prev = entry" = List<T>
+Line 98 col 0 MemberAccessExpression "this.prev" = List<T>
+Line 98 col 0 ThisKeyword "this" = List<T>
+Line 98 col 17 IdentifierName "prev" = List<T>
+Line 98 col 24 IdentifierName "entry" = List<T>
+Line 99 col 19 IdentifierName "entry" = List<T>
+Line 102 col 15 IdentifierName "insertBefore" = (data: T) => List<T>
 Line 102 col 28 IdentifierName "data" = T
 Line 102 col 34 IdentifierName "T" = T
-Line 102 col 38 IdentifierName "List" = Editor.List<T>
+Line 102 col 38 IdentifierName "List" = List<T>
 Line 102 col 43 IdentifierName "T" = T
-Line 103 col 16 IdentifierName "entry" = Editor.List<T>
-Line 103 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = Editor.List<T>
-Line 103 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => Editor.List<T>
-Line 103 col 24 MemberAccessExpression "this.listFactory" = Editor.ListFactory<T>
-Line 103 col 24 ThisKeyword "this" = Editor.List<T>
-Line 103 col 29 IdentifierName "listFactory" = Editor.ListFactory<T>
-Line 103 col 41 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
+Line 103 col 16 IdentifierName "entry" = List<T>
+Line 103 col 24 InvocationExpression "this.listFactory.MakeEntry(data)" = List<T>
+Line 103 col 24 MemberAccessExpression "this.listFactory.MakeEntry" = <T>(data: T) => List<T>
+Line 103 col 24 MemberAccessExpression "this.listFactory" = ListFactory<T>
+Line 103 col 24 ThisKeyword "this" = List<T>
+Line 103 col 29 IdentifierName "listFactory" = ListFactory<T>
+Line 103 col 41 IdentifierName "MakeEntry" = <T>(data: T) => List<T>
 Line 103 col 51 IdentifierName "data" = T
-Line 104 col 19 InvocationExpression "this.insertEntryBefore(entry)" = Editor.List<T>
-Line 104 col 19 MemberAccessExpression "this.insertEntryBefore" = (entry: Editor.List<T>) => Editor.List<T>
-Line 104 col 19 ThisKeyword "this" = Editor.List<T>
-Line 104 col 24 IdentifierName "insertEntryBefore" = (entry: Editor.List<T>) => Editor.List<T>
-Line 104 col 42 IdentifierName "entry" = Editor.List<T>
-Line 108 col 17 IdentifierName "ListFactory" = Editor.ListFactory<T>
+Line 104 col 19 InvocationExpression "this.insertEntryBefore(entry)" = List<T>
+Line 104 col 19 MemberAccessExpression "this.insertEntryBefore" = (entry: List<T>) => List<T>
+Line 104 col 19 ThisKeyword "this" = List<T>
+Line 104 col 24 IdentifierName "insertEntryBefore" = (entry: List<T>) => List<T>
+Line 104 col 42 IdentifierName "entry" = List<T>
+Line 108 col 17 IdentifierName "ListFactory" = ListFactory<T>
 Line 108 col 29 IdentifierName "T" = T
-Line 110 col 15 IdentifierName "MakeHead" = <T>() => Editor.List<T>
+Line 110 col 15 IdentifierName "MakeHead" = <T>() => List<T>
 Line 110 col 24 IdentifierName "T" = T
-Line 110 col 30 IdentifierName "List" = Editor.List<T>
+Line 110 col 30 IdentifierName "List" = List<T>
 Line 110 col 35 IdentifierName "T" = T
-Line 111 col 16 IdentifierName "entry" = Editor.List<T>
-Line 111 col 23 IdentifierName "List" = Editor.List<T>
+Line 111 col 16 IdentifierName "entry" = List<T>
+Line 111 col 23 IdentifierName "List" = List<T>
 Line 111 col 28 IdentifierName "T" = T
-Line 111 col 33 ObjectCreationExpression "new List<T>(true, null)" = Editor.List<T>
-Line 111 col 37 IdentifierName "List" = typeof Editor.List
+Line 111 col 33 ObjectCreationExpression "new List<T>(true, null)" = List<T>
+Line 111 col 37 IdentifierName "List" = typeof List
 Line 111 col 42 IdentifierName "T" = T
-Line 112 col 0 AssignmentExpression "entry.prev = entry" = Editor.List<T>
-Line 112 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 112 col 0 IdentifierName "entry" = Editor.List<T>
-Line 112 col 18 IdentifierName "prev" = Editor.List<T>
-Line 112 col 25 IdentifierName "entry" = Editor.List<T>
-Line 113 col 0 AssignmentExpression "entry.next = entry" = Editor.List<T>
-Line 113 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 113 col 0 IdentifierName "entry" = Editor.List<T>
-Line 113 col 18 IdentifierName "next" = Editor.List<T>
-Line 113 col 25 IdentifierName "entry" = Editor.List<T>
-Line 114 col 19 IdentifierName "entry" = Editor.List<T>
-Line 117 col 15 IdentifierName "MakeEntry" = <T>(data: T) => Editor.List<T>
+Line 112 col 0 AssignmentExpression "entry.prev = entry" = List<T>
+Line 112 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 112 col 0 IdentifierName "entry" = List<T>
+Line 112 col 18 IdentifierName "prev" = List<T>
+Line 112 col 25 IdentifierName "entry" = List<T>
+Line 113 col 0 AssignmentExpression "entry.next = entry" = List<T>
+Line 113 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 113 col 0 IdentifierName "entry" = List<T>
+Line 113 col 18 IdentifierName "next" = List<T>
+Line 113 col 25 IdentifierName "entry" = List<T>
+Line 114 col 19 IdentifierName "entry" = List<T>
+Line 117 col 15 IdentifierName "MakeEntry" = <T>(data: T) => List<T>
 Line 117 col 25 IdentifierName "T" = T
 Line 117 col 28 IdentifierName "data" = T
 Line 117 col 34 IdentifierName "T" = T
-Line 117 col 38 IdentifierName "List" = Editor.List<T>
+Line 117 col 38 IdentifierName "List" = List<T>
 Line 117 col 43 IdentifierName "T" = T
-Line 118 col 16 IdentifierName "entry" = Editor.List<T>
-Line 118 col 23 IdentifierName "List" = Editor.List<T>
+Line 118 col 16 IdentifierName "entry" = List<T>
+Line 118 col 23 IdentifierName "List" = List<T>
 Line 118 col 28 IdentifierName "T" = T
-Line 118 col 33 ObjectCreationExpression "new List<T>(false, data)" = Editor.List<T>
-Line 118 col 37 IdentifierName "List" = typeof Editor.List
+Line 118 col 33 ObjectCreationExpression "new List<T>(false, data)" = List<T>
+Line 118 col 37 IdentifierName "List" = typeof List
 Line 118 col 42 IdentifierName "T" = T
 Line 118 col 52 IdentifierName "data" = T
-Line 119 col 0 AssignmentExpression "entry.prev = entry" = Editor.List<T>
-Line 119 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 119 col 0 IdentifierName "entry" = Editor.List<T>
-Line 119 col 18 IdentifierName "prev" = Editor.List<T>
-Line 119 col 25 IdentifierName "entry" = Editor.List<T>
-Line 120 col 0 AssignmentExpression "entry.next = entry" = Editor.List<T>
-Line 120 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 120 col 0 IdentifierName "entry" = Editor.List<T>
-Line 120 col 18 IdentifierName "next" = Editor.List<T>
-Line 120 col 25 IdentifierName "entry" = Editor.List<T>
-Line 121 col 19 IdentifierName "entry" = Editor.List<T>
-Line 124 col 15 IdentifierName "RemoveEntry" = <T>(entry: Editor.List<T>) => Editor.List<T>
+Line 119 col 0 AssignmentExpression "entry.prev = entry" = List<T>
+Line 119 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 119 col 0 IdentifierName "entry" = List<T>
+Line 119 col 18 IdentifierName "prev" = List<T>
+Line 119 col 25 IdentifierName "entry" = List<T>
+Line 120 col 0 AssignmentExpression "entry.next = entry" = List<T>
+Line 120 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 120 col 0 IdentifierName "entry" = List<T>
+Line 120 col 18 IdentifierName "next" = List<T>
+Line 120 col 25 IdentifierName "entry" = List<T>
+Line 121 col 19 IdentifierName "entry" = List<T>
+Line 124 col 15 IdentifierName "RemoveEntry" = <T>(entry: List<T>) => List<T>
 Line 124 col 27 IdentifierName "T" = T
-Line 124 col 30 IdentifierName "entry" = Editor.List<T>
-Line 124 col 37 IdentifierName "List" = Editor.List<T>
+Line 124 col 30 IdentifierName "entry" = List<T>
+Line 124 col 37 IdentifierName "List" = List<T>
 Line 124 col 42 IdentifierName "T" = T
-Line 124 col 47 IdentifierName "List" = Editor.List<T>
+Line 124 col 47 IdentifierName "List" = List<T>
 Line 124 col 52 IdentifierName "T" = T
 Line 125 col 16 EqualsWithTypeConversionExpression "entry == null" = boolean
-Line 125 col 16 IdentifierName "entry" = Editor.List<T>
+Line 125 col 16 IdentifierName "entry" = List<T>
 Line 128 col 21 MemberAccessExpression "entry.isHead" = boolean
-Line 128 col 21 IdentifierName "entry" = Editor.List<T>
+Line 128 col 21 IdentifierName "entry" = List<T>
 Line 128 col 27 IdentifierName "isHead" = boolean
-Line 133 col 0 AssignmentExpression "entry.next.prev = entry.prev" = Editor.List<T>
-Line 133 col 0 MemberAccessExpression "entry.next.prev" = Editor.List<T>
-Line 133 col 0 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 133 col 0 IdentifierName "entry" = Editor.List<T>
-Line 133 col 22 IdentifierName "next" = Editor.List<T>
-Line 133 col 27 IdentifierName "prev" = Editor.List<T>
-Line 133 col 34 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 133 col 34 IdentifierName "entry" = Editor.List<T>
-Line 133 col 40 IdentifierName "prev" = Editor.List<T>
-Line 134 col 0 AssignmentExpression "entry.prev.next = entry.next" = Editor.List<T>
-Line 134 col 0 MemberAccessExpression "entry.prev.next" = Editor.List<T>
-Line 134 col 0 MemberAccessExpression "entry.prev" = Editor.List<T>
-Line 134 col 0 IdentifierName "entry" = Editor.List<T>
-Line 134 col 22 IdentifierName "prev" = Editor.List<T>
-Line 134 col 27 IdentifierName "next" = Editor.List<T>
-Line 134 col 34 MemberAccessExpression "entry.next" = Editor.List<T>
-Line 134 col 34 IdentifierName "entry" = Editor.List<T>
-Line 134 col 40 IdentifierName "next" = Editor.List<T>
-Line 136 col 23 IdentifierName "entry" = Editor.List<T>
+Line 133 col 0 AssignmentExpression "entry.next.prev = entry.prev" = List<T>
+Line 133 col 0 MemberAccessExpression "entry.next.prev" = List<T>
+Line 133 col 0 MemberAccessExpression "entry.next" = List<T>
+Line 133 col 0 IdentifierName "entry" = List<T>
+Line 133 col 22 IdentifierName "next" = List<T>
+Line 133 col 27 IdentifierName "prev" = List<T>
+Line 133 col 34 MemberAccessExpression "entry.prev" = List<T>
+Line 133 col 34 IdentifierName "entry" = List<T>
+Line 133 col 40 IdentifierName "prev" = List<T>
+Line 134 col 0 AssignmentExpression "entry.prev.next = entry.next" = List<T>
+Line 134 col 0 MemberAccessExpression "entry.prev.next" = List<T>
+Line 134 col 0 MemberAccessExpression "entry.prev" = List<T>
+Line 134 col 0 IdentifierName "entry" = List<T>
+Line 134 col 22 IdentifierName "prev" = List<T>
+Line 134 col 27 IdentifierName "next" = List<T>
+Line 134 col 34 MemberAccessExpression "entry.next" = List<T>
+Line 134 col 34 IdentifierName "entry" = List<T>
+Line 134 col 40 IdentifierName "next" = List<T>
+Line 136 col 23 IdentifierName "entry" = List<T>

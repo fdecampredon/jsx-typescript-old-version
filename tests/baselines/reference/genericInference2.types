@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericInference2.ts ===
 Line 0 col 19 IdentifierName "ko" = ko
-Line 1 col 24 IdentifierName "Observable" = ko.Observable<T>
+Line 1 col 24 IdentifierName "Observable" = Observable<T>
 Line 1 col 35 IdentifierName "T" = T
 Line 2 col 15 IdentifierName "T" = T
 Line 3 col 12 IdentifierName "value" = T
@@ -9,11 +9,11 @@ Line 4 col 0 IdentifierName "N" = number
 Line 5 col 0 IdentifierName "g" = boolean
 Line 6 col 0 IdentifierName "r" = T
 Line 6 col 14 IdentifierName "T" = T
-Line 8 col 23 IdentifierName "observable" = typeof ko.observable
+Line 8 col 23 IdentifierName "observable" = typeof observable
 Line 8 col 34 IdentifierName "T" = T
 Line 8 col 37 IdentifierName "value" = T
 Line 8 col 44 IdentifierName "T" = T
-Line 8 col 48 IdentifierName "Observable" = ko.Observable<T>
+Line 8 col 48 IdentifierName "Observable" = Observable<T>
 Line 8 col 59 IdentifierName "T" = T
 Line 10 col 8 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
 Line 10 col 12 ObjectLiteralExpression "{ 

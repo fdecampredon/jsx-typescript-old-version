@@ -1122,7 +1122,7 @@ Line 25 col 7 IdentifierName "T1" = T1
 Line 26 col 7 IdentifierName "T2" = T2
 Line 27 col 7 IdentifierName "T3" = T3
 Line 30 col 7 IdentifierName "Underscore" = Underscore
-Line 31 col 21 IdentifierName "WrappedObject" = Underscore.WrappedObject<T>
+Line 31 col 21 IdentifierName "WrappedObject" = WrappedObject<T>
 Line 31 col 35 IdentifierName "T" = T
 Line 32 col 0 IdentifierName "keys" = () => string[]
 Line 33 col 0 IdentifierName "values" = () => any[]
@@ -1171,10 +1171,10 @@ Line 59 col 0 IdentifierName "isNull" = () => boolean
 Line 60 col 0 IdentifierName "isUndefined" = () => boolean
 Line 61 col 0 IdentifierName "value" = () => T
 Line 61 col 17 IdentifierName "T" = T
-Line 64 col 21 IdentifierName "WrappedFunction" = Underscore.WrappedFunction<T>
+Line 64 col 21 IdentifierName "WrappedFunction" = WrappedFunction<T>
 Line 64 col 37 IdentifierName "T" = T
 Line 64 col 47 IdentifierName "Function" = Function
-Line 64 col 65 IdentifierName "WrappedObject" = Underscore.WrappedObject<T>
+Line 64 col 65 IdentifierName "WrappedObject" = WrappedObject<T>
 Line 64 col 79 IdentifierName "T" = T
 Line 65 col 0 IdentifierName "bind" = { (object: any): T; (object: any, ...args: any[]): Function; }
 Line 65 col 13 IdentifierName "object" = any
@@ -1217,9 +1217,9 @@ Line 76 col 0 IdentifierName "compose" = (...funcs: Function[]) => Function
 Line 76 col 19 IdentifierName "funcs" = Function[]
 Line 76 col 26 IdentifierName "Function" = Function
 Line 76 col 39 IdentifierName "Function" = Function
-Line 79 col 21 IdentifierName "WrappedArray" = Underscore.WrappedArray<T>
+Line 79 col 21 IdentifierName "WrappedArray" = WrappedArray<T>
 Line 79 col 34 IdentifierName "T" = T
-Line 79 col 45 IdentifierName "WrappedObject" = Underscore.WrappedObject<T>
+Line 79 col 45 IdentifierName "WrappedObject" = WrappedObject<T>
 Line 79 col 59 IdentifierName "Array" = Array<T>
 Line 79 col 65 IdentifierName "T" = T
 Line 80 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => void
@@ -1595,9 +1595,9 @@ Line 158 col 67 IdentifierName "T" = T
 Line 159 col 0 IdentifierName "unshift" = (...items: T[]) => number
 Line 159 col 19 IdentifierName "items" = T[]
 Line 159 col 26 IdentifierName "T" = T
-Line 162 col 21 IdentifierName "WrappedDictionary" = Underscore.WrappedDictionary<T>
+Line 162 col 21 IdentifierName "WrappedDictionary" = WrappedDictionary<T>
 Line 162 col 39 IdentifierName "T" = T
-Line 162 col 50 IdentifierName "WrappedObject" = Underscore.WrappedObject<T>
+Line 162 col 50 IdentifierName "WrappedObject" = WrappedObject<T>
 Line 162 col 64 IdentifierName "Dictionary" = Dictionary<T>
 Line 162 col 75 IdentifierName "T" = T
 Line 163 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => void
@@ -1836,120 +1836,120 @@ Line 200 col 19 IdentifierName "T" = T
 Line 201 col 0 IdentifierName "toArray" = () => T[]
 Line 201 col 19 IdentifierName "T" = T
 Line 202 col 0 IdentifierName "size" = () => number
-Line 205 col 21 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 205 col 21 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 205 col 35 IdentifierName "T" = T
-Line 206 col 0 IdentifierName "keys" = () => Underscore.ChainedArray<string>
-Line 206 col 16 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 207 col 0 IdentifierName "values" = () => Underscore.ChainedArray<any>
-Line 207 col 18 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 208 col 0 IdentifierName "pairs" = () => Underscore.ChainedArray<any[]>
-Line 208 col 17 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 209 col 0 IdentifierName "invert" = () => Underscore.ChainedObject<any>
-Line 209 col 18 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 210 col 0 IdentifierName "functions" = () => Underscore.ChainedArray<string>
-Line 210 col 21 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 211 col 0 IdentifierName "methods" = () => Underscore.ChainedArray<string>
-Line 211 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 212 col 0 IdentifierName "extend" = (...sources: any[]) => Underscore.ChainedObject<T>
+Line 206 col 0 IdentifierName "keys" = () => ChainedArray<string>
+Line 206 col 16 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 207 col 0 IdentifierName "values" = () => ChainedArray<any>
+Line 207 col 18 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 208 col 0 IdentifierName "pairs" = () => ChainedArray<any[]>
+Line 208 col 17 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 209 col 0 IdentifierName "invert" = () => ChainedObject<any>
+Line 209 col 18 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 210 col 0 IdentifierName "functions" = () => ChainedArray<string>
+Line 210 col 21 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 211 col 0 IdentifierName "methods" = () => ChainedArray<string>
+Line 211 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 212 col 0 IdentifierName "extend" = (...sources: any[]) => ChainedObject<T>
 Line 212 col 18 IdentifierName "sources" = any[]
-Line 212 col 35 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 212 col 35 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 212 col 49 IdentifierName "T" = T
-Line 213 col 0 IdentifierName "pick" = (...keys: string[]) => Underscore.ChainedObject<T>
+Line 213 col 0 IdentifierName "pick" = (...keys: string[]) => ChainedObject<T>
 Line 213 col 16 IdentifierName "keys" = string[]
-Line 213 col 33 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 213 col 33 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 213 col 47 IdentifierName "T" = T
-Line 214 col 0 IdentifierName "omit" = (...keys: string[]) => Underscore.ChainedObject<T>
+Line 214 col 0 IdentifierName "omit" = (...keys: string[]) => ChainedObject<T>
 Line 214 col 16 IdentifierName "keys" = string[]
-Line 214 col 33 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 214 col 33 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 214 col 47 IdentifierName "T" = T
-Line 215 col 0 IdentifierName "defaults" = (...defaults: any[]) => Underscore.ChainedObject<T>
+Line 215 col 0 IdentifierName "defaults" = (...defaults: any[]) => ChainedObject<T>
 Line 215 col 20 IdentifierName "defaults" = any[]
-Line 215 col 38 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 215 col 38 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 215 col 52 IdentifierName "T" = T
-Line 216 col 0 IdentifierName "clone" = () => Underscore.ChainedObject<T>
-Line 216 col 17 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 216 col 0 IdentifierName "clone" = () => ChainedObject<T>
+Line 216 col 17 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 216 col 31 IdentifierName "T" = T
-Line 217 col 0 IdentifierName "tap" = (interceptor: (object: T) => void) => Underscore.ChainedObject<T>
+Line 217 col 0 IdentifierName "tap" = (interceptor: (object: T) => void) => ChainedObject<T>
 Line 217 col 12 IdentifierName "interceptor" = (object: T) => void
 Line 217 col 26 IdentifierName "object" = T
 Line 217 col 34 IdentifierName "T" = T
-Line 217 col 47 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 217 col 47 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 217 col 61 IdentifierName "T" = T
-Line 218 col 0 IdentifierName "has" = (key: string) => Underscore.ChainedObject<boolean>
+Line 218 col 0 IdentifierName "has" = (key: string) => ChainedObject<boolean>
 Line 218 col 12 IdentifierName "key" = string
-Line 218 col 26 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 219 col 0 IdentifierName "isEqual" = (other: T) => Underscore.ChainedObject<boolean>
+Line 218 col 26 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 219 col 0 IdentifierName "isEqual" = (other: T) => ChainedObject<boolean>
 Line 219 col 16 IdentifierName "other" = T
 Line 219 col 23 IdentifierName "T" = T
-Line 219 col 27 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 220 col 0 IdentifierName "isEmpty" = () => Underscore.ChainedObject<boolean>
-Line 220 col 19 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 221 col 0 IdentifierName "isElement" = () => Underscore.ChainedObject<boolean>
-Line 221 col 21 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 222 col 0 IdentifierName "isArray" = () => Underscore.ChainedObject<boolean>
-Line 222 col 19 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 223 col 0 IdentifierName "isObject" = () => Underscore.ChainedObject<boolean>
-Line 223 col 20 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 224 col 0 IdentifierName "isArguments" = () => Underscore.ChainedObject<boolean>
-Line 224 col 23 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 225 col 0 IdentifierName "isFunction" = () => Underscore.ChainedObject<boolean>
-Line 225 col 22 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 226 col 0 IdentifierName "isString" = () => Underscore.ChainedObject<boolean>
-Line 226 col 20 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 227 col 0 IdentifierName "isNumber" = () => Underscore.ChainedObject<boolean>
-Line 227 col 20 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 228 col 0 IdentifierName "isFinite" = () => Underscore.ChainedObject<boolean>
-Line 228 col 20 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 229 col 0 IdentifierName "isBoolean" = () => Underscore.ChainedObject<boolean>
-Line 229 col 21 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 230 col 0 IdentifierName "isDate" = () => Underscore.ChainedObject<boolean>
-Line 230 col 18 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 231 col 0 IdentifierName "isRegExp" = () => Underscore.ChainedObject<boolean>
-Line 231 col 20 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 232 col 0 IdentifierName "isNaN" = () => Underscore.ChainedObject<boolean>
-Line 232 col 17 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 233 col 0 IdentifierName "isNull" = () => Underscore.ChainedObject<boolean>
-Line 233 col 18 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 234 col 0 IdentifierName "isUndefined" = () => Underscore.ChainedObject<boolean>
-Line 234 col 23 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 219 col 27 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 220 col 0 IdentifierName "isEmpty" = () => ChainedObject<boolean>
+Line 220 col 19 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 221 col 0 IdentifierName "isElement" = () => ChainedObject<boolean>
+Line 221 col 21 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 222 col 0 IdentifierName "isArray" = () => ChainedObject<boolean>
+Line 222 col 19 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 223 col 0 IdentifierName "isObject" = () => ChainedObject<boolean>
+Line 223 col 20 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 224 col 0 IdentifierName "isArguments" = () => ChainedObject<boolean>
+Line 224 col 23 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 225 col 0 IdentifierName "isFunction" = () => ChainedObject<boolean>
+Line 225 col 22 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 226 col 0 IdentifierName "isString" = () => ChainedObject<boolean>
+Line 226 col 20 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 227 col 0 IdentifierName "isNumber" = () => ChainedObject<boolean>
+Line 227 col 20 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 228 col 0 IdentifierName "isFinite" = () => ChainedObject<boolean>
+Line 228 col 20 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 229 col 0 IdentifierName "isBoolean" = () => ChainedObject<boolean>
+Line 229 col 21 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 230 col 0 IdentifierName "isDate" = () => ChainedObject<boolean>
+Line 230 col 18 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 231 col 0 IdentifierName "isRegExp" = () => ChainedObject<boolean>
+Line 231 col 20 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 232 col 0 IdentifierName "isNaN" = () => ChainedObject<boolean>
+Line 232 col 17 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 233 col 0 IdentifierName "isNull" = () => ChainedObject<boolean>
+Line 233 col 18 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 234 col 0 IdentifierName "isUndefined" = () => ChainedObject<boolean>
+Line 234 col 23 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 235 col 0 IdentifierName "value" = () => T
 Line 235 col 17 IdentifierName "T" = T
-Line 238 col 21 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 238 col 21 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 238 col 34 IdentifierName "T" = T
-Line 238 col 45 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 238 col 45 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 238 col 59 IdentifierName "Array" = Array<T>
 Line 238 col 65 IdentifierName "T" = T
-Line 239 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => Underscore.ChainedObject<void>
+Line 239 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => ChainedObject<void>
 Line 239 col 13 IdentifierName "iterator" = Iterator<T, void>
 Line 239 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 239 col 32 IdentifierName "T" = T
 Line 239 col 42 IdentifierName "context" = any
-Line 239 col 58 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 240 col 0 IdentifierName "forEach" = (iterator: Iterator<T, void>, context?: any) => Underscore.ChainedObject<void>
+Line 239 col 58 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 240 col 0 IdentifierName "forEach" = (iterator: Iterator<T, void>, context?: any) => ChainedObject<void>
 Line 240 col 16 IdentifierName "iterator" = Iterator<T, void>
 Line 240 col 26 IdentifierName "Iterator" = Iterator<T, U>
 Line 240 col 35 IdentifierName "T" = T
 Line 240 col 45 IdentifierName "context" = any
-Line 240 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 241 col 0 IdentifierName "map" = <U>(iterator: Iterator<T, U>, context?: any) => Underscore.ChainedArray<U>
+Line 240 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 241 col 0 IdentifierName "map" = <U>(iterator: Iterator<T, U>, context?: any) => ChainedArray<U>
 Line 241 col 12 IdentifierName "U" = U
 Line 241 col 15 IdentifierName "iterator" = Iterator<T, U>
 Line 241 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 241 col 34 IdentifierName "T" = T
 Line 241 col 37 IdentifierName "U" = U
 Line 241 col 41 IdentifierName "context" = any
-Line 241 col 57 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 241 col 57 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 241 col 70 IdentifierName "U" = U
-Line 242 col 0 IdentifierName "collect" = <U>(iterator: Iterator<T, U>, context?: any) => Underscore.ChainedArray<U>
+Line 242 col 0 IdentifierName "collect" = <U>(iterator: Iterator<T, U>, context?: any) => ChainedArray<U>
 Line 242 col 16 IdentifierName "U" = U
 Line 242 col 19 IdentifierName "iterator" = Iterator<T, U>
 Line 242 col 29 IdentifierName "Iterator" = Iterator<T, U>
 Line 242 col 38 IdentifierName "T" = T
 Line 242 col 41 IdentifierName "U" = U
 Line 242 col 45 IdentifierName "context" = any
-Line 242 col 61 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 242 col 61 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 242 col 74 IdentifierName "U" = U
-Line 243 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 243 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 243 col 15 IdentifierName "iterator" = Reducer<T, T>
 Line 243 col 25 IdentifierName "Reducer" = Reducer<T, U>
 Line 243 col 33 IdentifierName "T" = T
@@ -1957,9 +1957,9 @@ Line 243 col 36 IdentifierName "T" = T
 Line 243 col 40 IdentifierName "initialValue" = T
 Line 243 col 55 IdentifierName "T" = T
 Line 243 col 58 IdentifierName "context" = any
-Line 243 col 74 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 243 col 74 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 243 col 88 IdentifierName "T" = T
-Line 244 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 244 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 244 col 15 IdentifierName "U" = U
 Line 244 col 18 IdentifierName "iterator" = Reducer<T, U>
 Line 244 col 28 IdentifierName "Reducer" = Reducer<T, U>
@@ -1968,9 +1968,9 @@ Line 244 col 39 IdentifierName "U" = U
 Line 244 col 43 IdentifierName "initialValue" = U
 Line 244 col 57 IdentifierName "U" = U
 Line 244 col 60 IdentifierName "context" = any
-Line 244 col 76 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 244 col 76 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 244 col 90 IdentifierName "U" = U
-Line 245 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 245 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 245 col 14 IdentifierName "iterator" = Reducer<T, T>
 Line 245 col 24 IdentifierName "Reducer" = Reducer<T, U>
 Line 245 col 32 IdentifierName "T" = T
@@ -1978,9 +1978,9 @@ Line 245 col 35 IdentifierName "T" = T
 Line 245 col 39 IdentifierName "initialValue" = T
 Line 245 col 54 IdentifierName "T" = T
 Line 245 col 57 IdentifierName "context" = any
-Line 245 col 73 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 245 col 73 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 245 col 87 IdentifierName "T" = T
-Line 246 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 246 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 246 col 14 IdentifierName "U" = U
 Line 246 col 17 IdentifierName "iterator" = Reducer<T, U>
 Line 246 col 27 IdentifierName "Reducer" = Reducer<T, U>
@@ -1989,9 +1989,9 @@ Line 246 col 38 IdentifierName "U" = U
 Line 246 col 42 IdentifierName "initialValue" = U
 Line 246 col 56 IdentifierName "U" = U
 Line 246 col 59 IdentifierName "context" = any
-Line 246 col 75 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 246 col 75 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 246 col 89 IdentifierName "U" = U
-Line 247 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 247 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 247 col 15 IdentifierName "iterator" = Reducer<T, T>
 Line 247 col 25 IdentifierName "Reducer" = Reducer<T, U>
 Line 247 col 33 IdentifierName "T" = T
@@ -1999,9 +1999,9 @@ Line 247 col 36 IdentifierName "T" = T
 Line 247 col 40 IdentifierName "initialValue" = T
 Line 247 col 55 IdentifierName "T" = T
 Line 247 col 58 IdentifierName "context" = any
-Line 247 col 74 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 247 col 74 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 247 col 88 IdentifierName "T" = T
-Line 248 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 248 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 248 col 15 IdentifierName "U" = U
 Line 248 col 18 IdentifierName "iterator" = Reducer<T, U>
 Line 248 col 28 IdentifierName "Reducer" = Reducer<T, U>
@@ -2010,9 +2010,9 @@ Line 248 col 39 IdentifierName "U" = U
 Line 248 col 43 IdentifierName "initialValue" = U
 Line 248 col 57 IdentifierName "U" = U
 Line 248 col 60 IdentifierName "context" = any
-Line 248 col 76 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 248 col 76 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 248 col 90 IdentifierName "U" = U
-Line 249 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 249 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 249 col 20 IdentifierName "iterator" = Reducer<T, T>
 Line 249 col 30 IdentifierName "Reducer" = Reducer<T, U>
 Line 249 col 38 IdentifierName "T" = T
@@ -2020,9 +2020,9 @@ Line 249 col 41 IdentifierName "T" = T
 Line 249 col 45 IdentifierName "initialValue" = T
 Line 249 col 60 IdentifierName "T" = T
 Line 249 col 63 IdentifierName "context" = any
-Line 249 col 79 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 249 col 79 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 249 col 93 IdentifierName "T" = T
-Line 250 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 250 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 250 col 20 IdentifierName "U" = U
 Line 250 col 23 IdentifierName "iterator" = Reducer<T, U>
 Line 250 col 33 IdentifierName "Reducer" = Reducer<T, U>
@@ -2031,9 +2031,9 @@ Line 250 col 44 IdentifierName "U" = U
 Line 250 col 48 IdentifierName "initialValue" = U
 Line 250 col 62 IdentifierName "U" = U
 Line 250 col 65 IdentifierName "context" = any
-Line 250 col 81 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 250 col 81 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 250 col 95 IdentifierName "U" = U
-Line 251 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 251 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 251 col 14 IdentifierName "iterator" = Reducer<T, T>
 Line 251 col 24 IdentifierName "Reducer" = Reducer<T, U>
 Line 251 col 32 IdentifierName "T" = T
@@ -2041,9 +2041,9 @@ Line 251 col 35 IdentifierName "T" = T
 Line 251 col 39 IdentifierName "initialValue" = T
 Line 251 col 54 IdentifierName "T" = T
 Line 251 col 57 IdentifierName "context" = any
-Line 251 col 73 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 251 col 73 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 251 col 87 IdentifierName "T" = T
-Line 252 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 252 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 252 col 14 IdentifierName "U" = U
 Line 252 col 17 IdentifierName "iterator" = Reducer<T, U>
 Line 252 col 27 IdentifierName "Reducer" = Reducer<T, U>
@@ -2052,216 +2052,216 @@ Line 252 col 38 IdentifierName "U" = U
 Line 252 col 42 IdentifierName "initialValue" = U
 Line 252 col 56 IdentifierName "U" = U
 Line 252 col 59 IdentifierName "context" = any
-Line 252 col 75 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 252 col 75 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 252 col 89 IdentifierName "U" = U
-Line 253 col 0 IdentifierName "find" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<T>
+Line 253 col 0 IdentifierName "find" = (iterator: Iterator<T, boolean>, context?: any) => ChainedObject<T>
 Line 253 col 13 IdentifierName "iterator" = Iterator<T, boolean>
 Line 253 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 253 col 32 IdentifierName "T" = T
 Line 253 col 45 IdentifierName "context" = any
-Line 253 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 253 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 253 col 75 IdentifierName "T" = T
-Line 254 col 0 IdentifierName "detect" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<T>
+Line 254 col 0 IdentifierName "detect" = (iterator: Iterator<T, boolean>, context?: any) => ChainedObject<T>
 Line 254 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 254 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 254 col 34 IdentifierName "T" = T
 Line 254 col 47 IdentifierName "context" = any
-Line 254 col 63 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 254 col 63 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 254 col 77 IdentifierName "T" = T
-Line 255 col 0 IdentifierName "filter" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 255 col 0 IdentifierName "filter" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 255 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 255 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 255 col 34 IdentifierName "T" = T
 Line 255 col 47 IdentifierName "context" = any
-Line 255 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 255 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 255 col 76 IdentifierName "T" = T
-Line 256 col 0 IdentifierName "select" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 256 col 0 IdentifierName "select" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 256 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 256 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 256 col 34 IdentifierName "T" = T
 Line 256 col 47 IdentifierName "context" = any
-Line 256 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 256 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 256 col 76 IdentifierName "T" = T
-Line 257 col 0 IdentifierName "where" = (properties: Object) => Underscore.ChainedArray<T>
+Line 257 col 0 IdentifierName "where" = (properties: Object) => ChainedArray<T>
 Line 257 col 14 IdentifierName "properties" = Object
 Line 257 col 26 IdentifierName "Object" = Object
-Line 257 col 35 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 257 col 35 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 257 col 48 IdentifierName "T" = T
-Line 258 col 0 IdentifierName "findWhere" = (properties: Object) => Underscore.ChainedObject<T>
+Line 258 col 0 IdentifierName "findWhere" = (properties: Object) => ChainedObject<T>
 Line 258 col 18 IdentifierName "properties" = Object
 Line 258 col 30 IdentifierName "Object" = Object
-Line 258 col 39 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 258 col 39 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 258 col 53 IdentifierName "T" = T
-Line 259 col 0 IdentifierName "reject" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 259 col 0 IdentifierName "reject" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 259 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 259 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 259 col 34 IdentifierName "T" = T
 Line 259 col 47 IdentifierName "context" = any
-Line 259 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 259 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 259 col 76 IdentifierName "T" = T
-Line 260 col 0 IdentifierName "every" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 260 col 0 IdentifierName "every" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 260 col 14 IdentifierName "iterator" = Iterator<T, boolean>
 Line 260 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 260 col 34 IdentifierName "T" = T
 Line 260 col 47 IdentifierName "context" = any
-Line 260 col 63 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 261 col 0 IdentifierName "all" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 260 col 63 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 261 col 0 IdentifierName "all" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 261 col 12 IdentifierName "iterator" = Iterator<T, boolean>
 Line 261 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 261 col 32 IdentifierName "T" = T
 Line 261 col 45 IdentifierName "context" = any
-Line 261 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 262 col 0 IdentifierName "some" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 261 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 262 col 0 IdentifierName "some" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 262 col 13 IdentifierName "iterator" = Iterator<T, boolean>
 Line 262 col 24 IdentifierName "Iterator" = Iterator<T, U>
 Line 262 col 33 IdentifierName "T" = T
 Line 262 col 46 IdentifierName "context" = any
-Line 262 col 62 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 263 col 0 IdentifierName "any" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 262 col 62 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 263 col 0 IdentifierName "any" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 263 col 12 IdentifierName "iterator" = Iterator<T, boolean>
 Line 263 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 263 col 32 IdentifierName "T" = T
 Line 263 col 45 IdentifierName "context" = any
-Line 263 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 264 col 0 IdentifierName "contains" = (value: T) => Underscore.ChainedObject<boolean>
+Line 263 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 264 col 0 IdentifierName "contains" = (value: T) => ChainedObject<boolean>
 Line 264 col 17 IdentifierName "value" = T
 Line 264 col 24 IdentifierName "T" = T
-Line 264 col 28 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 265 col 0 IdentifierName "include" = (value: T) => Underscore.ChainedObject<boolean>
+Line 264 col 28 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 265 col 0 IdentifierName "include" = (value: T) => ChainedObject<boolean>
 Line 265 col 16 IdentifierName "value" = T
 Line 265 col 23 IdentifierName "T" = T
-Line 265 col 27 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 266 col 0 IdentifierName "invoke" = (methodName: string, ...args: any[]) => Underscore.ChainedArray<any>
+Line 265 col 27 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 266 col 0 IdentifierName "invoke" = (methodName: string, ...args: any[]) => ChainedArray<any>
 Line 266 col 15 IdentifierName "methodName" = string
 Line 266 col 38 IdentifierName "args" = any[]
-Line 266 col 52 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 267 col 0 IdentifierName "pluck" = (propertyName: string) => Underscore.ChainedArray<any>
+Line 266 col 52 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 267 col 0 IdentifierName "pluck" = (propertyName: string) => ChainedArray<any>
 Line 267 col 14 IdentifierName "propertyName" = string
-Line 267 col 37 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 268 col 0 IdentifierName "max" = (iterator?: Iterator<T, any>, context?: any) => Underscore.ChainedObject<T>
+Line 267 col 37 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 268 col 0 IdentifierName "max" = (iterator?: Iterator<T, any>, context?: any) => ChainedObject<T>
 Line 268 col 12 IdentifierName "iterator" = Iterator<T, any>
 Line 268 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 268 col 32 IdentifierName "T" = T
 Line 268 col 41 IdentifierName "context" = any
-Line 268 col 57 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 268 col 57 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 268 col 71 IdentifierName "T" = T
-Line 269 col 0 IdentifierName "min" = (iterator?: Iterator<T, any>, context?: any) => Underscore.ChainedObject<T>
+Line 269 col 0 IdentifierName "min" = (iterator?: Iterator<T, any>, context?: any) => ChainedObject<T>
 Line 269 col 12 IdentifierName "iterator" = Iterator<T, any>
 Line 269 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 269 col 32 IdentifierName "T" = T
 Line 269 col 41 IdentifierName "context" = any
-Line 269 col 57 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 269 col 57 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 269 col 71 IdentifierName "T" = T
-Line 270 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): Underscore.ChainedArray<T>; (propertyName: string): Underscore.ChainedArray<T>; }
+Line 270 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): ChainedArray<T>; (propertyName: string): ChainedArray<T>; }
 Line 270 col 15 IdentifierName "iterator" = Iterator<T, any>
 Line 270 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 270 col 34 IdentifierName "T" = T
 Line 270 col 43 IdentifierName "context" = any
-Line 270 col 59 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 270 col 59 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 270 col 72 IdentifierName "T" = T
-Line 271 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): Underscore.ChainedArray<T>; (propertyName: string): Underscore.ChainedArray<T>; }
+Line 271 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): ChainedArray<T>; (propertyName: string): ChainedArray<T>; }
 Line 271 col 15 IdentifierName "propertyName" = string
-Line 271 col 38 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 271 col 38 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 271 col 51 IdentifierName "T" = T
 Line 272 col 0 IdentifierName "// Should return ChainedDictionary<T[]>, but expansive recursion not allowed
-        groupBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<any[]>; (propertyName: string): Underscore.ChainedDictionary<any[]>; }
+        groupBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<any[]>; (propertyName: string): ChainedDictionary<any[]>; }
 Line 273 col 16 IdentifierName "iterator" = Iterator<T, any>
 Line 273 col 27 IdentifierName "Iterator" = Iterator<T, U>
 Line 273 col 36 IdentifierName "T" = T
 Line 273 col 45 IdentifierName "context" = any
-Line 273 col 61 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 274 col 0 IdentifierName "groupBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<any[]>; (propertyName: string): Underscore.ChainedDictionary<any[]>; }
+Line 273 col 61 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 274 col 0 IdentifierName "groupBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<any[]>; (propertyName: string): ChainedDictionary<any[]>; }
 Line 274 col 16 IdentifierName "propertyName" = string
-Line 274 col 39 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 275 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<number>; (propertyName: string): Underscore.ChainedDictionary<number>; }
+Line 274 col 39 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 275 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<number>; (propertyName: string): ChainedDictionary<number>; }
 Line 275 col 16 IdentifierName "iterator" = Iterator<T, any>
 Line 275 col 27 IdentifierName "Iterator" = Iterator<T, U>
 Line 275 col 36 IdentifierName "T" = T
 Line 275 col 45 IdentifierName "context" = any
-Line 275 col 61 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 276 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<number>; (propertyName: string): Underscore.ChainedDictionary<number>; }
+Line 275 col 61 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 276 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<number>; (propertyName: string): ChainedDictionary<number>; }
 Line 276 col 16 IdentifierName "propertyName" = string
-Line 276 col 39 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 277 col 0 IdentifierName "shuffle" = () => Underscore.ChainedArray<T>
-Line 277 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 276 col 39 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 277 col 0 IdentifierName "shuffle" = () => ChainedArray<T>
+Line 277 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 277 col 32 IdentifierName "T" = T
-Line 278 col 0 IdentifierName "toArray" = () => Underscore.ChainedArray<T>
-Line 278 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 278 col 0 IdentifierName "toArray" = () => ChainedArray<T>
+Line 278 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 278 col 32 IdentifierName "T" = T
-Line 279 col 0 IdentifierName "size" = () => Underscore.ChainedObject<number>
-Line 279 col 16 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 280 col 0 IdentifierName "first" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
-Line 280 col 17 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 279 col 0 IdentifierName "size" = () => ChainedObject<number>
+Line 279 col 16 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 280 col 0 IdentifierName "first" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
+Line 280 col 17 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 280 col 31 IdentifierName "T" = T
-Line 281 col 0 IdentifierName "first" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
+Line 281 col 0 IdentifierName "first" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
 Line 281 col 14 IdentifierName "count" = number
-Line 281 col 30 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 281 col 30 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 281 col 43 IdentifierName "T" = T
-Line 282 col 0 IdentifierName "head" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
-Line 282 col 16 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 282 col 0 IdentifierName "head" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
+Line 282 col 16 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 282 col 30 IdentifierName "T" = T
-Line 283 col 0 IdentifierName "head" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
+Line 283 col 0 IdentifierName "head" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
 Line 283 col 13 IdentifierName "count" = number
-Line 283 col 29 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 283 col 29 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 283 col 42 IdentifierName "T" = T
-Line 284 col 0 IdentifierName "take" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
-Line 284 col 16 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 284 col 0 IdentifierName "take" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
+Line 284 col 16 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 284 col 30 IdentifierName "T" = T
-Line 285 col 0 IdentifierName "take" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
+Line 285 col 0 IdentifierName "take" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
 Line 285 col 13 IdentifierName "count" = number
-Line 285 col 29 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 285 col 29 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 285 col 42 IdentifierName "T" = T
-Line 286 col 0 IdentifierName "initial" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
-Line 286 col 19 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 286 col 0 IdentifierName "initial" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
+Line 286 col 19 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 286 col 33 IdentifierName "T" = T
-Line 287 col 0 IdentifierName "initial" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
+Line 287 col 0 IdentifierName "initial" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
 Line 287 col 16 IdentifierName "count" = number
-Line 287 col 32 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 287 col 32 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 287 col 45 IdentifierName "T" = T
-Line 288 col 0 IdentifierName "last" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
-Line 288 col 16 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 288 col 0 IdentifierName "last" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
+Line 288 col 16 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 288 col 30 IdentifierName "T" = T
-Line 289 col 0 IdentifierName "last" = { (): Underscore.ChainedObject<T>; (count: number): Underscore.ChainedArray<T>; }
+Line 289 col 0 IdentifierName "last" = { (): ChainedObject<T>; (count: number): ChainedArray<T>; }
 Line 289 col 13 IdentifierName "count" = number
-Line 289 col 29 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 289 col 29 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 289 col 42 IdentifierName "T" = T
-Line 290 col 0 IdentifierName "rest" = (index?: number) => Underscore.ChainedArray<T>
+Line 290 col 0 IdentifierName "rest" = (index?: number) => ChainedArray<T>
 Line 290 col 13 IdentifierName "index" = number
-Line 290 col 30 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 290 col 30 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 290 col 43 IdentifierName "T" = T
-Line 291 col 0 IdentifierName "compact" = () => Underscore.ChainedArray<T>
-Line 291 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 291 col 0 IdentifierName "compact" = () => ChainedArray<T>
+Line 291 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 291 col 32 IdentifierName "T" = T
-Line 292 col 0 IdentifierName "flatten" = <U>(shallow?: boolean) => Underscore.ChainedArray<U>
+Line 292 col 0 IdentifierName "flatten" = <U>(shallow?: boolean) => ChainedArray<U>
 Line 292 col 16 IdentifierName "U" = U
 Line 292 col 19 IdentifierName "shallow" = boolean
-Line 292 col 39 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 292 col 39 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 292 col 52 IdentifierName "U" = U
-Line 293 col 0 IdentifierName "without" = (...values: T[]) => Underscore.ChainedArray<T>
+Line 293 col 0 IdentifierName "without" = (...values: T[]) => ChainedArray<T>
 Line 293 col 19 IdentifierName "values" = T[]
 Line 293 col 27 IdentifierName "T" = T
-Line 293 col 33 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 293 col 33 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 293 col 46 IdentifierName "T" = T
-Line 294 col 0 IdentifierName "union" = (...arrays: T[][]) => Underscore.ChainedArray<T>
+Line 294 col 0 IdentifierName "union" = (...arrays: T[][]) => ChainedArray<T>
 Line 294 col 17 IdentifierName "arrays" = T[][]
 Line 294 col 25 IdentifierName "T" = T
-Line 294 col 33 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 294 col 33 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 294 col 46 IdentifierName "T" = T
-Line 295 col 0 IdentifierName "intersection" = (...arrays: T[][]) => Underscore.ChainedArray<T>
+Line 295 col 0 IdentifierName "intersection" = (...arrays: T[][]) => ChainedArray<T>
 Line 295 col 24 IdentifierName "arrays" = T[][]
 Line 295 col 32 IdentifierName "T" = T
-Line 295 col 40 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 295 col 40 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 295 col 53 IdentifierName "T" = T
-Line 296 col 0 IdentifierName "difference" = (...others: T[][]) => Underscore.ChainedArray<T>
+Line 296 col 0 IdentifierName "difference" = (...others: T[][]) => ChainedArray<T>
 Line 296 col 22 IdentifierName "others" = T[][]
 Line 296 col 30 IdentifierName "T" = T
-Line 296 col 38 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 296 col 38 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 296 col 51 IdentifierName "T" = T
-Line 297 col 0 IdentifierName "uniq" = { (isSorted?: boolean): Underscore.ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): Underscore.ChainedArray<U>; }
+Line 297 col 0 IdentifierName "uniq" = { (isSorted?: boolean): ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): ChainedArray<U>; }
 Line 297 col 13 IdentifierName "isSorted" = boolean
-Line 297 col 34 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 297 col 34 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 297 col 47 IdentifierName "T" = T
-Line 298 col 0 IdentifierName "uniq" = { (isSorted?: boolean): Underscore.ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): Underscore.ChainedArray<U>; }
+Line 298 col 0 IdentifierName "uniq" = { (isSorted?: boolean): ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): ChainedArray<U>; }
 Line 298 col 13 IdentifierName "U" = U
 Line 298 col 16 IdentifierName "isSorted" = boolean
 Line 298 col 35 IdentifierName "iterator" = Iterator<T, U>
@@ -2269,13 +2269,13 @@ Line 298 col 45 IdentifierName "Iterator" = Iterator<T, U>
 Line 298 col 54 IdentifierName "T" = T
 Line 298 col 57 IdentifierName "U" = U
 Line 298 col 61 IdentifierName "context" = any
-Line 298 col 77 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 298 col 77 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 298 col 90 IdentifierName "U" = U
-Line 299 col 0 IdentifierName "unique" = { (isSorted?: boolean): Underscore.ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): Underscore.ChainedArray<U>; }
+Line 299 col 0 IdentifierName "unique" = { (isSorted?: boolean): ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): ChainedArray<U>; }
 Line 299 col 15 IdentifierName "isSorted" = boolean
-Line 299 col 36 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 299 col 36 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 299 col 49 IdentifierName "T" = T
-Line 300 col 0 IdentifierName "unique" = { (isSorted?: boolean): Underscore.ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): Underscore.ChainedArray<U>; }
+Line 300 col 0 IdentifierName "unique" = { (isSorted?: boolean): ChainedArray<T>; <U>(isSorted: boolean, iterator: Iterator<T, U>, context?: any): ChainedArray<U>; }
 Line 300 col 15 IdentifierName "U" = U
 Line 300 col 18 IdentifierName "isSorted" = boolean
 Line 300 col 37 IdentifierName "iterator" = Iterator<T, U>
@@ -2283,151 +2283,151 @@ Line 300 col 47 IdentifierName "Iterator" = Iterator<T, U>
 Line 300 col 56 IdentifierName "T" = T
 Line 300 col 59 IdentifierName "U" = U
 Line 300 col 63 IdentifierName "context" = any
-Line 300 col 79 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 300 col 79 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 300 col 92 IdentifierName "U" = U
-Line 301 col 0 IdentifierName "zip" = (...arrays: any[][]) => Underscore.ChainedArray<any[]>
+Line 301 col 0 IdentifierName "zip" = (...arrays: any[][]) => ChainedArray<any[]>
 Line 301 col 15 IdentifierName "arrays" = any[][]
-Line 301 col 33 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 302 col 0 IdentifierName "object" = { (): Underscore.ChainedObject<any>; (values: any[]): Underscore.ChainedObject<any>; }
-Line 302 col 18 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 303 col 0 IdentifierName "object" = { (): Underscore.ChainedObject<any>; (values: any[]): Underscore.ChainedObject<any>; }
+Line 301 col 33 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 302 col 0 IdentifierName "object" = { (): ChainedObject<any>; (values: any[]): ChainedObject<any>; }
+Line 302 col 18 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 303 col 0 IdentifierName "object" = { (): ChainedObject<any>; (values: any[]): ChainedObject<any>; }
 Line 303 col 15 IdentifierName "values" = any[]
-Line 303 col 31 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 304 col 0 IdentifierName "indexOf" = (value: T, isSorted?: boolean) => Underscore.ChainedObject<number>
+Line 303 col 31 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 304 col 0 IdentifierName "indexOf" = (value: T, isSorted?: boolean) => ChainedObject<number>
 Line 304 col 16 IdentifierName "value" = T
 Line 304 col 23 IdentifierName "T" = T
 Line 304 col 26 IdentifierName "isSorted" = boolean
-Line 304 col 47 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 305 col 0 IdentifierName "lastIndexOf" = (value: T, fromIndex?: number) => Underscore.ChainedObject<number>
+Line 304 col 47 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 305 col 0 IdentifierName "lastIndexOf" = (value: T, fromIndex?: number) => ChainedObject<number>
 Line 305 col 20 IdentifierName "value" = T
 Line 305 col 27 IdentifierName "T" = T
 Line 305 col 30 IdentifierName "fromIndex" = number
-Line 305 col 51 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 306 col 0 IdentifierName "sortedIndex" = { (obj: T, propertyName: string): Underscore.ChainedObject<number>; (obj: T, iterator?: Iterator<T, any>, context?: any): Underscore.ChainedObject<number>; }
+Line 305 col 51 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 306 col 0 IdentifierName "sortedIndex" = { (obj: T, propertyName: string): ChainedObject<number>; (obj: T, iterator?: Iterator<T, any>, context?: any): ChainedObject<number>; }
 Line 306 col 20 IdentifierName "obj" = T
 Line 306 col 25 IdentifierName "T" = T
 Line 306 col 28 IdentifierName "propertyName" = string
-Line 306 col 51 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 307 col 0 IdentifierName "sortedIndex" = { (obj: T, propertyName: string): Underscore.ChainedObject<number>; (obj: T, iterator?: Iterator<T, any>, context?: any): Underscore.ChainedObject<number>; }
+Line 306 col 51 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 307 col 0 IdentifierName "sortedIndex" = { (obj: T, propertyName: string): ChainedObject<number>; (obj: T, iterator?: Iterator<T, any>, context?: any): ChainedObject<number>; }
 Line 307 col 20 IdentifierName "obj" = T
 Line 307 col 25 IdentifierName "T" = T
 Line 307 col 28 IdentifierName "iterator" = Iterator<T, any>
 Line 307 col 39 IdentifierName "Iterator" = Iterator<T, U>
 Line 307 col 48 IdentifierName "T" = T
 Line 307 col 57 IdentifierName "context" = any
-Line 307 col 73 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 307 col 73 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 308 col 0 IdentifierName "// Methods from Array
-        concat" = (...items: T[]) => Underscore.ChainedArray<T>
+        concat" = (...items: T[]) => ChainedArray<T>
 Line 309 col 18 IdentifierName "items" = T[]
 Line 309 col 25 IdentifierName "T" = T
-Line 309 col 31 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 309 col 31 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 309 col 44 IdentifierName "T" = T
-Line 310 col 0 IdentifierName "join" = (separator?: string) => Underscore.ChainedObject<string>
+Line 310 col 0 IdentifierName "join" = (separator?: string) => ChainedObject<string>
 Line 310 col 13 IdentifierName "separator" = string
-Line 310 col 34 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 311 col 0 IdentifierName "pop" = () => Underscore.ChainedObject<T>
-Line 311 col 15 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 310 col 34 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 311 col 0 IdentifierName "pop" = () => ChainedObject<T>
+Line 311 col 15 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 311 col 29 IdentifierName "T" = T
-Line 312 col 0 IdentifierName "push" = (...items: T[]) => Underscore.ChainedObject<number>
+Line 312 col 0 IdentifierName "push" = (...items: T[]) => ChainedObject<number>
 Line 312 col 16 IdentifierName "items" = T[]
 Line 312 col 23 IdentifierName "T" = T
-Line 312 col 29 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 313 col 0 IdentifierName "reverse" = () => Underscore.ChainedArray<T>
-Line 313 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 312 col 29 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 313 col 0 IdentifierName "reverse" = () => ChainedArray<T>
+Line 313 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 313 col 32 IdentifierName "T" = T
-Line 314 col 0 IdentifierName "shift" = () => Underscore.ChainedObject<T>
-Line 314 col 17 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 314 col 0 IdentifierName "shift" = () => ChainedObject<T>
+Line 314 col 17 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 314 col 31 IdentifierName "T" = T
-Line 315 col 0 IdentifierName "slice" = (start: number, end?: number) => Underscore.ChainedArray<T>
+Line 315 col 0 IdentifierName "slice" = (start: number, end?: number) => ChainedArray<T>
 Line 315 col 14 IdentifierName "start" = number
 Line 315 col 29 IdentifierName "end" = number
-Line 315 col 44 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 315 col 44 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 315 col 57 IdentifierName "T" = T
-Line 316 col 0 IdentifierName "sort" = (compareFn?: (a: T, b: T) => number) => Underscore.ChainedArray<T>
+Line 316 col 0 IdentifierName "sort" = (compareFn?: (a: T, b: T) => number) => ChainedArray<T>
 Line 316 col 13 IdentifierName "compareFn" = (a: T, b: T) => number
 Line 316 col 26 IdentifierName "a" = T
 Line 316 col 29 IdentifierName "T" = T
 Line 316 col 32 IdentifierName "b" = T
 Line 316 col 35 IdentifierName "T" = T
-Line 316 col 50 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 316 col 50 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 316 col 63 IdentifierName "T" = T
-Line 317 col 0 IdentifierName "splice" = { (start: number): Underscore.ChainedArray<T>; (start: number, deleteCount: number, ...items: T[]): Underscore.ChainedArray<T>; }
+Line 317 col 0 IdentifierName "splice" = { (start: number): ChainedArray<T>; (start: number, deleteCount: number, ...items: T[]): ChainedArray<T>; }
 Line 317 col 15 IdentifierName "start" = number
-Line 317 col 31 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 317 col 31 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 317 col 44 IdentifierName "T" = T
-Line 318 col 0 IdentifierName "splice" = { (start: number): Underscore.ChainedArray<T>; (start: number, deleteCount: number, ...items: T[]): Underscore.ChainedArray<T>; }
+Line 318 col 0 IdentifierName "splice" = { (start: number): ChainedArray<T>; (start: number, deleteCount: number, ...items: T[]): ChainedArray<T>; }
 Line 318 col 15 IdentifierName "start" = number
 Line 318 col 30 IdentifierName "deleteCount" = number
 Line 318 col 54 IdentifierName "items" = T[]
 Line 318 col 61 IdentifierName "T" = T
-Line 318 col 67 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 318 col 67 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 318 col 80 IdentifierName "T" = T
-Line 319 col 0 IdentifierName "unshift" = (...items: T[]) => Underscore.ChainedObject<number>
+Line 319 col 0 IdentifierName "unshift" = (...items: T[]) => ChainedObject<number>
 Line 319 col 19 IdentifierName "items" = T[]
 Line 319 col 26 IdentifierName "T" = T
-Line 319 col 32 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 319 col 32 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 320 col 0 IdentifierName "// Methods from ChainedObject with promoted return types
-        extend" = (...sources: any[]) => Underscore.ChainedArray<T>
+        extend" = (...sources: any[]) => ChainedArray<T>
 Line 321 col 18 IdentifierName "sources" = any[]
-Line 321 col 35 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 321 col 35 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 321 col 48 IdentifierName "T" = T
-Line 322 col 0 IdentifierName "pick" = (...keys: string[]) => Underscore.ChainedArray<T>
+Line 322 col 0 IdentifierName "pick" = (...keys: string[]) => ChainedArray<T>
 Line 322 col 16 IdentifierName "keys" = string[]
-Line 322 col 33 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 322 col 33 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 322 col 46 IdentifierName "T" = T
-Line 323 col 0 IdentifierName "omit" = (...keys: string[]) => Underscore.ChainedArray<T>
+Line 323 col 0 IdentifierName "omit" = (...keys: string[]) => ChainedArray<T>
 Line 323 col 16 IdentifierName "keys" = string[]
-Line 323 col 33 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 323 col 33 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 323 col 46 IdentifierName "T" = T
-Line 324 col 0 IdentifierName "defaults" = (...defaults: any[]) => Underscore.ChainedArray<T>
+Line 324 col 0 IdentifierName "defaults" = (...defaults: any[]) => ChainedArray<T>
 Line 324 col 20 IdentifierName "defaults" = any[]
-Line 324 col 38 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 324 col 38 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 324 col 51 IdentifierName "T" = T
-Line 325 col 0 IdentifierName "clone" = () => Underscore.ChainedArray<T>
-Line 325 col 17 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 325 col 0 IdentifierName "clone" = () => ChainedArray<T>
+Line 325 col 17 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 325 col 30 IdentifierName "T" = T
-Line 326 col 0 IdentifierName "tap" = (interceptor: (object: T[]) => void) => Underscore.ChainedArray<T>
+Line 326 col 0 IdentifierName "tap" = (interceptor: (object: T[]) => void) => ChainedArray<T>
 Line 326 col 12 IdentifierName "interceptor" = (object: T[]) => void
 Line 326 col 26 IdentifierName "object" = T[]
 Line 326 col 34 IdentifierName "T" = T
-Line 326 col 49 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 326 col 49 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 326 col 62 IdentifierName "T" = T
-Line 329 col 21 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 329 col 21 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 329 col 39 IdentifierName "T" = T
-Line 329 col 50 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 329 col 50 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 329 col 64 IdentifierName "Dictionary" = Dictionary<T>
 Line 329 col 75 IdentifierName "T" = T
-Line 330 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => Underscore.ChainedObject<void>
+Line 330 col 0 IdentifierName "each" = (iterator: Iterator<T, void>, context?: any) => ChainedObject<void>
 Line 330 col 13 IdentifierName "iterator" = Iterator<T, void>
 Line 330 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 330 col 32 IdentifierName "T" = T
 Line 330 col 42 IdentifierName "context" = any
-Line 330 col 58 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 331 col 0 IdentifierName "forEach" = (iterator: Iterator<T, void>, context?: any) => Underscore.ChainedObject<void>
+Line 330 col 58 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 331 col 0 IdentifierName "forEach" = (iterator: Iterator<T, void>, context?: any) => ChainedObject<void>
 Line 331 col 16 IdentifierName "iterator" = Iterator<T, void>
 Line 331 col 26 IdentifierName "Iterator" = Iterator<T, U>
 Line 331 col 35 IdentifierName "T" = T
 Line 331 col 45 IdentifierName "context" = any
-Line 331 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 332 col 0 IdentifierName "map" = <U>(iterator: Iterator<T, U>, context?: any) => Underscore.ChainedArray<U>
+Line 331 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 332 col 0 IdentifierName "map" = <U>(iterator: Iterator<T, U>, context?: any) => ChainedArray<U>
 Line 332 col 12 IdentifierName "U" = U
 Line 332 col 15 IdentifierName "iterator" = Iterator<T, U>
 Line 332 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 332 col 34 IdentifierName "T" = T
 Line 332 col 37 IdentifierName "U" = U
 Line 332 col 41 IdentifierName "context" = any
-Line 332 col 57 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 332 col 57 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 332 col 70 IdentifierName "U" = U
-Line 333 col 0 IdentifierName "collect" = <U>(iterator: Iterator<T, U>, context?: any) => Underscore.ChainedArray<U>
+Line 333 col 0 IdentifierName "collect" = <U>(iterator: Iterator<T, U>, context?: any) => ChainedArray<U>
 Line 333 col 16 IdentifierName "U" = U
 Line 333 col 19 IdentifierName "iterator" = Iterator<T, U>
 Line 333 col 29 IdentifierName "Iterator" = Iterator<T, U>
 Line 333 col 38 IdentifierName "T" = T
 Line 333 col 41 IdentifierName "U" = U
 Line 333 col 45 IdentifierName "context" = any
-Line 333 col 61 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 333 col 61 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 333 col 74 IdentifierName "U" = U
-Line 334 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 334 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 334 col 15 IdentifierName "iterator" = Reducer<T, T>
 Line 334 col 25 IdentifierName "Reducer" = Reducer<T, U>
 Line 334 col 33 IdentifierName "T" = T
@@ -2435,9 +2435,9 @@ Line 334 col 36 IdentifierName "T" = T
 Line 334 col 40 IdentifierName "initialValue" = T
 Line 334 col 55 IdentifierName "T" = T
 Line 334 col 58 IdentifierName "context" = any
-Line 334 col 74 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 334 col 74 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 334 col 88 IdentifierName "T" = T
-Line 335 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 335 col 0 IdentifierName "reduce" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 335 col 15 IdentifierName "U" = U
 Line 335 col 18 IdentifierName "iterator" = Reducer<T, U>
 Line 335 col 28 IdentifierName "Reducer" = Reducer<T, U>
@@ -2446,9 +2446,9 @@ Line 335 col 39 IdentifierName "U" = U
 Line 335 col 43 IdentifierName "initialValue" = U
 Line 335 col 57 IdentifierName "U" = U
 Line 335 col 60 IdentifierName "context" = any
-Line 335 col 76 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 335 col 76 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 335 col 90 IdentifierName "U" = U
-Line 336 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 336 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 336 col 14 IdentifierName "iterator" = Reducer<T, T>
 Line 336 col 24 IdentifierName "Reducer" = Reducer<T, U>
 Line 336 col 32 IdentifierName "T" = T
@@ -2456,9 +2456,9 @@ Line 336 col 35 IdentifierName "T" = T
 Line 336 col 39 IdentifierName "initialValue" = T
 Line 336 col 54 IdentifierName "T" = T
 Line 336 col 57 IdentifierName "context" = any
-Line 336 col 73 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 336 col 73 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 336 col 87 IdentifierName "T" = T
-Line 337 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 337 col 0 IdentifierName "foldl" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 337 col 14 IdentifierName "U" = U
 Line 337 col 17 IdentifierName "iterator" = Reducer<T, U>
 Line 337 col 27 IdentifierName "Reducer" = Reducer<T, U>
@@ -2467,9 +2467,9 @@ Line 337 col 38 IdentifierName "U" = U
 Line 337 col 42 IdentifierName "initialValue" = U
 Line 337 col 56 IdentifierName "U" = U
 Line 337 col 59 IdentifierName "context" = any
-Line 337 col 75 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 337 col 75 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 337 col 89 IdentifierName "U" = U
-Line 338 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 338 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 338 col 15 IdentifierName "iterator" = Reducer<T, T>
 Line 338 col 25 IdentifierName "Reducer" = Reducer<T, U>
 Line 338 col 33 IdentifierName "T" = T
@@ -2477,9 +2477,9 @@ Line 338 col 36 IdentifierName "T" = T
 Line 338 col 40 IdentifierName "initialValue" = T
 Line 338 col 55 IdentifierName "T" = T
 Line 338 col 58 IdentifierName "context" = any
-Line 338 col 74 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 338 col 74 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 338 col 88 IdentifierName "T" = T
-Line 339 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 339 col 0 IdentifierName "inject" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 339 col 15 IdentifierName "U" = U
 Line 339 col 18 IdentifierName "iterator" = Reducer<T, U>
 Line 339 col 28 IdentifierName "Reducer" = Reducer<T, U>
@@ -2488,9 +2488,9 @@ Line 339 col 39 IdentifierName "U" = U
 Line 339 col 43 IdentifierName "initialValue" = U
 Line 339 col 57 IdentifierName "U" = U
 Line 339 col 60 IdentifierName "context" = any
-Line 339 col 76 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 339 col 76 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 339 col 90 IdentifierName "U" = U
-Line 340 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 340 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 340 col 20 IdentifierName "iterator" = Reducer<T, T>
 Line 340 col 30 IdentifierName "Reducer" = Reducer<T, U>
 Line 340 col 38 IdentifierName "T" = T
@@ -2498,9 +2498,9 @@ Line 340 col 41 IdentifierName "T" = T
 Line 340 col 45 IdentifierName "initialValue" = T
 Line 340 col 60 IdentifierName "T" = T
 Line 340 col 63 IdentifierName "context" = any
-Line 340 col 79 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 340 col 79 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 340 col 93 IdentifierName "T" = T
-Line 341 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 341 col 0 IdentifierName "reduceRight" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 341 col 20 IdentifierName "U" = U
 Line 341 col 23 IdentifierName "iterator" = Reducer<T, U>
 Line 341 col 33 IdentifierName "Reducer" = Reducer<T, U>
@@ -2509,9 +2509,9 @@ Line 341 col 44 IdentifierName "U" = U
 Line 341 col 48 IdentifierName "initialValue" = U
 Line 341 col 62 IdentifierName "U" = U
 Line 341 col 65 IdentifierName "context" = any
-Line 341 col 81 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 341 col 81 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 341 col 95 IdentifierName "U" = U
-Line 342 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 342 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 342 col 14 IdentifierName "iterator" = Reducer<T, T>
 Line 342 col 24 IdentifierName "Reducer" = Reducer<T, U>
 Line 342 col 32 IdentifierName "T" = T
@@ -2519,9 +2519,9 @@ Line 342 col 35 IdentifierName "T" = T
 Line 342 col 39 IdentifierName "initialValue" = T
 Line 342 col 54 IdentifierName "T" = T
 Line 342 col 57 IdentifierName "context" = any
-Line 342 col 73 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 342 col 73 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 342 col 87 IdentifierName "T" = T
-Line 343 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): Underscore.ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): Underscore.ChainedObject<U>; }
+Line 343 col 0 IdentifierName "foldr" = { (iterator: Reducer<T, T>, initialValue?: T, context?: any): ChainedObject<T>; <U>(iterator: Reducer<T, U>, initialValue: U, context?: any): ChainedObject<U>; }
 Line 343 col 14 IdentifierName "U" = U
 Line 343 col 17 IdentifierName "iterator" = Reducer<T, U>
 Line 343 col 27 IdentifierName "Reducer" = Reducer<T, U>
@@ -2530,219 +2530,219 @@ Line 343 col 38 IdentifierName "U" = U
 Line 343 col 42 IdentifierName "initialValue" = U
 Line 343 col 56 IdentifierName "U" = U
 Line 343 col 59 IdentifierName "context" = any
-Line 343 col 75 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 343 col 75 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 343 col 89 IdentifierName "U" = U
-Line 344 col 0 IdentifierName "find" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<T>
+Line 344 col 0 IdentifierName "find" = (iterator: Iterator<T, boolean>, context?: any) => ChainedObject<T>
 Line 344 col 13 IdentifierName "iterator" = Iterator<T, boolean>
 Line 344 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 344 col 32 IdentifierName "T" = T
 Line 344 col 45 IdentifierName "context" = any
-Line 344 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 344 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 344 col 75 IdentifierName "T" = T
-Line 345 col 0 IdentifierName "detect" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<T>
+Line 345 col 0 IdentifierName "detect" = (iterator: Iterator<T, boolean>, context?: any) => ChainedObject<T>
 Line 345 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 345 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 345 col 34 IdentifierName "T" = T
 Line 345 col 47 IdentifierName "context" = any
-Line 345 col 63 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 345 col 63 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 345 col 77 IdentifierName "T" = T
-Line 346 col 0 IdentifierName "filter" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 346 col 0 IdentifierName "filter" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 346 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 346 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 346 col 34 IdentifierName "T" = T
 Line 346 col 47 IdentifierName "context" = any
-Line 346 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 346 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 346 col 76 IdentifierName "T" = T
-Line 347 col 0 IdentifierName "select" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 347 col 0 IdentifierName "select" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 347 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 347 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 347 col 34 IdentifierName "T" = T
 Line 347 col 47 IdentifierName "context" = any
-Line 347 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 347 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 347 col 76 IdentifierName "T" = T
-Line 348 col 0 IdentifierName "where" = (properties: Object) => Underscore.ChainedArray<T>
+Line 348 col 0 IdentifierName "where" = (properties: Object) => ChainedArray<T>
 Line 348 col 14 IdentifierName "properties" = Object
 Line 348 col 26 IdentifierName "Object" = Object
-Line 348 col 35 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 348 col 35 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 348 col 48 IdentifierName "T" = T
-Line 349 col 0 IdentifierName "findWhere" = (properties: Object) => Underscore.ChainedObject<T>
+Line 349 col 0 IdentifierName "findWhere" = (properties: Object) => ChainedObject<T>
 Line 349 col 18 IdentifierName "properties" = Object
 Line 349 col 30 IdentifierName "Object" = Object
-Line 349 col 39 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 349 col 39 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 349 col 53 IdentifierName "T" = T
-Line 350 col 0 IdentifierName "reject" = (iterator: Iterator<T, boolean>, context?: any) => Underscore.ChainedArray<T>
+Line 350 col 0 IdentifierName "reject" = (iterator: Iterator<T, boolean>, context?: any) => ChainedArray<T>
 Line 350 col 15 IdentifierName "iterator" = Iterator<T, boolean>
 Line 350 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 350 col 34 IdentifierName "T" = T
 Line 350 col 47 IdentifierName "context" = any
-Line 350 col 63 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 350 col 63 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 350 col 76 IdentifierName "T" = T
-Line 351 col 0 IdentifierName "every" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 351 col 0 IdentifierName "every" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 351 col 14 IdentifierName "iterator" = Iterator<T, boolean>
 Line 351 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 351 col 34 IdentifierName "T" = T
 Line 351 col 47 IdentifierName "context" = any
-Line 351 col 63 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 352 col 0 IdentifierName "all" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 351 col 63 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 352 col 0 IdentifierName "all" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 352 col 12 IdentifierName "iterator" = Iterator<T, boolean>
 Line 352 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 352 col 32 IdentifierName "T" = T
 Line 352 col 45 IdentifierName "context" = any
-Line 352 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 353 col 0 IdentifierName "some" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 352 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 353 col 0 IdentifierName "some" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 353 col 13 IdentifierName "iterator" = Iterator<T, boolean>
 Line 353 col 24 IdentifierName "Iterator" = Iterator<T, U>
 Line 353 col 33 IdentifierName "T" = T
 Line 353 col 46 IdentifierName "context" = any
-Line 353 col 62 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 354 col 0 IdentifierName "any" = (iterator?: Iterator<T, boolean>, context?: any) => Underscore.ChainedObject<boolean>
+Line 353 col 62 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 354 col 0 IdentifierName "any" = (iterator?: Iterator<T, boolean>, context?: any) => ChainedObject<boolean>
 Line 354 col 12 IdentifierName "iterator" = Iterator<T, boolean>
 Line 354 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 354 col 32 IdentifierName "T" = T
 Line 354 col 45 IdentifierName "context" = any
-Line 354 col 61 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 355 col 0 IdentifierName "contains" = (value: T) => Underscore.ChainedObject<boolean>
+Line 354 col 61 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 355 col 0 IdentifierName "contains" = (value: T) => ChainedObject<boolean>
 Line 355 col 17 IdentifierName "value" = T
 Line 355 col 24 IdentifierName "T" = T
-Line 355 col 28 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 356 col 0 IdentifierName "include" = (value: T) => Underscore.ChainedObject<boolean>
+Line 355 col 28 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 356 col 0 IdentifierName "include" = (value: T) => ChainedObject<boolean>
 Line 356 col 16 IdentifierName "value" = T
 Line 356 col 23 IdentifierName "T" = T
-Line 356 col 27 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
-Line 357 col 0 IdentifierName "invoke" = (methodName: string, ...args: any[]) => Underscore.ChainedArray<any>
+Line 356 col 27 IdentifierName "ChainedObject" = ChainedObject<T>
+Line 357 col 0 IdentifierName "invoke" = (methodName: string, ...args: any[]) => ChainedArray<any>
 Line 357 col 15 IdentifierName "methodName" = string
 Line 357 col 38 IdentifierName "args" = any[]
-Line 357 col 52 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 358 col 0 IdentifierName "pluck" = (propertyName: string) => Underscore.ChainedArray<any>
+Line 357 col 52 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 358 col 0 IdentifierName "pluck" = (propertyName: string) => ChainedArray<any>
 Line 358 col 14 IdentifierName "propertyName" = string
-Line 358 col 37 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
-Line 359 col 0 IdentifierName "max" = (iterator?: Iterator<T, any>, context?: any) => Underscore.ChainedObject<T>
+Line 358 col 37 IdentifierName "ChainedArray" = ChainedArray<T>
+Line 359 col 0 IdentifierName "max" = (iterator?: Iterator<T, any>, context?: any) => ChainedObject<T>
 Line 359 col 12 IdentifierName "iterator" = Iterator<T, any>
 Line 359 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 359 col 32 IdentifierName "T" = T
 Line 359 col 41 IdentifierName "context" = any
-Line 359 col 57 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 359 col 57 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 359 col 71 IdentifierName "T" = T
-Line 360 col 0 IdentifierName "min" = (iterator?: Iterator<T, any>, context?: any) => Underscore.ChainedObject<T>
+Line 360 col 0 IdentifierName "min" = (iterator?: Iterator<T, any>, context?: any) => ChainedObject<T>
 Line 360 col 12 IdentifierName "iterator" = Iterator<T, any>
 Line 360 col 23 IdentifierName "Iterator" = Iterator<T, U>
 Line 360 col 32 IdentifierName "T" = T
 Line 360 col 41 IdentifierName "context" = any
-Line 360 col 57 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 360 col 57 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 360 col 71 IdentifierName "T" = T
-Line 361 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): Underscore.ChainedArray<T>; (propertyName: string): Underscore.ChainedArray<T>; }
+Line 361 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): ChainedArray<T>; (propertyName: string): ChainedArray<T>; }
 Line 361 col 15 IdentifierName "iterator" = Iterator<T, any>
 Line 361 col 25 IdentifierName "Iterator" = Iterator<T, U>
 Line 361 col 34 IdentifierName "T" = T
 Line 361 col 43 IdentifierName "context" = any
-Line 361 col 59 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 361 col 59 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 361 col 72 IdentifierName "T" = T
-Line 362 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): Underscore.ChainedArray<T>; (propertyName: string): Underscore.ChainedArray<T>; }
+Line 362 col 0 IdentifierName "sortBy" = { (iterator: Iterator<T, any>, context?: any): ChainedArray<T>; (propertyName: string): ChainedArray<T>; }
 Line 362 col 15 IdentifierName "propertyName" = string
-Line 362 col 38 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 362 col 38 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 362 col 51 IdentifierName "T" = T
 Line 363 col 0 IdentifierName "// Should return ChainedDictionary<T[]>, but expansive recursion not allowed
-        groupBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<any[]>; (propertyName: string): Underscore.ChainedDictionary<any[]>; }
+        groupBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<any[]>; (propertyName: string): ChainedDictionary<any[]>; }
 Line 364 col 16 IdentifierName "iterator" = Iterator<T, any>
 Line 364 col 27 IdentifierName "Iterator" = Iterator<T, U>
 Line 364 col 36 IdentifierName "T" = T
 Line 364 col 45 IdentifierName "context" = any
-Line 364 col 61 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 365 col 0 IdentifierName "groupBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<any[]>; (propertyName: string): Underscore.ChainedDictionary<any[]>; }
+Line 364 col 61 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 365 col 0 IdentifierName "groupBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<any[]>; (propertyName: string): ChainedDictionary<any[]>; }
 Line 365 col 16 IdentifierName "propertyName" = string
-Line 365 col 39 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 366 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<number>; (propertyName: string): Underscore.ChainedDictionary<number>; }
+Line 365 col 39 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 366 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<number>; (propertyName: string): ChainedDictionary<number>; }
 Line 366 col 16 IdentifierName "iterator" = Iterator<T, any>
 Line 366 col 27 IdentifierName "Iterator" = Iterator<T, U>
 Line 366 col 36 IdentifierName "T" = T
 Line 366 col 45 IdentifierName "context" = any
-Line 366 col 61 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 367 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): Underscore.ChainedDictionary<number>; (propertyName: string): Underscore.ChainedDictionary<number>; }
+Line 366 col 61 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 367 col 0 IdentifierName "countBy" = { (iterator?: Iterator<T, any>, context?: any): ChainedDictionary<number>; (propertyName: string): ChainedDictionary<number>; }
 Line 367 col 16 IdentifierName "propertyName" = string
-Line 367 col 39 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
-Line 368 col 0 IdentifierName "shuffle" = () => Underscore.ChainedArray<T>
-Line 368 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 367 col 39 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
+Line 368 col 0 IdentifierName "shuffle" = () => ChainedArray<T>
+Line 368 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 368 col 32 IdentifierName "T" = T
-Line 369 col 0 IdentifierName "toArray" = () => Underscore.ChainedArray<T>
-Line 369 col 19 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 369 col 0 IdentifierName "toArray" = () => ChainedArray<T>
+Line 369 col 19 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 369 col 32 IdentifierName "T" = T
-Line 370 col 0 IdentifierName "size" = () => Underscore.ChainedObject<number>
-Line 370 col 16 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 370 col 0 IdentifierName "size" = () => ChainedObject<number>
+Line 370 col 16 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 371 col 0 IdentifierName "// Methods from ChainedObject with promoted return types
-        extend" = (...sources: any[]) => Underscore.ChainedDictionary<T>
+        extend" = (...sources: any[]) => ChainedDictionary<T>
 Line 372 col 18 IdentifierName "sources" = any[]
-Line 372 col 35 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 372 col 35 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 372 col 53 IdentifierName "T" = T
-Line 373 col 0 IdentifierName "pick" = (...keys: string[]) => Underscore.ChainedDictionary<T>
+Line 373 col 0 IdentifierName "pick" = (...keys: string[]) => ChainedDictionary<T>
 Line 373 col 16 IdentifierName "keys" = string[]
-Line 373 col 33 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 373 col 33 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 373 col 51 IdentifierName "T" = T
-Line 374 col 0 IdentifierName "omit" = (...keys: string[]) => Underscore.ChainedDictionary<T>
+Line 374 col 0 IdentifierName "omit" = (...keys: string[]) => ChainedDictionary<T>
 Line 374 col 16 IdentifierName "keys" = string[]
-Line 374 col 33 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 374 col 33 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 374 col 51 IdentifierName "T" = T
-Line 375 col 0 IdentifierName "defaults" = (...defaults: any[]) => Underscore.ChainedDictionary<T>
+Line 375 col 0 IdentifierName "defaults" = (...defaults: any[]) => ChainedDictionary<T>
 Line 375 col 20 IdentifierName "defaults" = any[]
-Line 375 col 38 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 375 col 38 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 375 col 56 IdentifierName "T" = T
-Line 376 col 0 IdentifierName "clone" = () => Underscore.ChainedDictionary<T>
-Line 376 col 17 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 376 col 0 IdentifierName "clone" = () => ChainedDictionary<T>
+Line 376 col 17 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 376 col 35 IdentifierName "T" = T
-Line 377 col 0 IdentifierName "tap" = (interceptor: (object: Dictionary<T>) => void) => Underscore.ChainedDictionary<T>
+Line 377 col 0 IdentifierName "tap" = (interceptor: (object: Dictionary<T>) => void) => ChainedDictionary<T>
 Line 377 col 12 IdentifierName "interceptor" = (object: Dictionary<T>) => void
 Line 377 col 26 IdentifierName "object" = Dictionary<T>
 Line 377 col 34 IdentifierName "Dictionary" = Dictionary<T>
 Line 377 col 45 IdentifierName "T" = T
-Line 377 col 59 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 377 col 59 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 377 col 77 IdentifierName "T" = T
-Line 380 col 21 IdentifierName "TemplateSettings" = Underscore.TemplateSettings
+Line 380 col 21 IdentifierName "TemplateSettings" = TemplateSettings
 Line 381 col 0 IdentifierName "evaluate" = RegExp
 Line 381 col 19 IdentifierName "RegExp" = RegExp
 Line 382 col 0 IdentifierName "interpolate" = RegExp
 Line 382 col 22 IdentifierName "RegExp" = RegExp
 Line 383 col 0 IdentifierName "escape" = RegExp
 Line 383 col 17 IdentifierName "RegExp" = RegExp
-Line 386 col 21 IdentifierName "Static" = Underscore.Static
+Line 386 col 21 IdentifierName "Static" = Static
 Line 387 col 9 IdentifierName "T" = T
 Line 387 col 12 IdentifierName "list" = T[]
 Line 387 col 18 IdentifierName "T" = T
-Line 387 col 24 IdentifierName "WrappedArray" = Underscore.WrappedArray<T>
+Line 387 col 24 IdentifierName "WrappedArray" = WrappedArray<T>
 Line 387 col 37 IdentifierName "T" = T
 Line 388 col 9 IdentifierName "T" = T
 Line 388 col 12 IdentifierName "list" = Dictionary<T>
 Line 388 col 18 IdentifierName "Dictionary" = Dictionary<T>
 Line 388 col 29 IdentifierName "T" = T
-Line 388 col 34 IdentifierName "WrappedDictionary" = Underscore.WrappedDictionary<T>
+Line 388 col 34 IdentifierName "WrappedDictionary" = WrappedDictionary<T>
 Line 388 col 52 IdentifierName "T" = T
 Line 389 col 9 IdentifierName "T" = T
 Line 389 col 19 IdentifierName "Function" = Function
 Line 389 col 29 IdentifierName "func" = T
 Line 389 col 35 IdentifierName "T" = T
-Line 389 col 39 IdentifierName "WrappedFunction" = Underscore.WrappedFunction<T>
+Line 389 col 39 IdentifierName "WrappedFunction" = WrappedFunction<T>
 Line 389 col 55 IdentifierName "T" = T
 Line 390 col 9 IdentifierName "T" = T
 Line 390 col 12 IdentifierName "obj" = T
 Line 390 col 17 IdentifierName "T" = T
-Line 390 col 21 IdentifierName "WrappedObject" = Underscore.WrappedObject<T>
+Line 390 col 21 IdentifierName "WrappedObject" = WrappedObject<T>
 Line 390 col 35 IdentifierName "T" = T
-Line 391 col 0 IdentifierName "chain" = { <T>(list: T[]): Underscore.ChainedArray<T>; <T>(list: Dictionary<T>): Underscore.ChainedDictionary<T>; <T>(obj: T): Underscore.ChainedObject<T>; }
+Line 391 col 0 IdentifierName "chain" = { <T>(list: T[]): ChainedArray<T>; <T>(list: Dictionary<T>): ChainedDictionary<T>; <T>(obj: T): ChainedObject<T>; }
 Line 392 col 14 IdentifierName "T" = T
 Line 392 col 17 IdentifierName "list" = T[]
 Line 392 col 23 IdentifierName "T" = T
-Line 392 col 29 IdentifierName "ChainedArray" = Underscore.ChainedArray<T>
+Line 392 col 29 IdentifierName "ChainedArray" = ChainedArray<T>
 Line 392 col 42 IdentifierName "T" = T
-Line 393 col 0 IdentifierName "chain" = { <T>(list: T[]): Underscore.ChainedArray<T>; <T>(list: Dictionary<T>): Underscore.ChainedDictionary<T>; <T>(obj: T): Underscore.ChainedObject<T>; }
+Line 393 col 0 IdentifierName "chain" = { <T>(list: T[]): ChainedArray<T>; <T>(list: Dictionary<T>): ChainedDictionary<T>; <T>(obj: T): ChainedObject<T>; }
 Line 393 col 14 IdentifierName "T" = T
 Line 393 col 17 IdentifierName "list" = Dictionary<T>
 Line 393 col 23 IdentifierName "Dictionary" = Dictionary<T>
 Line 393 col 34 IdentifierName "T" = T
-Line 393 col 39 IdentifierName "ChainedDictionary" = Underscore.ChainedDictionary<T>
+Line 393 col 39 IdentifierName "ChainedDictionary" = ChainedDictionary<T>
 Line 393 col 57 IdentifierName "T" = T
-Line 394 col 0 IdentifierName "chain" = { <T>(list: T[]): Underscore.ChainedArray<T>; <T>(list: Dictionary<T>): Underscore.ChainedDictionary<T>; <T>(obj: T): Underscore.ChainedObject<T>; }
+Line 394 col 0 IdentifierName "chain" = { <T>(list: T[]): ChainedArray<T>; <T>(list: Dictionary<T>): ChainedDictionary<T>; <T>(obj: T): ChainedObject<T>; }
 Line 394 col 14 IdentifierName "T" = T
 Line 394 col 17 IdentifierName "obj" = T
 Line 394 col 22 IdentifierName "T" = T
-Line 394 col 26 IdentifierName "ChainedObject" = Underscore.ChainedObject<T>
+Line 394 col 26 IdentifierName "ChainedObject" = ChainedObject<T>
 Line 394 col 40 IdentifierName "T" = T
 Line 395 col 0 IdentifierName "each" = { <T>(list: T[], iterator: Iterator<T, void>, context?: any): void; <T>(list: Dictionary<T>, iterator: Iterator<T, void>, context?: any): void; }
 Line 396 col 13 IdentifierName "T" = T
@@ -3881,8 +3881,8 @@ Line 614 col 0 IdentifierName "isNull" = (object: any) => boolean
 Line 614 col 15 IdentifierName "object" = any
 Line 615 col 0 IdentifierName "isUndefined" = (value: any) => boolean
 Line 615 col 20 IdentifierName "value" = any
-Line 616 col 0 IdentifierName "noConflict" = () => Underscore.Static
-Line 617 col 22 IdentifierName "Static" = Underscore.Static
+Line 616 col 0 IdentifierName "noConflict" = () => Static
+Line 617 col 22 IdentifierName "Static" = Static
 Line 618 col 0 IdentifierName "identity" = <T>(value: T) => T
 Line 619 col 17 IdentifierName "T" = T
 Line 619 col 20 IdentifierName "value" = T
@@ -3913,16 +3913,16 @@ Line 633 col 17 IdentifierName "s" = string
 Line 634 col 0 IdentifierName "result" = (object: any, property: string) => any
 Line 635 col 15 IdentifierName "object" = any
 Line 635 col 28 IdentifierName "property" = string
-Line 636 col 0 IdentifierName "templateSettings" = Underscore.TemplateSettings
-Line 637 col 26 IdentifierName "TemplateSettings" = Underscore.TemplateSettings
-Line 638 col 0 IdentifierName "template" = { (templateString: string): (data: any) => string; (templateString: string, data: any, settings?: Underscore.TemplateSettings): string; }
+Line 636 col 0 IdentifierName "templateSettings" = TemplateSettings
+Line 637 col 26 IdentifierName "TemplateSettings" = TemplateSettings
+Line 638 col 0 IdentifierName "template" = { (templateString: string): (data: any) => string; (templateString: string, data: any, settings?: TemplateSettings): string; }
 Line 639 col 17 IdentifierName "templateString" = string
 Line 639 col 43 IdentifierName "data" = any
-Line 640 col 0 IdentifierName "template" = { (templateString: string): (data: any) => string; (templateString: string, data: any, settings?: Underscore.TemplateSettings): string; }
+Line 640 col 0 IdentifierName "template" = { (templateString: string): (data: any) => string; (templateString: string, data: any, settings?: TemplateSettings): string; }
 Line 640 col 17 IdentifierName "templateString" = string
 Line 640 col 41 IdentifierName "data" = any
-Line 640 col 52 IdentifierName "settings" = Underscore.TemplateSettings
-Line 640 col 63 IdentifierName "TemplateSettings" = Underscore.TemplateSettings
+Line 640 col 52 IdentifierName "settings" = TemplateSettings
+Line 640 col 63 IdentifierName "TemplateSettings" = TemplateSettings
 Line 644 col 12 IdentifierName "_" = Underscore.Static
 Line 644 col 15 IdentifierName "Underscore" = Underscore
 Line 644 col 26 IdentifierName "Static" = Underscore.Static

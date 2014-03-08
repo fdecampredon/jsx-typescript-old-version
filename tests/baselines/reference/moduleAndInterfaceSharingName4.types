@@ -1,10 +1,10 @@
 === tests/cases/compiler/moduleAndInterfaceSharingName4.ts ===
 Line 0 col 15 IdentifierName "D3" = D3
-Line 1 col 8 IdentifierName "x" = D3.Color.Color
+Line 1 col 8 IdentifierName "x" = Color.Color
 Line 1 col 11 IdentifierName "D3" = D3
-Line 1 col 14 IdentifierName "Color" = D3.Color
-Line 1 col 20 IdentifierName "Color" = D3.Color.Color
-Line 3 col 11 IdentifierName "Color" = D3.Color
-Line 4 col 25 IdentifierName "Color" = D3.Color.Color
-Line 5 col 0 IdentifierName "darker" = D3.Color.Color
-Line 5 col 20 IdentifierName "Color" = D3.Color.Color
+Line 1 col 14 IdentifierName "Color" = Color
+Line 1 col 20 IdentifierName "Color" = Color.Color
+Line 3 col 11 IdentifierName "Color" = Color
+Line 4 col 25 IdentifierName "Color" = Color
+Line 5 col 0 IdentifierName "darker" = Color
+Line 5 col 20 IdentifierName "Color" = Color

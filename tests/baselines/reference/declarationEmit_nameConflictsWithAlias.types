@@ -1,11 +1,11 @@
 === tests/cases/compiler/declarationEmit_nameConflictsWithAlias.ts ===
-Line 1 col 14 IdentifierName "C" = C
-Line 1 col 35 IdentifierName "I" = C.I
+Line 1 col 14 IdentifierName "C" = v
+Line 1 col 35 IdentifierName "I" = I
 Line 2 col 14 IdentifierName "v" = v
-Line 2 col 18 IdentifierName "C" = C
+Line 2 col 18 IdentifierName "C" = v
 Line 3 col 14 IdentifierName "M" = M
-Line 4 col 18 IdentifierName "C" = M.C
-Line 4 col 39 IdentifierName "I" = M.C.I
+Line 4 col 18 IdentifierName "C" = C
+Line 4 col 39 IdentifierName "I" = I
 Line 5 col 15 IdentifierName "w" = C.I
 Line 5 col 18 IdentifierName "v" = v
 Line 5 col 20 IdentifierName "I" = C.I

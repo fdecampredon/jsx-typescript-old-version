@@ -1,10 +1,10 @@
 === tests/cases/compiler/exportImportNonInstantiatedModule.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "I" = A.I
+Line 1 col 21 IdentifierName "I" = I
 Line 1 col 25 IdentifierName "x" = number
 Line 4 col 7 IdentifierName "B" = B
-Line 5 col 18 IdentifierName "A1" = B.A1
-Line 5 col 23 IdentifierName "A" = A
+Line 5 col 18 IdentifierName "A1" = A1
+Line 5 col 23 IdentifierName "A" = A1
 Line 9 col 4 IdentifierName "x" = A.I
 Line 9 col 7 IdentifierName "B" = B
 Line 9 col 9 IdentifierName "A1" = B.A1

@@ -128,7 +128,7 @@ module TypeScript {
         }
 
         private canEmitDeclarations(declAST: ISyntaxElement): boolean {
-            var container = this.getEnclosingContainer(declAST);
+            var container = DeclarationEmitter.getEnclosingContainer(declAST);
             if (container.kind() === SyntaxKind.ModuleDeclaration || container.kind() === SyntaxKind.SourceUnit) {
                 var pullDecl = this.semanticInfoChain.getDeclForAST(declAST);
                 if (!hasFlag(pullDecl.flags, PullElementFlags.Exported)) {
@@ -166,7 +166,7 @@ module TypeScript {
                     var emitDeclare = !hasFlag(pullFlags, PullElementFlags.Exported);
 
                     var declAST = this.semanticInfoChain.getASTForDecl(pullDecl);
-                    var container = this.getEnclosingContainer(declAST);
+                    var container = DeclarationEmitter.getEnclosingContainer(declAST);
 
                     var isExternalModule = container.kind() === SyntaxKind.SourceUnit && this.document.isExternalModule();
 
@@ -243,7 +243,7 @@ module TypeScript {
         }
 
         private emitTypeSignature(ast: ISyntaxElement, type: PullTypeSymbol) {
-            var declarationContainerAst = this.getEnclosingContainer(ast);
+            var declarationContainerAst = DeclarationEmitter.getEnclosingContainer(ast);
 
             var start = new Date().getTime();
             var declarationContainerDecl = this.semanticInfoChain.getDeclForAST(declarationContainerAst);
@@ -864,7 +864,7 @@ module TypeScript {
             this.emitBaseList(clause.typeNames, clause.kind() === SyntaxKind.ExtendsHeritageClause);
         }
 
-        private getEnclosingContainer(ast: ISyntaxElement): ISyntaxElement {
+        static getEnclosingContainer(ast: ISyntaxElement): ISyntaxElement {
             // If the passed in as is the 'name' portion of an module declaration.  
             // If so, we want the actual container of *that* module declaration.  
             var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(ast);
@@ -894,7 +894,7 @@ module TypeScript {
             }
 
             this.declFile.Write("<");
-            var containerAst = this.getEnclosingContainer(typeParams);
+            var containerAst = DeclarationEmitter.getEnclosingContainer(typeParams);
 
             var start = new Date().getTime();
             var containerDecl = this.semanticInfoChain.getDeclForAST(containerAst);

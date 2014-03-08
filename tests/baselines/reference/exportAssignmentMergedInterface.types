@@ -1,19 +1,19 @@
 === tests/cases/compiler/foo_1.ts ===
 Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 4 IdentifierName "x" = Foo
+Line 1 col 4 IdentifierName "x" = foo
 Line 1 col 7 IdentifierName "foo" = foo
 Line 2 col 0 InvocationExpression "x("test")" = void
-Line 2 col 0 IdentifierName "x" = Foo
+Line 2 col 0 IdentifierName "x" = foo
 Line 3 col 0 InvocationExpression "x(42)" = number
-Line 3 col 0 IdentifierName "x" = Foo
+Line 3 col 0 IdentifierName "x" = foo
 Line 4 col 4 IdentifierName "y" = string
 Line 4 col 16 MemberAccessExpression "x.b" = string
-Line 4 col 16 IdentifierName "x" = Foo
+Line 4 col 16 IdentifierName "x" = foo
 Line 4 col 18 IdentifierName "b" = string
 Line 5 col 3 LogicalNotExpression "!!x.c" = boolean
 Line 5 col 4 LogicalNotExpression "!x.c" = boolean
 Line 5 col 5 MemberAccessExpression "x.c" = boolean
-Line 5 col 5 IdentifierName "x" = Foo
+Line 5 col 5 IdentifierName "x" = foo
 Line 5 col 7 IdentifierName "c" = boolean
 Line 6 col 4 IdentifierName "z" = { x: number; y: number; }
 Line 6 col 8 ObjectLiteralExpression "{x: 1, y: 2}" = { x: number; y: number; }
@@ -22,7 +22,7 @@ Line 6 col 15 IdentifierName "y" = number
 Line 7 col 0 AssignmentExpression "z = x.d" = { x: number; y: number; }
 Line 7 col 0 IdentifierName "z" = { x: number; y: number; }
 Line 7 col 4 MemberAccessExpression "x.d" = { x: number; y: number; }
-Line 7 col 4 IdentifierName "x" = Foo
+Line 7 col 4 IdentifierName "x" = foo
 Line 7 col 6 IdentifierName "d" = { x: number; y: number; }
 === tests/cases/compiler/foo_0.ts ===
 Line 0 col 10 IdentifierName "Foo" = Foo

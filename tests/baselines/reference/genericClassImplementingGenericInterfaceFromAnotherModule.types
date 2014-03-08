@@ -1,9 +1,9 @@
 === tests/cases/compiler/genericClassImplementingGenericInterfaceFromAnotherModule.ts ===
 Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 21 IdentifierName "IFoo" = foo.IFoo<T>
+Line 1 col 21 IdentifierName "IFoo" = IFoo<T>
 Line 1 col 26 IdentifierName "T" = T
 Line 3 col 7 IdentifierName "bar" = bar
-Line 4 col 17 IdentifierName "Foo" = bar.Foo<T>
+Line 4 col 17 IdentifierName "Foo" = Foo<T>
 Line 4 col 21 IdentifierName "T" = T
 Line 4 col 35 IdentifierName "foo" = foo
 Line 4 col 39 IdentifierName "IFoo" = foo.IFoo<T>

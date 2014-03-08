@@ -1,29 +1,29 @@
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_fs.ts ===
 Line 0 col 7 IdentifierName "commands" = commands
 Line 1 col 9 IdentifierName "run" = typeof run
-Line 1 col 13 IdentifierName "configuration" = IConfiguration
+Line 1 col 13 IdentifierName "configuration" = commands.IConfiguration
 Line 1 col 28 IdentifierName "commands" = commands
-Line 1 col 37 IdentifierName "IConfiguration" = IConfiguration
+Line 1 col 37 IdentifierName "IConfiguration" = commands.IConfiguration
 Line 2 col 8 IdentifierName "absoluteWorkspacePath" = string
 Line 2 col 32 InvocationExpression "configuration.workspace.toAbsolutePath(configuration.server)" = string
 Line 2 col 32 MemberAccessExpression "configuration.workspace.toAbsolutePath" = (server: IServer, workspaceRelativePath?: string) => string
 Line 2 col 32 MemberAccessExpression "configuration.workspace" = IWorkspace
-Line 2 col 32 IdentifierName "configuration" = IConfiguration
+Line 2 col 32 IdentifierName "configuration" = commands.IConfiguration
 Line 2 col 46 IdentifierName "workspace" = IWorkspace
 Line 2 col 56 IdentifierName "toAbsolutePath" = (server: IServer, workspaceRelativePath?: string) => string
 Line 2 col 71 MemberAccessExpression "configuration.server" = IServer
-Line 2 col 71 IdentifierName "configuration" = IConfiguration
+Line 2 col 71 IdentifierName "configuration" = commands.IConfiguration
 Line 2 col 85 IdentifierName "server" = IServer
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_commands.ts ===
 Line 2 col 7 IdentifierName "fs" = fs
 Line 3 col 7 IdentifierName "server" = server
 Line 5 col 17 IdentifierName "IConfiguration" = IConfiguration
-Line 6 col 0 IdentifierName "workspace" = IWorkspace
+Line 6 col 0 IdentifierName "workspace" = server.IWorkspace
 Line 6 col 15 IdentifierName "server" = server
-Line 6 col 22 IdentifierName "IWorkspace" = IWorkspace
-Line 7 col 0 IdentifierName "server" = IServer
+Line 6 col 22 IdentifierName "IWorkspace" = server.IWorkspace
+Line 7 col 0 IdentifierName "server" = server.IServer
 Line 7 col 13 IdentifierName "server" = server
-Line 7 col 20 IdentifierName "IServer" = IServer
+Line 7 col 20 IdentifierName "IServer" = server.IServer
 === tests/cases/compiler/visibilityOfCrossModuleTypeUsage_server.ts ===
 Line 0 col 17 IdentifierName "IServer" = IServer
 Line 3 col 17 IdentifierName "IWorkspace" = IWorkspace

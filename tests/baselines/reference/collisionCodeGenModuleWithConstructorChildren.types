@@ -1,17 +1,17 @@
 === tests/cases/compiler/collisionCodeGenModuleWithConstructorChildren.ts ===
 Line 0 col 7 IdentifierName "M" = M
 Line 1 col 15 IdentifierName "x" = number
-Line 2 col 10 IdentifierName "c" = M.c
+Line 2 col 10 IdentifierName "c" = c
 Line 3 col 20 IdentifierName "M" = any
 Line 3 col 23 IdentifierName "p" = number
 Line 3 col 27 IdentifierName "x" = number
 Line 8 col 7 IdentifierName "M" = M
-Line 9 col 10 IdentifierName "d" = M.d
+Line 9 col 10 IdentifierName "d" = d
 Line 10 col 28 IdentifierName "M" = any
 Line 10 col 31 IdentifierName "p" = number
 Line 10 col 35 IdentifierName "x" = number
 Line 15 col 7 IdentifierName "M" = M
-Line 16 col 10 IdentifierName "d2" = M.d2
+Line 16 col 10 IdentifierName "d2" = d2
 Line 18 col 16 IdentifierName "M" = number
 Line 19 col 16 IdentifierName "p" = number
 Line 19 col 20 IdentifierName "x" = number

@@ -1,6 +1,6 @@
 === tests/cases/compiler/genericArgumentCallSigAssignmentCompat.ts ===
 Line 0 col 7 IdentifierName "Underscore" = Underscore
-Line 1 col 21 IdentifierName "Iterator" = Underscore.Iterator<T, U>
+Line 1 col 21 IdentifierName "Iterator" = Iterator<T, U>
 Line 1 col 30 IdentifierName "T" = T
 Line 1 col 33 IdentifierName "U" = U
 Line 2 col 9 IdentifierName "value" = T
@@ -8,13 +8,13 @@ Line 2 col 16 IdentifierName "T" = T
 Line 2 col 19 IdentifierName "index" = any
 Line 2 col 31 IdentifierName "list" = any
 Line 2 col 43 IdentifierName "U" = U
-Line 5 col 21 IdentifierName "Static" = Underscore.Static
-Line 6 col 0 IdentifierName "all" = <T>(list: T[], iterator?: Underscore.Iterator<T, boolean>, context?: any) => boolean
+Line 5 col 21 IdentifierName "Static" = Static
+Line 6 col 0 IdentifierName "all" = <T>(list: T[], iterator?: Iterator<T, boolean>, context?: any) => boolean
 Line 6 col 12 IdentifierName "T" = T
 Line 6 col 15 IdentifierName "list" = T[]
 Line 6 col 21 IdentifierName "T" = T
-Line 6 col 26 IdentifierName "iterator" = Underscore.Iterator<T, boolean>
-Line 6 col 37 IdentifierName "Iterator" = Underscore.Iterator<T, U>
+Line 6 col 26 IdentifierName "iterator" = Iterator<T, boolean>
+Line 6 col 37 IdentifierName "Iterator" = Iterator<T, U>
 Line 6 col 46 IdentifierName "T" = T
 Line 6 col 59 IdentifierName "context" = any
 Line 7 col 0 IdentifierName "identity" = <T>(value: T) => T

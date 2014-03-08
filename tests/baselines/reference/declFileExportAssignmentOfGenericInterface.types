@@ -1,10 +1,10 @@
 === tests/cases/compiler/declFileExportAssignmentOfGenericInterface_1.ts ===
 Line 0 col 7 IdentifierName "a" = a
-Line 1 col 11 IdentifierName "x" = Foo<Foo<string>>
+Line 1 col 11 IdentifierName "x" = a<a<string>>
 Line 1 col 14 IdentifierName "a" = a
 Line 1 col 16 IdentifierName "a" = a
 Line 2 col 0 MemberAccessExpression "x.a" = string
-Line 2 col 0 IdentifierName "x" = Foo<Foo<string>>
+Line 2 col 0 IdentifierName "x" = a<a<string>>
 Line 2 col 2 IdentifierName "a" = string
 === tests/cases/compiler/declFileExportAssignmentOfGenericInterface_0.ts ===
 Line 1 col 10 IdentifierName "Foo" = Foo<T>

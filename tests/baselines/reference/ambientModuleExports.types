@@ -1,8 +1,8 @@
 === tests/cases/compiler/ambientModuleExports.ts ===
 Line 0 col 15 IdentifierName "Foo" = Foo
-Line 1 col 10 IdentifierName "a" = typeof Foo.a
+Line 1 col 10 IdentifierName "a" = typeof a
 Line 2 col 5 IdentifierName "b" = number
-Line 3 col 7 IdentifierName "C" = Foo.C
+Line 3 col 7 IdentifierName "C" = C
 Line 5 col 0 InvocationExpression "Foo.a()" = void
 Line 5 col 0 MemberAccessExpression "Foo.a" = typeof Foo.a
 Line 5 col 0 IdentifierName "Foo" = typeof Foo
@@ -16,9 +16,9 @@ Line 8 col 12 MemberAccessExpression "Foo.C" = typeof Foo.C
 Line 8 col 12 IdentifierName "Foo" = typeof Foo
 Line 8 col 16 IdentifierName "C" = typeof Foo.C
 Line 10 col 15 IdentifierName "Foo2" = Foo2
-Line 11 col 20 IdentifierName "a" = typeof Foo2.a
+Line 11 col 20 IdentifierName "a" = typeof a
 Line 12 col 15 IdentifierName "b" = number
-Line 13 col 17 IdentifierName "C" = Foo2.C
+Line 13 col 17 IdentifierName "C" = C
 Line 15 col 0 InvocationExpression "Foo2.a()" = void
 Line 15 col 0 MemberAccessExpression "Foo2.a" = typeof Foo2.a
 Line 15 col 0 IdentifierName "Foo2" = typeof Foo2

@@ -1,10 +1,10 @@
 === tests/cases/compiler/declFileTypeofInAnonymousType.ts ===
 Line 1 col 7 IdentifierName "m1" = m1
-Line 2 col 17 IdentifierName "c" = m1.c
-Line 4 col 16 IdentifierName "e" = m1.e
-Line 5 col 0 IdentifierName "weekday" = m1.e
-Line 6 col 0 IdentifierName "weekend" = m1.e
-Line 7 col 0 IdentifierName "holiday" = m1.e
+Line 2 col 17 IdentifierName "c" = c
+Line 4 col 16 IdentifierName "e" = e
+Line 5 col 0 IdentifierName "weekday" = e
+Line 6 col 0 IdentifierName "weekend" = e
+Line 7 col 0 IdentifierName "holiday" = e
 Line 10 col 4 IdentifierName "a" = { c: m1.c; }
 Line 10 col 9 IdentifierName "c" = m1.c
 Line 10 col 12 IdentifierName "m1" = m1

@@ -1,17 +1,17 @@
 === tests/cases/compiler/exportAssignmentEnum_B.ts ===
-Line 0 col 7 IdentifierName "EnumE" = typeof E
-Line 2 col 4 IdentifierName "a" = E
-Line 2 col 8 MemberAccessExpression "EnumE.A" = E
-Line 2 col 8 IdentifierName "EnumE" = typeof E
-Line 2 col 14 IdentifierName "A" = E
-Line 3 col 4 IdentifierName "b" = E
-Line 3 col 8 MemberAccessExpression "EnumE.B" = E
-Line 3 col 8 IdentifierName "EnumE" = typeof E
-Line 3 col 14 IdentifierName "B" = E
-Line 4 col 4 IdentifierName "c" = E
-Line 4 col 8 MemberAccessExpression "EnumE.C" = E
-Line 4 col 8 IdentifierName "EnumE" = typeof E
-Line 4 col 14 IdentifierName "C" = E
+Line 0 col 7 IdentifierName "EnumE" = EnumE
+Line 2 col 4 IdentifierName "a" = EnumE
+Line 2 col 8 MemberAccessExpression "EnumE.A" = EnumE
+Line 2 col 8 IdentifierName "EnumE" = typeof EnumE
+Line 2 col 14 IdentifierName "A" = EnumE
+Line 3 col 4 IdentifierName "b" = EnumE
+Line 3 col 8 MemberAccessExpression "EnumE.B" = EnumE
+Line 3 col 8 IdentifierName "EnumE" = typeof EnumE
+Line 3 col 14 IdentifierName "B" = EnumE
+Line 4 col 4 IdentifierName "c" = EnumE
+Line 4 col 8 MemberAccessExpression "EnumE.C" = EnumE
+Line 4 col 8 IdentifierName "EnumE" = typeof EnumE
+Line 4 col 14 IdentifierName "C" = EnumE
 === tests/cases/compiler/exportAssignmentEnum_A.ts ===
 Line 0 col 5 IdentifierName "E" = E
 Line 1 col 0 IdentifierName "A" = E

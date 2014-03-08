@@ -1,9 +1,9 @@
 === tests/cases/compiler/reuseInnerModuleMember_1.ts ===
 Line 1 col 15 IdentifierName "bar" = bar
-Line 2 col 14 IdentifierName "alpha" = bar.alpha
+Line 2 col 14 IdentifierName "alpha" = alpha
 Line 5 col 7 IdentifierName "f" = f
 Line 6 col 7 IdentifierName "bar" = bar
-Line 7 col 8 IdentifierName "x" = bar.alpha
-Line 7 col 11 IdentifierName "alpha" = bar.alpha
+Line 7 col 8 IdentifierName "x" = alpha
+Line 7 col 11 IdentifierName "alpha" = alpha
 === tests/cases/compiler/reuseInnerModuleMember_0.ts ===
 Line 0 col 14 IdentifierName "M" = M

@@ -6498,7 +6498,8 @@ module TypeScript {
             }
 
             // First check if this is the name child of a declaration. If it is, no need to search for a name in scope since this is not a reference.
-            if (ASTHelpers.isDeclarationASTOrDeclarationNameAST(nameAST)) {
+            var isDeclarationASTOrDeclarationNameAST = ASTHelpers.isDeclarationASTOrDeclarationNameAST(nameAST);
+            if (isDeclarationASTOrDeclarationNameAST) {
                 nameSymbol = this.semanticInfoChain.getDeclForAST(nameAST.parent).getSymbol();
             }
 
@@ -6525,6 +6526,24 @@ module TypeScript {
                         nameSymbol = this.cachedFunctionArgumentsSymbol();
                         this.resolveDeclaredSymbol(this.cachedIArgumentsInterfaceType(), context);
                     }
+                }
+            }
+
+            var aliasSymbol: PullTypeAliasSymbol = null;
+            if (nameSymbol && nameSymbol.isAlias() && !isDeclarationASTOrDeclarationNameAST) {
+                aliasSymbol = <PullTypeAliasSymbol>nameSymbol;
+                if (!this.inTypeQuery(nameAST)) {
+                    aliasSymbol.setIsUsedAsValue();
+                }
+
+                this.resolveDeclaredSymbol(nameSymbol, context);
+
+                this.resolveDeclaredSymbol(aliasSymbol.assignedValue(), context);
+                this.resolveDeclaredSymbol(aliasSymbol.assignedContainer(), context);
+
+                nameSymbol = aliasSymbol.getExportAssignedValueSymbol();
+                if (!nameSymbol) {
+                    aliasSymbol = null;
                 }
             }
 
@@ -6586,29 +6605,6 @@ module TypeScript {
                         return this.getNewErrorTypeSymbol(id);
 
                     }
-                }
-            }
-
-            var aliasSymbol: PullTypeAliasSymbol = null;
-
-            if (nameSymbol.isType() && nameSymbol.isAlias()) {
-                aliasSymbol = <PullTypeAliasSymbol>nameSymbol;
-                if (!this.inTypeQuery(nameAST)) {
-                    aliasSymbol.setIsUsedAsValue();
-                }
-
-                this.resolveDeclaredSymbol(nameSymbol, context);
-
-                this.resolveDeclaredSymbol(aliasSymbol.assignedValue(), context);
-                this.resolveDeclaredSymbol(aliasSymbol.assignedContainer(), context);
-
-                var exportAssignmentSymbol = (<PullTypeAliasSymbol>nameSymbol).getExportAssignedValueSymbol();
-
-                if (exportAssignmentSymbol) {
-                    nameSymbol = exportAssignmentSymbol;
-                }
-                else {
-                    aliasSymbol = null;
                 }
             }
 

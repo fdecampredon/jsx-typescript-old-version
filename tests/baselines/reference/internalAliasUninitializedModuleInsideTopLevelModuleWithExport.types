@@ -1,15 +1,15 @@
 === tests/cases/compiler/internalAliasUninitializedModuleInsideTopLevelModuleWithExport.ts ===
 Line 0 col 14 IdentifierName "a" = a
-Line 1 col 18 IdentifierName "b" = a.b
-Line 2 col 25 IdentifierName "I" = a.b.I
+Line 1 col 18 IdentifierName "b" = b
+Line 2 col 25 IdentifierName "I" = I
 Line 3 col 0 IdentifierName "foo" = () => any
 Line 8 col 14 IdentifierName "b" = b
 Line 8 col 18 IdentifierName "a" = a
 Line 8 col 20 IdentifierName "b" = any
-Line 9 col 11 IdentifierName "x" = a.b.I
+Line 9 col 11 IdentifierName "x" = b.I
 Line 9 col 14 IdentifierName "b" = b
-Line 9 col 16 IdentifierName "I" = a.b.I
+Line 9 col 16 IdentifierName "I" = b.I
 Line 10 col 0 InvocationExpression "x.foo()" = any
 Line 10 col 0 MemberAccessExpression "x.foo" = () => any
-Line 10 col 0 IdentifierName "x" = a.b.I
+Line 10 col 0 IdentifierName "x" = b.I
 Line 10 col 2 IdentifierName "foo" = () => any

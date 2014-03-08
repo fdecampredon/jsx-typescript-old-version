@@ -1,10 +1,10 @@
 === tests/cases/compiler/interMixingModulesInterfaces5.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 2 col 14 IdentifierName "B" = A.B
+Line 2 col 14 IdentifierName "B" = B
 Line 3 col 0 IdentifierName "name" = string
 Line 4 col 0 IdentifierName "value" = number
-Line 7 col 18 IdentifierName "B" = A.B
-Line 8 col 24 IdentifierName "createB" = typeof A.B.createB
+Line 7 col 18 IdentifierName "B" = B
+Line 8 col 24 IdentifierName "createB" = typeof createB
 Line 14 col 4 IdentifierName "x" = number
 Line 14 col 16 InvocationExpression "A.B.createB()" = number
 Line 14 col 16 MemberAccessExpression "A.B.createB" = typeof A.B.createB

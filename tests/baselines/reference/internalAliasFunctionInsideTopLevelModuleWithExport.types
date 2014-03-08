@@ -1,13 +1,13 @@
 === tests/cases/compiler/internalAliasFunctionInsideTopLevelModuleWithExport.ts ===
 Line 0 col 14 IdentifierName "a" = a
-Line 1 col 20 IdentifierName "foo" = typeof a.foo
+Line 1 col 20 IdentifierName "foo" = typeof foo
 Line 1 col 24 IdentifierName "x" = number
 Line 2 col 15 IdentifierName "x" = number
-Line 6 col 14 IdentifierName "b" = typeof a.foo
+Line 6 col 14 IdentifierName "b" = b
 Line 6 col 18 IdentifierName "a" = a
-Line 6 col 20 IdentifierName "foo" = typeof a.foo
+Line 6 col 20 IdentifierName "foo" = typeof b
 Line 7 col 11 IdentifierName "bVal" = number
 Line 7 col 18 InvocationExpression "b(10)" = number
-Line 7 col 18 IdentifierName "b" = typeof a.foo
-Line 8 col 11 IdentifierName "bVal2" = typeof a.foo
-Line 8 col 19 IdentifierName "b" = typeof a.foo
+Line 7 col 18 IdentifierName "b" = typeof b
+Line 8 col 11 IdentifierName "bVal2" = typeof b
+Line 8 col 19 IdentifierName "b" = typeof b

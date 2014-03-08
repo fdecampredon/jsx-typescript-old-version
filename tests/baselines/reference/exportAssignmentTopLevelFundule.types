@@ -1,5 +1,5 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = typeof foo
+Line 0 col 7 IdentifierName "foo" = foo
 Line 1 col 3 EqualsExpression "foo.answer === 42" = boolean
 Line 1 col 3 MemberAccessExpression "foo.answer" = number
 Line 1 col 3 IdentifierName "foo" = typeof foo

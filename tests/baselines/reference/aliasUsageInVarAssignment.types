@@ -1,0 +1,20 @@
+=== tests/cases/compiler/aliasUsageInVarAssignment_main.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 7 IdentifierName "moduleA" = moduleA
+Line 2 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 3 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
+Line 3 col 31 IdentifierName "Backbone" = typeof Backbone
+Line 3 col 40 IdentifierName "Model" = typeof Backbone.Model
+Line 5 col 4 IdentifierName "i" = IHasVisualizationModel
+Line 5 col 7 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
+Line 6 col 4 IdentifierName "m" = typeof moduleA
+Line 6 col 14 IdentifierName "moduleA" = typeof moduleA
+Line 6 col 24 IdentifierName "i" = IHasVisualizationModel
+=== tests/cases/compiler/aliasUsageInVarAssignment_backbone.ts ===
+Line 0 col 13 IdentifierName "Model" = Model
+Line 1 col 11 IdentifierName "someData" = string
+=== tests/cases/compiler/aliasUsageInVarAssignment_moduleA.ts ===
+Line 0 col 7 IdentifierName "Backbone" = Backbone
+Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
+Line 1 col 40 IdentifierName "Backbone" = Backbone
+Line 1 col 49 IdentifierName "Model" = Backbone.Model

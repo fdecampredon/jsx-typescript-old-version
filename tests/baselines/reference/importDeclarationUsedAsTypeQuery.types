@@ -1,7 +1,7 @@
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_1.ts ===
 Line 1 col 7 IdentifierName "a" = a
-Line 2 col 11 IdentifierName "x" = typeof tests/cases/compiler/importDeclarationUsedAsTypeQuery_require.ts
-Line 2 col 21 IdentifierName "a" = a
+Line 2 col 11 IdentifierName "x" = typeof a
+Line 2 col 21 IdentifierName "a" = typeof a
 === tests/cases/compiler/importDeclarationUsedAsTypeQuery_require.ts ===
 Line 0 col 13 IdentifierName "B" = B
 Line 1 col 0 IdentifierName "id" = number

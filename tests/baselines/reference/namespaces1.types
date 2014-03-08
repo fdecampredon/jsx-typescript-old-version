@@ -1,8 +1,8 @@
 === tests/cases/compiler/namespaces1.ts ===
 Line 0 col 7 IdentifierName "X" = X
-Line 1 col 18 IdentifierName "Y" = X.Y
-Line 2 col 25 IdentifierName "Z" = X.Y.Z
-Line 4 col 21 IdentifierName "Y" = X.Y
+Line 1 col 18 IdentifierName "Y" = Y
+Line 2 col 25 IdentifierName "Z" = Z
+Line 4 col 21 IdentifierName "Y" = Y
 Line 7 col 4 IdentifierName "x" = X.Y.Z
 Line 7 col 7 IdentifierName "X" = X
 Line 7 col 9 IdentifierName "Y" = X.Y

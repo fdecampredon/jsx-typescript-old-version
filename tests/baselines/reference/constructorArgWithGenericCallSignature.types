@@ -1,16 +1,16 @@
 === tests/cases/compiler/constructorArgWithGenericCallSignature.ts ===
 Line 0 col 7 IdentifierName "Test" = Test
-Line 1 col 21 IdentifierName "MyFunc" = Test.MyFunc
+Line 1 col 21 IdentifierName "MyFunc" = MyFunc
 Line 2 col 9 IdentifierName "T" = T
 Line 2 col 12 IdentifierName "value1" = T
 Line 2 col 20 IdentifierName "T" = T
 Line 2 col 24 IdentifierName "T" = T
-Line 4 col 17 IdentifierName "MyClass" = Test.MyClass
-Line 5 col 20 IdentifierName "func" = Test.MyFunc
-Line 5 col 26 IdentifierName "MyFunc" = Test.MyFunc
-Line 8 col 17 IdentifierName "F" = typeof Test.F
-Line 8 col 19 IdentifierName "func" = Test.MyFunc
-Line 8 col 25 IdentifierName "MyFunc" = Test.MyFunc
+Line 4 col 17 IdentifierName "MyClass" = MyClass
+Line 5 col 20 IdentifierName "func" = MyFunc
+Line 5 col 26 IdentifierName "MyFunc" = MyFunc
+Line 8 col 17 IdentifierName "F" = typeof F
+Line 8 col 19 IdentifierName "func" = MyFunc
+Line 8 col 25 IdentifierName "MyFunc" = MyFunc
 Line 10 col 4 IdentifierName "func" = Test.MyFunc
 Line 10 col 10 IdentifierName "Test" = Test
 Line 10 col 15 IdentifierName "MyFunc" = Test.MyFunc

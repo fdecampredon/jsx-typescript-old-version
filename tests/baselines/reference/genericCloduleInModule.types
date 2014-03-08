@@ -1,10 +1,10 @@
 === tests/cases/compiler/genericCloduleInModule.ts ===
 Line 1 col 7 IdentifierName "A" = A
-Line 2 col 17 IdentifierName "B" = A.B<T>
+Line 2 col 17 IdentifierName "B" = B<T>
 Line 2 col 19 IdentifierName "T" = T
 Line 3 col 0 IdentifierName "foo" = () => void
 Line 4 col 15 IdentifierName "bar" = () => void
-Line 6 col 18 IdentifierName "B" = A.B
+Line 6 col 18 IdentifierName "B" = B
 Line 7 col 19 IdentifierName "x" = number
 Line 11 col 4 IdentifierName "b" = A.B<number>
 Line 11 col 7 IdentifierName "A" = A

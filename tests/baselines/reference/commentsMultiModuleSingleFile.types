@@ -1,10 +1,10 @@
 === tests/cases/compiler/commentsMultiModuleSingleFile.ts ===
 Line 2 col 7 IdentifierName "multiM" = multiM
-Line 4 col 17 IdentifierName "b" = multiM.b
-Line 8 col 17 IdentifierName "d" = multiM.d
+Line 4 col 17 IdentifierName "b" = b
+Line 8 col 17 IdentifierName "d" = d
 Line 13 col 7 IdentifierName "multiM" = multiM
-Line 15 col 17 IdentifierName "c" = multiM.c
-Line 19 col 17 IdentifierName "e" = multiM.e
+Line 15 col 17 IdentifierName "c" = c
+Line 19 col 17 IdentifierName "e" = e
 Line 22 col 0 ObjectCreationExpression "new multiM.b()" = multiM.b
 Line 22 col 4 MemberAccessExpression "multiM.b" = typeof multiM.b
 Line 22 col 4 IdentifierName "multiM" = typeof multiM

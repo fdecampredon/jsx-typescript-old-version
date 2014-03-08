@@ -1,13 +1,13 @@
 === tests/cases/compiler/structural1.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 1 col 21 IdentifierName "I" = M.I
+Line 1 col 21 IdentifierName "I" = I
 Line 2 col 0 IdentifierName "salt" = number
 Line 3 col 0 IdentifierName "pepper" = number
-Line 6 col 20 IdentifierName "f" = typeof M.f
-Line 6 col 22 IdentifierName "i" = M.I
-Line 6 col 24 IdentifierName "I" = M.I
+Line 6 col 20 IdentifierName "f" = typeof f
+Line 6 col 22 IdentifierName "i" = I
+Line 6 col 24 IdentifierName "I" = I
 Line 8 col 0 InvocationExpression "f({salt:2,pepper:0})" = void
-Line 8 col 0 IdentifierName "f" = typeof M.f
+Line 8 col 0 IdentifierName "f" = typeof f
 Line 9 col 6 ObjectLiteralExpression "{salt:2,pepper:0}" = { salt: number; pepper: number; }
 Line 9 col 7 IdentifierName "salt" = number
 Line 9 col 14 IdentifierName "pepper" = number

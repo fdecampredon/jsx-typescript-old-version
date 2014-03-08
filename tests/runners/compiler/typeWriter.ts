@@ -66,12 +66,23 @@ class TypeWriterWalker extends TypeScript.SyntaxWalker {
         }
     }
 
+    private getEnclosingScopeSymbol(ast: TypeScript.ISyntaxElement): TypeScript.PullSymbol {
+        var enclosingScopeAST = TypeScript.DeclarationEmitter.getEnclosingContainer(ast);
+        if (enclosingScopeAST) {
+            var typeInfo = this.compiler.pullGetSymbolInformationFromAST(enclosingScopeAST, this.document);
+            return typeInfo ? typeInfo.symbol : null;
+        }
+
+        return null;
+    }
+
     private getTypeOfElement(element: TypeScript.ISyntaxElement) {
         var ast = this.getAstForElement(element);
         if (ast) {
             var typeInfo = this.compiler.pullGetSymbolInformationFromAST(ast, this.document);
             if (typeInfo.symbol && typeInfo.symbol.type) {
-                return typeInfo.symbol.type.toString();
+                var enclosingScope = this.getEnclosingScopeSymbol(ast);
+                return typeInfo.symbol.type.toString(enclosingScope);
             }
         }
 

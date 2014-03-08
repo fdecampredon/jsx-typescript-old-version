@@ -32158,58 +32158,31 @@ var TypeScript;
             return false;
         };
 
-        Emitter.prototype.getPotentialDeclPathInfoForEmit = function (pullSymbol) {
-            var decl = pullSymbol.getDeclarations()[0];
-            var parentDecl = decl.getParentDecl();
-            var symbolContainerDeclPath = parentDecl ? parentDecl.getParentPath() : [];
-
+        Emitter.prototype.shouldQualifySymbolNameWithParentName = function (symbol) {
             var enclosingContextDeclPath = this.declStack;
-            var commonNodeIndex = -1;
+            var symbolDeclarations = symbol.getDeclarations();
+            for (var i = 0; i < symbolDeclarations.length; i++) {
+                var currentDecl = symbolDeclarations[i];
+                var declParent = currentDecl.getParentDecl();
 
-            if (enclosingContextDeclPath.length) {
-                for (var i = symbolContainerDeclPath.length - 1; i >= 0; i--) {
-                    var symbolContainerDeclPathNode = symbolContainerDeclPath[i];
-                    for (var j = enclosingContextDeclPath.length - 1; j >= 0; j--) {
-                        var enclosingContextDeclPathNode = enclosingContextDeclPath[j];
-                        if (symbolContainerDeclPathNode === enclosingContextDeclPathNode) {
-                            commonNodeIndex = i;
-                            break;
-                        }
-                    }
+                if (currentDecl.kind === 67108864 /* EnumMember */) {
+                    return true;
+                }
 
-                    if (commonNodeIndex >= 0) {
-                        break;
-                    }
+                if (!TypeScript.hasFlag(currentDecl.flags, 1 /* Exported */)) {
+                    return false;
+                }
+
+                if (currentDecl.kind === 512 /* Variable */ && !TypeScript.hasFlag(currentDecl.flags, 118784 /* ImplicitVariable */)) {
+                    return true;
+                }
+
+                if (TypeScript.ArrayUtilities.contains(this.declStack, declParent)) {
+                    return false;
                 }
             }
 
-            var startingIndex = symbolContainerDeclPath.length - 1;
-            for (var i = startingIndex - 1; i > commonNodeIndex; i--) {
-                if (symbolContainerDeclPath[i + 1].flags & 1 /* Exported */) {
-                    startingIndex = i;
-                } else {
-                    break;
-                }
-            }
-            return { potentialPath: symbolContainerDeclPath, startingIndex: startingIndex };
-        };
-
-        Emitter.prototype.emitDottedNameFromDeclPath = function (declPath, startingIndex, lastIndex) {
-            for (var i = startingIndex; i <= lastIndex; i++) {
-                if (declPath[i].kind === 32 /* DynamicModule */ || declPath[i].flags & 65536 /* InitializedDynamicModule */) {
-                    this.writeToOutput("exports.");
-                } else {
-                    this.writeToOutput(this.getModuleName(declPath[i], true) + ".");
-                }
-            }
-        };
-
-        Emitter.prototype.emitSymbolContainerNameInEnclosingContext = function (pullSymbol) {
-            var declPathInfo = this.getPotentialDeclPathInfoForEmit(pullSymbol);
-            var potentialDeclPath = declPathInfo.potentialPath;
-            var startingIndex = declPathInfo.startingIndex;
-
-            this.emitDottedNameFromDeclPath(potentialDeclPath, startingIndex, potentialDeclPath.length - 1);
+            return true;
         };
 
         Emitter.prototype.getSymbolForEmit = function (ast) {
@@ -32244,20 +32217,12 @@ var TypeScript;
                     if (pullSymbolContainer) {
                         var pullSymbolContainerKind = pullSymbolContainer.kind;
 
-                        if (pullSymbolContainerKind === 8 /* Class */) {
-                            if (pullSymbol.anyDeclHasFlag(16 /* Static */)) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            } else if (pullSymbolKind === 4096 /* Property */) {
-                                this.emitThis();
-                                this.writeToOutput(".");
-                            }
-                        } else if (TypeScript.PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === 64 /* Enum */ || pullSymbolContainer.anyDeclHasFlag(32768 /* InitializedModule */ | 4096 /* Enum */)) {
-                            if (pullSymbolKind === 4096 /* Property */ || pullSymbolKind === 67108864 /* EnumMember */) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            } else if (pullSymbol.anyDeclHasFlag(1 /* Exported */) && pullSymbolKind === 512 /* Variable */ && !pullSymbol.anyDeclHasFlag(32768 /* InitializedModule */ | 4096 /* Enum */)) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
-                            } else if (pullSymbol.anyDeclHasFlag(1 /* Exported */) && !this.symbolIsUsedInItsEnclosingContainer(pullSymbol)) {
-                                this.emitSymbolContainerNameInEnclosingContext(pullSymbol);
+                        if (TypeScript.PullHelpers.symbolIsModule(pullSymbolContainer) || pullSymbolContainerKind === 64 /* Enum */ || pullSymbolContainer.anyDeclHasFlag(32768 /* InitializedModule */ | 4096 /* Enum */)) {
+                            var needToEmitParentName = this.shouldQualifySymbolNameWithParentName(pullSymbol);
+                            if (needToEmitParentName) {
+                                var parentDecl = pullSymbol.getDeclarations()[0].getParentDecl();
+                                TypeScript.Debug.assert(parentDecl && !parentDecl.isRootDecl());
+                                this.writeToOutput(this.getModuleName(parentDecl, true) + ".");
                             }
                         } else if (pullSymbolContainerKind === 32 /* DynamicModule */ || pullSymbolContainer.anyDeclHasFlag(65536 /* InitializedDynamicModule */)) {
                             if (pullSymbolKind === 4096 /* Property */) {
@@ -33226,20 +33191,12 @@ var TypeScript;
             return false;
         };
 
-        Emitter.prototype.emitDottedNameMemberAccessExpressionWorker = function (expression, potentialPath, startingIndex, lastIndex) {
+        Emitter.prototype.emitDottedNameMemberAccessExpression = function (expression) {
             this.recordSourceMappingStart(expression);
             if (expression.expression.kind() === 212 /* MemberAccessExpression */) {
-                this.emitDottedNameMemberAccessExpressionRecurse(expression.expression, potentialPath, startingIndex, lastIndex - 1);
+                this.emitDottedNameMemberAccessExpressionRecurse(expression.expression);
             } else {
-                this.emitComments(expression.expression, true);
-                this.recordSourceMappingStart(expression.expression);
-
-                this.emitDottedNameFromDeclPath(potentialPath, startingIndex, lastIndex - 2);
-
-                this.writeToOutput(expression.expression.text());
-
-                this.recordSourceMappingEnd(expression.expression);
-                this.emitComments(expression.expression, false);
+                this.emitName(expression.expression, true);
             }
 
             this.writeToOutput(".");
@@ -33248,23 +33205,10 @@ var TypeScript;
             this.recordSourceMappingEnd(expression);
         };
 
-        Emitter.prototype.emitDottedNameMemberAccessExpressionRecurse = function (expression, potentialPath, startingIndex, lastIndex) {
+        Emitter.prototype.emitDottedNameMemberAccessExpressionRecurse = function (expression) {
             this.emitComments(expression, true);
-
-            if (lastIndex - startingIndex < 1) {
-                startingIndex = lastIndex - 1;
-                TypeScript.Debug.assert(startingIndex >= 0);
-            }
-
-            this.emitDottedNameMemberAccessExpressionWorker(expression, potentialPath, startingIndex, lastIndex);
+            this.emitDottedNameMemberAccessExpression(expression);
             this.emitComments(expression, false);
-        };
-
-        Emitter.prototype.emitDottedNameMemberAccessExpression = function (expression) {
-            var memberAccessSymbol = this.getSymbolForEmit(expression).symbol;
-
-            var potentialDeclInfo = this.getPotentialDeclPathInfoForEmit(memberAccessSymbol);
-            this.emitDottedNameMemberAccessExpressionWorker(expression, potentialDeclInfo.potentialPath, potentialDeclInfo.startingIndex, potentialDeclInfo.potentialPath.length);
         };
 
         Emitter.prototype.emitMemberAccessExpression = function (expression) {
@@ -36400,6 +36344,7 @@ var TypeScript;
         RootPullDecl.prototype.getEnclosingDecl = function () {
             return this;
         };
+
         RootPullDecl.prototype.isRootDecl = function () {
             return true;
         };
@@ -46175,10 +46120,10 @@ var TypeScript;
             return null;
         };
 
-        PullTypeResolver.prototype.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable = function (nameAST) {
+        PullTypeResolver.prototype.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable = function (nameAST, nameSymbol, context) {
             var id = nameAST.valueText();
             if (id.length === 0) {
-                return null;
+                return false;
             }
 
             var memberVariableDeclarationAST = TypeScript.ASTHelpers.getEnclosingMemberVariableDeclaration(nameAST);
@@ -46189,16 +46134,18 @@ var TypeScript;
 
                     if (constructorDecl) {
                         var childDecls = constructorDecl.searchChildDecls(id, 68147712 /* SomeValue */);
-
                         if (childDecls.length) {
-                            var memberVariableSymbol = memberVariableDecl.getSymbol();
+                            if (TypeScript.PullHelpers.isSymbolDeclaredInScopeChain(nameSymbol, constructorDecl.getSymbol().getContainer())) {
+                                var memberVariableSymbol = memberVariableDecl.getSymbol();
 
-                            return this.semanticInfoChain.diagnosticFromAST(nameAST, TypeScript.DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor, [memberVariableSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()]);
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, TypeScript.DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor, [memberVariableSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()]));
+                                return true;
+                            }
                         }
                     }
                 }
             }
-            return null;
+            return false;
         };
 
         PullTypeResolver.prototype.computeNameExpression = function (nameAST, context) {
@@ -46216,8 +46163,6 @@ var TypeScript;
                     enclosingDecl = valueDecl;
                 }
             }
-
-            var diagnosticForInitializer = this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST);
 
             if (TypeScript.ASTHelpers.isDeclarationASTOrDeclarationNameAST(nameAST)) {
                 nameSymbol = this.semanticInfoChain.getDeclForAST(nameAST.parent).getSymbol();
@@ -46248,8 +46193,7 @@ var TypeScript;
             if (!nameSymbol) {
                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST, TypeScript.DiagnosticCode.Could_not_find_symbol_0, [nameAST.text()]));
                 return this.getNewErrorTypeSymbol(id);
-            } else if (diagnosticForInitializer) {
-                context.postDiagnostic(diagnosticForInitializer);
+            } else if (this.checkNameAsPartOfInitializerExpressionForInstanceMemberVariable(nameAST, nameSymbol, context)) {
                 return this.getNewErrorTypeSymbol(id);
             }
 
@@ -55830,6 +55774,26 @@ var TypeScript;
             return container && container.kind === 33554432 /* ConstructorType */ && symbolIsModule(container) && symbol.anyDeclHasFlag(1 /* Exported */);
         }
         PullHelpers.isExportedSymbolInClodule = isExportedSymbolInClodule;
+
+        function isSymbolDeclaredInScopeChain(symbol, scopeSymbol) {
+            TypeScript.Debug.assert(symbol);
+            var symbolDeclarationScope = symbol.getContainer();
+
+            while (scopeSymbol) {
+                if (scopeSymbol === symbolDeclarationScope) {
+                    return true;
+                }
+
+                scopeSymbol = scopeSymbol.getContainer();
+            }
+
+            if (scopeSymbol === null && symbolDeclarationScope === null) {
+                return true;
+            }
+
+            return false;
+        }
+        PullHelpers.isSymbolDeclaredInScopeChain = isSymbolDeclaredInScopeChain;
 
         
 

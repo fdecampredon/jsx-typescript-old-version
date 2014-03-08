@@ -1,6 +1,6 @@
 === tests/cases/compiler/declFileModuleAssignmentInObjectLiteralProperty.ts ===
 Line 1 col 7 IdentifierName "m1" = m1
-Line 2 col 17 IdentifierName "c" = m1.c
+Line 2 col 17 IdentifierName "c" = c
 Line 5 col 4 IdentifierName "d" = { m1: { m: typeof m1; }; m2: { c: typeof m1.c; }; }
 Line 5 col 8 ObjectLiteralExpression "{
     m1: { m: m1 },

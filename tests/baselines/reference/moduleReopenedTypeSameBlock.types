@@ -1,9 +1,9 @@
 === tests/cases/compiler/moduleReopenedTypeSameBlock.ts ===
 Line 0 col 7 IdentifierName "M" = M
-Line 0 col 24 IdentifierName "C1" = M.C1
+Line 0 col 24 IdentifierName "C1" = C1
 Line 1 col 7 IdentifierName "M" = M
-Line 2 col 21 IdentifierName "I" = M.I
+Line 2 col 21 IdentifierName "I" = I
 Line 2 col 25 IdentifierName "n" = number
-Line 3 col 17 IdentifierName "C2" = M.C2
-Line 3 col 22 IdentifierName "f" = () => M.I
-Line 3 col 27 IdentifierName "I" = M.I
+Line 3 col 17 IdentifierName "C2" = C2
+Line 3 col 22 IdentifierName "f" = () => I
+Line 3 col 27 IdentifierName "I" = I

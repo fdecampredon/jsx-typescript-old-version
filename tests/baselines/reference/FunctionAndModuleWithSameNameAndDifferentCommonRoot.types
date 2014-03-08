@@ -1,12 +1,12 @@
 === tests/cases/compiler/function.ts ===
 Line 0 col 7 IdentifierName "A" = A
-Line 1 col 20 IdentifierName "Point" = typeof A.Point
+Line 1 col 20 IdentifierName "Point" = typeof Point
 Line 2 col 15 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
 Line 2 col 17 IdentifierName "x" = number
 Line 2 col 23 IdentifierName "y" = number
 === tests/cases/compiler/module.ts ===
 Line 0 col 7 IdentifierName "B" = B
-Line 1 col 18 IdentifierName "Point" = B.Point
+Line 1 col 18 IdentifierName "Point" = Point
 Line 2 col 19 IdentifierName "Origin" = { x: number; y: number; }
 Line 2 col 28 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
 Line 2 col 30 IdentifierName "x" = number

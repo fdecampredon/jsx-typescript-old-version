@@ -1,7 +1,7 @@
 === tests/cases/compiler/chainedImportAlias_file1.ts ===
 Line 0 col 7 IdentifierName "x" = x
 Line 1 col 7 IdentifierName "y" = y
-Line 1 col 11 IdentifierName "x" = tests/cases/compiler/chainedImportAlias_file1.ts
+Line 1 col 11 IdentifierName "x" = x
 Line 2 col 12 IdentifierName "console" = { log(message?: any): any; }
 Line 3 col 0 IdentifierName "log" = (message?: any) => any
 Line 3 col 8 IdentifierName "message" = any
@@ -9,7 +9,7 @@ Line 5 col 0 InvocationExpression "console.log(y)" = any
 Line 5 col 0 MemberAccessExpression "console.log" = (message?: any) => any
 Line 5 col 0 IdentifierName "console" = { log(message?: any): any; }
 Line 5 col 8 IdentifierName "log" = (message?: any) => any
-Line 5 col 12 IdentifierName "y" = y
+Line 5 col 12 IdentifierName "y" = typeof x
 === tests/cases/compiler/chainedImportAlias_file0.ts ===
 Line 0 col 14 IdentifierName "m" = m
-Line 1 col 20 IdentifierName "foo" = typeof m.foo
+Line 1 col 20 IdentifierName "foo" = typeof foo

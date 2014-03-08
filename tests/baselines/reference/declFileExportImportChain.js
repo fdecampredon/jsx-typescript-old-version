@@ -20,7 +20,7 @@ define(["require", "exports", "declFileExportImportChain_a"], function(require, 
     exports.a = a;
 });
 //// [declFileExportImportChain_b1.js]
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports", "declFileExportImportChain_b"], function(require, exports, b) {
     
     return b;
 });

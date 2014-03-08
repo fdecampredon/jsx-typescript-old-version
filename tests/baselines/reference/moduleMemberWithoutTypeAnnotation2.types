@@ -1,11 +1,11 @@
 === tests/cases/compiler/moduleMemberWithoutTypeAnnotation2.ts ===
 Line 0 col 7 IdentifierName "TypeScript" = TypeScript
-Line 1 col 18 IdentifierName "CompilerDiagnostics" = TypeScript.CompilerDiagnostics
-Line 3 col 25 IdentifierName "IDiagnosticWriter" = TypeScript.CompilerDiagnostics.IDiagnosticWriter
+Line 1 col 18 IdentifierName "CompilerDiagnostics" = CompilerDiagnostics
+Line 3 col 25 IdentifierName "IDiagnosticWriter" = IDiagnosticWriter
 Line 4 col 0 IdentifierName "Alert" = (output: string) => void
 Line 4 col 18 IdentifierName "output" = string
 Line 7 col 19 IdentifierName "diagnosticWriter" = any
-Line 9 col 24 IdentifierName "Alert" = typeof TypeScript.CompilerDiagnostics.Alert
+Line 9 col 24 IdentifierName "Alert" = typeof Alert
 Line 9 col 30 IdentifierName "output" = string
 Line 10 col 16 IdentifierName "diagnosticWriter" = any
 Line 11 col 0 InvocationExpression "diagnosticWriter.Alert(output)" = any
