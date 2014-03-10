@@ -1,3 +1,1 @@
 infiniteExpansionThroughInstantiation2.ts(4,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-infiniteExpansionThroughInstantiation2.ts(9,22): error TS2086: Type 'AA<BB>' does not satisfy the constraint 'AA<AA<BB>>' for type parameter 'T extends AA<T>'.
-infiniteExpansionThroughInstantiation2.ts(9,25): error TS2086: Type 'BB' does not satisfy the constraint 'AA<BB>' for type parameter 'T extends AA<T>'.

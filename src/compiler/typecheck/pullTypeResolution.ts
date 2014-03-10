@@ -1559,77 +1559,6 @@ module TypeScript {
                 var parentType = extendedTypes.length ? extendedTypes[0] : null;
 
                 if (constructorMethod) {
-                    var constructorTypeSymbol = constructorMethod.type;
-
-                    var constructSignatures = constructorTypeSymbol.getConstructSignatures();
-
-                    if (!constructSignatures.length) {
-                        var constructorSignature: PullSignatureSymbol;
-
-                        var parentConstructor = parentType ? parentType.getConstructorMethod() : null;
-
-                        // inherit parent's constructor signatures   
-                        if (parentConstructor) {
-                            // There are cases where we need the parent's constructor resolved
-                            // when it is not already resolved. The common case is a class with
-                            // no explicit constructor inheriting an explicit constructor from
-                            // a base class.
-                            // class A extends B {}
-                            // class B { constructor(p: string) {} }
-                            // This should really be the responsibility of the symbol internally
-                            // when we call getConstructorMethod(). It fits into the larger notion
-                            // of making symbols resolve their own components when they are queried.
-                            this.resolveDeclaredSymbol(parentConstructor, context);
-                            var parentConstructorType = parentConstructor.type;
-                            var parentConstructSignatures = parentConstructorType.getConstructSignatures();
-
-                            var parentConstructSignature: PullSignatureSymbol;
-                            var parentParameters: PullSymbol[];
-
-                            if (!parentConstructSignatures.length) {
-                                // If neither we nor our parent have a construct signature then we've entered this call recursively,
-                                // so just create the parent's constructor now rather than later.
-                                // (We'll have begun resolving this symbol because of the call to resolveReferenceTypeDeclaration above, so this
-                                // is safe to do here and now.)
-
-                                parentConstructSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature);
-                                parentConstructSignature.returnType = parentType;
-                                parentConstructSignature.addTypeParametersFromReturnType();
-                                parentConstructorType.appendConstructSignature(parentConstructSignature);
-                                parentConstructSignature.addDeclaration(parentType.getDeclarations()[0]);
-                                parentConstructSignatures = [parentConstructSignature];
-                            }
-
-                            for (var i = 0; i < parentConstructSignatures.length; i++) {
-                                // create a new signature for each parent constructor   
-                                parentConstructSignature = parentConstructSignatures[i];
-                                parentParameters = parentConstructSignature.parameters;
-
-                                constructorSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature, parentConstructSignature.isDefinition());
-                                constructorSignature.returnType = classDeclSymbol;
-                                constructorSignature.addTypeParametersFromReturnType();
-
-                                for (var j = 0; j < parentParameters.length; j++) {
-                                    constructorSignature.addParameter(parentParameters[j], parentParameters[j].isOptional);
-                                }
-
-                                constructorTypeSymbol.appendConstructSignature(constructorSignature);
-                                constructorSignature.addDeclaration(classDecl);
-                            }
-                        }
-                        else { // PULLREVIEW: This likely won't execute, unless there's some serious out-of-order resolution issues
-                            constructorSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature);
-                            constructorSignature.returnType = classDeclSymbol;
-                            constructorSignature.addTypeParametersFromReturnType();
-                            constructorTypeSymbol.appendConstructSignature(constructorSignature);
-                            constructorSignature.addDeclaration(classDecl);
-                        }
-                    }
-
-                    if (!classDeclSymbol.isResolved) {
-                        return classDeclSymbol;
-                    }
-
                     // Need to ensure our constructor type can properly see our parent type's 
                     // constructor type before going and resolving our members.
                     if (parentType) {
@@ -1638,11 +1567,15 @@ module TypeScript {
                         // this will only be null if we have upstream errors
                         if (parentConstructorSymbol) {
                             var parentConstructorTypeSymbol = parentConstructorSymbol.type;
-
+                            var constructorTypeSymbol = constructorMethod.type;
                             if (!constructorTypeSymbol.hasBase(parentConstructorTypeSymbol)) {
                                 constructorTypeSymbol.addExtendedType(parentConstructorTypeSymbol);
                             }
                         }
+                    }
+
+                    if (!classDeclSymbol.isResolved) {
+                        return classDeclSymbol;
                     }
                 }
 
@@ -6948,15 +6881,13 @@ module TypeScript {
             var specializedSymbol = this.createInstantiatedType(genericTypeSymbol, typeArgs);
 
             // check constraints, if appropriate
-            var typeConstraint: PullTypeSymbol = null;
             var upperBound: PullTypeSymbol = null;
 
             // Get the instantiated versions of the type parameters (in case their constraints were generic)
             typeParameters = specializedSymbol.getTypeParameters();
 
             var typeConstraintSubstitutionMap: PullTypeSymbol[] = [];
-            var typeArg: PullTypeSymbol = null;
-
+            
             var instantiatedSubstitutionMap = specializedSymbol.getTypeParameterArgumentMap();
 
 
@@ -6971,10 +6902,11 @@ module TypeScript {
             }
 
             for (var iArg = 0; (iArg < typeArgs.length) && (iArg < typeParameters.length); iArg++) {
-                typeArg = typeArgs[iArg];
-                typeConstraint = typeParameters[iArg].getConstraint();
+                var typeArg = typeArgs[iArg];
+                var typeParameter = typeParameters[iArg];
+                var typeConstraint = typeParameter.getConstraint();
 
-                typeConstraintSubstitutionMap[typeParameters[iArg].pullSymbolID] = typeArg;
+                typeConstraintSubstitutionMap[typeParameter.pullSymbolID] = typeArg;
 
                 // test specialization type for assignment compatibility with the constraint
                 if (typeConstraint) {
@@ -7004,12 +6936,16 @@ module TypeScript {
                         return specializedSymbol;
                     }
 
-                    // Section 3.4.2 (November 18, 2013): 
-                    // A type argument satisfies a type parameter constraint if the type argument is assignable
-                    // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
-                    if (!this.sourceIsAssignableToTarget(typeArg, typeConstraint, genericTypeAST, context)) {
-                        var enclosingSymbol = this.getEnclosingSymbolForAST(genericTypeAST);
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameters[iArg].toString(enclosingSymbol, /*useConstraintInName*/ true)]));
+                    if (context.canTypeCheckAST(genericTypeAST)) {
+                        this.typeCheckCallBacks.push(context => {
+                            // Section 3.4.2 (November 18, 2013): 
+                            // A type argument satisfies a type parameter constraint if the type argument is assignable
+                            // to(section 3.8.4) the constraint type once type arguments are substituted for type parameters.
+                            if (!this.sourceIsAssignableToTarget(typeArg, typeConstraint, genericTypeAST, context)) {
+                                var enclosingSymbol = this.getEnclosingSymbolForAST(genericTypeAST);
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(genericTypeAST, DiagnosticCode.Type_0_does_not_satisfy_the_constraint_1_for_type_parameter_2, [typeArg.toString(enclosingSymbol, /*useConstraintInName*/ true), typeConstraint.toString(enclosingSymbol, /*useConstraintInName*/ true), typeParameter.toString(enclosingSymbol, /*useConstraintInName*/ true)]));
+                            }
+                        });
                     }
                 }
             }

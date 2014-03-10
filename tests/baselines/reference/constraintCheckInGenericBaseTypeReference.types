@@ -1,0 +1,20 @@
+=== tests/cases/compiler/constraintCheckInGenericBaseTypeReference.ts ===
+Line 1 col 6 IdentifierName "Constraint" = Constraint
+Line 2 col 11 IdentifierName "method" = () => void
+Line 4 col 6 IdentifierName "GenericBase" = GenericBase<T>
+Line 4 col 18 IdentifierName "T" = T
+Line 4 col 28 IdentifierName "Constraint" = Constraint
+Line 5 col 11 IdentifierName "items" = any
+Line 7 col 6 IdentifierName "Derived" = Derived
+Line 7 col 22 IdentifierName "GenericBase" = GenericBase<T>
+Line 7 col 34 IdentifierName "TypeArg" = TypeArg
+Line 10 col 6 IdentifierName "TypeArg" = TypeArg
+Line 11 col 11 IdentifierName "method" = () => void
+Line 12 col 0 MemberAccessExpression "Container.People.items" = any
+Line 12 col 0 MemberAccessExpression "Container.People" = Derived
+Line 12 col 0 IdentifierName "Container" = typeof Container
+Line 12 col 18 IdentifierName "People" = Derived
+Line 12 col 25 IdentifierName "items" = any
+Line 16 col 6 IdentifierName "Container" = Container
+Line 17 col 18 IdentifierName "People" = Derived
+Line 17 col 26 IdentifierName "Derived" = Derived

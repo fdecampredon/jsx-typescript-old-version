@@ -1786,7 +1786,7 @@ module TypeScript {
                 constructorSymbol.type.hasOwnConstructSignatures()))) {
 
                 var hasDefinitionSignature = false;
-                var constructorSigs = constructorSymbol.type.getConstructSignatures();
+                var constructorSigs = constructorSymbol.type.getOwnDeclaredConstructSignatures();
 
                 for (var i = 0; i < constructorSigs.length; i++) {
                     if (!constructorSigs[i].anyDeclHasFlag(PullElementFlags.Signature)) {
@@ -1877,7 +1877,7 @@ module TypeScript {
 
             this.semanticInfoChain.setSymbolForAST(this.semanticInfoChain.getASTForDecl(constructSignatureDeclaration), constructSignature);
 
-            var signatureIndex = this.getIndexForInsertingSignatureAtEndOfEnclosingDeclInSignatureList(constructSignature, parent.getOwnConstructSignatures());
+            var signatureIndex = this.getIndexForInsertingSignatureAtEndOfEnclosingDeclInSignatureList(constructSignature, parent.getOwnDeclaredConstructSignatures());
             parent.insertConstructSignatureAtIndex(constructSignature, signatureIndex);
         }
 

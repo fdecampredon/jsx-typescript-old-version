@@ -1593,6 +1593,7 @@ module TypeScript {
         private _callSignatures: PullSignatureSymbol[] = null;
         private _allCallSignatures: PullSignatureSymbol[] = null;
         private _constructSignatures: PullSignatureSymbol[] = null;
+        private _allConstructSignatures: PullSignatureSymbol[] = null;
         private _indexSignatures: PullSignatureSymbol[] = null;
         private _allIndexSignatures: PullSignatureSymbol[] = null;
         private _allIndexSignaturesOfAugmentedType: PullSignatureSymbol[] = null;
@@ -1682,7 +1683,10 @@ module TypeScript {
             return this.kind === PullElementKind.Class || (this._constructorMethod !== null);
         }
         public isFunction() { return (this.kind & (PullElementKind.ConstructorType | PullElementKind.FunctionType)) !== 0; }
-        public isConstructor() { return this.kind === PullElementKind.ConstructorType; }
+        public isConstructor() {
+            return this.kind === PullElementKind.ConstructorType ||
+                (this._associatedContainerTypeSymbol && this._associatedContainerTypeSymbol.isClass());
+        }
         public isTypeParameter() { return false; }
         public isTypeVariable() { return false; }
         public isError() { return false; }
@@ -2059,16 +2063,20 @@ module TypeScript {
             return this.getTypeParameters();
         }
 
+        private addCallOrConstructSignaturePrerequisiteBase(signature: PullSignatureSymbol): void {
+            if (signature.isGeneric()) {
+                this._hasGenericSignature = true;
+            }
+
+            signature.functionType = this;
+        }
+
         private addCallSignaturePrerequisite(callSignature: PullSignatureSymbol): void {
             if (!this._callSignatures) {
                 this._callSignatures = [];
             }
 
-            if (callSignature.isGeneric()) {
-                this._hasGenericSignature = true;
-            }
-
-            callSignature.functionType = this;
+            this.addCallOrConstructSignaturePrerequisiteBase(callSignature);
         }
 
         public appendCallSignature(callSignature: PullSignatureSymbol): void {
@@ -2092,11 +2100,7 @@ module TypeScript {
                 this._constructSignatures = [];
             }
 
-            if (constructSignature.isGeneric()) {
-                this._hasGenericSignature = true;
-            }
-
-            constructSignature.functionType = this;
+            this.addCallOrConstructSignaturePrerequisiteBase(constructSignature);
         }
 
         public appendConstructSignature(constructSignature: PullSignatureSymbol): void {
@@ -2172,15 +2176,27 @@ module TypeScript {
             return this._constructSignatures !== null;
         }
 
-        public getOwnConstructSignatures(): PullSignatureSymbol[] {
+        public getOwnDeclaredConstructSignatures(): PullSignatureSymbol[] {
             return this._constructSignatures || sentinelEmptyArray;
         }
 
         public getConstructSignatures(): PullSignatureSymbol[]{
+            if (this._allConstructSignatures) {
+                return this._allConstructSignatures;
+            }
+
             var signatures: PullSignatureSymbol[] = [];
 
             if (this._constructSignatures) {
                 signatures = signatures.concat(this._constructSignatures);
+            }
+            else if (this.isConstructor()) {
+                if (this._extendedTypes && this._extendedTypes.length > 0) {
+                    signatures = this.getBaseClassConstructSignatures(this._extendedTypes[0]);
+                }
+                else {
+                    signatures = [this.getDefaultClassConstructSignature()];
+                }
             }
 
             // If it's a constructor type, we don't inherit construct signatures
@@ -2198,6 +2214,8 @@ module TypeScript {
                     this._getResolver()._addUnhiddenSignaturesFromBaseType(this._constructSignatures, this._extendedTypes[i].getConstructSignatures(), signatures);
                 }
             }
+
+            this._allConstructSignatures = signatures;
 
             return signatures;
         }
@@ -2293,6 +2311,50 @@ module TypeScript {
             }
 
             return this._allIndexSignaturesOfAugmentedType;
+        }
+
+        private getBaseClassConstructSignatures(baseType: PullTypeSymbol): PullSignatureSymbol[] {
+            Debug.assert(this.isConstructor() && baseType.isConstructor());
+            var instanceTypeSymbol = this.getAssociatedContainerType();
+            Debug.assert(instanceTypeSymbol.getDeclarations().length === 1);
+            if (baseType.hasBase(this)) {
+                return null;
+            }
+
+            var baseConstructSignatures = baseType.getConstructSignatures();
+            var signatures: PullSignatureSymbol[] = [];
+            for (var i = 0; i < baseConstructSignatures.length; i++) {
+                var baseSignature = baseConstructSignatures[i];
+                var currentSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature, baseSignature.isDefinition());
+                currentSignature.returnType = instanceTypeSymbol;
+                currentSignature.addTypeParametersFromReturnType();
+                for (var j = 0; j < baseSignature.parameters.length; j++) {
+                    currentSignature.addParameter(baseSignature.parameters[j], baseSignature.parameters[j].isOptional);
+                }
+                if (baseSignature.parameters.length > 0) {
+                    currentSignature.hasVarArgs = baseSignature.parameters[baseSignature.parameters.length - 1].isVarArg;
+                }
+
+                // Assume the class has only one decl, since it can't mix with anything
+                currentSignature.addDeclaration(instanceTypeSymbol.getDeclarations()[0]);
+                this.addCallOrConstructSignaturePrerequisiteBase(currentSignature);
+                signatures.push(currentSignature);
+            }
+
+            return signatures;
+        }
+
+        private getDefaultClassConstructSignature(): PullSignatureSymbol {
+            Debug.assert(this.isConstructor());
+            var instanceTypeSymbol = this.getAssociatedContainerType();
+            Debug.assert(instanceTypeSymbol.getDeclarations().length == 1);
+            var signature = new PullSignatureSymbol(PullElementKind.ConstructSignature, /*isDefinition*/ true);
+            signature.returnType = instanceTypeSymbol;
+            signature.addTypeParametersFromReturnType();
+            signature.addDeclaration(instanceTypeSymbol.getDeclarations()[0]);
+            this.addCallOrConstructSignaturePrerequisiteBase(signature);
+
+            return signature;
         }
 
         public addImplementedType(implementedType: PullTypeSymbol): void {

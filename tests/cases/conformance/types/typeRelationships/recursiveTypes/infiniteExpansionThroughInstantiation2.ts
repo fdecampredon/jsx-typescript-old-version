@@ -6,6 +6,6 @@ interface AA<T extends AA<T>> // now an error due to referencing type parameter 
     x: T
 }
 
-interface BB extends AA<AA<BB>> // error, was originally intended to work but then we added the restriction that causes the error in AA
+interface BB extends AA<AA<BB>>
 {
 }

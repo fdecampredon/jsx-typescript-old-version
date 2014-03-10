@@ -1,0 +1,60 @@
+=== tests/cases/compiler/complexClassRelationships.ts ===
+Line 1 col 6 IdentifierName "Derived" = Derived
+Line 1 col 22 IdentifierName "Base" = Base
+Line 2 col 18 IdentifierName "createEmpty" = () => Derived
+Line 2 col 33 IdentifierName "Derived" = Derived
+Line 3 col 12 IdentifierName "item" = Derived
+Line 3 col 19 ObjectCreationExpression "new Derived()" = Derived
+Line 3 col 23 IdentifierName "Derived" = typeof Derived
+Line 4 col 15 IdentifierName "item" = Derived
+Line 7 col 6 IdentifierName "BaseCollection" = BaseCollection<T>
+Line 7 col 21 IdentifierName "T" = T
+Line 7 col 31 IdentifierName "Base" = Base
+Line 8 col 16 IdentifierName "f" = () => T
+Line 8 col 25 IdentifierName "T" = T
+Line 9 col 0 ParenthesizedArrowFunctionExpression "(item: Thing) => { return [item.Components]; }" = (item: Thing) => ComponentCollection<any>[]
+Line 9 col 9 IdentifierName "item" = Thing
+Line 9 col 15 IdentifierName "Thing" = Thing
+Line 9 col 34 ArrayLiteralExpression "[item.Components]" = ComponentCollection<any>[]
+Line 9 col 35 MemberAccessExpression "item.Components" = ComponentCollection<any>
+Line 9 col 35 IdentifierName "item" = Thing
+Line 9 col 40 IdentifierName "Components" = ComponentCollection<any>
+Line 12 col 6 IdentifierName "Base" = Base
+Line 13 col 0 IdentifierName "ownerCollection" = BaseCollection<Base>
+Line 13 col 21 IdentifierName "BaseCollection" = BaseCollection<T>
+Line 13 col 36 IdentifierName "Base" = Base
+Line 16 col 6 IdentifierName "Thing" = Thing
+Line 17 col 15 IdentifierName "Components" = ComponentCollection<any>
+Line 17 col 29 IdentifierName "ComponentCollection" = ComponentCollection<T>
+Line 20 col 6 IdentifierName "ComponentCollection" = ComponentCollection<T>
+Line 20 col 26 IdentifierName "T" = T
+Line 21 col 19 IdentifierName "sortComponents" = (p: Foo) => GenericType<string>
+Line 21 col 34 IdentifierName "p" = Foo
+Line 21 col 37 IdentifierName "Foo" = Foo
+Line 22 col 15 MemberAccessExpression "p.prop1" = GenericType<string>
+Line 22 col 15 IdentifierName "p" = Foo
+Line 22 col 17 IdentifierName "prop1" = GenericType<string>
+Line 26 col 6 IdentifierName "Foo" = Foo
+Line 27 col 15 IdentifierName "prop1" = GenericType<string>
+Line 28 col 15 ObjectCreationExpression "new GenericType<string>(this)" = GenericType<string>
+Line 28 col 19 IdentifierName "GenericType" = typeof GenericType
+Line 28 col 39 ThisKeyword "this" = Foo
+Line 30 col 11 IdentifierName "populate" = () => void
+Line 31 col 0 MemberAccessExpression "this.prop2" = BaseCollection<Derived>
+Line 31 col 0 ThisKeyword "this" = Foo
+Line 31 col 13 IdentifierName "prop2" = BaseCollection<Derived>
+Line 33 col 15 IdentifierName "prop2" = BaseCollection<Derived>
+Line 33 col 24 IdentifierName "BaseCollection" = BaseCollection<T>
+Line 33 col 39 IdentifierName "Derived" = Derived
+Line 34 col 15 ObjectCreationExpression "new BaseCollection<Derived>(Derived.createEmpty)" = BaseCollection<Derived>
+Line 34 col 19 IdentifierName "BaseCollection" = typeof BaseCollection
+Line 34 col 34 IdentifierName "Derived" = Derived
+Line 34 col 43 MemberAccessExpression "Derived.createEmpty" = () => Derived
+Line 34 col 43 IdentifierName "Derived" = typeof Derived
+Line 34 col 51 IdentifierName "createEmpty" = () => Derived
+Line 38 col 6 IdentifierName "GenericType" = GenericType<T>
+Line 38 col 18 IdentifierName "T" = T
+Line 39 col 16 IdentifierName "parent" = FooBase
+Line 39 col 24 IdentifierName "FooBase" = FooBase
+Line 42 col 6 IdentifierName "FooBase" = FooBase
+Line 43 col 11 IdentifierName "populate" = () => void
