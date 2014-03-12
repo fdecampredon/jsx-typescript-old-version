@@ -219,11 +219,11 @@ var harnessSources = [
 ];
 
 var librarySourceMap = [
-		{ target: "lib.core.d.ts", sources: ["lib.core.d.ts"] },
+		{ target: "lib.core.d.ts", sources: ["core.d.ts"] },
 		{ target: "lib.dom.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "dom.generated.d.ts"], },
 		{ target: "lib.webworker.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "webworker.generated.d.ts"], },
 		{ target: "lib.scripthost.d.ts", sources: ["importcore.d.ts", "scripthost.d.ts"], },
-		{ target: "lib.d.ts", sources: ["lib.core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "scripthost.d.ts"], },
+		{ target: "lib.d.ts", sources: ["core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "scripthost.d.ts"], },
 		{ target: "jquery.d.ts", sources: ["jquery.d.ts"], },
 		{ target: "winjs.d.ts", sources: ["winjs.d.ts"], },
 		{ target: "winrt.d.ts", sources: ["winrt.d.ts"] }
@@ -401,11 +401,11 @@ compileFile(perfCompilerPath, [frontEndPath], [tscFile], [], true);
 var webhostPath = "tests/cases/webhost/webtsc.ts";
 var webhostJsPath = "tests/cases/webhost/webtsc.js";
 desc("Builds the web host");
-compileFile(webhostJsPath, [webhostPath], [tscFile, webhostPath], [], true);
+compileFile(webhostJsPath, [webhostPath], [tscFile, webhostPath].concat(libraryTargets), [], true);
 
 desc("Builds the tsc web host");
 task("webhost", [webhostJsPath], function() {
-		jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
+		jake.cpR(path.join(builtLocalDirectory, "lib.d.ts"), "tests/cases/webhost");
 });
 
 // Fidelity Tests
@@ -427,10 +427,10 @@ desc("Builds the test infrastructure using the built compiler");
 task("tests", [run, serviceFile, fidelityTestsOutFile, perfCompilerPath].concat(libraryTargets), function() {	
 	// Copy the language service over to the test directory
 	jake.cpR(serviceFile, builtTestDirectory);
-	jake.cpR(path.join(libraryDirectory, "lib.d.ts"), builtTestDirectory);
-	jake.cpR(path.join(libraryDirectory, "lib.core.d.ts"), builtTestDirectory);
+	jake.cpR(path.join(builtLocalDirectory, "lib.d.ts"), builtTestDirectory);
+	jake.cpR(path.join(builtLocalDirectory, "lib.core.d.ts"), builtTestDirectory);
 
-	jake.cpR(path.join(libraryDirectory, "lib.d.ts"), "tests/cases/webhost");
+	jake.cpR(path.join(builtLocalDirectory, "lib.d.ts"), "tests/cases/webhost");
 });
 
 desc("Runs the tests using the built run.js file. Syntax is jake runtests. Optional parameters 'host=' and 'tests='.");
