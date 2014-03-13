@@ -969,9 +969,9 @@ module TypeScript {
                 // One of the names in a module declaration.  i.e.:  module A.B.C { ...
 
                 // If our decl points at a single name of a module, then just resolve that individual module.
-                var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(ast);
+                var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(ast);
                 var resolvedSymbol: PullSymbol;
-                if (ASTHelpers.isAnyNameOfModule(enclosingModule, ast)) {
+                if (enclosingModule) {
                     resolvedSymbol = this.resolveSingleModuleDeclaration(enclosingModule, ast, context);
                 }
                 else if (ast.kind() === SyntaxKind.SourceUnit && decl.kind === PullElementKind.DynamicModule) {
@@ -1004,8 +1004,8 @@ module TypeScript {
 
         private resolveOtherDecl(otherDecl: PullDecl, context: PullTypeResolutionContext) {
             var astForOtherDecl = this.getASTForDecl(otherDecl);
-            var moduleDecl = ASTHelpers.getEnclosingModuleDeclaration(astForOtherDecl);
-            if (ASTHelpers.isAnyNameOfModule(moduleDecl, astForOtherDecl)) {
+            var moduleDecl = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(astForOtherDecl);
+            if (moduleDecl) {
                 this.resolveSingleModuleDeclaration(moduleDecl, astForOtherDecl, context);
             }
             else {
@@ -2575,8 +2575,8 @@ module TypeScript {
         private checkExternalModuleRequireExportsCollides(ast: AST, name: IASTToken, context: PullTypeResolutionContext) {
             var enclosingDecl = this.getEnclosingDeclForAST(ast);
 
-            var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(name);
-            if (ASTHelpers.isAnyNameOfModule(enclosingModule, name)) {
+            var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(name);
+            if (enclosingModule) {
                 // If we're actually the name of a module, then we want the enclosing decl for the 
                 // module that we're in.
                 enclosingDecl = this.getEnclosingDeclForAST(enclosingModule);
@@ -3329,8 +3329,8 @@ module TypeScript {
             // Verify if this variable name conflicts with the _this that would be emitted to capture this in any of the enclosing context
             var enclosingDecl = this.getEnclosingDeclForAST(_thisAST);
 
-            var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(_thisAST);
-            if (ASTHelpers.isAnyNameOfModule(enclosingModule, _thisAST)) {
+            var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(_thisAST);
+            if (enclosingModule) {
                 // If we're actually the name of a module, then we want the enclosing decl for the 
                 // module that we're in.
                 enclosingDecl = this.getEnclosingDeclForAST(enclosingModule);
