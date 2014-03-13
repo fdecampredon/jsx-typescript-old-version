@@ -999,6 +999,12 @@ module TypeScript {
                 }
             }
 
+            if (!symbol.isResolved) {
+                Debug.assert(!symbol.inResolution);
+                // All declarations are resolved there is nothing to do any more 
+                symbol.setResolved();
+            }
+
             return symbol;
         }
 
