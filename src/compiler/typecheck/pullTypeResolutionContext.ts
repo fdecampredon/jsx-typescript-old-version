@@ -433,17 +433,23 @@ module TypeScript {
             if (!this.enclosingTypeWalker1) {
                 this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
             }
-            var symbolsWhenStartedWalkingTypes1 = this.enclosingTypeWalker1.startWalkingType(symbol1);
+            var stateWhenStartedWalkingTypes1 = this.enclosingTypeWalker1.startWalkingType(symbol1);
             if (!this.enclosingTypeWalker2) {
                 this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
             }
-            var symbolsWhenStartedWalkingTypes2 = this.enclosingTypeWalker2.startWalkingType(symbol2);            
-            return { symbolsWhenStartedWalkingTypes1: symbolsWhenStartedWalkingTypes1, symbolsWhenStartedWalkingTypes2: symbolsWhenStartedWalkingTypes2 };
+            var stateWhenStartedWalkingTypes2 = this.enclosingTypeWalker2.startWalkingType(symbol2);            
+            return {
+                stateWhenStartedWalkingTypes1: stateWhenStartedWalkingTypes1,
+                stateWhenStartedWalkingTypes2: stateWhenStartedWalkingTypes2
+            };
         }
 
-        public endWalkingTypes(symbolsWhenStartedWalkingTypes: { symbolsWhenStartedWalkingTypes1: PullSymbol[]; symbolsWhenStartedWalkingTypes2: PullSymbol[]; }) {
-            this.enclosingTypeWalker1.endWalkingType(symbolsWhenStartedWalkingTypes.symbolsWhenStartedWalkingTypes1);
-            this.enclosingTypeWalker2.endWalkingType(symbolsWhenStartedWalkingTypes.symbolsWhenStartedWalkingTypes2);
+        public endWalkingTypes(statesWhenStartedWalkingTypes: {
+            stateWhenStartedWalkingTypes1: EnclosingTypeWalkerState;
+            stateWhenStartedWalkingTypes2: EnclosingTypeWalkerState;
+        }) {
+            this.enclosingTypeWalker1.endWalkingType(statesWhenStartedWalkingTypes.stateWhenStartedWalkingTypes1);
+            this.enclosingTypeWalker2.endWalkingType(statesWhenStartedWalkingTypes.stateWhenStartedWalkingTypes2);
         }
 
         public setEnclosingTypes(symbol1: PullSymbol, symbol2: PullSymbol) {
@@ -553,20 +559,27 @@ module TypeScript {
             return false;
         }
 
-        public resetEnclosingTypeWalkers() {
-            var enclosingTypeWalker1 = this.enclosingTypeWalker1;
-            var enclosingTypeWalker2 = this.enclosingTypeWalker2;
-            this.enclosingTypeWalker1 = null;
-            this.enclosingTypeWalker2 = null;
+        public resetEnclosingTypeWalkerStates() {
+            var enclosingTypeWalkerState1 = this.enclosingTypeWalker1 ? this.enclosingTypeWalker1.resetEnclosingTypeWalkerState() : null;
+            var enclosingTypeWalkerState2 = this.enclosingTypeWalker2 ? this.enclosingTypeWalker2.resetEnclosingTypeWalkerState() : null;
             return {
-                enclosingTypeWalker1: enclosingTypeWalker1,
-                enclosingTypeWalker2: enclosingTypeWalker2
+                enclosingTypeWalkerState1: enclosingTypeWalkerState1,
+                enclosingTypeWalkerState2: enclosingTypeWalkerState2
             }
         }
 
-        public setEnclosingTypeWalkers(enclosingTypeWalkers: { enclosingTypeWalker1: PullTypeEnclosingTypeWalker; enclosingTypeWalker2: PullTypeEnclosingTypeWalker; }) {
-            this.enclosingTypeWalker1 = enclosingTypeWalkers.enclosingTypeWalker1;
-            this.enclosingTypeWalker2 = enclosingTypeWalkers.enclosingTypeWalker2;
+        public setEnclosingTypeWalkerStates(enclosingTypeWalkerStates: {
+            enclosingTypeWalkerState1: EnclosingTypeWalkerState;
+            enclosingTypeWalkerState2: EnclosingTypeWalkerState;
+        }) {
+            Debug.assert(this.enclosingTypeWalker1 || !enclosingTypeWalkerStates.enclosingTypeWalkerState1);
+            if (this.enclosingTypeWalker1) {
+                this.enclosingTypeWalker1.setEnclosingTypeWalkerState(enclosingTypeWalkerStates.enclosingTypeWalkerState1);
+            }
+            Debug.assert(this.enclosingTypeWalker2 || !enclosingTypeWalkerStates.enclosingTypeWalkerState2);
+            if (this.enclosingTypeWalker2) {
+                this.enclosingTypeWalker2.setEnclosingTypeWalkerState(enclosingTypeWalkerStates.enclosingTypeWalkerState2);
+            }
         }
     }
 }

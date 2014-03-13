@@ -5,6 +5,11 @@
 
 module TypeScript {
 
+    export class EnclosingTypeWalkerState {
+        public _currentSymbols: PullSymbol[] = null;
+        public _hasEnclosingType = false;
+    }
+
     // This is the walker that walks the type and type reference associated with the declaration.
     // This will make sure that any time, generative classification is asked, we have the right type of the declaration
     // and we can evaluate it in the correct context
@@ -22,12 +27,47 @@ module TypeScript {
     // checking members of IList<string>
     export class PullTypeEnclosingTypeWalker {
         // Symbols walked
-        private currentSymbols: PullSymbol[] = null;
+        private enclosingTypeWalkerState = new EnclosingTypeWalkerState();
 
+        public resetEnclosingTypeWalkerState(): EnclosingTypeWalkerState {
+            var currentState = this.enclosingTypeWalkerState;
+            this.enclosingTypeWalkerState = new EnclosingTypeWalkerState();
+            return currentState;
+        }
+
+        public setEnclosingTypeWalkerState(enclosingTypeWalkerState: EnclosingTypeWalkerState) {
+            if (enclosingTypeWalkerState) {
+                this.enclosingTypeWalkerState = enclosingTypeWalkerState;
+            }
+            else {
+                this.resetEnclosingTypeWalkerState();
+            }
+        }
+
+        private setCurrentEnclosingType(type: PullTypeSymbol) {
+            this.enclosingTypeWalkerState._hasEnclosingType = true;
+            if (type.isGeneric()) {
+                this.enclosingTypeWalkerState._currentSymbols = [PullHelpers.getRootType(type)];
+            }
+        }
+
+        private canSymbolOrDeclBeUsedAsEnclosingTypeHelper(name: string, kind: PullElementKind) {
+            return name !== null && (kind === PullElementKind.Class || kind === PullElementKind.Interface);
+        }
+
+        private canDeclBeUsedAsEnclosingType(decl: PullDecl) {
+            return this.canSymbolOrDeclBeUsedAsEnclosingTypeHelper(decl.name, decl.kind);
+        }
+
+        private canSymbolBeUsedAsEnclosingType(symbol: PullSymbol) {
+            return this.canSymbolOrDeclBeUsedAsEnclosingTypeHelper(symbol.name, symbol.kind);
+        }
+        
         // Enclosing type is the first symbol in the symbols visited
         public getEnclosingType() {
-            if (this.currentSymbols && this.currentSymbols.length > 0) {
-                return <PullTypeSymbol>this.currentSymbols[0];
+            var currentSymbols = this.enclosingTypeWalkerState._currentSymbols;
+            if (currentSymbols && currentSymbols.length > 0) {
+                return <PullTypeSymbol>currentSymbols[0];
             }
 
             return null;
@@ -36,13 +76,15 @@ module TypeScript {
         // We can/should walk the structure only if the enclosing type is generic
         public _canWalkStructure() {
             var enclosingType = this.getEnclosingType();
-            return !!enclosingType && enclosingType.isGeneric();
+            Debug.assert(!enclosingType || enclosingType.isGeneric());
+            return !!enclosingType;
         }
 
         // Current symbol is the last symbol in the current symbols list
         public _getCurrentSymbol() {
-            if (this.currentSymbols && this.currentSymbols.length) {
-                return this.currentSymbols[this.currentSymbols.length - 1];
+            var currentSymbols = this.enclosingTypeWalkerState._currentSymbols;
+            if (currentSymbols && currentSymbols.length) {
+                return currentSymbols[currentSymbols.length - 1];
             }
 
             return null;
@@ -51,7 +93,7 @@ module TypeScript {
         // Gets the generative classification of the current symbol in the enclosing type
         public getGenerativeClassification() {
             if (this._canWalkStructure()) {
-                var currentType = <PullTypeSymbol>this.currentSymbols[this.currentSymbols.length - 1];
+                var currentType = <PullTypeSymbol>this._getCurrentSymbol();
                 if (!currentType) {
                     // This may occur if we are trying to walk type parameter in the original declaration
                     return GenerativeTypeClassification.Unknown;
@@ -66,20 +108,21 @@ module TypeScript {
         }
 
         private _pushSymbol(symbol: PullSymbol) {
-            return this.currentSymbols.push(symbol);
+            return this.enclosingTypeWalkerState._currentSymbols.push(symbol);
         }
 
         private _popSymbol() {
-            return this.currentSymbols.pop();
+            return this.enclosingTypeWalkerState._currentSymbols.pop();
         }
 
         // Sets the enclosing type along with parent declaration symbols
         private _setEnclosingTypeOfParentDecl(decl: PullDecl, setSignature: boolean) {
             var parentDecl = decl.getParentDecl();
-            if (parentDecl) {
+            // If we are already at module/script, we are done walking up the parent
+            if (parentDecl && (parentDecl.kind & (PullElementKind.SomeContainer | PullElementKind.Script))) {
                 // Always set signatures in parents
-                if (parentDecl.kind & PullElementKind.SomeInstantiatableType) {
-                    this._setEnclosingTypeWorker(<PullTypeSymbol>parentDecl.getSymbol(), /*setSignature*/ true);
+                if (this.canDeclBeUsedAsEnclosingType(parentDecl)) {
+                    this.setCurrentEnclosingType(<PullTypeSymbol>parentDecl.getSymbol());
                 } else {
                     this._setEnclosingTypeOfParentDecl(parentDecl, /*setSignature*/ true);
                 }
@@ -110,8 +153,8 @@ module TypeScript {
 
         // Set the enclosing type of the symbol
         private _setEnclosingTypeWorker(symbol: PullSymbol, setSignature: boolean) {
-            if (symbol.isType() && (<PullTypeSymbol>symbol).isNamedTypeSymbol()) {
-                this.currentSymbols = [PullHelpers.getRootType(<PullTypeSymbol>symbol)];
+            if (this.canSymbolBeUsedAsEnclosingType(symbol)) {
+                this.setCurrentEnclosingType(<PullTypeSymbol>symbol);
                 return;
             }
 
@@ -119,38 +162,35 @@ module TypeScript {
             for (var i = 0; i < decls.length; i++) {
                 var decl = decls[i];
                 this._setEnclosingTypeOfParentDecl(decl, setSignature);
-                if (this._canWalkStructure()) {
+                if (this.enclosingTypeWalkerState._hasEnclosingType) {
                     return;
                 }
             }
-        }
 
-        // Sets the current symbol with the symbol
-        public setCurrentSymbol(symbol: PullSymbol) {
-            Debug.assert(this._canWalkStructure());
-            this.currentSymbols[this.currentSymbols.length - 1] = symbol;
+            // We have started walking enclosing type, irrespective of whether there were any symbols set in the context
+            this.enclosingTypeWalkerState._hasEnclosingType = true;
         }
 
         // Start walking type
-        public startWalkingType(symbol: PullTypeSymbol): PullSymbol[] {
-            var currentSymbols = this.currentSymbols;
+        public startWalkingType(symbol: PullTypeSymbol): EnclosingTypeWalkerState {
+            var currentState = this.enclosingTypeWalkerState;
 
             // If we dont have enclosing type or the symbol is named type, we need to set the new enclosing type
-            var setEnclosingType = !this.getEnclosingType() || symbol.isNamedTypeSymbol();
+            var setEnclosingType = !this.enclosingTypeWalkerState._hasEnclosingType || this.canSymbolBeUsedAsEnclosingType(symbol);
             if (setEnclosingType) {
-                this.currentSymbols = null;
+                this.resetEnclosingTypeWalkerState();
                 this.setEnclosingType(symbol);
             }
-            return currentSymbols;
+            return currentState;
         }
 
         // Finish walking type
-        public endWalkingType(currentSymbolsWhenStartedWalkingTypes: PullSymbol[]) {
-            this.currentSymbols = currentSymbolsWhenStartedWalkingTypes;
+        public endWalkingType(stateWhenStartedWalkingTypes: EnclosingTypeWalkerState) {
+            this.enclosingTypeWalkerState = stateWhenStartedWalkingTypes;
         }
 
         public setEnclosingType(symbol: PullSymbol) {
-            Debug.assert(!this.getEnclosingType());
+            Debug.assert(!this.enclosingTypeWalkerState._hasEnclosingType);
             this._setEnclosingTypeWorker(symbol, symbol.isSignature());
         }
 
