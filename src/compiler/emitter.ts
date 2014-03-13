@@ -2736,7 +2736,12 @@ module TypeScript {
         }
 
         public emitSuperExpression(expression: ISyntaxToken): void {
-            this.writeToOutputWithSourceMapRecord("_super.prototype", expression);
+            if (PullTypeResolver.isInStaticMemberContext(this.getEnclosingDecl())) {
+                this.writeToOutputWithSourceMapRecord("_super", expression);
+            }
+            else {
+                this.writeToOutputWithSourceMapRecord("_super.prototype", expression);
+            }
         }
 
         public emitParenthesizedExpression(parenthesizedExpression: ParenthesizedExpressionSyntax): void {

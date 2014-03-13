@@ -1,0 +1,51 @@
+=== tests/cases/compiler/superCallInStaticMethod.ts ===
+Line 0 col 6 IdentifierName "Doing" = Doing
+Line 1 col 18 IdentifierName "staticMethod" = () => void
+Line 5 col 6 IdentifierName "Other" = Other
+Line 5 col 20 IdentifierName "Doing" = Doing
+Line 7 col 18 IdentifierName "staticMethod" = () => void
+Line 8 col 0 InvocationExpression "super.staticMethod()" = void
+Line 8 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 8 col 14 IdentifierName "staticMethod" = () => void
+Line 12 col 18 IdentifierName "lambdaInsideAStaticMethod" = () => void
+Line 13 col 0 ParenthesizedArrowFunctionExpression "() => {
+            super.staticMethod();
+        }" = () => void
+Line 14 col 0 InvocationExpression "super.staticMethod()" = void
+Line 14 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 14 col 18 IdentifierName "staticMethod" = () => void
+Line 19 col 18 IdentifierName "objectLiteralInsideAStaticMethod" = () => { a: () => void; b: void; }
+Line 20 col 15 ObjectLiteralExpression "{
+            a: () => {
+                super.staticMethod();
+            },
+            b: super.staticMethod()
+        }" = { a: () => void; b: void; }
+Line 21 col 0 IdentifierName "a" = () => void
+Line 21 col 15 ParenthesizedArrowFunctionExpression "() => {
+                super.staticMethod();
+            }" = () => void
+Line 22 col 0 InvocationExpression "super.staticMethod()" = void
+Line 22 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 22 col 22 IdentifierName "staticMethod" = () => void
+Line 24 col 0 IdentifierName "b" = void
+Line 24 col 15 InvocationExpression "super.staticMethod()" = void
+Line 24 col 15 MemberAccessExpression "super.staticMethod" = () => void
+Line 24 col 21 IdentifierName "staticMethod" = () => void
+Line 29 col 22 IdentifierName "staticGetter" = number
+Line 30 col 0 InvocationExpression "super.staticMethod()" = void
+Line 30 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 30 col 14 IdentifierName "staticMethod" = () => void
+Line 36 col 22 IdentifierName "staticGetter" = number
+Line 36 col 35 IdentifierName "value" = number
+Line 37 col 0 InvocationExpression "super.staticMethod()" = void
+Line 37 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 37 col 14 IdentifierName "staticMethod" = () => void
+Line 41 col 18 IdentifierName "initializerInAStaticMethod" = (a?: void) => void
+Line 41 col 45 IdentifierName "a" = void
+Line 41 col 49 InvocationExpression "super.staticMethod()" = void
+Line 41 col 49 MemberAccessExpression "super.staticMethod" = () => void
+Line 41 col 55 IdentifierName "staticMethod" = () => void
+Line 42 col 0 InvocationExpression "super.staticMethod()" = void
+Line 42 col 0 MemberAccessExpression "super.staticMethod" = () => void
+Line 42 col 14 IdentifierName "staticMethod" = () => void

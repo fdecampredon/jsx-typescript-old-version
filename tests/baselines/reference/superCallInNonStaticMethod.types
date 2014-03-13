@@ -1,0 +1,56 @@
+=== tests/cases/compiler/superCallInNonStaticMethod.ts ===
+Line 0 col 6 IdentifierName "Doing" = Doing
+Line 1 col 11 IdentifierName "instanceMethod" = () => void
+Line 5 col 6 IdentifierName "Other" = Other
+Line 5 col 20 IdentifierName "Doing" = Doing
+Line 7 col 11 IdentifierName "instanceMethod" = () => void
+Line 8 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 8 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 8 col 14 IdentifierName "instanceMethod" = () => void
+Line 12 col 11 IdentifierName "lambdaInsideAnInstanceMethod" = () => void
+Line 13 col 0 ParenthesizedArrowFunctionExpression "() => {
+            super.instanceMethod();
+        }" = () => void
+Line 14 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 14 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 14 col 18 IdentifierName "instanceMethod" = () => void
+Line 19 col 11 IdentifierName "objectLiteralInsideAnInstanceMethod" = () => { a: () => void; b: void; }
+Line 20 col 15 ObjectLiteralExpression "{
+            a: () => {
+                super.instanceMethod();
+            },
+            b: super.instanceMethod()
+        }" = { a: () => void; b: void; }
+Line 21 col 0 IdentifierName "a" = () => void
+Line 21 col 15 ParenthesizedArrowFunctionExpression "() => {
+                super.instanceMethod();
+            }" = () => void
+Line 22 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 22 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 22 col 22 IdentifierName "instanceMethod" = () => void
+Line 24 col 0 IdentifierName "b" = void
+Line 24 col 15 InvocationExpression "super.instanceMethod()" = void
+Line 24 col 15 MemberAccessExpression "super.instanceMethod" = () => void
+Line 24 col 21 IdentifierName "instanceMethod" = () => void
+Line 29 col 15 IdentifierName "accessor" = number
+Line 30 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 30 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 30 col 14 IdentifierName "instanceMethod" = () => void
+Line 36 col 15 IdentifierName "accessor" = number
+Line 36 col 24 IdentifierName "value" = number
+Line 37 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 37 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 37 col 14 IdentifierName "instanceMethod" = () => void
+Line 41 col 0 InvocationExpression "super()" = void
+Line 42 col 0 InvocationExpression "super.instanceMethod()" = void
+Line 42 col 0 MemberAccessExpression "super.instanceMethod" = () => void
+Line 42 col 14 IdentifierName "instanceMethod" = () => void
+Line 45 col 11 IdentifierName "propertyInitializer" = void
+Line 45 col 33 InvocationExpression "super.instanceMethod()" = void
+Line 45 col 33 MemberAccessExpression "super.instanceMethod" = () => void
+Line 45 col 39 IdentifierName "instanceMethod" = () => void
+Line 47 col 11 IdentifierName "functionProperty" = () => void
+Line 47 col 30 ParenthesizedArrowFunctionExpression "() => {super.instanceMethod(); }" = () => void
+Line 47 col 37 InvocationExpression "super.instanceMethod()" = void
+Line 47 col 37 MemberAccessExpression "super.instanceMethod" = () => void
+Line 47 col 43 IdentifierName "instanceMethod" = () => void

@@ -55,18 +55,18 @@ var SomeDerivedClass = (function (_super) {
 
 
     SomeDerivedClass.fn = function () {
-        var x = _super.prototype.func.call(this);
+        var x = _super.func.call(this);
         var x;
     };
 
     Object.defineProperty(SomeDerivedClass, "a", {
         get: function () {
-            var x = _super.prototype.func.call(this);
+            var x = _super.func.call(this);
             var x;
             return null;
         },
         set: function (n) {
-            var x = _super.prototype.func.call(this);
+            var x = _super.func.call(this);
             var x;
         },
         enumerable: true,

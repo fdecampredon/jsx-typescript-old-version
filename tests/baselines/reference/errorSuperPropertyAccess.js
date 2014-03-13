@@ -22,16 +22,16 @@ var NoBase = (function () {
     //super static property access in static member function of class with no base type
     //super static property access in static member accessor(get and set) of class with no base type
     NoBase.static1 = function () {
-        _super.prototype.hasOwnProperty.call(this, '');
+        _super.hasOwnProperty.call(this, '');
     };
 
     Object.defineProperty(NoBase, "static2", {
         get: function () {
-            _super.prototype.hasOwnProperty.call(this, '');
+            _super.hasOwnProperty.call(this, '');
             return '';
         },
         set: function (n) {
-            _super.prototype.hasOwnProperty.call(this, '');
+            _super.hasOwnProperty.call(this, '');
         },
         enumerable: true,
         configurable: true
@@ -137,21 +137,21 @@ var SomeDerived3 = (function (_super) {
         _super.apply(this, arguments);
     }
     SomeDerived3.fn = function () {
-        _super.prototype.publicStaticMember = 3;
-        _super.prototype.privateStaticMember = 3;
-        _super.prototype.privateStaticFunc.call(this);
+        _super.publicStaticMember = 3;
+        _super.privateStaticMember = 3;
+        _super.privateStaticFunc.call(this);
     };
     Object.defineProperty(SomeDerived3, "a", {
         get: function () {
-            _super.prototype.publicStaticMember = 3;
-            _super.prototype.privateStaticMember = 3;
-            _super.prototype.privateStaticFunc.call(this);
+            _super.publicStaticMember = 3;
+            _super.privateStaticMember = 3;
+            _super.privateStaticFunc.call(this);
             return '';
         },
         set: function (n) {
-            _super.prototype.publicStaticMember = 3;
-            _super.prototype.privateStaticMember = 3;
-            _super.prototype.privateStaticFunc.call(this);
+            _super.publicStaticMember = 3;
+            _super.privateStaticMember = 3;
+            _super.privateStaticFunc.call(this);
         },
         enumerable: true,
         configurable: true

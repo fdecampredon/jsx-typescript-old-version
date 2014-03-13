@@ -6782,7 +6782,7 @@ module TypeScript {
             }
 
             if (typeNameSymbol.isTypeParameter()) {
-                if (this.isInStaticMemberContext(enclosingDecl)) {
+                if (PullTypeResolver.isInStaticMemberContext(enclosingDecl)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
                     if (parentDecl.kind === PullElementKind.Class) {
@@ -6799,7 +6799,7 @@ module TypeScript {
             return typeNameSymbol;
         }
 
-        private isInStaticMemberContext(decl: PullDecl): boolean {
+        public static isInStaticMemberContext(decl: PullDecl): boolean {
             while (decl) {                
                 // check if decl correspond to static member of some sort
                 if (hasFlag(decl.kind, PullElementKind.SomeFunction | PullElementKind.Property) && hasFlag(decl.flags, PullElementFlags.Static)) {

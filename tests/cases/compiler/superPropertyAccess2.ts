@@ -9,9 +9,9 @@ class C {
 
 class D extends C {
     public static foo() {
-        super.bar(); // error
+        super.bar(); // OK
         super.x;  // error
-    }    
+    }
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ class D extends C {
     }
 
     public static get y() {
-        super.bar(); // error
+        super.bar(); // OK
         super.x; // error
         return 1;
     }

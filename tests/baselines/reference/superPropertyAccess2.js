@@ -30,14 +30,14 @@ var D = (function (_super) {
         _super.prototype.x; // error
     }
     D.foo = function () {
-        _super.prototype.bar.call(this); // error
-        _super.prototype.x; // error
+        _super.bar.call(this); // OK
+        _super.x; // error
     };
 
     Object.defineProperty(D, "y", {
         get: function () {
-            _super.prototype.bar.call(this); // error
-            _super.prototype.x; // error
+            _super.bar.call(this); // OK
+            _super.x; // error
             return 1;
         },
         enumerable: true,
