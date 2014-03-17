@@ -1586,6 +1586,45 @@ declare var MSEventObj: {
     new(): MSEventObj;
 }
 
+interface HTMLCanvasElement extends HTMLElement {
+    /**
+      * Gets or sets the width of a canvas element on a document.
+      */
+    width: number;
+    /**
+      * Gets or sets the height of a canvas element on a document.
+      */
+    height: number;
+    /**
+      * Returns an object that provides methods and properties for drawing and manipulating images and graphics on a canvas element in a document. A context object includes information about colors, line widths, fonts, and other graphic parameters that can be drawn on a canvas.
+      * @param contextId The identifier (ID) of the type of canvas to create. Internet Explorer 9 and Internet Explorer 10 support only a 2-D context using canvas.getContext("2d"); IE11 Preview also supports 3-D or WebGL context using canvas.getContext("experimental-webgl");
+      */
+    getContext(contextId: "2d"): CanvasRenderingContext2D;
+    /**
+      * Returns an object that provides methods and properties for drawing and manipulating images and graphics on a canvas element in a document. A context object includes information about colors, line widths, fonts, and other graphic parameters that can be drawn on a canvas.
+      * @param contextId The identifier (ID) of the type of canvas to create. Internet Explorer 9 and Internet Explorer 10 support only a 2-D context using canvas.getContext("2d"); IE11 Preview also supports 3-D or WebGL context using canvas.getContext("experimental-webgl");
+      */
+    getContext(contextId: "experimental-webgl"): WebGLRenderingContext;
+    /**
+      * Returns an object that provides methods and properties for drawing and manipulating images and graphics on a canvas element in a document. A context object includes information about colors, line widths, fonts, and other graphic parameters that can be drawn on a canvas.
+      * @param contextId The identifier (ID) of the type of canvas to create. Internet Explorer 9 and Internet Explorer 10 support only a 2-D context using canvas.getContext("2d"); IE11 Preview also supports 3-D or WebGL context using canvas.getContext("experimental-webgl");
+      */
+    getContext(contextId: string, ...args: any[]): any;
+    /**
+      * Returns the content of the current canvas as an image that you can use as a source for another canvas or an HTML element.
+      * @param type The standard MIME type for the image format to return. If you do not specify this parameter, the default value is a PNG format image.
+      */
+    toDataURL(type?: string, ...args: any[]): string;
+    /**
+      * Returns a blob object encoded as a Portable Network Graphics (PNG) format from a canvas image or drawing.
+      */
+    msToBlob(): Blob;
+}
+declare var HTMLCanvasElement: {
+    prototype: HTMLCanvasElement;
+    new(): HTMLCanvasElement;
+}
+
 interface NavigatorID {
     appVersion: string;
     appName: string;
@@ -3313,11 +3352,11 @@ interface HTMLOptionElement extends HTMLElement, MSDataBindingExtensions {
       * Sets or retrieves whether the option in the list box is the default item.
       */
     selected: boolean;
-    create(): HTMLOptionElement;
 }
 declare var HTMLOptionElement: {
     prototype: HTMLOptionElement;
     new(): HTMLOptionElement;
+    create(): HTMLOptionElement;
 }
 
 interface HTMLMapElement extends HTMLElement {
@@ -3793,11 +3832,11 @@ interface HTMLImageElement extends HTMLElement, MSImageResourceExtensions, MSDat
     msPlayToSource: any;
     crossOrigin: string;
     msPlayToPreferredSourceUri: string;
-    create(): HTMLImageElement;
 }
 declare var HTMLImageElement: {
     prototype: HTMLImageElement;
     new(): HTMLImageElement;
+    create(): HTMLImageElement;
 }
 
 interface HTMLAreaElement extends HTMLElement {
@@ -4582,7 +4621,6 @@ interface XMLHttpRequest extends EventTarget {
     onloadstart: (ev: Event) => any;
     msCaching: string;
     open(method: string, url: string, async?: boolean, user?: string, password?: string): void;
-    create(): XMLHttpRequest;
     send(data?: any): void;
     abort(): void;
     getAllResponseHeaders(): string;
@@ -4613,6 +4651,7 @@ declare var XMLHttpRequest: {
     UNSENT: number;
     OPENED: number;
     HEADERS_RECEIVED: number;
+    create(): XMLHttpRequest;
 }
 
 interface HTMLTableHeaderCellElement extends HTMLTableCellElement {
@@ -6195,7 +6234,6 @@ interface XDomainRequest {
     responseText: string;
     contentType: string;
     open(method: string, url: string): void;
-    create(): XDomainRequest;
     abort(): void;
     send(data?: any): void;
     addEventListener(type: "error", listener: (ev: ErrorEvent) => any, useCapture?: boolean): void;
@@ -6207,6 +6245,7 @@ interface XDomainRequest {
 declare var XDomainRequest: {
     prototype: XDomainRequest;
     new(): XDomainRequest;
+    create(): XDomainRequest;
 }
 
 interface DOML2DeprecatedBackgroundColorStyle {
@@ -6320,35 +6359,6 @@ declare var SVGTextContentElement: {
 
 interface DOML2DeprecatedColorProperty {
     color: string;
-}
-
-interface HTMLCanvasElement extends HTMLElement {
-    /**
-      * Gets or sets the width of a canvas element on a document.
-      */
-    width: number;
-    /**
-      * Gets or sets the height of a canvas element on a document.
-      */
-    height: number;
-    /**
-      * Returns the content of the current canvas as an image that you can use as a source for another canvas or an HTML element.
-      * @param type The standard MIME type for the image format to return. If you do not specify this parameter, the default value is a PNG format image.
-      */
-    toDataURL(type?: string, ...args: any[]): string;
-    /**
-      * Returns an object that provides methods and properties for drawing and manipulating images and graphics on a canvas element in a document. A context object includes information about colors, line widths, fonts, and other graphic parameters that can be drawn on a canvas.
-      * @param contextId The identifier (ID) of the type of canvas to create. Internet Explorer 9 and Internet Explorer 10 support only a 2-D context using canvas.getContext("2d"); IE11 Preview also supports 3-D or WebGL context using canvas.getContext("experimental-webgl");
-      */
-    getContext(contextId: string, ...args: any[]): any;
-    /**
-      * Returns a blob object encoded as a Portable Network Graphics (PNG) format from a canvas image or drawing.
-      */
-    msToBlob(): Blob;
-}
-declare var HTMLCanvasElement: {
-    prototype: HTMLCanvasElement;
-    new(): HTMLCanvasElement;
 }
 
 interface Location {
@@ -9620,14 +9630,14 @@ interface IDBKeyRange {
     upperOpen: boolean;
     lower: any;
     lowerOpen: boolean;
-    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
-    only(value: any): IDBKeyRange;
-    lowerBound(bound: any, open?: boolean): IDBKeyRange;
-    upperBound(bound: any, open?: boolean): IDBKeyRange;
 }
 declare var IDBKeyRange: {
     prototype: IDBKeyRange;
     new(): IDBKeyRange;
+    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
+    only(value: any): IDBKeyRange;
+    lowerBound(bound: any, open?: boolean): IDBKeyRange;
+    upperBound(bound: any, open?: boolean): IDBKeyRange;
 }
 
 interface WindowConsole {
@@ -10517,11 +10527,11 @@ declare var DeviceOrientationEvent: {
 interface MSMediaKeys {
     keySystem: string;
     createSession(type: string, initData: Uint8Array, cdmData?: Uint8Array): MSMediaKeySession;
-    isTypeSupported(keySystem: string, type?: string): boolean;
 }
 declare var MSMediaKeys: {
     prototype: MSMediaKeys;
     new(keySystem: string): MSMediaKeys;
+    isTypeSupported(keySystem: string, type?: string): boolean;
 }
 
 interface MSMediaKeyMessageEvent extends Event {
@@ -10675,12 +10685,12 @@ interface MediaSource extends EventTarget {
     activeSourceBuffers: SourceBufferList;
     addSourceBuffer(type: string): SourceBuffer;
     endOfStream(error?: string): void;
-    isTypeSupported(type: string): boolean;
     removeSourceBuffer(sourceBuffer: SourceBuffer): void;
 }
 declare var MediaSource: {
     prototype: MediaSource;
     new(): MediaSource;
+    isTypeSupported(type: string): boolean;
 }
 
 interface SourceBufferList extends EventTarget {
