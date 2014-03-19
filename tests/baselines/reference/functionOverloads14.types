@@ -1,0 +1,9 @@
+=== tests/cases/compiler/functionOverloads14.ts ===
+Line 0 col 9 IdentifierName "foo" = typeof foo
+Line 0 col 16 IdentifierName "a" = number
+Line 1 col 9 IdentifierName "foo" = typeof foo
+Line 1 col 16 IdentifierName "a" = string
+Line 2 col 9 IdentifierName "foo" = typeof foo
+Line 2 col 16 IdentifierName "a" = any
+Line 2 col 33 ObjectLiteralExpression "{a:1}" = { a: number; }
+Line 2 col 34 IdentifierName "a" = number

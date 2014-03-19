@@ -1,0 +1,85 @@
+=== tests/cases/compiler/objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.ts ===
+Line 3 col 10 IdentifierName "I" = I<X, Y, Z, A>
+Line 3 col 12 IdentifierName "X" = X
+Line 3 col 15 IdentifierName "Y" = Y
+Line 3 col 18 IdentifierName "Z" = Z
+Line 3 col 21 IdentifierName "A" = A
+Line 4 col 5 IdentifierName "x" = X
+Line 4 col 8 IdentifierName "X" = X
+Line 4 col 12 IdentifierName "X" = X
+Line 7 col 10 IdentifierName "I2" = I2
+Line 8 col 5 IdentifierName "Y" = Y
+Line 8 col 8 IdentifierName "Z" = Z
+Line 8 col 11 IdentifierName "A" = A
+Line 8 col 14 IdentifierName "B" = B
+Line 8 col 17 IdentifierName "x" = Y
+Line 8 col 20 IdentifierName "Y" = Y
+Line 8 col 24 IdentifierName "Y" = Y
+Line 11 col 4 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
+Line 11 col 10 IdentifierName "Z" = Z
+Line 11 col 13 IdentifierName "A" = A
+Line 11 col 16 IdentifierName "B" = B
+Line 11 col 19 IdentifierName "C" = C
+Line 11 col 22 IdentifierName "D" = D
+Line 11 col 25 IdentifierName "x" = Z
+Line 11 col 28 IdentifierName "Z" = Z
+Line 11 col 32 IdentifierName "Z" = Z
+Line 13 col 9 IdentifierName "foo1" = typeof foo1
+Line 13 col 14 IdentifierName "x" = I<string, boolean, number, string>
+Line 13 col 17 IdentifierName "I" = I<X, Y, Z, A>
+Line 14 col 9 IdentifierName "foo1" = typeof foo1
+Line 14 col 14 IdentifierName "x" = I<string, boolean, number, string>
+Line 14 col 17 IdentifierName "I" = I<X, Y, Z, A>
+Line 15 col 9 IdentifierName "foo1" = typeof foo1
+Line 15 col 14 IdentifierName "x" = any
+Line 17 col 9 IdentifierName "foo2" = typeof foo2
+Line 17 col 14 IdentifierName "x" = I2
+Line 17 col 17 IdentifierName "I2" = I2
+Line 18 col 9 IdentifierName "foo2" = typeof foo2
+Line 18 col 14 IdentifierName "x" = I2
+Line 18 col 17 IdentifierName "I2" = I2
+Line 19 col 9 IdentifierName "foo2" = typeof foo2
+Line 19 col 14 IdentifierName "x" = any
+Line 21 col 9 IdentifierName "foo3" = typeof foo3
+Line 21 col 14 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
+Line 21 col 24 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
+Line 22 col 9 IdentifierName "foo3" = typeof foo3
+Line 22 col 14 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
+Line 22 col 24 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
+Line 23 col 9 IdentifierName "foo3" = typeof foo3
+Line 23 col 14 IdentifierName "x" = any
+Line 25 col 9 IdentifierName "foo13" = typeof foo13
+Line 25 col 15 IdentifierName "x" = I<boolean, string, number, Date>
+Line 25 col 18 IdentifierName "I" = I<X, Y, Z, A>
+Line 25 col 45 IdentifierName "Date" = Date
+Line 26 col 9 IdentifierName "foo13" = typeof foo13
+Line 26 col 15 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
+Line 26 col 25 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
+Line 27 col 9 IdentifierName "foo13" = typeof foo13
+Line 27 col 15 IdentifierName "x" = any
+Line 29 col 9 IdentifierName "foo14" = typeof foo14
+Line 29 col 15 IdentifierName "x" = I<boolean, string, number, Date>
+Line 29 col 18 IdentifierName "I" = I<X, Y, Z, A>
+Line 29 col 45 IdentifierName "Date" = Date
+Line 30 col 9 IdentifierName "foo14" = typeof foo14
+Line 30 col 15 IdentifierName "x" = I2
+Line 30 col 18 IdentifierName "I2" = I2
+Line 31 col 9 IdentifierName "foo14" = typeof foo14
+Line 31 col 15 IdentifierName "x" = any
+Line 33 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 33 col 16 IdentifierName "x" = <Z, A, B, C, D>(x: Z) => Z
+Line 33 col 26 IdentifierName "a" = <Z, A, B, C, D>(x: Z) => Z
+Line 34 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 34 col 16 IdentifierName "x" = I2
+Line 34 col 19 IdentifierName "I2" = I2
+Line 35 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 35 col 16 IdentifierName "x" = any
+Line 37 col 9 IdentifierName "foo15" = typeof foo15
+Line 37 col 15 IdentifierName "x" = I<boolean, string, number, Date>
+Line 37 col 18 IdentifierName "I" = I<X, Y, Z, A>
+Line 37 col 45 IdentifierName "Date" = Date
+Line 38 col 9 IdentifierName "foo15" = typeof foo15
+Line 38 col 15 IdentifierName "x" = I2
+Line 38 col 18 IdentifierName "I2" = I2
+Line 39 col 9 IdentifierName "foo15" = typeof foo15
+Line 39 col 15 IdentifierName "x" = any
