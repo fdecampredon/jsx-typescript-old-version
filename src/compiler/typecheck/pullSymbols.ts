@@ -1531,6 +1531,15 @@ module TypeScript {
                 wrappingTypeParameterID = parameters[i].type.getWrappingTypeParameterID(typeParameterArgumentMap);
             }
 
+            var typeParameters = signature.getTypeParameters();
+            for (var i = 0; !wrappingTypeParameterID && i < typeParameters.length; i++) {
+                PullHelpers.resolveDeclaredSymbolToUseType(typeParameters[i]);
+                var constraint = typeParameters[i].getConstraint();
+                if (constraint) {
+                    wrappingTypeParameterID = constraint.getWrappingTypeParameterID(typeParameterArgumentMap);
+                }
+            }
+
             signature.inWrapCheck = false;
 
             return wrappingTypeParameterID;
@@ -2836,10 +2845,6 @@ module TypeScript {
                 if (typeParameterArgumentMap[type.pullSymbolID] || typeParameterArgumentMap[type.getRootSymbol().pullSymbolID]) {
                     return type.pullSymbolID;
                 }
-
-                var constraint = (<PullTypeParameterSymbol>type).getConstraint();
-                var wrappingTypeParameterID = constraint ? constraint.getWrappingTypeParameterID(typeParameterArgumentMap) : 0;
-                return wrappingTypeParameterID;
             }
 
             if (type.inWrapCheck) {
