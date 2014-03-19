@@ -9837,27 +9837,20 @@ module TypeScript {
             return true;
         }
 
-        private typeParametersAreIdentical(tp1: PullTypeParameterSymbol[], tp2: PullTypeParameterSymbol[],
+        private constraintsAreIdentical(tp1: PullTypeParameterSymbol[], tp2: PullTypeParameterSymbol[],
             context: PullTypeResolutionContext) {
-            // Check if both the type parameter list present or both are absent
-            if (!!(tp1 && tp1.length) !== !!(tp2 && tp2.length)) {
+            Debug.assert(tp1 && tp2);
+            if (tp1.length !== tp2.length) {
                 return false;
             }
 
-            // Verify the legth
-            if (tp1 && tp2 && (tp1.length !== tp2.length)) {
-                return false;
-            }
-
-            if (tp1 && tp2) {
-                for (var i = 0; i < tp1.length; i++) {
-                    // Verify the pairwise identity of the constraints
-                    context.walkTypeParameterConstraints(i);
-                    var areConstraintsIdentical = this.typesAreIdentical(tp1[i].getConstraint(), tp2[i].getConstraint(), context);
-                    context.postWalkTypeParameterConstraints();
-                    if (!areConstraintsIdentical) {
-                        return false;
-                    }
+            for (var i = 0; i < tp1.length; i++) {
+                // Verify the pairwise identity of the constraints
+                context.walkTypeParameterConstraints(i);
+                var areConstraintsIdentical = this.typesAreIdentical(tp1[i].getConstraint(), tp2[i].getConstraint(), context);
+                context.postWalkTypeParameterConstraints();
+                if (!areConstraintsIdentical) {
+                    return false;
                 }
             }
 
@@ -9929,34 +9922,32 @@ module TypeScript {
             // The spec says to assume type parameters are pairwise identical in order to compare
             // the signatures. We skip that here because we are about to instantiate the signatures
             // to any to avoid a generative recursion when comparing generic signatures.
-            return this.signatureTypeParametersParametersAndReturnTypesAreIdentical(s1, s2, context, includingReturnType);
+            return this.signatureConstraints_Parameters_AndReturnTypesAreIdenticalAfterInstantiationToAny(s1, s2, context, includingReturnType);
         }
 
-        private signatureTypeParametersParametersAndReturnTypesAreIdentical(s1: PullSignatureSymbol, s2: PullSignatureSymbol,
+        private signatureConstraints_Parameters_AndReturnTypesAreIdenticalAfterInstantiationToAny(s1: PullSignatureSymbol, s2: PullSignatureSymbol,
             context: PullTypeResolutionContext, includingReturnType?: boolean) {
-            if (!this.typeParametersAreIdentical(s1.getTypeParameters(), s2.getTypeParameters(), context)) {
+            if (!this.constraintsAreIdentical(s1.getTypeParameters(), s2.getTypeParameters(), context)) {
                 return false;
             }
 
             // This is not in the spec yet, but we need to instantiate signatures to any before
             // comparing them to avoid a generative recursion. Considering them pairwise
             // identical is not enough to achieve this. Consider the following example:
-            //interface IPromise<T> {
-            //    then<U>(callback: (x: T) => IPromise<U>): IPromise<U>;
-            //}
-            //interface Promise<T> {
-            //    then<U>(callback: (x: T) => Promise<U>): Promise<U>;
-            //}
-            //var x: IPromise<string>;
-            //var x: Promise<string>;
+            //
+            // interface IPromise<T> {
+            //     then<U>(callback: (x: T) => IPromise<U>): IPromise<U>;
+            // }
+            // interface Promise<T> {
+            //     then<U>(callback: (x: T) => Promise<U>): Promise<U>;
+            // }
+            // var x: IPromise<string>;
+            // var x: Promise<string>;
+            //
             // Comparing IPromise<U> and Promise<U> would lead to an infinite expansion, since
             // each instantiation introduces a new U. Therefore, the U must be erased to any.
-            if (s1.isGeneric()) {
-                s1 = this.instantiateSignatureToAny(s1);
-            }
-            if (s2.isGeneric()) {
-                s2 = this.instantiateSignatureToAny(s2);
-            }
+            s1 = this.instantiateSignatureToAny(s1);
+            s2 = this.instantiateSignatureToAny(s2);
 
             if (includingReturnType) {
                 PullHelpers.resolveDeclaredSymbolToUseType(s1);
@@ -10985,13 +10976,8 @@ module TypeScript {
             // Section 3.8.3 + 3.8.4: M is a non-specialized call or construct signature and S'
             // contains a call or construct signature N where, when M and N are instantiated using
             // type Any as the type argument for all type parameters declared by M and N (if any)
-            if (targetSig.isGeneric()) {
-                targetSig = this.instantiateSignatureToAny(targetSig);
-            }
-
-            if (sourceSig.isGeneric()) {
-                sourceSig = this.instantiateSignatureToAny(sourceSig);
-            }
+            targetSig = this.instantiateSignatureToAny(targetSig);
+            sourceSig = this.instantiateSignatureToAny(sourceSig);
 
             var sourceReturnType = sourceSig.returnType;
             var targetReturnType = targetSig.returnType;
@@ -11581,7 +11567,7 @@ module TypeScript {
             context: PullTypeResolutionContext): void {
             for (var i = 0; i < parameterSignatures.length; i++) { 
                 var paramSignature = parameterSignatures[i];
-                if (argumentSignatures.length > 0 && paramSignature.isGeneric()) {
+                if (argumentSignatures.length > 0) {
                     paramSignature = this.instantiateSignatureToAny(paramSignature);
                 }
                 for (var j = 0; j < argumentSignatures.length; j++) {
@@ -11590,9 +11576,7 @@ module TypeScript {
                         continue;
                     }
 
-                    if (argumentSignature.isGeneric()) {
-                        argumentSignature = this.instantiateSignatureToAny(argumentSignature);
-                    }
+                    argumentSignature = this.instantiateSignatureToAny(argumentSignature);
 
                     // In relateTypeToTypeParameters, the argument type (expressionType) is passed in first
                     // (before the parameter type), so the correct order here is j, i
@@ -11699,6 +11683,10 @@ module TypeScript {
         }
 
         public instantiateSignatureToAny(signature: PullSignatureSymbol) {
+            if (!signature.isGeneric()) {
+                return signature;
+            }
+
             var typeParameters = signature.getTypeParameters();
             if (!this._cachedAnyTypeArgs) {
                 this._cachedAnyTypeArgs = [
