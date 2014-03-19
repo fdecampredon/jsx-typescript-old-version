@@ -906,22 +906,6 @@ module TypeScript {
     "code": 2143,
     "category": DiagnosticCategory.Error
   },
-  "Duplicate overload signature for '{0}'.": {
-    "code": 2144,
-    "category": DiagnosticCategory.Error
-  },
-  "Duplicate constructor overload signature.": {
-    "code": 2145,
-    "category": DiagnosticCategory.Error
-  },
-  "Duplicate overload call signature.": {
-    "code": 2146,
-    "category": DiagnosticCategory.Error
-  },
-  "Duplicate overload construct signature.": {
-    "code": 2147,
-    "category": DiagnosticCategory.Error
-  },
   "Overload signature is not compatible with function definition.": {
     "code": 2148,
     "category": DiagnosticCategory.Error
@@ -1020,10 +1004,6 @@ module TypeScript {
   },
   "Default arguments are only allowed in implementation.": {
     "code": 2174,
-    "category": DiagnosticCategory.Error
-  },
-  "Overloads cannot differ only by return type.": {
-    "code": 2175,
     "category": DiagnosticCategory.Error
   },
   "Function expression declared a non-void return type, but has no return expression.": {

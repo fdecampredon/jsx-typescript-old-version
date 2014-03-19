@@ -7,9 +7,7 @@ describe('Compiling unittests\\compiler\\functionSignatureTests.ts', function() 
             code += 'var bar: { bar: { (): string; (): number; }; };';
             code += 'foo = bar;';
         Harness.Compiler.compileString(code, 'function signatures', function(result) {
-            assert.compilerWarning(result, 1, 27, 'error TS2175: Overloads cannot differ only by return type.');
-            assert.compilerWarning(result, 2, 31, 'error TS2175: Overloads cannot differ only by return type.');       
-            assert.equal(result.errors.length, 2);
+            assert.equal(result.errors.length, 0);
         });
     })
 

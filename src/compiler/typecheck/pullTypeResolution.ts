@@ -11797,42 +11797,6 @@ module TypeScript {
                 }
             }
 
-            if (!signature.isDefinition()) {
-                // Check for if the signatures are identical, check with the signatures before the current current one
-                var signatureParentDecl = signature.getDeclarations()[0].getParentDecl();
-                for (var i = 0; i < allSignatures.length; i++) {
-                    if (allSignatures[i] === signature) {
-                        break;
-                    }
-
-                    // Make sure they are in the same declaration
-                    var allSignaturesParentDecl = allSignatures[i].getDeclarations()[0].getParentDecl();
-                    if (allSignaturesParentDecl !== signatureParentDecl) {
-                        continue;
-                    }
-
-                    if (this.signaturesAreIdenticalWithNewEnclosingTypes(allSignatures[i], signature, context, /*includingReturnType*/ false)) {
-                        if (!this.signatureReturnTypesAreIdentical(allSignatures[i], signature, context)) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDecl, DiagnosticCode.Overloads_cannot_differ_only_by_return_type));
-                        }
-                        else if (funcDecl.kind() === SyntaxKind.ConstructorDeclaration) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDecl, DiagnosticCode.Duplicate_constructor_overload_signature));
-                        }
-                        else if (functionDeclaration.kind === PullElementKind.ConstructSignature) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDecl, DiagnosticCode.Duplicate_overload_construct_signature));
-                        }
-                        else if (functionDeclaration.kind === PullElementKind.CallSignature) {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDecl, DiagnosticCode.Duplicate_overload_call_signature));
-                        }
-                        else {
-                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(funcDecl, DiagnosticCode.Duplicate_overload_signature_for_0, [funcSymbol.getScopedNameEx().toString()]));
-                        }
-
-                        break;
-                    }
-                }
-            }
-
             // Verify assignment compatibility or in case of constantOverload signature, if its subtype of atleast one signature
             var isConstantOverloadSignature = signature.isStringConstantOverloadSignature();
             if (isConstantOverloadSignature) {
