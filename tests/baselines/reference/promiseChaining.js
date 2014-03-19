@@ -1,4 +1,3 @@
-// This exhibits the bug that you see with Promise typings having generic signatures in a generic type
 var Chain = (function () {
     function Chain(value) {
         this.value = value;
@@ -6,7 +5,6 @@ var Chain = (function () {
     Chain.prototype.then = function (cb) {
         var result = cb(this.value);
 
-        // BUG 858876
         // should get a fresh type parameter which each then call
         var z = this.then(function (x) {
             return result;
@@ -28,7 +26,6 @@ var Chain2 = (function () {
     Chain2.prototype.then = function (cb) {
         var result = cb(this.value);
 
-        // BUG 858876
         // should get a fresh type parameter which each then call
         var z = this.then(function (x) {
             return result;

@@ -742,13 +742,15 @@ module TypeScript {
             this._instantiatedCallSignatures = [];
 
             for (var i = 0; i < referencedCallSignatures.length; i++) {
-                this._getResolver().resolveDeclaredSymbol(referencedCallSignatures[i]);
+                var referencedSignature = referencedCallSignatures[i];
+                this._getResolver().resolveDeclaredSymbol(referencedSignature);
 
-                if (!referencedCallSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
-                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedCallSignatures[i];
+                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedSignature;
                 }
                 else {
-                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._getResolver().instantiateSignature(referencedCallSignatures[i], this._typeParameterArgumentMap);
+                    var signatureTypeParameterArgumentMap = this.augmentMapWithSynthesizedTypeParameters(referencedSignature);
+                    this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._getResolver().instantiateSignature(referencedSignature, signatureTypeParameterArgumentMap, /*shouldStayGeneric*/ true);
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length - 1].functionType = this;
                 }
             }
@@ -771,18 +773,44 @@ module TypeScript {
             this._instantiatedConstructSignatures = [];
 
             for (var i = 0; i < referencedConstructSignatures.length; i++) {
-                this._getResolver().resolveDeclaredSymbol(referencedConstructSignatures[i]);
+                var referencedSignature = referencedConstructSignatures[i];
+                this._getResolver().resolveDeclaredSymbol(referencedSignature);
 
-                if (!referencedConstructSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
-                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedConstructSignatures[i];
+                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedSignature;
                 }
                 else {
-                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._getResolver().instantiateSignature(referencedConstructSignatures[i], this._typeParameterArgumentMap);
+                    // Construct signatures only get new type parameters if they are not from
+                    // class constructors. Otherwise, they must share the type parameters with
+                    // the class itself.
+                    var shouldGenerateNewTypeParameters = !this.isConstructor();
+                    var signatureTypeParameterArgumentMap = shouldGenerateNewTypeParameters ? this.augmentMapWithSynthesizedTypeParameters(referencedSignature) : this._typeParameterArgumentMap;
+                    this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._getResolver().instantiateSignature(referencedSignature, signatureTypeParameterArgumentMap, /*shouldStayGeneric*/ shouldGenerateNewTypeParameters);
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length - 1].functionType = this;
                 }
             }
 
             return this._instantiatedConstructSignatures;
+        }
+
+        private augmentMapWithSynthesizedTypeParameters(referencedSignature: PullSignatureSymbol): TypeArgumentMap {
+            if (referencedSignature.isGeneric()) {
+                var signaturesOwnTypeParameters = referencedSignature.getTypeParameters();
+                var newOwnTypeParameters = new Array<PullSynthesizedTypeParameterSymbol>(signaturesOwnTypeParameters.length);
+                for (var j = 0; j < signaturesOwnTypeParameters.length; j++) {
+                    newOwnTypeParameters[j] = this._getResolver().instantiateTypeParameter(signaturesOwnTypeParameters[j], this._typeParameterArgumentMap);
+                }
+                // Augment the map with this new information
+                var signaturesOwnTypeArgumentMap = new PullInstantiationHelpers.MutableTypeArgumentMap(this._typeParameterArgumentMap);
+                for (var j = 0; j < signaturesOwnTypeParameters.length; j++) {
+                    signaturesOwnTypeArgumentMap.ensureTypeArgumentCopy();
+                    signaturesOwnTypeArgumentMap.typeParameterArgumentMap[signaturesOwnTypeParameters[j].pullSymbolID] = newOwnTypeParameters[j];
+                }
+                return signaturesOwnTypeArgumentMap.typeParameterArgumentMap;
+            }
+            else {
+                return this._typeParameterArgumentMap;
+            }
         }
 
         public getIndexSignatures(): PullSignatureSymbol[]{
@@ -806,7 +834,7 @@ module TypeScript {
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = referencedIndexSignatures[i];
                 }
                 else {
-                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._getResolver().instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap);
+                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._getResolver().instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap, /*shouldStayGeneric*/ false);
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length - 1].functionType = this;
                 }
             }
@@ -820,7 +848,7 @@ module TypeScript {
             return this._typeParameterArgumentMap;
         }
 
-        constructor(rootSignature: PullSignatureSymbol, private _typeParameterArgumentMap: TypeArgumentMap) {
+        constructor(rootSignature: PullSignatureSymbol, private _typeParameterArgumentMap: TypeArgumentMap, private shouldStayGeneric: boolean) {
             super(rootSignature.kind, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;
@@ -838,15 +866,23 @@ module TypeScript {
         public getTypeParameters(): PullTypeParameterSymbol[]{
             if (!this._typeParameters) {
                 var rootSymbol = <PullSignatureSymbol>this.getRootSymbol();
-                var typeParameters = rootSymbol.getTypeParameters();
-                var hasInstantiatedTypeParametersOfThisSignature = ArrayUtilities.all(typeParameters, typeParameter =>
-                    this._typeParameterArgumentMap[typeParameter.pullSymbolID] !== undefined);
+                var rootTypeParameters = rootSymbol.getTypeParameters();
 
-                if (!hasInstantiatedTypeParametersOfThisSignature && typeParameters.length) {
-                    // Type parameteres are the instantiated version of the rootTypeparmeters with our own type parameter argument map
+                if (this.shouldStayGeneric && rootTypeParameters.length) {
                     this._typeParameters = [];
-                    for (var i = 0; i < typeParameters.length; i++) {
-                        this._typeParameters[this._typeParameters.length] = this._getResolver().instantiateTypeParameter(typeParameters[i], this._typeParameterArgumentMap);
+                    for (var i = 0; i < rootTypeParameters.length; i++) {
+                        // Sometimes, one of the root symbol's type parameters is itself a surrounding type argument
+                        // For example
+                        // interface Foo<T> {
+                        //     boo<S>(x: T, y: S): Foo<S>;
+                        // }
+                        // In the inner instantiation of Foo<S>, the surrounding T will actually be an S.
+                        // Unless we substitute this inner S with an S', the types of x and y will appear
+                        // to be the same.
+                        var typeParameterSubstitution = this._typeParameterArgumentMap[rootTypeParameters[i].pullSymbolID];
+                        this._typeParameters[this._typeParameters.length] = typeParameterSubstitution && typeParameterSubstitution.isSynthesizedTypeParameter()
+                        ? <PullSynthesizedTypeParameterSymbol>typeParameterSubstitution
+                        : rootTypeParameters[i];
                     }
                 }
                 else {
@@ -863,21 +899,44 @@ module TypeScript {
         }
     }
 
-    // Instantiated type parameter symbol is the type parameter with the instantiated version of the constraint
-    export class PullInstantiatedTypeParameterSymbol extends PullTypeParameterSymbol {
-        constructor(rootTypeParameter: PullTypeSymbol, constraintType: PullTypeSymbol) {
-            super(rootTypeParameter.name);
-            nSpecializedTypeParameterCreated++;
-
-            this.setRootSymbol(rootTypeParameter);
-            this.setConstraint(constraintType);
-
-            // Store in the cache
-            rootTypeParameter.addSpecialization(this, [constraintType]);
+    
+    // Sometimes, one of the root symbol's type parameters it itself a surrounding type argument
+    // For example
+    // interface Foo<T> {
+    //     boo<S>(x: T, y: S): Foo<S>;
+    // }
+    // In the inner instantiation of Foo<S>, the surrounding T will actually be an S.
+    // Unless we substitute this inner S with an S', the types of x and y will appear
+    // to be the same. PullSynthesizedTypeParameterSymbol is the S' in this example.
+    export class PullSynthesizedTypeParameterSymbol extends PullTypeParameterSymbol {
+        // We specifically do not set a root symbol here. Root symbols are only for instantiation.
+        // This is distinct from instantiation.
+        constructor(private originalTypeParameter: PullTypeParameterSymbol, private _typeParameterArgumentMap: TypeArgumentMap) {
+            super(originalTypeParameter.name);
+            var originalTypeParameterDeclarations = originalTypeParameter.getDeclarations();
+            for (var i = 0; i < originalTypeParameterDeclarations.length; i++) {
+                this.addDeclaration(originalTypeParameterDeclarations[i]);
+            }
         }
 
         public _getResolver(): PullTypeResolver {
-            return this.getRootSymbol()._getResolver();
+            return this.originalTypeParameter._getResolver();
+        }
+
+        public getConstraint(): PullTypeSymbol {
+            var constraint = super.getConstraint();
+            if (!constraint) {
+                var originalConstraint = this.originalTypeParameter.getConstraint();
+                if (originalConstraint) {
+                    constraint = this._getResolver().instantiateType(originalConstraint, this._typeParameterArgumentMap);
+                    this.setConstraint(constraint);
+                }
+            }
+            return constraint;
+        }
+
+        public isSynthesizedTypeParameter(): boolean {
+            return true;
         }
    }
 }

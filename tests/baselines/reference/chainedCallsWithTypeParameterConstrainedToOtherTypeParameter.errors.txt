@@ -1,0 +1,4 @@
+chainedCallsWithTypeParameterConstrainedToOtherTypeParameter.ts(19,54): error TS2082: Supplied parameters do not match any signature of call target:
+	Call signatures of types '(c: C) => B' and '(x: C) => C' are incompatible:
+		Type 'B' is missing property 'z' from type 'C'.
+chainedCallsWithTypeParameterConstrainedToOtherTypeParameter.ts(19,54): error TS2087: Could not select overload for 'call' expression.

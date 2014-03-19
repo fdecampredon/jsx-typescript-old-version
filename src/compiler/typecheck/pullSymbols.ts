@@ -2002,10 +2002,6 @@ module TypeScript {
         }
 
         private getSimpleInstantiationCacheId(typeArgumentMap: TypeArgumentMap) {
-            if (this.isTypeParameter()) {
-                return typeArgumentMap[0].pullSymbolID;
-            }
-
             return typeArgumentMap[this.getTypeParameters()[0].pullSymbolID].pullSymbolID;
         }
 
@@ -3043,6 +3039,10 @@ module TypeScript {
                 this._widenedType = resolver.widenType(this, ast, context);
             }
             return this._widenedType;
+        }
+
+        public isSynthesizedTypeParameter(): boolean {
+            return false;
         }
     }
 
