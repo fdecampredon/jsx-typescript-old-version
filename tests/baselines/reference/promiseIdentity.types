@@ -1,0 +1,27 @@
+=== tests/cases/compiler/promiseIdentity.ts ===
+Line 0 col 10 IdentifierName "IPromise" = IPromise<T>
+Line 0 col 19 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "then" = <U>(callback: (x: T) => IPromise<U>) => IPromise<U>
+Line 1 col 9 IdentifierName "U" = U
+Line 1 col 12 IdentifierName "callback" = (x: T) => IPromise<U>
+Line 1 col 23 IdentifierName "x" = T
+Line 1 col 26 IdentifierName "T" = T
+Line 1 col 32 IdentifierName "IPromise" = IPromise<T>
+Line 1 col 41 IdentifierName "U" = U
+Line 1 col 46 IdentifierName "IPromise" = IPromise<T>
+Line 1 col 55 IdentifierName "U" = U
+Line 3 col 10 IdentifierName "Promise" = Promise<T>
+Line 3 col 18 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "then" = <U>(callback: (x: T) => Promise<U>) => Promise<U>
+Line 4 col 9 IdentifierName "U" = U
+Line 4 col 12 IdentifierName "callback" = (x: T) => Promise<U>
+Line 4 col 23 IdentifierName "x" = T
+Line 4 col 26 IdentifierName "T" = T
+Line 4 col 32 IdentifierName "Promise" = Promise<T>
+Line 4 col 40 IdentifierName "U" = U
+Line 4 col 45 IdentifierName "Promise" = Promise<T>
+Line 4 col 53 IdentifierName "U" = U
+Line 6 col 4 IdentifierName "x" = IPromise<string>
+Line 6 col 7 IdentifierName "IPromise" = IPromise<T>
+Line 7 col 4 IdentifierName "x" = Promise<string>
+Line 7 col 7 IdentifierName "Promise" = Promise<T>

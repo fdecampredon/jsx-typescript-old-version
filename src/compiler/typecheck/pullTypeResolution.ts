@@ -9839,18 +9839,6 @@ module TypeScript {
 
         private typeParametersAreIdentical(tp1: PullTypeParameterSymbol[], tp2: PullTypeParameterSymbol[],
             context: PullTypeResolutionContext) {
-            // Set the cache pairwise identity of type parameters so that 
-            // if the constraints refer to the type parameters, we would be able to say true
-            var typeParamsAreIdentical = this.typeParametersAreIdenticalWorker(tp1, tp2, context);
-
-            // Reset the cahce with pairwise identity of type parameters
-            this.setTypeParameterIdentity(tp1, tp2, undefined);
-
-            return typeParamsAreIdentical;
-        }
-
-        private typeParametersAreIdenticalWorker(tp1: PullTypeParameterSymbol[], tp2: PullTypeParameterSymbol[],
-            context: PullTypeResolutionContext) {
             // Check if both the type parameter list present or both are absent
             if (!!(tp1 && tp1.length) !== !!(tp2 && tp2.length)) {
                 return false;
@@ -9938,22 +9926,36 @@ module TypeScript {
                 return false;
             }
 
-            // Assume typeParameter pairwise identity before we check
-            var s1TypeParameters = s1.getTypeParameters();
-            var s2TypeParameters = s2.getTypeParameters();
-            this.setTypeParameterIdentity(s1TypeParameters, s2TypeParameters, true);
-
-            var typeParametersParametersAndReturnTypesAreIdentical = this.signatureTypeParametersParametersAndReturnTypesAreIdentical(s1, s2, context, includingReturnType);
-
-            // Reset the cahce with pairwise identity of type parameters
-            this.setTypeParameterIdentity(s1TypeParameters, s2TypeParameters, undefined);
-            return typeParametersParametersAndReturnTypesAreIdentical;
+            // The spec says to assume type parameters are pairwise identical in order to compare
+            // the signatures. We skip that here because we are about to instantiate the signatures
+            // to any to avoid a generative recursion when comparing generic signatures.
+            return this.signatureTypeParametersParametersAndReturnTypesAreIdentical(s1, s2, context, includingReturnType);
         }
 
         private signatureTypeParametersParametersAndReturnTypesAreIdentical(s1: PullSignatureSymbol, s2: PullSignatureSymbol,
             context: PullTypeResolutionContext, includingReturnType?: boolean) {
-            if (!this.typeParametersAreIdenticalWorker(s1.getTypeParameters(), s2.getTypeParameters(), context)) {
+            if (!this.typeParametersAreIdentical(s1.getTypeParameters(), s2.getTypeParameters(), context)) {
                 return false;
+            }
+
+            // This is not in the spec yet, but we need to instantiate signatures to any before
+            // comparing them to avoid a generative recursion. Considering them pairwise
+            // identical is not enough to achieve this. Consider the following example:
+            //interface IPromise<T> {
+            //    then<U>(callback: (x: T) => IPromise<U>): IPromise<U>;
+            //}
+            //interface Promise<T> {
+            //    then<U>(callback: (x: T) => Promise<U>): Promise<U>;
+            //}
+            //var x: IPromise<string>;
+            //var x: Promise<string>;
+            // Comparing IPromise<U> and Promise<U> would lead to an infinite expansion, since
+            // each instantiation introduces a new U. Therefore, the U must be erased to any.
+            if (s1.isGeneric()) {
+                s1 = this.instantiateSignatureToAny(s1);
+            }
+            if (s2.isGeneric()) {
+                s2 = this.instantiateSignatureToAny(s2);
             }
 
             if (includingReturnType) {
