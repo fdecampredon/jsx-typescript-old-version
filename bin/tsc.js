@@ -32970,7 +32970,11 @@ var TypeScript;
         };
 
         Emitter.prototype.emitSuperExpression = function (expression) {
-            this.writeToOutputWithSourceMapRecord("_super.prototype", expression);
+            if (TypeScript.PullTypeResolver.isInStaticMemberContext(this.getEnclosingDecl())) {
+                this.writeToOutputWithSourceMapRecord("_super", expression);
+            } else {
+                this.writeToOutputWithSourceMapRecord("_super.prototype", expression);
+            }
         };
 
         Emitter.prototype.emitParenthesizedExpression = function (parenthesizedExpression) {
@@ -46358,7 +46362,7 @@ var TypeScript;
             }
 
             if (typeNameSymbol.isTypeParameter()) {
-                if (this.isInStaticMemberContext(enclosingDecl)) {
+                if (PullTypeResolver.isInStaticMemberContext(enclosingDecl)) {
                     var parentDecl = typeNameSymbol.getDeclarations()[0].getParentDecl();
 
                     if (parentDecl.kind === 8 /* Class */) {
@@ -46375,7 +46379,7 @@ var TypeScript;
             return typeNameSymbol;
         };
 
-        PullTypeResolver.prototype.isInStaticMemberContext = function (decl) {
+        PullTypeResolver.isInStaticMemberContext = function (decl) {
             while (decl) {
                 if (TypeScript.hasFlag(decl.kind, 1032192 /* SomeFunction */ | 4096 /* Property */) && TypeScript.hasFlag(decl.flags, 16 /* Static */)) {
                     return true;

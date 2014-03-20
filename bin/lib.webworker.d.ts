@@ -797,6 +797,9 @@ interface Date {
     toLocaleString(locale?: string, options?: Intl.DateTimeFormatOptions): string;
 }
 
+/////////////////////////////
+/// IE Worker APIs
+/////////////////////////////
 
 
 interface Console {
@@ -875,7 +878,6 @@ interface XMLHttpRequest extends EventTarget {
     onloadstart: (ev: Event) => any;
     msCaching: string;
     open(method: string, url: string, async?: boolean, user?: string, password?: string): void;
-    create(): XMLHttpRequest;
     send(data?: any): void;
     abort(): void;
     getAllResponseHeaders(): string;
@@ -906,6 +908,7 @@ declare var XMLHttpRequest: {
     UNSENT: number;
     OPENED: number;
     HEADERS_RECEIVED: number;
+    create(): XMLHttpRequest;
 }
 
 interface EventListener {
@@ -1277,14 +1280,14 @@ interface IDBKeyRange {
     upperOpen: boolean;
     lower: any;
     lowerOpen: boolean;
-    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
-    only(value: any): IDBKeyRange;
-    lowerBound(bound: any, open?: boolean): IDBKeyRange;
-    upperBound(bound: any, open?: boolean): IDBKeyRange;
 }
 declare var IDBKeyRange: {
     prototype: IDBKeyRange;
     new(): IDBKeyRange;
+    bound(lower: any, upper: any, lowerOpen?: boolean, upperOpen?: boolean): IDBKeyRange;
+    only(value: any): IDBKeyRange;
+    lowerBound(bound: any, open?: boolean): IDBKeyRange;
+    upperBound(bound: any, open?: boolean): IDBKeyRange;
 }
 
 interface WindowConsole {
