@@ -408,6 +408,10 @@ declare var HTMLElement: {
 
 interface Document extends Node, NodeSelector, MSEventAttachmentTarget, DocumentEvent, MSResourceMetadata, MSNodeExtensions, MSDocumentExtensions, GlobalEventHandlers {
     /**
+      * Gets a reference to the root node of the document. 
+      */
+    documentElement: HTMLElement;
+    /**
       * Retrieves the collection of user agents and versions declared in the X-UA-Compatible
       */
     compatible: MSCompatibleInfoCollection;
@@ -789,10 +793,6 @@ interface Document extends Node, NodeSelector, MSEventAttachmentTarget, Document
       * @param ev The mouse event.
       */
     onmousemove: (ev: MouseEvent) => any;
-    /**
-      * Gets a reference to the root node of the document. 
-      */
-    documentElement: Element;
     /**
       * Fires before an object contained in an editable element enters a UI-activated state or when an editable container object is control selected.
       * @param ev The event.
