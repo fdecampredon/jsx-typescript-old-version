@@ -223,7 +223,7 @@ var librarySourceMap = [
 		{ target: "lib.dom.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "dom.generated.d.ts"], },
 		{ target: "lib.webworker.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "webworker.generated.d.ts"], },
 		{ target: "lib.scripthost.d.ts", sources: ["importcore.d.ts", "scripthost.d.ts"], },
-		{ target: "lib.d.ts", sources: ["core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "scripthost.d.ts"], },
+		{ target: "lib.d.ts", sources: ["core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "webworker.importscripts.d.ts", "scripthost.d.ts"], },
 		{ target: "jquery.d.ts", sources: ["jquery.d.ts"], },
 		{ target: "winjs.d.ts", sources: ["winjs.d.ts"], },
 		{ target: "winrt.d.ts", sources: ["winrt.d.ts"] }
