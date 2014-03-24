@@ -757,7 +757,7 @@ module TypeScript {
                 this.hasErrors = true;
             }
 
-            this.ioHost.stderr.Write(TypeScriptCompiler.getFullDiagnosticText(diagnostic));
+            this.ioHost.stderr.Write(TypeScriptCompiler.getFullDiagnosticText(diagnostic, path => this.resolvePath(path)));
         }
 
         private tryWriteOutputFiles(outputFiles: OutputFile[]): boolean {
