@@ -867,10 +867,8 @@ module TypeScript {
         static getEnclosingContainer(ast: ISyntaxElement): ISyntaxElement {
             // If the passed in as is the 'name' portion of an module declaration.  
             // If so, we want the actual container of *that* module declaration.  
-            var enclosingModule = ASTHelpers.getEnclosingModuleDeclaration(ast);
-            if (ASTHelpers.isAnyNameOfModule(enclosingModule, ast)) {
-                ast = enclosingModule;
-            }
+            var enclosingModule = ASTHelpers.getModuleDeclarationFromNameAST(ast);
+            ast = enclosingModule || ast;
 
             ast = ast.parent;
             while (ast) {

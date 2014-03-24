@@ -321,6 +321,9 @@ module TypeScript.ASTHelpers {
         return false;
     }
 
+    export function parentIsModuleDeclaration(ast: ISyntaxElement) {
+        return ast.parent && ast.parent.kind() === SyntaxKind.ModuleDeclaration;
+    }
 
     export function parametersFromIdentifier(id: ISyntaxToken): IParameters {
         return {
@@ -714,32 +717,51 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
+    function isEntireNameOfModuleDeclaration(nameAST: ISyntaxElement) {
+        return parentIsModuleDeclaration(nameAST) && (<ModuleDeclarationSyntax>nameAST.parent).name === nameAST;
+    }
+
+    export function getModuleDeclarationFromNameAST(ast: ISyntaxElement): ModuleDeclarationSyntax {
+        if (ast) {
+            switch (ast.kind()) {
+                case SyntaxKind.StringLiteral:
+                    if (parentIsModuleDeclaration(ast) && (<ModuleDeclarationSyntax>ast.parent).stringLiteral === ast) {
+                        return <ModuleDeclarationSyntax>ast.parent;
+                    }
+                    return null;
+
+                case SyntaxKind.IdentifierName:
+                case SyntaxKind.QualifiedName:
+                    if (isEntireNameOfModuleDeclaration(ast)) {
+                        return <ModuleDeclarationSyntax>ast.parent;
+                    }
+                    break;
+
+                default: 
+                    return null;
+            }
+
+            // Only qualified names can be name of module declaration if they didnt satisfy above conditions
+            for (ast = ast.parent; ast && ast.kind() === SyntaxKind.QualifiedName; ast = ast.parent) {
+                if (isEntireNameOfModuleDeclaration(ast)) {
+                    return <ModuleDeclarationSyntax>ast.parent;
+                }
+            }
+        }
+
+        return null;
+    }
+
     export function isLastNameOfModule(ast: ModuleDeclarationSyntax, astName: ISyntaxElement): boolean {
         if (ast) {
             if (ast.stringLiteral) {
                 return astName === ast.stringLiteral;
             }
-            else {
-                var moduleNames = getModuleNames(ast.name);
-                var nameIndex = moduleNames.indexOf(<ISyntaxToken>astName);
-
-                return nameIndex === (moduleNames.length - 1);
-            }
-        }
-
-        return false;
-    }
-
-    export function isAnyNameOfModule(ast: ModuleDeclarationSyntax, astName: ISyntaxElement): boolean {
-        if (ast) {
-            if (ast.stringLiteral) {
-                return ast.stringLiteral === astName;
+            else if (ast.name.kind() === SyntaxKind.QualifiedName) {
+                return astName === (<QualifiedNameSyntax>ast.name).right;
             }
             else {
-                var moduleNames = getModuleNames(ast.name);
-                var nameIndex = moduleNames.indexOf(<ISyntaxToken>astName);
-
-                return nameIndex >= 0;
+                return astName === ast.name;
             }
         }
 

@@ -1,0 +1,71 @@
+=== tests/cases/compiler/methodContainingLocalFunction.ts ===
+Line 1 col 6 IdentifierName "BugExhibition" = BugExhibition<T>
+Line 1 col 20 IdentifierName "T" = T
+Line 2 col 11 IdentifierName "exhibitBug" = () => void
+Line 3 col 17 IdentifierName "localFunction" = () => void
+Line 4 col 12 IdentifierName "x" = () => void
+Line 5 col 0 AssignmentExpression "x = localFunction" = () => void
+Line 5 col 0 IdentifierName "x" = () => void
+Line 5 col 12 IdentifierName "localFunction" = () => void
+Line 9 col 6 IdentifierName "BugExhibition2" = BugExhibition2<T>
+Line 9 col 21 IdentifierName "T" = T
+Line 10 col 23 IdentifierName "exhibitBug" = any
+Line 11 col 17 IdentifierName "localFunction" = () => void
+Line 12 col 12 IdentifierName "x" = () => void
+Line 13 col 0 AssignmentExpression "x = localFunction" = () => void
+Line 13 col 0 IdentifierName "x" = () => void
+Line 13 col 12 IdentifierName "localFunction" = () => void
+Line 18 col 6 IdentifierName "BugExhibition3" = BugExhibition3<T>
+Line 18 col 21 IdentifierName "T" = T
+Line 19 col 11 IdentifierName "exhibitBug" = () => void
+Line 20 col 17 IdentifierName "localGenericFunction" = <U>(u?: U) => void
+Line 20 col 38 IdentifierName "U" = U
+Line 20 col 41 IdentifierName "u" = U
+Line 20 col 45 IdentifierName "U" = U
+Line 21 col 12 IdentifierName "x" = () => void
+Line 22 col 0 AssignmentExpression "x = localGenericFunction" = <U>(u?: U) => void
+Line 22 col 0 IdentifierName "x" = () => void
+Line 22 col 12 IdentifierName "localGenericFunction" = <U>(u?: U) => void
+Line 26 col 6 IdentifierName "C" = C
+Line 27 col 0 IdentifierName "exhibit" = () => void
+Line 28 col 12 IdentifierName "funcExpr" = <U>(u?: U) => void
+Line 28 col 23 ParenthesizedArrowFunctionExpression "<U>(u?: U) => { }" = <U>(u?: U) => void
+Line 28 col 24 IdentifierName "U" = U
+Line 28 col 27 IdentifierName "u" = U
+Line 28 col 31 IdentifierName "U" = U
+Line 29 col 12 IdentifierName "x" = () => void
+Line 30 col 0 AssignmentExpression "x = funcExpr" = <U>(u?: U) => void
+Line 30 col 0 IdentifierName "x" = () => void
+Line 30 col 12 IdentifierName "funcExpr" = <U>(u?: U) => void
+Line 34 col 7 IdentifierName "M" = M
+Line 35 col 20 IdentifierName "exhibitBug" = typeof exhibitBug
+Line 36 col 17 IdentifierName "localFunction" = () => void
+Line 37 col 12 IdentifierName "x" = () => void
+Line 38 col 0 AssignmentExpression "x = localFunction" = () => void
+Line 38 col 0 IdentifierName "x" = () => void
+Line 38 col 12 IdentifierName "localFunction" = () => void
+Line 42 col 5 IdentifierName "E" = E
+Line 43 col 0 IdentifierName "A" = E
+Line 43 col 8 InvocationExpression "(() => {
+        function localFunction() { }
+        var x: { (): void; };
+        x = localFunction;
+        return 0;
+    })()" = number
+Line 43 col 8 ParenthesizedExpression "(() => {
+        function localFunction() { }
+        var x: { (): void; };
+        x = localFunction;
+        return 0;
+    })" = () => number
+Line 43 col 9 ParenthesizedArrowFunctionExpression "() => {
+        function localFunction() { }
+        var x: { (): void; };
+        x = localFunction;
+        return 0;
+    }" = () => number
+Line 44 col 17 IdentifierName "localFunction" = () => void
+Line 45 col 12 IdentifierName "x" = () => void
+Line 46 col 0 AssignmentExpression "x = localFunction" = () => void
+Line 46 col 0 IdentifierName "x" = () => void
+Line 46 col 12 IdentifierName "localFunction" = () => void
