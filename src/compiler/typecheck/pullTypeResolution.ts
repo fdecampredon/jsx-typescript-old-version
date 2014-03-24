@@ -969,7 +969,7 @@ module TypeScript {
                 // One of the names in a module declaration.  i.e.:  module A.B.C { ...
 
                 // If our decl points at a single name of a module, then just resolve that individual module.
-                var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(ast);
+                var enclosingModule = ASTHelpers.getModuleDeclarationFromNameAST(ast);
                 var resolvedSymbol: PullSymbol;
                 if (enclosingModule) {
                     resolvedSymbol = this.resolveSingleModuleDeclaration(enclosingModule, ast, context);
@@ -1010,7 +1010,7 @@ module TypeScript {
 
         private resolveOtherDecl(otherDecl: PullDecl, context: PullTypeResolutionContext) {
             var astForOtherDecl = this.getASTForDecl(otherDecl);
-            var moduleDecl = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(astForOtherDecl);
+            var moduleDecl = ASTHelpers.getModuleDeclarationFromNameAST(astForOtherDecl);
             if (moduleDecl) {
                 this.resolveSingleModuleDeclaration(moduleDecl, astForOtherDecl, context);
             }
@@ -2581,7 +2581,7 @@ module TypeScript {
         private checkExternalModuleRequireExportsCollides(ast: AST, name: IASTToken, context: PullTypeResolutionContext) {
             var enclosingDecl = this.getEnclosingDeclForAST(ast);
 
-            var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(name);
+            var enclosingModule = ASTHelpers.getModuleDeclarationFromNameAST(name);
             if (enclosingModule) {
                 // If we're actually the name of a module, then we want the enclosing decl for the 
                 // module that we're in.
@@ -3335,7 +3335,7 @@ module TypeScript {
             // Verify if this variable name conflicts with the _this that would be emitted to capture this in any of the enclosing context
             var enclosingDecl = this.getEnclosingDeclForAST(_thisAST);
 
-            var enclosingModule = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(_thisAST);
+            var enclosingModule = ASTHelpers.getModuleDeclarationFromNameAST(_thisAST);
             if (enclosingModule) {
                 // If we're actually the name of a module, then we want the enclosing decl for the 
                 // module that we're in.
@@ -9778,8 +9778,7 @@ module TypeScript {
             property1: PullSymbol,
             property2: PullSymbol,
             context: PullTypeResolutionContext): boolean {
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(type1, type2);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(type1, type2);
             var arePropertiesIdentical = this.propertiesAreIdentical(property1, property2, context);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
             return arePropertiesIdentical;
@@ -9874,8 +9873,7 @@ module TypeScript {
 
             // If signatures are identitical is called directally we need to get the enclosingType and 
             // current symbol correctly
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(s1, s2);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(s1, s2);
             var areSignaturesIdentical = this.signaturesAreIdentical(s1, s2, context, includingReturnType);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
             return areSignaturesIdentical;
@@ -9977,8 +9975,7 @@ module TypeScript {
             var s2TypeParameters = s2.getTypeParameters();
             this.setTypeParameterIdentity(s1TypeParameters, s2TypeParameters, true);
 
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(s1, s2);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(s1, s2);
             context.walkReturnTypes();
             var returnTypeIsIdentical = this.typesAreIdenticalInEnclosingTypes(s1.returnType, s2.returnType, context);
             // context.postWalkReturnTypes(); - this is not needed because we are restoring the old walkers
@@ -10008,8 +10005,7 @@ module TypeScript {
         }
 
         private sourceMembersAreAssignableToTargetMembers(source: PullTypeSymbol, target: PullTypeSymbol, ast: AST, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean) {
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(source, target);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(source, target);
             var areSourceMembersAreAssignableToTargetMembers = this.sourceMembersAreRelatableToTargetMembers(source, target,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
@@ -10020,8 +10016,7 @@ module TypeScript {
             sourceProp: PullSymbol, targetProp: PullSymbol, ast: AST, context: PullTypeResolutionContext,
             comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean) {
 
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(source, target);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(source, target);
             var isSourcePropertyIsAssignableToTargetProperty = this.sourcePropertyIsRelatableToTargetProperty(source, target, sourceProp, targetProp,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
@@ -10032,8 +10027,7 @@ module TypeScript {
             ast: AST, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo,
             isComparingInstantiatedSignatures?: boolean) {
             
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(source, target);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(source, target);
             var areSourceCallSignaturesAssignableToTargetCallSignatures = this.sourceCallSignaturesAreRelatableToTargetCallSignatures(source, target,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
@@ -10043,8 +10037,7 @@ module TypeScript {
         private sourceConstructSignaturesAreAssignableToTargetConstructSignatures(source: PullTypeSymbol, target: PullTypeSymbol,
             ast: AST, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean) {
 
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(source, target);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(source, target);
             var areSourceConstructSignaturesAssignableToTargetConstructSignatures = this.sourceConstructSignaturesAreRelatableToTargetConstructSignatures(source, target,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
@@ -10053,8 +10046,7 @@ module TypeScript {
 
         private sourceIndexSignaturesAreAssignableToTargetIndexSignatures(source: PullTypeSymbol, target: PullTypeSymbol,
             ast: AST, context: PullTypeResolutionContext, comparisonInfo: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean) {
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(source, target);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(source, target);
             var areSourceIndexSignaturesAssignableToTargetIndexSignatures = this.sourceIndexSignaturesAreRelatableToTargetIndexSignatures(source, target,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);
@@ -10075,8 +10067,7 @@ module TypeScript {
         }
 
         private signatureIsAssignableToTarget(s1: PullSignatureSymbol, s2: PullSignatureSymbol, ast: AST, context: PullTypeResolutionContext, comparisonInfo?: TypeComparisonInfo, isComparingInstantiatedSignatures?: boolean) {
-            var enclosingTypeWalkerStates = context.resetEnclosingTypeWalkerStates();
-            context.setEnclosingTypes(s1, s2);
+            var enclosingTypeWalkerStates = context.setEnclosingTypeForSymbols(s1, s2);
             var isSignatureIsAssignableToTarget = this.signatureIsRelatableToTarget(s1, s2,
                 /*assignableTo*/true, this.assignableCache, ast, context, comparisonInfo, isComparingInstantiatedSignatures);
             context.setEnclosingTypeWalkerStates(enclosingTypeWalkerStates);

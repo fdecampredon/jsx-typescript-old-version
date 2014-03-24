@@ -317,7 +317,7 @@ module TypeScript.ASTHelpers {
         return false;
     }
 
-    export function hasModuleDeclarationParent(ast: AST) {
+    export function parentIsModuleDeclaration(ast: AST) {
         return ast.parent && ast.parent.kind() === SyntaxKind.ModuleDeclaration;
     }
 
@@ -569,22 +569,22 @@ module TypeScript.ASTHelpers {
         return null;
     }
 
-    function isNameOfModuleDeclaration(nameAST: AST) {
-        return hasModuleDeclarationParent(nameAST) && (<ModuleDeclaration>nameAST.parent).name === nameAST;
+    function isEntireNameOfModuleDeclaration(nameAST: AST) {
+        return parentIsModuleDeclaration(nameAST) && (<ModuleDeclaration>nameAST.parent).name === nameAST;
     }
 
-    export function getModuleDeclarationIfAnyNameOfModule(ast: AST): ModuleDeclaration {
+    export function getModuleDeclarationFromNameAST(ast: AST): ModuleDeclaration {
         if (ast) {
             switch (ast.kind()) {
                 case SyntaxKind.StringLiteral:
-                    if (hasModuleDeclarationParent(ast) && (<ModuleDeclaration>ast.parent).stringLiteral === ast) {
+                    if (parentIsModuleDeclaration(ast) && (<ModuleDeclaration>ast.parent).stringLiteral === ast) {
                         return <ModuleDeclaration>ast.parent;
                     }
                     return null;
 
                 case SyntaxKind.IdentifierName:
                 case SyntaxKind.QualifiedName:
-                    if (isNameOfModuleDeclaration(ast)) {
+                    if (isEntireNameOfModuleDeclaration(ast)) {
                         return <ModuleDeclaration>ast.parent;
                     }
                     break;
@@ -595,7 +595,7 @@ module TypeScript.ASTHelpers {
 
             // Only qualified names can be name of module declaration if they didnt satisfy above conditions
             for (ast = ast.parent; ast && ast.kind() === SyntaxKind.QualifiedName; ast = ast.parent) {
-                if (isNameOfModuleDeclaration(ast)) {
+                if (isEntireNameOfModuleDeclaration(ast)) {
                     return <ModuleDeclaration>ast.parent;
                 }
             }

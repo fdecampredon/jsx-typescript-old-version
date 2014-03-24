@@ -224,8 +224,8 @@ module TypeScript {
     export class PullTypeResolutionContext {
         private contextStack: PullContextualTypeContext[] = [];
         private typeCheckedNodes: IBitVector = null;
-        public enclosingTypeWalker1: PullTypeEnclosingTypeWalker = null;
-        public enclosingTypeWalker2: PullTypeEnclosingTypeWalker = null;
+        private enclosingTypeWalker1: PullTypeEnclosingTypeWalker = null;
+        private enclosingTypeWalker2: PullTypeEnclosingTypeWalker = null;
 
         constructor(private resolver: PullTypeResolver, public inTypeCheck = false, public fileName: string = null) {
             if (inTypeCheck) {
@@ -452,15 +452,19 @@ module TypeScript {
             this.enclosingTypeWalker2.endWalkingType(statesWhenStartedWalkingTypes.stateWhenStartedWalkingTypes2);
         }
 
-        public setEnclosingTypes(symbol1: PullSymbol, symbol2: PullSymbol) {
+        public setEnclosingTypeForSymbols(symbol1: PullSymbol, symbol2: PullSymbol) {
             if (!this.enclosingTypeWalker1) {
                 this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
             }
-            this.enclosingTypeWalker1.setEnclosingType(symbol1);
+            var enclosingTypeWalkerState1  = this.enclosingTypeWalker1.setEnclosingTypeForSymbol(symbol1);
             if (!this.enclosingTypeWalker2) {
                 this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
             }
-            this.enclosingTypeWalker2.setEnclosingType(symbol2);
+            var enclosingTypeWalkerState2 = this.enclosingTypeWalker2.setEnclosingTypeForSymbol(symbol2);
+            return {
+                enclosingTypeWalkerState1: enclosingTypeWalkerState1,
+                enclosingTypeWalkerState2: enclosingTypeWalkerState2
+            }
         }
 
         public walkMemberTypes(memberName: string) {

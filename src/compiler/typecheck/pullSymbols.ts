@@ -778,7 +778,7 @@ module TypeScript {
             var ast = decl.ast();
 
             if (ast) {
-                var enclosingModuleDeclaration = ASTHelpers.getModuleDeclarationIfAnyNameOfModule(ast);
+                var enclosingModuleDeclaration = ASTHelpers.getModuleDeclarationFromNameAST(ast);
                 if (ASTHelpers.isLastNameOfModule(enclosingModuleDeclaration, ast)) {
                     return ASTHelpers.docComments(enclosingModuleDeclaration);
                 }
