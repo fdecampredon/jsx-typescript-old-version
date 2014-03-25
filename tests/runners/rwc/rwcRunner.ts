@@ -49,7 +49,7 @@ class RWCRunner extends RunnerBase {
     private htmlBaselineReport = new Diff.HtmlBaselineReport('rwc-report.html');
 
     public _getDiagnosticText(diagnostic: TypeScript.Diagnostic): string {
-        return this.removeRootPath(TypeScript.TypeScriptCompiler.getFullDiagnosticText(diagnostic));
+        return this.removeRootPath(TypeScript.TypeScriptCompiler.getFullDiagnosticText(diagnostic, path => TypeScript.switchToForwardSlashes(path)));
     }
 
     private removeRootPath(path: string): string {

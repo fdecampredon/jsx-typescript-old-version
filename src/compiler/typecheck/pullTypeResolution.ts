@@ -1344,8 +1344,13 @@ module TypeScript {
                 if (enclosingDecl.kind === PullElementKind.Script && declGroups[i].length) {
                     var name = declGroups[i][0].name;
                     var candidateSymbol = this.semanticInfoChain.findTopLevelSymbol(name, PullElementKind.Variable, enclosingDecl);
-                    if (candidateSymbol && candidateSymbol.isResolved) {
+                    if (candidateSymbol) {
                         if (!candidateSymbol.anyDeclHasFlag(PullElementFlags.ImplicitVariable)) {
+                            // in case if candidate is declared in lib.d.ts it might not be resolved in IDE scenarios (because of deferred resolution of lib.d.ts)
+                            // however we cannot just ignore it since then behavior will be different from command line (where everything is resolved).
+                            if (!candidateSymbol.isResolved) {
+                                this.resolveDeclaredSymbol(candidateSymbol);
+                            }
                             firstSymbol = candidateSymbol;
                         }
                     }
