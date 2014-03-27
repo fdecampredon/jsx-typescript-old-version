@@ -3471,16 +3471,6 @@ module TypeScript {
                 var go = true;
 
                 switch (ast.kind()) {
-                    case SyntaxKind.FunctionDeclaration:
-                    case SyntaxKind.SimpleArrowFunctionExpression:
-                    case SyntaxKind.ParenthesizedArrowFunctionExpression:
-                    case SyntaxKind.FunctionExpression:
-                    case SyntaxKind.ObjectLiteralExpression:
-                        // don't recurse into a function\object literal decl - we don't want to confuse a nested
-                        // return type with the top-level function's return type
-                        go = false;
-                        break;
-
                     case SyntaxKind.ReturnStatement:
                         var returnStatement: ReturnStatementSyntax = <ReturnStatementSyntax>ast;
                         enclosingDecl.setFlag(PullElementFlags.HasReturnStatement);
@@ -3494,6 +3484,9 @@ module TypeScript {
                         break;
 
                     default:
+                        // don't recurse into a function\object literal decl - we don't want to confuse a nested
+                        // return type with the top-level function's return type
+                        go = !this.isAnyFunctionExpressionOrDeclaration(ast);
                         break;
                 }
 
@@ -3662,23 +3655,19 @@ module TypeScript {
             if (constructorDecl.block) {
                 var foundSuperCall = false;
                 var pre = (ast: ISyntaxElement, walker: IAstWalker) => {
-                    switch (ast.kind()) {
-                        // do not dive inside functions/object literals - super calls inside them are illegal and should not be considered valid search results
-                        case SyntaxKind.FunctionDeclaration:
-                        case SyntaxKind.SimpleArrowFunctionExpression:
-                        case SyntaxKind.ParenthesizedArrowFunctionExpression:
-                        case SyntaxKind.FunctionExpression:
-                        case SyntaxKind.ObjectLiteralExpression:
-                            walker.options.goChildren = false;
-                        default:
-                            // If we hit a super invocation, then we're done.  Stop everything we're doing.
-                            // Note 1: there is no restriction on there being multiple super calls.
-                            // Note 2: The restriction about super calls not being permitted in a local 
-                            // function is checked in typeCheckSuperExpression
-                            if (this.isSuperInvocationExpression(ast)) {
-                                foundSuperCall = true;
-                                walker.options.stopWalking = true;
-                            }
+                    // do not dive in functions - super calls inside them are illegal and should not be considered valid search results
+                    if (this.isAnyFunctionExpressionOrDeclaration(ast)) {
+                        walker.options.goChildren = false;
+                        return;
+                    }
+
+                    // If we hit a super invocation, then we're done.  Stop everything we're doing.
+                    // Note 1: there is no restriction on there being multiple super calls.
+                    // Note 2: The restriction about super calls not being permitted in a local 
+                    // function is checked in typeCheckSuperExpression
+                    if (this.isSuperInvocationExpression(ast)) {
+                        foundSuperCall = true;
+                        walker.options.stopWalking = true;
                     }
                 }
 
@@ -7705,27 +7694,32 @@ module TypeScript {
                 //      The containing class is a derived class.
                 //      The constructor declares parameter properties or the containing class 
                 //      declares instance member variables with initializers.
+                for (var currentDecl = enclosingDecl; currentDecl !== null; currentDecl = currentDecl.getParentDecl()) {
+                    if (currentDecl.kind === PullElementKind.ConstructorMethod) {
+                        // We were in a constructor.  That's good.
+                        var classDecl = currentDecl.getParentDecl();
 
-                if (enclosingDecl.kind === PullElementKind.ConstructorMethod) {
-                    // We were in a constructor.  That's good.
-                    var classDecl = enclosingDecl.getParentDecl();
+                        if (!this.enclosingClassIsDerived(classDecl)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                            return;
+                        }
+                        else if (this.inConstructorParameterList(ast)) {
+                            context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
+                            return;
+                        }
 
-                    if (!this.enclosingClassIsDerived(classDecl)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_non_derived_classes));
+                        // Nothing wrong with how we were referenced.  Note: the check if we're the
+                        // first statement in the constructor happens in typeCheckConstructorDeclaration.
                         return;
                     }
-                    else if (this.inConstructorParameterList(ast)) {
-                        context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.super_cannot_be_referenced_in_constructor_arguments));
-                        return;
+                    else if (this.isAnyFunctionExpressionOrDeclaration(currentDecl.ast())) {
+                        break;
                     }
+                }
 
-                    // Nothing wrong with how we were referenced.  Note: the check if we're the
-                    // first statement in the constructor happens in typeCheckConstructorDeclaration.
-                }
-                else {
-                    // SPEC NOV 18: Super calls are not permitted outside constructors or in local functions inside constructors.
-                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_nested_functions_inside_constructors));
-                }
+                // SPEC NOV 18: Super calls are not permitted outside constructors or in local functions inside constructors.
+                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(ast, DiagnosticCode.Super_calls_are_not_permitted_outside_constructors_or_in_nested_functions_inside_constructors));
+
             }
         }
 
@@ -12544,31 +12538,23 @@ module TypeScript {
                 if (block) {
                     var reportErrorOnReturnExpressions = (ast: ISyntaxElement, walker: IAstWalker) => {
                         var go = true;
-                        switch (ast.kind()) {
-                            case SyntaxKind.FunctionDeclaration:
-                            case SyntaxKind.SimpleArrowFunctionExpression:
-                            case SyntaxKind.ParenthesizedArrowFunctionExpression:
-                            case SyntaxKind.FunctionExpression:
-                                // don't recurse into a function decl - we don't want to confuse a nested
-                                // return type with the top-level function's return type
-                                go = false;
-                                break;
+                        if (this.isAnyFunctionExpressionOrDeclaration(ast)) {
+                            // don't recurse into a function decl - we don't want to confuse a nested
+                            // return type with the top-level function's return type
+                            go = false;
+                        }
+                        else if (ast.kind() === SyntaxKind.ReturnStatement) {
 
-                            case SyntaxKind.ReturnStatement:
-                                var returnStatement: ReturnStatementSyntax = <ReturnStatementSyntax>ast;
-                                var returnExpressionSymbol = this.resolveAST(returnStatement.expression, false, context).type;
-                                // Check if return statement's type matches the one that we concluded
-                                if (PullHelpers.typeSymbolsAreIdentical(returnExpressionSymbol, funcReturnType)) {
-                                    context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(returnStatement, messageCode, messageArguments));
-                                }
-                                else {
-                                    reportOnFuncDecl = true;
-                                }
-                                go = false;
-                                break;
-
-                            default:
-                                break;
+                            var returnStatement: ReturnStatementSyntax = <ReturnStatementSyntax>ast;
+                            var returnExpressionSymbol = this.resolveAST(returnStatement.expression, false, context).type;
+                            // Check if return statement's type matches the one that we concluded
+                            if (PullHelpers.typeSymbolsAreIdentical(returnExpressionSymbol, funcReturnType)) {
+                                context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(returnStatement, messageCode, messageArguments));
+                            }
+                            else {
+                                reportOnFuncDecl = true;
+                            }
+                            go = false;
                         }
 
                         walker.options.goChildren = go;
