@@ -56044,14 +56044,14 @@ var TypeScript;
             return this.semanticInfoChain.topLevelDecl(fileName);
         };
 
-        TypeScriptCompiler.getLocationText = function (location) {
-            return location.fileName() + "(" + (location.line() + 1) + "," + (location.character() + 1) + ")";
+        TypeScriptCompiler.getLocationText = function (location, resolvePath) {
+            return resolvePath(location.fileName()) + "(" + (location.line() + 1) + "," + (location.character() + 1) + ")";
         };
 
-        TypeScriptCompiler.getFullDiagnosticText = function (diagnostic) {
+        TypeScriptCompiler.getFullDiagnosticText = function (diagnostic, resolvePath) {
             var result = "";
             if (diagnostic.fileName()) {
-                result += this.getLocationText(diagnostic) + ": ";
+                result += this.getLocationText(diagnostic, resolvePath) + ": ";
             }
 
             result += diagnostic.message();
@@ -56061,7 +56061,7 @@ var TypeScript;
                 result += " " + TypeScript.getLocalizedText(TypeScript.DiagnosticCode.Additional_locations, null) + TypeScript.Environment.newLine;
 
                 for (var i = 0, n = additionalLocations.length; i < n; i++) {
-                    result += "\t" + this.getLocationText(additionalLocations[i]) + TypeScript.Environment.newLine;
+                    result += "\t" + this.getLocationText(additionalLocations[i], resolvePath) + TypeScript.Environment.newLine;
                 }
             } else {
                 result += TypeScript.Environment.newLine;
@@ -66050,14 +66050,14 @@ var TypeScript;
             };
 
             LanguageService.prototype.getNavigateToItems = function (searchValue) {
+                var _this = this;
                 TypeScript.Debug.assert(searchValue !== null && searchValue !== undefined, "The searchValue argument was not supplied or null");
 
                 var terms = searchValue.split(" ");
-                var regExpTerms = new Array(terms.length);
-                for (var i = 0; i < terms.length; i++) {
-                    terms[i] = terms[i].trim().toLocaleLowerCase();
-                    regExpTerms[i] = new RegExp(terms[i], "i");
-                }
+
+                var searchTerms = terms.map(function (t) {
+                    return ({ caseSensitive: _this.hasAnyUpperCaseCharacter(t), term: t });
+                });
 
                 var items = [];
 
@@ -66065,21 +66065,28 @@ var TypeScript;
                 for (var i = 0, n = fileNames.length; i < n; i++) {
                     var fileName = fileNames[i];
                     var declaration = this.compiler.getCachedTopLevelDeclaration(fileName);
-                    this.findSearchValueInPullDecl(fileName, [declaration], items, terms, regExpTerms);
+                    this.findSearchValueInPullDecl(fileName, [declaration], items, searchTerms);
                 }
                 return items;
             };
 
-            LanguageService.prototype.findSearchValueInPullDecl = function (fileName, declarations, results, searchTerms, searchRegExpTerms, parentName, parentkindName) {
+            LanguageService.prototype.hasAnyUpperCaseCharacter = function (s) {
+                for (var i = 0; i < s.length; ++i) {
+                    if (s[i].toLocaleLowerCase() !== s[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
+            LanguageService.prototype.findSearchValueInPullDecl = function (fileName, declarations, results, searchTerms, parentName, parentkindName) {
                 var item;
                 var declaration;
-                var term;
-                var regExpTerm;
                 var declName;
                 var kindName;
                 var matchKind;
                 var fullName;
-                var resultArray;
 
                 for (var i = 0, declLength = declarations.length; i < declLength; ++i) {
                     declaration = declarations[i];
@@ -66088,21 +66095,16 @@ var TypeScript;
                     matchKind = null;
 
                     for (var j = 0, termsLength = searchTerms.length; j < termsLength; ++j) {
-                        term = searchTerms[j];
-                        regExpTerm = searchRegExpTerms[j];
-                        resultArray = regExpTerm.exec(declName);
-                        if (resultArray) {
-                            if (declName.length === term.length && resultArray.index === 0) {
-                                matchKind = Services.MatchKind.exact;
-                                break;
-                            }
-                            if (declName.length > term.length && resultArray.index === 0) {
-                                matchKind = Services.MatchKind.prefix;
-                                break;
-                            }
-                            if (declName.length > term.length && resultArray.index > 0) {
+                        var searchTerm = searchTerms[j];
+                        var declNameToSearch = searchTerm.caseSensitive ? declName : declName.toLocaleLowerCase();
+
+                        var index = declNameToSearch.indexOf(searchTerm.term);
+
+                        if (index !== -1) {
+                            if (index === 0) {
+                                matchKind = declName.length === searchTerm.term.length ? Services.MatchKind.exact : Services.MatchKind.prefix;
+                            } else {
                                 matchKind = Services.MatchKind.subString;
-                                break;
                             }
                         }
                     }
@@ -66125,7 +66127,7 @@ var TypeScript;
                         }
                     }
                     if (this.isContainerDeclaration(declaration)) {
-                        this.findSearchValueInPullDecl(fileName, declaration.getChildDecls(), results, searchTerms, searchRegExpTerms, fullName, kindName);
+                        this.findSearchValueInPullDecl(fileName, declaration.getChildDecls(), results, searchTerms, fullName, kindName);
                     }
                 }
             };
