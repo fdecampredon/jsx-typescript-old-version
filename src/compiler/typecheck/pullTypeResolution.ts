@@ -420,6 +420,10 @@ module TypeScript {
                         if (childDecls.length && childDecls[0].kind === PullElementKind.TypeAlias) { // this can return container or dynamic module
                             var aliasSymbol = <PullTypeAliasSymbol>this.getExportedMemberSymbol(childDecls[0].getSymbol(), parent);
                             if (aliasSymbol) {
+                                if (!aliasSymbol.isResolved) {
+                                    this.resolveDeclaredSymbol(aliasSymbol);
+                                }
+
                                 if ((declSearchKind & PullElementKind.SomeType) !== 0) {
                                     // Some type
                                     var typeSymbol = aliasSymbol.getExportAssignedTypeSymbol();
