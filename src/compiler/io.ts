@@ -46,7 +46,6 @@ module TypeScript {
         stderr: ITextWriter;
         stdout: ITextWriter;
         watchFile(fileName: string, callback: (x: string) => void): IFileWatcher;
-        run(source: string, fileName: string): void;
         getExecutingFilePath(): string;
         quit(exitCode?: number): void;
     }
@@ -256,13 +255,6 @@ module TypeScript {
                 stderr: WScript.StdErr,
                 stdout: WScript.StdOut,
                 watchFile: null,
-                run: function (source, fileName) {
-                    try {
-                        eval(source);
-                    } catch (e) {
-                        IOUtils.throwIOError(TypeScript.getDiagnosticMessage(TypeScript.DiagnosticCode.Error_while_executing_file_0, [fileName]), e);
-                    }
-                },
                 getExecutingFilePath: function () {
                     return WScript.ScriptFullName;
                 },
@@ -422,11 +414,6 @@ module TypeScript {
                             _fs.unwatchFile(fileName, fileChanged);
                         }
                     };
-                },
-                run: function (source, fileName) {
-                    require.main.fileName = fileName;
-                    require.main.paths = _module._nodeModulePaths(_path.dirname(_fs.realpathSync(fileName)));
-                    require.main._compile(source, fileName);
                 },
                 getExecutingFilePath: function () {
                     return process.mainModule.filename;
