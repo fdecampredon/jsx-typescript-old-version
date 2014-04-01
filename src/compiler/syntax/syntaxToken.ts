@@ -46,7 +46,7 @@ module TypeScript {
 }
 
 module TypeScript.Syntax {
-    export function isExpression(token: ISyntaxToken): boolean {
+    export function isPrimaryExpression(token: ISyntaxToken): boolean {
         switch (token.tokenKind) {
             case SyntaxKind.IdentifierName:
             case SyntaxKind.RegularExpressionLiteral:
@@ -520,24 +520,28 @@ module TypeScript.Syntax {
             return this.realize().withTrailingTrivia(trailingTrivia);
         }
 
-        public isExpression(): boolean {
-            return isExpression(this);
+        public isPrimaryExpression(): boolean {
+            return isPrimaryExpression(this);
         }
 
-        public isPrimaryExpression(): boolean {
-            return this.isExpression();
+        public isExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isLeftHandSideExpression(): boolean {
+            return this.isPrimaryExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {
@@ -695,24 +699,28 @@ module TypeScript.Syntax {
                 this._fullStart, this.tokenKind,  this._leadingTrivia, this._text, this._value, this._valueText, trailingTrivia);
         }
 
-        public isExpression(): boolean {
-            return isExpression(this);
+        public isPrimaryExpression(): boolean {
+            return isPrimaryExpression(this);
         }
 
-        public isPrimaryExpression(): boolean {
-            return this.isExpression();
+        public isExpression(): boolean {
+            return this.isPrimaryExpression();
+        }
+
+        public isLeftHandSideExpression(): boolean {
+            return this.isPrimaryExpression();
         }
 
         public isMemberExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public isPostfixExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public isUnaryExpression(): boolean {
-            return this.isExpression();
+            return this.isPrimaryExpression();
         }
 
         public previousToken(includeSkippedTokens: boolean = false): ISyntaxToken {

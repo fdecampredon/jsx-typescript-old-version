@@ -35,9 +35,11 @@ var interfaces: TypeScript.IIndexable<any> = {
     INameSyntax: 'ITypeSyntax',
     IUnaryExpressionSyntax: 'IExpressionSyntax',
     IPostfixExpressionSyntax: 'IUnaryExpressionSyntax',
+    ILeftHandSideExpressionSyntax: 'IPostfixExpressionSyntax',
     // Note: for simplicity's sake, we merge CallExpression, NewExpression and MemberExpression 
     // into IMemberExpression.
-    IMemberExpressionSyntax: 'IPostfixExpressionSyntax',
+    IMemberExpressionSyntax: 'ILeftHandSideExpressionSyntax',
+    ICallExpressionSyntax: 'ILeftHandSideExpressionSyntax',
     IPrimaryExpressionSyntax: 'IMemberExpressionSyntax',
     IArrowFunctionExpressionSyntax: 'IUnaryExpressionSyntax',
     IIterationStatementSyntax: 'IStatementSyntax',
@@ -386,9 +388,9 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'MemberAccessExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberExpressionSyntax'],
+        interfaces: ['IMemberExpressionSyntax', 'ICallExpressionSyntax'],
         children: [
-            <any>{ name: 'expression', type: 'IExpressionSyntax' },
+            <any>{ name: 'expression', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'dotToken', isToken: true },
             <any>{ name: 'name', isToken: true, tokenKinds: ['IdentifierName'] }
         ]
@@ -399,16 +401,16 @@ var definitions:ITypeDefinition[] = [
         interfaces: ['IPostfixExpressionSyntax'],
         children: [
             <any>{ name: 'kind', type: 'SyntaxKind' },
-            <any>{ name: 'operand', type: 'IMemberExpressionSyntax' },
+            <any>{ name: 'operand', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'operatorToken', isToken: true, tokenKinds:['PlusPlusToken', 'MinusMinusToken'] }
         ]
     },
     <any>{
         name: 'ElementAccessExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberExpressionSyntax'],
+        interfaces: ['IMemberExpressionSyntax', 'ICallExpressionSyntax'],
         children: [
-            <any>{ name: 'expression', type: 'IExpressionSyntax' },
+            <any>{ name: 'expression', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'openBracketToken', isToken: true },
             <any>{ name: 'argumentExpression', type: 'IExpressionSyntax' },
             <any>{ name: 'closeBracketToken', isToken: true }
@@ -417,9 +419,9 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'InvocationExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberExpressionSyntax'],
+        interfaces: ['ICallExpressionSyntax', 'IExpressionWithArgumentListSyntax'],
         children: [
-            <any>{ name: 'expression', type: 'IMemberExpressionSyntax' },
+            <any>{ name: 'expression', type: 'ILeftHandSideExpressionSyntax' },
             <any>{ name: 'argumentList', type: 'ArgumentListSyntax' }
         ]
     },
@@ -682,7 +684,7 @@ var definitions:ITypeDefinition[] = [
     <any>{
         name: 'ObjectCreationExpressionSyntax',
         baseType: 'SyntaxNode',
-        interfaces: ['IMemberExpressionSyntax'],
+        interfaces: ['IMemberExpressionSyntax', 'IExpressionWithArgumentListSyntax'],
         children: [
             <any>{ name: 'newKeyword', isToken: true },
             <any>{ name: 'expression', type: 'IMemberExpressionSyntax' },
@@ -2372,24 +2374,28 @@ function generateToken(isFixedWidth: boolean, leading: boolean, trailing: boolea
 "            return this.realize().withTrailingTrivia(trailingTrivia);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public isExpression(): boolean {\r\n" +
-"            return isExpression(this);\r\n" +
+"        public isPrimaryExpression(): boolean {\r\n" +
+"            return isPrimaryExpression(this);\r\n" +
 "        }\r\n" +
 "\r\n" +
-"        public isPrimaryExpression(): boolean {\r\n" +
-"            return this.isExpression();\r\n" +
+"        public isExpression(): boolean {\r\n" +
+"            return this.isPrimaryExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isMemberExpression(): boolean {\r\n" +
-"            return this.isExpression();\r\n" +
+"            return this.isPrimaryExpression();\r\n" +
+"        }\r\n" +
+"\r\n" +
+"        public isLeftHandSideExpression(): boolean {\r\n" +
+"            return this.isPrimaryExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isPostfixExpression(): boolean {\r\n" +
-"            return this.isExpression();\r\n" +
+"            return this.isPrimaryExpression();\r\n" +
 "        }\r\n" +
 "\r\n" +
 "        public isUnaryExpression(): boolean {\r\n" +
-"            return this.isExpression();\r\n" +
+"            return this.isPrimaryExpression();\r\n" +
 "        }\r\n"
 
 

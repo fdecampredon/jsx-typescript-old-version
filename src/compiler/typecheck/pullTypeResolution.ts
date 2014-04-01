@@ -6404,7 +6404,10 @@ module TypeScript {
                             // Check if symbol is from scope that is outer to constructor's outer scope
                             if (PullHelpers.isSymbolDeclaredInScopeChain(nameSymbol, constructorDecl.getSymbol().getContainer())) {
                                 var memberVariableSymbol = memberVariableDecl.getSymbol();
-                                // Currently name was resolved to something from outerscope of the class                                // But constructor contains same parameter name, and hence this member initializer                                // when moved into constructor function in generated js would resolve to the constructor                                 // parameter but thats not what user intended. Report error
+                                // Currently name was resolved to something from outerscope of the class
+                                // But constructor contains same parameter name, and hence this member initializer
+                                // when moved into constructor function in generated js would resolve to the constructor 
+                                // parameter but thats not what user intended. Report error
                                 context.postDiagnostic(this.semanticInfoChain.diagnosticFromAST(nameAST,
                                     DiagnosticCode.Initializer_of_instance_member_variable_0_cannot_reference_identifier_1_declared_in_the_constructor,
                                     [memberVariableSymbol.getScopedName(constructorDecl.getSymbol()), nameAST.text()]));
@@ -11022,7 +11025,7 @@ module TypeScript {
         // Overload resolution
 
         private resolveOverloads(
-            application: ICallExpressionSyntax,
+            application: IExpressionWithArgumentListSyntax,
             group: PullSignatureSymbol[],
             haveTypeArgumentsAtCallSite: boolean,
             context: PullTypeResolutionContext,
@@ -11095,7 +11098,7 @@ module TypeScript {
             return null;
         }
 
-        private getCallTargetErrorSpanAST(callEx: ICallExpressionSyntax): ISyntaxElement {
+        private getCallTargetErrorSpanAST(callEx: IExpressionWithArgumentListSyntax): ISyntaxElement {
             if (callEx.expression.kind() === SyntaxKind.MemberAccessExpression) {
                 var memberAccessExpression = <MemberAccessExpressionSyntax>callEx.expression;
                 if (memberAccessExpression.name.fullWidth() > 0) {

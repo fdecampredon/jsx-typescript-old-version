@@ -38,6 +38,15 @@ class Program {
             TypeScript.Environment.standardOut.WriteLine("");
         }
 
+        TypeScript.Environment.standardOut.WriteLine("Testing Incremental 1.");
+        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
+            fileName => this.runIncremental(fileName, TypeScript.LanguageVersion.EcmaScript5));
+
+        if (specificFile === undefined) {
+            TypeScript.Environment.standardOut.WriteLine("Testing Incremental 2.");
+            TypeScript.IncrementalParserTests.runAllTests();
+        }
+
         TypeScript.Environment.standardOut.WriteLine("Testing scanner ES3.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\scanner\\ecmascript3",
             fileName => this.runScanner(fileName, TypeScript.LanguageVersion.EcmaScript3, verify, /*generateBaselines:*/ generate));
@@ -61,14 +70,6 @@ class Program {
         //TypeScript.Environment.standardOut.WriteLine("Testing Monoco.");
         //this.runTests(TypeScript.Environment.currentDirectory() + "c:\\temp\\monoco",
         //    fileName => this.runParser(fileName, TypeScript.LanguageVersion.EcmaScript5, false, /*generateBaselines:*/ generate, /*allowErrors:*/ false));
-        TypeScript.Environment.standardOut.WriteLine("Testing Incremental 1.");
-        this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\parser\\ecmascript5",
-            fileName => this.runIncremental(fileName, TypeScript.LanguageVersion.EcmaScript5));
-
-        if (specificFile === undefined) {
-            TypeScript.Environment.standardOut.WriteLine("Testing Incremental 2.");
-            TypeScript.IncrementalParserTests.runAllTests();
-        }
 
         TypeScript.Environment.standardOut.WriteLine("Testing emitter 1.");
         this.runTests(TypeScript.Environment.currentDirectory() + "\\tests\\Fidelity\\emitter\\ecmascript5",

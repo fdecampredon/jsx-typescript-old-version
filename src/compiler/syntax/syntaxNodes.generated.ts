@@ -1354,6 +1354,10 @@ module TypeScript {
             return true;
         }
 
+        public isLeftHandSideExpression(): boolean {
+            return true;
+        }
+
         public isPostfixExpression(): boolean {
             return true;
         }
@@ -1494,6 +1498,10 @@ module TypeScript {
         }
 
         public isMemberExpression(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
             return true;
         }
 
@@ -2623,8 +2631,8 @@ module TypeScript {
         }
     }
 
-    export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
-        constructor(public expression: IExpressionSyntax,
+    export class MemberAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
+        constructor(public expression: ILeftHandSideExpressionSyntax,
                     public dotToken: ISyntaxToken,
                     public name: ISyntaxToken,
                     parsedInStrictMode: boolean) {
@@ -2658,6 +2666,14 @@ module TypeScript {
             return true;
         }
 
+        public isCallExpression(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
+            return true;
+        }
+
         public isPostfixExpression(): boolean {
             return true;
         }
@@ -2670,7 +2686,7 @@ module TypeScript {
             return true;
         }
 
-        public update(expression: IExpressionSyntax,
+        public update(expression: ILeftHandSideExpressionSyntax,
                       dotToken: ISyntaxToken,
                       name: ISyntaxToken): MemberAccessExpressionSyntax {
             if (this.expression === expression && this.dotToken === dotToken && this.name === name) {
@@ -2680,7 +2696,7 @@ module TypeScript {
             return new MemberAccessExpressionSyntax(expression, dotToken, name, /*parsedInStrictMode:*/ this.parsedInStrictMode());
         }
 
-        public static create1(expression: IExpressionSyntax,
+        public static create1(expression: ILeftHandSideExpressionSyntax,
                               name: ISyntaxToken): MemberAccessExpressionSyntax {
             return new MemberAccessExpressionSyntax(expression, Syntax.token(SyntaxKind.DotToken), name, /*parsedInStrictMode:*/ false);
         }
@@ -2693,7 +2709,7 @@ module TypeScript {
             return <MemberAccessExpressionSyntax>super.withTrailingTrivia(trivia);
         }
 
-        public withExpression(expression: IExpressionSyntax): MemberAccessExpressionSyntax {
+        public withExpression(expression: ILeftHandSideExpressionSyntax): MemberAccessExpressionSyntax {
             return this.update(expression, this.dotToken, this.name);
         }
 
@@ -2715,7 +2731,7 @@ module TypeScript {
     private _kind: SyntaxKind;
 
         constructor(kind: SyntaxKind,
-                    public operand: IMemberExpressionSyntax,
+                    public operand: ILeftHandSideExpressionSyntax,
                     public operatorToken: ISyntaxToken,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
@@ -2757,7 +2773,7 @@ module TypeScript {
         }
 
         public update(kind: SyntaxKind,
-                      operand: IMemberExpressionSyntax,
+                      operand: ILeftHandSideExpressionSyntax,
                       operatorToken: ISyntaxToken): PostfixUnaryExpressionSyntax {
             if (this._kind === kind && this.operand === operand && this.operatorToken === operatorToken) {
                 return this;
@@ -2778,7 +2794,7 @@ module TypeScript {
             return this.update(kind, this.operand, this.operatorToken);
         }
 
-        public withOperand(operand: IMemberExpressionSyntax): PostfixUnaryExpressionSyntax {
+        public withOperand(operand: ILeftHandSideExpressionSyntax): PostfixUnaryExpressionSyntax {
             return this.update(this._kind, operand, this.operatorToken);
         }
 
@@ -2792,8 +2808,8 @@ module TypeScript {
         }
     }
 
-    export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
-        constructor(public expression: IExpressionSyntax,
+    export class ElementAccessExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, ICallExpressionSyntax {
+        constructor(public expression: ILeftHandSideExpressionSyntax,
                     public openBracketToken: ISyntaxToken,
                     public argumentExpression: IExpressionSyntax,
                     public closeBracketToken: ISyntaxToken,
@@ -2829,6 +2845,14 @@ module TypeScript {
             return true;
         }
 
+        public isCallExpression(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
+            return true;
+        }
+
         public isPostfixExpression(): boolean {
             return true;
         }
@@ -2841,7 +2865,7 @@ module TypeScript {
             return true;
         }
 
-        public update(expression: IExpressionSyntax,
+        public update(expression: ILeftHandSideExpressionSyntax,
                       openBracketToken: ISyntaxToken,
                       argumentExpression: IExpressionSyntax,
                       closeBracketToken: ISyntaxToken): ElementAccessExpressionSyntax {
@@ -2852,7 +2876,7 @@ module TypeScript {
             return new ElementAccessExpressionSyntax(expression, openBracketToken, argumentExpression, closeBracketToken, /*parsedInStrictMode:*/ this.parsedInStrictMode());
         }
 
-        public static create1(expression: IExpressionSyntax,
+        public static create1(expression: ILeftHandSideExpressionSyntax,
                               argumentExpression: IExpressionSyntax): ElementAccessExpressionSyntax {
             return new ElementAccessExpressionSyntax(expression, Syntax.token(SyntaxKind.OpenBracketToken), argumentExpression, Syntax.token(SyntaxKind.CloseBracketToken), /*parsedInStrictMode:*/ false);
         }
@@ -2865,7 +2889,7 @@ module TypeScript {
             return <ElementAccessExpressionSyntax>super.withTrailingTrivia(trivia);
         }
 
-        public withExpression(expression: IExpressionSyntax): ElementAccessExpressionSyntax {
+        public withExpression(expression: ILeftHandSideExpressionSyntax): ElementAccessExpressionSyntax {
             return this.update(expression, this.openBracketToken, this.argumentExpression, this.closeBracketToken);
         }
 
@@ -2888,8 +2912,8 @@ module TypeScript {
         }
     }
 
-    export class InvocationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
-        constructor(public expression: IMemberExpressionSyntax,
+    export class InvocationExpressionSyntax extends SyntaxNode implements ICallExpressionSyntax, IExpressionWithArgumentListSyntax {
+        constructor(public expression: ILeftHandSideExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
                     parsedInStrictMode: boolean) {
             super(parsedInStrictMode); 
@@ -2917,7 +2941,15 @@ module TypeScript {
             }
         }
 
-        public isMemberExpression(): boolean {
+        public isCallExpression(): boolean {
+            return true;
+        }
+
+        public isExpressionWithArgumentList(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
             return true;
         }
 
@@ -2933,7 +2965,7 @@ module TypeScript {
             return true;
         }
 
-        public update(expression: IMemberExpressionSyntax,
+        public update(expression: ILeftHandSideExpressionSyntax,
                       argumentList: ArgumentListSyntax): InvocationExpressionSyntax {
             if (this.expression === expression && this.argumentList === argumentList) {
                 return this;
@@ -2942,7 +2974,7 @@ module TypeScript {
             return new InvocationExpressionSyntax(expression, argumentList, /*parsedInStrictMode:*/ this.parsedInStrictMode());
         }
 
-        public static create1(expression: IMemberExpressionSyntax): InvocationExpressionSyntax {
+        public static create1(expression: ILeftHandSideExpressionSyntax): InvocationExpressionSyntax {
             return new InvocationExpressionSyntax(expression, ArgumentListSyntax.create1(), /*parsedInStrictMode:*/ false);
         }
 
@@ -2954,7 +2986,7 @@ module TypeScript {
             return <InvocationExpressionSyntax>super.withTrailingTrivia(trivia);
         }
 
-        public withExpression(expression: IMemberExpressionSyntax): InvocationExpressionSyntax {
+        public withExpression(expression: ILeftHandSideExpressionSyntax): InvocationExpressionSyntax {
             return this.update(expression, this.argumentList);
         }
 
@@ -4918,7 +4950,7 @@ module TypeScript {
         }
     }
 
-    export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax {
+    export class ObjectCreationExpressionSyntax extends SyntaxNode implements IMemberExpressionSyntax, IExpressionWithArgumentListSyntax {
         constructor(public newKeyword: ISyntaxToken,
                     public expression: IMemberExpressionSyntax,
                     public argumentList: ArgumentListSyntax,
@@ -4950,6 +4982,14 @@ module TypeScript {
         }
 
         public isMemberExpression(): boolean {
+            return true;
+        }
+
+        public isExpressionWithArgumentList(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
             return true;
         }
 
@@ -6248,6 +6288,10 @@ module TypeScript {
             return true;
         }
 
+        public isLeftHandSideExpression(): boolean {
+            return true;
+        }
+
         public isPostfixExpression(): boolean {
             return true;
         }
@@ -6499,6 +6543,10 @@ module TypeScript {
         }
 
         public isMemberExpression(): boolean {
+            return true;
+        }
+
+        public isLeftHandSideExpression(): boolean {
             return true;
         }
 

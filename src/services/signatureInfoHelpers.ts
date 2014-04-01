@@ -224,7 +224,7 @@ module TypeScript.Services {
             return [signatureGroupInfo];
         }
 
-        public static getActualSignatureInfoFromCallExpression(ast: TypeScript.ICallExpressionSyntax, caretPosition: number, typeParameterInformation: IPartiallyWrittenTypeArgumentListInformation): ActualSignatureInfo {
+        public static getActualSignatureInfoFromCallExpression(ast: TypeScript.IExpressionWithArgumentListSyntax, caretPosition: number, typeParameterInformation: IPartiallyWrittenTypeArgumentListInformation): ActualSignatureInfo {
             if (!ast) {
                 return null;
             }

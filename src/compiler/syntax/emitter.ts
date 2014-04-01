@@ -537,8 +537,8 @@ module TypeScript.Emitter1 {
 
             // this.foo = expr;
             var receiver = MemberAccessExpressionSyntax.create1(
-                static ? <IExpressionSyntax>this.withNoTrivia(classDeclaration.identifier)
-                : Syntax.token(SyntaxKind.ThisKeyword),
+                static ? <ILeftHandSideExpressionSyntax>this.withNoTrivia(classDeclaration.identifier)
+                       : Syntax.token(SyntaxKind.ThisKeyword),
                 this.withNoTrivia(declarator.propertyName)).withTrailingTrivia(Syntax.spaceTriviaList);
 
             return ExpressionStatementSyntax.create1(
@@ -687,11 +687,11 @@ module TypeScript.Emitter1 {
             var classIdentifier = this.withNoTrivia(classDeclaration.identifier);
             var functionIdentifier = this.withNoTrivia(functionDeclaration.propertyName);
 
-            var receiver: IExpressionSyntax = classIdentifier.withLeadingTrivia(functionDeclaration.leadingTrivia());
+            var receiver: ILeftHandSideExpressionSyntax = classIdentifier.withLeadingTrivia(functionDeclaration.leadingTrivia());
 
             receiver = this.containsToken(functionDeclaration.modifiers, SyntaxKind.StaticKeyword)
-            ? receiver
-            : MemberAccessExpressionSyntax.create1(receiver, Syntax.identifierName("prototype"));
+                ? receiver
+                : MemberAccessExpressionSyntax.create1(receiver, Syntax.identifierName("prototype"));
 
             receiver = MemberAccessExpressionSyntax.create1(
                 receiver, functionIdentifier.withTrailingTrivia(Syntax.spaceTriviaList));

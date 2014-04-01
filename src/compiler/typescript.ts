@@ -665,7 +665,7 @@ module TypeScript {
                     case SyntaxKind.ObjectCreationExpression:
                         if (propagateContextualTypes) {
                             var isNew = current.kind() === SyntaxKind.ObjectCreationExpression;
-                            var callExpression = <ICallExpressionSyntax>current;
+                            var callExpression = <IExpressionWithArgumentListSyntax>current;
                             var contextualType: PullTypeSymbol = null;
 
                             // Check if we are in an argumnt for a call, propagate the contextual typing

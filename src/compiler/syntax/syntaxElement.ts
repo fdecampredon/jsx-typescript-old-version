@@ -124,6 +124,7 @@ module TypeScript {
 
     export interface IExpressionSyntax extends ISyntaxNodeOrToken {
         isExpression(): boolean;
+        isLeftHandSideExpression(): boolean;
         withLeadingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
         withTrailingTrivia(trivia: ISyntaxTriviaList): IExpressionSyntax;
     }
@@ -139,7 +140,7 @@ module TypeScript {
         expression: IExpressionSyntax;
     }
 
-    export interface ICallExpressionSyntax extends IExpressionSyntax {
+    export interface IExpressionWithArgumentListSyntax extends IExpressionSyntax {
         expression: IExpressionSyntax;
         argumentList: ArgumentListSyntax;
     }
@@ -148,8 +149,16 @@ module TypeScript {
         isPostfixExpression(): boolean;
     }
 
-    export interface IMemberExpressionSyntax extends IPostfixExpressionSyntax {
+    export interface ILeftHandSideExpressionSyntax extends IPostfixExpressionSyntax {
+        isLeftHandSideExpression(): boolean;
+    }
+
+    export interface IMemberExpressionSyntax extends ILeftHandSideExpressionSyntax {
         isMemberExpression(): boolean;
+    }
+
+    export interface ICallExpressionSyntax extends ILeftHandSideExpressionSyntax {
+        isCallExpression(): boolean;
     }
 
     export interface IPrimaryExpressionSyntax extends IMemberExpressionSyntax {

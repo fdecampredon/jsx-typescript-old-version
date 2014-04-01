@@ -387,6 +387,10 @@ module TypeScript {
             return false;
         }
 
+        public isLeftHandSideExpression(): boolean {
+            return false;
+        }
+
         public isSwitchClause(): boolean {
             return false;
         }

@@ -296,7 +296,7 @@ module TypeScript {
 
         public visitMemberAccessExpression(node: MemberAccessExpressionSyntax): any {
             return node.update(
-                <IExpressionSyntax>this.visitNodeOrToken(node.expression),
+                <ILeftHandSideExpressionSyntax>this.visitNodeOrToken(node.expression),
                 this.visitToken(node.dotToken),
                 this.visitToken(node.name));
         }
@@ -304,13 +304,13 @@ module TypeScript {
         public visitPostfixUnaryExpression(node: PostfixUnaryExpressionSyntax): any {
             return node.update(
                 node.kind(),
-                <IMemberExpressionSyntax>this.visitNodeOrToken(node.operand),
+                <ILeftHandSideExpressionSyntax>this.visitNodeOrToken(node.operand),
                 this.visitToken(node.operatorToken));
         }
 
         public visitElementAccessExpression(node: ElementAccessExpressionSyntax): any {
             return node.update(
-                <IExpressionSyntax>this.visitNodeOrToken(node.expression),
+                <ILeftHandSideExpressionSyntax>this.visitNodeOrToken(node.expression),
                 this.visitToken(node.openBracketToken),
                 <IExpressionSyntax>this.visitNodeOrToken(node.argumentExpression),
                 this.visitToken(node.closeBracketToken));
@@ -318,7 +318,7 @@ module TypeScript {
 
         public visitInvocationExpression(node: InvocationExpressionSyntax): any {
             return node.update(
-                <IMemberExpressionSyntax>this.visitNodeOrToken(node.expression),
+                <ILeftHandSideExpressionSyntax>this.visitNodeOrToken(node.expression),
                 <ArgumentListSyntax>this.visitNode(node.argumentList));
         }
 
