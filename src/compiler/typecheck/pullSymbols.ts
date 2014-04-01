@@ -2325,6 +2325,9 @@ module TypeScript {
             var signatures: PullSignatureSymbol[] = [];
             for (var i = 0; i < baseConstructSignatures.length; i++) {
                 var baseSignature = baseConstructSignatures[i];
+                // Make sure the base signature is resolved, so that the parameter symbols from the new 
+                // siganture are used, they will have the type associated with them. 
+                baseSignature._resolveDeclaredSymbol();
                 var currentSignature = new PullSignatureSymbol(PullElementKind.ConstructSignature, baseSignature.isDefinition());
                 currentSignature.returnType = instanceTypeSymbol;
                 currentSignature.addTypeParametersFromReturnType();
