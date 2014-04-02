@@ -209,6 +209,7 @@ interface ProjectRunnerTestCase {
     baselineCheck?: boolean;
     baselineFiles?: string[];
     path?: string;
+    skipRun?: boolean;
     negative?: boolean;
     bug?: string;
     outputOption?: string;
@@ -222,7 +223,10 @@ class ProjectRunner extends RunnerBase {
     public initializeTests() {
 
         describe("Compiling a project", function (done: any) {
+
+
             var rPath = Harness.userSpecifiedroot + 'tests\\cases\\projects\\r.js';
+            var testExec = true;
 
             function cleanProjectDirectory(directory: string, outputFiles: string[], declareFiles: string[]) {
                 var files = outputFiles.concat(declareFiles);
@@ -488,6 +492,16 @@ class ProjectRunner extends RunnerBase {
                         });
                     }
 
+                    if (testExec && !spec.skipRun) {
+                        it("runs without error", function (done: any) {
+                            Exec.exec("node.exe", ['"' + outputFiles[0] + '"'], function (res) {
+                                Harness.Assert.equal(res.stdout, "");
+                                Harness.Assert.equal(res.stderr, "");
+                                done();
+                            })
+                        });
+                    }
+
                     if (spec.baselineCheck) {
                         it("checks baseline", function () {
                             Harness.Assert.noDiff(Harness.readFile(spec.path + spec.outputFiles[0] + "").contents,
@@ -559,6 +573,19 @@ class ProjectRunner extends RunnerBase {
                         });
                     }
 
+                    if (testExec && !spec.skipRun) {
+                        var moduleName = spec.outputFiles[0].replace(/\.js$/, "");
+                        TypeScript.IO.writeFile(spec.projectRoot + '/driver.js', amdDriverTemplate.replace(/\{0}/g, moduleName), /*writeByteOrderMark:*/false);
+
+                        it("runs without error", function (done: any) {
+                            Exec.exec("node.exe", ['"' + spec.projectRoot + '/driver.js"'], function (res) {
+                                Harness.Assert.equal(res.stdout, "");
+                                Harness.Assert.equal(res.stderr, "");
+                                done();
+                            })
+                        });
+                    }
+
                     if (spec.baselineCheck) {
                         it("checks baseline", function () {
                             Harness.Assert.noDiff(Harness.readFile(spec.path + spec.outputFiles[0] + "").contents,
@@ -615,6 +642,7 @@ class ProjectRunner extends RunnerBase {
                 , baselineCheck: true
                 , baselineFiles: ['base-consume', 'base-decl', 'lib/bar/base-a', 'lib/foo/base-a']
                 , path: 'cases/projects/non-relative/'
+                , skipRun: true
             });
 
             tests.push({
@@ -624,7 +652,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['decl.ts']
                 , outputFiles: <string[]>[]
                 , negative: true
-
+                , skipRun: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(1,1): error TS2071: Unable to resolve external module '\"./foo/bar.js\"'.",
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/NoModule/decl.ts") + "(1,1): error TS2072: Module cannot be aliased to a non-module type.",
@@ -673,6 +701,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['consume.ts']
                 , collectedFiles: ['consume.ts', 'decl.d.ts']
                 , outputFiles: ['consume.js']
+                , skipRun: true
             });
 
             tests.push({
@@ -681,6 +710,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['main/consume.ts']
                 , collectedFiles: [(Harness.userSpecifiedroot == "" ? "main/consume.ts" : 'main/consume.ts'), 'decl.d.ts']
                 , outputFiles: ['main/consume.js']
+                , skipRun: true
             });
 
 
@@ -690,6 +720,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['consume.ts']
                 , collectedFiles: ['consume.ts']
                 , outputFiles: <string[]>[]
+                , skipRun: true
             });
 
             tests.push({
@@ -698,6 +729,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['external.ts']
                 , collectedFiles: ['external.ts', 'external2.ts', 'internal.ts']
                 , outputFiles: ['external.js', 'external2.js', 'internal.js']
+                , skipRun: true /* this requires a host which is able to resolve the script in the reference tag */
             });
 
             //Harness.Assert.bug('No error for importing an external module in illegal scope');
@@ -708,6 +740,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['internal2.ts', 'external2.ts']
             //        , outputFiles: ['external2.js']
             //        , negative: true
+            //        , skipRun: true /* this requires a host which is able to resolve the script in the reference tag */ // TODO: What does this actually mean...
             //        , errors: [TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/ext-int-ext/internal2.ts') + '(2,19): Import declaration of external module is permitted only in global or top level dynamic modules']
             //});
 
@@ -717,6 +750,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['main.ts']
                 , collectedFiles: ['main.ts', 'classA.ts', 'classB.ts']
                 , outputFiles: ['main.js', 'lib/classA.js', 'lib/classB.js']
+                , skipRun: true /* this requires a host which is able to resolve the script in the reference tags */
             });
 
             tests.push({
@@ -725,6 +759,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['consume.ts']
                 , collectedFiles: ['consume.ts', 'decl.ts']
                 , outputFiles: ['consume.js', 'decl.js']
+                , skipRun: true
             });
 
             tests.push({
@@ -741,6 +776,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['test1.ts']
                 , collectedFiles: ['test1.ts', 'test2.ts']
                 , outputFiles: <string[]>[]
+                , skipRun: true
                 , negative: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/NestedLocalModule-WithRecursiveTypecheck/test2.ts") + "(5,5): error TS2136: Import declarations in an internal module cannot reference an external module.",
@@ -754,6 +790,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['test1.ts']
                 , collectedFiles: ['test1.ts', 'test2.ts']
                 , outputFiles: <string[]>[]
+                , skipRun: true
                 , negative: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/NestedLocalModule-SimpleCase/test1.ts") + "(2,2): error TS2136: Import declarations in an internal module cannot reference an external module.",
@@ -767,6 +804,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['test.ts', 'mExported.ts', 'mNonExported.ts']
                 , outputFiles: ['mExported.js', 'mNonExported.js']
                 , negative: true
+                , skipRun: true
                 , errors: <string[]>[]
             });
 
@@ -777,6 +815,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['test.ts', 'indirectExternalModule.ts', 'externalModule.ts']
                 , outputFiles: ['indirectExternalModule.js', 'externalModule.js']
                 , negative: true
+                , skipRun: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/privacyCheck-IndirectReference/test.ts") + "(2,12): error TS2031: Exported variable 'x' is using inaccessible module '" + TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/privacyCheck-IndirectReference/indirectExternalModule.ts'.",
                 ]
@@ -790,6 +829,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['test.ts', 'mExported.ts', 'mNonExported.ts']
             //        , outputFiles: ['test.js', 'mExported.js', 'mNonExported.js']
             //        , negative: true
+            //        , skipRun: true
             //        , errors: [ TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/privacyCheck-InsideModule/test.ts') + '(5,37): Import declaration of external module is permitted only in global or top level dynamic modules'
             //            , TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/privacyCheck-InsideModule/test.ts') + '(24,33): Import declaration of external module is permitted only in global or top level dynamic modules']
             //});
@@ -802,6 +842,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['test.ts', 'mExported.ts', 'mNonExported.ts']
             //        , outputFiles: ['test.js', 'mExported.js', 'mNonExported.js']
             //        , negative: true
+            //        , skipRun: true
             //        , errors: [TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/privacyCheck-ImportInParent/test.ts') + '(2,37): Import declaration of external module is permitted only in global or top level dynamic modules'
             //            , TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/privacyCheck-ImportInParent/test.ts') + '(42,33): Import declaration of external module is permitted only in global or top level dynamic modules'
             //            , TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/privacyCheck-ImportInParent/test.ts') + '(24,8): exported variable \'c1\' is using inaccessible module "mExported"'
@@ -820,6 +861,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['consumer.ts']
                 , collectedFiles: ['consumer.ts', 'ref.d.ts']
                 , outputFiles: ['consumer.js']
+                , skipRun: true
                 , baselineCheck: true
                 , path: 'cases/projects/DeclareExportAdded/'
                 , baselineFiles: ['base-declare-export']
@@ -832,6 +874,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['app.ts']
                 , collectedFiles: ['app.ts', 'a.ts', 'b.ts']
                 , outputFiles: ['app.js', 'A/a.js', 'A/b.js']
+                , skipRun: true
             })
 
             tests.push({
@@ -841,6 +884,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['decl.d.ts', 'in1.d.ts', 'in2.d.ts']
                 , outputFiles: <string[]>[]
                 , negative: true
+                , skipRun: true
                 , bug: '535531'
                 , errors: [TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/declareVariableCollision/in2.d.ts") + "(1,1): error TS2000: Duplicate identifier 'a'. Additional locations:"
                     + TypeScript.Environment.newLine + "\t" + TypeScript.IO.resolvePath(Harness.userSpecifiedroot + "tests/cases/projects/declareVariableCollision/in1.d.ts") + "(1,1)"]
@@ -852,6 +896,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['a.ts', 'b.ts']
                 , collectedFiles: ['a.ts', 'b.ts']
                 , outputFiles: ['a.js']
+                , skipRun: true
             });
 
             tests.push({
@@ -860,6 +905,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['b.ts', 'a.ts']
                 , collectedFiles: ['a.ts', 'b.ts']
                 , outputFiles: ['a.js']
+                , skipRun: true
             });
 
             //Harness.Assert.bug('Wrong signature emitted in declaration file for class types imported from external modules');
@@ -870,6 +916,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['useModule.ts', 'm4.ts']
                 , outputFiles: ['useModule.js', 'm4.js']
                 , declareFiles: ['m4.d.ts', 'useModule.d.ts']
+                , skipRun: true
             });
 
             //Harness.Assert.bug('Wrong signature emitted in declaration file for class types imported from external modules');
@@ -880,6 +927,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['useModule.ts', 'glo_m4.ts']
             //        , outputFiles: ['useModule.js', 'glo_m4.js']
             //        , declareFiles: ['glo_m4.d.ts', 'useModule.d.ts']
+            //        , skipRun: true
             //});
 
             tests.push({
@@ -889,6 +937,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['useModule.ts', 'private_m4.ts']
                 , outputFiles: ['useModule.js', 'private_m4.js']
                 , declareFiles: ['private_m4.d.ts', 'useModule.d.ts']
+                , skipRun: true
             });
 
             tests.push({
@@ -898,6 +947,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['useModule.ts', 'fncOnly_m4.ts']
                 , outputFiles: ['useModule.js', 'fncOnly_m4.js']
                 , declareFiles: ['fncOnly_m4.d.ts', 'useModule.d.ts']
+                , skipRun: true
             });
 
             //Harness.Assert.bug('Wrong signature emitted in declaration file for class types imported from external modules');
@@ -908,6 +958,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['useModule.ts', 'm4.ts']
             //        , outputFiles: ['useModule.js', 'm4.js']
             //        , declareFiles: ['m4.d.ts', 'useModule.d.ts']
+            //        , skipRun: true
             //});
 
             //Harness.Assert.bug('Wrong signature emitted in declaration file for class types imported from external modules');
@@ -918,6 +969,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['useModule.ts', 'm4.ts', 'm5.ts']
             //        , outputFiles: ['useModule.js', 'm4.js', 'm5.js']
             //        , declareFiles: ['m4.d.ts', 'm5.d.ts', 'useModule.d.ts']
+            //        , skipRun: true
             //});
 
             tests.push({
@@ -927,6 +979,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['useModule.ts', 'm4.ts']
                 , outputFiles: ['m4.js']
                 , declareFiles: ['m4.d.ts', 'useModule.d.ts']
+                , skipRun: true
             });
 
             //Harness.Assert.bug('Exported types cannot flow across multiple external module boundaries');
@@ -937,6 +990,7 @@ class ProjectRunner extends RunnerBase {
             //        , collectedFiles: ['useModule.ts', 'm4.ts', 'm5.ts']
             //        , outputFiles: ['useModule.js', 'm4.js', 'm5.js']
             //        , negative: true
+            //        , skipRun: true
             //        , errors: [TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/declarations_IndirectImport/useModule.ts') + '(3,0): exported variable \'d\' is using inaccessible module "m4"'
             //            , TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/declarations_IndirectImport/useModule.ts') + '(4,0): exported variable \'x\' is using inaccessible module "m4"'
             //            , TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/declarations_IndirectImport/useModule.ts') + '(7,4): exported function return type is using inaccessible module "m4"']
@@ -950,6 +1004,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['test.js']
                 , declareFiles: ['test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -961,6 +1016,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['bin/test.d.ts']
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -972,6 +1028,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -983,6 +1040,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
 
             tests.push({
@@ -994,6 +1052,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_singleFile: no outdir"
@@ -1004,6 +1063,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_singleFile: no outdir"
@@ -1015,6 +1075,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1027,6 +1088,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_singleFile: specify outputFile"
@@ -1038,6 +1100,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot - disk path]: outputdir_singleFile: specify outputFile"
@@ -1049,6 +1112,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
                 , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot - relative path]: outputdir_singleFile: specify outputFile"
@@ -1060,6 +1124,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileRelativePath.sourcemapRecord.baseline"
                 , mapRoot: "../mapFiles"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_singleFile: specify outputFile"
@@ -1071,6 +1136,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - disk path]: outputdir_singleFile: specify outputFile"
@@ -1082,6 +1148,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
                 , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - relative path]: outputdir_singleFile: specify outputFile"
@@ -1093,6 +1160,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileRelativePath.sourcemapRecord.baseline"
                 , sourceRoot: "../src/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1106,6 +1174,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1118,6 +1187,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1130,6 +1200,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1142,6 +1213,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootDiskPath'
                 , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/mapFiles"
+                , skipRun: true
             });
 
             tests.push({
@@ -1154,6 +1226,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirRelativePath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootRelativePath'
                 , mapRoot: "../mapFiles"
+                , skipRun: true
             });
 
             tests.push({
@@ -1166,6 +1239,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - disk path]: outputdir_singleFile: specify outputDirectory"
@@ -1177,6 +1251,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootDiskPath'
                 , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_singleFile/src/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1189,6 +1264,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirRelativePath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootRelativePath'
                 , sourceRoot: "../src/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1202,6 +1278,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1212,6 +1289,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['m1.js', 'test.js']
                 , declareFiles: ['m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1223,6 +1301,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['bin/test.d.ts']
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1234,6 +1313,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1245,6 +1325,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_simple: no outdir"
@@ -1255,6 +1336,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_simple: no outdir"
@@ -1265,6 +1347,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_simple: no outdir"
@@ -1276,6 +1359,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1288,6 +1372,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_simple: specify outputFile"
@@ -1299,6 +1384,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot - disk path]: outputdir_simple: specify outputFile"
@@ -1310,6 +1396,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
                 , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot - relative path]: outputdir_simple: specify outputFile"
@@ -1321,6 +1408,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileRelativePath.sourcemapRecord.baseline"
                 , mapRoot: "../mapFiles"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_simple: specify outputFile"
@@ -1332,6 +1420,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - disk path]: outputdir_simple: specify outputFile"
@@ -1343,6 +1432,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileDiskPath.sourcemapRecord.baseline"
                 , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - relative path]: outputdir_simple: specify outputFile"
@@ -1354,6 +1444,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFileRelativePath.sourcemapRecord.baseline"
                 , sourceRoot: "../src/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_simple: specify outputFile"
@@ -1366,6 +1457,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1378,6 +1470,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_simple: specify outputDirectory"
@@ -1389,6 +1482,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot - disk path]: outputdir_simple: specify outputDirectory"
@@ -1400,6 +1494,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootDiskPath'
                 , mapRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/mapFiles/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot- relative path]: outputdir_simple: specify outputDirectory"
@@ -1411,6 +1506,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirRelativePath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleMapRootRelativePath'
                 , mapRoot: "../mapFiles"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_simple: specify outputDirectory"
@@ -1422,6 +1518,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - disk path]: outputdir_simple: specify outputDirectory"
@@ -1433,6 +1530,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirDiskPath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootDiskPath'
                 , sourceRoot: TypeScript.switchToForwardSlashes(TypeScript.IO.resolvePath(Harness.userSpecifiedroot)) + "/tests/cases/projects/outputdir_simple/src/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot - relative path]: outputdir_simple: specify outputDirectory"
@@ -1444,6 +1542,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDirRelativePath.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simpleSourceRootRelativePath'
                 , sourceRoot: "../src/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_simple: specify outputDirectory"
@@ -1456,6 +1555,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1466,6 +1566,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['ref/m1.js', 'test.js']
                 , declareFiles: ['ref/m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1477,6 +1578,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['bin/test.d.ts']
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1488,6 +1590,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1499,6 +1602,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_subfolder: no outdir"
@@ -1509,6 +1613,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_subfolder: no outdir"
@@ -1519,6 +1624,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_subfolder: no outdir"
@@ -1530,6 +1636,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1542,6 +1649,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_subfolder: specify outputFile"
@@ -1553,6 +1661,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_subfolder: specify outputFile"
@@ -1564,6 +1673,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_subfolder: specify outputFile"
@@ -1576,6 +1686,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1588,6 +1699,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_subfolder: specify outputDirectory"
@@ -1599,6 +1711,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_subfolder: specify outputDirectory"
@@ -1610,6 +1723,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_subfolder: specify outputDirectory"
@@ -1622,6 +1736,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             // TODO: Add for outputdir_multifolder that spans one level below where we are building
@@ -1636,6 +1751,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', '../outputdir_multifolder_ref/m2.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1648,6 +1764,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'bin/test.js'
                 , verifyEmitFiles: true
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1660,6 +1777,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , declareFiles: ['outdir/simple/outputdir_multifolder/ref/m1.d.ts', 'outdir/simple/outputdir_multifolder_ref/m2.d.ts', 'outdir/simple/outputdir_multifolder/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1672,6 +1790,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_multifolder: no outdir"
@@ -1683,6 +1802,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , verifyFileNamesOnly: true
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_multifolder: no outdir"
@@ -1694,6 +1814,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , verifyFileNamesOnly: true
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_multifolder: no outdir"
@@ -1706,6 +1827,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1719,6 +1841,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , verifyFileNamesOnly: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_multifolder: specify outputFile"
@@ -1731,6 +1854,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_multifolder: specify outputFile"
@@ -1743,6 +1867,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_multifolder: specify outputFile"
@@ -1756,6 +1881,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outputFile.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1769,6 +1895,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/outputdir_multifolder/ref/m1.d.ts', 'outdir/simple/outputdir_multifolder_ref/m2.d.ts', 'outdir/simple/outputdir_multifolder/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1781,6 +1908,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
                 , mapRoot: "http://www.typescriptlang.org/"
             });
             tests.push({
@@ -1794,6 +1922,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_multifolder: specify outputDirectory"
@@ -1805,6 +1934,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
             });
@@ -1817,6 +1947,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['m1.js', 'test.js']
                 , declareFiles: ['m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1828,6 +1959,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['m1.js', 'test.js']
                 , declareFiles: ['m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1839,6 +1971,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1850,6 +1983,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_module_simple: no outdir"
@@ -1860,6 +1994,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1871,6 +2006,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1883,6 +2019,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
 
@@ -1896,6 +2033,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_module_simple: specify outputDirectory"
@@ -1907,6 +2045,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1919,6 +2058,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -1932,6 +2072,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
 
@@ -1943,6 +2084,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['ref/m1.js', 'test.js']
                 , declareFiles: ['ref/m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -1954,6 +2096,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , outputOption: 'bin/test.js'
+                , skipRun: true
             });
 
             tests.push({
@@ -1965,6 +2108,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -1976,6 +2120,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_module_subfolder: no outdir"
@@ -1986,6 +2131,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_module_subfolder: no outdir"
@@ -1996,6 +2142,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_module_subfolder: no outdir"
@@ -2007,6 +2154,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -2019,6 +2167,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_module_subfolder: specify outputDirectory"
@@ -2030,6 +2179,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_module_subfolder: specify outputDirectory"
@@ -2041,6 +2191,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_module_subfolder: specify outputDirectory"
@@ -2053,6 +2204,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             // TODO: Add for outputdir_module_multifolder that spans one level below where we are building
@@ -2067,6 +2219,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', '../outputdir_module_multifolder_ref/m2.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2079,6 +2232,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', '../outputdir_module_multifolder_ref/m2.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2091,6 +2245,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyFileNamesOnly: true
                 , declareFiles: ['outdir/simple/outputdir_module_multifolder/ref/m1.d.ts', 'outdir/simple/outputdir_module_multifolder_ref/m2.d.ts', 'outdir/simple/outputdir_module_multifolder/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -2103,6 +2258,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , verifyFileNamesOnly: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2116,6 +2272,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/outputdir_module_multifolder/ref/m1.d.ts', 'outdir/simple/outputdir_module_multifolder_ref/m2.d.ts', 'outdir/simple/outputdir_module_multifolder/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -2126,6 +2283,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['ref/m1.js', 'ref/m2.js', 'test.js']
                 , declareFiles: ['ref/m1.d.ts', 'ref/m2.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2137,6 +2295,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['ref/m2.js', 'bin/test.js']
                 , declareFiles: ['ref/m2.d.ts', 'bin/test.d.ts']
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2148,6 +2307,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/ref/m2.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
 
             tests.push({
@@ -2160,6 +2320,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['outdir/outAndOutDirFolder/ref/m2.d.ts', 'bin/outAndOutDirFile.d.ts']
                 , outputOption: 'bin/outAndOutDirFile.js'
                 , outDirOption: 'outdir/outAndOutDirFolder'
+                , skipRun: true
             });
 
             tests.push({
@@ -2171,6 +2332,7 @@ class ProjectRunner extends RunnerBase {
                 , declareFiles: ['ref/m1.d.ts', 'ref/m2.d.ts', 'test.d.ts']
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_mixed_subfolder: no outdir"
@@ -2181,6 +2343,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_mixed_subfolder: no outdir"
@@ -2191,6 +2354,7 @@ class ProjectRunner extends RunnerBase {
                 , verifyEmitFiles: true
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_mixed_subfolder: no outdir"
@@ -2202,6 +2366,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "noOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -2214,6 +2379,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , declareFiles: ['outdir/simple/ref/m1.d.ts', 'outdir/simple/ref/m2.d.ts', 'outdir/simple/test.d.ts']
                 , outDirOption: 'outdir/simple'
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot]: outputdir_mixed_subfolder: specify outputDirectory"
@@ -2225,6 +2391,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/sourceRoot]: outputdir_mixed_subfolder: specify outputDirectory"
@@ -2236,6 +2403,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outDir.sourcemapRecord.baseline"
                 , outDirOption: 'outdir/simple'
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
             tests.push({
                 scenario: "[Sourcemap/mapRoot/sourceRoot]: outputdir_mixed_subfolder: specify outputDirectory"
@@ -2248,6 +2416,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/simple'
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -2260,6 +2429,7 @@ class ProjectRunner extends RunnerBase {
                 , outputOption: 'bin/outAndOutDirFile.js'
                 , outDirOption: 'outdir/outAndOutDirFolder'
                 , sourceMapRecordBaseline: "outputFileAndOutDir.sourcemapRecord.baseline"
+                , skipRun: true
             });
 
             tests.push({
@@ -2273,6 +2443,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/outAndOutDirFolder'
                 , sourceMapRecordBaseline: "outputFileAndOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
+                , skipRun: true
             });
 
             tests.push({
@@ -2286,6 +2457,7 @@ class ProjectRunner extends RunnerBase {
                 , outDirOption: 'outdir/outAndOutDirFolder'
                 , sourceMapRecordBaseline: "outputFileAndOutDir.sourcemapRecord.baseline"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             tests.push({
@@ -2300,6 +2472,7 @@ class ProjectRunner extends RunnerBase {
                 , sourceMapRecordBaseline: "outputFileAndOutDir.sourcemapRecord.baseline"
                 , mapRoot: "http://www.typescriptlang.org/"
                 , sourceRoot: "http://typescript.codeplex.com/"
+                , skipRun: true
             });
 
             // TODO: case when folder is present and option --out is use
@@ -2315,6 +2488,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['fs.ts', 'server.ts', 'commands.ts']
                 , outputFiles: ['fs.js', 'server.js', 'commands.js']
                 , verifyEmitFiles: true
+                , skipRun: true
                 , negative: true
                 , errors: <string[]>[]
             });
@@ -2327,6 +2501,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: ['main.ts']
                 , outputFiles: ['main.js']
                 , verifyEmitFiles: false
+                , skipRun: true
                 , negative: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/InvalidReferences/main.ts') + '(1,1): error TS5006: A file cannot have a reference to itself.',
@@ -2343,6 +2518,7 @@ class ProjectRunner extends RunnerBase {
                 , outputFiles: ['out.js']
                 , outputOption: 'out.js'
                 , verifyEmitFiles: true
+                , skipRun: true
             });
 
             tests.push({
@@ -2352,6 +2528,7 @@ class ProjectRunner extends RunnerBase {
                 , collectedFiles: <string[]>[]
                 , outputFiles: ['test.js']
                 , verifyEmitFiles: false
+                , skipRun: true
                 , negative: true
                 , errors: [
                     TypeScript.IO.resolvePath(Harness.userSpecifiedroot + 'tests/cases/projects/No-default-lib/test.ts') + '(3,8): error TS2095: Could not find symbol \'Array\'.']
@@ -2363,6 +2540,7 @@ class ProjectRunner extends RunnerBase {
                 , inputFiles: ['m\'ain.ts']
                 , collectedFiles: ['m\'ain.ts', 'class\'A.ts']
                 , outputFiles: ['m\'ain.js', 'li\'b/class\'A.js']
+                , skipRun: true /* this requires a host which is able to resolve the script in the reference tags */
             });
 
 
@@ -2379,6 +2557,10 @@ class ProjectRunner extends RunnerBase {
             }
 
             Exec.exec("node.exe", ['-v'], function (res) {
+                if (res.stderr.length > 0) {
+                    testExec = false;
+                }
+
                 done();
             });
         });
