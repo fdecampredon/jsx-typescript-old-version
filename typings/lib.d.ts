@@ -12174,7 +12174,7 @@ interface MutationObserver {
 }
 declare var MutationObserver: {
     prototype: MutationObserver;
-    new (callback: (arr: MutationRecord[], observer: MutationObserver)=>any): MutationObserver; 
+    new (): MutationObserver;
 }
 
 interface AudioTrackList {

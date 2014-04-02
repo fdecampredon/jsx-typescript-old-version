@@ -700,9 +700,11 @@ module TypeScript.Services {
             Debug.assert(searchValue !== null && searchValue !== undefined, "The searchValue argument was not supplied or null");
             // Split search value in terms array
             var terms = searchValue.split(" ");
-
-            // default NavigateTo approach: if search term contains only lower-case chars - use case-insensitive search, otherwise switch to case-sensitive version
-            var searchTerms = terms.map((t) => ({ caseSensitive: this.hasAnyUpperCaseCharacter(t), term: t }));
+            var regExpTerms: RegExp[] = new Array<RegExp>(terms.length);
+            for (var i = 0; i < terms.length; i++) {
+                terms[i] = terms[i].trim().toLocaleLowerCase();
+                regExpTerms[i] = new RegExp(terms[i], "i");
+            }
 
             var items: NavigateToItem[] = [];
 
@@ -710,20 +712,10 @@ module TypeScript.Services {
             for (var i = 0, n = fileNames.length; i < n; i++) {
                 var fileName = fileNames[i];
                 var declaration = this.compiler.getCachedTopLevelDeclaration(fileName);
-                this.findSearchValueInPullDecl(fileName, [declaration], items, searchTerms);
+                this.findSearchValueInPullDecl(fileName, [declaration], items, terms, regExpTerms);
             }
             return items;
-        }
-
-        private hasAnyUpperCaseCharacter(s: string): boolean {
-            for (var i = 0; i < s.length; ++i) {
-                if (s[i].toLocaleLowerCase() !== s[i]) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
+       }
 
         // Search given file's declaration and output matched NavigateToItem into array of NavigateToItem[] which is passed in as 
         // one of the function's arguements. The function will recruseively call itself to visit all children declarations  
@@ -737,13 +729,16 @@ module TypeScript.Services {
         //        parentName: a name of the parent of declarations array.
         //        parentKindName: a kind of parent in string format.
         private findSearchValueInPullDecl(fileName: string, declarations: TypeScript.PullDecl[], results: NavigateToItem[],
-            searchTerms: { caseSensitive: boolean; term: string }[], parentName?: string, parentkindName?: string): void {
+            searchTerms: string[], searchRegExpTerms: RegExp[], parentName?: string, parentkindName?: string): void {
             var item: NavigateToItem;
             var declaration: TypeScript.PullDecl;
+            var term: string;
+            var regExpTerm: RegExp;
             var declName: string;
             var kindName: string;
             var matchKind: string;
             var fullName: string;
+            var resultArray: RegExpExecArray;
 
             for (var i = 0, declLength = declarations.length; i < declLength; ++i) {
                 declaration = declarations[i];
@@ -751,21 +746,26 @@ module TypeScript.Services {
                 kindName = this.mapPullElementKind(declaration.kind);
                 matchKind = null;
 
+                // Find match between name and each given search terms using regular expression
                 for (var j = 0, termsLength = searchTerms.length; j < termsLength; ++j) {
-                    var searchTerm = searchTerms[j];
-                    var declNameToSearch = searchTerm.caseSensitive ? declName : declName.toLocaleLowerCase();
-                    // in case of case-insensitive search searchTerm.term will already be lower-cased
-                    var index = declNameToSearch.indexOf(searchTerm.term);
-
-                    if (index !== -1) {
-                        if (index === 0) {
-                            // here we know that match occur at the beginning of the string.
-                            // if search term and declName has the same length - we have an exact match, otherwise declName have longer length and this will be prefix match
-                            matchKind = declName.length === searchTerm.term.length ? MatchKind.exact : MatchKind.prefix;
+                    term = searchTerms[j];
+                    regExpTerm = searchRegExpTerms[j];
+                    resultArray = regExpTerm.exec(declName);
+                    if (resultArray) {
+                        if (declName.length === term.length && resultArray.index === 0) {
+                            // declName and term have exactly same length and the match occur at the beginning of the string; so we must have exact match
+                            matchKind = MatchKind.exact;
+                            break;
                         }
-                        else {
+                        if (declName.length > term.length && resultArray.index === 0) {
+                            // declName have longer length and the match occur at the beginning of the string; so we must have prefix match
+                            matchKind = MatchKind.prefix;
+                            break;
+                        }
+                        if (declName.length > term.length && resultArray.index > 0) {
                             // declName have longer length and the match doesn't occur at the beginning of the string; so we must have substring match
                             matchKind = MatchKind.subString;
+                            break;
                         }
                     }
                 }
@@ -790,7 +790,7 @@ module TypeScript.Services {
                     }
                 }
                 if (this.isContainerDeclaration(declaration)) {
-                    this.findSearchValueInPullDecl(fileName, declaration.getChildDecls(), results, searchTerms, fullName, kindName);
+                    this.findSearchValueInPullDecl(fileName, declaration.getChildDecls(), results, searchTerms, searchRegExpTerms, fullName, kindName);
                 }
             }
         }

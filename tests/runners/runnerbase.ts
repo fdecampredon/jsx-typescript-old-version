@@ -24,7 +24,7 @@ class RunnerBase {
     }
 
     public _getDiagnosticText(diagnostic: TypeScript.Diagnostic): string {
-        return RunnerBase.removeFullPaths(TypeScript.TypeScriptCompiler.getFullDiagnosticText(diagnostic, path => TypeScript.switchToForwardSlashes(path)));
+        return RunnerBase.removeFullPaths(TypeScript.TypeScriptCompiler.getFullDiagnosticText(diagnostic));
     }
 
     /** Replaces instances of full paths with filenames only */

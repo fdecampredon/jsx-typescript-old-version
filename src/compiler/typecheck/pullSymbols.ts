@@ -95,7 +95,7 @@ module TypeScript {
         }
 
         // Finds alias if present representing this symbol
-        private findAliasedTypeSymbols(scopeSymbol: PullSymbol, skipScopeSymbolAliasesLookIn?: boolean, lookIntoOnlyExportedAlias?: boolean, aliasSymbols: PullTypeAliasSymbol[]= [], visitedScopeDeclarations: PullDecl[]= []): PullTypeAliasSymbol[] {
+        private findAliasedType(scopeSymbol: PullSymbol, skipScopeSymbolAliasesLookIn?: boolean, lookIntoOnlyExportedAlias?: boolean, aliasSymbols: PullTypeAliasSymbol[]= [], visitedScopeDeclarations: PullDecl[]= []): PullTypeAliasSymbol[] {
             var scopeDeclarations = scopeSymbol.getDeclarations();
             var scopeSymbolAliasesToLookIn: PullTypeAliasSymbol[] = [];
 
@@ -132,7 +132,7 @@ module TypeScript {
                 var scopeSymbolAlias = scopeSymbolAliasesToLookIn[i];
 
                 aliasSymbols.push(scopeSymbolAlias);
-                var result = this.findAliasedTypeSymbols(
+                var result = this.findAliasedType(
                     scopeSymbolAlias.assignedContainer().hasExportAssignment() ? scopeSymbolAlias.assignedContainer().getExportAssignedContainerSymbol() : scopeSymbolAlias.assignedContainer(),
                 /*skipScopeSymbolAliasesLookIn*/ false, /*lookIntoOnlyExportedAlias*/ true, aliasSymbols, visitedScopeDeclarations);
                 if (result) {
@@ -153,7 +153,7 @@ module TypeScript {
 
             var scopePath = scopeSymbol.pathToRoot();
             if (scopePath.length && scopePath[scopePath.length - 1].kind === PullElementKind.DynamicModule) {
-                var symbols = this.findAliasedTypeSymbols(scopePath[scopePath.length - 1]);
+                var symbols = this.findAliasedType(scopePath[scopePath.length - 1]);
                 return symbols;
             }
 
@@ -189,7 +189,7 @@ module TypeScript {
                 if (this.kind !== PullElementKind.TypeAlias) {
                     var scopePath = scopeSymbol.pathToRoot();
                     for (var i = 0; i < scopePath.length; i++) {
-                        var internalAliases = this.findAliasedTypeSymbols(scopeSymbol, /*skipScopeSymbolAliasesLookIn*/ true, /*lookIntoOnlyExportedAlias*/ true);
+                        var internalAliases = this.findAliasedType(scopeSymbol, /*skipScopeSymbolAliasesLookIn*/ true, /*lookIntoOnlyExportedAlias*/ true);
                         if (internalAliases) {
                             Debug.assert(internalAliases.length === 1);
                             return internalAliases[0];
@@ -215,8 +215,8 @@ module TypeScript {
             }
 
             var externalAliases = this.getExternalAliasedSymbols(scopeSymbol);
-            // Use only alias symbols to the dynamic module and it isnt expressed in terms of this symbol itself
-            if (externalAliases && externalAliases[0] != this && PullSymbol._isExternalModuleReferenceAlias(externalAliases[externalAliases.length - 1])) {
+            // Use only alias symbols to the dynamic module
+            if (externalAliases && PullSymbol._isExternalModuleReferenceAlias(externalAliases[externalAliases.length - 1])) {
                 var aliasFullName = aliasNameGetter(externalAliases[0]);
                 if (!aliasFullName) {
                     return null;
@@ -778,7 +778,7 @@ module TypeScript {
             var ast = decl.ast();
 
             if (ast) {
-                var enclosingModuleDeclaration = ASTHelpers.getModuleDeclarationFromNameAST(ast);
+                var enclosingModuleDeclaration = ASTHelpers.getEnclosingModuleDeclaration(ast);
                 if (ASTHelpers.isLastNameOfModule(enclosingModuleDeclaration, ast)) {
                     return ASTHelpers.docComments(enclosingModuleDeclaration);
                 }
@@ -3166,7 +3166,6 @@ module TypeScript {
             return !!this.assignedValue || !!this.assignedType || !!this.assignedContainer;
         }
 
-        // Determine if 'symbol' is used as containerSymbol
         static usedAsSymbol(containerSymbol: PullSymbol, symbol: PullSymbol): boolean {
             if (!containerSymbol || !containerSymbol.isContainer()) {
                 return false;
@@ -3181,18 +3180,7 @@ module TypeScript {
             var typeExportSymbol = moduleSymbol.getExportAssignedTypeSymbol();
             var containerExportSymbol = moduleSymbol.getExportAssignedContainerSymbol();
             if (valueExportSymbol || typeExportSymbol || containerExportSymbol) {
-                // If the container symbol has export assignment then 'symbol' is used as containerSymbol if
-                // any of export assigned symbol is same as 'symbol'
-                if (valueExportSymbol === symbol
-                    || typeExportSymbol == symbol
-                    || containerExportSymbol == symbol) {
-                    return true;
-                }
-
-                // If the container symbol doesnt export itself, check if export assigned container symbol is used as 'symbol'
-                if (containerExportSymbol != containerSymbol) {
-                    return PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
-                }
+                return valueExportSymbol === symbol || typeExportSymbol == symbol || containerExportSymbol == symbol || PullContainerSymbol.usedAsSymbol(containerExportSymbol, symbol);
             }
 
             return false;
