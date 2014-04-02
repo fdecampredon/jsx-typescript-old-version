@@ -1,0 +1,15 @@
+=== tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType3_moduleA.ts ===
+Line 1 col 7 IdentifierName "moduleC" = moduleC
+Line 2 col 7 IdentifierName "ClassB" = ClassB
+Line 3 col 11 IdentifierName "b" = ClassB
+Line 3 col 14 IdentifierName "ClassB" = ClassB
+=== tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType3_moduleDef.d.ts ===
+Line 1 col 11 IdentifierName "self" = self
+Line 2 col 13 IdentifierName "self" = self
+Line 5 col 11 IdentifierName "self" = self
+Line 6 col 13 IdentifierName "self" = self
+Line 9 col 11 IdentifierName "self" = self
+Line 10 col 13 IdentifierName "self" = self
+=== tests/cases/compiler/recursiveExportAssignmentAndFindAliasedType3_moduleB.ts ===
+Line 0 col 6 IdentifierName "ClassB" = ClassB
+Line 1 col 9 IdentifierName "ClassB" = typeof ClassB
