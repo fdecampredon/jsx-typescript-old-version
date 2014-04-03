@@ -56,7 +56,7 @@ module TypeScript {
     }
 
     export class BatchCompiler implements IReferenceResolverHost {
-        public compilerVersion = "1.0.0.0";
+        public compilerVersion = "1.0.1.0";
         private inputFiles: string[] = [];
         private compilationSettings: ImmutableCompilationSettings;
         private resolvedFiles: IResolvedFile[] = [];

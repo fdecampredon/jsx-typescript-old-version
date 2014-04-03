@@ -719,7 +719,7 @@ module TypeScript.Services {
 
         private hasAnyUpperCaseCharacter(s: string): boolean {
             for (var i = 0; i < s.length; ++i) {
-                if (s[i].toLocaleLowerCase() !== s[i]) {
+                if (s.charAt(i).toLocaleLowerCase() !== s.charAt(i)) {
                     return true;
                 }
             }
