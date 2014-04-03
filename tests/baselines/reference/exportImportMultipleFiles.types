@@ -2,9 +2,9 @@
 Line 0 col 7 IdentifierName "lib" = lib
 Line 1 col 0 InvocationExpression "lib.math.add(3, 4)" = any
 Line 1 col 0 MemberAccessExpression "lib.math.add" = typeof lib.math.add
-Line 1 col 0 MemberAccessExpression "lib.math" = lib.math
+Line 1 col 0 MemberAccessExpression "lib.math" = typeof lib.math
 Line 1 col 0 IdentifierName "lib" = typeof lib
-Line 1 col 4 IdentifierName "math" = lib.math
+Line 1 col 4 IdentifierName "math" = typeof lib.math
 Line 1 col 9 IdentifierName "add" = typeof lib.math.add
 === tests/cases/compiler/exportImportMultipleFiles_math.ts ===
 Line 0 col 16 IdentifierName "add" = typeof add
