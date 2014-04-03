@@ -8,11 +8,34 @@ module TypeScript {
         private _wrapsTypeParameterCache = BitVector.getBitVector(/*allowedUndefined*/ true);
 
         // 0 indicates that it does not wrap type parameter
-        // undefined indicates that the info wasnt available from cache
+        // undefined indicates that the info wasn't available from cache
         // rest indicates the valid type parameter id
+        //
+        // The obvious way to answer the question, "Does this type wrap any type parameter
+        // from a given map?" is via a boolean. However, using a boolean would make the
+        // cache less effective. So we instead return the ID of SOME type parameter that is
+        // both in the typeParameterArgumentMap and is set to true in the cache. If all
+        // type parameters in the map are set to false in the cache, we return 0. And if
+        // neither of those apply, we need more information, so we return undefined.
+        //
+        // For example, consider a type or signature that wraps type
+        // parameters with ID's [1, 5, 6]. We are asked if it wraps some type parameter from
+        // the map [2, 4, 6]. Of course it does, because it wraps 6. If we cached true
+        // for map [2, 4, 6], this would not help us if we were later asked if it wraps
+        // something from [1, 3, 6], since it is not the same map that we were asked about
+        // before. However, by caching the 6, we are implicitly caching true for ANY map
+        // that contains a 6.
+        //
+        // On the negative side, if we find that nothing is wrapped from [2, 3, 4], we should
+        // cache false for each type parameter (2, 3, and 4). This way if we are later asked
+        // about [3, 4], we know to return false.
+        //
+        // Another way to think about this is that if we wrap some type parameter, then
+        // we have only learned that we wrap ONE type parameter. If we do not wrap any
+        // type parameter, we have learned that for ALL type parameters in the map.
         public getWrapsTypeParameter(typeParameterArgumentMap: TypeArgumentMap): number {
             // Find result from cache
-            var mapHasTypeParameterNotCached = false;
+            var someTypeParameterWasMissingFromCache = false;
             for (var typeParameterID in typeParameterArgumentMap) {
                 if (typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
                     var cachedValue = this._wrapsTypeParameterCache.valueAt(typeParameterID);
@@ -20,12 +43,12 @@ module TypeScript {
                         // Cached value indicates that the type parameter is wrapped
                         return typeParameterID;
                     }
-                    mapHasTypeParameterNotCached = mapHasTypeParameterNotCached || cachedValue === undefined;
+                    someTypeParameterWasMissingFromCache = someTypeParameterWasMissingFromCache || cachedValue === undefined;
                 }
             }
 
             // If everything was cached, then this type doesnt wrap the type parameter
-            if (!mapHasTypeParameterNotCached) {
+            if (!someTypeParameterWasMissingFromCache) {
                 return 0;
             }
 
