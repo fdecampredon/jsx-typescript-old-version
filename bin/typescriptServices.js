@@ -37549,6 +37549,8 @@ var TypeScript;
             var signatures = [];
             for (var i = 0; i < baseConstructSignatures.length; i++) {
                 var baseSignature = baseConstructSignatures[i];
+
+                baseSignature._resolveDeclaredSymbol();
                 var currentSignature = new PullSignatureSymbol(2097152 /* ConstructSignature */, baseSignature.isDefinition());
                 currentSignature.returnType = instanceTypeSymbol;
                 currentSignature.addTypeParametersFromReturnType();
@@ -66072,7 +66074,7 @@ var TypeScript;
 
             LanguageService.prototype.hasAnyUpperCaseCharacter = function (s) {
                 for (var i = 0; i < s.length; ++i) {
-                    if (s[i].toLocaleLowerCase() !== s[i]) {
+                    if (s.charAt(i).toLocaleLowerCase() !== s.charAt(i)) {
                         return true;
                     }
                 }
