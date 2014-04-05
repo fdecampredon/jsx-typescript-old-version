@@ -1,24 +1,103 @@
-enumAssignability.ts(9,1): error TS2011: Cannot convert 'F' to 'E'.
-enumAssignability.ts(10,1): error TS2011: Cannot convert 'E' to 'F'.
-enumAssignability.ts(29,9): error TS2011: Cannot convert 'E' to 'string'.
-enumAssignability.ts(30,9): error TS2011: Cannot convert 'E' to 'boolean'.
-enumAssignability.ts(31,9): error TS2011: Cannot convert 'E' to 'Date'.
-enumAssignability.ts(33,9): error TS2011: Cannot convert 'E' to 'void'.
-enumAssignability.ts(34,9): error TS2011: Cannot convert 'E' to 'Object'.
-enumAssignability.ts(35,9): error TS2011: Cannot convert 'E' to '{}'.
-enumAssignability.ts(36,9): error TS2011: Cannot convert 'E' to '() => {}'.
-enumAssignability.ts(37,9): error TS2011: Cannot convert 'E' to 'Function'.
-enumAssignability.ts(38,9): error TS2011: Cannot convert 'E' to '(x: number) => string'.
-enumAssignability.ts(39,5): error TS2011: Cannot convert 'E' to 'C'.
-enumAssignability.ts(40,5): error TS2011: Cannot convert 'E' to 'I'.
-enumAssignability.ts(41,9): error TS2011: Cannot convert 'E' to 'number[]'.
-enumAssignability.ts(42,9): error TS2011: Cannot convert 'E' to '{ foo: string; }'.
-enumAssignability.ts(43,9): error TS2011: Cannot convert 'E' to '<T>(x: T) => T'.
-enumAssignability.ts(44,9): error TS2011: Cannot convert 'E' to 'Number'.
-enumAssignability.ts(45,9): error TS2011: Cannot convert 'E' to 'String'.
-enumAssignability.ts(47,21): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
-enumAssignability.ts(48,9): error TS2011: Cannot convert 'E' to 'T'.
-enumAssignability.ts(49,9): error TS2011: Cannot convert 'E' to 'U'.
-enumAssignability.ts(50,9): error TS2011: Cannot convert 'E' to 'V'.
-enumAssignability.ts(51,13): error TS2011: Cannot convert 'E' to 'A'.
-enumAssignability.ts(52,13): error TS2011: Cannot convert 'E' to 'B'.
+==== tests/cases/compiler/enumAssignability.ts (24 errors) ====
+    // enums assignable to number, any, Object, errors unless otherwise noted
+    
+    enum E { A }
+    enum F { B }
+    
+    var e = E.A;
+    var f = F.B;
+    
+    e = f; 
+    ~
+!!! error TS2011: Cannot convert 'F' to 'E'.
+    f = e; 
+    ~
+!!! error TS2011: Cannot convert 'E' to 'F'.
+    e = 1; // ok
+    f = 1; // ok
+    var x: number = e; // ok
+    x = f; // ok
+    
+    module Others {
+        var a: any = e; // ok
+    
+        class C {
+            foo: string;
+        }
+        var ac: C;
+        interface I {
+            foo: string;
+        }
+        var ai: I;
+    
+        var b: number = e; // ok
+        var c: string = e;
+            ~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'string'.
+        var d: boolean = e;
+            ~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'boolean'.
+        var ee: Date = e;
+            ~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'Date'.
+        var f: any = e; // ok
+        var g: void = e;
+            ~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'void'.
+        var h: Object = e;
+            ~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'Object'.
+        var i: {} = e;
+            ~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to '{}'.
+        var j: () => {} = e;
+            ~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to '() => {}'.
+        var k: Function = e;
+            ~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'Function'.
+        var l: (x: number) => string = e;
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to '(x: number) => string'.
+        ac = e;
+        ~~
+!!! error TS2011: Cannot convert 'E' to 'C'.
+        ai = e;
+        ~~
+!!! error TS2011: Cannot convert 'E' to 'I'.
+        var m: number[] = e;
+            ~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'number[]'.
+        var n: { foo: string } = e;
+            ~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to '{ foo: string; }'.
+        var o: <T>(x: T) => T = e;
+            ~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to '<T>(x: T) => T'.
+        var p: Number = e;
+            ~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'Number'.
+        var q: String = e;
+            ~~~~~~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'String'.
+    
+        function foo<T, U extends T, V extends Date, A extends Number, B extends E>(x: T, y: U, z: V) {
+                        ~~~~~~~~~~~
+!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+            x = e;
+            ~
+!!! error TS2011: Cannot convert 'E' to 'T'.
+            y = e;
+            ~
+!!! error TS2011: Cannot convert 'E' to 'U'.
+            z = e;
+            ~
+!!! error TS2011: Cannot convert 'E' to 'V'.
+            var a: A = e;
+                ~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'A'.
+            var b: B = e;
+                ~~~~~~~~
+!!! error TS2011: Cannot convert 'E' to 'B'.
+        }
+    }

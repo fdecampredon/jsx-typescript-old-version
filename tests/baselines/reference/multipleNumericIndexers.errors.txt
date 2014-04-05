@@ -1,11 +1,45 @@
-multipleNumericIndexers.ts(5,5): error TS2233: Duplicate number index signature. Additional locations:
-	multipleNumericIndexers.ts(4,5)
-multipleNumericIndexers.ts(10,5): error TS2233: Duplicate number index signature. Additional locations:
-	multipleNumericIndexers.ts(9,5)
-multipleNumericIndexers.ts(15,5): error TS2233: Duplicate number index signature. Additional locations:
-	multipleNumericIndexers.ts(14,5)
-multipleNumericIndexers.ts(20,5): error TS2233: Duplicate number index signature. Additional locations:
-	multipleNumericIndexers.ts(19,5)
-multipleNumericIndexers.ts(25,5): error TS2233: Duplicate number index signature. Additional locations:
-	multipleNumericIndexers.ts(24,5)
-multipleNumericIndexers.ts(28,11): error TS2234: All declarations of an interface must have identical type parameters.
+==== tests/cases/compiler/multipleNumericIndexers.ts (6 errors) ====
+    // Multiple indexers of the same type are an error
+    
+    class C {
+        [x: number]: string;
+        [x: number]: string;
+        ~~~~~~~~~~~~~~~~~~~
+!!! error TS2233: Duplicate number index signature.
+    }
+    
+    interface I {
+        [x: number]: string;
+        [x: number]: string;
+        ~~~~~~~~~~~~~~~~~~~
+!!! error TS2233: Duplicate number index signature.
+    }
+    
+    var a: {
+        [x: number]: string;
+        [x: number]: string;
+        ~~~~~~~~~~~~~~~~~~~
+!!! error TS2233: Duplicate number index signature.
+    }
+    
+    var b: {
+        [x: number]: string;
+        [x: number]: string
+        ~~~~~~~~~~~~~~~~~~~
+!!! error TS2233: Duplicate number index signature.
+    } = { 1: '', "2": '' }
+    
+    class C2<T> {
+        [x: number]: string;
+        [x: number]: string;
+        ~~~~~~~~~~~~~~~~~~~
+!!! error TS2233: Duplicate number index signature.
+    }
+    
+    interface I<T> {
+              ~
+!!! error TS2234: All declarations of an interface must have identical type parameters.
+        [x: number]: string;
+        [x: number]: string;
+    }
+    

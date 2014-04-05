@@ -1,1 +1,6 @@
-recursiveInheritanceGeneric.ts(1,11): error TS2101: Interface 'I5<T>' is recursively referenced as a base type of itself.
+==== tests/cases/compiler/recursiveInheritanceGeneric.ts (1 errors) ====
+    interface I5<T> extends I5<T> { 
+              ~~
+!!! error TS2101: Interface 'I5<T>' is recursively referenced as a base type of itself.
+        foo():void;
+    }  

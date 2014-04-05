@@ -1,1 +1,6 @@
-arrayReferenceWithoutTypeArgs.ts(2,17): error TS2173: Generic type references must include all type arguments.
+==== tests/cases/compiler/arrayReferenceWithoutTypeArgs.ts (1 errors) ====
+    class X {
+        public f(a: Array) { }
+                    ~~~~~
+!!! error TS2173: Generic type references must include all type arguments.
+    }

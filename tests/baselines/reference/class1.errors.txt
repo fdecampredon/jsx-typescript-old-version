@@ -1,2 +1,5 @@
-class1.ts(2,7): error TS2000: Duplicate identifier 'foo'. Additional locations:
-	class1.ts(1,1)
+==== tests/cases/compiler/class1.ts (1 errors) ====
+    interface foo{ }
+    class foo{ }
+          ~~~
+!!! error TS2000: Duplicate identifier 'foo'.

@@ -1,1 +1,18 @@
-protoAssignment.ts(2,26): error TS2095: Could not find symbol 'Comparable'.
+==== tests/cases/compiler/protoAssignment.ts (1 errors) ====
+    
+    interface Number extends Comparable<number> {
+                             ~~~~~~~~~~
+!!! error TS2095: Could not find symbol 'Comparable'.
+    
+        compareTo(other: number);
+    
+    }
+    
+    Number.prototype.compareTo = function (other: number) {
+    
+       return this.valueOf() == other;
+    
+    }
+    
+     
+    

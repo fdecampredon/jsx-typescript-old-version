@@ -1,1 +1,15 @@
-unknownSymbolInGenericReturnType.ts(2,61): error TS2095: Could not find symbol 'A'.
+==== tests/cases/compiler/unknownSymbolInGenericReturnType.ts (1 errors) ====
+    class Linq {
+        public static select<T, S>(values: T[], func: (v: T) => A): any[] {
+                                                                ~
+!!! error TS2095: Could not find symbol 'A'.
+            var result = new Array(values.length);
+     
+            for (var i = 0; i < values.length; i++) {
+                result[i] = func(values[i]);
+            }
+     
+            return result;
+        }
+    }
+    

@@ -1,3 +1,12 @@
-complicatedGenericRecursiveBaseClassReference.ts(1,7): error TS2100: Class 'S18<B, A, C>' is recursively referenced as a base type of itself.
-complicatedGenericRecursiveBaseClassReference.ts(4,6): error TS2081: Supplied parameters do not match any signature of call target.
-complicatedGenericRecursiveBaseClassReference.ts(4,6): error TS2085: Could not select overload for 'new' expression.
+==== tests/cases/compiler/complicatedGenericRecursiveBaseClassReference.ts (3 errors) ====
+    class S18<B, A, C> extends S18<A[], { S19: A; (): A }[], C[]>
+          ~~~
+!!! error TS2100: Class 'S18<B, A, C>' is recursively referenced as a base type of itself.
+    {
+    }
+    (new S18(123)).S18 = 0;
+         ~~~
+!!! error TS2081: Supplied parameters do not match any signature of call target.
+         ~~~
+!!! error TS2085: Could not select overload for 'new' expression.
+    

@@ -1,2 +1,31 @@
-declaredExternalModuleWithExportAssignment.ts(11,9): error TS2027: Exported variable 'server' has or is using private type 'connectModule'.
-declaredExternalModuleWithExportAssignment.ts(11,9): error TS2027: Exported variable 'server' has or is using private type 'connectExport'.
+==== tests/cases/compiler/declaredExternalModuleWithExportAssignment.ts (2 errors) ====
+    declare module 'connect' {
+        interface connectModule {
+            (res, req, next): void;
+        }
+    
+        interface connectExport {
+            use: (mod: connectModule) => connectExport;
+            listen: (port: number) => void;
+        }
+    
+        var server: {
+            ~~~~~~~~~
+            ~~~~~~~~~
+            (): connectExport;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+            test1: connectModule;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            test2(): connectModule;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        };
+    ~~~~~
+!!! error TS2027: Exported variable 'server' has or is using private type 'connectModule'.
+    ~~~~~
+!!! error TS2027: Exported variable 'server' has or is using private type 'connectExport'.
+        export = server;
+    }
+    

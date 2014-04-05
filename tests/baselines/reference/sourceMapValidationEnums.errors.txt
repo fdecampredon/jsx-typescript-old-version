@@ -1,2 +1,16 @@
-sourceMapValidationEnums.ts(4,5): error TS2000: Duplicate identifier 'x'. Additional locations:
-	sourceMapValidationEnums.ts(2,5)
+==== tests/cases/compiler/sourceMapValidationEnums.ts (1 errors) ====
+    enum e {
+        x,
+        y,
+        x
+        ~
+!!! error TS2000: Duplicate identifier 'x'.
+    }
+    enum e2 {
+        x = 10,
+        y = 10,
+        z,
+        x2
+    }
+    enum e3 {
+    }

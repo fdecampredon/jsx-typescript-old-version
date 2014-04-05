@@ -1,6 +1,31 @@
-instantiateNonGenericTypeWithTypeArguments.ts(8,13): error TS2081: Supplied parameters do not match any signature of call target.
-instantiateNonGenericTypeWithTypeArguments.ts(8,13): error TS2085: Could not select overload for 'new' expression.
-instantiateNonGenericTypeWithTypeArguments.ts(11,13): error TS2081: Supplied parameters do not match any signature of call target.
-instantiateNonGenericTypeWithTypeArguments.ts(11,13): error TS2085: Could not select overload for 'new' expression.
-instantiateNonGenericTypeWithTypeArguments.ts(14,14): error TS2081: Supplied parameters do not match any signature of call target.
-instantiateNonGenericTypeWithTypeArguments.ts(14,14): error TS2085: Could not select overload for 'new' expression.
+==== tests/cases/compiler/instantiateNonGenericTypeWithTypeArguments.ts (6 errors) ====
+    // it is an error to provide type arguments to a non-generic call
+    // all of these are errors
+    
+    class C {
+        x: string;
+    }
+    
+    var c = new C<number>();
+                ~
+!!! error TS2081: Supplied parameters do not match any signature of call target.
+                ~
+!!! error TS2085: Could not select overload for 'new' expression.
+    
+    function Foo(): void { }
+    var r = new Foo<number>();
+                ~~~
+!!! error TS2081: Supplied parameters do not match any signature of call target.
+                ~~~
+!!! error TS2085: Could not select overload for 'new' expression.
+    
+    var f: { (): void };
+    var r2 = new f<number>();
+                 ~
+!!! error TS2081: Supplied parameters do not match any signature of call target.
+                 ~
+!!! error TS2085: Could not select overload for 'new' expression.
+    
+    var a: any;
+    // BUG 790977
+    var r2 = new a<number>();

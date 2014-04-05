@@ -1,1 +1,12 @@
-constructorReturnsInvalidType.ts(3,16): error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+==== tests/cases/compiler/constructorReturnsInvalidType.ts (1 errors) ====
+    class X {
+        constructor() {
+            return 1;
+                   ~
+!!! error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+        }
+        foo() { }
+    }
+     
+    var x = new X();
+    

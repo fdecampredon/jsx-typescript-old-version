@@ -1,2 +1,14 @@
-assignToFn.ts(8,5): error TS2012: Cannot convert 'string' to '(n: number) => boolean':
-	Type '(n: number) => boolean' requires a call signature, but type 'String' lacks one.
+==== tests/cases/compiler/assignToFn.ts (1 errors) ====
+    module M {
+        interface I {
+        f(n:number):boolean;
+        }
+    
+        var x:I={ f:function(n) { return true; } };
+    
+        x.f="hello";
+        ~~~
+!!! error TS2012: Cannot convert 'string' to '(n: number) => boolean':
+!!! 	Type '(n: number) => boolean' requires a call signature, but type 'String' lacks one.
+    }
+    

@@ -1,4 +1,22 @@
-indexSignatureMustHaveTypeAnnotation.ts(2,6): error TS1022: Index signature parameter must have a type annotation.
-indexSignatureMustHaveTypeAnnotation.ts(3,5): error TS1021: Index signature must have a type annotation.
-indexSignatureMustHaveTypeAnnotation.ts(7,6): error TS1022: Index signature parameter must have a type annotation.
-indexSignatureMustHaveTypeAnnotation.ts(12,5): error TS1021: Index signature must have a type annotation.
+==== tests/cases/compiler/indexSignatureMustHaveTypeAnnotation.ts (4 errors) ====
+    interface I {
+        [x]: string;
+         ~
+!!! error TS1022: Index signature parameter must have a type annotation.
+        [x: string];
+        ~~~~~~~~~~~
+!!! error TS1021: Index signature must have a type annotation.
+    }
+    
+    class C {
+        [x]: string
+         ~
+!!! error TS1022: Index signature parameter must have a type annotation.
+        
+    }
+    
+    class C2 {
+        [x: string]
+        ~~~~~~~~~~~
+!!! error TS1021: Index signature must have a type annotation.
+    }

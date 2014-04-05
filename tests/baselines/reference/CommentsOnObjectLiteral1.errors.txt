@@ -1,1 +1,10 @@
-commentsOnObjectLiteral1.ts(1,14): error TS2095: Could not find symbol 'makeClass'.
+==== tests/cases/compiler/commentsOnObjectLiteral1.ts (1 errors) ====
+    var Person = makeClass( 
+                 ~~~~~~~~~
+!!! error TS2095: Could not find symbol 'makeClass'.
+       /** 
+         @scope Person 
+       */ 
+       {
+       } 
+    );

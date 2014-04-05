@@ -1,1 +1,8 @@
-collisionThisExpressionAndModuleInGlobal.ts(1,8): error TS2206: Expression resolves to variable declaration '_this' that compiler uses to capture 'this' reference.
+==== tests/cases/compiler/collisionThisExpressionAndModuleInGlobal.ts (1 errors) ====
+    module _this { //Error
+           ~~~~~
+!!! error TS2206: Expression resolves to variable declaration '_this' that compiler uses to capture 'this' reference.
+        class c {
+        }
+    }
+    var f = () => this;

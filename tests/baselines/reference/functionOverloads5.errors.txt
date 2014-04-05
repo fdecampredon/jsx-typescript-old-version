@@ -1,1 +1,8 @@
-functionOverloads5.ts(2,3): error TS2150: Overload signatures must all be public or private.
+==== tests/cases/compiler/functionOverloads5.ts (1 errors) ====
+    class baz { 
+      public foo();
+      ~~~~~~~~~~~~~
+!!! error TS2150: Overload signatures must all be public or private.
+      private foo(bar?:any){ }
+    }
+    

@@ -1,2 +1,6 @@
-typecheckCommaExpression.ts(1,2): error TS2095: Could not find symbol 'a'.
-typecheckCommaExpression.ts(1,5): error TS2095: Could not find symbol 'b'.
+==== tests/cases/compiler/typecheckCommaExpression.ts (2 errors) ====
+    (a, b)
+     ~
+!!! error TS2095: Could not find symbol 'a'.
+        ~
+!!! error TS2095: Could not find symbol 'b'.

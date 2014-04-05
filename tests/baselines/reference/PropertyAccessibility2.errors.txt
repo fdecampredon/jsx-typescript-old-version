@@ -1,1 +1,8 @@
-propertyAccessibility2.ts(4,11): error TS2107: 'C.x' is inaccessible.
+==== tests/cases/compiler/propertyAccessibility2.ts (1 errors) ====
+    class C {
+      private static x = 1;
+    }
+    var c = C.x;
+              ~
+!!! error TS2107: 'C.x' is inaccessible.
+    

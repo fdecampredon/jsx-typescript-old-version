@@ -1,2 +1,5 @@
-varAndFunctionShareName.ts(2,10): error TS2000: Duplicate identifier 'myFn'. Additional locations:
-	varAndFunctionShareName.ts(1,5)
+==== tests/cases/compiler/varAndFunctionShareName.ts (1 errors) ====
+    var myFn;
+    function myFn(): any { }
+             ~~~~
+!!! error TS2000: Duplicate identifier 'myFn'.

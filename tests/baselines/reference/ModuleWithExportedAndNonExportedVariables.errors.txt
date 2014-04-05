@@ -1,1 +1,15 @@
-ModuleWithExportedAndNonExportedVariables.ts(11,11): error TS2094: The property 'y' does not exist on value of type 'typeof A'.
+==== tests/cases/compiler/ModuleWithExportedAndNonExportedVariables.ts (1 errors) ====
+    module A {
+        export var x = 'hello world'
+        var y = 12;
+    }
+    
+    
+    var x: string;
+    var x = A.x;
+    
+    // Error, since y is not exported
+    var y = A.y;
+              ~
+!!! error TS2094: The property 'y' does not exist on value of type 'typeof A'.
+    

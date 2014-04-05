@@ -1,1 +1,14 @@
-ModuleWithExportedAndNonExportedEnums.ts(10,11): error TS2094: The property 'Day' does not exist on value of type 'typeof A'.
+==== tests/cases/compiler/ModuleWithExportedAndNonExportedEnums.ts (1 errors) ====
+    module A {
+        export enum Color { Red, Blue }
+        enum Day { Monday, Tuesday }
+    }
+    
+    // not an error since exported
+    var a: A.Color = A.Color.Red;
+    
+    // error not exported
+    var b = A.Day.Monday;
+              ~~~
+!!! error TS2094: The property 'Day' does not exist on value of type 'typeof A'.
+    

@@ -1,11 +1,34 @@
-stringNamedPropertyDuplicates.ts(20,5): error TS1005: ',' expected.
-stringNamedPropertyDuplicates.ts(3,5): error TS2000: Duplicate identifier '"a b"'. Additional locations:
-	stringNamedPropertyDuplicates.ts(2,5)
-stringNamedPropertyDuplicates.ts(5,12): error TS2000: Duplicate identifier '"c d"'. Additional locations:
-	stringNamedPropertyDuplicates.ts(4,5)
-stringNamedPropertyDuplicates.ts(10,5): error TS2000: Duplicate identifier '"a b"'. Additional locations:
-	stringNamedPropertyDuplicates.ts(9,5)
-stringNamedPropertyDuplicates.ts(15,5): error TS2000: Duplicate identifier '"a b"'. Additional locations:
-	stringNamedPropertyDuplicates.ts(14,5)
-stringNamedPropertyDuplicates.ts(20,5): error TS2000: Duplicate identifier '"a b"'. Additional locations:
-	stringNamedPropertyDuplicates.ts(19,5)
+==== tests/cases/compiler/stringNamedPropertyDuplicates.ts (6 errors) ====
+    class C {
+        "a b": number;
+        "a b": number;
+        ~~~~~
+!!! error TS2000: Duplicate identifier '"a b"'.
+        static "c d": number;
+        static "c d": number;
+               ~~~~~
+!!! error TS2000: Duplicate identifier '"c d"'.
+    }
+    
+    interface I {
+        "a b": number;
+        "a b": number;
+        ~~~~~
+!!! error TS2000: Duplicate identifier '"a b"'.
+    }
+    
+    var a: {
+        "a b": number;
+        "a b": number;
+        ~~~~~
+!!! error TS2000: Duplicate identifier '"a b"'.
+    }
+    
+    var b = {
+        "a b": 1
+        "a b": 1
+        ~~~~~
+!!! error TS1005: ',' expected.
+        ~~~~~~~~
+!!! error TS2000: Duplicate identifier '"a b"'.
+    }

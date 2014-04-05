@@ -1,4 +1,20 @@
-badArraySyntax.ts(6,15): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
-badArraySyntax.ts(7,15): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
-badArraySyntax.ts(8,20): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
-badArraySyntax.ts(9,20): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+==== tests/cases/compiler/badArraySyntax.ts (4 errors) ====
+    class Z {
+     public x = "";
+    }
+    
+    var a1: Z[] = [];
+    var a2 = new Z[];
+                  ~~
+!!! error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+    var a3 = new Z[]();
+                  ~~
+!!! error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+    var a4: Z[] = new Z[];
+                       ~~
+!!! error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+    var a5: Z[] = new Z[]();
+                       ~~
+!!! error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+    
+    

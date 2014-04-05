@@ -1,2 +1,11 @@
-importDeclWithExportModifierAndExportAssignment.ts(6,1): error TS1064: Export assignment not allowed in module with exported element.
-importDeclWithExportModifierAndExportAssignment.ts(5,21): error TS2178: Could not find symbol 'c' in module 'x'.
+==== tests/cases/compiler/importDeclWithExportModifierAndExportAssignment.ts (2 errors) ====
+    module x {
+        interface c {
+        }
+    }
+    export import a = x.c;
+                        ~
+!!! error TS2178: Could not find symbol 'c' in module 'x'.
+    export = x;
+    ~~~~~~~~~~~
+!!! error TS1064: Export assignment not allowed in module with exported element.

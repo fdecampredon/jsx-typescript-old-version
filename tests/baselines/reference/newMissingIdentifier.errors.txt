@@ -1,1 +1,5 @@
-newMissingIdentifier.ts(1,14): error TS1003: Identifier expected.
+==== tests/cases/compiler/newMissingIdentifier.ts (1 errors) ====
+    var x = new ();
+                 ~
+!!! error TS1003: Identifier expected.
+    

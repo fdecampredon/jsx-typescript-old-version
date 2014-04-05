@@ -1,1 +1,11 @@
-classExtendsShadowedConstructorFunction.ts(5,21): error TS2186: Type name 'C' in extends clause does not reference constructor function for 'C'.
+==== tests/cases/compiler/classExtendsShadowedConstructorFunction.ts (1 errors) ====
+    class C { foo: string; }
+    
+    module M {
+        var C = 1;
+        class D extends C { // error, C must evaluate to constructor function
+                        ~
+!!! error TS2186: Type name 'C' in extends clause does not reference constructor function for 'C'.
+            bar: string;
+        }
+    }

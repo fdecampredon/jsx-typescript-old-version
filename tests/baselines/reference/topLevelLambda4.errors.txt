@@ -1,1 +1,4 @@
-topLevelLambda4.ts(1,22): error TS2108: 'this' cannot be referenced within module bodies.
+==== tests/cases/compiler/topLevelLambda4.ts (1 errors) ====
+    export var x = () => this.window;
+                         ~~~~
+!!! error TS2108: 'this' cannot be referenced within module bodies.

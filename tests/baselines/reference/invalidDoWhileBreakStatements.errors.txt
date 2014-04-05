@@ -1,6 +1,51 @@
-invalidDoWhileBreakStatements.ts(4,1): error TS2202: 'break' statement can only be used within an enclosing iteration or switch statement.
-invalidDoWhileBreakStatements.ts(8,4): error TS2203: Jump target not found.
-invalidDoWhileBreakStatements.ts(14,9): error TS2204: Jump target cannot cross function boundary.
-invalidDoWhileBreakStatements.ts(21,9): error TS2204: Jump target cannot cross function boundary.
-invalidDoWhileBreakStatements.ts(27,5): error TS2203: Jump target not found.
-invalidDoWhileBreakStatements.ts(37,5): error TS2203: Jump target not found.
+==== tests/cases/compiler/invalidDoWhileBreakStatements.ts (6 errors) ====
+    // All errors
+    
+    // naked break not allowed
+    break;
+    ~~~~~~
+!!! error TS2202: 'break' statement can only be used within an enclosing iteration or switch statement.
+    
+    // non-existent label
+    ONE:
+    do break TWO; while (true)
+       ~~~~~~~~~~
+!!! error TS2203: Jump target not found.
+    
+    // break from inside function
+    TWO:
+    do {
+        var x = () => {
+            break TWO;
+            ~~~~~~~~~~
+!!! error TS2204: Jump target cannot cross function boundary.
+        }
+    }while (true)
+    
+    THREE:
+    do {
+        var fn = function () {
+            break THREE;
+            ~~~~~~~~~~~~
+!!! error TS2204: Jump target cannot cross function boundary.
+        }
+    }while (true)
+    
+    // break forward
+    do {
+        break FIVE;
+        ~~~~~~~~~~~
+!!! error TS2203: Jump target not found.
+        FIVE:
+        do { } while (true)
+    }while (true)
+    
+    // label on non-loop statement
+    NINE:
+    var y = 12;
+    
+    do {
+        break NINE;
+        ~~~~~~~~~~~
+!!! error TS2203: Jump target not found.
+    }while (true)

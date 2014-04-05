@@ -1,4 +1,15 @@
-classWithPredefinedTypesAsNames.ts(3,7): error TS1057: Class name cannot be 'any'.
-classWithPredefinedTypesAsNames.ts(4,7): error TS1057: Class name cannot be 'number'.
-classWithPredefinedTypesAsNames.ts(5,7): error TS1057: Class name cannot be 'boolean'.
-classWithPredefinedTypesAsNames.ts(6,7): error TS1057: Class name cannot be 'string'.
+==== tests/cases/compiler/classWithPredefinedTypesAsNames.ts (4 errors) ====
+    // classes cannot use predefined types as names
+    
+    class any { }
+          ~~~
+!!! error TS1057: Class name cannot be 'any'.
+    class number { }
+          ~~~~~~
+!!! error TS1057: Class name cannot be 'number'.
+    class boolean { }
+          ~~~~~~~
+!!! error TS1057: Class name cannot be 'boolean'.
+    class string { }
+          ~~~~~~
+!!! error TS1057: Class name cannot be 'string'.

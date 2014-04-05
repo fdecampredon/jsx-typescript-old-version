@@ -1,4 +1,10 @@
-es6ClassTest9.ts(1,18): error TS1005: '{' expected.
-es6ClassTest9.ts(1,19): error TS1003: Identifier expected.
-es6ClassTest9.ts(2,10): error TS2000: Duplicate identifier 'foo'. Additional locations:
-	es6ClassTest9.ts(1,1)
+==== tests/cases/compiler/es6ClassTest9.ts (3 errors) ====
+    declare class foo();
+                     ~
+!!! error TS1005: '{' expected.
+                      ~
+!!! error TS1003: Identifier expected.
+    function foo() {}
+             ~~~
+!!! error TS2000: Duplicate identifier 'foo'.
+    

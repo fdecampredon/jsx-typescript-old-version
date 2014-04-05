@@ -1,2 +1,6 @@
-primitiveTypeAsInterfaceName.ts(1,11): error TS1058: Interface name cannot be 'number'.
-primitiveTypeAsInterfaceName.ts(1,11): error TS2000: Duplicate identifier 'number'.
+==== tests/cases/compiler/primitiveTypeAsInterfaceName.ts (2 errors) ====
+    interface number {}
+              ~~~~~~
+!!! error TS1058: Interface name cannot be 'number'.
+              ~~~~~~
+!!! error TS2000: Duplicate identifier 'number'.

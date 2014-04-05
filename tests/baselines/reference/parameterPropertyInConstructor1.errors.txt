@@ -1,1 +1,9 @@
-parameterPropertyInConstructor1.ts(3,17): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+==== tests/cases/compiler/parameterPropertyInConstructor1.ts (1 errors) ====
+    declare module mod {
+      class Customers {
+        constructor(public names: string);
+                    ~~~~~~
+!!! error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+      }
+    }
+    

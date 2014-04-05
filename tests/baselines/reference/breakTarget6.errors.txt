@@ -1,1 +1,6 @@
-breakTarget6.ts(2,3): error TS2203: Jump target not found.
+==== tests/cases/compiler/breakTarget6.ts (1 errors) ====
+    while (true) {
+      break target;
+      ~~~~~~~~~~~~~
+!!! error TS2203: Jump target not found.
+    }

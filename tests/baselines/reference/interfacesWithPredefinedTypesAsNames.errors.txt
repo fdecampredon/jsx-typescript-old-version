@@ -1,6 +1,18 @@
-interfacesWithPredefinedTypesAsNames.ts(5,11): error TS1005: ';' expected.
-interfacesWithPredefinedTypesAsNames.ts(1,11): error TS2000: Duplicate identifier 'any'.
-interfacesWithPredefinedTypesAsNames.ts(2,11): error TS2000: Duplicate identifier 'number'.
-interfacesWithPredefinedTypesAsNames.ts(3,11): error TS2000: Duplicate identifier 'string'.
-interfacesWithPredefinedTypesAsNames.ts(4,11): error TS2000: Duplicate identifier 'boolean'.
-interfacesWithPredefinedTypesAsNames.ts(5,1): error TS2095: Could not find symbol 'interface'.
+==== tests/cases/compiler/interfacesWithPredefinedTypesAsNames.ts (6 errors) ====
+    interface any { }
+              ~~~
+!!! error TS2000: Duplicate identifier 'any'.
+    interface number { }
+              ~~~~~~
+!!! error TS2000: Duplicate identifier 'number'.
+    interface string { }
+              ~~~~~~
+!!! error TS2000: Duplicate identifier 'string'.
+    interface boolean { }
+              ~~~~~~~
+!!! error TS2000: Duplicate identifier 'boolean'.
+    interface void {}
+              ~~~~
+!!! error TS1005: ';' expected.
+    ~~~~~~~~~
+!!! error TS2095: Could not find symbol 'interface'.
