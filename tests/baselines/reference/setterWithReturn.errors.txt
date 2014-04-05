@@ -1,2 +1,15 @@
-setterWithReturn.ts(4,20): error TS2122: Setters cannot return a value.
-setterWithReturn.ts(7,20): error TS2122: Setters cannot return a value.
+==== tests/cases/compiler/setterWithReturn.ts (2 errors) ====
+    class C234 {
+        public set p1(arg1) {
+            if (true) {
+                return arg1;
+                       ~~~~
+!!! error TS2122: Setters cannot return a value.
+            }
+            else {
+                return 0;
+                       ~
+!!! error TS2122: Setters cannot return a value.
+            }
+       }
+    }

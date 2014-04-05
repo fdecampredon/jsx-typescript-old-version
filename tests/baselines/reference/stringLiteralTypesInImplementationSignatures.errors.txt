@@ -1,11 +1,49 @@
-stringLiteralTypesInImplementationSignatures.ts(3,1): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(4,9): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(5,10): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(8,5): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(12,5): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
-stringLiteralTypesInImplementationSignatures.ts(13,5): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
-stringLiteralTypesInImplementationSignatures.ts(17,5): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
-stringLiteralTypesInImplementationSignatures.ts(18,5): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
-stringLiteralTypesInImplementationSignatures.ts(22,5): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(23,8): error TS2163: Overload signature implementation cannot use specialized type.
-stringLiteralTypesInImplementationSignatures.ts(24,8): error TS2163: Overload signature implementation cannot use specialized type.
+==== tests/cases/compiler/stringLiteralTypesInImplementationSignatures.ts (11 errors) ====
+    // String literal types are only valid in overload signatures
+    
+    function foo(x: 'hi') { }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+    var f = function foo(x: 'hi') { }
+            ~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+    var f2 = (x: 'hi', y: 'hi') => { }
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+    
+    class C {
+        foo(x: 'hi') { }
+        ~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+    }
+    
+    interface I {
+        (x: 'hi');
+        ~~~~~~~~~
+!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+        foo(x: 'hi', y: 'hi');
+        ~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+    }
+    
+    var a: {
+        (x: 'hi');
+        ~~~~~~~~~
+!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+        foo(x: 'hi');
+        ~~~~~~~~~~~~
+!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+    }
+    
+    var b = {
+        foo(x: 'hi') { },
+        ~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+        a: function foo(x: 'hi', y: 'hi') { },
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+        b: (x: 'hi') => { }
+           ~~~~~~~~~~~~~~~~
+!!! error TS2163: Overload signature implementation cannot use specialized type.
+    }
+    

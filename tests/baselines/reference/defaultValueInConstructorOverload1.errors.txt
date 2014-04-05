@@ -1,1 +1,8 @@
-defaultValueInConstructorOverload1.ts(2,17): error TS2174: Default arguments are only allowed in implementation.
+==== tests/cases/compiler/defaultValueInConstructorOverload1.ts (1 errors) ====
+    class C {
+        constructor(x = '');
+                    ~~~~~~
+!!! error TS2174: Default arguments are only allowed in implementation.
+        constructor(x = '') {
+        }
+    }

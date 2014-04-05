@@ -119,9 +119,9 @@ module Harness {
             }
         }
 
-        export function equal(actual: any, expected: any) {
+        export function equal(actual: any, expected: any, description = '') {
             if (actual !== expected) {
-                throwAssertError(new Error("Expected " + actual + " to equal " + expected));
+                throwAssertError(new Error("Expected " + description + (description.length > 0 ? ' ' : '') + actual + " to equal " + expected));
             }
         }
 

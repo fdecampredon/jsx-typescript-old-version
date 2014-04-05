@@ -1,2 +1,10 @@
-classCannotExtendVar.ts(3,7): error TS2000: Duplicate identifier 'Markup'. Additional locations:
-	classCannotExtendVar.ts(1,5)
+==== tests/cases/compiler/classCannotExtendVar.ts (1 errors) ====
+    var Markup;
+    
+    class Markup {
+          ~~~~~~
+!!! error TS2000: Duplicate identifier 'Markup'.
+        constructor() {
+        }
+    }
+    

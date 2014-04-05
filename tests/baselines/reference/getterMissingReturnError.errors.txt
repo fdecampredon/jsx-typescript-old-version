@@ -1,1 +1,9 @@
-getterMissingReturnError.ts(2,16): error TS2126: Getters must return a value.
+==== tests/cases/compiler/getterMissingReturnError.ts (1 errors) ====
+    class test {
+        public get p2(){
+                   ~~
+!!! error TS2126: Getters must return a value.
+    
+        }
+    }
+    

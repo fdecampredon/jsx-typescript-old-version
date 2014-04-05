@@ -1,1 +1,6 @@
-boolInsteadOfBoolean.ts(1,8): error TS2095: Could not find symbol 'bool'.
+==== tests/cases/compiler/boolInsteadOfBoolean.ts (1 errors) ====
+    var x: bool;
+           ~~~~
+!!! error TS2095: Could not find symbol 'bool'.
+    var a: boolean = x;
+    x = a;

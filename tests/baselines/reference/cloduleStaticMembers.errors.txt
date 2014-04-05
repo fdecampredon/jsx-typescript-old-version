@@ -1,3 +1,19 @@
-cloduleStaticMembers.ts(6,18): error TS2107: 'Clod.x' is inaccessible.
-cloduleStaticMembers.ts(7,13): error TS2095: Could not find symbol 'x'.
-cloduleStaticMembers.ts(10,13): error TS2095: Could not find symbol 'y'.
+==== tests/cases/compiler/cloduleStaticMembers.ts (3 errors) ====
+    class Clod {
+        private static x = 10;
+        public static y = 10;
+    }
+    module Clod {
+        var p = Clod.x;
+                     ~
+!!! error TS2107: 'Clod.x' is inaccessible.
+        var q = x;
+                ~
+!!! error TS2095: Could not find symbol 'x'.
+    
+        var s = Clod.y;
+        var t = y; 
+                ~
+!!! error TS2095: Could not find symbol 'y'.
+    }
+    

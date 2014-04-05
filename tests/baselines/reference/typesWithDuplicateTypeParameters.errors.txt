@@ -1,6 +1,21 @@
-typesWithDuplicateTypeParameters.ts(1,9): error TS2000: Duplicate identifier 'T'.
-typesWithDuplicateTypeParameters.ts(2,10): error TS2000: Duplicate identifier 'T'.
-typesWithDuplicateTypeParameters.ts(4,13): error TS2000: Duplicate identifier 'T'.
-typesWithDuplicateTypeParameters.ts(5,14): error TS2000: Duplicate identifier 'T'.
-typesWithDuplicateTypeParameters.ts(7,12): error TS2000: Duplicate identifier 'T'.
-typesWithDuplicateTypeParameters.ts(8,13): error TS2000: Duplicate identifier 'T'.
+==== tests/cases/compiler/typesWithDuplicateTypeParameters.ts (6 errors) ====
+    class C<T, T> { }
+            ~
+!!! error TS2000: Duplicate identifier 'T'.
+    class C2<T, U, T> { }
+             ~
+!!! error TS2000: Duplicate identifier 'T'.
+    
+    interface I<T, T> { }
+                ~
+!!! error TS2000: Duplicate identifier 'T'.
+    interface I2<T, U, T> { }
+                 ~
+!!! error TS2000: Duplicate identifier 'T'.
+    
+    function f<T, T>() { }
+               ~
+!!! error TS2000: Duplicate identifier 'T'.
+    function f2<T, U, T>() { }
+                ~
+!!! error TS2000: Duplicate identifier 'T'.

@@ -1,1 +1,10 @@
-importAndVariableDeclarationConflict1.ts(6,5): error TS4026: Variable declaration cannot have the same name as an import declaration.
+==== tests/cases/compiler/importAndVariableDeclarationConflict1.ts (1 errors) ====
+    module m {
+      export var m = '';
+    }
+    
+    import x = m.m;
+    var x = '';
+        ~~~~~~
+!!! error TS4026: Variable declaration cannot have the same name as an import declaration.
+    

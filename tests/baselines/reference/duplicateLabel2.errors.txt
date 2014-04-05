@@ -1,2 +1,9 @@
-duplicateLabel2.ts(3,3): error TS2000: Duplicate identifier 'target'. Additional locations:
-	duplicateLabel2.ts(1,1)
+==== tests/cases/compiler/duplicateLabel2.ts (1 errors) ====
+    target:
+    while (true) {
+      target:
+      ~~~~~~
+!!! error TS2000: Duplicate identifier 'target'.
+      while (true) {
+      }
+    }

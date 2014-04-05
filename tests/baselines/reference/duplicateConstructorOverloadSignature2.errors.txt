@@ -1,1 +1,8 @@
-duplicateConstructorOverloadSignature2.ts(3,5): error TS2145: Duplicate constructor overload signature.
+==== tests/cases/compiler/duplicateConstructorOverloadSignature2.ts (1 errors) ====
+    class C<T> {
+        constructor(x: T);
+        constructor(x: T);
+        ~~~~~~~~~~~~~~~~~~
+!!! error TS2145: Duplicate constructor overload signature.
+        constructor(x: any) { }
+    }

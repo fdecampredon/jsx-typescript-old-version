@@ -1,6 +1,16 @@
-enumWithPrimitiveName.ts(1,6): error TS1059: Enum name cannot be 'string'.
-enumWithPrimitiveName.ts(2,6): error TS1059: Enum name cannot be 'number'.
-enumWithPrimitiveName.ts(3,6): error TS1059: Enum name cannot be 'any'.
-enumWithPrimitiveName.ts(1,6): error TS2000: Duplicate identifier 'string'.
-enumWithPrimitiveName.ts(2,6): error TS2000: Duplicate identifier 'number'.
-enumWithPrimitiveName.ts(3,6): error TS2000: Duplicate identifier 'any'.
+==== tests/cases/compiler/enumWithPrimitiveName.ts (6 errors) ====
+    enum string { }
+         ~~~~~~
+!!! error TS1059: Enum name cannot be 'string'.
+         ~~~~~~
+!!! error TS2000: Duplicate identifier 'string'.
+    enum number { }
+         ~~~~~~
+!!! error TS1059: Enum name cannot be 'number'.
+         ~~~~~~
+!!! error TS2000: Duplicate identifier 'number'.
+    enum any { }
+         ~~~
+!!! error TS1059: Enum name cannot be 'any'.
+         ~~~
+!!! error TS2000: Duplicate identifier 'any'.

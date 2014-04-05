@@ -1,4 +1,22 @@
-interfaceThatInheritsFromItself.ts(10,15): error TS1032: Interface declaration cannot have 'implements' clause.
-interfaceThatInheritsFromItself.ts(1,11): error TS2101: Interface 'Foo' is recursively referenced as a base type of itself.
-interfaceThatInheritsFromItself.ts(4,11): error TS2101: Interface 'Foo2<T>' is recursively referenced as a base type of itself.
-interfaceThatInheritsFromItself.ts(7,11): error TS2101: Interface 'Foo3<T>' is recursively referenced as a base type of itself.
+==== tests/cases/compiler/interfaceThatInheritsFromItself.ts (4 errors) ====
+    interface Foo extends Foo { // error
+              ~~~
+!!! error TS2101: Interface 'Foo' is recursively referenced as a base type of itself.
+    }
+    
+    interface Foo2<T> extends Foo2<T> { // error
+              ~~~~
+!!! error TS2101: Interface 'Foo2<T>' is recursively referenced as a base type of itself.
+    }
+    
+    interface Foo3<T> extends Foo3<string> { // error
+              ~~~~
+!!! error TS2101: Interface 'Foo3<T>' is recursively referenced as a base type of itself.
+    }
+    
+    interface Bar implements Bar { // error
+                  ~~~~~~~~~~~~~~
+!!! error TS1032: Interface declaration cannot have 'implements' clause.
+    }
+    
+    

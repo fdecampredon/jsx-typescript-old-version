@@ -1,6 +1,34 @@
+<<<<<<< HEAD
 inheritedConstructorWithRestParams.ts(13,5): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'string' to argument 2 which is of type 'number'.
 inheritedConstructorWithRestParams.ts(13,5): error TS2085: Could not select overload for 'new' expression.
 inheritedConstructorWithRestParams.ts(14,5): error TS2082: Supplied parameters do not match any signature of call target:
 	Could not apply type 'string' to argument 1 which is of type 'number'.
 inheritedConstructorWithRestParams.ts(14,5): error TS2085: Could not select overload for 'new' expression.
+=======
+==== tests/cases/compiler/inheritedConstructorWithRestParams.ts (4 errors) ====
+    class Base {
+        constructor(...a: string[]) { }
+    }
+    
+    class Derived extends Base { }
+    
+    // Ok
+    new Derived("", "");
+    new Derived("");
+    new Derived();
+    
+    // Errors
+    new Derived("", 3);
+        ~~~~~~~
+!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! 	Could not apply type 'string' to argument 2 which is of type 'number'.
+        ~~~~~~~
+!!! error TS2085: Could not select overload for 'new' expression.
+    new Derived(3);
+        ~~~~~~~
+!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
+        ~~~~~~~
+!!! error TS2085: Could not select overload for 'new' expression.
+>>>>>>> b9bbbf1... Improve error baseline reporting

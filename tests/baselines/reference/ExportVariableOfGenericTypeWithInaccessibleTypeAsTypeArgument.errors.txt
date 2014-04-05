@@ -1,2 +1,13 @@
-ExportVariableOfGenericTypeWithInaccessibleTypeAsTypeArgument.ts(6,16): error TS2027: Exported variable 'beez' has or is using private type 'B'.
-ExportVariableOfGenericTypeWithInaccessibleTypeAsTypeArgument.ts(7,16): error TS2027: Exported variable 'beez2' has or is using private type 'B'.
+==== tests/cases/compiler/ExportVariableOfGenericTypeWithInaccessibleTypeAsTypeArgument.ts (2 errors) ====
+    module A {
+        class B {
+            id: number;
+        }
+    
+        export var beez: Array<B>;
+                   ~~~~~~~~~~~~~~
+!!! error TS2027: Exported variable 'beez' has or is using private type 'B'.
+        export var beez2 = new Array<B>();
+                   ~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2027: Exported variable 'beez2' has or is using private type 'B'.
+    }

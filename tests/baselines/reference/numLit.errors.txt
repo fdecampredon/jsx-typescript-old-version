@@ -1,2 +1,9 @@
-numLit.ts(3,3): error TS1005: ';' expected.
-numLit.ts(3,3): error TS2095: Could not find symbol 'toString'.
+==== tests/cases/compiler/numLit.ts (2 errors) ====
+    1..toString();
+    1.0.toString();
+    1.toString();
+      ~~~~~~~~
+!!! error TS1005: ';' expected.
+      ~~~~~~~~
+!!! error TS2095: Could not find symbol 'toString'.
+    1.+2.0 + 3. ;

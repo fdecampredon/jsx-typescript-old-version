@@ -1,2 +1,15 @@
-inheritSameNamePrivatePropertiesFromDifferentOrigins.ts(9,11): error TS2189: Interface 'A' cannot simultaneously extend types 'C' and 'C2':
-Named properties 'x' of types 'C' and 'C2' are not identical.
+==== tests/cases/compiler/inheritSameNamePrivatePropertiesFromDifferentOrigins.ts (1 errors) ====
+    class C {
+        private x: number;
+    }
+    
+    class C2 {
+        private x: number;
+    }
+    
+    interface A extends C, C2 { // error
+              ~
+!!! error TS2189: Interface 'A' cannot simultaneously extend types 'C' and 'C2':
+!!! Named properties 'x' of types 'C' and 'C2' are not identical.
+        y: string;
+    }

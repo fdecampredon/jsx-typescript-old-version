@@ -1,1 +1,6 @@
-continueInIterationStatement4.ts(1,15): error TS2095: Could not find symbol 'something'.
+==== tests/cases/compiler/continueInIterationStatement4.ts (1 errors) ====
+    for (var i in something) {
+                  ~~~~~~~~~
+!!! error TS2095: Could not find symbol 'something'.
+      continue;
+    }

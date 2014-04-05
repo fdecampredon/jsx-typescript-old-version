@@ -1,1 +1,4 @@
-separate1-1.ts(1,1): error TS2095: Could not find symbol 'X'.
+==== tests/cases/compiler/separate1-1.ts (1 errors) ====
+    X.f();
+    ~
+!!! error TS2095: Could not find symbol 'X'.

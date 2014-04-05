@@ -1,1 +1,12 @@
-privateAccessInSubclass1.ts(7,10): error TS2107: 'Base.options' is inaccessible.
+==== tests/cases/compiler/privateAccessInSubclass1.ts (1 errors) ====
+    class Base {
+      private options: any;
+    }
+    
+    class D extends Base {
+      myMethod() {
+        this.options;
+             ~~~~~~~
+!!! error TS2107: 'Base.options' is inaccessible.
+      }
+    }

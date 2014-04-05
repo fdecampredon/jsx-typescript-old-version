@@ -1,1 +1,7 @@
-thisInConstructorParameter1.ts(3,21): error TS2155: 'this' cannot be referenced in constructor arguments.
+==== tests/cases/compiler/thisInConstructorParameter1.ts (1 errors) ====
+    class Foo {
+        public y;
+        constructor(x = this.y) { }
+                        ~~~~
+!!! error TS2155: 'this' cannot be referenced in constructor arguments.
+    }

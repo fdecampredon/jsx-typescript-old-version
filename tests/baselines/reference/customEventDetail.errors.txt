@@ -1,1 +1,8 @@
-customEventDetail.ts(1,8): error TS2095: Could not find symbol 'CustomEvent'.
+==== tests/cases/compiler/customEventDetail.ts (1 errors) ====
+    var x: CustomEvent;
+           ~~~~~~~~~~~
+!!! error TS2095: Could not find symbol 'CustomEvent'.
+    
+    // valid since detail is any
+    x.initCustomEvent('hello', true, true, { id: 12, name: 'hello' });
+    var y = x.detail.name;

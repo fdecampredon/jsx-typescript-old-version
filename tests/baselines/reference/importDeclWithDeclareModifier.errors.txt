@@ -1,2 +1,12 @@
-importDeclWithDeclareModifier.ts(5,1): error TS1079: 'declare' modifier not allowed on import declaration.
-importDeclWithDeclareModifier.ts(5,29): error TS2178: Could not find symbol 'c' in module 'x'.
+==== tests/cases/compiler/importDeclWithDeclareModifier.ts (2 errors) ====
+    module x {
+        interface c {
+        }
+    }
+    declare export import a = x.c;
+    ~~~~~~~
+!!! error TS1079: 'declare' modifier not allowed on import declaration.
+                                ~
+!!! error TS2178: Could not find symbol 'c' in module 'x'.
+    var b: a;
+    

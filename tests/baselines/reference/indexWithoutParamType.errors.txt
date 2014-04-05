@@ -1,1 +1,4 @@
-indexWithoutParamType.ts(1,11): error TS1003: Identifier expected.
+==== tests/cases/compiler/indexWithoutParamType.ts (1 errors) ====
+    var y: { []; } // Error
+              ~
+!!! error TS1003: Identifier expected.

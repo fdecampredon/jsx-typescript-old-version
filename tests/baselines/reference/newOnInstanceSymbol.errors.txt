@@ -1,1 +1,6 @@
-newOnInstanceSymbol.ts(3,5): error TS2083: Invalid 'new' expression.
+==== tests/cases/compiler/newOnInstanceSymbol.ts (1 errors) ====
+    class C {}
+    var x = new C(); // should be ok
+    new x(); // should error
+        ~
+!!! error TS2083: Invalid 'new' expression.

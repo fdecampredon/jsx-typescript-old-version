@@ -1,2 +1,13 @@
-objectLiteralWithNumericPropertyName.ts(4,5): error TS2012: Cannot convert '{ 0: number; }' to 'A':
-	Types of property '0' of types '{ 0: number; }' and 'A' are incompatible.
+==== tests/cases/compiler/objectLiteralWithNumericPropertyName.ts (1 errors) ====
+    interface A {
+        0: string;
+    }
+    var x: A = {
+        ~~~~~~~~
+        0: 3
+    ~~~~~~~~
+    };
+    ~
+!!! error TS2012: Cannot convert '{ 0: number; }' to 'A':
+!!! 	Types of property '0' of types '{ 0: number; }' and 'A' are incompatible.
+    

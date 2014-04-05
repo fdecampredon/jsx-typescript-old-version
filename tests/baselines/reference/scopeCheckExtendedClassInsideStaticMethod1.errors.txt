@@ -1,3 +1,15 @@
-scopeCheckExtendedClassInsideStaticMethod1.ts(4,7): error TS2095: Could not find symbol 'v'.
-scopeCheckExtendedClassInsideStaticMethod1.ts(5,12): error TS2094: The property 'p' does not exist on value of type 'typeof D'.
-scopeCheckExtendedClassInsideStaticMethod1.ts(6,7): error TS2095: Could not find symbol 's'.
+==== tests/cases/compiler/scopeCheckExtendedClassInsideStaticMethod1.ts (3 errors) ====
+    class C { private v; public p; static s; }
+    class D extends C {
+       static c() {
+          v = 1;
+          ~
+!!! error TS2095: Could not find symbol 'v'.
+          this.p = 1;
+               ~
+!!! error TS2094: The property 'p' does not exist on value of type 'typeof D'.
+          s = 1;
+          ~
+!!! error TS2095: Could not find symbol 's'.
+       }
+    }

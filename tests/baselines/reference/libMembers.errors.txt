@@ -1,3 +1,22 @@
-libMembers.ts(9,16): error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
-libMembers.ts(4,3): error TS2094: The property 'subby' does not exist on value of type 'string'.
-libMembers.ts(12,15): error TS2094: The property 'prototype' does not exist on value of type 'C'.
+==== tests/cases/compiler/libMembers.ts (3 errors) ====
+    var s="hello";
+    s.substring(0);
+    s.substring(3,4);
+    s.subby(12);   // error unresolved
+      ~~~~~
+!!! error TS2094: The property 'subby' does not exist on value of type 'string'.
+    String.fromCharCode(12);
+    module M {
+        export class C {
+        }
+        var a=new C[];
+                   ~~
+!!! error TS2068: 'new T[]' cannot be used to create an array. Use 'new Array<T>()' instead.
+        a.length;
+        a.push(new C());
+        (new C()).prototype;
+                  ~~~~~~~~~
+!!! error TS2094: The property 'prototype' does not exist on value of type 'C'.
+    }
+    
+    

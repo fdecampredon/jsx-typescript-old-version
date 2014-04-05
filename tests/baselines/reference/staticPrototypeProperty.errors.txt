@@ -1,2 +1,12 @@
-staticPrototypeProperty.ts(2,4): error TS2000: Duplicate identifier 'prototype'.
-staticPrototypeProperty.ts(6,11): error TS2000: Duplicate identifier 'prototype'.
+==== tests/cases/compiler/staticPrototypeProperty.ts (2 errors) ====
+    class C {
+       static prototype() { }
+       ~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2000: Duplicate identifier 'prototype'.
+    }
+     
+    class C2 {
+       static prototype;
+              ~~~~~~~~~
+!!! error TS2000: Duplicate identifier 'prototype'.
+    }

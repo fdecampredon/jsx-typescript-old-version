@@ -1,1 +1,6 @@
-genericTypeUsedWithoutTypeArguments3.ts(2,26): error TS2173: Generic type references must include all type arguments.
+==== tests/cases/compiler/genericTypeUsedWithoutTypeArguments3.ts (1 errors) ====
+    interface Foo<T> { }
+    interface Bar<T> extends Foo { }
+                             ~~~
+!!! error TS2173: Generic type references must include all type arguments.
+    

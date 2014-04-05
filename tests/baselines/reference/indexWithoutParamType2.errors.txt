@@ -1,1 +1,6 @@
-indexWithoutParamType2.ts(2,6): error TS1022: Index signature parameter must have a type annotation.
+==== tests/cases/compiler/indexWithoutParamType2.ts (1 errors) ====
+    class C {
+        [x]: string
+         ~
+!!! error TS1022: Index signature parameter must have a type annotation.
+    }

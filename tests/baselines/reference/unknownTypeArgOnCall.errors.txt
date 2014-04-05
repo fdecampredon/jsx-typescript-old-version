@@ -1,1 +1,11 @@
-unknownTypeArgOnCall.ts(7,17): error TS2095: Could not find symbol 'Uhhhh'.
+==== tests/cases/compiler/unknownTypeArgOnCall.ts (1 errors) ====
+    class Foo<T> {
+      public clone<U>() {
+       return null;
+       }
+    }
+    var f = new Foo<number>();
+    var r = f.clone<Uhhhh>()
+                    ~~~~~
+!!! error TS2095: Could not find symbol 'Uhhhh'.
+    

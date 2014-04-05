@@ -1,2 +1,12 @@
-collisionExportsRequireAndClass.ts(1,1): error TS2228: Duplicate identifier 'require'. Compiler reserves name 'require' in top level scope of an external module.
-collisionExportsRequireAndClass.ts(3,1): error TS2228: Duplicate identifier 'exports'. Compiler reserves name 'exports' in top level scope of an external module.
+==== tests/cases/compiler/collisionExportsRequireAndClass.ts (2 errors) ====
+    export class require {
+    ~~~~~~~~~~~~~~~~~~~~~~
+    }
+    ~
+!!! error TS2228: Duplicate identifier 'require'. Compiler reserves name 'require' in top level scope of an external module.
+    export class exports {
+    ~~~~~~~~~~~~~~~~~~~~~~
+    }
+    ~
+!!! error TS2228: Duplicate identifier 'exports'. Compiler reserves name 'exports' in top level scope of an external module.
+    
