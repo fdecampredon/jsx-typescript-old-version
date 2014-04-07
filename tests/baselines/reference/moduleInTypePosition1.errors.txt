@@ -3,7 +3,7 @@
     import WinJS = require('moduleInTypePosition1_0');
     var x = (w1: WinJS) => { };
                  ~~~~~
-!!! error TS4022: Type reference cannot refer to container 'WinJS'.
+!!! moduleInTypePosition1_1.ts(3,14): error TS4022: Type reference cannot refer to container 'WinJS'.
     
 ==== tests/cases/compiler/moduleInTypePosition1_0.ts (0 errors) ====
     export class Promise {

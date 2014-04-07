@@ -8,7 +8,7 @@
     
     class C4 implements I1 {
           ~~
-!!! error TS2137: Class C4 declares interface I1 but does not implement it:
+!!! interfaceImplementation3.ts(8,7): error TS2137: Class C4 declares interface I1 but does not implement it:
 !!! 	Type 'C4' is missing property 'iAny' from type 'I1'.
         public iObj:{ };
         public iNum:number;

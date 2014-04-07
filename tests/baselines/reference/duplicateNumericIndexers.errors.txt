@@ -5,20 +5,23 @@
         [x: number]: string;
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(5,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	duplicateNumericIndexers.ts(4,5)
     }
     
     interface String {
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(9,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	lib.d.ts(424,5)
         [x: number]: string;
     }
     
     interface Array<T> {
         [x: number]: T;
         ~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(14,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	lib.d.ts(1132,5)
         [x: number]: T;
     }
     
@@ -26,21 +29,24 @@
         [x: number]: string;
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(20,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	duplicateNumericIndexers.ts(19,5)
     }
     
     interface I {
         [x: number]: string;
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(25,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	duplicateNumericIndexers.ts(24,5)
     }
     
     var a: {
         [x: number]: string;
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2233: Duplicate number index signature.
+!!! duplicateNumericIndexers.ts(30,5): error TS2233: Duplicate number index signature. Additional locations:
+!!! 	duplicateNumericIndexers.ts(29,5)
     }
     
     

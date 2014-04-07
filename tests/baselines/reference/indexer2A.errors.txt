@@ -5,12 +5,12 @@
             hasOwnProperty(objectId: number) : boolean
             [objectId: number] : IHeapObjectProperty[] 
              ~~~~~~~~
-!!! error TS1005: ']' expected.
+!!! indexer2A.ts(5,10): error TS1005: ']' expected.
                              ~
-!!! error TS1005: ';' expected.
+!!! indexer2A.ts(5,26): error TS1005: ';' expected.
                                ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! indexer2A.ts(5,28): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
                                                     ~
-!!! error TS1005: '=' expected.
+!!! indexer2A.ts(5,49): error TS1005: '=' expected.
     }    
     var directChildrenMap = <IDirectChildrenMap>{}; 

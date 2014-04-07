@@ -5,7 +5,7 @@
     
     interface A<T, U> { // error
               ~
-!!! error TS2234: All declarations of an interface must have identical type parameters.
+!!! twoGenericInterfacesWithTheSameNameButDifferentArity.ts(5,11): error TS2234: All declarations of an interface must have identical type parameters.
         y: T;
     }
     
@@ -16,7 +16,7 @@
     
         interface A<T, U> { // error
                   ~
-!!! error TS2234: All declarations of an interface must have identical type parameters.
+!!! twoGenericInterfacesWithTheSameNameButDifferentArity.ts(14,15): error TS2234: All declarations of an interface must have identical type parameters.
             y: T;
         }
     }
@@ -42,7 +42,7 @@
     module M3 {
         export interface A<T, U> { // error
                          ~
-!!! error TS2234: All declarations of an interface must have identical type parameters.
+!!! twoGenericInterfacesWithTheSameNameButDifferentArity.ts(38,22): error TS2234: All declarations of an interface must have identical type parameters.
             y: T;
         }
     }

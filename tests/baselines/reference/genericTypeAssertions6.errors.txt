@@ -8,10 +8,10 @@
         f(x: T, y: U) {
             x = <T>y;
                 ~~~~
-!!! error TS2011: Cannot convert 'U' to 'T'.
+!!! genericTypeAssertions6.ts(8,13): error TS2011: Cannot convert 'U' to 'T'.
             y = <U>x;
                 ~~~~
-!!! error TS2011: Cannot convert 'T' to 'U'.
+!!! genericTypeAssertions6.ts(9,13): error TS2011: Cannot convert 'T' to 'U'.
         }
     }
     
@@ -23,7 +23,7 @@
             var d = <U>new Date();
             var e = <T><U>new Date();
                     ~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'U' to 'T'.
+!!! genericTypeAssertions6.ts(19,17): error TS2011: Cannot convert 'U' to 'T'.
         }
     }
     

@@ -8,5 +8,5 @@
     
     interface Z extends X, Y { }
               ~
-!!! error TS2189: Interface 'Z' cannot simultaneously extend types 'X' and 'Y':
+!!! baseTypePrivateMemberClash.ts(8,11): error TS2189: Interface 'Z' cannot simultaneously extend types 'X' and 'Y':
 !!! Named properties 'm' of types 'X' and 'Y' are not identical.

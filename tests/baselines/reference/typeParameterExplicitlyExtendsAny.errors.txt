@@ -3,7 +3,7 @@
         var t: T;
         t.blah; // Error
           ~~~~
-!!! error TS2094: The property 'blah' does not exist on value of type 'T'.
+!!! typeParameterExplicitlyExtendsAny.ts(3,7): error TS2094: The property 'blah' does not exist on value of type 'T'.
         t.toString; // ok
     }
     
@@ -11,6 +11,6 @@
         var t: T;
         t.blah; // Error
           ~~~~
-!!! error TS2094: The property 'blah' does not exist on value of type 'T'.
+!!! typeParameterExplicitlyExtendsAny.ts(9,7): error TS2094: The property 'blah' does not exist on value of type 'T'.
         t.toString; // ok
     }

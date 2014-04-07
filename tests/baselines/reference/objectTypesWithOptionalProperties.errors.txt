@@ -12,9 +12,9 @@
     class C {
         x?: number; // error
          ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties.ts(12,6): error TS1005: ';' expected.
           ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! objectTypesWithOptionalProperties.ts(12,7): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     }
     
     interface I2<T> {
@@ -24,15 +24,15 @@
     class C2<T> {
         x?: T; // error
          ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties.ts(20,6): error TS1005: ';' expected.
           ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! objectTypesWithOptionalProperties.ts(20,7): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     }
     
     var b = {
         x?: 1 // error
          ~
-!!! error TS1005: ':' expected.
+!!! objectTypesWithOptionalProperties.ts(24,6): error TS1005: ':' expected.
           ~
-!!! error TS1003: Identifier expected.
+!!! objectTypesWithOptionalProperties.ts(24,7): error TS1003: Identifier expected.
     }

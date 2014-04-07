@@ -9,10 +9,10 @@
     
     var a: A;
            ~
-!!! error TS4022: Type reference cannot refer to container 'A'.
+!!! moduleAssignmentCompat2.ts(9,8): error TS4022: Type reference cannot refer to container 'A'.
     var b: B;
            ~
-!!! error TS4022: Type reference cannot refer to container 'B'.
+!!! moduleAssignmentCompat2.ts(10,8): error TS4022: Type reference cannot refer to container 'B'.
     
     a = b;
     b = a; // error

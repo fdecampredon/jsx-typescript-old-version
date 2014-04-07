@@ -84,7 +84,7 @@
         class Signature extends Symbol {
             constructor(public typeParameters: TypeParameter[], public parameters: Parameter[], public returnType: Type) {
                                                ~~~~~~~~~~~~~
-!!! error TS2095: Could not find symbol 'TypeParameter'.
+!!! unspecializedConstraints.ts(84,44): error TS2095: Could not find symbol 'TypeParameter'.
                 super();
             }
             equalsNoReturn(other: Signature): boolean {
@@ -129,7 +129,7 @@
     
         function arrayContains<T extends Equals<T>>(a: T[], item: T): boolean {
                                ~~~~~~~~~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! unspecializedConstraints.ts(127,28): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
             var len = a.length;
             for (var i = 0; i < len; i++) {
                 if (item.equals(a[i])) return true;
@@ -139,7 +139,7 @@
     
         function arrayEquals<T extends Equals<T>>(a: T[], b: T[]): boolean {
                              ~~~~~~~~~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! unspecializedConstraints.ts(135,26): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
             var len = a.length;
             if (b.length !== len) return false;
             for (var i = 0; i < len; i++) {
@@ -150,7 +150,7 @@
     
         function setEquals<T extends Equals<T>>(a: T[], b: T[]): boolean {
                            ~~~~~~~~~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! unspecializedConstraints.ts(144,24): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
             var len = a.length;
             if (b.length !== len) return false;
             for (var i = 0; i < len; i++) {

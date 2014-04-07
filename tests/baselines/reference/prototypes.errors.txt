@@ -2,6 +2,6 @@
     Object.prototype; // ok
     new Object().prototype; // error
                  ~~~~~~~~~
-!!! error TS2094: The property 'prototype' does not exist on value of type 'Object'.
+!!! prototypes.ts(2,14): error TS2094: The property 'prototype' does not exist on value of type 'Object'.
     function f() {}
     f.prototype;

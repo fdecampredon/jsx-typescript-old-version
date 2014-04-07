@@ -2,5 +2,5 @@
     interface Foo<T> { }
     class Bar<T> implements Foo { }
                             ~~~
-!!! error TS2173: Generic type references must include all type arguments.
+!!! genericTypeUsedWithoutTypeArguments1.ts(2,25): error TS2173: Generic type references must include all type arguments.
     

@@ -6,7 +6,7 @@
         interface I2 { item:number; }   
         class C1 implements I1 {
               ~~
-!!! error TS2137: Class C1 declares interface I1 but does not implement it:
+!!! interfaceDeclaration3.ts(6,11): error TS2137: Class C1 declares interface I1 but does not implement it:
 !!! 	Types of property 'item' of types 'C1' and 'I1' are incompatible.
             public item:number;
         }
@@ -34,7 +34,7 @@
         }
         class C1 implements I1 {
               ~~
-!!! error TS2137: Class C1 declares interface I1 but does not implement it:
+!!! interfaceDeclaration3.ts(31,11): error TS2137: Class C1 declares interface I1 but does not implement it:
 !!! 	Types of property 'item' of types 'C1' and 'I1' are incompatible.
             public item:number;    
         }
@@ -60,6 +60,6 @@
     
     interface I2 extends I1 { item:string; }
               ~~
-!!! error TS2143: Interface 'I2' cannot extend interface 'I1':
+!!! interfaceDeclaration3.ts(54,11): error TS2143: Interface 'I2' cannot extend interface 'I1':
 !!! 	Types of property 'item' of types 'I2' and 'I1' are incompatible.
     

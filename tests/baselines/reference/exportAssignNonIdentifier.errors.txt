@@ -2,22 +2,22 @@
     var x = 10;
     export = typeof x; // Error
              ~~~~~~
-!!! error TS1006: Identifier expected; 'typeof' is a keyword.
+!!! foo1.ts(2,10): error TS1006: Identifier expected; 'typeof' is a keyword.
     
 ==== tests/cases/compiler/foo2.ts (1 errors) ====
     export = "sausages"; // Error
              ~~~~~~~~~~
-!!! error TS1003: Identifier expected.
+!!! foo2.ts(1,10): error TS1003: Identifier expected.
     
 ==== tests/cases/compiler/foo3.ts (1 errors) ====
     export = class Foo3 {}; // Error
              ~~~~~
-!!! error TS1006: Identifier expected; 'class' is a keyword.
+!!! foo3.ts(1,10): error TS1006: Identifier expected; 'class' is a keyword.
     
 ==== tests/cases/compiler/foo4.ts (1 errors) ====
     export = true; // Error
              ~~~~
-!!! error TS1006: Identifier expected; 'true' is a keyword.
+!!! foo4.ts(1,10): error TS1006: Identifier expected; 'true' is a keyword.
     
 ==== tests/cases/compiler/foo5.ts (0 errors) ====
     export = undefined; // Valid.  undefined is an identifier in JavaScript/TypeScript
@@ -25,18 +25,18 @@
 ==== tests/cases/compiler/foo6.ts (2 errors) ====
     export = void; // Error
              ~~~~
-!!! error TS1006: Identifier expected; 'void' is a keyword.
+!!! foo6.ts(1,10): error TS1006: Identifier expected; 'void' is a keyword.
                  ~
-!!! error TS1003: Identifier expected.
+!!! foo6.ts(1,14): error TS1003: Identifier expected.
     
 ==== tests/cases/compiler/foo7.ts (1 errors) ====
     export = Date || String; // Error
                   ~~
-!!! error TS1005: ';' expected.
+!!! foo7.ts(1,15): error TS1005: ';' expected.
     
 ==== tests/cases/compiler/foo8.ts (1 errors) ====
     export = null; // Error
              ~~~~
-!!! error TS1006: Identifier expected; 'null' is a keyword.
+!!! foo8.ts(1,10): error TS1006: Identifier expected; 'null' is a keyword.
     
     

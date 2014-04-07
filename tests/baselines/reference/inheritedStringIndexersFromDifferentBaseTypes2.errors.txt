@@ -18,7 +18,7 @@
     }
     interface E extends A, D { } // error
               ~
-!!! error TS2189: Interface 'E' cannot simultaneously extend types 'D' and 'A':
+!!! inheritedStringIndexersFromDifferentBaseTypes2.ts(18,11): error TS2189: Interface 'E' cannot simultaneously extend types 'D' and 'A':
 !!! Type of number indexer in type 'D' is not assignable to string indexer type in type 'A'.
 !!! 	Type '{}' is missing property 'a' from type '{ a: any; }'.
     

@@ -5,12 +5,12 @@
     }
     x.a<string>(1); // bug was that this caused 'Could not find symbol T' on return type T in the type assertion on x.a's definition
       ~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeAssertionToGenericFunctionType.ts(5,3): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
       ~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeAssertionToGenericFunctionType.ts(5,3): error TS2087: Could not select overload for 'call' expression.
     x.b<string>(); // error
       ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! typeAssertionToGenericFunctionType.ts(6,3): error TS2081: Supplied parameters do not match any signature of call target.
       ~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeAssertionToGenericFunctionType.ts(6,3): error TS2087: Could not select overload for 'call' expression.

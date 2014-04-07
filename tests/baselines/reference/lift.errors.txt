@@ -14,13 +14,13 @@
     
         public liftxyz () { return x+z+this.y; }
                                    ~
-!!! error TS2095: Could not find symbol 'x'.
+!!! lift.ts(14,32): error TS2095: Could not find symbol 'x'.
                                      ~
-!!! error TS2095: Could not find symbol 'z'.
+!!! lift.ts(14,34): error TS2095: Could not find symbol 'z'.
         public liftxylocllz () { return x+z+this.y+this.ll; }
                                         ~
-!!! error TS2095: Could not find symbol 'x'.
+!!! lift.ts(15,37): error TS2095: Could not find symbol 'x'.
                                           ~
-!!! error TS2095: Could not find symbol 'z'.
+!!! lift.ts(15,39): error TS2095: Could not find symbol 'z'.
     }
     

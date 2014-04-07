@@ -3,7 +3,7 @@
         constructor() {
             super(); // error
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! superCallInConstructorWithNoBaseType.ts(3,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     }
     
@@ -11,6 +11,6 @@
         public constructor(public x: T) {
             super(); // error
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! superCallInConstructorWithNoBaseType.ts(9,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     }

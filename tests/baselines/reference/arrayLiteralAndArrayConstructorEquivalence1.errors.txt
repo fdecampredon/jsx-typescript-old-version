@@ -3,7 +3,7 @@
     var myCars3 = new Array({});
     var myCars4: Array; // error
                  ~~~~~
-!!! error TS2173: Generic type references must include all type arguments.
+!!! arrayLiteralAndArrayConstructorEquivalence1.ts(3,14): error TS2173: Generic type references must include all type arguments.
     var myCars5: Array<any>[];
      
     myCars = myCars3;

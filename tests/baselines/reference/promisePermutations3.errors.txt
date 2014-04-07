@@ -68,11 +68,11 @@
     var r3a = r3.then(testFunction3, testFunction3, testFunction3);
     var r3b = r3.then(testFunction3, testFunction3, testFunction3).then(testFunction3, testFunction3, testFunction3);
                                                                    ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(68,64): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction3' and '(value: IPromise<number>) => IPromise<number>' are incompatible:
 !!! 		Type 'Number' is missing property 'then' from type 'IPromise<number>'.
                                                                    ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(68,64): error TS2087: Could not select overload for 'call' expression.
     var s3: Promise<number>;
     var s3a = s3.then(testFunction3, testFunction3, testFunction3);
     var s3b = s3.then(testFunction3P, testFunction3P, testFunction3P);
@@ -84,132 +84,132 @@
     var sPromise: (x: any) => Promise<string>;
     var r4a = r4.then(testFunction4, testFunction4, testFunction4); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(78,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction4' and '(value: string) => IPromise<string>' are incompatible.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(78,14): error TS2087: Could not select overload for 'call' expression.
     var r4b = r4.then(sIPromise, testFunction4, testFunction4).then(sIPromise, testFunction4, testFunction4); // ok
     var s4: Promise<string>;
     var s4a = s4.then(testFunction4, testFunction4, testFunction4); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(81,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction4' and '(value: string) => Promise<string>' are incompatible:
 !!! 		Types of property 'then' of types 'IPromise<string>' and 'Promise<string>' are incompatible:
 !!! 			Call signatures of types '<U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void) => IPromise<U>' and '{ <U>(success?: (value: string) => Promise<U>, error?: (error: any) => Promise<U>, progress?: (progress: any) => void): Promise<U>; <U>(success?: (value: string) => Promise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Promise<U>; <U>(success?: (value: string) => U, error?: (error: any) => Promise<U>, progress?: (progress: any) => void): Promise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): Promise<U>; }' are incompatible:
 !!! 				Property 'done' defined as optional in type 'IPromise<T>', but is required in type 'Promise<T>'.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(81,14): error TS2087: Could not select overload for 'call' expression.
     var s4b = s4.then(testFunction4P, testFunction4P, testFunction4P); // error 
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(82,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction4P' and '(value: string) => Promise<string>' are incompatible.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(82,14): error TS2087: Could not select overload for 'call' expression.
     var s4c = s4.then(testFunction4P, testFunction4, testFunction4); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(83,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction4P' and '(value: string) => Promise<string>' are incompatible.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(83,14): error TS2087: Could not select overload for 'call' expression.
     var s4d = s4.then(sIPromise, testFunction4P, testFunction4).then(sIPromise, testFunction4P, testFunction4); 
     
     var r5: IPromise<string>;
     var r5a = r5.then(testFunction5, testFunction5, testFunction5); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(87,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction5' and '(value: string) => {}' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(87,14): error TS2087: Could not select overload for 'call' expression.
     var r5b = r5.then(sIPromise, sIPromise, sIPromise).then(sIPromise, sIPromise, sIPromise); // ok
     var s5: Promise<string>;
     var s5a = s5.then(testFunction5, testFunction5, testFunction5); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(90,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction5' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(90,14): error TS2087: Could not select overload for 'call' expression.
     var s5b = s5.then(testFunction5P, testFunction5P, testFunction5P); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(91,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction5P' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(91,14): error TS2087: Could not select overload for 'call' expression.
     var s5c = s5.then(testFunction5P, testFunction5, testFunction5); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(92,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction5P' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(92,14): error TS2087: Could not select overload for 'call' expression.
     var s5d = s5.then(sPromise, sPromise, sPromise).then(sIPromise, sIPromise, sIPromise); // ok
     
     var r6: IPromise<string>;
     var r6a = r6.then(testFunction6, testFunction6, testFunction6); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(96,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction6' and '(value: string) => {}' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(96,14): error TS2087: Could not select overload for 'call' expression.
     var r6b = r6.then(sIPromise, sIPromise, sIPromise).then(sIPromise, sIPromise, sIPromise); // ok
     var s6: Promise<string>;
     var s6a = s6.then(testFunction6, testFunction6, testFunction6); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(99,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction6' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(99,14): error TS2087: Could not select overload for 'call' expression.
     var s6b = s6.then(testFunction6P, testFunction6P, testFunction6P); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(100,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction6P' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(100,14): error TS2087: Could not select overload for 'call' expression.
     var s6c = s6.then(testFunction6P, testFunction6, testFunction6); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(101,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction6P' and '(value: string) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(101,14): error TS2087: Could not select overload for 'call' expression.
     var s6d = s6.then(sPromise, sPromise, sPromise).then(sIPromise, sIPromise, sIPromise); // ok
     
     var r7: IPromise<string>;
     var r7a = r7.then(testFunction7, testFunction7, testFunction7); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(105,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction7' and '(value: string) => IPromise<string>' are incompatible:
 !!! 		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(105,14): error TS2087: Could not select overload for 'call' expression.
     var r7b = r7.then(sIPromise, sIPromise, sIPromise).then(sIPromise, sIPromise, sIPromise); // ok
     var s7: Promise<string>;
     var s7a = r7.then(testFunction7, testFunction7, testFunction7); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(108,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction7' and '(value: string) => IPromise<string>' are incompatible:
 !!! 		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(108,14): error TS2087: Could not select overload for 'call' expression.
     var s7b = r7.then(testFunction7P, testFunction7P, testFunction7P); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(109,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction7P' and '(value: string) => Promise<string>' are incompatible:
 !!! 		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(109,14): error TS2087: Could not select overload for 'call' expression.
     var s7c = r7.then(testFunction7P, testFunction7, testFunction7); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(110,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction7P' and '(value: string) => IPromise<string>' are incompatible:
 !!! 		Type '<T>(a: T) => T' requires a call signature, but type 'String' lacks one.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(110,14): error TS2087: Could not select overload for 'call' expression.
     var s7d = r7.then(sPromise, sPromise, sPromise).then(sPromise, sPromise, sPromise); // ok?
     
     var r8: IPromise<number>;
@@ -217,44 +217,44 @@
     var nPromise: (x: any) => Promise<number>;
     var r8a = r8.then(testFunction8, testFunction8, testFunction8); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(116,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction8' and '(value: number) => {}' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(116,14): error TS2087: Could not select overload for 'call' expression.
     var r8b = r8.then(nIPromise, nIPromise, nIPromise).then(nIPromise, nIPromise, nIPromise); // ok
     var s8: Promise<number>;
     var s8a = s8.then(testFunction8, testFunction8, testFunction8); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(119,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction8' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(119,14): error TS2087: Could not select overload for 'call' expression.
     var s8b = s8.then(testFunction8P, testFunction8P, testFunction8P); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(120,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction8P' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(120,14): error TS2087: Could not select overload for 'call' expression.
     var s8c = s8.then(testFunction8P, testFunction8, testFunction8); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(121,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction8P' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(121,14): error TS2087: Could not select overload for 'call' expression.
     var s8d = s8.then(nIPromise, nIPromise, nIPromise).then(nIPromise, nIPromise, nIPromise); // ok
     
     var r9: IPromise<number>;
     var r9a = r9.then(testFunction9, testFunction9, testFunction9); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(125,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction9' and '(value: number) => {}' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(125,14): error TS2087: Could not select overload for 'call' expression.
     var r9b = r9.then(sIPromise, sIPromise, sIPromise); // ok
     var r9c = r9.then(nIPromise, nIPromise, nIPromise); // ok
     var r9d = r9.then(testFunction, sIPromise, nIPromise); // ok
@@ -262,25 +262,25 @@
     var s9: Promise<number>;
     var s9a = s9.then(testFunction9, testFunction9, testFunction9); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(131,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction9' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(131,14): error TS2087: Could not select overload for 'call' expression.
     var s9b = s9.then(testFunction9P, testFunction9P, testFunction9P); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(132,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction9P' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(132,14): error TS2087: Could not select overload for 'call' expression.
     var s9c = s9.then(testFunction9P, testFunction9, testFunction9); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! promisePermutations3.ts(133,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types 'typeof testFunction9P' and '(value: number) => Promise<{}>' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! promisePermutations3.ts(133,14): error TS2087: Could not select overload for 'call' expression.
     var s9d = s9.then(sPromise, sPromise, sPromise); // ok
     var s9e = s9.then(nPromise, nPromise, nPromise); // ok
     var s9f = s9.then(testFunction, sIPromise, nIPromise); // ok

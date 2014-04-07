@@ -5,9 +5,9 @@
     
     import v = V;
     ~~~~~~~~~~~~~
-!!! error TS2072: Module cannot be aliased to a non-module type.
+!!! invalidImportAliasIdentifiers.ts(5,1): error TS2072: Module cannot be aliased to a non-module type.
                ~
-!!! error TS2179: Unable to resolve module reference 'V'.
+!!! invalidImportAliasIdentifiers.ts(5,12): error TS2179: Unable to resolve module reference 'V'.
     
     class C {
         name: string;
@@ -15,9 +15,9 @@
     
     import c = C;
     ~~~~~~~~~~~~~
-!!! error TS2072: Module cannot be aliased to a non-module type.
+!!! invalidImportAliasIdentifiers.ts(11,1): error TS2072: Module cannot be aliased to a non-module type.
                ~
-!!! error TS2179: Unable to resolve module reference 'C'.
+!!! invalidImportAliasIdentifiers.ts(11,12): error TS2179: Unable to resolve module reference 'C'.
     
     enum E {
         Red, Blue
@@ -25,9 +25,9 @@
     
     import e = E;
     ~~~~~~~~~~~~~
-!!! error TS2072: Module cannot be aliased to a non-module type.
+!!! invalidImportAliasIdentifiers.ts(17,1): error TS2072: Module cannot be aliased to a non-module type.
                ~
-!!! error TS2179: Unable to resolve module reference 'E'.
+!!! invalidImportAliasIdentifiers.ts(17,12): error TS2179: Unable to resolve module reference 'E'.
     
     interface I {
         id: number;
@@ -35,7 +35,7 @@
     
     import i = I;
     ~~~~~~~~~~~~~
-!!! error TS2072: Module cannot be aliased to a non-module type.
+!!! invalidImportAliasIdentifiers.ts(23,1): error TS2072: Module cannot be aliased to a non-module type.
                ~
-!!! error TS2179: Unable to resolve module reference 'I'.
+!!! invalidImportAliasIdentifiers.ts(23,12): error TS2179: Unable to resolve module reference 'I'.
     

@@ -35,9 +35,10 @@
         // "Optional parameters may only be followed by other optional parameters"
         public C1M5(C1M5A1:number,C1M5A2:number=0,C1M5A3:number) { return C1M5A1 + C1M5A2; }
                                                   ~~~~~~~~~~~~~
-!!! error TS1016: Required parameter cannot follow optional parameter.
+!!! optionalParamArgsTest.ts(35,47): error TS1016: Required parameter cannot follow optional parameter.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'C1M5'.
+!!! optionalParamArgsTest.ts(35,5): error TS2000: Duplicate identifier 'C1M5'. Additional locations:
+!!! 	optionalParamArgsTest.ts(31,5)
     }
     
     class C2 extends C1 {
@@ -103,104 +104,104 @@
     // Negative tests - we expect these cases to fail
     c1o1.C1M1(1);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(99,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(99,6): error TS2087: Could not select overload for 'call' expression.
     i1o1.C1M1(1);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(100,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(100,6): error TS2087: Could not select overload for 'call' expression.
     F1(1);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(101,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(101,1): error TS2087: Could not select overload for 'call' expression.
     L1(1);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(102,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(102,1): error TS2087: Could not select overload for 'call' expression.
     c1o1.C1M2();
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(103,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(103,6): error TS2087: Could not select overload for 'call' expression.
     i1o1.C1M2();
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(104,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(104,6): error TS2087: Could not select overload for 'call' expression.
     F2();
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(105,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(105,1): error TS2087: Could not select overload for 'call' expression.
     L2();
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(106,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(106,1): error TS2087: Could not select overload for 'call' expression.
     c1o1.C1M2(1,2);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(107,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(107,6): error TS2087: Could not select overload for 'call' expression.
     i1o1.C1M2(1,2);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(108,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(108,6): error TS2087: Could not select overload for 'call' expression.
     F2(1,2);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(109,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(109,1): error TS2087: Could not select overload for 'call' expression.
     L2(1,2);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(110,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(110,1): error TS2087: Could not select overload for 'call' expression.
     c1o1.C1M3(1,2,3);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(111,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(111,6): error TS2087: Could not select overload for 'call' expression.
     i1o1.C1M3(1,2,3);
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(112,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(112,6): error TS2087: Could not select overload for 'call' expression.
     F3(1,2,3);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(113,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(113,1): error TS2087: Could not select overload for 'call' expression.
     L3(1,2,3);
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(114,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(114,1): error TS2087: Could not select overload for 'call' expression.
     c1o1.C1M4();
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(115,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(115,6): error TS2087: Could not select overload for 'call' expression.
     i1o1.C1M4();
          ~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(116,6): error TS2081: Supplied parameters do not match any signature of call target.
          ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(116,6): error TS2087: Could not select overload for 'call' expression.
     F4();
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(117,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(117,1): error TS2087: Could not select overload for 'call' expression.
     L4();
     ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! optionalParamArgsTest.ts(118,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! optionalParamArgsTest.ts(118,1): error TS2087: Could not select overload for 'call' expression.
     
     function fnOpt1(id: number, children: number[] = [], expectedPath: number[] = [], isRoot?: boolean): void {}
     function fnOpt2(id: number, children?: number[], expectedPath?: number[], isRoot?: boolean): void {}

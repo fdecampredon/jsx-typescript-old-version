@@ -3,6 +3,6 @@
     
     module.module { }
                   ~
-!!! error TS1005: ';' expected.
+!!! moduleKeywordRepeatError.ts(3,15): error TS1005: ';' expected.
     ~~~~~~
-!!! error TS2095: Could not find symbol 'module'.
+!!! moduleKeywordRepeatError.ts(3,1): error TS2095: Could not find symbol 'module'.

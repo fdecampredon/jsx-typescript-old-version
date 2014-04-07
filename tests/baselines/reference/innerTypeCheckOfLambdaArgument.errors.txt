@@ -10,7 +10,7 @@
                     // otherwise, there's a bug in overload resolution / partial typechecking
             var k: string = 10; 
           ~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! innerTypeCheckOfLambdaArgument.ts(10,7): error TS2011: Cannot convert 'number' to 'string'.
         }
     );
     

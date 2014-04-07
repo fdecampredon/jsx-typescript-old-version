@@ -4,9 +4,9 @@
     function f() {
         var d1 = new derived();
                      ~~~~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! errorForwardReferenceForwadingConstructor.ts(4,18): error TS2081: Supplied parameters do not match any signature of call target.
                      ~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! errorForwardReferenceForwadingConstructor.ts(4,18): error TS2085: Could not select overload for 'new' expression.
         var d2 = new derived(4);
     }
     

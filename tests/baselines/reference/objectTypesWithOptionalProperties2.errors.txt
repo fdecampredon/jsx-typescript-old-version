@@ -4,50 +4,50 @@
     var a: {
         x()?: number; // error
            ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties2.ts(4,8): error TS1005: ';' expected.
             ~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! objectTypesWithOptionalProperties2.ts(4,9): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
     }
     
     interface I {
         x()?: number; // error
            ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties2.ts(8,8): error TS1005: ';' expected.
             ~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! objectTypesWithOptionalProperties2.ts(8,9): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
     }
     
     class C {
         x()?: number; // error
            ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties2.ts(12,8): error TS1005: ';' expected.
             ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! objectTypesWithOptionalProperties2.ts(12,9): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     }
     
     interface I2<T> {
         x()?: T; // error
            ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties2.ts(16,8): error TS1005: ';' expected.
             ~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! objectTypesWithOptionalProperties2.ts(16,9): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
     }
     
     class C2<T> {
         x()?: T; // error
            ~
-!!! error TS1005: ';' expected.
+!!! objectTypesWithOptionalProperties2.ts(20,8): error TS1005: ';' expected.
             ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! objectTypesWithOptionalProperties2.ts(20,9): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     }
     
     
     var b = {
         x()?: 1 // error
            ~
-!!! error TS1005: '{' expected.
+!!! objectTypesWithOptionalProperties2.ts(25,8): error TS1005: '{' expected.
             ~
-!!! error TS1008: Unexpected token; 'property or accessor' expected.
+!!! objectTypesWithOptionalProperties2.ts(25,9): error TS1008: Unexpected token; 'property or accessor' expected.
     }
     ~
-!!! error TS1005: ':' expected.
+!!! objectTypesWithOptionalProperties2.ts(26,1): error TS1005: ':' expected.

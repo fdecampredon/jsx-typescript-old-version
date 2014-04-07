@@ -5,7 +5,7 @@
     
     x.toBAZ();
       ~~~~~
-!!! error TS2094: The property 'toBAZ' does not exist on value of type 'number'.
+!!! primitiveMembers.ts(5,3): error TS2094: The property 'toBAZ' does not exist on value of type 'number'.
     x.toString();
     
     var n = 0;
@@ -13,7 +13,7 @@
     
     n = N;  // should not work, as 'number' has a different brand
     ~
-!!! error TS2011: Cannot convert 'Number' to 'number'.
+!!! primitiveMembers.ts(11,1): error TS2011: Cannot convert 'Number' to 'number'.
     N = n; // should work
     
     var o: Object = {}
@@ -28,10 +28,10 @@
     
     class baz { public bar(): void { }; }
                                       ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! primitiveMembers.ts(24,35): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     class foo extends baz { public bar(){ return undefined}; }
                                                            ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! primitiveMembers.ts(25,56): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
     
     
     

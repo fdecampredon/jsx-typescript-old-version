@@ -3,6 +3,7 @@
     
     module console {
            ~~~~~~~
-!!! error TS2000: Duplicate identifier 'console'.
+!!! module_augmentExistingVariable.ts(3,8): error TS2000: Duplicate identifier 'console'. Additional locations:
+!!! 	module_augmentExistingVariable.ts(1,5)
         export var x = 2;
     }

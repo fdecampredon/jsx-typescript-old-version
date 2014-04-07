@@ -14,18 +14,18 @@
         }
         export class Bug implements IMode {
                                     ~~~~~
-!!! error TS2019: Exported class 'Bug' implements private interface 'IMode'.
+!!! arrayAssignmentTest6.ts(14,33): error TS2019: Exported class 'Bug' implements private interface 'IMode'.
             public tokenize(line:string, tokens:IToken[], includeStates:boolean):ILineTokens {
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                          ~~~~~~~~~~~~~~~
-!!! error TS2038: Parameter 'tokens' of public method from exported class has or is using private type 'IToken'.
+!!! arrayAssignmentTest6.ts(15,38): error TS2038: Parameter 'tokens' of public method from exported class has or is using private type 'IToken'.
                                                                                  ~~~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'ILineTokens'.
+!!! arrayAssignmentTest6.ts(15,78): error TS2056: Return type of public method from exported class has or is using private type 'ILineTokens'.
                 return null;
     ~~~~~~~~~~~~~~~~~~~~~~~~
             }
     ~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'ILineTokens'.
+!!! arrayAssignmentTest6.ts(15,9): error TS2056: Return type of public method from exported class has or is using private type 'ILineTokens'.
         }    
     }
     

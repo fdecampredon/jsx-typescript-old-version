@@ -11,9 +11,9 @@
     
     var r = new Derived(); // error
                 ~~~~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor.ts(11,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor.ts(11,13): error TS2085: Could not select overload for 'new' expression.
     var r2 = new Derived(1); 
     
     class Base2<T> {
@@ -28,7 +28,7 @@
     
     var d = new D(); // error
                 ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor.ts(24,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor.ts(24,13): error TS2085: Could not select overload for 'new' expression.
     var d2 = new D(new Date()); // ok

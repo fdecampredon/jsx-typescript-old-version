@@ -4,13 +4,13 @@
     // naked break not allowed
     break;
     ~~~~~~
-!!! error TS2202: 'break' statement can only be used within an enclosing iteration or switch statement.
+!!! invalidDoWhileBreakStatements.ts(4,1): error TS2202: 'break' statement can only be used within an enclosing iteration or switch statement.
     
     // non-existent label
     ONE:
     do break TWO; while (true)
        ~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidDoWhileBreakStatements.ts(8,4): error TS2203: Jump target not found.
     
     // break from inside function
     TWO:
@@ -18,7 +18,7 @@
         var x = () => {
             break TWO;
             ~~~~~~~~~~
-!!! error TS2204: Jump target cannot cross function boundary.
+!!! invalidDoWhileBreakStatements.ts(14,9): error TS2204: Jump target cannot cross function boundary.
         }
     }while (true)
     
@@ -27,7 +27,7 @@
         var fn = function () {
             break THREE;
             ~~~~~~~~~~~~
-!!! error TS2204: Jump target cannot cross function boundary.
+!!! invalidDoWhileBreakStatements.ts(21,9): error TS2204: Jump target cannot cross function boundary.
         }
     }while (true)
     
@@ -35,7 +35,7 @@
     do {
         break FIVE;
         ~~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidDoWhileBreakStatements.ts(27,5): error TS2203: Jump target not found.
         FIVE:
         do { } while (true)
     }while (true)
@@ -47,5 +47,5 @@
     do {
         break NINE;
         ~~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidDoWhileBreakStatements.ts(37,5): error TS2203: Jump target not found.
     }while (true)

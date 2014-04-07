@@ -10,7 +10,7 @@
             super();
             var _super = 10; // Should be error 
                 ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInConstructor.ts(10,13): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
         }
     }
     class c extends Foo {
@@ -19,7 +19,7 @@
             var x = () => {
                 var _super = 10; // Should be error
                     ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInConstructor.ts(17,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
         }
     }

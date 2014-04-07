@@ -3,7 +3,8 @@
         public aaaaa() { }
         public get aaaaa() {
                    ~~~~~
-!!! error TS2000: Duplicate identifier 'aaaaa'.
+!!! functionAndPropertyNameConflict.ts(3,16): error TS2000: Duplicate identifier 'aaaaa'. Additional locations:
+!!! 	functionAndPropertyNameConflict.ts(2,5)
             return 1;
         }
     }

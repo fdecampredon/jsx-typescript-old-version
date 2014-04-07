@@ -23,31 +23,31 @@
     function foo1b(x: B<string, string>);
     function foo1b(x: B<string, string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1b'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(23,1): error TS2144: Duplicate overload signature for 'foo1b'.
     function foo1b(x: any) { }
     
     function foo1c(x: C<string, number, boolean>);
     function foo1c(x: C<string, number, boolean>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1c'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(27,1): error TS2144: Duplicate overload signature for 'foo1c'.
     function foo1c(x: any) { }
     
     function foo2(x: I<string, boolean, number, string>);
     function foo2(x: I<string, boolean, number, string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(31,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(35,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo4(x: typeof b);
     function foo4(x: typeof b); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo4'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(39,1): error TS2144: Duplicate overload signature for 'foo4'.
     function foo4(x: any) { }
     
     function foo8(x: B<string, string>);
@@ -57,7 +57,7 @@
     function foo9(x: B<string, number>);
     function foo9(x: C<string, number, B<string, string>>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo9'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingTypeParameterCounts.ts(47,1): error TS2144: Duplicate overload signature for 'foo9'.
     function foo9(x: any) { }
     
     function foo10(x: B<string, boolean>);

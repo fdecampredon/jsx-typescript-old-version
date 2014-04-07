@@ -2,6 +2,7 @@
     function bar(): string;
     class bar {}
     ~~~~~
-!!! error TS1041: Function implementation expected.
+!!! classOverloadForFunction2.ts(2,1): error TS1041: Function implementation expected.
           ~~~
-!!! error TS2000: Duplicate identifier 'bar'.
+!!! classOverloadForFunction2.ts(2,7): error TS2000: Duplicate identifier 'bar'. Additional locations:
+!!! 	classOverloadForFunction2.ts(1,1)

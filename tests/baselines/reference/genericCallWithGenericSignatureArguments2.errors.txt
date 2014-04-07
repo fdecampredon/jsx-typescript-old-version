@@ -14,16 +14,16 @@
         // BUG 835518
         var r9 = r7(new Date()); // should be ok
                  ~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithGenericSignatureArguments2.ts(14,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'T' to argument 1 which is of type 'Date'.
                  ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithGenericSignatureArguments2.ts(14,14): error TS2087: Could not select overload for 'call' expression.
         var r10 = r7(1); // error
                   ~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithGenericSignatureArguments2.ts(15,15): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'T' to argument 1 which is of type 'number'.
                   ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithGenericSignatureArguments2.ts(15,15): error TS2087: Could not select overload for 'call' expression.
     }
     
     function foo2<T extends Date>(a: (x: T) => T, b: (x: T) => T) {
@@ -34,11 +34,11 @@
     function other3<T extends RegExp>(x: T) {
         var r7 = foo2((a: T) => a, (b: T) => b); // error
                  ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithGenericSignatureArguments2.ts(24,14): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(a: T) => T' and '(x: Date) => Date' are incompatible:
 !!! 		Type 'RegExp' is missing property 'toDateString' from type 'Date'.
                  ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithGenericSignatureArguments2.ts(24,14): error TS2087: Could not select overload for 'call' expression.
         var r7b = foo2((a) => a, (b) => b); // valid, T is inferred to be Date
     }
     
@@ -52,7 +52,7 @@
     
     var r7 = foo3(E.A, (x) => E.A, (x) => F.A); // error
              ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithGenericSignatureArguments2.ts(36,10): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(x: E) => F' and '(x: E) => E' are incompatible.
              ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithGenericSignatureArguments2.ts(36,10): error TS2087: Could not select overload for 'call' expression.

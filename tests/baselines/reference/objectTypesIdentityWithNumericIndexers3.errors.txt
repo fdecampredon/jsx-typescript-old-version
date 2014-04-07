@@ -31,37 +31,37 @@
     function foo1(x: A);
     function foo1(x: A); // error
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(31,1): error TS2144: Duplicate overload signature for 'foo1'.
     function foo1(x: any) { }
     
     function foo1b(x: B);
     function foo1b(x: B); // error
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1b'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(35,1): error TS2144: Duplicate overload signature for 'foo1b'.
     function foo1b(x: any) { }
     
     function foo1c(x: C<string>);
     function foo1c(x: C<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1c'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(39,1): error TS2144: Duplicate overload signature for 'foo1c'.
     function foo1c(x: any) { }
     
     function foo2(x: I);
     function foo2(x: I); // error
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(43,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(47,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo4(x: typeof b);
     function foo4(x: typeof b); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo4'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(51,1): error TS2144: Duplicate overload signature for 'foo4'.
     function foo4(x: any) { }
     
     function foo5(x: A);
@@ -71,13 +71,13 @@
     function foo5b(x: A);
     function foo5b(x: C<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo5b'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(59,1): error TS2144: Duplicate overload signature for 'foo5b'.
     function foo5b(x: any) { }
     
     function foo5c(x: A);
     function foo5c(x: PA); // error
     ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo5c'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(63,1): error TS2144: Duplicate overload signature for 'foo5c'.
     function foo5c(x: any) { }
     
     function foo5d(x: A);
@@ -95,7 +95,7 @@
     function foo8(x: B);
     function foo8(x: I); // error
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo8'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(79,1): error TS2144: Duplicate overload signature for 'foo8'.
     function foo8(x: any) { }
     
     function foo9(x: B);
@@ -105,7 +105,7 @@
     function foo10(x: B);
     function foo10(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo10'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(87,1): error TS2144: Duplicate overload signature for 'foo10'.
     function foo10(x: any) { }
     
     function foo11(x: B);
@@ -119,7 +119,7 @@
     function foo11c(x: B);
     function foo11c(x: PB); // error
     ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo11c'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(99,1): error TS2144: Duplicate overload signature for 'foo11c'.
     function foo11c(x: any) { }
     
     function foo12(x: I);
@@ -129,7 +129,7 @@
     function foo13(x: I);
     function foo13(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo13'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(107,1): error TS2144: Duplicate overload signature for 'foo13'.
     function foo13(x: any) { }
     
     function foo14(x: I);
@@ -143,7 +143,7 @@
     function foo16(x: I);
     function foo16(x: PB); // error
     ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo16'.
+!!! objectTypesIdentityWithNumericIndexers3.ts(119,1): error TS2144: Duplicate overload signature for 'foo16'.
     function foo16(x: any) { }
     
     

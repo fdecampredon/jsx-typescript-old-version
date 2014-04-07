@@ -3,13 +3,13 @@
         // super in a non class context
         var x = super;
                      ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(3,18): error TS1005: '.' expected.
         var y = () => super;
                            ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(4,24): error TS1005: '.' expected.
         var z = () => () => () => super;
                                        ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(5,36): error TS1005: '.' expected.
     }
     
     class User {
@@ -28,20 +28,20 @@
             function inner() {
                 super.sayHello();
                 ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! superErrors.ts(22,13): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
             }
     
             // super call in a lambda in an inner function in a constructor 
             function inner2() {
                 var x = () => super.sayHello();
                               ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! superErrors.ts(27,27): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
             }
     
             // super call in a lambda in a function expression in a constructor 
             (function() { return () => super; })();
                                             ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(31,41): error TS1005: '.' expected.
         }
         sayHello(): void {
             // super call in a method
@@ -51,24 +51,24 @@
             function inner() {
                 var x = () => super.sayHello();
                               ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! superErrors.ts(39,27): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
             }
     
             // super call in a lambda in a function expression in a constructor 
             (function() { return () => super; })();
                                             ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(43,41): error TS1005: '.' expected.
         }
         static staticFunction(): void {
             // super in static functions
             var s = super;
                          ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(47,22): error TS1005: '.' expected.
             var x = () => super;
                                ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(48,28): error TS1005: '.' expected.
             var y = () => () => () => super;
                                            ~
-!!! error TS1005: '.' expected.
+!!! superErrors.ts(49,40): error TS1005: '.' expected.
         }
     }

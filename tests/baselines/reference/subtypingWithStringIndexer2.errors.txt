@@ -11,7 +11,7 @@
     
     interface B extends A {
               ~
-!!! error TS2143: Interface 'B' cannot extend interface 'A':
+!!! subtypingWithStringIndexer2.ts(11,11): error TS2143: Interface 'B' cannot extend interface 'A':
 !!! 	Index signatures of types 'B' and 'A' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
         [x: string]: Base; // error
@@ -28,7 +28,7 @@
     
         interface B extends A<Base> {
                             ~~~~~~~
-!!! error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
+!!! subtypingWithStringIndexer2.ts(24,25): error TS2086: Type 'Base' does not satisfy the constraint 'Derived' for type parameter 'T extends Derived'.
             [x: string]: Derived; // error
         }
     
@@ -38,21 +38,21 @@
     
         interface B3<T extends Derived> extends A<T> {
                   ~~
-!!! error TS2143: Interface 'Generics.B3<T>' cannot extend interface 'Generics.A<T>':
+!!! subtypingWithStringIndexer2.ts(32,15): error TS2143: Interface 'Generics.B3<T>' cannot extend interface 'Generics.A<T>':
 !!! 	Index signatures of types 'B3<T>' and 'A<T>' are incompatible.
             [x: string]: Base; // error
         }
     
         interface B4<T extends Derived> extends A<T> {
                   ~~
-!!! error TS2143: Interface 'Generics.B4<T>' cannot extend interface 'Generics.A<T>':
+!!! subtypingWithStringIndexer2.ts(36,15): error TS2143: Interface 'Generics.B4<T>' cannot extend interface 'Generics.A<T>':
 !!! 	Index signatures of types 'B4<T>' and 'A<T>' are incompatible.
             [x: string]: Derived; // error
         }
     
         interface B5<T extends Derived2> extends A<T> {
                   ~~
-!!! error TS2143: Interface 'Generics.B5<T>' cannot extend interface 'Generics.A<T>':
+!!! subtypingWithStringIndexer2.ts(40,15): error TS2143: Interface 'Generics.B5<T>' cannot extend interface 'Generics.A<T>':
 !!! 	Index signatures of types 'B5<T>' and 'A<T>' are incompatible.
             [x: string]: Derived2; // error
         }

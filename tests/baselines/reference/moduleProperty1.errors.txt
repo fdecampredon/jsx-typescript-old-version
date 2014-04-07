@@ -9,10 +9,10 @@
         var x = 10;  // variable local to this module body
         private y = x;  // can't use private in modules
         ~~~~~~~
-!!! error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+!!! moduleProperty1.ts(9,5): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
                 ~
-!!! error TS2095: Could not find symbol 'y'.
+!!! moduleProperty1.ts(9,13): error TS2095: Could not find symbol 'y'.
         export var z = y;  // property visible to any code
                        ~
-!!! error TS2095: Could not find symbol 'y'.
+!!! moduleProperty1.ts(10,20): error TS2095: Could not find symbol 'y'.
     }

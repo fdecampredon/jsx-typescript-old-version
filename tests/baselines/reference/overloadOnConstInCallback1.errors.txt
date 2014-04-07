@@ -2,7 +2,7 @@
     class C {
         x1(a: number, callback: (x: 'hi') => number); // error
                                 ~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! overloadOnConstInCallback1.ts(2,29): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
         x1(a: number, callback: (x: any) => number) {
             callback('hi');
             callback('bye');

@@ -6,7 +6,8 @@
     
         module x { // error
                ~
-!!! error TS2000: Duplicate identifier 'x'.
+!!! nameCollisions.ts(6,12): error TS2000: Duplicate identifier 'x'. Additional locations:
+!!! 	nameCollisions.ts(4,9)
             export class Bar {
                 test: number;
             }
@@ -17,7 +18,8 @@
         }
         var z; // error
             ~
-!!! error TS2000: Duplicate identifier 'z'.
+!!! nameCollisions.ts(15,9): error TS2000: Duplicate identifier 'z'. Additional locations:
+!!! 	nameCollisions.ts(12,12)
     
         module y {
             var b;
@@ -25,7 +27,8 @@
     
         class y { } // error
               ~
-!!! error TS2000: Duplicate identifier 'y'.
+!!! nameCollisions.ts(21,11): error TS2000: Duplicate identifier 'y'. Additional locations:
+!!! 	nameCollisions.ts(17,12)
     
         var w;
         module w { } //ok
@@ -33,12 +36,14 @@
         var f;
         function f() { } //error
                  ~
-!!! error TS2000: Duplicate identifier 'f'.
+!!! nameCollisions.ts(27,14): error TS2000: Duplicate identifier 'f'. Additional locations:
+!!! 	nameCollisions.ts(26,9)
     
         function f2() { }
         var f2; // error
             ~~
-!!! error TS2000: Duplicate identifier 'f2'.
+!!! nameCollisions.ts(30,9): error TS2000: Duplicate identifier 'f2'. Additional locations:
+!!! 	nameCollisions.ts(29,5)
     
         var i;
         interface i { } //ok
@@ -46,12 +51,14 @@
         class C { }
         function C() { } // error
                  ~
-!!! error TS2000: Duplicate identifier 'C'.
+!!! nameCollisions.ts(36,14): error TS2000: Duplicate identifier 'C'. Additional locations:
+!!! 	nameCollisions.ts(35,5)
     
         function C2() { }
         class C2 { } // error
               ~~
-!!! error TS2000: Duplicate identifier 'C2'.
+!!! nameCollisions.ts(39,11): error TS2000: Duplicate identifier 'C2'. Additional locations:
+!!! 	nameCollisions.ts(38,5)
     
         function fi() { }
         interface fi { } // ok
@@ -59,10 +66,12 @@
         class cli { }
         interface cli { } // error
                   ~~~
-!!! error TS2000: Duplicate identifier 'cli'.
+!!! nameCollisions.ts(45,15): error TS2000: Duplicate identifier 'cli'. Additional locations:
+!!! 	nameCollisions.ts(44,5)
     
         interface cli2 { }
         class cli2 { } // error
               ~~~~
-!!! error TS2000: Duplicate identifier 'cli2'.
+!!! nameCollisions.ts(48,11): error TS2000: Duplicate identifier 'cli2'. Additional locations:
+!!! 	nameCollisions.ts(47,5)
     }

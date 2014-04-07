@@ -14,7 +14,7 @@
     foo = { id: 1234, name: "test" };  // Ok
     foo = { name: "test" };            // Error, id missing
     ~~~
-!!! error TS2012: Cannot convert '{ name: string; }' to 'IFoo':
+!!! optionalPropertiesTest.ts(14,1): error TS2012: Cannot convert '{ name: string; }' to 'IFoo':
 !!! 	Type '{ name: string; }' is missing property 'id' from type 'IFoo'.
     foo = {id: 1234, print:()=>{}}       // Ok
     
@@ -28,11 +28,11 @@
     
     var test1: i1 = {};
         ~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{}' to 'i1':
+!!! optionalPropertiesTest.ts(25,5): error TS2012: Cannot convert '{}' to 'i1':
 !!! 	Type '{}' is missing property 'M' from type 'i1'.
     var test2: i3 = {};
         ~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{}' to 'i3':
+!!! optionalPropertiesTest.ts(26,5): error TS2012: Cannot convert '{}' to 'i3':
 !!! 	Type '{}' is missing property 'M' from type 'i3'.
     var test3: i2 = {};
     var test4: i4 = {};
@@ -49,5 +49,5 @@
     var test10_2: i2;
     test10_1 = test10_2;
     ~~~~~~~~
-!!! error TS2012: Cannot convert 'i2' to 'i1':
+!!! optionalPropertiesTest.ts(40,1): error TS2012: Cannot convert 'i2' to 'i1':
 !!! 	Property 'M' defined as optional in type 'i2', but is required in type 'i1'.

@@ -3,7 +3,7 @@
         foo(): B<T>; // instead of B does see this
         foo(): void; // instead of B does see this
         ~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! mutuallyRecursiveGenericBaseTypes1.ts(3,5): error TS2175: Overloads cannot differ only by return type.
      
         foo2(): B<number>;
     }

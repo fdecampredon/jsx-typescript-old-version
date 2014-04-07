@@ -6,47 +6,47 @@
         constructor() {
             var a = super.prototype;
                     ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(6,17): error TS2103: 'super' cannot be referenced in non-derived classes.
             var b = super.hasOwnProperty('');
                     ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(7,17): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     
         fn() {
             var a = super.prototype;
                     ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(11,17): error TS2103: 'super' cannot be referenced in non-derived classes.
             var b = super.hasOwnProperty('');
                     ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(12,17): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     
         m = super.prototype;
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(15,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         n = super.hasOwnProperty('');
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(16,9): error TS2103: 'super' cannot be referenced in non-derived classes.
     
         //super static property access in static member function of class with no base type
         //super static property access in static member accessor(get and set) of class with no base type
         public static static1() {
             super.hasOwnProperty('');
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(21,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     
         public static get static2() {
             super.hasOwnProperty('');
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(25,9): error TS2103: 'super' cannot be referenced in non-derived classes.
             return '';
         }
     
         public static set static2(n) {
             super.hasOwnProperty('');
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! errorSuperPropertyAccess.ts(30,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     }
     
@@ -75,36 +75,36 @@
             super();
             super.publicMember = 1;
                   ~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(57,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     
         fn() {
             var x = super.publicMember;
                           ~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(61,23): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     
         get a() {
             var x = super.publicMember;
                           ~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(65,23): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             return undefined;
         }
         set a(n) {
             n = super.publicMember;
                       ~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(69,19): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
         fn2() {
             function inner() {
                 super.publicFunc();
                 ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! errorSuperPropertyAccess.ts(73,13): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
             }
             var x = {
                 test: function () { return super.publicFunc(); }
                                            ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! errorSuperPropertyAccess.ts(76,40): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
             }
         }
     }
@@ -117,25 +117,25 @@
             super();
             super.privateMember = 1;
                   ~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(87,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     
         fn() {
             var x = super.privateMember;
                           ~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(91,23): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     
         get a() {
             var x = super.privateMember;
                           ~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(95,23): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             return undefined;
         }
         set a(n) {
             n = super.privateMember;
                       ~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(99,19): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     }
     
@@ -147,43 +147,43 @@
         static fn() {
             super.publicStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(109,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(110,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticFunc();
                   ~~~~~~~~~~~~~~~~~
-!!! error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
+!!! errorSuperPropertyAccess.ts(111,15): error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
         }
         static get a() {
             super.publicStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(114,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(115,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticFunc();
                   ~~~~~~~~~~~~~~~~~
-!!! error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
+!!! errorSuperPropertyAccess.ts(116,15): error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
             return '';
         }
         static set a(n) {
             super.publicStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(120,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticMember = 3;
                   ~~~~~~~~~~~~~~~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! errorSuperPropertyAccess.ts(121,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             super.privateStaticFunc();
                   ~~~~~~~~~~~~~~~~~
-!!! error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
+!!! errorSuperPropertyAccess.ts(122,15): error TS2107: 'SomeBase.privateStaticFunc' is inaccessible.
         }
     }
     
     // In object literal
     var obj = { n: super.wat, p: super.foo() };
                    ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! errorSuperPropertyAccess.ts(127,16): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
                                  ~~~~~
-!!! error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
+!!! errorSuperPropertyAccess.ts(127,30): error TS2102: 'super' property access is permitted only in a constructor, member function, or member accessor of a derived class.
     

@@ -20,12 +20,12 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
     };
     ~
-!!! error TS2027: Exported variable 'server' has or is using private type 'connectModule'.
+!!! multipleExportAssignments.ts(8,5): error TS2027: Exported variable 'server' has or is using private type 'connectModule'.
     ~
-!!! error TS2027: Exported variable 'server' has or is using private type 'connectExport'.
+!!! multipleExportAssignments.ts(8,5): error TS2027: Exported variable 'server' has or is using private type 'connectExport'.
     export = server;
     export = connectExport;
     ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS1065: Module cannot have multiple export assignments.
+!!! multipleExportAssignments.ts(14,1): error TS1065: Module cannot have multiple export assignments.
      
     

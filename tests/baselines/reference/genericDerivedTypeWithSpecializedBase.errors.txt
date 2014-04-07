@@ -11,6 +11,6 @@
     var y: B<number>;
     x = y;  // error
     ~
-!!! error TS2012: Cannot convert 'B<number>' to 'A<number>':
+!!! genericDerivedTypeWithSpecializedBase.ts(11,1): error TS2012: Cannot convert 'B<number>' to 'A<number>':
 !!! 	Types of property 'x' of types 'B<number>' and 'A<number>' are incompatible.
     

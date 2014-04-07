@@ -2,7 +2,7 @@
     function foo() {
         function f1(_i: number, ...restParameters) { //_i is error
                     ~~~~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterFunctionExpressions.ts(2,17): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
             var _i = 10; // no error
         }
         function f1NoError(_i: number) { // no error
@@ -19,7 +19,7 @@
         function f4(_i: string, ...rest); // no codegen no error
         function f4(_i: any, ...rest) { // error
                     ~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterFunctionExpressions.ts(17,17): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
         }
     
         function f4NoError(_i: number); // no error

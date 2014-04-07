@@ -22,28 +22,28 @@
     
             super.m2.bind(this);                                // Should error, instance property, not a public instance member function
                   ~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! superPropertyAccess.ts(22,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
     
             super.p1();                                         // Should error, private not public instance member function
                   ~~
-!!! error TS2107: 'MyBase.p1' is inaccessible.
+!!! superPropertyAccess.ts(24,15): error TS2107: 'MyBase.p1' is inaccessible.
     
             var l1 = super.d1;                                  // Should error, instance data property not a public instance member function
                            ~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! superPropertyAccess.ts(26,24): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
     
             var l1 = super.d2;                                  // Should error, instance data property not a public instance member function
                            ~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! superPropertyAccess.ts(28,24): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
     
             super.m1 = function (a: string) { return ""; };     // Should be allowed, we will not restrict assignment
     
             super.value = 0;                                    // Should error, instance data property not a public instance member function
                   ~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! superPropertyAccess.ts(32,15): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
             
             var z = super.value;                                // Should error, instance data property not a public instance member function
                           ~~~~~
-!!! error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
+!!! superPropertyAccess.ts(34,23): error TS2166: Only public methods of the base class are accessible via the 'super' keyword.
         }
     }

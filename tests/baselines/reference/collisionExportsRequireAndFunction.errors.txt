@@ -5,12 +5,12 @@
     ~~~~~~~~~~~~~
     }
     ~
-!!! error TS2228: Duplicate identifier 'exports'. Compiler reserves name 'exports' in top level scope of an external module.
+!!! collisionExportsRequireAndFunction.ts(1,1): error TS2228: Duplicate identifier 'exports'. Compiler reserves name 'exports' in top level scope of an external module.
     export function require() {
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
         return "require";
     ~~~~~~~~~~~~~~~~~~~~~
     }
     ~
-!!! error TS2228: Duplicate identifier 'require'. Compiler reserves name 'require' in top level scope of an external module.
+!!! collisionExportsRequireAndFunction.ts(4,1): error TS2228: Duplicate identifier 'require'. Compiler reserves name 'require' in top level scope of an external module.
     

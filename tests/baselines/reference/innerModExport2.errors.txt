@@ -5,9 +5,9 @@
         var non_export_var: number;
         module {
                ~
-!!! error TS1005: ';' expected.
+!!! innerModExport2.ts(5,12): error TS1005: ';' expected.
         ~~~~~~
-!!! error TS2095: Could not find symbol 'module'.
+!!! innerModExport2.ts(5,5): error TS2095: Could not find symbol 'module'.
             var non_export_var = 0;
             export var export_var = 1;
     
@@ -17,7 +17,7 @@
         }
         var export_var: number;
             ~~~~~~~~~~~~~~~~~~
-!!! error TS2192: All declarations of merged declaration 'export_var' must be exported or not exported.
+!!! innerModExport2.ts(13,9): error TS2192: All declarations of merged declaration 'export_var' must be exported or not exported.
     
         export var outer_var_export = 0;
         export function outerFuncExport() { return 0; }
@@ -26,4 +26,4 @@
     
     Outer.NonExportFunc();
           ~~~~~~~~~~~~~
-!!! error TS2094: The property 'NonExportFunc' does not exist on value of type 'typeof Outer'.
+!!! innerModExport2.ts(20,7): error TS2094: The property 'NonExportFunc' does not exist on value of type 'typeof Outer'.

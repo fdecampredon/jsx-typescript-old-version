@@ -3,9 +3,9 @@
     module foo {
         export var x: T;
                       ~
-!!! error TS2095: Could not find symbol 'T'.
+!!! genericMergedDeclarationUsingTypeParameter2.ts(3,19): error TS2095: Could not find symbol 'T'.
         var y = <T>1;
                  ~
-!!! error TS2095: Could not find symbol 'T'.
+!!! genericMergedDeclarationUsingTypeParameter2.ts(4,14): error TS2095: Could not find symbol 'T'.
     }
     

@@ -1,13 +1,13 @@
 ==== tests/cases/compiler/anyIdenticalToItself.ts (3 errors) ====
     function foo(x: any);
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2149: Overload signature is not compatible with function definition:
+!!! anyIdenticalToItself.ts(1,1): error TS2149: Overload signature is not compatible with function definition:
 !!! 	Call signature expects 1 or fewer parameters.
     function foo(x: any);
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo'.
+!!! anyIdenticalToItself.ts(2,1): error TS2144: Duplicate overload signature for 'foo'.
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2149: Overload signature is not compatible with function definition:
+!!! anyIdenticalToItself.ts(2,1): error TS2149: Overload signature is not compatible with function definition:
 !!! 	Call signature expects 1 or fewer parameters.
     function foo(x: any, y: number) { }
     

@@ -31,11 +31,11 @@
         var b: { new <T>(x: T, y: T): string };
         var r10 = foo6(b); // error
                   ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithOverloadedConstructorTypedArguments2.ts(31,15): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Construct signatures of types 'new<T>(x: T, y: T) => string' and '{ new(x: {}): string; new(x: {}, y?: {}): string; }' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
                   ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithOverloadedConstructorTypedArguments2.ts(31,15): error TS2087: Could not select overload for 'call' expression.
     
         function foo7<T>(x:T, cb: { new(x: T): string; new(x: T, y?: T): string }) {
             return cb;

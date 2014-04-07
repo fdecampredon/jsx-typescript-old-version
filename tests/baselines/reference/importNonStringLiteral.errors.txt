@@ -2,11 +2,11 @@
     var x = "filename";
     import foo = require(x); // invalid
                          ~
-!!! error TS1003: Identifier expected.
+!!! importNonStringLiteral.ts(2,22): error TS1003: Identifier expected.
                           ~
-!!! error TS1005: ';' expected.
+!!! importNonStringLiteral.ts(2,23): error TS1005: ';' expected.
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2071: Unable to resolve external module ''.
+!!! importNonStringLiteral.ts(2,1): error TS2071: Unable to resolve external module ''.
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2072: Module cannot be aliased to a non-module type.
+!!! importNonStringLiteral.ts(2,1): error TS2072: Module cannot be aliased to a non-module type.
     

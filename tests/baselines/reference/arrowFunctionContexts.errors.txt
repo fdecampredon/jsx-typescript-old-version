@@ -3,7 +3,7 @@
     // Arrow function used in with statement
     with (window) {
           ~~~~~~
-!!! error TS2135: All symbols within a with block will be resolved to 'any'.
+!!! arrowFunctionContexts.ts(3,7): error TS2135: All symbols within a with block will be resolved to 'any'.
         var p = () => this;
     }
     
@@ -21,7 +21,7 @@
     // Arrow function as function argument
     window.setTimeout(() => null, 100);
     ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! arrowFunctionContexts.ts(19,1): error TS2095: Could not find symbol 'window'.
     
     // Arrow function as value in array literal
     
@@ -35,10 +35,10 @@
     enum E {
         x = () => 4, // Error expected
         ~~~~~~~~~~~
-!!! error TS2011: Cannot convert '() => number' to 'E'.
+!!! arrowFunctionContexts.ts(31,5): error TS2011: Cannot convert '() => number' to 'E'.
         y = (() => this).length // error, can't use this in enum
                    ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! arrowFunctionContexts.ts(32,16): error TS2097: 'this' cannot be referenced in current location.
     }
     
     // Arrow function as module variable initializer
@@ -52,7 +52,7 @@
         // Arrow function used in with statement
         with (window) {
               ~~~~~~
-!!! error TS2135: All symbols within a with block will be resolved to 'any'.
+!!! arrowFunctionContexts.ts(44,11): error TS2135: All symbols within a with block will be resolved to 'any'.
             var p = () => this;
         }
     
@@ -70,7 +70,7 @@
         // Arrow function as function argument
         window.setTimeout(() => null, 100);
         ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! arrowFunctionContexts.ts(60,5): error TS2095: Could not find symbol 'window'.
     
         // Arrow function as value in array literal
     
@@ -84,10 +84,10 @@
         enum E {
             x = () => 4, // Error expected
             ~~~~~~~~~~~
-!!! error TS2011: Cannot convert '() => number' to 'E'.
+!!! arrowFunctionContexts.ts(72,9): error TS2011: Cannot convert '() => number' to 'E'.
             y = (() => this).length
                        ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! arrowFunctionContexts.ts(73,20): error TS2097: 'this' cannot be referenced in current location.
         }
     
         // Arrow function as module variable initializer

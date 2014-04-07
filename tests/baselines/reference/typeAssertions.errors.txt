@@ -5,7 +5,7 @@
     
     fn1(fn2<string>(4)); // Error
         ~~~~~~~~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeAssertions.ts(5,5): error TS2087: Could not select overload for 'call' expression.
     
     var a: any;
     var s: string;
@@ -33,7 +33,7 @@
     someBase = <SomeBase>someBase;
     someBase = <SomeBase>someOther; // Error
                ~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert 'SomeOther' to 'SomeBase':
+!!! typeAssertions.ts(31,12): error TS2012: Cannot convert 'SomeOther' to 'SomeBase':
 !!! 	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.
 !!! 	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
     
@@ -41,18 +41,18 @@
     someDerived = <SomeDerived>someBase;
     someDerived = <SomeDerived>someOther; // Error
                   ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert 'SomeOther' to 'SomeDerived':
+!!! typeAssertions.ts(35,15): error TS2012: Cannot convert 'SomeOther' to 'SomeDerived':
 !!! 	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
 !!! 	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
     
     someOther = <SomeOther>someDerived; // Error
                 ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert 'SomeDerived' to 'SomeOther':
+!!! typeAssertions.ts(37,13): error TS2012: Cannot convert 'SomeDerived' to 'SomeOther':
 !!! 	Type 'SomeDerived' is missing property 'q' from type 'SomeOther'.
 !!! 	Type 'SomeOther' is missing property 'x' from type 'SomeDerived'.
     someOther = <SomeOther>someBase; // Error
                 ~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert 'SomeBase' to 'SomeOther':
+!!! typeAssertions.ts(38,13): error TS2012: Cannot convert 'SomeBase' to 'SomeOther':
 !!! 	Type 'SomeBase' is missing property 'q' from type 'SomeOther'.
 !!! 	Type 'SomeOther' is missing property 'p' from type 'SomeBase'.
     someOther = <SomeOther>someOther;

@@ -3,7 +3,7 @@
         constructor() {
             this.foo<string>();
                  ~~~
-!!! error TS2094: The property 'foo' does not exist on value of type 'Foo'.
+!!! invokingNonGenericMethodWithTypeArguments1.ts(3,14): error TS2094: The property 'foo' does not exist on value of type 'Foo'.
         }
     }
     

@@ -2,7 +2,7 @@
     function x() {
      with({}) {
           ~~
-!!! error TS2135: All symbols within a with block will be resolved to 'any'.
+!!! functionExpressionInWithBlock.ts(2,7): error TS2135: All symbols within a with block will be resolved to 'any'.
       function f() {
        () => this;
       }

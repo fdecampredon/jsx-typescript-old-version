@@ -4,15 +4,15 @@
     switch (0) {
         case Foo: break;    // Error
              ~~~
-!!! error TS2012: Cannot convert 'typeof Foo' to 'number':
+!!! switchCasesExpressionTypeMismatch.ts(4,10): error TS2012: Cannot convert 'typeof Foo' to 'number':
 !!! 	Type 'Number' is missing property 'prototype' from type 'typeof Foo'.
         case "sss": break;  // Error
              ~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! switchCasesExpressionTypeMismatch.ts(5,10): error TS2011: Cannot convert 'string' to 'number'.
         case 123: break;    // No Error
         case true: break;   // Error
              ~~~~
-!!! error TS2011: Cannot convert 'boolean' to 'number'.
+!!! switchCasesExpressionTypeMismatch.ts(7,10): error TS2011: Cannot convert 'boolean' to 'number'.
     }
     
     var s: any = 0;

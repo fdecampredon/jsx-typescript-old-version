@@ -8,7 +8,7 @@
     
     class IntFooBad implements IFoo<number> { // error
           ~~~~~~~~~
-!!! error TS2137: Class IntFooBad declares interface IFoo<number> but does not implement it:
+!!! genericSpecializations3.ts(8,7): error TS2137: Class IntFooBad declares interface IFoo<number> but does not implement it:
 !!! 	Types of property 'foo' of types 'IntFooBad' and 'IFoo<number>' are incompatible:
 !!! 		Call signatures of types '(x: string) => string' and '(x: number) => number' are incompatible.
         foo(x: string): string { return null; }
@@ -32,12 +32,12 @@
     
     intFoo = stringFoo2; // error
     ~~~~~~
-!!! error TS2012: Cannot convert 'StringFoo2' to 'IntFoo':
+!!! genericSpecializations3.ts(28,1): error TS2012: Cannot convert 'StringFoo2' to 'IntFoo':
 !!! 	Types of property 'foo' of types 'StringFoo2' and 'IntFoo' are incompatible:
 !!! 		Call signatures of types '(x: string) => string' and '(x: number) => number' are incompatible.
     stringFoo2 = intFoo; // error
     ~~~~~~~~~~
-!!! error TS2012: Cannot convert 'IntFoo' to 'StringFoo2':
+!!! genericSpecializations3.ts(29,1): error TS2012: Cannot convert 'IntFoo' to 'StringFoo2':
 !!! 	Types of property 'foo' of types 'IntFoo' and 'StringFoo2' are incompatible:
 !!! 		Call signatures of types '(x: number) => number' and '(x: string) => string' are incompatible.
     

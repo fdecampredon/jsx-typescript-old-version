@@ -4,7 +4,7 @@
     }
     class Foo implements Qux {
           ~~~
-!!! error TS2137: Class Foo declares interface Qux but does not implement it:
+!!! publicMemberImplementedAsPrivateInDerivedClass.ts(4,7): error TS2137: Class Foo declares interface Qux but does not implement it:
 !!! 	Property 'Bar' defined as private in type 'Foo' is defined as public in type 'Qux'.
      private Bar: number;
     }

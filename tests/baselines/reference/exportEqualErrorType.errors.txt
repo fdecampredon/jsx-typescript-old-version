@@ -3,7 +3,7 @@
     import connect = require('exportEqualErrorType_0');
     connect().use(connect.static('foo')); // Error  1      The property 'static' does not exist on value of type ''.
                           ~~~~~~
-!!! error TS2094: The property 'static' does not exist on value of type '{ foo: Date; (): connect.connectExport; }'.
+!!! exportEqualErrorType_1.ts(3,23): error TS2094: The property 'static' does not exist on value of type '{ foo: Date; (): connect.connectExport; }'.
     
 ==== tests/cases/compiler/exportEqualErrorType_0.ts (0 errors) ====
     module server {

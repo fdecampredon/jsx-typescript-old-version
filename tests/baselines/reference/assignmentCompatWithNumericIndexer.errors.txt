@@ -14,7 +14,7 @@
     a = b;
     b = a; // error
     ~
-!!! error TS2012: Cannot convert 'A' to '{ [x: number]: Derived; }':
+!!! assignmentCompatWithNumericIndexer.ts(14,1): error TS2012: Cannot convert 'A' to '{ [x: number]: Derived; }':
 !!! 	Index signatures of types 'A' and '{ [x: number]: Derived; }' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     
@@ -22,7 +22,7 @@
     a = b2;
     b2 = a; // error
     ~~
-!!! error TS2012: Cannot convert 'A' to '{ [x: number]: Derived2; }':
+!!! assignmentCompatWithNumericIndexer.ts(18,1): error TS2012: Cannot convert 'A' to '{ [x: number]: Derived2; }':
 !!! 	Index signatures of types 'A' and '{ [x: number]: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
     
@@ -40,22 +40,22 @@
             var b: { [x: number]: Derived; }
             a = b; // error
             ~
-!!! error TS2012: Cannot convert '{ [x: number]: Derived; }' to 'A<T>':
+!!! assignmentCompatWithNumericIndexer.ts(32,9): error TS2012: Cannot convert '{ [x: number]: Derived; }' to 'A<T>':
 !!! 	Index signatures of types '{ [x: number]: Derived; }' and 'A<T>' are incompatible.
             b = a; // error
             ~
-!!! error TS2012: Cannot convert 'A<T>' to '{ [x: number]: Derived; }':
+!!! assignmentCompatWithNumericIndexer.ts(33,9): error TS2012: Cannot convert 'A<T>' to '{ [x: number]: Derived; }':
 !!! 	Index signatures of types 'A<T>' and '{ [x: number]: Derived; }' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     
             var b2: { [x: number]: Derived2; }
             a = b2; // error
             ~
-!!! error TS2012: Cannot convert '{ [x: number]: Derived2; }' to 'A<T>':
+!!! assignmentCompatWithNumericIndexer.ts(36,9): error TS2012: Cannot convert '{ [x: number]: Derived2; }' to 'A<T>':
 !!! 	Index signatures of types '{ [x: number]: Derived2; }' and 'A<T>' are incompatible.
             b2 = a; // error
             ~~
-!!! error TS2012: Cannot convert 'A<T>' to '{ [x: number]: Derived2; }':
+!!! assignmentCompatWithNumericIndexer.ts(37,9): error TS2012: Cannot convert 'A<T>' to '{ [x: number]: Derived2; }':
 !!! 	Index signatures of types 'A<T>' and '{ [x: number]: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
     

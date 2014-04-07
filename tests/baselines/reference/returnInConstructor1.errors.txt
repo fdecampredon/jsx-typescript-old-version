@@ -11,7 +11,7 @@
         constructor() {
             return 1; // error
                    ~
-!!! error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+!!! returnInConstructor1.ts(11,16): error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
         }
     }
     
@@ -27,7 +27,7 @@
         constructor() {
             return "test"; // error
                    ~~~~~~
-!!! error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+!!! returnInConstructor1.ts(25,16): error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
         }
     }
     
@@ -43,7 +43,7 @@
         constructor() {
             return { foo: 1 }; //error
                    ~~~~~~~~~~
-!!! error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+!!! returnInConstructor1.ts(39,16): error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
         }
     }
     
@@ -61,7 +61,7 @@
             super();
             return new G(); //error
                    ~~~~~~~
-!!! error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
+!!! returnInConstructor1.ts(55,16): error TS2194: Return type of constructor signature must be assignable to the instance type of the class.
         }
     }
     

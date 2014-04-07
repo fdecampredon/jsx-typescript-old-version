@@ -13,5 +13,5 @@
     module D {
         export var y = D.bar; // error
                          ~~~
-!!! error TS2107: 'C.bar' is inaccessible.
+!!! privateStaticNotAccessibleInClodule2.ts(13,22): error TS2107: 'C.bar' is inaccessible.
     }

@@ -24,10 +24,10 @@
     
     arr_any = function () { return null;} // should be an error - is
     ~~~~~~~
-!!! error TS2012: Cannot convert '() => any' to 'any[]':
+!!! arrayAssignmentTest4.ts(24,1): error TS2012: Cannot convert '() => any' to 'any[]':
 !!! 	Type '() => any' is missing property 'concat' from type 'any[]'.
     arr_any = c3; // should be an error - is
     ~~~~~~~
-!!! error TS2012: Cannot convert 'C3' to 'any[]':
+!!! arrayAssignmentTest4.ts(25,1): error TS2012: Cannot convert 'C3' to 'any[]':
 !!! 	Type 'C3' is missing property 'concat' from type 'any[]'.
     

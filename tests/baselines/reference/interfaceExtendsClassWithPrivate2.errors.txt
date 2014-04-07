@@ -10,10 +10,10 @@
     
     class D extends C implements I { // error
           ~
-!!! error TS2137: Class D declares interface I but does not implement it:
+!!! interfaceExtendsClassWithPrivate2.ts(10,7): error TS2137: Class D declares interface I but does not implement it:
 !!! 	Types 'D' and 'C' define property 'x' as private.
           ~
-!!! error TS2141: Class 'D' cannot extend class 'C':
+!!! interfaceExtendsClassWithPrivate2.ts(10,7): error TS2141: Class 'D' cannot extend class 'C':
 !!! 	Types 'D' and 'C' define property 'x' as private.
         public foo(x: any) { return x; }
         private x = 2;
@@ -24,10 +24,10 @@
     
     class D2 extends C implements I { // error
           ~~
-!!! error TS2137: Class D2 declares interface I but does not implement it:
+!!! interfaceExtendsClassWithPrivate2.ts(18,7): error TS2137: Class D2 declares interface I but does not implement it:
 !!! 	Types 'D2' and 'C' define property 'x' as private.
           ~~
-!!! error TS2141: Class 'D2' cannot extend class 'C':
+!!! interfaceExtendsClassWithPrivate2.ts(18,7): error TS2141: Class 'D2' cannot extend class 'C':
 !!! 	Types 'D2' and 'C' define property 'x' as private.
         public foo(x: any) { return x; }
         private x = "";

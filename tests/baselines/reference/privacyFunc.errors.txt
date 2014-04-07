@@ -12,7 +12,7 @@
             constructor (m1_c3_c1: C1_public);
             constructor (m1_c3_c2: C2_private); //error
                          ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2032: Parameter 'm1_c3_c2' of constructor from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(12,22): error TS2032: Parameter 'm1_c3_c2' of constructor from exported class has or is using private type 'C2_private'.
             constructor (m1_c3_c1_2: any) {
             }
     
@@ -27,7 +27,7 @@
     
             public f4_public(m1_c3_f4_arg: C2_private) { // error
                              ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2038: Parameter 'm1_c3_f4_arg' of public method from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(25,26): error TS2038: Parameter 'm1_c3_f4_arg' of public method from exported class has or is using private type 'C2_private'.
             }
     
             private f5_private() {
@@ -45,7 +45,7 @@
             public f8_public() {
                 return new C2_private();  // error
                 ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(41,13): error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
             }
     
             private f9_private(): C1_public {
@@ -62,10 +62,10 @@
     
             public f12_public(): C2_private { // error
                                  ~~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(56,30): error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
                 return new C2_private(); //error
                 ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(57,13): error TS2056: Return type of public method from exported class has or is using private type 'C2_private'.
             }
         }
     
@@ -133,7 +133,7 @@
         export class C7_public {
             constructor (m1_c7_c: C2_private) { // error
                          ~~~~~~~~~~~~~~~~~~~
-!!! error TS2032: Parameter 'm1_c7_c' of constructor from exported class has or is using private type 'C2_private'.
+!!! privacyFunc.ts(123,22): error TS2032: Parameter 'm1_c7_c' of constructor from exported class has or is using private type 'C2_private'.
             }
         }
         
@@ -153,7 +153,7 @@
     
         export function f4_public(m1_f4_arg: C2_private) { // error
                                   ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2040: Parameter 'm1_f4_arg' of exported function has or is using private type 'C2_private'.
+!!! privacyFunc.ts(141,31): error TS2040: Parameter 'm1_f4_arg' of exported function has or is using private type 'C2_private'.
         }
     
     
@@ -172,7 +172,7 @@
         export function f8_public() {
             return new C2_private();  // error
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2058: Return type of exported function has or is using private type 'C2_private'.
+!!! privacyFunc.ts(158,9): error TS2058: Return type of exported function has or is using private type 'C2_private'.
         }
     
     
@@ -190,10 +190,10 @@
     
         export function f12_public(): C2_private { // error
                                       ~~~~~~~~~~
-!!! error TS2058: Return type of exported function has or is using private type 'C2_private'.
+!!! privacyFunc.ts(174,35): error TS2058: Return type of exported function has or is using private type 'C2_private'.
             return new C2_private(); //error
             ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2058: Return type of exported function has or is using private type 'C2_private'.
+!!! privacyFunc.ts(175,9): error TS2058: Return type of exported function has or is using private type 'C2_private'.
         }
     }
     

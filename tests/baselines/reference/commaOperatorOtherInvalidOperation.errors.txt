@@ -6,7 +6,7 @@
     }
     var resultIsString: number = foo(1, "123"); //error here
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! commaOperatorOtherInvalidOperation.ts(6,5): error TS2011: Cannot convert 'string' to 'number'.
     
     //TypeParameters
     function foo1<T1, T2>() {
@@ -14,5 +14,5 @@
         var y: T2;
         var result: T1 = (x, y); //error here
             ~~~~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'T2' to 'T1'.
+!!! commaOperatorOtherInvalidOperation.ts(12,9): error TS2011: Cannot convert 'T2' to 'T1'.
     }

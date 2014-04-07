@@ -20,7 +20,7 @@
     c2 = c;
     c.bar(); // error
       ~~~
-!!! error TS2094: The property 'bar' does not exist on value of type 'C'.
+!!! classImplementsClass6.ts(20,3): error TS2094: The property 'bar' does not exist on value of type 'C'.
     c2.bar(); // should error
        ~~~
-!!! error TS2094: The property 'bar' does not exist on value of type 'C2'.
+!!! classImplementsClass6.ts(21,4): error TS2094: The property 'bar' does not exist on value of type 'C2'.

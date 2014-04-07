@@ -2,6 +2,6 @@
     class A {
         a(completed: () => any): void;
         ~
-!!! error TS1041: Function implementation expected.
+!!! crashOnMethodSignatures.ts(2,5): error TS1041: Function implementation expected.
     }
     

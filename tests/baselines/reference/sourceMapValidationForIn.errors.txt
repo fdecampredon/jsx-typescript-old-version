@@ -2,22 +2,22 @@
     for (var x in String) {
         WScript.Echo(x);
         ~~~~~~~
-!!! error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationForIn.ts(2,5): error TS2095: Could not find symbol 'WScript'.
     }
     for (x in String) {
         WScript.Echo(x);
         ~~~~~~~
-!!! error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationForIn.ts(5,5): error TS2095: Could not find symbol 'WScript'.
     }
     for (var x2 in String)
     {
         WScript.Echo(x2);
         ~~~~~~~
-!!! error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationForIn.ts(9,5): error TS2095: Could not find symbol 'WScript'.
     }
     for (x in String)
     {
         WScript.Echo(x);
         ~~~~~~~
-!!! error TS2095: Could not find symbol 'WScript'.
+!!! sourceMapValidationForIn.ts(13,5): error TS2095: Could not find symbol 'WScript'.
     }

@@ -8,13 +8,13 @@
           (function () {
               name=value;
            ~~~~
-!!! error TS2095: Could not find symbol 'name'.
+!!! selfRef.ts(8,8): error TS2095: Could not find symbol 'name'.
           })();
           }
           public getName = function(): string {
               return name;
                      ~~~~
-!!! error TS2095: Could not find symbol 'name'.
+!!! selfRef.ts(12,18): error TS2095: Could not find symbol 'name'.
           }
         }
     }

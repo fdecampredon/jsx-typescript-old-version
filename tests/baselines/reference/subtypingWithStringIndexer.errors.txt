@@ -32,14 +32,14 @@
     
         class B3<T extends Base> extends A<T> {
               ~~
-!!! error TS2141: Class 'Generics.B3<T>' cannot extend class 'Generics.A<T>':
+!!! subtypingWithStringIndexer.ts(32,11): error TS2141: Class 'Generics.B3<T>' cannot extend class 'Generics.A<T>':
 !!! 	Index signatures of types 'B3<T>' and 'A<T>' are incompatible.
             [x: string]: Derived; // error
         }
     
         class B4<T extends Base> extends A<T> {
               ~~
-!!! error TS2141: Class 'Generics.B4<T>' cannot extend class 'Generics.A<T>':
+!!! subtypingWithStringIndexer.ts(36,11): error TS2141: Class 'Generics.B4<T>' cannot extend class 'Generics.A<T>':
 !!! 	Index signatures of types 'B4<T>' and 'A<T>' are incompatible.
             [x: string]: Derived2; // error
         }

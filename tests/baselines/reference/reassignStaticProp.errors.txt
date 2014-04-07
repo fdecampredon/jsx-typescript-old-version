@@ -5,7 +5,8 @@
      
         static bar:string; // errror - duplicate id
                ~~~
-!!! error TS2000: Duplicate identifier 'bar'.
+!!! reassignStaticProp.ts(5,12): error TS2000: Duplicate identifier 'bar'. Additional locations:
+!!! 	reassignStaticProp.ts(3,5)
      
     }
      

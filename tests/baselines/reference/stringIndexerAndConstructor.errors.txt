@@ -11,8 +11,8 @@
         new (): boolean;
         "": string;
         ~~~~~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'number'.
+!!! stringIndexerAndConstructor.ts(11,5): error TS2171: All named properties must be assignable to string indexer type 'number'.
         d: string;
         ~~~~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'number'.
+!!! stringIndexerAndConstructor.ts(12,5): error TS2171: All named properties must be assignable to string indexer type 'number'.
     }

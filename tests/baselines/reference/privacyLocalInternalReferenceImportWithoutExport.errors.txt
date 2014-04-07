@@ -61,31 +61,31 @@
         var privateUse_im_private_c_private = new im_private_c_private();
         export var publicUse_im_private_c_private = new im_private_c_private();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_c_private' has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(61,16): error TS2027: Exported variable 'publicUse_im_private_c_private' has or is using private type 'm_private.c_private'.
         var privateUse_im_private_e_private = im_private_e_private.Happy;
         export var publicUse_im_private_e_private = im_private_e_private.Grumpy;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_e_private' has or is using private type 'm_private.e_private'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(63,16): error TS2027: Exported variable 'publicUse_im_private_e_private' has or is using private type 'm_private.e_private'.
         var privateUse_im_private_f_private = im_private_f_private();
         export var publicUse_im_private_f_private = im_private_f_private();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_f_private' has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(65,16): error TS2027: Exported variable 'publicUse_im_private_f_private' has or is using private type 'm_private.c_private'.
         var privateUse_im_private_v_private = im_private_v_private;
         export var publicUse_im_private_v_private = im_private_v_private;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_v_private' has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(67,16): error TS2027: Exported variable 'publicUse_im_private_v_private' has or is using private type 'm_private.c_private'.
         var privateUse_im_private_i_private: im_private_i_private;
         export var publicUse_im_private_i_private: im_private_i_private;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_i_private' has or is using private type 'm_private.i_private'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(69,16): error TS2027: Exported variable 'publicUse_im_private_i_private' has or is using private type 'm_private.i_private'.
         var privateUse_im_private_mi_private = new im_private_mi_private.c();
         export var publicUse_im_private_mi_private = new im_private_mi_private.c();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_mi_private' has or is using private type 'm_private.mi_private.c'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(71,16): error TS2027: Exported variable 'publicUse_im_private_mi_private' has or is using private type 'm_private.mi_private.c'.
         var privateUse_im_private_mu_private: im_private_mu_private.i;
         export var publicUse_im_private_mu_private: im_private_mu_private.i;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_private_mu_private' has or is using private type 'm_private.mu_private.i'.
+!!! privacyLocalInternalReferenceImportWithoutExport.ts(73,16): error TS2027: Exported variable 'publicUse_im_private_mu_private' has or is using private type 'm_private.mu_private.i'.
     
     
         // No Privacy errors - importing public elements

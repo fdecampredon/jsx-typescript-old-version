@@ -3,8 +3,8 @@
     }
     export var x: typeof foo;
                ~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'x' has or is using private type 'foo'.
+!!! privacyCheckTypeOfFunction.ts(3,12): error TS2027: Exported variable 'x' has or is using private type 'foo'.
     export var b = foo;
                ~~~~~~~
-!!! error TS2027: Exported variable 'b' has or is using private type 'foo'.
+!!! privacyCheckTypeOfFunction.ts(4,12): error TS2027: Exported variable 'b' has or is using private type 'foo'.
     

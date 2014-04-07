@@ -10,4 +10,4 @@
     // Invalid, as there is already an exported member.
     export = C1;
     ~~~~~~~~~~~~
-!!! error TS1064: Export assignment not allowed in module with exported element.
+!!! exportAssignmentAndDeclaration.ts(10,1): error TS1064: Export assignment not allowed in module with exported element.

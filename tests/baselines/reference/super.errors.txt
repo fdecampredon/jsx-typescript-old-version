@@ -29,7 +29,7 @@
         public foo() {
             super.foo();
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! super.ts(29,9): error TS2103: 'super' cannot be referenced in non-derived classes.
         }
     }
     

@@ -15,19 +15,19 @@
     function foo1(x: I<string, boolean, number, string>);
     function foo1(x: I<string, boolean, number, string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1'.
+!!! objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.ts(15,1): error TS2144: Duplicate overload signature for 'foo1'.
     function foo1(x: any) { }
     
     function foo2(x: I2);
     function foo2(x: I2); // error
     ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.ts(19,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.ts(23,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo13(x: I<boolean, string, number, Date>);

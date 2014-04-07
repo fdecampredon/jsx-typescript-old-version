@@ -13,7 +13,7 @@
     
         export class C implements I {
                      ~
-!!! error TS2137: Class C declares interface I but does not implement it:
+!!! fuzzy.ts(13,18): error TS2137: Class C declares interface I but does not implement it:
 !!! 	Type 'C' is missing property 'alsoWorks' from type 'I'.
             constructor(public x:number) {
             }
@@ -24,7 +24,7 @@
             doesntWork():R {
                 return { anything:1, oneI:this };
                        ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{ anything: number; oneI: C; }' to 'R':
+!!! fuzzy.ts(21,20): error TS2012: Cannot convert '{ anything: number; oneI: C; }' to 'R':
 !!! 	Types of property 'oneI' of types '{ anything: number; oneI: C; }' and 'R' are incompatible:
 !!! 		Type 'C' is missing property 'alsoWorks' from type 'I'.
             }
@@ -32,7 +32,7 @@
             worksToo():R {
                 return <R>({ oneI: this });
                        ~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{ oneI: C; }' to 'R':
+!!! fuzzy.ts(25,20): error TS2012: Cannot convert '{ oneI: C; }' to 'R':
 !!! 	Type '{ oneI: C; }' is missing property 'anything' from type 'R'.
 !!! 	Types of property 'oneI' of types 'R' and '{ oneI: C; }' are incompatible:
 !!! 		Type 'I' is missing property 'x' from type 'C'.

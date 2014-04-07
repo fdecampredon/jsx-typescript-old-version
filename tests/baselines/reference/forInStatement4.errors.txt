@@ -2,5 +2,5 @@
     var expr: any;
     for (var a: number in expr) {
          ~~~~~~~~~~~~~
-!!! error TS2115: Variable declarations of a 'for' statement cannot use a type annotation.
+!!! forInStatement4.ts(2,6): error TS2115: Variable declarations of a 'for' statement cannot use a type annotation.
     }

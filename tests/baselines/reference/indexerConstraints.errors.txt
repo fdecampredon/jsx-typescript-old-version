@@ -14,13 +14,13 @@
     interface E {
         [s: string]: B;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints.ts(14,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     interface E {
         [n: number]: A;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints.ts(17,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     
@@ -31,7 +31,7 @@
     interface G extends F {
         [n: number]: A;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints.ts(25,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     
@@ -42,7 +42,7 @@
     interface I extends H {
         [s: string]: B;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints.ts(33,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     
@@ -53,7 +53,7 @@
     interface K extends J {
         [n: number]: A;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints.ts(41,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
         [s: string]: B;
     }

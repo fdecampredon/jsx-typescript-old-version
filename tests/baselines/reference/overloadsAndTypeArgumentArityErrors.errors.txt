@@ -5,7 +5,7 @@
     
     Callbacks<number, string, boolean>('s'); // wrong number of type arguments
     ~~~~~~~~~
-!!! error TS4027: Signature expected 1 type arguments, got 3 instead.
+!!! overloadsAndTypeArgumentArityErrors.ts(5,1): error TS4027: Signature expected 1 type arguments, got 3 instead.
     new Callbacks<number, string, boolean>('s'); // wrong number of type arguments
         ~~~~~~~~~
-!!! error TS4027: Signature expected 1 type arguments, got 3 instead.
+!!! overloadsAndTypeArgumentArityErrors.ts(6,5): error TS4027: Signature expected 1 type arguments, got 3 instead.

@@ -41,7 +41,7 @@
     
     M = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignAnyToEveryType.ts(41,1): error TS2130: Invalid left-hand side of assignment expression.
     
     function k<T>(a: T) {
         a = x;

@@ -4,10 +4,10 @@
     (x) = 3; // OK
     x = ''; // Error
     ~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(4,1): error TS2011: Cannot convert 'string' to 'number'.
     (x) = ''; // Error
     ~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(5,1): error TS2011: Cannot convert 'string' to 'number'.
     
     module M {
         export var y: number;
@@ -17,20 +17,20 @@
     (M.y) = 3; // OK
     M.y = ''; // Error
     ~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(13,1): error TS2011: Cannot convert 'string' to 'number'.
     (M).y = ''; // Error
     ~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(14,1): error TS2011: Cannot convert 'string' to 'number'.
     (M.y) = ''; // Error
     ~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(15,1): error TS2011: Cannot convert 'string' to 'number'.
     
     M = { y: 3 }; // Error
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(17,1): error TS2130: Invalid left-hand side of assignment expression.
     (M) = { y: 3 }; // Error
     ~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(18,1): error TS2130: Invalid left-hand side of assignment expression.
     
     module M2 {
         export module M3 {
@@ -39,7 +39,7 @@
     
         M3 = { x: 3 }; // Error
         ~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(25,5): error TS2130: Invalid left-hand side of assignment expression.
     }
     M2.M3 = { x: 3 }; // OK
     (M2).M3 = { x: 3 }; // OK
@@ -47,57 +47,57 @@
     
     M2.M3 = { x: '' }; // Error
     ~~~~~
-!!! error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(31,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     (M2).M3 = { x: '' }; // Error
     ~~~~~~~
-!!! error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(32,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     (M2.M3) = { x: '' }; // Error
     ~~~~~~~
-!!! error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
+!!! assignmentToParenthesizedIdentifiers.ts(33,1): error TS2012: Cannot convert '{ x: string; }' to 'typeof M2.M3':
 !!! 	Types of property 'M2.M3.x' of types '{ x: string; }' and 'typeof M2.M3' are incompatible.
     
     
     function fn() { }
     fn = () => 3; // Bug 823548: Should be error (fn is not a reference)
     ~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(37,1): error TS2130: Invalid left-hand side of assignment expression.
     (fn) = () => 3; // Should be error
     ~~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(38,1): error TS2130: Invalid left-hand side of assignment expression.
     
     function fn2(x: number, y: { t: number }) {
         x = 3;
         (x) = 3; // OK
         x = ''; // Error
         ~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(43,5): error TS2011: Cannot convert 'string' to 'number'.
         (x) = ''; // Error
         ~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(44,5): error TS2011: Cannot convert 'string' to 'number'.
     
         (y).t = 3; // OK
         (y.t) = 3; // OK
         (y).t = ''; // Error
         ~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(48,5): error TS2011: Cannot convert 'string' to 'number'.
         (y.t) = ''; // Error
         ~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(49,5): error TS2011: Cannot convert 'string' to 'number'.
     
         y['t'] = 3; // OK
         (y)['t'] = 3; // OK
         (y['t']) = 3; // OK
         y['t'] = ''; // Error
         ~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(54,5): error TS2011: Cannot convert 'string' to 'number'.
         (y)['t'] = ''; // Error
         ~~~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(55,5): error TS2011: Cannot convert 'string' to 'number'.
         (y['t']) = ''; // Error
         ~~~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! assignmentToParenthesizedIdentifiers.ts(56,5): error TS2011: Cannot convert 'string' to 'number'.
     }
     
     enum E {
@@ -105,10 +105,10 @@
     }
     E = undefined; // Error
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(62,1): error TS2130: Invalid left-hand side of assignment expression.
     (E) = undefined; // Error
     ~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(63,1): error TS2130: Invalid left-hand side of assignment expression.
     
     class C {
     
@@ -116,8 +116,8 @@
     
     C = undefined; // Error
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(69,1): error TS2130: Invalid left-hand side of assignment expression.
     (C) = undefined; // Error
     ~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToParenthesizedIdentifiers.ts(70,1): error TS2130: Invalid left-hand side of assignment expression.
     

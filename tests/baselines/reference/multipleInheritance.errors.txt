@@ -9,7 +9,7 @@
     
     class C extends B1, B2 { // duplicate member
             ~~~~~~~~~~~~~~
-!!! error TS1026: Classes can only extend a single class.
+!!! multipleInheritance.ts(9,9): error TS1026: Classes can only extend a single class.
     }
     
     class D1 extends B1 {
@@ -20,7 +20,7 @@
     
     class E extends D1, D2 { // nope, duplicate member
             ~~~~~~~~~~~~~~
-!!! error TS1026: Classes can only extend a single class.
+!!! multipleInheritance.ts(18,9): error TS1026: Classes can only extend a single class.
     }
     
     class N {
@@ -38,7 +38,7 @@
     
     class Baad extends Good {
           ~~~~
-!!! error TS2141: Class 'Baad' cannot extend class 'Good':
+!!! multipleInheritance.ts(34,7): error TS2141: Class 'Baad' cannot extend class 'Good':
 !!! 	Class 'Baad' defines instance member function 'f', but extended class 'Good' defines it as instance member property.
         public f(): number { return 0; }
         public g(n:number) { return 0; }

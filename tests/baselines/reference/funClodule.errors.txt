@@ -5,7 +5,8 @@
     }
     declare class foo { } // Should error
                   ~~~
-!!! error TS2000: Duplicate identifier 'foo'.
+!!! funClodule.ts(5,15): error TS2000: Duplicate identifier 'foo'. Additional locations:
+!!! 	funClodule.ts(1,1)
     
     
     declare class foo2 { }
@@ -14,7 +15,8 @@
     }
     declare function foo2(); // Should error
                      ~~~~
-!!! error TS2000: Duplicate identifier 'foo2'.
+!!! funClodule.ts(12,18): error TS2000: Duplicate identifier 'foo2'. Additional locations:
+!!! 	funClodule.ts(8,1)
     
     
     function foo3() { }
@@ -23,4 +25,5 @@
     }
     class foo3 { } // Should error
           ~~~~
-!!! error TS2000: Duplicate identifier 'foo3'.
+!!! funClodule.ts(19,7): error TS2000: Duplicate identifier 'foo3'. Additional locations:
+!!! 	funClodule.ts(15,1)

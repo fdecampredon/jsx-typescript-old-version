@@ -17,7 +17,7 @@
     
     interface Derived2 extends Base, Base2 { // error
               ~~~~~~~~
-!!! error TS2143: Interface 'Derived2' cannot extend interface 'Base':
+!!! interfaceWithMultipleBaseTypes2.ts(17,11): error TS2143: Interface 'Derived2' cannot extend interface 'Base':
 !!! 	Types of property 'x' of types 'Derived2' and 'Base' are incompatible:
 !!! 		Types of property 'a' of types '{ a: number; b: string; }' and '{ a?: string; b: string; }' are incompatible.
         x: { a: number; b: string }

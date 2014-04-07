@@ -2,7 +2,7 @@
     module M1 {
         export var q = 5;
                    ~~~~~
-!!! error TS4026: Variable declaration cannot have the same name as an import declaration.
+!!! varNameConflictsWithImportInDifferentPartOfModule.ts(2,16): error TS4026: Variable declaration cannot have the same name as an import declaration.
         export var s = '';
     }
     module M1 {

@@ -16,7 +16,7 @@
     var ownerList: OwnerList<string>;
     list = ownerList; 
     ~~~~
-!!! error TS2012: Cannot convert 'OwnerList<string>' to 'List<string>':
+!!! infiniteExpansionThroughInstantiation.ts(16,1): error TS2012: Cannot convert 'OwnerList<string>' to 'List<string>':
 !!! 	Types of property 'data' of types 'OwnerList<string>' and 'List<string>' are incompatible.
     
     function other<T>(x: T) {
@@ -24,7 +24,7 @@
         var ownerList: OwnerList<T>;
         list = ownerList; 
         ~~~~
-!!! error TS2012: Cannot convert 'OwnerList<T>' to 'List<T>':
+!!! infiniteExpansionThroughInstantiation.ts(21,5): error TS2012: Cannot convert 'OwnerList<T>' to 'List<T>':
 !!! 	Types of property 'data' of types 'OwnerList<T>' and 'List<T>' are incompatible.
     
     }

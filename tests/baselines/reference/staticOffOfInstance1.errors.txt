@@ -3,7 +3,7 @@
       public Blah() {
         this.Foo();
              ~~~
-!!! error TS2094: The property 'Foo' does not exist on value of type 'List'.
+!!! staticOffOfInstance1.ts(3,10): error TS2094: The property 'Foo' does not exist on value of type 'List'.
       }
       public static Foo() {}
     }

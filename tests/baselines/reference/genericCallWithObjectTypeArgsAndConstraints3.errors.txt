@@ -20,7 +20,7 @@
     
     function f2<T extends Base, U extends { x: T; y: T }>(a: U) {
                                 ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! genericCallWithObjectTypeArgsAndConstraints3.ts(20,29): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         var r: T;
         return r;
     }

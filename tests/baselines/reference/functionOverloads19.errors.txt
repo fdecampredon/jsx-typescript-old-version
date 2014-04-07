@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/functionOverloads19.ts (1 errors) ====
     function foo(bar:{b:string;});
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2149: Overload signature is not compatible with function definition:
+!!! functionOverloads19.ts(1,1): error TS2149: Overload signature is not compatible with function definition:
 !!! 	Type '{ a: any; }' is missing property 'b' from type '{ b: string; }'.
 !!! 	Type '{ b: string; }' is missing property 'a' from type '{ a: any; }'.
     function foo(bar:{a:string;});

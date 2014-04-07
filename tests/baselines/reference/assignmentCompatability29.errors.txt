@@ -9,6 +9,6 @@
     }
     __test2__.__val__aa = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: any[]; }':
+!!! assignmentCompatability29.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: any[]; }':
 !!! 	Types of property 'one' of types '__test1__.interfaceWithPublicAndOptional<number, string>' and '{ one: any[]; }' are incompatible:
 !!! 		Type 'Number' is missing property 'concat' from type 'any[]'.

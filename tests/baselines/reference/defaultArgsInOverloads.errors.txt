@@ -2,19 +2,19 @@
     function fun(a: string);
     function fun(a = 3);
                  ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! defaultArgsInOverloads.ts(2,14): error TS2174: Default arguments are only allowed in implementation.
     function fun(a = null) { }
     
     class C {
         fun(a: string);
         fun(a = 3);
          ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! defaultArgsInOverloads.ts(7,6): error TS2174: Default arguments are only allowed in implementation.
         fun(a = null) { }
         static fun(a: string);
         static fun(a = 3);
                 ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! defaultArgsInOverloads.ts(10,13): error TS2174: Default arguments are only allowed in implementation.
         static fun(a = null) { }
     }
     
@@ -22,9 +22,9 @@
         fun(a: string);
         fun(a = 3);
             ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! defaultArgsInOverloads.ts(16,9): error TS2174: Default arguments are only allowed in implementation.
     }
     
     var f: (a = 3) => number;
             ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! defaultArgsInOverloads.ts(19,9): error TS2174: Default arguments are only allowed in implementation.

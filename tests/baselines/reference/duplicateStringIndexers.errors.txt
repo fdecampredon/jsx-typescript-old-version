@@ -5,42 +5,48 @@
         [x: string]: string;
         [x: string]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(5,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(4,5)
     }
     
     interface String {
         [x: string]: string;
         [x: string]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(10,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(9,5)
     }
     
     interface Array<T> {
         [x: string]: T;
         [x: string]: T;
         ~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(15,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(14,5)
     }
     
     class C {
         [x: string]: string;
         [x: string]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(20,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(19,5)
     }
     
     interface I {
         [x: string]: string;
         [x: string]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(25,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(24,5)
     }
     
     var a: {
         [x: string]: string;
         [x: string]: string;
         ~~~~~~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! duplicateStringIndexers.ts(30,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	duplicateStringIndexers.ts(29,5)
     }
     
     

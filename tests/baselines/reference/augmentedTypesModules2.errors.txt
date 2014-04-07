@@ -6,12 +6,14 @@
     module m2a { var y = 2; }
     function m2a() { }; // error since the module is instantiated
              ~~~
-!!! error TS2000: Duplicate identifier 'm2a'.
+!!! augmentedTypesModules2.ts(6,10): error TS2000: Duplicate identifier 'm2a'. Additional locations:
+!!! 	augmentedTypesModules2.ts(5,8)
     
     module m2b { export var y = 2; }
     function m2b() { };  // error since the module is instantiated
              ~~~
-!!! error TS2000: Duplicate identifier 'm2b'.
+!!! augmentedTypesModules2.ts(9,10): error TS2000: Duplicate identifier 'm2b'. Additional locations:
+!!! 	augmentedTypesModules2.ts(8,8)
     
     function m2c() { }; 
     module m2c { export var y = 2; } 
@@ -19,7 +21,8 @@
     module m2cc { export var y = 2; }
     function m2cc() { }; // error to have module first
              ~~~~
-!!! error TS2000: Duplicate identifier 'm2cc'.
+!!! augmentedTypesModules2.ts(15,10): error TS2000: Duplicate identifier 'm2cc'. Additional locations:
+!!! 	augmentedTypesModules2.ts(14,8)
     
     module m2d { }
     declare function m2d(): void; 

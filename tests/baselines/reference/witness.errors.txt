@@ -8,7 +8,7 @@
     var pInit: any;
     function fn(pInit = pInit) {
                         ~~~~~
-!!! error TS2231: Parameter 'pInit' cannot be referenced in its initializer.
+!!! witness.ts(8,21): error TS2231: Parameter 'pInit' cannot be referenced in its initializer.
         var pInit: any;
     }
     class InitClass {

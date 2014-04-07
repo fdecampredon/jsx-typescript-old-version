@@ -16,7 +16,8 @@
     
     class i2 {  // error
           ~~
-!!! error TS2000: Duplicate identifier 'i2'.
+!!! augmentedTypesInterface.ts(16,7): error TS2000: Duplicate identifier 'i2'. Additional locations:
+!!! 	augmentedTypesInterface.ts(12,1)
         bar() {
             return 1;
         }
@@ -28,7 +29,8 @@
     }
     enum i3 { One }; // error
          ~~
-!!! error TS2000: Duplicate identifier 'i3'.
+!!! augmentedTypesInterface.ts(26,6): error TS2000: Duplicate identifier 'i3'. Additional locations:
+!!! 	augmentedTypesInterface.ts(23,1)
     
     // interface then import
     interface i4 {

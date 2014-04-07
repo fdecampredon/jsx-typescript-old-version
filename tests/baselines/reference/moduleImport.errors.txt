@@ -2,11 +2,11 @@
     module A.B.C {
         import XYZ = X.Y.Z;
                     ~
-!!! error TS2180: Could not find module 'Y' in module 'X'.
+!!! moduleImport.ts(2,17): error TS2180: Could not find module 'Y' in module 'X'.
         export function ping(x: number) {
             if (x>0) XYZ.pong (x-1);
                ~~~
-!!! error TS2095: Could not find symbol 'XYZ'.
+!!! moduleImport.ts(4,12): error TS2095: Could not find symbol 'XYZ'.
         }
     }
     

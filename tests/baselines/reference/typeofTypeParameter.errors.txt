@@ -3,6 +3,6 @@
         var a: typeof x;
         var y: typeof T;
                       ~
-!!! error TS2095: Could not find symbol 'T'.
+!!! typeofTypeParameter.ts(3,19): error TS2095: Could not find symbol 'T'.
         return a;
     }

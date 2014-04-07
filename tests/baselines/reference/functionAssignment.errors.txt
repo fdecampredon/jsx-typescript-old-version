@@ -22,7 +22,7 @@
         var n = '';
         n = 4;
         ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! functionAssignment.ts(22,5): error TS2011: Cannot convert 'number' to 'string'.
     });
     
     function f3(a: { a: number; b: number; }) { }
@@ -36,7 +36,7 @@
     
     callb((a) =>{ a.length; });
                     ~~~~~~
-!!! error TS2094: The property 'length' does not exist on value of type 'number'.
+!!! functionAssignment.ts(34,17): error TS2094: The property 'length' does not exist on value of type 'number'.
     
     
     

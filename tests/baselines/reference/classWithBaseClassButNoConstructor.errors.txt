@@ -10,9 +10,9 @@
     var r = C;
     var c = new C(); // error
                 ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithBaseClassButNoConstructor.ts(10,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithBaseClassButNoConstructor.ts(10,13): error TS2085: Could not select overload for 'new' expression.
     var c2 = new C(1); // ok
     
     class Base2<T,U> {
@@ -26,9 +26,9 @@
     var r2 = D;
     var d = new D(); // error
                 ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithBaseClassButNoConstructor.ts(22,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithBaseClassButNoConstructor.ts(22,13): error TS2085: Could not select overload for 'new' expression.
     var d2 = new D(1); // ok
     
     // specialized base class
@@ -39,9 +39,9 @@
     var r3 = D2;
     var d3 = new D(); // error
                  ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithBaseClassButNoConstructor.ts(31,14): error TS2081: Supplied parameters do not match any signature of call target.
                  ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithBaseClassButNoConstructor.ts(31,14): error TS2085: Could not select overload for 'new' expression.
     var d4 = new D(1); // ok
     
     class D3 extends Base2<string, number> {
@@ -51,7 +51,7 @@
     var r4 = D3;
     var d5 = new D(); // error
                  ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithBaseClassButNoConstructor.ts(39,14): error TS2081: Supplied parameters do not match any signature of call target.
                  ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithBaseClassButNoConstructor.ts(39,14): error TS2085: Could not select overload for 'new' expression.
     var d6 = new D(1); // ok

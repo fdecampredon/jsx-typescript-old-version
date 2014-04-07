@@ -51,61 +51,61 @@
         // Privacy errors - importing private elements
         export import im_public_c_private = m_private.c_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2181: Exported import declaration 'im_public_c_private' is assigned value with type that has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(51,5): error TS2181: Exported import declaration 'im_public_c_private' is assigned value with type that has or is using private type 'm_private.c_private'.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2183: Exported import declaration 'im_public_c_private' is assigned type that has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(51,5): error TS2183: Exported import declaration 'im_public_c_private' is assigned type that has or is using private type 'm_private.c_private'.
         export import im_public_e_private = m_private.e_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2181: Exported import declaration 'im_public_e_private' is assigned value with type that has or is using private type 'm_private.e_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(52,5): error TS2181: Exported import declaration 'im_public_e_private' is assigned value with type that has or is using private type 'm_private.e_private'.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2183: Exported import declaration 'im_public_e_private' is assigned type that has or is using private type 'm_private.e_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(52,5): error TS2183: Exported import declaration 'im_public_e_private' is assigned type that has or is using private type 'm_private.e_private'.
         export import im_public_f_private = m_private.f_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2181: Exported import declaration 'im_public_f_private' is assigned value with type that has or is using private type 'm_private.f_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(53,5): error TS2181: Exported import declaration 'im_public_f_private' is assigned value with type that has or is using private type 'm_private.f_private'.
         export import im_public_v_private = m_private.v_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2181: Exported import declaration 'im_public_v_private' is assigned value with type that has or is using private type 'm_private.c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(54,5): error TS2181: Exported import declaration 'im_public_v_private' is assigned value with type that has or is using private type 'm_private.c_private'.
         export import im_public_i_private = m_private.i_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2183: Exported import declaration 'im_public_i_private' is assigned type that has or is using private type 'm_private.i_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(55,5): error TS2183: Exported import declaration 'im_public_i_private' is assigned type that has or is using private type 'm_private.i_private'.
         export import im_public_mi_private = m_private.mi_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2182: Exported import declaration 'im_public_mi_private' is assigned value with type that is using inaccessible module 'm_private.mi_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(56,5): error TS2182: Exported import declaration 'im_public_mi_private' is assigned value with type that is using inaccessible module 'm_private.mi_private'.
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2185: Exported import declaration 'im_public_mi_private' is assigned container that is or is using inaccessible module 'm_private.mi_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(56,5): error TS2185: Exported import declaration 'im_public_mi_private' is assigned container that is or is using inaccessible module 'm_private.mi_private'.
         export import im_public_mu_private = m_private.mu_private;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2185: Exported import declaration 'im_public_mu_private' is assigned container that is or is using inaccessible module 'm_private.mu_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(57,5): error TS2185: Exported import declaration 'im_public_mu_private' is assigned container that is or is using inaccessible module 'm_private.mu_private'.
     
         // Usage of privacy error imports
         var privateUse_im_public_c_private = new im_public_c_private();
         export var publicUse_im_public_c_private = new im_public_c_private();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_c_private' has or is using private type 'im_public_c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(61,16): error TS2027: Exported variable 'publicUse_im_public_c_private' has or is using private type 'im_public_c_private'.
         var privateUse_im_public_e_private = im_public_e_private.Happy;
         export var publicUse_im_public_e_private = im_public_e_private.Grumpy;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_e_private' has or is using private type 'im_public_e_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(63,16): error TS2027: Exported variable 'publicUse_im_public_e_private' has or is using private type 'im_public_e_private'.
         var privateUse_im_public_f_private = im_public_f_private();
         export var publicUse_im_public_f_private = im_public_f_private();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_f_private' has or is using private type 'im_public_c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(65,16): error TS2027: Exported variable 'publicUse_im_public_f_private' has or is using private type 'im_public_c_private'.
         var privateUse_im_public_v_private = im_public_v_private;
         export var publicUse_im_public_v_private = im_public_v_private;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_v_private' has or is using private type 'im_public_c_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(67,16): error TS2027: Exported variable 'publicUse_im_public_v_private' has or is using private type 'im_public_c_private'.
         var privateUse_im_public_i_private: im_public_i_private;
         export var publicUse_im_public_i_private: im_public_i_private;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_i_private' has or is using private type 'im_public_i_private'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(69,16): error TS2027: Exported variable 'publicUse_im_public_i_private' has or is using private type 'im_public_i_private'.
         var privateUse_im_public_mi_private = new im_public_mi_private.c();
         export var publicUse_im_public_mi_private = new im_public_mi_private.c();
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_mi_private' has or is using private type 'im_public_mi_private.c'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(71,16): error TS2027: Exported variable 'publicUse_im_public_mi_private' has or is using private type 'im_public_mi_private.c'.
         var privateUse_im_public_mu_private: im_public_mu_private.i;
         export var publicUse_im_public_mu_private: im_public_mu_private.i;
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'publicUse_im_public_mu_private' has or is using private type 'im_public_mu_private.i'.
+!!! privacyLocalInternalReferenceImportWithExport.ts(73,16): error TS2027: Exported variable 'publicUse_im_public_mu_private' has or is using private type 'im_public_mu_private.i'.
     
     
         // No Privacy errors - importing public elements

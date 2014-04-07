@@ -4,4 +4,4 @@
     function Test() { }
     var test = new Test();
                ~~~~~~~~~~
-!!! error TS7009: 'new' expression, which lacks a constructor signature, implicitly has an 'any' type.
+!!! newFunctionImplicitAny.ts(4,12): error TS7009: 'new' expression, which lacks a constructor signature, implicitly has an 'any' type.

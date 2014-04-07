@@ -2,7 +2,7 @@
     function fn() { }
     fn = () => 3;
     ~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToFunction.ts(2,1): error TS2130: Invalid left-hand side of assignment expression.
     
     module foo {
         function xyz() {
@@ -10,6 +10,6 @@
             }
             bar = null;
             ~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignmentToFunction.ts(8,9): error TS2130: Invalid left-hand side of assignment expression.
         }
     }

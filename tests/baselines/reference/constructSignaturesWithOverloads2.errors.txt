@@ -32,7 +32,7 @@
     
     interface I<T> {
               ~
-!!! error TS2234: All declarations of an interface must have identical type parameters.
+!!! constructSignaturesWithOverloads2.ts(32,11): error TS2234: All declarations of an interface must have identical type parameters.
         new (x: T, y?: number): C2<T>;
         new (x: T, y: number): C2<T>;
     }

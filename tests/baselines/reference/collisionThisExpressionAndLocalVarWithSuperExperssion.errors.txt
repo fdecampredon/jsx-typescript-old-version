@@ -7,7 +7,7 @@
         public foo() {
             var _this = 10;
                 ~~~~~~~~~~
-!!! error TS2200: Duplicate identifier '_this'. Compiler uses variable declaration '_this' to capture 'this' reference.
+!!! collisionThisExpressionAndLocalVarWithSuperExperssion.ts(7,13): error TS2200: Duplicate identifier '_this'. Compiler uses variable declaration '_this' to capture 'this' reference.
             var f = () => super.foo();
         }
     }
@@ -16,7 +16,7 @@
             var f = () => {
                 var _this = 10;
                     ~~~~~~~~~~
-!!! error TS2200: Duplicate identifier '_this'. Compiler uses variable declaration '_this' to capture 'this' reference.
+!!! collisionThisExpressionAndLocalVarWithSuperExperssion.ts(14,17): error TS2200: Duplicate identifier '_this'. Compiler uses variable declaration '_this' to capture 'this' reference.
                 return super.foo()
             }
         }

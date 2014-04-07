@@ -27,10 +27,10 @@
     // No candidate overloads found
     fn1({}); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(27,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type '{}'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(27,1): error TS2087: Could not select overload for 'call' expression.
     
     // Generic and non - generic overload where generic overload is the only candidate when called with type arguments
     function fn2(s: string, n: number): number;
@@ -46,10 +46,10 @@
     // Generic and non - generic overload where non - generic overload is the only candidate when called with type arguments
     fn2<Date>('', 0); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(41,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'number' to argument 1 which is of type 'string'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(41,1): error TS2087: Could not select overload for 'call' expression.
     
     // Generic and non - generic overload where non - generic overload is the only candidate when called without type arguments
     fn2('', 0); // OK
@@ -73,7 +73,7 @@
     // Generic overloads with differing arity called with type argument count that doesn't match any overload
     fn3<number, number, number, number>(); // Error
     ~~~
-!!! error TS4027: Signature expected 1 type arguments, got 4 instead.
+!!! overloadResolution.ts(63,1): error TS4027: Signature expected 1 type arguments, got 4 instead.
     
     // Generic overloads with constraints called with type arguments that satisfy the constraints
     function fn4<T extends string, U extends number>(n: T, m: U);
@@ -82,16 +82,16 @@
     fn4<string, number>('', 3);
     fn4<string, number>(3, ''); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(70,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(70,1): error TS2087: Could not select overload for 'call' expression.
     fn4<number, string>('', 3); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(71,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'number' to argument 1 which is of type 'string'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(71,1): error TS2087: Could not select overload for 'call' expression.
     fn4<number, string>(3, ''); 
     
     // Generic overloads with constraints called without type arguments but with types that satisfy the constraints
@@ -103,21 +103,21 @@
     // Generic overloads with constraints called with type arguments that do not satisfy the constraints
     fn4<boolean, Date>(null, null); // Error
     ~~~
-!!! error TS2086: Type 'boolean' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+!!! overloadResolution.ts(81,1): error TS2086: Type 'boolean' does not satisfy the constraint 'number' for type parameter 'T extends number'.
     
     // Generic overloads with constraints called without type arguments but with types that do not satisfy the constraints
     fn4(true, null); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(84,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'boolean'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(84,1): error TS2087: Could not select overload for 'call' expression.
     fn4(null, true); // Error
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! overloadResolution.ts(85,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'number' to argument 2 which is of type 'boolean'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! overloadResolution.ts(85,1): error TS2087: Could not select overload for 'call' expression.
     
     // Non - generic overloads where contextual typing of function arguments has errors
     function fn5(f: (n: string) => void): string;

@@ -3,10 +3,10 @@
         class Visibility {
             public foo() { };
                          ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! es6ClassTest3.ts(3,22): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
             private bar() { };
                           ~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! es6ClassTest3.ts(4,23): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
             private x: number;
             public y: number;
             public z: number;

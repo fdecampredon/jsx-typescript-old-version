@@ -3,5 +3,5 @@
     
     interface x extends string { }
                         ~~~~~~
-!!! error TS2075: An interface may only extend another class or interface.
+!!! errorLocationForInterfaceExtension.ts(3,21): error TS2075: An interface may only extend another class or interface.
     

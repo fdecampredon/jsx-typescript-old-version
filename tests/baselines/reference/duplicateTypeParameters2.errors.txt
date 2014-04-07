@@ -4,4 +4,4 @@
     
     interface I<T extends A, T extends B> {}
                 ~~~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'T'.
+!!! duplicateTypeParameters2.ts(4,13): error TS2000: Duplicate identifier 'T'.

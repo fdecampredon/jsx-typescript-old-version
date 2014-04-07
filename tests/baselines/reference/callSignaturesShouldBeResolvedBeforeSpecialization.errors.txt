@@ -9,8 +9,8 @@
         test("expects boolean instead of string"); // should not error - "test" should not expect a boolean
         test(true); // should error - string expected
         ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! callSignaturesShouldBeResolvedBeforeSpecialization.ts(9,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'boolean'.
         ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! callSignaturesShouldBeResolvedBeforeSpecialization.ts(9,5): error TS2087: Could not select overload for 'call' expression.
     }

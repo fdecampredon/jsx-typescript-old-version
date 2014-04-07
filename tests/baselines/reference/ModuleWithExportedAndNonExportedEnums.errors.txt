@@ -10,5 +10,5 @@
     // error not exported
     var b = A.Day.Monday;
               ~~~
-!!! error TS2094: The property 'Day' does not exist on value of type 'typeof A'.
+!!! ModuleWithExportedAndNonExportedEnums.ts(10,11): error TS2094: The property 'Day' does not exist on value of type 'typeof A'.
     

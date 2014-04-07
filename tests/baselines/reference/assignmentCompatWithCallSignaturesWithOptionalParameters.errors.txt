@@ -16,25 +16,25 @@
         a = (x?: number) => 1; // ok, same number of required params
         a = (x: number) => 1; // error, too many required params
         ~
-!!! error TS2012: Cannot convert '(x: number) => number' to '() => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(16,5): error TS2012: Cannot convert '(x: number) => number' to '() => number':
 !!! 	Call signatures of types '(x: number) => number' and '() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         a = b.a; // ok
         a = b.a2; // ok
         a = b.a3; // error
         ~
-!!! error TS2012: Cannot convert '(x: number) => number' to '() => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(19,5): error TS2012: Cannot convert '(x: number) => number' to '() => number':
 !!! 	Call signatures of types '(x: number) => number' and '() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         a = b.a4; // error
         ~
-!!! error TS2012: Cannot convert '(x: number, y?: number) => number' to '() => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(20,5): error TS2012: Cannot convert '(x: number, y?: number) => number' to '() => number':
 !!! 	Call signatures of types '(x: number, y?: number) => number' and '() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         a = b.a5; // ok
         a = b.a6; // error
         ~
-!!! error TS2012: Cannot convert '(x: number, y: number) => number' to '() => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(22,5): error TS2012: Cannot convert '(x: number, y: number) => number' to '() => number':
 !!! 	Call signatures of types '(x: number, y: number) => number' and '() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     
@@ -49,7 +49,7 @@
         a2 = b.a5; // ok
         a2 = b.a6; // error
         ~~
-!!! error TS2012: Cannot convert '(x: number, y: number) => number' to '(x?: number) => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(33,5): error TS2012: Cannot convert '(x: number, y: number) => number' to '(x?: number) => number':
 !!! 	Call signatures of types '(x: number, y: number) => number' and '(x?: number) => number' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     
@@ -59,7 +59,7 @@
         a3 = (x: number) => 1; // ok, same number of required params
         a3 = (x: number, y: number) => 1;  // error, too many required params
         ~~
-!!! error TS2012: Cannot convert '(x: number, y: number) => number' to '(x: number) => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(39,5): error TS2012: Cannot convert '(x: number, y: number) => number' to '(x: number) => number':
 !!! 	Call signatures of types '(x: number, y: number) => number' and '(x: number) => number' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
         a3 = b.a; // ok
@@ -69,7 +69,7 @@
         a3 = b.a5; // ok
         a3 = b.a6; // error
         ~~
-!!! error TS2012: Cannot convert '(x: number, y: number) => number' to '(x: number) => number':
+!!! assignmentCompatWithCallSignaturesWithOptionalParameters.ts(45,5): error TS2012: Cannot convert '(x: number, y: number) => number' to '(x: number) => number':
 !!! 	Call signatures of types '(x: number, y: number) => number' and '(x: number) => number' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     

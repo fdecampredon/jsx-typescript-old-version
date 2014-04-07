@@ -4,7 +4,7 @@
     
         export function f(p: I) { return f };
                           ~~~~
-!!! error TS2040: Parameter 'p' of exported function has or is using private type 'I'.
+!!! rectype.ts(4,23): error TS2040: Parameter 'p' of exported function has or is using private type 'I'.
     
         var i:I;
     

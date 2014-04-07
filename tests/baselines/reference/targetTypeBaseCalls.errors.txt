@@ -9,17 +9,17 @@
      
     foo(function(s) { s = 5 });  // Error, can’t assign number to string
                       ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! targetTypeBaseCalls.ts(9,19): error TS2011: Cannot convert 'number' to 'string'.
      
      
      
     new Foo(function(s) { s = 5 });  // error, if types are applied correctly
                           ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! targetTypeBaseCalls.ts(13,23): error TS2011: Cannot convert 'number' to 'string'.
      
      
      
     class Bar extends Foo { constructor() { super(function(s) { s = 5 }) } }  // error, if types are applied correctly
                                                                 ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! targetTypeBaseCalls.ts(17,61): error TS2011: Cannot convert 'number' to 'string'.
     

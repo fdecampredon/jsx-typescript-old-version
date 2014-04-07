@@ -22,6 +22,6 @@
     var w: A;
     var w: C;
         ~~~~
-!!! error TS2134: Subsequent variable declarations must have the same type.  Variable 'w' must be of type 'A', but here has type 'C'.
+!!! orderMattersForSignatureGroupIdentity.ts(22,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'w' must be of type 'A', but here has type 'C'.
     
     w({ s: "", n: 0 }).toLowerCase();

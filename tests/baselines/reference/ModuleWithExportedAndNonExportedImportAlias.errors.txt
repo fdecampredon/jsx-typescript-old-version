@@ -37,8 +37,8 @@
     // not expected to work since non are exported
     var line = Geometry.Lines.Line;
         ~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2134: Subsequent variable declarations must have the same type.  Variable 'line' must be of type '{ start: { x: number; y: number; }; end: { x: number; y: number; }; }', but here has type 'any'.
+!!! ModuleWithExportedAndNonExportedImportAlias.ts(37,5): error TS2134: Subsequent variable declarations must have the same type.  Variable 'line' must be of type '{ start: { x: number; y: number; }; end: { x: number; y: number; }; }', but here has type 'any'.
                         ~~~~~
-!!! error TS2094: The property 'Lines' does not exist on value of type 'typeof Geometry'.
+!!! ModuleWithExportedAndNonExportedImportAlias.ts(37,21): error TS2094: The property 'Lines' does not exist on value of type 'typeof Geometry'.
     
     

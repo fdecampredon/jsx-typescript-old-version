@@ -9,7 +9,7 @@
     
         constructor () {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! strictModeInConstructor.ts(9,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             "use strict";   // No error
             super();
         }
@@ -29,7 +29,7 @@
     
         constructor () {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! strictModeInConstructor.ts(27,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             var x = 1; // Error
             super();
             "use strict";

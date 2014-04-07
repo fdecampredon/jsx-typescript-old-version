@@ -19,7 +19,7 @@
     var result3: string = foo(x => { // returns string because the C overload is picked
         var y: G<typeof x>; // error that C does not satisfy constraint
                ~~~~~~~~~~~
-!!! error TS2086: Type 'C' does not satisfy the constraint 'A' for type parameter 'T extends A'.
+!!! overloadresolutionWithConstraintCheckingDeferred.ts(19,12): error TS2086: Type 'C' does not satisfy the constraint 'A' for type parameter 'T extends A'.
         return y;
     });
     

@@ -29,37 +29,37 @@
     function foo1(x: A);
     function foo1(x: A); // error
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(29,1): error TS2144: Duplicate overload signature for 'foo1'.
     function foo1(x: any) { }
     
     function foo1b(x: B<string>);
     function foo1b(x: B<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1b'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(33,1): error TS2144: Duplicate overload signature for 'foo1b'.
     function foo1b(x: any) { }
     
     function foo1c(x: C<string>);
     function foo1c(x: C<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1c'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(37,1): error TS2144: Duplicate overload signature for 'foo1c'.
     function foo1c(x: any) { }
     
     function foo2(x: I<string>);
     function foo2(x: I<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(41,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(45,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo4(x: typeof b);
     function foo4(x: typeof b); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo4'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(49,1): error TS2144: Duplicate overload signature for 'foo4'.
     function foo4(x: any) { }
     
     function foo5(x: A);
@@ -77,19 +77,19 @@
     function foo7(x: A);
     function foo7(x: typeof a); // no error, bug?
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo7'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(65,1): error TS2144: Duplicate overload signature for 'foo7'.
     function foo7(x: any) { }
     
     function foo8(x: B<string>);
     function foo8(x: I<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo8'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(69,1): error TS2144: Duplicate overload signature for 'foo8'.
     function foo8(x: any) { }
     
     function foo9(x: B<string>);
     function foo9(x: C<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo9'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(73,1): error TS2144: Duplicate overload signature for 'foo9'.
     function foo9(x: any) { }
     
     function foo10(x: B<string>);
@@ -103,7 +103,7 @@
     function foo12(x: I<string>);
     function foo12(x: C<string>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo12'.
+!!! objectTypesIdentityWithGenericCallSignaturesOptionalParams.ts(85,1): error TS2144: Duplicate overload signature for 'foo12'.
     function foo12(x: any) { }
     
     function foo12b(x: I2);

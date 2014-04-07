@@ -9,7 +9,7 @@
     var c = new C // C<any>
     var c2 = new C<number> // error, type params are actually part of the arg list so you need both
                    ~~~~~~
-!!! error TS2095: Could not find symbol 'number'.
+!!! genericConstructExpressionWithoutArgs.ts(9,16): error TS2095: Could not find symbol 'number'.
     
     
-!!! error TS1003: Identifier expected.
+!!! genericConstructExpressionWithoutArgs.ts(10,1): error TS1003: Identifier expected.

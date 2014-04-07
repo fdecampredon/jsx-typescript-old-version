@@ -3,5 +3,5 @@
     var a: Number;
     x = a;
     ~
-!!! error TS2011: Cannot convert 'Number' to 'number'.
+!!! assignFromNumberInterface.ts(3,1): error TS2011: Cannot convert 'Number' to 'number'.
     a = x;

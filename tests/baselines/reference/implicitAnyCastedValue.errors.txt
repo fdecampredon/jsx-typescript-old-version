@@ -10,10 +10,10 @@
     class C {
         bar = null;  // this should be an error
         ~~~~~~~~~~~
-!!! error TS7005: Variable 'bar' implicitly has an 'any' type.
+!!! implicitAnyCastedValue.ts(10,5): error TS7005: Variable 'bar' implicitly has an 'any' type.
         foo = undefined;  // this should be an error
         ~~~~~~~~~~~~~~~~
-!!! error TS7005: Variable 'foo' implicitly has an 'any' type.
+!!! implicitAnyCastedValue.ts(11,5): error TS7005: Variable 'foo' implicitly has an 'any' type.
         public get tempVar() {
             return <any>0;  // this should not be an error
         }
@@ -30,7 +30,7 @@
     class C1 {
         getValue = null;  // this should be an error
         ~~~~~~~~~~~~~~~~
-!!! error TS7005: Variable 'getValue' implicitly has an 'any' type.
+!!! implicitAnyCastedValue.ts(26,5): error TS7005: Variable 'getValue' implicitly has an 'any' type.
     
         public get castedGet() {
             return <any>this.getValue;  // this should not be an error
@@ -51,7 +51,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     }
     ~
-!!! error TS7010: 'notCastedNull', which lacks return-type annotation, implicitly has an 'any' return type.
+!!! implicitAnyCastedValue.ts(41,1): error TS7010: 'notCastedNull', which lacks return-type annotation, implicitly has an 'any' return type.
     
     function returnTypeBar(): any {
         return null;  // this should not be an error
@@ -63,7 +63,7 @@
     
     function multipleRets1(x) {    // this should not be an error
                            ~
-!!! error TS7006: Parameter 'x' of 'multipleRets1' implicitly has an 'any' type.
+!!! implicitAnyCastedValue.ts(53,24): error TS7006: Parameter 'x' of 'multipleRets1' implicitly has an 'any' type.
         if (x) {
             return <any>0;
         }
@@ -74,7 +74,7 @@
     
     function multipleRets2(x) {    // this should not be an error
                            ~
-!!! error TS7006: Parameter 'x' of 'multipleRets2' implicitly has an 'any' type.
+!!! implicitAnyCastedValue.ts(62,24): error TS7006: Parameter 'x' of 'multipleRets2' implicitly has an 'any' type.
         if (x) {
             return null;
         }

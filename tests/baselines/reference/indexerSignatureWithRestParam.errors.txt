@@ -2,11 +2,11 @@
     interface I {
         [...x]: string;
          ~~~~
-!!! error TS1017: Index signatures cannot have rest parameters.
+!!! indexerSignatureWithRestParam.ts(2,6): error TS1017: Index signatures cannot have rest parameters.
     }
     
     class C {
         [...x]: string
          ~~~~
-!!! error TS1017: Index signatures cannot have rest parameters.
+!!! indexerSignatureWithRestParam.ts(6,6): error TS1017: Index signatures cannot have rest parameters.
     }

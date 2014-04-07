@@ -2,4 +2,4 @@
     module A {}
     A = undefined; // invalid LHS
     ~
-!!! error TS2095: Could not find symbol 'A'.
+!!! assignToModule.ts(2,1): error TS2095: Could not find symbol 'A'.

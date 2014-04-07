@@ -3,5 +3,5 @@
     var a: String;
     x = a;
     ~
-!!! error TS2011: Cannot convert 'String' to 'string'.
+!!! assignFromStringInterface.ts(3,1): error TS2011: Cannot convert 'String' to 'string'.
     a = x;

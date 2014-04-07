@@ -30,13 +30,13 @@
     function foo5(x: C<number>): number;
     function foo5(x: C<number>): string; // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! objectTypesIdentityWithPrivates2.ts(30,1): error TS2175: Overloads cannot differ only by return type.
     function foo5(x: any): any { }
     
     function foo6(x: D<number>): number;
     function foo6(x: D<number>): string; // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! objectTypesIdentityWithPrivates2.ts(34,1): error TS2175: Overloads cannot differ only by return type.
     function foo6(x: any): any { }
     
     

@@ -3,5 +3,6 @@
         "artist": string;
         artist: string;
         ~~~~~~
-!!! error TS2000: Duplicate identifier 'artist'.
+!!! duplicateStringNamedProperty1.ts(3,5): error TS2000: Duplicate identifier 'artist'. Additional locations:
+!!! 	duplicateStringNamedProperty1.ts(2,5)
     }

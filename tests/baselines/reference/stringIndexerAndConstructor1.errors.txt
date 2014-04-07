@@ -3,5 +3,5 @@
         [s: string]: number;
         "": string;
         ~~~~~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'number'.
+!!! stringIndexerAndConstructor1.ts(3,5): error TS2171: All named properties must be assignable to string indexer type 'number'.
     }

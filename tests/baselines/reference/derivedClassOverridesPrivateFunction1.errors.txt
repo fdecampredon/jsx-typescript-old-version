@@ -8,7 +8,7 @@
     }
     class DerivedClass extends BaseClass {
           ~~~~~~~~~~~~
-!!! error TS2141: Class 'DerivedClass' cannot extend class 'BaseClass':
+!!! derivedClassOverridesPrivateFunction1.ts(8,7): error TS2141: Class 'DerivedClass' cannot extend class 'BaseClass':
 !!! 	Types 'DerivedClass' and 'BaseClass' define property '_init' as private.
         constructor() {
             super();

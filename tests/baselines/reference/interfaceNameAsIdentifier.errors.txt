@@ -4,7 +4,7 @@
     }
     C();
     ~
-!!! error TS2095: Could not find symbol 'C'.
+!!! interfaceNameAsIdentifier.ts(4,1): error TS2095: Could not find symbol 'C'.
     
     module m2 {
         export interface C {
@@ -14,5 +14,5 @@
     
     m2.C();
     ~~
-!!! error TS2095: Could not find symbol 'm2'.
+!!! interfaceNameAsIdentifier.ts(12,1): error TS2095: Could not find symbol 'm2'.
     

@@ -10,7 +10,7 @@
     
     class D2 implements I {
           ~~
-!!! error TS2137: Class D2 declares interface I but does not implement it:
+!!! classExtendsInterfaceThatExtendsClassWithPrivates1.ts(10,7): error TS2137: Class D2 declares interface I but does not implement it:
 !!! 	Types 'D2' and 'C' define property 'x' as private.
         public foo(x: any) { return x }
         private x = 3;

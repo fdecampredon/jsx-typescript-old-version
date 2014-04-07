@@ -6,6 +6,6 @@
       // 'this' should not be available in a static initializer.
       log(this);
           ~~~~
-!!! error TS2140: 'this' cannot be referenced in static initializers in a class body.
+!!! thisInArrowFunctionInStaticInitializer1.ts(6,7): error TS2140: 'this' cannot be referenced in static initializers in a class body.
      }
     }

@@ -2,7 +2,7 @@
     export module myModule {
         import foo = require("importInsideModule_file1");
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2136: Import declarations in an internal module cannot reference an external module.
+!!! importInsideModule_file2.ts(2,5): error TS2136: Import declarations in an internal module cannot reference an external module.
         var a = foo.x;
     }
 ==== tests/cases/compiler/importInsideModule_file1.ts (0 errors) ====

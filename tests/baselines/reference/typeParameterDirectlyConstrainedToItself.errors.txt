@@ -3,37 +3,37 @@
     
     class C<T extends T> { } 
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(3,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     class C2<T, U extends U> { } 
                 ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(4,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     
     interface I<T extends T> { }
                 ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(6,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     interface I2<T, U extends U> { }
                     ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(7,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     
     function f<T extends T>() { }
                ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(9,12): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     function f2<T, U extends U>() { }
                    ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(10,16): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     
     var a: {
         <T extends T>(): void;
          ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(13,6): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         <T, U extends U>(): void;
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(14,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     }
     
     var b = <T extends T>() => { }
              ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(17,10): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     var b2 = <T, U extends U>() => { }
                  ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterDirectlyConstrainedToItself.ts(18,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.

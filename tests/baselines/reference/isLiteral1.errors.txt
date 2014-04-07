@@ -1,4 +1,4 @@
 ==== tests/cases/compiler/isLiteral1.ts (1 errors) ====
     var x: number = 02343;
                     ~~~~~
-!!! error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.
+!!! isLiteral1.ts(1,17): error TS1085: Octal literals are not available when targeting ECMAScript 5 and higher.

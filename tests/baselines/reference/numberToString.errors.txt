@@ -2,7 +2,7 @@
     function f1(n:number):string {
         return n; // error return type mismatch
                ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! numberToString.ts(2,12): error TS2011: Cannot convert 'number' to 'string'.
     }
     
     function f2(s:string):void {
@@ -11,9 +11,9 @@
     f1(3);
     f2(3); // error no coercion to string
     ~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! numberToString.ts(9,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
     ~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! numberToString.ts(9,1): error TS2087: Could not select overload for 'call' expression.
     f2(3+""); // ok + operator promotes
     

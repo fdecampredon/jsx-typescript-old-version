@@ -6,11 +6,11 @@
     class D<T> extends C<T> {
         constructor(x) {
         ~~~~~~~~~~~
-!!! error TS2105: Constructors for derived classes must contain a 'super' call.
+!!! superWithTypeArgument2.ts(6,5): error TS2105: Constructors for derived classes must contain a 'super' call.
             super<T>(x);
                  ~
-!!! error TS1005: '.' expected.
+!!! superWithTypeArgument2.ts(7,14): error TS1005: '.' expected.
             ~~~~~
-!!! error TS2158: Untyped function calls may not accept type arguments.
+!!! superWithTypeArgument2.ts(7,9): error TS2158: Untyped function calls may not accept type arguments.
         }
     }

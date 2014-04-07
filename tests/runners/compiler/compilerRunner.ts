@@ -145,7 +145,7 @@ class CompilerBaselineRunner extends RunnerBase {
                                     outputLines.push('    ' + new Array(squiggleStart + 1).join(' ') + new Array(Math.min(length, line.length - squiggleStart) + 1).join('~'));
                                     // If the error ended here, or we're at the end of the file, emit its message
                                     if ((lineIndex === lines.length - 1) || nextLineStart > (err.start() + err.length())) {
-                                        RunnerBase.removeFullPaths(err.message()).split(/\r?\n/g).map(s => '!!! ' + s).forEach(e => outputLines.push(e));
+                                        this._getDiagnosticText(err).split(/\r?\n/g).filter(s => s.length > 0).map(s => '!!! ' + s).forEach(e => outputLines.push(e));
                                         markedErrorCount++;
                                     }
                                 }

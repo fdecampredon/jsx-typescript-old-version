@@ -4,19 +4,19 @@
         } catch (x) {
             var x: string; // ensure x is 'Any'
                 ~~~~~~~~~
-!!! error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'any', but here has type 'string'.
+!!! invalidTryStatements.ts(4,13): error TS2134: Subsequent variable declarations must have the same type.  Variable 'x' must be of type 'any', but here has type 'string'.
         }
     
         // no type annotation allowed
         try { } catch (z: any) { }
                         ~~~~~
-!!! error TS1013: Catch clause parameter cannot have a type annotation.
+!!! invalidTryStatements.ts(8,21): error TS1013: Catch clause parameter cannot have a type annotation.
         try { } catch (a: number) { }
                         ~~~~~~~~
-!!! error TS1013: Catch clause parameter cannot have a type annotation.
+!!! invalidTryStatements.ts(9,21): error TS1013: Catch clause parameter cannot have a type annotation.
         try { } catch (y: string) { }
                         ~~~~~~~~
-!!! error TS1013: Catch clause parameter cannot have a type annotation.
+!!! invalidTryStatements.ts(10,21): error TS1013: Catch clause parameter cannot have a type annotation.
     }
     
     

@@ -12,7 +12,7 @@
     
     class C2 implements i1 {
           ~~
-!!! error TS2137: Class C2 declares interface i1 but does not implement it:
+!!! interfaceImplementation8.ts(12,7): error TS2137: Class C2 declares interface i1 but does not implement it:
 !!! 	Property 'name' defined as private in type 'C2' is defined as public in type 'i1'.
         private name:string;
     }
@@ -24,11 +24,11 @@
     class C4 extends C1 implements i1{ }
     class C5 extends C2 implements i1{ }
           ~~
-!!! error TS2137: Class C5 declares interface i1 but does not implement it:
+!!! interfaceImplementation8.ts(21,7): error TS2137: Class C5 declares interface i1 but does not implement it:
 !!! 	Property 'name' defined as private in type 'C2' is defined as public in type 'i1'.
     class C6 extends C3 implements i1{ }
           ~~
-!!! error TS2137: Class C6 declares interface i1 but does not implement it:
+!!! interfaceImplementation8.ts(22,7): error TS2137: Class C6 declares interface i1 but does not implement it:
 !!! 	Property 'name' defined as private in type 'C3' is defined as public in type 'i1'.
     
     /*

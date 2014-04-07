@@ -7,7 +7,7 @@
     var o: Object;
     o = i; // error
     ~
-!!! error TS2012: Cannot convert 'I' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat.ts(7,1): error TS2012: Cannot convert 'I' to 'Object':
 !!! 	Types of property 'toString' of types 'I' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => void' and '() => string' are incompatible.
     i = o; // ok
@@ -18,7 +18,7 @@
     var c: C;
     o = c; // error
     ~
-!!! error TS2012: Cannot convert 'C' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat.ts(14,1): error TS2012: Cannot convert 'C' to 'Object':
 !!! 	Types of property 'toString' of types 'C' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => void' and '() => string' are incompatible.
     c = o; // ok
@@ -28,7 +28,7 @@
     }
     o = a; // error
     ~
-!!! error TS2012: Cannot convert '{ toString: () => void; }' to 'Object':
+!!! objectTypeHidingMembersOfObjectAssignmentCompat.ts(20,1): error TS2012: Cannot convert '{ toString: () => void; }' to 'Object':
 !!! 	Types of property 'toString' of types '{ toString: () => void; }' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => void' and '() => string' are incompatible.
     a = o; // ok

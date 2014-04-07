@@ -31,7 +31,7 @@
         a = d;
         a = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to '{ foo: string; }':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(31,5): error TS2012: Cannot convert 'E' to '{ foo: string; }':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type '{ foo: string; }'.
     
         b = a;
@@ -39,7 +39,7 @@
         b = d;
         b = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'Base':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(36,5): error TS2012: Cannot convert 'E' to 'Base':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type 'Base'.
     
         i = a;
@@ -47,7 +47,7 @@
         i = d;
         i = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'I':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(41,5): error TS2012: Cannot convert 'E' to 'I':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type 'I'.
     
         d = a;
@@ -55,24 +55,24 @@
         d = i;
         d = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'D':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(46,5): error TS2012: Cannot convert 'E' to 'D':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type 'D'.
     
         e = a; // errror
         ~
-!!! error TS2012: Cannot convert '{ foo: string; }' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(48,5): error TS2012: Cannot convert '{ foo: string; }' to 'E':
 !!! 	Property 'foo' defined as public in type '{ foo: string; }' is defined as private in type 'E'.
         e = b; // errror
         ~
-!!! error TS2012: Cannot convert 'Base' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(49,5): error TS2012: Cannot convert 'Base' to 'E':
 !!! 	Property 'foo' defined as public in type 'Base' is defined as private in type 'E'.
         e = i; // errror
         ~
-!!! error TS2012: Cannot convert 'I' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(50,5): error TS2012: Cannot convert 'I' to 'E':
 !!! 	Property 'foo' defined as public in type 'I' is defined as private in type 'E'.
         e = d; // errror
         ~
-!!! error TS2012: Cannot convert 'D' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(51,5): error TS2012: Cannot convert 'D' to 'E':
 !!! 	Property 'foo' defined as public in type 'D' is defined as private in type 'E'.
         e = e; 
     
@@ -105,77 +105,77 @@
     
         a = b; // error
         ~
-!!! error TS2012: Cannot convert 'Base' to '{ foo: string; }':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(81,5): error TS2012: Cannot convert 'Base' to '{ foo: string; }':
 !!! 	Property 'foo' defined as private in type 'Base' is defined as public in type '{ foo: string; }'.
         a = i; // error
         ~
-!!! error TS2012: Cannot convert 'I' to '{ foo: string; }':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(82,5): error TS2012: Cannot convert 'I' to '{ foo: string; }':
 !!! 	Property 'foo' defined as private in type 'Base' is defined as public in type '{ foo: string; }'.
         a = d;
         a = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to '{ foo: string; }':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(84,5): error TS2012: Cannot convert 'E' to '{ foo: string; }':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type '{ foo: string; }'.
     
         b = a; // error
         ~
-!!! error TS2012: Cannot convert '{ foo: string; }' to 'Base':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(86,5): error TS2012: Cannot convert '{ foo: string; }' to 'Base':
 !!! 	Property 'foo' defined as public in type '{ foo: string; }' is defined as private in type 'Base'.
         b = i;
         b = d; // error
         ~
-!!! error TS2012: Cannot convert 'D' to 'Base':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(88,5): error TS2012: Cannot convert 'D' to 'Base':
 !!! 	Property 'foo' defined as public in type 'D' is defined as private in type 'Base'.
         b = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'Base':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(89,5): error TS2012: Cannot convert 'E' to 'Base':
 !!! 	Types 'E' and 'Base' define property 'foo' as private.
         b = b;
         
         i = a; // error
         ~
-!!! error TS2012: Cannot convert '{ foo: string; }' to 'I':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(92,5): error TS2012: Cannot convert '{ foo: string; }' to 'I':
 !!! 	Property 'foo' defined as public in type '{ foo: string; }' is defined as private in type 'Base'.
         i = b;
         i = d; // error
         ~
-!!! error TS2012: Cannot convert 'D' to 'I':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(94,5): error TS2012: Cannot convert 'D' to 'I':
 !!! 	Property 'foo' defined as public in type 'D' is defined as private in type 'Base'.
         i = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'I':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(95,5): error TS2012: Cannot convert 'E' to 'I':
 !!! 	Types 'E' and 'Base' define property 'foo' as private.
         i = i;
     
         d = a;
         d = b; // error
         ~
-!!! error TS2012: Cannot convert 'Base' to 'D':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(99,5): error TS2012: Cannot convert 'Base' to 'D':
 !!! 	Property 'foo' defined as private in type 'Base' is defined as public in type 'D'.
         d = i; // error
         ~
-!!! error TS2012: Cannot convert 'I' to 'D':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(100,5): error TS2012: Cannot convert 'I' to 'D':
 !!! 	Property 'foo' defined as private in type 'Base' is defined as public in type 'D'.
         d = e; // error
         ~
-!!! error TS2012: Cannot convert 'E' to 'D':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(101,5): error TS2012: Cannot convert 'E' to 'D':
 !!! 	Property 'foo' defined as private in type 'E' is defined as public in type 'D'.
     
         e = a; // errror
         ~
-!!! error TS2012: Cannot convert '{ foo: string; }' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(103,5): error TS2012: Cannot convert '{ foo: string; }' to 'E':
 !!! 	Property 'foo' defined as public in type '{ foo: string; }' is defined as private in type 'E'.
         e = b; // errror
         ~
-!!! error TS2012: Cannot convert 'Base' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(104,5): error TS2012: Cannot convert 'Base' to 'E':
 !!! 	Types 'Base' and 'E' define property 'foo' as private.
         e = i; // errror
         ~
-!!! error TS2012: Cannot convert 'I' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(105,5): error TS2012: Cannot convert 'I' to 'E':
 !!! 	Types 'Base' and 'E' define property 'foo' as private.
         e = d; // errror
         ~
-!!! error TS2012: Cannot convert 'D' to 'E':
+!!! assignmentCompatWithObjectMembersAccessibility.ts(106,5): error TS2012: Cannot convert 'D' to 'E':
 !!! 	Property 'foo' defined as public in type 'D' is defined as private in type 'E'.
         e = e;
     

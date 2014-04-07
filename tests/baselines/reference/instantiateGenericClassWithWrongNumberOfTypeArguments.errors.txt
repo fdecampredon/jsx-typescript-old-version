@@ -8,7 +8,7 @@
     
     var c = new C<number, number>();
                 ~
-!!! error TS4027: Signature expected 1 type arguments, got 2 instead.
+!!! instantiateGenericClassWithWrongNumberOfTypeArguments.ts(8,13): error TS4027: Signature expected 1 type arguments, got 2 instead.
     
     class D<T, U> {
         x: T
@@ -18,4 +18,4 @@
     // BUG 794238
     var d = new D<number>();
                 ~
-!!! error TS4027: Signature expected 2 type arguments, got 1 instead.
+!!! instantiateGenericClassWithWrongNumberOfTypeArguments.ts(16,13): error TS4027: Signature expected 2 type arguments, got 1 instead.

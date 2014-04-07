@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/restParamAsOptional.ts (2 errors) ====
     function f(...x?) { }
                ~~~~~
-!!! error TS1047: Rest parameter cannot be optional.
+!!! restParamAsOptional.ts(1,12): error TS1047: Rest parameter cannot be optional.
     function f2(...x = []) { }
                 ~~~~~~~~~
-!!! error TS1048: Rest parameter cannot have an initializer.
+!!! restParamAsOptional.ts(2,13): error TS1048: Rest parameter cannot have an initializer.

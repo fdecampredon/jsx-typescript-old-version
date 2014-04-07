@@ -52,7 +52,7 @@
             var b8: <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U; 
             a8 = b8; // error, { foo: number } and Base are incompatible
             ~~
-!!! error TS2012: Cannot convert '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
+!!! assignmentCompatWithCallSignatures4.ts(52,9): error TS2012: Cannot convert '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
 !!! 	Call signatures of types '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' and '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' are incompatible:
 !!! 		Call signatures of types '(arg2: { foo: number; }) => any' and '(arg2: Base) => Derived' are incompatible:
 !!! 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
@@ -62,7 +62,7 @@
 !!! 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
             b8 = a8; // error, { foo: number } and Base are incompatible
             ~~
-!!! error TS2012: Cannot convert '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
+!!! assignmentCompatWithCallSignatures4.ts(53,9): error TS2012: Cannot convert '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
 !!! 	Call signatures of types '(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' and '<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' are incompatible:
 !!! 		Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => any' are incompatible:
 !!! 			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.

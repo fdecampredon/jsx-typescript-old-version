@@ -23,13 +23,13 @@
     function foo2(x: I);
     function foo2(x: I); // error
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithOptionality.ts(23,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithOptionality.ts(27,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo6(x: A);
@@ -55,7 +55,7 @@
     function foo13(x: I);
     function foo13(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo13'.
+!!! objectTypesIdentityWithOptionality.ts(51,1): error TS2144: Duplicate overload signature for 'foo13'.
     function foo13(x: any) { }
     
     function foo14(x: I);

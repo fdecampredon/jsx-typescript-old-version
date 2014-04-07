@@ -16,7 +16,7 @@
       
               getDomNode(): Element;
                       ~~~~~~~
-!!! error TS2095: Could not find symbol 'Element'.
+!!! recursiveClassReferenceTest.ts(16,19): error TS2095: Could not find symbol 'Element'.
             
             addWidget(widgetId:string, widget:IWidget);
     
@@ -58,7 +58,7 @@
             public getDomNode() {
                 return domNode;
               ~~~~~~~
-!!! error TS2095: Could not find symbol 'domNode'.
+!!! recursiveClassReferenceTest.ts(56,11): error TS2095: Could not find symbol 'domNode'.
             }
             
             public destroy() {
@@ -92,7 +92,7 @@
             
             public getMode(): IMode { return mode; }
                                        ~~~~
-!!! error TS2095: Could not find symbol 'mode'.
+!!! recursiveClassReferenceTest.ts(88,36): error TS2095: Could not find symbol 'mode'.
         }
         
         export class Mode extends AbstractMode {
@@ -101,10 +101,10 @@
             public getInitialState(): IState {
                 return new State(self);
                   ~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! recursiveClassReferenceTest.ts(95,15): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Type 'Window' is missing property 'getInitialState' from type 'IMode'.
                   ~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! recursiveClassReferenceTest.ts(95,15): error TS2085: Could not select overload for 'new' expression.
             }
     
     

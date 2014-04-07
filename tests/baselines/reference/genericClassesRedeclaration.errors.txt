@@ -29,7 +29,7 @@
         }
         class IdentiferNameHashTable<T> extends StringHashTable<T> {
                                                 ~~~~~~~~~~~~~~~~~~
-!!! error TS2186: Type name 'StringHashTable' in extends clause does not reference constructor function for 'TypeScript.StringHashTable<T>'.
+!!! genericClassesRedeclaration.ts(29,45): error TS2186: Type name 'StringHashTable' in extends clause does not reference constructor function for 'TypeScript.StringHashTable<T>'.
             public getAllKeys(): string[];
             public add(key: string, data: T): boolean;
             public addOrUpdate(key: string, data: T): boolean;
@@ -44,7 +44,8 @@
         interface IIndexable<T> {
             [s: string]: T;
             ~~~~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! genericClassesRedeclaration.ts(42,9): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	genericClassesRedeclaration.ts(3,9)
         }
         function createIntrinsicsObject<T>(): IIndexable<T>;
         interface IHashTable<T> {
@@ -59,7 +60,8 @@
         }
         class StringHashTable<T> implements IHashTable<T> {
               ~~~~~~~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'StringHashTable'.
+!!! genericClassesRedeclaration.ts(55,11): error TS2000: Duplicate identifier 'StringHashTable'. Additional locations:
+!!! 	genericClassesRedeclaration.ts(16,5)
             private itemCount;
             private table;
             public getAllKeys(): string[];
@@ -74,9 +76,10 @@
         }
         class IdentiferNameHashTable<T> extends StringHashTable<T> {
               ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'IdentiferNameHashTable'.
+!!! genericClassesRedeclaration.ts(68,11): error TS2000: Duplicate identifier 'IdentiferNameHashTable'. Additional locations:
+!!! 	genericClassesRedeclaration.ts(29,5)
                                                 ~~~~~~~~~~~~~~~~~~
-!!! error TS2186: Type name 'StringHashTable' in extends clause does not reference constructor function for 'StringHashTable<T>'.
+!!! genericClassesRedeclaration.ts(68,45): error TS2186: Type name 'StringHashTable' in extends clause does not reference constructor function for 'StringHashTable<T>'.
             public getAllKeys(): string[];
             public add(key: string, data: T): boolean;
             public addOrUpdate(key: string, data: T): boolean;

@@ -4,12 +4,12 @@
     
     class C<T, U extends T, V extends U> {
                ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(4,12): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(4,25): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         z: W; // error
            ~
-!!! error TS2095: Could not find symbol 'W'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(5,8): error TS2095: Could not find symbol 'W'.
         foo<W extends V>(x: W): T {
             var r: T;
             return x;
@@ -18,25 +18,25 @@
     
     interface I<T, U extends T, V extends U> {
                    ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(12,16): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                                 ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(12,29): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         x: T;
         y: U;
         z: W; // error
            ~
-!!! error TS2095: Could not find symbol 'W'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(15,8): error TS2095: Could not find symbol 'W'.
         foo<W extends V>(x: W): T;
     }
     
     function foo<T, U extends T>(x: T, y: U): V { // error
                     ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(19,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                                               ~
-!!! error TS2095: Could not find symbol 'V'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(19,43): error TS2095: Could not find symbol 'V'.
         function bar<V extends T, W extends U>(): X { // error
                                                   ~
-!!! error TS2095: Could not find symbol 'X'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(20,47): error TS2095: Could not find symbol 'X'.
             function baz<X extends W, Y extends V>(a: X, b: Y): T {
                 x = y;
                 return y;
@@ -46,12 +46,12 @@
     
     function foo2<U extends T, T>(x: T, y: U): W { // error
                   ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(28,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                                                ~
-!!! error TS2095: Could not find symbol 'W'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(28,44): error TS2095: Could not find symbol 'W'.
         function bar<V extends T, W extends U>(): Y { // error
                                                   ~
-!!! error TS2095: Could not find symbol 'Y'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(29,47): error TS2095: Could not find symbol 'Y'.
             function baz<X extends W, Y extends V>(a: X, b: Y): T {
                 x = y;
                 return y;
@@ -61,12 +61,12 @@
     
     var f3 = <T, U extends T>(x: T, y: U) => {
                  ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(37,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         function bar<V extends T, W extends U>(r: X, s: Y) { // error
                                                   ~
-!!! error TS2095: Could not find symbol 'X'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(38,47): error TS2095: Could not find symbol 'X'.
                                                         ~
-!!! error TS2095: Could not find symbol 'Y'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(38,53): error TS2095: Could not find symbol 'Y'.
             var g = <X extends W, Y extends V>(a: X, b: Y): T => {
                 x = y;
                 return y;
@@ -76,11 +76,11 @@
     
     var f4 = <U extends T, T>(x: V, y: X) => { // error
               ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(46,11): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                                  ~
-!!! error TS2095: Could not find symbol 'V'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(46,30): error TS2095: Could not find symbol 'V'.
                                        ~
-!!! error TS2095: Could not find symbol 'X'.
+!!! typeParameterUsedAsTypeParameterConstraint4.ts(46,36): error TS2095: Could not find symbol 'X'.
         function bar<V extends T, W extends U>() {
             var g = <X extends W, Y extends V>(a: X, b: Y): T => {
                 x = y;

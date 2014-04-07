@@ -6,7 +6,7 @@
     interface server {
         (): http.Server;
             ~~~~~~~~~~~
-!!! error TS2053: Return type of call signature from exported interface has or is using private type 'http.Server'.
+!!! exportAssignValueAndType.ts(6,9): error TS2053: Return type of call signature from exported interface has or is using private type 'http.Server'.
         startTime: Date;
     }
      

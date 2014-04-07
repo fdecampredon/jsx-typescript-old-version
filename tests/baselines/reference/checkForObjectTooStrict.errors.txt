@@ -22,13 +22,13 @@
     
     class Baz extends Object {
                       ~~~~~~
-!!! error TS2073: A class may only extend another class.
+!!! checkForObjectTooStrict.ts(22,19): error TS2073: A class may only extend another class.
     
         constructor () { // ERROR, as expected
     
             super();
             ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! checkForObjectTooStrict.ts(26,9): error TS2103: 'super' cannot be referenced in non-derived classes.
     
         }
     

@@ -296,17 +296,17 @@
         class constructor { }
         class any { }
               ~~~
-!!! error TS1057: Class name cannot be 'any'.
+!!! convertKeywordsYes.ts(296,11): error TS1057: Class name cannot be 'any'.
         class boolean { }
               ~~~~~~~
-!!! error TS1057: Class name cannot be 'boolean'.
+!!! convertKeywordsYes.ts(297,11): error TS1057: Class name cannot be 'boolean'.
         class implements { }
         class interface { }
         class let { }
         class module { }
         class number { }
               ~~~~~~
-!!! error TS1057: Class name cannot be 'number'.
+!!! convertKeywordsYes.ts(302,11): error TS1057: Class name cannot be 'number'.
         class package { }
         class private { }
         class protected { }
@@ -315,7 +315,7 @@
         class static { }
         class string { }
               ~~~~~~
-!!! error TS1057: Class name cannot be 'string'.
+!!! convertKeywordsYes.ts(309,11): error TS1057: Class name cannot be 'string'.
         class get { }
         class yield { }
         class declare { }

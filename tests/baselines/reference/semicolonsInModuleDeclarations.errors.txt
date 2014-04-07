@@ -2,7 +2,7 @@
     declare module ambiModule {
        export interface i1 { };
                               ~
-!!! error TS1036: Statements are not allowed in ambient contexts.
+!!! semicolonsInModuleDeclarations.ts(2,27): error TS1036: Statements are not allowed in ambient contexts.
        export interface i2 { }
     }
     

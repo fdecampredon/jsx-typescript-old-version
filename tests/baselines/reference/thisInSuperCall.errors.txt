@@ -14,7 +14,7 @@
         constructor() {
             super(this); // error
                   ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInSuperCall.ts(14,15): error TS2097: 'this' cannot be referenced in current location.
         }
     }
     
@@ -22,6 +22,6 @@
         constructor(public p) {
             super(this); // error
                   ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInSuperCall.ts(20,15): error TS2097: 'this' cannot be referenced in current location.
         }
     }

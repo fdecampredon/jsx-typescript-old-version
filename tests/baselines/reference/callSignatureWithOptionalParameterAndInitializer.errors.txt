@@ -3,13 +3,13 @@
     
     function foo(x?: number = 1) { }
                  ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(3,14): error TS1015: Parameter cannot have question mark and initializer.
     var f = function foo(x?: number = 1) { }
                          ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(4,22): error TS1015: Parameter cannot have question mark and initializer.
     var f2 = (x: number, y? = 1) => { }
                          ~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(5,22): error TS1015: Parameter cannot have question mark and initializer.
     
     foo(1);
     foo();
@@ -21,7 +21,7 @@
     class C {
         foo(x?: number = 1) { }
             ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(15,9): error TS1015: Parameter cannot have question mark and initializer.
     }
     
     var c: C;
@@ -31,14 +31,14 @@
     interface I {
         (x? = 1);
          ~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(23,6): error TS1015: Parameter cannot have question mark and initializer.
          ~~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(23,6): error TS2174: Default arguments are only allowed in implementation.
         foo(x: number, y?: number = 1);
                        ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(24,20): error TS1015: Parameter cannot have question mark and initializer.
                        ~~~~~~~~~~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(24,20): error TS2174: Default arguments are only allowed in implementation.
     }
     
     var i: I;
@@ -50,14 +50,14 @@
     var a: {
         (x?: number = 1);
          ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(34,6): error TS1015: Parameter cannot have question mark and initializer.
          ~~~~~~~~~~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(34,6): error TS2174: Default arguments are only allowed in implementation.
         foo(x? = 1);
             ~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(35,9): error TS1015: Parameter cannot have question mark and initializer.
             ~~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(35,9): error TS2174: Default arguments are only allowed in implementation.
     }
     
     a();
@@ -68,15 +68,15 @@
     var b = {
         foo(x?: number = 1) { },
             ~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(44,9): error TS1015: Parameter cannot have question mark and initializer.
         a: function foo(x: number, y?: number = '') { },
                                    ~~~~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(45,32): error TS1015: Parameter cannot have question mark and initializer.
                                    ~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(45,32): error TS2011: Cannot convert 'string' to 'number'.
         b: (x?: any = '') => { }
             ~~~~~~~~~~~~
-!!! error TS1015: Parameter cannot have question mark and initializer.
+!!! callSignatureWithOptionalParameterAndInitializer.ts(46,9): error TS1015: Parameter cannot have question mark and initializer.
     }
     
     b.foo();

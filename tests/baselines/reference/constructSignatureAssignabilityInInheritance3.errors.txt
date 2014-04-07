@@ -41,7 +41,7 @@
     
             interface I2<T, U> extends A {
                       ~~
-!!! error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I2<T, U>' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+!!! constructSignatureAssignabilityInInheritance3.ts(41,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I2<T, U>' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
 !!! 	Types of property 'a2' of types 'I2<T, U>' and 'A' are incompatible:
 !!! 		Construct signatures of types 'new(x: T) => U[]' and 'new(x: number) => string[]' are incompatible:
 !!! 			Types of property 'pop' of types 'U[]' and 'string[]' are incompatible:
@@ -56,7 +56,7 @@
     
             interface I4 extends A {
                       ~~
-!!! error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
+!!! constructSignatureAssignabilityInInheritance3.ts(50,19): error TS2143: Interface 'Errors.WithNonGenericSignaturesInBaseType.I4' cannot extend interface 'Errors.WithNonGenericSignaturesInBaseType.A':
 !!! 	Types of property 'a8' of types 'I4' and 'A' are incompatible:
 !!! 		Construct signatures of types 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' and 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' are incompatible:
 !!! 			Call signatures of types '(arg2: { foo: number; }) => any' and '(arg2: Base) => Derived' are incompatible:

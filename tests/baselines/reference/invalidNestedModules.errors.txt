@@ -10,7 +10,8 @@
         export module B {
             export class C { // Error
                          ~
-!!! error TS2000: Duplicate identifier 'C'.
+!!! invalidNestedModules.ts(10,22): error TS2000: Duplicate identifier 'C'. Additional locations:
+!!! 	invalidNestedModules.ts(1,12)
                 name: string;
             }
         }
@@ -26,7 +27,8 @@
         export module X {
             export var Point: number; // Error
                        ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! invalidNestedModules.ts(24,20): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	invalidNestedModules.ts(17,5)
         }
     }
     

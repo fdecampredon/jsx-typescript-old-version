@@ -3,6 +3,6 @@
     
         public set bar(param?:any) { }
                        ~~~~~~~~~~
-!!! error TS1051: 'set' accessor parameter cannot be optional.
+!!! optionalSetterParam.ts(3,20): error TS1051: 'set' accessor parameter cannot be optional.
     }
     

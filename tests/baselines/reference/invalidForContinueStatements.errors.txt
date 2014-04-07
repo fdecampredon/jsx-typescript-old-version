@@ -4,13 +4,13 @@
     // naked continue not allowed
     continue;
     ~~~~~~~~~
-!!! error TS2201: 'continue' statement can only be used within an enclosing iteration statement.
+!!! invalidForContinueStatements.ts(4,1): error TS2201: 'continue' statement can only be used within an enclosing iteration statement.
     
     // non-existent label
     ONE:
     for(;;) continue TWO;
             ~~~~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidForContinueStatements.ts(8,9): error TS2203: Jump target not found.
     
     // continue from inside function
     TWO:
@@ -18,7 +18,7 @@
         var x = () => {
             continue TWO;
             ~~~~~~~~~~~~~
-!!! error TS2204: Jump target cannot cross function boundary.
+!!! invalidForContinueStatements.ts(14,9): error TS2204: Jump target cannot cross function boundary.
         }
     }
     
@@ -27,7 +27,7 @@
         var fn = function () {
             continue THREE;
             ~~~~~~~~~~~~~~~
-!!! error TS2204: Jump target cannot cross function boundary.
+!!! invalidForContinueStatements.ts(21,9): error TS2204: Jump target cannot cross function boundary.
         }
     }
     
@@ -35,7 +35,7 @@
     for(;;) {
         continue FIVE;
         ~~~~~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidForContinueStatements.ts(27,5): error TS2203: Jump target not found.
         FIVE:
         for (; ;) { }
     }
@@ -46,5 +46,5 @@
     for(;;) {
         continue NINE;
         ~~~~~~~~~~~~~~
-!!! error TS2203: Jump target not found.
+!!! invalidForContinueStatements.ts(36,5): error TS2203: Jump target not found.
     }

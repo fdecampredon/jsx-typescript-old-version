@@ -3,7 +3,7 @@
         set x(value) {
             return null; // Should be an error
                    ~~~~
-!!! error TS2122: Setters cannot return a value.
+!!! returnValueInSetter.ts(3,16): error TS2122: Setters cannot return a value.
         }
     }
     

@@ -15,7 +15,7 @@
         }
         public set d() {
                ~~~
-!!! error TS1049: 'set' accessor must have one and only one parameter.
+!!! classdecl.ts(15,12): error TS1049: 'set' accessor must have one and only one parameter.
         }
     
         public static get p2() {
