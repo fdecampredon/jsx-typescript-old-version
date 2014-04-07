@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-duplicateNumericIndexers.ts(5,5): error TS2233: Duplicate number index signature. Additional locations:
-	duplicateNumericIndexers.ts(4,5)
-duplicateNumericIndexers.ts(9,5): error TS2233: Duplicate number index signature. Additional locations:
-	lib.d.ts(418,5)
-duplicateNumericIndexers.ts(14,5): error TS2233: Duplicate number index signature. Additional locations:
-	lib.d.ts(976,5)
-duplicateNumericIndexers.ts(20,5): error TS2233: Duplicate number index signature. Additional locations:
-	duplicateNumericIndexers.ts(19,5)
-duplicateNumericIndexers.ts(25,5): error TS2233: Duplicate number index signature. Additional locations:
-	duplicateNumericIndexers.ts(24,5)
-duplicateNumericIndexers.ts(30,5): error TS2233: Duplicate number index signature. Additional locations:
-	duplicateNumericIndexers.ts(29,5)
-=======
 ==== tests/cases/compiler/duplicateNumericIndexers.ts (6 errors) ====
     // it is an error to have duplicate index signatures of the same kind in a type
     
@@ -27,7 +13,7 @@ duplicateNumericIndexers.ts(30,5): error TS2233: Duplicate number index signatur
         [x: number]: string;
         ~~~~~~~~~~~~~~~~~~~
 !!! duplicateNumericIndexers.ts(9,5): error TS2233: Duplicate number index signature. Additional locations:
-!!! 	lib.d.ts(424,5)
+!!! 	lib.d.ts(418,5)
         [x: number]: string;
     }
     
@@ -35,7 +21,7 @@ duplicateNumericIndexers.ts(30,5): error TS2233: Duplicate number index signatur
         [x: number]: T;
         ~~~~~~~~~~~~~~
 !!! duplicateNumericIndexers.ts(14,5): error TS2233: Duplicate number index signature. Additional locations:
-!!! 	lib.d.ts(1132,5)
+!!! 	lib.d.ts(976,5)
         [x: number]: T;
     }
     
@@ -64,4 +50,3 @@ duplicateNumericIndexers.ts(30,5): error TS2233: Duplicate number index signatur
     }
     
     
->>>>>>> b9bbbf1... Improve error baseline reporting

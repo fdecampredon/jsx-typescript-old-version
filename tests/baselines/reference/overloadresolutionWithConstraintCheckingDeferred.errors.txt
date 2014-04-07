@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-overloadresolutionWithConstraintCheckingDeferred.ts(19,12): error TS2086: Type 'C' does not satisfy the constraint 'A' for type parameter 'T extends A'.
-=======
 ==== tests/cases/compiler/overloadresolutionWithConstraintCheckingDeferred.ts (1 errors) ====
     interface A { x }
     interface B { x; y }
@@ -26,4 +23,3 @@ overloadresolutionWithConstraintCheckingDeferred.ts(19,12): error TS2086: Type '
         return y;
     });
     
->>>>>>> b9bbbf1... Improve error baseline reporting

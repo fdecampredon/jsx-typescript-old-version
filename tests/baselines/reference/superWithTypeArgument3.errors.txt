@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-superWithTypeArgument3.ts(8,14): error TS1005: '.' expected.
-superWithTypeArgument3.ts(7,5): error TS2105: Constructors for derived classes must contain a 'super' call.
-superWithTypeArgument3.ts(8,14): error TS2158: Untyped function calls may not accept type arguments.
-=======
 ==== tests/cases/compiler/superWithTypeArgument3.ts (3 errors) ====
     class C<T> {
         foo: T;
@@ -16,11 +11,10 @@ superWithTypeArgument3.ts(8,14): error TS2158: Untyped function calls may not ac
             super<T>();
                  ~
 !!! superWithTypeArgument3.ts(8,14): error TS1005: '.' expected.
-            ~~~~~
-!!! superWithTypeArgument3.ts(8,9): error TS2158: Untyped function calls may not accept type arguments.
+                 
+!!! superWithTypeArgument3.ts(8,14): error TS2158: Untyped function calls may not accept type arguments.
         }
         bar() {
             super.bar<T>(null);
         }
     }
->>>>>>> b9bbbf1... Improve error baseline reporting

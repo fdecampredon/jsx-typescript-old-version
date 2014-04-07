@@ -10,11 +10,11 @@
     
     class D extends C {
         public static foo() {
-            super.bar(); // OK
+            super.bar(); // error
             super.x;  // error
                   ~
 !!! superPropertyAccess2.ts(13,15): error TS2094: The property 'x' does not exist on value of type 'typeof C'.
-        }
+        }    
     
         constructor() {
             super();
@@ -27,7 +27,7 @@
         }
     
         public static get y() {
-            super.bar(); // OK
+            super.bar(); // error
             super.x; // error
                   ~
 !!! superPropertyAccess2.ts(24,15): error TS2094: The property 'x' does not exist on value of type 'typeof C'.
