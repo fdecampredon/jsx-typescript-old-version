@@ -8,15 +8,15 @@
     // TypeParameter_0_of_exported_class_1_has_or_is_using_private_type_2
     export class publicClassWithPrivateTypeParameters<T extends privateClass> {
                                                       ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2220: TypeParameter 'T extends privateClass' of exported class has or is using private type 'privateClass'.
+!!! privacyTypeParametersOfClass.ts(8,51): error TS2220: TypeParameter 'T extends privateClass' of exported class has or is using private type 'privateClass'.
         myMethod(val: T): T { // Error
                  ~~~~~~
-!!! error TS2038: Parameter 'val' of public method from exported class has or is using private type 'privateClass'.
+!!! privacyTypeParametersOfClass.ts(9,14): error TS2038: Parameter 'val' of public method from exported class has or is using private type 'privateClass'.
                           ~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'privateClass'.
+!!! privacyTypeParametersOfClass.ts(9,23): error TS2056: Return type of public method from exported class has or is using private type 'privateClass'.
             return val;
             ~~~~~~~~~~~
-!!! error TS2056: Return type of public method from exported class has or is using private type 'privateClass'.
+!!! privacyTypeParametersOfClass.ts(10,9): error TS2056: Return type of public method from exported class has or is using private type 'privateClass'.
         }
     }
     

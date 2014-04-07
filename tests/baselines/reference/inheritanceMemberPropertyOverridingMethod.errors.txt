@@ -7,7 +7,7 @@
     
     class b extends a {
           ~
-!!! error TS2141: Class 'b' cannot extend class 'a':
+!!! inheritanceMemberPropertyOverridingMethod.ts(7,7): error TS2141: Class 'b' cannot extend class 'a':
 !!! 	Class 'b' defines instance member property 'x', but extended class 'a' defines it as instance member function.
         x: () => string;
     }

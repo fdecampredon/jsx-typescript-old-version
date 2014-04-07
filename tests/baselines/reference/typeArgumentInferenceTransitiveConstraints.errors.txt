@@ -2,9 +2,9 @@
     
     function fn<A extends Date, B extends A, C extends B>(a: A, b: B, c: C) {
                                 ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeArgumentInferenceTransitiveConstraints.ts(2,29): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
                                              ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeArgumentInferenceTransitiveConstraints.ts(2,42): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         return [a, b, c];
     }
     

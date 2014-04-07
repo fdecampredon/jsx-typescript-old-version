@@ -5,9 +5,9 @@
         var non_export_var: number;
         module {
                ~
-!!! error TS1005: ';' expected.
+!!! innerModExport1.ts(5,12): error TS1005: ';' expected.
         ~~~~~~
-!!! error TS2095: Could not find symbol 'module'.
+!!! innerModExport1.ts(5,5): error TS2095: Could not find symbol 'module'.
             var non_export_var = 0;
             export var export_var = 1;
     

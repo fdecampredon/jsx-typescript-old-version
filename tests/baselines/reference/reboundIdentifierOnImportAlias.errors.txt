@@ -6,5 +6,5 @@
         var Foo = 1;
         import F = Foo;
                    ~~~
-!!! error TS2187: Internal module reference 'Foo' in import declaration does not reference module instance for 'Foo'.
+!!! reboundIdentifierOnImportAlias.ts(6,16): error TS2187: Internal module reference 'Foo' in import declaration does not reference module instance for 'Foo'.
     }

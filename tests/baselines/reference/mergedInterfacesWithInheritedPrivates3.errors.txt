@@ -9,7 +9,7 @@
     
     interface A extends C { // error
               ~
-!!! error TS2189: Interface 'A' cannot simultaneously extend types 'C' and 'C2':
+!!! mergedInterfacesWithInheritedPrivates3.ts(9,11): error TS2189: Interface 'A' cannot simultaneously extend types 'C' and 'C2':
 !!! Named properties 'x' of types 'C' and 'C2' are not identical.
         y: string;
     }
@@ -20,7 +20,7 @@
     
     class D extends C implements A { // error
           ~
-!!! error TS2137: Class D declares interface A but does not implement it:
+!!! mergedInterfacesWithInheritedPrivates3.ts(17,7): error TS2137: Class D declares interface A but does not implement it:
 !!! 	Types 'C' and 'C2' define property 'x' as private.
         y: string;
         z: string;
@@ -37,7 +37,7 @@
     
         interface A extends C { // error, privates conflict
                   ~
-!!! error TS2189: Interface 'A' cannot simultaneously extend types 'M.C' and 'M.C2':
+!!! mergedInterfacesWithInheritedPrivates3.ts(31,15): error TS2189: Interface 'A' cannot simultaneously extend types 'M.C' and 'M.C2':
 !!! Named properties 'x' of types 'M.C' and 'M.C2' are not identical.
             y: string;
         }

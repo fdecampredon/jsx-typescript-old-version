@@ -5,7 +5,7 @@
     
       export function a(){  A.b();  } // A.b should be an unresolved symbol error
                               ~
-!!! error TS2094: The property 'b' does not exist on value of type 'typeof A'.
+!!! qualifiedModuleLocals.ts(5,27): error TS2094: The property 'b' does not exist on value of type 'typeof A'.
     
     }
     

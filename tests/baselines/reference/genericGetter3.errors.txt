@@ -11,4 +11,4 @@
     var c = new C<number>();
     var r: string = c.x;
         ~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'A<number>' to 'string'.
+!!! genericGetter3.ts(11,5): error TS2011: Cannot convert 'A<number>' to 'string'.

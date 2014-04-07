@@ -2,7 +2,7 @@
     interface X {
     x: () => <A, A>() => void;
               ~
-!!! error TS2000: Duplicate identifier 'A'.
+!!! duplicateTypeParameters3.ts(2,11): error TS2000: Duplicate identifier 'A'.
     }
      
     

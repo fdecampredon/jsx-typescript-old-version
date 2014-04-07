@@ -3,7 +3,7 @@
     
     function foo<T, U extends T>(t: T) {
                     ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! genericCallWithConstraintsTypeArgumentInference2.ts(3,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         var u: U;
         return u;
     }
@@ -13,8 +13,8 @@
     var r3 = foo(new Object()); // {}
     var r4 = foo<Date, Date>(1); // error
              ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! genericCallWithConstraintsTypeArgumentInference2.ts(11,10): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Type 'Number' is missing property 'toDateString' from type 'Date'.
              ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! genericCallWithConstraintsTypeArgumentInference2.ts(11,10): error TS2087: Could not select overload for 'call' expression.
     var r5 = foo<Date, Date>(new Date()); // no error

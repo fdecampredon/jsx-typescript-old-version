@@ -5,7 +5,7 @@
         constructor(x: number, y: string);
         constructor(x: number, y: string); // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2145: Duplicate constructor overload signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(5,5): error TS2145: Duplicate constructor overload signature.
         constructor(x: number) { }
     }
     
@@ -15,7 +15,7 @@
         constructor(x: T, y: string);
         constructor(x: T, y: string); // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2145: Duplicate constructor overload signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(13,5): error TS2145: Duplicate constructor overload signature.
         constructor(x: T) { }
     }
     
@@ -25,7 +25,7 @@
         new (x: number, y: string): C;
         new (x: number, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(21,5): error TS2147: Duplicate overload construct signature.
     }
     
     var i: I;
@@ -35,11 +35,11 @@
         new (x: T, y: string): C2<T>;
         new (x: T, y: string): C2<T>; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(29,5): error TS2147: Duplicate overload construct signature.
         new <T>(x: T, y: string): C2<T>;
         new <T>(x: T, y: string): C2<T>; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(31,5): error TS2147: Duplicate overload construct signature.
     }
     
     var i2: I2<number>;
@@ -49,7 +49,7 @@
         new (x: number, y: string): C;
         new (x: number, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(39,5): error TS2147: Duplicate overload construct signature.
     }
     
     var r5 = new a(1, '');
@@ -58,7 +58,7 @@
         new <T>(x: T, y: string): C2<T>;
         new <T>(x: T, y: string): C2<T>; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithIdenticalOverloads.ts(46,5): error TS2147: Duplicate overload construct signature.
     }
     
     var r6 = new b(1, '');

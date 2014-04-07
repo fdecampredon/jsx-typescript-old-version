@@ -2,14 +2,14 @@
     module N {
         export class C4 extends M.B {
                                   ~
-!!! error TS2094: The property 'B' does not exist on value of type 'M'.
+!!! extBaseClass2.ts(2,31): error TS2094: The property 'B' does not exist on value of type 'M'.
         }
     }
     
     module M {
         export class C5 extends B {
                                 ~
-!!! error TS2095: Could not find symbol 'B'.
+!!! extBaseClass2.ts(7,29): error TS2095: Could not find symbol 'B'.
         }
     }
     

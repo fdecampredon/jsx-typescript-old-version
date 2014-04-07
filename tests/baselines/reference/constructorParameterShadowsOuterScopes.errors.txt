@@ -8,11 +8,11 @@
     class C {
         b = x; // error, evaluated in scope of constructor, cannot reference x
             ~
-!!! error TS2230: Initializer of instance member variable 'b' cannot reference identifier 'x' declared in the constructor.
+!!! constructorParameterShadowsOuterScopes.ts(8,9): error TS2230: Initializer of instance member variable 'b' cannot reference identifier 'x' declared in the constructor.
         constructor(x: string) {
             x = 2; // error, x is string
             ~
-!!! error TS2011: Cannot convert 'number' to 'string'.
+!!! constructorParameterShadowsOuterScopes.ts(10,9): error TS2011: Cannot convert 'number' to 'string'.
         }    
     }
     
@@ -20,7 +20,7 @@
     class D {
         b = y; // error, evaluated in scope of constructor, cannot reference y
             ~
-!!! error TS2230: Initializer of instance member variable 'b' cannot reference identifier 'y' declared in the constructor.
+!!! constructorParameterShadowsOuterScopes.ts(16,9): error TS2230: Initializer of instance member variable 'b' cannot reference identifier 'y' declared in the constructor.
         constructor(x: string) {
             var y = "";
         }

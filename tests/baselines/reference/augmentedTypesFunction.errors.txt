@@ -3,35 +3,41 @@
     function y1() { }
     var y1 = 1; // error
         ~~
-!!! error TS2000: Duplicate identifier 'y1'.
+!!! augmentedTypesFunction.ts(3,5): error TS2000: Duplicate identifier 'y1'. Additional locations:
+!!! 	augmentedTypesFunction.ts(2,1)
     
     // function then function
     function y2() { }
     function y2() { } // error
              ~~
-!!! error TS2000: Duplicate identifier 'y2'.
+!!! augmentedTypesFunction.ts(7,10): error TS2000: Duplicate identifier 'y2'. Additional locations:
+!!! 	augmentedTypesFunction.ts(6,1)
     
     function y2a() { }
     var y2a = () => { } // error
         ~~~
-!!! error TS2000: Duplicate identifier 'y2a'.
+!!! augmentedTypesFunction.ts(10,5): error TS2000: Duplicate identifier 'y2a'. Additional locations:
+!!! 	augmentedTypesFunction.ts(9,1)
     
     // function then class
     function y3() { }
     class y3 { } // error
           ~~
-!!! error TS2000: Duplicate identifier 'y3'.
+!!! augmentedTypesFunction.ts(14,7): error TS2000: Duplicate identifier 'y3'. Additional locations:
+!!! 	augmentedTypesFunction.ts(13,1)
     
     function y3a() { }
     class y3a { public foo() { } } // error
           ~~~
-!!! error TS2000: Duplicate identifier 'y3a'.
+!!! augmentedTypesFunction.ts(17,7): error TS2000: Duplicate identifier 'y3a'. Additional locations:
+!!! 	augmentedTypesFunction.ts(16,1)
     
     // function then enum
     function y4() { }
     enum y4 { One } // error
          ~~
-!!! error TS2000: Duplicate identifier 'y4'.
+!!! augmentedTypesFunction.ts(21,6): error TS2000: Duplicate identifier 'y4'. Additional locations:
+!!! 	augmentedTypesFunction.ts(20,1)
     
     // function then internal module
     function y5() { }

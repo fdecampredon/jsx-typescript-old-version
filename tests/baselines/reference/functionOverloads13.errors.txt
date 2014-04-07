@@ -2,6 +2,6 @@
     function foo(bar:number):string;
     function foo(bar:number):number;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! functionOverloads13.ts(2,1): error TS2175: Overloads cannot differ only by return type.
     function foo(bar?:number):any { return "" }
     

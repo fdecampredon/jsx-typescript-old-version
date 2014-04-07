@@ -3,13 +3,13 @@
         x = this;
         static y = this;
                    ~~~~
-!!! error TS2140: 'this' cannot be referenced in static initializers in a class body.
+!!! thisInConstructorParameter2.ts(3,16): error TS2140: 'this' cannot be referenced in static initializers in a class body.
     
         constructor(public z = this, zz = this) { }
                                ~~~~
-!!! error TS2155: 'this' cannot be referenced in constructor arguments.
+!!! thisInConstructorParameter2.ts(5,28): error TS2155: 'this' cannot be referenced in constructor arguments.
                                           ~~~~
-!!! error TS2155: 'this' cannot be referenced in constructor arguments.
+!!! thisInConstructorParameter2.ts(5,39): error TS2155: 'this' cannot be referenced in constructor arguments.
     
         foo(zz = this) { zz.x; }
         static bar(zz = this) { zz.y; }

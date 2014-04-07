@@ -6,6 +6,6 @@
     
         export var f: typeof Inner;
                    ~~~~~~~~~~~~~~~
-!!! error TS2031: Exported variable 'f' is using inaccessible module 'Inner'.
+!!! privacyCheckTypeOfInvisibleModuleError.ts(6,16): error TS2031: Exported variable 'f' is using inaccessible module 'Inner'.
     }
     

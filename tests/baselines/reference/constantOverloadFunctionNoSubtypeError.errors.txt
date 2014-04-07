@@ -6,13 +6,13 @@
     
     function foo(tagName: 'canvas'): Derived3;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! constantOverloadFunctionNoSubtypeError.ts(6,1): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
     function foo(tagName:  'div'): Derived2;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! constantOverloadFunctionNoSubtypeError.ts(7,1): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
     function foo(tagName: 'span'): Derived1;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! constantOverloadFunctionNoSubtypeError.ts(8,1): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
     function foo(tagName: number): Base;
     function foo(tagName: any): Base {
     

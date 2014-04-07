@@ -12,7 +12,7 @@
         constructor(a: any);
         constructor(x: any, y?: any) { }
         ~~~~~~~~~~~
-!!! error TS2105: Constructors for derived classes must contain a 'super' call.
+!!! constructorOverloads3.ts(12,5): error TS2105: Constructors for derived classes must contain a 'super' call.
         bar1() { /*WScript.Echo("Yo");*/}
     }
     

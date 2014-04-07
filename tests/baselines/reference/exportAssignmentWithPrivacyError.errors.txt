@@ -21,9 +21,9 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
     };
     ~
-!!! error TS2027: Exported variable 'server' has or is using private type 'connectmodule'.
+!!! exportAssignmentWithPrivacyError.ts(9,5): error TS2027: Exported variable 'server' has or is using private type 'connectmodule'.
     ~
-!!! error TS2027: Exported variable 'server' has or is using private type 'connectexport'.
+!!! exportAssignmentWithPrivacyError.ts(9,5): error TS2027: Exported variable 'server' has or is using private type 'connectexport'.
     
     export = server;
     

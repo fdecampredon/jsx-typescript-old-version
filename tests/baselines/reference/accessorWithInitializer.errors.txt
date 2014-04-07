@@ -8,9 +8,14 @@ accessorWithInitializer.ts(5,17): error TS1052: 'set' accessor parameter cannot 
     class C {
         set X(v = 0) { }
               ~~~~~
-!!! error TS1052: 'set' accessor parameter cannot have an initializer.
+!!! accessorWithInitializer.ts(4,11): error TS1052: 'set' accessor parameter cannot have an initializer.
         static set X(v2 = 0) { }
                      ~~~~~~
+<<<<<<< HEAD
 !!! error TS1052: 'set' accessor parameter cannot have an initializer.
     }
 >>>>>>> b9bbbf1... Improve error baseline reporting
+=======
+!!! accessorWithInitializer.ts(5,18): error TS1052: 'set' accessor parameter cannot have an initializer.
+    }
+>>>>>>> d7cb924... Use tsc.js-style error messages in error baselines

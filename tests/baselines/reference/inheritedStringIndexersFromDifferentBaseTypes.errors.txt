@@ -13,7 +13,7 @@
     }
     interface E extends A, D { } // error
               ~
-!!! error TS2189: Interface 'E' cannot simultaneously extend types 'A' and 'D':
+!!! inheritedStringIndexersFromDifferentBaseTypes.ts(13,11): error TS2189: Interface 'E' cannot simultaneously extend types 'A' and 'D':
 !!! Types of string indexer of types 'A' and 'D' are not identical.
     
     
@@ -31,5 +31,5 @@
     }
     interface E2 extends A2, D2 { } // error
               ~~
-!!! error TS2189: Interface 'E2' cannot simultaneously extend types 'A2' and 'D2':
+!!! inheritedStringIndexersFromDifferentBaseTypes.ts(28,11): error TS2189: Interface 'E2' cannot simultaneously extend types 'A2' and 'D2':
 !!! Types of number indexer of types 'A2' and 'D2' are not identical.

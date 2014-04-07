@@ -14,14 +14,15 @@
     // to be Point and return type is inferred to be void
     function Point(x, y) {
              ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! targetTypeTest1.ts(14,10): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	targetTypeTest1.ts(1,1)
         this.x = x;
         this.y = y;
     }
     
     declare function EF1(a:number, b:number):number;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2152: Overload signatures must all be ambient or non-ambient.
+!!! targetTypeTest1.ts(19,1): error TS2152: Overload signatures must all be ambient or non-ambient.
     
     function EF1(a,b) { return a+b; }
     
@@ -64,7 +65,8 @@
     
     function C(a,b) {
              ~
-!!! error TS2000: Duplicate identifier 'C'.
+!!! targetTypeTest1.ts(60,10): error TS2000: Duplicate identifier 'C'. Additional locations:
+!!! 	targetTypeTest1.ts(53,1)
         this.a=a;
         this.b=b;
     }

@@ -5,7 +5,7 @@
     
     process({a:true,b:"y"});
     ~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! objectLitTargetTypeCallSite.ts(5,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Types of property 'a' of types '{ a: boolean; b: string; }' and '{ a: number; b: string; }' are incompatible.
     ~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! objectLitTargetTypeCallSite.ts(5,1): error TS2087: Could not select overload for 'call' expression.

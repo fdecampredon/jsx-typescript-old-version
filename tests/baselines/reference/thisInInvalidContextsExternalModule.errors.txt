@@ -3,7 +3,7 @@
     class ErrClass1 {
         static t = this; // Error
                    ~~~~
-!!! error TS2140: 'this' cannot be referenced in static initializers in a class body.
+!!! thisInInvalidContextsExternalModule.ts(3,16): error TS2140: 'this' cannot be referenced in static initializers in a class body.
     }
     
     class BaseErrClass {
@@ -24,7 +24,7 @@
         constructor() {
             super(this); // Error
                   ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInInvalidContextsExternalModule.ts(22,15): error TS2097: 'this' cannot be referenced in current location.
         }
     }
     
@@ -32,7 +32,7 @@
         //'this' in module variable
         var x = this; // Error
                 ~~~~
-!!! error TS2108: 'this' cannot be referenced within module bodies.
+!!! thisInInvalidContextsExternalModule.ts(28,13): error TS2108: 'this' cannot be referenced within module bodies.
     }
     
     //'this' as type parameter constraint
@@ -42,15 +42,15 @@
     function genericFunc<T>(x: T) { }
     genericFunc<this>(undefined);  // Should be an error
                 ~~~~
-!!! error TS2108: 'this' cannot be referenced within module bodies.
+!!! thisInInvalidContextsExternalModule.ts(36,13): error TS2108: 'this' cannot be referenced within module bodies.
     
     class ErrClass3 extends this {
                             ~~~~
-!!! error TS1008: Unexpected token; 'type name' expected.
+!!! thisInInvalidContextsExternalModule.ts(38,25): error TS1008: Unexpected token; 'type name' expected.
                                  ~
-!!! error TS1005: ';' expected.
+!!! thisInInvalidContextsExternalModule.ts(38,30): error TS1005: ';' expected.
                             ~~~~
-!!! error TS2108: 'this' cannot be referenced within module bodies.
+!!! thisInInvalidContextsExternalModule.ts(38,25): error TS2108: 'this' cannot be referenced within module bodies.
     
     }
     
@@ -58,14 +58,14 @@
     enum SomeEnum {
         A = this, // Should not be allowed
             ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInInvalidContextsExternalModule.ts(44,9): error TS2097: 'this' cannot be referenced in current location.
         B = this.spaaaace // Also should not be allowed
             ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInInvalidContextsExternalModule.ts(45,9): error TS2097: 'this' cannot be referenced in current location.
     }
     
     export = this; // Should be an error
              ~~~~
-!!! error TS1006: Identifier expected; 'this' is a keyword.
+!!! thisInInvalidContextsExternalModule.ts(48,10): error TS1006: Identifier expected; 'this' is a keyword.
              ~~~~
-!!! error TS2108: 'this' cannot be referenced within module bodies.
+!!! thisInInvalidContextsExternalModule.ts(48,10): error TS2108: 'this' cannot be referenced within module bodies.

@@ -3,9 +3,9 @@
     
     interface blue extends color() { // error
                                 ~
-!!! error TS1005: ',' expected.
+!!! interfaceMayNotBeExtendedWitACall.ts(3,29): error TS1005: ',' expected.
                                    ~
-!!! error TS1005: '=>' expected.
+!!! interfaceMayNotBeExtendedWitACall.ts(3,32): error TS1005: '=>' expected.
     
     }
     

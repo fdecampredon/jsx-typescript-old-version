@@ -8,7 +8,7 @@
     f = i;
     i = f;
     ~
-!!! error TS2012: Cannot convert 'Object' to 'I':
+!!! objectTypeWithConstructSignatureHidingMembersOfFunctionAssignmentCompat.ts(8,1): error TS2012: Cannot convert 'Object' to 'I':
 !!! 	Type 'I' requires a construct signature, but type 'Object' lacks one.
     
     var a: {
@@ -17,5 +17,5 @@
     f = a;
     a = f;
     ~
-!!! error TS2012: Cannot convert 'Object' to 'new() => any':
+!!! objectTypeWithConstructSignatureHidingMembersOfFunctionAssignmentCompat.ts(14,1): error TS2012: Cannot convert 'Object' to 'new() => any':
 !!! 	Type 'new() => any' requires a construct signature, but type 'Object' lacks one.

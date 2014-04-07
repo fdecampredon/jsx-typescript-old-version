@@ -10,6 +10,6 @@
     class Foo3 {
         constructor (public ...args: string[]) { }
                             ~~~
-!!! error TS1003: Identifier expected.
+!!! varArgConstructorMemberParameter.ts(10,25): error TS1003: Identifier expected.
     }
     

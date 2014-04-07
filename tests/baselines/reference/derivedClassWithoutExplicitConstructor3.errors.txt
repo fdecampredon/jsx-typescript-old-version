@@ -21,14 +21,14 @@
     
     var r = new Derived(); // error
                 ~~~~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor3.ts(21,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor3.ts(21,13): error TS2085: Could not select overload for 'new' expression.
     var r2 = new Derived2(1); // error
                  ~~~~~~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor3.ts(22,14): error TS2081: Supplied parameters do not match any signature of call target.
                  ~~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor3.ts(22,14): error TS2085: Could not select overload for 'new' expression.
     var r3 = new Derived('', '');
     
     class Base2<T> {
@@ -52,12 +52,12 @@
     
     var d = new D2(); // error
                 ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor3.ts(44,13): error TS2081: Supplied parameters do not match any signature of call target.
                 ~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor3.ts(44,13): error TS2085: Could not select overload for 'new' expression.
     var d2 = new D2(new Date()); // error
                  ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! derivedClassWithoutExplicitConstructor3.ts(45,14): error TS2081: Supplied parameters do not match any signature of call target.
                  ~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! derivedClassWithoutExplicitConstructor3.ts(45,14): error TS2085: Could not select overload for 'new' expression.
     var d3 = new D2(new Date(), new Date()); // ok

@@ -4,7 +4,7 @@
     
     var baz = Foo.b;
                   ~
-!!! error TS2094: The property 'b' does not exist on value of type 'typeof Foo'.
+!!! errorSupression1.ts(4,15): error TS2094: The property 'b' does not exist on value of type 'typeof Foo'.
       // Foo.b won't bind. 
     baz.concat("y");
     

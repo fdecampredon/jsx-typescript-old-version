@@ -13,10 +13,10 @@
     
     class Bar2 extends Foo implements I { // error
           ~~~~
-!!! error TS2137: Class Bar2 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(13,7): error TS2137: Class Bar2 declares interface I but does not implement it:
 !!! 	Property 'x' defined as public in type 'Bar2' is defined as private in type 'Foo'.
           ~~~~
-!!! error TS2141: Class 'Bar2' cannot extend class 'Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(13,7): error TS2141: Class 'Bar2' cannot extend class 'Foo':
 !!! 	Property 'x' defined as public in type 'Bar2' is defined as private in type 'Foo'.
         x: string;
         y: number;
@@ -24,10 +24,10 @@
     
     class Bar3 extends Foo implements I { // error
           ~~~~
-!!! error TS2137: Class Bar3 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(18,7): error TS2137: Class Bar3 declares interface I but does not implement it:
 !!! 	Types 'Bar3' and 'Foo' define property 'x' as private.
           ~~~~
-!!! error TS2141: Class 'Bar3' cannot extend class 'Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(18,7): error TS2141: Class 'Bar3' cannot extend class 'Foo':
 !!! 	Types 'Bar3' and 'Foo' define property 'x' as private.
         private x: string;
         y: number;
@@ -54,10 +54,10 @@
     
         class Bar2 extends Foo implements I { // error
               ~~~~
-!!! error TS2137: Class Bar2 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(42,11): error TS2137: Class Bar2 declares interface I but does not implement it:
 !!! 	Type 'Bar2' is missing property 'z' from type 'I'.
               ~~~~
-!!! error TS2141: Class 'M.Bar2' cannot extend class 'M.Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(42,11): error TS2141: Class 'M.Bar2' cannot extend class 'M.Foo':
 !!! 	Property 'x' defined as public in type 'Bar2' is defined as private in type 'Foo'.
             x: string;
             y: number;
@@ -65,10 +65,10 @@
     
         class Bar3 extends Foo implements I { // error
               ~~~~
-!!! error TS2137: Class Bar3 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(47,11): error TS2137: Class Bar3 declares interface I but does not implement it:
 !!! 	Type 'Bar3' is missing property 'z' from type 'I'.
               ~~~~
-!!! error TS2141: Class 'M.Bar3' cannot extend class 'M.Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(47,11): error TS2141: Class 'M.Bar3' cannot extend class 'M.Foo':
 !!! 	Types 'Bar3' and 'Foo' define property 'x' as private.
             private x: string;
             y: number;
@@ -91,7 +91,7 @@
     
         class Bar extends Foo implements I { // error
               ~~~
-!!! error TS2137: Class Bar declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(67,11): error TS2137: Class Bar declares interface I but does not implement it:
 !!! 	Type 'Bar' is missing property 'y' from type 'I'.
             z: number;
         }
@@ -100,17 +100,17 @@
         var r1 = b.z;
         var r2 = b.x; // error
                    ~
-!!! error TS2107: 'M2.Foo.x' is inaccessible.
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(73,16): error TS2107: 'M2.Foo.x' is inaccessible.
         var r3 = b.y; // error
                    ~
-!!! error TS2094: The property 'y' does not exist on value of type 'Bar'.
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(74,16): error TS2094: The property 'y' does not exist on value of type 'Bar'.
     
         class Bar2 extends Foo implements I { // error
               ~~~~
-!!! error TS2137: Class Bar2 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(76,11): error TS2137: Class Bar2 declares interface I but does not implement it:
 !!! 	Type 'Bar2' is missing property 'y' from type 'I'.
               ~~~~
-!!! error TS2141: Class 'M2.Bar2' cannot extend class 'M2.Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(76,11): error TS2141: Class 'M2.Bar2' cannot extend class 'M2.Foo':
 !!! 	Property 'x' defined as public in type 'Bar2' is defined as private in type 'Foo'.
             x: string;
             z: number;
@@ -118,10 +118,10 @@
     
         class Bar3 extends Foo implements I { // error
               ~~~~
-!!! error TS2137: Class Bar3 declares interface I but does not implement it:
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(81,11): error TS2137: Class Bar3 declares interface I but does not implement it:
 !!! 	Type 'Bar3' is missing property 'y' from type 'I'.
               ~~~~
-!!! error TS2141: Class 'M2.Bar3' cannot extend class 'M2.Foo':
+!!! implementingAnInterfaceExtendingClassWithPrivates2.ts(81,11): error TS2141: Class 'M2.Bar3' cannot extend class 'M2.Foo':
 !!! 	Types 'Bar3' and 'Foo' define property 'x' as private.
             private x: string;
             z: number;

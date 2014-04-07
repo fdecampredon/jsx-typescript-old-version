@@ -3,5 +3,5 @@
         prototype: number; // ok
         static prototype: C; // error
                ~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'prototype'.
+!!! propertyNamedPrototype.ts(3,12): error TS2000: Duplicate identifier 'prototype'.
     }

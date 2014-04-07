@@ -9,5 +9,5 @@
     module C {
         export var y = C.bar; // error
                          ~~~
-!!! error TS2107: 'C.bar' is inaccessible.
+!!! privateStaticNotAccessibleInClodule.ts(9,22): error TS2107: 'C.bar' is inaccessible.
     }

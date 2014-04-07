@@ -17,20 +17,20 @@
         x() {
             var lamda = (_super: number) => { // Error 
                          ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(17,22): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
                 return x => this;   // New scope.  So should inject new _this capture
             }
         }
         y(_super: number) { // Error 
           ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(21,7): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             var lambda = () => {
                 return x => this;   // New scope.  So should inject new _this capture
             }
         }
         set z(_super: number) { // Error
               ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(26,11): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
         }
         public prop3: {
             doStuff: (_super: number) => void; // no error - no code gen
@@ -38,12 +38,12 @@
         public prop4 = {
             doStuff: (_super: number) => { // should be error
                       ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(32,19): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
         }
         constructor(_super: number) { // should be error
                     ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(35,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             super();
         }
     }
@@ -62,14 +62,14 @@
         constructor(_super: string);// no code gen - no error
         constructor(_super: any) { // should be error
                     ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(52,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             super();
         }
         y(_super: number); // no code gen - no error
         y(_super: string); // no code gen - no error
         y(_super: any) { // Error 
           ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter.ts(57,7): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             var lambda = () => {
                 return x => this;   // New scope.  So should inject new _this capture
             }

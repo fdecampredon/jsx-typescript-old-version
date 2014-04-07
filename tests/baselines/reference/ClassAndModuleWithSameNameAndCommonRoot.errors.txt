@@ -14,7 +14,7 @@
     module X.Y {
         export module Point {
                       ~~~~~
-!!! error TS2188: Module 'Point' cannot merge with previous declaration of 'Point' in a different file 'class.ts'.
+!!! module.ts(2,19): error TS2188: Module 'Point' cannot merge with previous declaration of 'Point' in a different file 'class.ts'.
             export var Origin = new Point(0, 0);
         }
     }

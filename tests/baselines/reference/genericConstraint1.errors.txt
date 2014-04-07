@@ -8,4 +8,4 @@
     var x = new C<number>();
     x.bar2<string>(2, "");
       ~~~~
-!!! error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+!!! genericConstraint1.ts(8,3): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.

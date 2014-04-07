@@ -3,5 +3,5 @@
         (x: T): number;
         (x: T): string;
         ~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! duplicateConstructSignature2.ts(3,5): error TS2175: Overloads cannot differ only by return type.
     }

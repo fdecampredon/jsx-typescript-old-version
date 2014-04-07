@@ -9,10 +9,10 @@
     var f = new Foo();
     f.privMeth(); // should not work
       ~~~~~~~~
-!!! error TS2107: 'Foo.privMeth' is inaccessible.
+!!! privateVisibility.ts(9,3): error TS2107: 'Foo.privMeth' is inaccessible.
     f.privProp; // should not work
       ~~~~~~~~
-!!! error TS2107: 'Foo.privProp' is inaccessible.
+!!! privateVisibility.ts(10,3): error TS2107: 'Foo.privProp' is inaccessible.
     
     f.pubMeth(); // should work
     f.pubProp; // should work
@@ -28,6 +28,6 @@
     c.pub; // should work
     c.priv; // should not work
       ~~~~
-!!! error TS2107: 'M.C.priv' is inaccessible.
+!!! privateVisibility.ts(24,3): error TS2107: 'M.C.priv' is inaccessible.
     
     

@@ -9,5 +9,5 @@
     }
     __test2__.__val__x4 = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '__test2__.classWithPublicAndOptional<number, string>':
+!!! assignmentCompatability10.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '__test2__.classWithPublicAndOptional<number, string>':
 !!! 	Property 'two' defined as optional in type '__test1__.interfaceWithPublicAndOptional<T, U>', but is required in type '__test2__.classWithPublicAndOptional<T, U>'.

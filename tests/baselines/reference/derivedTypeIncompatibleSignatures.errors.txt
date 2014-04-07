@@ -5,7 +5,7 @@
     
     interface B extends A {
               ~
-!!! error TS2143: Interface 'B' cannot extend interface 'A':
+!!! derivedTypeIncompatibleSignatures.ts(5,11): error TS2143: Interface 'B' cannot extend interface 'A':
 !!! 	Call signatures of types 'B' and 'A' are incompatible.
         (a: string): number; // Number is not a subtype of string.  Should error.
     }
@@ -16,7 +16,7 @@
     
     interface D extends C {
               ~
-!!! error TS2143: Interface 'D' cannot extend interface 'C':
+!!! derivedTypeIncompatibleSignatures.ts(13,11): error TS2143: Interface 'D' cannot extend interface 'C':
 !!! 	Construct signatures of types 'D' and 'C' are incompatible.
         new (a: string): number; // Number is not a subtype of string.  Should error.
     }
@@ -27,7 +27,7 @@
     
     interface F extends E {
               ~
-!!! error TS2143: Interface 'F' cannot extend interface 'E':
+!!! derivedTypeIncompatibleSignatures.ts(21,11): error TS2143: Interface 'F' cannot extend interface 'E':
 !!! 	Index signatures of types 'F' and 'E' are incompatible.
         [a: string]: number; // Number is not a subtype of string.  Should error.
     }
@@ -38,7 +38,7 @@
     
     interface H extends G {
               ~
-!!! error TS2143: Interface 'H' cannot extend interface 'G':
+!!! derivedTypeIncompatibleSignatures.ts(29,11): error TS2143: Interface 'H' cannot extend interface 'G':
 !!! 	Index signatures of types 'H' and 'G' are incompatible.
         [a: number]: number; // Should error for the same reason
     }

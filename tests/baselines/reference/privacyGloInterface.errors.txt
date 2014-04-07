@@ -13,44 +13,44 @@
             (c1: C1_public);
             (c1: C2_private);
              ~~~~~~~~~~~~~~
-!!! error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(13,10): error TS2036: Parameter 'c1' of call signature from exported interface has or is using private type 'C2_private'.
             (): C1_public;
             (c2: number): C2_private;
                           ~~~~~~~~~~
-!!! error TS2053: Return type of call signature from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(15,23): error TS2053: Return type of call signature from exported interface has or is using private type 'C2_private'.
     
             new (c1: C1_public);
             new (c1: C2_private);
                  ~~~~~~~~~~~~~~
-!!! error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(18,14): error TS2035: Parameter 'c1' of constructor signature from exported interface has or is using private type 'C2_private'.
             new (): C1_public;
             new (c2: number): C2_private;
                               ~~~~~~~~~~
-!!! error TS2052: Return type of constructor signature from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(20,27): error TS2052: Return type of constructor signature from exported interface has or is using private type 'C2_private'.
     
             [c: number]: C1_public;
             [c: string]: C2_private;
                          ~~~~~~~~~~
-!!! error TS2054: Return type of index signature from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(23,22): error TS2054: Return type of index signature from exported interface has or is using private type 'C2_private'.
     
             x: C1_public;
             y: C2_private;
             ~~~~~~~~~~~~~
-!!! error TS2026: Property 'y' of exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(26,9): error TS2026: Property 'y' of exported interface has or is using private type 'C2_private'.
     
             a?: C1_public;
             b?: C2_private;
             ~~~~~~~~~~~~~~
-!!! error TS2026: Property 'b' of exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(29,9): error TS2026: Property 'b' of exported interface has or is using private type 'C2_private'.
     
             f1(a1: C1_public);
             f2(a1: C2_private);
                ~~~~~~~~~~~~~~
-!!! error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(32,12): error TS2039: Parameter 'a1' of method from exported interface has or is using private type 'C2_private'.
             f3(): C1_public;
             f4(): C2_private;
                   ~~~~~~~~~~
-!!! error TS2057: Return type of method from exported interface has or is using private type 'C2_private'.
+!!! privacyGloInterface.ts(34,15): error TS2057: Return type of method from exported interface has or is using private type 'C2_private'.
     
         }
     
@@ -122,14 +122,14 @@
         }
         export interface m3_C4_public extends m3_i_private {
                                               ~~~~~~~~~~~~
-!!! error TS2020: Exported interface 'm3_C4_public' extends private interface 'm3_i_private'.
+!!! privacyGloInterface.ts(104,43): error TS2020: Exported interface 'm3_C4_public' extends private interface 'm3_i_private'.
         }
     
         interface m3_C5_private extends m3_i_private, m3_i_public {
         }
         export interface m3_C6_public extends  m3_i_private, m3_i_public {
                                                ~~~~~~~~~~~~
-!!! error TS2020: Exported interface 'm3_C6_public' extends private interface 'm3_i_private'.
+!!! privacyGloInterface.ts(109,44): error TS2020: Exported interface 'm3_C6_public' extends private interface 'm3_i_private'.
         }
     }
     

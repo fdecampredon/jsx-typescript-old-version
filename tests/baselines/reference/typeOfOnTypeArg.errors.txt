@@ -7,8 +7,8 @@
     
     fill(32);
     ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeOfOnTypeArg.ts(7,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Type 'Number' is missing property '''' from type '{ '': number; }'.
     ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeOfOnTypeArg.ts(7,1): error TS2087: Could not select overload for 'call' expression.
     

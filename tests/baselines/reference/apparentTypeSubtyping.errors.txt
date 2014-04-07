@@ -9,7 +9,7 @@
     // is String (S) a subtype of U extends String (T)? Would only be true if we used the apparent type of U (T)
     class Derived<U> extends Base<string> { // error
           ~~~~~~~
-!!! error TS2141: Class 'Derived<U>' cannot extend class 'Base<string>':
+!!! apparentTypeSubtyping.ts(9,7): error TS2141: Class 'Derived<U>' cannot extend class 'Base<string>':
 !!! 	Types of property 'x' of types 'Derived<U>' and 'Base<string>' are incompatible.
         x: String;
     }

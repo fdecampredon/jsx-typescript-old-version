@@ -9,23 +9,23 @@
         // TypeParameter_0_of_constructor_signature_from_exported_interface_has_or_is_using_private_type_1
         new <T extends privateClass>(): privateClass; 
              ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2208: TypeParameter 'T extends privateClass' of constructor signature from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(9,10): error TS2208: TypeParameter 'T extends privateClass' of constructor signature from exported interface has or is using private type 'privateClass'.
                                         ~~~~~~~~~~~~
-!!! error TS2052: Return type of constructor signature from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(9,37): error TS2052: Return type of constructor signature from exported interface has or is using private type 'privateClass'.
     
         // TypeParameter_0_of_constructor_signature_from_exported_interface_has_or_is_using_private_type_1
         <T extends privateClass>(): privateClass;
          ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2209: TypeParameter 'T extends privateClass' of call signature from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(12,6): error TS2209: TypeParameter 'T extends privateClass' of call signature from exported interface has or is using private type 'privateClass'.
                                     ~~~~~~~~~~~~
-!!! error TS2053: Return type of call signature from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(12,33): error TS2053: Return type of call signature from exported interface has or is using private type 'privateClass'.
     
         // TypeParameter_0_of_method_from_exported_interface_has_or_is_using_private_type_1
         myMethod<T extends privateClass>(): privateClass;
                  ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2212: TypeParameter 'T extends privateClass' of method from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(15,14): error TS2212: TypeParameter 'T extends privateClass' of method from exported interface has or is using private type 'privateClass'.
                                             ~~~~~~~~~~~~
-!!! error TS2057: Return type of method from exported interface has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(15,41): error TS2057: Return type of method from exported interface has or is using private type 'privateClass'.
     }
     
     export interface publicInterfaceWithPublicTypeParameters {
@@ -50,14 +50,14 @@
         // TypeParameter_0_of_public_static_method_from_exported_class_has_or_is_using_private_type_1
         static myPublicStaticMethod<T extends privateClass>() {
                                     ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2210: TypeParameter 'T extends privateClass' of public static method from exported class has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(38,33): error TS2210: TypeParameter 'T extends privateClass' of public static method from exported class has or is using private type 'privateClass'.
         }
         private static myPrivateStaticMethod<T extends privateClass>() { // No error
         }
         // TypeParameter_0_of_public_method_from_exported_class_has_or_is_using_private_type_1
         myPublicMethod<T extends privateClass>() {
                        ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2211: TypeParameter 'T extends privateClass' of public method from exported class has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(43,20): error TS2211: TypeParameter 'T extends privateClass' of public method from exported class has or is using private type 'privateClass'.
         }
         private myPrivateMethod<T extends privateClass>() { // No error
         }
@@ -99,7 +99,7 @@
     // TypeParameter_0_of_exported_function_has_or_is_using_private_type_1
     export function publicFunctionWithPrivateTypeParameters<T extends privateClass>() {
                                                             ~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2213: TypeParameter 'T extends privateClass' of exported function has or is using private type 'privateClass'.
+!!! privacyTypeParameterOfFunction.ts(83,57): error TS2213: TypeParameter 'T extends privateClass' of exported function has or is using private type 'privateClass'.
     }
     
     export function publicFunctionWithPublicTypeParameters<T extends publicClass>() {

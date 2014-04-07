@@ -12,16 +12,16 @@
         p1;
         p2: string;
         ~~~~~~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type '() => string':
+!!! interfacedeclWithIndexerErrors.ts(12,5): error TS2172: All named properties must be assignable to string indexer type '() => string':
 !!! 	Type '() => string' requires a call signature, but type 'String' lacks one.
         p3?;
         p4?: number;
         ~~~~~~~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type '() => string':
+!!! interfacedeclWithIndexerErrors.ts(14,5): error TS2172: All named properties must be assignable to string indexer type '() => string':
 !!! 	Type '() => string' requires a call signature, but type 'Number' lacks one.
         p5: (s: number) =>string;
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type '() => string':
+!!! interfacedeclWithIndexerErrors.ts(15,5): error TS2172: All named properties must be assignable to string indexer type '() => string':
 !!! 	Call signatures of types '(s: number) => string' and '() => string' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     
@@ -29,12 +29,12 @@
         f2? ();
         f3(a: string): number;
         ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type '() => string':
+!!! interfacedeclWithIndexerErrors.ts(19,5): error TS2172: All named properties must be assignable to string indexer type '() => string':
 !!! 	Call signatures of types '(a: string) => number' and '() => string' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         f4? (s: number): string;
         ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type '() => string':
+!!! interfacedeclWithIndexerErrors.ts(20,5): error TS2172: All named properties must be assignable to string indexer type '() => string':
 !!! 	Call signatures of types '(s: number) => string' and '() => string' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     }

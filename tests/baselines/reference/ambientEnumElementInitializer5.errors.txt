@@ -2,5 +2,5 @@
     declare enum E {
      e = -0xA
        ~
-!!! error TS1066: Ambient enum elements can only have integer literal initializers.
+!!! ambientEnumElementInitializer5.ts(2,4): error TS1066: Ambient enum elements can only have integer literal initializers.
     }

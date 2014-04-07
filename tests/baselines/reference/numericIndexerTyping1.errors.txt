@@ -9,9 +9,9 @@
     var i: I;
     var r: string = i[1]; // error: numeric indexer returns the type of the string indexer
         ~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'Date' to 'string'.
+!!! numericIndexerTyping1.ts(9,5): error TS2011: Cannot convert 'Date' to 'string'.
     
     var i2: I2;
     var r2: string = i2[1]; // error: numeric indexer returns the type of the string indexer
         ~~~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'Date' to 'string'.
+!!! numericIndexerTyping1.ts(12,5): error TS2011: Cannot convert 'Date' to 'string'.

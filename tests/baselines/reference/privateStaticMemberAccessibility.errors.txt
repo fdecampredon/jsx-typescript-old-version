@@ -6,8 +6,8 @@
     class Derived extends Base {
         static bar = Base.foo; // error
                           ~~~
-!!! error TS2107: 'Base.foo' is inaccessible.
+!!! privateStaticMemberAccessibility.ts(6,23): error TS2107: 'Base.foo' is inaccessible.
         bing = () => Base.foo; // error
                           ~~~
-!!! error TS2107: 'Base.foo' is inaccessible.
+!!! privateStaticMemberAccessibility.ts(7,23): error TS2107: 'Base.foo' is inaccessible.
     }

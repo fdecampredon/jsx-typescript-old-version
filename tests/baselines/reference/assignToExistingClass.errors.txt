@@ -8,7 +8,7 @@
             willThrowError() {
                 Mocked = Mocked || function () { // => Error: Invalid left-hand side of assignment expression.
                 ~~~~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! assignToExistingClass.ts(8,13): error TS2130: Invalid left-hand side of assignment expression.
                     return { myProp: "test" };
                 };
             }

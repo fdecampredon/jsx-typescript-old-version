@@ -8,9 +8,9 @@
     k1.foo;
     k1.bar;
        ~~~
-!!! error TS2094: The property 'bar' does not exist on value of type 'K'.
+!!! typeofClass.ts(8,4): error TS2094: The property 'bar' does not exist on value of type 'K'.
     var k2: typeof K;
     k2.foo;
        ~~~
-!!! error TS2094: The property 'foo' does not exist on value of type 'typeof K'.
+!!! typeofClass.ts(10,4): error TS2094: The property 'foo' does not exist on value of type 'typeof K'.
     k2.bar;

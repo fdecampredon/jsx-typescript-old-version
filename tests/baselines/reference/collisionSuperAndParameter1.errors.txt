@@ -6,7 +6,7 @@
         x() {
             var lambda = (_super: number) => { // Error 
                           ~~~~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndParameter1.ts(6,23): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
         }
     }

@@ -9,7 +9,7 @@
     class G extends F {
         [n: number]: A
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints2.ts(9,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     
@@ -20,7 +20,7 @@
     class I extends H {
         [s: string]: B
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints2.ts(17,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
     }
     
@@ -32,7 +32,7 @@
     class K extends J {
         [n: number]: A;
         ~~~~~~~~~~~~~~
-!!! error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
+!!! indexerConstraints2.ts(26,5): error TS2168: Numeric indexer type 'A' must be assignable to string indexer type 'B':
 !!! 	Type 'A' is missing property 'b' from type 'B'.
         [s: string]: B;
     }

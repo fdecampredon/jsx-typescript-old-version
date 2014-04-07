@@ -13,7 +13,7 @@
         var A = { x: 0, y: 0 };
         import Point = A;
                        ~
-!!! error TS2187: Internal module reference 'A' in import declaration does not reference module instance for 'A'.
+!!! shadowedInternalModule.ts(13,20): error TS2187: Internal module reference 'A' in import declaration does not reference module instance for 'A'.
     }
     
     module X {
@@ -34,5 +34,5 @@
     
         var Y = 12;
             ~~~~~~
-!!! error TS4026: Variable declaration cannot have the same name as an import declaration.
+!!! shadowedInternalModule.ts(32,9): error TS4026: Variable declaration cannot have the same name as an import declaration.
     }

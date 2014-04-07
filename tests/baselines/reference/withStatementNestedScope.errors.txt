@@ -2,7 +2,7 @@
     var x = 1;
     with (x) {
           ~
-!!! error TS2135: All symbols within a with block will be resolved to 'any'.
+!!! withStatementNestedScope.ts(2,7): error TS2135: All symbols within a with block will be resolved to 'any'.
         function f(a: number) {
             return 1;
         }

@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/classExtendsItselfIndirectly.ts (2 errors) ====
     class C extends E { foo: string; } // error
           ~
-!!! error TS2100: Class 'C' is recursively referenced as a base type of itself.
+!!! classExtendsItselfIndirectly.ts(1,7): error TS2100: Class 'C' is recursively referenced as a base type of itself.
     
     class D extends C { bar: string; }
     
@@ -9,7 +9,7 @@
     
     class C2<T> extends E2<T> { foo: T; } // error
           ~~
-!!! error TS2100: Class 'C2<T>' is recursively referenced as a base type of itself.
+!!! classExtendsItselfIndirectly.ts(7,7): error TS2100: Class 'C2<T>' is recursively referenced as a base type of itself.
     
     class D2<T> extends C2<T> { bar: T; }
     

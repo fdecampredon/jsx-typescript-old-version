@@ -5,7 +5,7 @@
     
     declare class Buffer implements IBuffer {
                   ~~~~~~
-!!! error TS2137: Class Buffer declares interface IBuffer but does not implement it:
+!!! declareClassInterfaceImplementation.ts(5,15): error TS2137: Class Buffer declares interface IBuffer but does not implement it:
 !!! 	Index signatures of types 'Buffer' and 'IBuffer' are incompatible.
     
     }

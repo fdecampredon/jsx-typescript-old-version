@@ -2,5 +2,5 @@
     class foo<T> {
         static P: T;
                   ~
-!!! error TS2099: Static members cannot reference class type parameters.
+!!! typeParametersInStaticProperties.ts(2,15): error TS2099: Static members cannot reference class type parameters.
     } 

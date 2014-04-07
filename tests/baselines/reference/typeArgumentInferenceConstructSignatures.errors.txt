@@ -25,10 +25,10 @@
     new someGenerics1(3, 4);
     new someGenerics1<string, number>(3, 4); // Error
         ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceConstructSignatures.ts(25,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
         ~~~~~~~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! typeArgumentInferenceConstructSignatures.ts(25,5): error TS2085: Could not select overload for 'new' expression.
     new someGenerics1<number, {}>(3, 4);
     
     // Generic call with argument of function type whose parameter is of type parameter type
@@ -56,7 +56,7 @@
     new someGenerics3(() => '');
     new someGenerics3<Window>(() => undefined);
                       ~~~~~~
-!!! error TS2095: Could not find symbol 'Window'.
+!!! typeArgumentInferenceConstructSignatures.ts(51,19): error TS2095: Could not find symbol 'Window'.
     new someGenerics3<number>(() => 3);
     
     // 2 parameter generic call with argument 1 of type parameter type and argument 2 of function type whose parameter is of type parameter type
@@ -68,10 +68,10 @@
     new someGenerics4<string, number>('', () => 3);
     new someGenerics4<string, number>('', (x: string) => ''); // Error
         ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceConstructSignatures.ts(61,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
         ~~~~~~~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! typeArgumentInferenceConstructSignatures.ts(61,5): error TS2085: Could not select overload for 'new' expression.
     new someGenerics4<string, number>(null, null);
     
     // 2 parameter generic call with argument 2 of type parameter type and argument 1 of function type whose parameter is of type parameter type
@@ -83,10 +83,10 @@
     new someGenerics5<number, string>('', () => 3);
     new someGenerics5<number, string>('', (x: string) => ''); // Error
         ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceConstructSignatures.ts(71,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
         ~~~~~~~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! typeArgumentInferenceConstructSignatures.ts(71,5): error TS2085: Could not select overload for 'new' expression.
     new someGenerics5<string, number>(null, null);
     
     // Generic call with multiple arguments of function types that each have parameters of the same generic type
@@ -98,10 +98,10 @@
     new someGenerics6<number>(n => n, n => n, n => n);
     new someGenerics6<number>((n: number) => n, (n: string) => n, (n: number) => n); // Error
         ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceConstructSignatures.ts(81,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(n: string) => string' and '(b: number) => number' are incompatible.
         ~~~~~~~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! typeArgumentInferenceConstructSignatures.ts(81,5): error TS2085: Could not select overload for 'new' expression.
     new someGenerics6<number>((n: number) => n, (n: number) => n, (n: number) => n);
     
     // Generic call with multiple arguments of function types that each have parameters of different generic type
@@ -140,15 +140,15 @@
         x: number;
         z?: Window;
             ~~~~~~
-!!! error TS2095: Could not find symbol 'Window'.
+!!! typeArgumentInferenceConstructSignatures.ts(118,9): error TS2095: Could not find symbol 'Window'.
     }
     var a9e = new someGenerics9(undefined, { x: 6, z: window }, { x: 6, y: '' });
                                                       ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! typeArgumentInferenceConstructSignatures.ts(120,51): error TS2095: Could not find symbol 'window'.
     var a9e: {};
     var a9f = new someGenerics9<A92>(undefined, { x: 6, z: window }, { x: 6, y: '' });
                                                            ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! typeArgumentInferenceConstructSignatures.ts(122,56): error TS2095: Could not find symbol 'window'.
     var a9f: A92;
     
     // Generic call with multiple parameters of generic type passed arguments with a single best common type

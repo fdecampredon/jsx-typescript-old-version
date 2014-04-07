@@ -4,6 +4,6 @@
         var A = 1;
         class B extends A { b: string; }
                         ~
-!!! error TS2186: Type name 'A' in extends clause does not reference constructor function for 'A'.
+!!! classExtendsClauseClassNotReferringConstructor.ts(4,21): error TS2186: Type name 'A' in extends clause does not reference constructor function for 'A'.
     }
     

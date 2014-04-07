@@ -16,23 +16,23 @@
     interface I {
         new (public x);
              ~~~~~~
-!!! error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! constructSignatureWithAccessibilityModifiersOnParameters.ts(16,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
     }
     
     interface I2 {
         new (private x);
              ~~~~~~~
-!!! error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! constructSignatureWithAccessibilityModifiersOnParameters.ts(20,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
     }
     
     var a: {
         new (public x);
              ~~~~~~
-!!! error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! constructSignatureWithAccessibilityModifiersOnParameters.ts(24,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
     }
     
     var b: {
         new (private x);
              ~~~~~~~
-!!! error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
+!!! constructSignatureWithAccessibilityModifiersOnParameters.ts(28,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
     }

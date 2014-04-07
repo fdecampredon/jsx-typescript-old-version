@@ -15,14 +15,14 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~
                 return 1;
                        ~
-!!! error TS1005: ';' expected.
+!!! interfaceExtendingClass2.ts(13,20): error TS1005: ';' expected.
     ~~~~~~~~~~~~~~~~~~~~~
             };
     ~~~~~~~~~~
         }
          
-!!! error TS1005: '}' expected.
+!!! interfaceExtendingClass2.ts(15,6): error TS1005: '}' expected.
     ~~~~~
-!!! error TS2172: All named properties must be assignable to string indexer type 'Object':
+!!! interfaceExtendingClass2.ts(11,5): error TS2172: All named properties must be assignable to string indexer type 'Object':
 !!! 	Types of property 'toString' of types '{ toString: () => { return: any; 1: any; }; }' and 'Object' are incompatible:
 !!! 		Call signatures of types '() => { return: any; 1: any; }' and '() => string' are incompatible.

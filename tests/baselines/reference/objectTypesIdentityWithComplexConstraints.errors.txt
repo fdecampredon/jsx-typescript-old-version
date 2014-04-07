@@ -6,7 +6,7 @@
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           }>(x: T, y: T): void
     ~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithComplexConstraints.ts(2,8): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     }
     
     interface B {
@@ -17,5 +17,5 @@
     function foo(x: A);
     function foo(x: B); // error after constraints above made illegal
     ~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo'.
+!!! objectTypesIdentityWithComplexConstraints.ts(13,1): error TS2144: Duplicate overload signature for 'foo'.
     function foo(x: any) { }

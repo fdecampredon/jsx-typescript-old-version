@@ -11,19 +11,19 @@
     noGenericParams<number>('');
     noGenericParams<{}>(''); // Error
     ~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
+!!! typeArgumentInferenceWithConstraints.ts(11,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'T extends number'.
     
     // Generic call with multiple type parameters and only one used in parameter type annotation
     function someGenerics1<T, U extends T>(n: T, m: number) { }
                               ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeArgumentInferenceWithConstraints.ts(14,27): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     someGenerics1(3, 4); // Valid
     someGenerics1<string, number>(3, 4); // Error
     ~~~~~~~~~~~~~
-!!! error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'U extends T'.
+!!! typeArgumentInferenceWithConstraints.ts(16,1): error TS2086: Type 'number' does not satisfy the constraint 'string' for type parameter 'U extends T'.
     someGenerics1<number, {}>(3, 4); // Error
     ~~~~~~~~~~~~~
-!!! error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
+!!! typeArgumentInferenceWithConstraints.ts(17,1): error TS2086: Type '{}' does not satisfy the constraint 'number' for type parameter 'U extends T'.
     someGenerics1<number, number>(3, 4);
     
     // Generic call with argument of function type whose parameter is of type parameter type
@@ -40,11 +40,11 @@
     // Generic call with argument of function type whose parameter is not of type parameter type but body/return type uses type parameter
     function someGenerics3<T extends Window>(producer: () => T) { }
                                      ~~~~~~
-!!! error TS2095: Could not find symbol 'Window'.
+!!! typeArgumentInferenceWithConstraints.ts(32,34): error TS2095: Could not find symbol 'Window'.
     someGenerics3(() => ''); // Error
     someGenerics3<Window>(() => undefined);
                   ~~~~~~
-!!! error TS2095: Could not find symbol 'Window'.
+!!! typeArgumentInferenceWithConstraints.ts(34,15): error TS2095: Could not find symbol 'Window'.
     someGenerics3<number>(() => 3); // Error
     
     // 2 parameter generic call with argument 1 of type parameter type and argument 2 of function type whose parameter is of type parameter type
@@ -53,10 +53,10 @@
     someGenerics4<string, number>('', () => 3);
     someGenerics4<string, number>('', (x: string) => ''); // Error
     ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceWithConstraints.ts(41,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
     ~~~~~~~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentInferenceWithConstraints.ts(41,1): error TS2087: Could not select overload for 'call' expression.
     someGenerics4<string, number>(null, null);
     
     // 2 parameter generic call with argument 2 of type parameter type and argument 1 of function type whose parameter is of type parameter type
@@ -65,13 +65,13 @@
     someGenerics5<number, string>('', () => 3);
     someGenerics5<number, string>('', (x: string) => ''); // Error
     ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceWithConstraints.ts(48,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(x: string) => string' and '(x: number) => void' are incompatible.
     ~~~~~~~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentInferenceWithConstraints.ts(48,1): error TS2087: Could not select overload for 'call' expression.
     someGenerics5<string, number>(null, null); // Error
     ~~~~~~~~~~~~~
-!!! error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.
+!!! typeArgumentInferenceWithConstraints.ts(49,1): error TS2086: Type 'string' does not satisfy the constraint 'number' for type parameter 'U extends number'.
     
     // Generic call with multiple arguments of function types that each have parameters of the same generic type
     function someGenerics6<A extends number>(a: (a: A) => A, b: (b: A) => A, c: (c: A) => A) { }
@@ -79,10 +79,10 @@
     someGenerics6<number>(n => n, n => n, n => n);
     someGenerics6<number>((n: number) => n, (n: string) => n, (n: number) => n); // Error
     ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceWithConstraints.ts(55,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Call signatures of types '(n: string) => string' and '(b: number) => number' are incompatible.
     ~~~~~~~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentInferenceWithConstraints.ts(55,1): error TS2087: Could not select overload for 'call' expression.
     someGenerics6<number>((n: number) => n, (n: number) => n, (n: number) => n);
     
     // Generic call with multiple arguments of function types that each have parameters of different generic type
@@ -95,13 +95,13 @@
     function someGenerics8<T extends string>(n: T): T { return n; }
     var x = someGenerics8<string>(someGenerics7); // Error
             ~~~~~~~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentInferenceWithConstraints.ts(66,9): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'typeof someGenerics7'.
             ~~~~~~~~~~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentInferenceWithConstraints.ts(66,9): error TS2087: Could not select overload for 'call' expression.
     x<string, string, string>(null, null, null); // Error
     ~
-!!! error TS2158: Untyped function calls may not accept type arguments.
+!!! typeArgumentInferenceWithConstraints.ts(67,1): error TS2158: Untyped function calls may not accept type arguments.
     
     // Generic call with multiple parameters of generic type passed arguments with no best common type
     function someGenerics9<T extends any>(a: T, b: T, c: T): T {
@@ -121,15 +121,15 @@
         x: number;
         z?: Window;
             ~~~~~~
-!!! error TS2095: Could not find symbol 'Window'.
+!!! typeArgumentInferenceWithConstraints.ts(85,9): error TS2095: Could not find symbol 'Window'.
     }
     var a9e = someGenerics9(undefined, { x: 6, z: window }, { x: 6, y: '' });
                                                   ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! typeArgumentInferenceWithConstraints.ts(87,47): error TS2095: Could not find symbol 'window'.
     var a9e: {};
     var a9f = someGenerics9<A92>(undefined, { x: 6, z: window }, { x: 6, y: '' });
                                                        ~~~~~~
-!!! error TS2095: Could not find symbol 'window'.
+!!! typeArgumentInferenceWithConstraints.ts(89,52): error TS2095: Could not find symbol 'window'.
     var a9f: A92;
     
     // Generic call with multiple parameters of generic type passed arguments with a single best common type

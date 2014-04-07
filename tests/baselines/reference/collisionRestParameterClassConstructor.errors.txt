@@ -3,7 +3,7 @@
     class c1 {
         constructor(_i: number, ...restParameters) { //_i is error
                     ~~~~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterClassConstructor.ts(3,17): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
             var _i = 10; // no error
         }
     }
@@ -27,7 +27,7 @@
     class c3 {
         constructor(public _i: number, ...restParameters) { //_i is error
                     ~~~~~~~~~~~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterClassConstructor.ts(25,17): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
             var _i = 10; // no error
         }
     }
@@ -49,7 +49,7 @@
         constructor(_i: string, ...rest); // no codegen no error
         constructor(_i: any, ...rest) { // error
                     ~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterClassConstructor.ts(45,17): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
             var _i: any; // no error
         }
     }

@@ -11,11 +11,11 @@
     class Foo2 {
         var // error
         ~~~
-!!! error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
+!!! varAsID.ts(11,5): error TS1008: Unexpected token; 'constructor, function, accessor or variable' expected.
         x=1;
     }
     ~
-!!! error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+!!! varAsID.ts(13,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
     
     var f2 = new Foo2();
     

@@ -3,4 +3,4 @@
     var f = () => this;
     _this = 10; // Error
     ~~~~~
-!!! error TS2206: Expression resolves to variable declaration '_this' that compiler uses to capture 'this' reference.
+!!! collisionThisExpressionAndAmbientVarInGlobal.ts(3,1): error TS2206: Expression resolves to variable declaration '_this' that compiler uses to capture 'this' reference.

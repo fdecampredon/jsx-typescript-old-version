@@ -10,7 +10,8 @@
         // duplicate identifier error
         export function Point() {
                         ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! function.ts(3,21): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	module.ts(2,19)
             return { x: 0, y: 0 };
         }
     }
@@ -25,7 +26,8 @@
         // duplicate identifier error
         export function Point() {
                         ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! simple.ts(8,21): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	simple.ts(3,19)
             return { x: 0, y: 0 };
         }
     }

@@ -5,17 +5,18 @@
     
         static fn(id: string) { }
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2149: Overload signature is not compatible with function definition:
+!!! ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndNonGenericClassStaticFunctionOfTheSameName.ts(5,5): error TS2149: Overload signature is not compatible with function definition:
 !!! 	Call signature expects 1 or fewer parameters.
         ~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2151: Overload signatures must all be exported or not exported.
+!!! ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndNonGenericClassStaticFunctionOfTheSameName.ts(5,5): error TS2151: Overload signatures must all be exported or not exported.
     }
     
     module clodule {
         // error: duplicate identifier expected
         export function fn<T>(x: T, y: T): T {
                         ~~
-!!! error TS2000: Duplicate identifier 'fn'.
+!!! ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndNonGenericClassStaticFunctionOfTheSameName.ts(10,21): error TS2000: Duplicate identifier 'fn'. Additional locations:
+!!! 	ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndNonGenericClassStaticFunctionOfTheSameName.ts(5,5)
             return x;
         }
     }

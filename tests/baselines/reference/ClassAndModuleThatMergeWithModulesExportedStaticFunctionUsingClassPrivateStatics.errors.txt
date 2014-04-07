@@ -11,7 +11,7 @@
         export function fn<T>(x: T, y: T): number {
             return clodule.sfn('a');
                            ~~~
-!!! error TS2107: 'clodule<T>.sfn' is inaccessible.
+!!! ClassAndModuleThatMergeWithModulesExportedStaticFunctionUsingClassPrivateStatics.ts(11,24): error TS2107: 'clodule<T>.sfn' is inaccessible.
         }
     }
     

@@ -27,21 +27,21 @@
     // Construct expression with no parentheses for construct signature with > 0 parameters
     var b = new C0 32, ''; // Parse error
                    ~~
-!!! error TS1005: ',' expected.
+!!! newOperatorErrorCases.ts(27,16): error TS1005: ',' expected.
     
     // Generic construct expression with no parentheses
     var c1 = new T;
     var c1: T<{}>;
     var c2 = new T<string>; // Parse error
                           ~
-!!! error TS1003: Identifier expected.
+!!! newOperatorErrorCases.ts(32,23): error TS1003: Identifier expected.
                    ~~~~~~
-!!! error TS2095: Could not find symbol 'string'.
+!!! newOperatorErrorCases.ts(32,16): error TS2095: Could not find symbol 'string'.
     
     
     // Construct expression of non-void returning function
     function fnNumber(): number { return 32; }
     var s = new fnNumber(); // Error
                 ~~~~~~~~
-!!! error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
+!!! newOperatorErrorCases.ts(37,13): error TS2084: Call signatures used in a 'new' expression must have a 'void' return type.
     

@@ -115,12 +115,12 @@
             }).then((response: XMLHttpRequest) => {
                     var result: IUploadResult = { // This should be error
                                 ~~~~~~~~~~~~~
-!!! error TS2095: Could not find symbol 'IUploadResult'.
+!!! variableDeclaratorResolvedDuringContextualTyping.ts(115,29): error TS2095: Could not find symbol 'IUploadResult'.
                         stat: this.jsonToStat(newFilePath, "someString"), // _this needs to be emitted to the js file
                                    ~~~~~~~~~~
-!!! error TS2094: The property 'jsonToStat' does not exist on value of type 'FileService'.
+!!! variableDeclaratorResolvedDuringContextualTyping.ts(116,32): error TS2094: The property 'jsonToStat' does not exist on value of type 'FileService'.
                                               ~~~~~~~~~~~
-!!! error TS2095: Could not find symbol 'newFilePath'.
+!!! variableDeclaratorResolvedDuringContextualTyping.ts(116,43): error TS2095: Could not find symbol 'newFilePath'.
                         isNew: response.status === 201
                     };
     

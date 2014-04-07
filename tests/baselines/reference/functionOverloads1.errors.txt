@@ -2,5 +2,5 @@
     function foo();
     1+1;
     ~
-!!! error TS1041: Function implementation expected.
+!!! functionOverloads1.ts(2,1): error TS1041: Function implementation expected.
     function foo():string { return "a" }

@@ -2,16 +2,16 @@
     module M {
         declare declare var x;
                 ~~~~~~~
-!!! error TS1028: Accessibility modifier already seen.
+!!! declareAlreadySeen.ts(2,13): error TS1028: Accessibility modifier already seen.
         declare declare function f();
                 ~~~~~~~
-!!! error TS1028: Accessibility modifier already seen.
+!!! declareAlreadySeen.ts(3,13): error TS1028: Accessibility modifier already seen.
     
         declare declare module N { }  
                 ~~~~~~~
-!!! error TS1028: Accessibility modifier already seen.
+!!! declareAlreadySeen.ts(5,13): error TS1028: Accessibility modifier already seen.
     
         declare declare class C { }
                 ~~~~~~~
-!!! error TS1028: Accessibility modifier already seen.
+!!! declareAlreadySeen.ts(7,13): error TS1028: Accessibility modifier already seen.
     }

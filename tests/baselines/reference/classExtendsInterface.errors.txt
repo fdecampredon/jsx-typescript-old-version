@@ -2,12 +2,12 @@
     interface Comparable {}
     class A extends Comparable {}
                     ~~~~~~~~~~
-!!! error TS2073: A class may only extend another class.
+!!! classExtendsInterface.ts(2,17): error TS2073: A class may only extend another class.
     class B implements Comparable {}
      
     interface Comparable2<T> {}
     class A2<T> extends Comparable2<T> {}
                         ~~~~~~~~~~~~~~
-!!! error TS2073: A class may only extend another class.
+!!! classExtendsInterface.ts(6,21): error TS2073: A class may only extend another class.
     class B2<T> implements Comparable2<T> {}
     

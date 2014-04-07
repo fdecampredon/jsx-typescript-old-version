@@ -20,7 +20,7 @@
     
         interface I3<T> extends Base<T> {
                   ~~
-!!! error TS2143: Interface 'ClassTypeParam.I3<T>' cannot extend interface 'ClassTypeParam.Base<T>':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(20,15): error TS2143: Interface 'ClassTypeParam.I3<T>' cannot extend interface 'ClassTypeParam.Base<T>':
 !!! 	Types of property 'a' of types 'I3<T>' and 'Base<T>' are incompatible:
 !!! 		Construct signatures of types 'new(x: T) => T' and 'new() => T' are incompatible:
 !!! 			Call signature expects 0 or fewer parameters.
@@ -55,7 +55,7 @@
     
         interface I10<T> extends Base<T> {
                   ~~~
-!!! error TS2143: Interface 'ClassTypeParam.I10<T>' cannot extend interface 'ClassTypeParam.Base<T>':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(50,15): error TS2143: Interface 'ClassTypeParam.I10<T>' cannot extend interface 'ClassTypeParam.Base<T>':
 !!! 	Types of property 'a3' of types 'I10<T>' and 'Base<T>' are incompatible:
 !!! 		Construct signatures of types 'new(x: T, y: T) => T' and 'new(x: T) => T' are incompatible:
 !!! 			Call signature expects 1 or fewer parameters.
@@ -118,7 +118,7 @@
     
         interface I3<T> extends Base2 {
                   ~~
-!!! error TS2143: Interface 'GenericSignaturesInvalid.I3<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(108,15): error TS2143: Interface 'GenericSignaturesInvalid.I3<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 !!! 	Types of property 'a' of types 'I3<T>' and 'Base2' are incompatible:
 !!! 		Construct signatures of types 'new(x: T) => T' and 'new<T>() => T' are incompatible:
 !!! 			Call signature expects 0 or fewer parameters.
@@ -153,7 +153,7 @@
     
         interface I10<T> extends Base2 {
                   ~~~
-!!! error TS2143: Interface 'GenericSignaturesInvalid.I10<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(138,15): error TS2143: Interface 'GenericSignaturesInvalid.I10<T>' cannot extend interface 'GenericSignaturesInvalid.Base2':
 !!! 	Types of property 'a3' of types 'I10<T>' and 'Base2' are incompatible:
 !!! 		Construct signatures of types 'new(x: T, y: T) => T' and 'new<T>(x: T) => T' are incompatible:
 !!! 			Call signature expects 1 or fewer parameters.
@@ -216,7 +216,7 @@
     
         interface I3 extends Base2 {
                   ~~
-!!! error TS2143: Interface 'GenericSignaturesValid.I3' cannot extend interface 'GenericSignaturesValid.Base2':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(196,15): error TS2143: Interface 'GenericSignaturesValid.I3' cannot extend interface 'GenericSignaturesValid.Base2':
 !!! 	Types of property 'a' of types 'I3' and 'Base2' are incompatible:
 !!! 		Construct signatures of types 'new<T>(x: T) => T' and 'new<T>() => T' are incompatible:
 !!! 			Call signature expects 0 or fewer parameters.
@@ -251,7 +251,7 @@
     
         interface I10 extends Base2 {
                   ~~~
-!!! error TS2143: Interface 'GenericSignaturesValid.I10' cannot extend interface 'GenericSignaturesValid.Base2':
+!!! subtypingWithGenericConstructSignaturesWithOptionalParameters.ts(226,15): error TS2143: Interface 'GenericSignaturesValid.I10' cannot extend interface 'GenericSignaturesValid.Base2':
 !!! 	Types of property 'a3' of types 'I10' and 'Base2' are incompatible:
 !!! 		Construct signatures of types 'new<T>(x: T, y: T) => T' and 'new<T>(x: T) => T' are incompatible:
 !!! 			Call signature expects 1 or fewer parameters.

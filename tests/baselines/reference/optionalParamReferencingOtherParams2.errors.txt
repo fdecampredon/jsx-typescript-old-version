@@ -2,7 +2,7 @@
     var a = 1;
     function strange(x = a, y = b) { 
                                 ~
-!!! error TS2190: Initializer of parameter 'y' cannot reference identifier 'b' declared after it.
+!!! optionalParamReferencingOtherParams2.ts(2,29): error TS2190: Initializer of parameter 'y' cannot reference identifier 'b' declared after it.
         var b = "";
         return y;
     }

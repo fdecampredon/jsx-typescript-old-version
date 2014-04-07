@@ -5,37 +5,37 @@
         (x): number;
         (x): void; // error
         ~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(5,5): error TS2175: Overloads cannot differ only by return type.
         <T>(x: T): number;
         <T>(x: T): string; // error
         ~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(7,5): error TS2175: Overloads cannot differ only by return type.
     }
     
     interface I2 {
         <T>(x: T): number;
         <T>(x: T): string; // error
         ~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(12,5): error TS2175: Overloads cannot differ only by return type.
     }
     
     interface I3<T> {
         (x: T): number;
         (x: T): string; // error
         ~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(17,5): error TS2175: Overloads cannot differ only by return type.
     }
     
     var a: {
         (x, y): Object;
         (x, y): any; // error
         ~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(22,5): error TS2175: Overloads cannot differ only by return type.
     }
     
     var a2: {
         <T>(x: T): number;
         <T>(x: T): string; // error
         ~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! callSignaturesThatDifferOnlyByReturnType.ts(27,5): error TS2175: Overloads cannot differ only by return type.
     }

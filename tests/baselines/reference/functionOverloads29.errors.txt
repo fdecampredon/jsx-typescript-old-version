@@ -4,7 +4,7 @@
     function foo(bar:any):any{ return bar }
     var x = foo();
             ~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! functionOverloads29.ts(4,9): error TS2081: Supplied parameters do not match any signature of call target.
             ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! functionOverloads29.ts(4,9): error TS2087: Could not select overload for 'call' expression.
     

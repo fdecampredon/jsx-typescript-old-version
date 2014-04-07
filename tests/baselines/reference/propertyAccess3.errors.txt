@@ -2,4 +2,4 @@
     var foo: boolean;
     foo.toBAZ();
         ~~~~~
-!!! error TS2094: The property 'toBAZ' does not exist on value of type 'boolean'.
+!!! propertyAccess3.ts(2,5): error TS2094: The property 'toBAZ' does not exist on value of type 'boolean'.

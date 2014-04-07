@@ -6,7 +6,7 @@
     }
     declare class xyz extends abc {
                               ~~~
-!!! error TS2173: Generic type references must include all type arguments.
+!!! recursiveBaseConstructorCreation3.ts(6,27): error TS2173: Generic type references must include all type arguments.
     }
     
     var bar = new xyz(); // Error: Invalid 'new' expression.

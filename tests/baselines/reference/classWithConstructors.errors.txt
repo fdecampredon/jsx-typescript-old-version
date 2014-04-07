@@ -6,9 +6,9 @@
     
         var c = new C(); // error
                     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(6,17): error TS2081: Supplied parameters do not match any signature of call target.
                     ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(6,17): error TS2085: Could not select overload for 'new' expression.
         var c2 = new C(''); // ok
     
         class C2 {
@@ -19,9 +19,9 @@
     
         var c3 = new C2(); // error
                      ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(15,18): error TS2081: Supplied parameters do not match any signature of call target.
                      ~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(15,18): error TS2085: Could not select overload for 'new' expression.
         var c4 = new C2(''); // ok
         var c5 = new C2(1); // ok
     
@@ -29,9 +29,9 @@
     
         var d = new D(); // error
                     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(21,17): error TS2081: Supplied parameters do not match any signature of call target.
                     ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(21,17): error TS2085: Could not select overload for 'new' expression.
         var d2 = new D(1); // ok
         var d3 = new D(''); // ok
     }
@@ -43,9 +43,9 @@
     
         var c = new C(); // error
                     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(31,17): error TS2081: Supplied parameters do not match any signature of call target.
                     ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(31,17): error TS2085: Could not select overload for 'new' expression.
         var c2 = new C(''); // ok
     
         class C2<T,U> {
@@ -56,9 +56,9 @@
     
         var c3 = new C2(); // error
                      ~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(40,18): error TS2081: Supplied parameters do not match any signature of call target.
                      ~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(40,18): error TS2085: Could not select overload for 'new' expression.
         var c4 = new C2(''); // ok
         var c5 = new C2(1, 2); // ok
     
@@ -66,9 +66,9 @@
     
         var d = new D(); // error
                     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! classWithConstructors.ts(46,17): error TS2081: Supplied parameters do not match any signature of call target.
                     ~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! classWithConstructors.ts(46,17): error TS2085: Could not select overload for 'new' expression.
         var d2 = new D(1); // ok
         var d3 = new D(''); // ok
     }

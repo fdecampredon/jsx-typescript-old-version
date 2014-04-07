@@ -28,7 +28,7 @@
     // these should be errors since the functions are not exported
     var fn2 = A.fn2;
                 ~~~
-!!! error TS2094: The property 'fn2' does not exist on value of type 'typeof A'.
+!!! ModuleWithExportedAndNonExportedFunctions.ts(28,13): error TS2094: The property 'fn2' does not exist on value of type 'typeof A'.
     var fng2 = A.fng2;
                  ~~~~
-!!! error TS2094: The property 'fng2' does not exist on value of type 'typeof A'.
+!!! ModuleWithExportedAndNonExportedFunctions.ts(29,14): error TS2094: The property 'fng2' does not exist on value of type 'typeof A'.

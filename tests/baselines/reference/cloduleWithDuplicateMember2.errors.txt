@@ -10,5 +10,6 @@
     module C {
         export function x() { }
                         ~
-!!! error TS2000: Duplicate identifier 'x'.
+!!! cloduleWithDuplicateMember2.ts(10,21): error TS2000: Duplicate identifier 'x'. Additional locations:
+!!! 	cloduleWithDuplicateMember2.ts(7,16)
     }

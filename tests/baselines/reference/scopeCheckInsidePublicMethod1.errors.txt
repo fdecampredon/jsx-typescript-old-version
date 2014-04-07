@@ -4,6 +4,6 @@
        public a() {
           s = 1; // ERR
           ~
-!!! error TS2095: Could not find symbol 's'.
+!!! scopeCheckInsidePublicMethod1.ts(4,7): error TS2095: Could not find symbol 's'.
        }
     }

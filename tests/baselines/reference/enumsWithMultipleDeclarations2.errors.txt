@@ -10,5 +10,5 @@
     enum E {
       C
       ~
-!!! error TS4024: In enums with multiple declarations only one declaration can omit an initializer for the first enum element.
+!!! enumsWithMultipleDeclarations2.ts(10,3): error TS4024: In enums with multiple declarations only one declaration can omit an initializer for the first enum element.
     }

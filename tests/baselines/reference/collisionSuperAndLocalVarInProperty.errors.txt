@@ -13,7 +13,7 @@
             doStuff: () => {
                 var _super = 10; // Should be error 
                     ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInProperty.ts(13,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
         }
         public _super = 10; // No error

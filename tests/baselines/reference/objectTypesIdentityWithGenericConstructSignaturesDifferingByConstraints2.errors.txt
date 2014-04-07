@@ -5,81 +5,81 @@
     
     class B<T extends U, U extends Array<number>> {
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(5,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         constructor(x: T, y: U) { return null; }
     }
     
     class C<T extends U, U extends String> {
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(9,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         constructor(x: T, y: U) { return null; }
     }
     
     class D<T extends U, U extends Number> {
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(13,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         constructor(x: T, y: U) { return null; }
     }
     
     interface I<T extends U, U extends Number> {
                 ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(17,13): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         new(x: T, y: U): string;
     }
     
     interface I2 {
         new<T extends U, U extends Boolean>(x: T, y: U): string;
             ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(22,9): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     }
     
     var a: { new<T extends U, U extends Array<string>>(x: T, y: U): string }
                  ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(25,14): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     var b = { new<T extends U, U extends RegExp>(x: T, y: U) { return ''; } }; // not a construct signature, function called new
                   ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(26,15): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     
     function foo1b(x: B<Array<number>, Array<number>>);
     function foo1b(x: B<Array<number>, Array<number>>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1b'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(29,1): error TS2144: Duplicate overload signature for 'foo1b'.
     function foo1b(x: any) { }
     
     function foo1c(x: C<String, String>);
     function foo1c(x: C<String, String>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo1c'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(33,1): error TS2144: Duplicate overload signature for 'foo1c'.
     function foo1c(x: any) { }
     
     function foo2(x: I<Number, Number>);
     function foo2(x: I<Number, Number>); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo2'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(37,1): error TS2144: Duplicate overload signature for 'foo2'.
     function foo2(x: any) { }
     
     function foo3(x: typeof a);
     function foo3(x: typeof a); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo3'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(41,1): error TS2144: Duplicate overload signature for 'foo3'.
     function foo3(x: any) { }
     
     function foo4(x: typeof b);
     function foo4(x: typeof b); // error
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo4'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(45,1): error TS2144: Duplicate overload signature for 'foo4'.
     function foo4(x: any) { }
     
     function foo5c(x: C<String, String>);
     function foo5c(x: D<Number, Number>); // ok
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo5c'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(49,1): error TS2144: Duplicate overload signature for 'foo5c'.
     function foo5c(x: any) { }
     
     function foo6c(x: C<String, String>);
     function foo6c(x: D<any, Number>); // ok
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo6c'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(53,1): error TS2144: Duplicate overload signature for 'foo6c'.
     function foo6c(x: any) { }
     
     function foo8(x: B<Array<number>, Array<number>>);
@@ -89,7 +89,7 @@
     function foo9(x: B<Array<number>, Array<number>>);
     function foo9(x: C<String, String>); // error, types are structurally equal
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2144: Duplicate overload signature for 'foo9'.
+!!! objectTypesIdentityWithGenericConstructSignaturesDifferingByConstraints2.ts(61,1): error TS2144: Duplicate overload signature for 'foo9'.
     function foo9(x: any) { }
     
     function foo10(x: B<Array<number>, Array<number>>);

@@ -4,7 +4,7 @@
         selectMany<U>(selector: (item: T) => U[]): Query<U>;
         selectMany<U>(arraySelector: (item: T) => U[], resultSelector: (outer: T, inner: U) => R): Query<R>;
                                                                                                ~
-!!! error TS2095: Could not find symbol 'R'.
+!!! undefinedTypeArgument2.ts(4,92): error TS2095: Could not find symbol 'R'.
                                                                                                          ~
-!!! error TS2095: Could not find symbol 'R'.
+!!! undefinedTypeArgument2.ts(4,102): error TS2095: Could not find symbol 'R'.
     }

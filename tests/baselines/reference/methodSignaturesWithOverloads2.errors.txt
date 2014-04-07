@@ -19,12 +19,12 @@
         func4?<T>(x: T): number;
         func4? <T>(s: T): string;
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! methodSignaturesWithOverloads2.ts(19,5): error TS2175: Overloads cannot differ only by return type.
         func5?: {
             <T>(x: T): number;
             <T>(s: T): string;
             ~~~~~~~~~~~~~~~~~
-!!! error TS2175: Overloads cannot differ only by return type.
+!!! methodSignaturesWithOverloads2.ts(22,9): error TS2175: Overloads cannot differ only by return type.
         };
     };
     

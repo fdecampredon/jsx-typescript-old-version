@@ -15,7 +15,7 @@
     class Derived2 extends Base {
         constructor(public y: string) {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! derivedClassParameterProperties.ts(15,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             var a = 1;
             super(); // error
         }
@@ -32,7 +32,7 @@
         a = 1;
         constructor(y: string) {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! derivedClassParameterProperties.ts(30,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             var b = 2;
             super(); // error
         }
@@ -60,7 +60,7 @@
         b: number;
         constructor(y: string) {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! derivedClassParameterProperties.ts(56,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             this.a = 3;
             this.b = 3;
             super(); // error
@@ -85,7 +85,7 @@
         b: number;
         constructor(y: string) {
         ~~~~~~~~~~~
-!!! error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
+!!! derivedClassParameterProperties.ts(79,5): error TS2104: A 'super' call must be the first statement in the constructor when a class contains initialized properties or has parameter properties.
             this.a = 3;
             this.b = 3;
             super(); // error

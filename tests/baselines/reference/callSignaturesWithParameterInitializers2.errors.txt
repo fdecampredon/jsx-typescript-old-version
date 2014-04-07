@@ -4,7 +4,7 @@
     
     function foo(x = 2);
                  ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers2.ts(4,14): error TS2174: Default arguments are only allowed in implementation.
     function foo(x = 1) { }
     
     foo(1);
@@ -13,7 +13,7 @@
     class C {
         foo(x = 2);
             ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! callSignaturesWithParameterInitializers2.ts(11,9): error TS2174: Default arguments are only allowed in implementation.
         foo(x = 1) { }
     }
     
@@ -24,10 +24,11 @@
     var b = {
         foo(x = 1),
                   ~
-!!! error TS1005: '{' expected.
+!!! callSignaturesWithParameterInitializers2.ts(20,15): error TS1005: '{' expected.
         foo(x = 1) { },
         ~~~~~~~~~~~~~~
-!!! error TS2000: Duplicate identifier 'foo'.
+!!! callSignaturesWithParameterInitializers2.ts(21,5): error TS2000: Duplicate identifier 'foo'. Additional locations:
+!!! 	callSignaturesWithParameterInitializers2.ts(20,5)
     }
     
     b.foo();

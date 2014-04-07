@@ -17,17 +17,17 @@
     
     g = f2; // Error
     ~
-!!! error TS2012: Cannot convert 'typeof f2' to '(s1: string) => number':
+!!! assignmentCompatWithOverloads.ts(17,1): error TS2012: Cannot convert 'typeof f2' to '(s1: string) => number':
 !!! 	Call signatures of types 'typeof f2' and '(s1: string) => number' are incompatible.
     
     g = f3; // Error
     ~
-!!! error TS2012: Cannot convert 'typeof f3' to '(s1: string) => number':
+!!! assignmentCompatWithOverloads.ts(19,1): error TS2012: Cannot convert 'typeof f3' to '(s1: string) => number':
 !!! 	Call signatures of types 'typeof f3' and '(s1: string) => number' are incompatible.
     
     g = f4; // Error
     ~
-!!! error TS2012: Cannot convert 'typeof f4' to '(s1: string) => number':
+!!! assignmentCompatWithOverloads.ts(21,1): error TS2012: Cannot convert 'typeof f4' to '(s1: string) => number':
 !!! 	Call signatures of types 'typeof f4' and '(s1: string) => number' are incompatible.
     
     class C {
@@ -39,5 +39,5 @@
     
     d = C; // Error
     ~
-!!! error TS2012: Cannot convert 'typeof C' to 'new(x: number) => void':
+!!! assignmentCompatWithOverloads.ts(30,1): error TS2012: Cannot convert 'typeof C' to 'new(x: number) => void':
 !!! 	Construct signatures of types 'typeof C' and 'new(x: number) => void' are incompatible.

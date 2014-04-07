@@ -6,9 +6,14 @@ accessorWithRestParam.ts(3,17): error TS1053: 'set' accessor cannot have rest pa
     class C {
         set X(...v) { }
               ~~~~
-!!! error TS1053: 'set' accessor cannot have rest parameter.
+!!! accessorWithRestParam.ts(2,11): error TS1053: 'set' accessor cannot have rest parameter.
         static set X(...v2) { }
                      ~~~~~
+<<<<<<< HEAD
 !!! error TS1053: 'set' accessor cannot have rest parameter.
     }
 >>>>>>> b9bbbf1... Improve error baseline reporting
+=======
+!!! accessorWithRestParam.ts(3,18): error TS1053: 'set' accessor cannot have rest parameter.
+    }
+>>>>>>> d7cb924... Use tsc.js-style error messages in error baselines

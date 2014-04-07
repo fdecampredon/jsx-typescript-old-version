@@ -4,7 +4,7 @@
             var k = () => {
                 var s: string = this.n();
                     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'void' to 'string'.
+!!! thisWhenTypeCheckFails.ts(4,17): error TS2011: Cannot convert 'void' to 'string'.
             }
         }    
     }

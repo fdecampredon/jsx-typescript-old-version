@@ -4,9 +4,9 @@
     }
     var x = IgnoreRulesSpecific. // error
             ~~~~~~~~~~~~~~~~~~~
-!!! error TS2095: Could not find symbol 'IgnoreRulesSpecific'.
+!!! enumMemberResolution.ts(4,9): error TS2095: Could not find symbol 'IgnoreRulesSpecific'.
     var y = 1;
         ~
-!!! error TS1005: ',' expected.
+!!! enumMemberResolution.ts(5,5): error TS1005: ',' expected.
     var z = Position2.IgnoreRulesSpecific; // no error
     

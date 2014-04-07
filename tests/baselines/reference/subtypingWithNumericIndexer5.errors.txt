@@ -11,7 +11,7 @@
     
     class B implements A {
           ~
-!!! error TS2137: Class B declares interface A but does not implement it:
+!!! subtypingWithNumericIndexer5.ts(11,7): error TS2137: Class B declares interface A but does not implement it:
 !!! 	Index signatures of types 'B' and 'A' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
         [x: string]: Base; // error
@@ -36,21 +36,21 @@
     
         class B3<T extends Derived> implements A<T> {
               ~~
-!!! error TS2137: Class B3<T> declares interface A<T> but does not implement it:
+!!! subtypingWithNumericIndexer5.ts(32,11): error TS2137: Class B3<T> declares interface A<T> but does not implement it:
 !!! 	Index signatures of types 'B3<T>' and 'A<T>' are incompatible.
             [x: string]: Base; // error
         }
     
         class B4<T extends Derived> implements A<T> {
               ~~
-!!! error TS2137: Class B4<T> declares interface A<T> but does not implement it:
+!!! subtypingWithNumericIndexer5.ts(36,11): error TS2137: Class B4<T> declares interface A<T> but does not implement it:
 !!! 	Index signatures of types 'B4<T>' and 'A<T>' are incompatible.
             [x: string]: Derived; // error
         }
     
         class B5<T extends Derived2> implements A<T> {
               ~~
-!!! error TS2137: Class B5<T> declares interface A<T> but does not implement it:
+!!! subtypingWithNumericIndexer5.ts(40,11): error TS2137: Class B5<T> declares interface A<T> but does not implement it:
 !!! 	Index signatures of types 'B5<T>' and 'A<T>' are incompatible.
             [x: string]: Derived2; // error
         }

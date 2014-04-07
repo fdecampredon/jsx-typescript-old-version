@@ -7,7 +7,7 @@
         bar(x: number): number {
             C.prototype.bar = () => { } // error
             ~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '() => void' to '(x: number) => number':
+!!! instanceMemberAssignsToClassPrototype.ts(7,9): error TS2012: Cannot convert '() => void' to '(x: number) => number':
 !!! 	Call signatures of types '() => void' and '(x: number) => number' are incompatible.
             C.prototype.bar = (x) => x; // ok
             C.prototype.bar = (x: number) => 1; // ok

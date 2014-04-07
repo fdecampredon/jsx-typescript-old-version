@@ -3,8 +3,8 @@
         public clone() {
             return new Bar(0);
                        ~~~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! overloadResolutionOnDefaultConstructor1.ts(3,20): error TS2081: Supplied parameters do not match any signature of call target.
                        ~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! overloadResolutionOnDefaultConstructor1.ts(3,20): error TS2085: Could not select overload for 'new' expression.
         }
     }

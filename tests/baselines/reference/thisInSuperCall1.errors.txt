@@ -7,7 +7,7 @@
         constructor(public x: number) {
             super(this);
                   ~~~~
-!!! error TS2097: 'this' cannot be referenced in current location.
+!!! thisInSuperCall1.ts(7,15): error TS2097: 'this' cannot be referenced in current location.
         }
     }
     

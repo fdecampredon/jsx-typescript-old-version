@@ -1,7 +1,7 @@
 ==== tests/cases/compiler/collisionRestParameterArrowFunctions.ts (1 errors) ====
     var f1 = (_i: number, ...restParameters) => { //_i is error
               ~~~~~~~~~~
-!!! error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
+!!! collisionRestParameterArrowFunctions.ts(1,11): error TS2224: Duplicate identifier '_i'. Compiler uses '_i' to initialize rest parameter.
         var _i = 10; // no error
     }
     var f1NoError = (_i: number) => { // no error

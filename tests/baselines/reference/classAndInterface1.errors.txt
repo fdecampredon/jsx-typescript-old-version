@@ -2,4 +2,5 @@
     class cli { }
     interface cli { } // error
               ~~~
-!!! error TS2000: Duplicate identifier 'cli'.
+!!! classAndInterface1.ts(2,11): error TS2000: Duplicate identifier 'cli'. Additional locations:
+!!! 	classAndInterface1.ts(1,1)

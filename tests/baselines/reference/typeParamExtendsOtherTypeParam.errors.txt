@@ -1,10 +1,10 @@
 ==== tests/cases/compiler/typeParamExtendsOtherTypeParam.ts (10 errors) ====
     class A<T, U extends T> { }
                ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParamExtendsOtherTypeParam.ts(1,12): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
     class B<T extends Object, U extends T> {
                               ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! typeParamExtendsOtherTypeParam.ts(2,27): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         data: A<Object, Object>;
     }
     
@@ -16,22 +16,22 @@
     // Below should be in error
     var x1: A<{ a: string;}, { b: string }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(12,9): error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
     var x2: A<{ a: string;}, { a: number }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(13,9): error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
     var x3: B<{ a: string;}, { b: string }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(14,9): error TS2086: Type '{ b: string; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
     var x4: B<{ a: string;}, { a: number }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(15,9): error TS2086: Type '{ a: number; }' does not satisfy the constraint '{ a: string; }' for type parameter 'U extends T'.
     var x5: A<{ a: string; b: number }, { a: string }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(16,9): error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
     var x6: B<{ a: string; b: number }, { a: string }>;
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(17,9): error TS2086: Type '{ a: string; }' does not satisfy the constraint '{ a: string; b: number; }' for type parameter 'U extends T'.
     
     interface I1 {
         a: string;
@@ -44,8 +44,8 @@
     
     var x7: A<I2, I1>;
             ~~~~~~~~~
-!!! error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(28,9): error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.
     var x8: B<I2, I1>;
             ~~~~~~~~~
-!!! error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.
+!!! typeParamExtendsOtherTypeParam.ts(29,9): error TS2086: Type 'I1' does not satisfy the constraint 'I2' for type parameter 'U extends T'.
     

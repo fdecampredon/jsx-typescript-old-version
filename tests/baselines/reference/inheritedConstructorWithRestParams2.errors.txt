@@ -43,20 +43,24 @@ inheritedConstructorWithRestParams2.ts(34,5): error TS2085: Could not select ove
     // Errors
     new Derived(3);
         ~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! inheritedConstructorWithRestParams2.ts(32,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'string' to argument 1 which is of type 'number'.
         ~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! inheritedConstructorWithRestParams2.ts(32,5): error TS2085: Could not select overload for 'new' expression.
     new Derived("", 3, "", 3);
         ~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! inheritedConstructorWithRestParams2.ts(33,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'number' to argument 3 which is of type 'string'.
         ~~~~~~~
-!!! error TS2085: Could not select overload for 'new' expression.
+!!! inheritedConstructorWithRestParams2.ts(33,5): error TS2085: Could not select overload for 'new' expression.
     new Derived("", 3, "", "");
         ~~~~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! inheritedConstructorWithRestParams2.ts(34,5): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Could not apply type 'number' to argument 3 which is of type 'string'.
         ~~~~~~~
+<<<<<<< HEAD
 !!! error TS2085: Could not select overload for 'new' expression.
 >>>>>>> b9bbbf1... Improve error baseline reporting
+=======
+!!! inheritedConstructorWithRestParams2.ts(34,5): error TS2085: Could not select overload for 'new' expression.
+>>>>>>> d7cb924... Use tsc.js-style error messages in error baselines

@@ -7,7 +7,7 @@
     var c: Comparer<any>;
     c = { compareTo: (x, y) => { return y; } };
                       ~
-!!! error TS7012: Parameter 'x' of lambda function implicitly has an 'any' type.
+!!! implicitAnyGenericTypeInference.ts(7,19): error TS7012: Parameter 'x' of lambda function implicitly has an 'any' type.
                          ~
-!!! error TS7012: Parameter 'y' of lambda function implicitly has an 'any' type.
+!!! implicitAnyGenericTypeInference.ts(7,22): error TS7012: Parameter 'y' of lambda function implicitly has an 'any' type.
     var r = c.compareTo(1, '');

@@ -10,7 +10,7 @@
     
     interface S extends T {
               ~
-!!! error TS2143: Interface 'S' cannot extend interface 'T':
+!!! subtypingWithObjectMembersOptionality2.ts(10,11): error TS2143: Interface 'S' cannot extend interface 'T':
 !!! 	Property 'Foo' defined as optional in type 'S', but is required in type 'T'.
         Foo?: Derived // error
     }
@@ -21,7 +21,7 @@
     
     interface S2 extends T2 {
               ~~
-!!! error TS2143: Interface 'S2' cannot extend interface 'T2':
+!!! subtypingWithObjectMembersOptionality2.ts(18,11): error TS2143: Interface 'S2' cannot extend interface 'T2':
 !!! 	Property '1' defined as optional in type 'S2', but is required in type 'T2'.
         1?: Derived; // error
     }
@@ -32,7 +32,7 @@
     
     interface S3 extends T3 {
               ~~
-!!! error TS2143: Interface 'S3' cannot extend interface 'T3':
+!!! subtypingWithObjectMembersOptionality2.ts(26,11): error TS2143: Interface 'S3' cannot extend interface 'T3':
 !!! 	Property ''1'' defined as optional in type 'S3', but is required in type 'T3'.
         '1'?: Derived; // error
     }
@@ -42,4 +42,4 @@
     var b: { Foo?: Derived; }
     var r = true ? a : b; // error
             ~~~~~~~~~~~~
-!!! error TS2226: Type of conditional '{}' must be identical to '{ Foo: Base; }' or '{ Foo?: Derived; }'.
+!!! subtypingWithObjectMembersOptionality2.ts(33,9): error TS2226: Type of conditional '{}' must be identical to '{ Foo: Base; }' or '{ Foo?: Derived; }'.

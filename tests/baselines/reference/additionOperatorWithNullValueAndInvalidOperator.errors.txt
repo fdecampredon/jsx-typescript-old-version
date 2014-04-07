@@ -11,36 +11,36 @@
     // null + boolean/Object
     var r1 = null + a;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(11,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r2 = null + b;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(12,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r3 = null + c;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(13,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r4 = a + null;
              ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(14,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r5 = b + null;
              ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(15,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r6 = null + c;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(16,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     
     // other cases
     var r7 = null + d;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(19,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r8 = null + true;
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(20,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r9 = null + { a: '' };
              ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(21,10): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r10 = null + foo();
               ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(22,11): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     var r11 = null + (() => { });
               ~~~~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! additionOperatorWithNullValueAndInvalidOperator.ts(23,11): error TS2111: Invalid '+' expression - types not known to support the addition operator.

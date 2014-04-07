@@ -11,7 +11,7 @@
     
         var foo: { [index: any]; }; // expect an error here
                  ~~~~~~~~~~
-!!! error TS1023: Index signature parameter type must be 'string' or 'number'.
+!!! arraySigChecking.ts(11,14): error TS1023: Index signature parameter type must be 'string' or 'number'.
     }
     
     interface myInt {
@@ -20,7 +20,7 @@
     var myVar: myInt;
     var strArray: string[] = [myVar.voidFn()];
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{}[]' to 'string[]':
+!!! arraySigChecking.ts(18,5): error TS2012: Cannot convert '{}[]' to 'string[]':
 !!! 	Types of property 'pop' of types '{}[]' and 'string[]' are incompatible:
 !!! 		Call signatures of types '() => {}' and '() => string' are incompatible.
     
@@ -28,7 +28,7 @@
     var myArray: number[][][];
     myArray = [[1, 2]];
     ~~~~~~~
-!!! error TS2012: Cannot convert '{}[][]' to 'number[][][]':
+!!! arraySigChecking.ts(22,1): error TS2012: Cannot convert '{}[][]' to 'number[][][]':
 !!! 	Types of property 'pop' of types '{}[][]' and 'number[][][]' are incompatible:
 !!! 		Call signatures of types '() => {}[]' and '() => number[][]' are incompatible:
 !!! 			Types of property 'pop' of types '{}[]' and 'number[][]' are incompatible:

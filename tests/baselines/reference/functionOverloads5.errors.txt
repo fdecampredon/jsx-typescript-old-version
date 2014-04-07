@@ -2,7 +2,7 @@
     class baz { 
       public foo();
       ~~~~~~~~~~~~~
-!!! error TS2150: Overload signatures must all be public or private.
+!!! functionOverloads5.ts(2,3): error TS2150: Overload signatures must all be public or private.
       private foo(bar?:any){ }
     }
     

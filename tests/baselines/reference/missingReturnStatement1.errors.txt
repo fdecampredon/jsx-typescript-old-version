@@ -2,7 +2,7 @@
     class Foo {
         foo(): number {
                ~~~~~~
-!!! error TS2131: Function declared a non-void return type, but has no return expression.
+!!! missingReturnStatement1.ts(2,12): error TS2131: Function declared a non-void return type, but has no return expression.
             //return 4;
         }
     }

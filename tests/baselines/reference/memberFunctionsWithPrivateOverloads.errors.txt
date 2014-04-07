@@ -43,16 +43,16 @@
     var c: C;
     var r = c.foo(1); // error
               ~~~
-!!! error TS2107: 'C.foo' is inaccessible.
+!!! memberFunctionsWithPrivateOverloads.ts(43,11): error TS2107: 'C.foo' is inaccessible.
     
     var d: D<number>;
     var r2 = d.foo(2); // error
                ~~~
-!!! error TS2107: 'D<T>.foo' is inaccessible.
+!!! memberFunctionsWithPrivateOverloads.ts(46,12): error TS2107: 'D<T>.foo' is inaccessible.
     
     var r3 = C.foo(1); // error
                ~~~
-!!! error TS2107: 'C.foo' is inaccessible.
+!!! memberFunctionsWithPrivateOverloads.ts(48,12): error TS2107: 'C.foo' is inaccessible.
     var r4 = D.bar(''); // error
                ~~~
-!!! error TS2107: 'D<T>.bar' is inaccessible.
+!!! memberFunctionsWithPrivateOverloads.ts(49,12): error TS2107: 'D<T>.bar' is inaccessible.

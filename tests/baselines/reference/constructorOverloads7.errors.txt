@@ -15,7 +15,8 @@
     // to be Point and return type is inferred to be void
     function Point(x, y) {
              ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! constructorOverloads7.ts(15,10): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	constructorOverloads7.ts(1,1)
         this.x = x;
         this.y = y;
     
@@ -24,7 +25,7 @@
     
     declare function EF1(a:number, b:number):number;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2152: Overload signatures must all be ambient or non-ambient.
+!!! constructorOverloads7.ts(22,1): error TS2152: Overload signatures must all be ambient or non-ambient.
     
     function EF1(a,b) { return a+b; }
     

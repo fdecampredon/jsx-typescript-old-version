@@ -4,7 +4,7 @@
     function callb(a) { }
     callb((a) => { a.length; } ); // error, chose first overload
                      ~~~~~~
-!!! error TS2094: The property 'length' does not exist on value of type 'number'.
+!!! functionOverloadAmbiguity1.ts(4,18): error TS2094: The property 'length' does not exist on value of type 'number'.
     
     function callb2(lam: (n: string) => void );
     function callb2(lam: (l: number) => void );

@@ -15,7 +15,7 @@
     a = b; // ok
     b = a; // error
     ~
-!!! error TS2012: Cannot convert 'A' to '{ [x: string]: Derived; }':
+!!! assignmentCompatWithStringIndexer2.ts(15,1): error TS2012: Cannot convert 'A' to '{ [x: string]: Derived; }':
 !!! 	Index signatures of types 'A' and '{ [x: string]: Derived; }' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     
@@ -23,7 +23,7 @@
     a = b2; // ok
     b2 = a; // error
     ~~
-!!! error TS2012: Cannot convert 'A' to '{ [x: string]: Derived2; }':
+!!! assignmentCompatWithStringIndexer2.ts(19,1): error TS2012: Cannot convert 'A' to '{ [x: string]: Derived2; }':
 !!! 	Index signatures of types 'A' and '{ [x: string]: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
     
@@ -41,7 +41,7 @@
         a1 = b1; // ok
         b1 = a1; // error
         ~~
-!!! error TS2012: Cannot convert 'A<Base>' to '{ [x: string]: Derived; }':
+!!! assignmentCompatWithStringIndexer2.ts(33,5): error TS2012: Cannot convert 'A<Base>' to '{ [x: string]: Derived; }':
 !!! 	Index signatures of types 'A<Base>' and '{ [x: string]: Derived; }' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     
@@ -53,7 +53,7 @@
         a1 = b2; // ok
         b2 = a1; // error
         ~~
-!!! error TS2012: Cannot convert 'A<Base>' to '{ [x: string]: Derived2; }':
+!!! assignmentCompatWithStringIndexer2.ts(41,5): error TS2012: Cannot convert 'A<Base>' to '{ [x: string]: Derived2; }':
 !!! 	Index signatures of types 'A<Base>' and '{ [x: string]: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
     
@@ -62,22 +62,22 @@
             var a3: A<T>;
             a3 = b3; // error
             ~~
-!!! error TS2012: Cannot convert '{ [x: string]: Derived; }' to 'A<T>':
+!!! assignmentCompatWithStringIndexer2.ts(46,9): error TS2012: Cannot convert '{ [x: string]: Derived; }' to 'A<T>':
 !!! 	Index signatures of types '{ [x: string]: Derived; }' and 'A<T>' are incompatible.
             b3 = a3; // error
             ~~
-!!! error TS2012: Cannot convert 'A<T>' to '{ [x: string]: Derived; }':
+!!! assignmentCompatWithStringIndexer2.ts(47,9): error TS2012: Cannot convert 'A<T>' to '{ [x: string]: Derived; }':
 !!! 	Index signatures of types 'A<T>' and '{ [x: string]: Derived; }' are incompatible:
 !!! 		Type 'Base' is missing property 'bar' from type 'Derived'.
     
             var b4: { [x: string]: Derived2; };
             a3 = b4; // error
             ~~
-!!! error TS2012: Cannot convert '{ [x: string]: Derived2; }' to 'A<T>':
+!!! assignmentCompatWithStringIndexer2.ts(50,9): error TS2012: Cannot convert '{ [x: string]: Derived2; }' to 'A<T>':
 !!! 	Index signatures of types '{ [x: string]: Derived2; }' and 'A<T>' are incompatible.
             b4 = a3; // error
             ~~
-!!! error TS2012: Cannot convert 'A<T>' to '{ [x: string]: Derived2; }':
+!!! assignmentCompatWithStringIndexer2.ts(51,9): error TS2012: Cannot convert 'A<T>' to '{ [x: string]: Derived2; }':
 !!! 	Index signatures of types 'A<T>' and '{ [x: string]: Derived2; }' are incompatible:
 !!! 		Type 'Base' is missing property 'baz' from type 'Derived2'.
         }

@@ -4,8 +4,8 @@
     
     f += '';
     ~
-!!! error TS2012: Cannot convert 'string' to 'typeof f':
+!!! concatClassAndString.ts(4,1): error TS2012: Cannot convert 'string' to 'typeof f':
 !!! 	Type 'String' is missing property 'prototype' from type 'typeof f'.
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! concatClassAndString.ts(4,1): error TS2130: Invalid left-hand side of assignment expression.
     

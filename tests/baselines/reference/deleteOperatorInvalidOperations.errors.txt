@@ -5,14 +5,14 @@
     // operand before delete operator
     var BOOLEAN1 = ANY delete ;     //expect error
                        ~~~~~~
-!!! error TS1005: ',' expected.
+!!! deleteOperatorInvalidOperations.ts(5,20): error TS1005: ',' expected.
                               ~
-!!! error TS1003: Identifier expected.
+!!! deleteOperatorInvalidOperations.ts(5,27): error TS1003: Identifier expected.
     
     // miss an operand
     var BOOLEAN2 = delete ;
                           ~
-!!! error TS1003: Identifier expected.
+!!! deleteOperatorInvalidOperations.ts(8,23): error TS1003: Identifier expected.
     
     // delete global variable s
     class testADelx {

@@ -2,4 +2,4 @@
     class B extends A { }
     class A extends A { }
           ~
-!!! error TS2100: Class 'A' is recursively referenced as a base type of itself.
+!!! classInheritence.ts(2,7): error TS2100: Class 'A' is recursively referenced as a base type of itself.

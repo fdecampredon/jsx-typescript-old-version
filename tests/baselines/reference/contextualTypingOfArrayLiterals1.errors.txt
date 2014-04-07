@@ -5,7 +5,7 @@
     
     var x3: I = [new Date(), 1]; 
         ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '{}[]' to 'I':
+!!! contextualTypingOfArrayLiterals1.ts(5,5): error TS2012: Cannot convert '{}[]' to 'I':
 !!! 	Index signatures of types '{}[]' and 'I' are incompatible:
 !!! 		Type '{}' is missing property 'toDateString' from type 'Date'.
     var r2 = x3[1]; 

@@ -21,12 +21,12 @@
     var c3 = new Z();
     c1 = c2 = c3; // a bug made this not report the same error as below
     ~~
-!!! error TS2012: Cannot convert 'Z' to 'X':
+!!! chainedAssignment1.ts(21,1): error TS2012: Cannot convert 'Z' to 'X':
 !!! 	Type 'Z' is missing property 'a' from type 'X'.
          ~~
-!!! error TS2012: Cannot convert 'Z' to 'Y':
+!!! chainedAssignment1.ts(21,6): error TS2012: Cannot convert 'Z' to 'Y':
 !!! 	Type 'Z' is missing property 'a' from type 'Y'.
     c2 = c3; // Error TS111: Cannot convert Z to Y
     ~~
-!!! error TS2012: Cannot convert 'Z' to 'Y':
+!!! chainedAssignment1.ts(22,1): error TS2012: Cannot convert 'Z' to 'Y':
 !!! 	Type 'Z' is missing property 'a' from type 'Y'.

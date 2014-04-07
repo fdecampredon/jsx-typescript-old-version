@@ -28,16 +28,16 @@
     var arr = [new Giraffe(), new Elephant()];
     foo(arr); // Error because of no contextual type
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! arrayLiteralContextualType.ts(28,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Types of property 'pop' of types '{}[]' and 'IAnimal[]' are incompatible:
 !!! 		Call signatures of types '() => {}' and '() => IAnimal' are incompatible:
 !!! 			Type '{}' is missing property 'name' from type 'IAnimal'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! arrayLiteralContextualType.ts(28,1): error TS2087: Could not select overload for 'call' expression.
     bar(arr); // Error because of no contextual type
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! arrayLiteralContextualType.ts(29,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Index signatures of types '{}[]' and '{ [n: number]: IAnimal; }' are incompatible:
 !!! 		Type '{}' is missing property 'name' from type 'IAnimal'.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! arrayLiteralContextualType.ts(29,1): error TS2087: Could not select overload for 'call' expression.

@@ -5,10 +5,12 @@
         }
         export function Function(...args: any[]): any;
                         ~~~~~~~~
-!!! error TS2000: Duplicate identifier 'Function'.
+!!! constructorOverloads4.ts(5,21): error TS2000: Duplicate identifier 'Function'. Additional locations:
+!!! 	constructorOverloads4.ts(2,5)
         export function Function(...args: string[]): Function;
                         ~~~~~~~~
-!!! error TS2000: Duplicate identifier 'Function'.
+!!! constructorOverloads4.ts(6,21): error TS2000: Duplicate identifier 'Function'. Additional locations:
+!!! 	constructorOverloads4.ts(2,5)
     }
     
     

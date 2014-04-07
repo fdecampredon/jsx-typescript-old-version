@@ -4,10 +4,10 @@
     function foo1<T extends String>(test: any) { }
     foo1<Date>(""); // should error
     ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentConstraintResolution1.ts(4,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Type 'String' is missing property 'toDateString' from type 'Date'.
     ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentConstraintResolution1.ts(4,1): error TS2087: Could not select overload for 'call' expression.
     
     
     
@@ -16,8 +16,8 @@
     function foo2<T extends String>(test: any): any { return null; }
     foo2<Date>(""); // Type Date does not satisfy the constraint 'Number' for type parameter 'T extends Number'
     ~~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! typeArgumentConstraintResolution1.ts(11,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Type 'String' is missing property 'toDateString' from type 'Date'.
     ~~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! typeArgumentConstraintResolution1.ts(11,1): error TS2087: Could not select overload for 'call' expression.
     

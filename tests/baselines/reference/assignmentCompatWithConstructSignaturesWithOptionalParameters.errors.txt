@@ -16,18 +16,18 @@
         a = b.a2; // ok
         a = b.a3; // error
         ~
-!!! error TS2012: Cannot convert 'new(x: number) => number' to 'new() => number':
+!!! assignmentCompatWithConstructSignaturesWithOptionalParameters.ts(16,5): error TS2012: Cannot convert 'new(x: number) => number' to 'new() => number':
 !!! 	Construct signatures of types 'new(x: number) => number' and 'new() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         a = b.a4; // error
         ~
-!!! error TS2012: Cannot convert 'new(x: number, y?: number) => number' to 'new() => number':
+!!! assignmentCompatWithConstructSignaturesWithOptionalParameters.ts(17,5): error TS2012: Cannot convert 'new(x: number, y?: number) => number' to 'new() => number':
 !!! 	Construct signatures of types 'new(x: number, y?: number) => number' and 'new() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
         a = b.a5; // ok
         a = b.a6; // error
         ~
-!!! error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new() => number':
+!!! assignmentCompatWithConstructSignaturesWithOptionalParameters.ts(19,5): error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new() => number':
 !!! 	Construct signatures of types 'new(x: number, y: number) => number' and 'new() => number' are incompatible:
 !!! 		Call signature expects 0 or fewer parameters.
     
@@ -39,7 +39,7 @@
         a2 = b.a5; // ok
         a2 = b.a6; // error
         ~~
-!!! error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new(x?: number) => number':
+!!! assignmentCompatWithConstructSignaturesWithOptionalParameters.ts(27,5): error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new(x?: number) => number':
 !!! 	Construct signatures of types 'new(x: number, y: number) => number' and 'new(x?: number) => number' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     
@@ -51,7 +51,7 @@
         a3 = b.a5; // ok
         a3 = b.a6; // error
         ~~
-!!! error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new(x: number) => number':
+!!! assignmentCompatWithConstructSignaturesWithOptionalParameters.ts(35,5): error TS2012: Cannot convert 'new(x: number, y: number) => number' to 'new(x: number) => number':
 !!! 	Construct signatures of types 'new(x: number, y: number) => number' and 'new(x: number) => number' are incompatible:
 !!! 		Call signature expects 1 or fewer parameters.
     

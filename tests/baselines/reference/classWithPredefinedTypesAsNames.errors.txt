@@ -3,13 +3,13 @@
     
     class any { }
           ~~~
-!!! error TS1057: Class name cannot be 'any'.
+!!! classWithPredefinedTypesAsNames.ts(3,7): error TS1057: Class name cannot be 'any'.
     class number { }
           ~~~~~~
-!!! error TS1057: Class name cannot be 'number'.
+!!! classWithPredefinedTypesAsNames.ts(4,7): error TS1057: Class name cannot be 'number'.
     class boolean { }
           ~~~~~~~
-!!! error TS1057: Class name cannot be 'boolean'.
+!!! classWithPredefinedTypesAsNames.ts(5,7): error TS1057: Class name cannot be 'boolean'.
     class string { }
           ~~~~~~
-!!! error TS1057: Class name cannot be 'string'.
+!!! classWithPredefinedTypesAsNames.ts(6,7): error TS1057: Class name cannot be 'string'.

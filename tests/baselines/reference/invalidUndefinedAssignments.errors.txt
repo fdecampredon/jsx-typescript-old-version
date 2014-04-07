@@ -4,31 +4,31 @@
     enum E { A }
     E = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidUndefinedAssignments.ts(4,1): error TS2130: Invalid left-hand side of assignment expression.
     E.A = x;
     ~~~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidUndefinedAssignments.ts(5,1): error TS2130: Invalid left-hand side of assignment expression.
     
     class C { foo: string }
     var f: C;
     C = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidUndefinedAssignments.ts(9,1): error TS2130: Invalid left-hand side of assignment expression.
     
     interface I { foo: string }
     var g: I;
     g = x;
     I = x;
     ~
-!!! error TS2095: Could not find symbol 'I'.
+!!! invalidUndefinedAssignments.ts(14,1): error TS2095: Could not find symbol 'I'.
     
     module M { export var x = 1; }
     M = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidUndefinedAssignments.ts(17,1): error TS2130: Invalid left-hand side of assignment expression.
     
     function i<T>(a: T) { }
     // BUG 767030
     i = x; 
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidUndefinedAssignments.ts(21,1): error TS2130: Invalid left-hand side of assignment expression.

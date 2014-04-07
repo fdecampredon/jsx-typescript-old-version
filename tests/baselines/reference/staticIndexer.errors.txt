@@ -2,5 +2,5 @@
     class C {
         static [s: string]: number;
         ~~~~~~
-!!! error TS1055: Modifiers cannot appear here.
+!!! staticIndexer.ts(2,5): error TS1055: Modifiers cannot appear here.
     }

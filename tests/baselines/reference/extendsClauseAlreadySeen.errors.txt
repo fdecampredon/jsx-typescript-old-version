@@ -4,6 +4,6 @@
     }
     class D extends C extends C {
                       ~~~~~~~~~
-!!! error TS1024: 'extends' clause already seen.
+!!! extendsClauseAlreadySeen.ts(4,19): error TS1024: 'extends' clause already seen.
         baz() { }
     }

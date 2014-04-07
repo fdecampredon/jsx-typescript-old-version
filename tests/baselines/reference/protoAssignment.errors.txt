@@ -2,7 +2,7 @@
     
     interface Number extends Comparable<number> {
                              ~~~~~~~~~~
-!!! error TS2095: Could not find symbol 'Comparable'.
+!!! protoAssignment.ts(2,26): error TS2095: Could not find symbol 'Comparable'.
     
         compareTo(other: number);
     

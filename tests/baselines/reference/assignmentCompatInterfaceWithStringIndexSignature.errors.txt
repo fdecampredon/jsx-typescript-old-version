@@ -15,8 +15,8 @@
     
     Biz(new Foo());
     ~~~
-!!! error TS2082: Supplied parameters do not match any signature of call target:
+!!! assignmentCompatInterfaceWithStringIndexSignature.ts(15,1): error TS2082: Supplied parameters do not match any signature of call target:
 !!! 	Index signatures of types 'Foo' and 'IHandlerMap' are incompatible.
     ~~~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! assignmentCompatInterfaceWithStringIndexSignature.ts(15,1): error TS2087: Could not select overload for 'call' expression.
     

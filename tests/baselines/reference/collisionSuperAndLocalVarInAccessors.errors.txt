@@ -13,13 +13,13 @@
         get prop2(): number {
             var _super = 10; // Should be error
                 ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInAccessors.ts(13,13): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             return 10;
         }
         set prop2(val: number) {
             var _super = 10; // Should be error
                 ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInAccessors.ts(17,13): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
         }
     }
     class c extends Foo {
@@ -27,7 +27,7 @@
             var x = () => {
                 var _super = 10; // Should be error
                     ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInAccessors.ts(23,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
             return 10;
         }
@@ -35,7 +35,7 @@
             var x = () => {
                 var _super = 10; // Should be error
                     ~~~~~~~~~~~
-!!! error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
+!!! collisionSuperAndLocalVarInAccessors.ts(29,17): error TS2205: Duplicate identifier '_super'. Compiler uses '_super' to capture base class reference.
             }
         }
     }

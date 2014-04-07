@@ -15,7 +15,8 @@
     
     declare class _<T> {
                   ~
-!!! error TS2000: Duplicate identifier '_'.
+!!! getAccessorWithImpliedReturnTypeAndFunctionClassMerge.ts(15,15): error TS2000: Duplicate identifier '_'. Additional locations:
+!!! 	getAccessorWithImpliedReturnTypeAndFunctionClassMerge.ts(1,1)
         each(iterator: _.ListIterator<T, void>, context?: any): void;
     }
     

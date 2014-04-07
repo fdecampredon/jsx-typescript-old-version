@@ -25,10 +25,10 @@
     
     var baz = c.Baz;
                 ~~~
-!!! error TS2094: The property 'Baz' does not exist on value of type 'C'.
+!!! gettersAndSetters.ts(25,13): error TS2094: The property 'Baz' does not exist on value of type 'C'.
     c.Baz = "bazv";
       ~~~
-!!! error TS2094: The property 'Baz' does not exist on value of type 'C'.
+!!! gettersAndSetters.ts(26,3): error TS2094: The property 'Baz' does not exist on value of type 'C'.
     
     // The Foo accessors' return and param types should be contextually typed to the Foo field
     var o : {Foo:number;} = {get Foo() {return 0;}, set Foo(val:number){val}}; // o

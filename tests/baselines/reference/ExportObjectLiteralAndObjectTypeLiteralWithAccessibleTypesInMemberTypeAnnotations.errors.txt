@@ -7,10 +7,10 @@
     
         export var Origin: Point = { x: 0, y: 0 };
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'Origin' has or is using private type 'Point'.
+!!! ExportObjectLiteralAndObjectTypeLiteralWithAccessibleTypesInMemberTypeAnnotations.ts(7,16): error TS2027: Exported variable 'Origin' has or is using private type 'Point'.
     
         export var Unity = { start: new Point(0, 0), end: new Point(1, 0) };
                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2027: Exported variable 'Unity' has or is using private type 'Point'.
+!!! ExportObjectLiteralAndObjectTypeLiteralWithAccessibleTypesInMemberTypeAnnotations.ts(9,16): error TS2027: Exported variable 'Unity' has or is using private type 'Point'.
     }
     

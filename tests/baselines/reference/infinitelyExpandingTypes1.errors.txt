@@ -17,12 +17,12 @@
     
     l == m; // should error
     ~~~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'List<number>' and 'MyList<number>'.
+!!! infinitelyExpandingTypes1.ts(17,1): error TS2009: Operator '==' cannot be applied to types 'List<number>' and 'MyList<number>'.
     
     var l2: List<string>;
     
     l == l2; // should error;
     ~~~~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'List<number>' and 'List<string>'.
+!!! infinitelyExpandingTypes1.ts(21,1): error TS2009: Operator '==' cannot be applied to types 'List<number>' and 'List<string>'.
     
     l == l; // should not error

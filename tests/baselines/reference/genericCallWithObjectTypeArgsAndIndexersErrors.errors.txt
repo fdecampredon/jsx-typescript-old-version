@@ -15,7 +15,7 @@
     
     function other3<T extends U, U extends Date>(arg: T) {
                     ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! genericCallWithObjectTypeArgsAndIndexersErrors.ts(15,17): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         var b: {
             [x: string]: Object;
             [x: number]: T;

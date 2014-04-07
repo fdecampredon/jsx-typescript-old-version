@@ -17,7 +17,7 @@
         r.y = 4;
         var r6 = c.y(); // error
                  ~~~~~
-!!! error TS2088: Cannot invoke an expression whose type lacks a call signature.
+!!! instancePropertyInClassType.ts(17,14): error TS2088: Cannot invoke an expression whose type lacks a call signature.
     
     }
     
@@ -39,5 +39,5 @@
         r.y = '';
         var r6 = c.y(); // error
                  ~~~~~
-!!! error TS2088: Cannot invoke an expression whose type lacks a call signature.
+!!! instancePropertyInClassType.ts(37,14): error TS2088: Cannot invoke an expression whose type lacks a call signature.
     }

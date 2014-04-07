@@ -87,10 +87,10 @@
         n==a;
         n==s;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'number' and 'string'.
+!!! expr.ts(87,5): error TS2009: Operator '==' cannot be applied to types 'number' and 'string'.
         n==b;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'number' and 'boolean'.
+!!! expr.ts(88,5): error TS2009: Operator '==' cannot be applied to types 'number' and 'boolean'.
         n==i;
         n==n;
         n==e;
@@ -98,15 +98,15 @@
         s==a;
         s==n;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'string' and 'number'.
+!!! expr.ts(94,5): error TS2009: Operator '==' cannot be applied to types 'string' and 'number'.
         s==b;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'string' and 'boolean'.
+!!! expr.ts(95,5): error TS2009: Operator '==' cannot be applied to types 'string' and 'boolean'.
         s==i;
         s==s;
         s==e;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'string' and 'E'.
+!!! expr.ts(98,5): error TS2009: Operator '==' cannot be applied to types 'string' and 'E'.
     
         a==n;
         a==s;
@@ -122,19 +122,19 @@
         i==i;
         i==e;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'I' and 'E'.
+!!! expr.ts(112,5): error TS2009: Operator '==' cannot be applied to types 'I' and 'E'.
     
         e==n;
         e==s;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'E' and 'string'.
+!!! expr.ts(115,5): error TS2009: Operator '==' cannot be applied to types 'E' and 'string'.
         e==b;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'E' and 'boolean'.
+!!! expr.ts(116,5): error TS2009: Operator '==' cannot be applied to types 'E' and 'boolean'.
         e==a;
         e==i;
         ~~~~
-!!! error TS2009: Operator '==' cannot be applied to types 'E' and 'I'.
+!!! expr.ts(118,5): error TS2009: Operator '==' cannot be applied to types 'E' and 'I'.
         e==e;
     
         +i;
@@ -160,10 +160,10 @@
         n+s;
         n+b;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(142,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         n+i;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(143,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         n+n;
         n+e;
     
@@ -183,206 +183,206 @@
     
         i+n;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(161,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         i+s;
         i+b;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(163,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         i+a;
         i+i;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(165,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         i+e;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(166,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
     
         e+n;
         e+s;
         e+b;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(170,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         e+a;
         e+i;
         ~
-!!! error TS2111: Invalid '+' expression - types not known to support the addition operator.
+!!! expr.ts(172,5): error TS2111: Invalid '+' expression - types not known to support the addition operator.
         e+e;
     
         n^a;
         n^s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(176,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n^b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(177,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n^i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(178,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n^n;
         n^e;
     
         s^a;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(182,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s^n;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(183,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s^b;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(184,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(184,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s^i;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(185,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(185,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s^s;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(186,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(186,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s^e;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(187,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
     
         a^n;
         a^s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(190,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a^b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(191,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a^i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(192,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a^a;
         a^e;
     
         i^n;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(196,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i^s;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(197,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(197,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i^b;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(198,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(198,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i^a;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(199,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i^i;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(200,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(200,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i^e;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(201,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
     
         e^n;
         e^s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(204,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e^b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(205,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e^a;
         e^i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(207,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e^e;
     
         n-a;
         n-s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(211,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n-b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(212,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n-i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(213,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         n-n;
         n-e;
     
         s-a;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(217,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s-n;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(218,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s-b;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(219,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(219,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s-i;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(220,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(220,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s-s;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(221,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(221,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         s-e;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(222,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
     
         a-n;
         a-s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(225,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a-b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(226,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a-i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(227,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         a-a;
         a-e;
     
         i-n;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(231,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i-s;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(232,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(232,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i-b;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(233,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(233,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i-a;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(234,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i-i;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(235,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(235,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         i-e;
         ~
-!!! error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(236,5): error TS2113: The left-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
     
         e-n;
         e-s;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(239,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e-b;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(240,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e-a;
         e-i;
           ~
-!!! error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
+!!! expr.ts(242,7): error TS2112: The right-hand side of an arithmetic operation must be of type 'any', 'number' or an enum type.
         e-e;
     
     }

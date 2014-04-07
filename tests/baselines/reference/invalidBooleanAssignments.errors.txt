@@ -3,48 +3,48 @@
     
     var a: number = x;
         ~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'boolean' to 'number'.
+!!! invalidBooleanAssignments.ts(3,5): error TS2011: Cannot convert 'boolean' to 'number'.
     var b: string = x;
         ~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'boolean' to 'string'.
+!!! invalidBooleanAssignments.ts(4,5): error TS2011: Cannot convert 'boolean' to 'string'.
     var c: void = x;
         ~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'boolean' to 'void'.
+!!! invalidBooleanAssignments.ts(5,5): error TS2011: Cannot convert 'boolean' to 'void'.
     var d: typeof undefined = x;
     
     enum E { A }
     var e: E = x;
         ~~~~~~~~
-!!! error TS2011: Cannot convert 'boolean' to 'E'.
+!!! invalidBooleanAssignments.ts(9,5): error TS2011: Cannot convert 'boolean' to 'E'.
     
     class C { foo: string }
     var f: C = x;
         ~~~~~~~~
-!!! error TS2012: Cannot convert 'boolean' to 'C':
+!!! invalidBooleanAssignments.ts(12,5): error TS2012: Cannot convert 'boolean' to 'C':
 !!! 	Type 'Boolean' is missing property 'foo' from type 'C'.
     
     interface I { bar: string }
     var g: I = x;
         ~~~~~~~~
-!!! error TS2012: Cannot convert 'boolean' to 'I':
+!!! invalidBooleanAssignments.ts(15,5): error TS2012: Cannot convert 'boolean' to 'I':
 !!! 	Type 'Boolean' is missing property 'bar' from type 'I'.
     
     var h: { (): string } = x;
         ~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert 'boolean' to '() => string':
+!!! invalidBooleanAssignments.ts(17,5): error TS2012: Cannot convert 'boolean' to '() => string':
 !!! 	Type '() => string' requires a call signature, but type 'Boolean' lacks one.
     var h2: { toString(): string } = x; // no error
     
     module M { export var a = 1; }
     M = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidBooleanAssignments.ts(21,1): error TS2130: Invalid left-hand side of assignment expression.
     
     function i<T>(a: T) {
         a = x;
         ~
-!!! error TS2011: Cannot convert 'boolean' to 'T'.
+!!! invalidBooleanAssignments.ts(24,5): error TS2011: Cannot convert 'boolean' to 'T'.
     }
     i = x;
     ~
-!!! error TS2130: Invalid left-hand side of assignment expression.
+!!! invalidBooleanAssignments.ts(26,1): error TS2130: Invalid left-hand side of assignment expression.

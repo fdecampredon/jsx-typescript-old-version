@@ -5,7 +5,7 @@
     
     interface I extends Foo { // error
               ~
-!!! error TS2142: Interface 'I' cannot extend class 'Foo':
+!!! interfaceExtendingClassWithPrivates.ts(5,11): error TS2142: Interface 'I' cannot extend class 'Foo':
 !!! 	Property 'x' defined as public in type 'I' is defined as private in type 'Foo'.
         x: string;
     }
@@ -18,4 +18,4 @@
     var r = i.y;
     var r2 = i.x; // error
                ~
-!!! error TS2107: 'Foo.x' is inaccessible.
+!!! interfaceExtendingClassWithPrivates.ts(15,12): error TS2107: 'Foo.x' is inaccessible.

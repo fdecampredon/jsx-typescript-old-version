@@ -189,7 +189,7 @@
     // contextually typing function declarations
     declare function EF1(a:number, b:number):number;
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2152: Overload signatures must all be ambient or non-ambient.
+!!! contextualTyping.ts(189,1): error TS2152: Overload signatures must all be ambient or non-ambient.
     
     function EF1(a,b) { return a+b; }
     
@@ -209,7 +209,8 @@
     
     function Point(x, y) {
              ~~~~~
-!!! error TS2000: Duplicate identifier 'Point'.
+!!! contextualTyping.ts(207,10): error TS2000: Duplicate identifier 'Point'. Additional locations:
+!!! 	contextualTyping.ts(197,1)
         this.x = x;
         this.y = y;
     
@@ -234,5 +235,5 @@
     interface B extends A { }
     var x: B = { };
         ~~~~~~~~~~
-!!! error TS2012: Cannot convert '{}' to 'B':
+!!! contextualTyping.ts(230,5): error TS2012: Cannot convert '{}' to 'B':
 !!! 	Type '{}' is missing property 'x' from type 'B'.

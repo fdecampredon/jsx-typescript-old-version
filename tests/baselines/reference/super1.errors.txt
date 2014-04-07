@@ -16,7 +16,7 @@
         public bar() {
             return super.super.foo;
                          ~~~~~
-!!! error TS2094: The property 'super' does not exist on value of type 'Sub1'.
+!!! super1.ts(16,22): error TS2094: The property 'super' does not exist on value of type 'Sub1'.
         }
     }
     
@@ -31,7 +31,7 @@
         public bar() {
             return super.prototype.foo = null;
                          ~~~~~~~~~
-!!! error TS2094: The property 'prototype' does not exist on value of type 'Base2'.
+!!! super1.ts(29,22): error TS2094: The property 'prototype' does not exist on value of type 'Base2'.
         }
     }
     
@@ -46,7 +46,7 @@
         public bar() {
             return super.bar();
                          ~~~
-!!! error TS2094: The property 'bar' does not exist on value of type 'Base3'.
+!!! super1.ts(42,22): error TS2094: The property 'bar' does not exist on value of type 'Base3'.
         }
     }
     
@@ -60,7 +60,7 @@
         
         export class SubSub4 extends Sub4{
                                      ~~~~
-!!! error TS2018: Exported class 'SubSub4' extends private class 'Sub4'.
+!!! super1.ts(54,34): error TS2018: Exported class 'SubSub4' extends private class 'Sub4'.
             public x(){
                 return super.x();
             }
@@ -70,7 +70,7 @@
             public x() {
                 return super.x();
                        ~~~~~
-!!! error TS2103: 'super' cannot be referenced in non-derived classes.
+!!! super1.ts(62,20): error TS2103: 'super' cannot be referenced in non-derived classes.
             }
         }
     }

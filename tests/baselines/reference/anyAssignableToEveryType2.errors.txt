@@ -114,7 +114,7 @@
     
     interface I18<T, U extends T> {
                      ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! anyAssignableToEveryType2.ts(114,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         [x: string]: U;
         foo: any;
     }

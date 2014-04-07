@@ -4,7 +4,7 @@
     class Bar {}
     case
     ~~~~
-!!! error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
+!!! unexpectedStatementBlockTerminator.ts(4,1): error TS1008: Unexpected token; 'module, class, interface, enum, import or statement' expected.
     
     function Goo() {return {a:1,b:2};}
     

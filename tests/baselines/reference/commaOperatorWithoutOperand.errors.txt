@@ -9,40 +9,40 @@
     // Missing the second operand
     (ANY, );
           ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(9,7): error TS1003: Identifier expected.
     (BOOLEAN, );
               ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(10,11): error TS1003: Identifier expected.
     (NUMBER, );
              ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(11,10): error TS1003: Identifier expected.
     (STRING, );
              ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(12,10): error TS1003: Identifier expected.
     (OBJECT, );
              ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(13,10): error TS1003: Identifier expected.
     
     // Missing the first operand
     (, ANY);
      ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(16,2): error TS1003: Identifier expected.
     (, BOOLEAN);
      ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(17,2): error TS1003: Identifier expected.
     (, NUMBER);
      ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(18,2): error TS1003: Identifier expected.
     (, STRING);
      ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(19,2): error TS1003: Identifier expected.
     (, OBJECT);
      ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(20,2): error TS1003: Identifier expected.
     
     // Missing all operands
     ( , );
       ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(23,3): error TS1003: Identifier expected.
         ~
-!!! error TS1003: Identifier expected.
+!!! commaOperatorWithoutOperand.ts(23,5): error TS1003: Identifier expected.

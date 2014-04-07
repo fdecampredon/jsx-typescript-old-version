@@ -3,7 +3,7 @@
         export class Bug {
             public foo():string {
                          ~~~~~~
-!!! error TS2131: Function declared a non-void return type, but has no return expression.
+!!! missingReturnStatement.ts(3,22): error TS2131: Function declared a non-void return type, but has no return expression.
             }
         }    
     }

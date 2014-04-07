@@ -3,7 +3,7 @@
         foo: string;
         constructor(x = 1); // error
                     ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! constructorOverloadsWithDefaultValues.ts(3,17): error TS2174: Default arguments are only allowed in implementation.
         constructor() {
         }
     }
@@ -12,7 +12,7 @@
         foo: string;
         constructor(x = 1); // error
                     ~~~~~
-!!! error TS2174: Default arguments are only allowed in implementation.
+!!! constructorOverloadsWithDefaultValues.ts(10,17): error TS2174: Default arguments are only allowed in implementation.
         constructor() {
         }
     }

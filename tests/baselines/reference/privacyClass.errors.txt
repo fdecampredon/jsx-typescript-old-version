@@ -22,7 +22,7 @@
         }
         export class m1_C4_public extends m1_c_private {
                                           ~~~~~~~~~~~~
-!!! error TS2018: Exported class 'm1_C4_public' extends private class 'm1_c_private'.
+!!! privacyClass.ts(22,39): error TS2018: Exported class 'm1_C4_public' extends private class 'm1_c_private'.
         }
     
         class m1_C5_private implements m1_i_public {
@@ -33,7 +33,7 @@
         }
         export class m1_C8_public implements m1_i_private {
                                              ~~~~~~~~~~~~
-!!! error TS2019: Exported class 'm1_C8_public' implements private interface 'm1_i_private'.
+!!! privacyClass.ts(31,42): error TS2019: Exported class 'm1_C8_public' implements private interface 'm1_i_private'.
         }
     
         class m1_C9_private extends m1_c_public implements m1_i_private, m1_i_public {
@@ -42,13 +42,13 @@
         }
         export class m1_C11_public extends m1_c_public implements  m1_i_private, m1_i_public {
                                                                    ~~~~~~~~~~~~
-!!! error TS2019: Exported class 'm1_C11_public' implements private interface 'm1_i_private'.
+!!! privacyClass.ts(38,64): error TS2019: Exported class 'm1_C11_public' implements private interface 'm1_i_private'.
         }
         export class m1_C12_public extends m1_c_private implements  m1_i_private, m1_i_public {
                                            ~~~~~~~~~~~~
-!!! error TS2018: Exported class 'm1_C12_public' extends private class 'm1_c_private'.
+!!! privacyClass.ts(40,40): error TS2018: Exported class 'm1_C12_public' extends private class 'm1_c_private'.
                                                                     ~~~~~~~~~~~~
-!!! error TS2019: Exported class 'm1_C12_public' implements private interface 'm1_i_private'.
+!!! privacyClass.ts(40,65): error TS2019: Exported class 'm1_C12_public' implements private interface 'm1_i_private'.
         }
     }
     
@@ -118,7 +118,7 @@
     }
     export class glo_C4_public extends glo_c_private {
                                        ~~~~~~~~~~~~~
-!!! error TS2018: Exported class 'glo_C4_public' extends private class 'glo_c_private'.
+!!! privacyClass.ts(108,36): error TS2018: Exported class 'glo_C4_public' extends private class 'glo_c_private'.
     }
     
     class glo_C5_private implements glo_i_public {
@@ -129,7 +129,7 @@
     }
     export class glo_C8_public implements glo_i_private {
                                           ~~~~~~~~~~~~~
-!!! error TS2019: Exported class 'glo_C8_public' implements private interface 'glo_i_private'.
+!!! privacyClass.ts(117,39): error TS2019: Exported class 'glo_C8_public' implements private interface 'glo_i_private'.
     }
     
     class glo_C9_private extends glo_c_public implements glo_i_private, glo_i_public {
@@ -138,11 +138,11 @@
     }
     export class glo_C11_public extends glo_c_public implements  glo_i_private, glo_i_public {
                                                                  ~~~~~~~~~~~~~
-!!! error TS2019: Exported class 'glo_C11_public' implements private interface 'glo_i_private'.
+!!! privacyClass.ts(124,62): error TS2019: Exported class 'glo_C11_public' implements private interface 'glo_i_private'.
     }
     export class glo_C12_public extends glo_c_private implements  glo_i_private, glo_i_public {
                                         ~~~~~~~~~~~~~
-!!! error TS2018: Exported class 'glo_C12_public' extends private class 'glo_c_private'.
+!!! privacyClass.ts(126,37): error TS2018: Exported class 'glo_C12_public' extends private class 'glo_c_private'.
                                                                   ~~~~~~~~~~~~~
-!!! error TS2019: Exported class 'glo_C12_public' implements private interface 'glo_i_private'.
+!!! privacyClass.ts(126,63): error TS2019: Exported class 'glo_C12_public' implements private interface 'glo_i_private'.
     }

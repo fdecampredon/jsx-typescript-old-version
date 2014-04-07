@@ -7,7 +7,7 @@
     
     var a: A;
            ~
-!!! error TS2095: Could not find symbol 'A'.
+!!! assignmentCompatWithStringIndexer3.ts(7,8): error TS2095: Could not find symbol 'A'.
     var b1: { [x: string]: string; }
     a = b1; // error
     b1 = a; // error
@@ -22,11 +22,11 @@
             var b: { [x: string]: string; }
             a = b; // error
             ~
-!!! error TS2012: Cannot convert '{ [x: string]: string; }' to 'A<T>':
+!!! assignmentCompatWithStringIndexer3.ts(20,9): error TS2012: Cannot convert '{ [x: string]: string; }' to 'A<T>':
 !!! 	Index signatures of types '{ [x: string]: string; }' and 'A<T>' are incompatible.
             b = a; // error
             ~
-!!! error TS2012: Cannot convert 'A<T>' to '{ [x: string]: string; }':
+!!! assignmentCompatWithStringIndexer3.ts(21,9): error TS2012: Cannot convert 'A<T>' to '{ [x: string]: string; }':
 !!! 	Index signatures of types 'A<T>' and '{ [x: string]: string; }' are incompatible.
         }
     }

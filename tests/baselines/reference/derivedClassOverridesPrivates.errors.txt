@@ -5,7 +5,7 @@
     
     class Derived extends Base {
           ~~~~~~~
-!!! error TS2141: Class 'Derived' cannot extend class 'Base':
+!!! derivedClassOverridesPrivates.ts(5,7): error TS2141: Class 'Derived' cannot extend class 'Base':
 !!! 	Types 'Derived' and 'Base' define property 'x' as private.
         private x: { foo: string; bar: string; }; // error
     }
@@ -16,7 +16,7 @@
     
     class Derived2 extends Base2 {
           ~~~~~~~~
-!!! error TS2141: Class 'Derived2' cannot extend class 'Base2':
+!!! derivedClassOverridesPrivates.ts(13,7): error TS2141: Class 'Derived2' cannot extend class 'Base2':
 !!! 	Types 'Derived2' and 'Base2' define static property 'y' as private.
         private static y: { foo: string; bar: string; }; // error
     }

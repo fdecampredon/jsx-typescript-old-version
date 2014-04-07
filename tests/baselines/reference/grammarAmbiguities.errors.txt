@@ -8,13 +8,13 @@
     f(g<A, B>(7));
     f(g < A, B > 7); // Should error
     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! grammarAmbiguities.ts(8,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! grammarAmbiguities.ts(8,1): error TS2087: Could not select overload for 'call' expression.
     f(g < A, B > +(7)); // Should error
     ~
-!!! error TS2081: Supplied parameters do not match any signature of call target.
+!!! grammarAmbiguities.ts(9,1): error TS2081: Supplied parameters do not match any signature of call target.
     ~
-!!! error TS2087: Could not select overload for 'call' expression.
+!!! grammarAmbiguities.ts(9,1): error TS2087: Could not select overload for 'call' expression.
     
     

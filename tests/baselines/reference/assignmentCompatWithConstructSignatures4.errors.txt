@@ -52,7 +52,7 @@
             var b8: new <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U; 
             a8 = b8; // error, type mismatch
             ~~
-!!! error TS2012: Cannot convert 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
+!!! assignmentCompatWithConstructSignatures4.ts(52,9): error TS2012: Cannot convert 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' to 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived':
 !!! 	Construct signatures of types 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' and 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' are incompatible:
 !!! 		Call signatures of types '(arg2: { foo: number; }) => any' and '(arg2: Base) => Derived' are incompatible:
 !!! 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
@@ -62,7 +62,7 @@
 !!! 			Types of property 'foo' of types '{ foo: number; }' and 'Base' are incompatible.
             b8 = a8; // error
             ~~
-!!! error TS2012: Cannot convert 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
+!!! assignmentCompatWithConstructSignatures4.ts(53,9): error TS2012: Cannot convert 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' to 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U':
 !!! 	Construct signatures of types 'new(x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived' and 'new<T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: number; }) => U) => (r: T) => U' are incompatible:
 !!! 		Call signatures of types '(arg2: Base) => Derived' and '(arg2: { foo: number; }) => any' are incompatible:
 !!! 			Types of property 'foo' of types 'Base' and '{ foo: number; }' are incompatible.
@@ -95,25 +95,25 @@
             var b16: new <T>(x: (a: T) => T) => T[];
             a16 = b16; // error
             ~~~
-!!! error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => T[]' to '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }':
+!!! assignmentCompatWithConstructSignatures4.ts(77,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => T[]' to '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }':
 !!! 	Construct signatures of types 'new<T>(x: (a: T) => T) => T[]' and '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' are incompatible:
 !!! 		Type '{ new(a: number): number; new(a?: number): number; }' requires a construct signature, but type '(a: any) => any' lacks one.
 !!! 		Type '(a: any) => any' requires a call signature, but type '{ new(a: number): number; new(a?: number): number; }' lacks one.
             b16 = a16; // error
             ~~~
-!!! error TS2012: Cannot convert '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' to 'new<T>(x: (a: T) => T) => T[]':
+!!! assignmentCompatWithConstructSignatures4.ts(78,9): error TS2012: Cannot convert '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' to 'new<T>(x: (a: T) => T) => T[]':
 !!! 	Construct signatures of types '{ new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }' and 'new<T>(x: (a: T) => T) => T[]' are incompatible.
     
             var b17: new <T>(x: (a: T) => T) => any[];
             a17 = b17; // error
             ~~~
-!!! error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => any[]' to '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }':
+!!! assignmentCompatWithConstructSignatures4.ts(81,9): error TS2012: Cannot convert 'new<T>(x: (a: T) => T) => any[]' to '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }':
 !!! 	Construct signatures of types 'new<T>(x: (a: T) => T) => any[]' and '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' are incompatible:
 !!! 		Type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' requires a construct signature, but type '(a: any) => any' lacks one.
 !!! 		Type '(a: any) => any' requires a call signature, but type '{ new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }' lacks one.
             b17 = a17; // error
             ~~~
-!!! error TS2012: Cannot convert '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' to 'new<T>(x: (a: T) => T) => any[]':
+!!! assignmentCompatWithConstructSignatures4.ts(82,9): error TS2012: Cannot convert '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' to 'new<T>(x: (a: T) => T) => any[]':
 !!! 	Construct signatures of types '{ new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }' and 'new<T>(x: (a: T) => T) => any[]' are incompatible.
         }
     

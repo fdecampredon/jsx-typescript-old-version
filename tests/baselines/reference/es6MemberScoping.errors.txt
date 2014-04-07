@@ -9,7 +9,7 @@
         }
         public _store = store; // should be an error.
                         ~~~~~
-!!! error TS2095: Could not find symbol 'store'.
+!!! es6MemberScoping.ts(9,21): error TS2095: Could not find symbol 'store'.
     }
     
     class Foo2 {

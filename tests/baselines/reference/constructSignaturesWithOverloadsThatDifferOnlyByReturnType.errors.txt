@@ -13,18 +13,18 @@
         new(x: number, y: string): C;
         new(x: number, y: string): C2<number>; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithOverloadsThatDifferOnlyByReturnType.ts(13,5): error TS2147: Duplicate overload construct signature.
     }
     
     interface I2<T> {
         new (x: T, y: string): C2<number>;
         new (x: T, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithOverloadsThatDifferOnlyByReturnType.ts(18,5): error TS2147: Duplicate overload construct signature.
         new <T>(x: T, y: string): C2<T>;
         new <T>(x: T, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithOverloadsThatDifferOnlyByReturnType.ts(20,5): error TS2147: Duplicate overload construct signature.
     
     }
     
@@ -32,12 +32,12 @@
         new (x: number, y: string): C2<number>;
         new (x: number, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithOverloadsThatDifferOnlyByReturnType.ts(26,5): error TS2147: Duplicate overload construct signature.
     }
     
     var b: {
         new <T>(x: T, y: string): C2<T>;
         new <T>(x: T, y: string): C; // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2147: Duplicate overload construct signature.
+!!! constructSignaturesWithOverloadsThatDifferOnlyByReturnType.ts(31,5): error TS2147: Duplicate overload construct signature.
     }

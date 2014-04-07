@@ -2,12 +2,12 @@
     interface I {
         x1(a: number, callback: (x: 'hi') => number);
                                 ~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! overloadOnConstInBaseWithBadImplementationInDerived.ts(2,29): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
     }
     
     class C implements I {
         x1(a: number, callback: (x: 'hi') => number) { // error
                                 ~~~~~~~~~~~~~~~~~~~
-!!! error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
+!!! overloadOnConstInBaseWithBadImplementationInDerived.ts(6,29): error TS2154: Specialized overload signature is not assignable to any non-specialized signature.
         }
     }

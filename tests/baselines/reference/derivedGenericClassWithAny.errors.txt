@@ -30,11 +30,11 @@
         x: T;
         get X(): T { return ''; } // error
                             ~~
-!!! error TS2011: Cannot convert 'string' to 'T'.
+!!! derivedGenericClassWithAny.ts(30,25): error TS2011: Cannot convert 'string' to 'T'.
         foo(): T {
             return ''; // error
                    ~~
-!!! error TS2011: Cannot convert 'string' to 'T'.
+!!! derivedGenericClassWithAny.ts(32,16): error TS2011: Cannot convert 'string' to 'T'.
         }
     }
     
@@ -45,6 +45,6 @@
     c = d;
     c = e;
     ~
-!!! error TS2012: Cannot convert 'E<string>' to 'C<number>':
+!!! derivedGenericClassWithAny.ts(41,1): error TS2012: Cannot convert 'E<string>' to 'C<number>':
 !!! 	Types of property 'x' of types 'E<string>' and 'C<number>' are incompatible.
     var r = c.foo(); // e.foo would return string

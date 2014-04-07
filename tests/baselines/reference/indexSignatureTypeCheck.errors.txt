@@ -16,20 +16,21 @@
         [...p3: any[]];
         [p4: string, p5?: string];
                    ~
-!!! error TS1005: ']' expected.
+!!! indexSignatureTypeCheck.ts(16,16): error TS1005: ']' expected.
                                 ~
-!!! error TS1005: ';' expected.
+!!! indexSignatureTypeCheck.ts(16,29): error TS1005: ';' expected.
                                  ~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! indexSignatureTypeCheck.ts(16,30): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
         ~~~~~~~~~~~
-!!! error TS2232: Duplicate string index signature.
+!!! indexSignatureTypeCheck.ts(16,5): error TS2232: Duplicate string index signature. Additional locations:
+!!! 	indexSignatureTypeCheck.ts(14,5)
         [p6: string, ...p7: any[]];
                    ~
-!!! error TS1005: ']' expected.
+!!! indexSignatureTypeCheck.ts(17,16): error TS1005: ']' expected.
                      ~~~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! indexSignatureTypeCheck.ts(17,18): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
                                  ~
-!!! error TS1005: ';' expected.
+!!! indexSignatureTypeCheck.ts(17,30): error TS1005: ';' expected.
                                   ~
-!!! error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
+!!! indexSignatureTypeCheck.ts(17,31): error TS1008: Unexpected token; 'call, construct, index, property or function signature' expected.
     }

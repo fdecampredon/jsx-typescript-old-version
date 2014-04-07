@@ -9,12 +9,12 @@
     
             static MakeHead(): List<T> {
                                     ~
-!!! error TS2099: Static members cannot reference class type parameters.
+!!! staticMethodReferencingTypeArgument1.ts(9,33): error TS2099: Static members cannot reference class type parameters.
                 var entry: List<T> = new List<T>(true, null); // can't access T here
                                 ~
-!!! error TS2099: Static members cannot reference class type parameters.
+!!! staticMethodReferencingTypeArgument1.ts(10,29): error TS2099: Static members cannot reference class type parameters.
                                               ~
-!!! error TS2099: Static members cannot reference class type parameters.
+!!! staticMethodReferencingTypeArgument1.ts(10,43): error TS2099: Static members cannot reference class type parameters.
                 entry.prev = entry;
                 entry.next = entry;
                 return entry;

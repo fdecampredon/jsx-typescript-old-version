@@ -5,5 +5,5 @@
     }
     var z1: number = foo1({ x: undefined, y: "def" });  // Best common type is any
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2011: Cannot convert 'string' to 'number'.
+!!! widenToAny1.ts(5,5): error TS2011: Cannot convert 'string' to 'number'.
     

@@ -10,7 +10,7 @@
     // error
     class Derived extends Base {
           ~~~~~~~
-!!! error TS2141: Class 'Derived' cannot extend class 'Base':
+!!! derivedClassFunctionOverridesBaseClassAccessor.ts(10,7): error TS2141: Class 'Derived' cannot extend class 'Base':
 !!! 	Class 'Derived' defines instance member function 'x', but extended class 'Base' defines it as instance member accessor.
         x() {
             return 1;

@@ -3,14 +3,14 @@
         static get x() { return 1; }
         static get x() { return 1; } // error
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2015: Getter 'x' already declared.
+!!! twoAccessorsWithSameName2.ts(3,5): error TS2015: Getter 'x' already declared.
     }
     
     class D {
         static set x(v) {  }
         static set x(v) {  } // error
         ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2016: Setter 'x' already declared.
+!!! twoAccessorsWithSameName2.ts(8,5): error TS2016: Setter 'x' already declared.
     }
     
     class E {

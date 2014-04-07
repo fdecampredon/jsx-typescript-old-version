@@ -10,7 +10,7 @@
     
     class C2 implements ifoo { // ERROR - still need 'y'
           ~~
-!!! error TS2137: Class C2 declares interface ifoo but does not implement it:
+!!! optionalPropertiesInClasses.ts(10,7): error TS2137: Class C2 declares interface ifoo but does not implement it:
 !!! 	Type 'C2' is missing property 'y' from type 'ifoo'.
         public x:number;
     }

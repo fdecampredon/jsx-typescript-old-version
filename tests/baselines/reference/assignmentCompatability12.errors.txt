@@ -9,5 +9,5 @@
     }
     __test2__.__val__obj = __test1__.__val__obj4
     ~~~~~~~~~~~~~~~~~~~~
-!!! error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: string; }':
+!!! assignmentCompatability12.ts(9,1): error TS2012: Cannot convert '__test1__.interfaceWithPublicAndOptional<number, string>' to '{ one: string; }':
 !!! 	Types of property 'one' of types '__test1__.interfaceWithPublicAndOptional<number, string>' and '{ one: string; }' are incompatible.

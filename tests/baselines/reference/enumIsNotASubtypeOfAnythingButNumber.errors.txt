@@ -18,7 +18,7 @@
         [x: string]: string;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'string'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(18,5): error TS2171: All named properties must be assignable to string indexer type 'string'.
     }
     
     
@@ -26,7 +26,7 @@
         [x: string]: boolean;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'boolean'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(24,5): error TS2171: All named properties must be assignable to string indexer type 'boolean'.
     }
     
     
@@ -34,7 +34,7 @@
         [x: string]: Date;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'Date'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(30,5): error TS2171: All named properties must be assignable to string indexer type 'Date'.
     }
     
     
@@ -42,7 +42,7 @@
         [x: string]: RegExp;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'RegExp'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(36,5): error TS2171: All named properties must be assignable to string indexer type 'RegExp'.
     }
     
     
@@ -50,7 +50,7 @@
         [x: string]: { bar: number };
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type '{ bar: number; }'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(42,5): error TS2171: All named properties must be assignable to string indexer type '{ bar: number; }'.
     }
     
     
@@ -58,7 +58,7 @@
         [x: string]: number[];
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'number[]'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(48,5): error TS2171: All named properties must be assignable to string indexer type 'number[]'.
     }
     
     
@@ -66,7 +66,7 @@
         [x: string]: I8;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'I8'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(54,5): error TS2171: All named properties must be assignable to string indexer type 'I8'.
     }
     
     class A { foo: number; }
@@ -74,7 +74,7 @@
         [x: string]: A;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'A'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(60,5): error TS2171: All named properties must be assignable to string indexer type 'A'.
     }
     
     class A2<T> { foo: T; }
@@ -82,7 +82,7 @@
         [x: string]: A2<number>;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'A2<number>'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(66,5): error TS2171: All named properties must be assignable to string indexer type 'A2<number>'.
     }
     
     
@@ -90,7 +90,7 @@
         [x: string]: (x) => number;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type '(x: any) => number'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(72,5): error TS2171: All named properties must be assignable to string indexer type '(x: any) => number'.
     }
     
     
@@ -98,7 +98,7 @@
         [x: string]: <T>(x: T) => T;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type '<T>(x: T) => T'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(78,5): error TS2171: All named properties must be assignable to string indexer type '<T>(x: T) => T'.
     }
     
     
@@ -107,7 +107,7 @@
         [x: string]: E2;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'E2'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(85,5): error TS2171: All named properties must be assignable to string indexer type 'E2'.
     }
     
     
@@ -119,7 +119,7 @@
         [x: string]: typeof f;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'typeof f'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(95,5): error TS2171: All named properties must be assignable to string indexer type 'typeof f'.
     }
     
     
@@ -131,7 +131,7 @@
         [x: string]: typeof c;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'typeof c'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(105,5): error TS2171: All named properties must be assignable to string indexer type 'typeof c'.
     }
     
     
@@ -139,17 +139,17 @@
         [x: string]: T;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'T'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(111,5): error TS2171: All named properties must be assignable to string indexer type 'T'.
     }
     
     
     interface I18<T, U extends T> {
                      ~~~~~~~~~~~
-!!! error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(115,18): error TS2229: Constraint of a type parameter cannot reference any type parameter from the same type parameter list.
         [x: string]: U;
         foo: E;
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'U'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(117,5): error TS2171: All named properties must be assignable to string indexer type 'U'.
     }
     
     
@@ -157,7 +157,7 @@
         [x: string]: Object;
         foo: E; // BUG 831833
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type 'Object'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(123,5): error TS2171: All named properties must be assignable to string indexer type 'Object'.
     }
     
     
@@ -165,5 +165,5 @@
         [x: string]: {};
         foo: E; // BUG 831833
         ~~~~~~
-!!! error TS2171: All named properties must be assignable to string indexer type '{}'.
+!!! enumIsNotASubtypeOfAnythingButNumber.ts(129,5): error TS2171: All named properties must be assignable to string indexer type '{}'.
     }

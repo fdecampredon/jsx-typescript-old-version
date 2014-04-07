@@ -3,6 +3,6 @@
         constructor(x: number);
         constructor(x: number);
         ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2145: Duplicate constructor overload signature.
+!!! duplicateConstructorOverloadSignature.ts(3,5): error TS2145: Duplicate constructor overload signature.
         constructor(x: any) { }
     }

@@ -2,7 +2,7 @@
     module M {
         export class C implements I {} // this should be an unresolved symbol I error
                                   ~
-!!! error TS2095: Could not find symbol 'I'.
+!!! bind1.ts(2,31): error TS2095: Could not find symbol 'I'.
     }
     
     

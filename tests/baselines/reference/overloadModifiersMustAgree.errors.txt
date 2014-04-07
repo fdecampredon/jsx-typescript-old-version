@@ -2,23 +2,23 @@
     class baz {
         public foo();
         ~~~~~~~~~~~~~
-!!! error TS2150: Overload signatures must all be public or private.
+!!! overloadModifiersMustAgree.ts(2,5): error TS2150: Overload signatures must all be public or private.
         private foo(bar?: any) { } // error - access modifiers do not agree
     }
     
     declare function bar();
     ~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2152: Overload signatures must all be ambient or non-ambient.
+!!! overloadModifiersMustAgree.ts(6,1): error TS2152: Overload signatures must all be ambient or non-ambient.
     export function bar(s: string);
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2151: Overload signatures must all be exported or not exported.
+!!! overloadModifiersMustAgree.ts(7,1): error TS2151: Overload signatures must all be exported or not exported.
     function bar(s?: string) { }
     
     interface I {
         foo? ();
         foo(s: string);
         ~~~~~~~~~~~~~~
-!!! error TS2153: Overload signatures must all be optional or required.
+!!! overloadModifiersMustAgree.ts(12,5): error TS2153: Overload signatures must all be optional or required.
     }
     
     
