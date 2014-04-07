@@ -434,11 +434,11 @@ module TypeScript {
 
         public startWalkingTypes(symbol1: PullTypeSymbol, symbol2: PullTypeSymbol) {
             if (!this.enclosingTypeWalker1) {
-                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
+                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker(this.resolver.semanticInfoChain);
             }
             var stateWhenStartedWalkingTypes1 = this.enclosingTypeWalker1.startWalkingType(symbol1);
             if (!this.enclosingTypeWalker2) {
-                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
+                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker(this.resolver.semanticInfoChain);
             }
             var stateWhenStartedWalkingTypes2 = this.enclosingTypeWalker2.startWalkingType(symbol2);            
             return {
@@ -457,11 +457,11 @@ module TypeScript {
 
         public setEnclosingTypeForSymbols(symbol1: PullSymbol, symbol2: PullSymbol) {
             if (!this.enclosingTypeWalker1) {
-                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker();
+                this.enclosingTypeWalker1 = new PullTypeEnclosingTypeWalker(this.resolver.semanticInfoChain);
             }
             var enclosingTypeWalkerState1  = this.enclosingTypeWalker1.setEnclosingTypeForSymbol(symbol1);
             if (!this.enclosingTypeWalker2) {
-                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker();
+                this.enclosingTypeWalker2 = new PullTypeEnclosingTypeWalker(this.resolver.semanticInfoChain);
             }
             var enclosingTypeWalkerState2 = this.enclosingTypeWalker2.setEnclosingTypeForSymbol(symbol2);
             return {

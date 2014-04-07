@@ -56,7 +56,7 @@ module TypeScript.Services {
                     if (firstParentDecl.kind === TypeScript.PullElementKind.ObjectLiteral &&
                         secondParentDecl.kind === TypeScript.PullElementKind.ObjectLiteral) {
 
-                        return firstParentDecl.ast() === secondParentDecl.ast();
+                        return firstParentDecl.ast(firstSymbol.semanticInfoChain) === secondParentDecl.ast(secondSymbol.semanticInfoChain);
                     }
                 }
 

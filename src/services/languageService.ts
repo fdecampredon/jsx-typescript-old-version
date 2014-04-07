@@ -79,6 +79,8 @@ module TypeScript.Services {
         getEmitOutput(fileName: string): TypeScript.EmitOutput;
 
         getSyntaxTree(fileName: string): TypeScript.SyntaxTree;
+
+        dispose(): void;
     }
 
     export function logInternalError(logger: TypeScript.ILogger, err: Error) {

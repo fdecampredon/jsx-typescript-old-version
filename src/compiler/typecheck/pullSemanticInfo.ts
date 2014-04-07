@@ -55,8 +55,8 @@ module TypeScript {
         private _fileNames: string[] = null;
 
         constructor(private compiler: TypeScriptCompiler, private logger: ILogger) {
-            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, this, /*isExternalModule:*/ false);
-            this.documents[0] = new Document(this.compiler, this, /*fileName:*/ "", /*referencedFiles:*/[], /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null, globalDecl);
+            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, /*isExternalModule:*/ false);
+            this.documents[0] = new Document(this.compiler.compilationSettings(), /*fileName:*/ "", /*referencedFiles:*/[], /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null, globalDecl);
 
             this.anyTypeDecl = new NormalPullDecl("any", "any", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
             this.booleanTypeDecl = new NormalPullDecl("boolean", "boolean", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
@@ -66,14 +66,15 @@ module TypeScript {
             
             // add the global primitive values for "null" and "undefined"
             // Because you cannot reference them by name, they're not parented by any actual decl.
-            this.nullTypeDecl = new RootPullDecl("null", "", PullElementKind.Primitive, PullElementFlags.None, this, /*isExternalModule:*/ false);
-            this.undefinedTypeDecl = new RootPullDecl("undefined", "", PullElementKind.Primitive, PullElementFlags.None, this, /*isExternalModule:*/ false);
+            this.nullTypeDecl = new RootPullDecl("null", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
+            this.undefinedTypeDecl = new RootPullDecl("undefined", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
             this.undefinedValueDecl = new NormalPullDecl("undefined", "undefined", PullElementKind.Variable, PullElementFlags.Ambient, globalDecl);
 
             this.invalidate();
         }
 
         public getDocument(fileName: string): Document {
+            fileName = TypeScript.switchToForwardSlashes(fileName);
             var document = this.fileNameToDocument[fileName];
             return document || null;
         }
@@ -95,7 +96,7 @@ module TypeScript {
         // Must pass in a new decl, or an old symbol that has a decl available for ownership transfer
         private bindPrimitiveSymbol<TSymbol extends PullSymbol>(decl: PullDecl, newSymbol: TSymbol): TSymbol {
             newSymbol.addDeclaration(decl);
-            decl.setSymbol(newSymbol);
+            this.setSymbolForDecl(decl, newSymbol);
             newSymbol.setResolved();
 
             return newSymbol;
@@ -104,14 +105,14 @@ module TypeScript {
         // Creates a new type symbol to be bound to this decl. Must be called during
         // invalidation after every edit.
         private addPrimitiveTypeSymbol(decl: PullDecl): PullPrimitiveTypeSymbol {
-            var newSymbol = new PullPrimitiveTypeSymbol(decl.name);
+            var newSymbol = new PullPrimitiveTypeSymbol(decl.name, this);
             return this.bindPrimitiveSymbol(decl, newSymbol);
         }
 
         // Creates a new value symbol to be bound to this decl, and has the specified type.
         // Must be called during invalidation after every edit.
         private addPrimitiveValueSymbol(decl: PullDecl, type: PullTypeSymbol): PullSymbol {
-            var newSymbol = new PullSymbol(decl.name, PullElementKind.Variable);
+            var newSymbol = new PullSymbol(decl.name, PullElementKind.Variable, this);
             newSymbol.type = type;
             return this.bindPrimitiveSymbol(decl, newSymbol);
         }
@@ -128,9 +129,9 @@ module TypeScript {
             this.undefinedValueSymbol = this.addPrimitiveValueSymbol(this.undefinedValueDecl, this.undefinedTypeSymbol);
 
             // other decls not reachable from the globalDecl
-            var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, /*parentDecl*/null, /*semanticInfoChain*/ this);
-            var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType);
-            emptyTypeDecl.setSymbol(emptyTypeSymbol);
+            var emptyTypeDecl = new PullSynthesizedDecl("{}", "{}", PullElementKind.ObjectType, PullElementFlags.None, /*parentDecl*/null);
+            var emptyTypeSymbol = new PullTypeSymbol("{}", PullElementKind.ObjectType, this);
+            this.setSymbolForDecl(emptyTypeDecl, emptyTypeSymbol);
             emptyTypeSymbol.addDeclaration(emptyTypeDecl);
             emptyTypeSymbol.setResolved();
             this.emptyTypeSymbol = emptyTypeSymbol;
@@ -138,6 +139,7 @@ module TypeScript {
 
         public addDocument(document: Document): void {
             var fileName = document.fileName;
+            fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var existingIndex = ArrayUtilities.indexOf(this.documents, u => u.fileName === fileName);
             if (existingIndex < 0) {
@@ -157,6 +159,7 @@ module TypeScript {
 
         public removeDocument(fileName: string): void {
             Debug.assert(fileName !== "", "Can't remove the semantic info for the global decl.");
+            fileName = TypeScript.switchToForwardSlashes(fileName);
             var index = ArrayUtilities.indexOf(this.documents, u => u.fileName === fileName);
             if (index > 0) {
                 this.fileNameToDocument[fileName] = undefined;
@@ -199,7 +202,7 @@ module TypeScript {
             if (!symbol) {
 
                 for (var i = 0, n = this.documents.length; i < n; i++) {
-                    var topLevelDecl = this.documents[i].topLevelDecl();
+                    var topLevelDecl = this.documents[i].topLevelDecl(this);
 
                     var symbol = this.findTopLevelSymbolInDecl(topLevelDecl, name, kind, doNotGoPastThisDecl);
                     if (symbol) {
@@ -226,7 +229,7 @@ module TypeScript {
             // past, then we have to stop searching at the position of that decl.  Otherwise, we
             // search the entire file.
             var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName()
-                ? doNotGoPastThisDecl.ast().start()
+                ? doNotGoPastThisDecl.ast(this).start()
                 : -1
 
             var foundDecls = topLevelDecl.searchChildDecls(name, kind);
@@ -236,13 +239,13 @@ module TypeScript {
 
                 // This decl was at or past the stopping point.  Don't search any further.
                 if (doNotGoPastThisPosition !== -1 &&
-                    foundDecl.ast() &&
-                    foundDecl.ast().start() > doNotGoPastThisPosition) {
+                    foundDecl.ast(this) &&
+                    foundDecl.ast(this).start() > doNotGoPastThisPosition) {
 
                     break;
                 }
 
-                var symbol = foundDecls[j].getSymbol();
+                var symbol = foundDecls[j].getSymbol(this);
                 if (symbol) {
                     return symbol;
                 }
@@ -277,13 +280,13 @@ module TypeScript {
             var dtsSymbol: PullContainerSymbol;
             for (var i = 0; i < this.documents.length; i++) {
                 var document = this.documents[i];
-                var topLevelDecl = document.topLevelDecl(); // Script
+                var topLevelDecl = document.topLevelDecl(this); // Script
 
                 if (topLevelDecl.isExternalModule()) {
                     var isTsFile = document.fileName === tsFile;
                     if (isTsFile || document.fileName === dtsFile) {
                         var dynamicModuleDecl = topLevelDecl.getChildDecls()[0];
-                        symbol = <PullContainerSymbol>dynamicModuleDecl.getSymbol();
+                        symbol = <PullContainerSymbol>dynamicModuleDecl.getSymbol(this);
 
                         if (isTsFile) {
                             this.symbolCache[tsCacheID] = symbol;
@@ -317,12 +320,12 @@ module TypeScript {
                 symbol = null;
                 for (var i = 0; i < this.documents.length; i++) {
                     var document = this.documents[i];
-                    var topLevelDecl = document.topLevelDecl();
+                    var topLevelDecl = document.topLevelDecl(this);
 
                     if (!topLevelDecl.isExternalModule()) {
                         var dynamicModules = topLevelDecl.searchChildDecls(id, PullElementKind.DynamicModule);
                         if (dynamicModules.length) {
-                            symbol = <PullContainerSymbol>dynamicModules[0].getSymbol();
+                            symbol = <PullContainerSymbol>dynamicModules[0].getSymbol(this);
                             break;
                         }
                     }
@@ -430,16 +433,16 @@ module TypeScript {
                 if (hasFlag(decl.kind, PullElementKind.SomeContainer)) {
                     var valueDecl = decl.getValueDecl();
                     if (valueDecl) {
-                        valueDecl.ensureSymbolIsBound();
+                        valueDecl.ensureSymbolIsBound(this);
                     }
                 }
-                symbol = decl.getSymbol();
+                symbol = decl.getSymbol(this);
 
                 if (symbol) {
                     // This is just a workaround for making sure all the declarations are bound 
                     // It can be removed later when binder can deal with all declarations of any type
                     for (var i = 1; i < decls.length; i++) {
-                        decls[i].ensureSymbolIsBound();
+                        decls[i].ensureSymbolIsBound(this);
                     }
 
                     this.symbolCache[cacheID] = symbol;
@@ -493,7 +496,7 @@ module TypeScript {
                 // document that does not represent an editable file, there is no reason to ever
                 // invalidate its decls. Doing this would break the invariant that all decls of
                 // unedited files should persist across edits.
-                if (this.settingsChangeAffectsSyntax(oldSettings, newSettings)) {
+                if (settingsChangeAffectsSyntax(oldSettings, newSettings)) {
                     for (var i = 1, n = this.documents.length; i < n; i++) {
                         this.documents[i].invalidate();
                     }
@@ -507,20 +510,6 @@ module TypeScript {
 
             var cleanEnd = new Date().getTime();
             // this.logger.log("   time to invalidate: " + (cleanEnd - cleanStart));
-        }
-
-        private settingsChangeAffectsSyntax(before: ImmutableCompilationSettings, after: ImmutableCompilationSettings): boolean {
-            // If the automatic semicolon insertion option has changed, then we have to dump all
-            // syntax trees in order to reparse them with the new option.
-            //
-            // If the language version changed, then that affects what types of things we parse. So
-            // we have to dump all syntax trees.
-            //
-            // If propagateEnumConstants changes, then that affects the constant value data we've 
-            // stored in the ISyntaxElement.
-            return before.allowAutomaticSemicolonInsertion() !== after.allowAutomaticSemicolonInsertion() ||
-                before.codeGenTarget() !== after.codeGenTarget() ||
-                before.propagateEnumConstants() !== after.propagateEnumConstants();
         }
 
         public setSymbolForAST(ast: ISyntaxElement, symbol: PullSymbol): void {
@@ -603,8 +592,8 @@ module TypeScript {
         public addSyntheticIndexSignature(containingDecl: PullDecl, containingSymbol: PullTypeSymbol, ast: ISyntaxElement,
             indexParamName: string, indexParamType: PullTypeSymbol, returnType: PullTypeSymbol): void {
 
-            var indexSignature = new PullSignatureSymbol(PullElementKind.IndexSignature);
-            var indexParameterSymbol = new PullSymbol(indexParamName, PullElementKind.Parameter);
+            var indexSignature = new PullSignatureSymbol(PullElementKind.IndexSignature, this);
+            var indexParameterSymbol = new PullSymbol(indexParamName, PullElementKind.Parameter, this);
             indexParameterSymbol.type = indexParamType;
             indexSignature.addParameter(indexParameterSymbol);
             indexSignature.returnType = returnType;
@@ -613,10 +602,10 @@ module TypeScript {
 
             containingSymbol.addIndexSignature(indexSignature);
 
-            var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl, containingDecl.semanticInfoChain);
-            var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl, containingDecl.semanticInfoChain);
-            indexSigDecl.setSignatureSymbol(indexSignature);
-            indexParamDecl.setSymbol(indexParameterSymbol);
+            var indexSigDecl = new PullSynthesizedDecl("", "", PullElementKind.IndexSignature, PullElementFlags.Signature, containingDecl);
+            var indexParamDecl = new PullSynthesizedDecl(indexParamName, indexParamName, PullElementKind.Parameter, PullElementFlags.None, indexSigDecl);
+            indexSigDecl.setSignatureSymbol(indexSignature, this);
+            this.setSymbolForDecl(indexParamDecl, indexParameterSymbol);
             indexSignature.addDeclaration(indexSigDecl);
             indexParameterSymbol.addDeclaration(indexParamDecl);
         }
@@ -625,14 +614,14 @@ module TypeScript {
             var document = this.getDocument(ast.fileName());
 
             if (document) {
-                return document._getDeclForAST(ast);
+                return document._getDeclForAST(ast, this);
             }
 
             return null;
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            return this.getDocument(ast.fileName()).getEnclosingDecl(ast);
+            return this.getDocument(ast.fileName()).getEnclosingDecl(ast, this);
         }
 
         public setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
@@ -655,7 +644,7 @@ module TypeScript {
         public topLevelDecl(fileName: string): PullDecl {
             var document = this.getDocument(fileName);
             if (document) {
-                return document.topLevelDecl();
+                return document.topLevelDecl(this);
             }
 
             return null;
@@ -663,7 +652,7 @@ module TypeScript {
 
         public topLevelDecls(): PullDecl[] {
             if (!this._topLevelDecls) {
-                this._topLevelDecls = ArrayUtilities.select(this.documents, u => u.topLevelDecl());
+                this._topLevelDecls = ArrayUtilities.select(this.documents, u => u.topLevelDecl(this));
             }
 
             return this._topLevelDecls;

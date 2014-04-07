@@ -11,7 +11,7 @@ module TypeScript.Services {
 
         private static symbolDeclarationIntersectsPosition(symbol: PullSymbol, fileName: string, position: number) {
             var decl = symbol.getDeclarations()[0];
-            if (decl.fileName() === fileName && this.getSpan(decl.ast()).intersectsWithPosition(position)) {
+            if (decl.fileName() === fileName && this.getSpan(decl.ast(symbol.semanticInfoChain)).intersectsWithPosition(position)) {
                 // This is the symbol declaration from the given position in the file
                 return true;
             }

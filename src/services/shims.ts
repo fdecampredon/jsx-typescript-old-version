@@ -175,7 +175,9 @@ module TypeScript.Services {
     }
 
     export class LanguageServiceShimHostAdapter implements TypeScript.Services.ILanguageServiceHost {
+        private hostIdentifier: string;
         constructor(private shimHost: ILanguageServiceShimHost) {
+            this.hostIdentifier = shimHost.getHostIdentifier();
         }
 
         public information(): boolean {
@@ -270,6 +272,10 @@ module TypeScript.Services {
         public getParentDirectory(path: string): string {
             return this.shimHost.getParentDirectory(path);
         }
+
+        public getHostIdentifier(): string {
+            return this.hostIdentifier;
+        }
     }
 
     export function simpleForwardCall(logger: TypeScript.ILogger, actionDescription: string, action: () =>any): any {
@@ -322,6 +328,7 @@ module TypeScript.Services {
         // some external native objects holds onto us (e.g. Com/Interop).
         public dispose(dummy: any): void {
             this.logger.log("dispose()");
+            this.languageService.dispose();
             this.languageService = null;
 
             // force a GC

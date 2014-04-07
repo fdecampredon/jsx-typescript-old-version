@@ -257,7 +257,7 @@ module TypeScript.Services {
         // A cache of all the information about the files on the host side.
         private hostCache: HostCache = null;
 
-        constructor(private host: ILanguageServiceHost, private cancellationToken: CancellationToken) {
+        constructor(private host: ILanguageServiceHost, private documentRegistry: DocumentRegistry, private cancellationToken: CancellationToken) {
             this.logger = this.host;
         }
 
@@ -271,6 +271,8 @@ module TypeScript.Services {
             // Reset the cache at start of every refresh
             this.hostCache = new HostCache(this.host);
 
+            // TODO: adjust state of documents in document registry
+
             var compilationSettings = this.hostCache.compilationSettings();
             
             // If we don't have a compiler, then create a new one.
@@ -278,11 +280,24 @@ module TypeScript.Services {
                 this.compiler = new TypeScript.TypeScriptCompiler(this.logger, compilationSettings);
             }
 
+            // TODO: invalidate documents in registry
+            var oldSettings = this.compiler.compilationSettings();
+
+            var changesInCompilationSettingsAffectSyntax =
+                oldSettings && compilationSettings && !compareDataObjects(oldSettings, compilationSettings) && settingsChangeAffectsSyntax(oldSettings, compilationSettings);
+
             // let the compiler know about the current compilation settings.  
             this.compiler.setCompilationSettings(compilationSettings);
 
             // Now, remove any files from the compiler that are no longer in hte host.
             var compilerFileNames = this.compiler.fileNames();
+
+            if (changesInCompilationSettingsAffectSyntax) {
+                // drop old documents from the registry since compilation settings changed
+                compilerFileNames.forEach(name => this.documentRegistry.removeDocument(name, oldSettings, this.host.getHostIdentifier()))
+            }
+
+
             for (var i = 0, n = compilerFileNames.length; i < n; i++) {
 
                 this.cancellationToken.throwIfCancellationRequested();
@@ -291,6 +306,10 @@ module TypeScript.Services {
 
                 if (!this.hostCache.contains(fileName)) {
                     this.compiler.removeFile(fileName);
+                    if (!changesInCompilationSettingsAffectSyntax) {
+                        // for case if changesInCompilationSettingsAffectSyntax === true - documents should already be unregistered
+                        this.documentRegistry.removeDocument(fileName, oldSettings, this.host.getHostIdentifier());
+                    }
                 }
             }
 
@@ -299,43 +318,45 @@ module TypeScript.Services {
             // know about it.)
             var cache = this.hostCache;
             var hostFileNames = cache.getFileNames();
+
             for (var i = 0, n = hostFileNames.length; i < n; i++) {
                 var fileName = hostFileNames[i];
 
-                if (this.compiler.getDocument(fileName)) {
-                    this.tryUpdateFile(this.compiler, fileName);
+                var document: Document = this.compiler.getDocument(fileName)
+                if (document) {
+                    //
+                    // If the document is the same, assume no update
+                    //
+                    var version = this.hostCache.getVersion(fileName);
+                    var isOpen = this.hostCache.isOpen(fileName);
+                    if (document.version === version && document.isOpen === isOpen) {
+                        continue;
+                    }
+
+                    // Only perform incremental parsing on open files that are being edited.  If a file was
+                    // open, but is now closed, we want to reparse entirely so we don't have any tokens that
+                    // are holding onto expensive script snapshot instances on the host.  Similarly, if a 
+                    // file was closed, then we always want to reparse.  This is so our tree doesn't keep 
+                    // the old buffer alive that represented the file on disk (as the host has moved to a 
+                    // new text buffer).
+                    var textChangeRange: TextChangeRange = null;
+                    if (document.isOpen && isOpen) {
+                        textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
+                    }
+
+                    document = this.documentRegistry.updateDocument(fileName, compilationSettings, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
+                    
+                    //compiler.updateFile(fileName, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
                 }
                 else {
-                    this.compiler.addFile(fileName,
-                        cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName));
+                    var document = this.documentRegistry.acquireDocument(fileName, compilationSettings, cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName), this.host.getHostIdentifier())
+                    // TODO: move snapshot management to DocumentRegistry
+                    this.compiler.addOrUpdateFile(document);
+                    //this.compiler.addFile(fileName,
+                    //    cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName));
                 }
+                this.compiler.addOrUpdateFile(document);
             }
-        }
-
-        private tryUpdateFile(compiler: TypeScript.TypeScriptCompiler, fileName: string): void {
-            var document: TypeScript.Document = this.compiler.getDocument(fileName);
-
-            //
-            // If the document is the same, assume no update
-            //
-            var version = this.hostCache.getVersion(fileName);
-            var isOpen = this.hostCache.isOpen(fileName);
-            if (document.version === version && document.isOpen === isOpen) {
-                return;
-            }
-
-            // Only perform incremental parsing on open files that are being edited.  If a file was
-            // open, but is now closed, we want to reparse entirely so we don't have any tokens that
-            // are holding onto expensive script snapshot instances on the host.  Similarly, if a 
-            // file was closed, then we always want to reparse.  This is so our tree doesn't keep 
-            // the old buffer alive that represented the file on disk (as the host has moved to a 
-            // new text buffer).
-            var textChangeRange: TextChangeRange = null;
-            if (document.isOpen && isOpen) {
-                textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
-            }
-
-            compiler.updateFile(fileName, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
         }
 
         // Methods that defer to the host cache to get the result.
@@ -381,6 +402,11 @@ module TypeScript.Services {
         public getDocument(fileName: string): TypeScript.Document {
             this.synchronizeHostData();
             return this.compiler.getDocument(fileName);
+        }
+
+        public getSemanticInfoChain(): SemanticInfoChain {
+            this.synchronizeHostData();
+            return this.compiler.getSemanticInfoChain();
         }
 
         public getSyntacticDiagnostics(fileName: string): TypeScript.Diagnostic[] {
@@ -451,6 +477,15 @@ module TypeScript.Services {
         public canEmitDeclarations(fileName: string) {
             this.synchronizeHostData();
             return this.compiler.canEmitDeclarations(fileName);
+        }
+
+        public dispose(): void {
+            if (this.compiler) {
+                var fileNames = this.compiler.fileNames();
+                for (var i = 0; i < fileNames.length; ++i) {
+                    this.documentRegistry.removeDocument(fileNames[i], this.compiler.compilationSettings(), this.host.getHostIdentifier());
+                }
+            }
         }
     }
 }

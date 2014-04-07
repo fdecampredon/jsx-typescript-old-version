@@ -126,7 +126,7 @@ module TypeScript {
             return result;
         }
     }
-
+    
     export interface ICancellationToken {
         isCancellationRequested(): boolean;
     }
@@ -149,6 +149,111 @@ module TypeScript {
                 throw new OperationCanceledException();
             }
         }
+    }    
+
+    class DocumentRegistryEntry {
+        public refCount = 1;
+        public owners: string[] = [];
+        constructor(public document: Document) {
+        }
+    }
+
+    export class DocumentRegistry {
+        private buckets: StringHashTable <DocumentRegistryEntry> [] = [];
+
+        private getKeyFromCompilationSettings(settings: ImmutableCompilationSettings): number {
+            var propagateEnumConstants = settings.propagateEnumConstants() ? 1 : 0;
+            var allowAutomaticSemicolonInsertion = settings.allowAutomaticSemicolonInsertion() ? 0 : 1;
+            
+            return propagateEnumConstants << 2 | allowAutomaticSemicolonInsertion << 1 | settings.codeGenTarget() 
+        }
+
+        private getBucketForCompilationSettings(settings: ImmutableCompilationSettings, createIfMissing: boolean): StringHashTable<DocumentRegistryEntry> {
+            var key = this.getKeyFromCompilationSettings(settings);
+            var bucket = this.buckets[key];
+            if (!bucket && createIfMissing) {
+                this.buckets[key] = bucket = new StringHashTable<DocumentRegistryEntry>();
+            }
+            return bucket;
+        }
+
+        private canonicalizeFileName(fileName: string): string {
+            return fileName;//.toLowerCase();
+        }
+
+        static createDocument(
+            compilationSettings: ImmutableCompilationSettings,
+            fileName: string,
+            scriptSnapshot: IScriptSnapshot,
+            byteOrderMark: ByteOrderMark,
+            version: number,
+            isOpen: boolean,
+            referencedFiles: string[]= []): TypeScript.Document {
+            return TypeScript.Document.create_doNotUseDirectly(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+        }
+
+        acquireDocument(
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            byteOrderMark: ByteOrderMark,
+            version: number,
+            isOpen: boolean,
+            owner: string,
+            referencedFiles: string[]= []): TypeScript.Document {
+
+            var canonicalFileName = this.canonicalizeFileName(fileName);
+
+            var bucket = this.getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ true);
+            var entry = bucket.lookup(canonicalFileName);
+            if (!entry) {
+                var document = DocumentRegistry.createDocument(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+
+                entry = new DocumentRegistryEntry(document);
+                bucket.add(canonicalFileName, entry);
+            }
+            else {
+                entry.refCount++;
+            }
+            entry.owners.push(this.canonicalizeFileName(owner));
+            return entry.document;
+        }
+
+        updateDocument(
+            fileName: string,
+            compilationSettings: ImmutableCompilationSettings,
+            scriptSnapshot: IScriptSnapshot,
+            version: number,
+            isOpen: boolean,
+            textChangeRange: TextChangeRange
+            ): TypeScript.Document {
+
+            var bucket = this.getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ false);
+            Debug.assert(bucket);
+            var canonicalFileName = this.canonicalizeFileName(fileName);
+            var entry = bucket.lookup(canonicalFileName);
+            Debug.assert(entry);
+
+            entry.document = entry.document.update_doNotUseDirectly(scriptSnapshot, version, isOpen, textChangeRange);
+            return entry.document;
+        }
+
+        removeDocument(fileName: string, compilationSettings: ImmutableCompilationSettings, owner: string): void {
+            var bucket = this.getBucketForCompilationSettings(compilationSettings, false);
+            Debug.assert(bucket);
+            var canonicalFileName = this.canonicalizeFileName(fileName);
+            var entry = bucket.lookup(canonicalFileName);
+            entry.refCount--;
+
+            var ownerIndex = entry.owners.indexOf(this.canonicalizeFileName(owner));
+            Debug.assert(ownerIndex !== -1);
+            entry.owners.splice(ownerIndex, 1)
+
+            Debug.assert(entry.refCount >= 0);
+            if (entry.refCount === 0) {
+                bucket.remove(canonicalFileName)
+            }
+        }
     }
 
     export class TypeScriptCompiler {
@@ -157,6 +262,10 @@ module TypeScript {
         constructor(public logger: ILogger = new NullLogger(),
                     private _settings: ImmutableCompilationSettings = ImmutableCompilationSettings.defaultSettings()) {
             this.semanticInfoChain = new SemanticInfoChain(this, logger);
+        }
+
+        public getSemanticInfoChain() {
+            return this.semanticInfoChain;
         }
 
         public compilationSettings(): ImmutableCompilationSettings {
@@ -183,32 +292,57 @@ module TypeScript {
             this.semanticInfoChain.invalidate();
         }
 
-        public addFile(fileName: string,
+        public addOrUpdateFile(document: Document): void {
+            // TODO: TypeScript.sourceCharactersCompiled += document. scriptSnapshot.getLength();
+
+            // Note: the semantic info chain will recognize that this is a replacement of an
+            // existing script, and will handle it appropriately.
+            this.semanticInfoChain.addDocument(document);
+        }
+
+        public addFile(
+            fileName: string,
             scriptSnapshot: IScriptSnapshot,
             byteOrderMark: ByteOrderMark,
             version: number,
             isOpen: boolean,
-            referencedFiles: string[] = []): void {
+            referencedFiles: string[]= []): void {
 
             fileName = TypeScript.switchToForwardSlashes(fileName);
-
-            TypeScript.sourceCharactersCompiled += scriptSnapshot.getLength();
-
-            var document = Document.create(this, this.semanticInfoChain, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
-
-            this.semanticInfoChain.addDocument(document);
+            var document = DocumentRegistry.createDocument(this.compilationSettings(), fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+            this.addOrUpdateFile(document);
         }
 
         public updateFile(fileName: string, scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): void {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var document = this.getDocument(fileName);
-            var updatedDocument = document.update(scriptSnapshot, version, isOpen, textChangeRange);
+            var updatedDocument = document.update_doNotUseDirectly(scriptSnapshot, version, isOpen, textChangeRange);
 
             // Note: the semantic info chain will recognize that this is a replacement of an
             // existing script, and will handle it appropriately.
-            this.semanticInfoChain.addDocument(updatedDocument);
+            this.addOrUpdateFile(updatedDocument);
         }
+
+        //    fileName = TypeScript.switchToForwardSlashes(fileName);
+
+        //    TypeScript.sourceCharactersCompiled += scriptSnapshot.getLength();
+
+        //    var document = this.documentRegistry.getDocument(fileName, this._settings, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+
+        //    this.semanticInfoChain.addDocument(document);
+        //}
+
+        //public updateFile(fileName: string, scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): void {
+        //    fileName = TypeScript.switchToForwardSlashes(fileName);
+
+        //    var document = this.getDocument(fileName);
+        //    var updatedDocument = document.update(scriptSnapshot, version, isOpen, textChangeRange);
+
+        //    // Note: the semantic info chain will recognize that this is a replacement of an
+        //    // existing script, and will handle it appropriately.
+        //    this.semanticInfoChain.addDocument(updatedDocument);
+        //}
 
         public removeFile(fileName: string): void {
             fileName = TypeScript.switchToForwardSlashes(fileName);
@@ -1065,7 +1199,7 @@ module TypeScript {
                 return null;
             }
 
-            var astForDecl = decl.ast();
+            var astForDecl = decl.ast(this.semanticInfoChain);
             if (!astForDecl) {
                 return null;
             }
@@ -1075,7 +1209,7 @@ module TypeScript {
                 return null;
             }
 
-            var symbol = decl.getSymbol();
+            var symbol = decl.getSymbol(this.semanticInfoChain);
             resolver.resolveDeclaredSymbol(symbol, context.resolutionContext);
             symbol.setUnresolved();
 

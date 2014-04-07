@@ -162,7 +162,7 @@ module TypeScript {
         //     owner: /*Any type here can only refere to type parameter T*/;
         //     map<U>(a: /*any type parameter here can only refere to U and T*/
         // }
-        export function getAllowedToReferenceTypeParametersFromDecl(decl: PullDecl): PullTypeParameterSymbol[]{
+        export function getAllowedToReferenceTypeParametersFromDecl(decl: PullDecl, semanticInfoChain: SemanticInfoChain): PullTypeParameterSymbol[]{
             var allowedToReferenceTypeParameters: PullTypeParameterSymbol[] = [];
 
             var allowedToUseDeclTypeParameters = false;
@@ -212,13 +212,13 @@ module TypeScript {
 
             if (getTypeParametersFromParentDecl) {
                 allowedToReferenceTypeParameters = allowedToReferenceTypeParameters.concat(
-                    getAllowedToReferenceTypeParametersFromDecl(decl.getParentDecl()));
+                    getAllowedToReferenceTypeParametersFromDecl(decl.getParentDecl(), semanticInfoChain));
             }
 
             if (allowedToUseDeclTypeParameters) {
                 var typeParameterDecls = decl.getTypeParameters();
                 for (var i = 0; i < typeParameterDecls.length; i++) {
-                    allowedToReferenceTypeParameters.push(<PullTypeParameterSymbol>typeParameterDecls[i].getSymbol());
+                    allowedToReferenceTypeParameters.push(<PullTypeParameterSymbol>typeParameterDecls[i].getSymbol(semanticInfoChain));
                 }
             }
 

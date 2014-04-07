@@ -154,4 +154,18 @@ module TypeScript {
             return result;
         }
     }
+
+    export function settingsChangeAffectsSyntax(before: ImmutableCompilationSettings, after: ImmutableCompilationSettings): boolean {
+        // If the automatic semicolon insertion option has changed, then we have to dump all
+        // syntax trees in order to reparse them with the new option.
+        //
+        // If the language version changed, then that affects what types of things we parse. So
+        // we have to dump all syntax trees.
+        //
+        // If propagateEnumConstants changes, then that affects the constant value data we've 
+        // stored in the ISyntaxElement.
+        return before.allowAutomaticSemicolonInsertion() !== after.allowAutomaticSemicolonInsertion() ||
+            before.codeGenTarget() !== after.codeGenTarget() ||
+            before.propagateEnumConstants() !== after.propagateEnumConstants();
+    }
 }

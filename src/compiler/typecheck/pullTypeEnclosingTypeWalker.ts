@@ -77,7 +77,7 @@ module TypeScript {
         // Current state of the enclosing type walker
         private enclosingTypeWalkerState: EnclosingTypeWalkerState;
 
-        constructor() {
+        constructor(private semanticInfoChain: SemanticInfoChain) {
             this.setDefaultTypeWalkerState();
         }
 
@@ -172,14 +172,14 @@ module TypeScript {
             if (parentDecl && !(parentDecl.kind & (PullElementKind.SomeContainer | PullElementKind.Script))) {
                 // Always set signatures in parents
                 if (this.canDeclBeUsedAsEnclosingType(parentDecl)) {
-                    this.setSymbolAsEnclosingType(<PullTypeSymbol>parentDecl.getSymbol());
+                    this.setSymbolAsEnclosingType(<PullTypeSymbol>parentDecl.getSymbol(this.semanticInfoChain));
                 } else {
                     this._setEnclosingTypeOfParentDecl(parentDecl, /*setSignature*/ true);
                 }
 
                 if (this._canWalkStructure()) {
                     // Update the current decl in the 
-                    var symbol = decl.getSymbol();
+                    var symbol = decl.getSymbol(this.semanticInfoChain);
                     if (symbol) {
                         // If symbol is raw PullSymbol (not a type or a signature, but
                         // rather a variable, function, etc), use its type instead
@@ -192,7 +192,7 @@ module TypeScript {
 
                     // Set signature symbol if asked
                     if (setSignature) {
-                        var signature = decl.getSignatureSymbol();
+                        var signature = decl.getSignatureSymbol(this.semanticInfoChain);
                         if (signature) {
                             this._pushSymbol(signature);
                         }
