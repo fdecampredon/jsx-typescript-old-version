@@ -31970,7 +31970,42 @@ var TypeScript;
         };
 
         Emitter.prototype.emitParenthesizedExpression = function (parenthesizedExpression) {
+            var omitParentheses = false;
+
             if (parenthesizedExpression.expression.kind() === 220 /* CastExpression */ && parenthesizedExpression.openParenTrailingComments === null) {
+                var castedExpression = parenthesizedExpression.expression.expression;
+
+                while (castedExpression.kind() == 220 /* CastExpression */) {
+                    castedExpression = castedExpression.expression;
+                }
+
+                switch (castedExpression.kind()) {
+                    case 217 /* ParenthesizedExpression */:
+                    case 11 /* IdentifierName */:
+                    case 32 /* NullKeyword */:
+                    case 35 /* ThisKeyword */:
+                    case 14 /* StringLiteral */:
+                    case 13 /* NumericLiteral */:
+                    case 12 /* RegularExpressionLiteral */:
+                    case 37 /* TrueKeyword */:
+                    case 24 /* FalseKeyword */:
+                    case 214 /* ArrayLiteralExpression */:
+                    case 215 /* ObjectLiteralExpression */:
+                    case 212 /* MemberAccessExpression */:
+                    case 221 /* ElementAccessExpression */:
+                        omitParentheses = true;
+                        break;
+
+                    case 213 /* InvocationExpression */:
+                        if (parenthesizedExpression.parent.kind() !== 216 /* ObjectCreationExpression */) {
+                            omitParentheses = true;
+                        }
+
+                        break;
+                }
+            }
+
+            if (omitParentheses) {
                 this.emit(parenthesizedExpression.expression);
             } else {
                 this.recordSourceMappingStart(parenthesizedExpression);
