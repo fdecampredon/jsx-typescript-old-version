@@ -204,7 +204,7 @@ module TypeScript {
                 this._cachedFunctionArgumentsSymbol.setResolved();
 
                 var functionArgumentsDecl = new PullSynthesizedDecl("arguments", "arguments", PullElementKind.Parameter, PullElementFlags.None, /*parentDecl*/ null);
-                this.semanticInfoChain.setSymbolForDecl(functionArgumentsDecl, this._cachedFunctionArgumentsSymbol);
+                functionArgumentsDecl.setSymbol(this._cachedFunctionArgumentsSymbol, this.semanticInfoChain);
                 this._cachedFunctionArgumentsSymbol.addDeclaration(functionArgumentsDecl);
             }
 
@@ -515,7 +515,7 @@ module TypeScript {
                             // 11.2.3 Unlike a non-instantiated internal module (section 10.1), 
                             // an external module containing only interface types and non-instantiated internal modules still has a module instance associated with it, albeit one with no members.
                             var decls = symbol.getDeclarations();
-                            var ast = <ImportDeclarationSyntax>decls[0].ast(this.semanticInfoChain);
+                            var ast = <ImportDeclarationSyntax>decls[0].ast();
                             return ast.moduleReference.kind() === SyntaxKind.ExternalModuleReference;
                         }
                     }
@@ -1133,7 +1133,7 @@ module TypeScript {
             for (var i = 0; i < declarations.length; ++i) {
                 var currentDecl = declarations[i];
 
-                var ast = <EnumDeclarationSyntax>currentDecl.ast(this.semanticInfoChain);
+                var ast = <EnumDeclarationSyntax>currentDecl.ast();
                 if (ast.enumElements.nonSeparatorCount() === 0) {
                     continue;
                 }
@@ -1327,7 +1327,7 @@ module TypeScript {
                         }
 
                         if (nameConflict) {
-                            this.semanticInfoChain.addDiagnosticFromAST(firstDeclInGroup.ast(this.semanticInfoChain),
+                            this.semanticInfoChain.addDiagnosticFromAST(firstDeclInGroup.ast(),
                                 DiagnosticCode.Variable_declaration_cannot_have_the_same_name_as_an_import_declaration);
                         }
                     });
@@ -1786,9 +1786,9 @@ module TypeScript {
                 Debug.assert(currentParameterType);
                 if (currentParameterType === this.semanticInfoChain.stringTypeSymbol) {
                     if (firstStringIndexer) {
-                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(this.semanticInfoChain),
+                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
                             DiagnosticCode.Duplicate_string_index_signature, null,
-                            [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast(this.semanticInfoChain))]);
+                            [this.semanticInfoChain.locationFromAST(firstStringIndexer.getDeclarations()[0].ast())]);
                         return;
                     }
                     else {
@@ -1797,9 +1797,9 @@ module TypeScript {
                 }
                 else if (currentParameterType === this.semanticInfoChain.numberTypeSymbol) {
                     if (firstNumberIndexer) {
-                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(this.semanticInfoChain),
+                        this.semanticInfoChain.addDiagnosticFromAST(currentIndexer.getDeclarations()[0].ast(),
                             DiagnosticCode.Duplicate_number_index_signature, null,
-                            [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast(this.semanticInfoChain))]);
+                            [this.semanticInfoChain.locationFromAST(firstNumberIndexer.getDeclarations()[0].ast())]);
                         return;
                     }
                     else {
@@ -4371,11 +4371,11 @@ module TypeScript {
             }
             else {
                 var getterSymbol = accessorSymbol.getGetter();
-                var getterFunctionDeclarationAst = getterSymbol ? <GetAccessorSyntax>getterSymbol.getDeclarations()[0].ast(this.semanticInfoChain) : null;
+                var getterFunctionDeclarationAst = getterSymbol ? <GetAccessorSyntax>getterSymbol.getDeclarations()[0].ast() : null;
                 var hasGetter = getterSymbol !== null;
 
                 var setterSymbol = accessorSymbol.getSetter();
-                var setterFunctionDeclarationAst = setterSymbol ? <SetAccessorSyntax>setterSymbol.getDeclarations()[0].ast(this.semanticInfoChain) : null;
+                var setterFunctionDeclarationAst = setterSymbol ? <SetAccessorSyntax>setterSymbol.getDeclarations()[0].ast() : null;
                 var hasSetter = setterSymbol !== null;
 
                 var getterAnnotatedType = this.resolveGetterReturnTypeAnnotation(
@@ -4559,8 +4559,8 @@ module TypeScript {
             var setter = accessorSymbol.getSetter();
 
             if (getter && setter) {
-                var getterAST = <GetAccessorSyntax>getter.getDeclarations()[0].ast(this.semanticInfoChain);
-                var setterAST = <SetAccessorSyntax>setter.getDeclarations()[0].ast(this.semanticInfoChain);
+                var getterAST = <GetAccessorSyntax>getter.getDeclarations()[0].ast();
+                var setterAST = <SetAccessorSyntax>setter.getDeclarations()[0].ast();
 
                 // There exists: 
                 //     return type annotaion for the getter &&
@@ -7719,7 +7719,7 @@ module TypeScript {
                         // first statement in the constructor happens in typeCheckConstructorDeclaration.
                         return;
                     }
-                    else if (this.isAnyFunctionExpressionOrDeclaration(currentDecl.ast(this.semanticInfoChain))) {
+                    else if (this.isAnyFunctionExpressionOrDeclaration(currentDecl.ast())) {
                         break;
                     }
                 }
@@ -7784,7 +7784,7 @@ module TypeScript {
                     if (!isUsingExistingSymbol) {
                         memberSymbol = new PullSymbol(assignmentText.memberName, PullElementKind.Property, this.semanticInfoChain);
                         memberSymbol.addDeclaration(decl);
-                        this.semanticInfoChain.setSymbolForDecl(decl, memberSymbol);
+                        decl.setSymbol(memberSymbol, this.semanticInfoChain);
                     }
                     else {
                         memberSymbol = decl.getSymbol(this.semanticInfoChain);
@@ -7803,7 +7803,7 @@ module TypeScript {
                     var existingMember = objectLiteralTypeSymbol.findMember(memberSymbol.name, /*lookInParent*/ true);
                     if (existingMember) {
                         pullTypeContext.postDiagnostic(this.semanticInfoChain.duplicateIdentifierDiagnosticFromAST(propertyAssignment, assignmentText.actualText,
-                            existingMember.getDeclarations()[0].ast(this.semanticInfoChain)));
+                            existingMember.getDeclarations()[0].ast()));
                     }
 
                     objectLiteralTypeSymbol.addMember(memberSymbol);
@@ -7924,7 +7924,7 @@ module TypeScript {
                 typeSymbol = new PullTypeSymbol("", PullElementKind.ObjectLiteral, this.semanticInfoChain);
                 typeSymbol.addDeclaration(objectLitDecl);
                 this.setSymbolForAST(objectLitAST, typeSymbol, context);
-                this.semanticInfoChain.setSymbolForDecl(objectLitDecl, typeSymbol);
+                objectLitDecl.setSymbol(typeSymbol, this.semanticInfoChain);
             }
 
             var propertyAssignments = objectLitAST.propertyAssignments;
@@ -12686,8 +12686,8 @@ module TypeScript {
                         var relevantSignature = this.determineRelevantIndexerForMember(memberSymbol, numberSignature, stringSignature);
                         if (relevantSignature) {
                             var comparisonInfo = new TypeComparisonInfo();
-                            if (!this.sourceIsAssignableToTarget(memberSymbol.type, relevantSignature.returnType, member.ast(this.semanticInfoChain), context, comparisonInfo)) {
-                                this.reportErrorThatMemberIsNotSubtypeOfIndexer(memberSymbol, relevantSignature, member.ast(this.semanticInfoChain), context, comparisonInfo);
+                            if (!this.sourceIsAssignableToTarget(memberSymbol.type, relevantSignature.returnType, member.ast(), context, comparisonInfo)) {
+                                this.reportErrorThatMemberIsNotSubtypeOfIndexer(memberSymbol, relevantSignature, member.ast(), context, comparisonInfo);
                             }
                         }
                     }
@@ -13069,7 +13069,7 @@ module TypeScript {
                 // that has an extends clause. Since an interface cannot have an implements clause
                 // (by the grammar) we only have to check that it has a heritage clause.
                 var firstInterfaceASTWithExtendsClause = ArrayUtilities.firstOrDefault(typeSymbol.getDeclarations(), decl => 
-                    (<InterfaceDeclarationSyntax>decl.ast(this.semanticInfoChain)).heritageClauses !== null).ast(this.semanticInfoChain);
+                    (<InterfaceDeclarationSyntax>decl.ast()).heritageClauses !== null).ast();
                 if (classOrInterface === firstInterfaceASTWithExtendsClause) {
                     // Checking type compatibility between bases requires knowing the types of all
                     // base type members. Therefore, we have to delay this operation until all
@@ -13437,7 +13437,7 @@ module TypeScript {
                     if (memberContainer && memberContainer.isClass()) {
                         // We're accessing a private member of a class.  We can only do that if we're 
                         // actually contained within that class.
-                        var memberClass = memberContainer.getDeclarations()[0].ast(this.semanticInfoChain);
+                        var memberClass = memberContainer.getDeclarations()[0].ast();
                         Debug.assert(memberClass);
 
                         var containingClass = this.getEnclosingClassDeclaration(name);

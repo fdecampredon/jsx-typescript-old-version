@@ -26,11 +26,6 @@ module TypeScript {
             Debug.assert(decl.fileName() === this.document.fileName);
             this.document._setASTForDecl(decl, ast);
         }
-
-        public getASTForDecl(decl: PullDecl): ISyntaxElement {
-            Debug.assert(decl.fileName() === this.document.fileName);
-            return this.document._getASTForDecl(decl);
-        }
     }
 
     function moduleElementsHasExportAssignment(moduleElements: ISyntaxList<IModuleElementSyntax>): boolean {
@@ -94,7 +89,7 @@ module TypeScript {
 
         var isExternalModule = context.document.isExternalModule();
 
-        var decl: PullDecl = new RootPullDecl(/*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, isExternalModule);
+        var decl: PullDecl = new RootPullDecl(context.document, /*name:*/ fileName, fileName, PullElementKind.Script, PullElementFlags.None, isExternalModule);
         context.setDeclForAST(sourceUnit, decl);
         context.setASTForDecl(decl, sourceUnit);
 
@@ -1068,14 +1063,14 @@ module TypeScript {
         if (ast.kind() === SyntaxKind.ModuleDeclaration) {
             var moduleDeclaration = <ModuleDeclarationSyntax>ast;
             if (moduleDeclaration.stringLiteral) {
-                Debug.assert(context.getASTForDecl(currentDecl) === moduleDeclaration.stringLiteral);
+                Debug.assert(currentDecl.ast() === moduleDeclaration.stringLiteral);
                 context.popParent();
             }
             else {
                 var moduleNames = ASTHelpers.getModuleNames(moduleDeclaration.name);
                 for (var i = moduleNames.length - 1; i >= 0; i--) {
                     var moduleName = moduleNames[i];
-                    Debug.assert(context.getASTForDecl(currentDecl) === moduleName);
+                    Debug.assert(currentDecl.ast() === moduleName);
                     context.popParent();
                     currentDecl = context.getParent();
                 }
@@ -1089,7 +1084,7 @@ module TypeScript {
         }
 
         // Don't pop the topmost decl.  We return that out at the end.
-        while (currentDecl.getParentDecl() && context.getASTForDecl(currentDecl) === ast) {
+        while (currentDecl.getParentDecl() && currentDecl.ast() === ast) {
             context.popParent();
             currentDecl = context.getParent();
         }
@@ -1112,7 +1107,7 @@ module TypeScript {
         for (var i = 0, n = ast.enumElements.nonSeparatorCount(); i < n; i++) {
             var enumElement = ast.enumElements.nonSeparatorAt(i);
             var enumElementDecl = ArrayUtilities.first(enumMemberDecls, d =>
-                context.getASTForDecl(d) === enumElement);
+                d.ast() === enumElement);
 
             Debug.assert(enumElementDecl.kind === PullElementKind.EnumMember);
 

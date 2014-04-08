@@ -219,7 +219,7 @@ module TypeScript.Services {
             else if (symbol.kind == TypeScript.PullElementKind.Property || typeSymbol.isMethod() || typeSymbol.isProperty()) {
 
                 var declaration: TypeScript.PullDecl = symbol.getDeclarations()[0];
-                var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol(this.getSemanticInfoChain()).type;
+                var classSymbol: TypeScript.PullTypeSymbol = declaration.getParentDecl().getSymbol(symbol.semanticInfoChain).type;
 
                 typesToSearch = [];
                 var extendingTypes = classSymbol.getTypesThatExtendThisType();
@@ -305,7 +305,7 @@ module TypeScript.Services {
                         }
                         else {
                             var declaration = searchSymbolInfoAtPosition.symbol.getDeclarations()[0];
-                            normalizedSymbol = declaration.getSymbol(this.getSemanticInfoChain());
+                            normalizedSymbol = declaration.getSymbol(symbol.semanticInfoChain);
                         }
 
                         if (normalizedSymbol === symbol) {
@@ -660,7 +660,7 @@ module TypeScript.Services {
         }
 
         private addDeclaration(symbolKind: string, symbolName: string, containerKind: string, containerName: string, declaration: TypeScript.PullDecl, result: DefinitionInfo[]): void {
-            var ast = declaration.ast(this.getSemanticInfoChain());
+            var ast = declaration.ast();
             result.push(new DefinitionInfo(
                 this._getHostFileName(declaration.fileName()),
                 ast.start(), ast.end(), symbolKind, symbolName, containerKind, containerName));
@@ -789,7 +789,7 @@ module TypeScript.Services {
                 // create corresponding NavigateToItem and add it into results array
                 if (this.shouldIncludeDeclarationInNavigationItems(declaration)) {
                     fullName = parentName ? parentName + "." + declName : declName;
-                    var ast = declaration.ast(this.getSemanticInfoChain());
+                    var ast = declaration.ast();
                     if (matchKind) {
                         item = new NavigateToItem();
                         item.name = declName;

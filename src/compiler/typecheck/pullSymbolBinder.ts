@@ -204,7 +204,7 @@ module TypeScript {
                 if (enumContainerSymbol.kind !== enumDeclKind) {
                     // duplicate symbol error
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        enumAST.identifier, enumContainerDecl.getDisplayName(), enumContainerSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        enumAST.identifier, enumContainerDecl.getDisplayName(), enumContainerSymbol.getDeclarations()[0].ast());
                     enumContainerSymbol = null;
                 }
                 else if (!this.checkThatExportsMatch(enumContainerDecl, enumContainerSymbol)) {
@@ -226,7 +226,7 @@ module TypeScript {
 
             // We add the declaration early so that during any recursive binding of other module decls with the same name, this declaration is present.
             enumContainerSymbol.addDeclaration(enumContainerDecl);
-            this.semanticInfoChain.setSymbolForDecl(enumContainerDecl, enumContainerSymbol);
+            enumContainerDecl.setSymbol(enumContainerSymbol, this.semanticInfoChain);
 
             this.semanticInfoChain.setSymbolForAST(enumAST.identifier, enumContainerSymbol);
             this.semanticInfoChain.setSymbolForAST(enumAST, enumContainerSymbol);
@@ -486,7 +486,7 @@ module TypeScript {
                     // duplicate symbol error
                     if (isInitializedModule) {
                         this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                            moduleNameAST, moduleContainerDecl.getDisplayName(), /*additionalLocation:*/ moduleContainerTypeSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                            moduleNameAST, moduleContainerDecl.getDisplayName(), /*additionalLocation:*/ moduleContainerTypeSymbol.getDeclarations()[0].ast());
                     }
 
                     moduleContainerTypeSymbol = null;
@@ -511,7 +511,7 @@ module TypeScript {
 
             // We add the declaration early so that during any recursive binding of other module decls with the same name, this declaration is present.
             moduleContainerTypeSymbol.addDeclaration(moduleContainerDecl);
-            this.semanticInfoChain.setSymbolForDecl(moduleContainerDecl, moduleContainerTypeSymbol);
+            moduleContainerDecl.setSymbol(moduleContainerTypeSymbol, this.semanticInfoChain);
 
             this.semanticInfoChain.setSymbolForAST(moduleNameAST, moduleContainerTypeSymbol);
             this.semanticInfoChain.setSymbolForAST(moduleDeclAST, moduleContainerTypeSymbol);
@@ -560,7 +560,7 @@ module TypeScript {
                     // will be short-circuited. With a more organized binding pattern, this situation
                     // shouldn't be possible.
                     instanceSymbol = new PullSymbol(modName, PullElementKind.Variable, this.semanticInfoChain);
-                    this.semanticInfoChain.setSymbolForDecl(currentModuleValueDecl, instanceSymbol);
+                    currentModuleValueDecl.setSymbol(instanceSymbol, this.semanticInfoChain);
                     if (!instanceSymbol.hasDeclaration(currentModuleValueDecl)) {
                         instanceSymbol.addDeclaration(currentModuleValueDecl);
                     }
@@ -599,7 +599,7 @@ module TypeScript {
 
             if (importSymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    importDeclAST, importDeclaration.getDisplayName(), importSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                    importDeclAST, importDeclaration.getDisplayName(), importSymbol.getDeclarations()[0].ast());
                 importSymbol = null;
             }
 
@@ -612,7 +612,7 @@ module TypeScript {
             }
 
             importSymbol.addDeclaration(importDeclaration);
-            this.semanticInfoChain.setSymbolForDecl(importDeclaration, importSymbol);
+            importDeclaration.setSymbol(importSymbol, this.semanticInfoChain);
 
             this.semanticInfoChain.setSymbolForAST(importDeclAST, importSymbol);
 
@@ -681,7 +681,7 @@ module TypeScript {
             // Only error if it is an interface (for classes and enums we will error when we bind the implicit variable)
             if (classSymbol && classSymbol.kind === PullElementKind.Interface) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    classAST.identifier, classDecl.getDisplayName(), classSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                    classAST.identifier, classDecl.getDisplayName(), classSymbol.getDeclarations()[0].ast());
                 classSymbol = null;
             }
 
@@ -692,7 +692,7 @@ module TypeScript {
             }
 
             classSymbol.addDeclaration(classDecl);
-            this.semanticInfoChain.setSymbolForDecl(classDecl, classSymbol);
+            classDecl.setSymbol(classSymbol, this.semanticInfoChain);
 
             this.semanticInfoChain.setSymbolForAST(classAST.identifier, classSymbol);
             this.semanticInfoChain.setSymbolForAST(classAST, classSymbol);
@@ -722,7 +722,7 @@ module TypeScript {
 
                 classSymbol.addTypeParameter(typeParameterSymbol);
                 typeParameterSymbol.addDeclaration(typeParameterDecls[i]);
-                this.semanticInfoChain.setSymbolForDecl(typeParameterDecls[i], typeParameterSymbol)
+                typeParameterDecls[i].setSymbol(typeParameterSymbol, this.semanticInfoChain);
             }
 
             constructorSymbol = classSymbol.getConstructorMethod();
@@ -793,7 +793,7 @@ module TypeScript {
             if (interfaceSymbol) {
                 if (!(interfaceSymbol.kind & acceptableSharedKind)) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        interfaceAST.identifier, interfaceDecl.getDisplayName(), interfaceSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        interfaceAST.identifier, interfaceDecl.getDisplayName(), interfaceSymbol.getDeclarations()[0].ast());
                     interfaceSymbol = null;
                 }
                 else if (!this.checkThatExportsMatch(interfaceDecl, interfaceSymbol)) {
@@ -811,7 +811,7 @@ module TypeScript {
             }
 
             interfaceSymbol.addDeclaration(interfaceDecl);
-            this.semanticInfoChain.setSymbolForDecl(interfaceDecl, interfaceSymbol);
+            interfaceDecl.setSymbol(interfaceSymbol, this.semanticInfoChain);
 
             if (createdNewSymbol) {
 
@@ -857,7 +857,7 @@ module TypeScript {
                 }
 
                 typeParameter.addDeclaration(typeParameters[i]);
-                this.semanticInfoChain.setSymbolForDecl(typeParameters[i], typeParameter);
+                typeParameters[i].setSymbol(typeParameter, this.semanticInfoChain);
             }
         }
 
@@ -867,7 +867,7 @@ module TypeScript {
             var objectSymbol = new PullTypeSymbol("", PullElementKind.ObjectType, this.semanticInfoChain);
 
             objectSymbol.addDeclaration(objectDecl);
-            this.semanticInfoChain.setSymbolForDecl(objectDecl, objectSymbol);
+            objectDecl.setSymbol(objectSymbol, this.semanticInfoChain);
 
             this.semanticInfoChain.setSymbolForAST(objectSymbolAST, objectSymbol);
 
@@ -885,7 +885,7 @@ module TypeScript {
 
             var constructorTypeSymbol = new PullTypeSymbol("", PullElementKind.ConstructorType, this.semanticInfoChain);
 
-            this.semanticInfoChain.setSymbolForDecl(constructorTypeDeclaration, constructorTypeSymbol);
+            constructorTypeDeclaration.setSymbol(constructorTypeSymbol, this.semanticInfoChain);
             constructorTypeSymbol.addDeclaration(constructorTypeDeclaration);
             this.semanticInfoChain.setSymbolForAST(constructorTypeAST, constructorTypeSymbol);
 
@@ -997,8 +997,8 @@ module TypeScript {
                 // if the previous declaration is a non-ambient class, it must be located in the same file as this declaration
                 if (acceptableRedeclaration && (prevIsClassConstructorVariable || prevIsFunction) && !isAmbientOrPrevIsAmbient) {
                     if (prevDecl.fileName() !== variableDeclaration.fileName()) {
-                        this.semanticInfoChain.addDiagnostic(PullHelpers.diagnosticFromDecl(variableDeclaration,
-                            DiagnosticCode.Module_0_cannot_merge_with_previous_declaration_of_1_in_a_different_file_2, this.semanticInfoChain, [declName, declName, prevDecl.fileName()]));
+                        this.semanticInfoChain.addDiagnostic(this.semanticInfoChain.diagnosticFromDecl(variableDeclaration,
+                            DiagnosticCode.Module_0_cannot_merge_with_previous_declaration_of_1_in_a_different_file_2, [declName, declName, prevDecl.fileName()]));
                         variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                     }
                 }
@@ -1008,7 +1008,7 @@ module TypeScript {
                     // However, we will error when a variable clobbers a function, or when the two explicit var declarations are not in the same parent declaration
                     if (!prevIsParam && (isImplicit || prevIsImplicit || hasFlag(prevKind, PullElementKind.SomeFunction)) || !shareParent) {
                         this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                            nameAST, variableDeclaration.getDisplayName(), variableSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                            nameAST, variableDeclaration.getDisplayName(), variableSymbol.getDeclarations()[0].ast());
                         variableSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(declName);
                     }
                     else { // double var declaration (keep them separate so we can verify type sameness during type check)
@@ -1214,7 +1214,7 @@ module TypeScript {
 
             if (propertySymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    propDeclAST.propertyName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                    propDeclAST.propertyName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast());
             }
 
             if (propertySymbol) {
@@ -1276,7 +1276,7 @@ module TypeScript {
 
             if (propertySymbol) {
                 this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                    astName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                    astName, propertyDeclaration.getDisplayName(), propertySymbol.getDeclarations()[0].ast());
             }
 
             if (propertySymbol) {
@@ -1419,7 +1419,7 @@ module TypeScript {
 
                 if (!acceptableRedeclaration) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.identifier, functionDeclaration.getDisplayName(), functionSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        funcDeclAST.identifier, functionDeclaration.getDisplayName(), functionSymbol.getDeclarations()[0].ast());
                     functionSymbol.type = this.semanticInfoChain.getResolver().getNewErrorTypeSymbol(funcName);
                 }
             }
@@ -1647,7 +1647,7 @@ module TypeScript {
                 (methodSymbol.kind !== PullElementKind.Method ||
                 (!isSignature && !methodSymbol.allDeclsHaveFlag(PullElementFlags.Signature)))) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        methodAST, methodDeclaration.getDisplayName(), methodSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        methodAST, methodDeclaration.getDisplayName(), methodSymbol.getDeclarations()[0].ast());
                 methodSymbol = null;
             }
 
@@ -1739,7 +1739,7 @@ module TypeScript {
                 // Report duplicate symbol error on existing prototype symbol since class has explicit prototype symbol
                 // This kind of scenario can happen with augmented module and class with module member named prototype
                 this.semanticInfoChain.addDiagnostic(
-                    PullHelpers.diagnosticFromDecl(prototypeSymbol.getDeclarations()[0], DiagnosticCode.Duplicate_identifier_0, this.semanticInfoChain, [prototypeSymbol.getDisplayName()]));
+                    this.semanticInfoChain.diagnosticFromDecl(prototypeSymbol.getDeclarations()[0], DiagnosticCode.Duplicate_identifier_0, [prototypeSymbol.getDisplayName()]));
             }
 
             // Add synthetic prototype decl and symbol
@@ -1972,7 +1972,7 @@ module TypeScript {
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.propertyName, getAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        funcDeclAST.propertyName, getAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast());
                     accessorSymbol = null;
                 }
                 else {
@@ -2069,7 +2069,7 @@ module TypeScript {
             if (accessorSymbol) {
                 if (!accessorSymbol.isAccessor()) {
                     this.semanticInfoChain.addDuplicateIdentifierDiagnosticFromAST(
-                        funcDeclAST.propertyName, setAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast(this.semanticInfoChain));
+                        funcDeclAST.propertyName, setAccessorDeclaration.getDisplayName(), accessorSymbol.getDeclarations()[0].ast());
                     accessorSymbol = null;
                 }
                 else {

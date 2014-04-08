@@ -778,7 +778,7 @@ module TypeScript {
         }
 
         private getDocCommentsOfDecl(decl: TypeScript.PullDecl): TypeScript.Comment[] {
-            var ast = decl.ast(this.semanticInfoChain);
+            var ast = decl.ast();
 
             if (ast) {
                 var enclosingModuleDeclaration = ASTHelpers.getModuleDeclarationFromNameAST(ast);

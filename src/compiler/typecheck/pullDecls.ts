@@ -7,6 +7,10 @@ module TypeScript {
     var pullDeclID = 0;
     var sentinelEmptyPullDeclArray: any[] = [];
 
+    export interface IASTForDeclMap {
+        _getASTForDecl(decl: PullDecl): ISyntaxElement;
+    }
+
     export class PullDecl {
         // Properties that will not change over the lifetime of the decl
         public kind: PullElementKind;
@@ -43,6 +47,10 @@ module TypeScript {
             if (displayName !== this.name) {
                 this.declDisplayName = displayName;
             }
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            throw Errors.abstract();
         }
 
         public fileName(): string {
@@ -99,9 +107,9 @@ module TypeScript {
             return this.declDisplayName === undefined ? this.name : this.declDisplayName;
         }
 
-        //public setSymbol(symbol: PullSymbol) {
-        //    this.semanticInfoChain.setSymbolForDecl(this, symbol);
-        //}
+        public setSymbol(symbol: PullSymbol, semanticInfoChain: SemanticInfoChain): void {
+            semanticInfoChain.setSymbolForDecl(this, symbol);
+        }
 
         public ensureSymbolIsBound(semanticInfoChain: SemanticInfoChain) {
             if (!this.hasBeenBound(semanticInfoChain) && this.kind !== PullElementKind.Script) {
@@ -123,10 +131,6 @@ module TypeScript {
         public hasSymbol(semanticInfoChain: SemanticInfoChain) {
             var symbol = semanticInfoChain.getSymbolForDecl(this);
             return !!symbol;
-        }
-
-        public setSymbol(symbol: PullSymbol, semanticInfoChain: SemanticInfoChain): void {
-            semanticInfoChain.setSymbolForDecl(this, symbol);
         }
 
         public setSignatureSymbol(signatureSymbol: PullSignatureSymbol, semanticInfoChain: SemanticInfoChain): void {
@@ -303,8 +307,8 @@ module TypeScript {
             return false;
         }
 
-        public ast(semanticInfoChain: SemanticInfoChain): ISyntaxElement {
-            return semanticInfoChain.getASTForDecl(this);
+        public ast(): ISyntaxElement {
+            return this.isSynthesized() ? null : this.getASTForDeclMap()._getASTForDecl(this);
         }
 
         public isRootDecl() {
@@ -322,7 +326,7 @@ module TypeScript {
         private _isExternalModule: boolean;
         private _fileName: string;
 
-        constructor(name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, isExternalModule: boolean) {
+        constructor(private astToDeclMap: IASTForDeclMap, name: string, fileName: string, kind: PullElementKind, declFlags: PullElementFlags, isExternalModule: boolean) {
             super(name, name, kind, declFlags);
             this._isExternalModule = isExternalModule;
             this._fileName = fileName;
@@ -330,6 +334,10 @@ module TypeScript {
 
         public fileName(): string {
             return this._fileName;
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            return this.astToDeclMap;
         }
 
         public getParentPath(): PullDecl[]{
@@ -388,6 +396,10 @@ module TypeScript {
 
         public fileName(): string {
             return this._rootDecl.fileName();
+        }
+
+        public getASTForDeclMap(): IASTForDeclMap {
+            return this._rootDecl.getASTForDeclMap();
         }
 
         public getParentDecl(): PullDecl {

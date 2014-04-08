@@ -1,7 +1,7 @@
 ///<reference path='references.ts' />
 
 module TypeScript {
-    export class Document {
+    export class Document implements IASTForDeclMap {
         private _diagnostics: Diagnostic[] = null;
         private _bloomFilter: BloomFilter = null;
         private _lineMap: LineMap = null;
@@ -237,7 +237,7 @@ module TypeScript {
             return !this.compilationSettings.outFileOption() || this.isExternalModule();
         }
 
-        public update_doNotUseDirectly(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
+        public update(scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): Document {
             // See if we are currently holding onto a syntax tree.  We may not be because we're 
             // either a closed file, or we've just been lazy and haven't had to create the syntax
             // tree yet.  Access the field instead of the method so we don't accidently realize
@@ -272,11 +272,11 @@ module TypeScript {
             return new Document(this.compilationSettings, this.fileName, this.referencedFiles, scriptSnapshot, this.byteOrderMark, version, isOpen, newSyntaxTree, /*topLevelDecl:*/ null);
         }
 
-        public static create_doNotUseDirectly(compilationSettings: ImmutableCompilationSettings, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
+        public static create(compilationSettings: ImmutableCompilationSettings, fileName: string, scriptSnapshot: IScriptSnapshot, byteOrderMark: ByteOrderMark, version: number, isOpen: boolean, referencedFiles: string[]): Document {
             return new Document(compilationSettings, fileName, referencedFiles, scriptSnapshot, byteOrderMark, version, isOpen, /*syntaxTree:*/ null, /*topLevelDecl:*/ null);
         }
 
-        public topLevelDecl(semanticInfoChain: SemanticInfoChain): PullDecl {
+        public topLevelDecl(): PullDecl {
             if (this._topLevelDecl === null) {
                 this._topLevelDecl = DeclarationCreator.create(this, this.compilationSettings);
             }
@@ -284,16 +284,16 @@ module TypeScript {
             return this._topLevelDecl;
         }
 
-        public _getDeclForAST(ast: ISyntaxElement, semanticInfoChain: SemanticInfoChain): PullDecl {
+        public _getDeclForAST(ast: ISyntaxElement): PullDecl {
             // Ensure we actually have created all our decls before we try to find a mathcing decl
             // for this ast.
-            this.topLevelDecl(semanticInfoChain);
+            this.topLevelDecl();
             return this._astDeclMap[ast.syntaxID()];
         }
 
-        public getEnclosingDecl(ast: ISyntaxElement, semanticInfoChain: SemanticInfoChain): PullDecl {
+        public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
             if (ast.kind() === SyntaxKind.SourceUnit) {
-                return this._getDeclForAST(ast, semanticInfoChain);
+                return this._getDeclForAST(ast);
             }
 
             // First, walk up the ISyntaxElement, looking for a decl corresponding to that ISyntaxElement node.
@@ -305,7 +305,7 @@ module TypeScript {
                 //    decl = this._getDeclForAST(<ISyntaxElement>moduleDecl.stringLiteral || ArrayUtilities.last(getModuleNames(moduleDecl.name)));
                 //}
                 //else {
-                decl = this._getDeclForAST(ast, semanticInfoChain);
+                decl = this._getDeclForAST(ast);
                 //}
 
                 if (decl) {

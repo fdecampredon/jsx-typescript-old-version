@@ -249,12 +249,10 @@ module TypeScript {
         // Returns true if compilation failed from some reason.
         private compile(): void {
             var compiler = new TypeScriptCompiler(this.logger, this.compilationSettings);
-            var documentRegistry = new DocumentRegistry();
-            var owner = "<command-line-compiler>";
+
             this.resolvedFiles.forEach(resolvedFile => {
                 var sourceFile = this.getSourceFile(resolvedFile.path);
-                var document = documentRegistry.acquireDocument(resolvedFile.path, this.compilationSettings, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, owner, resolvedFile.referencedFiles);
-                compiler.addOrUpdateFile(document);
+                compiler.addFile(resolvedFile.path, sourceFile.scriptSnapshot, sourceFile.byteOrderMark, /*version:*/ 0, /*isOpen:*/ false, resolvedFile.referencedFiles);
             });
 
             for (var it = compiler.compile((path: string) => this.resolvePath(path)); it.moveNext();) {

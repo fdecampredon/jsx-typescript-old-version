@@ -14,6 +14,13 @@ module TypeScript {
     var sentinalEmptyArray: any[] = [];
 
     export class SemanticInfoChain {
+
+        private static EmptyASTToDeclMap: IASTForDeclMap = {
+            _getASTForDecl(decl: PullDecl): ISyntaxElement {
+                return null;
+            }
+        }
+
         private documents: Document[] = [];
         private fileNameToDocument = createIntrinsicsObject<Document>();
 
@@ -55,7 +62,7 @@ module TypeScript {
         private _fileNames: string[] = null;
 
         constructor(private compiler: TypeScriptCompiler, private logger: ILogger) {
-            var globalDecl = new RootPullDecl(/*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, /*isExternalModule:*/ false);
+            var globalDecl = new RootPullDecl(SemanticInfoChain.EmptyASTToDeclMap, /*name:*/ "", /*fileName:*/ "", PullElementKind.Global, PullElementFlags.None, /*isExternalModule:*/ false);
             this.documents[0] = new Document(this.compiler.compilationSettings(), /*fileName:*/ "", /*referencedFiles:*/[], /*scriptSnapshot:*/null, ByteOrderMark.None, /*version:*/0, /*isOpen:*/ false, /*syntaxTree:*/null, globalDecl);
 
             this.anyTypeDecl = new NormalPullDecl("any", "any", PullElementKind.Primitive, PullElementFlags.None, globalDecl);
@@ -66,8 +73,8 @@ module TypeScript {
             
             // add the global primitive values for "null" and "undefined"
             // Because you cannot reference them by name, they're not parented by any actual decl.
-            this.nullTypeDecl = new RootPullDecl("null", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
-            this.undefinedTypeDecl = new RootPullDecl("undefined", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
+            this.nullTypeDecl = new RootPullDecl(SemanticInfoChain.EmptyASTToDeclMap, "null", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
+            this.undefinedTypeDecl = new RootPullDecl(SemanticInfoChain.EmptyASTToDeclMap, "undefined", "", PullElementKind.Primitive, PullElementFlags.None, /*isExternalModule:*/ false);
             this.undefinedValueDecl = new NormalPullDecl("undefined", "undefined", PullElementKind.Variable, PullElementFlags.Ambient, globalDecl);
 
             this.invalidate();
@@ -202,7 +209,7 @@ module TypeScript {
             if (!symbol) {
 
                 for (var i = 0, n = this.documents.length; i < n; i++) {
-                    var topLevelDecl = this.documents[i].topLevelDecl(this);
+                    var topLevelDecl = this.documents[i].topLevelDecl();
 
                     var symbol = this.findTopLevelSymbolInDecl(topLevelDecl, name, kind, doNotGoPastThisDecl);
                     if (symbol) {
@@ -229,7 +236,7 @@ module TypeScript {
             // past, then we have to stop searching at the position of that decl.  Otherwise, we
             // search the entire file.
             var doNotGoPastThisPosition = doNotGoPastThisDecl && doNotGoPastThisDecl.fileName() === topLevelDecl.fileName()
-                ? doNotGoPastThisDecl.ast(this).start()
+                ? doNotGoPastThisDecl.ast().start()
                 : -1
 
             var foundDecls = topLevelDecl.searchChildDecls(name, kind);
@@ -239,8 +246,8 @@ module TypeScript {
 
                 // This decl was at or past the stopping point.  Don't search any further.
                 if (doNotGoPastThisPosition !== -1 &&
-                    foundDecl.ast(this) &&
-                    foundDecl.ast(this).start() > doNotGoPastThisPosition) {
+                    foundDecl.ast() &&
+                    foundDecl.ast().start() > doNotGoPastThisPosition) {
 
                     break;
                 }
@@ -280,7 +287,7 @@ module TypeScript {
             var dtsSymbol: PullContainerSymbol;
             for (var i = 0; i < this.documents.length; i++) {
                 var document = this.documents[i];
-                var topLevelDecl = document.topLevelDecl(this); // Script
+                var topLevelDecl = document.topLevelDecl(); // Script
 
                 if (topLevelDecl.isExternalModule()) {
                     var isTsFile = document.fileName === tsFile;
@@ -320,7 +327,7 @@ module TypeScript {
                 symbol = null;
                 for (var i = 0; i < this.documents.length; i++) {
                     var document = this.documents[i];
-                    var topLevelDecl = document.topLevelDecl(this);
+                    var topLevelDecl = document.topLevelDecl();
 
                     if (!topLevelDecl.isExternalModule()) {
                         var dynamicModules = topLevelDecl.searchChildDecls(id, PullElementKind.DynamicModule);
@@ -488,21 +495,6 @@ module TypeScript {
             this.declSymbolMap.length = 0;
             this.declSignatureSymbolMap.length = 0;
 
-            if (oldSettings && newSettings) {
-                // Depending on which options changed, our cached syntactic data may not be valid
-                // anymore.
-                // Note: It is important to start at 1 in this loop because documents[0] is the
-                // global decl with the primitive decls in it. Since documents[0] is the only
-                // document that does not represent an editable file, there is no reason to ever
-                // invalidate its decls. Doing this would break the invariant that all decls of
-                // unedited files should persist across edits.
-                if (settingsChangeAffectsSyntax(oldSettings, newSettings)) {
-                    for (var i = 1, n = this.documents.length; i < n; i++) {
-                        this.documents[i].invalidate();
-                    }
-                }
-            }
-
             // Reset global counters
             TypeScript.pullSymbolID = 0;
 
@@ -614,14 +606,14 @@ module TypeScript {
             var document = this.getDocument(ast.fileName());
 
             if (document) {
-                return document._getDeclForAST(ast, this);
+                return document._getDeclForAST(ast);
             }
 
             return null;
         }
 
         public getEnclosingDecl(ast: ISyntaxElement): PullDecl {
-            return this.getDocument(ast.fileName()).getEnclosingDecl(ast, this);
+            return this.getDocument(ast.fileName()).getEnclosingDecl(ast);
         }
 
         public setDeclForAST(ast: ISyntaxElement, decl: PullDecl): void {
@@ -644,7 +636,7 @@ module TypeScript {
         public topLevelDecl(fileName: string): PullDecl {
             var document = this.getDocument(fileName);
             if (document) {
-                return document.topLevelDecl(this);
+                return document.topLevelDecl();
             }
 
             return null;
@@ -652,7 +644,7 @@ module TypeScript {
 
         public topLevelDecls(): PullDecl[] {
             if (!this._topLevelDecls) {
-                this._topLevelDecls = ArrayUtilities.select(this.documents, u => u.topLevelDecl(this));
+                this._topLevelDecls = ArrayUtilities.select(this.documents, u => u.topLevelDecl());
             }
 
             return this._topLevelDecls;
@@ -664,6 +656,10 @@ module TypeScript {
 
         public diagnosticFromAST(ast: ISyntaxElement, diagnosticKey: string, _arguments: any[] = null, additionalLocations: Location[] = null): Diagnostic {
             return new Diagnostic(ast.fileName(), this.lineMap(ast.fileName()), ast.start(), ast.width(), diagnosticKey, _arguments, additionalLocations);
+        }
+
+        public diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
+            return this.diagnosticFromAST(decl.ast(), diagnosticKey, _arguments, additionalLocations);
         }
 
         public locationFromAST(ast: ISyntaxElement): Location {

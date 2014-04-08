@@ -271,8 +271,6 @@ module TypeScript.Services {
             // Reset the cache at start of every refresh
             this.hostCache = new HostCache(this.host);
 
-            // TODO: adjust state of documents in document registry
-
             var compilationSettings = this.hostCache.compilationSettings();
             
             // If we don't have a compiler, then create a new one.
@@ -280,7 +278,6 @@ module TypeScript.Services {
                 this.compiler = new TypeScript.TypeScriptCompiler(this.logger, compilationSettings);
             }
 
-            // TODO: invalidate documents in registry
             var oldSettings = this.compiler.compilationSettings();
 
             var changesInCompilationSettingsAffectSyntax =
@@ -289,14 +286,8 @@ module TypeScript.Services {
             // let the compiler know about the current compilation settings.  
             this.compiler.setCompilationSettings(compilationSettings);
 
-            // Now, remove any files from the compiler that are no longer in hte host.
+            // Now, remove any files from the compiler that are no longer in the host.
             var compilerFileNames = this.compiler.fileNames();
-
-            if (changesInCompilationSettingsAffectSyntax) {
-                // drop old documents from the registry since compilation settings changed
-                compilerFileNames.forEach(name => this.documentRegistry.removeDocument(name, oldSettings, this.host.getHostIdentifier()))
-            }
-
 
             for (var i = 0, n = compilerFileNames.length; i < n; i++) {
 
@@ -304,31 +295,33 @@ module TypeScript.Services {
 
                 var fileName = compilerFileNames[i];
 
-                if (!this.hostCache.contains(fileName)) {
+                var fileIsNotInHostCache = !this.hostCache.contains(fileName);
+                if (fileIsNotInHostCache) {
                     this.compiler.removeFile(fileName);
-                    if (!changesInCompilationSettingsAffectSyntax) {
-                        // for case if changesInCompilationSettingsAffectSyntax === true - documents should already be unregistered
-                        this.documentRegistry.removeDocument(fileName, oldSettings, this.host.getHostIdentifier());
-                    }
+                }
+
+                if (fileIsNotInHostCache || changesInCompilationSettingsAffectSyntax) {
+                    this.documentRegistry.releaseDocument(fileName, oldSettings, this.host.getHostIdentifier());
                 }
             }
 
             // Now, for every file the host knows about, either add the file (if the compiler
             // doesn't know about it.).  Or notify the compiler about any changes (if it does
             // know about it.)
-            var cache = this.hostCache;
-            var hostFileNames = cache.getFileNames();
+            var hostFileNames = this.hostCache.getFileNames();
 
             for (var i = 0, n = hostFileNames.length; i < n; i++) {
                 var fileName = hostFileNames[i];
+
+                var version = this.hostCache.getVersion(fileName);
+                var isOpen = this.hostCache.isOpen(fileName);
+                var scriptSnapshot = this.hostCache.getScriptSnapshot(fileName);
 
                 var document: Document = this.compiler.getDocument(fileName)
                 if (document) {
                     //
                     // If the document is the same, assume no update
                     //
-                    var version = this.hostCache.getVersion(fileName);
-                    var isOpen = this.hostCache.isOpen(fileName);
                     if (document.version === version && document.isOpen === isOpen) {
                         continue;
                     }
@@ -344,17 +337,12 @@ module TypeScript.Services {
                         textChangeRange = this.hostCache.getScriptTextChangeRangeSinceVersion(fileName, document.version);
                     }
 
-                    document = this.documentRegistry.updateDocument(fileName, compilationSettings, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
-                    
-                    //compiler.updateFile(fileName, this.hostCache.getScriptSnapshot(fileName), version, isOpen, textChangeRange);
+                    document = this.documentRegistry.updateDocument(fileName, compilationSettings, scriptSnapshot, version, isOpen, textChangeRange);
                 }
                 else {
-                    var document = this.documentRegistry.acquireDocument(fileName, compilationSettings, cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName), this.host.getHostIdentifier())
-                    // TODO: move snapshot management to DocumentRegistry
-                    this.compiler.addOrUpdateFile(document);
-                    //this.compiler.addFile(fileName,
-                    //    cache.getScriptSnapshot(fileName), cache.getByteOrderMark(fileName), cache.getVersion(fileName), cache.isOpen(fileName));
+                    document = this.documentRegistry.acquireDocument(fileName, compilationSettings, scriptSnapshot, this.hostCache.getByteOrderMark(fileName), version, isOpen, this.host.getHostIdentifier())
                 }
+
                 this.compiler.addOrUpdateFile(document);
             }
         }
@@ -483,7 +471,7 @@ module TypeScript.Services {
             if (this.compiler) {
                 var fileNames = this.compiler.fileNames();
                 for (var i = 0; i < fileNames.length; ++i) {
-                    this.documentRegistry.removeDocument(fileNames[i], this.compiler.compilationSettings(), this.host.getHostIdentifier());
+                    this.documentRegistry.releaseDocument(fileNames[i], this.compiler.compilationSettings(), this.host.getHostIdentifier());
                 }
             }
         }

@@ -6,10 +6,6 @@
 module TypeScript {
 
     export module PullHelpers {
-        export function diagnosticFromDecl(decl: PullDecl, diagnosticKey: string, semanticInfoChain: SemanticInfoChain, _arguments: any[]= null, additionalLocations: Location[]= null): Diagnostic {
-            var ast = decl.ast(semanticInfoChain);
-            return semanticInfoChain.diagnosticFromAST(ast, diagnosticKey, _arguments, additionalLocations);
-        }
 
         // This helps in case we would like to make sure we have type while we are resolving/infering types for it
         // without infering back to any because we incorrectly detected recursive resolution of function
@@ -30,7 +26,7 @@ module TypeScript {
         }
 
         export function getSignatureForFuncDecl(functionDecl: PullDecl, semanticInfoChain: SemanticInfoChain) {
-            var funcDecl = functionDecl.ast(semanticInfoChain);
+            var funcDecl = functionDecl.ast();
             var funcSymbol = functionDecl.getSymbol(semanticInfoChain);
 
             if (!funcSymbol) {

@@ -152,7 +152,7 @@ module TypeScript {
     }    
 
     class DocumentRegistryEntry {
-        public refCount = 1;
+        public refCount: number = 0;
         public owners: string[] = [];
         constructor(public document: Document) {
         }
@@ -163,7 +163,7 @@ module TypeScript {
 
         private getKeyFromCompilationSettings(settings: ImmutableCompilationSettings): number {
             var propagateEnumConstants = settings.propagateEnumConstants() ? 1 : 0;
-            var allowAutomaticSemicolonInsertion = settings.allowAutomaticSemicolonInsertion() ? 0 : 1;
+            var allowAutomaticSemicolonInsertion = settings.allowAutomaticSemicolonInsertion() ? 1 : 0;
             
             return propagateEnumConstants << 2 | allowAutomaticSemicolonInsertion << 1 | settings.codeGenTarget() 
         }
@@ -177,22 +177,24 @@ module TypeScript {
             return bucket;
         }
 
-        private canonicalizeFileName(fileName: string): string {
-            return fileName;//.toLowerCase();
+        public reportStats() {
+            var bucketInfoArray = this.buckets.filter((entries) => !!entries).map((entries, i) => {
+                var bucket = { propagateEnumConstants: !!(i & (1 << 2)), allowAutomaticSemicolonInsertion: !!(i & (1 << 1)), codeGenTarget: TypeScript.LanguageVersion[i & 1] };
+                var documents = entries.getAllKeys().map((name) => {
+                    var entry = entries.lookup(name);
+                    return {
+                        name: name,
+                        refCount: entry.refCount,
+                        references: entry.owners.slice(0)
+                    };
+                });
+                documents.sort((x, y) => y.refCount - x.refCount);
+                return { bucket: bucket, documents: documents }
+            });
+            return JSON.stringify(bucketInfoArray, null, 2);
         }
 
-        static createDocument(
-            compilationSettings: ImmutableCompilationSettings,
-            fileName: string,
-            scriptSnapshot: IScriptSnapshot,
-            byteOrderMark: ByteOrderMark,
-            version: number,
-            isOpen: boolean,
-            referencedFiles: string[]= []): TypeScript.Document {
-            return TypeScript.Document.create_doNotUseDirectly(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
-        }
-
-        acquireDocument(
+        public acquireDocument(
             fileName: string,
             compilationSettings: ImmutableCompilationSettings,
             scriptSnapshot: IScriptSnapshot,
@@ -202,24 +204,21 @@ module TypeScript {
             owner: string,
             referencedFiles: string[]= []): TypeScript.Document {
 
-            var canonicalFileName = this.canonicalizeFileName(fileName);
-
             var bucket = this.getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ true);
-            var entry = bucket.lookup(canonicalFileName);
+            var entry = bucket.lookup(fileName);
             if (!entry) {
-                var document = DocumentRegistry.createDocument(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+                var document = Document.create(compilationSettings, fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
 
                 entry = new DocumentRegistryEntry(document);
-                bucket.add(canonicalFileName, entry);
+                bucket.add(fileName, entry);
             }
-            else {
-                entry.refCount++;
-            }
-            entry.owners.push(this.canonicalizeFileName(owner));
+            entry.refCount++;
+
+            entry.owners.push(owner);
             return entry.document;
         }
 
-        updateDocument(
+        public updateDocument(
             fileName: string,
             compilationSettings: ImmutableCompilationSettings,
             scriptSnapshot: IScriptSnapshot,
@@ -230,28 +229,27 @@ module TypeScript {
 
             var bucket = this.getBucketForCompilationSettings(compilationSettings, /*createIfMissing*/ false);
             Debug.assert(bucket);
-            var canonicalFileName = this.canonicalizeFileName(fileName);
-            var entry = bucket.lookup(canonicalFileName);
+            var entry = bucket.lookup(fileName);
             Debug.assert(entry);
 
-            entry.document = entry.document.update_doNotUseDirectly(scriptSnapshot, version, isOpen, textChangeRange);
+            entry.document = entry.document.update(scriptSnapshot, version, isOpen, textChangeRange);
             return entry.document;
         }
 
-        removeDocument(fileName: string, compilationSettings: ImmutableCompilationSettings, owner: string): void {
+        public releaseDocument(fileName: string, compilationSettings: ImmutableCompilationSettings, owner: string): void {
             var bucket = this.getBucketForCompilationSettings(compilationSettings, false);
             Debug.assert(bucket);
-            var canonicalFileName = this.canonicalizeFileName(fileName);
-            var entry = bucket.lookup(canonicalFileName);
+
+            var entry = bucket.lookup(fileName);
             entry.refCount--;
 
-            var ownerIndex = entry.owners.indexOf(this.canonicalizeFileName(owner));
+            var ownerIndex = entry.owners.indexOf(owner);
             Debug.assert(ownerIndex !== -1);
             entry.owners.splice(ownerIndex, 1)
 
             Debug.assert(entry.refCount >= 0);
             if (entry.refCount === 0) {
-                bucket.remove(canonicalFileName)
+                bucket.remove(fileName);
             }
         }
     }
@@ -294,7 +292,6 @@ module TypeScript {
 
         public addOrUpdateFile(document: Document): void {
             // TODO: TypeScript.sourceCharactersCompiled += document. scriptSnapshot.getLength();
-
             // Note: the semantic info chain will recognize that this is a replacement of an
             // existing script, and will handle it appropriately.
             this.semanticInfoChain.addDocument(document);
@@ -309,7 +306,7 @@ module TypeScript {
             referencedFiles: string[]= []): void {
 
             fileName = TypeScript.switchToForwardSlashes(fileName);
-            var document = DocumentRegistry.createDocument(this.compilationSettings(), fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
+            var document = Document.create(this.compilationSettings(), fileName, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
             this.addOrUpdateFile(document);
         }
 
@@ -317,32 +314,12 @@ module TypeScript {
             fileName = TypeScript.switchToForwardSlashes(fileName);
 
             var document = this.getDocument(fileName);
-            var updatedDocument = document.update_doNotUseDirectly(scriptSnapshot, version, isOpen, textChangeRange);
+            var updatedDocument = document.update(scriptSnapshot, version, isOpen, textChangeRange);
 
             // Note: the semantic info chain will recognize that this is a replacement of an
             // existing script, and will handle it appropriately.
             this.addOrUpdateFile(updatedDocument);
         }
-
-        //    fileName = TypeScript.switchToForwardSlashes(fileName);
-
-        //    TypeScript.sourceCharactersCompiled += scriptSnapshot.getLength();
-
-        //    var document = this.documentRegistry.getDocument(fileName, this._settings, scriptSnapshot, byteOrderMark, version, isOpen, referencedFiles);
-
-        //    this.semanticInfoChain.addDocument(document);
-        //}
-
-        //public updateFile(fileName: string, scriptSnapshot: IScriptSnapshot, version: number, isOpen: boolean, textChangeRange: TextChangeRange): void {
-        //    fileName = TypeScript.switchToForwardSlashes(fileName);
-
-        //    var document = this.getDocument(fileName);
-        //    var updatedDocument = document.update(scriptSnapshot, version, isOpen, textChangeRange);
-
-        //    // Note: the semantic info chain will recognize that this is a replacement of an
-        //    // existing script, and will handle it appropriately.
-        //    this.semanticInfoChain.addDocument(updatedDocument);
-        //}
 
         public removeFile(fileName: string): void {
             fileName = TypeScript.switchToForwardSlashes(fileName);
@@ -1199,7 +1176,7 @@ module TypeScript {
                 return null;
             }
 
-            var astForDecl = decl.ast(this.semanticInfoChain);
+            var astForDecl = decl.ast();
             if (!astForDecl) {
                 return null;
             }
