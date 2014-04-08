@@ -120,9 +120,15 @@ class CompilerBaselineRunner extends RunnerBase {
                         // Make sure we emit something for every error
                         var markedErrorCount = 0;
                         // For each line, emit the line followed by any error squiggles matching this line
+                        // Note: IE JS engine incorrectly handles consecutive delimiters here when using RegExp split, so
+                        // we have to string-based splitting instead and try to figure out the delimiting chars
                         var fileLineMap = TypeScript.LineMap1.fromString(inputFile.content);
-                        var lines = inputFile.content.split(/\r?\n/g);
+                        var lines = inputFile.content.split('\n');
                         lines.forEach((line, lineIndex) => {
+                            if (line.length > 0 && line.charAt(line.length - 1) === '\r') {
+                                line = line.substr(0, line.length - 1);
+                            }
+
                             var thisLineStart = fileLineMap.getLineStartPosition(lineIndex);
                             var nextLineStart: number;
                             // On the last line of the file, fake the next line start number so that we handle errors on the last character of the file correctly
@@ -145,7 +151,14 @@ class CompilerBaselineRunner extends RunnerBase {
                                     outputLines.push('    ' + new Array(squiggleStart + 1).join(' ') + new Array(Math.min(length, line.length - squiggleStart) + 1).join('~'));
                                     // If the error ended here, or we're at the end of the file, emit its message
                                     if ((lineIndex === lines.length - 1) || nextLineStart > (err.start() + err.length())) {
-                                        this._getDiagnosticText(err).split(/\r?\n/g).filter(s => s.length > 0).map(s => '!!! ' + s).forEach(e => outputLines.push(e));
+                                        // Just like above, we need to do a split on a string instead of on a regex
+                                        // because the JS engine does regexes wrong
+                                        this._getDiagnosticText(err)
+                                            .split('\n')
+                                            .map(s => s.length > 0 && s.charAt(s.length - 1) === '\r' ? s.substr(0, s.length - 1) : s)
+                                            .filter(s => s.length > 0)
+                                            .map(s => '!!! ' + s)
+                                            .forEach(e => outputLines.push(e));
                                         markedErrorCount++;
                                     }
                                 }
