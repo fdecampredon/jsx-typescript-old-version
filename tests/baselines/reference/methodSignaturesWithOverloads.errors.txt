@@ -1,4 +1,4 @@
-==== tests/cases/compiler/methodSignaturesWithOverloads.ts (4 errors) ====
+==== tests/cases/compiler/methodSignaturesWithOverloads.ts (2 errors) ====
     // Object type literals permit overloads with optionality but they must match
     
     var c: {
@@ -17,12 +17,8 @@
         func4? <T>(s: T): string; // error, mismatched optionality
         ~~~~~~~~~~~~~~~~~~~~~~~~
 !!! methodSignaturesWithOverloads.ts(14,5): error TS2153: Overload signatures must all be optional or required.
-        ~~~~~~~~~~~~~~~~~~~~~~~~
-!!! methodSignaturesWithOverloads.ts(14,5): error TS2175: Overloads cannot differ only by return type.
         func5?: {
             <T>(x: T): number;
             <T>(s: T): string;
-            ~~~~~~~~~~~~~~~~~
-!!! methodSignaturesWithOverloads.ts(17,9): error TS2175: Overloads cannot differ only by return type.
         };
     };

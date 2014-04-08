@@ -1,0 +1,61 @@
+=== tests/cases/compiler/promiseIdentity.ts ===
+Line 0 col 10 IdentifierName "IPromise" = IPromise<T>
+Line 0 col 19 IdentifierName "T" = T
+Line 1 col 0 IdentifierName "then" = <U>(callback: (x: T) => IPromise<U>) => IPromise<U>
+Line 1 col 9 IdentifierName "U" = U
+Line 1 col 12 IdentifierName "callback" = (x: T) => IPromise<U>
+Line 1 col 23 IdentifierName "x" = T
+Line 1 col 26 IdentifierName "T" = T
+Line 1 col 32 IdentifierName "IPromise" = IPromise<T>
+Line 1 col 41 IdentifierName "U" = U
+Line 1 col 46 IdentifierName "IPromise" = IPromise<T>
+Line 1 col 55 IdentifierName "U" = U
+Line 3 col 10 IdentifierName "Promise" = Promise<T>
+Line 3 col 18 IdentifierName "T" = T
+Line 4 col 0 IdentifierName "then" = <U>(callback: (x: T) => Promise<U>) => Promise<U>
+Line 4 col 9 IdentifierName "U" = U
+Line 4 col 12 IdentifierName "callback" = (x: T) => Promise<U>
+Line 4 col 23 IdentifierName "x" = T
+Line 4 col 26 IdentifierName "T" = T
+Line 4 col 32 IdentifierName "Promise" = Promise<T>
+Line 4 col 40 IdentifierName "U" = U
+Line 4 col 45 IdentifierName "Promise" = Promise<T>
+Line 4 col 53 IdentifierName "U" = U
+Line 6 col 4 IdentifierName "x" = IPromise<string>
+Line 6 col 7 IdentifierName "IPromise" = IPromise<T>
+Line 7 col 4 IdentifierName "x" = Promise<string>
+Line 7 col 7 IdentifierName "Promise" = Promise<T>
+Line 10 col 10 IdentifierName "IPromise2" = IPromise2<T, V>
+Line 10 col 20 IdentifierName "T" = T
+Line 10 col 23 IdentifierName "V" = V
+Line 11 col 0 IdentifierName "then" = <U, W>(callback: (x: T) => IPromise2<U, W>) => IPromise2<W, U>
+Line 11 col 9 IdentifierName "U" = U
+Line 11 col 12 IdentifierName "W" = W
+Line 11 col 15 IdentifierName "callback" = (x: T) => IPromise2<U, W>
+Line 11 col 26 IdentifierName "x" = T
+Line 11 col 29 IdentifierName "T" = T
+Line 11 col 35 IdentifierName "IPromise2" = IPromise2<T, V>
+Line 11 col 45 IdentifierName "U" = U
+Line 11 col 48 IdentifierName "W" = W
+Line 11 col 53 IdentifierName "IPromise2" = IPromise2<T, V>
+Line 11 col 63 IdentifierName "W" = W
+Line 11 col 66 IdentifierName "U" = U
+Line 13 col 10 IdentifierName "Promise2" = Promise2<T, V>
+Line 13 col 19 IdentifierName "T" = T
+Line 13 col 22 IdentifierName "V" = V
+Line 14 col 0 IdentifierName "then" = <U, W>(callback: (x: V) => Promise2<U, T>) => Promise2<T, W>
+Line 14 col 9 IdentifierName "U" = U
+Line 14 col 12 IdentifierName "W" = W
+Line 14 col 15 IdentifierName "callback" = (x: V) => Promise2<U, T>
+Line 14 col 26 IdentifierName "x" = V
+Line 14 col 29 IdentifierName "V" = V
+Line 14 col 35 IdentifierName "Promise2" = Promise2<T, V>
+Line 14 col 44 IdentifierName "U" = U
+Line 14 col 47 IdentifierName "T" = T
+Line 14 col 52 IdentifierName "Promise2" = Promise2<T, V>
+Line 14 col 61 IdentifierName "T" = T
+Line 14 col 64 IdentifierName "W" = W
+Line 19 col 4 IdentifierName "y" = IPromise2<string, number>
+Line 19 col 7 IdentifierName "IPromise2" = IPromise2<T, V>
+Line 20 col 4 IdentifierName "y" = Promise2<any, string>
+Line 20 col 7 IdentifierName "Promise2" = Promise2<T, V>

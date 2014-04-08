@@ -1,4 +1,4 @@
-==== tests/cases/compiler/functionOverloadErrors.ts (19 errors) ====
+==== tests/cases/compiler/functionOverloadErrors.ts (14 errors) ====
     //Function overload signature with initializer
     function fn1(x = 3);
                  ~~~~~
@@ -8,23 +8,17 @@
     //Multiple function overload signatures that are identical
     function fn2a();
     function fn2a();
-    ~~~~~~~~~~~~~~~~
-!!! functionOverloadErrors.ts(7,1): error TS2144: Duplicate overload signature for 'fn2a'.
     function fn2a() {
     
     }
     function fn2b(n: number[]);
     function fn2b(n: Array<number>);
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! functionOverloadErrors.ts(12,1): error TS2144: Duplicate overload signature for 'fn2b'.
     function fn2b() {
     }
     
     //Multiple function overload signatures that differ only by return type
     function fn3(x: string): string;
     function fn3(y: string): number;
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! functionOverloadErrors.ts(18,1): error TS2175: Overloads cannot differ only by return type.
     function fn3(): any {
         return null;
     }
@@ -42,15 +36,11 @@
     //Function overloads that differ only by type parameter name
     function fn8<T>(n: string);
     function fn8<S>(n: string);
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! functionOverloadErrors.ts(35,1): error TS2144: Duplicate overload signature for 'fn8'.
     function fn8() { }
     
     //Function overloads that differ only by type parameter name when used in parameter type annotations
     function fn9<T>(n: T);
     function fn9<S>(n: S);
-    ~~~~~~~~~~~~~~~~~~~~~~
-!!! functionOverloadErrors.ts(40,1): error TS2144: Duplicate overload signature for 'fn9'.
     function fn9() { }
     
     //Function overloads that differ only by type parameter constraints

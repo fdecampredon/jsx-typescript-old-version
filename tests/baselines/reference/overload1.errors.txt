@@ -1,4 +1,4 @@
-==== tests/cases/compiler/overload1.ts (10 errors) ====
+==== tests/cases/compiler/overload1.ts (9 errors) ====
     module O {
         export class A {
             
@@ -18,8 +18,6 @@
             g(n:number):string;
             g(a:A):C;
             g(c:C):string;
-            ~~~~~~~~~~~~~
-!!! overload1.ts(19,9): error TS2175: Overloads cannot differ only by return type.
             h(s1:string,s2:number):string;
             h(s1:number,s2:string):number;
         }

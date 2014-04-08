@@ -1,0 +1,75 @@
+=== tests/cases/compiler/objectTypesIdentityWithCallSignaturesDifferingParamCounts2.ts ===
+Line 2 col 10 IdentifierName "I" = I
+Line 3 col 5 IdentifierName "x" = string
+Line 6 col 10 IdentifierName "I2" = I2<T>
+Line 6 col 13 IdentifierName "T" = T
+Line 7 col 5 IdentifierName "x" = T
+Line 7 col 8 IdentifierName "T" = T
+Line 7 col 12 IdentifierName "T" = T
+Line 10 col 4 IdentifierName "a" = (x: string, y: string) => string
+Line 10 col 10 IdentifierName "x" = string
+Line 10 col 21 IdentifierName "y" = string
+Line 12 col 9 IdentifierName "foo2" = typeof foo2
+Line 12 col 14 IdentifierName "x" = I
+Line 12 col 17 IdentifierName "I" = I
+Line 13 col 9 IdentifierName "foo2" = typeof foo2
+Line 13 col 14 IdentifierName "x" = I
+Line 13 col 17 IdentifierName "I" = I
+Line 14 col 9 IdentifierName "foo2" = typeof foo2
+Line 14 col 14 IdentifierName "x" = any
+Line 16 col 9 IdentifierName "foo3" = typeof foo3
+Line 16 col 14 IdentifierName "x" = (x: string, y: string) => string
+Line 16 col 24 IdentifierName "a" = (x: string, y: string) => string
+Line 17 col 9 IdentifierName "foo3" = typeof foo3
+Line 17 col 14 IdentifierName "x" = (x: string, y: string) => string
+Line 17 col 24 IdentifierName "a" = (x: string, y: string) => string
+Line 18 col 9 IdentifierName "foo3" = typeof foo3
+Line 18 col 14 IdentifierName "x" = any
+Line 20 col 9 IdentifierName "foo4" = typeof foo4
+Line 20 col 14 IdentifierName "x" = I2<string>
+Line 20 col 17 IdentifierName "I2" = I2<T>
+Line 21 col 9 IdentifierName "foo4" = typeof foo4
+Line 21 col 14 IdentifierName "x" = I2<string>
+Line 21 col 17 IdentifierName "I2" = I2<T>
+Line 22 col 9 IdentifierName "foo4" = typeof foo4
+Line 22 col 14 IdentifierName "x" = any
+Line 24 col 9 IdentifierName "foo5" = typeof foo5
+Line 24 col 14 IdentifierName "x" = I2<string>
+Line 24 col 17 IdentifierName "I2" = I2<T>
+Line 25 col 9 IdentifierName "foo5" = typeof foo5
+Line 25 col 14 IdentifierName "x" = I2<number>
+Line 25 col 17 IdentifierName "I2" = I2<T>
+Line 26 col 9 IdentifierName "foo5" = typeof foo5
+Line 26 col 14 IdentifierName "x" = any
+Line 28 col 9 IdentifierName "foo13" = typeof foo13
+Line 28 col 15 IdentifierName "x" = I
+Line 28 col 18 IdentifierName "I" = I
+Line 29 col 9 IdentifierName "foo13" = typeof foo13
+Line 29 col 15 IdentifierName "x" = (x: string, y: string) => string
+Line 29 col 25 IdentifierName "a" = (x: string, y: string) => string
+Line 30 col 9 IdentifierName "foo13" = typeof foo13
+Line 30 col 15 IdentifierName "x" = any
+Line 32 col 9 IdentifierName "foo14" = typeof foo14
+Line 32 col 15 IdentifierName "x" = I
+Line 32 col 18 IdentifierName "I" = I
+Line 33 col 9 IdentifierName "foo14" = typeof foo14
+Line 33 col 15 IdentifierName "x" = I2<string>
+Line 33 col 18 IdentifierName "I2" = I2<T>
+Line 34 col 9 IdentifierName "foo14" = typeof foo14
+Line 34 col 15 IdentifierName "x" = any
+Line 36 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 36 col 16 IdentifierName "x" = (x: string, y: string) => string
+Line 36 col 26 IdentifierName "a" = (x: string, y: string) => string
+Line 37 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 37 col 16 IdentifierName "x" = I2<string>
+Line 37 col 19 IdentifierName "I2" = I2<T>
+Line 38 col 9 IdentifierName "foo14b" = typeof foo14b
+Line 38 col 16 IdentifierName "x" = any
+Line 40 col 9 IdentifierName "foo15" = typeof foo15
+Line 40 col 15 IdentifierName "x" = I
+Line 40 col 18 IdentifierName "I" = I
+Line 41 col 9 IdentifierName "foo15" = typeof foo15
+Line 41 col 15 IdentifierName "x" = I2<number>
+Line 41 col 18 IdentifierName "I2" = I2<T>
+Line 42 col 9 IdentifierName "foo15" = typeof foo15
+Line 42 col 15 IdentifierName "x" = any

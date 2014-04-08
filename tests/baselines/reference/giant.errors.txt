@@ -1,4 +1,4 @@
-==== tests/cases/compiler/giant.ts (216 errors) ====
+==== tests/cases/compiler/giant.ts (192 errors) ====
     
     /*
         Prefixes
@@ -78,8 +78,6 @@
         //Call Signature
         ();
         (): number;
-        ~~~~~~~~~~
-!!! giant.ts(41,5): error TS2175: Overloads cannot differ only by return type.
         (p);
         (p1: string);
         (p2?: string);
@@ -92,8 +90,6 @@
         //Construct Signature
         new ();
         new (): number;
-        ~~~~~~~~~~~~~~
-!!! giant.ts(53,5): error TS2175: Overloads cannot differ only by return type.
         new (p: string);
         new (p2?: string);
         new (...p3: any[]);
@@ -129,8 +125,6 @@
         p6(pa1): void;
         p7(pa1, pa2): void;
         p7? (pa1, pa2): void;
-        ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(76,5): error TS2144: Duplicate overload signature for 'p7'.
         ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(76,5): error TS2153: Overload signatures must all be optional or required.
     }
@@ -200,8 +194,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(105,9): error TS2175: Overloads cannot differ only by return type.
             (p);
             (p1: string);
             (p2?: string);
@@ -214,8 +206,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(117,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -251,8 +241,6 @@
             p6(pa1): void;
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
-            ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(140,9): error TS2144: Duplicate overload signature for 'p7'.
             ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(140,9): error TS2153: Overload signatures must all be optional or required.
         }
@@ -337,8 +325,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(184,9): error TS2175: Overloads cannot differ only by return type.
             (p);
             (p1: string);
             (p2?: string);
@@ -351,8 +337,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(196,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -388,8 +372,6 @@
             p6(pa1): void;
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
-            ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(219,9): error TS2144: Duplicate overload signature for 'p7'.
             ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(219,9): error TS2153: Overload signatures must all be optional or required.
         }
@@ -548,8 +530,6 @@
         //Call Signature
         ();
         (): number;
-        ~~~~~~~~~~
-!!! giant.ts(299,5): error TS2175: Overloads cannot differ only by return type.
         (p);
         (p1: string);
         (p2?: string);
@@ -562,8 +542,6 @@
         //Construct Signature
         new ();
         new (): number;
-        ~~~~~~~~~~~~~~
-!!! giant.ts(311,5): error TS2175: Overloads cannot differ only by return type.
         new (p: string);
         new (p2?: string);
         new (...p3: any[]);
@@ -599,8 +577,6 @@
         p6(pa1): void;
         p7(pa1, pa2): void;
         p7? (pa1, pa2): void;
-        ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(334,5): error TS2144: Duplicate overload signature for 'p7'.
         ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(334,5): error TS2153: Overload signatures must all be optional or required.
     }
@@ -670,8 +646,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(363,9): error TS2175: Overloads cannot differ only by return type.
             (p);
             (p1: string);
             (p2?: string);
@@ -684,8 +658,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(375,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -721,8 +693,6 @@
             p6(pa1): void;
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
-            ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(398,9): error TS2144: Duplicate overload signature for 'p7'.
             ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(398,9): error TS2153: Overload signatures must all be optional or required.
         }
@@ -807,8 +777,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(442,9): error TS2175: Overloads cannot differ only by return type.
             (p);
             (p1: string);
             (p2?: string);
@@ -821,8 +789,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(454,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -858,8 +824,6 @@
             p6(pa1): void;
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
-            ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(477,9): error TS2144: Duplicate overload signature for 'p7'.
             ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(477,9): error TS2153: Overload signatures must all be optional or required.
         }
@@ -1029,8 +993,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(568,9): error TS2175: Overloads cannot differ only by return type.
             (p: string);
             (p2?: string);
             (...p3: any[]);
@@ -1042,8 +1004,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(579,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -1080,8 +1040,6 @@
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
             ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(602,9): error TS2144: Duplicate overload signature for 'p7'.
-            ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(602,9): error TS2153: Overload signatures must all be optional or required.
         }
         module M {
@@ -1114,8 +1072,6 @@
             //Call Signature
             ();
             (): number;
-            ~~~~~~~~~~
-!!! giant.ts(633,9): error TS2175: Overloads cannot differ only by return type.
             (p);
             (p1: string);
             (p2?: string);
@@ -1128,8 +1084,6 @@
             //Construct Signature
             new ();
             new (): number;
-            ~~~~~~~~~~~~~~
-!!! giant.ts(645,9): error TS2175: Overloads cannot differ only by return type.
             new (p: string);
             new (p2?: string);
             new (...p3: any[]);
@@ -1165,8 +1119,6 @@
             p6(pa1): void;
             p7(pa1, pa2): void;
             p7? (pa1, pa2): void;
-            ~~~~~~~~~~~~~~~~~~~~
-!!! giant.ts(668,9): error TS2144: Duplicate overload signature for 'p7'.
             ~~~~~~~~~~~~~~~~~~~~
 !!! giant.ts(668,9): error TS2153: Overload signatures must all be optional or required.
         }

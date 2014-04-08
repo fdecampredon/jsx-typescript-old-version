@@ -1,0 +1,59 @@
+=== tests/cases/compiler/methodSignaturesWithOverloads2.ts ===
+Line 2 col 4 IdentifierName "c" = { func4?(x: number): number; func4?(s: string): string; func5?: { (x: number): number; (s: string): string; }; }
+Line 3 col 0 IdentifierName "func4" = { (x: number): number; (s: string): string; }
+Line 3 col 11 IdentifierName "x" = number
+Line 4 col 0 IdentifierName "func4" = { (x: number): number; (s: string): string; }
+Line 4 col 11 IdentifierName "s" = string
+Line 5 col 0 IdentifierName "func5" = { (x: number): number; (s: string): string; }
+Line 6 col 9 IdentifierName "x" = number
+Line 7 col 9 IdentifierName "s" = string
+Line 10 col 0 AssignmentExpression "// no errors
+c.func4 = c.func5" = { (x: number): number; (s: string): string; }
+Line 10 col 0 MemberAccessExpression "// no errors
+c.func4" = { (x: number): number; (s: string): string; }
+Line 10 col 0 IdentifierName "// no errors
+c" = { func4?(x: number): number; func4?(s: string): string; func5?: { (x: number): number; (s: string): string; }; }
+Line 12 col 2 IdentifierName "func4" = { (x: number): number; (s: string): string; }
+Line 12 col 10 MemberAccessExpression "c.func5" = { (x: number): number; (s: string): string; }
+Line 12 col 10 IdentifierName "c" = { func4?(x: number): number; func4?(s: string): string; func5?: { (x: number): number; (s: string): string; }; }
+Line 12 col 12 IdentifierName "func5" = { (x: number): number; (s: string): string; }
+Line 13 col 0 AssignmentExpression "c.func5 = c.func4" = { (x: number): number; (s: string): string; }
+Line 13 col 0 MemberAccessExpression "c.func5" = { (x: number): number; (s: string): string; }
+Line 13 col 0 IdentifierName "c" = { func4?(x: number): number; func4?(s: string): string; func5?: { (x: number): number; (s: string): string; }; }
+Line 13 col 2 IdentifierName "func5" = { (x: number): number; (s: string): string; }
+Line 13 col 10 MemberAccessExpression "c.func4" = { (x: number): number; (s: string): string; }
+Line 13 col 10 IdentifierName "c" = { func4?(x: number): number; func4?(s: string): string; func5?: { (x: number): number; (s: string): string; }; }
+Line 13 col 12 IdentifierName "func4" = { (x: number): number; (s: string): string; }
+Line 16 col 4 IdentifierName "c2" = { func4?<T>(x: T): number; func4?<T>(s: T): string; func5?: { <T>(x: T): number; <T>(s: T): string; }; }
+Line 17 col 0 IdentifierName "func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 17 col 11 IdentifierName "T" = T
+Line 17 col 14 IdentifierName "x" = T
+Line 17 col 17 IdentifierName "T" = T
+Line 18 col 0 IdentifierName "func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 18 col 12 IdentifierName "T" = T
+Line 18 col 15 IdentifierName "s" = T
+Line 18 col 18 IdentifierName "T" = T
+Line 19 col 0 IdentifierName "func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 20 col 9 IdentifierName "T" = T
+Line 20 col 12 IdentifierName "x" = T
+Line 20 col 15 IdentifierName "T" = T
+Line 21 col 9 IdentifierName "T" = T
+Line 21 col 12 IdentifierName "s" = T
+Line 21 col 15 IdentifierName "T" = T
+Line 24 col 0 AssignmentExpression "// no errors
+c2.func4 = c2.func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 24 col 0 MemberAccessExpression "// no errors
+c2.func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 24 col 0 IdentifierName "// no errors
+c2" = { func4?<T>(x: T): number; func4?<T>(s: T): string; func5?: { <T>(x: T): number; <T>(s: T): string; }; }
+Line 26 col 3 IdentifierName "func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 26 col 11 MemberAccessExpression "c2.func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 26 col 11 IdentifierName "c2" = { func4?<T>(x: T): number; func4?<T>(s: T): string; func5?: { <T>(x: T): number; <T>(s: T): string; }; }
+Line 26 col 14 IdentifierName "func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 27 col 0 AssignmentExpression "c2.func5 = c2.func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 27 col 0 MemberAccessExpression "c2.func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 27 col 0 IdentifierName "c2" = { func4?<T>(x: T): number; func4?<T>(s: T): string; func5?: { <T>(x: T): number; <T>(s: T): string; }; }
+Line 27 col 3 IdentifierName "func5" = { <T>(x: T): number; <T>(s: T): string; }
+Line 27 col 11 MemberAccessExpression "c2.func4" = { <T>(x: T): number; <T>(s: T): string; }
+Line 27 col 11 IdentifierName "c2" = { func4?<T>(x: T): number; func4?<T>(s: T): string; func5?: { <T>(x: T): number; <T>(s: T): string; }; }
+Line 27 col 14 IdentifierName "func4" = { <T>(x: T): number; <T>(s: T): string; }

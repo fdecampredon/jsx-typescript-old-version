@@ -1,4 +1,4 @@
-==== tests/cases/compiler/interfaceMemberValidation.ts (8 errors) ====
+==== tests/cases/compiler/interfaceMemberValidation.ts (6 errors) ====
     interface i1 { name: string; }
     interface i2 extends i1 { name: number; yo: string; }
               ~~
@@ -11,8 +11,6 @@
 !!! interfaceMemberValidation.ts(5,2): error TS2171: All named properties must be assignable to string indexer type 'number'.
      bar():any;
      ~~~~~~~~~
-!!! interfaceMemberValidation.ts(6,2): error TS2144: Duplicate overload signature for 'bar'.
-     ~~~~~~~~~
 !!! interfaceMemberValidation.ts(6,2): error TS2171: All named properties must be assignable to string indexer type 'number'.
      new():void;
      ~~~~~~~~~~
@@ -20,8 +18,6 @@
      new():void;
      ~~~~~~~~~~
 !!! interfaceMemberValidation.ts(8,2): error TS2133: Constructors cannot have a return type of 'void'.
-     ~~~~~~~~~~
-!!! interfaceMemberValidation.ts(8,2): error TS2147: Duplicate overload construct signature.
      [s:string]:number;
      [s:string]:number;
      ~~~~~~~~~~~~~~~~~

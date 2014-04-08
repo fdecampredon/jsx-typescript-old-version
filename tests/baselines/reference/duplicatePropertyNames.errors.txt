@@ -1,4 +1,4 @@
-==== tests/cases/compiler/duplicatePropertyNames.ts (11 errors) ====
+==== tests/cases/compiler/duplicatePropertyNames.ts (10 errors) ====
     // duplicate property names are an error in all types
     
     interface Number {
@@ -12,8 +12,6 @@
     interface String {
         foo(): string;
         foo(): string;
-        ~~~~~~~~~~~~~
-!!! duplicatePropertyNames.ts(10,5): error TS2144: Duplicate overload signature for 'foo'.
     }
     
     interface Array<T> {

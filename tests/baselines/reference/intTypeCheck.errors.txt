@@ -1,4 +1,4 @@
-==== tests/cases/compiler/intTypeCheck.ts (83 errors) ====
+==== tests/cases/compiler/intTypeCheck.ts (78 errors) ====
     interface i1 {
         //Property Signatures
         p;
@@ -14,8 +14,6 @@
         //Call Signatures
         ();
         (): number;
-        ~~~~~~~~~~
-!!! intTypeCheck.ts(15,5): error TS2175: Overloads cannot differ only by return type.
         (p);
         (p1: string);
         (p2?: string);
@@ -27,8 +25,6 @@
         //Construct Signatures
         new ();
         new (): number;
-        ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(26,5): error TS2175: Overloads cannot differ only by return type.
         new (p: string);
         new (p2?: string);
         new (...p3: any[]);
@@ -62,8 +58,6 @@
         //Call Signatures
         ();
         (): number;
-        ~~~~~~~~~~
-!!! intTypeCheck.ts(50,5): error TS2175: Overloads cannot differ only by return type.
         (p);
         (p1: string);
         (p2?: string);
@@ -76,8 +70,6 @@
         //Construct Signatures
         new ();
         new (): number;
-        ~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(62,5): error TS2175: Overloads cannot differ only by return type.
         new (p: string);
         new (p2?: string);
         new (...p3: any[]);
@@ -111,8 +103,6 @@
         p6(pa1): void;
         p7(pa1, pa2): void;
         p7? (pa1, pa2): void;
-        ~~~~~~~~~~~~~~~~~~~~
-!!! intTypeCheck.ts(83,5): error TS2144: Duplicate overload signature for 'p7'.
         ~~~~~~~~~~~~~~~~~~~~
 !!! intTypeCheck.ts(83,5): error TS2153: Overload signatures must all be optional or required.
     }

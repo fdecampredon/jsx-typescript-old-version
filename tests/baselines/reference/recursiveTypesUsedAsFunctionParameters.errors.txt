@@ -1,4 +1,4 @@
-==== tests/cases/compiler/recursiveTypesUsedAsFunctionParameters.ts (3 errors) ====
+==== tests/cases/compiler/recursiveTypesUsedAsFunctionParameters.ts (2 errors) ====
     class List<T> {
         data: T;
         next: List<List<T>>;
@@ -11,8 +11,6 @@
     
     function foo<T>(x: List<T>);
     function foo<U>(x: List<U>); // error, duplicate
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! recursiveTypesUsedAsFunctionParameters.ts(12,1): error TS2144: Duplicate overload signature for 'foo'.
     function foo<T>(x: List<T>) {
     }
     

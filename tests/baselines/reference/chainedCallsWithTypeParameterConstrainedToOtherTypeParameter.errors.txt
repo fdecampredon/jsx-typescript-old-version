@@ -1,0 +1,26 @@
+==== tests/cases/compiler/chainedCallsWithTypeParameterConstrainedToOtherTypeParameter.ts (2 errors) ====
+    class Chain<T extends A> {
+        constructor(public value: T) { }
+        then<S extends T>(cb: (x: T) => S): Chain<S> {
+            return null;
+        }
+    }
+    
+    class A {
+        x;
+    }
+    class B extends A {
+        y;
+    }
+    class C extends B {
+        z;
+    }
+    
+    // Ok to go down the chain, but error to try to climb back up
+    (new Chain(new A)).then(a => new B).then(b => new C).then(c => new B).then(b => new A);
+                                                         ~~~~
+!!! chainedCallsWithTypeParameterConstrainedToOtherTypeParameter.ts(19,54): error TS2082: Supplied parameters do not match any signature of call target:
+!!! 	Call signatures of types '(c: C) => B' and '(x: C) => C' are incompatible:
+!!! 		Type 'B' is missing property 'z' from type 'C'.
+                                                         ~~~~
+!!! chainedCallsWithTypeParameterConstrainedToOtherTypeParameter.ts(19,54): error TS2087: Could not select overload for 'call' expression.

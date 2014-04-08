@@ -1,4 +1,4 @@
-==== tests/cases/compiler/constructSignatureWithAccessibilityModifiersOnParameters2.ts (18 errors) ====
+==== tests/cases/compiler/constructSignatureWithAccessibilityModifiersOnParameters2.ts (14 errors) ====
     // Parameter properties are not valid in overloads of constructors
     
     class C {
@@ -38,8 +38,6 @@
         new (public x);
              ~~~~~~
 !!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(20,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-        ~~~~~~~~~~~~~~
-!!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(20,5): error TS2147: Duplicate overload construct signature.
     }
     
     interface I2 {
@@ -49,8 +47,6 @@
         new (private x);
              ~~~~~~~
 !!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(25,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-        ~~~~~~~~~~~~~~~
-!!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(25,5): error TS2147: Duplicate overload construct signature.
     }
     
     var a: {
@@ -60,8 +56,6 @@
         new (public y);
              ~~~~~~
 !!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(30,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-        ~~~~~~~~~~~~~~
-!!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(30,5): error TS2147: Duplicate overload construct signature.
     }
     
     var b: {
@@ -71,6 +65,4 @@
         new (private y);
              ~~~~~~~
 !!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(35,10): error TS1040: Parameter property declarations can only be used in a non-ambient constructor declaration.
-        ~~~~~~~~~~~~~~~
-!!! constructSignatureWithAccessibilityModifiersOnParameters2.ts(35,5): error TS2147: Duplicate overload construct signature.
     }

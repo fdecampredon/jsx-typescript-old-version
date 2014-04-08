@@ -1,4 +1,4 @@
-==== tests/cases/compiler/objectTypesIdentityWithComplexConstraints.ts (2 errors) ====
+==== tests/cases/compiler/objectTypesIdentityWithComplexConstraints.ts (1 errors) ====
     interface A {
           <T extends {
            ~~~~~~~~~~~
@@ -16,6 +16,4 @@
     // ok, not considered identical because the steps of contextual signature instantiation create fresh type parameters
     function foo(x: A);
     function foo(x: B); // error after constraints above made illegal
-    ~~~~~~~~~~~~~~~~~~~
-!!! objectTypesIdentityWithComplexConstraints.ts(13,1): error TS2144: Duplicate overload signature for 'foo'.
     function foo(x: any) { }
