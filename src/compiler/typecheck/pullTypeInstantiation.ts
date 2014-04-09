@@ -9,7 +9,7 @@ module TypeScript {
         InfinitelyExpanding
     }
 
-    export interface TypeArgumentMap {
+    export interface TypeSubstitutionMap {
         [n: number]: PullTypeSymbol;
     }
 
@@ -150,7 +150,7 @@ module TypeScript {
             return this.referencedTypeSymbol.getMembers();
         }
 
-        public setHasDefaultConstructor(hasOne= true): void {
+        public setHasDefaultConstructor(hasOne = true): void {
             Debug.fail("Reference symbol " + this.pullSymbolID + ":setHasDefaultConstructor");
         }
         public getHasDefaultConstructor(): boolean {
@@ -427,20 +427,20 @@ module TypeScript {
             return this.referencedTypeSymbol;
         }
 
-        // The typeParameterArgumentMap parameter represents a mapping of PUllSymbolID strings of type parameters to type argument symbols
+        // The typeParameterSubstitutionMap parameter represents a mapping of PUllSymbolID strings of type parameters to type argument symbols
         // The instantiateFunctionTypeParameters parameter is set to true when a signature is being specialized at a call site, or if its
         // type parameters need to otherwise be specialized (say, during a type relationship check)
-        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterArgumentMap: TypeArgumentMap): PullInstantiatedTypeReferenceSymbol {
+        public static create(resolver: PullTypeResolver, type: PullTypeSymbol, typeParameterSubstitutionMap: TypeSubstitutionMap): PullInstantiatedTypeReferenceSymbol {
             Debug.assert(resolver);
 
             // check for an existing instantiation
 
-            // If the typeArgument map is going to change, we need to create copy so that 
+            // If the type substitution map is going to change, we need to create copy so that 
             // we dont polute the map entry passed in by the caller. 
-            // (eg. when getting the member type using enclosing types type argument map)
-            var mutableTypeParameterMap = new PullInstantiationHelpers.MutableTypeArgumentMap(typeParameterArgumentMap);
+            // (eg. when getting the member type using enclosing types type substitution map)
+            var mutableTypeParameterMap = new PullInstantiationHelpers.MutableTypeParameterSubstitutionMap(typeParameterSubstitutionMap);
 
-            // if the type is already specialized, we need to create a new type argument map that represents 
+            // if the type is already specialized, we need to create a new type substitution map that represents 
             // the mapping of type arguments we've just received to type arguments as previously passed through
             // If we have below sample
             //interface IList<T> {
@@ -453,13 +453,13 @@ module TypeScript {
             //    owner: List2<List2<V>>;
             //}
             // When instantiating List<V> with U = V and trying to get owner property we would have the map that
-            // says U = V, but when creating the IList<V> we want to updates its type argument maps to say T = V because 
+            // says U = V, but when creating the IList<V> we want to updates its type substitution maps to say T = V because 
             // IList<T>  would now be instantiated with V
             PullInstantiationHelpers.instantiateTypeArgument(resolver, type, mutableTypeParameterMap);
 
             // Lookup in cache if this specialization already exists
             var rootType = <PullTypeSymbol>type.getRootSymbol();
-            var instantiation = <PullInstantiatedTypeReferenceSymbol>rootType.getSpecialization(mutableTypeParameterMap.typeParameterArgumentMap);
+            var instantiation = <PullInstantiatedTypeReferenceSymbol>rootType.getSpecialization(mutableTypeParameterMap.typeParameterSubstitutionMap);
             if (instantiation) {
                 return instantiation;
             }
@@ -467,30 +467,30 @@ module TypeScript {
             // In any type, typeparameter map should only contain information about the allowed to reference type parameters 
             // so remove unnecessary entries that are outside these scope, eg. from above sample we need to remove entry U = V
             // and keep only T = V
-            PullInstantiationHelpers.cleanUpTypeArgumentMap(type, mutableTypeParameterMap);
-            typeParameterArgumentMap = mutableTypeParameterMap.typeParameterArgumentMap;
+            PullInstantiationHelpers.cleanUpTypeParameterSubstitutionMap(type, mutableTypeParameterMap);
+            typeParameterSubstitutionMap = mutableTypeParameterMap.typeParameterSubstitutionMap;
 
             // If the reference is made to itself (e.g., referring to Array<T> within the declaration of Array<T>,
             // We want to special-case the reference so later calls to getMember, etc., will delegate directly
             // to the referenced declaration type, and not force any additional instantiation
             var isInstanceReferenceType = (type.kind & PullElementKind.SomeInstantiatableType) != 0;
-            var resolvedTypeParameterArgumentMap = typeParameterArgumentMap;
+            var resolvedTypeParameterArgumentMap = typeParameterSubstitutionMap;
             if (isInstanceReferenceType) {
                 var typeParameters = rootType.getTypeParameters();
                 for (var i = 0; i < typeParameters.length; i++) {
-                    if (!PullHelpers.typeSymbolsAreIdentical(typeParameters[i], typeParameterArgumentMap[typeParameters[i].pullSymbolID])) {
+                    if (!PullHelpers.typeSymbolsAreIdentical(typeParameters[i], typeParameterSubstitutionMap[typeParameters[i].pullSymbolID])) {
                         isInstanceReferenceType = false;
                         break;
                     }
                 }
 
                 if (isInstanceReferenceType) {
-                    typeParameterArgumentMap = [];
+                    typeParameterSubstitutionMap = [];
                 }
             }
 
-            // Create the type using typeArgument map
-            instantiation = new PullInstantiatedTypeReferenceSymbol(rootType, typeParameterArgumentMap, isInstanceReferenceType);
+            // Create the type using type substitution map
+            instantiation = new PullInstantiatedTypeReferenceSymbol(rootType, typeParameterSubstitutionMap, isInstanceReferenceType);
 
             // Store in the cache
             rootType.addSpecialization(instantiation, resolvedTypeParameterArgumentMap);
@@ -498,7 +498,7 @@ module TypeScript {
             return instantiation;
         }
 
-        constructor(public referencedTypeSymbol: PullTypeSymbol, private _typeParameterArgumentMap: TypeArgumentMap,
+        constructor(public referencedTypeSymbol: PullTypeSymbol, private _typeParameterSubstitutionMap: TypeSubstitutionMap,
             public isInstanceReferenceType: boolean) {
             super(referencedTypeSymbol);
 
@@ -509,8 +509,8 @@ module TypeScript {
             return (<PullTypeSymbol>this.getRootSymbol()).isGeneric();
         }
 
-        public getTypeParameterArgumentMap(): TypeArgumentMap {
-            return this._typeParameterArgumentMap;
+        public getTypeParameterSubstitutionMap(): TypeSubstitutionMap {
+            return this._typeParameterSubstitutionMap;
         }
 
         public getTypeArguments(): PullTypeSymbol[]{
@@ -527,7 +527,7 @@ module TypeScript {
                     var typeArguments: PullTypeSymbol[] = [];
 
                     for (var i = 0; i < typeParameters.length; i++) {
-                        typeArgument = <PullTypeSymbol>this._typeParameterArgumentMap[typeParameters[i].pullSymbolID];
+                        typeArgument = <PullTypeSymbol>this._typeParameterSubstitutionMap[typeParameters[i].pullSymbolID];
 
                         if (!typeArgument) {
                             Debug.fail("type argument count mismatch");
@@ -558,13 +558,13 @@ module TypeScript {
             PullHelpers.resolveDeclaredSymbolToUseType(referencedMember);
 
             // if the member does not require further specialization, re-use the referenced symbol
-            if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+            if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterSubstitutionMap)) {
                 instantiatedMember = referencedMember;
             }
             else {
                 instantiatedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                 instantiatedMember.setRootSymbol(referencedMember);
-                instantiatedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                instantiatedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterSubstitutionMap);
                 instantiatedMember.isOptional = referencedMember.isOptional;
             }
             this._instantiatedMemberNameCache[instantiatedMember.name] = instantiatedMember;
@@ -671,7 +671,7 @@ module TypeScript {
                     requestedMembers[requestedMembers.length] = this._allInstantiatedMemberNameCache[referencedMember.name];
                 }
                 else {
-                    if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                    if (!referencedMember.type.wrapsSomeTypeParameter(this._typeParameterSubstitutionMap)) {
                         this._allInstantiatedMemberNameCache[referencedMember.name] = referencedMember;
                         requestedMembers[requestedMembers.length] = referencedMember;
                     }
@@ -679,7 +679,7 @@ module TypeScript {
                         requestedMember = new PullSymbol(referencedMember.name, referencedMember.kind);
                         requestedMember.setRootSymbol(referencedMember);
 
-                        requestedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterArgumentMap);
+                        requestedMember.type = this._getResolver().instantiateType(referencedMember.type, this._typeParameterSubstitutionMap);
                         requestedMember.isOptional = referencedMember.isOptional;
 
                         this._allInstantiatedMemberNameCache[requestedMember.name] = requestedMember;
@@ -703,7 +703,7 @@ module TypeScript {
                 this._instantiatedConstructorMethod.setRootSymbol(referencedConstructorMethod);
                 this._instantiatedConstructorMethod.setResolved();
 
-                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedConstructorMethod.type, this._typeParameterArgumentMap);
+                this._instantiatedConstructorMethod.type = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedConstructorMethod.type, this._typeParameterSubstitutionMap);
             }
 
 
@@ -720,7 +720,7 @@ module TypeScript {
                 var referencedAssociatedContainerType = this.referencedTypeSymbol.getAssociatedContainerType();
 
                 if (referencedAssociatedContainerType) {
-                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedAssociatedContainerType, this._typeParameterArgumentMap);
+                    this._instantiatedAssociatedContainerType = PullInstantiatedTypeReferenceSymbol.create(this._getResolver(), referencedAssociatedContainerType, this._typeParameterSubstitutionMap);
                 }
             }
 
@@ -745,11 +745,11 @@ module TypeScript {
                 var referencedSignature = referencedCallSignatures[i];
                 this._getResolver().resolveDeclaredSymbol(referencedSignature);
 
-                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterSubstitutionMap)) {
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = referencedSignature;
                 }
                 else {
-                    var signatureTypeParameterArgumentMap = this.augmentMapWithSynthesizedTypeParameters(referencedSignature);
+                    var signatureTypeParameterArgumentMap = this.augmentSignatureSubstitutionMapWithSynthesizedTypeParameters(referencedSignature);
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length] = this._getResolver().instantiateSignature(referencedSignature, signatureTypeParameterArgumentMap, /*shouldStayGeneric*/ true);
                     this._instantiatedCallSignatures[this._instantiatedCallSignatures.length - 1].functionType = this;
                 }
@@ -776,7 +776,7 @@ module TypeScript {
                 var referencedSignature = referencedConstructSignatures[i];
                 this._getResolver().resolveDeclaredSymbol(referencedSignature);
 
-                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedSignature.wrapsSomeTypeParameter(this._typeParameterSubstitutionMap)) {
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = referencedSignature;
                 }
                 else {
@@ -784,7 +784,7 @@ module TypeScript {
                     // class constructors. Otherwise, they must share the type parameters with
                     // the class itself.
                     var shouldGenerateNewTypeParameters = !this.isConstructor();
-                    var signatureTypeParameterArgumentMap = shouldGenerateNewTypeParameters ? this.augmentMapWithSynthesizedTypeParameters(referencedSignature) : this._typeParameterArgumentMap;
+                    var signatureTypeParameterArgumentMap = shouldGenerateNewTypeParameters ? this.augmentSignatureSubstitutionMapWithSynthesizedTypeParameters(referencedSignature) : this._typeParameterSubstitutionMap;
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length] = this._getResolver().instantiateSignature(referencedSignature, signatureTypeParameterArgumentMap, /*shouldStayGeneric*/ shouldGenerateNewTypeParameters);
                     this._instantiatedConstructSignatures[this._instantiatedConstructSignatures.length - 1].functionType = this;
                 }
@@ -793,23 +793,52 @@ module TypeScript {
             return this._instantiatedConstructSignatures;
         }
 
-        private augmentMapWithSynthesizedTypeParameters(referencedSignature: PullSignatureSymbol): TypeArgumentMap {
+        // This method takes a map of all substitutions that are in scope outside the signature.
+        // The output is the composition of that map with all the new substitutions that result
+        // from generating new type parameters to replace the root type parameters. Here is an
+        // example of what this means:
+        //
+        // interface Foo<T> {
+        //     method<U>(func: (t: T) => U): Foo<U>
+        // }
+        //
+        // Suppose we are inside the reference Foo<U>. The map coming in (this._typeParameterSubstitutionMap)
+        // might be [T -> U]. If we just left the signature alone, and performed this substitution, we would
+        // get method<U>(func: (t: U) => U): Foo<U>, which is wrong because the U that came in needn't be
+        // the same as the new U. So we have to generate a U' that is distinct from U, and then update the
+        // map accordingly.
+        private augmentSignatureSubstitutionMapWithSynthesizedTypeParameters(referencedSignature: PullSignatureSymbol): TypeSubstitutionMap {
             if (referencedSignature.isGeneric()) {
+                // Collect the signature's root type parameters, and for each one, create a new
+                // type parameter with the same name. In the above example, getTypeParameters
+                // should return an array of U, and newOwnTypeParameters should be an array
+                // of U' (a fresh type parameter). Note also that U' keeps track of U as its
+                // root type parameter. We assert in order to be sure that all keys in the map
+                // are IDs of root type parameters (all of our substitution maps are against the root
+                // signature).
                 var signaturesOwnTypeParameters = referencedSignature.getTypeParameters();
                 var newOwnTypeParameters = new Array<PullSynthesizedTypeParameterSymbol>(signaturesOwnTypeParameters.length);
-                for (var j = 0; j < signaturesOwnTypeParameters.length; j++) {
-                    newOwnTypeParameters[j] = this._getResolver().instantiateTypeParameter(signaturesOwnTypeParameters[j], this._typeParameterArgumentMap);
+                for (var i = 0; i < signaturesOwnTypeParameters.length; i++) {
+                    Debug.assert(signaturesOwnTypeParameters[i].isRootSymbol());
+                    newOwnTypeParameters[i] = new PullSynthesizedTypeParameterSymbol(<PullTypeParameterSymbol>signaturesOwnTypeParameters[i], this._typeParameterSubstitutionMap);
                 }
-                // Augment the map with this new information
-                var signaturesOwnTypeArgumentMap = new PullInstantiationHelpers.MutableTypeArgumentMap(this._typeParameterArgumentMap);
-                for (var j = 0; j < signaturesOwnTypeParameters.length; j++) {
-                    signaturesOwnTypeArgumentMap.ensureTypeArgumentCopy();
-                    signaturesOwnTypeArgumentMap.typeParameterArgumentMap[signaturesOwnTypeParameters[j].pullSymbolID] = newOwnTypeParameters[j];
+                // We make a copy of this._typeParameterSubstitutionMap that accounts for this new type
+                // parameter. In the above example, we copy the map [T -> U], and we output the map
+                // [T -> U, U -> U']. Similarly, if we instantiated the same signature inside
+                // Foo<U'>, we would get the map [T -> U', U -> U'']. Note that this only works
+                // because we do not do recursive lookups in the map when substituting. In other words,
+                // we do not use the transitive closure of the map (doing so would cause us to substitute
+                // U' for T in the first example, which would be incorrect).
+                // See PullInstantiationHelpers.instantiateTypeArgument.
+                var signaturesOwnTypeArgumentMap = new PullInstantiationHelpers.MutableTypeParameterSubstitutionMap(this._typeParameterSubstitutionMap);
+                for (var i = 0; i < signaturesOwnTypeParameters.length; i++) {
+                    signaturesOwnTypeArgumentMap.ensureCopyOfUnderlyingMap();
+                    signaturesOwnTypeArgumentMap.typeParameterSubstitutionMap[signaturesOwnTypeParameters[i].pullSymbolID] = newOwnTypeParameters[i];
                 }
-                return signaturesOwnTypeArgumentMap.typeParameterArgumentMap;
+                return signaturesOwnTypeArgumentMap.typeParameterSubstitutionMap;
             }
             else {
-                return this._typeParameterArgumentMap;
+                return this._typeParameterSubstitutionMap;
             }
         }
 
@@ -830,11 +859,11 @@ module TypeScript {
             for (var i = 0; i < referencedIndexSignatures.length; i++) {
                 this._getResolver().resolveDeclaredSymbol(referencedIndexSignatures[i]);
 
-                if (!referencedIndexSignatures[i].wrapsSomeTypeParameter(this._typeParameterArgumentMap)) {
+                if (!referencedIndexSignatures[i].wrapsSomeTypeParameter(this._typeParameterSubstitutionMap)) {
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = referencedIndexSignatures[i];
                 }
                 else {
-                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._getResolver().instantiateSignature(referencedIndexSignatures[i], this._typeParameterArgumentMap, /*shouldStayGeneric*/ false);
+                    this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length] = this._getResolver().instantiateSignature(referencedIndexSignatures[i], this._typeParameterSubstitutionMap, /*shouldStayGeneric*/ false);
                     this._instantiatedIndexSignatures[this._instantiatedIndexSignatures.length - 1].functionType = this;
                 }
             }
@@ -844,17 +873,17 @@ module TypeScript {
     }
 
     export class PullInstantiatedSignatureSymbol extends PullSignatureSymbol {
-        public getTypeParameterArgumentMap(): TypeArgumentMap{
-            return this._typeParameterArgumentMap;
+        public getTypeParameterSubstitutionMap(): TypeSubstitutionMap {
+            return this._typeParameterSubstitutionMap;
         }
 
-        constructor(rootSignature: PullSignatureSymbol, private _typeParameterArgumentMap: TypeArgumentMap, private shouldStayGeneric: boolean) {
+        constructor(rootSignature: PullSignatureSymbol, private _typeParameterSubstitutionMap: TypeSubstitutionMap, private shouldStayGeneric: boolean) {
             super(rootSignature.kind, rootSignature.isDefinition());
             this.setRootSymbol(rootSignature);
             nSpecializedSignaturesCreated++;
             
             // Store in the cache
-            rootSignature.addSpecialization(this, _typeParameterArgumentMap);
+            rootSignature.addSpecialization(this, _typeParameterSubstitutionMap);
         }
 
         public getIsSpecialized() { return true; }
@@ -879,7 +908,7 @@ module TypeScript {
                         // In the inner instantiation of Foo<S>, the surrounding T will actually be an S.
                         // Unless we substitute this inner S with an S', the types of x and y will appear
                         // to be the same.
-                        var typeParameterSubstitution = this._typeParameterArgumentMap[rootTypeParameters[i].pullSymbolID];
+                        var typeParameterSubstitution = this._typeParameterSubstitutionMap[rootTypeParameters[i].pullSymbolID];
                         this._typeParameters[this._typeParameters.length] = typeParameterSubstitution && typeParameterSubstitution.isSynthesizedTypeParameter()
                         ? <PullSynthesizedTypeParameterSymbol>typeParameterSubstitution
                         : rootTypeParameters[i];
@@ -911,7 +940,7 @@ module TypeScript {
     export class PullSynthesizedTypeParameterSymbol extends PullTypeParameterSymbol {
         // We specifically do not set a root symbol here. Root symbols are only for instantiation.
         // This is distinct from instantiation.
-        constructor(private originalTypeParameter: PullTypeParameterSymbol, private _typeParameterArgumentMap: TypeArgumentMap) {
+        constructor(private originalTypeParameter: PullTypeParameterSymbol, private _typeParameterSubstitutionMapForConstraint: TypeSubstitutionMap) {
             super(originalTypeParameter.name);
             var originalTypeParameterDeclarations = originalTypeParameter.getDeclarations();
             for (var i = 0; i < originalTypeParameterDeclarations.length; i++) {
@@ -928,7 +957,7 @@ module TypeScript {
             if (!constraint) {
                 var originalConstraint = this.originalTypeParameter.getConstraint();
                 if (originalConstraint) {
-                    constraint = this._getResolver().instantiateType(originalConstraint, this._typeParameterArgumentMap);
+                    constraint = this._getResolver().instantiateType(originalConstraint, this._typeParameterSubstitutionMapForConstraint);
                     this.setConstraint(constraint);
                 }
             }

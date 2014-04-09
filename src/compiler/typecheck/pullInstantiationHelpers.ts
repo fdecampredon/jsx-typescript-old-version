@@ -33,7 +33,7 @@ module TypeScript {
         // Another way to think about this is that if we wrap some type parameter, then
         // we have only learned that we wrap ONE type parameter. If we do not wrap any
         // type parameter, we have learned that for ALL type parameters in the map.
-        public getWrapsTypeParameter(typeParameterArgumentMap: TypeArgumentMap): number {
+        public getWrapsTypeParameter(typeParameterArgumentMap: TypeSubstitutionMap): number {
             // Find result from cache
             var someTypeParameterWasMissingFromCache = false;
             for (var typeParameterID in typeParameterArgumentMap) {
@@ -55,7 +55,7 @@ module TypeScript {
             return undefined;
         }
 
-        public setWrapsTypeParameter(typeParameterArgumentMap: TypeArgumentMap, wrappingTypeParameterID: number) {
+        public setWrapsTypeParameter(typeParameterArgumentMap: TypeSubstitutionMap, wrappingTypeParameterID: number) {
             if (wrappingTypeParameterID) {
                 // wrappingTypeParameterID is the known type parameter that is wrapped
                 // We dont know about other type parameters present in the map and hence we cant set their values
@@ -74,23 +74,23 @@ module TypeScript {
     }
 
     export module PullInstantiationHelpers {
-        // This class helps in creating the type argument map
-        // But it creates another copy only if the type argument map is changing
+        // This class helps in creating the type substitution map
+        // But it creates another copy only if the type substitution map is changing
         // helping in not modifying entried in the existing map
-        export class MutableTypeArgumentMap {
-            public createdDuplicateTypeArgumentMap = false;
-            constructor(public typeParameterArgumentMap: TypeArgumentMap) {
+        export class MutableTypeParameterSubstitutionMap {
+            public createdDuplicateTypeSubstitutionMap = false;
+            constructor(public typeParameterSubstitutionMap: TypeSubstitutionMap) {
             }
-            public ensureTypeArgumentCopy() {
-                if (!this.createdDuplicateTypeArgumentMap) {
-                    var passedInTypeArgumentMap = this.typeParameterArgumentMap;
-                    this.typeParameterArgumentMap = [];
+            public ensureCopyOfUnderlyingMap() {
+                if (!this.createdDuplicateTypeSubstitutionMap) {
+                    var passedInTypeArgumentMap = this.typeParameterSubstitutionMap;
+                    this.typeParameterSubstitutionMap = [];
                     for (var typeParameterID in passedInTypeArgumentMap) {
                         if (passedInTypeArgumentMap.hasOwnProperty(typeParameterID)) {
-                            this.typeParameterArgumentMap[typeParameterID] = passedInTypeArgumentMap[typeParameterID];
+                            this.typeParameterSubstitutionMap[typeParameterID] = passedInTypeArgumentMap[typeParameterID];
                         }
                     }
-                    this.createdDuplicateTypeArgumentMap = true;
+                    this.createdDuplicateTypeSubstitutionMap = true;
                 }
             }
         }
@@ -98,7 +98,7 @@ module TypeScript {
         // Instantiate the type arguments
         // This instantiates all the type parameters the symbol can reference and the type argument in the end
         // will contain the final instantiated version for each typeparameter
-        // eg. if the type is already specialized, we need to create a new type argument map that represents 
+        // eg. if the type is already specialized, we need to create a new type substitution map that represents 
         // the mapping of type arguments we've just received to type arguments as previously passed through
         // If we have below sample
         //interface IList<T> {
@@ -111,30 +111,30 @@ module TypeScript {
         //    owner: List2<List2<V>>;
         //}
         // When instantiating List<V> with U = V and trying to get owner property we would have the map that
-        // says U = V, but when creating the IList<V> we want to updates its type argument maps to say T = V because 
+        // says U = V, but when creating the IList<V> we want to updates its type substitution maps to say T = V because 
         // IList<T>  would now be instantiated with V
         export function instantiateTypeArgument(resolver: PullTypeResolver, symbol: InstantiableSymbol,
-            mutableTypeParameterMap: MutableTypeArgumentMap) {
+            mutableTypeParameterMap: MutableTypeParameterSubstitutionMap) {
             if (symbol.getIsSpecialized()) {
-                // Get the type argument map from the signature and update our type argument map
-                var rootTypeArgumentMap = symbol.getTypeParameterArgumentMap();
+                // Get the type substitution map from the signature and update our type substitution map
+                var rootTypeArgumentMap = symbol.getTypeParameterSubstitutionMap();
                 var newTypeArgumentMap: PullTypeSymbol[] = [];
                 var allowedTypeParameters = symbol.getAllowedToReferenceTypeParameters();
                 for (var i = 0; i < allowedTypeParameters.length; i++) {
                     var typeParameterID = allowedTypeParameters[i].pullSymbolID;
                     var typeArg = rootTypeArgumentMap[typeParameterID];
                     if (typeArg) {
-                        newTypeArgumentMap[typeParameterID] = resolver.instantiateType(typeArg, mutableTypeParameterMap.typeParameterArgumentMap);
+                        newTypeArgumentMap[typeParameterID] = resolver.instantiateType(typeArg, mutableTypeParameterMap.typeParameterSubstitutionMap);
                     }
                 }
 
-                // We are repeating this loop just to make sure we arent poluting the typeParameterArgumentMap passed in
+                // We are repeating this loop just to make sure we arent poluting the typeParameterSubstitutionMap passed in
                 // when we are insantiating the type arguments
                 for (var i = 0; i < allowedTypeParameters.length; i++) {
                     var typeParameterID = allowedTypeParameters[i].pullSymbolID;
-                    if (newTypeArgumentMap[typeParameterID] && mutableTypeParameterMap.typeParameterArgumentMap[typeParameterID] != newTypeArgumentMap[typeParameterID]) {
-                        mutableTypeParameterMap.ensureTypeArgumentCopy();
-                        mutableTypeParameterMap.typeParameterArgumentMap[typeParameterID] = newTypeArgumentMap[typeParameterID];
+                    if (newTypeArgumentMap[typeParameterID] && mutableTypeParameterMap.typeParameterSubstitutionMap[typeParameterID] != newTypeArgumentMap[typeParameterID]) {
+                        mutableTypeParameterMap.ensureCopyOfUnderlyingMap();
+                        mutableTypeParameterMap.typeParameterSubstitutionMap[typeParameterID] = newTypeArgumentMap[typeParameterID];
                     }
                 }
             }
@@ -144,13 +144,13 @@ module TypeScript {
         // eg. In any type, typeparameter map should only contain information about the allowed to reference type parameters 
         // so remove unnecessary entries that are outside these scope, eg. from above sample we need to remove entry U = V
         // and keep only T = V
-        export function cleanUpTypeArgumentMap(symbol: InstantiableSymbol, mutableTypeArgumentMap: MutableTypeArgumentMap) {
+        export function cleanUpTypeParameterSubstitutionMap(symbol: InstantiableSymbol, mutableTypeParameterSubstitutionMap: MutableTypeParameterSubstitutionMap) {
             var allowedToReferenceTypeParameters = symbol.getAllowedToReferenceTypeParameters();
-            for (var typeParameterID in mutableTypeArgumentMap.typeParameterArgumentMap) {
-                if (mutableTypeArgumentMap.typeParameterArgumentMap.hasOwnProperty(typeParameterID)) {
+            for (var typeParameterID in mutableTypeParameterSubstitutionMap.typeParameterSubstitutionMap) {
+                if (mutableTypeParameterSubstitutionMap.typeParameterSubstitutionMap.hasOwnProperty(typeParameterID)) {
                     if (!ArrayUtilities.any(allowedToReferenceTypeParameters, (typeParameter) => typeParameter.pullSymbolID == typeParameterID)) {
-                        mutableTypeArgumentMap.ensureTypeArgumentCopy();
-                        delete mutableTypeArgumentMap.typeParameterArgumentMap[typeParameterID];
+                        mutableTypeParameterSubstitutionMap.ensureCopyOfUnderlyingMap();
+                        delete mutableTypeParameterSubstitutionMap.typeParameterSubstitutionMap[typeParameterID];
                     }
                 }
             }
@@ -225,11 +225,11 @@ module TypeScript {
             return allowedToReferenceTypeParameters;
         }
 
-        export function createTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[]): TypeArgumentMap {
-            return updateTypeParameterArgumentMap(typeParameters, typeArguments, {});
+        export function createTypeParameterSubstitutionMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[]): TypeSubstitutionMap {
+            return updateTypeParameterSubstitutionMap(typeParameters, typeArguments, {});
         }
 
-        export function updateTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], typeParameterArgumentMap: TypeArgumentMap): TypeArgumentMap {
+        export function updateTypeParameterSubstitutionMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], typeParameterSubstitutionMap: TypeSubstitutionMap): TypeSubstitutionMap {
             for (var i = 0; i < typeParameters.length; i++) {
                 // The reason we call getRootSymbol below is to handle the case where a signature
                 // has a type parameter constrained to an outer type parameter. Because signatures
@@ -245,18 +245,18 @@ module TypeScript {
                 // signature must be against the root U.
                 // Note that when this type of situation does not apply, getRootSymbol is the
                 // identity function.
-                typeParameterArgumentMap[typeParameters[i].getRootSymbol().pullSymbolID] = typeArguments[i];
+                typeParameterSubstitutionMap[typeParameters[i].getRootSymbol().pullSymbolID] = typeArguments[i];
             }
-            return typeParameterArgumentMap;
+            return typeParameterSubstitutionMap;
         }
 
-        export function updateMutableTypeParameterArgumentMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], mutableMap: MutableTypeArgumentMap): void {
+        export function updateMutableTypeParameterSubstitutionMap(typeParameters: PullTypeParameterSymbol[], typeArguments: PullTypeSymbol[], mutableMap: MutableTypeParameterSubstitutionMap): void {
             for (var i = 0; i < typeParameters.length; i++) {
                 // See comment in updateTypeParameterArgumentMap for why we use getRootSymbol
                 var typeParameterId = typeParameters[i].getRootSymbol().pullSymbolID;
-                if (mutableMap.typeParameterArgumentMap[typeParameterId] !== typeArguments[i]) {
-                    mutableMap.ensureTypeArgumentCopy();
-                    mutableMap.typeParameterArgumentMap[typeParameterId] = typeArguments[i];
+                if (mutableMap.typeParameterSubstitutionMap[typeParameterId] !== typeArguments[i]) {
+                    mutableMap.ensureCopyOfUnderlyingMap();
+                    mutableMap.typeParameterSubstitutionMap[typeParameterId] = typeArguments[i];
                 }
             }
         }
