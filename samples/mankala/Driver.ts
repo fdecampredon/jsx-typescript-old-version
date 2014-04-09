@@ -1,5 +1,5 @@
 ///<reference path='Position.ts'/>
-///<reference path='Geometry.ts'/>
+///<reference path='geometry.ts'/>
 ///<reference path='Game.ts'/>
 ///<reference path='Features.ts'/>
 ///<reference path='Base.ts'/>

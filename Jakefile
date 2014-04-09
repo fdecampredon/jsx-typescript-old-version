@@ -199,11 +199,11 @@ var harnessSources = [
 	path.join(harnessDirectory, "fourslash.ts"),
 	path.join(harnessDirectory, "runner.ts"),
 
-	path.join(runnersDirectory, "runnerBase.ts"),
+	path.join(runnersDirectory, "runnerbase.ts"),
 	path.join(runnersDirectory, "compiler/compilerRunner.ts"),
 	path.join(runnersDirectory, "fourslash/fourslashRunner.ts"),
 	path.join(runnersDirectory, "projects/projectsRunner.ts"),
-	path.join(runnersDirectory, "unittest/unittestRunner.ts"),
+	path.join(runnersDirectory, "unittest/unittestrunner.ts"),
 	path.join(runnersDirectory, "rwc/rwcRunner.ts"),
 
 	path.join(runnersDirectory, "../cases/unittests/samples/samples.ts"),
@@ -222,8 +222,8 @@ var librarySourceMap = [
 		{ target: "lib.core.d.ts", sources: ["core.d.ts"] },
 		{ target: "lib.dom.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "dom.generated.d.ts"], },
 		{ target: "lib.webworker.d.ts", sources: ["importcore.d.ts", "extensions.d.ts", "webworker.generated.d.ts"], },
-		{ target: "lib.scripthost.d.ts", sources: ["importcore.d.ts", "scripthost.d.ts"], },
-		{ target: "lib.d.ts", sources: ["core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "webworker.importscripts.d.ts", "scripthost.d.ts"], },
+		{ target: "lib.scriptHost.d.ts", sources: ["importcore.d.ts", "scriptHost.d.ts"], },
+		{ target: "lib.d.ts", sources: ["core.d.ts", "extensions.d.ts", "dom.generated.d.ts", "webworker.importscripts.d.ts", "scriptHost.d.ts"], },
 		{ target: "jquery.d.ts", sources: ["jquery.d.ts"], },
 		{ target: "winjs.d.ts", sources: ["winjs.d.ts"], },
 		{ target: "winrt.d.ts", sources: ["winrt.d.ts"] }

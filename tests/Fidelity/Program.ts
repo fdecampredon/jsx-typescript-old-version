@@ -1,4 +1,4 @@
-/// <reference path='..\..\src\Services\es5compat.ts' />
+/// <reference path='..\..\src\services\es5compat.ts' />
 
 ///<reference path='..\..\src\compiler\syntax\references.ts' />
 ///<reference path='..\..\src\compiler\syntax\emitter.ts' />

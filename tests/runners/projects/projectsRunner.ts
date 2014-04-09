@@ -1,6 +1,6 @@
 ///<reference path="../../../src/harness/harness.ts" />
 ///<reference path="../../../src/harness/exec.ts" />
-///<reference path="../runnerBase.ts" />
+///<reference path="../runnerbase.ts" />
 
 class SourceFile {
     constructor(public scriptSnapshot: TypeScript.IScriptSnapshot, public byteOrderMark: TypeScript.ByteOrderMark) {

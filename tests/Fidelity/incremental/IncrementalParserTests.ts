@@ -1,5 +1,5 @@
-///<reference path='..\..\..\src\Compiler\Syntax\References.ts' />
-///<reference path='..\..\..\src\Compiler\Core\Environment.ts' />
+///<reference path='..\..\..\src\compiler\syntax\references.ts' />
+///<reference path='..\..\..\src\compiler\core\environment.ts' />
 ///<reference path='..\..\..\src\compiler\references.ts' />
 ///<reference path='..\Program.ts' />
 

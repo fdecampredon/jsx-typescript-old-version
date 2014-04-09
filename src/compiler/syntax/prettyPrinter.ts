@@ -1,4 +1,4 @@
-///<reference path='References.ts' />
+///<reference path='references.ts' />
 
 module TypeScript.PrettyPrinter {
     export function prettyPrint(node: SyntaxNode, indentWhitespace: string = "    "): string {

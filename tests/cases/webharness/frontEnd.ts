@@ -1,5 +1,5 @@
 ///<reference path='..\..\..\src\compiler\typescript.ts'/>
-///<reference path='..\..\..\src\compiler\Syntax\Parser.ts'/>
+///<reference path='..\..\..\src\compiler\syntax\parser.ts'/>
 ///<reference path='..\..\..\src\services\pullLanguageService.ts'/>
 ///<reference path='.\quotedLib.ts'/>
 ///<reference path='.\quotedCompiler.ts'/>

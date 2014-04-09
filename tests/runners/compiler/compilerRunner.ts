@@ -1,6 +1,6 @@
 /// <reference path='..\..\..\src\harness\harness.ts' />
 /// <reference path='..\..\..\src\compiler\diagnostics.ts' />
-/// <reference path='..\runnerBase.ts' />
+/// <reference path='..\runnerbase.ts' />
 /// <reference path='typeWriter.ts' />
 
 enum CompilerTestType {

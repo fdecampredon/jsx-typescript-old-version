@@ -23,7 +23,7 @@
 ///<reference path='..\..\tests\runners\compiler\compilerRunner.ts' />
 ///<reference path='..\..\tests\runners\fourslash\fourslashRunner.ts' />
 ///<reference path='..\..\tests\runners\projects\projectsRunner.ts' />
-///<reference path='..\..\tests\runners\unittest\unittestRunner.ts' />
+///<reference path='..\..\tests\runners\unittest\unittestrunner.ts' />
 
 declare var _inheritsFrom: any; // reference base inheritsFrom in child contexts.
 

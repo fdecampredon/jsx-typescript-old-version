@@ -3,7 +3,7 @@
 ///<reference path="fourslash/fourslashRunner.ts" />
 ///<reference path="rwc/rwcRunner.ts" />
 ///<reference path="projects/projectsRunner.ts" />
-///<reference path="unittest/unittestRunner.ts" />
+///<reference path="unittest/unittestrunner.ts" />
 
 class RunnerFactory {
     private runners : TypeScript.IIndexable<any> = {};

@@ -1,6 +1,6 @@
 ///<reference path='..\..\..\src\harness\harness.ts'/>
 ///<reference path='..\..\..\src\harness\exec.ts'/>
-///<reference path='..\runnerBase.ts' />
+///<reference path='..\runnerbase.ts' />
 /// <reference path='..\compiler\typeWriter.ts' />
 
 interface testSpec {

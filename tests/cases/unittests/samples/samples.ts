@@ -78,7 +78,7 @@ describe('Compiling samples', function ()
     // mankala
     it('compiles the mankala sample without error', function ()
     {
-        var units = ["mankala/Base.ts", "mankala/Driver.ts", "mankala/Features.ts", "mankala/Game.ts", "mankala/Geometry.ts", "mankala/Position.ts" ];
+        var units = ["mankala/Base.ts", "mankala/Driver.ts", "mankala/Features.ts", "mankala/Game.ts", "mankala/geometry.ts", "mankala/Position.ts" ];
         addUnitsAndCompile(units);
     });
 
