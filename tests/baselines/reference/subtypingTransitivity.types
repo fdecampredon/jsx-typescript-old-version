@@ -1,27 +1,54 @@
 === tests/cases/compiler/subtypingTransitivity.ts ===
-Line 0 col 6 IdentifierName "B" = B
-Line 1 col 0 IdentifierName "x" = Object
-Line 1 col 7 IdentifierName "Object" = Object
-Line 4 col 6 IdentifierName "D" = D
-Line 4 col 16 IdentifierName "B" = B
-Line 5 col 11 IdentifierName "x" = string
-Line 7 col 6 IdentifierName "D2" = D2
-Line 7 col 17 IdentifierName "B" = B
-Line 8 col 11 IdentifierName "x" = number
-Line 11 col 4 IdentifierName "b" = B
-Line 11 col 7 IdentifierName "B" = B
-Line 12 col 4 IdentifierName "d" = D
-Line 12 col 7 IdentifierName "D" = D
-Line 13 col 4 IdentifierName "d2" = D2
-Line 13 col 8 IdentifierName "D2" = D2
-Line 14 col 0 AssignmentExpression "d.x = ''" = string
-Line 14 col 0 MemberAccessExpression "d.x" = string
-Line 14 col 0 IdentifierName "d" = D
-Line 15 col 2 IdentifierName "x" = string
-Line 16 col 0 AssignmentExpression "b = d" = D
-Line 16 col 0 IdentifierName "b" = B
-Line 16 col 4 IdentifierName "d" = D
-Line 17 col 0 AssignmentExpression "b.x = 1" = number
-Line 17 col 0 MemberAccessExpression "b.x" = Object
-Line 17 col 0 IdentifierName "b" = B
-Line 17 col 2 IdentifierName "x" = Object
+class B {
+>B : B
+
+    x: Object;
+>x : Object
+>Object : Object
+}
+
+class D extends B {
+>D : D
+>B : B
+
+    public x: string;
+>x : string
+}
+class D2 extends B {
+>D2 : D2
+>B : B
+
+    public x: number;
+>x : number
+}
+
+var b: B;
+>b : B
+>B : B
+
+var d: D;
+>d : D
+>D : D
+
+var d2: D2;
+>d2 : D2
+>D2 : D2
+
+>d.x = '' : string
+>d.x : string
+>d : D
+
+d.x = '';
+>x : string
+
+b = d;
+>b = d : D
+>b : B
+>d : D
+
+b.x = 1; // assigned number to string
+>b.x = 1 : number
+>b.x : Object
+>b : B
+>x : Object
+

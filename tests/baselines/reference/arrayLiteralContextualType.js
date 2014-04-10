@@ -1,3 +1,4 @@
+//// [arrayLiteralContextualType.js]
 var Giraffe = (function () {
     function Giraffe() {
         this.name = "Giraffe";

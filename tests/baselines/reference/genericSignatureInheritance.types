@@ -1,7 +1,14 @@
 === tests/cases/compiler/genericSignatureInheritance.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 1 col 5 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "x" = T
-Line 1 col 11 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "I2" = I2
-Line 4 col 21 IdentifierName "I" = I
+interface I {
+>I : I
+
+    <T>(x: T): string;
+>T : T
+>x : T
+>T : T
+}
+
+interface I2 extends I { }
+>I2 : I2
+>I : I
+

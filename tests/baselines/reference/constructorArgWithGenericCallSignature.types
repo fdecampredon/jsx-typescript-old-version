@@ -1,27 +1,46 @@
 === tests/cases/compiler/constructorArgWithGenericCallSignature.ts ===
-Line 0 col 7 IdentifierName "Test" = Test
-Line 1 col 21 IdentifierName "MyFunc" = MyFunc
-Line 2 col 9 IdentifierName "T" = T
-Line 2 col 12 IdentifierName "value1" = T
-Line 2 col 20 IdentifierName "T" = T
-Line 2 col 24 IdentifierName "T" = T
-Line 4 col 17 IdentifierName "MyClass" = MyClass
-Line 5 col 20 IdentifierName "func" = MyFunc
-Line 5 col 26 IdentifierName "MyFunc" = MyFunc
-Line 8 col 17 IdentifierName "F" = typeof F
-Line 8 col 19 IdentifierName "func" = MyFunc
-Line 8 col 25 IdentifierName "MyFunc" = MyFunc
-Line 10 col 4 IdentifierName "func" = Test.MyFunc
-Line 10 col 10 IdentifierName "Test" = Test
-Line 10 col 15 IdentifierName "MyFunc" = Test.MyFunc
-Line 11 col 0 InvocationExpression "Test.F(func)" = void
-Line 11 col 0 MemberAccessExpression "Test.F" = typeof Test.F
-Line 11 col 0 IdentifierName "Test" = typeof Test
-Line 11 col 5 IdentifierName "F" = typeof Test.F
-Line 11 col 7 IdentifierName "func" = Test.MyFunc
-Line 12 col 4 IdentifierName "test" = Test.MyClass
-Line 12 col 11 ObjectCreationExpression "new Test.MyClass(func)" = Test.MyClass
-Line 12 col 15 MemberAccessExpression "Test.MyClass" = typeof Test.MyClass
-Line 12 col 15 IdentifierName "Test" = typeof Test
-Line 12 col 20 IdentifierName "MyClass" = typeof Test.MyClass
-Line 12 col 28 IdentifierName "func" = Test.MyFunc
+module Test {
+>Test : Test
+
+    export interface MyFunc {
+>MyFunc : MyFunc
+
+        <T>(value1: T): T;
+>T : T
+>value1 : T
+>T : T
+>T : T
+    }
+    export class MyClass {
+>MyClass : MyClass
+
+        constructor(func: MyFunc) { }
+>func : MyFunc
+>MyFunc : MyFunc
+    }
+ 
+ export function F(func: MyFunc) { }
+>F : typeof F
+>func : MyFunc
+>MyFunc : MyFunc
+}
+var func: Test.MyFunc;
+>func : Test.MyFunc
+>Test : Test
+>MyFunc : Test.MyFunc
+
+Test.F(func); // OK
+>Test.F(func) : void
+>Test.F : typeof Test.F
+>Test : typeof Test
+>F : typeof Test.F
+>func : Test.MyFunc
+
+var test = new Test.MyClass(func); // Should be OK
+>test : Test.MyClass
+>new Test.MyClass(func) : Test.MyClass
+>Test.MyClass : typeof Test.MyClass
+>Test : typeof Test
+>MyClass : typeof Test.MyClass
+>func : Test.MyFunc
+

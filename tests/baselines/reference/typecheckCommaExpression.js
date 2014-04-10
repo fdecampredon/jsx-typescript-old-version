@@ -1,1 +1,2 @@
+//// [typecheckCommaExpression.js]
 (a, b);

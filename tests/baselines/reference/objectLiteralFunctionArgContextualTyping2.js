@@ -1,3 +1,4 @@
+//// [objectLiteralFunctionArgContextualTyping2.js]
 function f2(args) {
 }
 

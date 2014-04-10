@@ -1,10 +1,16 @@
 === tests/cases/compiler/instanceofOperatorWithLHSIsTypeParameter.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "t" = T
-Line 0 col 19 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "x" = any
-Line 2 col 8 IdentifierName "r" = boolean
-Line 2 col 12 InstanceOfExpression "t instanceof x" = boolean
-Line 2 col 12 IdentifierName "t" = T
-Line 2 col 25 IdentifierName "x" = any
+function foo<T>(t: T) {
+>foo : typeof foo
+>T : T
+>t : T
+>T : T
+
+    var x: any;
+>x : any
+
+    var r = t instanceof x;
+>r : boolean
+>t instanceof x : boolean
+>t : T
+>x : any
+}

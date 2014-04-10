@@ -1,3 +1,4 @@
+//// [collisionRestParameterArrowFunctions.js]
 var f1 = function (_i) {
     var restParameters = [];
     for (var _i = 0; _i < (arguments.length - 1); _i++) {

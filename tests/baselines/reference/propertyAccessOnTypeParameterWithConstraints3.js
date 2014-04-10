@@ -1,3 +1,4 @@
+//// [propertyAccessOnTypeParameterWithConstraints3.js]
 // generic types should behave as if they have properties of their constraint type
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

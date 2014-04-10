@@ -1,3 +1,4 @@
+//// [importStatementsInterfaces.js]
 // no code gen expected
 var B;
 (function (B) {

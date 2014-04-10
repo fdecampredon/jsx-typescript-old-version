@@ -1,17 +1,28 @@
 === tests/cases/compiler/assignmentCompatWithGenericCallSignatures.ts ===
-Line 2 col 4 IdentifierName "f" = <S extends { p: string; }[]>(x: S) => void
-Line 2 col 8 IdentifierName "S" = S
-Line 2 col 20 IdentifierName "p" = string
-Line 2 col 35 IdentifierName "x" = S
-Line 2 col 38 IdentifierName "S" = S
-Line 3 col 4 IdentifierName "g" = <T extends { p: string; }>(x: T[]) => void
-Line 3 col 8 IdentifierName "T" = T
-Line 3 col 20 IdentifierName "p" = string
-Line 3 col 33 IdentifierName "x" = T[]
-Line 3 col 36 IdentifierName "T" = T
-Line 4 col 0 AssignmentExpression "f = g" = <T extends { p: string; }>(x: T[]) => void
-Line 4 col 0 IdentifierName "f" = <S extends { p: string; }[]>(x: S) => void
-Line 5 col 4 IdentifierName "g" = <T extends { p: string; }>(x: T[]) => void
-Line 6 col 0 AssignmentExpression "g = f" = <S extends { p: string; }[]>(x: S) => void
-Line 6 col 0 IdentifierName "g" = <T extends { p: string; }>(x: T[]) => void
-Line 6 col 4 IdentifierName "f" = <S extends { p: string; }[]>(x: S) => void
+// some complex cases of assignment compat of generic signatures that stress contextual signature instantiation
+
+var f: <S extends { p: string }[]>(x: S) => void
+>f : <S extends { p: string; }[]>(x: S) => void
+>S : S
+>p : string
+>x : S
+>S : S
+
+var g: <T extends { p: string }>(x: T[]) => void
+>g : <T extends { p: string; }>(x: T[]) => void
+>T : T
+>p : string
+>x : T[]
+>T : T
+
+>f = g : <T extends { p: string; }>(x: T[]) => void
+>f : <S extends { p: string; }[]>(x: S) => void
+
+f = g; // ok
+>g : <T extends { p: string; }>(x: T[]) => void
+
+g = f; // ok
+>g = f : <S extends { p: string; }[]>(x: S) => void
+>g : <T extends { p: string; }>(x: T[]) => void
+>f : <S extends { p: string; }[]>(x: S) => void
+

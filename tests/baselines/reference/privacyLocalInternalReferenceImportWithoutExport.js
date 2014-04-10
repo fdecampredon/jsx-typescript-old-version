@@ -1,3 +1,4 @@
+//// [privacyLocalInternalReferenceImportWithoutExport.js]
 define(["require", "exports"], function(require, exports) {
     // private elements
     var m_private;

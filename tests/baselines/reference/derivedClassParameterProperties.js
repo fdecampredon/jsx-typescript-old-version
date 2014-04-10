@@ -1,3 +1,4 @@
+//// [derivedClassParameterProperties.js]
 // ordering of super calls in derived constructors matters depending on other class contents
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

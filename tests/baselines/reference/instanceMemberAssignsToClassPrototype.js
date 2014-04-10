@@ -1,3 +1,4 @@
+//// [instanceMemberAssignsToClassPrototype.js]
 var C = (function () {
     function C() {
     }

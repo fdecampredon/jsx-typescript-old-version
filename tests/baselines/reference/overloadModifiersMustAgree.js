@@ -1,3 +1,4 @@
+//// [overloadModifiersMustAgree.js]
 var baz = (function () {
     function baz() {
     }

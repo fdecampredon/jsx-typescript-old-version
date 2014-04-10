@@ -1,3 +1,4 @@
+//// [genericFunctionCallSignatureReturnTypeMismatch.js]
 var f;
 
 var g;

@@ -1,15 +1,28 @@
 === tests/cases/compiler/defaultIndexProps1.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 8 IdentifierName "v" = string
-Line 4 col 4 IdentifierName "f" = Foo
-Line 4 col 8 ObjectCreationExpression "new Foo()" = Foo
-Line 4 col 12 IdentifierName "Foo" = typeof Foo
-Line 6 col 4 IdentifierName "q" = string
-Line 6 col 8 ElementAccessExpression "f["v"]" = string
-Line 6 col 8 IdentifierName "f" = Foo
-Line 8 col 4 IdentifierName "o" = { v: string; }
-Line 8 col 8 ObjectLiteralExpression "{v:"Yo2"}" = { v: string; }
-Line 8 col 9 IdentifierName "v" = string
-Line 10 col 4 IdentifierName "q2" = string
-Line 10 col 9 ElementAccessExpression "o["v"]" = string
-Line 10 col 9 IdentifierName "o" = { v: string; }
+class Foo {
+>Foo : Foo
+
+	public v = "Yo";
+>v : string
+}
+
+var f = new Foo();
+>f : Foo
+>new Foo() : Foo
+>Foo : typeof Foo
+
+var q = f["v"];
+>q : string
+>f["v"] : string
+>f : Foo
+
+var o = {v:"Yo2"};
+>o : { v: string; }
+>{v:"Yo2"} : { v: string; }
+>v : string
+
+var q2 = o["v"];
+>q2 : string
+>o["v"] : string
+>o : { v: string; }
+

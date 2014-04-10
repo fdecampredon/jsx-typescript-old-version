@@ -1,3 +1,4 @@
+//// [functionSignatureAssignmentCompat1.js]
 var parsers;
 var c = parsers.raw;
 var d = parsers.readline;

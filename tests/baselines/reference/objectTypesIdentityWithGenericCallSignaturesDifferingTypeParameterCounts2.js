@@ -1,3 +1,4 @@
+//// [objectTypesIdentityWithGenericCallSignaturesDifferingTypeParameterCounts2.js]
 // object types are identical structurally
 
 var a;

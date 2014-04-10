@@ -1,3 +1,4 @@
+//// [assignFromNumberInterface2.js]
 var x = 1;
 var a;
 var b;

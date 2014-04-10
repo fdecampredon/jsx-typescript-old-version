@@ -1,21 +1,40 @@
 === tests/cases/compiler/collisionCodeGenModuleWithMemberClassConflict.ts ===
-Line 0 col 7 IdentifierName "m1" = m1
-Line 1 col 17 IdentifierName "m1" = m1
-Line 4 col 4 IdentifierName "foo" = m1.m1
-Line 4 col 10 ObjectCreationExpression "new m1.m1()" = m1.m1
-Line 4 col 14 MemberAccessExpression "m1.m1" = typeof m1.m1
-Line 4 col 14 IdentifierName "m1" = typeof m1
-Line 4 col 17 IdentifierName "m1" = typeof m1.m1
-Line 6 col 7 IdentifierName "m2" = m2
-Line 7 col 17 IdentifierName "m2" = m2
-Line 10 col 17 IdentifierName "_m2" = _m2
-Line 13 col 4 IdentifierName "foo" = m2.m2
-Line 13 col 10 ObjectCreationExpression "new m2.m2()" = m2.m2
-Line 13 col 14 MemberAccessExpression "m2.m2" = typeof m2.m2
-Line 13 col 14 IdentifierName "m2" = typeof m2
-Line 13 col 17 IdentifierName "m2" = typeof m2.m2
-Line 14 col 4 IdentifierName "foo" = m2._m2
-Line 14 col 10 ObjectCreationExpression "new m2._m2()" = m2._m2
-Line 14 col 14 MemberAccessExpression "m2._m2" = typeof m2._m2
-Line 14 col 14 IdentifierName "m2" = typeof m2
-Line 14 col 17 IdentifierName "_m2" = typeof m2._m2
+module m1 {
+>m1 : m1
+
+    export class m1 {
+>m1 : m1
+    }
+}
+var foo = new m1.m1();
+>foo : m1.m1
+>new m1.m1() : m1.m1
+>m1.m1 : typeof m1.m1
+>m1 : typeof m1
+>m1 : typeof m1.m1
+
+module m2 {
+>m2 : m2
+
+    export class m2 {
+>m2 : m2
+    }
+
+    export class _m2 {
+>_m2 : _m2
+    }
+}
+var foo = new m2.m2();
+>foo : m2.m2
+>new m2.m2() : m2.m2
+>m2.m2 : typeof m2.m2
+>m2 : typeof m2
+>m2 : typeof m2.m2
+
+var foo = new m2._m2();
+>foo : m2._m2
+>new m2._m2() : m2._m2
+>m2._m2 : typeof m2._m2
+>m2 : typeof m2
+>_m2 : typeof m2._m2
+

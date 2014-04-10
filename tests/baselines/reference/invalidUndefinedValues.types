@@ -1,61 +1,108 @@
 === tests/cases/compiler/invalidUndefinedValues.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 0 col 14 IdentifierName "undefined" = any
-Line 1 col 0 AssignmentExpression "x = 1" = number
-Line 1 col 0 IdentifierName "x" = any
-Line 3 col 0 AssignmentExpression "x = ''" = string
-Line 3 col 0 IdentifierName "x" = any
-Line 4 col 0 AssignmentExpression "x = true" = boolean
-Line 4 col 0 IdentifierName "x" = any
-Line 5 col 4 IdentifierName "a" = void
-Line 6 col 0 AssignmentExpression "x = a" = void
-Line 6 col 0 IdentifierName "x" = any
-Line 6 col 4 IdentifierName "a" = void
-Line 7 col 0 AssignmentExpression "x = null" = any
-Line 7 col 0 IdentifierName "x" = any
-Line 9 col 6 IdentifierName "C" = C
-Line 9 col 10 IdentifierName "foo" = string
-Line 10 col 4 IdentifierName "b" = C
-Line 10 col 7 IdentifierName "C" = C
-Line 11 col 0 AssignmentExpression "x = C" = typeof C
-Line 11 col 0 IdentifierName "x" = any
-Line 11 col 4 IdentifierName "C" = typeof C
-Line 12 col 0 AssignmentExpression "x = b" = C
-Line 12 col 0 IdentifierName "x" = any
-Line 12 col 4 IdentifierName "b" = C
-Line 14 col 10 IdentifierName "I" = I
-Line 14 col 14 IdentifierName "foo" = string
-Line 15 col 4 IdentifierName "c" = I
-Line 15 col 7 IdentifierName "I" = I
-Line 16 col 0 AssignmentExpression "x = c" = I
-Line 16 col 0 IdentifierName "x" = any
-Line 16 col 4 IdentifierName "c" = I
-Line 18 col 7 IdentifierName "M" = M
-Line 18 col 22 IdentifierName "x" = number
-Line 19 col 0 AssignmentExpression "x = M" = typeof M
-Line 19 col 0 IdentifierName "x" = any
-Line 19 col 4 IdentifierName "M" = typeof M
-Line 20 col 0 AssignmentExpression "x = { f() { } }" = { f(): void; }
-Line 20 col 0 IdentifierName "x" = any
-Line 21 col 4 ObjectLiteralExpression "{ f() { } }" = { f(): void; }
-Line 21 col 6 IdentifierName "f" = () => void
-Line 23 col 9 IdentifierName "f" = typeof f
-Line 23 col 11 IdentifierName "T" = T
-Line 23 col 14 IdentifierName "a" = T
-Line 23 col 17 IdentifierName "T" = T
-Line 24 col 0 AssignmentExpression "x = a" = T
-Line 24 col 0 IdentifierName "x" = any
-Line 24 col 8 IdentifierName "a" = T
-Line 26 col 0 AssignmentExpression "x = f" = typeof f
-Line 26 col 0 IdentifierName "x" = any
-Line 26 col 4 IdentifierName "f" = typeof f
-Line 28 col 5 IdentifierName "E" = E
-Line 28 col 9 IdentifierName "A" = E
-Line 29 col 0 AssignmentExpression "x = E" = typeof E
-Line 29 col 0 IdentifierName "x" = any
-Line 29 col 4 IdentifierName "E" = typeof E
-Line 30 col 0 AssignmentExpression "x = E.A" = E
-Line 30 col 0 IdentifierName "x" = any
-Line 30 col 4 MemberAccessExpression "E.A" = E
-Line 30 col 4 IdentifierName "E" = typeof E
-Line 30 col 6 IdentifierName "A" = E
+var x: typeof undefined;
+>x : any
+>undefined : any
+
+>x = 1 : number
+>x : any
+
+x = 1;
+x = '';
+>x = '' : string
+>x : any
+
+x = true;
+>x = true : boolean
+>x : any
+
+var a: void;
+>a : void
+
+x = a;
+>x = a : void
+>x : any
+>a : void
+
+x = null;
+>x = null : any
+>x : any
+
+class C { foo: string }
+>C : C
+>foo : string
+
+var b: C;
+>b : C
+>C : C
+
+x = C;
+>x = C : typeof C
+>x : any
+>C : typeof C
+
+x = b;
+>x = b : C
+>x : any
+>b : C
+
+interface I { foo: string }
+>I : I
+>foo : string
+
+var c: I;
+>c : I
+>I : I
+
+x = c;
+>x = c : I
+>x : any
+>c : I
+
+module M { export var x = 1; }
+>M : M
+>x : number
+
+x = M;
+>x = M : typeof M
+>x : any
+>M : typeof M
+
+>x = { f() { } } : { f(): void; }
+>x : any
+
+x = { f() { } }
+>{ f() { } } : { f(): void; }
+>f : () => void
+
+function f<T>(a: T) {
+>f : typeof f
+>T : T
+>a : T
+>T : T
+
+    x = a;
+>x = a : T
+>x : any
+>a : T
+}
+x = f;
+>x = f : typeof f
+>x : any
+>f : typeof f
+
+enum E { A }
+>E : E
+>A : E
+
+x = E;
+>x = E : typeof E
+>x : any
+>E : typeof E
+
+x = E.A;
+>x = E.A : E
+>x : any
+>E.A : E
+>E : typeof E
+>A : E
+

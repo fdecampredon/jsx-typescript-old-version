@@ -1,22 +1,50 @@
 === tests/cases/compiler/baseIndexSignatureResolution.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 0 col 21 IdentifierName "a" = string
-Line 1 col 6 IdentifierName "Derived" = Derived
-Line 1 col 22 IdentifierName "Base" = Base
-Line 1 col 37 IdentifierName "b" = string
-Line 4 col 10 IdentifierName "Foo" = Foo
-Line 5 col 5 IdentifierName "i" = number
-Line 5 col 17 IdentifierName "Base" = Base
-Line 7 col 10 IdentifierName "FooOf" = FooOf<TBase>
-Line 7 col 16 IdentifierName "TBase" = TBase
-Line 7 col 30 IdentifierName "Base" = Base
-Line 7 col 44 IdentifierName "Foo" = Foo
-Line 8 col 5 IdentifierName "i" = number
-Line 8 col 17 IdentifierName "TBase" = TBase
-Line 10 col 4 IdentifierName "x" = FooOf<Derived>
-Line 10 col 7 IdentifierName "FooOf" = FooOf<TBase>
-Line 10 col 13 IdentifierName "Derived" = Derived
-Line 11 col 4 IdentifierName "y" = Derived
-Line 11 col 7 IdentifierName "Derived" = Derived
-Line 11 col 17 ElementAccessExpression "x[0]" = Derived
-Line 11 col 17 IdentifierName "x" = FooOf<Derived>
+class Base { private a: string; }
+>Base : Base
+>a : string
+
+class Derived extends Base { private b: string; }
+>Derived : Derived
+>Base : Base
+>b : string
+
+// Note - commmenting "extends Foo" prevents the error
+interface Foo {
+>Foo : Foo
+
+    [i: number]: Base;
+>i : number
+>Base : Base
+}
+interface FooOf<TBase extends Base> extends Foo {
+>FooOf : FooOf<TBase>
+>TBase : TBase
+>Base : Base
+>Foo : Foo
+
+    [i: number]: TBase;
+>i : number
+>TBase : TBase
+}
+var x: FooOf<Derived> = null;
+>x : FooOf<Derived>
+>FooOf : FooOf<TBase>
+>Derived : Derived
+
+var y: Derived = x[0];
+>y : Derived
+>Derived : Derived
+>x[0] : Derived
+>x : FooOf<Derived>
+
+/*
+// Note - the equivalent for normal interface methods works fine:
+interface A {
+    foo(): Base;
+}
+interface B<TBase extends Base> extends A {
+    foo(): TBase;
+}
+var b: B<Derived> = null;
+var z: Derived = b.foo();
+*/

@@ -1,18 +1,35 @@
 === tests/cases/compiler/declFileWithInternalModuleNameConflictsInExtendsClause2.ts ===
-Line 1 col 7 IdentifierName "X" = X
-Line 1 col 9 IdentifierName "A" = X.A
-Line 1 col 11 IdentifierName "C" = X.A.C
-Line 2 col 21 IdentifierName "Z" = Z
-Line 5 col 7 IdentifierName "X" = X
-Line 5 col 9 IdentifierName "A" = X.A
-Line 5 col 11 IdentifierName "B" = X.A.B
-Line 5 col 13 IdentifierName "C" = X.A.B.C
-Line 6 col 17 IdentifierName "W" = W
-Line 6 col 30 IdentifierName "A" = A
-Line 6 col 32 IdentifierName "C" = A.C
-Line 6 col 34 IdentifierName "Z" = A.C.Z
-Line 10 col 7 IdentifierName "X" = X
-Line 10 col 9 IdentifierName "A" = X.A
-Line 10 col 11 IdentifierName "B" = X.A.B
-Line 10 col 13 IdentifierName "C" = X.A.B.C
-Line 11 col 11 IdentifierName "A" = A
+
+module X.A.C {
+>X : X
+>A : X.A
+>C : X.A.C
+
+    export interface Z {
+>Z : Z
+    }
+}
+module X.A.B.C {
+>X : X
+>A : X.A
+>B : X.A.B
+>C : X.A.B.C
+
+    export class W implements A.C.Z { // This can refer to it as A.C.Z
+>W : W
+>A : A
+>C : A.C
+>Z : A.C.Z
+    }
+}
+
+module X.A.B.C {
+>X : X
+>A : X.A
+>B : X.A.B
+>C : X.A.B.C
+
+    module A {
+>A : A
+    }
+}

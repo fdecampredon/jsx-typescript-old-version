@@ -1,14 +1,27 @@
 === tests/cases/compiler/internalAliasInitializedModuleInsideTopLevelModuleWithExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 18 IdentifierName "b" = b
-Line 2 col 21 IdentifierName "c" = c
-Line 7 col 14 IdentifierName "b" = b
-Line 7 col 18 IdentifierName "a" = a
-Line 7 col 20 IdentifierName "b" = typeof b
-Line 8 col 11 IdentifierName "x" = b.c
-Line 8 col 14 IdentifierName "b" = b
-Line 8 col 16 IdentifierName "c" = b.c
-Line 8 col 20 ObjectCreationExpression "new b.c()" = b.c
-Line 8 col 24 MemberAccessExpression "b.c" = typeof b.c
-Line 8 col 24 IdentifierName "b" = typeof b
-Line 8 col 26 IdentifierName "c" = typeof b.c
+export module a {
+>a : a
+
+    export module b {
+>b : b
+
+        export class c {
+>c : c
+        }
+    }
+}
+
+export import b = a.b;
+>b : b
+>a : a
+>b : typeof b
+
+export var x: b.c = new b.c();
+>x : b.c
+>b : b
+>c : b.c
+>new b.c() : b.c
+>b.c : typeof b.c
+>b : typeof b
+>c : typeof b.c
+

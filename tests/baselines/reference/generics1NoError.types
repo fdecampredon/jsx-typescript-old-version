@@ -1,31 +1,49 @@
 === tests/cases/compiler/generics1NoError.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 0 col 14 IdentifierName "a" = string
-Line 1 col 10 IdentifierName "B" = B
-Line 1 col 20 IdentifierName "A" = A
-Line 1 col 24 IdentifierName "b" = string
-Line 2 col 10 IdentifierName "C" = C
-Line 2 col 20 IdentifierName "B" = B
-Line 2 col 24 IdentifierName "c" = string
-Line 3 col 10 IdentifierName "G" = G<T, U>
-Line 3 col 12 IdentifierName "T" = T
-Line 3 col 15 IdentifierName "U" = U
-Line 3 col 25 IdentifierName "B" = B
-Line 4 col 0 IdentifierName "x" = T
-Line 4 col 7 IdentifierName "T" = T
-Line 5 col 0 IdentifierName "y" = U
-Line 5 col 7 IdentifierName "U" = U
-Line 7 col 4 IdentifierName "v1" = G<A, C>
-Line 7 col 8 IdentifierName "G" = G<T, U>
-Line 7 col 10 IdentifierName "A" = A
-Line 7 col 13 IdentifierName "C" = C
-Line 8 col 4 IdentifierName "v2" = G<{ a: string; }, C>
-Line 8 col 8 IdentifierName "G" = G<T, U>
-Line 8 col 12 IdentifierName "a" = string
-Line 8 col 25 IdentifierName "C" = C
-Line 9 col 4 IdentifierName "v4" = G<G<A, B>, C>
-Line 9 col 8 IdentifierName "G" = G<T, U>
-Line 9 col 10 IdentifierName "G" = G<T, U>
-Line 9 col 12 IdentifierName "A" = A
-Line 9 col 15 IdentifierName "B" = B
-Line 9 col 19 IdentifierName "C" = C
+interface A { a: string; }
+>A : A
+>a : string
+
+interface B extends A { b: string; }
+>B : B
+>A : A
+>b : string
+
+interface C extends B { c: string; }
+>C : C
+>B : B
+>c : string
+
+interface G<T, U extends B> {
+>G : G<T, U>
+>T : T
+>U : U
+>B : B
+
+    x: T;
+>x : T
+>T : T
+
+    y: U;
+>y : U
+>U : U
+}
+var v1: G<A, C>;               // Ok
+>v1 : G<A, C>
+>G : G<T, U>
+>A : A
+>C : C
+
+var v2: G<{ a: string }, C>;   // Ok, equivalent to G<A, C>
+>v2 : G<{ a: string; }, C>
+>G : G<T, U>
+>a : string
+>C : C
+
+var v4: G<G<A, B>, C>;         // Ok
+>v4 : G<G<A, B>, C>
+>G : G<T, U>
+>G : G<T, U>
+>A : A
+>B : B
+>C : C
+

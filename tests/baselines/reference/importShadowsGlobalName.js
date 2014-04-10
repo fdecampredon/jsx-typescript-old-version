@@ -1,3 +1,8 @@
+//// [Bar.ts]
+import Error = require('Foo');
+class Bar extends Error {}
+export = Bar;
+
 //// [Foo.js]
 define(["require", "exports"], function(require, exports) {
     var Foo = (function () {

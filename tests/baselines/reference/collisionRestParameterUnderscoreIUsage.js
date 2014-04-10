@@ -1,3 +1,4 @@
+//// [collisionRestParameterUnderscoreIUsage.js]
 var _i = "This is what I'd expect to see";
 var Foo = (function () {
     function Foo() {

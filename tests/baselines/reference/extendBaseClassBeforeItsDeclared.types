@@ -1,5 +1,9 @@
 === tests/cases/compiler/extendBaseClassBeforeItsDeclared.ts ===
-Line 0 col 6 IdentifierName "derived" = derived
-Line 0 col 22 IdentifierName "base" = base
-Line 2 col 6 IdentifierName "base" = base
-Line 2 col 33 IdentifierName "n" = number
+class derived extends base { }
+>derived : derived
+>base : base
+ 
+class base { constructor (public n: number) { } }
+>base : base
+>n : number
+

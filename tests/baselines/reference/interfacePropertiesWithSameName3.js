@@ -1,3 +1,4 @@
+//// [interfacePropertiesWithSameName3.js]
 var D2 = (function () {
     function D2() {
     }

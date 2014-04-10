@@ -1,3 +1,10 @@
+//// [declFileImportModuleWithExportAssignment_1.ts]
+/**This is on import declaration*/
+import a1 = require("declFileImportModuleWithExportAssignment_0");
+export var a = a1;
+a.test1(null, null, null);
+
+
 //// [declFileImportModuleWithExportAssignment_0.js]
 var m2;
 module.exports = m2;

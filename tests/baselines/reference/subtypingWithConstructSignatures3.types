@@ -1,400 +1,587 @@
 === tests/cases/compiler/subtypingWithConstructSignatures3.ts ===
-Line 3 col 7 IdentifierName "Errors" = Errors
-Line 4 col 10 IdentifierName "Base" = Base
-Line 4 col 17 IdentifierName "foo" = string
-Line 5 col 10 IdentifierName "Derived" = Derived
-Line 5 col 26 IdentifierName "Base" = Base
-Line 5 col 33 IdentifierName "bar" = string
-Line 6 col 10 IdentifierName "Derived2" = Derived2
-Line 6 col 27 IdentifierName "Derived" = Derived
-Line 6 col 37 IdentifierName "baz" = string
-Line 7 col 10 IdentifierName "OtherDerived" = OtherDerived
-Line 7 col 31 IdentifierName "Base" = Base
-Line 7 col 38 IdentifierName "bing" = string
-Line 9 col 21 IdentifierName "foo2" = typeof foo2
-Line 9 col 26 IdentifierName "a2" = new(x: number) => string[]
-Line 9 col 35 IdentifierName "x" = number
-Line 9 col 67 IdentifierName "a2" = new(x: number) => string[]
-Line 10 col 21 IdentifierName "foo2" = typeof foo2
-Line 10 col 26 IdentifierName "a2" = any
-Line 12 col 21 IdentifierName "foo7" = typeof foo7
-Line 12 col 26 IdentifierName "a2" = new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
-Line 12 col 35 IdentifierName "x" = new(arg: Base) => Derived
-Line 12 col 43 IdentifierName "arg" = Base
-Line 12 col 48 IdentifierName "Base" = Base
-Line 12 col 57 IdentifierName "Derived" = Derived
-Line 12 col 74 IdentifierName "r" = Base
-Line 12 col 77 IdentifierName "Base" = Base
-Line 12 col 86 IdentifierName "Derived2" = Derived2
-Line 12 col 104 IdentifierName "a2" = new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
-Line 13 col 21 IdentifierName "foo7" = typeof foo7
-Line 13 col 26 IdentifierName "a2" = any
-Line 15 col 21 IdentifierName "foo8" = typeof foo8
-Line 15 col 26 IdentifierName "a2" = new(x: new(arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
-Line 15 col 35 IdentifierName "x" = new(arg: Base) => Derived
-Line 15 col 43 IdentifierName "arg" = Base
-Line 15 col 48 IdentifierName "Base" = Base
-Line 15 col 57 IdentifierName "Derived" = Derived
-Line 15 col 66 IdentifierName "y" = new(arg2: Base) => Derived
-Line 15 col 74 IdentifierName "arg2" = Base
-Line 15 col 80 IdentifierName "Base" = Base
-Line 15 col 89 IdentifierName "Derived" = Derived
-Line 15 col 106 IdentifierName "r" = Base
-Line 15 col 109 IdentifierName "Base" = Base
-Line 15 col 118 IdentifierName "Derived" = Derived
-Line 15 col 135 IdentifierName "a2" = new(x: new(arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
-Line 16 col 21 IdentifierName "foo8" = typeof foo8
-Line 16 col 26 IdentifierName "a2" = any
-Line 18 col 21 IdentifierName "foo10" = typeof foo10
-Line 18 col 27 IdentifierName "a2" = new(...x: Base[]) => Base
-Line 18 col 39 IdentifierName "x" = Base[]
-Line 18 col 42 IdentifierName "Base" = Base
-Line 18 col 53 IdentifierName "Base" = Base
-Line 18 col 67 IdentifierName "a2" = new(...x: Base[]) => Base
-Line 19 col 21 IdentifierName "foo10" = typeof foo10
-Line 19 col 27 IdentifierName "a2" = any
-Line 21 col 21 IdentifierName "foo11" = typeof foo11
-Line 21 col 27 IdentifierName "a2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 21 col 36 IdentifierName "x" = { foo: string; }
-Line 21 col 41 IdentifierName "foo" = string
-Line 21 col 56 IdentifierName "y" = { foo: string; bar: string; }
-Line 21 col 61 IdentifierName "foo" = string
-Line 21 col 74 IdentifierName "bar" = string
-Line 21 col 92 IdentifierName "Base" = Base
-Line 21 col 106 IdentifierName "a2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 22 col 21 IdentifierName "foo11" = typeof foo11
-Line 22 col 27 IdentifierName "a2" = any
-Line 24 col 21 IdentifierName "foo12" = typeof foo12
-Line 24 col 27 IdentifierName "a2" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 24 col 36 IdentifierName "x" = Base[]
-Line 24 col 39 IdentifierName "Array" = Array<T>
-Line 24 col 45 IdentifierName "Base" = Base
-Line 24 col 52 IdentifierName "y" = Derived2[]
-Line 24 col 55 IdentifierName "Array" = Array<T>
-Line 24 col 61 IdentifierName "Derived2" = Derived2
-Line 24 col 75 IdentifierName "Array" = Array<T>
-Line 24 col 81 IdentifierName "Derived" = Derived
-Line 24 col 99 IdentifierName "a2" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 25 col 21 IdentifierName "foo12" = typeof foo12
-Line 25 col 27 IdentifierName "a2" = any
-Line 27 col 21 IdentifierName "foo15" = typeof foo15
-Line 27 col 27 IdentifierName "a2" = new(x: { a: string; b: number; }) => number
-Line 27 col 36 IdentifierName "x" = { a: string; b: number; }
-Line 27 col 41 IdentifierName "a" = string
-Line 27 col 52 IdentifierName "b" = number
-Line 27 col 84 IdentifierName "a2" = new(x: { a: string; b: number; }) => number
-Line 28 col 21 IdentifierName "foo15" = typeof foo15
-Line 28 col 27 IdentifierName "a2" = any
-Line 30 col 21 IdentifierName "foo16" = typeof foo16
-Line 30 col 27 IdentifierName "a2" = { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
-Line 32 col 13 IdentifierName "x" = { new(a: number): number; new(a?: number): number; }
-Line 33 col 17 IdentifierName "a" = number
-Line 34 col 17 IdentifierName "a" = number
-Line 36 col 13 IdentifierName "x" = { new(a: boolean): boolean; new(a?: boolean): boolean; }
-Line 37 col 17 IdentifierName "a" = boolean
-Line 38 col 17 IdentifierName "a" = boolean
-Line 40 col 15 IdentifierName "a2" = { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
-Line 41 col 21 IdentifierName "foo16" = typeof foo16
-Line 41 col 27 IdentifierName "a2" = any
-Line 43 col 21 IdentifierName "foo17" = typeof foo17
-Line 43 col 27 IdentifierName "a2" = { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
-Line 44 col 13 IdentifierName "x" = { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }
-Line 45 col 17 IdentifierName "T" = T
-Line 45 col 27 IdentifierName "Derived" = Derived
-Line 45 col 36 IdentifierName "a" = T
-Line 45 col 39 IdentifierName "T" = T
-Line 45 col 43 IdentifierName "T" = T
-Line 46 col 17 IdentifierName "T" = T
-Line 46 col 27 IdentifierName "Base" = Base
-Line 46 col 33 IdentifierName "a" = T
-Line 46 col 36 IdentifierName "T" = T
-Line 46 col 40 IdentifierName "T" = T
-Line 48 col 13 IdentifierName "x" = { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }
-Line 49 col 17 IdentifierName "T" = T
-Line 49 col 27 IdentifierName "Derived2" = Derived2
-Line 49 col 37 IdentifierName "a" = T
-Line 49 col 40 IdentifierName "T" = T
-Line 49 col 44 IdentifierName "T" = T
-Line 50 col 17 IdentifierName "T" = T
-Line 50 col 27 IdentifierName "Base" = Base
-Line 50 col 33 IdentifierName "a" = T
-Line 50 col 36 IdentifierName "T" = T
-Line 50 col 40 IdentifierName "T" = T
-Line 52 col 15 IdentifierName "a2" = { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
-Line 53 col 21 IdentifierName "foo17" = typeof foo17
-Line 53 col 27 IdentifierName "a2" = any
-Line 55 col 8 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
-Line 55 col 21 IdentifierName "T" = T
-Line 55 col 24 IdentifierName "U" = U
-Line 55 col 27 IdentifierName "x" = T
-Line 55 col 30 IdentifierName "T" = T
-Line 55 col 36 IdentifierName "U" = U
-Line 56 col 8 IdentifierName "r1arg2" = new(x: number) => string[]
-Line 56 col 21 IdentifierName "x" = number
-Line 57 col 8 IdentifierName "r1" = any
-Line 57 col 13 InvocationExpression "foo2(r1arg1)" = any
-Line 57 col 13 IdentifierName "foo2" = typeof foo2
-Line 57 col 18 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
-Line 58 col 8 IdentifierName "r1a" = { new<T, U>(x: T): U[]; }[]
-Line 58 col 14 ArrayLiteralExpression "[r1arg2, r1arg1]" = { new<T, U>(x: T): U[]; }[]
-Line 58 col 15 IdentifierName "r1arg2" = new(x: number) => string[]
-Line 58 col 23 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
-Line 59 col 8 IdentifierName "r1b" = { new<T, U>(x: T): U[]; }[]
-Line 59 col 14 ArrayLiteralExpression "[r1arg1, r1arg2]" = { new<T, U>(x: T): U[]; }[]
-Line 59 col 15 IdentifierName "r1arg1" = new<T, U>(x: T) => U[]
-Line 59 col 23 IdentifierName "r1arg2" = new(x: number) => string[]
-Line 61 col 8 IdentifierName "r2arg1" = new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
-Line 61 col 21 IdentifierName "T" = T
-Line 61 col 31 IdentifierName "Base" = Base
-Line 61 col 37 IdentifierName "U" = U
-Line 61 col 47 IdentifierName "Derived" = Derived
-Line 61 col 56 IdentifierName "V" = V
-Line 61 col 66 IdentifierName "Derived2" = Derived2
-Line 61 col 76 IdentifierName "x" = new(arg: T) => U
-Line 61 col 84 IdentifierName "arg" = T
-Line 61 col 89 IdentifierName "T" = T
-Line 61 col 95 IdentifierName "U" = U
-Line 61 col 106 IdentifierName "r" = T
-Line 61 col 109 IdentifierName "T" = T
-Line 61 col 115 IdentifierName "V" = V
-Line 62 col 8 IdentifierName "r2arg2" = new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
-Line 62 col 21 IdentifierName "x" = new(arg: Base) => Derived
-Line 62 col 29 IdentifierName "arg" = Base
-Line 62 col 34 IdentifierName "Base" = Base
-Line 62 col 43 IdentifierName "Derived" = Derived
-Line 62 col 60 IdentifierName "r" = Base
-Line 62 col 63 IdentifierName "Base" = Base
-Line 62 col 72 IdentifierName "Derived2" = Derived2
-Line 63 col 8 IdentifierName "r2" = any
-Line 63 col 13 InvocationExpression "foo7(r2arg1)" = any
-Line 63 col 13 IdentifierName "foo7" = typeof foo7
-Line 63 col 18 IdentifierName "r2arg1" = new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
-Line 64 col 8 IdentifierName "r2a" = { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
-Line 64 col 14 ArrayLiteralExpression "[r2arg2, r2arg1]" = { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
-Line 64 col 15 IdentifierName "r2arg2" = new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
-Line 64 col 23 IdentifierName "r2arg1" = new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
-Line 65 col 8 IdentifierName "r2b" = { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
-Line 65 col 14 ArrayLiteralExpression "[r2arg1, r2arg2]" = { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
-Line 65 col 15 IdentifierName "r2arg1" = new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
-Line 65 col 23 IdentifierName "r2arg2" = new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
-Line 67 col 8 IdentifierName "r3arg1" = new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
-Line 67 col 21 IdentifierName "T" = T
-Line 67 col 31 IdentifierName "Base" = Base
-Line 67 col 37 IdentifierName "U" = U
-Line 67 col 47 IdentifierName "Derived" = Derived
-Line 67 col 56 IdentifierName "x" = new(arg: T) => U
-Line 67 col 64 IdentifierName "arg" = T
-Line 67 col 69 IdentifierName "T" = T
-Line 67 col 75 IdentifierName "U" = U
-Line 67 col 78 IdentifierName "y" = (arg2: { foo: number; }) => U
-Line 67 col 82 IdentifierName "arg2" = { foo: number; }
-Line 67 col 90 IdentifierName "foo" = number
-Line 67 col 109 IdentifierName "U" = U
-Line 67 col 120 IdentifierName "r" = T
-Line 67 col 123 IdentifierName "T" = T
-Line 67 col 129 IdentifierName "U" = U
-Line 68 col 8 IdentifierName "r3arg2" = new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
-Line 68 col 21 IdentifierName "x" = (arg: Base) => Derived
-Line 68 col 25 IdentifierName "arg" = Base
-Line 68 col 30 IdentifierName "Base" = Base
-Line 68 col 39 IdentifierName "Derived" = Derived
-Line 68 col 48 IdentifierName "y" = new(arg2: Base) => Derived
-Line 68 col 56 IdentifierName "arg2" = Base
-Line 68 col 62 IdentifierName "Base" = Base
-Line 68 col 71 IdentifierName "Derived" = Derived
-Line 68 col 88 IdentifierName "r" = Base
-Line 68 col 91 IdentifierName "Base" = Base
-Line 68 col 100 IdentifierName "Derived" = Derived
-Line 69 col 8 IdentifierName "r3" = any
-Line 69 col 13 InvocationExpression "foo8(r3arg1)" = any
-Line 69 col 13 IdentifierName "foo8" = typeof foo8
-Line 69 col 18 IdentifierName "r3arg1" = new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
-Line 70 col 8 IdentifierName "r3a" = {}[]
-Line 70 col 14 ArrayLiteralExpression "[r3arg2, r3arg1]" = {}[]
-Line 70 col 15 IdentifierName "r3arg2" = new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
-Line 70 col 23 IdentifierName "r3arg1" = new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
-Line 71 col 8 IdentifierName "r3b" = {}[]
-Line 71 col 14 ArrayLiteralExpression "[r3arg1, r3arg2]" = {}[]
-Line 71 col 15 IdentifierName "r3arg1" = new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
-Line 71 col 23 IdentifierName "r3arg2" = new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
-Line 73 col 8 IdentifierName "r4arg1" = new<T extends Derived>(...x: T[]) => T
-Line 73 col 21 IdentifierName "T" = T
-Line 73 col 31 IdentifierName "Derived" = Derived
-Line 73 col 43 IdentifierName "x" = T[]
-Line 73 col 46 IdentifierName "T" = T
-Line 73 col 54 IdentifierName "T" = T
-Line 74 col 8 IdentifierName "r4arg2" = new(...x: Base[]) => Base
-Line 74 col 24 IdentifierName "x" = Base[]
-Line 74 col 27 IdentifierName "Base" = Base
-Line 74 col 38 IdentifierName "Base" = Base
-Line 75 col 8 IdentifierName "r4" = any
-Line 75 col 13 InvocationExpression "foo10(r4arg1)" = any
-Line 75 col 13 IdentifierName "foo10" = typeof foo10
-Line 75 col 19 IdentifierName "r4arg1" = new<T extends Derived>(...x: T[]) => T
-Line 76 col 8 IdentifierName "r4a" = { new<T extends Derived>(...x: T[]): T; }[]
-Line 76 col 14 ArrayLiteralExpression "[r4arg2, r4arg1]" = { new<T extends Derived>(...x: T[]): T; }[]
-Line 76 col 15 IdentifierName "r4arg2" = new(...x: Base[]) => Base
-Line 76 col 23 IdentifierName "r4arg1" = new<T extends Derived>(...x: T[]) => T
-Line 77 col 8 IdentifierName "r4b" = { new<T extends Derived>(...x: T[]): T; }[]
-Line 77 col 14 ArrayLiteralExpression "[r4arg1, r4arg2]" = { new<T extends Derived>(...x: T[]): T; }[]
-Line 77 col 15 IdentifierName "r4arg1" = new<T extends Derived>(...x: T[]) => T
-Line 77 col 23 IdentifierName "r4arg2" = new(...x: Base[]) => Base
-Line 79 col 8 IdentifierName "r5arg1" = new<T extends Derived>(x: T, y: T) => T
-Line 79 col 21 IdentifierName "T" = T
-Line 79 col 31 IdentifierName "Derived" = Derived
-Line 79 col 40 IdentifierName "x" = T
-Line 79 col 43 IdentifierName "T" = T
-Line 79 col 46 IdentifierName "y" = T
-Line 79 col 49 IdentifierName "T" = T
-Line 79 col 55 IdentifierName "T" = T
-Line 80 col 8 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 80 col 21 IdentifierName "x" = { foo: string; }
-Line 80 col 26 IdentifierName "foo" = string
-Line 80 col 41 IdentifierName "y" = { foo: string; bar: string; }
-Line 80 col 46 IdentifierName "foo" = string
-Line 80 col 59 IdentifierName "bar" = string
-Line 80 col 77 IdentifierName "Base" = Base
-Line 81 col 8 IdentifierName "r5" = any
-Line 81 col 13 InvocationExpression "foo11(r5arg1)" = any
-Line 81 col 13 IdentifierName "foo11" = typeof foo11
-Line 81 col 19 IdentifierName "r5arg1" = new<T extends Derived>(x: T, y: T) => T
-Line 82 col 8 IdentifierName "r5a" = { new<T extends Derived>(x: T, y: T): T; }[]
-Line 82 col 14 ArrayLiteralExpression "[r5arg2, r5arg1]" = { new<T extends Derived>(x: T, y: T): T; }[]
-Line 82 col 15 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 82 col 23 IdentifierName "r5arg1" = new<T extends Derived>(x: T, y: T) => T
-Line 83 col 8 IdentifierName "r5b" = { new<T extends Derived>(x: T, y: T): T; }[]
-Line 83 col 14 ArrayLiteralExpression "[r5arg1, r5arg2]" = { new<T extends Derived>(x: T, y: T): T; }[]
-Line 83 col 15 IdentifierName "r5arg1" = new<T extends Derived>(x: T, y: T) => T
-Line 83 col 23 IdentifierName "r5arg2" = new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 85 col 8 IdentifierName "r6arg1" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 85 col 21 IdentifierName "x" = Base[]
-Line 85 col 24 IdentifierName "Array" = Array<T>
-Line 85 col 30 IdentifierName "Base" = Base
-Line 85 col 37 IdentifierName "y" = Derived2[]
-Line 85 col 40 IdentifierName "Array" = Array<T>
-Line 85 col 46 IdentifierName "Derived2" = Derived2
-Line 85 col 60 IdentifierName "Array" = Array<T>
-Line 85 col 66 IdentifierName "Derived" = Derived
-Line 86 col 8 IdentifierName "r6arg2" = new<T extends Derived2[]>(x: Base[], y: Base[]) => T
-Line 86 col 21 IdentifierName "T" = T
-Line 86 col 31 IdentifierName "Array" = Array<T>
-Line 86 col 37 IdentifierName "Derived2" = Derived2
-Line 86 col 48 IdentifierName "x" = Base[]
-Line 86 col 51 IdentifierName "Array" = Array<T>
-Line 86 col 57 IdentifierName "Base" = Base
-Line 86 col 64 IdentifierName "y" = Base[]
-Line 86 col 67 IdentifierName "Array" = Array<T>
-Line 86 col 73 IdentifierName "Base" = Base
-Line 86 col 83 IdentifierName "T" = T
-Line 87 col 8 IdentifierName "r6" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 87 col 13 InvocationExpression "foo12(r6arg1)" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 87 col 13 IdentifierName "foo12" = typeof foo12
-Line 87 col 19 IdentifierName "r6arg1" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 88 col 8 IdentifierName "r6a" = { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
-Line 88 col 14 ArrayLiteralExpression "[r6arg2, r6arg1]" = { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
-Line 88 col 15 IdentifierName "r6arg2" = new<T extends Derived2[]>(x: Base[], y: Base[]) => T
-Line 88 col 23 IdentifierName "r6arg1" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 89 col 8 IdentifierName "r6b" = { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
-Line 89 col 14 ArrayLiteralExpression "[r6arg1, r6arg2]" = { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
-Line 89 col 15 IdentifierName "r6arg1" = new(x: Base[], y: Derived2[]) => Derived[]
-Line 89 col 23 IdentifierName "r6arg2" = new<T extends Derived2[]>(x: Base[], y: Base[]) => T
-Line 91 col 8 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
-Line 91 col 21 IdentifierName "T" = T
-Line 91 col 24 IdentifierName "x" = { a: T; b: T; }
-Line 91 col 29 IdentifierName "a" = T
-Line 91 col 32 IdentifierName "T" = T
-Line 91 col 35 IdentifierName "b" = T
-Line 91 col 38 IdentifierName "T" = T
-Line 91 col 46 IdentifierName "T" = T
-Line 92 col 8 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
-Line 92 col 21 IdentifierName "x" = { a: string; b: number; }
-Line 92 col 26 IdentifierName "a" = string
-Line 92 col 37 IdentifierName "b" = number
-Line 93 col 8 IdentifierName "r7" = any
-Line 93 col 13 InvocationExpression "foo15(r7arg1)" = any
-Line 93 col 13 IdentifierName "foo15" = typeof foo15
-Line 93 col 19 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
-Line 94 col 8 IdentifierName "r7a" = { new<T>(x: { a: T; b: T; }): T; }[]
-Line 94 col 14 ArrayLiteralExpression "[r7arg2, r7arg1]" = { new<T>(x: { a: T; b: T; }): T; }[]
-Line 94 col 15 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
-Line 94 col 23 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
-Line 95 col 8 IdentifierName "r7b" = { new<T>(x: { a: T; b: T; }): T; }[]
-Line 95 col 14 ArrayLiteralExpression "[r7arg1, r7arg2]" = { new<T>(x: { a: T; b: T; }): T; }[]
-Line 95 col 15 IdentifierName "r7arg1" = new<T>(x: { a: T; b: T; }) => T
-Line 95 col 23 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
-Line 97 col 8 IdentifierName "r7arg3" = new<T extends Base>(x: { a: T; b: T; }) => number
-Line 97 col 21 IdentifierName "T" = T
-Line 97 col 31 IdentifierName "Base" = Base
-Line 97 col 37 IdentifierName "x" = { a: T; b: T; }
-Line 97 col 42 IdentifierName "a" = T
-Line 97 col 45 IdentifierName "T" = T
-Line 97 col 48 IdentifierName "b" = T
-Line 97 col 51 IdentifierName "T" = T
-Line 98 col 8 IdentifierName "r7c" = new(x: { a: string; b: number; }) => number
-Line 98 col 14 InvocationExpression "foo15(r7arg3)" = new(x: { a: string; b: number; }) => number
-Line 98 col 14 IdentifierName "foo15" = typeof foo15
-Line 98 col 20 IdentifierName "r7arg3" = new<T extends Base>(x: { a: T; b: T; }) => number
-Line 99 col 8 IdentifierName "r7d" = { new(x: { a: string; b: number; }): number; }[]
-Line 99 col 14 ArrayLiteralExpression "[r7arg2, r7arg3]" = { new(x: { a: string; b: number; }): number; }[]
-Line 99 col 15 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
-Line 99 col 23 IdentifierName "r7arg3" = new<T extends Base>(x: { a: T; b: T; }) => number
-Line 100 col 8 IdentifierName "r7e" = { new<T extends Base>(x: { a: T; b: T; }): number; }[]
-Line 100 col 14 ArrayLiteralExpression "[r7arg3, r7arg2]" = { new<T extends Base>(x: { a: T; b: T; }): number; }[]
-Line 100 col 15 IdentifierName "r7arg3" = new<T extends Base>(x: { a: T; b: T; }) => number
-Line 100 col 23 IdentifierName "r7arg2" = new(x: { a: string; b: number; }) => number
-Line 102 col 8 IdentifierName "r8arg" = new<T>(x: new(a: T) => T) => T[]
-Line 102 col 20 IdentifierName "T" = T
-Line 102 col 23 IdentifierName "x" = new(a: T) => T
-Line 102 col 31 IdentifierName "a" = T
-Line 102 col 34 IdentifierName "T" = T
-Line 102 col 40 IdentifierName "T" = T
-Line 102 col 46 IdentifierName "T" = T
-Line 103 col 8 IdentifierName "r8" = any
-Line 103 col 13 InvocationExpression "foo16(r8arg)" = any
-Line 103 col 13 IdentifierName "foo16" = typeof foo16
-Line 103 col 19 IdentifierName "r8arg" = new<T>(x: new(a: T) => T) => T[]
-Line 105 col 8 IdentifierName "r9arg" = new<T>(x: new(a: T) => T) => any[]
-Line 105 col 20 IdentifierName "T" = T
-Line 105 col 23 IdentifierName "x" = new(a: T) => T
-Line 105 col 31 IdentifierName "a" = T
-Line 105 col 34 IdentifierName "T" = T
-Line 105 col 40 IdentifierName "T" = T
-Line 106 col 8 IdentifierName "r9" = { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
-Line 106 col 13 InvocationExpression "foo17(r9arg)" = { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
-Line 106 col 13 IdentifierName "foo17" = typeof foo17
-Line 106 col 19 IdentifierName "r9arg" = new<T>(x: new(a: T) => T) => any[]
-Line 109 col 7 IdentifierName "WithGenericSignaturesInBaseType" = WithGenericSignaturesInBaseType
-Line 110 col 21 IdentifierName "foo2" = typeof foo2
-Line 110 col 26 IdentifierName "a2" = new<T>(x: T) => T[]
-Line 110 col 35 IdentifierName "T" = T
-Line 110 col 38 IdentifierName "x" = T
-Line 110 col 41 IdentifierName "T" = T
-Line 110 col 47 IdentifierName "T" = T
-Line 110 col 60 IdentifierName "a2" = new<T>(x: T) => T[]
-Line 111 col 21 IdentifierName "foo2" = typeof foo2
-Line 111 col 26 IdentifierName "a2" = any
-Line 112 col 8 IdentifierName "r2arg2" = new<T>(x: T) => string[]
-Line 112 col 21 IdentifierName "T" = T
-Line 112 col 24 IdentifierName "x" = T
-Line 112 col 27 IdentifierName "T" = T
-Line 113 col 8 IdentifierName "r2" = new<T>(x: T) => T[]
-Line 113 col 13 InvocationExpression "foo2(r2arg2)" = new<T>(x: T) => T[]
-Line 113 col 13 IdentifierName "foo2" = typeof foo2
-Line 113 col 18 IdentifierName "r2arg2" = new<T>(x: T) => string[]
-Line 115 col 21 IdentifierName "foo3" = typeof foo3
-Line 115 col 26 IdentifierName "a2" = new<T>(x: T) => string[]
-Line 115 col 35 IdentifierName "T" = T
-Line 115 col 38 IdentifierName "x" = T
-Line 115 col 41 IdentifierName "T" = T
-Line 115 col 65 IdentifierName "a2" = new<T>(x: T) => string[]
-Line 116 col 21 IdentifierName "foo3" = typeof foo3
-Line 116 col 26 IdentifierName "a2" = any
-Line 117 col 8 IdentifierName "r3arg2" = new<T>(x: T) => T[]
-Line 117 col 21 IdentifierName "T" = T
-Line 117 col 24 IdentifierName "x" = T
-Line 117 col 27 IdentifierName "T" = T
-Line 117 col 33 IdentifierName "T" = T
-Line 118 col 8 IdentifierName "r3" = any
-Line 118 col 13 InvocationExpression "foo3(r3arg2)" = any
-Line 118 col 13 IdentifierName "foo3" = typeof foo3
-Line 118 col 18 IdentifierName "r3arg2" = new<T>(x: T) => T[]
+// checking subtype relations for function types as it relates to contextual signature instantiation
+// error cases, so function calls will all result in 'any'
+
+module Errors {
+>Errors : Errors
+
+    class Base { foo: string; }
+>Base : Base
+>foo : string
+
+    class Derived extends Base { bar: string; }
+>Derived : Derived
+>Base : Base
+>bar : string
+
+    class Derived2 extends Derived { baz: string; }
+>Derived2 : Derived2
+>Derived : Derived
+>baz : string
+
+    class OtherDerived extends Base { bing: string; }
+>OtherDerived : OtherDerived
+>Base : Base
+>bing : string
+
+    declare function foo2(a2: new (x: number) => string[]): typeof a2;
+>foo2 : typeof foo2
+>a2 : new(x: number) => string[]
+>x : number
+>a2 : new(x: number) => string[]
+
+    declare function foo2(a2: any): any;
+>foo2 : typeof foo2
+>a2 : any
+
+    declare function foo7(a2: new (x: new (arg: Base) => Derived) => new (r: Base) => Derived2): typeof a2;
+>foo7 : typeof foo7
+>a2 : new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
+>x : new(arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived2 : Derived2
+>a2 : new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
+
+    declare function foo7(a2: any): any;
+>foo7 : typeof foo7
+>a2 : any
+
+    declare function foo8(a2: new (x: new (arg: Base) => Derived, y: new (arg2: Base) => Derived) => new (r: Base) => Derived): typeof a2;
+>foo8 : typeof foo8
+>a2 : new(x: new(arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
+>x : new(arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : new(arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+>a2 : new(x: new(arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
+
+    declare function foo8(a2: any): any;
+>foo8 : typeof foo8
+>a2 : any
+
+    declare function foo10(a2: new (...x: Base[]) => Base): typeof a2;
+>foo10 : typeof foo10
+>a2 : new(...x: Base[]) => Base
+>x : Base[]
+>Base : Base
+>Base : Base
+>a2 : new(...x: Base[]) => Base
+
+    declare function foo10(a2: any): any;
+>foo10 : typeof foo10
+>a2 : any
+
+    declare function foo11(a2: new (x: { foo: string }, y: { foo: string; bar: string }) => Base): typeof a2;
+>foo11 : typeof foo11
+>a2 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>x : { foo: string; }
+>foo : string
+>y : { foo: string; bar: string; }
+>foo : string
+>bar : string
+>Base : Base
+>a2 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+
+    declare function foo11(a2: any): any;
+>foo11 : typeof foo11
+>a2 : any
+
+    declare function foo12(a2: new (x: Array<Base>, y: Array<Derived2>) => Array<Derived>): typeof a2;
+>foo12 : typeof foo12
+>a2 : new(x: Base[], y: Derived2[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived2[]
+>Array : Array<T>
+>Derived2 : Derived2
+>Array : Array<T>
+>Derived : Derived
+>a2 : new(x: Base[], y: Derived2[]) => Derived[]
+
+    declare function foo12(a2: any): any;
+>foo12 : typeof foo12
+>a2 : any
+
+    declare function foo15(a2: new (x: { a: string; b: number }) => number): typeof a2;
+>foo15 : typeof foo15
+>a2 : new(x: { a: string; b: number; }) => number
+>x : { a: string; b: number; }
+>a : string
+>b : number
+>a2 : new(x: { a: string; b: number; }) => number
+
+    declare function foo15(a2: any): any;
+>foo15 : typeof foo15
+>a2 : any
+
+    declare function foo16(a2: {
+>foo16 : typeof foo16
+>a2 : { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
+
+        // type of parameter is overload set which means we can't do inference based on this type
+        new (x: {
+>x : { new(a: number): number; new(a?: number): number; }
+
+            new (a: number): number;
+>a : number
+
+            new (a?: number): number;
+>a : number
+
+        }): number[];
+        new (x: {
+>x : { new(a: boolean): boolean; new(a?: boolean): boolean; }
+
+            new (a: boolean): boolean;
+>a : boolean
+
+            new (a?: boolean): boolean;
+>a : boolean
+
+        }): boolean[];
+    }): typeof a2;
+>a2 : { new(x: { new(a: number): number; new(a?: number): number; }): number[]; new(x: { new(a: boolean): boolean; new(a?: boolean): boolean; }): boolean[]; }
+
+    declare function foo16(a2: any): any;
+>foo16 : typeof foo16
+>a2 : any
+
+    declare function foo17(a2: {
+>foo17 : typeof foo17
+>a2 : { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
+
+        new (x: {
+>x : { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }
+
+            new <T extends Derived>(a: T): T;
+>T : T
+>Derived : Derived
+>a : T
+>T : T
+>T : T
+
+            new <T extends Base>(a: T): T;
+>T : T
+>Base : Base
+>a : T
+>T : T
+>T : T
+
+        }): any[];
+        new (x: {
+>x : { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }
+
+            new <T extends Derived2>(a: T): T;
+>T : T
+>Derived2 : Derived2
+>a : T
+>T : T
+>T : T
+
+            new <T extends Base>(a: T): T;
+>T : T
+>Base : Base
+>a : T
+>T : T
+>T : T
+
+        }): any[];
+    }): typeof a2;
+>a2 : { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
+
+    declare function foo17(a2: any): any;
+>foo17 : typeof foo17
+>a2 : any
+
+    var r1arg1: new <T, U>(x: T) => U[];
+>r1arg1 : new<T, U>(x: T) => U[]
+>T : T
+>U : U
+>x : T
+>T : T
+>U : U
+
+    var r1arg2: new (x: number) => string[]; 
+>r1arg2 : new(x: number) => string[]
+>x : number
+
+    var r1 = foo2(r1arg1); // any
+>r1 : any
+>foo2(r1arg1) : any
+>foo2 : typeof foo2
+>r1arg1 : new<T, U>(x: T) => U[]
+
+    var r1a = [r1arg2, r1arg1];
+>r1a : { new<T, U>(x: T): U[]; }[]
+>[r1arg2, r1arg1] : { new<T, U>(x: T): U[]; }[]
+>r1arg2 : new(x: number) => string[]
+>r1arg1 : new<T, U>(x: T) => U[]
+
+    var r1b = [r1arg1, r1arg2];
+>r1b : { new<T, U>(x: T): U[]; }[]
+>[r1arg1, r1arg2] : { new<T, U>(x: T): U[]; }[]
+>r1arg1 : new<T, U>(x: T) => U[]
+>r1arg2 : new(x: number) => string[]
+
+    var r2arg1: new <T extends Base, U extends Derived, V extends Derived2>(x: new (arg: T) => U) => new (r: T) => V;
+>r2arg1 : new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>V : V
+>Derived2 : Derived2
+>x : new(arg: T) => U
+>arg : T
+>T : T
+>U : U
+>r : T
+>T : T
+>V : V
+
+    var r2arg2: new (x: new (arg: Base) => Derived) => new (r: Base) => Derived2;
+>r2arg2 : new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
+>x : new(arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived2 : Derived2
+
+    var r2 = foo7(r2arg1); // any
+>r2 : any
+>foo7(r2arg1) : any
+>foo7 : typeof foo7
+>r2arg1 : new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
+
+    var r2a = [r2arg2, r2arg1];
+>r2a : { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+>[r2arg2, r2arg1] : { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+>r2arg2 : new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
+>r2arg1 : new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
+
+    var r2b = [r2arg1, r2arg2];
+>r2b : { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+>[r2arg1, r2arg2] : { new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U): new(r: T) => V; }[]
+>r2arg1 : new<T extends Base, U extends Derived, V extends Derived2>(x: new(arg: T) => U) => new(r: T) => V
+>r2arg2 : new(x: new(arg: Base) => Derived) => new(r: Base) => Derived2
+
+    var r3arg1: new <T extends Base, U extends Derived>(x: new (arg: T) => U, y: (arg2: { foo: number; }) => U) => new (r: T) => U;
+>r3arg1 : new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : new(arg: T) => U
+>arg : T
+>T : T
+>U : U
+>y : (arg2: { foo: number; }) => U
+>arg2 : { foo: number; }
+>foo : number
+>U : U
+>r : T
+>T : T
+>U : U
+
+    var r3arg2: new (x: (arg: Base) => Derived, y: new (arg2: Base) => Derived) => new (r: Base) => Derived;
+>r3arg2 : new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : new(arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+    var r3 = foo8(r3arg1); // any
+>r3 : any
+>foo8(r3arg1) : any
+>foo8 : typeof foo8
+>r3arg1 : new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+
+    var r3a = [r3arg2, r3arg1];
+>r3a : {}[]
+>[r3arg2, r3arg1] : {}[]
+>r3arg2 : new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
+>r3arg1 : new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+
+    var r3b = [r3arg1, r3arg2];
+>r3b : {}[]
+>[r3arg1, r3arg2] : {}[]
+>r3arg1 : new<T extends Base, U extends Derived>(x: new(arg: T) => U, y: (arg2: { foo: number; }) => U) => new(r: T) => U
+>r3arg2 : new(x: (arg: Base) => Derived, y: new(arg2: Base) => Derived) => new(r: Base) => Derived
+
+    var r4arg1: new <T extends Derived>(...x: T[]) => T;
+>r4arg1 : new<T extends Derived>(...x: T[]) => T
+>T : T
+>Derived : Derived
+>x : T[]
+>T : T
+>T : T
+
+    var r4arg2: new (...x: Base[]) => Base;
+>r4arg2 : new(...x: Base[]) => Base
+>x : Base[]
+>Base : Base
+>Base : Base
+
+    var r4 = foo10(r4arg1); // any
+>r4 : any
+>foo10(r4arg1) : any
+>foo10 : typeof foo10
+>r4arg1 : new<T extends Derived>(...x: T[]) => T
+
+    var r4a = [r4arg2, r4arg1];
+>r4a : { new<T extends Derived>(...x: T[]): T; }[]
+>[r4arg2, r4arg1] : { new<T extends Derived>(...x: T[]): T; }[]
+>r4arg2 : new(...x: Base[]) => Base
+>r4arg1 : new<T extends Derived>(...x: T[]) => T
+
+    var r4b = [r4arg1, r4arg2];
+>r4b : { new<T extends Derived>(...x: T[]): T; }[]
+>[r4arg1, r4arg2] : { new<T extends Derived>(...x: T[]): T; }[]
+>r4arg1 : new<T extends Derived>(...x: T[]) => T
+>r4arg2 : new(...x: Base[]) => Base
+
+    var r5arg1: new <T extends Derived>(x: T, y: T) => T;
+>r5arg1 : new<T extends Derived>(x: T, y: T) => T
+>T : T
+>Derived : Derived
+>x : T
+>T : T
+>y : T
+>T : T
+>T : T
+
+    var r5arg2: new (x: { foo: string }, y: { foo: string; bar: string }) => Base;
+>r5arg2 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>x : { foo: string; }
+>foo : string
+>y : { foo: string; bar: string; }
+>foo : string
+>bar : string
+>Base : Base
+
+    var r5 = foo11(r5arg1); // any
+>r5 : any
+>foo11(r5arg1) : any
+>foo11 : typeof foo11
+>r5arg1 : new<T extends Derived>(x: T, y: T) => T
+
+    var r5a = [r5arg2, r5arg1];
+>r5a : { new<T extends Derived>(x: T, y: T): T; }[]
+>[r5arg2, r5arg1] : { new<T extends Derived>(x: T, y: T): T; }[]
+>r5arg2 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>r5arg1 : new<T extends Derived>(x: T, y: T) => T
+
+    var r5b = [r5arg1, r5arg2];
+>r5b : { new<T extends Derived>(x: T, y: T): T; }[]
+>[r5arg1, r5arg2] : { new<T extends Derived>(x: T, y: T): T; }[]
+>r5arg1 : new<T extends Derived>(x: T, y: T) => T
+>r5arg2 : new(x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+
+    var r6arg1: new (x: Array<Base>, y: Array<Derived2>) => Array<Derived>;
+>r6arg1 : new(x: Base[], y: Derived2[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived2[]
+>Array : Array<T>
+>Derived2 : Derived2
+>Array : Array<T>
+>Derived : Derived
+
+    var r6arg2: new <T extends Array<Derived2>>(x: Array<Base>, y: Array<Base>) => T;
+>r6arg2 : new<T extends Derived2[]>(x: Base[], y: Base[]) => T
+>T : T
+>Array : Array<T>
+>Derived2 : Derived2
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Base[]
+>Array : Array<T>
+>Base : Base
+>T : T
+
+    var r6 = foo12(r6arg1); // new (x: Array<Base>, y: Array<Derived2>) => Array<Derived>
+>r6 : new(x: Base[], y: Derived2[]) => Derived[]
+>foo12(r6arg1) : new(x: Base[], y: Derived2[]) => Derived[]
+>foo12 : typeof foo12
+>r6arg1 : new(x: Base[], y: Derived2[]) => Derived[]
+
+    var r6a = [r6arg2, r6arg1];
+>r6a : { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+>[r6arg2, r6arg1] : { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+>r6arg2 : new<T extends Derived2[]>(x: Base[], y: Base[]) => T
+>r6arg1 : new(x: Base[], y: Derived2[]) => Derived[]
+
+    var r6b = [r6arg1, r6arg2];
+>r6b : { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+>[r6arg1, r6arg2] : { new<T extends Derived2[]>(x: Base[], y: Base[]): T; }[]
+>r6arg1 : new(x: Base[], y: Derived2[]) => Derived[]
+>r6arg2 : new<T extends Derived2[]>(x: Base[], y: Base[]) => T
+
+    var r7arg1: new <T>(x: { a: T; b: T }) => T;
+>r7arg1 : new<T>(x: { a: T; b: T; }) => T
+>T : T
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+
+    var r7arg2: new (x: { a: string; b: number }) => number;
+>r7arg2 : new(x: { a: string; b: number; }) => number
+>x : { a: string; b: number; }
+>a : string
+>b : number
+
+    var r7 = foo15(r7arg1); // (x: { a: string; b: number }) => number): number;
+>r7 : any
+>foo15(r7arg1) : any
+>foo15 : typeof foo15
+>r7arg1 : new<T>(x: { a: T; b: T; }) => T
+
+    var r7a = [r7arg2, r7arg1];
+>r7a : { new<T>(x: { a: T; b: T; }): T; }[]
+>[r7arg2, r7arg1] : { new<T>(x: { a: T; b: T; }): T; }[]
+>r7arg2 : new(x: { a: string; b: number; }) => number
+>r7arg1 : new<T>(x: { a: T; b: T; }) => T
+
+    var r7b = [r7arg1, r7arg2];
+>r7b : { new<T>(x: { a: T; b: T; }): T; }[]
+>[r7arg1, r7arg2] : { new<T>(x: { a: T; b: T; }): T; }[]
+>r7arg1 : new<T>(x: { a: T; b: T; }) => T
+>r7arg2 : new(x: { a: string; b: number; }) => number
+
+    var r7arg3: new <T extends Base>(x: { a: T; b: T }) => number;
+>r7arg3 : new<T extends Base>(x: { a: T; b: T; }) => number
+>T : T
+>Base : Base
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+
+    var r7c = foo15(r7arg3); // any
+>r7c : new(x: { a: string; b: number; }) => number
+>foo15(r7arg3) : new(x: { a: string; b: number; }) => number
+>foo15 : typeof foo15
+>r7arg3 : new<T extends Base>(x: { a: T; b: T; }) => number
+
+    var r7d = [r7arg2, r7arg3];
+>r7d : { new(x: { a: string; b: number; }): number; }[]
+>[r7arg2, r7arg3] : { new(x: { a: string; b: number; }): number; }[]
+>r7arg2 : new(x: { a: string; b: number; }) => number
+>r7arg3 : new<T extends Base>(x: { a: T; b: T; }) => number
+
+    var r7e = [r7arg3, r7arg2];
+>r7e : { new<T extends Base>(x: { a: T; b: T; }): number; }[]
+>[r7arg3, r7arg2] : { new<T extends Base>(x: { a: T; b: T; }): number; }[]
+>r7arg3 : new<T extends Base>(x: { a: T; b: T; }) => number
+>r7arg2 : new(x: { a: string; b: number; }) => number
+
+    var r8arg: new <T>(x: new (a: T) => T) => T[];
+>r8arg : new<T>(x: new(a: T) => T) => T[]
+>T : T
+>x : new(a: T) => T
+>a : T
+>T : T
+>T : T
+>T : T
+
+    var r8 = foo16(r8arg); // any
+>r8 : any
+>foo16(r8arg) : any
+>foo16 : typeof foo16
+>r8arg : new<T>(x: new(a: T) => T) => T[]
+
+    var r9arg: new <T>(x: new (a: T) => T) => any[];
+>r9arg : new<T>(x: new(a: T) => T) => any[]
+>T : T
+>x : new(a: T) => T
+>a : T
+>T : T
+>T : T
+
+    var r9 = foo17(r9arg); // // (x: { <T extends Derived >(a: T): T; <T extends Base >(a: T): T; }): any[]; (x: { <T extends Derived2>(a: T): T; <T extends Base>(a: T): T; }): any[];
+>r9 : { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
+>foo17(r9arg) : { new(x: { new<T extends Derived>(a: T): T; new<T extends Base>(a: T): T; }): any[]; new(x: { new<T extends Derived2>(a: T): T; new<T extends Base>(a: T): T; }): any[]; }
+>foo17 : typeof foo17
+>r9arg : new<T>(x: new(a: T) => T) => any[]
+}
+
+module WithGenericSignaturesInBaseType {
+>WithGenericSignaturesInBaseType : WithGenericSignaturesInBaseType
+
+    declare function foo2(a2: new <T>(x: T) => T[]): typeof a2;
+>foo2 : typeof foo2
+>a2 : new<T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+>a2 : new<T>(x: T) => T[]
+
+    declare function foo2(a2: any): any;
+>foo2 : typeof foo2
+>a2 : any
+
+    var r2arg2: new <T>(x: T) => string[];
+>r2arg2 : new<T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+
+    var r2 = foo2(r2arg2); // <T>(x:T) => T[] since we can infer from generic signatures now
+>r2 : new<T>(x: T) => T[]
+>foo2(r2arg2) : new<T>(x: T) => T[]
+>foo2 : typeof foo2
+>r2arg2 : new<T>(x: T) => string[]
+
+    declare function foo3(a2: new <T>(x: T) => string[]): typeof a2;
+>foo3 : typeof foo3
+>a2 : new<T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+>a2 : new<T>(x: T) => string[]
+
+    declare function foo3(a2: any): any;
+>foo3 : typeof foo3
+>a2 : any
+
+    var r3arg2: new <T>(x: T) => T[];
+>r3arg2 : new<T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+    var r3 = foo3(r3arg2); // any
+>r3 : any
+>foo3(r3arg2) : any
+>foo3 : typeof foo3
+>r3arg2 : new<T>(x: T) => T[]
+}

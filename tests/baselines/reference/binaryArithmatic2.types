@@ -1,4 +1,6 @@
 === tests/cases/compiler/binaryArithmatic2.ts ===
-Line 0 col 4 IdentifierName "v" = number
-Line 0 col 8 BitwiseOrExpression "4 | undefined" = number
-Line 0 col 12 IdentifierName "undefined" = any
+var v = 4 | undefined;
+>v : number
+>4 | undefined : number
+>undefined : any
+

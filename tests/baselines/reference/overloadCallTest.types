@@ -1,17 +1,37 @@
 === tests/cases/compiler/overloadCallTest.ts ===
-Line 0 col 6 IdentifierName "foo" = foo
-Line 2 col 17 IdentifierName "bar" = { (): string; (s: string): any; }
-Line 3 col 17 IdentifierName "bar" = { (): string; (s: string): any; }
-Line 3 col 21 IdentifierName "s" = string
-Line 4 col 17 IdentifierName "bar" = { (): string; (s: string): any; }
-Line 4 col 21 IdentifierName "foo" = string
-Line 6 col 12 IdentifierName "test" = any
-Line 6 col 19 InvocationExpression "bar("test")" = any
-Line 6 col 19 IdentifierName "bar" = { (): string; (s: string): any; }
-Line 7 col 12 IdentifierName "goo" = string
-Line 7 col 18 InvocationExpression "bar()" = string
-Line 7 col 18 IdentifierName "bar" = { (): string; (s: string): any; }
-Line 8 col 0 AssignmentExpression "goo = bar("test")" = any
-Line 8 col 0 IdentifierName "goo" = string
-Line 9 col 14 InvocationExpression "bar("test")" = any
-Line 9 col 14 IdentifierName "bar" = { (): string; (s: string): any; }
+class foo {
+>foo : foo
+
+    constructor() {
+        function bar(): string;
+>bar : { (): string; (s: string): any; }
+
+        function bar(s:string);
+>bar : { (): string; (s: string): any; }
+>s : string
+
+        function bar(foo?: string) { return "foo" };
+>bar : { (): string; (s: string): any; }
+>foo : string
+
+        var test = bar("test");
+>test : any
+>bar("test") : any
+>bar : { (): string; (s: string): any; }
+
+        var goo = bar();
+>goo : string
+>bar() : string
+>bar : { (): string; (s: string): any; }
+
+>goo = bar("test") : any
+>goo : string
+
+        goo = bar("test");
+>bar("test") : any
+>bar : { (): string; (s: string): any; }
+    }
+ 
+}
+
+

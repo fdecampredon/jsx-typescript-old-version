@@ -1,3 +1,26 @@
+//// [classSideInheritance2.ts]
+interface IText {
+    foo: number;
+}
+
+interface TextSpan {}
+
+class SubText extends TextBase {
+
+        constructor(text: IText, span: TextSpan) {
+            super();
+        }
+}
+
+class TextBase implements IText {
+        public foo: number;
+        public subText(span: TextSpan): IText {
+
+            return new SubText(this, span);
+        }
+}
+
+//// [classSideInheritance2.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

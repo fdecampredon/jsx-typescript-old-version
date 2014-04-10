@@ -1,3 +1,4 @@
+//// [typeParameterIndirectlyConstrainedToItself.js]
 var C = (function () {
     function C() {
     }

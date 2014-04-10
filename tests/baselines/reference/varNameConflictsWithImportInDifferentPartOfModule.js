@@ -1,3 +1,4 @@
+//// [varNameConflictsWithImportInDifferentPartOfModule.js]
 var M1;
 (function (M1) {
     M1.q = 5;

@@ -1,28 +1,69 @@
 === tests/cases/compiler/privateInstanceVisibility.ts ===
-Line 0 col 7 IdentifierName "Test" = Test
-Line 2 col 17 IdentifierName "Example" = Example
-Line 4 col 16 IdentifierName "someNumber" = number
-Line 8 col 15 IdentifierName "doSomething" = () => void
-Line 10 col 16 IdentifierName "that" = Example
-Line 10 col 23 ThisKeyword "this" = Example
-Line 12 col 21 IdentifierName "innerFunction" = () => void
-Line 14 col 20 IdentifierName "num" = number
-Line 14 col 26 MemberAccessExpression "that.someNumber" = number
-Line 14 col 26 IdentifierName "that" = Example
-Line 14 col 31 IdentifierName "someNumber" = number
-Line 26 col 6 IdentifierName "C" = C
-Line 28 col 12 IdentifierName "x" = number
-Line 29 col 0 IdentifierName "getX" = () => number
-Line 30 col 20 MemberAccessExpression "this.x" = number
-Line 30 col 20 ThisKeyword "this" = C
-Line 30 col 25 IdentifierName "x" = number
-Line 31 col 0 IdentifierName "clone" = (other: C) => void
-Line 32 col 10 IdentifierName "other" = C
-Line 32 col 17 IdentifierName "C" = C
-Line 33 col 0 AssignmentExpression "this.x = other.x" = number
-Line 33 col 0 MemberAccessExpression "this.x" = number
-Line 33 col 0 ThisKeyword "this" = C
-Line 33 col 13 IdentifierName "x" = number
-Line 33 col 17 MemberAccessExpression "other.x" = number
-Line 33 col 17 IdentifierName "other" = C
-Line 33 col 23 IdentifierName "x" = number
+module Test {
+>Test : Test
+ 
+    export class Example {
+>Example : Example
+ 
+        private someNumber: number;
+>someNumber : number
+ 
+        
+
+        public doSomething() {
+>doSomething : () => void
+ 
+            var that = this;                      
+>that : Example
+>this : Example
+
+            function innerFunction() {
+>innerFunction : () => void
+                
+                var num = that.someNumber;
+>num : number
+>that.someNumber : number
+>that : Example
+>someNumber : number
+ 
+            }
+ 
+        }        
+
+    }
+ 
+}
+
+
+
+class C {
+>C : C
+
+    private x: number;
+>x : number
+
+>getX : () => number
+
+    getX() { return this.x; }
+>this.x : number
+>this : C
+>x : number
+
+>clone : (other: C) => void
+
+    clone(other: C) {
+>other : C
+>C : C
+
+        this.x = other.x;
+>this.x = other.x : number
+>this.x : number
+>this : C
+>x : number
+>other.x : number
+>other : C
+>x : number
+
+    }
+}
+

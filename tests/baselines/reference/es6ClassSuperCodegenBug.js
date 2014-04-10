@@ -1,3 +1,19 @@
+//// [es6ClassSuperCodegenBug.ts]
+class A {
+	constructor(str1:string, str2:string) {}
+}
+class B extends A {
+    constructor() {
+	    if (true) {
+	        super('a1', 'b1');
+	    } else {
+	        super('a2', 'b2');
+	    }
+    }
+}
+
+
+//// [es6ClassSuperCodegenBug.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

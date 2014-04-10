@@ -1,3 +1,4 @@
+//// [interfaceDeclaration1.js]
 var v1;
 v1();
 

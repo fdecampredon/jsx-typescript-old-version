@@ -1,3 +1,4 @@
+//// [TwoInternalModulesThatMergeEachWithExportedClassesOfTheSameName.js]
 var A;
 (function (A) {
     var Point = (function () {

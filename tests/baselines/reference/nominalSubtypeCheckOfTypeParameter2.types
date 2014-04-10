@@ -1,28 +1,55 @@
 === tests/cases/compiler/nominalSubtypeCheckOfTypeParameter2.ts ===
-Line 0 col 10 IdentifierName "B" = B<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "bar" = T
-Line 1 col 9 IdentifierName "T" = T
-Line 5 col 10 IdentifierName "A" = A<T>
-Line 5 col 12 IdentifierName "T" = T
-Line 5 col 23 IdentifierName "B" = B<T>
-Line 5 col 25 IdentifierName "T" = T
-Line 6 col 0 IdentifierName "foo" = T
-Line 6 col 9 IdentifierName "T" = T
-Line 10 col 10 IdentifierName "A2" = A2<T>
-Line 10 col 13 IdentifierName "T" = T
-Line 10 col 24 IdentifierName "B" = B<T>
-Line 10 col 26 IdentifierName "B" = B<T>
-Line 11 col 0 IdentifierName "baz" = T
-Line 11 col 9 IdentifierName "T" = T
-Line 14 col 10 IdentifierName "C" = C<T>
-Line 14 col 12 IdentifierName "T" = T
-Line 15 col 0 IdentifierName "bam" = T
-Line 15 col 9 IdentifierName "T" = T
-Line 19 col 10 IdentifierName "A3" = A3<T>
-Line 19 col 13 IdentifierName "T" = T
-Line 19 col 24 IdentifierName "B" = B<T>
-Line 19 col 26 IdentifierName "C" = C<T>
-Line 19 col 28 IdentifierName "T" = T
-Line 20 col 0 IdentifierName "bing" = T
-Line 20 col 10 IdentifierName "T" = T
+interface B<T> {
+>B : B<T>
+>T : T
+
+    bar: T;
+>bar : T
+>T : T
+}
+
+// ok
+interface A<T> extends B<T> {
+>A : A<T>
+>T : T
+>B : B<T>
+>T : T
+
+    foo: T;
+>foo : T
+>T : T
+}
+
+// ok
+interface A2<T> extends B<B<string>> {
+>A2 : A2<T>
+>T : T
+>B : B<T>
+>B : B<T>
+
+    baz: T;
+>baz : T
+>T : T
+}
+
+interface C<T> {
+>C : C<T>
+>T : T
+
+    bam: T;
+>bam : T
+>T : T
+}
+
+// ok
+interface A3<T> extends B<C<T>> {
+>A3 : A3<T>
+>T : T
+>B : B<T>
+>C : C<T>
+>T : T
+
+    bing: T;
+>bing : T
+>T : T
+}

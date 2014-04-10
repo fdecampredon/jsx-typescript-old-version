@@ -1,3 +1,19 @@
+//// [badThisBinding.ts]
+declare function foo(a:any): any;
+declare function bar(a:any): any;
+
+class Greeter {
+    constructor() {
+		foo(() => {
+            bar(() => {
+                var x = this;
+			});
+		});
+	}
+
+} 
+
+//// [badThisBinding.js]
 var Greeter = (function () {
     function Greeter() {
         var _this = this;

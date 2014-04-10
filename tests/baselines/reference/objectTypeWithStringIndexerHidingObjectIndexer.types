@@ -1,31 +1,72 @@
 === tests/cases/compiler/objectTypeWithStringIndexerHidingObjectIndexer.ts ===
-Line 3 col 10 IdentifierName "Object" = Object
-Line 4 col 5 IdentifierName "x" = string
-Line 4 col 17 IdentifierName "Object" = Object
-Line 6 col 4 IdentifierName "o" = {}
-Line 6 col 8 ObjectLiteralExpression "{}" = {}
-Line 7 col 4 IdentifierName "r" = Object
-Line 7 col 8 ElementAccessExpression "o['']" = Object
-Line 7 col 8 IdentifierName "o" = {}
-Line 9 col 6 IdentifierName "C" = C
-Line 10 col 0 IdentifierName "foo" = string
-Line 11 col 5 IdentifierName "x" = string
-Line 13 col 4 IdentifierName "c" = C
-Line 13 col 7 IdentifierName "C" = C
-Line 14 col 4 IdentifierName "r2" = string
-Line 14 col 17 ElementAccessExpression "c['']" = string
-Line 14 col 17 IdentifierName "c" = C
-Line 16 col 10 IdentifierName "I" = I
-Line 17 col 0 IdentifierName "bar" = string
-Line 18 col 5 IdentifierName "x" = string
-Line 20 col 4 IdentifierName "i" = I
-Line 20 col 7 IdentifierName "I" = I
-Line 21 col 4 IdentifierName "r3" = string
-Line 21 col 17 ElementAccessExpression "i['']" = string
-Line 21 col 17 IdentifierName "i" = I
-Line 23 col 4 IdentifierName "o2" = { baz: string; [x: string]: string; }
-Line 24 col 0 IdentifierName "baz" = string
-Line 25 col 5 IdentifierName "x" = string
-Line 27 col 4 IdentifierName "r4" = string
-Line 27 col 17 ElementAccessExpression "o2['']" = string
-Line 27 col 17 IdentifierName "o2" = { baz: string; [x: string]: string; }
+// object types can define string indexers that are more specific than the default 'any' that would be returned
+// no errors expected below 
+
+interface Object {
+>Object : Object
+
+    [x: string]: Object;
+>x : string
+>Object : Object
+}
+var o = {};
+>o : {}
+>{} : {}
+
+var r = o['']; // should be Object
+>r : Object
+>o[''] : Object
+>o : {}
+
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+
+    [x: string]: string;
+>x : string
+}
+var c: C;
+>c : C
+>C : C
+
+var r2: string = c[''];
+>r2 : string
+>c[''] : string
+>c : C
+
+interface I {
+>I : I
+
+    bar: string;
+>bar : string
+
+    [x: string]: string;
+>x : string
+}
+var i: I;
+>i : I
+>I : I
+
+var r3: string = i[''];
+>r3 : string
+>i[''] : string
+>i : I
+
+var o2: {
+>o2 : { baz: string; [x: string]: string; }
+
+    baz: string;
+>baz : string
+
+    [x: string]: string;
+>x : string
+}
+var r4: string = o2[''];
+>r4 : string
+>o2[''] : string
+>o2 : { baz: string; [x: string]: string; }
+
+
+

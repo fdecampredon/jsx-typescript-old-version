@@ -1,10 +1,22 @@
 === tests/cases/compiler/inheritedMembersAndIndexSignaturesFromDifferentBases2.ts ===
-Line 0 col 10 IdentifierName "A" = A<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 5 IdentifierName "n" = number
-Line 1 col 17 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "B" = B
-Line 5 col 0 IdentifierName "foo" = number
-Line 8 col 10 IdentifierName "C" = C
-Line 8 col 20 IdentifierName "B" = B
-Line 8 col 23 IdentifierName "A" = A<T>
+interface A<T> {
+>A : A<T>
+>T : T
+
+    [n: number]: T;
+>n : number
+>T : T
+}
+
+interface B {
+>B : B
+
+    foo: number;
+>foo : number
+}
+
+interface C extends B, A<string> { } // Should succeed
+>C : C
+>B : B
+>A : A<T>
+

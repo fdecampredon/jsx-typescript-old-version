@@ -1,22 +1,48 @@
 === tests/cases/compiler/binopAssignmentShouldHaveType.ts ===
-Line 0 col 12 IdentifierName "console" = any
-Line 2 col 7 IdentifierName "Test" = Test
-Line 3 col 14 IdentifierName "Bug" = Bug
-Line 4 col 0 IdentifierName "getName" = () => string
-Line 7 col 0 IdentifierName "bug" = () => void
-Line 8 col 7 IdentifierName "name" = string
-Line 9 col 7 GreaterThanExpression "(name= this.getName()).length > 0" = boolean
-Line 9 col 7 MemberAccessExpression "(name= this.getName()).length" = number
-Line 9 col 7 ParenthesizedExpression "(name= this.getName())" = string
-Line 9 col 8 AssignmentExpression "name= this.getName()" = string
-Line 9 col 8 IdentifierName "name" = string
-Line 9 col 14 InvocationExpression "this.getName()" = string
-Line 9 col 14 MemberAccessExpression "this.getName" = () => string
-Line 9 col 14 ThisKeyword "this" = Bug
-Line 9 col 19 IdentifierName "getName" = () => string
-Line 9 col 30 IdentifierName "length" = number
-Line 10 col 0 InvocationExpression "console.log(name)" = any
-Line 10 col 0 MemberAccessExpression "console.log" = any
-Line 10 col 0 IdentifierName "console" = any
-Line 10 col 12 IdentifierName "log" = any
-Line 10 col 16 IdentifierName "name" = string
+declare var console;
+>console : any
+
+"use strict";
+module Test {
+>Test : Test
+
+ export class Bug {
+>Bug : Bug
+
+  getName():string {
+>getName : () => string
+
+   return "name";
+  }
+  bug() {
+>bug : () => void
+
+   var name:string= null;
+>name : string
+
+   if ((name= this.getName()).length > 0) {
+>(name= this.getName()).length > 0 : boolean
+>(name= this.getName()).length : number
+>(name= this.getName()) : string
+>name= this.getName() : string
+>name : string
+>this.getName() : string
+>this.getName : () => string
+>this : Bug
+>getName : () => string
+>length : number
+
+    console.log(name);
+>console.log(name) : any
+>console.log : any
+>console : any
+>log : any
+>name : string
+   }
+  }
+ }
+}
+
+ 
+
+

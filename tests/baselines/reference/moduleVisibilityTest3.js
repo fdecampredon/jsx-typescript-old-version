@@ -1,3 +1,4 @@
+//// [moduleVisibilityTest3.js]
 var _modes;
 (function (_modes) {
     var Mode = (function () {

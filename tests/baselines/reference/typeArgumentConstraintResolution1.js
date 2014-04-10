@@ -1,3 +1,4 @@
+//// [typeArgumentConstraintResolution1.js]
 function foo1(test) {
 }
 foo1(""); // should error

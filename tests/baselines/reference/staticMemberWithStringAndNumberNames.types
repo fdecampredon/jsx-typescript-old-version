@@ -1,20 +1,38 @@
 === tests/cases/compiler/staticMemberWithStringAndNumberNames.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 3 col 0 IdentifierName "x" = number
-Line 4 col 8 ElementAccessExpression "C['foo']" = number
-Line 4 col 8 IdentifierName "C" = typeof C
-Line 5 col 0 IdentifierName "x2" = number
-Line 5 col 9 ElementAccessExpression "C['0']" = number
-Line 5 col 9 IdentifierName "C" = typeof C
-Line 6 col 0 IdentifierName "x3" = number
-Line 6 col 9 ElementAccessExpression "C[0]" = number
-Line 6 col 9 IdentifierName "C" = typeof C
-Line 8 col 11 IdentifierName "s" = number
-Line 8 col 15 ElementAccessExpression "C['foo']" = number
-Line 8 col 15 IdentifierName "C" = typeof C
-Line 9 col 11 IdentifierName "s2" = number
-Line 9 col 16 ElementAccessExpression "C['0']" = number
-Line 9 col 16 IdentifierName "C" = typeof C
-Line 10 col 11 IdentifierName "s3" = number
-Line 10 col 16 ElementAccessExpression "C[0]" = number
-Line 10 col 16 IdentifierName "C" = typeof C
+class C {
+>C : C
+
+    static "foo" = 0;
+    static 0 = 1;
+
+>x : number
+
+    x = C['foo'];
+>C['foo'] : number
+>C : typeof C
+
+    x2 = C['0'];
+>x2 : number
+>C['0'] : number
+>C : typeof C
+
+    x3 = C[0];
+>x3 : number
+>C[0] : number
+>C : typeof C
+        
+    static s = C['foo'];
+>s : number
+>C['foo'] : number
+>C : typeof C
+
+    static s2 = C['0'];
+>s2 : number
+>C['0'] : number
+>C : typeof C
+
+    static s3 = C[0];
+>s3 : number
+>C[0] : number
+>C : typeof C
+}

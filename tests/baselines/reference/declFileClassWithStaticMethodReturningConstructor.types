@@ -1,4 +1,12 @@
 === tests/cases/compiler/declFileClassWithStaticMethodReturningConstructor.ts ===
-Line 1 col 13 IdentifierName "Enhancement" = Enhancement
-Line 2 col 18 IdentifierName "getType" = () => typeof Enhancement
-Line 3 col 15 ThisKeyword "this" = typeof Enhancement
+
+export class Enhancement {
+>Enhancement : Enhancement
+
+    public static getType() {
+>getType : () => typeof Enhancement
+
+        return this;
+>this : typeof Enhancement
+    }
+}

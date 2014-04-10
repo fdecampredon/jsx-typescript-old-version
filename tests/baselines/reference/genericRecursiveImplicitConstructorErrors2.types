@@ -1,34 +1,68 @@
 === tests/cases/compiler/genericRecursiveImplicitConstructorErrors2.ts ===
-Line 0 col 7 IdentifierName "TypeScript2" = TypeScript2
-Line 1 col 19 IdentifierName "DeclKind" = DeclKind
-Line 2 col 19 IdentifierName "PullTypesymbol" = PullTypesymbol
-Line 3 col 19 IdentifierName "SymbolLinkKind" = SymbolLinkKind
-Line 4 col 14 IdentifierName "PullSymbolVisibility" = PullSymbolVisibility
-Line 5 col 0 IdentifierName "Private" = PullSymbolVisibility
-Line 6 col 0 IdentifierName "Public" = PullSymbolVisibility
-Line 9 col 15 IdentifierName "PullSymbol" = PullSymbol
-Line 10 col 17 IdentifierName "name" = string
-Line 10 col 31 IdentifierName "declKind" = DeclKind
-Line 10 col 41 IdentifierName "DeclKind" = DeclKind
-Line 14 col 11 IdentifierName "addOutgoingLink" = <A, B, C>(linkTo: PullSymbol, kind: SymbolLinkKind) => void
-Line 14 col 27 IdentifierName "A" = A
-Line 14 col 29 IdentifierName "B" = B
-Line 14 col 31 IdentifierName "C" = C
-Line 14 col 34 IdentifierName "linkTo" = PullSymbol
-Line 14 col 42 IdentifierName "PullSymbol" = PullSymbol
-Line 14 col 54 IdentifierName "kind" = SymbolLinkKind
-Line 14 col 60 IdentifierName "SymbolLinkKind" = SymbolLinkKind
-Line 18 col 11 IdentifierName "getType" = <A, B, C>() => PullTypeSymbol<A, B, C>
-Line 18 col 19 IdentifierName "A" = A
-Line 18 col 21 IdentifierName "B" = B
-Line 18 col 23 IdentifierName "C" = C
-Line 18 col 29 IdentifierName "PullTypeSymbol" = PullTypeSymbol<A, B, C>
-Line 18 col 44 IdentifierName "A" = A
-Line 18 col 46 IdentifierName "B" = B
-Line 18 col 48 IdentifierName "C" = C
-Line 19 col 13 IdentifierName "undefined" = any
-Line 22 col 15 IdentifierName "PullTypeSymbol" = PullTypeSymbol<A, B, C>
-Line 22 col 31 IdentifierName "A" = A
-Line 22 col 33 IdentifierName "B" = B
-Line 22 col 35 IdentifierName "C" = C
-Line 22 col 45 IdentifierName "PullSymbol" = PullSymbol
+module TypeScript2 {
+>TypeScript2 : TypeScript2
+
+  export interface DeclKind { };
+>DeclKind : DeclKind
+
+  export interface PullTypesymbol { };
+>PullTypesymbol : PullTypesymbol
+
+  export interface SymbolLinkKind { };
+>SymbolLinkKind : SymbolLinkKind
+
+  export enum PullSymbolVisibility {
+>PullSymbolVisibility : PullSymbolVisibility
+
+    Private,
+>Private : PullSymbolVisibility
+
+    Public
+>Public : PullSymbolVisibility
+  }
+　
+  export class PullSymbol {
+>PullSymbol : PullSymbol
+
+    constructor (name: string, declKind: DeclKind) {
+>name : string
+>declKind : DeclKind
+>DeclKind : DeclKind
+
+    }
+    // link methods
+    public addOutgoingLink<A,B,C>(linkTo: PullSymbol, kind: SymbolLinkKind) {
+>addOutgoingLink : <A, B, C>(linkTo: PullSymbol, kind: SymbolLinkKind) => void
+>A : A
+>B : B
+>C : C
+>linkTo : PullSymbol
+>PullSymbol : PullSymbol
+>kind : SymbolLinkKind
+>SymbolLinkKind : SymbolLinkKind
+
+    }
+
+    public getType<A,B,C>(): PullTypeSymbol<A,B,C> {
+>getType : <A, B, C>() => PullTypeSymbol<A, B, C>
+>A : A
+>B : B
+>C : C
+>PullTypeSymbol : PullTypeSymbol<A, B, C>
+>A : A
+>B : B
+>C : C
+
+      return undefined;
+>undefined : any
+    }
+  }
+  export class PullTypeSymbol <A,B,C>extends PullSymbol {
+>PullTypeSymbol : PullTypeSymbol<A, B, C>
+>A : A
+>B : B
+>C : C
+>PullSymbol : PullSymbol
+  }
+}
+

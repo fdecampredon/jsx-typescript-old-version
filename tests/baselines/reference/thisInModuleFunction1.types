@@ -1,9 +1,18 @@
 === tests/cases/compiler/thisInModuleFunction1.ts ===
-Line 0 col 7 IdentifierName "bar" = bar
-Line 1 col 17 IdentifierName "bar" = typeof bar
-Line 2 col 9 ThisKeyword "this" = any
-Line 5 col 4 IdentifierName "z" = any
-Line 5 col 8 InvocationExpression "bar.bar()" = any
-Line 5 col 8 MemberAccessExpression "bar.bar" = typeof bar.bar
-Line 5 col 8 IdentifierName "bar" = typeof bar
-Line 5 col 12 IdentifierName "bar" = typeof bar.bar
+module bar {
+>bar : bar
+
+ export function bar() {
+>bar : typeof bar
+
+  return this;
+>this : any
+ } 
+} 
+var z = bar.bar();
+>z : any
+>bar.bar() : any
+>bar.bar : typeof bar.bar
+>bar : typeof bar
+>bar : typeof bar.bar
+

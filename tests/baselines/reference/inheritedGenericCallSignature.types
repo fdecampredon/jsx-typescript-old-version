@@ -1,23 +1,53 @@
 === tests/cases/compiler/inheritedGenericCallSignature.ts ===
-Line 1 col 10 IdentifierName "I1" = I1<T>
-Line 1 col 13 IdentifierName "T" = T
-Line 3 col 5 IdentifierName "a" = T
-Line 3 col 8 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "T" = T
-Line 8 col 10 IdentifierName "Object" = Object
-Line 12 col 10 IdentifierName "I2" = I2<T>
-Line 12 col 13 IdentifierName "T" = T
-Line 12 col 24 IdentifierName "I1" = I1<T>
-Line 12 col 27 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "b" = T
-Line 14 col 7 IdentifierName "T" = T
-Line 20 col 4 IdentifierName "x" = I2<Date>
-Line 20 col 7 IdentifierName "I2" = I2<T>
-Line 20 col 10 IdentifierName "Date" = Date
-Line 24 col 4 IdentifierName "y" = Date[]
-Line 24 col 8 InvocationExpression "x(undefined)" = Date[]
-Line 24 col 8 IdentifierName "x" = I2<Date>
-Line 24 col 10 IdentifierName "undefined" = any
-Line 25 col 0 MemberAccessExpression "y.length" = number
-Line 25 col 0 IdentifierName "y" = Date[]
-Line 26 col 2 IdentifierName "length" = number
+
+interface I1<T> {
+>I1 : I1<T>
+>T : T
+
+    (a: T): T;
+>a : T
+>T : T
+>T : T
+
+}
+
+
+interface Object {}
+>Object : Object
+
+ 
+
+interface I2<T> extends I1<T[]> {
+>I2 : I2<T>
+>T : T
+>I1 : I1<T>
+>T : T
+
+>b : T
+
+    b: T;
+>T : T
+
+}
+
+ 
+
+var x: I2<Date>;
+>x : I2<Date>
+>I2 : I2<T>
+>Date : Date
+
+ 
+
+var y = x(undefined);
+>y : Date[]
+>x(undefined) : Date[]
+>x : I2<Date>
+>undefined : any
+
+>y.length : number
+>y : Date[]
+
+y.length;  // should not error
+>length : number
+

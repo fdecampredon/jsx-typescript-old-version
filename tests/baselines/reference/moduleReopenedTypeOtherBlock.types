@@ -1,9 +1,20 @@
 === tests/cases/compiler/moduleReopenedTypeOtherBlock.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 17 IdentifierName "C1" = C1
-Line 2 col 21 IdentifierName "I" = I
-Line 2 col 25 IdentifierName "n" = number
-Line 4 col 7 IdentifierName "M" = M
-Line 5 col 17 IdentifierName "C2" = C2
-Line 5 col 22 IdentifierName "f" = () => I
-Line 5 col 27 IdentifierName "I" = I
+module M {
+>M : M
+
+    export class C1 { }
+>C1 : C1
+
+    export interface I { n: number; }
+>I : I
+>n : number
+}
+module M {
+>M : M
+
+    export class C2 { f(): I { return null; } }
+>C2 : C2
+>f : () => I
+>I : I
+}
+

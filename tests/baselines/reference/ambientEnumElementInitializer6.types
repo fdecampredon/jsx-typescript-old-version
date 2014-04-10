@@ -1,4 +1,11 @@
 === tests/cases/compiler/ambientEnumElementInitializer6.ts ===
-Line 0 col 15 IdentifierName "M" = M
-Line 1 col 9 IdentifierName "E" = E
-Line 2 col 0 IdentifierName "e" = E
+declare module M {
+>M : M
+
+    enum E {
+>E : E
+
+        e = 3
+>e : E
+    }
+}

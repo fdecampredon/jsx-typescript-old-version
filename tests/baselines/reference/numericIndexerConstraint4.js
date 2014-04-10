@@ -1,3 +1,17 @@
+//// [numericIndexerConstraint4.ts]
+class A {
+    foo: number;
+}
+
+class B extends A {
+    bar: string;
+}
+
+var x: {
+    [idx: number]: A;
+} = { data: new B() }
+
+//// [numericIndexerConstraint4.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

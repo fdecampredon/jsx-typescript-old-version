@@ -1,35 +1,66 @@
 === tests/cases/compiler/genericCallWithFunctionTypedArguments4.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 2 col 10 IdentifierName "foo" = string
-Line 3 col 6 IdentifierName "D" = D
-Line 3 col 10 IdentifierName "bar" = string
-Line 4 col 4 IdentifierName "a" = { new(x: boolean): C; new(x: string): D; }
-Line 5 col 8 IdentifierName "x" = boolean
-Line 5 col 21 IdentifierName "C" = C
-Line 6 col 8 IdentifierName "x" = string
-Line 6 col 20 IdentifierName "D" = D
-Line 9 col 9 IdentifierName "foo4" = typeof foo4
-Line 9 col 14 IdentifierName "T" = T
-Line 9 col 17 IdentifierName "U" = U
-Line 9 col 20 IdentifierName "cb" = new(x: T) => U
-Line 9 col 28 IdentifierName "x" = T
-Line 9 col 31 IdentifierName "T" = T
-Line 9 col 37 IdentifierName "U" = U
-Line 10 col 8 IdentifierName "u" = U
-Line 10 col 11 IdentifierName "U" = U
-Line 11 col 11 IdentifierName "u" = U
-Line 14 col 4 IdentifierName "r" = {}
-Line 14 col 8 InvocationExpression "foo4(a)" = {}
-Line 14 col 8 IdentifierName "foo4" = typeof foo4
-Line 14 col 13 IdentifierName "a" = { new(x: boolean): C; new(x: string): D; }
-Line 16 col 4 IdentifierName "b" = { new<T>(x: boolean): T; new<T>(x: T): any; }
-Line 17 col 8 IdentifierName "T" = T
-Line 17 col 11 IdentifierName "x" = boolean
-Line 17 col 24 IdentifierName "T" = T
-Line 18 col 8 IdentifierName "T" = T
-Line 18 col 11 IdentifierName "x" = T
-Line 18 col 14 IdentifierName "T" = T
-Line 21 col 4 IdentifierName "r2" = any
-Line 21 col 9 InvocationExpression "foo4(b)" = any
-Line 21 col 9 IdentifierName "foo4" = typeof foo4
-Line 21 col 14 IdentifierName "b" = { new<T>(x: boolean): T; new<T>(x: T): any; }
+// No inference is made from function typed arguments which have multiple call signatures
+
+class C { foo: string }
+>C : C
+>foo : string
+
+class D { bar: string }
+>D : D
+>bar : string
+
+var a: {
+>a : { new(x: boolean): C; new(x: string): D; }
+
+    new(x: boolean): C;
+>x : boolean
+>C : C
+
+    new(x: string): D;
+>x : string
+>D : D
+}
+
+function foo4<T, U>(cb: new(x: T) => U) {
+>foo4 : typeof foo4
+>T : T
+>U : U
+>cb : new(x: T) => U
+>x : T
+>T : T
+>U : U
+
+    var u: U;
+>u : U
+>U : U
+
+    return u;
+>u : U
+}
+
+var r = foo4(a); // T is {} (candidates boolean and string), U is {} (candidates C and D)
+>r : {}
+>foo4(a) : {}
+>foo4 : typeof foo4
+>a : { new(x: boolean): C; new(x: string): D; }
+
+var b: {
+>b : { new<T>(x: boolean): T; new<T>(x: T): any; }
+
+    new<T>(x: boolean): T;
+>T : T
+>x : boolean
+>T : T
+
+    new<T>(x: T): any;
+>T : T
+>x : T
+>T : T
+}
+
+var r2 = foo4(b); // T is {} (candidates boolean and {}), U is any (candidates any and {})
+>r2 : any
+>foo4(b) : any
+>foo4 : typeof foo4
+>b : { new<T>(x: boolean): T; new<T>(x: T): any; }
+

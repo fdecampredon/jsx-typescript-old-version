@@ -1,7 +1,12 @@
 === tests/cases/compiler/moduleCodeGenTest3.ts ===
-Line 0 col 7 IdentifierName "Baz" = Baz
-Line 0 col 24 IdentifierName "x" = string
-Line 1 col 0 AssignmentExpression "Baz.x = "goodbye"" = string
-Line 1 col 0 MemberAccessExpression "Baz.x" = string
-Line 1 col 0 IdentifierName "Baz" = typeof Baz
-Line 2 col 4 IdentifierName "x" = string
+module Baz { export var x = "hello"; }
+>Baz : Baz
+>x : string
+
+>Baz.x = "goodbye" : string
+>Baz.x : string
+>Baz : typeof Baz
+
+Baz.x = "goodbye";
+>x : string
+

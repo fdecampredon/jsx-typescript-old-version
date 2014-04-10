@@ -1,12 +1,29 @@
 === tests/cases/compiler/innerExtern.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 26 IdentifierName "BB" = BB
-Line 2 col 19 IdentifierName "Elephant" = any
-Line 4 col 18 IdentifierName "B" = B
-Line 5 col 21 IdentifierName "C" = C
-Line 6 col 0 IdentifierName "x" = any
-Line 6 col 16 MemberAccessExpression "BB.Elephant.X" = any
-Line 6 col 16 MemberAccessExpression "BB.Elephant" = any
-Line 6 col 16 IdentifierName "BB" = typeof BB
-Line 6 col 19 IdentifierName "Elephant" = any
-Line 6 col 28 IdentifierName "X" = any
+module A {
+>A : A
+
+    export declare module BB {
+>BB : BB
+
+        export var Elephant;
+>Elephant : any
+    }
+    export module B {
+>B : B
+
+        export class C {
+>C : C
+
+            x = BB.Elephant.X;
+>x : any
+>BB.Elephant.X : any
+>BB.Elephant : any
+>BB : typeof BB
+>Elephant : any
+>X : any
+        }
+    }
+}
+
+
+

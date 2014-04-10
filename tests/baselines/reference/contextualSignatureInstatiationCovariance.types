@@ -1,32 +1,48 @@
 === tests/cases/compiler/contextualSignatureInstatiationCovariance.ts ===
-Line 0 col 10 IdentifierName "Animal" = Animal
-Line 0 col 19 IdentifierName "x" = any
-Line 1 col 10 IdentifierName "TallThing" = TallThing
-Line 1 col 22 IdentifierName "x2" = any
-Line 2 col 10 IdentifierName "Giraffe" = Giraffe
-Line 2 col 26 IdentifierName "Animal" = Animal
-Line 2 col 34 IdentifierName "TallThing" = TallThing
-Line 2 col 46 IdentifierName "y" = any
-Line 4 col 4 IdentifierName "f2" = <T extends Giraffe>(x: T, y: T) => void
-Line 4 col 9 IdentifierName "T" = T
-Line 4 col 19 IdentifierName "Giraffe" = Giraffe
-Line 4 col 28 IdentifierName "x" = T
-Line 4 col 31 IdentifierName "T" = T
-Line 4 col 34 IdentifierName "y" = T
-Line 4 col 37 IdentifierName "T" = T
-Line 6 col 4 IdentifierName "g2" = (a: Animal, t: TallThing) => void
-Line 6 col 9 IdentifierName "a" = Animal
-Line 6 col 12 IdentifierName "Animal" = Animal
-Line 6 col 20 IdentifierName "t" = TallThing
-Line 6 col 23 IdentifierName "TallThing" = TallThing
-Line 7 col 0 AssignmentExpression "g2 = f2" = <T extends Giraffe>(x: T, y: T) => void
-Line 7 col 0 IdentifierName "g2" = (a: Animal, t: TallThing) => void
-Line 7 col 5 IdentifierName "f2" = <T extends Giraffe>(x: T, y: T) => void
-Line 9 col 4 IdentifierName "h2" = (a1: Animal, a2: Animal) => void
-Line 9 col 9 IdentifierName "a1" = Animal
-Line 9 col 13 IdentifierName "Animal" = Animal
-Line 9 col 21 IdentifierName "a2" = Animal
-Line 9 col 25 IdentifierName "Animal" = Animal
-Line 10 col 0 AssignmentExpression "h2 = f2" = <T extends Giraffe>(x: T, y: T) => void
-Line 10 col 0 IdentifierName "h2" = (a1: Animal, a2: Animal) => void
-Line 10 col 5 IdentifierName "f2" = <T extends Giraffe>(x: T, y: T) => void
+interface Animal { x }
+>Animal : Animal
+>x : any
+
+interface TallThing { x2 }
+>TallThing : TallThing
+>x2 : any
+
+interface Giraffe extends Animal, TallThing { y }
+>Giraffe : Giraffe
+>Animal : Animal
+>TallThing : TallThing
+>y : any
+
+var f2: <T extends Giraffe>(x: T, y: T) => void;
+>f2 : <T extends Giraffe>(x: T, y: T) => void
+>T : T
+>Giraffe : Giraffe
+>x : T
+>T : T
+>y : T
+>T : T
+
+var g2: (a: Animal, t: TallThing) => void;
+>g2 : (a: Animal, t: TallThing) => void
+>a : Animal
+>Animal : Animal
+>t : TallThing
+>TallThing : TallThing
+
+g2 = f2; // While neither Animal nor TallThing satisfy the constraint, T is at worst a Giraffe and compatible with both via covariance.
+>g2 = f2 : <T extends Giraffe>(x: T, y: T) => void
+>g2 : (a: Animal, t: TallThing) => void
+>f2 : <T extends Giraffe>(x: T, y: T) => void
+
+var h2: (a1: Animal, a2: Animal) => void;
+>h2 : (a1: Animal, a2: Animal) => void
+>a1 : Animal
+>Animal : Animal
+>a2 : Animal
+>Animal : Animal
+
+h2 = f2; // Animal does not satisfy the constraint, but T is at worst a Giraffe and compatible with Animal via covariance.
+>h2 = f2 : <T extends Giraffe>(x: T, y: T) => void
+>h2 : (a1: Animal, a2: Animal) => void
+>f2 : <T extends Giraffe>(x: T, y: T) => void
+

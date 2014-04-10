@@ -1,11 +1,22 @@
 === tests/cases/compiler/privacyCheckExportAssignmentOnExportedGenericInterface1.ts ===
-Line 0 col 7 IdentifierName "Foo" = Foo
-Line 1 col 21 IdentifierName "A" = A<T>
-Line 1 col 23 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "Foo" = Foo<T>
-Line 4 col 14 IdentifierName "T" = T
-Line 6 col 4 IdentifierName "Foo" = new() => Foo.A<Foo<string>>
-Line 6 col 19 IdentifierName "Foo" = Foo
-Line 6 col 23 IdentifierName "A" = Foo.A<T>
-Line 6 col 25 IdentifierName "Foo" = Foo<T>
-Line 7 col 9 IdentifierName "Foo" = new() => Foo.A<Foo<string>>
+module Foo {
+>Foo : Foo
+
+    export interface A<T> {
+>A : A<T>
+>T : T
+    }
+}
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+}
+var Foo: new () => Foo.A<Foo<string>>;
+>Foo : new() => Foo.A<Foo<string>>
+>Foo : Foo
+>A : Foo.A<T>
+>Foo : Foo<T>
+
+export = Foo;
+>Foo : new() => Foo.A<Foo<string>>
+

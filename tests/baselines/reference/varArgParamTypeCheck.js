@@ -1,3 +1,27 @@
+//// [varArgParamTypeCheck.ts]
+function sequence(...sequences:{():void;}[]) {
+}
+
+function callback(clb:()=>void) {
+}
+
+sequence(
+    function bar() {
+    },
+    function foo() {
+        callback(()=>{
+            this();
+        });
+    },
+    function baz() {
+        callback(()=>{
+            this();
+        });
+    }
+);
+
+
+//// [varArgParamTypeCheck.js]
 function sequence() {
     var sequences = [];
     for (var _i = 0; _i < (arguments.length - 0); _i++) {

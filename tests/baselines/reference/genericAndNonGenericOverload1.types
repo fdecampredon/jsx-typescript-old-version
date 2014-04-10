@@ -1,14 +1,24 @@
 === tests/cases/compiler/genericAndNonGenericOverload1.ts ===
-Line 0 col 10 IdentifierName "callable2" = callable2<T>
-Line 0 col 20 IdentifierName "T" = T
-Line 1 col 5 IdentifierName "a" = T
-Line 1 col 8 IdentifierName "T" = T
-Line 1 col 12 IdentifierName "T" = T
-Line 2 col 5 IdentifierName "Z" = Z
-Line 2 col 8 IdentifierName "a" = T
-Line 2 col 11 IdentifierName "T" = T
-Line 2 col 15 IdentifierName "Z" = Z
-Line 4 col 4 IdentifierName "c2" = callable2<number>
-Line 4 col 8 IdentifierName "callable2" = callable2<T>
-Line 5 col 0 InvocationExpression "c2<string>(1)" = string
-Line 5 col 0 IdentifierName "c2" = callable2<number>
+interface callable2<T> {
+>callable2 : callable2<T>
+>T : T
+
+    (a: T): T;
+>a : T
+>T : T
+>T : T
+
+    <Z>(a: T): Z;
+>Z : Z
+>a : T
+>T : T
+>Z : Z
+}
+var c2: callable2<number>;
+>c2 : callable2<number>
+>callable2 : callable2<T>
+
+c2<string>(1);
+>c2<string>(1) : string
+>c2 : callable2<number>
+

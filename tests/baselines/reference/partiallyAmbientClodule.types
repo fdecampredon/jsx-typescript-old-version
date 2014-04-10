@@ -1,4 +1,10 @@
 === tests/cases/compiler/partiallyAmbientClodule.ts ===
-Line 0 col 15 IdentifierName "foo" = foo
-Line 1 col 20 IdentifierName "x" = typeof x
-Line 3 col 6 IdentifierName "foo" = foo
+declare module foo {
+>foo : foo
+
+    export function x(): any;
+>x : typeof x
+}
+class foo { } // Legal, because module is ambient
+>foo : foo
+

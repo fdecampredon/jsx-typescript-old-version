@@ -1,12 +1,21 @@
 === tests/cases/compiler/genericClasses1.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "x" = T
-Line 1 col 11 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "v1" = C<string>
-Line 4 col 9 ObjectCreationExpression "new C<string>()" = C<string>
-Line 4 col 13 IdentifierName "C" = typeof C
-Line 6 col 4 IdentifierName "y" = string
-Line 6 col 8 MemberAccessExpression "v1.x" = string
-Line 6 col 8 IdentifierName "v1" = C<string>
-Line 6 col 11 IdentifierName "x" = string
+class C<T> {
+>C : C<T>
+>T : T
+
+	public x: T;
+>x : T
+>T : T
+}
+
+var v1 = new C<string>();
+>v1 : C<string>
+>new C<string>() : C<string>
+>C : typeof C
+
+var y = v1.x; // should be 'string'
+>y : string
+>v1.x : string
+>v1 : C<string>
+>x : string
+

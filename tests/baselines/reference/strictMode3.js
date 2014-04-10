@@ -1,3 +1,17 @@
+//// [strictMode3.ts]
+"use strict";
+
+class A {
+}
+
+class B extends A {
+}
+
+function foo() {
+    return this.window;
+}
+
+//// [strictMode3.js]
 "use strict";
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

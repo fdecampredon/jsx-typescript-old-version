@@ -1,3 +1,4 @@
+//// [staticMemberExportAccess.js]
 var Sammy = (function () {
     function Sammy() {
     }

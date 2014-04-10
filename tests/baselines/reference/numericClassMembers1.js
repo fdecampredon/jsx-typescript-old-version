@@ -1,3 +1,4 @@
+//// [numericClassMembers1.js]
 var C234 = (function () {
     function C234() {
         this[0] = 1;

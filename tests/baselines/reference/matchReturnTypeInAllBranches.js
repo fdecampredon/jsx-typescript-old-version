@@ -1,3 +1,4 @@
+//// [matchReturnTypeInAllBranches.js]
 // Represents a monster who enjoys ice cream
 var IceCreamMonster = (function () {
     function IceCreamMonster(iceCreamFlavor, wantsSprinkles, soundsWhenEating, name) {

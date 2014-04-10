@@ -1,100 +1,124 @@
 === tests/cases/compiler/ipromise4.ts ===
-Line 0 col 15 IdentifierName "Windows" = Windows
-Line 0 col 23 IdentifierName "Foundation" = Windows.Foundation
-Line 1 col 21 IdentifierName "IPromise" = IPromise<T>
-Line 1 col 30 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
-Line 2 col 13 IdentifierName "U" = U
-Line 2 col 16 IdentifierName "success" = (value: T) => IPromise<U>
-Line 2 col 27 IdentifierName "value" = T
-Line 2 col 34 IdentifierName "T" = T
-Line 2 col 40 IdentifierName "IPromise" = IPromise<T>
-Line 2 col 49 IdentifierName "U" = U
-Line 2 col 53 IdentifierName "error" = (error: any) => IPromise<U>
-Line 2 col 62 IdentifierName "error" = any
-Line 2 col 77 IdentifierName "IPromise" = IPromise<T>
-Line 2 col 86 IdentifierName "U" = U
-Line 2 col 90 IdentifierName "progress" = (progress: any) => void
-Line 2 col 102 IdentifierName "progress" = any
-Line 2 col 128 IdentifierName "Windows" = Windows
-Line 2 col 136 IdentifierName "Foundation" = Foundation
-Line 2 col 147 IdentifierName "IPromise" = IPromise<T>
-Line 2 col 156 IdentifierName "U" = U
-Line 3 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
-Line 3 col 13 IdentifierName "U" = U
-Line 3 col 16 IdentifierName "success" = (value: T) => IPromise<U>
-Line 3 col 27 IdentifierName "value" = T
-Line 3 col 34 IdentifierName "T" = T
-Line 3 col 40 IdentifierName "IPromise" = IPromise<T>
-Line 3 col 49 IdentifierName "U" = U
-Line 3 col 53 IdentifierName "error" = (error: any) => U
-Line 3 col 62 IdentifierName "error" = any
-Line 3 col 77 IdentifierName "U" = U
-Line 3 col 80 IdentifierName "progress" = (progress: any) => void
-Line 3 col 92 IdentifierName "progress" = any
-Line 3 col 118 IdentifierName "Windows" = Windows
-Line 3 col 126 IdentifierName "Foundation" = Foundation
-Line 3 col 137 IdentifierName "IPromise" = IPromise<T>
-Line 3 col 146 IdentifierName "U" = U
-Line 4 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
-Line 4 col 13 IdentifierName "U" = U
-Line 4 col 16 IdentifierName "success" = (value: T) => U
-Line 4 col 27 IdentifierName "value" = T
-Line 4 col 34 IdentifierName "T" = T
-Line 4 col 40 IdentifierName "U" = U
-Line 4 col 43 IdentifierName "error" = (error: any) => IPromise<U>
-Line 4 col 52 IdentifierName "error" = any
-Line 4 col 67 IdentifierName "IPromise" = IPromise<T>
-Line 4 col 76 IdentifierName "U" = U
-Line 4 col 80 IdentifierName "progress" = (progress: any) => void
-Line 4 col 92 IdentifierName "progress" = any
-Line 4 col 118 IdentifierName "Windows" = Windows
-Line 4 col 126 IdentifierName "Foundation" = Foundation
-Line 4 col 137 IdentifierName "IPromise" = IPromise<T>
-Line 4 col 146 IdentifierName "U" = U
-Line 5 col 0 IdentifierName "then" = { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
-Line 5 col 13 IdentifierName "U" = U
-Line 5 col 16 IdentifierName "success" = (value: T) => U
-Line 5 col 27 IdentifierName "value" = T
-Line 5 col 34 IdentifierName "T" = T
-Line 5 col 40 IdentifierName "U" = U
-Line 5 col 43 IdentifierName "error" = (error: any) => U
-Line 5 col 52 IdentifierName "error" = any
-Line 5 col 67 IdentifierName "U" = U
-Line 5 col 70 IdentifierName "progress" = (progress: any) => void
-Line 5 col 82 IdentifierName "progress" = any
-Line 5 col 108 IdentifierName "Windows" = Windows
-Line 5 col 116 IdentifierName "Foundation" = Foundation
-Line 5 col 127 IdentifierName "IPromise" = IPromise<T>
-Line 5 col 136 IdentifierName "U" = U
-Line 6 col 0 IdentifierName "done" = <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void) => void
-Line 6 col 15 IdentifierName "U" = U
-Line 6 col 18 IdentifierName "success" = (value: T) => any
-Line 6 col 29 IdentifierName "value" = T
-Line 6 col 36 IdentifierName "T" = T
-Line 6 col 47 IdentifierName "error" = (error: any) => any
-Line 6 col 56 IdentifierName "error" = any
-Line 6 col 76 IdentifierName "progress" = (progress: any) => void
-Line 6 col 88 IdentifierName "progress" = any
-Line 10 col 4 IdentifierName "p" = Windows.Foundation.IPromise<number>
-Line 10 col 7 IdentifierName "Windows" = Windows
-Line 10 col 15 IdentifierName "Foundation" = Windows.Foundation
-Line 10 col 26 IdentifierName "IPromise" = Windows.Foundation.IPromise<T>
-Line 11 col 0 InvocationExpression "p.then(function (x) { } )" = Windows.Foundation.IPromise<void>
-Line 11 col 0 MemberAccessExpression "p.then" = { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 11 col 0 IdentifierName "p" = Windows.Foundation.IPromise<number>
-Line 12 col 2 IdentifierName "then" = { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 12 col 7 FunctionExpression "function (x) { }" = (x: number) => void
-Line 12 col 17 IdentifierName "x" = number
-Line 13 col 0 InvocationExpression "p.then(function (x) { return "hello"; } ).then(function (x) { return x } )" = Windows.Foundation.IPromise<string>
-Line 13 col 0 MemberAccessExpression "p.then(function (x) { return "hello"; } ).then" = { <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 13 col 0 InvocationExpression "p.then(function (x) { return "hello"; } )" = Windows.Foundation.IPromise<string>
-Line 13 col 0 MemberAccessExpression "p.then" = { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 13 col 0 IdentifierName "p" = Windows.Foundation.IPromise<number>
-Line 13 col 2 IdentifierName "then" = { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 13 col 7 FunctionExpression "function (x) { return "hello"; }" = (x: number) => string
-Line 13 col 17 IdentifierName "x" = number
-Line 13 col 42 IdentifierName "then" = { <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
-Line 13 col 47 FunctionExpression "function (x) { return x }" = (x: string) => string
-Line 13 col 57 IdentifierName "x" = string
-Line 13 col 69 IdentifierName "x" = string
+declare module Windows.Foundation {
+>Windows : Windows
+>Foundation : Windows.Foundation
+
+    export interface IPromise<T> {
+>IPromise : IPromise<T>
+>T : T
+
+        then<U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void ): Windows.Foundation.IPromise<U>;
+>then : { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
+>U : U
+>success : (value: T) => IPromise<U>
+>value : T
+>T : T
+>IPromise : IPromise<T>
+>U : U
+>error : (error: any) => IPromise<U>
+>error : any
+>IPromise : IPromise<T>
+>U : U
+>progress : (progress: any) => void
+>progress : any
+>Windows : Windows
+>Foundation : Foundation
+>IPromise : IPromise<T>
+>U : U
+
+        then<U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void ): Windows.Foundation.IPromise<U>;
+>then : { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
+>U : U
+>success : (value: T) => IPromise<U>
+>value : T
+>T : T
+>IPromise : IPromise<T>
+>U : U
+>error : (error: any) => U
+>error : any
+>U : U
+>progress : (progress: any) => void
+>progress : any
+>Windows : Windows
+>Foundation : Foundation
+>IPromise : IPromise<T>
+>U : U
+
+        then<U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void ): Windows.Foundation.IPromise<U>;
+>then : { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
+>U : U
+>success : (value: T) => U
+>value : T
+>T : T
+>U : U
+>error : (error: any) => IPromise<U>
+>error : any
+>IPromise : IPromise<T>
+>U : U
+>progress : (progress: any) => void
+>progress : any
+>Windows : Windows
+>Foundation : Foundation
+>IPromise : IPromise<T>
+>U : U
+
+        then<U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void ): Windows.Foundation.IPromise<U>;
+>then : { <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => IPromise<U>, progress?: (progress: any) => void): IPromise<U>; <U>(success?: (value: T) => U, error?: (error: any) => U, progress?: (progress: any) => void): IPromise<U>; }
+>U : U
+>success : (value: T) => U
+>value : T
+>T : T
+>U : U
+>error : (error: any) => U
+>error : any
+>U : U
+>progress : (progress: any) => void
+>progress : any
+>Windows : Windows
+>Foundation : Foundation
+>IPromise : IPromise<T>
+>U : U
+
+        done? <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void ): void;
+>done : <U>(success?: (value: T) => any, error?: (error: any) => any, progress?: (progress: any) => void) => void
+>U : U
+>success : (value: T) => any
+>value : T
+>T : T
+>error : (error: any) => any
+>error : any
+>progress : (progress: any) => void
+>progress : any
+    }
+}
+ 
+var p: Windows.Foundation.IPromise<number> = null;
+>p : Windows.Foundation.IPromise<number>
+>Windows : Windows
+>Foundation : Windows.Foundation
+>IPromise : Windows.Foundation.IPromise<T>
+ 
+>p.then(function (x) { } ) : Windows.Foundation.IPromise<void>
+>p.then : { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>p : Windows.Foundation.IPromise<number>
+
+p.then(function (x) { } ); // should not error
+>then : { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>function (x) { } : (x: number) => void
+>x : number
+
+p.then(function (x) { return "hello"; } ).then(function (x) { return x } ); // should not error
+>p.then(function (x) { return "hello"; } ).then(function (x) { return x } ) : Windows.Foundation.IPromise<string>
+>p.then(function (x) { return "hello"; } ).then : { <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>p.then(function (x) { return "hello"; } ) : Windows.Foundation.IPromise<string>
+>p.then : { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>p : Windows.Foundation.IPromise<number>
+>then : { <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: number) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>function (x) { return "hello"; } : (x: number) => string
+>x : number
+>then : { <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => Windows.Foundation.IPromise<U>, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => Windows.Foundation.IPromise<U>, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; <U>(success?: (value: string) => U, error?: (error: any) => U, progress?: (progress: any) => void): Windows.Foundation.IPromise<U>; }
+>function (x) { return x } : (x: string) => string
+>x : string
+>x : string
+ 
+

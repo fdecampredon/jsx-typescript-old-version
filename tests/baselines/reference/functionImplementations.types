@@ -1,177 +1,345 @@
 === tests/cases/compiler/functionImplementations.ts ===
-Line 1 col 4 IdentifierName "v" = void
-Line 1 col 14 InvocationExpression "function () { } ()" = void
-Line 1 col 14 FunctionExpression "function () { }" = () => void
-Line 4 col 4 IdentifierName "a" = any
-Line 4 col 13 FunctionExpression "function f() {
+// FunctionExpression with no return type annotation and no return statement returns void
+var v: void = function () { } ();
+>v : void
+>function () { } () : void
+>function () { } : () => void
+
+// FunctionExpression f with no return type annotation and directly references f in its body returns any
+var a: any = function f() {
+>a : any
+>function f() {
     return f;
-}" = () => any
-Line 4 col 22 IdentifierName "f" = () => any
-Line 5 col 11 IdentifierName "f" = () => any
-Line 7 col 4 IdentifierName "a" = any
-Line 7 col 13 FunctionExpression "function f() {
+} : () => any
+>f : () => any
+
+    return f;
+>f : () => any
+
+};
+var a: any = function f() {
+>a : any
+>function f() {
     return f();
-}" = () => any
-Line 7 col 22 IdentifierName "f" = () => any
-Line 8 col 11 InvocationExpression "f()" = any
-Line 8 col 11 IdentifierName "f" = () => any
-Line 12 col 4 IdentifierName "a" = any
-Line 12 col 13 FunctionExpression "function f() {
+} : () => any
+>f : () => any
+
+    return f();
+>f() : any
+>f : () => any
+
+};
+
+// FunctionExpression f with no return type annotation and indirectly references f in its body returns any
+var a: any = function f() {
+>a : any
+>function f() {
     var x = f;
     return x;
-}" = () => any
-Line 12 col 22 IdentifierName "f" = () => any
-Line 13 col 8 IdentifierName "x" = () => any
-Line 13 col 12 IdentifierName "f" = () => any
-Line 14 col 11 IdentifierName "x" = () => any
-Line 18 col 9 IdentifierName "rec1" = typeof rec1
-Line 19 col 11 InvocationExpression "rec2()" = any
-Line 19 col 11 IdentifierName "rec2" = typeof rec2
-Line 21 col 9 IdentifierName "rec2" = typeof rec2
-Line 22 col 11 InvocationExpression "rec1()" = any
-Line 22 col 11 IdentifierName "rec1" = typeof rec1
-Line 24 col 4 IdentifierName "a" = any
-Line 24 col 8 InvocationExpression "rec1()" = any
-Line 24 col 8 IdentifierName "rec1" = typeof rec1
-Line 25 col 4 IdentifierName "a" = any
-Line 25 col 8 InvocationExpression "rec2()" = any
-Line 25 col 8 IdentifierName "rec2" = typeof rec2
-Line 28 col 9 IdentifierName "rec3" = typeof rec3
-Line 29 col 11 InvocationExpression "rec4()" = number
-Line 29 col 11 IdentifierName "rec4" = typeof rec4
-Line 31 col 9 IdentifierName "rec4" = typeof rec4
-Line 32 col 11 InvocationExpression "rec3()" = number
-Line 32 col 11 IdentifierName "rec3" = typeof rec3
-Line 34 col 4 IdentifierName "n" = number
-Line 35 col 4 IdentifierName "n" = number
-Line 35 col 8 InvocationExpression "rec3()" = number
-Line 35 col 8 IdentifierName "rec3" = typeof rec3
-Line 36 col 4 IdentifierName "n" = number
-Line 36 col 8 InvocationExpression "rec4()" = number
-Line 36 col 8 IdentifierName "rec4" = typeof rec4
-Line 39 col 4 IdentifierName "n" = number
-Line 39 col 8 InvocationExpression "function () {
+} : () => any
+>f : () => any
+
+    var x = f;
+>x : () => any
+>f : () => any
+
+    return x;
+>x : () => any
+
+};
+
+// Two mutually recursive function implementations with no return type annotations
+function rec1() {
+>rec1 : typeof rec1
+
+    return rec2();
+>rec2() : any
+>rec2 : typeof rec2
+}
+function rec2() {
+>rec2 : typeof rec2
+
+    return rec1();
+>rec1() : any
+>rec1 : typeof rec1
+}
+var a = rec1();
+>a : any
+>rec1() : any
+>rec1 : typeof rec1
+
+var a = rec2();
+>a : any
+>rec2() : any
+>rec2 : typeof rec2
+
+// Two mutually recursive function implementations with return type annotation in one
+function rec3(): number {
+>rec3 : typeof rec3
+
+    return rec4();
+>rec4() : number
+>rec4 : typeof rec4
+}
+function rec4() {
+>rec4 : typeof rec4
+
+    return rec3();
+>rec3() : number
+>rec3 : typeof rec3
+}
+var n: number;
+>n : number
+
+var n = rec3();
+>n : number
+>rec3() : number
+>rec3 : typeof rec3
+
+var n = rec4();
+>n : number
+>rec4() : number
+>rec4 : typeof rec4
+
+// FunctionExpression with no return type annotation and returns a number
+var n = function () {
+>n : number
+>function () {
     return 3;
-} ()" = number
-Line 39 col 8 FunctionExpression "function () {
+} () : number
+>function () {
     return 3;
-}" = () => number
-Line 44 col 4 IdentifierName "nu" = any
-Line 45 col 4 IdentifierName "nu" = any
-Line 45 col 9 InvocationExpression "function () {
+} : () => number
+
+    return 3;
+} ();
+
+// FunctionExpression with no return type annotation and returns null
+var nu = null;
+>nu : any
+
+var nu = function () {
+>nu : any
+>function () {
     return null;
-} ()" = any
-Line 45 col 9 FunctionExpression "function () {
+} () : any
+>function () {
     return null;
-}" = () => any
-Line 50 col 4 IdentifierName "un" = any
-Line 50 col 9 IdentifierName "undefined" = any
-Line 51 col 4 IdentifierName "un" = any
-Line 51 col 9 InvocationExpression "function () {
+} : () => any
+
+    return null;
+} ();
+
+// FunctionExpression with no return type annotation and returns undefined
+var un = undefined;
+>un : any
+>undefined : any
+
+var un = function () {
+>un : any
+>function () {
     return undefined;
-} ()" = any
-Line 51 col 9 FunctionExpression "function () {
+} () : any
+>function () {
     return undefined;
-}" = () => any
-Line 52 col 11 IdentifierName "undefined" = any
-Line 56 col 4 IdentifierName "n" = number
-Line 56 col 8 InvocationExpression "function <T>(x: T) {
+} : () => any
+
+    return undefined;
+>undefined : any
+
+} ();
+
+// FunctionExpression with no return type annotation and returns a type parameter type
+var n = function <T>(x: T) {
+>n : number
+>function <T>(x: T) {
     return x;
-} (4)" = number
-Line 56 col 8 FunctionExpression "function <T>(x: T) {
+} (4) : number
+>function <T>(x: T) {
     return x;
-}" = <T>(x: T) => T
-Line 56 col 18 IdentifierName "T" = T
-Line 56 col 21 IdentifierName "x" = T
-Line 56 col 24 IdentifierName "T" = T
-Line 57 col 11 IdentifierName "x" = T
-Line 61 col 4 IdentifierName "n" = number
-Line 61 col 8 InvocationExpression "function <T extends {}>(x: T) {
+} : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+
     return x;
-} (4)" = number
-Line 61 col 8 FunctionExpression "function <T extends {}>(x: T) {
+>x : T
+
+} (4);
+
+// FunctionExpression with no return type annotation and returns a constrained type parameter type
+var n = function <T extends {}>(x: T) {
+>n : number
+>function <T extends {}>(x: T) {
     return x;
-}" = <T extends {}>(x: T) => T
-Line 61 col 18 IdentifierName "T" = T
-Line 61 col 32 IdentifierName "x" = T
-Line 61 col 35 IdentifierName "T" = T
-Line 62 col 11 IdentifierName "x" = T
-Line 66 col 4 IdentifierName "n" = number
-Line 66 col 8 InvocationExpression "function () {
+} (4) : number
+>function <T extends {}>(x: T) {
+    return x;
+} : <T extends {}>(x: T) => T
+>T : T
+>x : T
+>T : T
+
+    return x;
+>x : T
+
+} (4);
+
+// FunctionExpression with no return type annotation with multiple return statements with identical types
+var n = function () {
+>n : number
+>function () {
     return 3;
     return 5;
-}()" = number
-Line 66 col 8 FunctionExpression "function () {
+}() : number
+>function () {
     return 3;
     return 5;
-}" = () => number
-Line 72 col 6 IdentifierName "Base" = Base
-Line 72 col 21 IdentifierName "m" = any
-Line 73 col 6 IdentifierName "Derived" = Derived
-Line 73 col 22 IdentifierName "Base" = Base
-Line 73 col 37 IdentifierName "q" = any
-Line 74 col 4 IdentifierName "b" = Base
-Line 74 col 7 IdentifierName "Base" = Base
-Line 75 col 4 IdentifierName "b" = Base
-Line 75 col 8 InvocationExpression "function () {
+} : () => number
+
+    return 3;
+    return 5;
+}();
+
+// FunctionExpression with no return type annotation with multiple return statements with subtype relation between returns
+class Base { private m; }
+>Base : Base
+>m : any
+
+class Derived extends Base { private q; }
+>Derived : Derived
+>Base : Base
+>q : any
+
+var b: Base;
+>b : Base
+>Base : Base
+
+var b = function () {
+>b : Base
+>function () {
     return new Base(); return new Derived();
-} ()" = Base
-Line 75 col 8 FunctionExpression "function () {
+} () : Base
+>function () {
     return new Base(); return new Derived();
-}" = () => Base
-Line 76 col 11 ObjectCreationExpression "new Base()" = Base
-Line 76 col 15 IdentifierName "Base" = typeof Base
-Line 76 col 30 ObjectCreationExpression "new Derived()" = Derived
-Line 76 col 34 IdentifierName "Derived" = typeof Derived
-Line 80 col 4 IdentifierName "a" = any
-Line 80 col 8 InvocationExpression "function f() {
+} : () => Base
+
+    return new Base(); return new Derived();
+>new Base() : Base
+>Base : typeof Base
+>new Derived() : Derived
+>Derived : typeof Derived
+
+} ();
+
+// FunctionExpression with no return type annotation with multiple return statements with one a recursive call
+var a = function f() {
+>a : any
+>function f() {
     return new Base(); return new Derived(); return f(); // ?
-} ()" = any
-Line 80 col 8 FunctionExpression "function f() {
+} () : any
+>function f() {
     return new Base(); return new Derived(); return f(); // ?
-}" = () => any
-Line 80 col 17 IdentifierName "f" = () => any
-Line 81 col 11 ObjectCreationExpression "new Base()" = Base
-Line 81 col 15 IdentifierName "Base" = typeof Base
-Line 81 col 30 ObjectCreationExpression "new Derived()" = Derived
-Line 81 col 34 IdentifierName "Derived" = typeof Derived
-Line 81 col 52 InvocationExpression "f()" = any
-Line 81 col 52 IdentifierName "f" = () => any
-Line 83 col 0 EqualsExpression "// FunctionExpression with non -void return type annotation with a single throw statement
+} : () => any
+>f : () => any
+
+    return new Base(); return new Derived(); return f(); // ?
+>new Base() : Base
+>Base : typeof Base
+>new Derived() : Derived
+>Derived : typeof Derived
+>f() : any
+>f : () => any
+
+} ();
+
+>// FunctionExpression with non -void return type annotation with a single throw statement
 undefined === function (): number {
     throw undefined;
-}" = boolean
-Line 83 col 0 IdentifierName "// FunctionExpression with non -void return type annotation with a single throw statement
-undefined" = any
-Line 85 col 14 FunctionExpression "function (): number {
+} : boolean
+>// FunctionExpression with non -void return type annotation with a single throw statement
+undefined : any
+
+// FunctionExpression with non -void return type annotation with a single throw statement
+undefined === function (): number {
+>function (): number {
     throw undefined;
-}" = () => number
-Line 86 col 10 IdentifierName "undefined" = any
-Line 90 col 9 IdentifierName "thisFunc" = typeof thisFunc
-Line 91 col 8 IdentifierName "x" = any
-Line 91 col 12 ThisKeyword "this" = any
-Line 92 col 8 IdentifierName "x" = any
-Line 96 col 9 IdentifierName "opt1" = typeof opt1
-Line 96 col 14 IdentifierName "n" = number
-Line 97 col 8 IdentifierName "m" = number
-Line 97 col 12 IdentifierName "n" = number
-Line 98 col 8 IdentifierName "m" = number
-Line 102 col 9 IdentifierName "opt2" = typeof opt2
-Line 102 col 14 IdentifierName "n" = { x: any; y: any; }
-Line 102 col 18 ObjectLiteralExpression "{ x: null, y: undefined }" = { x: any; y: any; }
-Line 102 col 20 IdentifierName "x" = any
-Line 102 col 29 IdentifierName "y" = any
-Line 102 col 32 IdentifierName "undefined" = any
-Line 103 col 8 IdentifierName "m" = { x: any; y: any; }
-Line 103 col 12 IdentifierName "n" = { x: any; y: any; }
-Line 104 col 8 IdentifierName "m" = { x: any; y: any; }
-Line 104 col 13 IdentifierName "x" = any
-Line 104 col 21 IdentifierName "y" = any
-Line 108 col 9 IdentifierName "opt3" = typeof opt3
-Line 108 col 14 IdentifierName "n" = number
-Line 108 col 25 IdentifierName "m" = number
-Line 108 col 29 IdentifierName "n" = number
-Line 109 col 8 IdentifierName "y" = number
-Line 109 col 12 IdentifierName "m" = number
-Line 110 col 8 IdentifierName "y" = number
-Line 117 col 9 IdentifierName "f6" = typeof f6
+} : () => number
+
+    throw undefined;
+>undefined : any
+
+};
+
+// Type of 'this' in function implementation is 'any'
+function thisFunc() {
+>thisFunc : typeof thisFunc
+
+    var x = this;
+>x : any
+>this : any
+
+    var x: any;
+>x : any
+}
+
+// Function signature with optional parameter, no type annotation and initializer has initializer's type
+function opt1(n = 4) {
+>opt1 : typeof opt1
+>n : number
+
+    var m = n;
+>m : number
+>n : number
+
+    var m: number;
+>m : number
+}
+
+// Function signature with optional parameter, no type annotation and initializer has initializer's widened type
+function opt2(n = { x: null, y: undefined }) {
+>opt2 : typeof opt2
+>n : { x: any; y: any; }
+>{ x: null, y: undefined } : { x: any; y: any; }
+>x : any
+>y : any
+>undefined : any
+
+    var m = n;
+>m : { x: any; y: any; }
+>n : { x: any; y: any; }
+
+    var m: { x: any; y: any };
+>m : { x: any; y: any; }
+>x : any
+>y : any
+}
+
+// Function signature with initializer referencing other parameter to the left
+function opt3(n: number, m = n) {
+>opt3 : typeof opt3
+>n : number
+>m : number
+>n : number
+
+    var y = m;
+>y : number
+>m : number
+
+    var y: number;
+>y : number
+}
+
+// Function signature with optional parameter has correct codegen 
+// (tested above)
+
+// FunctionExpression with non -void return type annotation return with no expression
+function f6(): number {
+>f6 : typeof f6
+
+    return;
+}
+
+
+
+

@@ -1,11 +1,17 @@
 === tests/cases/compiler/contextualTypeAny.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "obj" = { [s: string]: number; }
-Line 2 col 12 IdentifierName "s" = string
-Line 2 col 35 ObjectLiteralExpression "{ p: "", q: x }" = { p: string; q: any; [s: string]: any; }
-Line 2 col 37 IdentifierName "p" = string
-Line 2 col 44 IdentifierName "q" = any
-Line 2 col 47 IdentifierName "x" = any
-Line 4 col 4 IdentifierName "arr" = number[]
-Line 4 col 20 ArrayLiteralExpression "["", x]" = any[]
-Line 4 col 25 IdentifierName "x" = any
+var x: any;
+>x : any
+
+var obj: { [s: string]: number } = { p: "", q: x };
+>obj : { [s: string]: number; }
+>s : string
+>{ p: "", q: x } : { p: string; q: any; [s: string]: any; }
+>p : string
+>q : any
+>x : any
+
+var arr: number[] = ["", x];
+>arr : number[]
+>["", x] : any[]
+>x : any
+

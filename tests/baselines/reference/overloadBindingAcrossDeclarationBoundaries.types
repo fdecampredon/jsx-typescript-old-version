@@ -1,67 +1,121 @@
 === tests/cases/compiler/overloadBindingAcrossDeclarationBoundaries.ts ===
-Line 0 col 10 IdentifierName "Opt1" = Opt1
-Line 1 col 0 IdentifierName "p" = any
-Line 3 col 10 IdentifierName "Opt2" = Opt2
-Line 4 col 0 IdentifierName "q" = any
-Line 6 col 10 IdentifierName "Opt3" = Opt3
-Line 7 col 0 IdentifierName "r" = any
-Line 9 col 10 IdentifierName "Opt4" = Opt4
-Line 10 col 0 IdentifierName "s" = any
-Line 12 col 10 IdentifierName "A" = A
-Line 13 col 0 IdentifierName "a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 13 col 6 IdentifierName "o" = Opt1
-Line 13 col 9 IdentifierName "Opt1" = Opt1
-Line 13 col 16 IdentifierName "Opt1" = Opt1
-Line 14 col 0 IdentifierName "a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 14 col 6 IdentifierName "o" = Opt2
-Line 14 col 9 IdentifierName "Opt2" = Opt2
-Line 14 col 16 IdentifierName "Opt2" = Opt2
-Line 15 col 5 IdentifierName "o" = Opt1
-Line 15 col 8 IdentifierName "Opt1" = Opt1
-Line 15 col 15 IdentifierName "Opt1" = Opt1
-Line 16 col 5 IdentifierName "o" = Opt2
-Line 16 col 8 IdentifierName "Opt2" = Opt2
-Line 16 col 15 IdentifierName "Opt2" = Opt2
-Line 17 col 9 IdentifierName "o" = Opt1
-Line 17 col 12 IdentifierName "Opt1" = Opt1
-Line 17 col 19 IdentifierName "Opt1" = Opt1
-Line 18 col 9 IdentifierName "o" = Opt2
-Line 18 col 12 IdentifierName "Opt2" = Opt2
-Line 18 col 19 IdentifierName "Opt2" = Opt2
-Line 20 col 10 IdentifierName "A" = A
-Line 21 col 0 IdentifierName "a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 21 col 6 IdentifierName "o" = Opt3
-Line 21 col 9 IdentifierName "Opt3" = Opt3
-Line 21 col 16 IdentifierName "Opt3" = Opt3
-Line 22 col 0 IdentifierName "a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 22 col 6 IdentifierName "o" = Opt4
-Line 22 col 9 IdentifierName "Opt4" = Opt4
-Line 22 col 16 IdentifierName "Opt4" = Opt4
-Line 23 col 5 IdentifierName "o" = Opt3
-Line 23 col 8 IdentifierName "Opt3" = Opt3
-Line 23 col 15 IdentifierName "Opt3" = Opt3
-Line 24 col 5 IdentifierName "o" = Opt4
-Line 24 col 8 IdentifierName "Opt4" = Opt4
-Line 24 col 15 IdentifierName "Opt4" = Opt4
-Line 25 col 9 IdentifierName "o" = Opt3
-Line 25 col 12 IdentifierName "Opt3" = Opt3
-Line 25 col 19 IdentifierName "Opt3" = Opt3
-Line 26 col 9 IdentifierName "o" = Opt4
-Line 26 col 12 IdentifierName "Opt4" = Opt4
-Line 26 col 19 IdentifierName "Opt4" = Opt4
-Line 29 col 4 IdentifierName "a" = A
-Line 29 col 7 IdentifierName "A" = A
-Line 31 col 4 IdentifierName "a1" = Opt3
-Line 31 col 9 InvocationExpression "a.a({})" = Opt3
-Line 31 col 9 MemberAccessExpression "a.a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 31 col 9 IdentifierName "a" = A
-Line 31 col 11 IdentifierName "a" = { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
-Line 31 col 13 ObjectLiteralExpression "{}" = {}
-Line 32 col 4 IdentifierName "a1" = Opt3
-Line 32 col 9 InvocationExpression "a({})" = Opt3
-Line 32 col 9 IdentifierName "a" = A
-Line 32 col 11 ObjectLiteralExpression "{}" = {}
-Line 33 col 4 IdentifierName "a1" = Opt3
-Line 33 col 9 ObjectCreationExpression "new a({})" = Opt3
-Line 33 col 13 IdentifierName "a" = A
-Line 33 col 15 ObjectLiteralExpression "{}" = {}
+interface Opt1 {
+>Opt1 : Opt1
+
+    p?: any;
+>p : any
+}
+interface Opt2 {
+>Opt2 : Opt2
+
+    q?: any;
+>q : any
+}
+interface Opt3 {
+>Opt3 : Opt3
+
+    r?: any;
+>r : any
+}
+interface Opt4 {
+>Opt4 : Opt4
+
+    s?: any;
+>s : any
+}
+interface A {
+>A : A
+
+    a(o: Opt1): Opt1;
+>a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>o : Opt1
+>Opt1 : Opt1
+>Opt1 : Opt1
+
+    a(o: Opt2): Opt2;
+>a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>o : Opt2
+>Opt2 : Opt2
+>Opt2 : Opt2
+
+    (o: Opt1): Opt1;
+>o : Opt1
+>Opt1 : Opt1
+>Opt1 : Opt1
+
+    (o: Opt2): Opt2;
+>o : Opt2
+>Opt2 : Opt2
+>Opt2 : Opt2
+
+    new (o: Opt1): Opt1;
+>o : Opt1
+>Opt1 : Opt1
+>Opt1 : Opt1
+
+    new (o: Opt2): Opt2;
+>o : Opt2
+>Opt2 : Opt2
+>Opt2 : Opt2
+}
+interface A {
+>A : A
+
+    a(o: Opt3): Opt3;
+>a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>o : Opt3
+>Opt3 : Opt3
+>Opt3 : Opt3
+
+    a(o: Opt4): Opt4;
+>a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>o : Opt4
+>Opt4 : Opt4
+>Opt4 : Opt4
+
+    (o: Opt3): Opt3;
+>o : Opt3
+>Opt3 : Opt3
+>Opt3 : Opt3
+
+    (o: Opt4): Opt4;
+>o : Opt4
+>Opt4 : Opt4
+>Opt4 : Opt4
+
+    new (o: Opt3): Opt3;
+>o : Opt3
+>Opt3 : Opt3
+>Opt3 : Opt3
+
+    new (o: Opt4): Opt4;
+>o : Opt4
+>Opt4 : Opt4
+>Opt4 : Opt4
+}
+
+var a: A;
+>a : A
+>A : A
+
+// These should all be Opt3
+var a1 = a.a({});
+>a1 : Opt3
+>a.a({}) : Opt3
+>a.a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>a : A
+>a : { (o: Opt3): Opt3; (o: Opt4): Opt4; (o: Opt1): Opt1; (o: Opt2): Opt2; }
+>{} : {}
+
+var a1 = a({});
+>a1 : Opt3
+>a({}) : Opt3
+>a : A
+>{} : {}
+
+var a1 = new a({});
+>a1 : Opt3
+>new a({}) : Opt3
+>a : A
+>{} : {}
+

@@ -1,3 +1,4 @@
+//// [duplicateIdentifierInCatchBlock.js]
 var v;
 try  {
 } catch (e) {

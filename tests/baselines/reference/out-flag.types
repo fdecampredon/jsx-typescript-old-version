@@ -1,5 +1,21 @@
 === tests/cases/compiler/out-flag.ts ===
-Line 3 col 6 IdentifierName "MyClass" = MyClass
-Line 6 col 11 IdentifierName "Count" = () => number
-Line 11 col 11 IdentifierName "SetCount" = (value: number) => void
-Line 11 col 20 IdentifierName "value" = number
+//// @out: bin\
+
+// my class comments
+class MyClass
+>MyClass : MyClass
+{
+    // my function comments
+    public Count(): number
+>Count : () => number
+    {
+        return 42;
+    }
+
+    public SetCount(value: number)
+>SetCount : (value: number) => void
+>value : number
+    {
+        //
+    }
+}

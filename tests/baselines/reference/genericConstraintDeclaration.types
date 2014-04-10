@@ -1,7 +1,16 @@
 === tests/cases/compiler/genericConstraintDeclaration.ts ===
-Line 0 col 6 IdentifierName "List" = List<T>
-Line 0 col 11 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "empty" = <T extends {}>() => List<T>
-Line 1 col 17 IdentifierName "T" = T
-Line 1 col 34 IdentifierName "List" = List<T>
-Line 1 col 39 IdentifierName "T" = T
+class List<T extends {}>{
+>List : List<T>
+>T : T
+
+    static empty<T extends {}>(): List<T>{return null;}
+>empty : <T extends {}>() => List<T>
+>T : T
+>List : List<T>
+>T : T
+}
+
+
+
+
+

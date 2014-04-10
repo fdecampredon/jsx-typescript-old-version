@@ -1,48 +1,96 @@
 === tests/cases/compiler/typesWithOptionalProperty.ts ===
-Line 2 col 10 IdentifierName "I" = I
-Line 3 col 0 IdentifierName "foo" = string
-Line 4 col 0 IdentifierName "bar" = number
-Line 5 col 0 IdentifierName "baz" = () => string
-Line 8 col 4 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 9 col 0 IdentifierName "foo" = string
-Line 10 col 0 IdentifierName "bar" = number
-Line 11 col 0 IdentifierName "baz" = () => string
-Line 14 col 4 IdentifierName "b" = { foo: string; }
-Line 14 col 8 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
-Line 14 col 10 IdentifierName "foo" = string
-Line 15 col 4 IdentifierName "c" = { foo: string; bar: number; }
-Line 15 col 8 ObjectLiteralExpression "{ foo: '', bar: 3 }" = { foo: string; bar: number; }
-Line 15 col 10 IdentifierName "foo" = string
-Line 15 col 19 IdentifierName "bar" = number
-Line 16 col 4 IdentifierName "d" = { foo: string; bar: number; baz: () => string; }
-Line 16 col 8 ObjectLiteralExpression "{ foo: '', bar: 3, baz: () => '' }" = { foo: string; bar: number; baz: () => string; }
-Line 16 col 10 IdentifierName "foo" = string
-Line 16 col 19 IdentifierName "bar" = number
-Line 16 col 27 IdentifierName "baz" = () => string
-Line 16 col 32 ParenthesizedArrowFunctionExpression "() => ''" = () => string
-Line 18 col 4 IdentifierName "i" = I
-Line 18 col 7 IdentifierName "I" = I
-Line 19 col 0 AssignmentExpression "i = b" = { foo: string; }
-Line 19 col 0 IdentifierName "i" = I
-Line 20 col 4 IdentifierName "b" = { foo: string; }
-Line 21 col 0 AssignmentExpression "i = c" = { foo: string; bar: number; }
-Line 21 col 0 IdentifierName "i" = I
-Line 21 col 4 IdentifierName "c" = { foo: string; bar: number; }
-Line 22 col 0 AssignmentExpression "i = d" = { foo: string; bar: number; baz: () => string; }
-Line 22 col 0 IdentifierName "i" = I
-Line 22 col 4 IdentifierName "d" = { foo: string; bar: number; baz: () => string; }
-Line 23 col 0 AssignmentExpression "a = b" = { foo: string; }
-Line 23 col 0 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 24 col 4 IdentifierName "b" = { foo: string; }
-Line 25 col 0 AssignmentExpression "a = c" = { foo: string; bar: number; }
-Line 25 col 0 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 25 col 4 IdentifierName "c" = { foo: string; bar: number; }
-Line 26 col 0 AssignmentExpression "a = d" = { foo: string; bar: number; baz: () => string; }
-Line 26 col 0 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 26 col 4 IdentifierName "d" = { foo: string; bar: number; baz: () => string; }
-Line 27 col 0 AssignmentExpression "i = a" = { foo: string; bar?: number; baz?(): string; }
-Line 27 col 0 IdentifierName "i" = I
-Line 28 col 4 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 29 col 0 AssignmentExpression "a = i" = I
-Line 29 col 0 IdentifierName "a" = { foo: string; bar?: number; baz?(): string; }
-Line 29 col 4 IdentifierName "i" = I
+// basic uses of optional properties without errors
+
+interface I {
+>I : I
+
+    foo: string;
+>foo : string
+
+    bar?: number;
+>bar : number
+
+    baz? (): string;
+>baz : () => string
+}
+
+var a: {
+>a : { foo: string; bar?: number; baz?(): string; }
+
+    foo: string;
+>foo : string
+
+    bar?: number;
+>bar : number
+
+    baz? (): string;
+>baz : () => string
+
+};
+
+var b = { foo: '' };
+>b : { foo: string; }
+>{ foo: '' } : { foo: string; }
+>foo : string
+
+var c = { foo: '', bar: 3 };
+>c : { foo: string; bar: number; }
+>{ foo: '', bar: 3 } : { foo: string; bar: number; }
+>foo : string
+>bar : number
+
+var d = { foo: '', bar: 3, baz: () => '' };
+>d : { foo: string; bar: number; baz: () => string; }
+>{ foo: '', bar: 3, baz: () => '' } : { foo: string; bar: number; baz: () => string; }
+>foo : string
+>bar : number
+>baz : () => string
+>() => '' : () => string
+
+var i: I;
+>i : I
+>I : I
+
+>i = b : { foo: string; }
+>i : I
+
+i = b;
+>b : { foo: string; }
+
+i = c;
+>i = c : { foo: string; bar: number; }
+>i : I
+>c : { foo: string; bar: number; }
+
+i = d;
+>i = d : { foo: string; bar: number; baz: () => string; }
+>i : I
+>d : { foo: string; bar: number; baz: () => string; }
+
+>a = b : { foo: string; }
+>a : { foo: string; bar?: number; baz?(): string; }
+
+a = b;
+>b : { foo: string; }
+
+a = c;
+>a = c : { foo: string; bar: number; }
+>a : { foo: string; bar?: number; baz?(): string; }
+>c : { foo: string; bar: number; }
+
+a = d;
+>a = d : { foo: string; bar: number; baz: () => string; }
+>a : { foo: string; bar?: number; baz?(): string; }
+>d : { foo: string; bar: number; baz: () => string; }
+
+>i = a : { foo: string; bar?: number; baz?(): string; }
+>i : I
+
+i = a;
+>a : { foo: string; bar?: number; baz?(): string; }
+
+a = i;
+>a = i : I
+>a : { foo: string; bar?: number; baz?(): string; }
+>i : I
+

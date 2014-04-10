@@ -1,3 +1,10 @@
+//// [consumer.ts]
+
+import host = require("host");
+var hostVar = host;
+var v = new hostVar.Host();
+ 
+
 //// [host.js]
 define(["require", "exports"], function(require, exports) {
     var Host = (function () {

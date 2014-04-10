@@ -1,3 +1,10 @@
+//// [foo_1.ts]
+import foo = require("./foo_0");
+if(foo.C1.s1){
+	// Should cause runtime import
+}
+
+
 //// [foo_0.js]
 var C1 = (function () {
     function C1() {

@@ -1,3 +1,4 @@
+//// [implicitAnyFunctionReturnNullOrUndefined.js]
 // this should be an error
 function nullWidenFunction() {
     return null;

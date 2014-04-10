@@ -1,8 +1,19 @@
 === tests/cases/compiler/moduleUnassignedVariable.ts ===
-Line 0 col 7 IdentifierName "Bar" = Bar
-Line 1 col 15 IdentifierName "a" = number
-Line 2 col 13 IdentifierName "fooA" = typeof fooA
-Line 2 col 29 IdentifierName "a" = number
-Line 4 col 15 IdentifierName "b" = any
-Line 5 col 13 IdentifierName "fooB" = typeof fooB
-Line 5 col 29 IdentifierName "b" = any
+module Bar {
+>Bar : Bar
+
+    export var a = 1;
+>a : number
+
+    function fooA() { return a; } // Correct: return Bar.a
+>fooA : typeof fooA
+>a : number
+
+    export var b;
+>b : any
+
+    function fooB() { return b; } // Incorrect: return b
+>fooB : typeof fooB
+>b : any
+}
+

@@ -1,3 +1,4 @@
+//// [qualifiedModuleLocals.js]
 var A;
 (function (A) {
     function b() {

@@ -1,36 +1,60 @@
 === tests/cases/compiler/derivedTypeAccessesHiddenBaseCallViaSuperPropertyAccess.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "foo" = (x: { a: number; }) => { a: number; }
-Line 1 col 8 IdentifierName "x" = { a: number; }
-Line 1 col 13 IdentifierName "a" = number
-Line 1 col 29 IdentifierName "a" = number
-Line 6 col 6 IdentifierName "Derived" = Derived
-Line 6 col 22 IdentifierName "Base" = Base
-Line 7 col 0 IdentifierName "foo" = (x: { a: number; b: number; }) => { a: number; b: number; }
-Line 7 col 8 IdentifierName "x" = { a: number; b: number; }
-Line 7 col 13 IdentifierName "a" = number
-Line 7 col 24 IdentifierName "b" = number
-Line 7 col 40 IdentifierName "a" = number
-Line 7 col 51 IdentifierName "b" = number
-Line 10 col 0 IdentifierName "bar" = () => void
-Line 12 col 12 IdentifierName "r" = { a: number; }
-Line 12 col 16 InvocationExpression "super.foo({ a: 1 })" = { a: number; }
-Line 12 col 16 MemberAccessExpression "super.foo" = (x: { a: number; }) => { a: number; }
-Line 12 col 22 IdentifierName "foo" = (x: { a: number; }) => { a: number; }
-Line 12 col 26 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
-Line 12 col 28 IdentifierName "a" = number
-Line 13 col 12 IdentifierName "r2" = { a: number; }
-Line 13 col 17 InvocationExpression "super.foo({ a: 1, b: 2 })" = { a: number; }
-Line 13 col 17 MemberAccessExpression "super.foo" = (x: { a: number; }) => { a: number; }
-Line 13 col 23 IdentifierName "foo" = (x: { a: number; }) => { a: number; }
-Line 13 col 27 ObjectLiteralExpression "{ a: 1, b: 2 }" = { a: number; b: number; }
-Line 13 col 29 IdentifierName "a" = number
-Line 13 col 35 IdentifierName "b" = number
-Line 14 col 12 IdentifierName "r3" = { a: number; b: number; }
-Line 14 col 17 InvocationExpression "this.foo({ a: 1, b: 2 })" = { a: number; b: number; }
-Line 14 col 17 MemberAccessExpression "this.foo" = (x: { a: number; b: number; }) => { a: number; b: number; }
-Line 14 col 17 ThisKeyword "this" = Derived
-Line 14 col 22 IdentifierName "foo" = (x: { a: number; b: number; }) => { a: number; b: number; }
-Line 14 col 26 ObjectLiteralExpression "{ a: 1, b: 2 }" = { a: number; b: number; }
-Line 14 col 28 IdentifierName "a" = number
-Line 14 col 34 IdentifierName "b" = number
+class Base {
+>Base : Base
+
+    foo(x: { a: number }): { a: number } {
+>foo : (x: { a: number; }) => { a: number; }
+>x : { a: number; }
+>a : number
+>a : number
+
+        return null;
+    }
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    foo(x: { a: number; b: number }): { a: number; b: number } {
+>foo : (x: { a: number; b: number; }) => { a: number; b: number; }
+>x : { a: number; b: number; }
+>a : number
+>b : number
+>a : number
+>b : number
+
+        return null;
+    }
+
+>bar : () => void
+
+    bar() {
+        var r = super.foo({ a: 1 }); // { a: number }
+>r : { a: number; }
+>super.foo({ a: 1 }) : { a: number; }
+>super.foo : (x: { a: number; }) => { a: number; }
+>foo : (x: { a: number; }) => { a: number; }
+>{ a: 1 } : { a: number; }
+>a : number
+
+        var r2 = super.foo({ a: 1, b: 2 }); // { a: number }
+>r2 : { a: number; }
+>super.foo({ a: 1, b: 2 }) : { a: number; }
+>super.foo : (x: { a: number; }) => { a: number; }
+>foo : (x: { a: number; }) => { a: number; }
+>{ a: 1, b: 2 } : { a: number; b: number; }
+>a : number
+>b : number
+
+        var r3 = this.foo({ a: 1, b: 2 }); // { a: number; b: number; }
+>r3 : { a: number; b: number; }
+>this.foo({ a: 1, b: 2 }) : { a: number; b: number; }
+>this.foo : (x: { a: number; b: number; }) => { a: number; b: number; }
+>this : Derived
+>foo : (x: { a: number; b: number; }) => { a: number; b: number; }
+>{ a: 1, b: 2 } : { a: number; b: number; }
+>a : number
+>b : number
+    }
+}

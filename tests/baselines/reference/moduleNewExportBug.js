@@ -1,3 +1,4 @@
+//// [moduleNewExportBug.js]
 var mod1;
 (function (mod1) {
     var C = (function () {

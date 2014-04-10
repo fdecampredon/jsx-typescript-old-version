@@ -1,11 +1,29 @@
 === tests/cases/compiler/collisionExportsRequireAndUninstantiatedModule.ts ===
-Line 0 col 14 IdentifierName "require" = require
-Line 1 col 21 IdentifierName "I" = I
-Line 4 col 16 IdentifierName "foo" = typeof foo
-Line 4 col 23 IdentifierName "require" = require
-Line 4 col 31 IdentifierName "I" = require.I
-Line 7 col 14 IdentifierName "exports" = exports
-Line 8 col 21 IdentifierName "I" = I
-Line 11 col 16 IdentifierName "foo2" = typeof foo2
-Line 11 col 24 IdentifierName "exports" = exports
-Line 11 col 32 IdentifierName "I" = exports.I
+export module require { // no error 
+>require : require
+
+    export interface I {
+>I : I
+    }
+}
+export function foo(): require.I {
+>foo : typeof foo
+>require : require
+>I : require.I
+
+    return null;
+}
+export module exports { // no error
+>exports : exports
+
+    export interface I {
+>I : I
+    }
+}
+export function foo2(): exports.I {
+>foo2 : typeof foo2
+>exports : exports
+>I : exports.I
+
+    return null;
+}

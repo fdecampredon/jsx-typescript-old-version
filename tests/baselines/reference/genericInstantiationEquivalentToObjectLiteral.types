@@ -1,46 +1,70 @@
 === tests/cases/compiler/genericInstantiationEquivalentToObjectLiteral.ts ===
-Line 0 col 10 IdentifierName "Pair" = Pair<T1, T2>
-Line 0 col 15 IdentifierName "T1" = T1
-Line 0 col 19 IdentifierName "T2" = T2
-Line 0 col 25 IdentifierName "first" = T1
-Line 0 col 32 IdentifierName "T1" = T1
-Line 0 col 36 IdentifierName "second" = T2
-Line 0 col 44 IdentifierName "T2" = T2
-Line 1 col 4 IdentifierName "x" = Pair<string, number>
-Line 1 col 7 IdentifierName "Pair" = Pair<T1, T2>
-Line 2 col 4 IdentifierName "y" = { first: string; second: number; }
-Line 2 col 9 IdentifierName "first" = string
-Line 2 col 24 IdentifierName "second" = number
-Line 3 col 0 AssignmentExpression "x = y" = { first: string; second: number; }
-Line 3 col 0 IdentifierName "x" = Pair<string, number>
-Line 4 col 4 IdentifierName "y" = { first: string; second: number; }
-Line 5 col 0 AssignmentExpression "y = x" = Pair<string, number>
-Line 5 col 0 IdentifierName "y" = { first: string; second: number; }
-Line 5 col 4 IdentifierName "x" = Pair<string, number>
-Line 7 col 17 IdentifierName "f" = typeof f
-Line 7 col 19 IdentifierName "T" = T
-Line 7 col 22 IdentifierName "U" = U
-Line 7 col 25 IdentifierName "x" = Pair<T, U>
-Line 7 col 28 IdentifierName "Pair" = Pair<T1, T2>
-Line 7 col 33 IdentifierName "T" = T
-Line 7 col 36 IdentifierName "U" = U
-Line 8 col 17 IdentifierName "f2" = typeof f2
-Line 8 col 20 IdentifierName "T" = T
-Line 8 col 23 IdentifierName "U" = U
-Line 8 col 26 IdentifierName "x" = { first: T; second: U; }
-Line 8 col 31 IdentifierName "first" = T
-Line 8 col 38 IdentifierName "T" = T
-Line 8 col 41 IdentifierName "second" = U
-Line 8 col 49 IdentifierName "U" = U
-Line 9 col 0 InvocationExpression "f(x)" = any
-Line 9 col 0 IdentifierName "f" = typeof f
-Line 10 col 2 IdentifierName "x" = Pair<string, number>
-Line 11 col 0 InvocationExpression "f(y)" = any
-Line 11 col 0 IdentifierName "f" = typeof f
-Line 11 col 2 IdentifierName "y" = { first: string; second: number; }
-Line 12 col 0 InvocationExpression "f2(x)" = any
-Line 12 col 0 IdentifierName "f2" = typeof f2
-Line 12 col 3 IdentifierName "x" = Pair<string, number>
-Line 13 col 0 InvocationExpression "f2(y)" = any
-Line 13 col 0 IdentifierName "f2" = typeof f2
-Line 13 col 3 IdentifierName "y" = { first: string; second: number; }
+interface Pair<T1, T2> { first: T1; second: T2; }
+>Pair : Pair<T1, T2>
+>T1 : T1
+>T2 : T2
+>first : T1
+>T1 : T1
+>second : T2
+>T2 : T2
+
+var x: Pair<string, number>
+>x : Pair<string, number>
+>Pair : Pair<T1, T2>
+
+var y: { first: string; second: number; }
+>y : { first: string; second: number; }
+>first : string
+>second : number
+
+>x = y : { first: string; second: number; }
+>x : Pair<string, number>
+
+x = y;
+>y : { first: string; second: number; }
+
+y = x;
+>y = x : Pair<string, number>
+>y : { first: string; second: number; }
+>x : Pair<string, number>
+
+declare function f<T, U>(x: Pair<T, U>);
+>f : typeof f
+>T : T
+>U : U
+>x : Pair<T, U>
+>Pair : Pair<T1, T2>
+>T : T
+>U : U
+
+declare function f2<T, U>(x: { first: T; second: U; });
+>f2 : typeof f2
+>T : T
+>U : U
+>x : { first: T; second: U; }
+>first : T
+>T : T
+>second : U
+>U : U
+
+>f(x) : any
+>f : typeof f
+
+f(x);
+>x : Pair<string, number>
+
+f(y);
+>f(y) : any
+>f : typeof f
+>y : { first: string; second: number; }
+
+f2(x);
+>f2(x) : any
+>f2 : typeof f2
+>x : Pair<string, number>
+
+f2(y);
+>f2(y) : any
+>f2 : typeof f2
+>y : { first: string; second: number; }
+

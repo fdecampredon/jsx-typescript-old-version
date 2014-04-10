@@ -1,3 +1,4 @@
+//// [thisWhenTypeCheckFails.js]
 var c = (function () {
     function c() {
     }

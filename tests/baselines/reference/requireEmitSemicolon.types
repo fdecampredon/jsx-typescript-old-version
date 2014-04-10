@@ -1,19 +1,40 @@
 === tests/cases/compiler/requireEmitSemicolon_1.ts ===
-Line 1 col 7 IdentifierName "P" = P
-Line 3 col 14 IdentifierName "Database" = Database
-Line 4 col 14 IdentifierName "DB" = DB
-Line 5 col 12 IdentifierName "findPerson" = (id: number) => P.Models.Person
-Line 5 col 23 IdentifierName "id" = number
-Line 5 col 36 IdentifierName "P" = P
-Line 5 col 38 IdentifierName "Models" = P.Models
-Line 5 col 45 IdentifierName "Person" = P.Models.Person
-Line 6 col 16 ObjectCreationExpression "new P.Models.Person("Rock")" = P.Models.Person
-Line 6 col 20 MemberAccessExpression "P.Models.Person" = typeof P.Models.Person
-Line 6 col 20 MemberAccessExpression "P.Models" = typeof P.Models
-Line 6 col 20 IdentifierName "P" = typeof P
-Line 6 col 22 IdentifierName "Models" = typeof P.Models
-Line 6 col 29 IdentifierName "Person" = typeof P.Models.Person
+///<reference path='requireEmitSemicolon_0.ts'/>
+import P = require("requireEmitSemicolon_0"); // bug was we were not emitting a ; here and causing runtime failures in node
+>P : P
+
+export module Database {
+>Database : Database
+
+	export class DB {
+>DB : DB
+
+	    public findPerson(id: number): P.Models.Person {
+>findPerson : (id: number) => P.Models.Person
+>id : number
+>P : P
+>Models : P.Models
+>Person : P.Models.Person
+
+	        return new P.Models.Person("Rock");
+>new P.Models.Person("Rock") : P.Models.Person
+>P.Models.Person : typeof P.Models.Person
+>P.Models : typeof P.Models
+>P : typeof P
+>Models : typeof P.Models
+>Person : typeof P.Models.Person
+	    }
+	}
+} 
 === tests/cases/compiler/requireEmitSemicolon_0.ts ===
-Line 0 col 14 IdentifierName "Models" = Models
-Line 1 col 14 IdentifierName "Person" = Person
-Line 2 col 20 IdentifierName "name" = string
+export module Models {
+>Models : Models
+
+	export class Person {
+>Person : Person
+
+        constructor(name: string) { }
+>name : string
+	}
+}
+

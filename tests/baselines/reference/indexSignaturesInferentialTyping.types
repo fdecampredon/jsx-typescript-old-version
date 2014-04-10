@@ -1,35 +1,47 @@
 === tests/cases/compiler/indexSignaturesInferentialTyping.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "items" = { [index: number]: T; }
-Line 0 col 26 IdentifierName "index" = number
-Line 0 col 42 IdentifierName "T" = T
-Line 0 col 48 IdentifierName "T" = T
-Line 0 col 59 IdentifierName "undefined" = any
-Line 1 col 9 IdentifierName "bar" = typeof bar
-Line 1 col 13 IdentifierName "T" = T
-Line 1 col 16 IdentifierName "items" = { [index: string]: T; }
-Line 1 col 26 IdentifierName "index" = string
-Line 1 col 42 IdentifierName "T" = T
-Line 1 col 48 IdentifierName "T" = T
-Line 1 col 59 IdentifierName "undefined" = any
-Line 3 col 4 IdentifierName "x1" = number
-Line 3 col 9 InvocationExpression "foo({ 0: 0, 1: 1 })" = number
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 ObjectLiteralExpression "{ 0: 0, 1: 1 }" = { 0: number; 1: number; [index: number]: number; }
-Line 4 col 4 IdentifierName "x2" = {}
-Line 4 col 9 InvocationExpression "foo({ zero: 0, one: 1 })" = {}
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 4 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: number]: {}; }
-Line 4 col 15 IdentifierName "zero" = number
-Line 4 col 24 IdentifierName "one" = number
-Line 5 col 4 IdentifierName "x3" = number
-Line 5 col 9 InvocationExpression "bar({ 0: 0, 1: 1 })" = number
-Line 5 col 9 IdentifierName "bar" = typeof bar
-Line 5 col 13 ObjectLiteralExpression "{ 0: 0, 1: 1 }" = { 0: number; 1: number; [index: string]: number; }
-Line 6 col 4 IdentifierName "x4" = number
-Line 6 col 9 InvocationExpression "bar({ zero: 0, one: 1 })" = number
-Line 6 col 9 IdentifierName "bar" = typeof bar
-Line 6 col 13 ObjectLiteralExpression "{ zero: 0, one: 1 }" = { zero: number; one: number; [index: string]: number; }
-Line 6 col 15 IdentifierName "zero" = number
-Line 6 col 24 IdentifierName "one" = number
+function foo<T>(items: { [index: number]: T }): T { return undefined; }
+>foo : typeof foo
+>T : T
+>items : { [index: number]: T; }
+>index : number
+>T : T
+>T : T
+>undefined : any
+
+function bar<T>(items: { [index: string]: T }): T { return undefined; }
+>bar : typeof bar
+>T : T
+>items : { [index: string]: T; }
+>index : string
+>T : T
+>T : T
+>undefined : any
+
+var x1 = foo({ 0: 0, 1: 1 });       // type should be number
+>x1 : number
+>foo({ 0: 0, 1: 1 }) : number
+>foo : typeof foo
+>{ 0: 0, 1: 1 } : { 0: number; 1: number; [index: number]: number; }
+
+var x2 = foo({ zero: 0, one: 1 });
+>x2 : {}
+>foo({ zero: 0, one: 1 }) : {}
+>foo : typeof foo
+>{ zero: 0, one: 1 } : { zero: number; one: number; [index: number]: {}; }
+>zero : number
+>one : number
+
+var x3 = bar({ 0: 0, 1: 1 });
+>x3 : number
+>bar({ 0: 0, 1: 1 }) : number
+>bar : typeof bar
+>{ 0: 0, 1: 1 } : { 0: number; 1: number; [index: string]: number; }
+
+var x4 = bar({ zero: 0, one: 1 });  // type should be number
+>x4 : number
+>bar({ zero: 0, one: 1 }) : number
+>bar : typeof bar
+>{ zero: 0, one: 1 } : { zero: number; one: number; [index: string]: number; }
+>zero : number
+>one : number
+

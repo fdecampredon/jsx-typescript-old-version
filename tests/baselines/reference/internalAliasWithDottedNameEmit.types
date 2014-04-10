@@ -1,11 +1,20 @@
 === tests/cases/compiler/internalAliasWithDottedNameEmit.ts ===
-Line 0 col 7 IdentifierName "a" = a
-Line 0 col 9 IdentifierName "b" = a.b
-Line 0 col 11 IdentifierName "c" = a.b.c
-Line 1 col 17 IdentifierName "d" = any
-Line 3 col 7 IdentifierName "a" = a
-Line 3 col 9 IdentifierName "e" = a.e
-Line 3 col 11 IdentifierName "f" = a.e.f
-Line 4 col 13 IdentifierName "g" = g
-Line 4 col 17 IdentifierName "b" = b
-Line 4 col 19 IdentifierName "c" = typeof b.c
+module a.b.c {
+>a : a
+>b : a.b
+>c : a.b.c
+
+      export var d;
+>d : any
+}
+module a.e.f {
+>a : a
+>e : a.e
+>f : a.e.f
+
+      import g = b.c;
+>g : g
+>b : b
+>c : typeof b.c
+}
+

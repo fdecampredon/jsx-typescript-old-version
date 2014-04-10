@@ -1,3 +1,4 @@
+//// [typeParameterUsedAsConstraint.js]
 var C = (function () {
     function C() {
     }

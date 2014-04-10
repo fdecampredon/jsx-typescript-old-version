@@ -1,12 +1,22 @@
 === tests/cases/compiler/validBooleanAssignments.ts ===
-Line 0 col 4 IdentifierName "x" = boolean
-Line 2 col 4 IdentifierName "a" = any
-Line 2 col 13 IdentifierName "x" = boolean
-Line 3 col 4 IdentifierName "b" = Object
-Line 3 col 7 IdentifierName "Object" = Object
-Line 3 col 16 IdentifierName "x" = boolean
-Line 4 col 4 IdentifierName "c" = Boolean
-Line 4 col 7 IdentifierName "Boolean" = Boolean
-Line 4 col 17 IdentifierName "x" = boolean
-Line 5 col 4 IdentifierName "d" = boolean
-Line 5 col 17 IdentifierName "x" = boolean
+var x = true;
+>x : boolean
+
+var a: any = x;
+>a : any
+>x : boolean
+
+var b: Object = x;
+>b : Object
+>Object : Object
+>x : boolean
+
+var c: Boolean = x;
+>c : Boolean
+>Boolean : Boolean
+>x : boolean
+
+var d: boolean = x;
+>d : boolean
+>x : boolean
+

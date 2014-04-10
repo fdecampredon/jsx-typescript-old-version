@@ -1,18 +1,43 @@
 === tests/cases/compiler/emitMemberAccessExpression_file3.ts ===
-Line 2 col 12 IdentifierName "OData" = any
-Line 3 col 7 IdentifierName "Microsoft" = Microsoft
-Line 3 col 17 IdentifierName "PeopleAtWork" = Microsoft.PeopleAtWork
-Line 3 col 30 IdentifierName "Model" = Microsoft.PeopleAtWork.Model
-Line 4 col 17 IdentifierName "KnockoutExtentions" = KnockoutExtentions
+/// <reference path="emitMemberAccessExpression_file2.ts" />
+/// <reference path="emitMemberAccessExpression_file1.ts" />
+declare var OData: any;
+>OData : any
+
+module Microsoft.PeopleAtWork.Model {
+>Microsoft : Microsoft
+>PeopleAtWork : Microsoft.PeopleAtWork
+>Model : Microsoft.PeopleAtWork.Model
+
+    export class KnockoutExtentions {
+>KnockoutExtentions : KnockoutExtentions
+    }
+}
 === tests/cases/compiler/emitMemberAccessExpression_file1.ts ===
-=== tests/cases/compiler/emitMemberAccessExpression_file2.ts ===
-Line 2 col 7 IdentifierName "Microsoft" = Microsoft
-Line 2 col 17 IdentifierName "PeopleAtWork" = Microsoft.PeopleAtWork
-Line 2 col 30 IdentifierName "Model" = Microsoft.PeopleAtWork.Model
-Line 3 col 17 IdentifierName "_Person" = _Person
-Line 4 col 15 IdentifierName "populate" = (raw: any) => void
-Line 4 col 24 IdentifierName "raw" = any
-Line 5 col 16 IdentifierName "res" = typeof KnockoutExtentions
-Line 5 col 22 MemberAccessExpression "Model.KnockoutExtentions" = typeof KnockoutExtentions
-Line 5 col 22 IdentifierName "Model" = typeof Model
-Line 5 col 28 IdentifierName "KnockoutExtentions" = typeof KnockoutExtentions
+/// <reference path="emitMemberAccessExpression_file3.ts" />
+No type information for this code."use strict";
+No type information for this code.
+No type information for this code.=== tests/cases/compiler/emitMemberAccessExpression_file2.ts ===
+/// <reference path="emitMemberAccessExpression_file3.ts" />
+"use strict";
+module Microsoft.PeopleAtWork.Model {
+>Microsoft : Microsoft
+>PeopleAtWork : Microsoft.PeopleAtWork
+>Model : Microsoft.PeopleAtWork.Model
+
+    export class _Person {
+>_Person : _Person
+
+        public populate(raw: any) {
+>populate : (raw: any) => void
+>raw : any
+
+            var res = Model.KnockoutExtentions;
+>res : typeof KnockoutExtentions
+>Model.KnockoutExtentions : typeof KnockoutExtentions
+>Model : typeof Model
+>KnockoutExtentions : typeof KnockoutExtentions
+        }
+    }
+}
+

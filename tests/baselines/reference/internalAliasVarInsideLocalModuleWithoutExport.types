@@ -1,9 +1,21 @@
 === tests/cases/compiler/internalAliasVarInsideLocalModuleWithoutExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 15 IdentifierName "x" = number
-Line 4 col 14 IdentifierName "c" = c
-Line 5 col 11 IdentifierName "b" = b
-Line 5 col 15 IdentifierName "a" = a
-Line 5 col 17 IdentifierName "x" = number
-Line 6 col 15 IdentifierName "bVal" = number
-Line 6 col 22 IdentifierName "b" = number
+export module a {
+>a : a
+
+    export var x = 10;
+>x : number
+}
+
+export module c {
+>c : c
+
+    import b = a.x;
+>b : b
+>a : a
+>x : number
+
+    export var bVal = b;
+>bVal : number
+>b : number
+}
+

@@ -1,32 +1,56 @@
 === tests/cases/compiler/reorderProperties.ts ===
-Line 0 col 10 IdentifierName "A" = A<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "B" = B<T>
-Line 4 col 12 IdentifierName "T" = T
-Line 5 col 0 IdentifierName "x" = T
-Line 5 col 7 IdentifierName "T" = T
-Line 8 col 10 IdentifierName "C" = C<S>
-Line 8 col 12 IdentifierName "S" = S
-Line 8 col 23 IdentifierName "A" = A<T>
-Line 8 col 25 IdentifierName "D" = D<S>
-Line 8 col 27 IdentifierName "S" = S
-Line 9 col 0 IdentifierName "y" = S
-Line 9 col 7 IdentifierName "S" = S
-Line 12 col 10 IdentifierName "D" = D<S>
-Line 12 col 12 IdentifierName "S" = S
-Line 12 col 23 IdentifierName "B" = B<T>
-Line 12 col 25 IdentifierName "C" = C<S>
-Line 12 col 27 IdentifierName "S" = S
-Line 13 col 0 IdentifierName "y" = S
-Line 13 col 7 IdentifierName "S" = S
-Line 16 col 4 IdentifierName "c" = C<{ s: string; n: number; }>
-Line 16 col 7 IdentifierName "C" = C<S>
-Line 16 col 11 IdentifierName "s" = string
-Line 16 col 22 IdentifierName "n" = number
-Line 17 col 4 IdentifierName "d" = D<{ n: number; s: string; }>
-Line 17 col 7 IdentifierName "D" = D<S>
-Line 17 col 11 IdentifierName "n" = number
-Line 17 col 22 IdentifierName "s" = string
-Line 17 col 37 IdentifierName "c" = C<{ s: string; n: number; }>
+interface A<T> {
+>A : A<T>
+>T : T
+
+    x: T
+>x : T
+>T : T
+}
+
+interface B<T> {
+>B : B<T>
+>T : T
+
+    x: T
+>x : T
+>T : T
+}
+
+interface C<S> extends A<D<S>> {
+>C : C<S>
+>S : S
+>A : A<T>
+>D : D<S>
+>S : S
+
+    y: S
+>y : S
+>S : S
+}
+
+interface D<S> extends B<C<S>> {
+>D : D<S>
+>S : S
+>B : B<T>
+>C : C<S>
+>S : S
+
+    y: S
+>y : S
+>S : S
+}
+
+var c: C<{ s: string; n: number }>
+>c : C<{ s: string; n: number; }>
+>C : C<S>
+>s : string
+>n : number
+
+var d: D<{ n: number; s: string }> = c
+>d : D<{ n: number; s: string; }>
+>D : D<S>
+>n : number
+>s : string
+>c : C<{ s: string; n: number; }>
+

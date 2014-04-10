@@ -1,13 +1,17 @@
 === tests/cases/compiler/redeclarationOfVarWithGenericType.ts ===
-Line 0 col 4 IdentifierName "a1" = { fn<T>(x: T): T; }
-Line 0 col 10 IdentifierName "fn" = <T>(x: T) => T
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "x" = T
-Line 0 col 19 IdentifierName "T" = T
-Line 0 col 23 IdentifierName "T" = T
-Line 1 col 4 IdentifierName "a1" = { fn<T>(x: T): T; }
-Line 1 col 10 IdentifierName "fn" = <T>(x: T) => T
-Line 1 col 13 IdentifierName "T" = T
-Line 1 col 16 IdentifierName "x" = T
-Line 1 col 19 IdentifierName "T" = T
-Line 1 col 23 IdentifierName "T" = T
+var a1: { fn<T>(x: T): T };
+>a1 : { fn<T>(x: T): T; }
+>fn : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var a1: { fn<T>(x: T): T };
+>a1 : { fn<T>(x: T): T; }
+>fn : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+

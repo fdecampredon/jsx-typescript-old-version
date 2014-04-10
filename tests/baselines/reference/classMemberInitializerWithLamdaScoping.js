@@ -1,3 +1,4 @@
+//// [classMemberInitializerWithLamdaScoping.js]
 var Test = (function () {
     function Test(field) {
         var _this = this;

@@ -1,11 +1,16 @@
 === tests/cases/compiler/stringLiteralPropertyNameWithLineContinuation1.ts ===
-Line 0 col 4 IdentifierName "x" = { 'text\
+var x = {'text\
+>x : { 'text\
 ': string; }
-Line 0 col 8 ObjectLiteralExpression "{'text\
-':'hello'}" = { 'text\
+>{'text\
+':'hello'} : { 'text\
 ': string; }
-Line 2 col 0 AssignmentExpression "x.text = "bar"" = string
-Line 2 col 0 MemberAccessExpression "x.text" = string
-Line 2 col 0 IdentifierName "x" = { 'text\
+
+':'hello'}
+x.text = "bar"
+>x.text = "bar" : string
+>x.text : string
+>x : { 'text\
 ': string; }
-Line 2 col 2 IdentifierName "text" = string
+>text : string
+

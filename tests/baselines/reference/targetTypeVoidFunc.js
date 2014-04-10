@@ -1,3 +1,4 @@
+//// [targetTypeVoidFunc.js]
 function f1() {
     return function () {
         return;

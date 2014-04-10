@@ -1,171 +1,277 @@
 === tests/cases/compiler/propertyAccessOnTypeParameterWithConstraints2.ts ===
-Line 2 col 6 IdentifierName "A" = A
-Line 3 col 0 IdentifierName "foo" = () => string
-Line 6 col 6 IdentifierName "B" = B
-Line 6 col 16 IdentifierName "A" = A
-Line 7 col 0 IdentifierName "bar" = () => string
-Line 12 col 6 IdentifierName "C" = C<U, T>
-Line 12 col 8 IdentifierName "U" = U
-Line 12 col 18 IdentifierName "A" = A
-Line 12 col 21 IdentifierName "T" = T
-Line 12 col 31 IdentifierName "A" = A
-Line 13 col 0 IdentifierName "f" = () => string
-Line 14 col 12 IdentifierName "x" = U
-Line 14 col 15 IdentifierName "U" = U
-Line 15 col 12 IdentifierName "a" = string
-Line 15 col 16 InvocationExpression "x['foo']()" = string
-Line 15 col 16 ElementAccessExpression "x['foo']" = () => string
-Line 15 col 16 IdentifierName "x" = U
-Line 16 col 15 AddExpression "a + x.foo()" = string
-Line 16 col 15 IdentifierName "a" = string
-Line 16 col 19 InvocationExpression "x.foo()" = string
-Line 16 col 19 MemberAccessExpression "x.foo" = () => string
-Line 16 col 19 IdentifierName "x" = U
-Line 16 col 21 IdentifierName "foo" = () => string
-Line 18 col 0 IdentifierName "g" = (x: U) => string
-Line 19 col 6 IdentifierName "x" = U
-Line 19 col 9 IdentifierName "U" = U
-Line 20 col 12 IdentifierName "a" = string
-Line 20 col 16 InvocationExpression "x['foo']()" = string
-Line 20 col 16 ElementAccessExpression "x['foo']" = () => string
-Line 20 col 16 IdentifierName "x" = U
-Line 21 col 15 AddExpression "a + x.foo()" = string
-Line 21 col 15 IdentifierName "a" = string
-Line 21 col 19 InvocationExpression "x.foo()" = string
-Line 21 col 19 MemberAccessExpression "x.foo" = () => string
-Line 21 col 19 IdentifierName "x" = U
-Line 21 col 21 IdentifierName "foo" = () => string
-Line 37 col 4 IdentifierName "r1" = string
-Line 37 col 9 InvocationExpression "(new C<B, A>()).f()" = string
-Line 37 col 9 MemberAccessExpression "(new C<B, A>()).f" = () => string
-Line 37 col 9 ParenthesizedExpression "(new C<B, A>())" = C<B, A>
-Line 37 col 10 ObjectCreationExpression "new C<B, A>()" = C<B, A>
-Line 37 col 14 IdentifierName "C" = typeof C
-Line 37 col 16 IdentifierName "B" = B
-Line 37 col 19 IdentifierName "A" = A
-Line 37 col 25 IdentifierName "f" = () => string
-Line 38 col 4 IdentifierName "r1b" = string
-Line 38 col 10 InvocationExpression "(new C<B, A>()).g(new B())" = string
-Line 38 col 10 MemberAccessExpression "(new C<B, A>()).g" = (x: B) => string
-Line 38 col 10 ParenthesizedExpression "(new C<B, A>())" = C<B, A>
-Line 38 col 11 ObjectCreationExpression "new C<B, A>()" = C<B, A>
-Line 38 col 15 IdentifierName "C" = typeof C
-Line 38 col 17 IdentifierName "B" = B
-Line 38 col 20 IdentifierName "A" = A
-Line 38 col 26 IdentifierName "g" = (x: B) => string
-Line 38 col 28 ObjectCreationExpression "new B()" = B
-Line 38 col 32 IdentifierName "B" = typeof B
-Line 40 col 10 IdentifierName "I" = I<U, T>
-Line 40 col 12 IdentifierName "U" = U
-Line 40 col 22 IdentifierName "A" = A
-Line 40 col 25 IdentifierName "T" = T
-Line 40 col 35 IdentifierName "A" = A
-Line 41 col 0 IdentifierName "foo" = U
-Line 41 col 9 IdentifierName "U" = U
-Line 46 col 4 IdentifierName "i" = I<B, A>
-Line 46 col 7 IdentifierName "I" = I<U, T>
-Line 46 col 9 IdentifierName "B" = B
-Line 46 col 12 IdentifierName "A" = A
-Line 47 col 4 IdentifierName "r2" = string
-Line 47 col 9 InvocationExpression "i.foo.foo()" = string
-Line 47 col 9 MemberAccessExpression "i.foo.foo" = () => string
-Line 47 col 9 MemberAccessExpression "i.foo" = B
-Line 47 col 9 IdentifierName "i" = I<B, A>
-Line 47 col 11 IdentifierName "foo" = B
-Line 47 col 15 IdentifierName "foo" = () => string
-Line 48 col 4 IdentifierName "r2b" = string
-Line 48 col 10 InvocationExpression "i.foo['foo']()" = string
-Line 48 col 10 ElementAccessExpression "i.foo['foo']" = () => string
-Line 48 col 10 MemberAccessExpression "i.foo" = B
-Line 48 col 10 IdentifierName "i" = I<B, A>
-Line 48 col 12 IdentifierName "foo" = B
-Line 50 col 4 IdentifierName "a" = { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
-Line 51 col 5 IdentifierName "U" = U
-Line 51 col 15 IdentifierName "A" = A
-Line 51 col 18 IdentifierName "T" = T
-Line 51 col 28 IdentifierName "A" = A
-Line 51 col 34 IdentifierName "U" = U
-Line 52 col 5 IdentifierName "U" = U
-Line 52 col 15 IdentifierName "A" = A
-Line 52 col 18 IdentifierName "T" = T
-Line 52 col 28 IdentifierName "A" = A
-Line 52 col 31 IdentifierName "x" = U
-Line 52 col 34 IdentifierName "U" = U
-Line 52 col 38 IdentifierName "U" = U
-Line 53 col 5 IdentifierName "U" = U
-Line 53 col 15 IdentifierName "A" = A
-Line 53 col 18 IdentifierName "T" = T
-Line 53 col 28 IdentifierName "A" = A
-Line 53 col 31 IdentifierName "x" = U
-Line 53 col 34 IdentifierName "U" = U
-Line 53 col 37 IdentifierName "y" = T
-Line 53 col 40 IdentifierName "T" = T
-Line 53 col 44 IdentifierName "U" = U
-Line 60 col 4 IdentifierName "r3" = string
-Line 60 col 9 InvocationExpression "a<A, A>().foo()" = string
-Line 60 col 9 MemberAccessExpression "a<A, A>().foo" = () => string
-Line 60 col 9 InvocationExpression "a<A, A>()" = A
-Line 60 col 9 IdentifierName "a" = { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
-Line 60 col 11 IdentifierName "A" = A
-Line 60 col 14 IdentifierName "A" = A
-Line 60 col 19 IdentifierName "foo" = () => string
-Line 61 col 4 IdentifierName "r3b" = string
-Line 61 col 10 InvocationExpression "a()['foo']()" = string
-Line 61 col 10 ElementAccessExpression "a()['foo']" = () => string
-Line 61 col 10 InvocationExpression "a()" = A
-Line 61 col 10 IdentifierName "a" = { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
-Line 63 col 4 IdentifierName "aB" = B
-Line 63 col 9 ObjectCreationExpression "new B()" = B
-Line 63 col 13 IdentifierName "B" = typeof B
-Line 64 col 4 IdentifierName "r3c" = string
-Line 64 col 10 InvocationExpression "a(aB, aB).foo()" = string
-Line 64 col 10 MemberAccessExpression "a(aB, aB).foo" = () => string
-Line 64 col 10 InvocationExpression "a(aB, aB)" = B
-Line 64 col 10 IdentifierName "a" = { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
-Line 64 col 12 IdentifierName "aB" = B
-Line 64 col 16 IdentifierName "aB" = B
-Line 64 col 20 IdentifierName "foo" = () => string
-Line 65 col 4 IdentifierName "r3d" = string
-Line 65 col 10 InvocationExpression "a(aB, aB)['foo']()" = string
-Line 65 col 10 ElementAccessExpression "a(aB, aB)['foo']" = () => string
-Line 65 col 10 InvocationExpression "a(aB, aB)" = B
-Line 65 col 10 IdentifierName "a" = { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
-Line 65 col 12 IdentifierName "aB" = B
-Line 65 col 16 IdentifierName "aB" = B
-Line 67 col 4 IdentifierName "b" = { foo: <U extends A, T extends A>(x: U, y: T) => string; }
-Line 67 col 8 ObjectLiteralExpression "{
+// generic types should behave as if they have properties of their constraint type
+
+class A {
+>A : A
+
+    foo(): string { return ''; }
+>foo : () => string
+}
+
+class B extends A {
+>B : B
+>A : A
+
+    bar(): string {
+>bar : () => string
+
+        return '';
+    }
+}
+
+class C<U extends A, T extends A> {
+>C : C<U, T>
+>U : U
+>A : A
+>T : T
+>A : A
+
+    f() {
+>f : () => string
+
+        var x: U;
+>x : U
+>U : U
+
+        var a = x['foo'](); // should be string
+>a : string
+>x['foo']() : string
+>x['foo'] : () => string
+>x : U
+
+        return a + x.foo();
+>a + x.foo() : string
+>a : string
+>x.foo() : string
+>x.foo : () => string
+>x : U
+>foo : () => string
+    }
+
+>g : (x: U) => string
+
+    g(x: U) {
+>x : U
+>U : U
+
+        var a = x['foo'](); // should be string
+>a : string
+>x['foo']() : string
+>x['foo'] : () => string
+>x : U
+
+        return a + x.foo();
+>a + x.foo() : string
+>a : string
+>x.foo() : string
+>x.foo : () => string
+>x : U
+>foo : () => string
+    }
+}
+//class C<U extends T, T extends A> {
+//    f() {
+//        var x: U;
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+
+//    g(x: U) {
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+//}
+
+var r1 = (new C<B, A>()).f();
+>r1 : string
+>(new C<B, A>()).f() : string
+>(new C<B, A>()).f : () => string
+>(new C<B, A>()) : C<B, A>
+>new C<B, A>() : C<B, A>
+>C : typeof C
+>B : B
+>A : A
+>f : () => string
+
+var r1b = (new C<B, A>()).g(new B());
+>r1b : string
+>(new C<B, A>()).g(new B()) : string
+>(new C<B, A>()).g : (x: B) => string
+>(new C<B, A>()) : C<B, A>
+>new C<B, A>() : C<B, A>
+>C : typeof C
+>B : B
+>A : A
+>g : (x: B) => string
+>new B() : B
+>B : typeof B
+
+interface I<U extends A, T extends A> {
+>I : I<U, T>
+>U : U
+>A : A
+>T : T
+>A : A
+
+    foo: U;
+>foo : U
+>U : U
+}
+//interface I<U extends T, T extends A> {
+//    foo: U;
+//}
+var i: I<B, A>;
+>i : I<B, A>
+>I : I<U, T>
+>B : B
+>A : A
+
+var r2 = i.foo.foo();
+>r2 : string
+>i.foo.foo() : string
+>i.foo.foo : () => string
+>i.foo : B
+>i : I<B, A>
+>foo : B
+>foo : () => string
+
+var r2b = i.foo['foo']();
+>r2b : string
+>i.foo['foo']() : string
+>i.foo['foo'] : () => string
+>i.foo : B
+>i : I<B, A>
+>foo : B
+
+var a: {
+>a : { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
+
+    <U extends A, T extends A>(): U;
+>U : U
+>A : A
+>T : T
+>A : A
+>U : U
+
+    <U extends A, T extends A>(x: U): U;
+>U : U
+>A : A
+>T : T
+>A : A
+>x : U
+>U : U
+>U : U
+
+    <U extends A, T extends A>(x: U, y: T): U;
+>U : U
+>A : A
+>T : T
+>A : A
+>x : U
+>U : U
+>y : T
+>T : T
+>U : U
+}
+//var a: {
+//    <U extends T, T extends A>(): U;
+//    <U extends T, T extends A>(x: U): U;
+//    <U extends T, T extends A>(x: U, y: T): U;
+//}
+var r3 = a<A, A>().foo(); 
+>r3 : string
+>a<A, A>().foo() : string
+>a<A, A>().foo : () => string
+>a<A, A>() : A
+>a : { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
+>A : A
+>A : A
+>foo : () => string
+
+var r3b = a()['foo']();
+>r3b : string
+>a()['foo']() : string
+>a()['foo'] : () => string
+>a() : A
+>a : { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
+
+// parameter supplied for type argument inference to succeed
+var aB = new B();
+>aB : B
+>new B() : B
+>B : typeof B
+
+var r3c = a(aB, aB).foo(); 
+>r3c : string
+>a(aB, aB).foo() : string
+>a(aB, aB).foo : () => string
+>a(aB, aB) : B
+>a : { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
+>aB : B
+>aB : B
+>foo : () => string
+
+var r3d = a(aB, aB)['foo']();
+>r3d : string
+>a(aB, aB)['foo']() : string
+>a(aB, aB)['foo'] : () => string
+>a(aB, aB) : B
+>a : { <U extends A, T extends A>(): U; <U extends A, T extends A>(x: U): U; <U extends A, T extends A>(x: U, y: T): U; }
+>aB : B
+>aB : B
+
+var b = {
+>b : { foo: <U extends A, T extends A>(x: U, y: T) => string; }
+>{
     foo: <U extends A, T extends A>(x: U, y: T) => {
         var a = x['foo'](); // should be string
         return a + x.foo();
     }
-}" = { foo: <U extends A, T extends A>(x: U, y: T) => string; }
-Line 68 col 0 IdentifierName "foo" = <U extends A, T extends A>(x: U, y: T) => string
-Line 68 col 9 ParenthesizedArrowFunctionExpression "<U extends A, T extends A>(x: U, y: T) => {
+} : { foo: <U extends A, T extends A>(x: U, y: T) => string; }
+
+    foo: <U extends A, T extends A>(x: U, y: T) => {
+>foo : <U extends A, T extends A>(x: U, y: T) => string
+><U extends A, T extends A>(x: U, y: T) => {
         var a = x['foo'](); // should be string
         return a + x.foo();
-    }" = <U extends A, T extends A>(x: U, y: T) => string
-Line 68 col 10 IdentifierName "U" = U
-Line 68 col 20 IdentifierName "A" = A
-Line 68 col 23 IdentifierName "T" = T
-Line 68 col 33 IdentifierName "A" = A
-Line 68 col 36 IdentifierName "x" = U
-Line 68 col 39 IdentifierName "U" = U
-Line 68 col 42 IdentifierName "y" = T
-Line 68 col 45 IdentifierName "T" = T
-Line 69 col 12 IdentifierName "a" = string
-Line 69 col 16 InvocationExpression "x['foo']()" = string
-Line 69 col 16 ElementAccessExpression "x['foo']" = () => string
-Line 69 col 16 IdentifierName "x" = U
-Line 70 col 15 AddExpression "a + x.foo()" = string
-Line 70 col 15 IdentifierName "a" = string
-Line 70 col 19 InvocationExpression "x.foo()" = string
-Line 70 col 19 MemberAccessExpression "x.foo" = () => string
-Line 70 col 19 IdentifierName "x" = U
-Line 70 col 21 IdentifierName "foo" = () => string
-Line 80 col 4 IdentifierName "r4" = string
-Line 80 col 9 InvocationExpression "b.foo(aB, aB)" = string
-Line 80 col 9 MemberAccessExpression "b.foo" = <U extends A, T extends A>(x: U, y: T) => string
-Line 80 col 9 IdentifierName "b" = { foo: <U extends A, T extends A>(x: U, y: T) => string; }
-Line 80 col 11 IdentifierName "foo" = <U extends A, T extends A>(x: U, y: T) => string
-Line 80 col 15 IdentifierName "aB" = B
-Line 80 col 19 IdentifierName "aB" = B
+    } : <U extends A, T extends A>(x: U, y: T) => string
+>U : U
+>A : A
+>T : T
+>A : A
+>x : U
+>U : U
+>y : T
+>T : T
+
+        var a = x['foo'](); // should be string
+>a : string
+>x['foo']() : string
+>x['foo'] : () => string
+>x : U
+
+        return a + x.foo();
+>a + x.foo() : string
+>a : string
+>x.foo() : string
+>x.foo : () => string
+>x : U
+>foo : () => string
+    }
+}
+//var b = {
+//    foo: <U extends T, T extends A>(x: U, y: T) => {
+//        var a = x['foo'](); // should be string
+//        return a + x.foo();
+//    }
+//}
+
+var r4 = b.foo(aB, aB); // no inferences for T so constraint isn't satisfied, error
+>r4 : string
+>b.foo(aB, aB) : string
+>b.foo : <U extends A, T extends A>(x: U, y: T) => string
+>b : { foo: <U extends A, T extends A>(x: U, y: T) => string; }
+>foo : <U extends A, T extends A>(x: U, y: T) => string
+>aB : B
+>aB : B
+

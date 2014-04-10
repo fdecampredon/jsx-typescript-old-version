@@ -1,3 +1,7 @@
 === tests/cases/compiler/arrowFunctionInExpressionStatement2.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 0 ParenthesizedArrowFunctionExpression "() => 0" = () => number
+module M {
+>M : M
+
+    () => 0;
+>() => 0 : () => number
+}

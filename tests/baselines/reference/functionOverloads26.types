@@ -1,9 +1,17 @@
 === tests/cases/compiler/functionOverloads26.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "bar" = string
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "bar" = any
-Line 3 col 4 IdentifierName "x" = number
-Line 3 col 8 InvocationExpression "foo('baz')" = number
-Line 3 col 8 IdentifierName "foo" = typeof foo
+function foo():string;
+>foo : typeof foo
+
+function foo(bar:string):number;
+>foo : typeof foo
+>bar : string
+
+function foo(bar?:any):any{ return '' }
+>foo : typeof foo
+>bar : any
+
+var x = foo('baz');
+>x : number
+>foo('baz') : number
+>foo : typeof foo
+

@@ -1,3 +1,4 @@
+//// [functionCall6.js]
 function foo(a) {
 }
 ;

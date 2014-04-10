@@ -1,35 +1,59 @@
 === tests/cases/compiler/commaOperatorOtherValidOperation.ts ===
-Line 1 col 9 IdentifierName "i" = number
-Line 1 col 16 IdentifierName "j" = number
-Line 1 col 24 LessThanExpression "i < j" = boolean
-Line 1 col 24 IdentifierName "i" = number
-Line 1 col 28 IdentifierName "j" = number
-Line 1 col 31 CommaExpression "i++, j--" = number
-Line 1 col 31 PostIncrementExpression "i++" = number
-Line 1 col 31 IdentifierName "i" = number
-Line 1 col 36 PostDecrementExpression "j--" = number
-Line 1 col 36 IdentifierName "j" = number
-Line 6 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 13 IdentifierName "x" = number
-Line 6 col 24 IdentifierName "y" = string
-Line 8 col 11 CommaExpression "x, y" = string
-Line 8 col 11 IdentifierName "x" = number
-Line 8 col 14 IdentifierName "y" = string
-Line 10 col 4 IdentifierName "resultIsString" = string
-Line 10 col 21 InvocationExpression "foo(1, "123")" = string
-Line 10 col 21 IdentifierName "foo" = typeof foo
-Line 13 col 9 IdentifierName "foo1" = typeof foo1
-Line 13 col 14 IdentifierName "T1" = T1
-Line 13 col 18 IdentifierName "T2" = T2
-Line 15 col 8 IdentifierName "x" = T1
-Line 15 col 11 IdentifierName "T1" = T1
-Line 16 col 8 IdentifierName "y" = T2
-Line 16 col 11 IdentifierName "T2" = T2
-Line 17 col 0 CommaExpression "x, y" = T2
-Line 17 col 0 IdentifierName "x" = T1
-Line 17 col 7 IdentifierName "y" = T2
-Line 18 col 8 IdentifierName "resultIsT1" = T1
-Line 18 col 21 ParenthesizedExpression "(y, x)" = T1
-Line 18 col 22 CommaExpression "y, x" = T1
-Line 18 col 22 IdentifierName "y" = T2
-Line 18 col 25 IdentifierName "x" = T1
+//Comma operator in for loop
+for (var i = 0, j = 10; i < j; i++, j--)
+>i : number
+>j : number
+>i < j : boolean
+>i : number
+>j : number
+>i++, j-- : number
+>i++ : number
+>i : number
+>j-- : number
+>j : number
+{
+}
+
+//Comma operator in fuction arguments and return
+function foo(x: number, y: string)
+>foo : typeof foo
+>x : number
+>y : string
+{
+    return x, y;
+>x, y : string
+>x : number
+>y : string
+}
+var resultIsString = foo(1, "123");
+>resultIsString : string
+>foo(1, "123") : string
+>foo : typeof foo
+
+//TypeParameters
+function foo1<T1, T2>()
+>foo1 : typeof foo1
+>T1 : T1
+>T2 : T2
+{
+    var x: T1;
+>x : T1
+>T1 : T1
+
+    var y: T2;
+>y : T2
+>T2 : T2
+
+    x, y;
+>x, y : T2
+>x : T1
+>y : T2
+
+    var resultIsT1 = (y, x);
+>resultIsT1 : T1
+>(y, x) : T1
+>y, x : T1
+>y : T2
+>x : T1
+}
+

@@ -1,3 +1,4 @@
+//// [staticMemberAssignsToConstructorFunctionMembers.js]
 var C = (function () {
     function C() {
     }

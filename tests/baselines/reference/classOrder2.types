@@ -1,17 +1,39 @@
 === tests/cases/compiler/classOrder2.ts ===
-Line 1 col 6 IdentifierName "A" = A
-Line 1 col 16 IdentifierName "B" = B
-Line 2 col 0 IdentifierName "foo" = () => void
-Line 3 col 10 InvocationExpression "this.bar()" = void
-Line 3 col 10 MemberAccessExpression "this.bar" = () => void
-Line 3 col 10 ThisKeyword "this" = A
-Line 3 col 15 IdentifierName "bar" = () => void
-Line 7 col 6 IdentifierName "B" = B
-Line 8 col 0 IdentifierName "bar" = () => void
-Line 14 col 4 IdentifierName "a" = A
-Line 14 col 8 ObjectCreationExpression "new A()" = A
-Line 14 col 12 IdentifierName "A" = typeof A
-Line 15 col 0 InvocationExpression "a.foo()" = void
-Line 15 col 0 MemberAccessExpression "a.foo" = () => void
-Line 15 col 0 IdentifierName "a" = A
-Line 16 col 2 IdentifierName "foo" = () => void
+
+class A extends B {
+>A : A
+>B : B
+
+>foo : () => void
+
+  foo() { this.bar(); }
+>this.bar() : void
+>this.bar : () => void
+>this : A
+>bar : () => void
+
+}
+
+class B {
+>B : B
+
+>bar : () => void
+
+  bar() { }
+
+}
+
+
+var a = new A();
+>a : A
+>new A() : A
+>A : typeof A
+
+>a.foo() : void
+>a.foo : () => void
+>a : A
+
+a.foo();
+>foo : () => void
+
+

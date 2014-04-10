@@ -1,3 +1,4 @@
+//// [recursiveTypeInGenericConstraint.js]
 var G = (function () {
     function G() {
     }

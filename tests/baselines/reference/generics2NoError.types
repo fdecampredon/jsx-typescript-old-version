@@ -1,34 +1,61 @@
 === tests/cases/compiler/generics2NoError.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 0 col 14 IdentifierName "a" = string
-Line 1 col 10 IdentifierName "B" = B
-Line 1 col 20 IdentifierName "A" = A
-Line 1 col 24 IdentifierName "b" = string
-Line 2 col 10 IdentifierName "C" = C
-Line 2 col 20 IdentifierName "B" = B
-Line 2 col 24 IdentifierName "c" = string
-Line 3 col 10 IdentifierName "G" = G<T, U>
-Line 3 col 12 IdentifierName "T" = T
-Line 3 col 15 IdentifierName "U" = U
-Line 3 col 25 IdentifierName "B" = B
-Line 4 col 0 IdentifierName "x" = T
-Line 4 col 7 IdentifierName "T" = T
-Line 5 col 0 IdentifierName "y" = U
-Line 5 col 7 IdentifierName "U" = U
-Line 9 col 4 IdentifierName "v1" = { x: { a: string; }; y: { a: string; b: string; c: string; }; }
-Line 10 col 0 IdentifierName "x" = { a: string; }
-Line 10 col 9 IdentifierName "a" = string
-Line 11 col 0 IdentifierName "y" = { a: string; b: string; c: string; }
-Line 11 col 9 IdentifierName "a" = string
-Line 11 col 20 IdentifierName "b" = string
-Line 11 col 31 IdentifierName "c" = string
-Line 15 col 4 IdentifierName "v2" = G<{ a: string; }, C>
-Line 15 col 8 IdentifierName "G" = G<T, U>
-Line 15 col 12 IdentifierName "a" = string
-Line 15 col 25 IdentifierName "C" = C
-Line 16 col 4 IdentifierName "v4" = G<G<A, B>, C>
-Line 16 col 8 IdentifierName "G" = G<T, U>
-Line 16 col 10 IdentifierName "G" = G<T, U>
-Line 16 col 12 IdentifierName "A" = A
-Line 16 col 15 IdentifierName "B" = B
-Line 16 col 19 IdentifierName "C" = C
+interface A { a: string; }
+>A : A
+>a : string
+
+interface B extends A { b: string; }
+>B : B
+>A : A
+>b : string
+
+interface C extends B { c: string; }
+>C : C
+>B : B
+>c : string
+
+interface G<T, U extends B> {
+>G : G<T, U>
+>T : T
+>U : U
+>B : B
+
+    x: T;
+>x : T
+>T : T
+
+    y: U;
+>y : U
+>U : U
+}
+
+
+var v1: {
+>v1 : { x: { a: string; }; y: { a: string; b: string; c: string; }; }
+
+    x: { a: string; }
+>x : { a: string; }
+>a : string
+
+    y: { a: string; b: string; c: string };
+>y : { a: string; b: string; c: string; }
+>a : string
+>b : string
+>c : string
+
+}; // Ok
+
+
+var v2: G<{ a: string }, C>;   // Ok, equivalent to G<A, C>
+>v2 : G<{ a: string; }, C>
+>G : G<T, U>
+>a : string
+>C : C
+
+var v4: G<G<A, B>, C>;         // Ok
+>v4 : G<G<A, B>, C>
+>G : G<T, U>
+>G : G<T, U>
+>A : A
+>B : B
+>C : C
+

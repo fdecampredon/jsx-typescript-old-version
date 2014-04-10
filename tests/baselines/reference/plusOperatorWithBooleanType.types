@@ -1,58 +1,106 @@
 === tests/cases/compiler/plusOperatorWithBooleanType.ts ===
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 5 col 6 IdentifierName "A" = A
-Line 6 col 11 IdentifierName "a" = boolean
-Line 7 col 11 IdentifierName "foo" = () => boolean
-Line 9 col 7 IdentifierName "M" = M
-Line 10 col 15 IdentifierName "n" = boolean
-Line 13 col 4 IdentifierName "objA" = A
-Line 13 col 11 ObjectCreationExpression "new A()" = A
-Line 13 col 15 IdentifierName "A" = typeof A
-Line 16 col 4 IdentifierName "ResultIsNumber1" = number
-Line 16 col 22 PlusExpression "+BOOLEAN" = number
-Line 16 col 23 IdentifierName "BOOLEAN" = boolean
-Line 19 col 4 IdentifierName "ResultIsNumber2" = number
-Line 19 col 22 PlusExpression "+true" = number
-Line 20 col 4 IdentifierName "ResultIsNumber3" = number
-Line 20 col 22 PlusExpression "+{ x: true, y: false }" = number
-Line 20 col 23 ObjectLiteralExpression "{ x: true, y: false }" = { x: boolean; y: boolean; }
-Line 20 col 25 IdentifierName "x" = boolean
-Line 20 col 34 IdentifierName "y" = boolean
-Line 23 col 4 IdentifierName "ResultIsNumber4" = number
-Line 23 col 22 PlusExpression "+objA.a" = number
-Line 23 col 23 MemberAccessExpression "objA.a" = boolean
-Line 23 col 23 IdentifierName "objA" = A
-Line 23 col 28 IdentifierName "a" = boolean
-Line 24 col 4 IdentifierName "ResultIsNumber5" = number
-Line 24 col 22 PlusExpression "+M.n" = number
-Line 24 col 23 MemberAccessExpression "M.n" = boolean
-Line 24 col 23 IdentifierName "M" = typeof M
-Line 24 col 25 IdentifierName "n" = boolean
-Line 25 col 4 IdentifierName "ResultIsNumber6" = number
-Line 25 col 22 PlusExpression "+foo()" = number
-Line 25 col 23 InvocationExpression "foo()" = boolean
-Line 25 col 23 IdentifierName "foo" = typeof foo
-Line 26 col 4 IdentifierName "ResultIsNumber7" = number
-Line 26 col 22 PlusExpression "+A.foo()" = number
-Line 26 col 23 InvocationExpression "A.foo()" = boolean
-Line 26 col 23 MemberAccessExpression "A.foo" = () => boolean
-Line 26 col 23 IdentifierName "A" = typeof A
-Line 26 col 25 IdentifierName "foo" = () => boolean
-Line 27 col 0 PlusExpression "// miss assignment operators
-+true" = number
-Line 30 col 0 PlusExpression "+BOOLEAN" = number
-Line 30 col 1 IdentifierName "BOOLEAN" = boolean
-Line 31 col 0 PlusExpression "+foo()" = number
-Line 31 col 1 InvocationExpression "foo()" = boolean
-Line 31 col 1 IdentifierName "foo" = typeof foo
-Line 32 col 0 CommaExpression "+true, false" = boolean
-Line 32 col 0 PlusExpression "+true" = number
-Line 33 col 0 PlusExpression "+objA.a" = number
-Line 33 col 1 MemberAccessExpression "objA.a" = boolean
-Line 33 col 1 IdentifierName "objA" = A
-Line 33 col 6 IdentifierName "a" = boolean
-Line 34 col 0 PlusExpression "+M.n" = number
-Line 34 col 1 MemberAccessExpression "M.n" = boolean
-Line 34 col 1 IdentifierName "M" = typeof M
-Line 34 col 3 IdentifierName "n" = boolean
+// + operator on boolean type
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+function foo(): boolean { return true; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: boolean;
+>a : boolean
+
+    static foo() { return false; }
+>foo : () => boolean
+}
+module M {
+>M : M
+
+    export var n: boolean;
+>n : boolean
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// boolean type var
+var ResultIsNumber1 = +BOOLEAN;
+>ResultIsNumber1 : number
+>+BOOLEAN : number
+>BOOLEAN : boolean
+
+// boolean type literal
+var ResultIsNumber2 = +true;
+>ResultIsNumber2 : number
+>+true : number
+
+var ResultIsNumber3 = +{ x: true, y: false };
+>ResultIsNumber3 : number
+>+{ x: true, y: false } : number
+>{ x: true, y: false } : { x: boolean; y: boolean; }
+>x : boolean
+>y : boolean
+
+// boolean type expressions
+var ResultIsNumber4 = +objA.a;
+>ResultIsNumber4 : number
+>+objA.a : number
+>objA.a : boolean
+>objA : A
+>a : boolean
+
+var ResultIsNumber5 = +M.n;
+>ResultIsNumber5 : number
+>+M.n : number
+>M.n : boolean
+>M : typeof M
+>n : boolean
+
+var ResultIsNumber6 = +foo();
+>ResultIsNumber6 : number
+>+foo() : number
+>foo() : boolean
+>foo : typeof foo
+
+var ResultIsNumber7 = +A.foo();
+>ResultIsNumber7 : number
+>+A.foo() : number
+>A.foo() : boolean
+>A.foo : () => boolean
+>A : typeof A
+>foo : () => boolean
+
+>// miss assignment operators
++true : number
+
+// miss assignment operators
++true;
++BOOLEAN;
+>+BOOLEAN : number
+>BOOLEAN : boolean
+
++foo();
+>+foo() : number
+>foo() : boolean
+>foo : typeof foo
+
++true, false;
+>+true, false : boolean
+>+true : number
+
++objA.a;
+>+objA.a : number
+>objA.a : boolean
+>objA : A
+>a : boolean
+
++M.n;
+>+M.n : number
+>M.n : boolean
+>M : typeof M
+>n : boolean
+

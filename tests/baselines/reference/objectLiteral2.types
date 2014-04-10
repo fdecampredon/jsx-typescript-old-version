@@ -1,6 +1,8 @@
 === tests/cases/compiler/objectLiteral2.ts ===
-Line 0 col 4 IdentifierName "v30" = { a: number; b: number; }
-Line 0 col 10 ObjectLiteralExpression "{a:1, b:2}" = { a: number; b: number; }
-Line 0 col 11 IdentifierName "a" = number
-Line 0 col 16 IdentifierName "b" = number
-Line 0 col 22 IdentifierName "v31" = any
+var v30 = {a:1, b:2}, v31;
+>v30 : { a: number; b: number; }
+>{a:1, b:2} : { a: number; b: number; }
+>a : number
+>b : number
+>v31 : any
+

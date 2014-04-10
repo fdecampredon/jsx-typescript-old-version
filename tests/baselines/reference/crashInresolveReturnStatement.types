@@ -1,18 +1,42 @@
 === tests/cases/compiler/crashInresolveReturnStatement.ts ===
-Line 0 col 6 IdentifierName "WorkItemToolbar" = WorkItemToolbar
-Line 1 col 11 IdentifierName "onToolbarItemClick" = () => void
-Line 2 col 0 InvocationExpression "WITDialogs.createCopyOfWorkItem()" = void
-Line 2 col 0 MemberAccessExpression "WITDialogs.createCopyOfWorkItem" = () => void
-Line 2 col 0 IdentifierName "WITDialogs" = typeof WITDialogs
-Line 2 col 19 IdentifierName "createCopyOfWorkItem" = () => void
-Line 5 col 6 IdentifierName "CreateCopyOfWorkItemDialog" = CreateCopyOfWorkItemDialog
-Line 6 col 11 IdentifierName "getDialogResult" = () => any
-Line 10 col 9 IdentifierName "createWorkItemDialog" = typeof createWorkItemDialog
-Line 10 col 30 IdentifierName "P0" = P0
-Line 10 col 34 IdentifierName "dialogType" = P0
-Line 10 col 46 IdentifierName "P0" = P0
-Line 12 col 6 IdentifierName "WITDialogs" = WITDialogs
-Line 13 col 18 IdentifierName "createCopyOfWorkItem" = () => void
-Line 14 col 0 InvocationExpression "createWorkItemDialog(CreateCopyOfWorkItemDialog)" = void
-Line 14 col 0 IdentifierName "createWorkItemDialog" = typeof createWorkItemDialog
-Line 14 col 29 IdentifierName "CreateCopyOfWorkItemDialog" = typeof CreateCopyOfWorkItemDialog
+class WorkItemToolbar {
+>WorkItemToolbar : WorkItemToolbar
+
+    public onToolbarItemClick() {
+>onToolbarItemClick : () => void
+
+        WITDialogs.createCopyOfWorkItem();
+>WITDialogs.createCopyOfWorkItem() : void
+>WITDialogs.createCopyOfWorkItem : () => void
+>WITDialogs : typeof WITDialogs
+>createCopyOfWorkItem : () => void
+    }
+}
+class CreateCopyOfWorkItemDialog {
+>CreateCopyOfWorkItemDialog : CreateCopyOfWorkItemDialog
+
+    public getDialogResult() {
+>getDialogResult : () => any
+
+        return null;
+    }
+}
+function createWorkItemDialog<P0>(dialogType: P0) {
+>createWorkItemDialog : typeof createWorkItemDialog
+>P0 : P0
+>dialogType : P0
+>P0 : P0
+}
+class WITDialogs {
+>WITDialogs : WITDialogs
+
+    public static createCopyOfWorkItem() {
+>createCopyOfWorkItem : () => void
+
+        createWorkItemDialog(CreateCopyOfWorkItemDialog);
+>createWorkItemDialog(CreateCopyOfWorkItemDialog) : void
+>createWorkItemDialog : typeof createWorkItemDialog
+>CreateCopyOfWorkItemDialog : typeof CreateCopyOfWorkItemDialog
+    }
+}
+

@@ -1,17 +1,39 @@
 === tests/cases/compiler/interMixingModulesInterfaces0.ts ===
-Line 2 col 7 IdentifierName "A" = A
-Line 4 col 18 IdentifierName "B" = B
-Line 5 col 24 IdentifierName "createB" = typeof createB
-Line 5 col 35 IdentifierName "B" = B
-Line 10 col 21 IdentifierName "B" = B
-Line 11 col 0 IdentifierName "name" = string
-Line 12 col 0 IdentifierName "value" = number
-Line 16 col 4 IdentifierName "x" = A.B
-Line 16 col 7 IdentifierName "A" = A
-Line 16 col 9 IdentifierName "B" = A.B
-Line 16 col 13 InvocationExpression "A.B.createB()" = A.B
-Line 16 col 13 MemberAccessExpression "A.B.createB" = typeof A.B.createB
-Line 16 col 13 MemberAccessExpression "A.B" = typeof A.B
-Line 16 col 13 IdentifierName "A" = typeof A
-Line 16 col 15 IdentifierName "B" = typeof A.B
-Line 16 col 17 IdentifierName "createB" = typeof A.B.createB
+// bug 742098: intermixing modules and interfaces causes errors at call site and order matters
+
+module A {
+>A : A
+
+    export module B {
+>B : B
+
+        export function createB(): B {
+>createB : typeof createB
+>B : B
+
+            return null;
+        }
+    }
+
+    export interface B {
+>B : B
+
+        name: string;
+>name : string
+
+        value: number;
+>value : number
+    }
+}
+
+var x: A.B = A.B.createB();
+>x : A.B
+>A : A
+>B : A.B
+>A.B.createB() : A.B
+>A.B.createB : typeof A.B.createB
+>A.B : typeof A.B
+>A : typeof A
+>B : typeof A.B
+>createB : typeof A.B.createB
+

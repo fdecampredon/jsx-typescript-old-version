@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndLocalVarInConstructor.js]
 var class1 = (function () {
     function class1() {
         var _this = this;

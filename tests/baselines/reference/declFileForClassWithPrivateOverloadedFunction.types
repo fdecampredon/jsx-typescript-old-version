@@ -1,8 +1,17 @@
 === tests/cases/compiler/declFileForClassWithPrivateOverloadedFunction.ts ===
-Line 1 col 6 IdentifierName "C" = C
-Line 2 col 12 IdentifierName "foo" = { (x: number): any; (x: string): any; }
-Line 2 col 16 IdentifierName "x" = number
-Line 3 col 12 IdentifierName "foo" = { (x: number): any; (x: string): any; }
-Line 3 col 16 IdentifierName "x" = string
-Line 4 col 12 IdentifierName "foo" = { (x: number): any; (x: string): any; }
-Line 4 col 16 IdentifierName "x" = any
+
+class C {
+>C : C
+
+    private foo(x: number);
+>foo : { (x: number): any; (x: string): any; }
+>x : number
+
+    private foo(x: string);
+>foo : { (x: number): any; (x: string): any; }
+>x : string
+
+    private foo(x: any) { }
+>foo : { (x: number): any; (x: string): any; }
+>x : any
+}

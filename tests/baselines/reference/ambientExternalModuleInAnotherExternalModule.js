@@ -1,3 +1,4 @@
+//// [ambientExternalModuleInAnotherExternalModule.js]
 define(["require", "exports", "ext"], function(require, exports, ext) {
     var D = (function () {
         function D() {

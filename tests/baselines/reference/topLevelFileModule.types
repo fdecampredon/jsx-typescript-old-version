@@ -1,15 +1,25 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 7 IdentifierName "fum" = fum
-Line 2 col 4 IdentifierName "z" = number
-Line 2 col 8 AddExpression "foo.x + fum.y" = number
-Line 2 col 8 MemberAccessExpression "foo.x" = number
-Line 2 col 8 IdentifierName "foo" = typeof foo
-Line 2 col 12 IdentifierName "x" = number
-Line 2 col 16 MemberAccessExpression "fum.y" = number
-Line 2 col 16 IdentifierName "fum" = typeof fum
-Line 2 col 20 IdentifierName "y" = number
+import foo = require("vs/foo_0");
+>foo : foo
+
+import fum = require("vs/fum");
+>fum : fum
+
+var z = foo.x + fum.y;
+>z : number
+>foo.x + fum.y : number
+>foo.x : number
+>foo : typeof foo
+>x : number
+>fum.y : number
+>fum : typeof fum
+>y : number
+
 === tests/cases/compiler/vs/foo_0.ts ===
-Line 0 col 11 IdentifierName "x" = number
+export var x: number;
+>x : number
+
 === tests/cases/compiler/vs/fum.d.ts ===
-Line 0 col 19 IdentifierName "y" = number
+export declare var y: number;
+>y : number
+

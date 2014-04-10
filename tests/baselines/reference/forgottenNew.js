@@ -1,3 +1,4 @@
+//// [forgottenNew.js]
 var Tools;
 (function (Tools) {
     var NullLogger = (function () {

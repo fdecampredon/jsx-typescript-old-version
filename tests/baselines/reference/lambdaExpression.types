@@ -1,6 +1,14 @@
 === tests/cases/compiler/lambdaExpression.ts ===
-Line 0 col 0 ParenthesizedArrowFunctionExpression "() => 0" = () => number
-Line 1 col 4 IdentifierName "y" = number
-Line 2 col 0 ParenthesizedExpression "(()=>0)" = () => number
-Line 2 col 1 ParenthesizedArrowFunctionExpression "()=>0" = () => number
-Line 3 col 4 IdentifierName "x" = number
+() => 0; // Needs to be wrapped in parens to be a valid expression (not declaration)
+>() => 0 : () => number
+
+var y = 0;
+>y : number
+
+(()=>0);
+>(()=>0) : () => number
+>()=>0 : () => number
+
+var x = 0;
+>x : number
+

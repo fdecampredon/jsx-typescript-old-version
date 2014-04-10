@@ -1,11 +1,18 @@
 === tests/cases/compiler/namedFunctionExpressionInModule.ts ===
-Line 0 col 7 IdentifierName "Variables" = Variables
-Line 1 col 8 IdentifierName "x" = (a: any, b: any, c: any) => void
-Line 1 col 12 FunctionExpression "function bar(a, b, c) {
-    }" = (a: any, b: any, c: any) => void
-Line 1 col 21 IdentifierName "bar" = (a: any, b: any, c: any) => void
-Line 1 col 25 IdentifierName "a" = any
-Line 1 col 28 IdentifierName "b" = any
-Line 1 col 31 IdentifierName "c" = any
-Line 3 col 0 InvocationExpression "x(1, 2, 3)" = void
-Line 3 col 0 IdentifierName "x" = (a: any, b: any, c: any) => void
+module Variables{
+>Variables : Variables
+
+    var x = function bar(a, b, c) {
+>x : (a: any, b: any, c: any) => void
+>function bar(a, b, c) {
+    } : (a: any, b: any, c: any) => void
+>bar : (a: any, b: any, c: any) => void
+>a : any
+>b : any
+>c : any
+    }
+    x(1, 2, 3);
+>x(1, 2, 3) : void
+>x : (a: any, b: any, c: any) => void
+}
+

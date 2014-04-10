@@ -1,3 +1,4 @@
+//// [recursiveNamedLambdaCall.js]
 var promise = function (obj) {
     if (top && top.doScroll) {
         (function doScrollCheck() {

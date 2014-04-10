@@ -1,3 +1,4 @@
+//// [propertyAndAccessorWithSameName.js]
 var C = (function () {
     function C() {
     }

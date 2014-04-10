@@ -1,3 +1,11 @@
+//// [moduleImportedForTypeArgumentPosition_1.ts]
+/**This is on import declaration*/
+import M2 = require("moduleImportedForTypeArgumentPosition_0");
+class C1<T>{ }
+class Test1 extends C1<M2.M2C> {
+}
+
+
 //// [moduleImportedForTypeArgumentPosition_0.js]
 //// [moduleImportedForTypeArgumentPosition_1.js]
 var __extends = this.__extends || function (d, b) {

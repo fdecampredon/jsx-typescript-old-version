@@ -1,29 +1,51 @@
 === tests/cases/compiler/genericTypeWithMultipleBases3.ts ===
-Line 0 col 10 IdentifierName "IA" = IA<T>
-Line 0 col 13 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "foo" = (x: T) => T
-Line 2 col 4 IdentifierName "x" = T
-Line 2 col 7 IdentifierName "T" = T
-Line 2 col 11 IdentifierName "T" = T
-Line 6 col 10 IdentifierName "IB" = IB<T>
-Line 6 col 13 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "bar" = (x: T) => T
-Line 8 col 4 IdentifierName "x" = T
-Line 8 col 7 IdentifierName "T" = T
-Line 8 col 11 IdentifierName "T" = T
-Line 12 col 10 IdentifierName "IC" = IC<T>
-Line 12 col 13 IdentifierName "T" = T
-Line 12 col 24 IdentifierName "IA" = IA<T>
-Line 12 col 27 IdentifierName "T" = T
-Line 12 col 31 IdentifierName "IB" = IB<T>
-Line 12 col 34 IdentifierName "T" = T
-Line 14 col 4 IdentifierName "c" = IC<number>
-Line 14 col 7 IdentifierName "IC" = IC<T>
-Line 16 col 4 IdentifierName "x" = (x: number) => number
-Line 16 col 8 MemberAccessExpression "c.foo" = (x: number) => number
-Line 16 col 8 IdentifierName "c" = IC<number>
-Line 16 col 10 IdentifierName "foo" = (x: number) => number
-Line 18 col 4 IdentifierName "y" = (x: number) => number
-Line 18 col 8 MemberAccessExpression "c.bar" = (x: number) => number
-Line 18 col 8 IdentifierName "c" = IC<number>
-Line 18 col 10 IdentifierName "bar" = (x: number) => number
+interface IA<T> {
+>IA : IA<T>
+>T : T
+
+>foo : (x: T) => T
+
+foo(x: T): T;
+>x : T
+>T : T
+>T : T
+
+}
+
+interface IB<T> {
+>IB : IB<T>
+>T : T
+
+>bar : (x: T) => T
+
+bar(x: T): T;
+>x : T
+>T : T
+>T : T
+
+}
+
+interface IC<T> extends IA<T>, IB<T> { }
+>IC : IC<T>
+>T : T
+>IA : IA<T>
+>T : T
+>IB : IB<T>
+>T : T
+
+var c: IC<number>;
+>c : IC<number>
+>IC : IC<T>
+
+var x = c.foo;
+>x : (x: number) => number
+>c.foo : (x: number) => number
+>c : IC<number>
+>foo : (x: number) => number
+
+var y = c.bar;
+>y : (x: number) => number
+>c.bar : (x: number) => number
+>c : IC<number>
+>bar : (x: number) => number
+

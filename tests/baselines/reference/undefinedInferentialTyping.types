@@ -1,12 +1,19 @@
 === tests/cases/compiler/undefinedInferentialTyping.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "arr" = T[]
-Line 0 col 19 IdentifierName "T" = T
-Line 0 col 24 IdentifierName "elemnt" = T
-Line 0 col 32 IdentifierName "T" = T
-Line 0 col 36 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "a" = number
-Line 4 col 8 InvocationExpression "f([], 3)" = number
-Line 4 col 8 IdentifierName "f" = typeof f
-Line 4 col 10 ArrayLiteralExpression "[]" = number[]
+function f<T>(arr: T[], elemnt: T): T {
+>f : typeof f
+>T : T
+>arr : T[]
+>T : T
+>elemnt : T
+>T : T
+>T : T
+
+    return null;
+}
+
+var a = f([], 3); // should be number
+>a : number
+>f([], 3) : number
+>f : typeof f
+>[] : number[]
+

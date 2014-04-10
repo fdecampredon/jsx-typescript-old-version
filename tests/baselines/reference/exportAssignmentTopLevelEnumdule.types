@@ -1,22 +1,41 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 1 col 4 IdentifierName "color" = foo
-Line 1 col 11 IdentifierName "foo" = foo
-Line 2 col 3 EqualsExpression "color === foo.green" = boolean
-Line 2 col 3 IdentifierName "color" = foo
-Line 2 col 13 MemberAccessExpression "foo.green" = foo
-Line 2 col 13 IdentifierName "foo" = typeof foo
-Line 2 col 17 IdentifierName "green" = foo
-Line 3 col 0 AssignmentExpression "color = foo.answer" = number
-Line 3 col 0 IdentifierName "color" = foo
-Line 3 col 9 MemberAccessExpression "foo.answer" = number
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "answer" = number
+import foo = require("./foo_0");
+>foo : foo
+
+var color: foo;
+>color : foo
+>foo : foo
+
+if(color === foo.green){
+>color === foo.green : boolean
+>color : foo
+>foo.green : foo
+>foo : typeof foo
+>green : foo
+
+	color = foo.answer;
+>color = foo.answer : number
+>color : foo
+>foo.answer : number
+>foo : typeof foo
+>answer : number
+}
+
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 5 IdentifierName "foo" = foo
-Line 1 col 0 IdentifierName "red" = foo
-Line 1 col 6 IdentifierName "green" = foo
-Line 1 col 13 IdentifierName "blue" = foo
-Line 3 col 7 IdentifierName "foo" = foo
-Line 4 col 12 IdentifierName "answer" = number
-Line 6 col 9 IdentifierName "foo" = typeof foo
+enum foo {
+>foo : foo
+
+	red, green, blue
+>red : foo
+>green : foo
+>blue : foo
+}
+module foo {
+>foo : foo
+
+	export var answer = 42;
+>answer : number
+}
+export = foo;
+>foo : typeof foo
+

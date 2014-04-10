@@ -1,5 +1,7 @@
 === tests/cases/compiler/functionExpressionReturningItself.ts ===
-Line 0 col 4 IdentifierName "x" = () => any
-Line 0 col 8 FunctionExpression "function somefn() { return somefn; }" = () => any
-Line 0 col 17 IdentifierName "somefn" = () => any
-Line 0 col 35 IdentifierName "somefn" = () => any
+var x = function somefn() { return somefn; };
+>x : () => any
+>function somefn() { return somefn; } : () => any
+>somefn : () => any
+>somefn : () => any
+

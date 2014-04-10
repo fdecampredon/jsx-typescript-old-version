@@ -1,7 +1,21 @@
 === tests/cases/compiler/interfaceInReopenedModule.ts ===
-Line 0 col 7 IdentifierName "m" = m
-Line 4 col 7 IdentifierName "m" = m
-Line 5 col 14 IdentifierName "f" = f
-Line 6 col 17 IdentifierName "n" = n
-Line 7 col 16 IdentifierName "n" = f
-Line 7 col 19 IdentifierName "f" = f
+module m {
+>m : m
+}
+
+// In second instance of same module, exported interface is not visible
+module m {
+>m : m
+
+    interface f {}
+>f : f
+
+    export class n { 
+>n : n
+
+        private n: f;
+>n : f
+>f : f
+    }
+}
+

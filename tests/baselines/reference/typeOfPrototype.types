@@ -1,11 +1,19 @@
 === tests/cases/compiler/typeOfPrototype.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "bar" = number
-Line 2 col 11 IdentifierName "bar" = string
-Line 4 col 0 AssignmentExpression "Foo.prototype.bar = undefined" = any
-Line 4 col 0 MemberAccessExpression "Foo.prototype.bar" = number
-Line 4 col 0 MemberAccessExpression "Foo.prototype" = Foo
-Line 4 col 0 IdentifierName "Foo" = typeof Foo
-Line 4 col 4 IdentifierName "prototype" = Foo
-Line 4 col 14 IdentifierName "bar" = number
-Line 4 col 20 IdentifierName "undefined" = any
+class Foo {
+>Foo : Foo
+
+    bar = 3;
+>bar : number
+
+    static bar = '';
+>bar : string
+}
+Foo.prototype.bar = undefined; // Should be OK
+>Foo.prototype.bar = undefined : any
+>Foo.prototype.bar : number
+>Foo.prototype : Foo
+>Foo : typeof Foo
+>prototype : Foo
+>bar : number
+>undefined : any
+

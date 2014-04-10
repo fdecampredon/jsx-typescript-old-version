@@ -1,35 +1,62 @@
 === tests/cases/compiler/thisInLambda.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "x" = string
-Line 2 col 0 IdentifierName "bar" = () => void
-Line 3 col 0 MemberAccessExpression "this.x" = string
-Line 3 col 0 ThisKeyword "this" = Foo
-Line 3 col 13 IdentifierName "x" = string
-Line 4 col 12 IdentifierName "f" = () => string
-Line 4 col 16 ParenthesizedArrowFunctionExpression "() => this.x" = () => string
-Line 4 col 22 MemberAccessExpression "this.x" = string
-Line 4 col 22 ThisKeyword "this" = Foo
-Line 4 col 27 IdentifierName "x" = string
-Line 8 col 9 IdentifierName "myFn" = typeof myFn
-Line 8 col 14 IdentifierName "a" = any
-Line 9 col 6 IdentifierName "myCls" = myCls
-Line 11 col 0 InvocationExpression "myFn(() => {
+class Foo {
+>Foo : Foo
+
+    x = "hello";
+>x : string
+
+    bar() {
+>bar : () => void
+
+        this.x; // 'this' is type 'Foo'
+>this.x : string
+>this : Foo
+>x : string
+
+        var f = () => this.x; // 'this' should be type 'Foo' as well
+>f : () => string
+>() => this.x : () => string
+>this.x : string
+>this : Foo
+>x : string
+    }
+}
+
+function myFn(a:any) { }
+>myFn : typeof myFn
+>a : any
+
+class myCls {
+>myCls : myCls
+
+    constructor () {
+        myFn(() => {
+>myFn(() => {
             myFn(() => {
                 var x = this;
             });
-        })" = void
-Line 11 col 0 IdentifierName "myFn" = typeof myFn
-Line 11 col 13 ParenthesizedArrowFunctionExpression "() => {
+        }) : void
+>myFn : typeof myFn
+>() => {
             myFn(() => {
                 var x = this;
             });
-        }" = () => void
-Line 12 col 0 InvocationExpression "myFn(() => {
+        } : () => void
+
+            myFn(() => {
+>myFn(() => {
                 var x = this;
-            })" = void
-Line 12 col 0 IdentifierName "myFn" = typeof myFn
-Line 12 col 17 ParenthesizedArrowFunctionExpression "() => {
+            }) : void
+>myFn : typeof myFn
+>() => {
                 var x = this;
-            }" = () => void
-Line 13 col 20 IdentifierName "x" = myCls
-Line 13 col 24 ThisKeyword "this" = myCls
+            } : () => void
+
+                var x = this;
+>x : myCls
+>this : myCls
+
+            });
+        });
+    }
+}

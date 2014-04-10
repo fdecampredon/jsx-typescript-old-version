@@ -1,3 +1,4 @@
+//// [arrayAssignmentTest3.js]
 // The following gives no error
 // Michal saw no error if he used number instead of B,
 // but I do...

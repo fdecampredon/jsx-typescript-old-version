@@ -1,3 +1,18 @@
+//// [numericIndexerConstraint3.ts]
+class A {
+    foo: number;
+}
+
+class B extends A {
+    bar: string;
+}
+
+class C {
+    0: B;
+    [x: number]: A;
+}
+
+//// [numericIndexerConstraint3.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

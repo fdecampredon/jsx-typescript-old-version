@@ -1,17 +1,29 @@
 === tests/cases/compiler/constraintPropagationThroughReturnTypes.ts ===
-Line 0 col 9 IdentifierName "g" = typeof g
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "x" = T
-Line 0 col 17 IdentifierName "T" = T
-Line 0 col 21 IdentifierName "T" = T
-Line 1 col 9 IdentifierName "x" = T
-Line 4 col 9 IdentifierName "f" = typeof f
-Line 4 col 11 IdentifierName "S" = S
-Line 4 col 23 IdentifierName "foo" = string
-Line 4 col 38 IdentifierName "x" = S
-Line 4 col 41 IdentifierName "S" = S
-Line 5 col 6 IdentifierName "y" = S
-Line 5 col 10 InvocationExpression "g(x)" = S
-Line 5 col 10 IdentifierName "g" = typeof g
-Line 5 col 12 IdentifierName "x" = S
-Line 6 col 0 IdentifierName "y" = S
+function g<T>(x: T): T {
+>g : typeof g
+>T : T
+>x : T
+>T : T
+>T : T
+
+  return x;
+>x : T
+}
+ 
+function f<S extends { foo: string }>(x: S) {
+>f : typeof f
+>S : S
+>foo : string
+>x : S
+>S : S
+
+  var y = g(x);
+>y : S
+>g(x) : S
+>g : typeof g
+>x : S
+
+  y;
+>y : S
+}
+

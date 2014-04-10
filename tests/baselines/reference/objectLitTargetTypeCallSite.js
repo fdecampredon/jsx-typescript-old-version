@@ -1,3 +1,4 @@
+//// [objectLitTargetTypeCallSite.js]
 function process(x) {
     return x.a;
 }

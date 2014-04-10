@@ -1,12 +1,22 @@
 === tests/cases/compiler/validStringAssignments.ts ===
-Line 0 col 4 IdentifierName "x" = string
-Line 2 col 4 IdentifierName "a" = any
-Line 2 col 13 IdentifierName "x" = string
-Line 3 col 4 IdentifierName "b" = Object
-Line 3 col 7 IdentifierName "Object" = Object
-Line 3 col 16 IdentifierName "x" = string
-Line 4 col 4 IdentifierName "c" = string
-Line 4 col 16 IdentifierName "x" = string
-Line 5 col 4 IdentifierName "d" = String
-Line 5 col 7 IdentifierName "String" = String
-Line 5 col 16 IdentifierName "x" = string
+var x = '';
+>x : string
+
+var a: any = x;
+>a : any
+>x : string
+
+var b: Object = x;
+>b : Object
+>Object : Object
+>x : string
+
+var c: string = x;
+>c : string
+>x : string
+
+var d: String = x;
+>d : String
+>String : String
+>x : string
+

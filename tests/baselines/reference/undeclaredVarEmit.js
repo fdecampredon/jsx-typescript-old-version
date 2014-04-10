@@ -1,2 +1,3 @@
+//// [undeclaredVarEmit.js]
 f:
 number;

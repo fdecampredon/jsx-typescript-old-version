@@ -1,26 +1,38 @@
 === tests/cases/compiler/inferSecondaryParameter.ts ===
-Line 2 col 10 IdentifierName "Ib" = Ib
-Line 2 col 15 IdentifierName "m" = (test: string, fn: Function) => any
-Line 2 col 17 IdentifierName "test" = string
-Line 2 col 31 IdentifierName "fn" = Function
-Line 2 col 35 IdentifierName "Function" = Function
-Line 4 col 4 IdentifierName "b" = Ib
-Line 4 col 7 IdentifierName "Ib" = Ib
-Line 4 col 12 ObjectLiteralExpression "{ m: function (test: string, fn: Function) { } }" = { m: (test: string, fn: Function) => void; }
-Line 4 col 14 IdentifierName "m" = (test: string, fn: Function) => void
-Line 4 col 17 FunctionExpression "function (test: string, fn: Function) { }" = (test: string, fn: Function) => void
-Line 4 col 27 IdentifierName "test" = string
-Line 4 col 41 IdentifierName "fn" = Function
-Line 4 col 45 IdentifierName "Function" = Function
-Line 5 col 0 InvocationExpression "b.m("test", function (bug) {
+// type inference on 'bug' should give 'any'
+
+interface Ib { m(test: string, fn: Function); }
+>Ib : Ib
+>m : (test: string, fn: Function) => any
+>test : string
+>fn : Function
+>Function : Function
+
+var b: Ib = { m: function (test: string, fn: Function) { } };
+>b : Ib
+>Ib : Ib
+>{ m: function (test: string, fn: Function) { } } : { m: (test: string, fn: Function) => void; }
+>m : (test: string, fn: Function) => void
+>function (test: string, fn: Function) { } : (test: string, fn: Function) => void
+>test : string
+>fn : Function
+>Function : Function
+
+>b.m("test", function (bug) {
     var a: number = bug;
-})" = any
-Line 5 col 0 MemberAccessExpression "b.m" = (test: string, fn: Function) => any
-Line 5 col 0 IdentifierName "b" = Ib
-Line 6 col 2 IdentifierName "m" = (test: string, fn: Function) => any
-Line 6 col 12 FunctionExpression "function (bug) {
+}) : any
+>b.m : (test: string, fn: Function) => any
+>b : Ib
+
+b.m("test", function (bug) {
+>m : (test: string, fn: Function) => any
+>function (bug) {
     var a: number = bug;
-}" = (bug: any) => void
-Line 6 col 22 IdentifierName "bug" = any
-Line 7 col 8 IdentifierName "a" = number
-Line 7 col 20 IdentifierName "bug" = any
+} : (bug: any) => void
+>bug : any
+
+    var a: number = bug;
+>a : number
+>bug : any
+
+});

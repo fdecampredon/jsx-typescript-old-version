@@ -1,19 +1,57 @@
 === tests/cases/compiler/superCalls.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "x" = number
-Line 2 col 16 IdentifierName "n" = string
-Line 7 col 9 IdentifierName "v" = typeof v
-Line 9 col 6 IdentifierName "Derived" = Derived
-Line 9 col 22 IdentifierName "Base" = Base
-Line 11 col 23 IdentifierName "q" = number
-Line 12 col 0 InvocationExpression "super('')" = void
-Line 14 col 12 IdentifierName "p" = void
-Line 14 col 16 InvocationExpression "super('')" = void
-Line 15 col 12 IdentifierName "p" = void
-Line 15 col 16 InvocationExpression "v()" = void
-Line 15 col 16 IdentifierName "v" = typeof v
-Line 19 col 6 IdentifierName "OtherBase" = OtherBase
-Line 23 col 6 IdentifierName "OtherDerived" = OtherDerived
-Line 23 col 27 IdentifierName "OtherBase" = OtherBase
-Line 25 col 12 IdentifierName "p" = string
-Line 26 col 0 InvocationExpression "super()" = void
+class Base {
+>Base : Base
+
+    x = 43;
+>x : number
+
+    constructor(n: string) {
+>n : string
+
+    }
+}
+
+function v(): void { }
+>v : typeof v
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    //super call in class constructor of derived type
+    constructor(public q: number) {
+>q : number
+
+        super('');
+>super('') : void
+
+        //type of super call expression is void
+        var p = super('');
+>p : void
+>super('') : void
+
+        var p = v();
+>p : void
+>v() : void
+>v : typeof v
+    }
+}
+
+class OtherBase {
+>OtherBase : OtherBase
+
+}
+
+class OtherDerived extends OtherBase {
+>OtherDerived : OtherDerived
+>OtherBase : OtherBase
+
+    constructor() {
+        var p = '';
+>p : string
+
+        super();
+>super() : void
+    }
+}
+

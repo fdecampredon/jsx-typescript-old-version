@@ -1,11 +1,25 @@
 === tests/cases/compiler/recursiveBaseConstructorCreation2.ts ===
-Line 0 col 14 IdentifierName "base" = base
-Line 3 col 14 IdentifierName "abc" = abc
-Line 3 col 26 IdentifierName "base" = base
-Line 5 col 0 IdentifierName "foo" = xyz
-Line 5 col 8 IdentifierName "xyz" = xyz
-Line 7 col 14 IdentifierName "xyz" = xyz
-Line 7 col 26 IdentifierName "abc" = abc
-Line 11 col 4 IdentifierName "bar" = xyz
-Line 11 col 10 ObjectCreationExpression "new xyz()" = xyz
-Line 11 col 14 IdentifierName "xyz" = typeof xyz
+declare class base
+>base : base
+{
+}
+declare class abc extends base
+>abc : abc
+>base : base
+{
+   foo: xyz;
+>foo : xyz
+>xyz : xyz
+}
+declare class xyz extends abc
+>xyz : xyz
+>abc : abc
+{
+}
+ 
+var bar = new xyz(); // Error: Invalid 'new' expression.
+>bar : xyz
+>new xyz() : xyz
+>xyz : typeof xyz
+ 
+

@@ -1,17 +1,32 @@
 === tests/cases/compiler/setterBeforeGetter.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 2 col 12 IdentifierName "_bar" = { a: string; }
-Line 2 col 20 IdentifierName "a" = string
-Line 4 col 8 IdentifierName "bar" = { a: string; }
-Line 4 col 12 IdentifierName "thing" = { a: string; }
-Line 4 col 21 IdentifierName "a" = string
-Line 5 col 0 AssignmentExpression "this._bar = thing" = { a: string; }
-Line 5 col 0 MemberAccessExpression "this._bar" = { a: string; }
-Line 5 col 0 ThisKeyword "this" = Foo
-Line 5 col 13 IdentifierName "_bar" = { a: string; }
-Line 5 col 20 IdentifierName "thing" = { a: string; }
-Line 7 col 8 IdentifierName "bar" = { a: string; }
-Line 7 col 17 IdentifierName "a" = string
-Line 8 col 15 MemberAccessExpression "this._bar" = { a: string; }
-Line 8 col 15 ThisKeyword "this" = Foo
-Line 8 col 20 IdentifierName "_bar" = { a: string; }
+class Foo {
+>Foo : Foo
+
+    private _bar: { a: string; };
+>_bar : { a: string; }
+>a : string
+
+    // should not be an error to order them this way
+    set bar(thing: { a: string; }) {
+>bar : { a: string; }
+>thing : { a: string; }
+>a : string
+
+        this._bar = thing;
+>this._bar = thing : { a: string; }
+>this._bar : { a: string; }
+>this : Foo
+>_bar : { a: string; }
+>thing : { a: string; }
+    }
+    get bar(): { a: string; } {
+>bar : { a: string; }
+>a : string
+
+        return this._bar;
+>this._bar : { a: string; }
+>this : Foo
+>_bar : { a: string; }
+    }
+}
+

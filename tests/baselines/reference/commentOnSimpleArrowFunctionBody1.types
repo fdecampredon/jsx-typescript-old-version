@@ -1,10 +1,20 @@
 === tests/cases/compiler/commentOnSimpleArrowFunctionBody1.ts ===
-Line 0 col 9 IdentifierName "Foo" = typeof Foo
-Line 0 col 13 IdentifierName "x" = any
-Line 3 col 0 InvocationExpression "Foo(() =>
+function Foo(x: any)
+>Foo : typeof Foo
+>x : any
+{
+}
+ 
+>Foo(() =>
     // do something
-    127)" = void
-Line 3 col 0 IdentifierName "Foo" = typeof Foo
-Line 4 col 4 ParenthesizedArrowFunctionExpression "() =>
+    127) : void
+>Foo : typeof Foo
+
+Foo(() =>
+>() =>
     // do something
-    127" = () => number
+    127 : () => number
+
+    // do something
+    127);
+

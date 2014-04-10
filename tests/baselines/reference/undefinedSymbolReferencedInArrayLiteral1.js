@@ -1,3 +1,4 @@
+//// [undefinedSymbolReferencedInArrayLiteral1.js]
 var tokens = [{ startIndex: deltaOffset }];
 
 var functions = [function () {

@@ -1,3 +1,4 @@
+//// [augmentedTypesClass2.js]
 // Checking class with other things in type space not value space
 // class then interface
 var c11 = (function () {

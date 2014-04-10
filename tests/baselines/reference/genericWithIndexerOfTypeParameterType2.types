@@ -1,15 +1,32 @@
 === tests/cases/compiler/genericWithIndexerOfTypeParameterType2.ts ===
-Line 0 col 13 IdentifierName "Collection" = Collection<TItem>
-Line 0 col 24 IdentifierName "TItem" = TItem
-Line 0 col 38 IdentifierName "CollectionItem" = CollectionItem
-Line 1 col 0 IdentifierName "_itemsByKey" = { [key: string]: TItem; }
-Line 1 col 20 IdentifierName "key" = string
-Line 1 col 34 IdentifierName "TItem" = TItem
-Line 4 col 13 IdentifierName "List" = List
-Line 4 col 26 IdentifierName "Collection" = Collection<TItem>
-Line 4 col 37 IdentifierName "ListItem" = ListItem
-Line 5 col 0 IdentifierName "Bar" = () => void
-Line 8 col 13 IdentifierName "CollectionItem" = CollectionItem
-Line 10 col 13 IdentifierName "ListItem" = ListItem
-Line 10 col 30 IdentifierName "CollectionItem" = CollectionItem
-Line 11 col 0 IdentifierName "__isNew" = boolean
+export class Collection<TItem extends CollectionItem> {
+>Collection : Collection<TItem>
+>TItem : TItem
+>CollectionItem : CollectionItem
+
+    _itemsByKey: { [key: string]: TItem; };
+>_itemsByKey : { [key: string]: TItem; }
+>key : string
+>TItem : TItem
+}
+
+export class List extends Collection<ListItem>{
+>List : List
+>Collection : Collection<TItem>
+>ListItem : ListItem
+
+    Bar() {}
+>Bar : () => void
+}
+
+export class CollectionItem {}
+>CollectionItem : CollectionItem
+
+export class ListItem extends CollectionItem {
+>ListItem : ListItem
+>CollectionItem : CollectionItem
+
+    __isNew: boolean;
+>__isNew : boolean
+}
+

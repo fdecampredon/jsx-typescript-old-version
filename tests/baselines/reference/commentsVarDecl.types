@@ -1,30 +1,77 @@
 === tests/cases/compiler/commentsVarDecl.ts ===
-Line 2 col 4 IdentifierName "myVariable" = number
-Line 5 col 4 IdentifierName "anotherVariable" = number
-Line 8 col 4 IdentifierName "aVar" = string
-Line 12 col 4 IdentifierName "anotherAnotherVariable" = number
-Line 17 col 4 IdentifierName "x" = number
-Line 18 col 0 AssignmentExpression "/** Triple slash comment on the assignement shouldnt be in .d.ts file*/
-x = myVariable" = number
-Line 18 col 0 IdentifierName "/** Triple slash comment on the assignement shouldnt be in .d.ts file*/
-x" = number
-Line 20 col 4 IdentifierName "myVariable" = number
-Line 24 col 4 IdentifierName "n" = number
-Line 27 col 4 IdentifierName "y" = number
-Line 30 col 4 IdentifierName "yy" = number
-Line 35 col 4 IdentifierName "z" = (x: number, y: number) => number
-Line 35 col 30 ParenthesizedArrowFunctionExpression "(x: number, y: number) => x + y" = (x: number, y: number) => number
-Line 35 col 31 IdentifierName "x" = number
-Line 35 col 42 IdentifierName "y" = number
-Line 35 col 56 AddExpression "x + y" = number
-Line 35 col 56 IdentifierName "x" = number
-Line 35 col 60 IdentifierName "y" = number
-Line 37 col 4 IdentifierName "z2" = (x: number) => string
-Line 37 col 28 IdentifierName "x" = number
-Line 39 col 4 IdentifierName "x2" = (x: number) => string
-Line 39 col 9 IdentifierName "z2" = (x: number) => string
-Line 41 col 4 IdentifierName "n4" = (x: number) => string
-Line 41 col 9 IdentifierName "x" = number
-Line 42 col 0 AssignmentExpression "n4 = z2" = (x: number) => string
-Line 42 col 0 IdentifierName "n4" = (x: number) => string
-Line 42 col 5 IdentifierName "z2" = (x: number) => string
+
+/** Variable comments*/
+var myVariable = 10;
+>myVariable : number
+
+/** This is another variable comment*/
+var anotherVariable = 30;
+>anotherVariable : number
+
+// shouldn't appear
+var aVar = "";
+>aVar : string
+
+/** this is multiline comment
+  * All these variables are of number type */
+var anotherAnotherVariable = 70;
+>anotherAnotherVariable : number
+
+/** Triple slash multiline comment*/
+/** another line in the comment*/
+/** comment line 2*/
+var x = 70;
+>x : number
+
+>/** Triple slash comment on the assignement shouldnt be in .d.ts file*/
+x = myVariable : number
+>/** Triple slash comment on the assignement shouldnt be in .d.ts file*/
+x : number
+
+/** Triple slash comment on the assignement shouldnt be in .d.ts file*/
+x = myVariable;
+>myVariable : number
+
+/** triple slash comment1*/
+/** jsdocstyle comment - only this comment should be in .d.ts file*/
+var n = 30;
+>n : number
+
+/** var deckaration with comment on type as well*/
+var y = /** value comment */ 20;
+>y : number
+
+/// var deckaration with comment on type as well
+var yy =
+>yy : number
+
+    /// value comment
+    20;
+
+/** comment2 */
+var z = /** lambda comment */ (x: number, y: number) => x + y;
+>z : (x: number, y: number) => number
+>(x: number, y: number) => x + y : (x: number, y: number) => number
+>x : number
+>y : number
+>x + y : number
+>x : number
+>y : number
+
+var z2: /** type comment*/ (x: number) => string;
+>z2 : (x: number) => string
+>x : number
+
+var x2 = z2;
+>x2 : (x: number) => string
+>z2 : (x: number) => string
+
+var n4: (x: number) => string;
+>n4 : (x: number) => string
+>x : number
+
+n4 = z2;
+>n4 = z2 : (x: number) => string
+>n4 : (x: number) => string
+>z2 : (x: number) => string
+

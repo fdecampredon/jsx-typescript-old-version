@@ -1,3 +1,4 @@
+//// [typeParameterAsTypeParameterConstraint.js]
 // using a type parameter as a constraint for a type parameter is valid
 // no errors expected except illegal constraints
 function foo(x, y) {

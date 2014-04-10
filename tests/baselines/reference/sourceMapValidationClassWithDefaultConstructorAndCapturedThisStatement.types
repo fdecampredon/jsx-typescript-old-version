@@ -1,8 +1,14 @@
 === tests/cases/compiler/sourceMapValidationClassWithDefaultConstructorAndCapturedThisStatement.ts ===
-Line 0 col 6 IdentifierName "Greeter" = Greeter
-Line 1 col 11 IdentifierName "a" = number
-Line 2 col 11 IdentifierName "returnA" = () => number
-Line 2 col 21 ParenthesizedArrowFunctionExpression "() => this.a" = () => number
-Line 2 col 27 MemberAccessExpression "this.a" = number
-Line 2 col 27 ThisKeyword "this" = Greeter
-Line 2 col 32 IdentifierName "a" = number
+class Greeter {
+>Greeter : Greeter
+
+    public a = 10;
+>a : number
+
+    public returnA = () => this.a;
+>returnA : () => number
+>() => this.a : () => number
+>this.a : number
+>this : Greeter
+>a : number
+}

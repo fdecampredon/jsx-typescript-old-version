@@ -1,3 +1,11 @@
+//// [recursiveGetterAccess.ts]
+class MyClass {
+get testProp() { return this.testProp; }
+}
+ 
+
+
+//// [recursiveGetterAccess.js]
 var MyClass = (function () {
     function MyClass() {
     }

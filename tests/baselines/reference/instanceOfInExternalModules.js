@@ -1,3 +1,11 @@
+//// [instanceOfInExternalModules_1.ts]
+///<reference path='instanceOfInExternalModules_require.ts'/>
+import Bar = require("instanceOfInExternalModules_require");
+function IsFoo(value: any): boolean {
+    return value instanceof Bar.Foo;
+}
+
+
 //// [instanceOfInExternalModules_require.js]
 define(["require", "exports"], function(require, exports) {
     var Foo = (function () {

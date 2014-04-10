@@ -1,21 +1,40 @@
 === tests/cases/compiler/genericWithCallSignatures_1.ts ===
-Line 1 col 6 IdentifierName "MyClass" = MyClass
-Line 2 col 11 IdentifierName "callableThing" = CallableExtention<string>
-Line 2 col 26 IdentifierName "CallableExtention" = CallableExtention<T>
-Line 4 col 11 IdentifierName "myMethod" = () => void
-Line 5 col 12 IdentifierName "x" = string
-Line 5 col 16 CastExpression "<string> this.callableThing()" = string
-Line 5 col 25 InvocationExpression "this.callableThing()" = string
-Line 5 col 25 MemberAccessExpression "this.callableThing" = CallableExtention<string>
-Line 5 col 25 ThisKeyword "this" = MyClass
-Line 5 col 30 IdentifierName "callableThing" = CallableExtention<string>
+///<reference path="genericWithCallSignatures_0.ts"/>
+class MyClass {
+>MyClass : MyClass
+
+    public callableThing: CallableExtention<string>;
+>callableThing : CallableExtention<string>
+>CallableExtention : CallableExtention<T>
+
+    public myMethod() {
+>myMethod : () => void
+
+        var x = <string> this.callableThing();
+>x : string
+><string> this.callableThing() : string
+>this.callableThing() : string
+>this.callableThing : CallableExtention<string>
+>this : MyClass
+>callableThing : CallableExtention<string>
+    }
+}
 === tests/cases/compiler/genericWithCallSignatures_0.ts ===
-Line 0 col 10 IdentifierName "Callable" = Callable<T>
-Line 0 col 19 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "T" = T
-Line 2 col 5 IdentifierName "value" = T
-Line 2 col 12 IdentifierName "T" = T
-Line 5 col 10 IdentifierName "CallableExtention" = CallableExtention<T>
-Line 5 col 28 IdentifierName "T" = T
-Line 5 col 39 IdentifierName "Callable" = Callable<T>
-Line 5 col 48 IdentifierName "T" = T
+interface Callable<T> {
+>Callable : Callable<T>
+>T : T
+
+    (): T;
+>T : T
+
+    (value: T): void;
+>value : T
+>T : T
+}
+
+interface CallableExtention<T> extends Callable<T> { }
+>CallableExtention : CallableExtention<T>
+>T : T
+>Callable : Callable<T>
+>T : T
+

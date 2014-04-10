@@ -1,18 +1,33 @@
 === tests/cases/compiler/gettersAndSettersTypesAgree.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 15 IdentifierName "Foo" = string
-Line 2 col 15 IdentifierName "Foo" = string
-Line 2 col 19 IdentifierName "foo" = string
-Line 4 col 15 IdentifierName "Bar" = string
-Line 5 col 15 IdentifierName "Bar" = string
-Line 5 col 19 IdentifierName "bar" = string
-Line 8 col 4 IdentifierName "o1" = { Foo: number; }
-Line 8 col 9 ObjectLiteralExpression "{get Foo(){return 0;}, set Foo(val){}}" = { Foo: number; }
-Line 8 col 14 IdentifierName "Foo" = number
-Line 8 col 36 IdentifierName "Foo" = number
-Line 8 col 40 IdentifierName "val" = number
-Line 9 col 4 IdentifierName "o2" = { Foo: number; }
-Line 9 col 9 ObjectLiteralExpression "{get Foo(){return 0;}, set Foo(val:number){}}" = { Foo: number; }
-Line 9 col 14 IdentifierName "Foo" = number
-Line 9 col 36 IdentifierName "Foo" = number
-Line 9 col 40 IdentifierName "val" = number
+class C {
+>C : C
+
+    public get Foo() { return "foo";} // ok
+>Foo : string
+
+    public set Foo(foo) {} // ok - type inferred from getter return statement
+>Foo : string
+>foo : string
+
+    public get Bar() { return "foo";} // ok
+>Bar : string
+
+    public set Bar(bar:string) {} // ok - type must be declared
+>Bar : string
+>bar : string
+}
+
+var o1 = {get Foo(){return 0;}, set Foo(val){}}; // ok - types agree (inference)
+>o1 : { Foo: number; }
+>{get Foo(){return 0;}, set Foo(val){}} : { Foo: number; }
+>Foo : number
+>Foo : number
+>val : number
+
+var o2 = {get Foo(){return 0;}, set Foo(val:number){}}; // ok - types agree
+>o2 : { Foo: number; }
+>{get Foo(){return 0;}, set Foo(val:number){}} : { Foo: number; }
+>Foo : number
+>Foo : number
+>val : number
+

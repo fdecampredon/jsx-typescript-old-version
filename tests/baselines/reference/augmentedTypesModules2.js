@@ -1,3 +1,4 @@
+//// [augmentedTypesModules2.js]
 function m2() {
 }
 ;

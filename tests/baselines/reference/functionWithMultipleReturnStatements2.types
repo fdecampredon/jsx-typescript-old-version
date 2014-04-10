@@ -1,38 +1,146 @@
 === tests/cases/compiler/functionWithMultipleReturnStatements2.ts ===
-Line 3 col 9 IdentifierName "f1" = typeof f1
-Line 11 col 9 IdentifierName "f2" = typeof f2
-Line 21 col 9 IdentifierName "f4" = typeof f4
-Line 25 col 11 IdentifierName "e" = any
-Line 26 col 15 IdentifierName "undefined" = any
-Line 33 col 9 IdentifierName "f5" = typeof f5
-Line 35 col 11 ObjectCreationExpression "new Object()" = Object
-Line 35 col 15 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 38 col 9 IdentifierName "f6" = typeof f6
-Line 38 col 12 IdentifierName "T" = T
-Line 38 col 15 IdentifierName "x" = T
-Line 38 col 18 IdentifierName "T" = T
-Line 40 col 15 IdentifierName "x" = T
-Line 54 col 4 IdentifierName "a" = { x: number; y?: number; }
-Line 54 col 9 IdentifierName "x" = number
-Line 54 col 20 IdentifierName "y" = number
-Line 55 col 4 IdentifierName "b" = { x: number; z?: number; }
-Line 55 col 9 IdentifierName "x" = number
-Line 55 col 20 IdentifierName "z" = number
-Line 57 col 9 IdentifierName "f9" = typeof f9
-Line 59 col 15 IdentifierName "a" = { x: number; y?: number; }
-Line 61 col 15 IdentifierName "b" = { x: number; z?: number; }
-Line 66 col 9 IdentifierName "f10" = typeof f10
-Line 68 col 15 IdentifierName "b" = { x: number; z?: number; }
-Line 70 col 15 IdentifierName "a" = { x: number; y?: number; }
-Line 75 col 9 IdentifierName "f11" = typeof f11
-Line 77 col 15 ParenthesizedArrowFunctionExpression "(x: number) => { }" = (x: number) => void
-Line 77 col 16 IdentifierName "x" = number
-Line 79 col 15 ParenthesizedArrowFunctionExpression "(x: Object) => { }" = (x: Object) => void
-Line 79 col 16 IdentifierName "x" = Object
-Line 79 col 19 IdentifierName "Object" = Object
-Line 84 col 9 IdentifierName "f12" = typeof f12
-Line 86 col 15 ParenthesizedArrowFunctionExpression "(x: Object) => { }" = (x: Object) => void
-Line 86 col 16 IdentifierName "x" = Object
-Line 86 col 19 IdentifierName "Object" = Object
-Line 88 col 15 ParenthesizedArrowFunctionExpression "(x: number) => { }" = (x: number) => void
-Line 88 col 16 IdentifierName "x" = number
+// return type of a function with multiple returns is the BCT of each return statement
+// no errors expected here
+
+function f1() {
+>f1 : typeof f1
+
+    if (true) {
+        return 1;
+    } else {
+        return null;
+    }
+}
+
+function f2() {
+>f2 : typeof f2
+
+    if (true) {
+        return 1;
+    } else if (false) {
+        return null;
+    } else {
+        return 2;
+    }
+}
+
+function f4() {
+>f4 : typeof f4
+
+    try {
+        return 1;
+    }
+    catch (e) {
+>e : any
+
+        return undefined;
+>undefined : any
+    }
+    finally {
+        return 1;
+    }
+}
+
+function f5() {
+>f5 : typeof f5
+
+    return 1;
+    return new Object();
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+}
+
+function f6<T>(x: T) {
+>f6 : typeof f6
+>T : T
+>x : T
+>T : T
+
+    if (true) {
+        return x;
+>x : T
+
+    } else {
+        return null;
+    }
+}
+
+//function f7<T extends U, U>(x: T, y: U) {
+//    if (true) {
+//        return x;
+//    } else {
+//        return y;
+//    }
+//}
+
+var a: { x: number; y?: number };
+>a : { x: number; y?: number; }
+>x : number
+>y : number
+
+var b: { x: number; z?: number };
+>b : { x: number; z?: number; }
+>x : number
+>z : number
+
+// returns typeof a
+function f9() {
+>f9 : typeof f9
+
+    if (true) {
+        return a;
+>a : { x: number; y?: number; }
+
+    } else {
+        return b;
+>b : { x: number; z?: number; }
+    }
+}
+
+// returns typeof b
+function f10() {
+>f10 : typeof f10
+
+    if (true) {
+        return b;
+>b : { x: number; z?: number; }
+
+    } else {
+        return a;
+>a : { x: number; y?: number; }
+    }
+}
+
+// returns number => void
+function f11() {
+>f11 : typeof f11
+
+    if (true) {
+        return (x: number) => { }
+>(x: number) => { } : (x: number) => void
+>x : number
+
+    } else {
+        return (x: Object) => { }
+>(x: Object) => { } : (x: Object) => void
+>x : Object
+>Object : Object
+    }
+}
+
+// returns Object => void
+function f12() {
+>f12 : typeof f12
+
+    if (true) {
+        return (x: Object) => { }
+>(x: Object) => { } : (x: Object) => void
+>x : Object
+>Object : Object
+
+    } else {
+        return (x: number) => { }        
+>(x: number) => { } : (x: number) => void
+>x : number
+    }
+}

@@ -1,3 +1,4 @@
+//// [sourceMapValidationForIn.js]
 for (var x in String) {
     WScript.Echo(x);
 }

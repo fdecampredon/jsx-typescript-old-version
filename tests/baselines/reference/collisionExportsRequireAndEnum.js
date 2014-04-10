@@ -1,3 +1,4 @@
+//// [collisionExportsRequireAndEnum.js]
 define(["require", "exports"], function(require, exports) {
     (function (require) {
         require[require["_thisVal1"] = 0] = "_thisVal1";

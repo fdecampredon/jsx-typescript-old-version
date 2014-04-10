@@ -1,3 +1,4 @@
+//// [primitiveConstraints1.js]
 function foo1(t, u) {
 }
 foo1('hm', 1); // no error

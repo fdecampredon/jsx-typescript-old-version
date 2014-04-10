@@ -1,3 +1,16 @@
+//// [aliasUsageInTypeArgumentOfExtendsClause_main.ts]
+import Backbone = require("aliasUsageInTypeArgumentOfExtendsClause_backbone");
+import moduleA = require("aliasUsageInTypeArgumentOfExtendsClause_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+class C<T extends IHasVisualizationModel> {
+    x: T;
+}
+class D extends C<IHasVisualizationModel> {
+    x = moduleA;
+}
+
 //// [aliasUsageInTypeArgumentOfExtendsClause_backbone.js]
 var Model = (function () {
     function Model() {

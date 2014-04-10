@@ -1,7 +1,15 @@
 === tests/cases/compiler/exportAssignmentVariable_B.ts ===
-Line 0 col 7 IdentifierName "y" = y
-Line 2 col 4 IdentifierName "n" = number
-Line 2 col 16 IdentifierName "y" = number
+import y = require("exportAssignmentVariable_A");
+>y : y
+
+var n: number = y;
+>n : number
+>y : number
+
 === tests/cases/compiler/exportAssignmentVariable_A.ts ===
-Line 0 col 4 IdentifierName "x" = number
-Line 2 col 9 IdentifierName "x" = number
+var x = 0;
+>x : number
+
+export = x;
+>x : number
+

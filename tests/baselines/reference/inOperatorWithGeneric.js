@@ -1,3 +1,12 @@
+//// [inOperatorWithGeneric.ts]
+class C<T> {
+    foo(x:T) {
+        for (var p in x) {
+        }
+    }
+}
+
+//// [inOperatorWithGeneric.js]
 var C = (function () {
     function C() {
     }

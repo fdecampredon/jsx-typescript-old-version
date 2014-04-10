@@ -1,3 +1,4 @@
+//// [propertyAccess.js]
 var Compass;
 (function (Compass) {
     Compass[Compass["North"] = 0] = "North";

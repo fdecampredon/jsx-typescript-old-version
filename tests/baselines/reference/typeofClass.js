@@ -1,3 +1,4 @@
+//// [typeofClass.js]
 var K = (function () {
     function K() {
     }

@@ -1,3 +1,4 @@
+//// [typeArgumentInferenceWithConstraints.js]
 // Generic call with no parameters
 function noParams() {
 }

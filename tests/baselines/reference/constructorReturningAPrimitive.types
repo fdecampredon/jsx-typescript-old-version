@@ -1,13 +1,36 @@
 === tests/cases/compiler/constructorReturningAPrimitive.ts ===
-Line 3 col 6 IdentifierName "A" = A
-Line 9 col 4 IdentifierName "a" = A
-Line 9 col 8 ObjectCreationExpression "new A()" = A
-Line 9 col 12 IdentifierName "A" = typeof A
-Line 11 col 6 IdentifierName "B" = B<T>
-Line 11 col 8 IdentifierName "T" = T
-Line 13 col 12 IdentifierName "x" = T
-Line 13 col 15 IdentifierName "T" = T
-Line 14 col 15 IdentifierName "x" = T
-Line 18 col 4 IdentifierName "b" = B<number>
-Line 18 col 8 ObjectCreationExpression "new B<number>()" = B<number>
-Line 18 col 12 IdentifierName "B" = typeof B
+// technically not allowed by JavaScript but we don't have a 'not-primitive' constraint
+// functionally only possible when your class is otherwise devoid of members so of little consequence in practice
+
+class A {
+>A : A
+
+    constructor() {
+        return 1;
+    }
+}
+
+var a = new A();
+>a : A
+>new A() : A
+>A : typeof A
+
+class B<T> {
+>B : B<T>
+>T : T
+
+    constructor() {
+        var x: T;
+>x : T
+>T : T
+
+        return x;
+>x : T
+    }
+}
+
+var b = new B<number>();
+>b : B<number>
+>new B<number>() : B<number>
+>B : typeof B
+

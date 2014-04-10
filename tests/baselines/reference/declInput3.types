@@ -1,19 +1,32 @@
 === tests/cases/compiler/declInput3.ts ===
-Line 0 col 10 IdentifierName "bar2" = bar2
-Line 4 col 6 IdentifierName "bar" = bar
-Line 5 col 9 IdentifierName "f" = () => string
-Line 6 col 9 IdentifierName "g" = () => { a: bar; b: any; c: any; }
-Line 6 col 22 ObjectLiteralExpression "{a: <bar>null, b: undefined, c: void 4 }" = { a: bar; b: any; c: any; }
-Line 6 col 23 IdentifierName "a" = bar
-Line 6 col 26 CastExpression "<bar>null" = bar
-Line 6 col 27 IdentifierName "bar" = bar
-Line 6 col 37 IdentifierName "b" = any
-Line 6 col 40 IdentifierName "undefined" = any
-Line 6 col 51 IdentifierName "c" = any
-Line 6 col 54 VoidExpression "void 4" = any
-Line 7 col 9 IdentifierName "h" = (x?: number, y?: any, z?: string) => void
-Line 7 col 11 IdentifierName "x" = number
-Line 7 col 18 IdentifierName "y" = any
-Line 7 col 28 IdentifierName "z" = string
-Line 7 col 38 PostIncrementExpression "x++" = number
-Line 7 col 38 IdentifierName "x" = number
+interface bar2 {
+>bar2 : bar2
+
+}
+
+class bar {
+>bar : bar
+
+  public f() { return ''; }
+>f : () => string
+
+  public g() { return {a: <bar>null, b: undefined, c: void 4 }; }
+>g : () => { a: bar; b: any; c: any; }
+>{a: <bar>null, b: undefined, c: void 4 } : { a: bar; b: any; c: any; }
+>a : bar
+><bar>null : bar
+>bar : bar
+>b : any
+>undefined : any
+>c : any
+>void 4 : any
+
+  public h(x = 4, y = null, z = '') { x++; }
+>h : (x?: number, y?: any, z?: string) => void
+>x : number
+>y : any
+>z : string
+>x++ : number
+>x : number
+}
+

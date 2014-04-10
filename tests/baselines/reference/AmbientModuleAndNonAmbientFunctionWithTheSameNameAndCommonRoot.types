@@ -1,21 +1,37 @@
 === tests/cases/compiler/module.d.ts ===
-Line 0 col 15 IdentifierName "Point" = Point
-Line 1 col 15 IdentifierName "Origin" = { x: number; y: number; }
-Line 1 col 25 IdentifierName "x" = number
-Line 1 col 36 IdentifierName "y" = number
+declare module Point {
+>Point : Point
+
+    export var Origin: { x: number; y: number; }
+>Origin : { x: number; y: number; }
+>x : number
+>y : number
+}
+
 === tests/cases/compiler/function.ts ===
-Line 0 col 9 IdentifierName "Point" = typeof Point
-Line 1 col 11 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 1 col 13 IdentifierName "x" = number
-Line 1 col 19 IdentifierName "y" = number
+function Point() {
+>Point : typeof Point
+
+    return { x: 0, y: 0 };
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
 === tests/cases/compiler/test.ts ===
-Line 0 col 4 IdentifierName "cl" = { x: number; y: number; }
-Line 0 col 10 IdentifierName "x" = number
-Line 0 col 21 IdentifierName "y" = number
-Line 1 col 4 IdentifierName "cl" = { x: number; y: number; }
-Line 1 col 9 InvocationExpression "Point()" = { x: number; y: number; }
-Line 1 col 9 IdentifierName "Point" = typeof Point
-Line 2 col 4 IdentifierName "cl" = { x: number; y: number; }
-Line 2 col 9 MemberAccessExpression "Point.Origin" = { x: number; y: number; }
-Line 2 col 9 IdentifierName "Point" = typeof Point
-Line 2 col 15 IdentifierName "Origin" = { x: number; y: number; }
+var cl: { x: number; y: number; }
+>cl : { x: number; y: number; }
+>x : number
+>y : number
+
+var cl = Point();
+>cl : { x: number; y: number; }
+>Point() : { x: number; y: number; }
+>Point : typeof Point
+
+var cl = Point.Origin;
+>cl : { x: number; y: number; }
+>Point.Origin : { x: number; y: number; }
+>Point : typeof Point
+>Origin : { x: number; y: number; }
+

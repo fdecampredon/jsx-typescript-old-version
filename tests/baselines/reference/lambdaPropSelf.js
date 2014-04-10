@@ -1,3 +1,4 @@
+//// [lambdaPropSelf.js]
 var Person = (function () {
     function Person(name, children) {
         var _this = this;

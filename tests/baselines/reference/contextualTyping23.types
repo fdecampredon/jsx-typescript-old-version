@@ -1,8 +1,10 @@
 === tests/cases/compiler/contextualTyping23.ts ===
-Line 0 col 4 IdentifierName "foo" = (a: { (): number; (i: number): number; }) => number
-Line 0 col 9 IdentifierName "a" = { (): number; (i: number): number; }
-Line 0 col 24 IdentifierName "i" = number
-Line 0 col 54 AssignmentExpression "foo = function(a){return 5}" = (a: { (): number; (i: number): number; }) => number
-Line 0 col 54 IdentifierName "foo" = (a: { (): number; (i: number): number; }) => number
-Line 0 col 60 FunctionExpression "function(a){return 5}" = (a: { (): number; (i: number): number; }) => number
-Line 0 col 69 IdentifierName "a" = { (): number; (i: number): number; }
+var foo:(a:{():number; (i:number):number; })=>number; foo = function(a){return 5};
+>foo : (a: { (): number; (i: number): number; }) => number
+>a : { (): number; (i: number): number; }
+>i : number
+>foo = function(a){return 5} : (a: { (): number; (i: number): number; }) => number
+>foo : (a: { (): number; (i: number): number; }) => number
+>function(a){return 5} : (a: { (): number; (i: number): number; }) => number
+>a : { (): number; (i: number): number; }
+

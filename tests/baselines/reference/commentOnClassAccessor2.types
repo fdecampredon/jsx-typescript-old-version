@@ -1,5 +1,17 @@
 === tests/cases/compiler/commentOnClassAccessor2.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 4 col 6 IdentifierName "bar" = number
-Line 9 col 6 IdentifierName "bar" = number
-Line 9 col 10 IdentifierName "v" = number
+class C {
+>C : C
+
+  /**
+   * Getter.
+   */
+  get bar(): number { return 1;}
+>bar : number
+
+  /**
+   * Setter.
+   */
+  set bar(v) { }
+>bar : number
+>v : number
+}

@@ -1,29 +1,56 @@
 === tests/cases/compiler/genericCallWithFunctionTypedArguments3.ts ===
-Line 2 col 4 IdentifierName "a" = { (x: boolean): boolean; (x: string): any; }
-Line 3 col 5 IdentifierName "x" = boolean
-Line 4 col 5 IdentifierName "x" = string
-Line 7 col 9 IdentifierName "foo4" = typeof foo4
-Line 7 col 14 IdentifierName "T" = T
-Line 7 col 17 IdentifierName "U" = U
-Line 7 col 20 IdentifierName "cb" = (x: T) => U
-Line 7 col 25 IdentifierName "x" = T
-Line 7 col 28 IdentifierName "T" = T
-Line 7 col 34 IdentifierName "U" = U
-Line 8 col 8 IdentifierName "u" = U
-Line 8 col 11 IdentifierName "U" = U
-Line 9 col 11 IdentifierName "u" = U
-Line 12 col 4 IdentifierName "r" = any
-Line 12 col 8 InvocationExpression "foo4(a)" = any
-Line 12 col 8 IdentifierName "foo4" = typeof foo4
-Line 12 col 13 IdentifierName "a" = { (x: boolean): boolean; (x: string): any; }
-Line 14 col 4 IdentifierName "b" = { <T>(x: boolean): T; <T>(x: T): any; }
-Line 15 col 5 IdentifierName "T" = T
-Line 15 col 8 IdentifierName "x" = boolean
-Line 15 col 21 IdentifierName "T" = T
-Line 16 col 5 IdentifierName "T" = T
-Line 16 col 8 IdentifierName "x" = T
-Line 16 col 11 IdentifierName "T" = T
-Line 19 col 4 IdentifierName "r2" = any
-Line 19 col 9 InvocationExpression "foo4(b)" = any
-Line 19 col 9 IdentifierName "foo4" = typeof foo4
-Line 19 col 14 IdentifierName "b" = { <T>(x: boolean): T; <T>(x: T): any; }
+// No inference is made from function typed arguments which have multiple call signatures
+
+var a: {
+>a : { (x: boolean): boolean; (x: string): any; }
+
+    (x: boolean): boolean;
+>x : boolean
+
+    (x: string): any;
+>x : string
+}
+
+function foo4<T, U>(cb: (x: T) => U) {
+>foo4 : typeof foo4
+>T : T
+>U : U
+>cb : (x: T) => U
+>x : T
+>T : T
+>U : U
+
+    var u: U;
+>u : U
+>U : U
+
+    return u;
+>u : U
+}
+
+var r = foo4(a); // T is {} (candidates boolean and string), U is any (candidates any and boolean)
+>r : any
+>foo4(a) : any
+>foo4 : typeof foo4
+>a : { (x: boolean): boolean; (x: string): any; }
+
+var b: {
+>b : { <T>(x: boolean): T; <T>(x: T): any; }
+
+    <T>(x: boolean): T;
+>T : T
+>x : boolean
+>T : T
+
+    <T>(x: T): any;
+>T : T
+>x : T
+>T : T
+}
+
+var r2 = foo4(b); // T is {} (candidates boolean and {}), U is any (candidates any and {})
+>r2 : any
+>foo4(b) : any
+>foo4 : typeof foo4
+>b : { <T>(x: boolean): T; <T>(x: T): any; }
+

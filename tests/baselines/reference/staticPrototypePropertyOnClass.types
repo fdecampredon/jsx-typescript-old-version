@@ -1,17 +1,43 @@
 === tests/cases/compiler/staticPrototypePropertyOnClass.ts ===
-Line 0 col 6 IdentifierName "c1" = c1
-Line 2 col 6 IdentifierName "c2" = c2<T>
-Line 2 col 9 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "c3" = c3
-Line 8 col 6 IdentifierName "c4" = c4
-Line 9 col 16 IdentifierName "param" = string
-Line 10 col 16 IdentifierName "param" = number
-Line 11 col 16 IdentifierName "param" = any
-Line 14 col 4 IdentifierName "a" = typeof c1
-Line 14 col 8 IdentifierName "c1" = typeof c1
-Line 15 col 4 IdentifierName "b" = typeof c2
-Line 15 col 8 IdentifierName "c2" = typeof c2
-Line 16 col 4 IdentifierName "c" = typeof c3
-Line 16 col 8 IdentifierName "c3" = typeof c3
-Line 17 col 4 IdentifierName "d" = typeof c4
-Line 17 col 8 IdentifierName "c4" = typeof c4
+class c1 {
+>c1 : c1
+}
+class c2<T> {
+>c2 : c2<T>
+>T : T
+}
+class c3 {
+>c3 : c3
+
+    constructor() {
+    }
+}
+class c4 {
+>c4 : c4
+
+    constructor(param: string);
+>param : string
+
+    constructor(param: number);
+>param : number
+
+    constructor(param: any) {
+>param : any
+    }
+}
+var a = c1;
+>a : typeof c1
+>c1 : typeof c1
+
+var b = c2;
+>b : typeof c2
+>c2 : typeof c2
+
+var c = c3;
+>c : typeof c3
+>c3 : typeof c3
+
+var d = c4;
+>d : typeof c4
+>c4 : typeof c4
+

@@ -1,27 +1,51 @@
 === tests/cases/compiler/augmentedTypesModules3b.ts ===
-Line 0 col 6 IdentifierName "m3b" = m3b
-Line 0 col 12 IdentifierName "foo" = () => void
-Line 1 col 7 IdentifierName "m3b" = m3b
-Line 1 col 17 IdentifierName "y" = number
-Line 3 col 6 IdentifierName "m3c" = m3c
-Line 3 col 12 IdentifierName "foo" = () => void
-Line 4 col 7 IdentifierName "m3c" = m3c
-Line 4 col 24 IdentifierName "y" = number
-Line 6 col 14 IdentifierName "m3d" = m3d
-Line 6 col 20 IdentifierName "foo" = () => void
-Line 7 col 7 IdentifierName "m3d" = m3d
-Line 7 col 24 IdentifierName "y" = number
-Line 9 col 7 IdentifierName "m3e" = m3e
-Line 9 col 24 IdentifierName "y" = number
-Line 10 col 14 IdentifierName "m3e" = m3e
-Line 10 col 20 IdentifierName "foo" = () => void
-Line 12 col 14 IdentifierName "m3f" = m3f
-Line 12 col 20 IdentifierName "foo" = () => void
-Line 13 col 7 IdentifierName "m3f" = m3f
-Line 13 col 30 IdentifierName "I" = I
-Line 13 col 34 IdentifierName "foo" = () => void
-Line 15 col 14 IdentifierName "m3g" = m3g
-Line 15 col 20 IdentifierName "foo" = () => void
-Line 16 col 7 IdentifierName "m3g" = m3g
-Line 16 col 26 IdentifierName "C" = C
-Line 16 col 30 IdentifierName "foo" = () => void
+class m3b { foo() { } }
+>m3b : m3b
+>foo : () => void
+
+module m3b { var y = 2; }
+>m3b : m3b
+>y : number
+
+class m3c { foo() { } }
+>m3c : m3c
+>foo : () => void
+
+module m3c { export var y = 2; } 
+>m3c : m3c
+>y : number
+
+declare class m3d { foo(): void }
+>m3d : m3d
+>foo : () => void
+
+module m3d { export var y = 2; } 
+>m3d : m3d
+>y : number
+
+module m3e { export var y = 2; } 
+>m3e : m3e
+>y : number
+
+declare class m3e { foo(): void } 
+>m3e : m3e
+>foo : () => void
+
+declare class m3f { foo(): void }
+>m3f : m3f
+>foo : () => void
+
+module m3f { export interface I { foo(): void } }
+>m3f : m3f
+>I : I
+>foo : () => void
+
+declare class m3g { foo(): void }
+>m3g : m3g
+>foo : () => void
+
+module m3g { export class C { foo() { } } }
+>m3g : m3g
+>C : C
+>foo : () => void
+

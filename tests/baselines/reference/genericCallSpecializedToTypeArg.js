@@ -1,3 +1,4 @@
+//// [genericCallSpecializedToTypeArg.js]
 function dupe(x) {
     return x;
 }

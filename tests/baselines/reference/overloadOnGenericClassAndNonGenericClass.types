@@ -1,35 +1,60 @@
 === tests/cases/compiler/overloadOnGenericClassAndNonGenericClass.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 0 col 10 IdentifierName "a" = any
-Line 1 col 6 IdentifierName "B" = B
-Line 1 col 10 IdentifierName "b" = any
-Line 2 col 6 IdentifierName "C" = C
-Line 2 col 10 IdentifierName "c" = any
-Line 3 col 6 IdentifierName "X" = X<T>
-Line 3 col 8 IdentifierName "T" = T
-Line 3 col 13 IdentifierName "x" = T
-Line 3 col 16 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "X1" = X1
-Line 4 col 11 IdentifierName "x" = string
-Line 5 col 6 IdentifierName "X2" = X2
-Line 5 col 11 IdentifierName "x" = string
-Line 6 col 9 IdentifierName "f" = typeof f
-Line 6 col 11 IdentifierName "a" = X1
-Line 6 col 14 IdentifierName "X1" = X1
-Line 6 col 19 IdentifierName "A" = A
-Line 7 col 9 IdentifierName "f" = typeof f
-Line 7 col 11 IdentifierName "T" = T
-Line 7 col 14 IdentifierName "a" = X<T>
-Line 7 col 17 IdentifierName "X" = X<T>
-Line 7 col 19 IdentifierName "T" = T
-Line 7 col 24 IdentifierName "B" = B
-Line 8 col 9 IdentifierName "f" = typeof f
-Line 8 col 11 IdentifierName "a" = any
-Line 11 col 4 IdentifierName "xs" = X<string>
-Line 11 col 8 IdentifierName "X" = X<T>
-Line 13 col 4 IdentifierName "t3" = A
-Line 13 col 9 InvocationExpression "f(xs)" = A
-Line 13 col 9 IdentifierName "f" = typeof f
-Line 13 col 11 IdentifierName "xs" = X<string>
-Line 14 col 4 IdentifierName "t3" = A
-Line 14 col 8 IdentifierName "A" = A
+class A { a; }
+>A : A
+>a : any
+
+class B { b; }
+>B : B
+>b : any
+
+class C { c; }
+>C : C
+>c : any
+
+class X<T> { x: T; }
+>X : X<T>
+>T : T
+>x : T
+>T : T
+
+class X1 { x: string; }
+>X1 : X1
+>x : string
+
+class X2 { x: string; }
+>X2 : X2
+>x : string
+
+function f(a: X1): A;
+>f : typeof f
+>a : X1
+>X1 : X1
+>A : A
+
+function f<T>(a: X<T>): B;
+>f : typeof f
+>T : T
+>a : X<T>
+>X : X<T>
+>T : T
+>B : B
+
+function f(a): any {
+>f : typeof f
+>a : any
+}
+
+var xs: X<string>;
+>xs : X<string>
+>X : X<T>
+
+var t3 = f(xs);
+>t3 : A
+>f(xs) : A
+>f : typeof f
+>xs : X<string>
+
+var t3: A; // should not error
+>t3 : A
+>A : A
+

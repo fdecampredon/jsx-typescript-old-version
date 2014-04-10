@@ -1,3 +1,4 @@
+//// [assignFromBooleanInterface2.js]
 var x = true;
 var a;
 var b;

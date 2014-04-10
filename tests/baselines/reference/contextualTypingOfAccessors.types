@@ -1,23 +1,41 @@
 === tests/cases/compiler/contextualTypingOfAccessors.ts ===
-Line 2 col 4 IdentifierName "x" = { foo: (x: number) => number; }
-Line 3 col 0 IdentifierName "foo" = (x: number) => number
-Line 3 col 9 IdentifierName "x" = number
-Line 5 col 0 AssignmentExpression "x = {
+// not contextually typing accessors
+
+var x: {
+>x : { foo: (x: number) => number; }
+
+   foo: (x: number) => number;
+>foo : (x: number) => number
+>x : number
+}
+ 
+>x = {
    get foo() {
       return (n)=>n
    },
    set foo(x) {}
-}" = { foo: (n: any) => any; }
-Line 5 col 0 IdentifierName "x" = { foo: (x: number) => number; }
-Line 6 col 4 ObjectLiteralExpression "{
+} : { foo: (n: any) => any; }
+>x : { foo: (x: number) => number; }
+
+x = {
+>{
    get foo() {
       return (n)=>n
    },
    set foo(x) {}
-}" = { foo: (n: any) => any; }
-Line 7 col 7 IdentifierName "foo" = (n: any) => any
-Line 8 col 13 ParenthesizedArrowFunctionExpression "(n)=>n" = (n: any) => any
-Line 8 col 14 IdentifierName "n" = any
-Line 8 col 18 IdentifierName "n" = any
-Line 10 col 7 IdentifierName "foo" = (n: any) => any
-Line 10 col 11 IdentifierName "x" = (n: any) => any
+} : { foo: (n: any) => any; }
+
+   get foo() {
+>foo : (n: any) => any
+
+      return (n)=>n
+>(n)=>n : (n: any) => any
+>n : any
+>n : any
+
+   },
+   set foo(x) {}
+>foo : (n: any) => any
+>x : (n: any) => any
+}
+

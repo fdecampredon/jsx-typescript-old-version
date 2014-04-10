@@ -1,60 +1,107 @@
 === tests/cases/compiler/additionOperatorWithNullValueAndValidOperator.ts ===
-Line 2 col 5 IdentifierName "E" = E
-Line 2 col 9 IdentifierName "a" = E
-Line 2 col 12 IdentifierName "b" = E
-Line 2 col 15 IdentifierName "c" = E
-Line 4 col 4 IdentifierName "a" = any
-Line 5 col 4 IdentifierName "b" = number
-Line 6 col 4 IdentifierName "c" = E
-Line 6 col 7 IdentifierName "E" = E
-Line 7 col 4 IdentifierName "d" = string
-Line 10 col 4 IdentifierName "r1" = any
-Line 10 col 14 AddExpression "null + a" = any
-Line 10 col 21 IdentifierName "a" = any
-Line 11 col 4 IdentifierName "r2" = any
-Line 11 col 14 AddExpression "a + null" = any
-Line 11 col 14 IdentifierName "a" = any
-Line 14 col 4 IdentifierName "r3" = number
-Line 14 col 9 AddExpression "null + b" = number
-Line 14 col 16 IdentifierName "b" = number
-Line 15 col 4 IdentifierName "r4" = number
-Line 15 col 9 AddExpression "null + 1" = number
-Line 16 col 4 IdentifierName "r5" = number
-Line 16 col 9 AddExpression "null + c" = number
-Line 16 col 16 IdentifierName "c" = E
-Line 17 col 4 IdentifierName "r6" = number
-Line 17 col 9 AddExpression "null + E.a" = number
-Line 17 col 16 MemberAccessExpression "E.a" = E
-Line 17 col 16 IdentifierName "E" = typeof E
-Line 17 col 18 IdentifierName "a" = E
-Line 18 col 4 IdentifierName "r7" = number
-Line 18 col 9 AddExpression "null + E['a']" = number
-Line 18 col 16 ElementAccessExpression "E['a']" = E
-Line 18 col 16 IdentifierName "E" = typeof E
-Line 19 col 4 IdentifierName "r8" = number
-Line 19 col 9 AddExpression "b + null" = number
-Line 19 col 9 IdentifierName "b" = number
-Line 20 col 4 IdentifierName "r9" = number
-Line 20 col 9 AddExpression "1 + null" = number
-Line 21 col 4 IdentifierName "r10" = number
-Line 21 col 10 AddExpression "c + null" = number
-Line 21 col 10 IdentifierName "c" = E
-Line 22 col 4 IdentifierName "r11" = number
-Line 22 col 10 AddExpression "E.a + null" = number
-Line 22 col 10 MemberAccessExpression "E.a" = E
-Line 22 col 10 IdentifierName "E" = typeof E
-Line 22 col 12 IdentifierName "a" = E
-Line 23 col 4 IdentifierName "r12" = number
-Line 23 col 10 AddExpression "E['a'] + null" = number
-Line 23 col 10 ElementAccessExpression "E['a']" = E
-Line 23 col 10 IdentifierName "E" = typeof E
-Line 26 col 4 IdentifierName "r13" = string
-Line 26 col 10 AddExpression "null + d" = string
-Line 26 col 17 IdentifierName "d" = string
-Line 27 col 4 IdentifierName "r14" = string
-Line 27 col 10 AddExpression "null + ''" = string
-Line 28 col 4 IdentifierName "r15" = string
-Line 28 col 10 AddExpression "d + null" = string
-Line 28 col 10 IdentifierName "d" = string
-Line 29 col 4 IdentifierName "r16" = string
-Line 29 col 10 AddExpression "'' + null" = string
+// If one operand is the null or undefined value, it is treated as having the type of the other operand.
+
+enum E { a, b, c }
+>E : E
+>a : E
+>b : E
+>c : E
+
+var a: any;
+>a : any
+
+var b: number;
+>b : number
+
+var c: E;
+>c : E
+>E : E
+
+var d: string;
+>d : string
+
+// null + any
+var r1: any = null + a;
+>r1 : any
+>null + a : any
+>a : any
+
+var r2: any = a + null;
+>r2 : any
+>a + null : any
+>a : any
+
+// null + number/enum
+var r3 = null + b;
+>r3 : number
+>null + b : number
+>b : number
+
+var r4 = null + 1;
+>r4 : number
+>null + 1 : number
+
+var r5 = null + c;
+>r5 : number
+>null + c : number
+>c : E
+
+var r6 = null + E.a;
+>r6 : number
+>null + E.a : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var r7 = null + E['a'];
+>r7 : number
+>null + E['a'] : number
+>E['a'] : E
+>E : typeof E
+
+var r8 = b + null;
+>r8 : number
+>b + null : number
+>b : number
+
+var r9 = 1 + null;
+>r9 : number
+>1 + null : number
+
+var r10 = c + null
+>r10 : number
+>c + null : number
+>c : E
+
+var r11 = E.a + null;
+>r11 : number
+>E.a + null : number
+>E.a : E
+>E : typeof E
+>a : E
+
+var r12 = E['a'] + null;
+>r12 : number
+>E['a'] + null : number
+>E['a'] : E
+>E : typeof E
+
+// null + string
+var r13 = null + d;
+>r13 : string
+>null + d : string
+>d : string
+
+var r14 = null + '';
+>r14 : string
+>null + '' : string
+
+var r15 = d + null;
+>r15 : string
+>d + null : string
+>d : string
+
+var r16 = '' + null;
+>r16 : string
+>'' + null : string
+

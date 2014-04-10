@@ -1,8 +1,17 @@
 === tests/cases/compiler/methodSignatureDeclarationEmit1.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 9 IdentifierName "foo" = { (n: number): void; (s: string): void; }
-Line 1 col 13 IdentifierName "n" = number
-Line 2 col 9 IdentifierName "foo" = { (n: number): void; (s: string): void; }
-Line 2 col 13 IdentifierName "s" = string
-Line 3 col 9 IdentifierName "foo" = { (n: number): void; (s: string): void; }
-Line 3 col 13 IdentifierName "a" = any
+class C {
+>C : C
+
+  public foo(n: number): void;
+>foo : { (n: number): void; (s: string): void; }
+>n : number
+
+  public foo(s: string): void;
+>foo : { (n: number): void; (s: string): void; }
+>s : string
+
+  public foo(a: any): void {
+>foo : { (n: number): void; (s: string): void; }
+>a : any
+  }
+}

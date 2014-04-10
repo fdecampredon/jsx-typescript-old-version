@@ -1,15 +1,33 @@
 === tests/cases/compiler/genericPrototypeProperty3.ts ===
-Line 0 col 6 IdentifierName "BaseEvent" = BaseEvent
-Line 1 col 0 IdentifierName "target" = {}
-Line 4 col 6 IdentifierName "MyEvent" = MyEvent<T>
-Line 4 col 14 IdentifierName "T" = T
-Line 4 col 25 IdentifierName "BaseEvent" = BaseEvent
-Line 5 col 0 IdentifierName "target" = T
-Line 5 col 12 IdentifierName "T" = T
-Line 7 col 6 IdentifierName "BaseEventWrapper" = BaseEventWrapper
-Line 8 col 0 IdentifierName "t" = BaseEvent
-Line 8 col 7 IdentifierName "BaseEvent" = BaseEvent
-Line 11 col 6 IdentifierName "MyEventWrapper" = MyEventWrapper
-Line 11 col 29 IdentifierName "BaseEventWrapper" = BaseEventWrapper
-Line 12 col 0 IdentifierName "t" = MyEvent<any>
-Line 12 col 7 IdentifierName "MyEvent" = MyEvent<T>
+class BaseEvent {
+>BaseEvent : BaseEvent
+
+    target: {};
+>target : {}
+}
+
+class MyEvent<T> extends BaseEvent { // T is instantiated to any in the prototype, which is assignable to {}
+>MyEvent : MyEvent<T>
+>T : T
+>BaseEvent : BaseEvent
+
+    target: T;
+>target : T
+>T : T
+}
+class BaseEventWrapper {
+>BaseEventWrapper : BaseEventWrapper
+
+    t: BaseEvent;
+>t : BaseEvent
+>BaseEvent : BaseEvent
+}
+
+class MyEventWrapper extends BaseEventWrapper {
+>MyEventWrapper : MyEventWrapper
+>BaseEventWrapper : BaseEventWrapper
+
+    t: MyEvent<any>;
+>t : MyEvent<any>
+>MyEvent : MyEvent<T>
+}

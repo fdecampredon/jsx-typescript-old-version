@@ -1,4 +1,10 @@
 === tests/cases/compiler/sourceMapValidationExportAssignment.ts ===
-Line 0 col 6 IdentifierName "a" = a
-Line 1 col 11 IdentifierName "c" = any
-Line 3 col 9 IdentifierName "a" = typeof a
+class a {
+>a : a
+
+    public c;
+>c : any
+}
+export = a;
+>a : typeof a
+

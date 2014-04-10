@@ -1,6 +1,10 @@
 === tests/cases/compiler/memberAccessOnConstructorType.ts ===
-Line 0 col 4 IdentifierName "f" = new() => void
-Line 1 col 0 EqualsWithTypeConversionExpression "f.arguments == 0" = boolean
-Line 1 col 0 MemberAccessExpression "f.arguments" = any
-Line 1 col 0 IdentifierName "f" = new() => void
-Line 1 col 2 IdentifierName "arguments" = any
+var f: new () => void;
+>f : new() => void
+
+f.arguments == 0;
+>f.arguments == 0 : boolean
+>f.arguments : any
+>f : new() => void
+>arguments : any
+

@@ -1,115 +1,215 @@
 === tests/cases/compiler/everyTypeAssignableToAny.ts ===
-Line 0 col 4 IdentifierName "a" = any
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 0 IdentifierName "foo" = string
-Line 5 col 4 IdentifierName "ac" = C
-Line 5 col 8 IdentifierName "C" = C
-Line 6 col 10 IdentifierName "I" = I
-Line 7 col 0 IdentifierName "foo" = string
-Line 9 col 4 IdentifierName "ai" = I
-Line 9 col 8 IdentifierName "I" = I
-Line 11 col 5 IdentifierName "E" = E
-Line 11 col 9 IdentifierName "A" = E
-Line 12 col 4 IdentifierName "ae" = E
-Line 12 col 8 IdentifierName "E" = E
-Line 14 col 4 IdentifierName "b" = number
-Line 15 col 4 IdentifierName "c" = string
-Line 16 col 4 IdentifierName "d" = boolean
-Line 17 col 4 IdentifierName "e" = Date
-Line 17 col 7 IdentifierName "Date" = Date
-Line 18 col 4 IdentifierName "f" = any
-Line 19 col 4 IdentifierName "g" = void
-Line 20 col 4 IdentifierName "h" = Object
-Line 20 col 7 IdentifierName "Object" = Object
-Line 21 col 4 IdentifierName "i" = {}
-Line 22 col 4 IdentifierName "j" = () => {}
-Line 23 col 4 IdentifierName "k" = Function
-Line 23 col 7 IdentifierName "Function" = Function
-Line 24 col 4 IdentifierName "l" = (x: number) => string
-Line 24 col 8 IdentifierName "x" = number
-Line 25 col 4 IdentifierName "m" = number[]
-Line 26 col 4 IdentifierName "n" = { foo: string; }
-Line 26 col 9 IdentifierName "foo" = string
-Line 27 col 4 IdentifierName "o" = <T>(x: T) => T
-Line 27 col 8 IdentifierName "T" = T
-Line 27 col 11 IdentifierName "x" = T
-Line 27 col 14 IdentifierName "T" = T
-Line 27 col 20 IdentifierName "T" = T
-Line 28 col 4 IdentifierName "p" = Number
-Line 28 col 7 IdentifierName "Number" = Number
-Line 29 col 4 IdentifierName "q" = String
-Line 29 col 7 IdentifierName "String" = String
-Line 30 col 0 AssignmentExpression "a = b" = number
-Line 30 col 0 IdentifierName "a" = any
-Line 31 col 4 IdentifierName "b" = number
-Line 32 col 0 AssignmentExpression "a = c" = string
-Line 32 col 0 IdentifierName "a" = any
-Line 32 col 4 IdentifierName "c" = string
-Line 33 col 0 AssignmentExpression "a = d" = boolean
-Line 33 col 0 IdentifierName "a" = any
-Line 33 col 4 IdentifierName "d" = boolean
-Line 34 col 0 AssignmentExpression "a = e" = Date
-Line 34 col 0 IdentifierName "a" = any
-Line 34 col 4 IdentifierName "e" = Date
-Line 35 col 0 AssignmentExpression "a = f" = any
-Line 35 col 0 IdentifierName "a" = any
-Line 35 col 4 IdentifierName "f" = any
-Line 36 col 0 AssignmentExpression "a = g" = void
-Line 36 col 0 IdentifierName "a" = any
-Line 36 col 4 IdentifierName "g" = void
-Line 37 col 0 AssignmentExpression "a = h" = Object
-Line 37 col 0 IdentifierName "a" = any
-Line 37 col 4 IdentifierName "h" = Object
-Line 38 col 0 AssignmentExpression "a = i" = {}
-Line 38 col 0 IdentifierName "a" = any
-Line 38 col 4 IdentifierName "i" = {}
-Line 39 col 0 AssignmentExpression "a = j" = () => {}
-Line 39 col 0 IdentifierName "a" = any
-Line 39 col 4 IdentifierName "j" = () => {}
-Line 40 col 0 AssignmentExpression "a = k" = Function
-Line 40 col 0 IdentifierName "a" = any
-Line 40 col 4 IdentifierName "k" = Function
-Line 41 col 0 AssignmentExpression "a = l" = (x: number) => string
-Line 41 col 0 IdentifierName "a" = any
-Line 41 col 4 IdentifierName "l" = (x: number) => string
-Line 42 col 0 AssignmentExpression "a = m" = number[]
-Line 42 col 0 IdentifierName "a" = any
-Line 42 col 4 IdentifierName "m" = number[]
-Line 43 col 0 AssignmentExpression "a = o" = <T>(x: T) => T
-Line 43 col 0 IdentifierName "a" = any
-Line 43 col 4 IdentifierName "o" = <T>(x: T) => T
-Line 44 col 0 AssignmentExpression "a = p" = Number
-Line 44 col 0 IdentifierName "a" = any
-Line 44 col 4 IdentifierName "p" = Number
-Line 45 col 0 AssignmentExpression "a = q" = String
-Line 45 col 0 IdentifierName "a" = any
-Line 45 col 4 IdentifierName "q" = String
-Line 46 col 0 AssignmentExpression "a = ac" = C
-Line 46 col 0 IdentifierName "a" = any
-Line 46 col 4 IdentifierName "ac" = C
-Line 47 col 0 AssignmentExpression "a = ai" = I
-Line 47 col 0 IdentifierName "a" = any
-Line 47 col 4 IdentifierName "ai" = I
-Line 48 col 0 AssignmentExpression "a = ae" = E
-Line 48 col 0 IdentifierName "a" = any
-Line 48 col 4 IdentifierName "ae" = E
-Line 50 col 9 IdentifierName "foo" = typeof foo
-Line 50 col 13 IdentifierName "T" = T
-Line 50 col 16 IdentifierName "U /*extends T*/" = U
-Line 50 col 33 IdentifierName "V" = V
-Line 50 col 43 IdentifierName "Date" = Date
-Line 50 col 49 IdentifierName "x" = T
-Line 50 col 52 IdentifierName "T" = T
-Line 50 col 55 IdentifierName "y" = U
-Line 50 col 58 IdentifierName "U" = U
-Line 50 col 61 IdentifierName "z" = V
-Line 50 col 64 IdentifierName "V" = V
-Line 51 col 0 AssignmentExpression "a = x" = T
-Line 51 col 0 IdentifierName "a" = any
-Line 51 col 8 IdentifierName "x" = T
-Line 52 col 0 AssignmentExpression "a = y" = U
-Line 52 col 0 IdentifierName "a" = any
-Line 52 col 8 IdentifierName "y" = U
-Line 53 col 0 AssignmentExpression "a = z" = V
-Line 53 col 0 IdentifierName "a" = any
-Line 53 col 8 IdentifierName "z" = V
+var a: any;
+>a : any
+
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+var ac: C;
+>ac : C
+>C : C
+
+interface I {
+>I : I
+
+    foo: string;
+>foo : string
+}
+var ai: I;
+>ai : I
+>I : I
+
+enum E { A }
+>E : E
+>A : E
+
+var ae: E;
+>ae : E
+>E : E
+
+var b: number;
+>b : number
+
+var c: string;
+>c : string
+
+var d: boolean;
+>d : boolean
+
+var e: Date;
+>e : Date
+>Date : Date
+
+var f: any;
+>f : any
+
+var g: void;
+>g : void
+
+var h: Object;
+>h : Object
+>Object : Object
+
+var i: {};
+>i : {}
+
+var j: () => {};
+>j : () => {}
+
+var k: Function;
+>k : Function
+>Function : Function
+
+var l: (x: number) => string;
+>l : (x: number) => string
+>x : number
+
+var m: number[];
+>m : number[]
+
+var n: { foo: string };
+>n : { foo: string; }
+>foo : string
+
+var o: <T>(x: T) => T;
+>o : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var p: Number;
+>p : Number
+>Number : Number
+
+var q: String;
+>q : String
+>String : String
+
+>a = b : number
+>a : any
+
+a = b;
+>b : number
+
+a = c;
+>a = c : string
+>a : any
+>c : string
+
+a = d;
+>a = d : boolean
+>a : any
+>d : boolean
+
+a = e;
+>a = e : Date
+>a : any
+>e : Date
+
+a = f;
+>a = f : any
+>a : any
+>f : any
+
+a = g;
+>a = g : void
+>a : any
+>g : void
+
+a = h;
+>a = h : Object
+>a : any
+>h : Object
+
+a = i;
+>a = i : {}
+>a : any
+>i : {}
+
+a = j;
+>a = j : () => {}
+>a : any
+>j : () => {}
+
+a = k;
+>a = k : Function
+>a : any
+>k : Function
+
+a = l;
+>a = l : (x: number) => string
+>a : any
+>l : (x: number) => string
+
+a = m;
+>a = m : number[]
+>a : any
+>m : number[]
+
+a = o;
+>a = o : <T>(x: T) => T
+>a : any
+>o : <T>(x: T) => T
+
+a = p; 
+>a = p : Number
+>a : any
+>p : Number
+
+a = q;
+>a = q : String
+>a : any
+>q : String
+
+a = ac;
+>a = ac : C
+>a : any
+>ac : C
+
+a = ai;
+>a = ai : I
+>a : any
+>ai : I
+
+a = ae;
+>a = ae : E
+>a : any
+>ae : E
+
+function foo<T, U /*extends T*/, V extends Date>(x: T, y: U, z: V) {
+>foo : typeof foo
+>T : T
+>U /*extends T*/ : U
+>V : V
+>Date : Date
+>x : T
+>T : T
+>y : U
+>U : U
+>z : V
+>V : V
+
+    a = x;
+>a = x : T
+>a : any
+>x : T
+
+    a = y;
+>a = y : U
+>a : any
+>y : U
+
+    a = z;
+>a = z : V
+>a : any
+>z : V
+}
+//function foo<T, U extends T, V extends Date>(x: T, y: U, z: V) {
+//    a = x;
+//    a = y;
+//    a = z;
+//}

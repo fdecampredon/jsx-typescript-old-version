@@ -1,11 +1,25 @@
 === tests/cases/compiler/addMoreCallSignaturesToBaseSignature2.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo
-Line 1 col 5 IdentifierName "bar" = number
-Line 4 col 10 IdentifierName "Bar" = Bar
-Line 4 col 22 IdentifierName "Foo" = Foo
-Line 5 col 5 IdentifierName "key" = string
-Line 8 col 4 IdentifierName "a" = Bar
-Line 8 col 7 IdentifierName "Bar" = Bar
-Line 9 col 4 IdentifierName "kitty" = string
-Line 9 col 12 InvocationExpression "a(1)" = string
-Line 9 col 12 IdentifierName "a" = Bar
+interface Foo {
+>Foo : Foo
+
+    (bar:number): string;
+>bar : number
+}
+
+interface Bar extends Foo {
+>Bar : Bar
+>Foo : Foo
+
+    (key: string): string;
+>key : string
+}
+
+var a: Bar;
+>a : Bar
+>Bar : Bar
+
+var kitty = a(1);
+>kitty : string
+>a(1) : string
+>a : Bar
+

@@ -1,8 +1,16 @@
 === tests/cases/compiler/B.ts ===
-Line 0 col 7 IdentifierName "a" = a
-Line 2 col 7 IdentifierName "A" = A
-Line 2 col 11 IdentifierName "a" = a
-Line 2 col 13 IdentifierName "A" = a.A
-Line 4 col 9 IdentifierName "A" = typeof a.A
+import a = require('A');
+>a : a
+
+import A = a.A;
+>A : A
+>a : a
+>A : a.A
+
+export = A;
+>A : typeof a.A
+
 === tests/cases/compiler/A.ts ===
-Line 0 col 13 IdentifierName "A" = A
+export class A {
+>A : A
+}

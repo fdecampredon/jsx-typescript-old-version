@@ -1,30 +1,53 @@
 === tests/cases/compiler/missingSelf.ts ===
-Line 0 col 6 IdentifierName "CalcButton" = CalcButton
-Line 2 col 11 IdentifierName "a" = () => void
-Line 2 col 17 InvocationExpression "this.onClick()" = void
-Line 2 col 17 MemberAccessExpression "this.onClick" = () => void
-Line 2 col 17 ThisKeyword "this" = CalcButton
-Line 2 col 22 IdentifierName "onClick" = () => void
-Line 3 col 11 IdentifierName "onClick" = () => void
-Line 6 col 6 IdentifierName "CalcButton2" = CalcButton2
-Line 8 col 11 IdentifierName "b" = () => void
-Line 8 col 17 ParenthesizedArrowFunctionExpression "() => this.onClick()" = () => void
-Line 8 col 23 InvocationExpression "this.onClick()" = void
-Line 8 col 23 MemberAccessExpression "this.onClick" = () => void
-Line 8 col 23 ThisKeyword "this" = CalcButton2
-Line 8 col 28 IdentifierName "onClick" = () => void
-Line 9 col 11 IdentifierName "onClick" = () => void
-Line 12 col 4 IdentifierName "c" = CalcButton
-Line 12 col 8 ObjectCreationExpression "new CalcButton()" = CalcButton
-Line 12 col 12 IdentifierName "CalcButton" = typeof CalcButton
-Line 13 col 0 InvocationExpression "c.a()" = void
-Line 13 col 0 MemberAccessExpression "c.a" = () => void
-Line 13 col 0 IdentifierName "c" = CalcButton
-Line 13 col 2 IdentifierName "a" = () => void
-Line 14 col 4 IdentifierName "c2" = CalcButton2
-Line 14 col 9 ObjectCreationExpression "new CalcButton2()" = CalcButton2
-Line 14 col 13 IdentifierName "CalcButton2" = typeof CalcButton2
-Line 15 col 0 InvocationExpression "c2.b()" = void
-Line 15 col 0 MemberAccessExpression "c2.b" = () => void
-Line 15 col 0 IdentifierName "c2" = CalcButton2
-Line 15 col 3 IdentifierName "b" = () => void
+class CalcButton
+>CalcButton : CalcButton
+{
+    public a() { this.onClick(); }
+>a : () => void
+>this.onClick() : void
+>this.onClick : () => void
+>this : CalcButton
+>onClick : () => void
+
+    public onClick() { }
+>onClick : () => void
+}
+
+class CalcButton2
+>CalcButton2 : CalcButton2
+{
+    public b() { () => this.onClick(); }
+>b : () => void
+>() => this.onClick() : () => void
+>this.onClick() : void
+>this.onClick : () => void
+>this : CalcButton2
+>onClick : () => void
+
+    public onClick() { }
+>onClick : () => void
+}
+
+var c = new CalcButton();
+>c : CalcButton
+>new CalcButton() : CalcButton
+>CalcButton : typeof CalcButton
+
+c.a();
+>c.a() : void
+>c.a : () => void
+>c : CalcButton
+>a : () => void
+
+var c2 = new CalcButton2();
+>c2 : CalcButton2
+>new CalcButton2() : CalcButton2
+>CalcButton2 : typeof CalcButton2
+
+c2.b();
+>c2.b() : void
+>c2.b : () => void
+>c2 : CalcButton2
+>b : () => void
+
+

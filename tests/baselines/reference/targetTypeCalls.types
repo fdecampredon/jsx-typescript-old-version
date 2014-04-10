@@ -1,31 +1,39 @@
 === tests/cases/compiler/targetTypeCalls.ts ===
-Line 0 col 4 IdentifierName "fra1" = (v: any) => string
-Line 0 col 11 IdentifierName "v" = any
-Line 0 col 28 InvocationExpression "function() { return function (v:string) {return v;}; }() // should work" = (v: string) => string
-Line 0 col 28 FunctionExpression "function() { return function (v:string) {return v;}; }" = () => (v: string) => string
-Line 0 col 48 FunctionExpression "function (v:string) {return v;}" = (v: string) => string
-Line 0 col 58 IdentifierName "v" = string
-Line 0 col 76 IdentifierName "v" = string
-Line 1 col 4 IdentifierName "fra2" = (v: any) => number
-Line 1 col 11 IdentifierName "v" = any
-Line 1 col 28 InvocationExpression "function() { return function () { return 0; } }() // should work" = () => number
-Line 1 col 28 FunctionExpression "function() { return function () { return 0; } }" = () => () => number
-Line 1 col 48 FunctionExpression "function () { return 0; }" = () => number
-Line 3 col 4 IdentifierName "fra3" = (v: any) => string
-Line 3 col 11 IdentifierName "v" = any
-Line 3 col 28 InvocationExpression "function() { return function() { return function(v) {return v;};}(); }() // should work" = (v: any) => any
-Line 3 col 28 FunctionExpression "function() { return function() { return function(v) {return v;};}(); }" = () => (v: any) => any
-Line 3 col 48 InvocationExpression "function() { return function(v) {return v;};}()" = (v: any) => any
-Line 3 col 48 FunctionExpression "function() { return function(v) {return v;};}" = () => (v: any) => any
-Line 3 col 68 FunctionExpression "function(v) {return v;}" = (v: any) => any
-Line 3 col 77 IdentifierName "v" = any
-Line 3 col 88 IdentifierName "v" = any
-Line 4 col 4 IdentifierName "fra4" = (v: any) => void
-Line 4 col 11 IdentifierName "v" = any
-Line 4 col 26 InvocationExpression "function() { return function() { return function(v) {return v;};}(); }() // should work" = (v: any) => any
-Line 4 col 26 FunctionExpression "function() { return function() { return function(v) {return v;};}(); }" = () => (v: any) => any
-Line 4 col 46 InvocationExpression "function() { return function(v) {return v;};}()" = (v: any) => any
-Line 4 col 46 FunctionExpression "function() { return function(v) {return v;};}" = () => (v: any) => any
-Line 4 col 66 FunctionExpression "function(v) {return v;}" = (v: any) => any
-Line 4 col 75 IdentifierName "v" = any
-Line 4 col 86 IdentifierName "v" = any
+var fra1: (v:any)=>string = function() { return function (v:string) {return v;}; }() // should work
+>fra1 : (v: any) => string
+>v : any
+>function() { return function (v:string) {return v;}; }() // should work : (v: string) => string
+>function() { return function (v:string) {return v;}; } : () => (v: string) => string
+>function (v:string) {return v;} : (v: string) => string
+>v : string
+>v : string
+
+var fra2: (v:any)=>number = function() { return function () { return 0; } }() // should work
+>fra2 : (v: any) => number
+>v : any
+>function() { return function () { return 0; } }() // should work : () => number
+>function() { return function () { return 0; } } : () => () => number
+>function () { return 0; } : () => number
+
+var fra3: (v:any)=>string = function() { return function() { return function(v) {return v;};}(); }() // should work
+>fra3 : (v: any) => string
+>v : any
+>function() { return function() { return function(v) {return v;};}(); }() // should work : (v: any) => any
+>function() { return function() { return function(v) {return v;};}(); } : () => (v: any) => any
+>function() { return function(v) {return v;};}() : (v: any) => any
+>function() { return function(v) {return v;};} : () => (v: any) => any
+>function(v) {return v;} : (v: any) => any
+>v : any
+>v : any
+
+var fra4: (v:any)=>void = function() { return function() { return function(v) {return v;};}(); }() // should work
+>fra4 : (v: any) => void
+>v : any
+>function() { return function() { return function(v) {return v;};}(); }() // should work : (v: any) => any
+>function() { return function() { return function(v) {return v;};}(); } : () => (v: any) => any
+>function() { return function(v) {return v;};}() : (v: any) => any
+>function() { return function(v) {return v;};} : () => (v: any) => any
+>function(v) {return v;} : (v: any) => any
+>v : any
+>v : any
+

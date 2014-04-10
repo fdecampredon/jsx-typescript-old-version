@@ -1,17 +1,33 @@
 === tests/cases/compiler/staticInstanceResolution.ts ===
-Line 0 col 6 IdentifierName "Comment" = Comment
-Line 2 col 11 IdentifierName "getDocCommentText" = () => void
-Line 7 col 11 IdentifierName "getDocCommentText" = (comments: Comment[]) => void
-Line 7 col 29 IdentifierName "comments" = Comment[]
-Line 7 col 39 IdentifierName "Comment" = Comment
-Line 9 col 0 InvocationExpression "comments[0].getDocCommentText()" = void
-Line 9 col 0 MemberAccessExpression "comments[0].getDocCommentText" = () => void
-Line 9 col 0 ElementAccessExpression "comments[0]" = Comment
-Line 9 col 0 IdentifierName "comments" = Comment[]
-Line 9 col 20 IdentifierName "getDocCommentText" = () => void
-Line 10 col 12 IdentifierName "c" = Comment
-Line 10 col 15 IdentifierName "Comment" = Comment
-Line 11 col 0 InvocationExpression "c.getDocCommentText()" = void
-Line 11 col 0 MemberAccessExpression "c.getDocCommentText" = () => void
-Line 11 col 0 IdentifierName "c" = Comment
-Line 11 col 10 IdentifierName "getDocCommentText" = () => void
+class Comment {
+>Comment : Comment
+
+    public getDocCommentText()
+>getDocCommentText : () => void
+    {
+
+    }
+
+    static getDocCommentText(comments: Comment[])
+>getDocCommentText : (comments: Comment[]) => void
+>comments : Comment[]
+>Comment : Comment
+    {
+        comments[0].getDocCommentText();
+>comments[0].getDocCommentText() : void
+>comments[0].getDocCommentText : () => void
+>comments[0] : Comment
+>comments : Comment[]
+>getDocCommentText : () => void
+
+        var c: Comment;
+>c : Comment
+>Comment : Comment
+
+        c.getDocCommentText();
+>c.getDocCommentText() : void
+>c.getDocCommentText : () => void
+>c : Comment
+>getDocCommentText : () => void
+    }
+}

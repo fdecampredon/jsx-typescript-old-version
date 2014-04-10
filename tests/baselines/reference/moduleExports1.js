@@ -1,3 +1,4 @@
+//// [moduleExports1.js]
 define(["require", "exports"], function(require, exports) {
     (function (TypeScript) {
         (function (Strasse) {

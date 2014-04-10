@@ -1,3 +1,4 @@
+//// [comparisonOperatorWithNoRelationshipObjectsOnProperty.js]
 var A1 = (function () {
     function A1() {
     }

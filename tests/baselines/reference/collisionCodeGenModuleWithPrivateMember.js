@@ -1,3 +1,14 @@
+//// [collisionCodeGenModuleWithPrivateMember.ts]
+module m1 {
+    class m1 {
+    }
+    var x = new m1();
+    export class c1 {
+    }
+}
+var foo = new m1.c1();
+
+//// [collisionCodeGenModuleWithPrivateMember.js]
 var m1;
 (function (_m1) {
     var m1 = (function () {

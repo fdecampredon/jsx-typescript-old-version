@@ -1,55 +1,121 @@
 === tests/cases/compiler/moduleAliasInterface.ts ===
-Line 0 col 7 IdentifierName "_modes" = _modes
-Line 1 col 18 IdentifierName "IMode" = IMode
-Line 5 col 14 IdentifierName "Mode" = Mode
-Line 12 col 7 IdentifierName "editor" = editor
-Line 13 col 8 IdentifierName "modes" = modes
-Line 13 col 16 IdentifierName "_modes" = _modes
-Line 15 col 5 IdentifierName "i" = _modes.IMode
-Line 15 col 9 IdentifierName "modes" = modes
-Line 15 col 15 IdentifierName "IMode" = _modes.IMode
-Line 18 col 7 IdentifierName "Bug" = Bug
-Line 19 col 14 IdentifierName "p1" = _modes.IMode
-Line 19 col 18 IdentifierName "modes" = modes
-Line 19 col 24 IdentifierName "IMode" = _modes.IMode
-Line 19 col 31 IdentifierName "p2" = _modes.Mode
-Line 19 col 35 IdentifierName "modes" = modes
-Line 19 col 41 IdentifierName "Mode" = _modes.Mode
-Line 20 col 9 IdentifierName "foo" = (p1: _modes.IMode) => void
-Line 20 col 13 IdentifierName "p1" = _modes.IMode
-Line 20 col 16 IdentifierName "modes" = modes
-Line 20 col 22 IdentifierName "IMode" = _modes.IMode
-Line 26 col 7 IdentifierName "modesOuter" = modesOuter
-Line 26 col 20 IdentifierName "_modes" = _modes
-Line 27 col 7 IdentifierName "editor2" = editor2
-Line 29 col 5 IdentifierName "i" = _modes.IMode
-Line 29 col 9 IdentifierName "modesOuter" = modesOuter
-Line 29 col 20 IdentifierName "IMode" = _modes.IMode
-Line 31 col 7 IdentifierName "Bug" = Bug
-Line 32 col 17 IdentifierName "p1" = _modes.IMode
-Line 32 col 21 IdentifierName "modesOuter" = modesOuter
-Line 32 col 32 IdentifierName "IMode" = _modes.IMode
-Line 32 col 39 IdentifierName "p2" = _modes.Mode
-Line 32 col 43 IdentifierName "modesOuter" = modesOuter
-Line 32 col 54 IdentifierName "Mode" = _modes.Mode
-Line 36 col 9 IdentifierName "Foo" = Foo
-Line 36 col 28 IdentifierName "Bar" = Bar
-Line 38 col 8 IdentifierName "Bug2" = Bug2
-Line 39 col 18 IdentifierName "p1" = Foo.Bar
-Line 39 col 22 IdentifierName "Foo" = Foo
-Line 39 col 26 IdentifierName "Bar" = Foo.Bar
-Line 39 col 31 IdentifierName "p2" = _modes.Mode
-Line 39 col 35 IdentifierName "modesOuter" = modesOuter
-Line 39 col 46 IdentifierName "Mode" = _modes.Mode
-Line 43 col 7 IdentifierName "A1" = A1
-Line 44 col 21 IdentifierName "A1I1" = A1I1
-Line 45 col 17 IdentifierName "A1C1" = A1C1
-Line 48 col 7 IdentifierName "B1" = B1
-Line 49 col 11 IdentifierName "A1Alias1" = A1Alias1
-Line 49 col 22 IdentifierName "A1" = A1
-Line 51 col 8 IdentifierName "i" = A1.A1I1
-Line 51 col 12 IdentifierName "A1Alias1" = A1Alias1
-Line 51 col 21 IdentifierName "A1I1" = A1.A1I1
-Line 52 col 8 IdentifierName "c" = A1.A1C1
-Line 52 col 12 IdentifierName "A1Alias1" = A1Alias1
-Line 52 col 21 IdentifierName "A1C1" = A1.A1C1
+module _modes {
+>_modes : _modes
+
+ export interface IMode {
+>IMode : IMode
+  
+ }
+ 
+ export class Mode {
+>Mode : Mode
+  
+ }
+}
+
+// _modes. // produces an internal error - please implement in derived class
+
+module editor {
+>editor : editor
+
+ import modes = _modes;
+>modes : modes
+>_modes : _modes
+ 
+ var i : modes.IMode;
+>i : _modes.IMode
+>modes : modes
+>IMode : _modes.IMode
+  
+ // If you just use p1:modes, the compiler accepts it - should be an error
+ class Bug { 
+>Bug : Bug
+
+  constructor(p1: modes.IMode, p2: modes.Mode) { }// should be an error on p2 - it's not exported
+>p1 : _modes.IMode
+>modes : modes
+>IMode : _modes.IMode
+>p2 : _modes.Mode
+>modes : modes
+>Mode : _modes.Mode
+
+  public foo(p1:modes.IMode) {
+>foo : (p1: _modes.IMode) => void
+>p1 : _modes.IMode
+>modes : modes
+>IMode : _modes.IMode
+   
+  } 
+ }
+}
+
+import modesOuter = _modes;
+>modesOuter : modesOuter
+>_modes : _modes
+
+module editor2 {
+>editor2 : editor2
+ 
+ var i : modesOuter.IMode;
+>i : _modes.IMode
+>modesOuter : modesOuter
+>IMode : _modes.IMode
+ 
+ class Bug {
+>Bug : Bug
+
+     constructor(p1: modesOuter.IMode, p2: modesOuter.Mode) { }// no error here, since modesOuter is declared externally
+>p1 : _modes.IMode
+>modesOuter : modesOuter
+>IMode : _modes.IMode
+>p2 : _modes.Mode
+>modesOuter : modesOuter
+>Mode : _modes.Mode
+  
+ }
+ 
+  module Foo { export class Bar{} }
+>Foo : Foo
+>Bar : Bar
+ 
+  class Bug2 {
+>Bug2 : Bug2
+
+      constructor(p1: Foo.Bar, p2: modesOuter.Mode) { }
+>p1 : Foo.Bar
+>Foo : Foo
+>Bar : Foo.Bar
+>p2 : _modes.Mode
+>modesOuter : modesOuter
+>Mode : _modes.Mode
+  }
+}
+
+module A1 {
+>A1 : A1
+
+    export interface A1I1 {}
+>A1I1 : A1I1
+
+    export class A1C1 {}
+>A1C1 : A1C1
+}
+
+module B1 {
+>B1 : B1
+
+    import A1Alias1 = A1;
+>A1Alias1 : A1Alias1
+>A1 : A1
+    
+    var i : A1Alias1.A1I1;   
+>i : A1.A1I1
+>A1Alias1 : A1Alias1
+>A1I1 : A1.A1I1
+
+    var c : A1Alias1.A1C1;
+>c : A1.A1C1
+>A1Alias1 : A1Alias1
+>A1C1 : A1.A1C1
+}
+

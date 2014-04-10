@@ -1,3 +1,4 @@
+//// [implementingAnInterfaceExtendingClassWithPrivates.js]
 var Foo = (function () {
     function Foo() {
     }

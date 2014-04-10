@@ -1,3 +1,4 @@
+//// [genericArrayWithoutTypeAnnotation.js]
 var Bar = (function () {
     function Bar() {
     }

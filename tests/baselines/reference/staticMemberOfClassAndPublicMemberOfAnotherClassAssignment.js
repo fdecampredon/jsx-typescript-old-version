@@ -1,3 +1,4 @@
+//// [staticMemberOfClassAndPublicMemberOfAnotherClassAssignment.js]
 var B = (function () {
     function B() {
     }

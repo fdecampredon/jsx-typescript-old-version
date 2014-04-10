@@ -1,3 +1,4 @@
+//// [moduleWithNoValuesAsType.js]
 var a;
 
 var b;

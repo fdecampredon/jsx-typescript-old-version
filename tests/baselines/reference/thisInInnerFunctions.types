@@ -1,25 +1,51 @@
 === tests/cases/compiler/thisInInnerFunctions.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "x" = string
-Line 2 col 0 IdentifierName "bar" = () => void
-Line 3 col 17 IdentifierName "inner" = () => void
-Line 4 col 0 AssignmentExpression "this.y = "hi"" = string
-Line 4 col 0 MemberAccessExpression "this.y" = any
-Line 4 col 0 ThisKeyword "this" = any
-Line 4 col 17 IdentifierName "y" = any
-Line 5 col 16 IdentifierName "f" = () => any
-Line 5 col 20 ParenthesizedArrowFunctionExpression "() => this.y" = () => any
-Line 5 col 26 MemberAccessExpression "this.y" = any
-Line 5 col 26 ThisKeyword "this" = any
-Line 5 col 31 IdentifierName "y" = any
-Line 10 col 9 IdentifierName "test" = typeof test
-Line 11 col 8 IdentifierName "x" = () => void
-Line 11 col 12 ParenthesizedArrowFunctionExpression "() => {
+class Foo {
+>Foo : Foo
+
+    x = "hello";
+>x : string
+
+    bar() {
+>bar : () => void
+
+        function inner() {
+>inner : () => void
+
+            this.y = "hi"; // 'this' should be not type to 'Foo' either
+>this.y = "hi" : string
+>this.y : any
+>this : any
+>y : any
+
+            var f = () => this.y;  // 'this' should be not type to 'Foo' either
+>f : () => any
+>() => this.y : () => any
+>this.y : any
+>this : any
+>y : any
+        }
+    }
+}
+
+function test() {
+>test : typeof test
+
+    var x = () => {
+>x : () => void
+>() => {
         (() => this)();
         this;
-    }" = () => void
-Line 12 col 0 InvocationExpression "(() => this)()" = any
-Line 12 col 0 ParenthesizedExpression "(() => this)" = () => any
-Line 12 col 9 ParenthesizedArrowFunctionExpression "() => this" = () => any
-Line 12 col 15 ThisKeyword "this" = any
-Line 13 col 0 ThisKeyword "this" = any
+    } : () => void
+
+        (() => this)();
+>(() => this)() : any
+>(() => this) : () => any
+>() => this : () => any
+>this : any
+
+        this;
+>this : any
+
+    };
+}
+

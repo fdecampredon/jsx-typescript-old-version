@@ -1,13 +1,32 @@
 === tests/cases/compiler/constructorArgs.ts ===
-Line 0 col 10 IdentifierName "Options" = Options
-Line 1 col 0 IdentifierName "value" = number
-Line 4 col 6 IdentifierName "Super" = Super
-Line 5 col 13 IdentifierName "value" = number
-Line 9 col 6 IdentifierName "Sub" = Sub
-Line 9 col 18 IdentifierName "Super" = Super
-Line 10 col 20 IdentifierName "options" = Options
-Line 10 col 28 IdentifierName "Options" = Options
-Line 11 col 0 InvocationExpression "super(options.value)" = void
-Line 11 col 8 MemberAccessExpression "options.value" = number
-Line 11 col 8 IdentifierName "options" = Options
-Line 11 col 16 IdentifierName "value" = number
+interface Options {
+>Options : Options
+
+ value: number;
+>value : number
+}
+
+class Super {
+>Super : Super
+
+ constructor(value:number) {
+>value : number
+ }
+}
+
+class Sub extends Super {
+>Sub : Sub
+>Super : Super
+
+ constructor(public options:Options) {
+>options : Options
+>Options : Options
+
+  super(options.value);
+>super(options.value) : void
+>options.value : number
+>options : Options
+>value : number
+ } 
+}
+

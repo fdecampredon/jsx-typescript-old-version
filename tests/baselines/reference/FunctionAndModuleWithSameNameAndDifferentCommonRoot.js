@@ -1,3 +1,23 @@
+//// [function.ts]
+module A {
+    export function Point() {
+        return { x: 0, y: 0 };
+    }
+}
+//// [module.ts]
+module B {
+    export module Point {
+        export var Origin = { x: 0, y: 0 };
+    }
+}
+//// [test.ts]
+var fn: () => { x: number; y: number };
+var fn = A.Point;
+
+var cl: { x: number; y: number; }
+var cl = B.Point.Origin;
+
+
 //// [function.js]
 var A;
 (function (A) {

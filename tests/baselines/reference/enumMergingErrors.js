@@ -1,3 +1,4 @@
+//// [enumMergingErrors.js]
 // Enum with constant, computed, constant members split across 3 declarations with the same root module
 var M;
 (function (M) {

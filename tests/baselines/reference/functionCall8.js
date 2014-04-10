@@ -1,3 +1,4 @@
+//// [functionCall8.js]
 function foo(a) {
 }
 foo('foo');

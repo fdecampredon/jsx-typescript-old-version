@@ -1,37 +1,67 @@
 === tests/cases/compiler/m7Bugs.ts ===
-Line 1 col 10 IdentifierName "ISomething" = ISomething
-Line 2 col 0 IdentifierName "something" = number
-Line 5 col 4 IdentifierName "s" = ISomething
-Line 5 col 7 IdentifierName "ISomething" = ISomething
-Line 5 col 20 CastExpression "<ISomething>({ })" = ISomething
-Line 5 col 21 IdentifierName "ISomething" = ISomething
-Line 5 col 32 ParenthesizedExpression "({ })" = {}
-Line 5 col 33 ObjectLiteralExpression "{ }" = {}
-Line 9 col 10 IdentifierName "A" = A
-Line 9 col 14 IdentifierName "x" = string
-Line 11 col 10 IdentifierName "B" = B
-Line 11 col 20 IdentifierName "A" = A
-Line 13 col 4 IdentifierName "x" = B
-Line 13 col 7 IdentifierName "B" = B
-Line 13 col 11 CastExpression "<B>{ }" = B
-Line 13 col 12 IdentifierName "B" = B
-Line 13 col 14 ObjectLiteralExpression "{ }" = {}
-Line 15 col 6 IdentifierName "C1" = C1
-Line 16 col 8 IdentifierName "x" = string
-Line 19 col 6 IdentifierName "C2" = C2
-Line 19 col 17 IdentifierName "C1" = C1
-Line 21 col 4 IdentifierName "y1" = C1
-Line 21 col 8 IdentifierName "C1" = C1
-Line 21 col 13 ObjectCreationExpression "new C2()" = C2
-Line 21 col 17 IdentifierName "C2" = typeof C2
-Line 22 col 4 IdentifierName "y2" = C1
-Line 22 col 8 IdentifierName "C1" = C1
-Line 22 col 13 CastExpression "<C1> new C2()" = C1
-Line 22 col 14 IdentifierName "C1" = C1
-Line 22 col 18 ObjectCreationExpression "new C2()" = C2
-Line 22 col 22 IdentifierName "C2" = typeof C2
-Line 23 col 4 IdentifierName "y3" = C1
-Line 23 col 8 IdentifierName "C1" = C1
-Line 23 col 13 CastExpression "<C1> {}" = C1
-Line 23 col 14 IdentifierName "C1" = C1
-Line 23 col 18 ObjectLiteralExpression "{}" = {}
+// scenario 1
+interface ISomething {
+>ISomething : ISomething
+
+   something: number;
+>something : number
+}
+
+var s: ISomething = <ISomething>({ });
+>s : ISomething
+>ISomething : ISomething
+><ISomething>({ }) : ISomething
+>ISomething : ISomething
+>({ }) : {}
+>{ } : {}
+
+
+// scenario 2
+interface A { x: string; }
+>A : A
+>x : string
+
+interface B extends A { }
+>B : B
+>A : A
+
+var x: B = <B>{ };
+>x : B
+>B : B
+><B>{ } : B
+>B : B
+>{ } : {}
+
+class C1 {
+>C1 : C1
+
+	public x: string;
+>x : string
+}
+
+class C2 extends C1 {}
+>C2 : C2
+>C1 : C1
+
+var y1: C1 = new C2();
+>y1 : C1
+>C1 : C1
+>new C2() : C2
+>C2 : typeof C2
+
+var y2: C1 = <C1> new C2();
+>y2 : C1
+>C1 : C1
+><C1> new C2() : C1
+>C1 : C1
+>new C2() : C2
+>C2 : typeof C2
+
+var y3: C1 = <C1> {};
+>y3 : C1
+>C1 : C1
+><C1> {} : C1
+>C1 : C1
+>{} : {}
+
+

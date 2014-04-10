@@ -1,3 +1,4 @@
+//// [classMemberInitializerScoping.js]
 var aaa = 1;
 var CCC = (function () {
     function CCC(aaa) {

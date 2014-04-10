@@ -1,22 +1,36 @@
 === tests/cases/compiler/genericPrototypeProperty.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "foo" = (x: T) => T
-Line 2 col 8 IdentifierName "x" = T
-Line 2 col 11 IdentifierName "T" = T
-Line 2 col 15 IdentifierName "T" = T
-Line 5 col 4 IdentifierName "r" = C<any>
-Line 5 col 8 MemberAccessExpression "C.prototype" = C<any>
-Line 5 col 8 IdentifierName "C" = typeof C
-Line 5 col 10 IdentifierName "prototype" = C<any>
-Line 7 col 4 IdentifierName "r2" = any
-Line 7 col 9 MemberAccessExpression "r.x" = any
-Line 7 col 9 IdentifierName "r" = C<any>
-Line 7 col 11 IdentifierName "x" = any
-Line 8 col 4 IdentifierName "r3" = any
-Line 8 col 9 InvocationExpression "r.foo(null)" = any
-Line 8 col 9 MemberAccessExpression "r.foo" = (x: any) => any
-Line 8 col 9 IdentifierName "r" = C<any>
-Line 8 col 11 IdentifierName "foo" = (x: any) => any
+class C<T> {
+>C : C<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+
+    foo(x: T): T { return null; }
+>foo : (x: T) => T
+>x : T
+>T : T
+>T : T
+}
+
+var r = C.prototype;
+>r : C<any>
+>C.prototype : C<any>
+>C : typeof C
+>prototype : C<any>
+
+// should be any
+var r2 = r.x
+>r2 : any
+>r.x : any
+>r : C<any>
+>x : any
+
+var r3 = r.foo(null);
+>r3 : any
+>r.foo(null) : any
+>r.foo : (x: any) => any
+>r : C<any>
+>foo : (x: any) => any
+

@@ -1,21 +1,28 @@
 === tests/cases/compiler/genericFunctions2.ts ===
-Line 0 col 17 IdentifierName "map" = typeof map
-Line 0 col 22 IdentifierName "T" = T
-Line 0 col 25 IdentifierName "U" = U
-Line 0 col 30 IdentifierName "items" = T[]
-Line 0 col 37 IdentifierName "T" = T
-Line 0 col 42 IdentifierName "f" = (x: T) => U
-Line 0 col 46 IdentifierName "x" = T
-Line 0 col 49 IdentifierName "T" = T
-Line 0 col 55 IdentifierName "U" = U
-Line 0 col 59 IdentifierName "U" = U
-Line 2 col 4 IdentifierName "myItems" = string[]
-Line 3 col 4 IdentifierName "lengths" = number[]
-Line 3 col 14 InvocationExpression "map(myItems, x => x.length)" = number[]
-Line 3 col 14 IdentifierName "map" = typeof map
-Line 3 col 18 IdentifierName "myItems" = string[]
-Line 3 col 27 SimpleArrowFunctionExpression "x => x.length" = (x: string) => number
-Line 3 col 27 IdentifierName "x" = string
-Line 3 col 32 MemberAccessExpression "x.length" = number
-Line 3 col 32 IdentifierName "x" = string
-Line 3 col 34 IdentifierName "length" = number
+declare function map <T, U > (items: T[], f: (x: T) => U): U[];
+>map : typeof map
+>T : T
+>U : U
+>items : T[]
+>T : T
+>f : (x: T) => U
+>x : T
+>T : T
+>U : U
+>U : U
+
+var myItems: string[];
+>myItems : string[]
+
+var lengths = map(myItems, x => x.length);
+>lengths : number[]
+>map(myItems, x => x.length) : number[]
+>map : typeof map
+>myItems : string[]
+>x => x.length : (x: string) => number
+>x : string
+>x.length : number
+>x : string
+>length : number
+
+

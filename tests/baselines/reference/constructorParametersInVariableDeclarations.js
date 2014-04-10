@@ -1,3 +1,4 @@
+//// [constructorParametersInVariableDeclarations.js]
 var A = (function () {
     function A(x) {
         this.a = x;

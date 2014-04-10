@@ -1,3 +1,4 @@
+//// [genericMemberFunction.js]
 define(["require", "exports"], function(require, exports) {
     var BuildError = (function () {
         function BuildError() {

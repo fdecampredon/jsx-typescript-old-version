@@ -1,8 +1,18 @@
 === tests/cases/compiler/mergedEnumDeclarationCodeGen.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 1 col 0 IdentifierName "a" = E
-Line 2 col 0 IdentifierName "b" = E
-Line 2 col 8 IdentifierName "a" = E
-Line 4 col 5 IdentifierName "E" = E
-Line 5 col 0 IdentifierName "c" = E
-Line 5 col 8 IdentifierName "a" = E
+enum E {
+>E : E
+
+    a,
+>a : E
+
+    b = a
+>b : E
+>a : E
+}
+enum E {
+>E : E
+
+    c = a
+>c : E
+>a : E
+}

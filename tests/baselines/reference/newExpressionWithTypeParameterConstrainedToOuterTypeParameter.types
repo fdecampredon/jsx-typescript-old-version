@@ -1,13 +1,21 @@
 === tests/cases/compiler/newExpressionWithTypeParameterConstrainedToOuterTypeParameter.ts ===
-Line 0 col 10 IdentifierName "I" = I<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 9 IdentifierName "U" = U
-Line 1 col 19 IdentifierName "T" = T
-Line 1 col 22 IdentifierName "u" = U
-Line 1 col 25 IdentifierName "U" = U
-Line 1 col 29 IdentifierName "U" = U
-Line 3 col 4 IdentifierName "i" = I<string>
-Line 3 col 7 IdentifierName "I" = I<T>
-Line 4 col 4 IdentifierName "y" = string
-Line 4 col 8 ObjectCreationExpression "new i("")" = string
-Line 4 col 12 IdentifierName "i" = I<string>
+interface I<T> {
+>I : I<T>
+>T : T
+
+    new <U extends T>(u: U): U;
+>U : U
+>T : T
+>u : U
+>U : U
+>U : U
+}
+var i: I<string>;
+>i : I<string>
+>I : I<T>
+
+var y = new i(""); // y should be string
+>y : string
+>new i("") : string
+>i : I<string>
+

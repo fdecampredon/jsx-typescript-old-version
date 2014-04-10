@@ -1,99 +1,162 @@
 === tests/cases/compiler/logicalNotOperatorWithStringType.ts ===
-Line 1 col 4 IdentifierName "STRING" = string
-Line 2 col 4 IdentifierName "STRING1" = string[]
-Line 2 col 24 ArrayLiteralExpression "["", "abc"]" = string[]
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 6 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "a" = string
-Line 8 col 11 IdentifierName "foo" = () => string
-Line 10 col 7 IdentifierName "M" = M
-Line 11 col 15 IdentifierName "n" = string
-Line 14 col 4 IdentifierName "objA" = A
-Line 14 col 11 ObjectCreationExpression "new A()" = A
-Line 14 col 15 IdentifierName "A" = typeof A
-Line 17 col 4 IdentifierName "ResultIsBoolean1" = boolean
-Line 17 col 23 LogicalNotExpression "!STRING" = boolean
-Line 17 col 24 IdentifierName "STRING" = string
-Line 18 col 4 IdentifierName "ResultIsBoolean2" = boolean
-Line 18 col 23 LogicalNotExpression "!STRING1" = boolean
-Line 18 col 24 IdentifierName "STRING1" = string[]
-Line 21 col 4 IdentifierName "ResultIsBoolean3" = boolean
-Line 21 col 23 LogicalNotExpression "!""" = boolean
-Line 22 col 4 IdentifierName "ResultIsBoolean4" = boolean
-Line 22 col 23 LogicalNotExpression "!{ x: "", y: "" }" = boolean
-Line 22 col 24 ObjectLiteralExpression "{ x: "", y: "" }" = { x: string; y: string; }
-Line 22 col 26 IdentifierName "x" = string
-Line 22 col 33 IdentifierName "y" = string
-Line 23 col 4 IdentifierName "ResultIsBoolean5" = boolean
-Line 23 col 23 LogicalNotExpression "!{ x: "", y: (s: string) => { return s; } }" = boolean
-Line 23 col 24 ObjectLiteralExpression "{ x: "", y: (s: string) => { return s; } }" = { x: string; y: (s: string) => string; }
-Line 23 col 26 IdentifierName "x" = string
-Line 23 col 33 IdentifierName "y" = (s: string) => string
-Line 23 col 36 ParenthesizedArrowFunctionExpression "(s: string) => { return s; }" = (s: string) => string
-Line 23 col 37 IdentifierName "s" = string
-Line 23 col 60 IdentifierName "s" = string
-Line 26 col 4 IdentifierName "ResultIsBoolean6" = boolean
-Line 26 col 23 LogicalNotExpression "!objA.a" = boolean
-Line 26 col 24 MemberAccessExpression "objA.a" = string
-Line 26 col 24 IdentifierName "objA" = A
-Line 26 col 29 IdentifierName "a" = string
-Line 27 col 4 IdentifierName "ResultIsBoolean7" = boolean
-Line 27 col 23 LogicalNotExpression "!M.n" = boolean
-Line 27 col 24 MemberAccessExpression "M.n" = string
-Line 27 col 24 IdentifierName "M" = typeof M
-Line 27 col 26 IdentifierName "n" = string
-Line 28 col 4 IdentifierName "ResultIsBoolean8" = boolean
-Line 28 col 23 LogicalNotExpression "!STRING1[0]" = boolean
-Line 28 col 24 ElementAccessExpression "STRING1[0]" = string
-Line 28 col 24 IdentifierName "STRING1" = string[]
-Line 29 col 4 IdentifierName "ResultIsBoolean9" = boolean
-Line 29 col 23 LogicalNotExpression "!foo()" = boolean
-Line 29 col 24 InvocationExpression "foo()" = string
-Line 29 col 24 IdentifierName "foo" = typeof foo
-Line 30 col 4 IdentifierName "ResultIsBoolean10" = boolean
-Line 30 col 24 LogicalNotExpression "!A.foo()" = boolean
-Line 30 col 25 InvocationExpression "A.foo()" = string
-Line 30 col 25 MemberAccessExpression "A.foo" = () => string
-Line 30 col 25 IdentifierName "A" = typeof A
-Line 30 col 27 IdentifierName "foo" = () => string
-Line 31 col 4 IdentifierName "ResultIsBoolean11" = boolean
-Line 31 col 24 LogicalNotExpression "!(STRING + STRING)" = boolean
-Line 31 col 25 ParenthesizedExpression "(STRING + STRING)" = string
-Line 31 col 26 AddExpression "STRING + STRING" = string
-Line 31 col 26 IdentifierName "STRING" = string
-Line 31 col 35 IdentifierName "STRING" = string
-Line 32 col 4 IdentifierName "ResultIsBoolean12" = boolean
-Line 32 col 24 LogicalNotExpression "!STRING.charAt(0)" = boolean
-Line 32 col 25 InvocationExpression "STRING.charAt(0)" = string
-Line 32 col 25 MemberAccessExpression "STRING.charAt" = (pos: number) => string
-Line 32 col 25 IdentifierName "STRING" = string
-Line 32 col 32 IdentifierName "charAt" = (pos: number) => string
-Line 35 col 4 IdentifierName "ResultIsBoolean13" = boolean
-Line 35 col 24 LogicalNotExpression "!!STRING" = boolean
-Line 35 col 25 LogicalNotExpression "!STRING" = boolean
-Line 35 col 26 IdentifierName "STRING" = string
-Line 36 col 4 IdentifierName "ResultIsBoolean14" = boolean
-Line 36 col 24 LogicalNotExpression "!!!(STRING + STRING)" = boolean
-Line 36 col 25 LogicalNotExpression "!!(STRING + STRING)" = boolean
-Line 36 col 26 LogicalNotExpression "!(STRING + STRING)" = boolean
-Line 36 col 27 ParenthesizedExpression "(STRING + STRING)" = string
-Line 36 col 28 AddExpression "STRING + STRING" = string
-Line 36 col 28 IdentifierName "STRING" = string
-Line 36 col 37 IdentifierName "STRING" = string
-Line 37 col 0 LogicalNotExpression "// miss assignment operators
-!""" = boolean
-Line 40 col 0 LogicalNotExpression "!STRING" = boolean
-Line 40 col 1 IdentifierName "STRING" = string
-Line 41 col 0 LogicalNotExpression "!STRING1" = boolean
-Line 41 col 1 IdentifierName "STRING1" = string[]
-Line 42 col 0 LogicalNotExpression "!foo()" = boolean
-Line 42 col 1 InvocationExpression "foo()" = string
-Line 42 col 1 IdentifierName "foo" = typeof foo
-Line 43 col 0 CommaExpression "!objA.a,M.n" = string
-Line 43 col 0 LogicalNotExpression "!objA.a" = boolean
-Line 43 col 1 MemberAccessExpression "objA.a" = string
-Line 43 col 1 IdentifierName "objA" = A
-Line 43 col 6 IdentifierName "a" = string
-Line 43 col 8 MemberAccessExpression "M.n" = string
-Line 43 col 8 IdentifierName "M" = typeof M
-Line 43 col 10 IdentifierName "n" = string
+// ! operator on string type
+var STRING: string;
+>STRING : string
+
+var STRING1: string[] = ["", "abc"];
+>STRING1 : string[]
+>["", "abc"] : string[]
+
+function foo(): string { return "abc"; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: string;
+>a : string
+
+    static foo() { return ""; }
+>foo : () => string
+}
+module M {
+>M : M
+
+    export var n: string;
+>n : string
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// string type var
+var ResultIsBoolean1 = !STRING;
+>ResultIsBoolean1 : boolean
+>!STRING : boolean
+>STRING : string
+
+var ResultIsBoolean2 = !STRING1;
+>ResultIsBoolean2 : boolean
+>!STRING1 : boolean
+>STRING1 : string[]
+
+// string type literal
+var ResultIsBoolean3 = !"";
+>ResultIsBoolean3 : boolean
+>!"" : boolean
+
+var ResultIsBoolean4 = !{ x: "", y: "" };
+>ResultIsBoolean4 : boolean
+>!{ x: "", y: "" } : boolean
+>{ x: "", y: "" } : { x: string; y: string; }
+>x : string
+>y : string
+
+var ResultIsBoolean5 = !{ x: "", y: (s: string) => { return s; } };
+>ResultIsBoolean5 : boolean
+>!{ x: "", y: (s: string) => { return s; } } : boolean
+>{ x: "", y: (s: string) => { return s; } } : { x: string; y: (s: string) => string; }
+>x : string
+>y : (s: string) => string
+>(s: string) => { return s; } : (s: string) => string
+>s : string
+>s : string
+
+// string type expressions
+var ResultIsBoolean6 = !objA.a;
+>ResultIsBoolean6 : boolean
+>!objA.a : boolean
+>objA.a : string
+>objA : A
+>a : string
+
+var ResultIsBoolean7 = !M.n;
+>ResultIsBoolean7 : boolean
+>!M.n : boolean
+>M.n : string
+>M : typeof M
+>n : string
+
+var ResultIsBoolean8 = !STRING1[0];
+>ResultIsBoolean8 : boolean
+>!STRING1[0] : boolean
+>STRING1[0] : string
+>STRING1 : string[]
+
+var ResultIsBoolean9 = !foo();
+>ResultIsBoolean9 : boolean
+>!foo() : boolean
+>foo() : string
+>foo : typeof foo
+
+var ResultIsBoolean10 = !A.foo();
+>ResultIsBoolean10 : boolean
+>!A.foo() : boolean
+>A.foo() : string
+>A.foo : () => string
+>A : typeof A
+>foo : () => string
+
+var ResultIsBoolean11 = !(STRING + STRING);
+>ResultIsBoolean11 : boolean
+>!(STRING + STRING) : boolean
+>(STRING + STRING) : string
+>STRING + STRING : string
+>STRING : string
+>STRING : string
+
+var ResultIsBoolean12 = !STRING.charAt(0);
+>ResultIsBoolean12 : boolean
+>!STRING.charAt(0) : boolean
+>STRING.charAt(0) : string
+>STRING.charAt : (pos: number) => string
+>STRING : string
+>charAt : (pos: number) => string
+
+// multiple ! operator
+var ResultIsBoolean13 = !!STRING;
+>ResultIsBoolean13 : boolean
+>!!STRING : boolean
+>!STRING : boolean
+>STRING : string
+
+var ResultIsBoolean14 = !!!(STRING + STRING);
+>ResultIsBoolean14 : boolean
+>!!!(STRING + STRING) : boolean
+>!!(STRING + STRING) : boolean
+>!(STRING + STRING) : boolean
+>(STRING + STRING) : string
+>STRING + STRING : string
+>STRING : string
+>STRING : string
+
+>// miss assignment operators
+!"" : boolean
+
+// miss assignment operators
+!"";
+!STRING;
+>!STRING : boolean
+>STRING : string
+
+!STRING1;
+>!STRING1 : boolean
+>STRING1 : string[]
+
+!foo();
+>!foo() : boolean
+>foo() : string
+>foo : typeof foo
+
+!objA.a,M.n;
+>!objA.a,M.n : string
+>!objA.a : boolean
+>objA.a : string
+>objA : A
+>a : string
+>M.n : string
+>M : typeof M
+>n : string
+

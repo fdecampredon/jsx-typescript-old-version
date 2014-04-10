@@ -1,3 +1,4 @@
+//// [defaultArgsInFunctionExpressions.js]
 var f = function (a) {
     if (typeof a === "undefined") { a = 3; }
     return a;

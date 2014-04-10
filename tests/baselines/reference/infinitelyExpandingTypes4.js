@@ -1,3 +1,4 @@
+//// [infinitelyExpandingTypes4.js]
 var q1;
 var q2;
 var q3;

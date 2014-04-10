@@ -1,3 +1,4 @@
+//// [callWithWrongNumberOfTypeArguments.js]
 function f() {
 }
 

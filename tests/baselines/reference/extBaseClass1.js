@@ -1,3 +1,25 @@
+//// [extBaseClass1.ts]
+module M {
+    export class B {
+	    public x=10;
+    }
+
+    export class C extends B {
+    }
+}
+
+module M {
+    export class C2 extends B {
+    }
+}
+
+module N {
+    export class C3 extends M.B {
+    }
+}
+
+
+//// [extBaseClass1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

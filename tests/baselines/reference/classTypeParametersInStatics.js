@@ -1,3 +1,4 @@
+//// [classTypeParametersInStatics.js]
 var Editor;
 (function (Editor) {
     var List = (function () {

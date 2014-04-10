@@ -1,19 +1,49 @@
 === tests/cases/compiler/getAndSetAsMemberNames.ts ===
-Line 0 col 6 IdentifierName "C1" = C1
-Line 1 col 0 IdentifierName "set" = boolean
-Line 2 col 0 IdentifierName "get" = number
-Line 4 col 6 IdentifierName "C2" = C2
-Line 5 col 0 IdentifierName "set" = any
-Line 7 col 6 IdentifierName "C3" = C3
-Line 8 col 0 IdentifierName "set" = (x: any) => any
-Line 8 col 9 IdentifierName "x" = any
-Line 9 col 15 AddExpression "x + 1" = any
-Line 9 col 15 IdentifierName "x" = any
-Line 12 col 6 IdentifierName "C4" = C4
-Line 13 col 0 IdentifierName "get" = boolean
-Line 15 col 6 IdentifierName "C5" = C5
-Line 16 col 11 IdentifierName "set" = () => boolean
-Line 16 col 32 FunctionExpression "function () { return true; }" = () => boolean
-Line 17 col 0 IdentifierName "get" = () => boolean
-Line 18 col 8 IdentifierName "t" = any
-Line 18 col 10 IdentifierName "x" = any
+class C1 {
+>C1 : C1
+
+    set: boolean;
+>set : boolean
+
+    get = 1;
+>get : number
+}
+class C2 {
+>C2 : C2
+
+    set;
+>set : any
+}
+class C3 {
+>C3 : C3
+
+    set (x) {
+>set : (x: any) => any
+>x : any
+
+        return x + 1;
+>x + 1 : any
+>x : any
+    }
+}
+class C4 {
+>C4 : C4
+
+    get: boolean = true;
+>get : boolean
+}
+class C5 {
+>C5 : C5
+
+    public set: () => boolean = function () { return true; };
+>set : () => boolean
+>function () { return true; } : () => boolean
+
+    get (): boolean { return true; }
+>get : () => boolean
+
+    set t(x) { }
+>t : any
+>x : any
+}
+

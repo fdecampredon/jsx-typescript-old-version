@@ -1,3 +1,4 @@
+//// [objectTypeWithConstructSignatureHidingMembersOfFunctionAssignmentCompat.js]
 var i;
 var f;
 f = i;

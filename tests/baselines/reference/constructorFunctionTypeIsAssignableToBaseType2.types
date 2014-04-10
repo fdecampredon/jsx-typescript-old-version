@@ -1,21 +1,62 @@
 === tests/cases/compiler/constructorFunctionTypeIsAssignableToBaseType2.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 3 col 11 IdentifierName "foo" = { bar: Object; }
-Line 4 col 0 IdentifierName "bar" = Object
-Line 4 col 13 IdentifierName "Object" = Object
-Line 6 col 16 IdentifierName "x" = Object
-Line 6 col 19 IdentifierName "Object" = Object
-Line 10 col 6 IdentifierName "Derived" = Derived
-Line 10 col 22 IdentifierName "Base" = Base
-Line 12 col 11 IdentifierName "foo" = { bar: number; }
-Line 13 col 0 IdentifierName "bar" = number
-Line 16 col 16 IdentifierName "x" = number
-Line 17 col 0 InvocationExpression "super(x)" = void
-Line 17 col 14 IdentifierName "x" = number
-Line 21 col 6 IdentifierName "Derived2" = Derived2
-Line 21 col 23 IdentifierName "Base" = Base
-Line 22 col 11 IdentifierName "foo" = { bar: number; }
-Line 23 col 0 IdentifierName "bar" = number
-Line 27 col 16 IdentifierName "x" = any
-Line 28 col 0 InvocationExpression "super(x)" = void
-Line 28 col 14 IdentifierName "x" = any
+// the constructor function itself does not need to be a subtype of the base type constructor function
+
+class Base {
+>Base : Base
+
+    static foo: {
+>foo : { bar: Object; }
+
+        bar: Object;
+>bar : Object
+>Object : Object
+    }
+    constructor(x: Object) {
+>x : Object
+>Object : Object
+    }
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    // ok
+    static foo: {
+>foo : { bar: number; }
+
+        bar: number;
+>bar : number
+    }
+
+    constructor(x: number) {
+>x : number
+
+        super(x);
+>super(x) : void
+>x : number
+    }
+}
+
+class Derived2 extends Base {   
+>Derived2 : Derived2
+>Base : Base
+
+    static foo: {
+>foo : { bar: number; }
+
+        bar: number;
+>bar : number
+    }
+
+    // ok, not enforcing assignability relation on this
+    constructor(x: any) {
+>x : any
+
+        super(x);
+>super(x) : void
+>x : any
+
+        return 1;
+    }
+}

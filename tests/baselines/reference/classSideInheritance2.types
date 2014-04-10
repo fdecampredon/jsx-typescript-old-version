@@ -1,22 +1,46 @@
 === tests/cases/compiler/classSideInheritance2.ts ===
-Line 0 col 10 IdentifierName "IText" = IText
-Line 1 col 0 IdentifierName "foo" = number
-Line 4 col 10 IdentifierName "TextSpan" = TextSpan
-Line 6 col 6 IdentifierName "SubText" = SubText
-Line 6 col 22 IdentifierName "TextBase" = TextBase
-Line 8 col 20 IdentifierName "text" = IText
-Line 8 col 26 IdentifierName "IText" = IText
-Line 8 col 33 IdentifierName "span" = TextSpan
-Line 8 col 39 IdentifierName "TextSpan" = TextSpan
-Line 9 col 0 InvocationExpression "super()" = void
-Line 13 col 6 IdentifierName "TextBase" = TextBase
-Line 13 col 26 IdentifierName "IText" = IText
-Line 14 col 15 IdentifierName "foo" = number
-Line 15 col 15 IdentifierName "subText" = (span: TextSpan) => IText
-Line 15 col 23 IdentifierName "span" = TextSpan
-Line 15 col 29 IdentifierName "TextSpan" = TextSpan
-Line 15 col 40 IdentifierName "IText" = IText
-Line 17 col 19 ObjectCreationExpression "new SubText(this, span)" = SubText
-Line 17 col 23 IdentifierName "SubText" = typeof SubText
-Line 17 col 31 ThisKeyword "this" = TextBase
-Line 17 col 37 IdentifierName "span" = TextSpan
+interface IText {
+>IText : IText
+
+    foo: number;
+>foo : number
+}
+
+interface TextSpan {}
+>TextSpan : TextSpan
+
+class SubText extends TextBase {
+>SubText : SubText
+>TextBase : TextBase
+
+        constructor(text: IText, span: TextSpan) {
+>text : IText
+>IText : IText
+>span : TextSpan
+>TextSpan : TextSpan
+
+            super();
+>super() : void
+        }
+}
+
+class TextBase implements IText {
+>TextBase : TextBase
+>IText : IText
+
+        public foo: number;
+>foo : number
+
+        public subText(span: TextSpan): IText {
+>subText : (span: TextSpan) => IText
+>span : TextSpan
+>TextSpan : TextSpan
+>IText : IText
+
+            return new SubText(this, span);
+>new SubText(this, span) : SubText
+>SubText : typeof SubText
+>this : TextBase
+>span : TextSpan
+        }
+}

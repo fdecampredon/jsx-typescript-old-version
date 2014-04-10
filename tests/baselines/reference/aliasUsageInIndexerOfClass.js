@@ -1,3 +1,18 @@
+//// [aliasUsageInIndexerOfClass_main.ts]
+import Backbone = require("aliasUsageInIndexerOfClass_backbone");
+import moduleA = require("aliasUsageInIndexerOfClass_moduleA");
+interface IHasVisualizationModel {
+    VisualizationModel: typeof Backbone.Model;
+}
+class N {
+    [idx: string]: IHasVisualizationModel
+    x = moduleA;
+}
+class N2 {
+    [idx: string]: typeof moduleA
+    x: IHasVisualizationModel;
+}
+
 //// [aliasUsageInIndexerOfClass_backbone.js]
 var Model = (function () {
     function Model() {

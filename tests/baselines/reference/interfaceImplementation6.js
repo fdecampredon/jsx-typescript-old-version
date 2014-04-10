@@ -1,3 +1,4 @@
+//// [interfaceImplementation6.js]
 define(["require", "exports"], function(require, exports) {
     var C1 = (function () {
         function C1() {

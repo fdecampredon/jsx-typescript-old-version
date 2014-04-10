@@ -1,3 +1,4 @@
+//// [contextualTyping33.js]
 function foo(param) {
 }
 ;

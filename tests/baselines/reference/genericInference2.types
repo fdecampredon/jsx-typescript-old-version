@@ -1,67 +1,102 @@
 === tests/cases/compiler/genericInference2.ts ===
-Line 0 col 19 IdentifierName "ko" = ko
-Line 1 col 24 IdentifierName "Observable" = Observable<T>
-Line 1 col 35 IdentifierName "T" = T
-Line 2 col 15 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "value" = T
-Line 3 col 19 IdentifierName "T" = T
-Line 4 col 0 IdentifierName "N" = number
-Line 5 col 0 IdentifierName "g" = boolean
-Line 6 col 0 IdentifierName "r" = T
-Line 6 col 14 IdentifierName "T" = T
-Line 8 col 23 IdentifierName "observable" = typeof observable
-Line 8 col 34 IdentifierName "T" = T
-Line 8 col 37 IdentifierName "value" = T
-Line 8 col 44 IdentifierName "T" = T
-Line 8 col 48 IdentifierName "Observable" = Observable<T>
-Line 8 col 59 IdentifierName "T" = T
-Line 10 col 8 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 10 col 12 ObjectLiteralExpression "{ 
+    declare module ko { 
+>ko : ko
+
+       export interface Observable<T> { 
+>Observable : Observable<T>
+>T : T
+
+           (): T; 
+>T : T
+
+           (value: T): any; 
+>value : T
+>T : T
+
+           N: number; 
+>N : number
+
+           g: boolean; 
+>g : boolean
+
+           r: T; 
+>r : T
+>T : T
+       } 
+       export function observable<T>(value: T): Observable<T>; 
+>observable : typeof observable
+>T : T
+>value : T
+>T : T
+>Observable : Observable<T>
+>T : T
+    } 
+    var o = { 
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>{ 
        name: ko.observable("Bob"), 
        age: ko.observable(37) 
-    }" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 11 col 0 IdentifierName "name" = ko.Observable<string>
-Line 11 col 13 InvocationExpression "ko.observable("Bob")" = ko.Observable<string>
-Line 11 col 13 MemberAccessExpression "ko.observable" = typeof ko.observable
-Line 11 col 13 IdentifierName "ko" = typeof ko
-Line 11 col 16 IdentifierName "observable" = typeof ko.observable
-Line 12 col 0 IdentifierName "age" = ko.Observable<number>
-Line 12 col 12 InvocationExpression "ko.observable(37)" = ko.Observable<number>
-Line 12 col 12 MemberAccessExpression "ko.observable" = typeof ko.observable
-Line 12 col 12 IdentifierName "ko" = typeof ko
-Line 12 col 15 IdentifierName "observable" = typeof ko.observable
-Line 14 col 8 IdentifierName "x_v" = number
-Line 14 col 14 MemberAccessExpression "o.name().length" = number
-Line 14 col 14 InvocationExpression "o.name()" = string
-Line 14 col 14 MemberAccessExpression "o.name" = ko.Observable<string>
-Line 14 col 14 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 14 col 16 IdentifierName "name" = ko.Observable<string>
-Line 14 col 23 IdentifierName "length" = number
-Line 15 col 8 IdentifierName "age_v" = number
-Line 15 col 16 InvocationExpression "o.age()" = number
-Line 15 col 16 MemberAccessExpression "o.age" = ko.Observable<number>
-Line 15 col 16 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 15 col 18 IdentifierName "age" = ko.Observable<number>
-Line 16 col 8 IdentifierName "name_v" = any
-Line 16 col 17 InvocationExpression "o.name("Robert")" = any
-Line 16 col 17 MemberAccessExpression "o.name" = ko.Observable<string>
-Line 16 col 17 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 16 col 19 IdentifierName "name" = ko.Observable<string>
-Line 17 col 8 IdentifierName "zz_v" = number
-Line 17 col 15 MemberAccessExpression "o.name.N" = number
-Line 17 col 15 MemberAccessExpression "o.name" = ko.Observable<string>
-Line 17 col 15 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 17 col 17 IdentifierName "name" = ko.Observable<string>
-Line 17 col 22 IdentifierName "N" = number
-Line 18 col 8 IdentifierName "yy_v" = boolean
-Line 18 col 15 MemberAccessExpression "o.name.g" = boolean
-Line 18 col 15 MemberAccessExpression "o.name" = ko.Observable<string>
-Line 18 col 15 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 18 col 17 IdentifierName "name" = ko.Observable<string>
-Line 18 col 22 IdentifierName "g" = boolean
-Line 19 col 8 IdentifierName "rr_v" = string
-Line 19 col 15 MemberAccessExpression "o.name.r" = string
-Line 19 col 15 MemberAccessExpression "o.name" = ko.Observable<string>
-Line 19 col 15 IdentifierName "o" = { name: ko.Observable<string>; age: ko.Observable<number>; }
-Line 19 col 17 IdentifierName "name" = ko.Observable<string>
-Line 19 col 22 IdentifierName "r" = string
+    } : { name: ko.Observable<string>; age: ko.Observable<number>; }
+
+       name: ko.observable("Bob"), 
+>name : ko.Observable<string>
+>ko.observable("Bob") : ko.Observable<string>
+>ko.observable : typeof ko.observable
+>ko : typeof ko
+>observable : typeof ko.observable
+
+       age: ko.observable(37) 
+>age : ko.Observable<number>
+>ko.observable(37) : ko.Observable<number>
+>ko.observable : typeof ko.observable
+>ko : typeof ko
+>observable : typeof ko.observable
+
+    }; 
+    var x_v = o.name().length;  // should be 'number'
+>x_v : number
+>o.name().length : number
+>o.name() : string
+>o.name : ko.Observable<string>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>name : ko.Observable<string>
+>length : number
+
+    var age_v = o.age();  // should be 'number'
+>age_v : number
+>o.age() : number
+>o.age : ko.Observable<number>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>age : ko.Observable<number>
+
+    var name_v = o.name("Robert");  // should be 'any'
+>name_v : any
+>o.name("Robert") : any
+>o.name : ko.Observable<string>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>name : ko.Observable<string>
+
+    var zz_v = o.name.N;  // should be 'number'
+>zz_v : number
+>o.name.N : number
+>o.name : ko.Observable<string>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>name : ko.Observable<string>
+>N : number
+
+    var yy_v = o.name.g;  // should be 'boolean'
+>yy_v : boolean
+>o.name.g : boolean
+>o.name : ko.Observable<string>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>name : ko.Observable<string>
+>g : boolean
+
+    var rr_v = o.name.r;  // should be 'string'
+>rr_v : string
+>o.name.r : string
+>o.name : ko.Observable<string>
+>o : { name: ko.Observable<string>; age: ko.Observable<number>; }
+>name : ko.Observable<string>
+>r : string
+

@@ -1,3 +1,4 @@
+//// [decrementOperatorWithAnyOtherTypeInvalidOperations.js]
 // -- operator on any type
 var ANY1;
 var ANY2 = ["", ""];

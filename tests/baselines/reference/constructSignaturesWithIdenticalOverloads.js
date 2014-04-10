@@ -1,3 +1,4 @@
+//// [constructSignaturesWithIdenticalOverloads.js]
 // Duplicate overloads of construct signatures should generate errors
 var C = (function () {
     function C(x) {

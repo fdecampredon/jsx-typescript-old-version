@@ -1,85 +1,122 @@
 === tests/cases/compiler/logicalOrOperatorWithTypeParameters.ts ===
-Line 0 col 9 IdentifierName "fn1" = typeof fn1
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "U" = U
-Line 0 col 19 IdentifierName "t" = T
-Line 0 col 22 IdentifierName "T" = T
-Line 0 col 25 IdentifierName "u" = U
-Line 0 col 28 IdentifierName "U" = U
-Line 1 col 8 IdentifierName "r1" = T
-Line 1 col 13 LogicalOrExpression "t || t" = T
-Line 1 col 13 IdentifierName "t" = T
-Line 1 col 18 IdentifierName "t" = T
-Line 2 col 8 IdentifierName "r2" = T
-Line 2 col 12 IdentifierName "T" = T
-Line 2 col 16 LogicalOrExpression "t || t" = T
-Line 2 col 16 IdentifierName "t" = T
-Line 2 col 21 IdentifierName "t" = T
-Line 3 col 8 IdentifierName "r3" = {}
-Line 3 col 13 LogicalOrExpression "t || u" = {}
-Line 3 col 13 IdentifierName "t" = T
-Line 3 col 18 IdentifierName "u" = U
-Line 4 col 8 IdentifierName "r4" = {}
-Line 4 col 17 LogicalOrExpression "t || u" = {}
-Line 4 col 17 IdentifierName "t" = T
-Line 4 col 22 IdentifierName "u" = U
-Line 7 col 9 IdentifierName "fn2" = typeof fn2
-Line 7 col 13 IdentifierName "T" = T
-Line 7 col 16 IdentifierName "U/* extends T*/" = U
-Line 7 col 33 IdentifierName "V/* extends T*/" = V
-Line 7 col 50 IdentifierName "t" = T
-Line 7 col 53 IdentifierName "T" = T
-Line 7 col 56 IdentifierName "u" = U
-Line 7 col 59 IdentifierName "U" = U
-Line 7 col 62 IdentifierName "v" = V
-Line 7 col 65 IdentifierName "V" = V
-Line 8 col 8 IdentifierName "r1" = {}
-Line 8 col 13 LogicalOrExpression "t || u" = {}
-Line 8 col 13 IdentifierName "t" = T
-Line 8 col 18 IdentifierName "u" = U
-Line 10 col 8 IdentifierName "r3" = U
-Line 10 col 13 LogicalOrExpression "u || u" = U
-Line 10 col 13 IdentifierName "u" = U
-Line 10 col 18 IdentifierName "u" = U
-Line 11 col 8 IdentifierName "r4" = U
-Line 11 col 12 IdentifierName "U" = U
-Line 11 col 16 LogicalOrExpression "u || u" = U
-Line 11 col 16 IdentifierName "u" = U
-Line 11 col 21 IdentifierName "u" = U
-Line 12 col 8 IdentifierName "r5" = {}
-Line 12 col 13 LogicalOrExpression "u || v" = {}
-Line 12 col 13 IdentifierName "u" = U
-Line 12 col 18 IdentifierName "v" = V
-Line 13 col 8 IdentifierName "r6" = {}
-Line 13 col 17 LogicalOrExpression "u || v" = {}
-Line 13 col 17 IdentifierName "u" = U
-Line 13 col 22 IdentifierName "v" = V
-Line 17 col 9 IdentifierName "fn3" = typeof fn3
-Line 17 col 13 IdentifierName "T" = T
-Line 17 col 25 IdentifierName "a" = string
-Line 17 col 36 IdentifierName "b" = string
-Line 17 col 49 IdentifierName "U" = U
-Line 17 col 61 IdentifierName "a" = string
-Line 17 col 72 IdentifierName "b" = number
-Line 17 col 85 IdentifierName "t" = T
-Line 17 col 88 IdentifierName "T" = T
-Line 17 col 91 IdentifierName "u" = U
-Line 17 col 94 IdentifierName "U" = U
-Line 18 col 8 IdentifierName "r1" = {}
-Line 18 col 13 LogicalOrExpression "t || u" = {}
-Line 18 col 13 IdentifierName "t" = T
-Line 18 col 18 IdentifierName "u" = U
-Line 19 col 8 IdentifierName "r2" = {}
-Line 19 col 17 LogicalOrExpression "t || u" = {}
-Line 19 col 17 IdentifierName "t" = T
-Line 19 col 22 IdentifierName "u" = U
-Line 20 col 8 IdentifierName "r3" = { a: string; }
-Line 20 col 13 LogicalOrExpression "t || { a: '' }" = { a: string; }
-Line 20 col 13 IdentifierName "t" = T
-Line 20 col 18 ObjectLiteralExpression "{ a: '' }" = { a: string; }
-Line 20 col 20 IdentifierName "a" = string
-Line 21 col 8 IdentifierName "r4" = { a: string; }
-Line 21 col 14 IdentifierName "a" = string
-Line 21 col 28 LogicalOrExpression "t || u" = { a: string; }
-Line 21 col 28 IdentifierName "t" = T
-Line 21 col 33 IdentifierName "u" = U
+function fn1<T, U>(t: T, u: U) {
+>fn1 : typeof fn1
+>T : T
+>U : U
+>t : T
+>T : T
+>u : U
+>U : U
+
+    var r1 = t || t;
+>r1 : T
+>t || t : T
+>t : T
+>t : T
+
+    var r2: T = t || t;
+>r2 : T
+>T : T
+>t || t : T
+>t : T
+>t : T
+
+    var r3 = t || u;
+>r3 : {}
+>t || u : {}
+>t : T
+>u : U
+
+    var r4: {} = t || u;
+>r4 : {}
+>t || u : {}
+>t : T
+>u : U
+}
+
+function fn2<T, U/* extends T*/, V/* extends T*/>(t: T, u: U, v: V) {
+>fn2 : typeof fn2
+>T : T
+>U/* extends T*/ : U
+>V/* extends T*/ : V
+>t : T
+>T : T
+>u : U
+>U : U
+>v : V
+>V : V
+
+    var r1 = t || u;
+>r1 : {}
+>t || u : {}
+>t : T
+>u : U
+
+    //var r2: T = t || u;
+    var r3 = u || u;
+>r3 : U
+>u || u : U
+>u : U
+>u : U
+
+    var r4: U = u || u;
+>r4 : U
+>U : U
+>u || u : U
+>u : U
+>u : U
+
+    var r5 = u || v;
+>r5 : {}
+>u || v : {}
+>u : U
+>v : V
+
+    var r6: {} = u || v;
+>r6 : {}
+>u || v : {}
+>u : U
+>v : V
+
+    //var r7: T = u || v;
+}
+
+function fn3<T extends { a: string; b: string }, U extends { a: string; b: number }>(t: T, u: U) {
+>fn3 : typeof fn3
+>T : T
+>a : string
+>b : string
+>U : U
+>a : string
+>b : number
+>t : T
+>T : T
+>u : U
+>U : U
+
+    var r1 = t || u;
+>r1 : {}
+>t || u : {}
+>t : T
+>u : U
+
+    var r2: {} = t || u;
+>r2 : {}
+>t || u : {}
+>t : T
+>u : U
+
+    var r3 = t || { a: '' };
+>r3 : { a: string; }
+>t || { a: '' } : { a: string; }
+>t : T
+>{ a: '' } : { a: string; }
+>a : string
+
+    var r4: { a: string } = t || u;
+>r4 : { a: string; }
+>a : string
+>t || u : { a: string; }
+>t : T
+>u : U
+}

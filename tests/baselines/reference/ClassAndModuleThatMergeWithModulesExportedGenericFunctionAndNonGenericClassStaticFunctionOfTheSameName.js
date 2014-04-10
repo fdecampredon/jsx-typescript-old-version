@@ -1,3 +1,4 @@
+//// [ClassAndModuleThatMergeWithModulesExportedGenericFunctionAndNonGenericClassStaticFunctionOfTheSameName.js]
 var clodule = (function () {
     function clodule() {
     }

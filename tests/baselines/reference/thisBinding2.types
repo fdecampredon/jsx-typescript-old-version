@@ -1,68 +1,101 @@
 === tests/cases/compiler/thisBinding2.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "x" = number
-Line 3 col 0 AssignmentExpression "this.x = (() => {
+class C {
+>C : C
+
+ x: number;
+>x : number
+
+    constructor() {
+        this.x = (() => {
+>this.x = (() => {
    var x = 1;
    return this.x;
-  })()" = number
-Line 3 col 0 MemberAccessExpression "this.x" = number
-Line 3 col 0 ThisKeyword "this" = C
-Line 3 col 13 IdentifierName "x" = number
-Line 3 col 17 InvocationExpression "(() => {
+  })() : number
+>this.x : number
+>this : C
+>x : number
+>(() => {
    var x = 1;
    return this.x;
-  })()" = number
-Line 3 col 17 ParenthesizedExpression "(() => {
+  })() : number
+>(() => {
    var x = 1;
    return this.x;
-  })" = () => number
-Line 3 col 18 ParenthesizedArrowFunctionExpression "() => {
+  }) : () => number
+>() => {
    var x = 1;
    return this.x;
-  }" = () => number
-Line 4 col 7 IdentifierName "x" = number
-Line 5 col 10 MemberAccessExpression "this.x" = number
-Line 5 col 10 ThisKeyword "this" = C
-Line 5 col 15 IdentifierName "x" = number
-Line 7 col 0 AssignmentExpression "this.x = function() {
+  } : () => number
+
+   var x = 1;
+>x : number
+
+   return this.x;
+>this.x : number
+>this : C
+>x : number
+
+  })();
+  this.x = function() {
+>this.x = function() {
    var x = 1;
    return this.x;
-  }()" = any
-Line 7 col 0 MemberAccessExpression "this.x" = number
-Line 7 col 0 ThisKeyword "this" = C
-Line 7 col 7 IdentifierName "x" = number
-Line 7 col 11 InvocationExpression "function() {
+  }() : any
+>this.x : number
+>this : C
+>x : number
+>function() {
    var x = 1;
    return this.x;
-  }()" = any
-Line 7 col 11 FunctionExpression "function() {
+  }() : any
+>function() {
    var x = 1;
    return this.x;
-  }" = () => any
-Line 8 col 7 IdentifierName "x" = number
-Line 9 col 10 MemberAccessExpression "this.x" = any
-Line 9 col 10 ThisKeyword "this" = any
-Line 9 col 15 IdentifierName "x" = any
-Line 13 col 17 IdentifierName "setTimeout" = typeof setTimeout
-Line 13 col 28 IdentifierName "expression" = any
-Line 13 col 45 IdentifierName "msec" = number
-Line 13 col 60 IdentifierName "language" = any
-Line 14 col 4 IdentifierName "messenger" = { message: string; start: () => number; }
-Line 14 col 16 ObjectLiteralExpression "{
+  } : () => any
+
+   var x = 1;
+>x : number
+
+   return this.x;
+>this.x : any
+>this : any
+>x : any
+
+  }();
+    }  
+}
+declare function setTimeout(expression: any, msec?: number, language?: any): number;
+>setTimeout : typeof setTimeout
+>expression : any
+>msec : number
+>language : any
+
+var messenger = {
+>messenger : { message: string; start: () => number; }
+>{
     message: "Hello World",
     start: function () {
         return setTimeout(() => { var x = this.message; }, 3000);
     }
-}" = { message: string; start: () => number; }
-Line 15 col 0 IdentifierName "message" = string
-Line 16 col 0 IdentifierName "start" = () => number
-Line 16 col 11 FunctionExpression "function () {
+} : { message: string; start: () => number; }
+
+    message: "Hello World",
+>message : string
+
+    start: function () {
+>start : () => number
+>function () {
         return setTimeout(() => { var x = this.message; }, 3000);
-    }" = () => number
-Line 17 col 15 InvocationExpression "setTimeout(() => { var x = this.message; }, 3000)" = number
-Line 17 col 15 IdentifierName "setTimeout" = typeof setTimeout
-Line 17 col 26 ParenthesizedArrowFunctionExpression "() => { var x = this.message; }" = () => void
-Line 17 col 38 IdentifierName "x" = any
-Line 17 col 42 MemberAccessExpression "this.message" = any
-Line 17 col 42 ThisKeyword "this" = any
-Line 17 col 47 IdentifierName "message" = any
+    } : () => number
+
+        return setTimeout(() => { var x = this.message; }, 3000);
+>setTimeout(() => { var x = this.message; }, 3000) : number
+>setTimeout : typeof setTimeout
+>() => { var x = this.message; } : () => void
+>x : any
+>this.message : any
+>this : any
+>message : any
+    }
+};
+

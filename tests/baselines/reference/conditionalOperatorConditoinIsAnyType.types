@@ -1,177 +1,269 @@
 === tests/cases/compiler/conditionalOperatorConditoinIsAnyType.ts ===
-Line 1 col 4 IdentifierName "condAny" = any
-Line 2 col 4 IdentifierName "x" = any
-Line 4 col 4 IdentifierName "exprAny1" = any
-Line 5 col 4 IdentifierName "exprBoolean1" = boolean
-Line 6 col 4 IdentifierName "exprNumber1" = number
-Line 7 col 4 IdentifierName "exprString1" = string
-Line 8 col 4 IdentifierName "exprIsObject1" = Object
-Line 8 col 19 IdentifierName "Object" = Object
-Line 10 col 4 IdentifierName "exprAny2" = any
-Line 11 col 4 IdentifierName "exprBoolean2" = boolean
-Line 12 col 4 IdentifierName "exprNumber2" = number
-Line 13 col 4 IdentifierName "exprString2" = string
-Line 14 col 4 IdentifierName "exprIsObject2" = Object
-Line 14 col 19 IdentifierName "Object" = Object
-Line 15 col 0 ConditionalExpression "//Cond is an any type variable
-condAny ? exprAny1 : exprAny2" = any
-Line 15 col 0 IdentifierName "//Cond is an any type variable
-condAny" = any
-Line 17 col 10 IdentifierName "exprAny1" = any
-Line 17 col 21 IdentifierName "exprAny2" = any
-Line 18 col 0 ConditionalExpression "condAny ? exprBoolean1 : exprBoolean2" = boolean
-Line 18 col 0 IdentifierName "condAny" = any
-Line 18 col 10 IdentifierName "exprBoolean1" = boolean
-Line 18 col 25 IdentifierName "exprBoolean2" = boolean
-Line 19 col 0 ConditionalExpression "condAny ? exprNumber1 : exprNumber2" = number
-Line 19 col 0 IdentifierName "condAny" = any
-Line 19 col 10 IdentifierName "exprNumber1" = number
-Line 19 col 24 IdentifierName "exprNumber2" = number
-Line 20 col 0 ConditionalExpression "condAny ? exprString1 : exprString2" = string
-Line 20 col 0 IdentifierName "condAny" = any
-Line 20 col 10 IdentifierName "exprString1" = string
-Line 20 col 24 IdentifierName "exprString2" = string
-Line 21 col 0 ConditionalExpression "condAny ? exprIsObject1 : exprIsObject2" = Object
-Line 21 col 0 IdentifierName "condAny" = any
-Line 21 col 10 IdentifierName "exprIsObject1" = Object
-Line 21 col 26 IdentifierName "exprIsObject2" = Object
-Line 22 col 0 ConditionalExpression "//Cond is an any type literal
-null ? exprAny1 : exprAny2" = any
-Line 24 col 7 IdentifierName "exprAny1" = any
-Line 24 col 18 IdentifierName "exprAny2" = any
-Line 25 col 0 ConditionalExpression "null ? exprBoolean1 : exprBoolean2" = boolean
-Line 25 col 7 IdentifierName "exprBoolean1" = boolean
-Line 25 col 22 IdentifierName "exprBoolean2" = boolean
-Line 26 col 0 ConditionalExpression "undefined ? exprNumber1 : exprNumber2" = number
-Line 26 col 0 IdentifierName "undefined" = any
-Line 26 col 12 IdentifierName "exprNumber1" = number
-Line 26 col 26 IdentifierName "exprNumber2" = number
-Line 27 col 0 ConditionalExpression "[null, undefined] ? exprString1 : exprString2" = string
-Line 27 col 0 ArrayLiteralExpression "[null, undefined]" = any[]
-Line 27 col 7 IdentifierName "undefined" = any
-Line 27 col 20 IdentifierName "exprString1" = string
-Line 27 col 34 IdentifierName "exprString2" = string
-Line 28 col 0 ConditionalExpression "[null, undefined] ? exprIsObject1 : exprIsObject2" = Object
-Line 28 col 0 ArrayLiteralExpression "[null, undefined]" = any[]
-Line 28 col 7 IdentifierName "undefined" = any
-Line 28 col 20 IdentifierName "exprIsObject1" = Object
-Line 28 col 36 IdentifierName "exprIsObject2" = Object
-Line 29 col 0 ConditionalExpression "//Cond is an any type expression
-x.doSomeThing() ? exprAny1 : exprAny2" = any
-Line 29 col 0 InvocationExpression "//Cond is an any type expression
-x.doSomeThing()" = any
-Line 29 col 0 MemberAccessExpression "//Cond is an any type expression
-x.doSomeThing" = any
-Line 29 col 0 IdentifierName "//Cond is an any type expression
-x" = any
-Line 31 col 2 IdentifierName "doSomeThing" = any
-Line 31 col 18 IdentifierName "exprAny1" = any
-Line 31 col 29 IdentifierName "exprAny2" = any
-Line 32 col 0 ConditionalExpression "x("x") ? exprBoolean1 : exprBoolean2" = boolean
-Line 32 col 0 InvocationExpression "x("x")" = any
-Line 32 col 0 IdentifierName "x" = any
-Line 32 col 9 IdentifierName "exprBoolean1" = boolean
-Line 32 col 24 IdentifierName "exprBoolean2" = boolean
-Line 33 col 0 ConditionalExpression "x(x) ? exprNumber1 : exprNumber2" = number
-Line 33 col 0 InvocationExpression "x(x)" = any
-Line 33 col 0 IdentifierName "x" = any
-Line 33 col 2 IdentifierName "x" = any
-Line 33 col 7 IdentifierName "exprNumber1" = number
-Line 33 col 21 IdentifierName "exprNumber2" = number
-Line 34 col 0 ConditionalExpression "x("x") ? exprString1 : exprString2" = string
-Line 34 col 0 InvocationExpression "x("x")" = any
-Line 34 col 0 IdentifierName "x" = any
-Line 34 col 9 IdentifierName "exprString1" = string
-Line 34 col 23 IdentifierName "exprString2" = string
-Line 35 col 0 ConditionalExpression "x.doSomeThing() ? exprIsObject1 : exprIsObject2" = Object
-Line 35 col 0 InvocationExpression "x.doSomeThing()" = any
-Line 35 col 0 MemberAccessExpression "x.doSomeThing" = any
-Line 35 col 0 IdentifierName "x" = any
-Line 35 col 2 IdentifierName "doSomeThing" = any
-Line 35 col 18 IdentifierName "exprIsObject1" = Object
-Line 35 col 34 IdentifierName "exprIsObject2" = Object
-Line 38 col 4 IdentifierName "resultIsAny1" = any
-Line 38 col 19 ConditionalExpression "condAny ? exprAny1 : exprAny2" = any
-Line 38 col 19 IdentifierName "condAny" = any
-Line 38 col 29 IdentifierName "exprAny1" = any
-Line 38 col 40 IdentifierName "exprAny2" = any
-Line 39 col 4 IdentifierName "resultIsBoolean1" = boolean
-Line 39 col 23 ConditionalExpression "condAny ? exprBoolean1 : exprBoolean2" = boolean
-Line 39 col 23 IdentifierName "condAny" = any
-Line 39 col 33 IdentifierName "exprBoolean1" = boolean
-Line 39 col 48 IdentifierName "exprBoolean2" = boolean
-Line 40 col 4 IdentifierName "resultIsNumber1" = number
-Line 40 col 22 ConditionalExpression "condAny ? exprNumber1 : exprNumber2" = number
-Line 40 col 22 IdentifierName "condAny" = any
-Line 40 col 32 IdentifierName "exprNumber1" = number
-Line 40 col 46 IdentifierName "exprNumber2" = number
-Line 41 col 4 IdentifierName "resultIsString1" = string
-Line 41 col 22 ConditionalExpression "condAny ? exprString1 : exprString2" = string
-Line 41 col 22 IdentifierName "condAny" = any
-Line 41 col 32 IdentifierName "exprString1" = string
-Line 41 col 46 IdentifierName "exprString2" = string
-Line 42 col 4 IdentifierName "resultIsObject1" = Object
-Line 42 col 22 ConditionalExpression "condAny ? exprIsObject1 : exprIsObject2" = Object
-Line 42 col 22 IdentifierName "condAny" = any
-Line 42 col 32 IdentifierName "exprIsObject1" = Object
-Line 42 col 48 IdentifierName "exprIsObject2" = Object
-Line 44 col 4 IdentifierName "resultIsAny2" = any
-Line 44 col 19 ConditionalExpression "null ? exprAny1 : exprAny2" = any
-Line 44 col 26 IdentifierName "exprAny1" = any
-Line 44 col 37 IdentifierName "exprAny2" = any
-Line 45 col 4 IdentifierName "resultIsBoolean2" = boolean
-Line 45 col 23 ConditionalExpression "null ? exprBoolean1 : exprBoolean2" = boolean
-Line 45 col 30 IdentifierName "exprBoolean1" = boolean
-Line 45 col 45 IdentifierName "exprBoolean2" = boolean
-Line 46 col 4 IdentifierName "resultIsNumber2" = number
-Line 46 col 22 ConditionalExpression "undefined ? exprNumber1 : exprNumber2" = number
-Line 46 col 22 IdentifierName "undefined" = any
-Line 46 col 34 IdentifierName "exprNumber1" = number
-Line 46 col 48 IdentifierName "exprNumber2" = number
-Line 47 col 4 IdentifierName "resultIsString2" = string
-Line 47 col 22 ConditionalExpression "[null, undefined] ? exprString1 : exprString2" = string
-Line 47 col 22 ArrayLiteralExpression "[null, undefined]" = any[]
-Line 47 col 29 IdentifierName "undefined" = any
-Line 47 col 42 IdentifierName "exprString1" = string
-Line 47 col 56 IdentifierName "exprString2" = string
-Line 48 col 4 IdentifierName "resultIsObject2" = Object
-Line 48 col 22 ConditionalExpression "[null, undefined] ? exprIsObject1 : exprIsObject2" = Object
-Line 48 col 22 ArrayLiteralExpression "[null, undefined]" = any[]
-Line 48 col 29 IdentifierName "undefined" = any
-Line 48 col 42 IdentifierName "exprIsObject1" = Object
-Line 48 col 58 IdentifierName "exprIsObject2" = Object
-Line 50 col 4 IdentifierName "resultIsAny3" = any
-Line 50 col 19 ConditionalExpression "x.doSomeThing() ? exprAny1 : exprAny2" = any
-Line 50 col 19 InvocationExpression "x.doSomeThing()" = any
-Line 50 col 19 MemberAccessExpression "x.doSomeThing" = any
-Line 50 col 19 IdentifierName "x" = any
-Line 50 col 21 IdentifierName "doSomeThing" = any
-Line 50 col 37 IdentifierName "exprAny1" = any
-Line 50 col 48 IdentifierName "exprAny2" = any
-Line 51 col 4 IdentifierName "resultIsBoolean3" = boolean
-Line 51 col 23 ConditionalExpression "x("x") ? exprBoolean1 : exprBoolean2" = boolean
-Line 51 col 23 InvocationExpression "x("x")" = any
-Line 51 col 23 IdentifierName "x" = any
-Line 51 col 32 IdentifierName "exprBoolean1" = boolean
-Line 51 col 47 IdentifierName "exprBoolean2" = boolean
-Line 52 col 4 IdentifierName "resultIsNumber3" = number
-Line 52 col 22 ConditionalExpression "x(x) ? exprNumber1 : exprNumber2" = number
-Line 52 col 22 InvocationExpression "x(x)" = any
-Line 52 col 22 IdentifierName "x" = any
-Line 52 col 24 IdentifierName "x" = any
-Line 52 col 29 IdentifierName "exprNumber1" = number
-Line 52 col 43 IdentifierName "exprNumber2" = number
-Line 53 col 4 IdentifierName "resultIsString3" = string
-Line 53 col 22 ConditionalExpression "x("x") ? exprString1 : exprString2" = string
-Line 53 col 22 InvocationExpression "x("x")" = any
-Line 53 col 22 IdentifierName "x" = any
-Line 53 col 31 IdentifierName "exprString1" = string
-Line 53 col 45 IdentifierName "exprString2" = string
-Line 54 col 4 IdentifierName "resultIsObject3" = Object
-Line 54 col 22 ConditionalExpression "x.doSomeThing() ? exprIsObject1 : exprIsObject2" = Object
-Line 54 col 22 InvocationExpression "x.doSomeThing()" = any
-Line 54 col 22 MemberAccessExpression "x.doSomeThing" = any
-Line 54 col 22 IdentifierName "x" = any
-Line 54 col 24 IdentifierName "doSomeThing" = any
-Line 54 col 40 IdentifierName "exprIsObject1" = Object
-Line 54 col 56 IdentifierName "exprIsObject2" = Object
+//Cond ? Expr1 : Expr2,  Cond is of any type, Expr1 and Expr2 have the same type
+var condAny: any;
+>condAny : any
+
+var x: any;
+>x : any
+
+var exprAny1: any;
+>exprAny1 : any
+
+var exprBoolean1: boolean;
+>exprBoolean1 : boolean
+
+var exprNumber1: number;
+>exprNumber1 : number
+
+var exprString1: string;
+>exprString1 : string
+
+var exprIsObject1: Object;
+>exprIsObject1 : Object
+>Object : Object
+
+var exprAny2: any;
+>exprAny2 : any
+
+var exprBoolean2: boolean;
+>exprBoolean2 : boolean
+
+var exprNumber2: number;
+>exprNumber2 : number
+
+var exprString2: string;
+>exprString2 : string
+
+var exprIsObject2: Object;
+>exprIsObject2 : Object
+>Object : Object
+
+>//Cond is an any type variable
+condAny ? exprAny1 : exprAny2 : any
+>//Cond is an any type variable
+condAny : any
+
+//Cond is an any type variable
+condAny ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+condAny ? exprBoolean1 : exprBoolean2;
+>condAny ? exprBoolean1 : exprBoolean2 : boolean
+>condAny : any
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+condAny ? exprNumber1 : exprNumber2;
+>condAny ? exprNumber1 : exprNumber2 : number
+>condAny : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+condAny ? exprString1 : exprString2;
+>condAny ? exprString1 : exprString2 : string
+>condAny : any
+>exprString1 : string
+>exprString2 : string
+
+condAny ? exprIsObject1 : exprIsObject2;
+>condAny ? exprIsObject1 : exprIsObject2 : Object
+>condAny : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+>//Cond is an any type literal
+null ? exprAny1 : exprAny2 : any
+
+//Cond is an any type literal
+null ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+null ? exprBoolean1 : exprBoolean2;
+>null ? exprBoolean1 : exprBoolean2 : boolean
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+undefined ? exprNumber1 : exprNumber2;
+>undefined ? exprNumber1 : exprNumber2 : number
+>undefined : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+[null, undefined] ? exprString1 : exprString2;
+>[null, undefined] ? exprString1 : exprString2 : string
+>[null, undefined] : any[]
+>undefined : any
+>exprString1 : string
+>exprString2 : string
+
+[null, undefined] ? exprIsObject1 : exprIsObject2;
+>[null, undefined] ? exprIsObject1 : exprIsObject2 : Object
+>[null, undefined] : any[]
+>undefined : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+>//Cond is an any type expression
+x.doSomeThing() ? exprAny1 : exprAny2 : any
+>//Cond is an any type expression
+x.doSomeThing() : any
+>//Cond is an any type expression
+x.doSomeThing : any
+>//Cond is an any type expression
+x : any
+
+//Cond is an any type expression
+x.doSomeThing() ? exprAny1 : exprAny2;
+>doSomeThing : any
+>exprAny1 : any
+>exprAny2 : any
+
+x("x") ? exprBoolean1 : exprBoolean2;
+>x("x") ? exprBoolean1 : exprBoolean2 : boolean
+>x("x") : any
+>x : any
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+x(x) ? exprNumber1 : exprNumber2;
+>x(x) ? exprNumber1 : exprNumber2 : number
+>x(x) : any
+>x : any
+>x : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+x("x") ? exprString1 : exprString2;
+>x("x") ? exprString1 : exprString2 : string
+>x("x") : any
+>x : any
+>exprString1 : string
+>exprString2 : string
+
+x.doSomeThing() ? exprIsObject1 : exprIsObject2;
+>x.doSomeThing() ? exprIsObject1 : exprIsObject2 : Object
+>x.doSomeThing() : any
+>x.doSomeThing : any
+>x : any
+>doSomeThing : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+//Results shoud be same as Expr1 and Expr2
+var resultIsAny1 = condAny ? exprAny1 : exprAny2;
+>resultIsAny1 : any
+>condAny ? exprAny1 : exprAny2 : any
+>condAny : any
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean1 = condAny ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean1 : boolean
+>condAny ? exprBoolean1 : exprBoolean2 : boolean
+>condAny : any
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber1 = condAny ? exprNumber1 : exprNumber2;
+>resultIsNumber1 : number
+>condAny ? exprNumber1 : exprNumber2 : number
+>condAny : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString1 = condAny ? exprString1 : exprString2;
+>resultIsString1 : string
+>condAny ? exprString1 : exprString2 : string
+>condAny : any
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject1 = condAny ? exprIsObject1 : exprIsObject2;
+>resultIsObject1 : Object
+>condAny ? exprIsObject1 : exprIsObject2 : Object
+>condAny : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny2 = null ? exprAny1 : exprAny2;
+>resultIsAny2 : any
+>null ? exprAny1 : exprAny2 : any
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean2 = null ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean2 : boolean
+>null ? exprBoolean1 : exprBoolean2 : boolean
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber2 = undefined ? exprNumber1 : exprNumber2;
+>resultIsNumber2 : number
+>undefined ? exprNumber1 : exprNumber2 : number
+>undefined : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString2 = [null, undefined] ? exprString1 : exprString2;
+>resultIsString2 : string
+>[null, undefined] ? exprString1 : exprString2 : string
+>[null, undefined] : any[]
+>undefined : any
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject2 = [null, undefined] ? exprIsObject1 : exprIsObject2;
+>resultIsObject2 : Object
+>[null, undefined] ? exprIsObject1 : exprIsObject2 : Object
+>[null, undefined] : any[]
+>undefined : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny3 = x.doSomeThing() ? exprAny1 : exprAny2;
+>resultIsAny3 : any
+>x.doSomeThing() ? exprAny1 : exprAny2 : any
+>x.doSomeThing() : any
+>x.doSomeThing : any
+>x : any
+>doSomeThing : any
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean3 = x("x") ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean3 : boolean
+>x("x") ? exprBoolean1 : exprBoolean2 : boolean
+>x("x") : any
+>x : any
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber3 = x(x) ? exprNumber1 : exprNumber2;
+>resultIsNumber3 : number
+>x(x) ? exprNumber1 : exprNumber2 : number
+>x(x) : any
+>x : any
+>x : any
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString3 = x("x") ? exprString1 : exprString2;
+>resultIsString3 : string
+>x("x") ? exprString1 : exprString2 : string
+>x("x") : any
+>x : any
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject3 = x.doSomeThing() ? exprIsObject1 : exprIsObject2;
+>resultIsObject3 : Object
+>x.doSomeThing() ? exprIsObject1 : exprIsObject2 : Object
+>x.doSomeThing() : any
+>x.doSomeThing : any
+>x : any
+>doSomeThing : any
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+

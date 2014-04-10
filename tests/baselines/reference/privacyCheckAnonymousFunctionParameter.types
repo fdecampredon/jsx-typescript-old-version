@@ -1,22 +1,43 @@
 === tests/cases/compiler/privacyCheckAnonymousFunctionParameter.ts ===
-Line 0 col 11 IdentifierName "x" = number
-Line 1 col 10 IdentifierName "Iterator" = Iterator<T>
-Line 1 col 19 IdentifierName "T" = T
-Line 4 col 7 IdentifierName "Query" = Query
-Line 5 col 20 IdentifierName "fromDoWhile" = typeof fromDoWhile
-Line 5 col 32 IdentifierName "T" = T
-Line 5 col 35 IdentifierName "doWhile" = (test: Iterator<T>) => boolean
-Line 5 col 45 IdentifierName "test" = Iterator<T>
-Line 5 col 51 IdentifierName "Iterator" = Iterator<T>
-Line 5 col 60 IdentifierName "T" = T
-Line 5 col 77 IdentifierName "Iterator" = Iterator<T>
-Line 5 col 86 IdentifierName "T" = T
-Line 9 col 13 IdentifierName "fromOrderBy" = typeof fromOrderBy
-Line 10 col 15 InvocationExpression "fromDoWhile(test => {
+export var x = 1;  // Makes this an external module
+>x : number
+
+interface Iterator<T> {
+>Iterator : Iterator<T>
+>T : T
+}
+
+module Query {
+>Query : Query
+
+    export function fromDoWhile<T>(doWhile: (test: Iterator<T>) => boolean): Iterator<T> {
+>fromDoWhile : typeof fromDoWhile
+>T : T
+>doWhile : (test: Iterator<T>) => boolean
+>test : Iterator<T>
+>Iterator : Iterator<T>
+>T : T
+>Iterator : Iterator<T>
+>T : T
+
+        return null;
+    }
+
+    function fromOrderBy() {
+>fromOrderBy : typeof fromOrderBy
+
+        return fromDoWhile(test => {
+>fromDoWhile(test => {
             return true;
-        })" = Iterator<{}>
-Line 10 col 15 IdentifierName "fromDoWhile" = typeof fromDoWhile
-Line 10 col 27 SimpleArrowFunctionExpression "test => {
+        }) : Iterator<{}>
+>fromDoWhile : typeof fromDoWhile
+>test => {
             return true;
-        }" = (test: Iterator<{}>) => boolean
-Line 10 col 27 IdentifierName "test" = Iterator<{}>
+        } : (test: Iterator<{}>) => boolean
+>test : Iterator<{}>
+
+            return true;
+        });
+    }
+}
+

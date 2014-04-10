@@ -1,3 +1,4 @@
+//// [typeInfer1.js]
 var x = {
     Write: function (s) {
     },

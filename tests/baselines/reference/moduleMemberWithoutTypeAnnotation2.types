@@ -1,15 +1,36 @@
 === tests/cases/compiler/moduleMemberWithoutTypeAnnotation2.ts ===
-Line 0 col 7 IdentifierName "TypeScript" = TypeScript
-Line 1 col 18 IdentifierName "CompilerDiagnostics" = CompilerDiagnostics
-Line 3 col 25 IdentifierName "IDiagnosticWriter" = IDiagnosticWriter
-Line 4 col 0 IdentifierName "Alert" = (output: string) => void
-Line 4 col 18 IdentifierName "output" = string
-Line 7 col 19 IdentifierName "diagnosticWriter" = any
-Line 9 col 24 IdentifierName "Alert" = typeof Alert
-Line 9 col 30 IdentifierName "output" = string
-Line 10 col 16 IdentifierName "diagnosticWriter" = any
-Line 11 col 0 InvocationExpression "diagnosticWriter.Alert(output)" = any
-Line 11 col 0 MemberAccessExpression "diagnosticWriter.Alert" = any
-Line 11 col 0 IdentifierName "diagnosticWriter" = any
-Line 11 col 33 IdentifierName "Alert" = any
-Line 11 col 39 IdentifierName "output" = string
+module TypeScript {
+>TypeScript : TypeScript
+
+    export module CompilerDiagnostics {
+>CompilerDiagnostics : CompilerDiagnostics
+
+        export interface IDiagnosticWriter {
+>IDiagnosticWriter : IDiagnosticWriter
+
+            Alert(output: string): void;
+>Alert : (output: string) => void
+>output : string
+        }
+
+        export var diagnosticWriter = null;
+>diagnosticWriter : any
+
+        export function Alert(output: string) {
+>Alert : typeof Alert
+>output : string
+
+            if (diagnosticWriter) {
+>diagnosticWriter : any
+
+                diagnosticWriter.Alert(output);
+>diagnosticWriter.Alert(output) : any
+>diagnosticWriter.Alert : any
+>diagnosticWriter : any
+>Alert : any
+>output : string
+            }
+        }
+    }
+}
+

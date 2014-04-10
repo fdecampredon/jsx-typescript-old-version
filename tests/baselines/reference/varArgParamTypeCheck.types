@@ -1,9 +1,15 @@
 === tests/cases/compiler/varArgParamTypeCheck.ts ===
-Line 0 col 9 IdentifierName "sequence" = typeof sequence
-Line 0 col 21 IdentifierName "sequences" = { (): void; }[]
-Line 3 col 9 IdentifierName "callback" = typeof callback
-Line 3 col 18 IdentifierName "clb" = () => void
-Line 5 col 0 InvocationExpression "sequence(
+function sequence(...sequences:{():void;}[]) {
+>sequence : typeof sequence
+>sequences : { (): void; }[]
+}
+
+function callback(clb:()=>void) {
+>callback : typeof callback
+>clb : () => void
+}
+
+>sequence(
     function bar() {
     },
     function foo() {
@@ -16,38 +22,61 @@ Line 5 col 0 InvocationExpression "sequence(
             this();
         });
     }
-)" = void
-Line 5 col 0 IdentifierName "sequence" = typeof sequence
-Line 7 col 0 FunctionExpression "function bar() {
-    }" = () => void
-Line 7 col 13 IdentifierName "bar" = () => void
-Line 9 col 0 FunctionExpression "function foo() {
+) : void
+>sequence : typeof sequence
+
+sequence(
+    function bar() {
+>function bar() {
+    } : () => void
+>bar : () => void
+
+    },
+    function foo() {
+>function foo() {
         callback(()=>{
             this();
         });
-    }" = () => void
-Line 9 col 13 IdentifierName "foo" = () => void
-Line 10 col 0 InvocationExpression "callback(()=>{
+    } : () => void
+>foo : () => void
+
+        callback(()=>{
+>callback(()=>{
             this();
-        })" = void
-Line 10 col 0 IdentifierName "callback" = typeof callback
-Line 10 col 17 ParenthesizedArrowFunctionExpression "()=>{
+        }) : void
+>callback : typeof callback
+>()=>{
             this();
-        }" = () => void
-Line 11 col 0 InvocationExpression "this()" = any
-Line 11 col 0 ThisKeyword "this" = any
-Line 14 col 0 FunctionExpression "function baz() {
+        } : () => void
+
+            this();
+>this() : any
+>this : any
+
+        });
+    },
+    function baz() {
+>function baz() {
         callback(()=>{
             this();
         });
-    }" = () => void
-Line 14 col 13 IdentifierName "baz" = () => void
-Line 15 col 0 InvocationExpression "callback(()=>{
+    } : () => void
+>baz : () => void
+
+        callback(()=>{
+>callback(()=>{
             this();
-        })" = void
-Line 15 col 0 IdentifierName "callback" = typeof callback
-Line 15 col 17 ParenthesizedArrowFunctionExpression "()=>{
+        }) : void
+>callback : typeof callback
+>()=>{
             this();
-        }" = () => void
-Line 16 col 0 InvocationExpression "this()" = any
-Line 16 col 0 ThisKeyword "this" = any
+        } : () => void
+
+            this();
+>this() : any
+>this : any
+
+        });
+    }
+);
+

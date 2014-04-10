@@ -1,154 +1,202 @@
 === tests/cases/compiler/genericCallWithGenericSignatureArguments3.ts ===
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "T" = T
-Line 3 col 16 IdentifierName "x" = T
-Line 3 col 19 IdentifierName "T" = T
-Line 3 col 22 IdentifierName "a" = (x: T) => T
-Line 3 col 26 IdentifierName "x" = T
-Line 3 col 29 IdentifierName "T" = T
-Line 3 col 35 IdentifierName "T" = T
-Line 3 col 38 IdentifierName "b" = (x: T) => T
-Line 3 col 42 IdentifierName "x" = T
-Line 3 col 45 IdentifierName "T" = T
-Line 3 col 51 IdentifierName "T" = T
-Line 4 col 8 IdentifierName "r" = (x: T) => T
-Line 4 col 12 IdentifierName "x" = T
-Line 4 col 15 IdentifierName "T" = T
-Line 4 col 21 IdentifierName "T" = T
-Line 5 col 11 IdentifierName "r" = (x: T) => T
-Line 8 col 4 IdentifierName "r1" = (x: any) => any
-Line 8 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => null)" = (x: any) => any
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 8 col 17 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
-Line 8 col 18 IdentifierName "x" = string
-Line 8 col 36 ParenthesizedArrowFunctionExpression "(x: Object) => null" = (x: Object) => any
-Line 8 col 37 IdentifierName "x" = Object
-Line 8 col 40 IdentifierName "Object" = Object
-Line 9 col 4 IdentifierName "r1ii" = (x: string) => string
-Line 9 col 11 InvocationExpression "foo('', (x) => '', (x) => null)" = (x: string) => string
-Line 9 col 11 IdentifierName "foo" = typeof foo
-Line 9 col 19 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: string) => string
-Line 9 col 20 IdentifierName "x" = string
-Line 9 col 30 ParenthesizedArrowFunctionExpression "(x) => null" = (x: string) => any
-Line 9 col 31 IdentifierName "x" = string
-Line 10 col 4 IdentifierName "r2" = (x: Object) => Object
-Line 10 col 9 InvocationExpression "foo('', (x: string) => '', (x: Object) => '')" = (x: Object) => Object
-Line 10 col 9 IdentifierName "foo" = typeof foo
-Line 10 col 17 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
-Line 10 col 18 IdentifierName "x" = string
-Line 10 col 36 ParenthesizedArrowFunctionExpression "(x: Object) => ''" = (x: Object) => string
-Line 10 col 37 IdentifierName "x" = Object
-Line 10 col 40 IdentifierName "Object" = Object
-Line 11 col 4 IdentifierName "r3" = (x: Object) => Object
-Line 11 col 9 InvocationExpression "foo(null, (x: Object) => '', (x: string) => '')" = (x: Object) => Object
-Line 11 col 9 IdentifierName "foo" = typeof foo
-Line 11 col 19 ParenthesizedArrowFunctionExpression "(x: Object) => ''" = (x: Object) => string
-Line 11 col 20 IdentifierName "x" = Object
-Line 11 col 23 IdentifierName "Object" = Object
-Line 11 col 38 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
-Line 11 col 39 IdentifierName "x" = string
-Line 12 col 4 IdentifierName "r4" = (x: any) => any
-Line 12 col 9 InvocationExpression "foo(null, (x) => '', (x) => '')" = (x: any) => any
-Line 12 col 9 IdentifierName "foo" = typeof foo
-Line 12 col 19 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: any) => string
-Line 12 col 20 IdentifierName "x" = any
-Line 12 col 30 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: any) => string
-Line 12 col 31 IdentifierName "x" = any
-Line 13 col 4 IdentifierName "r5" = (x: Object) => Object
-Line 13 col 9 InvocationExpression "foo(new Object(), (x) => '', (x) => '')" = (x: Object) => Object
-Line 13 col 9 IdentifierName "foo" = typeof foo
-Line 13 col 13 ObjectCreationExpression "new Object()" = Object
-Line 13 col 17 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 13 col 27 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: Object) => string
-Line 13 col 28 IdentifierName "x" = Object
-Line 13 col 38 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: Object) => string
-Line 13 col 39 IdentifierName "x" = Object
-Line 15 col 5 IdentifierName "E" = E
-Line 15 col 9 IdentifierName "A" = E
-Line 16 col 5 IdentifierName "F" = F
-Line 16 col 9 IdentifierName "A" = F
-Line 18 col 4 IdentifierName "r6" = (x: number) => number
-Line 18 col 9 InvocationExpression "foo(E.A, (x: number) => E.A, (x: F) => F.A)" = (x: number) => number
-Line 18 col 9 IdentifierName "foo" = typeof foo
-Line 18 col 13 MemberAccessExpression "E.A" = E
-Line 18 col 13 IdentifierName "E" = typeof E
-Line 18 col 15 IdentifierName "A" = E
-Line 18 col 18 ParenthesizedArrowFunctionExpression "(x: number) => E.A" = (x: number) => E
-Line 18 col 19 IdentifierName "x" = number
-Line 18 col 33 MemberAccessExpression "E.A" = E
-Line 18 col 33 IdentifierName "E" = typeof E
-Line 18 col 35 IdentifierName "A" = E
-Line 18 col 38 ParenthesizedArrowFunctionExpression "(x: F) => F.A" = (x: F) => F
-Line 18 col 39 IdentifierName "x" = F
-Line 18 col 42 IdentifierName "F" = F
-Line 18 col 48 MemberAccessExpression "F.A" = F
-Line 18 col 48 IdentifierName "F" = typeof F
-Line 18 col 50 IdentifierName "A" = F
-Line 21 col 9 IdentifierName "foo2" = typeof foo2
-Line 21 col 14 IdentifierName "T" = T
-Line 21 col 17 IdentifierName "U" = U
-Line 21 col 20 IdentifierName "x" = T
-Line 21 col 23 IdentifierName "T" = T
-Line 21 col 26 IdentifierName "a" = (x: T) => U
-Line 21 col 30 IdentifierName "x" = T
-Line 21 col 33 IdentifierName "T" = T
-Line 21 col 39 IdentifierName "U" = U
-Line 21 col 42 IdentifierName "b" = (x: T) => U
-Line 21 col 46 IdentifierName "x" = T
-Line 21 col 49 IdentifierName "T" = T
-Line 21 col 55 IdentifierName "U" = U
-Line 22 col 8 IdentifierName "r" = (x: T) => U
-Line 22 col 12 IdentifierName "x" = T
-Line 22 col 15 IdentifierName "T" = T
-Line 22 col 21 IdentifierName "U" = U
-Line 23 col 11 IdentifierName "r" = (x: T) => U
-Line 26 col 4 IdentifierName "r8" = (x: string) => any
-Line 26 col 9 InvocationExpression "foo2('', (x) => '', (x) => null)" = (x: string) => any
-Line 26 col 9 IdentifierName "foo2" = typeof foo2
-Line 26 col 18 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: string) => string
-Line 26 col 19 IdentifierName "x" = string
-Line 26 col 29 ParenthesizedArrowFunctionExpression "(x) => null" = (x: string) => any
-Line 26 col 30 IdentifierName "x" = string
-Line 27 col 4 IdentifierName "r9" = (x: any) => string
-Line 27 col 9 InvocationExpression "foo2(null, (x) => '', (x) => '')" = (x: any) => string
-Line 27 col 9 IdentifierName "foo2" = typeof foo2
-Line 27 col 20 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: any) => string
-Line 27 col 21 IdentifierName "x" = any
-Line 27 col 31 ParenthesizedArrowFunctionExpression "(x) => ''" = (x: any) => string
-Line 27 col 32 IdentifierName "x" = any
-Line 28 col 4 IdentifierName "r10" = (x: Object) => string
-Line 28 col 10 InvocationExpression "foo2(null, (x: Object) => '', (x: string) => '')" = (x: Object) => string
-Line 28 col 10 IdentifierName "foo2" = typeof foo2
-Line 28 col 21 ParenthesizedArrowFunctionExpression "(x: Object) => ''" = (x: Object) => string
-Line 28 col 22 IdentifierName "x" = Object
-Line 28 col 25 IdentifierName "Object" = Object
-Line 28 col 40 ParenthesizedArrowFunctionExpression "(x: string) => ''" = (x: string) => string
-Line 28 col 41 IdentifierName "x" = string
-Line 30 col 4 IdentifierName "x" = (a: string) => boolean
-Line 30 col 8 IdentifierName "a" = string
-Line 31 col 4 IdentifierName "r11" = (x: {}) => {}
-Line 31 col 10 InvocationExpression "foo2(x, (a1: (y: string) => string) => (n: Object) => 1, (a2: (z: string) => string) => 2)" = (x: {}) => {}
-Line 31 col 10 IdentifierName "foo2" = typeof foo2
-Line 31 col 15 IdentifierName "x" = (a: string) => boolean
-Line 31 col 18 ParenthesizedArrowFunctionExpression "(a1: (y: string) => string) => (n: Object) => 1" = (a1: (y: string) => string) => (n: Object) => number
-Line 31 col 19 IdentifierName "a1" = (y: string) => string
-Line 31 col 24 IdentifierName "y" = string
-Line 31 col 49 ParenthesizedArrowFunctionExpression "(n: Object) => 1" = (n: Object) => number
-Line 31 col 50 IdentifierName "n" = Object
-Line 31 col 53 IdentifierName "Object" = Object
-Line 31 col 67 ParenthesizedArrowFunctionExpression "(a2: (z: string) => string) => 2" = (a2: (z: string) => string) => number
-Line 31 col 68 IdentifierName "a2" = (z: string) => string
-Line 31 col 73 IdentifierName "z" = string
-Line 32 col 4 IdentifierName "r12" = (x: (a: string) => boolean) => {}
-Line 32 col 10 InvocationExpression "foo2(x, (a1: (y: string) => boolean) => (n: Object) => 1, (a2: (z: string) => boolean) => 2)" = (x: (a: string) => boolean) => {}
-Line 32 col 10 IdentifierName "foo2" = typeof foo2
-Line 32 col 15 IdentifierName "x" = (a: string) => boolean
-Line 32 col 18 ParenthesizedArrowFunctionExpression "(a1: (y: string) => boolean) => (n: Object) => 1" = (a1: (y: string) => boolean) => (n: Object) => number
-Line 32 col 19 IdentifierName "a1" = (y: string) => boolean
-Line 32 col 24 IdentifierName "y" = string
-Line 32 col 50 ParenthesizedArrowFunctionExpression "(n: Object) => 1" = (n: Object) => number
-Line 32 col 51 IdentifierName "n" = Object
-Line 32 col 54 IdentifierName "Object" = Object
-Line 32 col 68 ParenthesizedArrowFunctionExpression "(a2: (z: string) => boolean) => 2" = (a2: (z: string) => boolean) => number
-Line 32 col 69 IdentifierName "a2" = (z: string) => boolean
-Line 32 col 74 IdentifierName "z" = string
+// When a function expression is inferentially typed (section 4.9.3) and a type assigned to a parameter in that expression references type parameters for which inferences are being made, 
+// the corresponding inferred type arguments to become fixed and no further candidate inferences are made for them.
+
+function foo<T>(x: T, a: (x: T) => T, b: (x: T) => T) {
+>foo : typeof foo
+>T : T
+>x : T
+>T : T
+>a : (x: T) => T
+>x : T
+>T : T
+>T : T
+>b : (x: T) => T
+>x : T
+>T : T
+>T : T
+
+    var r: (x: T) => T;
+>r : (x: T) => T
+>x : T
+>T : T
+>T : T
+
+    return r;
+>r : (x: T) => T
+}
+
+var r1 = foo('', (x: string) => '', (x: Object) => null); // any => any
+>r1 : (x: any) => any
+>foo('', (x: string) => '', (x: Object) => null) : (x: any) => any
+>foo : typeof foo
+>(x: string) => '' : (x: string) => string
+>x : string
+>(x: Object) => null : (x: Object) => any
+>x : Object
+>Object : Object
+
+var r1ii = foo('', (x) => '', (x) => null); // string => string
+>r1ii : (x: string) => string
+>foo('', (x) => '', (x) => null) : (x: string) => string
+>foo : typeof foo
+>(x) => '' : (x: string) => string
+>x : string
+>(x) => null : (x: string) => any
+>x : string
+
+var r2 = foo('', (x: string) => '', (x: Object) => ''); // string => string
+>r2 : (x: Object) => Object
+>foo('', (x: string) => '', (x: Object) => '') : (x: Object) => Object
+>foo : typeof foo
+>(x: string) => '' : (x: string) => string
+>x : string
+>(x: Object) => '' : (x: Object) => string
+>x : Object
+>Object : Object
+
+var r3 = foo(null, (x: Object) => '', (x: string) => ''); // Object => Object
+>r3 : (x: Object) => Object
+>foo(null, (x: Object) => '', (x: string) => '') : (x: Object) => Object
+>foo : typeof foo
+>(x: Object) => '' : (x: Object) => string
+>x : Object
+>Object : Object
+>(x: string) => '' : (x: string) => string
+>x : string
+
+var r4 = foo(null, (x) => '', (x) => ''); // any => any
+>r4 : (x: any) => any
+>foo(null, (x) => '', (x) => '') : (x: any) => any
+>foo : typeof foo
+>(x) => '' : (x: any) => string
+>x : any
+>(x) => '' : (x: any) => string
+>x : any
+
+var r5 = foo(new Object(), (x) => '', (x) => ''); // Object => Object
+>r5 : (x: Object) => Object
+>foo(new Object(), (x) => '', (x) => '') : (x: Object) => Object
+>foo : typeof foo
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+>(x) => '' : (x: Object) => string
+>x : Object
+>(x) => '' : (x: Object) => string
+>x : Object
+
+enum E { A }
+>E : E
+>A : E
+
+enum F { A }
+>F : F
+>A : F
+
+var r6 = foo(E.A, (x: number) => E.A, (x: F) => F.A); // number => number 
+>r6 : (x: number) => number
+>foo(E.A, (x: number) => E.A, (x: F) => F.A) : (x: number) => number
+>foo : typeof foo
+>E.A : E
+>E : typeof E
+>A : E
+>(x: number) => E.A : (x: number) => E
+>x : number
+>E.A : E
+>E : typeof E
+>A : E
+>(x: F) => F.A : (x: F) => F
+>x : F
+>F : F
+>F.A : F
+>F : typeof F
+>A : F
+
+
+function foo2<T, U>(x: T, a: (x: T) => U, b: (x: T) => U) {
+>foo2 : typeof foo2
+>T : T
+>U : U
+>x : T
+>T : T
+>a : (x: T) => U
+>x : T
+>T : T
+>U : U
+>b : (x: T) => U
+>x : T
+>T : T
+>U : U
+
+    var r: (x: T) => U;
+>r : (x: T) => U
+>x : T
+>T : T
+>U : U
+
+    return r;
+>r : (x: T) => U
+}
+
+var r8 = foo2('', (x) => '', (x) => null); // string => string
+>r8 : (x: string) => any
+>foo2('', (x) => '', (x) => null) : (x: string) => any
+>foo2 : typeof foo2
+>(x) => '' : (x: string) => string
+>x : string
+>(x) => null : (x: string) => any
+>x : string
+
+var r9 = foo2(null, (x) => '', (x) => ''); // any => any
+>r9 : (x: any) => string
+>foo2(null, (x) => '', (x) => '') : (x: any) => string
+>foo2 : typeof foo2
+>(x) => '' : (x: any) => string
+>x : any
+>(x) => '' : (x: any) => string
+>x : any
+
+var r10 = foo2(null, (x: Object) => '', (x: string) => ''); // Object => Object
+>r10 : (x: Object) => string
+>foo2(null, (x: Object) => '', (x: string) => '') : (x: Object) => string
+>foo2 : typeof foo2
+>(x: Object) => '' : (x: Object) => string
+>x : Object
+>Object : Object
+>(x: string) => '' : (x: string) => string
+>x : string
+
+var x: (a: string) => boolean;
+>x : (a: string) => boolean
+>a : string
+
+var r11 = foo2(x, (a1: (y: string) => string) => (n: Object) => 1, (a2: (z: string) => string) => 2); // {} => {}
+>r11 : (x: {}) => {}
+>foo2(x, (a1: (y: string) => string) => (n: Object) => 1, (a2: (z: string) => string) => 2) : (x: {}) => {}
+>foo2 : typeof foo2
+>x : (a: string) => boolean
+>(a1: (y: string) => string) => (n: Object) => 1 : (a1: (y: string) => string) => (n: Object) => number
+>a1 : (y: string) => string
+>y : string
+>(n: Object) => 1 : (n: Object) => number
+>n : Object
+>Object : Object
+>(a2: (z: string) => string) => 2 : (a2: (z: string) => string) => number
+>a2 : (z: string) => string
+>z : string
+
+var r12 = foo2(x, (a1: (y: string) => boolean) => (n: Object) => 1, (a2: (z: string) => boolean) => 2); // (string => boolean) => {}
+>r12 : (x: (a: string) => boolean) => {}
+>foo2(x, (a1: (y: string) => boolean) => (n: Object) => 1, (a2: (z: string) => boolean) => 2) : (x: (a: string) => boolean) => {}
+>foo2 : typeof foo2
+>x : (a: string) => boolean
+>(a1: (y: string) => boolean) => (n: Object) => 1 : (a1: (y: string) => boolean) => (n: Object) => number
+>a1 : (y: string) => boolean
+>y : string
+>(n: Object) => 1 : (n: Object) => number
+>n : Object
+>Object : Object
+>(a2: (z: string) => boolean) => 2 : (a2: (z: string) => boolean) => number
+>a2 : (z: string) => boolean
+>z : string
+

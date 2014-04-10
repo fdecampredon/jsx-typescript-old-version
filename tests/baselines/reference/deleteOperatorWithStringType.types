@@ -1,99 +1,162 @@
 === tests/cases/compiler/deleteOperatorWithStringType.ts ===
-Line 1 col 4 IdentifierName "STRING" = string
-Line 2 col 4 IdentifierName "STRING1" = string[]
-Line 2 col 24 ArrayLiteralExpression "["", "abc"]" = string[]
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 6 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "a" = string
-Line 8 col 11 IdentifierName "foo" = () => string
-Line 10 col 7 IdentifierName "M" = M
-Line 11 col 15 IdentifierName "n" = string
-Line 14 col 4 IdentifierName "objA" = A
-Line 14 col 11 ObjectCreationExpression "new A()" = A
-Line 14 col 15 IdentifierName "A" = typeof A
-Line 17 col 4 IdentifierName "ResultIsBoolean1" = boolean
-Line 17 col 23 DeleteExpression "delete STRING" = boolean
-Line 17 col 30 IdentifierName "STRING" = string
-Line 18 col 4 IdentifierName "ResultIsBoolean2" = boolean
-Line 18 col 23 DeleteExpression "delete STRING1" = boolean
-Line 18 col 30 IdentifierName "STRING1" = string[]
-Line 21 col 4 IdentifierName "ResultIsBoolean3" = boolean
-Line 21 col 23 DeleteExpression "delete """ = boolean
-Line 22 col 4 IdentifierName "ResultIsBoolean4" = boolean
-Line 22 col 23 DeleteExpression "delete { x: "", y: "" }" = boolean
-Line 22 col 30 ObjectLiteralExpression "{ x: "", y: "" }" = { x: string; y: string; }
-Line 22 col 32 IdentifierName "x" = string
-Line 22 col 39 IdentifierName "y" = string
-Line 23 col 4 IdentifierName "ResultIsBoolean5" = boolean
-Line 23 col 23 DeleteExpression "delete { x: "", y: (s: string) => { return s; } }" = boolean
-Line 23 col 30 ObjectLiteralExpression "{ x: "", y: (s: string) => { return s; } }" = { x: string; y: (s: string) => string; }
-Line 23 col 32 IdentifierName "x" = string
-Line 23 col 39 IdentifierName "y" = (s: string) => string
-Line 23 col 42 ParenthesizedArrowFunctionExpression "(s: string) => { return s; }" = (s: string) => string
-Line 23 col 43 IdentifierName "s" = string
-Line 23 col 66 IdentifierName "s" = string
-Line 26 col 4 IdentifierName "ResultIsBoolean6" = boolean
-Line 26 col 23 DeleteExpression "delete objA.a" = boolean
-Line 26 col 30 MemberAccessExpression "objA.a" = string
-Line 26 col 30 IdentifierName "objA" = A
-Line 26 col 35 IdentifierName "a" = string
-Line 27 col 4 IdentifierName "ResultIsBoolean7" = boolean
-Line 27 col 23 DeleteExpression "delete M.n" = boolean
-Line 27 col 30 MemberAccessExpression "M.n" = string
-Line 27 col 30 IdentifierName "M" = typeof M
-Line 27 col 32 IdentifierName "n" = string
-Line 28 col 4 IdentifierName "ResultIsBoolean8" = boolean
-Line 28 col 23 DeleteExpression "delete STRING1[0]" = boolean
-Line 28 col 30 ElementAccessExpression "STRING1[0]" = string
-Line 28 col 30 IdentifierName "STRING1" = string[]
-Line 29 col 4 IdentifierName "ResultIsBoolean9" = boolean
-Line 29 col 23 DeleteExpression "delete foo()" = boolean
-Line 29 col 30 InvocationExpression "foo()" = string
-Line 29 col 30 IdentifierName "foo" = typeof foo
-Line 30 col 4 IdentifierName "ResultIsBoolean10" = boolean
-Line 30 col 24 DeleteExpression "delete A.foo()" = boolean
-Line 30 col 31 InvocationExpression "A.foo()" = string
-Line 30 col 31 MemberAccessExpression "A.foo" = () => string
-Line 30 col 31 IdentifierName "A" = typeof A
-Line 30 col 33 IdentifierName "foo" = () => string
-Line 31 col 4 IdentifierName "ResultIsBoolean11" = boolean
-Line 31 col 24 DeleteExpression "delete (STRING + STRING)" = boolean
-Line 31 col 31 ParenthesizedExpression "(STRING + STRING)" = string
-Line 31 col 32 AddExpression "STRING + STRING" = string
-Line 31 col 32 IdentifierName "STRING" = string
-Line 31 col 41 IdentifierName "STRING" = string
-Line 32 col 4 IdentifierName "ResultIsBoolean12" = boolean
-Line 32 col 24 DeleteExpression "delete STRING.charAt(0)" = boolean
-Line 32 col 31 InvocationExpression "STRING.charAt(0)" = string
-Line 32 col 31 MemberAccessExpression "STRING.charAt" = (pos: number) => string
-Line 32 col 31 IdentifierName "STRING" = string
-Line 32 col 38 IdentifierName "charAt" = (pos: number) => string
-Line 35 col 4 IdentifierName "ResultIsBoolean13" = boolean
-Line 35 col 24 DeleteExpression "delete delete STRING" = boolean
-Line 35 col 31 DeleteExpression "delete STRING" = boolean
-Line 35 col 38 IdentifierName "STRING" = string
-Line 36 col 4 IdentifierName "ResultIsBoolean14" = boolean
-Line 36 col 24 DeleteExpression "delete delete delete (STRING + STRING)" = boolean
-Line 36 col 31 DeleteExpression "delete delete (STRING + STRING)" = boolean
-Line 36 col 38 DeleteExpression "delete (STRING + STRING)" = boolean
-Line 36 col 45 ParenthesizedExpression "(STRING + STRING)" = string
-Line 36 col 46 AddExpression "STRING + STRING" = string
-Line 36 col 46 IdentifierName "STRING" = string
-Line 36 col 55 IdentifierName "STRING" = string
-Line 37 col 0 DeleteExpression "// miss assignment operators
-delete """ = boolean
-Line 40 col 0 DeleteExpression "delete STRING" = boolean
-Line 40 col 7 IdentifierName "STRING" = string
-Line 41 col 0 DeleteExpression "delete STRING1" = boolean
-Line 41 col 7 IdentifierName "STRING1" = string[]
-Line 42 col 0 DeleteExpression "delete foo()" = boolean
-Line 42 col 7 InvocationExpression "foo()" = string
-Line 42 col 7 IdentifierName "foo" = typeof foo
-Line 43 col 0 CommaExpression "delete objA.a,M.n" = string
-Line 43 col 0 DeleteExpression "delete objA.a" = boolean
-Line 43 col 7 MemberAccessExpression "objA.a" = string
-Line 43 col 7 IdentifierName "objA" = A
-Line 43 col 12 IdentifierName "a" = string
-Line 43 col 14 MemberAccessExpression "M.n" = string
-Line 43 col 14 IdentifierName "M" = typeof M
-Line 43 col 16 IdentifierName "n" = string
+// delete  operator on string type
+var STRING: string;
+>STRING : string
+
+var STRING1: string[] = ["", "abc"];
+>STRING1 : string[]
+>["", "abc"] : string[]
+
+function foo(): string { return "abc"; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: string;
+>a : string
+
+    static foo() { return ""; }
+>foo : () => string
+}
+module M {
+>M : M
+
+    export var n: string;
+>n : string
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// string type var
+var ResultIsBoolean1 = delete STRING;
+>ResultIsBoolean1 : boolean
+>delete STRING : boolean
+>STRING : string
+
+var ResultIsBoolean2 = delete STRING1;
+>ResultIsBoolean2 : boolean
+>delete STRING1 : boolean
+>STRING1 : string[]
+
+// string type literal
+var ResultIsBoolean3 = delete "";
+>ResultIsBoolean3 : boolean
+>delete "" : boolean
+
+var ResultIsBoolean4 = delete { x: "", y: "" };
+>ResultIsBoolean4 : boolean
+>delete { x: "", y: "" } : boolean
+>{ x: "", y: "" } : { x: string; y: string; }
+>x : string
+>y : string
+
+var ResultIsBoolean5 = delete { x: "", y: (s: string) => { return s; } };
+>ResultIsBoolean5 : boolean
+>delete { x: "", y: (s: string) => { return s; } } : boolean
+>{ x: "", y: (s: string) => { return s; } } : { x: string; y: (s: string) => string; }
+>x : string
+>y : (s: string) => string
+>(s: string) => { return s; } : (s: string) => string
+>s : string
+>s : string
+
+// string type expressions
+var ResultIsBoolean6 = delete objA.a;
+>ResultIsBoolean6 : boolean
+>delete objA.a : boolean
+>objA.a : string
+>objA : A
+>a : string
+
+var ResultIsBoolean7 = delete M.n;
+>ResultIsBoolean7 : boolean
+>delete M.n : boolean
+>M.n : string
+>M : typeof M
+>n : string
+
+var ResultIsBoolean8 = delete STRING1[0];
+>ResultIsBoolean8 : boolean
+>delete STRING1[0] : boolean
+>STRING1[0] : string
+>STRING1 : string[]
+
+var ResultIsBoolean9 = delete foo();
+>ResultIsBoolean9 : boolean
+>delete foo() : boolean
+>foo() : string
+>foo : typeof foo
+
+var ResultIsBoolean10 = delete A.foo();
+>ResultIsBoolean10 : boolean
+>delete A.foo() : boolean
+>A.foo() : string
+>A.foo : () => string
+>A : typeof A
+>foo : () => string
+
+var ResultIsBoolean11 = delete (STRING + STRING);
+>ResultIsBoolean11 : boolean
+>delete (STRING + STRING) : boolean
+>(STRING + STRING) : string
+>STRING + STRING : string
+>STRING : string
+>STRING : string
+
+var ResultIsBoolean12 = delete STRING.charAt(0);
+>ResultIsBoolean12 : boolean
+>delete STRING.charAt(0) : boolean
+>STRING.charAt(0) : string
+>STRING.charAt : (pos: number) => string
+>STRING : string
+>charAt : (pos: number) => string
+
+// multiple delete  operator
+var ResultIsBoolean13 = delete delete STRING;
+>ResultIsBoolean13 : boolean
+>delete delete STRING : boolean
+>delete STRING : boolean
+>STRING : string
+
+var ResultIsBoolean14 = delete delete delete (STRING + STRING);
+>ResultIsBoolean14 : boolean
+>delete delete delete (STRING + STRING) : boolean
+>delete delete (STRING + STRING) : boolean
+>delete (STRING + STRING) : boolean
+>(STRING + STRING) : string
+>STRING + STRING : string
+>STRING : string
+>STRING : string
+
+>// miss assignment operators
+delete "" : boolean
+
+// miss assignment operators
+delete "";
+delete STRING;
+>delete STRING : boolean
+>STRING : string
+
+delete STRING1;
+>delete STRING1 : boolean
+>STRING1 : string[]
+
+delete foo();
+>delete foo() : boolean
+>foo() : string
+>foo : typeof foo
+
+delete objA.a,M.n;
+>delete objA.a,M.n : string
+>delete objA.a : boolean
+>objA.a : string
+>objA : A
+>a : string
+>M.n : string
+>M : typeof M
+>n : string
+

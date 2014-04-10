@@ -1,47 +1,77 @@
 === tests/cases/compiler/typeParametersAvailableInNestedScope.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "data" = T
-Line 1 col 10 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "x" = <U>(a: U) => T
-Line 3 col 8 ParenthesizedArrowFunctionExpression "<U>(a: U) => {
+class C<T> {
+>C : C<T>
+>T : T
+
+    data: T;
+>data : T
+>T : T
+
+>x : <U>(a: U) => T
+
+    x = <U>(a: U) => {
+><U>(a: U) => {
         var y: T;
         return y;
-    }" = <U>(a: U) => T
-Line 3 col 9 IdentifierName "U" = U
-Line 3 col 12 IdentifierName "a" = U
-Line 3 col 15 IdentifierName "U" = U
-Line 4 col 12 IdentifierName "y" = T
-Line 4 col 15 IdentifierName "T" = T
-Line 5 col 15 IdentifierName "y" = T
-Line 7 col 0 IdentifierName "foo" = () => T
-Line 9 col 17 IdentifierName "temp" = <U>(a: U) => T
-Line 9 col 22 IdentifierName "U" = U
-Line 9 col 25 IdentifierName "a" = U
-Line 9 col 28 IdentifierName "U" = U
-Line 10 col 16 IdentifierName "y" = T
-Line 10 col 19 IdentifierName "T" = T
-Line 11 col 19 IdentifierName "y" = T
-Line 13 col 15 InvocationExpression "temp(<T>null)" = T
-Line 13 col 15 IdentifierName "temp" = <U>(a: U) => T
-Line 13 col 20 CastExpression "<T>null" = T
-Line 13 col 21 IdentifierName "T" = T
-Line 17 col 4 IdentifierName "c" = C<number>
-Line 17 col 8 ObjectCreationExpression "new C<number>()" = C<number>
-Line 17 col 12 IdentifierName "C" = typeof C
-Line 18 col 0 AssignmentExpression "c.data = c.x(null)" = number
-Line 18 col 0 MemberAccessExpression "c.data" = number
-Line 18 col 0 IdentifierName "c" = C<number>
-Line 18 col 2 IdentifierName "data" = number
-Line 18 col 9 InvocationExpression "c.x(null)" = number
-Line 18 col 9 MemberAccessExpression "c.x" = <U>(a: U) => number
-Line 18 col 9 IdentifierName "c" = C<number>
-Line 18 col 11 IdentifierName "x" = <U>(a: U) => number
-Line 19 col 0 AssignmentExpression "c.data = c.foo()" = number
-Line 19 col 0 MemberAccessExpression "c.data" = number
-Line 19 col 0 IdentifierName "c" = C<number>
-Line 19 col 2 IdentifierName "data" = number
-Line 19 col 9 InvocationExpression "c.foo()" = number
-Line 19 col 9 MemberAccessExpression "c.foo" = () => number
-Line 19 col 9 IdentifierName "c" = C<number>
-Line 19 col 11 IdentifierName "foo" = () => number
+    } : <U>(a: U) => T
+>U : U
+>a : U
+>U : U
+
+        var y: T;
+>y : T
+>T : T
+
+        return y;
+>y : T
+    }
+
+>foo : () => T
+
+    foo() {
+        function temp<U>(a: U) {
+>temp : <U>(a: U) => T
+>U : U
+>a : U
+>U : U
+
+            var y: T;
+>y : T
+>T : T
+
+            return y;
+>y : T
+        }
+        return temp(<T>null);
+>temp(<T>null) : T
+>temp : <U>(a: U) => T
+><T>null : T
+>T : T
+    }
+}
+
+var c = new C<number>();
+>c : C<number>
+>new C<number>() : C<number>
+>C : typeof C
+
+c.data = c.x(null);
+>c.data = c.x(null) : number
+>c.data : number
+>c : C<number>
+>data : number
+>c.x(null) : number
+>c.x : <U>(a: U) => number
+>c : C<number>
+>x : <U>(a: U) => number
+
+c.data = c.foo();
+>c.data = c.foo() : number
+>c.data : number
+>c : C<number>
+>data : number
+>c.foo() : number
+>c.foo : () => number
+>c : C<number>
+>foo : () => number
+

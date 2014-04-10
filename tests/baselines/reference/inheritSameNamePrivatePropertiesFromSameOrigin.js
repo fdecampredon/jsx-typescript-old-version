@@ -1,3 +1,16 @@
+//// [inheritSameNamePrivatePropertiesFromSameOrigin.ts]
+class B {
+    private x: number;
+}
+class C extends B { }
+
+class C2 extends B { }
+
+interface A extends C, C2 { // ok
+    y: string;
+}
+
+//// [inheritSameNamePrivatePropertiesFromSameOrigin.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

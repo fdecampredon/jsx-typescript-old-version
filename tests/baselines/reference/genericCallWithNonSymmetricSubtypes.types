@@ -1,75 +1,117 @@
 === tests/cases/compiler/genericCallWithNonSymmetricSubtypes.ts ===
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "T" = T
-Line 3 col 16 IdentifierName "x" = T
-Line 3 col 19 IdentifierName "T" = T
-Line 3 col 22 IdentifierName "y" = T
-Line 3 col 25 IdentifierName "T" = T
-Line 4 col 8 IdentifierName "r" = T
-Line 4 col 11 IdentifierName "T" = T
-Line 5 col 11 IdentifierName "r" = T
-Line 8 col 4 IdentifierName "a" = { x: number; y?: number; }
-Line 8 col 9 IdentifierName "x" = number
-Line 8 col 20 IdentifierName "y" = number
-Line 9 col 4 IdentifierName "b" = { x: number; z?: number; }
-Line 9 col 9 IdentifierName "x" = number
-Line 9 col 20 IdentifierName "z" = number
-Line 11 col 4 IdentifierName "r" = { x: number; y?: number; }
-Line 11 col 8 InvocationExpression "foo(a, b)" = { x: number; y?: number; }
-Line 11 col 8 IdentifierName "foo" = typeof foo
-Line 11 col 12 IdentifierName "a" = { x: number; y?: number; }
-Line 11 col 15 IdentifierName "b" = { x: number; z?: number; }
-Line 12 col 4 IdentifierName "r2" = { x: number; z?: number; }
-Line 12 col 9 InvocationExpression "foo(b, a)" = { x: number; z?: number; }
-Line 12 col 9 IdentifierName "foo" = typeof foo
-Line 12 col 13 IdentifierName "b" = { x: number; z?: number; }
-Line 12 col 16 IdentifierName "a" = { x: number; y?: number; }
-Line 14 col 4 IdentifierName "x" = { x: number; }
-Line 14 col 9 IdentifierName "x" = number
-Line 15 col 4 IdentifierName "y" = { x?: number; }
-Line 15 col 9 IdentifierName "x" = number
-Line 17 col 4 IdentifierName "r3" = { x: number; y?: number; }
-Line 17 col 9 InvocationExpression "foo(a, x)" = { x: number; y?: number; }
-Line 17 col 9 IdentifierName "foo" = typeof foo
-Line 17 col 13 IdentifierName "a" = { x: number; y?: number; }
-Line 17 col 16 IdentifierName "x" = { x: number; }
-Line 18 col 4 IdentifierName "r4" = { x: number; }
-Line 18 col 9 InvocationExpression "foo(x, a)" = { x: number; }
-Line 18 col 9 IdentifierName "foo" = typeof foo
-Line 18 col 13 IdentifierName "x" = { x: number; }
-Line 18 col 16 IdentifierName "a" = { x: number; y?: number; }
-Line 20 col 4 IdentifierName "r5" = { x?: number; }
-Line 20 col 9 InvocationExpression "foo(a, y)" = { x?: number; }
-Line 20 col 9 IdentifierName "foo" = typeof foo
-Line 20 col 13 IdentifierName "a" = { x: number; y?: number; }
-Line 20 col 16 IdentifierName "y" = { x?: number; }
-Line 21 col 4 IdentifierName "r5" = { x?: number; }
-Line 21 col 9 InvocationExpression "foo(y, a)" = { x?: number; }
-Line 21 col 9 IdentifierName "foo" = typeof foo
-Line 21 col 13 IdentifierName "y" = { x?: number; }
-Line 21 col 16 IdentifierName "a" = { x: number; y?: number; }
-Line 23 col 4 IdentifierName "r6" = { x?: number; }
-Line 23 col 9 InvocationExpression "foo(x, y)" = { x?: number; }
-Line 23 col 9 IdentifierName "foo" = typeof foo
-Line 23 col 13 IdentifierName "x" = { x: number; }
-Line 23 col 16 IdentifierName "y" = { x?: number; }
-Line 24 col 4 IdentifierName "r6" = { x?: number; }
-Line 24 col 9 InvocationExpression "foo(y, x)" = { x?: number; }
-Line 24 col 9 IdentifierName "foo" = typeof foo
-Line 24 col 13 IdentifierName "y" = { x?: number; }
-Line 24 col 16 IdentifierName "x" = { x: number; }
-Line 26 col 4 IdentifierName "s1" = (x: Object) => string
-Line 26 col 9 IdentifierName "x" = Object
-Line 26 col 12 IdentifierName "Object" = Object
-Line 27 col 4 IdentifierName "s2" = (x: string) => string
-Line 27 col 9 IdentifierName "x" = string
-Line 29 col 4 IdentifierName "r7" = (x: Object) => string
-Line 29 col 9 InvocationExpression "foo(s1, s2)" = (x: Object) => string
-Line 29 col 9 IdentifierName "foo" = typeof foo
-Line 29 col 13 IdentifierName "s1" = (x: Object) => string
-Line 29 col 17 IdentifierName "s2" = (x: string) => string
-Line 30 col 4 IdentifierName "r8" = (x: string) => string
-Line 30 col 9 InvocationExpression "foo(s2, s1)" = (x: string) => string
-Line 30 col 9 IdentifierName "foo" = typeof foo
-Line 30 col 13 IdentifierName "s2" = (x: string) => string
-Line 30 col 17 IdentifierName "s1" = (x: Object) => string
+// generic type argument inference where inference leads to two candidates that are both supertypes of all candidates
+// we choose the first candidate so the result is dependent on the order of the arguments provided
+
+function foo<T>(x: T, y: T) {
+>foo : typeof foo
+>T : T
+>x : T
+>T : T
+>y : T
+>T : T
+
+    var r: T;
+>r : T
+>T : T
+
+    return r;
+>r : T
+}
+
+var a: { x: number; y?: number; };
+>a : { x: number; y?: number; }
+>x : number
+>y : number
+
+var b: { x: number; z?: number; };
+>b : { x: number; z?: number; }
+>x : number
+>z : number
+
+var r = foo(a, b); // { x: number; y?: number; };
+>r : { x: number; y?: number; }
+>foo(a, b) : { x: number; y?: number; }
+>foo : typeof foo
+>a : { x: number; y?: number; }
+>b : { x: number; z?: number; }
+
+var r2 = foo(b, a); // { x: number; z?: number; };
+>r2 : { x: number; z?: number; }
+>foo(b, a) : { x: number; z?: number; }
+>foo : typeof foo
+>b : { x: number; z?: number; }
+>a : { x: number; y?: number; }
+
+var x: { x: number; };
+>x : { x: number; }
+>x : number
+
+var y: { x?: number; };
+>y : { x?: number; }
+>x : number
+
+var r3 = foo(a, x); // { x: number; y?: number; };
+>r3 : { x: number; y?: number; }
+>foo(a, x) : { x: number; y?: number; }
+>foo : typeof foo
+>a : { x: number; y?: number; }
+>x : { x: number; }
+
+var r4 = foo(x, a); // { x: number; };
+>r4 : { x: number; }
+>foo(x, a) : { x: number; }
+>foo : typeof foo
+>x : { x: number; }
+>a : { x: number; y?: number; }
+
+var r5 = foo(a, y); // { x?: number; };
+>r5 : { x?: number; }
+>foo(a, y) : { x?: number; }
+>foo : typeof foo
+>a : { x: number; y?: number; }
+>y : { x?: number; }
+
+var r5 = foo(y, a); // { x?: number; };
+>r5 : { x?: number; }
+>foo(y, a) : { x?: number; }
+>foo : typeof foo
+>y : { x?: number; }
+>a : { x: number; y?: number; }
+
+var r6 = foo(x, y); // { x?: number; };
+>r6 : { x?: number; }
+>foo(x, y) : { x?: number; }
+>foo : typeof foo
+>x : { x: number; }
+>y : { x?: number; }
+
+var r6 = foo(y, x); // { x?: number; };
+>r6 : { x?: number; }
+>foo(y, x) : { x?: number; }
+>foo : typeof foo
+>y : { x?: number; }
+>x : { x: number; }
+
+var s1: (x: Object) => string;
+>s1 : (x: Object) => string
+>x : Object
+>Object : Object
+
+var s2: (x: string) => string;
+>s2 : (x: string) => string
+>x : string
+
+var r7 = foo(s1, s2); // (x: Object) => string;
+>r7 : (x: Object) => string
+>foo(s1, s2) : (x: Object) => string
+>foo : typeof foo
+>s1 : (x: Object) => string
+>s2 : (x: string) => string
+
+var r8 = foo(s2, s1); // (x: string) => string;
+>r8 : (x: string) => string
+>foo(s2, s1) : (x: string) => string
+>foo : typeof foo
+>s2 : (x: string) => string
+>s1 : (x: Object) => string
+

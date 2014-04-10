@@ -1,3 +1,4 @@
+//// [callSignaturesWithParameterInitializers.js]
 // Optional parameters allow initializers only in implementation signatures
 function foo(x) {
     if (typeof x === "undefined") { x = 1; }

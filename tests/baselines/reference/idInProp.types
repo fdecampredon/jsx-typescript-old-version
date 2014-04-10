@@ -1,4 +1,10 @@
 === tests/cases/compiler/idInProp.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 2 col 4 IdentifierName "t" = (f: any) => any
-Line 2 col 10 IdentifierName "f" = any
+function f() {
+>f : typeof f
+
+var t: { (f: any) : any; };
+>t : (f: any) => any
+>f : any
+
+}
+

@@ -1,62 +1,123 @@
 === tests/cases/compiler/importAliasIdentifiers.ts ===
-Line 0 col 7 IdentifierName "moduleA" = moduleA
-Line 1 col 17 IdentifierName "Point" = Point
-Line 2 col 27 IdentifierName "x" = number
-Line 2 col 45 IdentifierName "y" = number
-Line 6 col 7 IdentifierName "alias" = alias
-Line 6 col 15 IdentifierName "moduleA" = moduleA
-Line 8 col 4 IdentifierName "p" = moduleA.Point
-Line 8 col 7 IdentifierName "alias" = alias
-Line 8 col 13 IdentifierName "Point" = moduleA.Point
-Line 9 col 4 IdentifierName "p" = moduleA.Point
-Line 9 col 7 IdentifierName "moduleA" = moduleA
-Line 9 col 15 IdentifierName "Point" = moduleA.Point
-Line 10 col 4 IdentifierName "p" = { x: number; y: number; }
-Line 10 col 9 IdentifierName "x" = number
-Line 10 col 20 IdentifierName "y" = number
-Line 12 col 6 IdentifierName "clodule" = clodule
-Line 13 col 0 IdentifierName "name" = string
-Line 16 col 7 IdentifierName "clodule" = clodule
-Line 17 col 21 IdentifierName "Point" = Point
-Line 18 col 0 IdentifierName "x" = number
-Line 18 col 19 IdentifierName "y" = number
-Line 20 col 8 IdentifierName "Point" = Point
-Line 20 col 15 IdentifierName "Point" = Point
-Line 20 col 23 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 20 col 25 IdentifierName "x" = number
-Line 20 col 31 IdentifierName "y" = number
-Line 23 col 7 IdentifierName "clolias" = clolias
-Line 23 col 17 IdentifierName "clodule" = clodule
-Line 25 col 4 IdentifierName "p" = clodule.Point
-Line 25 col 7 IdentifierName "clolias" = clolias
-Line 25 col 15 IdentifierName "Point" = clodule.Point
-Line 26 col 4 IdentifierName "p" = clodule.Point
-Line 26 col 7 IdentifierName "clodule" = clodule
-Line 26 col 15 IdentifierName "Point" = clodule.Point
-Line 27 col 4 IdentifierName "p" = { x: number; y: number; }
-Line 27 col 9 IdentifierName "x" = number
-Line 27 col 20 IdentifierName "y" = number
-Line 30 col 9 IdentifierName "fundule" = typeof fundule
-Line 31 col 11 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 31 col 13 IdentifierName "x" = number
-Line 31 col 19 IdentifierName "y" = number
-Line 34 col 7 IdentifierName "fundule" = fundule
-Line 35 col 21 IdentifierName "Point" = Point
-Line 36 col 0 IdentifierName "x" = number
-Line 36 col 19 IdentifierName "y" = number
-Line 38 col 8 IdentifierName "Point" = Point
-Line 38 col 15 IdentifierName "Point" = Point
-Line 38 col 23 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 38 col 25 IdentifierName "x" = number
-Line 38 col 31 IdentifierName "y" = number
-Line 41 col 7 IdentifierName "funlias" = funlias
-Line 41 col 17 IdentifierName "fundule" = fundule
-Line 43 col 4 IdentifierName "p" = fundule.Point
-Line 43 col 7 IdentifierName "funlias" = funlias
-Line 43 col 15 IdentifierName "Point" = fundule.Point
-Line 44 col 4 IdentifierName "p" = fundule.Point
-Line 44 col 7 IdentifierName "fundule" = fundule
-Line 44 col 15 IdentifierName "Point" = fundule.Point
-Line 45 col 4 IdentifierName "p" = { x: number; y: number; }
-Line 45 col 9 IdentifierName "x" = number
-Line 45 col 20 IdentifierName "y" = number
+module moduleA {
+>moduleA : moduleA
+
+    export class Point {
+>Point : Point
+
+        constructor(public x: number, public y: number) { }
+>x : number
+>y : number
+    }
+}
+
+import alias = moduleA;
+>alias : alias
+>moduleA : moduleA
+
+var p: alias.Point;
+>p : moduleA.Point
+>alias : alias
+>Point : moduleA.Point
+
+var p: moduleA.Point;
+>p : moduleA.Point
+>moduleA : moduleA
+>Point : moduleA.Point
+
+var p: { x: number; y: number; };
+>p : { x: number; y: number; }
+>x : number
+>y : number
+
+class clodule {
+>clodule : clodule
+
+    name: string;
+>name : string
+}
+
+module clodule {
+>clodule : clodule
+
+    export interface Point {
+>Point : Point
+
+        x: number; y: number;
+>x : number
+>y : number
+    }
+    var Point: Point = { x: 0, y: 0 };
+>Point : Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
+import clolias = clodule;
+>clolias : clolias
+>clodule : clodule
+
+var p: clolias.Point;
+>p : clodule.Point
+>clolias : clolias
+>Point : clodule.Point
+
+var p: clodule.Point;
+>p : clodule.Point
+>clodule : clodule
+>Point : clodule.Point
+
+var p: { x: number; y: number; };
+>p : { x: number; y: number; }
+>x : number
+>y : number
+
+
+function fundule() {
+>fundule : typeof fundule
+
+    return { x: 0, y: 0 };
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
+module fundule {
+>fundule : fundule
+
+    export interface Point {
+>Point : Point
+
+        x: number; y: number;
+>x : number
+>y : number
+    }
+    var Point: Point = { x: 0, y: 0 };
+>Point : Point
+>Point : Point
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+}
+
+import funlias = fundule;
+>funlias : funlias
+>fundule : fundule
+
+var p: funlias.Point;
+>p : fundule.Point
+>funlias : funlias
+>Point : fundule.Point
+
+var p: fundule.Point;
+>p : fundule.Point
+>fundule : fundule
+>Point : fundule.Point
+
+var p: { x: number; y: number; };
+>p : { x: number; y: number; }
+>x : number
+>y : number
+

@@ -1,16 +1,31 @@
 === tests/cases/compiler/assignmentCompatForEnums.ts ===
-Line 0 col 5 IdentifierName "TokenType" = TokenType
-Line 0 col 17 IdentifierName "One" = TokenType
-Line 0 col 22 IdentifierName "Two" = TokenType
-Line 2 col 4 IdentifierName "list" = {}
-Line 2 col 11 ObjectLiteralExpression "{}" = {}
-Line 5 col 9 IdentifierName "returnType" = typeof returnType
-Line 5 col 23 IdentifierName "TokenType" = TokenType
-Line 7 col 9 IdentifierName "foo" = typeof foo
-Line 8 col 8 IdentifierName "x" = TokenType
-Line 8 col 12 InvocationExpression "returnType()" = TokenType
-Line 8 col 12 IdentifierName "returnType" = typeof returnType
-Line 10 col 8 IdentifierName "x" = TokenType
-Line 10 col 11 IdentifierName "TokenType" = TokenType
-Line 10 col 23 ElementAccessExpression "list['one']" = any
-Line 10 col 23 IdentifierName "list" = {}
+enum TokenType { One, Two };
+>TokenType : TokenType
+>One : TokenType
+>Two : TokenType
+
+var list = {};
+>list : {}
+>{} : {}
+
+
+function returnType(): TokenType { return null; }
+>returnType : typeof returnType
+>TokenType : TokenType
+
+function foo() {
+>foo : typeof foo
+
+    var x = returnType();
+>x : TokenType
+>returnType() : TokenType
+>returnType : typeof returnType
+
+    var x: TokenType = list['one'];
+>x : TokenType
+>TokenType : TokenType
+>list['one'] : any
+>list : {}
+}
+
+

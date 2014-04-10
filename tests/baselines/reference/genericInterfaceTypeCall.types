@@ -1,42 +1,61 @@
 === tests/cases/compiler/genericInterfaceTypeCall.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo<T>
-Line 0 col 14 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "reject" = (arg: T) => void
-Line 1 col 11 IdentifierName "arg" = T
-Line 1 col 16 IdentifierName "T" = T
-Line 3 col 4 IdentifierName "foo" = Foo<string>
-Line 3 col 9 IdentifierName "Foo" = Foo<T>
-Line 5 col 10 IdentifierName "bar" = bar<T>
-Line 5 col 14 IdentifierName "T" = T
-Line 6 col 0 IdentifierName "fail" = (func: (arg: T) => void) => void
-Line 6 col 9 IdentifierName "func" = (arg: T) => void
-Line 6 col 16 IdentifierName "arg" = T
-Line 6 col 21 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "fail2" = (func2: (arg: T) => void) => void
-Line 7 col 10 IdentifierName "func2" = (arg: T) => void
-Line 7 col 20 IdentifierName "arg" = T
-Line 7 col 25 IdentifierName "T" = T
-Line 9 col 4 IdentifierName "test" = bar<string>
-Line 9 col 10 IdentifierName "bar" = bar<T>
-Line 10 col 0 InvocationExpression "test.fail(arg => foo.reject(arg))" = void
-Line 10 col 0 MemberAccessExpression "test.fail" = (func: (arg: string) => void) => void
-Line 10 col 0 IdentifierName "test" = bar<string>
-Line 11 col 5 IdentifierName "fail" = (func: (arg: string) => void) => void
-Line 11 col 10 SimpleArrowFunctionExpression "arg => foo.reject(arg)" = (arg: string) => void
-Line 11 col 10 IdentifierName "arg" = string
-Line 11 col 17 InvocationExpression "foo.reject(arg)" = void
-Line 11 col 17 MemberAccessExpression "foo.reject" = (arg: string) => void
-Line 11 col 17 IdentifierName "foo" = Foo<string>
-Line 11 col 21 IdentifierName "reject" = (arg: string) => void
-Line 11 col 28 IdentifierName "arg" = string
-Line 12 col 0 InvocationExpression "test.fail2(arg => foo.reject(arg))" = void
-Line 12 col 0 MemberAccessExpression "test.fail2" = (func2: (arg: string) => void) => void
-Line 12 col 0 IdentifierName "test" = bar<string>
-Line 12 col 5 IdentifierName "fail2" = (func2: (arg: string) => void) => void
-Line 12 col 11 SimpleArrowFunctionExpression "arg => foo.reject(arg)" = (arg: string) => void
-Line 12 col 11 IdentifierName "arg" = string
-Line 12 col 18 InvocationExpression "foo.reject(arg)" = void
-Line 12 col 18 MemberAccessExpression "foo.reject" = (arg: string) => void
-Line 12 col 18 IdentifierName "foo" = Foo<string>
-Line 12 col 22 IdentifierName "reject" = (arg: string) => void
-Line 12 col 29 IdentifierName "arg" = string
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+
+    reject(arg: T): void;
+>reject : (arg: T) => void
+>arg : T
+>T : T
+}
+var foo: Foo<string>
+>foo : Foo<string>
+>Foo : Foo<T>
+ 
+interface bar<T> {
+>bar : bar<T>
+>T : T
+
+    fail(func: (arg: T) => void ): void;
+>fail : (func: (arg: T) => void) => void
+>func : (arg: T) => void
+>arg : T
+>T : T
+
+    fail2(func2: { (arg: T): void; }): void;
+>fail2 : (func2: (arg: T) => void) => void
+>func2 : (arg: T) => void
+>arg : T
+>T : T
+}
+var test: bar<string>;
+>test : bar<string>
+>bar : bar<T>
+ 
+>test.fail(arg => foo.reject(arg)) : void
+>test.fail : (func: (arg: string) => void) => void
+>test : bar<string>
+
+test.fail(arg => foo.reject(arg));
+>fail : (func: (arg: string) => void) => void
+>arg => foo.reject(arg) : (arg: string) => void
+>arg : string
+>foo.reject(arg) : void
+>foo.reject : (arg: string) => void
+>foo : Foo<string>
+>reject : (arg: string) => void
+>arg : string
+
+test.fail2(arg => foo.reject(arg)); // Error: Supplied parameters do not match any signature of call target
+>test.fail2(arg => foo.reject(arg)) : void
+>test.fail2 : (func2: (arg: string) => void) => void
+>test : bar<string>
+>fail2 : (func2: (arg: string) => void) => void
+>arg => foo.reject(arg) : (arg: string) => void
+>arg : string
+>foo.reject(arg) : void
+>foo.reject : (arg: string) => void
+>foo : Foo<string>
+>reject : (arg: string) => void
+>arg : string
+

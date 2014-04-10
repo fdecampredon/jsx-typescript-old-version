@@ -1,3 +1,4 @@
+//// [privacyCheckTypeOfInvisibleModuleError.js]
 var Outer;
 (function (Outer) {
     var Inner;

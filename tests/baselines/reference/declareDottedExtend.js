@@ -1,3 +1,17 @@
+//// [declareDottedExtend.ts]
+declare module A.B
+{
+    export class C{ }
+}
+
+import ab = A.B;
+
+class D extends ab.C{ }
+
+class E extends A.B.C{ }
+
+
+//// [declareDottedExtend.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

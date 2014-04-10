@@ -1,57 +1,80 @@
 === tests/cases/compiler/returnTypeParameterWithModules.ts ===
-Line 0 col 7 IdentifierName "M1" = M1
-Line 1 col 20 IdentifierName "reduce" = typeof reduce
-Line 1 col 27 IdentifierName "A" = A
-Line 1 col 30 IdentifierName "ar" = any
-Line 1 col 34 IdentifierName "f" = any
-Line 1 col 37 IdentifierName "e" = any
-Line 1 col 42 IdentifierName "Array" = Array<T>
-Line 1 col 48 IdentifierName "A" = A
-Line 2 col 15 InvocationExpression "Array.prototype.reduce.apply(ar, e ? [f, e] : [f])" = any
-Line 2 col 15 MemberAccessExpression "Array.prototype.reduce.apply" = (thisArg: any, argArray?: any) => any
-Line 2 col 15 MemberAccessExpression "Array.prototype.reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 2 col 15 MemberAccessExpression "Array.prototype" = any[]
-Line 2 col 15 IdentifierName "Array" = { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
-Line 2 col 21 IdentifierName "prototype" = any[]
-Line 2 col 31 IdentifierName "reduce" = { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
-Line 2 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
-Line 2 col 44 IdentifierName "ar" = any
-Line 2 col 48 ConditionalExpression "e ? [f, e] : [f]" = any
-Line 2 col 48 IdentifierName "e" = any
-Line 2 col 52 ArrayLiteralExpression "[f, e]" = any[]
-Line 2 col 53 IdentifierName "f" = any
-Line 2 col 56 IdentifierName "e" = any
-Line 2 col 61 ArrayLiteralExpression "[f]" = any[]
-Line 2 col 62 IdentifierName "f" = any
-Line 5 col 7 IdentifierName "M2" = M2
-Line 6 col 9 IdentifierName "A" = A
-Line 6 col 13 IdentifierName "M1" = M1
-Line 7 col 18 IdentifierName "compose" = typeof compose
-Line 8 col 0 InvocationExpression "A.reduce(arguments, compose2)" = {}[]
-Line 8 col 0 MemberAccessExpression "A.reduce" = typeof M1.reduce
-Line 8 col 0 IdentifierName "A" = typeof M1
-Line 8 col 10 IdentifierName "reduce" = typeof M1.reduce
-Line 8 col 17 IdentifierName "arguments" = IArguments
-Line 8 col 28 IdentifierName "compose2" = typeof compose2
-Line 10 col 20 IdentifierName "compose2" = typeof compose2
-Line 10 col 29 IdentifierName "B" = B
-Line 10 col 32 IdentifierName "C" = C
-Line 10 col 35 IdentifierName "D" = D
-Line 10 col 38 IdentifierName "g" = (x: B) => C
-Line 10 col 42 IdentifierName "x" = B
-Line 10 col 45 IdentifierName "B" = B
-Line 10 col 51 IdentifierName "C" = C
-Line 10 col 54 IdentifierName "f" = (x: D) => B
-Line 10 col 58 IdentifierName "x" = D
-Line 10 col 61 IdentifierName "D" = D
-Line 10 col 67 IdentifierName "B" = B
-Line 10 col 72 IdentifierName "x" = D
-Line 10 col 75 IdentifierName "D" = D
-Line 10 col 81 IdentifierName "C" = C
-Line 11 col 11 FunctionExpression "function (x) { return g(f(x)); }" = (x: D) => C
-Line 11 col 21 IdentifierName "x" = D
-Line 11 col 33 InvocationExpression "g(f(x))" = C
-Line 11 col 33 IdentifierName "g" = (x: B) => C
-Line 11 col 35 InvocationExpression "f(x)" = B
-Line 11 col 35 IdentifierName "f" = (x: D) => B
-Line 11 col 37 IdentifierName "x" = D
+module M1 {
+>M1 : M1
+
+    export function reduce<A>(ar, f, e?): Array<A> {
+>reduce : typeof reduce
+>A : A
+>ar : any
+>f : any
+>e : any
+>Array : Array<T>
+>A : A
+
+        return Array.prototype.reduce.apply(ar, e ? [f, e] : [f]);
+>Array.prototype.reduce.apply(ar, e ? [f, e] : [f]) : any
+>Array.prototype.reduce.apply : (thisArg: any, argArray?: any) => any
+>Array.prototype.reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>Array.prototype : any[]
+>Array : { isArray(arg: any): boolean; prototype: any[]; (arrayLength?: number): any[]; <T>(arrayLength: number): T[]; <T>(...items: T[]): T[]; new(arrayLength?: number): any[]; new<T>(arrayLength: number): T[]; new<T>(...items: T[]): T[]; }
+>prototype : any[]
+>reduce : { (callbackfn: (previousValue: any, currentValue: any, currentIndex: number, array: any[]) => any, initialValue?: any): any; <U>(callbackfn: (previousValue: U, currentValue: any, currentIndex: number, array: any[]) => U, initialValue: U): U; }
+>apply : (thisArg: any, argArray?: any) => any
+>ar : any
+>e ? [f, e] : [f] : any
+>e : any
+>[f, e] : any[]
+>f : any
+>e : any
+>[f] : any[]
+>f : any
+
+    };
+};
+module M2 {
+>M2 : M2
+
+  import A = M1
+>A : A
+>M1 : M1
+
+  export function compose() {
+>compose : typeof compose
+
+        A.reduce(arguments, compose2);
+>A.reduce(arguments, compose2) : {}[]
+>A.reduce : typeof M1.reduce
+>A : typeof M1
+>reduce : typeof M1.reduce
+>arguments : IArguments
+>compose2 : typeof compose2
+
+    };
+    export function compose2<B, C, D>(g: (x: B) => C, f: (x: D) => B): (x: D) => C {
+>compose2 : typeof compose2
+>B : B
+>C : C
+>D : D
+>g : (x: B) => C
+>x : B
+>B : B
+>C : C
+>f : (x: D) => B
+>x : D
+>D : D
+>B : B
+>x : D
+>D : D
+>C : C
+
+    return function (x) { return g(f(x)); }
+>function (x) { return g(f(x)); } : (x: D) => C
+>x : D
+>g(f(x)) : C
+>g : (x: B) => C
+>f(x) : B
+>f : (x: D) => B
+>x : D
+
+  };
+};

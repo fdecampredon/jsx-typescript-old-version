@@ -1,22 +1,40 @@
 === tests/cases/compiler/recursiveTypeParameterReferenceError2.ts ===
-Line 0 col 10 IdentifierName "List" = List<T>
-Line 0 col 15 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "data" = T
-Line 1 col 10 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "next" = List<T>
-Line 2 col 10 IdentifierName "List" = List<T>
-Line 2 col 15 IdentifierName "T" = T
-Line 3 col 0 IdentifierName "owner" = List<List<T>>
-Line 3 col 11 IdentifierName "List" = List<T>
-Line 3 col 16 IdentifierName "List" = List<T>
-Line 3 col 21 IdentifierName "T" = T
-Line 6 col 10 IdentifierName "List2" = List2<T>
-Line 6 col 16 IdentifierName "T" = T
-Line 7 col 0 IdentifierName "data" = T
-Line 7 col 10 IdentifierName "T" = T
-Line 8 col 0 IdentifierName "next" = List2<T>
-Line 8 col 10 IdentifierName "List2" = List2<T>
-Line 8 col 16 IdentifierName "T" = T
-Line 9 col 0 IdentifierName "owner" = List2<List2<string>>
-Line 9 col 11 IdentifierName "List2" = List2<T>
-Line 9 col 17 IdentifierName "List2" = List2<T>
+interface List<T> {
+>List : List<T>
+>T : T
+
+    data: T;
+>data : T
+>T : T
+
+    next: List<T>;
+>next : List<T>
+>List : List<T>
+>T : T
+
+    owner: List<List<T>>;  // Error, recursive reference with wrapped T
+>owner : List<List<T>>
+>List : List<T>
+>List : List<T>
+>T : T
+}
+
+interface List2<T> {
+>List2 : List2<T>
+>T : T
+
+    data: T;
+>data : T
+>T : T
+
+    next: List2<T>;
+>next : List2<T>
+>List2 : List2<T>
+>T : T
+
+    owner: List2<List2<string>>;  // Ok
+>owner : List2<List2<string>>
+>List2 : List2<T>
+>List2 : List2<T>
+}
+

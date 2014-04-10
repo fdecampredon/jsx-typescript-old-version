@@ -1,3 +1,4 @@
+//// [genericConstraint2.js]
 function compare(x, y) {
     if (x == null)
         return y == null ? 0 : -1;

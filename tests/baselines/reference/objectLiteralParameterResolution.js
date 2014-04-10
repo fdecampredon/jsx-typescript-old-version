@@ -1,3 +1,4 @@
+//// [objectLiteralParameterResolution.js]
 var s = $.extend({
     type: "GET",
     data: "data",

@@ -1,3 +1,4 @@
+//// [genericReturnTypeFromGetter1.js]
 define(["require", "exports"], function(require, exports) {
     var DbSet = (function () {
         function DbSet() {

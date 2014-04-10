@@ -1,25 +1,51 @@
 === tests/cases/compiler/genericTypeWithMultipleBases1.ts ===
-Line 0 col 17 IdentifierName "I1" = I1
-Line 1 col 0 IdentifierName "m1" = () => void
-Line 4 col 17 IdentifierName "I2" = I2
-Line 5 col 0 IdentifierName "m2" = () => void
-Line 8 col 17 IdentifierName "I3" = I3<T>
-Line 8 col 20 IdentifierName "T" = T
-Line 8 col 31 IdentifierName "I1" = I1
-Line 8 col 35 IdentifierName "I2" = I2
-Line 9 col 0 IdentifierName "//export interface I3<T> extends I2, I1 {
-    p1" = T
-Line 10 col 8 IdentifierName "T" = T
-Line 13 col 4 IdentifierName "x" = I3<number>
-Line 13 col 7 IdentifierName "I3" = I3<T>
-Line 14 col 0 MemberAccessExpression "x.p1" = number
-Line 14 col 0 IdentifierName "x" = I3<number>
-Line 14 col 2 IdentifierName "p1" = number
-Line 15 col 0 InvocationExpression "x.m1()" = void
-Line 15 col 0 MemberAccessExpression "x.m1" = () => void
-Line 15 col 0 IdentifierName "x" = I3<number>
-Line 15 col 2 IdentifierName "m1" = () => void
-Line 16 col 0 InvocationExpression "x.m2()" = void
-Line 16 col 0 MemberAccessExpression "x.m2" = () => void
-Line 16 col 0 IdentifierName "x" = I3<number>
-Line 16 col 2 IdentifierName "m2" = () => void
+export interface I1 {
+>I1 : I1
+
+    m1: () => void;
+>m1 : () => void
+}
+ 
+export interface I2 {
+>I2 : I2
+
+    m2: () => void;
+>m2 : () => void
+}
+ 
+export interface I3<T> extends I1, I2 {
+>I3 : I3<T>
+>T : T
+>I1 : I1
+>I2 : I2
+
+//export interface I3<T> extends I2, I1 {
+>//export interface I3<T> extends I2, I1 {
+    p1 : T
+
+    p1: T;
+>T : T
+}
+ 
+var x: I3<number>;
+>x : I3<number>
+>I3 : I3<T>
+
+x.p1;
+>x.p1 : number
+>x : I3<number>
+>p1 : number
+
+x.m1();
+>x.m1() : void
+>x.m1 : () => void
+>x : I3<number>
+>m1 : () => void
+
+x.m2();
+>x.m2() : void
+>x.m2 : () => void
+>x : I3<number>
+>m2 : () => void
+
+

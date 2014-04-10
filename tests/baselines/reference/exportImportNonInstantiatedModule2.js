@@ -1,3 +1,10 @@
+//// [consumer.ts]
+import e = require('./exporter');
+
+export function w(): e.w { // Should be OK
+    return {name: 'value' };
+}
+
 //// [w1.js]
 define(["require", "exports"], function(require, exports) {
     

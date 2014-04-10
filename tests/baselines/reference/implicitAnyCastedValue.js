@@ -1,3 +1,4 @@
+//// [implicitAnyCastedValue.js]
 var x = function () {
     return 0;
 };

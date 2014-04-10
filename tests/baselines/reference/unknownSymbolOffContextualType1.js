@@ -1,3 +1,4 @@
+//// [unknownSymbolOffContextualType1.js]
 function getMaxWidth(elementNames) {
     var elements = elementNames.map(function (name) {
         return document.getElementById(name);

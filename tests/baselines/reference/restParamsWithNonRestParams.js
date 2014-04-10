@@ -1,3 +1,4 @@
+//// [restParamsWithNonRestParams.js]
 function foo() {
     var b = [];
     for (var _i = 0; _i < (arguments.length - 0); _i++) {

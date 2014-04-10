@@ -1,3 +1,4 @@
+//// [ambiguousOverload.js]
 function foof(bar) {
     return bar;
 }

@@ -1,3 +1,4 @@
+//// [arithmeticOperatorWithTypeParameter.js]
 // type parameter type is not valid for arithmetic operand
 function foo(t) {
     var a;

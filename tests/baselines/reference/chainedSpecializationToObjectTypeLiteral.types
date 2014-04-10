@@ -1,54 +1,71 @@
 === tests/cases/compiler/chainedSpecializationToObjectTypeLiteral.ts ===
-Line 0 col 10 IdentifierName "Sequence" = Sequence<T>
-Line 0 col 19 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "each" = (iterator: (value: T) => void) => void
-Line 1 col 9 IdentifierName "iterator" = (value: T) => void
-Line 1 col 20 IdentifierName "value" = T
-Line 1 col 27 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "map" = <U>(iterator: (value: T) => U) => Sequence<U>
-Line 2 col 8 IdentifierName "U" = U
-Line 2 col 11 IdentifierName "iterator" = (value: T) => U
-Line 2 col 22 IdentifierName "value" = T
-Line 2 col 29 IdentifierName "T" = T
-Line 2 col 35 IdentifierName "U" = U
-Line 2 col 39 IdentifierName "Sequence" = Sequence<T>
-Line 2 col 48 IdentifierName "U" = U
-Line 3 col 0 IdentifierName "filter" = (iterator: (value: T) => boolean) => Sequence<T>
-Line 3 col 11 IdentifierName "iterator" = (value: T) => boolean
-Line 3 col 22 IdentifierName "value" = T
-Line 3 col 29 IdentifierName "T" = T
-Line 3 col 45 IdentifierName "Sequence" = Sequence<T>
-Line 3 col 54 IdentifierName "T" = T
-Line 4 col 0 IdentifierName "groupBy" = <K>(keySelector: (value: T) => K) => Sequence<{ key: K; items: T[]; }>
-Line 4 col 12 IdentifierName "K" = K
-Line 4 col 15 IdentifierName "keySelector" = (value: T) => K
-Line 4 col 29 IdentifierName "value" = T
-Line 4 col 36 IdentifierName "T" = T
-Line 4 col 42 IdentifierName "K" = K
-Line 4 col 46 IdentifierName "Sequence" = Sequence<T>
-Line 4 col 57 IdentifierName "key" = K
-Line 4 col 62 IdentifierName "K" = K
-Line 4 col 65 IdentifierName "items" = T[]
-Line 4 col 72 IdentifierName "T" = T
-Line 7 col 4 IdentifierName "s" = Sequence<string>
-Line 7 col 7 IdentifierName "Sequence" = Sequence<T>
-Line 8 col 4 IdentifierName "s2" = Sequence<{ key: number; items: string[]; }>
-Line 8 col 9 InvocationExpression "s.groupBy(s => s.length)" = Sequence<{ key: number; items: string[]; }>
-Line 8 col 9 MemberAccessExpression "s.groupBy" = <K>(keySelector: (value: string) => K) => Sequence<{ key: K; items: string[]; }>
-Line 8 col 9 IdentifierName "s" = Sequence<string>
-Line 8 col 11 IdentifierName "groupBy" = <K>(keySelector: (value: string) => K) => Sequence<{ key: K; items: string[]; }>
-Line 8 col 19 SimpleArrowFunctionExpression "s => s.length" = (s: string) => number
-Line 8 col 19 IdentifierName "s" = string
-Line 8 col 24 MemberAccessExpression "s.length" = number
-Line 8 col 24 IdentifierName "s" = string
-Line 8 col 26 IdentifierName "length" = number
-Line 9 col 4 IdentifierName "s3" = void
-Line 9 col 9 InvocationExpression "s2.each(x => { x.key /* Type is K, should be number */ })" = void
-Line 9 col 9 MemberAccessExpression "s2.each" = (iterator: (value: { key: number; items: string[]; }) => void) => void
-Line 9 col 9 IdentifierName "s2" = Sequence<{ key: number; items: string[]; }>
-Line 9 col 12 IdentifierName "each" = (iterator: (value: { key: number; items: string[]; }) => void) => void
-Line 9 col 17 SimpleArrowFunctionExpression "x => { x.key /* Type is K, should be number */ }" = (x: { key: number; items: string[]; }) => void
-Line 9 col 17 IdentifierName "x" = { key: number; items: string[]; }
-Line 9 col 24 MemberAccessExpression "x.key /* Type is K, should be number */" = number
-Line 9 col 24 IdentifierName "x" = { key: number; items: string[]; }
-Line 9 col 26 IdentifierName "key /* Type is K, should be number */" = number
+interface Sequence<T> {
+>Sequence : Sequence<T>
+>T : T
+
+    each(iterator: (value: T) => void): void;
+>each : (iterator: (value: T) => void) => void
+>iterator : (value: T) => void
+>value : T
+>T : T
+
+    map<U>(iterator: (value: T) => U): Sequence<U>;
+>map : <U>(iterator: (value: T) => U) => Sequence<U>
+>U : U
+>iterator : (value: T) => U
+>value : T
+>T : T
+>U : U
+>Sequence : Sequence<T>
+>U : U
+
+    filter(iterator: (value: T) => boolean): Sequence<T>;
+>filter : (iterator: (value: T) => boolean) => Sequence<T>
+>iterator : (value: T) => boolean
+>value : T
+>T : T
+>Sequence : Sequence<T>
+>T : T
+
+    groupBy<K>(keySelector: (value: T) => K): Sequence<{ key: K; items: T[]; }>;
+>groupBy : <K>(keySelector: (value: T) => K) => Sequence<{ key: K; items: T[]; }>
+>K : K
+>keySelector : (value: T) => K
+>value : T
+>T : T
+>K : K
+>Sequence : Sequence<T>
+>key : K
+>K : K
+>items : T[]
+>T : T
+}
+
+var s: Sequence<string>;
+>s : Sequence<string>
+>Sequence : Sequence<T>
+
+var s2 = s.groupBy(s => s.length);
+>s2 : Sequence<{ key: number; items: string[]; }>
+>s.groupBy(s => s.length) : Sequence<{ key: number; items: string[]; }>
+>s.groupBy : <K>(keySelector: (value: string) => K) => Sequence<{ key: K; items: string[]; }>
+>s : Sequence<string>
+>groupBy : <K>(keySelector: (value: string) => K) => Sequence<{ key: K; items: string[]; }>
+>s => s.length : (s: string) => number
+>s : string
+>s.length : number
+>s : string
+>length : number
+
+var s3 = s2.each(x => { x.key /* Type is K, should be number */ });
+>s3 : void
+>s2.each(x => { x.key /* Type is K, should be number */ }) : void
+>s2.each : (iterator: (value: { key: number; items: string[]; }) => void) => void
+>s2 : Sequence<{ key: number; items: string[]; }>
+>each : (iterator: (value: { key: number; items: string[]; }) => void) => void
+>x => { x.key /* Type is K, should be number */ } : (x: { key: number; items: string[]; }) => void
+>x : { key: number; items: string[]; }
+>x.key /* Type is K, should be number */ : number
+>x : { key: number; items: string[]; }
+>key /* Type is K, should be number */ : number
+

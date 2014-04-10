@@ -1,118 +1,182 @@
 === tests/cases/compiler/castExpressionParentheses.ts ===
-Line 0 col 12 IdentifierName "a" = any
-Line 1 col 0 ParenthesizedExpression "// parentheses should be omitted
+declare var a;
+>a : any
+
+>// parentheses should be omitted
 // literals
-(<any>{a:0})" = any
-Line 4 col 1 CastExpression "<any>{a:0}" = any
-Line 4 col 6 ObjectLiteralExpression "{a:0}" = { a: number; }
-Line 4 col 7 IdentifierName "a" = number
-Line 5 col 0 ParenthesizedExpression "(<any>[1,3,])" = any
-Line 5 col 1 CastExpression "<any>[1,3,]" = any
-Line 5 col 6 ArrayLiteralExpression "[1,3,]" = number[]
-Line 6 col 0 ParenthesizedExpression "(<any>"string")" = any
-Line 6 col 1 CastExpression "<any>"string"" = any
-Line 7 col 0 ParenthesizedExpression "(<any>23.0)" = any
-Line 7 col 1 CastExpression "<any>23.0" = any
-Line 8 col 0 ParenthesizedExpression "(<any>/regexp/g)" = any
-Line 8 col 1 CastExpression "<any>/regexp/g" = any
-Line 9 col 0 ParenthesizedExpression "(<any>false)" = any
-Line 9 col 1 CastExpression "<any>false" = any
-Line 10 col 0 ParenthesizedExpression "(<any>true)" = any
-Line 10 col 1 CastExpression "<any>true" = any
-Line 11 col 0 ParenthesizedExpression "(<any>null)" = any
-Line 11 col 1 CastExpression "<any>null" = any
-Line 12 col 0 ParenthesizedExpression "// names and dotted names
-(<any>this)" = any
-Line 13 col 1 CastExpression "<any>this" = any
-Line 13 col 6 ThisKeyword "this" = any
-Line 14 col 0 ParenthesizedExpression "(<any>this.x)" = any
-Line 14 col 1 CastExpression "<any>this.x" = any
-Line 14 col 6 MemberAccessExpression "this.x" = any
-Line 14 col 6 ThisKeyword "this" = any
-Line 14 col 11 IdentifierName "x" = any
-Line 15 col 0 ParenthesizedExpression "(<any>(<any>a).x)" = any
-Line 15 col 1 CastExpression "<any>(<any>a).x" = any
-Line 15 col 6 MemberAccessExpression "(<any>a).x" = any
-Line 15 col 6 ParenthesizedExpression "(<any>a)" = any
-Line 15 col 7 CastExpression "<any>a" = any
-Line 15 col 12 IdentifierName "a" = any
-Line 15 col 15 IdentifierName "x" = any
-Line 16 col 0 ParenthesizedExpression "(<any><any>a)" = any
-Line 16 col 1 CastExpression "<any><any>a" = any
-Line 16 col 6 CastExpression "<any>a" = any
-Line 16 col 11 IdentifierName "a" = any
-Line 17 col 0 ParenthesizedExpression "(<any>a[0])" = any
-Line 17 col 1 CastExpression "<any>a[0]" = any
-Line 17 col 6 ElementAccessExpression "a[0]" = any
-Line 17 col 6 IdentifierName "a" = any
-Line 18 col 0 ParenthesizedExpression "(<any>a.b["0"])" = any
-Line 18 col 1 CastExpression "<any>a.b["0"]" = any
-Line 18 col 6 ElementAccessExpression "a.b["0"]" = any
-Line 18 col 6 MemberAccessExpression "a.b" = any
-Line 18 col 6 IdentifierName "a" = any
-Line 18 col 8 IdentifierName "b" = any
-Line 19 col 0 MemberAccessExpression "(<any>a()).x" = any
-Line 19 col 0 ParenthesizedExpression "(<any>a())" = any
-Line 19 col 1 CastExpression "<any>a()" = any
-Line 19 col 6 InvocationExpression "a()" = any
-Line 19 col 6 IdentifierName "a" = any
-Line 19 col 11 IdentifierName "x" = any
-Line 21 col 12 IdentifierName "A" = any
-Line 22 col 0 MemberAccessExpression "// should keep the parentheses in emit
-(<any>new A).foo" = any
-Line 22 col 0 ParenthesizedExpression "// should keep the parentheses in emit
-(<any>new A)" = any
-Line 24 col 1 CastExpression "<any>new A" = any
-Line 24 col 6 ObjectCreationExpression "new A" = any
-Line 24 col 10 IdentifierName "A" = any
-Line 24 col 13 IdentifierName "foo" = any
-Line 25 col 0 MemberAccessExpression "(<any>typeof A).x" = any
-Line 25 col 0 ParenthesizedExpression "(<any>typeof A)" = any
-Line 25 col 1 CastExpression "<any>typeof A" = any
-Line 25 col 6 TypeOfExpression "typeof A" = string
-Line 25 col 13 IdentifierName "A" = any
-Line 25 col 16 IdentifierName "x" = any
-Line 26 col 0 MemberAccessExpression "(<any>-A).x" = any
-Line 26 col 0 ParenthesizedExpression "(<any>-A)" = any
-Line 26 col 1 CastExpression "<any>-A" = any
-Line 26 col 6 NegateExpression "-A" = number
-Line 26 col 7 IdentifierName "A" = any
-Line 26 col 10 IdentifierName "x" = any
-Line 27 col 0 ObjectCreationExpression "new (<any>A())" = any
-Line 27 col 4 ParenthesizedExpression "(<any>A())" = any
-Line 27 col 5 CastExpression "<any>A()" = any
-Line 27 col 10 InvocationExpression "A()" = any
-Line 27 col 10 IdentifierName "A" = any
-Line 28 col 0 InvocationExpression "(<any>()=> {})()" = void
-Line 28 col 0 ParenthesizedExpression "(<any>()=> {})" = <any>() => void
-Line 28 col 1 ParenthesizedArrowFunctionExpression "<any>()=> {}" = <any>() => void
-Line 28 col 2 IdentifierName "any" = any
-Line 29 col 0 InvocationExpression "(<any>function foo() { })()" = any
-Line 29 col 0 ParenthesizedExpression "(<any>function foo() { })" = any
-Line 29 col 1 CastExpression "<any>function foo() { }" = any
-Line 29 col 6 FunctionExpression "function foo() { }" = () => void
-Line 29 col 15 IdentifierName "foo" = () => void
-Line 30 col 0 MemberAccessExpression "(<any><number><any>-A).x" = any
-Line 30 col 0 ParenthesizedExpression "(<any><number><any>-A)" = any
-Line 30 col 1 CastExpression "<any><number><any>-A" = any
-Line 30 col 6 CastExpression "<number><any>-A" = number
-Line 30 col 14 CastExpression "<any>-A" = any
-Line 30 col 19 NegateExpression "-A" = number
-Line 30 col 20 IdentifierName "A" = any
-Line 30 col 23 IdentifierName "x" = any
-Line 31 col 0 MemberAccessExpression "// nested cast, should keep one pair of parenthese
-(<any><number>(<any>-A)).x" = any
-Line 31 col 0 ParenthesizedExpression "// nested cast, should keep one pair of parenthese
-(<any><number>(<any>-A))" = any
-Line 33 col 1 CastExpression "<any><number>(<any>-A)" = any
-Line 33 col 6 CastExpression "<number>(<any>-A)" = number
-Line 33 col 14 ParenthesizedExpression "(<any>-A)" = any
-Line 33 col 15 CastExpression "<any>-A" = any
-Line 33 col 20 NegateExpression "-A" = number
-Line 33 col 21 IdentifierName "A" = any
-Line 33 col 25 IdentifierName "x" = any
-Line 34 col 0 ParenthesizedExpression "// nested parenthesized expression, should keep one pair of parenthese
-(<any>(A))" = any
-Line 36 col 1 CastExpression "<any>(A)" = any
-Line 36 col 6 ParenthesizedExpression "(A)" = any
-Line 36 col 7 IdentifierName "A" = any
+(<any>{a:0}) : any
+
+// parentheses should be omitted
+// literals
+(<any>{a:0});  
+><any>{a:0} : any
+>{a:0} : { a: number; }
+>a : number
+
+(<any>[1,3,]); 
+>(<any>[1,3,]) : any
+><any>[1,3,] : any
+>[1,3,] : number[]
+
+(<any>"string"); 
+>(<any>"string") : any
+><any>"string" : any
+
+(<any>23.0); 
+>(<any>23.0) : any
+><any>23.0 : any
+
+(<any>/regexp/g); 
+>(<any>/regexp/g) : any
+><any>/regexp/g : any
+
+(<any>false); 
+>(<any>false) : any
+><any>false : any
+
+(<any>true); 
+>(<any>true) : any
+><any>true : any
+
+(<any>null); 
+>(<any>null) : any
+><any>null : any
+
+// names and dotted names
+>// names and dotted names
+(<any>this) : any
+
+(<any>this); 
+><any>this : any
+>this : any
+
+(<any>this.x); 
+>(<any>this.x) : any
+><any>this.x : any
+>this.x : any
+>this : any
+>x : any
+
+(<any>(<any>a).x);
+>(<any>(<any>a).x) : any
+><any>(<any>a).x : any
+>(<any>a).x : any
+>(<any>a) : any
+><any>a : any
+>a : any
+>x : any
+
+(<any><any>a);
+>(<any><any>a) : any
+><any><any>a : any
+><any>a : any
+>a : any
+
+(<any>a[0]);
+>(<any>a[0]) : any
+><any>a[0] : any
+>a[0] : any
+>a : any
+
+(<any>a.b["0"]);
+>(<any>a.b["0"]) : any
+><any>a.b["0"] : any
+>a.b["0"] : any
+>a.b : any
+>a : any
+>b : any
+
+(<any>a()).x;
+>(<any>a()).x : any
+>(<any>a()) : any
+><any>a() : any
+>a() : any
+>a : any
+>x : any
+
+declare var A;
+>A : any
+
+>// should keep the parentheses in emit
+(<any>new A).foo : any
+>// should keep the parentheses in emit
+(<any>new A) : any
+
+// should keep the parentheses in emit
+(<any>new A).foo; 
+><any>new A : any
+>new A : any
+>A : any
+>foo : any
+
+(<any>typeof A).x; 
+>(<any>typeof A).x : any
+>(<any>typeof A) : any
+><any>typeof A : any
+>typeof A : string
+>A : any
+>x : any
+
+(<any>-A).x; 
+>(<any>-A).x : any
+>(<any>-A) : any
+><any>-A : any
+>-A : number
+>A : any
+>x : any
+
+new (<any>A());
+>new (<any>A()) : any
+>(<any>A()) : any
+><any>A() : any
+>A() : any
+>A : any
+
+(<any>()=> {})();
+>(<any>()=> {})() : void
+>(<any>()=> {}) : <any>() => void
+><any>()=> {} : <any>() => void
+>any : any
+
+(<any>function foo() { })();
+>(<any>function foo() { })() : any
+>(<any>function foo() { }) : any
+><any>function foo() { } : any
+>function foo() { } : () => void
+>foo : () => void
+
+(<any><number><any>-A).x; 
+>(<any><number><any>-A).x : any
+>(<any><number><any>-A) : any
+><any><number><any>-A : any
+><number><any>-A : number
+><any>-A : any
+>-A : number
+>A : any
+>x : any
+
+>// nested cast, should keep one pair of parenthese
+(<any><number>(<any>-A)).x : any
+>// nested cast, should keep one pair of parenthese
+(<any><number>(<any>-A)) : any
+
+// nested cast, should keep one pair of parenthese
+(<any><number>(<any>-A)).x; 
+><any><number>(<any>-A) : any
+><number>(<any>-A) : number
+>(<any>-A) : any
+><any>-A : any
+>-A : number
+>A : any
+>x : any
+
+>// nested parenthesized expression, should keep one pair of parenthese
+(<any>(A)) : any
+
+// nested parenthesized expression, should keep one pair of parenthese
+(<any>(A)) 
+><any>(A) : any
+>(A) : any
+>A : any
+
+

@@ -1,13 +1,26 @@
 === tests/cases/compiler/consumer.ts ===
-Line 0 col 7 IdentifierName "e" = e
-Line 2 col 16 IdentifierName "w" = typeof w
-Line 2 col 21 IdentifierName "e" = e
-Line 2 col 23 IdentifierName "w" = e.w
-Line 3 col 11 ObjectLiteralExpression "{name: 'value' }" = { name: string; }
-Line 3 col 12 IdentifierName "name" = string
+import e = require('./exporter');
+>e : e
+
+export function w(): e.w { // Should be OK
+>w : typeof w
+>e : e
+>w : e.w
+
+    return {name: 'value' };
+>{name: 'value' } : { name: string; }
+>name : string
+}
 === tests/cases/compiler/w1.ts ===
-Line 1 col 9 IdentifierName "Widget1" = any
-Line 2 col 10 IdentifierName "Widget1" = Widget1
-Line 2 col 20 IdentifierName "name" = string
+
+export = Widget1
+>Widget1 : any
+
+interface Widget1 { name: string; }
+>Widget1 : Widget1
+>name : string
+
 === tests/cases/compiler/exporter.ts ===
-Line 0 col 14 IdentifierName "w" = w
+export import w = require('./w1');
+>w : w
+

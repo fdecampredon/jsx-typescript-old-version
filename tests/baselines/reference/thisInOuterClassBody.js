@@ -1,3 +1,4 @@
+//// [thisInOuterClassBody.js]
 var Foo = (function () {
     function Foo() {
         this.x = this;

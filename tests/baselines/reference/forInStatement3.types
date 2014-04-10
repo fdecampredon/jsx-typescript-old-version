@@ -1,7 +1,14 @@
 === tests/cases/compiler/forInStatement3.ts ===
-Line 0 col 9 IdentifierName "F" = typeof F
-Line 0 col 11 IdentifierName "T" = T
-Line 1 col 6 IdentifierName "expr" = T
-Line 1 col 12 IdentifierName "T" = T
-Line 2 col 11 IdentifierName "a" = any
-Line 2 col 16 IdentifierName "expr" = T
+function F<T>() {
+>F : typeof F
+>T : T
+
+  var expr: T;
+>expr : T
+>T : T
+
+  for (var a in expr) {
+>a : any
+>expr : T
+  }
+}

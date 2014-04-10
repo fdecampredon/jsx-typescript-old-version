@@ -1,3 +1,4 @@
+//// [missingReturnStatement.js]
 var Test;
 (function (Test) {
     var Bug = (function () {

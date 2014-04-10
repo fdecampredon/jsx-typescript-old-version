@@ -1,10 +1,41 @@
 === tests/cases/compiler/constructorWithExpressionLessReturn.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 6 col 6 IdentifierName "D" = D
-Line 7 col 0 IdentifierName "x" = number
-Line 13 col 6 IdentifierName "E" = E
-Line 14 col 23 IdentifierName "x" = number
-Line 19 col 6 IdentifierName "F" = F<T>
-Line 19 col 8 IdentifierName "T" = T
-Line 20 col 23 IdentifierName "x" = T
-Line 20 col 26 IdentifierName "T" = T
+class C {
+>C : C
+
+    constructor() {
+        return;
+    }
+}
+
+class D {
+>D : D
+
+    x: number;
+>x : number
+
+    constructor() {
+        return;
+    }
+}
+
+class E {
+>E : E
+
+    constructor(public x: number) {
+>x : number
+
+        return;
+    }
+}
+
+class F<T> {
+>F : F<T>
+>T : T
+
+    constructor(public x: T) {
+>x : T
+>T : T
+
+        return;
+    }
+}

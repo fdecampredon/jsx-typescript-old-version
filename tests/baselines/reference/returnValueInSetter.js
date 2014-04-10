@@ -1,3 +1,4 @@
+//// [returnValueInSetter.js]
 var f = (function () {
     function f() {
     }

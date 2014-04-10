@@ -1,54 +1,116 @@
 === tests/cases/compiler/moduleMemberWithoutTypeAnnotation1.ts ===
-Line 0 col 7 IdentifierName "TypeScript" = TypeScript
-Line 0 col 18 IdentifierName "Parser" = TypeScript.Parser
-Line 1 col 10 IdentifierName "SyntaxCursor" = SyntaxCursor
-Line 2 col 15 IdentifierName "currentNode" = () => SyntaxNode
-Line 2 col 30 IdentifierName "SyntaxNode" = SyntaxNode
-Line 8 col 7 IdentifierName "TypeScript" = TypeScript
-Line 9 col 21 IdentifierName "ISyntaxElement" = ISyntaxElement
-Line 10 col 21 IdentifierName "ISyntaxToken" = ISyntaxToken
-Line 12 col 17 IdentifierName "PositionedElement" = PositionedElement
-Line 13 col 15 IdentifierName "childIndex" = (child: ISyntaxElement) => void
-Line 13 col 26 IdentifierName "child" = ISyntaxElement
-Line 13 col 33 IdentifierName "ISyntaxElement" = ISyntaxElement
-Line 14 col 19 InvocationExpression "Syntax.childIndex()" = void
-Line 14 col 19 MemberAccessExpression "Syntax.childIndex" = typeof Syntax.childIndex
-Line 14 col 19 IdentifierName "Syntax" = typeof Syntax
-Line 14 col 26 IdentifierName "childIndex" = typeof Syntax.childIndex
-Line 18 col 17 IdentifierName "PositionedToken" = PositionedToken
-Line 19 col 20 IdentifierName "parent" = PositionedElement
-Line 19 col 28 IdentifierName "PositionedElement" = PositionedElement
-Line 19 col 47 IdentifierName "token" = ISyntaxToken
-Line 19 col 54 IdentifierName "ISyntaxToken" = ISyntaxToken
-Line 19 col 68 IdentifierName "fullStart" = number
-Line 24 col 7 IdentifierName "TypeScript" = TypeScript
-Line 25 col 17 IdentifierName "SyntaxNode" = SyntaxNode
-Line 26 col 15 IdentifierName "findToken" = (position: number, includeSkippedTokens?: boolean) => PositionedToken
-Line 26 col 25 IdentifierName "position" = number
-Line 26 col 43 IdentifierName "includeSkippedTokens" = boolean
-Line 26 col 83 IdentifierName "PositionedToken" = PositionedToken
-Line 27 col 16 IdentifierName "positionedToken" = any
-Line 27 col 34 InvocationExpression "this.findTokenInternal(null, position, 0)" = any
-Line 27 col 34 MemberAccessExpression "this.findTokenInternal" = (x: any, y: any, z: any) => any
-Line 27 col 34 ThisKeyword "this" = SyntaxNode
-Line 27 col 39 IdentifierName "findTokenInternal" = (x: any, y: any, z: any) => any
-Line 27 col 63 IdentifierName "position" = number
-Line 30 col 0 IdentifierName "findTokenInternal" = (x: any, y: any, z: any) => any
-Line 30 col 26 IdentifierName "x" = any
-Line 30 col 29 IdentifierName "y" = any
-Line 30 col 32 IdentifierName "z" = any
-Line 36 col 7 IdentifierName "TypeScript" = TypeScript
-Line 36 col 18 IdentifierName "Syntax" = TypeScript.Syntax
-Line 37 col 20 IdentifierName "childIndex" = typeof childIndex
-Line 39 col 17 IdentifierName "VariableWidthTokenWithTrailingTrivia" = VariableWidthTokenWithTrailingTrivia
-Line 39 col 65 IdentifierName "ISyntaxToken" = ISyntaxToken
-Line 40 col 16 IdentifierName "findTokenInternal" = (parent: PositionedElement, position: number, fullStart: number) => PositionedToken
-Line 40 col 34 IdentifierName "parent" = PositionedElement
-Line 40 col 42 IdentifierName "PositionedElement" = PositionedElement
-Line 40 col 61 IdentifierName "position" = number
-Line 40 col 79 IdentifierName "fullStart" = number
-Line 41 col 19 ObjectCreationExpression "new PositionedToken(parent, this, fullStart)" = PositionedToken
-Line 41 col 23 IdentifierName "PositionedToken" = typeof PositionedToken
-Line 41 col 39 IdentifierName "parent" = PositionedElement
-Line 41 col 47 ThisKeyword "this" = VariableWidthTokenWithTrailingTrivia
-Line 41 col 53 IdentifierName "fullStart" = number
+module TypeScript.Parser {
+>TypeScript : TypeScript
+>Parser : TypeScript.Parser
+
+    class SyntaxCursor {
+>SyntaxCursor : SyntaxCursor
+
+        public currentNode(): SyntaxNode {
+>currentNode : () => SyntaxNode
+>SyntaxNode : SyntaxNode
+
+            return null;
+        }
+    }
+}
+
+module TypeScript {
+>TypeScript : TypeScript
+
+    export interface ISyntaxElement { };
+>ISyntaxElement : ISyntaxElement
+
+    export interface ISyntaxToken { };
+>ISyntaxToken : ISyntaxToken
+
+    export class PositionedElement {
+>PositionedElement : PositionedElement
+
+        public childIndex(child: ISyntaxElement) {
+>childIndex : (child: ISyntaxElement) => void
+>child : ISyntaxElement
+>ISyntaxElement : ISyntaxElement
+
+            return Syntax.childIndex();
+>Syntax.childIndex() : void
+>Syntax.childIndex : typeof Syntax.childIndex
+>Syntax : typeof Syntax
+>childIndex : typeof Syntax.childIndex
+        }
+    }
+
+    export class PositionedToken {
+>PositionedToken : PositionedToken
+
+        constructor(parent: PositionedElement, token: ISyntaxToken, fullStart: number) {
+>parent : PositionedElement
+>PositionedElement : PositionedElement
+>token : ISyntaxToken
+>ISyntaxToken : ISyntaxToken
+>fullStart : number
+        }
+    }
+}
+
+module TypeScript {
+>TypeScript : TypeScript
+
+    export class SyntaxNode {
+>SyntaxNode : SyntaxNode
+
+        public findToken(position: number, includeSkippedTokens: boolean = false): PositionedToken {
+>findToken : (position: number, includeSkippedTokens?: boolean) => PositionedToken
+>position : number
+>includeSkippedTokens : boolean
+>PositionedToken : PositionedToken
+
+            var positionedToken = this.findTokenInternal(null, position, 0);
+>positionedToken : any
+>this.findTokenInternal(null, position, 0) : any
+>this.findTokenInternal : (x: any, y: any, z: any) => any
+>this : SyntaxNode
+>findTokenInternal : (x: any, y: any, z: any) => any
+>position : number
+
+            return null;
+        }
+        findTokenInternal(x, y, z) {
+>findTokenInternal : (x: any, y: any, z: any) => any
+>x : any
+>y : any
+>z : any
+
+            return null;
+        }
+    }
+}
+
+module TypeScript.Syntax {
+>TypeScript : TypeScript
+>Syntax : TypeScript.Syntax
+
+    export function childIndex() { }
+>childIndex : typeof childIndex
+
+    export class VariableWidthTokenWithTrailingTrivia implements ISyntaxToken {
+>VariableWidthTokenWithTrailingTrivia : VariableWidthTokenWithTrailingTrivia
+>ISyntaxToken : ISyntaxToken
+
+        private findTokenInternal(parent: PositionedElement, position: number, fullStart: number) {
+>findTokenInternal : (parent: PositionedElement, position: number, fullStart: number) => PositionedToken
+>parent : PositionedElement
+>PositionedElement : PositionedElement
+>position : number
+>fullStart : number
+
+            return new PositionedToken(parent, this, fullStart);
+>new PositionedToken(parent, this, fullStart) : PositionedToken
+>PositionedToken : typeof PositionedToken
+>parent : PositionedElement
+>this : VariableWidthTokenWithTrailingTrivia
+>fullStart : number
+        }
+    }
+}
+

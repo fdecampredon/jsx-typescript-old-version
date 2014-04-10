@@ -1,17 +1,33 @@
 === tests/cases/compiler/importOnAliasedIdentifiers.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 21 IdentifierName "X" = X
-Line 1 col 25 IdentifierName "s" = string
-Line 2 col 15 IdentifierName "X" = X
-Line 2 col 18 IdentifierName "X" = X
-Line 4 col 7 IdentifierName "B" = B
-Line 5 col 14 IdentifierName "A" = A
-Line 5 col 18 IdentifierName "n" = number
-Line 6 col 11 IdentifierName "Y" = Y
-Line 6 col 15 IdentifierName "A" = A
-Line 7 col 11 IdentifierName "Z" = Z
-Line 7 col 15 IdentifierName "A" = A
-Line 7 col 17 IdentifierName "X" = A.X
-Line 8 col 8 IdentifierName "v" = A.X
-Line 8 col 11 IdentifierName "Z" = Z
-Line 8 col 15 IdentifierName "Z" = A.X
+module A {
+>A : A
+
+    export interface X { s: string }
+>X : X
+>s : string
+
+    export var X: X;
+>X : X
+>X : X
+}
+module B {
+>B : B
+
+    interface A { n: number }
+>A : A
+>n : number
+
+    import Y = A; // Alias only for module A
+>Y : Y
+>A : A
+
+    import Z = A.X; // Alias for both type and member A.X
+>Z : Z
+>A : A
+>X : A.X
+
+    var v: Z = Z;
+>v : A.X
+>Z : Z
+>Z : A.X
+}

@@ -1,15 +1,24 @@
 === tests/cases/compiler/arrayCast.ts ===
-Line 0 col 0 CastExpression "// Should succeed.  The array is contextually typed with { id: number }[] type and ends up having 
+// Should succeed.  The array is contextually typed with { id: number }[] type and ends up having 
+>// Should succeed.  The array is contextually typed with { id: number }[] type and ends up having 
 // the type { } [].  { id: number }[] is assignable to {}[], so this is ok.
-<{ id: number; }[]>[{ foo: "s" }]" = { id: number; }[]
-Line 2 col 3 IdentifierName "id" = number
-Line 2 col 19 ArrayLiteralExpression "[{ foo: "s" }]" = {}[]
-Line 2 col 20 ObjectLiteralExpression "{ foo: "s" }" = { foo: string; }
-Line 2 col 22 IdentifierName "foo" = string
-Line 3 col 0 CastExpression "// Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]
-<{ id: number; }[]>[{ foo: "s" }, {}]" = { id: number; }[]
-Line 5 col 3 IdentifierName "id" = number
-Line 5 col 19 ArrayLiteralExpression "[{ foo: "s" }, {}]" = {}[]
-Line 5 col 20 ObjectLiteralExpression "{ foo: "s" }" = { foo: string; }
-Line 5 col 22 IdentifierName "foo" = string
-Line 5 col 34 ObjectLiteralExpression "{}" = {}
+<{ id: number; }[]>[{ foo: "s" }] : { id: number; }[]
+
+// the type { } [].  { id: number }[] is assignable to {}[], so this is ok.
+<{ id: number; }[]>[{ foo: "s" }];
+>id : number
+>[{ foo: "s" }] : {}[]
+>{ foo: "s" } : { foo: string; }
+>foo : string
+
+>// Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]
+<{ id: number; }[]>[{ foo: "s" }, {}] : { id: number; }[]
+
+// Should succeed without contextual typing, as the {} element causes the type of the array to be {}[]
+<{ id: number; }[]>[{ foo: "s" }, {}]; 
+>id : number
+>[{ foo: "s" }, {}] : {}[]
+>{ foo: "s" } : { foo: string; }
+>foo : string
+>{} : {}
+

@@ -1,37 +1,55 @@
 === tests/cases/compiler/comparisonOperatorWithIdenticalTypeParameter.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "t" = T
-Line 0 col 19 IdentifierName "T" = T
-Line 1 col 8 IdentifierName "r1" = boolean
-Line 1 col 13 LessThanExpression "t < t" = boolean
-Line 1 col 13 IdentifierName "t" = T
-Line 1 col 17 IdentifierName "t" = T
-Line 2 col 8 IdentifierName "r2" = boolean
-Line 2 col 13 GreaterThanExpression "t > t" = boolean
-Line 2 col 13 IdentifierName "t" = T
-Line 2 col 17 IdentifierName "t" = T
-Line 3 col 8 IdentifierName "r3" = boolean
-Line 3 col 13 LessThanOrEqualExpression "t <= t" = boolean
-Line 3 col 13 IdentifierName "t" = T
-Line 3 col 18 IdentifierName "t" = T
-Line 4 col 8 IdentifierName "r4" = boolean
-Line 4 col 13 GreaterThanOrEqualExpression "t >= t" = boolean
-Line 4 col 13 IdentifierName "t" = T
-Line 4 col 18 IdentifierName "t" = T
-Line 5 col 8 IdentifierName "r5" = boolean
-Line 5 col 13 EqualsWithTypeConversionExpression "t == t" = boolean
-Line 5 col 13 IdentifierName "t" = T
-Line 5 col 18 IdentifierName "t" = T
-Line 6 col 8 IdentifierName "r6" = boolean
-Line 6 col 13 NotEqualsWithTypeConversionExpression "t != t" = boolean
-Line 6 col 13 IdentifierName "t" = T
-Line 6 col 18 IdentifierName "t" = T
-Line 7 col 8 IdentifierName "r7" = boolean
-Line 7 col 13 EqualsExpression "t === t" = boolean
-Line 7 col 13 IdentifierName "t" = T
-Line 7 col 19 IdentifierName "t" = T
-Line 8 col 8 IdentifierName "r8" = boolean
-Line 8 col 13 NotEqualsExpression "t !== t" = boolean
-Line 8 col 13 IdentifierName "t" = T
-Line 8 col 19 IdentifierName "t" = T
+function foo<T>(t: T) {
+>foo : typeof foo
+>T : T
+>t : T
+>T : T
+
+    var r1 = t < t;
+>r1 : boolean
+>t < t : boolean
+>t : T
+>t : T
+
+    var r2 = t > t;
+>r2 : boolean
+>t > t : boolean
+>t : T
+>t : T
+
+    var r3 = t <= t;
+>r3 : boolean
+>t <= t : boolean
+>t : T
+>t : T
+
+    var r4 = t >= t;
+>r4 : boolean
+>t >= t : boolean
+>t : T
+>t : T
+
+    var r5 = t == t;
+>r5 : boolean
+>t == t : boolean
+>t : T
+>t : T
+
+    var r6 = t != t;
+>r6 : boolean
+>t != t : boolean
+>t : T
+>t : T
+
+    var r7 = t === t;
+>r7 : boolean
+>t === t : boolean
+>t : T
+>t : T
+
+    var r8 = t !== t;
+>r8 : boolean
+>t !== t : boolean
+>t : T
+>t : T
+}

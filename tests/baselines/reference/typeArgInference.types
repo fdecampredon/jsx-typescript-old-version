@@ -1,85 +1,111 @@
 === tests/cases/compiler/typeArgInference.ts ===
-Line 0 col 10 IdentifierName "I" = I
-Line 1 col 0 IdentifierName "f" = <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
-Line 1 col 6 IdentifierName "T" = T
-Line 1 col 9 IdentifierName "U" = U
-Line 1 col 12 IdentifierName "a1" = { a: T; b: U; }[]
-Line 1 col 18 IdentifierName "a" = T
-Line 1 col 21 IdentifierName "T" = T
-Line 1 col 24 IdentifierName "b" = U
-Line 1 col 27 IdentifierName "U" = U
-Line 1 col 34 IdentifierName "a2" = { a: T; b: U; }[]
-Line 1 col 40 IdentifierName "a" = T
-Line 1 col 43 IdentifierName "T" = T
-Line 1 col 46 IdentifierName "b" = U
-Line 1 col 49 IdentifierName "U" = U
-Line 1 col 59 IdentifierName "c" = T
-Line 1 col 62 IdentifierName "T" = T
-Line 1 col 65 IdentifierName "d" = U
-Line 1 col 68 IdentifierName "U" = U
-Line 2 col 0 IdentifierName "g" = <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
-Line 2 col 6 IdentifierName "T" = T
-Line 2 col 9 IdentifierName "U" = U
-Line 2 col 15 IdentifierName "arg" = { a: T; b: U; }[][]
-Line 2 col 22 IdentifierName "a" = T
-Line 2 col 25 IdentifierName "T" = T
-Line 2 col 28 IdentifierName "b" = U
-Line 2 col 31 IdentifierName "U" = U
-Line 2 col 43 IdentifierName "c" = T
-Line 2 col 46 IdentifierName "T" = T
-Line 2 col 49 IdentifierName "d" = U
-Line 2 col 52 IdentifierName "U" = U
-Line 4 col 4 IdentifierName "o" = { a: number; b: string; }
-Line 4 col 8 ObjectLiteralExpression "{ a: 3, b: "test" }" = { a: number; b: string; }
-Line 4 col 10 IdentifierName "a" = number
-Line 4 col 16 IdentifierName "b" = string
-Line 5 col 4 IdentifierName "x" = I
-Line 5 col 7 IdentifierName "I" = I
-Line 6 col 4 IdentifierName "t1" = { c: number; d: string; }
-Line 6 col 9 InvocationExpression "x.f([o], [o])" = { c: number; d: string; }
-Line 6 col 9 MemberAccessExpression "x.f" = <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
-Line 6 col 9 IdentifierName "x" = I
-Line 6 col 11 IdentifierName "f" = <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
-Line 6 col 13 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 6 col 14 IdentifierName "o" = { a: number; b: string; }
-Line 6 col 18 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 6 col 19 IdentifierName "o" = { a: number; b: string; }
-Line 7 col 4 IdentifierName "t1" = { c: number; d: string; }
-Line 7 col 10 IdentifierName "c" = number
-Line 7 col 21 IdentifierName "d" = string
-Line 8 col 4 IdentifierName "t2" = { c: number; d: string; }
-Line 8 col 9 InvocationExpression "x.f<number, string>([o], [o])" = { c: number; d: string; }
-Line 8 col 9 MemberAccessExpression "x.f" = <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
-Line 8 col 9 IdentifierName "x" = I
-Line 8 col 11 IdentifierName "f" = <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
-Line 8 col 29 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 8 col 30 IdentifierName "o" = { a: number; b: string; }
-Line 8 col 34 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 8 col 35 IdentifierName "o" = { a: number; b: string; }
-Line 9 col 4 IdentifierName "t2" = { c: number; d: string; }
-Line 9 col 10 IdentifierName "c" = number
-Line 9 col 21 IdentifierName "d" = string
-Line 10 col 4 IdentifierName "t3" = { c: number; d: string; }
-Line 10 col 9 InvocationExpression "x.g([o], [o])" = { c: number; d: string; }
-Line 10 col 9 MemberAccessExpression "x.g" = <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
-Line 10 col 9 IdentifierName "x" = I
-Line 10 col 11 IdentifierName "g" = <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
-Line 10 col 13 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 10 col 14 IdentifierName "o" = { a: number; b: string; }
-Line 10 col 18 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 10 col 19 IdentifierName "o" = { a: number; b: string; }
-Line 11 col 4 IdentifierName "t3" = { c: number; d: string; }
-Line 11 col 10 IdentifierName "c" = number
-Line 11 col 21 IdentifierName "d" = string
-Line 12 col 4 IdentifierName "t4" = { c: number; d: string; }
-Line 12 col 9 InvocationExpression "x.g<number, string>([o], [o])" = { c: number; d: string; }
-Line 12 col 9 MemberAccessExpression "x.g" = <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
-Line 12 col 9 IdentifierName "x" = I
-Line 12 col 11 IdentifierName "g" = <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
-Line 12 col 29 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 12 col 30 IdentifierName "o" = { a: number; b: string; }
-Line 12 col 34 ArrayLiteralExpression "[o]" = { a: number; b: string; }[]
-Line 12 col 35 IdentifierName "o" = { a: number; b: string; }
-Line 13 col 4 IdentifierName "t4" = { c: number; d: string; }
-Line 13 col 10 IdentifierName "c" = number
-Line 13 col 21 IdentifierName "d" = string
+interface I {
+>I : I
+
+    f<T, U>(a1: { a: T; b: U }[], a2: { a: T; b: U }[]): { c: T; d: U };
+>f : <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
+>T : T
+>U : U
+>a1 : { a: T; b: U; }[]
+>a : T
+>T : T
+>b : U
+>U : U
+>a2 : { a: T; b: U; }[]
+>a : T
+>T : T
+>b : U
+>U : U
+>c : T
+>T : T
+>d : U
+>U : U
+
+    g<T, U>(...arg: { a: T; b: U }[][]): { c: T; d: U };
+>g : <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
+>T : T
+>U : U
+>arg : { a: T; b: U; }[][]
+>a : T
+>T : T
+>b : U
+>U : U
+>c : T
+>T : T
+>d : U
+>U : U
+}
+var o = { a: 3, b: "test" };
+>o : { a: number; b: string; }
+>{ a: 3, b: "test" } : { a: number; b: string; }
+>a : number
+>b : string
+
+var x: I;
+>x : I
+>I : I
+
+var t1 = x.f([o], [o]);
+>t1 : { c: number; d: string; }
+>x.f([o], [o]) : { c: number; d: string; }
+>x.f : <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
+>x : I
+>f : <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+
+var t1: { c: number; d: string }; 
+>t1 : { c: number; d: string; }
+>c : number
+>d : string
+
+var t2 = x.f<number, string>([o], [o]);
+>t2 : { c: number; d: string; }
+>x.f<number, string>([o], [o]) : { c: number; d: string; }
+>x.f : <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
+>x : I
+>f : <T, U>(a1: { a: T; b: U; }[], a2: { a: T; b: U; }[]) => { c: T; d: U; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+
+var t2: { c: number; d: string }; 
+>t2 : { c: number; d: string; }
+>c : number
+>d : string
+
+var t3 = x.g([o], [o]);
+>t3 : { c: number; d: string; }
+>x.g([o], [o]) : { c: number; d: string; }
+>x.g : <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
+>x : I
+>g : <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+
+var t3: { c: number; d: string };
+>t3 : { c: number; d: string; }
+>c : number
+>d : string
+
+var t4 = x.g<number, string>([o], [o]);
+>t4 : { c: number; d: string; }
+>x.g<number, string>([o], [o]) : { c: number; d: string; }
+>x.g : <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
+>x : I
+>g : <T, U>(...arg: { a: T; b: U; }[][]) => { c: T; d: U; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+>[o] : { a: number; b: string; }[]
+>o : { a: number; b: string; }
+
+var t4: { c: number; d: string };
+>t4 : { c: number; d: string; }
+>c : number
+>d : string
+

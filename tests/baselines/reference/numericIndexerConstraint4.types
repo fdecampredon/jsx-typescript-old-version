@@ -1,13 +1,29 @@
 === tests/cases/compiler/numericIndexerConstraint4.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "foo" = number
-Line 4 col 6 IdentifierName "B" = B
-Line 4 col 16 IdentifierName "A" = A
-Line 5 col 0 IdentifierName "bar" = string
-Line 8 col 4 IdentifierName "x" = { [idx: number]: A; }
-Line 9 col 5 IdentifierName "idx" = number
-Line 9 col 19 IdentifierName "A" = A
-Line 10 col 4 ObjectLiteralExpression "{ data: new B() }" = { data: B; [idx: number]: A; }
-Line 10 col 6 IdentifierName "data" = B
-Line 10 col 12 ObjectCreationExpression "new B()" = B
-Line 10 col 16 IdentifierName "B" = typeof B
+class A {
+>A : A
+
+    foo: number;
+>foo : number
+}
+
+class B extends A {
+>B : B
+>A : A
+
+    bar: string;
+>bar : string
+}
+
+var x: {
+>x : { [idx: number]: A; }
+
+    [idx: number]: A;
+>idx : number
+>A : A
+
+} = { data: new B() }
+>{ data: new B() } : { data: B; [idx: number]: A; }
+>data : B
+>new B() : B
+>B : typeof B
+

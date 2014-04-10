@@ -1,3 +1,4 @@
+//// [nestedInfinitelyExpandedRecursiveTypes.js]
 var f;
 var g;
 f = g;

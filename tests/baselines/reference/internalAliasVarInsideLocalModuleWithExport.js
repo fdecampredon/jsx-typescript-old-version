@@ -1,3 +1,14 @@
+//// [internalAliasVarInsideLocalModuleWithExport.ts]
+export module a {
+    export var x = 10;
+}
+
+export module c {
+    export import b = a.x;
+    export var bVal = b;
+}
+
+
 //// [internalAliasVarInsideLocalModuleWithExport.js]
 define(["require", "exports"], function(require, exports) {
     (function (a) {

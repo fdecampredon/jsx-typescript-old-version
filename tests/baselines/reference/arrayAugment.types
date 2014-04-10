@@ -1,14 +1,25 @@
 === tests/cases/compiler/arrayAugment.ts ===
-Line 0 col 10 IdentifierName "Array" = Array<T>
-Line 0 col 16 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "split" = (parts: number) => T[][]
-Line 1 col 12 IdentifierName "parts" = number
-Line 1 col 30 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "x" = string[]
-Line 4 col 8 ArrayLiteralExpression "['']" = string[]
-Line 5 col 4 IdentifierName "y" = string[][]
-Line 5 col 8 InvocationExpression "x.split(4)" = string[][]
-Line 5 col 8 MemberAccessExpression "x.split" = (parts: number) => string[][]
-Line 5 col 8 IdentifierName "x" = string[]
-Line 5 col 10 IdentifierName "split" = (parts: number) => string[][]
-Line 6 col 4 IdentifierName "y" = string[][]
+interface Array<T> {
+>Array : Array<T>
+>T : T
+
+    split: (parts: number) => T[][];
+>split : (parts: number) => T[][]
+>parts : number
+>T : T
+}
+
+var x = [''];
+>x : string[]
+>[''] : string[]
+
+var y = x.split(4);
+>y : string[][]
+>x.split(4) : string[][]
+>x.split : (parts: number) => string[][]
+>x : string[]
+>split : (parts: number) => string[][]
+
+var y: string[][]; // Expect no error here
+>y : string[][]
+

@@ -1,3 +1,4 @@
+//// [getAndSetNotIdenticalType3.js]
 var A = (function () {
     function A() {
     }

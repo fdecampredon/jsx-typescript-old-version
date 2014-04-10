@@ -1,3 +1,4 @@
+//// [derivedClassWithoutExplicitConstructor3.js]
 // automatic constructors with a class hieararchy of depth > 2
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

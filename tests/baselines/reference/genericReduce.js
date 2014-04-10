@@ -1,3 +1,4 @@
+//// [genericReduce.js]
 var a = ["An", "array", "of", "strings"];
 var b = a.map(function (s) {
     return s.length;

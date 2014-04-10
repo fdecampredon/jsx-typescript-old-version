@@ -1,3 +1,20 @@
+//// [contextualTypingArrayOfLambdas.ts]
+class A {
+    foo: string;
+}
+
+class B extends A {
+    bar: string;
+}
+
+class C extends A {
+    baz: string;
+}
+
+var xs = [(x: A) => { }, (x: B) => { }, (x: C) => { }];
+
+
+//// [contextualTypingArrayOfLambdas.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

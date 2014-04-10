@@ -1,37 +1,70 @@
 === tests/cases/compiler/commentsFunction.ts ===
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 4 col 0 InvocationExpression "foo()" = void
-Line 4 col 0 IdentifierName "foo" = typeof foo
-Line 6 col 9 IdentifierName "fooWithParameters" = typeof fooWithParameters
-Line 6 col 56 IdentifierName "a" = string
-Line 7 col 0 IdentifierName "/** this is comment for b*/
-    b" = number
-Line 9 col 8 IdentifierName "d" = string
-Line 9 col 12 IdentifierName "a" = string
-Line 11 col 0 InvocationExpression "fooWithParameters("a", 10)" = void
-Line 11 col 0 IdentifierName "fooWithParameters" = typeof fooWithParameters
-Line 15 col 4 IdentifierName "fooFunc" = (b: string) => string
-Line 15 col 14 FunctionExpression "function FooFunctionValue(/** fooFunctionValue param */ b: string) {
+
+/** This comment should appear for foo*/
+function foo() {
+>foo : typeof foo
+}
+foo();
+>foo() : void
+>foo : typeof foo
+
+/** This is comment for function signature*/
+function fooWithParameters(/** this is comment about a*/a: string,
+>fooWithParameters : typeof fooWithParameters
+>a : string
+
+    /** this is comment for b*/
+>/** this is comment for b*/
+    b : number
+
+    b: number) {
+    var d = a;
+>d : string
+>a : string
+}
+fooWithParameters("a", 10);
+>fooWithParameters("a", 10) : void
+>fooWithParameters : typeof fooWithParameters
+
+/** fooFunc
+ * comment
+ */
+var fooFunc = function FooFunctionValue(/** fooFunctionValue param */ b: string) {
+>fooFunc : (b: string) => string
+>function FooFunctionValue(/** fooFunctionValue param */ b: string) {
     return b;
-}" = (b: string) => string
-Line 15 col 23 IdentifierName "FooFunctionValue" = (b: string) => string
-Line 15 col 70 IdentifierName "b" = string
-Line 16 col 11 IdentifierName "b" = string
-Line 20 col 4 IdentifierName "lambdaFoo" = (a: number, b: number) => number
-Line 20 col 45 ParenthesizedArrowFunctionExpression "(/**param a*/a: number, /**param b*/b: number) => a + b" = (a: number, b: number) => number
-Line 20 col 58 IdentifierName "a" = number
-Line 20 col 81 IdentifierName "b" = number
-Line 20 col 95 AddExpression "a + b" = number
-Line 20 col 95 IdentifierName "a" = number
-Line 20 col 99 IdentifierName "b" = number
-Line 21 col 4 IdentifierName "lambddaNoVarComment" = (a: number, b: number) => number
-Line 21 col 62 ParenthesizedArrowFunctionExpression "(/**param a*/a: number, /**param b*/b: number) => a * b" = (a: number, b: number) => number
-Line 21 col 75 IdentifierName "a" = number
-Line 21 col 98 IdentifierName "b" = number
-Line 21 col 112 MultiplyExpression "a * b" = number
-Line 21 col 112 IdentifierName "a" = number
-Line 21 col 116 IdentifierName "b" = number
-Line 22 col 0 InvocationExpression "lambdaFoo(10, 20)" = number
-Line 22 col 0 IdentifierName "lambdaFoo" = (a: number, b: number) => number
-Line 23 col 0 InvocationExpression "lambddaNoVarComment(10, 20)" = number
-Line 23 col 0 IdentifierName "lambddaNoVarComment" = (a: number, b: number) => number
+} : (b: string) => string
+>FooFunctionValue : (b: string) => string
+>b : string
+
+    return b;
+>b : string
+}
+
+/// lamdaFoo var comment
+var lambdaFoo = /** this is lambda comment*/ (/**param a*/a: number, /**param b*/b: number) => a + b;
+>lambdaFoo : (a: number, b: number) => number
+>(/**param a*/a: number, /**param b*/b: number) => a + b : (a: number, b: number) => number
+>a : number
+>b : number
+>a + b : number
+>a : number
+>b : number
+
+var lambddaNoVarComment = /** this is lambda multiplication*/ (/**param a*/a: number, /**param b*/b: number) => a * b;
+>lambddaNoVarComment : (a: number, b: number) => number
+>(/**param a*/a: number, /**param b*/b: number) => a * b : (a: number, b: number) => number
+>a : number
+>b : number
+>a * b : number
+>a : number
+>b : number
+
+lambdaFoo(10, 20);
+>lambdaFoo(10, 20) : number
+>lambdaFoo : (a: number, b: number) => number
+
+lambddaNoVarComment(10, 20);
+>lambddaNoVarComment(10, 20) : number
+>lambddaNoVarComment : (a: number, b: number) => number
+

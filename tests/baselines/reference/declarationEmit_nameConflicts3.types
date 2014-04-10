@@ -1,38 +1,77 @@
 === tests/cases/compiler/declarationEmit_nameConflicts3.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 21 IdentifierName "D" = D
-Line 2 col 18 IdentifierName "D" = D
-Line 3 col 24 IdentifierName "f" = typeof f
-Line 5 col 18 IdentifierName "C" = C
-Line 6 col 24 IdentifierName "f" = typeof f
-Line 8 col 18 IdentifierName "E" = E
-Line 9 col 24 IdentifierName "f" = typeof f
-Line 13 col 7 IdentifierName "M" = M
-Line 13 col 9 IdentifierName "P" = M.P
-Line 14 col 17 IdentifierName "C" = C
-Line 15 col 15 IdentifierName "f" = () => void
-Line 17 col 17 IdentifierName "E" = E
-Line 17 col 27 IdentifierName "C" = C
-Line 18 col 16 IdentifierName "D" = D
-Line 19 col 0 IdentifierName "f" = D
-Line 22 col 15 IdentifierName "v" = M.D
-Line 22 col 18 IdentifierName "M" = M
-Line 22 col 20 IdentifierName "D" = M.D
-Line 23 col 15 IdentifierName "w" = typeof D.f
-Line 23 col 19 MemberAccessExpression "M.D.f" = typeof D.f
-Line 23 col 19 MemberAccessExpression "M.D" = typeof D
-Line 23 col 19 IdentifierName "M" = typeof M
-Line 23 col 21 IdentifierName "D" = typeof D
-Line 23 col 23 IdentifierName "f" = typeof D.f
-Line 24 col 15 IdentifierName "x" = typeof C.f
-Line 24 col 19 MemberAccessExpression "M.C.f" = typeof C.f
-Line 24 col 19 MemberAccessExpression "M.C" = typeof C
-Line 24 col 19 IdentifierName "M" = typeof M
-Line 24 col 21 IdentifierName "C" = typeof C
-Line 24 col 23 IdentifierName "f" = typeof C.f
-Line 25 col 15 IdentifierName "x" = typeof E.f
-Line 25 col 19 MemberAccessExpression "M.E.f" = typeof E.f
-Line 25 col 19 MemberAccessExpression "M.E" = typeof E
-Line 25 col 19 IdentifierName "M" = typeof M
-Line 25 col 21 IdentifierName "E" = typeof E
-Line 25 col 23 IdentifierName "f" = typeof E.f
+module M {
+>M : M
+
+    export interface D { }
+>D : D
+
+    export module D {
+>D : D
+
+        export function f() { }
+>f : typeof f
+    }
+    export module C {
+>C : C
+
+        export function f() { }
+>f : typeof f
+    }
+    export module E {
+>E : E
+
+        export function f() { }
+>f : typeof f
+    }
+}
+
+module M.P {
+>M : M
+>P : M.P
+
+    export class C {
+>C : C
+
+        static f() { }
+>f : () => void
+    }
+    export class E extends C { }
+>E : E
+>C : C
+
+    export enum D {
+>D : D
+
+        f
+>f : D
+    }
+    // Bug 887180
+    export var v: M.D; // ok
+>v : M.D
+>M : M
+>D : M.D
+
+    export var w = M.D.f; // error, should be typeof M.D.f
+>w : typeof D.f
+>M.D.f : typeof D.f
+>M.D : typeof D
+>M : typeof M
+>D : typeof D
+>f : typeof D.f
+
+    export var x = M.C.f; // error, should be typeof M.C.f
+>x : typeof C.f
+>M.C.f : typeof C.f
+>M.C : typeof C
+>M : typeof M
+>C : typeof C
+>f : typeof C.f
+
+    export var x = M.E.f; // error, should be typeof M.E.f
+>x : typeof E.f
+>M.E.f : typeof E.f
+>M.E : typeof E
+>M : typeof M
+>E : typeof E
+>f : typeof E.f
+}

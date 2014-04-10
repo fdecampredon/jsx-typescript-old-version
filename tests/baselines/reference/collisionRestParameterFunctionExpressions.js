@@ -1,3 +1,4 @@
+//// [collisionRestParameterFunctionExpressions.js]
 function foo() {
     function f1(_i) {
         var restParameters = [];

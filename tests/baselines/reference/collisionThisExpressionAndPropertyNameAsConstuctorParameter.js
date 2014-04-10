@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndPropertyNameAsConstuctorParameter.js]
 var Foo2 = (function () {
     function Foo2(_this) {
         var _this = this;

@@ -1,3 +1,12 @@
+//// [emitMemberAccessExpression_file3.ts]
+/// <reference path="emitMemberAccessExpression_file2.ts" />
+/// <reference path="emitMemberAccessExpression_file1.ts" />
+declare var OData: any;
+module Microsoft.PeopleAtWork.Model {
+    export class KnockoutExtentions {
+    }
+}
+
 //// [emitMemberAccessExpression_file2.js]
 /// <reference path="emitMemberAccessExpression_file3.ts" />
 "use strict";

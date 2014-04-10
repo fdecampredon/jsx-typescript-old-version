@@ -1,16 +1,28 @@
 === tests/cases/compiler/targetTypeTest2.ts ===
-Line 3 col 4 IdentifierName "a" = any[]
-Line 3 col 16 ArrayLiteralExpression "[1,2,"3"]" = any[]
-Line 6 col 9 IdentifierName "func1" = typeof func1
-Line 6 col 15 IdentifierName "stuff" = any[]
-Line 6 col 37 IdentifierName "stuff" = any[]
-Line 8 col 9 IdentifierName "func2" = typeof func2
-Line 8 col 15 IdentifierName "stuff1" = string
-Line 8 col 30 IdentifierName "stuff2" = number
-Line 8 col 45 IdentifierName "stuff3" = number
-Line 9 col 8 InvocationExpression "func1([stuff1, stuff2, stuff3])" = any[]
-Line 9 col 8 IdentifierName "func1" = typeof func1
-Line 9 col 14 ArrayLiteralExpression "[stuff1, stuff2, stuff3]" = any[]
-Line 9 col 15 IdentifierName "stuff1" = string
-Line 9 col 23 IdentifierName "stuff2" = number
-Line 9 col 31 IdentifierName "stuff3" = number
+// Test target typing for array literals and call expressions
+
+
+var a : any[] = [1,2,"3"];
+>a : any[]
+>[1,2,"3"] : any[]
+
+
+function func1(stuff:any[]) { return stuff; }
+>func1 : typeof func1
+>stuff : any[]
+>stuff : any[]
+
+function func2(stuff1:string, stuff2:number, stuff3:number) {
+>func2 : typeof func2
+>stuff1 : string
+>stuff2 : number
+>stuff3 : number
+
+	return func1([stuff1, stuff2, stuff3]);
+>func1([stuff1, stuff2, stuff3]) : any[]
+>func1 : typeof func1
+>[stuff1, stuff2, stuff3] : any[]
+>stuff1 : string
+>stuff2 : number
+>stuff3 : number
+}

@@ -1,22 +1,42 @@
 === tests/cases/compiler/protoAsIndexInIndexExpression_1.ts ===
-Line 1 col 4 IdentifierName "EntityPrototype" = any
-Line 1 col 22 IdentifierName "undefined" = any
-Line 2 col 4 IdentifierName "WorkspacePrototype" = { serialize: () => any; }
-Line 2 col 25 ObjectLiteralExpression "{
+///<reference path='protoAsIndexInIndexExpression_0.ts'/>
+var EntityPrototype = undefined;
+>EntityPrototype : any
+>undefined : any
+
+var WorkspacePrototype = {
+>WorkspacePrototype : { serialize: () => any; }
+>{
     serialize: function (): any {
     }
-}" = { serialize: () => any; }
-Line 3 col 0 IdentifierName "serialize" = () => any
-Line 3 col 15 FunctionExpression "function (): any {
-    }" = () => any
-Line 6 col 0 AssignmentExpression "WorkspacePrototype['__proto__'] = EntityPrototype" = any
-Line 6 col 0 ElementAccessExpression "WorkspacePrototype['__proto__']" = any
-Line 6 col 0 IdentifierName "WorkspacePrototype" = { serialize: () => any; }
-Line 6 col 34 IdentifierName "EntityPrototype" = any
-Line 8 col 4 IdentifierName "o" = { "__proto__": number; }
-Line 8 col 8 ObjectLiteralExpression "{
+} : { serialize: () => any; }
+
+    serialize: function (): any {
+>serialize : () => any
+>function (): any {
+    } : () => any
+    }
+};
+WorkspacePrototype['__proto__'] = EntityPrototype;
+>WorkspacePrototype['__proto__'] = EntityPrototype : any
+>WorkspacePrototype['__proto__'] : any
+>WorkspacePrototype : { serialize: () => any; }
+>EntityPrototype : any
+
+var o = {
+>o : { "__proto__": number; }
+>{
     "__proto__": 0
-}" = { "__proto__": number; }
-Line 11 col 6 IdentifierName "C" = C
+} : { "__proto__": number; }
+
+    "__proto__": 0
+};
+class C {
+>C : C
+
+    "__proto__" = 0;
+}
 === tests/cases/compiler/protoAsIndexInIndexExpression_0.ts ===
-Line 0 col 11 IdentifierName "x" = any
+export var x;
+>x : any
+

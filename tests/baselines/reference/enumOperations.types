@@ -1,36 +1,64 @@
 === tests/cases/compiler/enumOperations.ts ===
-Line 0 col 5 IdentifierName "Enum" = Enum
-Line 0 col 12 IdentifierName "None" = Enum
-Line 1 col 4 IdentifierName "enumType" = Enum
-Line 1 col 14 IdentifierName "Enum" = Enum
-Line 1 col 21 MemberAccessExpression "Enum.None" = Enum
-Line 1 col 21 IdentifierName "Enum" = typeof Enum
-Line 1 col 26 IdentifierName "None" = Enum
-Line 2 col 4 IdentifierName "numberType" = number
-Line 3 col 4 IdentifierName "anyType" = any
-Line 4 col 0 BitwiseExclusiveOrExpression "enumType ^ numberType" = number
-Line 4 col 0 IdentifierName "enumType" = Enum
-Line 5 col 11 IdentifierName "numberType" = number
-Line 6 col 0 BitwiseExclusiveOrExpression "numberType ^ anyType" = number
-Line 6 col 0 IdentifierName "numberType" = number
-Line 6 col 13 IdentifierName "anyType" = any
-Line 7 col 0 BitwiseAndExpression "enumType & anyType" = number
-Line 7 col 0 IdentifierName "enumType" = Enum
-Line 8 col 11 IdentifierName "anyType" = any
-Line 9 col 0 BitwiseOrExpression "enumType | anyType" = number
-Line 9 col 0 IdentifierName "enumType" = Enum
-Line 9 col 11 IdentifierName "anyType" = any
-Line 10 col 0 BitwiseExclusiveOrExpression "enumType ^ anyType" = number
-Line 10 col 0 IdentifierName "enumType" = Enum
-Line 10 col 11 IdentifierName "anyType" = any
-Line 11 col 0 BitwiseNotExpression "~anyType" = number
-Line 11 col 1 IdentifierName "anyType" = any
-Line 12 col 0 LeftShiftExpression "enumType <<anyType" = number
-Line 12 col 0 IdentifierName "enumType" = Enum
-Line 12 col 11 IdentifierName "anyType" = any
-Line 13 col 0 SignedRightShiftExpression "enumType >>anyType" = number
-Line 13 col 0 IdentifierName "enumType" = Enum
-Line 13 col 11 IdentifierName "anyType" = any
-Line 14 col 0 UnsignedRightShiftExpression "enumType >>>anyType" = number
-Line 14 col 0 IdentifierName "enumType" = Enum
-Line 14 col 12 IdentifierName "anyType" = any
+enum Enum { None = 0 }
+>Enum : Enum
+>None : Enum
+
+var enumType: Enum = Enum.None;
+>enumType : Enum
+>Enum : Enum
+>Enum.None : Enum
+>Enum : typeof Enum
+>None : Enum
+
+var numberType: number = 0;
+>numberType : number
+
+var anyType: any = 0;
+>anyType : any
+ 
+>enumType ^ numberType : number
+>enumType : Enum
+
+enumType ^ numberType;
+>numberType : number
+
+numberType ^ anyType;
+>numberType ^ anyType : number
+>numberType : number
+>anyType : any
+ 
+>enumType & anyType : number
+>enumType : Enum
+
+enumType & anyType;
+>anyType : any
+
+enumType | anyType;
+>enumType | anyType : number
+>enumType : Enum
+>anyType : any
+
+enumType ^ anyType;
+>enumType ^ anyType : number
+>enumType : Enum
+>anyType : any
+
+~anyType;
+>~anyType : number
+>anyType : any
+
+enumType <<anyType;
+>enumType <<anyType : number
+>enumType : Enum
+>anyType : any
+
+enumType >>anyType;
+>enumType >>anyType : number
+>enumType : Enum
+>anyType : any
+
+enumType >>>anyType;
+>enumType >>>anyType : number
+>enumType : Enum
+>anyType : any
+

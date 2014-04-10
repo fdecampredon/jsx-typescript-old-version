@@ -1,3 +1,4 @@
+//// [thisInArrowFunctionInStaticInitializer1.js]
 function log(a) {
 }
 

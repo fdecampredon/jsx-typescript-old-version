@@ -1,22 +1,48 @@
 === tests/cases/compiler/file2.ts ===
-Line 0 col 7 IdentifierName "appJs" = appJs
-Line 1 col 7 IdentifierName "Services" = Services
-Line 1 col 18 IdentifierName "appJs" = appJs
-Line 1 col 24 IdentifierName "Services" = typeof appJs.Services
-Line 2 col 7 IdentifierName "UserServices" = UserServices
-Line 2 col 22 IdentifierName "Services" = appJs.Services
-Line 2 col 31 IdentifierName "UserServices" = appJs.Services.UserServices
-Line 3 col 4 IdentifierName "x" = string
-Line 3 col 8 InvocationExpression "new UserServices().getUserName()" = string
-Line 3 col 8 MemberAccessExpression "new UserServices().getUserName" = () => string
-Line 3 col 8 ObjectCreationExpression "new UserServices()" = appJs.Services.UserServices
-Line 3 col 12 IdentifierName "UserServices" = typeof appJs.Services.UserServices
-Line 3 col 27 IdentifierName "getUserName" = () => string
+import appJs = require("file1");
+>appJs : appJs
+
+import Services = appJs.Services;
+>Services : Services
+>appJs : appJs
+>Services : typeof appJs.Services
+
+import UserServices = Services.UserServices;
+>UserServices : UserServices
+>Services : appJs.Services
+>UserServices : appJs.Services.UserServices
+
+var x = new UserServices().getUserName();
+>x : string
+>new UserServices().getUserName() : string
+>new UserServices().getUserName : () => string
+>new UserServices() : appJs.Services.UserServices
+>UserServices : typeof appJs.Services.UserServices
+>getUserName : () => string
+
 === tests/cases/compiler/file1.ts ===
-Line 0 col 7 IdentifierName "App" = App
-Line 1 col 18 IdentifierName "Services" = Services
-Line 2 col 21 IdentifierName "UserServices" = UserServices
-Line 3 col 19 IdentifierName "getUserName" = () => string
-Line 10 col 7 IdentifierName "Mod" = Mod
-Line 10 col 13 IdentifierName "App" = App
-Line 11 col 9 IdentifierName "Mod" = typeof App
+module App {
+>App : App
+
+    export module Services {
+>Services : Services
+
+        export class UserServices {
+>UserServices : UserServices
+
+            public getUserName(): string {
+>getUserName : () => string
+
+                return "Bill Gates";
+            }
+        }
+    }
+}
+
+import Mod = App;
+>Mod : Mod
+>App : App
+
+export = Mod;
+>Mod : typeof App
+

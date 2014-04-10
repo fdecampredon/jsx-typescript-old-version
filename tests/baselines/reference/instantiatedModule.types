@@ -1,112 +1,197 @@
 === tests/cases/compiler/instantiatedModule.ts ===
-Line 2 col 7 IdentifierName "M" = M
-Line 3 col 21 IdentifierName "Point" = Point
-Line 3 col 29 IdentifierName "x" = number
-Line 3 col 40 IdentifierName "y" = number
-Line 4 col 15 IdentifierName "Point" = number
-Line 8 col 4 IdentifierName "m" = typeof M
-Line 8 col 14 IdentifierName "M" = typeof M
-Line 9 col 4 IdentifierName "m" = typeof M
-Line 9 col 8 IdentifierName "M" = typeof M
-Line 11 col 4 IdentifierName "a1" = number
-Line 12 col 4 IdentifierName "a1" = number
-Line 12 col 9 MemberAccessExpression "M.Point" = number
-Line 12 col 9 IdentifierName "M" = typeof M
-Line 12 col 11 IdentifierName "Point" = number
-Line 13 col 4 IdentifierName "a1" = number
-Line 13 col 9 MemberAccessExpression "m.Point" = number
-Line 13 col 9 IdentifierName "m" = typeof M
-Line 13 col 11 IdentifierName "Point" = number
-Line 15 col 4 IdentifierName "p1" = { x: number; y: number; }
-Line 15 col 10 IdentifierName "x" = number
-Line 15 col 21 IdentifierName "y" = number
-Line 16 col 4 IdentifierName "p1" = M.Point
-Line 16 col 8 IdentifierName "M" = M
-Line 16 col 10 IdentifierName "Point" = M.Point
-Line 20 col 7 IdentifierName "M2" = M2
-Line 21 col 17 IdentifierName "Point" = Point
-Line 22 col 0 IdentifierName "x" = number
-Line 23 col 0 IdentifierName "y" = number
-Line 24 col 15 IdentifierName "Origin" = () => Point
-Line 24 col 25 IdentifierName "Point" = Point
-Line 25 col 19 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 25 col 21 IdentifierName "x" = number
-Line 25 col 27 IdentifierName "y" = number
-Line 30 col 4 IdentifierName "m2" = typeof M2
-Line 30 col 15 IdentifierName "M2" = typeof M2
-Line 31 col 4 IdentifierName "m2" = typeof M2
-Line 31 col 9 IdentifierName "M2" = typeof M2
-Line 34 col 4 IdentifierName "a2" = typeof M2.Point
-Line 34 col 15 IdentifierName "M2" = typeof M2
-Line 34 col 18 IdentifierName "Point" = typeof M2.Point
-Line 35 col 4 IdentifierName "a2" = typeof M2.Point
-Line 35 col 9 MemberAccessExpression "m2.Point" = typeof M2.Point
-Line 35 col 9 IdentifierName "m2" = typeof M2
-Line 35 col 12 IdentifierName "Point" = typeof M2.Point
-Line 36 col 4 IdentifierName "a2" = typeof M2.Point
-Line 36 col 9 MemberAccessExpression "M2.Point" = typeof M2.Point
-Line 36 col 9 IdentifierName "M2" = typeof M2
-Line 36 col 12 IdentifierName "Point" = typeof M2.Point
-Line 37 col 4 IdentifierName "o" = M2.Point
-Line 37 col 7 IdentifierName "M2" = M2
-Line 37 col 10 IdentifierName "Point" = M2.Point
-Line 37 col 18 InvocationExpression "a2.Origin()" = M2.Point
-Line 37 col 18 MemberAccessExpression "a2.Origin" = () => M2.Point
-Line 37 col 18 IdentifierName "a2" = typeof M2.Point
-Line 37 col 21 IdentifierName "Origin" = () => M2.Point
-Line 39 col 4 IdentifierName "p2" = { x: number; y: number; }
-Line 39 col 10 IdentifierName "x" = number
-Line 39 col 21 IdentifierName "y" = number
-Line 40 col 4 IdentifierName "p2" = M2.Point
-Line 40 col 8 IdentifierName "M2" = M2
-Line 40 col 11 IdentifierName "Point" = M2.Point
-Line 41 col 4 IdentifierName "p2" = M2.Point
-Line 41 col 9 ObjectCreationExpression "new m2.Point()" = M2.Point
-Line 41 col 13 MemberAccessExpression "m2.Point" = typeof M2.Point
-Line 41 col 13 IdentifierName "m2" = typeof M2
-Line 41 col 16 IdentifierName "Point" = typeof M2.Point
-Line 42 col 4 IdentifierName "p2" = M2.Point
-Line 42 col 9 ObjectCreationExpression "new M2.Point()" = M2.Point
-Line 42 col 13 MemberAccessExpression "M2.Point" = typeof M2.Point
-Line 42 col 13 IdentifierName "M2" = typeof M2
-Line 42 col 16 IdentifierName "Point" = typeof M2.Point
-Line 44 col 7 IdentifierName "M3" = M3
-Line 45 col 16 IdentifierName "Color" = Color
-Line 45 col 24 IdentifierName "Blue" = Color
-Line 45 col 30 IdentifierName "Red" = Color
-Line 48 col 4 IdentifierName "m3" = typeof M3
-Line 48 col 15 IdentifierName "M3" = typeof M3
-Line 49 col 4 IdentifierName "m3" = typeof M3
-Line 49 col 9 IdentifierName "M3" = typeof M3
-Line 51 col 4 IdentifierName "a3" = typeof M3.Color
-Line 51 col 15 IdentifierName "M3" = typeof M3
-Line 51 col 18 IdentifierName "Color" = typeof M3.Color
-Line 52 col 4 IdentifierName "a3" = typeof M3.Color
-Line 52 col 9 MemberAccessExpression "m3.Color" = typeof M3.Color
-Line 52 col 9 IdentifierName "m3" = typeof M3
-Line 52 col 12 IdentifierName "Color" = typeof M3.Color
-Line 53 col 4 IdentifierName "a3" = typeof M3.Color
-Line 53 col 9 MemberAccessExpression "M3.Color" = typeof M3.Color
-Line 53 col 9 IdentifierName "M3" = typeof M3
-Line 53 col 12 IdentifierName "Color" = typeof M3.Color
-Line 54 col 4 IdentifierName "blue" = M3.Color
-Line 54 col 10 IdentifierName "M3" = M3
-Line 54 col 13 IdentifierName "Color" = M3.Color
-Line 54 col 21 MemberAccessExpression "a3.Blue" = M3.Color
-Line 54 col 21 IdentifierName "a3" = typeof M3.Color
-Line 54 col 24 IdentifierName "Blue" = M3.Color
-Line 56 col 4 IdentifierName "p3" = M3.Color
-Line 56 col 8 IdentifierName "M3" = M3
-Line 56 col 11 IdentifierName "Color" = M3.Color
-Line 57 col 4 IdentifierName "p3" = M3.Color
-Line 57 col 9 MemberAccessExpression "M3.Color.Red" = M3.Color
-Line 57 col 9 MemberAccessExpression "M3.Color" = typeof M3.Color
-Line 57 col 9 IdentifierName "M3" = typeof M3
-Line 57 col 12 IdentifierName "Color" = typeof M3.Color
-Line 57 col 18 IdentifierName "Red" = M3.Color
-Line 58 col 4 IdentifierName "p3" = M3.Color
-Line 58 col 9 MemberAccessExpression "m3.Color.Blue" = M3.Color
-Line 58 col 9 MemberAccessExpression "m3.Color" = typeof M3.Color
-Line 58 col 9 IdentifierName "m3" = typeof M3
-Line 58 col 12 IdentifierName "Color" = typeof M3.Color
-Line 58 col 18 IdentifierName "Blue" = M3.Color
+// adding the var makes this an instantiated module
+
+module M {
+>M : M
+
+    export interface Point { x: number; y: number }
+>Point : Point
+>x : number
+>y : number
+
+    export var Point = 1;
+>Point : number
+}
+
+// primary expression
+var m: typeof M;
+>m : typeof M
+>M : typeof M
+
+var m = M;
+>m : typeof M
+>M : typeof M
+
+var a1: number;
+>a1 : number
+
+var a1 = M.Point;
+>a1 : number
+>M.Point : number
+>M : typeof M
+>Point : number
+
+var a1 = m.Point;
+>a1 : number
+>m.Point : number
+>m : typeof M
+>Point : number
+
+var p1: { x: number; y: number; }
+>p1 : { x: number; y: number; }
+>x : number
+>y : number
+
+var p1: M.Point;
+>p1 : M.Point
+>M : M
+>Point : M.Point
+
+// making the point a class instead of an interface 
+// makes this an instantiated mmodule
+module M2 {
+>M2 : M2
+
+    export class Point {
+>Point : Point
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+
+        static Origin(): Point {
+>Origin : () => Point
+>Point : Point
+
+            return { x: 0, y: 0 };
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+        }
+    }
+}
+
+var m2: typeof M2;
+>m2 : typeof M2
+>M2 : typeof M2
+
+var m2 = M2;
+>m2 : typeof M2
+>M2 : typeof M2
+
+// static side of the class
+var a2: typeof M2.Point;
+>a2 : typeof M2.Point
+>M2 : typeof M2
+>Point : typeof M2.Point
+
+var a2 = m2.Point;
+>a2 : typeof M2.Point
+>m2.Point : typeof M2.Point
+>m2 : typeof M2
+>Point : typeof M2.Point
+
+var a2 = M2.Point;
+>a2 : typeof M2.Point
+>M2.Point : typeof M2.Point
+>M2 : typeof M2
+>Point : typeof M2.Point
+
+var o: M2.Point = a2.Origin();
+>o : M2.Point
+>M2 : M2
+>Point : M2.Point
+>a2.Origin() : M2.Point
+>a2.Origin : () => M2.Point
+>a2 : typeof M2.Point
+>Origin : () => M2.Point
+
+var p2: { x: number; y: number }
+>p2 : { x: number; y: number; }
+>x : number
+>y : number
+
+var p2: M2.Point;
+>p2 : M2.Point
+>M2 : M2
+>Point : M2.Point
+
+var p2 = new m2.Point();
+>p2 : M2.Point
+>new m2.Point() : M2.Point
+>m2.Point : typeof M2.Point
+>m2 : typeof M2
+>Point : typeof M2.Point
+
+var p2 = new M2.Point();
+>p2 : M2.Point
+>new M2.Point() : M2.Point
+>M2.Point : typeof M2.Point
+>M2 : typeof M2
+>Point : typeof M2.Point
+
+module M3 {
+>M3 : M3
+
+    export enum Color { Blue, Red }
+>Color : Color
+>Blue : Color
+>Red : Color
+}
+
+var m3: typeof M3;
+>m3 : typeof M3
+>M3 : typeof M3
+
+var m3 = M3;
+>m3 : typeof M3
+>M3 : typeof M3
+
+var a3: typeof M3.Color;
+>a3 : typeof M3.Color
+>M3 : typeof M3
+>Color : typeof M3.Color
+
+var a3 = m3.Color;
+>a3 : typeof M3.Color
+>m3.Color : typeof M3.Color
+>m3 : typeof M3
+>Color : typeof M3.Color
+
+var a3 = M3.Color;
+>a3 : typeof M3.Color
+>M3.Color : typeof M3.Color
+>M3 : typeof M3
+>Color : typeof M3.Color
+
+var blue: M3.Color = a3.Blue;
+>blue : M3.Color
+>M3 : M3
+>Color : M3.Color
+>a3.Blue : M3.Color
+>a3 : typeof M3.Color
+>Blue : M3.Color
+
+var p3: M3.Color;
+>p3 : M3.Color
+>M3 : M3
+>Color : M3.Color
+
+var p3 = M3.Color.Red;
+>p3 : M3.Color
+>M3.Color.Red : M3.Color
+>M3.Color : typeof M3.Color
+>M3 : typeof M3
+>Color : typeof M3.Color
+>Red : M3.Color
+
+var p3 = m3.Color.Blue;
+>p3 : M3.Color
+>m3.Color.Blue : M3.Color
+>m3.Color : typeof M3.Color
+>m3 : typeof M3
+>Color : typeof M3.Color
+>Blue : M3.Color
+

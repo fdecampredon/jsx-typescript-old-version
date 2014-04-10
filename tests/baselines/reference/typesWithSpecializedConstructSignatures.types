@@ -1,57 +1,117 @@
 === tests/cases/compiler/typesWithSpecializedConstructSignatures.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 2 col 13 IdentifierName "foo" = string
-Line 3 col 6 IdentifierName "Derived1" = Derived1
-Line 3 col 23 IdentifierName "Base" = Base
-Line 3 col 30 IdentifierName "bar" = string
-Line 4 col 6 IdentifierName "Derived2" = Derived2
-Line 4 col 23 IdentifierName "Base" = Base
-Line 4 col 30 IdentifierName "baz" = string
-Line 6 col 6 IdentifierName "C" = C
-Line 7 col 16 IdentifierName "x" = 'hi'
-Line 8 col 16 IdentifierName "x" = 'bye'
-Line 9 col 16 IdentifierName "x" = string
-Line 10 col 16 IdentifierName "x" = any
-Line 11 col 15 IdentifierName "x" = any
-Line 14 col 4 IdentifierName "c" = C
-Line 14 col 8 ObjectCreationExpression "new C('a')" = C
-Line 14 col 12 IdentifierName "C" = typeof C
-Line 16 col 10 IdentifierName "I" = I
-Line 17 col 8 IdentifierName "x" = 'hi'
-Line 17 col 18 IdentifierName "Derived1" = Derived1
-Line 18 col 8 IdentifierName "x" = 'bye'
-Line 18 col 19 IdentifierName "Derived2" = Derived2
-Line 19 col 8 IdentifierName "x" = string
-Line 19 col 20 IdentifierName "Base" = Base
-Line 21 col 4 IdentifierName "i" = I
-Line 21 col 7 IdentifierName "I" = I
-Line 23 col 4 IdentifierName "a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 24 col 8 IdentifierName "x" = 'hi'
-Line 24 col 18 IdentifierName "Derived1" = Derived1
-Line 25 col 8 IdentifierName "x" = 'bye'
-Line 25 col 19 IdentifierName "Derived2" = Derived2
-Line 26 col 8 IdentifierName "x" = string
-Line 26 col 20 IdentifierName "Base" = Base
-Line 28 col 0 AssignmentExpression "c = i" = I
-Line 28 col 0 IdentifierName "c" = C
-Line 29 col 4 IdentifierName "i" = I
-Line 30 col 0 AssignmentExpression "c = a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 30 col 0 IdentifierName "c" = C
-Line 30 col 4 IdentifierName "a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 31 col 0 AssignmentExpression "i = a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 31 col 0 IdentifierName "i" = I
-Line 32 col 4 IdentifierName "a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 33 col 0 AssignmentExpression "a = i" = I
-Line 33 col 0 IdentifierName "a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
-Line 34 col 4 IdentifierName "i" = I
-Line 36 col 4 IdentifierName "r1" = C
-Line 36 col 9 ObjectCreationExpression "new C('hi')" = C
-Line 36 col 13 IdentifierName "C" = typeof C
-Line 37 col 4 IdentifierName "r2" = Derived2
-Line 37 col 8 IdentifierName "Derived2" = Derived2
-Line 37 col 19 ObjectCreationExpression "new i('bye')" = Derived2
-Line 37 col 23 IdentifierName "i" = I
-Line 38 col 4 IdentifierName "r3" = Base
-Line 38 col 8 IdentifierName "Base" = Base
-Line 38 col 15 ObjectCreationExpression "new a('hm')" = Base
-Line 38 col 19 IdentifierName "a" = { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+// basic uses of specialized signatures without errors
+
+class Base { foo: string }
+>Base : Base
+>foo : string
+
+class Derived1 extends Base { bar: string }
+>Derived1 : Derived1
+>Base : Base
+>bar : string
+
+class Derived2 extends Base { baz: string }
+>Derived2 : Derived2
+>Base : Base
+>baz : string
+
+class C {
+>C : C
+
+    constructor(x: 'hi');
+>x : 'hi'
+
+    constructor(x: 'bye');
+>x : 'bye'
+
+    constructor(x: string);
+>x : string
+
+    constructor(x) {
+>x : any
+
+        return x;
+>x : any
+    }
+}
+var c = new C('a');
+>c : C
+>new C('a') : C
+>C : typeof C
+
+interface I {
+>I : I
+
+    new(x: 'hi'): Derived1;
+>x : 'hi'
+>Derived1 : Derived1
+
+    new(x: 'bye'): Derived2;
+>x : 'bye'
+>Derived2 : Derived2
+
+    new(x: string): Base;
+>x : string
+>Base : Base
+}
+var i: I;
+>i : I
+>I : I
+
+var a: {
+>a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+
+    new(x: 'hi'): Derived1;
+>x : 'hi'
+>Derived1 : Derived1
+
+    new(x: 'bye'): Derived2;
+>x : 'bye'
+>Derived2 : Derived2
+
+    new(x: string): Base;
+>x : string
+>Base : Base
+
+};
+
+>c = i : I
+>c : C
+
+c = i;
+>i : I
+
+c = a;
+>c = a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+>c : C
+>a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+
+>i = a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+>i : I
+
+i = a;
+>a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+
+>a = i : I
+>a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+
+a = i;
+>i : I
+
+var r1 = new C('hi');
+>r1 : C
+>new C('hi') : C
+>C : typeof C
+
+var r2: Derived2 = new i('bye');
+>r2 : Derived2
+>Derived2 : Derived2
+>new i('bye') : Derived2
+>i : I
+
+var r3: Base = new a('hm');
+>r3 : Base
+>Base : Base
+>new a('hm') : Base
+>a : { new(x: 'hi'): Derived1; new(x: 'bye'): Derived2; new(x: string): Base; }
+

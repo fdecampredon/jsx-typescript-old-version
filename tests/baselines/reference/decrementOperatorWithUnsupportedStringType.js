@@ -1,3 +1,4 @@
+//// [decrementOperatorWithUnsupportedStringType.js]
 // -- operator on string type
 var STRING;
 var STRING1 = ["", ""];

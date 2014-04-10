@@ -1,3 +1,4 @@
+//// [ModuleWithExportedAndNonExportedClasses.js]
 var A;
 (function (_A) {
     var A = (function () {

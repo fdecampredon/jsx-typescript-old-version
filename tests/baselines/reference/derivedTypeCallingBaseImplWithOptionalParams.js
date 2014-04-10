@@ -1,3 +1,4 @@
+//// [derivedTypeCallingBaseImplWithOptionalParams.js]
 var MyClass = (function () {
     function MyClass() {
     }

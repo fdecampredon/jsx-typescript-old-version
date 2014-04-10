@@ -1,3 +1,14 @@
+//// [moduleReopenedTypeOtherBlock.ts]
+module M {
+    export class C1 { }
+    export interface I { n: number; }
+}
+module M {
+    export class C2 { f(): I { return null; } }
+}
+
+
+//// [moduleReopenedTypeOtherBlock.js]
 var M;
 (function (M) {
     var C1 = (function () {

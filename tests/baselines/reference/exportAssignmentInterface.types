@@ -1,12 +1,25 @@
 === tests/cases/compiler/exportAssignmentInterface_B.ts ===
-Line 0 col 7 IdentifierName "I1" = I1
-Line 2 col 4 IdentifierName "i" = I1
-Line 2 col 7 IdentifierName "I1" = I1
-Line 4 col 4 IdentifierName "n" = number
-Line 4 col 16 MemberAccessExpression "i.p1" = number
-Line 4 col 16 IdentifierName "i" = I1
-Line 4 col 18 IdentifierName "p1" = number
+import I1 = require("exportAssignmentInterface_A");
+>I1 : I1
+
+var i: I1;
+>i : I1
+>I1 : I1
+
+var n: number = i.p1;
+>n : number
+>i.p1 : number
+>i : I1
+>p1 : number
+
 === tests/cases/compiler/exportAssignmentInterface_A.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "p1" = number
-Line 4 col 9 IdentifierName "A" = any
+interface A {
+>A : A
+
+	p1: number;
+>p1 : number
+}
+
+export = A;
+>A : any
+

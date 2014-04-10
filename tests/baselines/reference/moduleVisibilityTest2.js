@@ -1,3 +1,4 @@
+//// [moduleVisibilityTest2.js]
 var OuterMod;
 (function (OuterMod) {
     function someExportedOuterFunc() {

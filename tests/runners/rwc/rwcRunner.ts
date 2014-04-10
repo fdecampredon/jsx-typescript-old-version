@@ -257,7 +257,10 @@ class RWCRunner extends RunnerBase {
                             typeLines.push('=== ' + file + ' ===');
                             var walker = new TypeWriterWalker(spec.projectRoot + "/" + file, compiler);
                             walker.run();
-                            walker.results.forEach(line => typeLines.push(line));
+                            walker.results.forEach(result => {
+                                var typeResult = 'Line ' + result.line + ' col ' + result.column + ' ' + result.syntaxKind + ' "' + result.identifierName + '" = ' + result.type;
+                                typeLines.push(typeResult)
+                            });
                         });
 
                         var typesResult = typeLines.join('\n');

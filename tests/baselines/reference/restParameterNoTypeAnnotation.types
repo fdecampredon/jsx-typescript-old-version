@@ -1,7 +1,14 @@
 === tests/cases/compiler/restParameterNoTypeAnnotation.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 16 IdentifierName "rest" = any[]
-Line 1 col 9 IdentifierName "x" = number
-Line 1 col 21 ElementAccessExpression "rest[0]" = any
-Line 1 col 21 IdentifierName "rest" = any[]
-Line 2 col 12 IdentifierName "x" = number
+function foo(...rest) {   
+>foo : typeof foo
+>rest : any[]
+
+     var x: number = rest[0];
+>x : number
+>rest[0] : any
+>rest : any[]
+
+     return x;   
+>x : number
+}  
+

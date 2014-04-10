@@ -1,3 +1,4 @@
+//// [optionalParamTypeComparison.js]
 var f;
 var g;
 

@@ -1,100 +1,142 @@
 === tests/cases/compiler/commaOperatorsMultipleOperators.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 5 col 0 CommaExpression "//Expected: work well
-ANY, BOOLEAN, NUMBER" = number
-Line 5 col 0 CommaExpression "//Expected: work well
-ANY, BOOLEAN" = boolean
-Line 5 col 0 IdentifierName "//Expected: work well
-ANY" = any
-Line 7 col 5 IdentifierName "BOOLEAN" = boolean
-Line 7 col 14 IdentifierName "NUMBER" = number
-Line 8 col 0 CommaExpression "BOOLEAN, NUMBER, STRING" = string
-Line 8 col 0 CommaExpression "BOOLEAN, NUMBER" = number
-Line 8 col 0 IdentifierName "BOOLEAN" = boolean
-Line 8 col 9 IdentifierName "NUMBER" = number
-Line 8 col 17 IdentifierName "STRING" = string
-Line 9 col 0 CommaExpression "NUMBER, STRING, OBJECT" = Object
-Line 9 col 0 CommaExpression "NUMBER, STRING" = string
-Line 9 col 0 IdentifierName "NUMBER" = number
-Line 9 col 8 IdentifierName "STRING" = string
-Line 9 col 16 IdentifierName "OBJECT" = Object
-Line 10 col 0 CommaExpression "STRING, OBJECT, ANY" = any
-Line 10 col 0 CommaExpression "STRING, OBJECT" = Object
-Line 10 col 0 IdentifierName "STRING" = string
-Line 10 col 8 IdentifierName "OBJECT" = Object
-Line 10 col 16 IdentifierName "ANY" = any
-Line 11 col 0 CommaExpression "OBJECT, ANY, BOOLEAN" = boolean
-Line 11 col 0 CommaExpression "OBJECT, ANY" = any
-Line 11 col 0 IdentifierName "OBJECT" = Object
-Line 11 col 8 IdentifierName "ANY" = any
-Line 11 col 13 IdentifierName "BOOLEAN" = boolean
-Line 14 col 4 IdentifierName "resultIsAny1" = any
-Line 14 col 19 ParenthesizedExpression "(STRING, OBJECT, ANY)" = any
-Line 14 col 20 CommaExpression "STRING, OBJECT, ANY" = any
-Line 14 col 20 CommaExpression "STRING, OBJECT" = Object
-Line 14 col 20 IdentifierName "STRING" = string
-Line 14 col 28 IdentifierName "OBJECT" = Object
-Line 14 col 36 IdentifierName "ANY" = any
-Line 15 col 4 IdentifierName "resultIsBoolean1" = boolean
-Line 15 col 23 ParenthesizedExpression "(OBJECT, ANY, BOOLEAN)" = boolean
-Line 15 col 24 CommaExpression "OBJECT, ANY, BOOLEAN" = boolean
-Line 15 col 24 CommaExpression "OBJECT, ANY" = any
-Line 15 col 24 IdentifierName "OBJECT" = Object
-Line 15 col 32 IdentifierName "ANY" = any
-Line 15 col 37 IdentifierName "BOOLEAN" = boolean
-Line 16 col 4 IdentifierName "resultIsNumber1" = number
-Line 16 col 22 ParenthesizedExpression "(ANY, BOOLEAN, NUMBER)" = number
-Line 16 col 23 CommaExpression "ANY, BOOLEAN, NUMBER" = number
-Line 16 col 23 CommaExpression "ANY, BOOLEAN" = boolean
-Line 16 col 23 IdentifierName "ANY" = any
-Line 16 col 28 IdentifierName "BOOLEAN" = boolean
-Line 16 col 37 IdentifierName "NUMBER" = number
-Line 17 col 4 IdentifierName "resultIsString1" = string
-Line 17 col 22 ParenthesizedExpression "(BOOLEAN, NUMBER, STRING)" = string
-Line 17 col 23 CommaExpression "BOOLEAN, NUMBER, STRING" = string
-Line 17 col 23 CommaExpression "BOOLEAN, NUMBER" = number
-Line 17 col 23 IdentifierName "BOOLEAN" = boolean
-Line 17 col 32 IdentifierName "NUMBER" = number
-Line 17 col 40 IdentifierName "STRING" = string
-Line 18 col 4 IdentifierName "resultIsObject1" = Object
-Line 18 col 22 ParenthesizedExpression "(NUMBER, STRING, OBJECT)" = Object
-Line 18 col 23 CommaExpression "NUMBER, STRING, OBJECT" = Object
-Line 18 col 23 CommaExpression "NUMBER, STRING" = string
-Line 18 col 23 IdentifierName "NUMBER" = number
-Line 18 col 31 IdentifierName "STRING" = string
-Line 18 col 39 IdentifierName "OBJECT" = Object
-Line 19 col 0 CommaExpression "//Literal and expression
-null, true, 1" = number
-Line 19 col 0 CommaExpression "//Literal and expression
-null, true" = boolean
-Line 22 col 0 CommaExpression "++NUMBER, STRING.charAt(0), new Object()" = Object
-Line 22 col 0 CommaExpression "++NUMBER, STRING.charAt(0)" = string
-Line 22 col 0 PreIncrementExpression "++NUMBER" = number
-Line 22 col 2 IdentifierName "NUMBER" = number
-Line 22 col 10 InvocationExpression "STRING.charAt(0)" = string
-Line 22 col 10 MemberAccessExpression "STRING.charAt" = (pos: number) => string
-Line 22 col 10 IdentifierName "STRING" = string
-Line 22 col 17 IdentifierName "charAt" = (pos: number) => string
-Line 22 col 28 ObjectCreationExpression "new Object()" = Object
-Line 22 col 32 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 24 col 4 IdentifierName "resultIsNumber2" = number
-Line 24 col 22 ParenthesizedExpression "(null, true, 1)" = number
-Line 24 col 23 CommaExpression "null, true, 1" = number
-Line 24 col 23 CommaExpression "null, true" = boolean
-Line 25 col 4 IdentifierName "resultIsObject2" = Object
-Line 25 col 22 ParenthesizedExpression "(++NUMBER, STRING.charAt(0), new Object())" = Object
-Line 25 col 23 CommaExpression "++NUMBER, STRING.charAt(0), new Object()" = Object
-Line 25 col 23 CommaExpression "++NUMBER, STRING.charAt(0)" = string
-Line 25 col 23 PreIncrementExpression "++NUMBER" = number
-Line 25 col 25 IdentifierName "NUMBER" = number
-Line 25 col 33 InvocationExpression "STRING.charAt(0)" = string
-Line 25 col 33 MemberAccessExpression "STRING.charAt" = (pos: number) => string
-Line 25 col 33 IdentifierName "STRING" = string
-Line 25 col 40 IdentifierName "charAt" = (pos: number) => string
-Line 25 col 51 ObjectCreationExpression "new Object()" = Object
-Line 25 col 55 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+>//Expected: work well
+ANY, BOOLEAN, NUMBER : number
+>//Expected: work well
+ANY, BOOLEAN : boolean
+>//Expected: work well
+ANY : any
+
+//Expected: work well
+ANY, BOOLEAN, NUMBER;
+>BOOLEAN : boolean
+>NUMBER : number
+
+BOOLEAN, NUMBER, STRING;
+>BOOLEAN, NUMBER, STRING : string
+>BOOLEAN, NUMBER : number
+>BOOLEAN : boolean
+>NUMBER : number
+>STRING : string
+
+NUMBER, STRING, OBJECT;
+>NUMBER, STRING, OBJECT : Object
+>NUMBER, STRING : string
+>NUMBER : number
+>STRING : string
+>OBJECT : Object
+
+STRING, OBJECT, ANY;
+>STRING, OBJECT, ANY : any
+>STRING, OBJECT : Object
+>STRING : string
+>OBJECT : Object
+>ANY : any
+
+OBJECT, ANY, BOOLEAN;
+>OBJECT, ANY, BOOLEAN : boolean
+>OBJECT, ANY : any
+>OBJECT : Object
+>ANY : any
+>BOOLEAN : boolean
+
+//Results should have the same type as the third operand
+var resultIsAny1 = (STRING, OBJECT, ANY);
+>resultIsAny1 : any
+>(STRING, OBJECT, ANY) : any
+>STRING, OBJECT, ANY : any
+>STRING, OBJECT : Object
+>STRING : string
+>OBJECT : Object
+>ANY : any
+
+var resultIsBoolean1 = (OBJECT, ANY, BOOLEAN);
+>resultIsBoolean1 : boolean
+>(OBJECT, ANY, BOOLEAN) : boolean
+>OBJECT, ANY, BOOLEAN : boolean
+>OBJECT, ANY : any
+>OBJECT : Object
+>ANY : any
+>BOOLEAN : boolean
+
+var resultIsNumber1 = (ANY, BOOLEAN, NUMBER);
+>resultIsNumber1 : number
+>(ANY, BOOLEAN, NUMBER) : number
+>ANY, BOOLEAN, NUMBER : number
+>ANY, BOOLEAN : boolean
+>ANY : any
+>BOOLEAN : boolean
+>NUMBER : number
+
+var resultIsString1 = (BOOLEAN, NUMBER, STRING);
+>resultIsString1 : string
+>(BOOLEAN, NUMBER, STRING) : string
+>BOOLEAN, NUMBER, STRING : string
+>BOOLEAN, NUMBER : number
+>BOOLEAN : boolean
+>NUMBER : number
+>STRING : string
+
+var resultIsObject1 = (NUMBER, STRING, OBJECT);
+>resultIsObject1 : Object
+>(NUMBER, STRING, OBJECT) : Object
+>NUMBER, STRING, OBJECT : Object
+>NUMBER, STRING : string
+>NUMBER : number
+>STRING : string
+>OBJECT : Object
+
+>//Literal and expression
+null, true, 1 : number
+>//Literal and expression
+null, true : boolean
+
+//Literal and expression
+null, true, 1;
+++NUMBER, STRING.charAt(0), new Object();
+>++NUMBER, STRING.charAt(0), new Object() : Object
+>++NUMBER, STRING.charAt(0) : string
+>++NUMBER : number
+>NUMBER : number
+>STRING.charAt(0) : string
+>STRING.charAt : (pos: number) => string
+>STRING : string
+>charAt : (pos: number) => string
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+
+var resultIsNumber2 = (null, true, 1);
+>resultIsNumber2 : number
+>(null, true, 1) : number
+>null, true, 1 : number
+>null, true : boolean
+
+var resultIsObject2 = (++NUMBER, STRING.charAt(0), new Object());
+>resultIsObject2 : Object
+>(++NUMBER, STRING.charAt(0), new Object()) : Object
+>++NUMBER, STRING.charAt(0), new Object() : Object
+>++NUMBER, STRING.charAt(0) : string
+>++NUMBER : number
+>NUMBER : number
+>STRING.charAt(0) : string
+>STRING.charAt : (pos: number) => string
+>STRING : string
+>charAt : (pos: number) => string
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+

@@ -1,3 +1,19 @@
+//// [es3-sourcemap-amd.ts]
+
+class A
+{
+    constructor ()
+    {
+
+    }
+
+    public B()
+    {
+        return 42;
+    }
+}
+
+//// [es3-sourcemap-amd.js]
 var A = (function () {
     function A() {
     }

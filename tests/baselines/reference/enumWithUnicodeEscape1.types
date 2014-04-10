@@ -1,2 +1,7 @@
 === tests/cases/compiler/enumWithUnicodeEscape1.ts ===
-Line 0 col 5 IdentifierName "E" = E
+enum E {
+>E : E
+
+  'gold \u2730'
+}
+

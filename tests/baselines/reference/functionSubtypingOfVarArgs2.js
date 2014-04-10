@@ -1,3 +1,20 @@
+//// [functionSubtypingOfVarArgs2.ts]
+class EventBase {
+    private _listeners: { (...args: any[]): void; }[] = [];
+
+    add(listener: (...args: any[]) => void): void {
+        this._listeners.push(listener);
+    }
+}
+
+class StringEvent extends EventBase {
+    add(listener: (items: string, moreitems: number) => void ) {
+        super.add(listener);
+    }
+}
+
+
+//// [functionSubtypingOfVarArgs2.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

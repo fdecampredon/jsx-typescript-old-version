@@ -1,3 +1,4 @@
+//// [forIn.js]
 var arr = null;
 for (var i in arr) {
     var x1 = arr[i];

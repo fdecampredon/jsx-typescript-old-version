@@ -1,56 +1,89 @@
 === tests/cases/compiler/overloadResolutionOverNonCTLambdas.ts ===
-Line 0 col 7 IdentifierName "Bugs" = Bugs
-Line 1 col 8 IdentifierName "A" = A
-Line 5 col 11 IdentifierName "bug2" = typeof bug2
-Line 5 col 16 IdentifierName "message" = string
-Line 5 col 35 IdentifierName "args" = any[]
-Line 6 col 8 IdentifierName "result" = string
-Line 6 col 16 InvocationExpression "message.replace(/\{(\d+)\}/g, function(match, ...rest) {
+module Bugs {
+>Bugs : Bugs
+
+  class A {
+>A : A
+  }
+  
+  // replace(searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string;
+  function bug2(message:string, ...args:any[]):string {
+>bug2 : typeof bug2
+>message : string
+>args : any[]
+
+    var result= message.replace(/\{(\d+)\}/g, function(match, ...rest) {
+>result : string
+>message.replace(/\{(\d+)\}/g, function(match, ...rest) {
       var index= rest[0];
       return typeof args[index] !== 'undefined'
         ? args[index]
         : match;
-    })" = string
-Line 6 col 16 MemberAccessExpression "message.replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
-Line 6 col 16 IdentifierName "message" = string
-Line 6 col 24 IdentifierName "replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
-Line 6 col 46 FunctionExpression "function(match, ...rest) {
+    }) : string
+>message.replace : { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
+>message : string
+>replace : { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
+>function(match, ...rest) {
       var index= rest[0];
       return typeof args[index] !== 'undefined'
         ? args[index]
         : match;
-    }" = (match: string, ...rest: any[]) => any
-Line 6 col 55 IdentifierName "match" = string
-Line 6 col 65 IdentifierName "rest" = any[]
-Line 7 col 10 IdentifierName "index" = any
-Line 7 col 17 ElementAccessExpression "rest[0]" = any
-Line 7 col 17 IdentifierName "rest" = any[]
-Line 8 col 13 ConditionalExpression "typeof args[index] !== 'undefined'
+    } : (match: string, ...rest: any[]) => any
+>match : string
+>rest : any[]
+
+      var index= rest[0];
+>index : any
+>rest[0] : any
+>rest : any[]
+
+      return typeof args[index] !== 'undefined'
+>typeof args[index] !== 'undefined'
         ? args[index]
-        : match" = any
-Line 8 col 13 NotEqualsExpression "typeof args[index] !== 'undefined'" = boolean
-Line 8 col 13 TypeOfExpression "typeof args[index]" = string
-Line 8 col 20 ElementAccessExpression "args[index]" = any
-Line 8 col 20 IdentifierName "args" = any[]
-Line 8 col 25 IdentifierName "index" = any
-Line 9 col 10 ElementAccessExpression "args[index]" = any
-Line 9 col 10 IdentifierName "args" = any[]
-Line 9 col 15 IdentifierName "index" = any
-Line 10 col 10 IdentifierName "match" = string
-Line 12 col 11 IdentifierName "result" = string
-Line 16 col 9 IdentifierName "bug3" = typeof bug3
-Line 16 col 14 IdentifierName "f" = (x: string) => string
-Line 16 col 17 IdentifierName "x" = string
-Line 16 col 45 InvocationExpression "f("s")" = string
-Line 16 col 45 IdentifierName "f" = (x: string) => string
-Line 18 col 9 IdentifierName "fprime" = typeof fprime
-Line 18 col 16 IdentifierName "x" = string
-Line 18 col 42 IdentifierName "x" = string
-Line 19 col 0 InvocationExpression "bug3(fprime)" = string
-Line 19 col 0 IdentifierName "bug3" = typeof bug3
-Line 20 col 5 IdentifierName "fprime" = typeof fprime
-Line 21 col 0 InvocationExpression "bug3(function(x:string):string { return x; })" = string
-Line 21 col 0 IdentifierName "bug3" = typeof bug3
-Line 22 col 5 FunctionExpression "function(x:string):string { return x; }" = (x: string) => string
-Line 22 col 14 IdentifierName "x" = string
-Line 22 col 40 IdentifierName "x" = string
+        : match : any
+>typeof args[index] !== 'undefined' : boolean
+>typeof args[index] : string
+>args[index] : any
+>args : any[]
+>index : any
+
+        ? args[index]
+>args[index] : any
+>args : any[]
+>index : any
+
+        : match;
+>match : string
+
+    });
+    return result;
+>result : string
+  }
+}
+
+function bug3(f:(x:string)=>string) { return f("s") }
+>bug3 : typeof bug3
+>f : (x: string) => string
+>x : string
+>f("s") : string
+>f : (x: string) => string
+
+function fprime(x:string):string { return x; }
+>fprime : typeof fprime
+>x : string
+>x : string
+
+>bug3(fprime) : string
+>bug3 : typeof bug3
+
+bug3(fprime);
+>fprime : typeof fprime
+
+>bug3(function(x:string):string { return x; }) : string
+>bug3 : typeof bug3
+
+bug3(function(x:string):string { return x; });
+>function(x:string):string { return x; } : (x: string) => string
+>x : string
+>x : string
+

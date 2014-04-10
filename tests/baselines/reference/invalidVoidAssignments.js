@@ -1,3 +1,4 @@
+//// [invalidVoidAssignments.js]
 var x;
 
 var a = x;

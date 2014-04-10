@@ -1,22 +1,40 @@
 === tests/cases/compiler/instanceofOperatorWithLHSIsObject.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 2 col 4 IdentifierName "x1" = any
-Line 3 col 4 IdentifierName "x2" = Function
-Line 3 col 8 IdentifierName "Function" = Function
-Line 5 col 4 IdentifierName "a" = {}
-Line 6 col 4 IdentifierName "b" = Object
-Line 6 col 7 IdentifierName "Object" = Object
-Line 7 col 4 IdentifierName "c" = C
-Line 7 col 7 IdentifierName "C" = C
-Line 9 col 4 IdentifierName "r1" = boolean
-Line 9 col 9 InstanceOfExpression "a instanceof x1" = boolean
-Line 9 col 9 IdentifierName "a" = {}
-Line 9 col 22 IdentifierName "x1" = any
-Line 10 col 4 IdentifierName "r2" = boolean
-Line 10 col 9 InstanceOfExpression "b instanceof x2" = boolean
-Line 10 col 9 IdentifierName "b" = Object
-Line 10 col 22 IdentifierName "x2" = Function
-Line 11 col 4 IdentifierName "r3" = boolean
-Line 11 col 9 InstanceOfExpression "c instanceof x1" = boolean
-Line 11 col 9 IdentifierName "c" = C
-Line 11 col 22 IdentifierName "x1" = any
+class C { }
+>C : C
+
+var x1: any;
+>x1 : any
+
+var x2: Function;
+>x2 : Function
+>Function : Function
+
+var a: {};
+>a : {}
+
+var b: Object;
+>b : Object
+>Object : Object
+
+var c: C;
+>c : C
+>C : C
+
+var r1 = a instanceof x1;
+>r1 : boolean
+>a instanceof x1 : boolean
+>a : {}
+>x1 : any
+
+var r2 = b instanceof x2;
+>r2 : boolean
+>b instanceof x2 : boolean
+>b : Object
+>x2 : Function
+
+var r3 = c instanceof x1;
+>r3 : boolean
+>c instanceof x1 : boolean
+>c : C
+>x1 : any
+

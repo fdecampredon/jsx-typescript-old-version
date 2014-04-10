@@ -1,23 +1,40 @@
 === tests/cases/compiler/externModuleClobber.ts ===
-Line 0 col 15 IdentifierName "EM" = EM
-Line 1 col 14 IdentifierName "Position" = Position
-Line 3 col 14 IdentifierName "EC" = EC
-Line 4 col 9 IdentifierName "getPosition" = () => Position
-Line 4 col 25 IdentifierName "EM" = EM
-Line 4 col 28 IdentifierName "Position" = Position
-Line 8 col 4 IdentifierName "x" = EM.Position
-Line 8 col 6 IdentifierName "EM" = EM
-Line 8 col 9 IdentifierName "Position" = EM.Position
-Line 9 col 4 IdentifierName "ec" = EM.EC
-Line 9 col 7 IdentifierName "EM" = EM
-Line 9 col 10 IdentifierName "EC" = EM.EC
-Line 9 col 15 ObjectCreationExpression "new EM.EC()" = EM.EC
-Line 9 col 19 MemberAccessExpression "EM.EC" = typeof EM.EC
-Line 9 col 19 IdentifierName "EM" = typeof EM
-Line 9 col 22 IdentifierName "EC" = typeof EM.EC
-Line 10 col 0 AssignmentExpression "x = ec.getPosition()" = EM.Position
-Line 10 col 0 IdentifierName "x" = EM.Position
-Line 11 col 4 InvocationExpression "ec.getPosition()" = EM.Position
-Line 11 col 4 MemberAccessExpression "ec.getPosition" = () => EM.Position
-Line 11 col 4 IdentifierName "ec" = EM.EC
-Line 11 col 7 IdentifierName "getPosition" = () => EM.Position
+declare module EM {
+>EM : EM
+
+	export class Position { }
+>Position : Position
+
+	export class EC {
+>EC : EC
+
+		public getPosition() : EM.Position;
+>getPosition : () => Position
+>EM : EM
+>Position : Position
+	}
+}
+
+var x:EM.Position;
+>x : EM.Position
+>EM : EM
+>Position : EM.Position
+
+var ec:EM.EC = new EM.EC();
+>ec : EM.EC
+>EM : EM
+>EC : EM.EC
+>new EM.EC() : EM.EC
+>EM.EC : typeof EM.EC
+>EM : typeof EM
+>EC : typeof EM.EC
+
+>x = ec.getPosition() : EM.Position
+>x : EM.Position
+
+x = ec.getPosition();
+>ec.getPosition() : EM.Position
+>ec.getPosition : () => EM.Position
+>ec : EM.EC
+>getPosition : () => EM.Position
+

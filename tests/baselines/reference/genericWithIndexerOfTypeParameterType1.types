@@ -1,21 +1,34 @@
 === tests/cases/compiler/genericWithIndexerOfTypeParameterType1.ts ===
-Line 0 col 6 IdentifierName "LazyArray" = LazyArray<T>
-Line 0 col 16 IdentifierName "T" = T
-Line 1 col 12 IdentifierName "objects" = { [objectId: string]: T; }
-Line 1 col 22 CastExpression "<{ [objectId: string]: T; }>{}" = { [objectId: string]: T; }
-Line 1 col 26 IdentifierName "objectId" = string
-Line 1 col 45 IdentifierName "T" = T
-Line 1 col 50 ObjectLiteralExpression "{}" = { [objectId: string]: T; }
-Line 2 col 0 IdentifierName "array" = () => { [objectId: string]: T; }
-Line 3 col 15 MemberAccessExpression "this.objects" = { [objectId: string]: T; }
-Line 3 col 15 ThisKeyword "this" = LazyArray<T>
-Line 3 col 20 IdentifierName "objects" = { [objectId: string]: T; }
-Line 6 col 4 IdentifierName "lazyArray" = LazyArray<string>
-Line 6 col 16 ObjectCreationExpression "new LazyArray<string>()" = LazyArray<string>
-Line 6 col 20 IdentifierName "LazyArray" = typeof LazyArray
-Line 7 col 4 IdentifierName "value" = string
-Line 7 col 20 ElementAccessExpression "lazyArray.array()["test"]" = string
-Line 7 col 20 InvocationExpression "lazyArray.array()" = { [objectId: string]: string; }
-Line 7 col 20 MemberAccessExpression "lazyArray.array" = () => { [objectId: string]: string; }
-Line 7 col 20 IdentifierName "lazyArray" = LazyArray<string>
-Line 7 col 30 IdentifierName "array" = () => { [objectId: string]: string; }
+class LazyArray<T> {
+>LazyArray : LazyArray<T>
+>T : T
+
+    private objects = <{ [objectId: string]: T; }>{};
+>objects : { [objectId: string]: T; }
+><{ [objectId: string]: T; }>{} : { [objectId: string]: T; }
+>objectId : string
+>T : T
+>{} : { [objectId: string]: T; }
+
+    array() {
+>array : () => { [objectId: string]: T; }
+
+        return this.objects;
+>this.objects : { [objectId: string]: T; }
+>this : LazyArray<T>
+>objects : { [objectId: string]: T; }
+    }
+}
+var lazyArray = new LazyArray<string>();
+>lazyArray : LazyArray<string>
+>new LazyArray<string>() : LazyArray<string>
+>LazyArray : typeof LazyArray
+
+var value: string = lazyArray.array()["test"]; // used to be an error
+>value : string
+>lazyArray.array()["test"] : string
+>lazyArray.array() : { [objectId: string]: string; }
+>lazyArray.array : () => { [objectId: string]: string; }
+>lazyArray : LazyArray<string>
+>array : () => { [objectId: string]: string; }
+

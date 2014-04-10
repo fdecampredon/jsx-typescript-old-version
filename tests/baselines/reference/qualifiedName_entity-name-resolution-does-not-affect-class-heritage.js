@@ -1,3 +1,4 @@
+//// [qualifiedName_entity-name-resolution-does-not-affect-class-heritage.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

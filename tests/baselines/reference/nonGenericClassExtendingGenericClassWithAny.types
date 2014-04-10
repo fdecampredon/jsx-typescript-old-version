@@ -1,7 +1,14 @@
 === tests/cases/compiler/nonGenericClassExtendingGenericClassWithAny.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo<T>
-Line 0 col 10 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "t" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "Bar" = Bar
-Line 4 col 18 IdentifierName "Foo" = Foo<T>
+class Foo<T> {
+>Foo : Foo<T>
+>T : T
+
+    t: T;
+>t : T
+>T : T
+}
+
+class Bar extends Foo<any> { } // Valid
+>Bar : Bar
+>Foo : Foo<T>
+

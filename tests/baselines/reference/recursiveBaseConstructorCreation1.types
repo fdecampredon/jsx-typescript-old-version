@@ -1,10 +1,18 @@
 === tests/cases/compiler/recursiveBaseConstructorCreation1.ts ===
-Line 0 col 6 IdentifierName "C1" = C1
-Line 1 col 7 IdentifierName "func" = (param: C2) => any
-Line 1 col 12 IdentifierName "param" = C2
-Line 1 col 19 IdentifierName "C2" = C2
-Line 3 col 6 IdentifierName "C2" = C2
-Line 3 col 17 IdentifierName "C1" = C1
-Line 4 col 4 IdentifierName "x" = C2
-Line 4 col 8 ObjectCreationExpression "new C2()" = C2
-Line 4 col 12 IdentifierName "C2" = typeof C2
+class C1 {
+>C1 : C1
+
+public func(param: C2): any { }
+>func : (param: C2) => any
+>param : C2
+>C2 : C2
+}
+class C2 extends C1 { }
+>C2 : C2
+>C1 : C1
+
+var x = new C2(); // Valid
+>x : C2
+>new C2() : C2
+>C2 : typeof C2
+

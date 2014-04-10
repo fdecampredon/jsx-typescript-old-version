@@ -1,6 +1,15 @@
 === tests/cases/compiler/anyIsAssignableToObject.ts ===
-Line 0 col 10 IdentifierName "P" = P
-Line 1 col 0 IdentifierName "p" = {}
-Line 4 col 10 IdentifierName "Q" = Q
-Line 4 col 20 IdentifierName "P" = P
-Line 5 col 0 IdentifierName "p" = any
+interface P {
+>P : P
+
+    p: {};
+>p : {}
+}
+
+interface Q extends P { // Check assignability here. Any is assignable to {}
+>Q : Q
+>P : P
+
+    p: any;
+>p : any
+}

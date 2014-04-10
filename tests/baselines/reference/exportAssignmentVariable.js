@@ -1,3 +1,8 @@
+//// [exportAssignmentVariable_B.ts]
+import y = require("exportAssignmentVariable_A");
+
+var n: number = y;
+
 //// [exportAssignmentVariable_A.js]
 var x = 0;
 

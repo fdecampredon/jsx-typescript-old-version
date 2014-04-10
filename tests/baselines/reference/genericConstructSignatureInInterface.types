@@ -1,10 +1,19 @@
 === tests/cases/compiler/genericConstructSignatureInInterface.ts ===
-Line 0 col 10 IdentifierName "C" = C
-Line 1 col 9 IdentifierName "T" = T
-Line 1 col 12 IdentifierName "x" = T
-Line 1 col 15 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "v" = C
-Line 4 col 7 IdentifierName "C" = C
-Line 5 col 4 IdentifierName "r" = any
-Line 5 col 8 ObjectCreationExpression "new v<number>(1)" = any
-Line 5 col 12 IdentifierName "v" = C
+interface C {
+>C : C
+
+    new <T>(x: T);
+>T : T
+>x : T
+>T : T
+}
+
+var v: C;
+>v : C
+>C : C
+
+var r = new v<number>(1);
+>r : any
+>new v<number>(1) : any
+>v : C
+

@@ -1,18 +1,35 @@
 === tests/cases/compiler/multiModuleFundule1.ts ===
-Line 0 col 9 IdentifierName "C" = typeof C
-Line 0 col 11 IdentifierName "x" = number
-Line 2 col 7 IdentifierName "C" = C
-Line 3 col 15 IdentifierName "x" = number
-Line 5 col 7 IdentifierName "C" = C
-Line 6 col 20 IdentifierName "foo" = () => void
-Line 9 col 4 IdentifierName "r" = void
-Line 9 col 8 InvocationExpression "C(2)" = void
-Line 9 col 8 IdentifierName "C" = typeof C
-Line 10 col 4 IdentifierName "r2" = any
-Line 10 col 9 ObjectCreationExpression "new C(2)" = any
-Line 10 col 13 IdentifierName "C" = typeof C
-Line 11 col 4 IdentifierName "r3" = void
-Line 11 col 9 InvocationExpression "C.foo()" = void
-Line 11 col 9 MemberAccessExpression "C.foo" = () => void
-Line 11 col 9 IdentifierName "C" = typeof C
-Line 11 col 11 IdentifierName "foo" = () => void
+function C(x: number) { }
+>C : typeof C
+>x : number
+
+module C {
+>C : C
+
+    export var x = 1;
+>x : number
+}
+module C {
+>C : C
+
+    export function foo() { }
+>foo : () => void
+}
+
+var r = C(2);
+>r : void
+>C(2) : void
+>C : typeof C
+
+var r2 = new C(2); // using void returning function as constructor
+>r2 : any
+>new C(2) : any
+>C : typeof C
+
+var r3 = C.foo();
+>r3 : void
+>C.foo() : void
+>C.foo : () => void
+>C : typeof C
+>foo : () => void
+

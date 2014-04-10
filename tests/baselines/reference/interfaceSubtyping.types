@@ -1,7 +1,18 @@
 === tests/cases/compiler/interfaceSubtyping.ts ===
-Line 0 col 10 IdentifierName "iface" = iface
-Line 1 col 0 IdentifierName "foo" = () => void
-Line 3 col 6 IdentifierName "Camera" = Camera
-Line 3 col 24 IdentifierName "iface" = iface
-Line 4 col 24 IdentifierName "str" = string
-Line 6 col 0 IdentifierName "foo" = () => string
+interface iface {
+>iface : iface
+
+    foo(): void;
+>foo : () => void
+}
+class Camera implements iface{
+>Camera : Camera
+>iface : iface
+
+    constructor (public str: string) {
+>str : string
+    }
+    foo() {  return "s";   }
+>foo : () => string
+}
+

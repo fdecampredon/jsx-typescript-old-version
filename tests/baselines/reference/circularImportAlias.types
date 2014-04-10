@@ -1,22 +1,47 @@
 === tests/cases/compiler/circularImportAlias.ts ===
-Line 2 col 7 IdentifierName "B" = B
-Line 3 col 18 IdentifierName "a" = a
-Line 3 col 22 IdentifierName "A" = a
-Line 4 col 17 IdentifierName "D" = D
-Line 4 col 27 IdentifierName "a" = a
-Line 4 col 29 IdentifierName "C" = A.C
-Line 5 col 0 IdentifierName "id" = number
-Line 9 col 7 IdentifierName "A" = A
-Line 10 col 17 IdentifierName "C" = C
-Line 10 col 21 IdentifierName "name" = string
-Line 11 col 18 IdentifierName "b" = b
-Line 11 col 22 IdentifierName "B" = b
-Line 14 col 4 IdentifierName "c" = { name: string; }
-Line 14 col 9 IdentifierName "name" = string
-Line 15 col 4 IdentifierName "c" = A.C
-Line 15 col 8 ObjectCreationExpression "new B.a.C()" = A.C
-Line 15 col 12 MemberAccessExpression "B.a.C" = typeof A.C
-Line 15 col 12 MemberAccessExpression "B.a" = typeof A
-Line 15 col 12 IdentifierName "B" = typeof B
-Line 15 col 14 IdentifierName "a" = typeof A
-Line 15 col 16 IdentifierName "C" = typeof A.C
+// expected no error
+
+module B {
+>B : B
+
+    export import a = A;
+>a : a
+>A : a
+
+    export class D extends a.C {
+>D : D
+>a : a
+>C : A.C
+
+        id: number;
+>id : number
+    }
+}
+
+module A {
+>A : A
+
+    export class C { name: string }
+>C : C
+>name : string
+
+    export import b = B;
+>b : b
+>B : b
+}
+
+var c: { name: string };
+>c : { name: string; }
+>name : string
+
+var c = new B.a.C();
+>c : A.C
+>new B.a.C() : A.C
+>B.a.C : typeof A.C
+>B.a : typeof A
+>B : typeof B
+>a : typeof A
+>C : typeof A.C
+
+
+

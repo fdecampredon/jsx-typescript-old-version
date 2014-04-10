@@ -1,34 +1,70 @@
 === tests/cases/compiler/overloadResolutionWithAny.ts ===
-Line 0 col 4 IdentifierName "func" = { (s: string): number; (s: any): string; }
-Line 1 col 5 IdentifierName "s" = string
-Line 2 col 5 IdentifierName "s" = any
-Line 4 col 0 InvocationExpression "func("")" = number
-Line 4 col 0 IdentifierName "func" = { (s: string): number; (s: any): string; }
-Line 6 col 0 InvocationExpression "func(3)" = string
-Line 6 col 0 IdentifierName "func" = { (s: string): number; (s: any): string; }
-Line 7 col 4 IdentifierName "x" = any
-Line 8 col 0 InvocationExpression "func(x)" = string
-Line 8 col 0 IdentifierName "func" = { (s: string): number; (s: any): string; }
-Line 8 col 5 IdentifierName "x" = any
-Line 10 col 4 IdentifierName "func2" = { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
-Line 11 col 5 IdentifierName "s" = string
-Line 11 col 16 IdentifierName "t" = string
-Line 12 col 5 IdentifierName "s" = any
-Line 12 col 13 IdentifierName "t" = string
-Line 13 col 5 IdentifierName "s" = string
-Line 13 col 16 IdentifierName "t" = any
-Line 13 col 25 IdentifierName "RegExp" = RegExp
-Line 14 col 5 IdentifierName "s" = any
-Line 14 col 13 IdentifierName "t" = any
-Line 16 col 0 InvocationExpression "func2(x, x)" = string
-Line 16 col 0 IdentifierName "func2" = { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
-Line 17 col 6 IdentifierName "x" = any
-Line 17 col 9 IdentifierName "x" = any
-Line 18 col 0 InvocationExpression "func2("", "")" = number
-Line 18 col 0 IdentifierName "func2" = { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
-Line 19 col 0 InvocationExpression "func2(x, "")" = boolean
-Line 19 col 0 IdentifierName "func2" = { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
-Line 19 col 6 IdentifierName "x" = any
-Line 20 col 0 InvocationExpression "func2("", x)" = RegExp
-Line 20 col 0 IdentifierName "func2" = { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
-Line 20 col 10 IdentifierName "x" = any
+var func: {
+>func : { (s: string): number; (s: any): string; }
+
+    (s: string): number;
+>s : string
+
+    (s: any): string;
+>s : any
+
+};
+
+>func("") : number
+>func : { (s: string): number; (s: any): string; }
+
+func(""); // number
+func(3); // string
+>func(3) : string
+>func : { (s: string): number; (s: any): string; }
+
+var x: any;
+>x : any
+
+func(x); // string
+>func(x) : string
+>func : { (s: string): number; (s: any): string; }
+>x : any
+
+var func2: {
+>func2 : { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
+
+    (s: string, t: string): number;
+>s : string
+>t : string
+
+    (s: any, t: string): boolean;
+>s : any
+>t : string
+
+    (s: string, t: any): RegExp;
+>s : string
+>t : any
+>RegExp : RegExp
+
+    (s: any, t: any): string;
+>s : any
+>t : any
+}
+
+>func2(x, x) : string
+>func2 : { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
+
+func2(x, x); // string
+>x : any
+>x : any
+
+func2("", ""); // number
+>func2("", "") : number
+>func2 : { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
+
+func2(x, ""); // boolean
+>func2(x, "") : boolean
+>func2 : { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
+>x : any
+
+func2("", x); // RegExp
+>func2("", x) : RegExp
+>func2 : { (s: string, t: string): number; (s: any, t: string): boolean; (s: string, t: any): RegExp; (s: any, t: any): string; }
+>x : any
+

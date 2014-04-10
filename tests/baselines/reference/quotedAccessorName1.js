@@ -1,3 +1,9 @@
+//// [quotedAccessorName1.ts]
+class C {
+    get "foo"() { return 0; }
+}
+
+//// [quotedAccessorName1.js]
 var C = (function () {
     function C() {
     }

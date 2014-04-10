@@ -1,3 +1,11 @@
+//// [foo_2.ts]
+import foo0 = require("./foo_0");
+module Foo {
+	export var x = foo0.x;
+}
+export = Foo;
+
+
 //// [foo_1.js]
 define(["require", "exports", "./foo_2"], function(require, exports, foo2) {
     var Foo;

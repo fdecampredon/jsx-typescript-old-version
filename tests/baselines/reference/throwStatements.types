@@ -1,111 +1,241 @@
 === tests/cases/compiler/throwStatements.ts ===
-Line 2 col 10 IdentifierName "I" = I
-Line 3 col 0 IdentifierName "id" = number
-Line 6 col 6 IdentifierName "C" = C
-Line 6 col 19 IdentifierName "I" = I
-Line 7 col 0 IdentifierName "id" = number
-Line 10 col 6 IdentifierName "D" = D<T>
-Line 10 col 8 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "source" = T
-Line 11 col 12 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "recurse" = D<T>
-Line 12 col 13 IdentifierName "D" = D<T>
-Line 12 col 15 IdentifierName "T" = T
-Line 13 col 0 IdentifierName "wrapped" = D<D<T>>
-Line 13 col 13 IdentifierName "D" = D<T>
-Line 13 col 15 IdentifierName "D" = D<T>
-Line 13 col 17 IdentifierName "T" = T
-Line 16 col 9 IdentifierName "F" = typeof F
-Line 16 col 11 IdentifierName "x" = string
-Line 18 col 7 IdentifierName "M" = M
-Line 19 col 17 IdentifierName "A" = A
-Line 20 col 0 IdentifierName "name" = string
-Line 23 col 20 IdentifierName "F2" = typeof F2
-Line 23 col 23 IdentifierName "x" = number
-Line 23 col 51 InvocationExpression "x.toString()" = string
-Line 23 col 51 MemberAccessExpression "x.toString" = (radix?: number) => string
-Line 23 col 51 IdentifierName "x" = number
-Line 23 col 53 IdentifierName "toString" = (radix?: number) => string
-Line 26 col 4 IdentifierName "aNumber" = number
-Line 27 col 6 IdentifierName "aNumber" = number
-Line 28 col 4 IdentifierName "aString" = string
-Line 29 col 6 IdentifierName "aString" = string
-Line 30 col 4 IdentifierName "aDate" = Date
-Line 30 col 12 ObjectCreationExpression "new Date(12)" = Date
-Line 30 col 16 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 31 col 6 IdentifierName "aDate" = Date
-Line 32 col 4 IdentifierName "anObject" = Object
-Line 32 col 15 ObjectCreationExpression "new Object()" = Object
-Line 32 col 19 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 33 col 6 IdentifierName "anObject" = Object
-Line 35 col 4 IdentifierName "anAny" = any
-Line 36 col 6 IdentifierName "anAny" = any
-Line 37 col 4 IdentifierName "anOtherAny" = any
-Line 37 col 17 CastExpression "<any> new C()" = any
-Line 37 col 23 ObjectCreationExpression "new C()" = C
-Line 37 col 27 IdentifierName "C" = typeof C
-Line 38 col 6 IdentifierName "anOtherAny" = any
-Line 39 col 4 IdentifierName "anUndefined" = any
-Line 39 col 18 IdentifierName "undefined" = any
-Line 40 col 6 IdentifierName "anUndefined" = any
-Line 42 col 4 IdentifierName "aClass" = C
-Line 42 col 13 ObjectCreationExpression "new C()" = C
-Line 42 col 17 IdentifierName "C" = typeof C
-Line 43 col 6 IdentifierName "aClass" = C
-Line 44 col 4 IdentifierName "aGenericClass" = D<string>
-Line 44 col 20 ObjectCreationExpression "new D<string>()" = D<string>
-Line 44 col 24 IdentifierName "D" = typeof D
-Line 45 col 6 IdentifierName "aGenericClass" = D<string>
-Line 46 col 4 IdentifierName "anObjectLiteral" = { id: number; }
-Line 46 col 22 ObjectLiteralExpression "{ id: 12 }" = { id: number; }
-Line 46 col 24 IdentifierName "id" = number
-Line 47 col 6 IdentifierName "anObjectLiteral" = { id: number; }
-Line 49 col 4 IdentifierName "aFunction" = typeof F
-Line 49 col 16 IdentifierName "F" = typeof F
-Line 50 col 6 IdentifierName "aFunction" = typeof F
-Line 51 col 6 InvocationExpression "aFunction('')" = number
-Line 51 col 6 IdentifierName "aFunction" = typeof F
-Line 52 col 4 IdentifierName "aLambda" = (x: any) => number
-Line 52 col 14 ParenthesizedArrowFunctionExpression "(x) => 2" = (x: any) => number
-Line 52 col 15 IdentifierName "x" = any
-Line 53 col 6 IdentifierName "aLambda" = (x: any) => number
-Line 54 col 6 InvocationExpression "aLambda(1)" = number
-Line 54 col 6 IdentifierName "aLambda" = (x: any) => number
-Line 56 col 4 IdentifierName "aModule" = typeof M
-Line 56 col 14 IdentifierName "M" = typeof M
-Line 57 col 6 IdentifierName "aModule" = typeof M
-Line 58 col 6 TypeOfExpression "typeof M" = string
-Line 58 col 13 IdentifierName "M" = typeof M
-Line 59 col 4 IdentifierName "aClassInModule" = M.A
-Line 59 col 21 ObjectCreationExpression "new M.A()" = M.A
-Line 59 col 25 MemberAccessExpression "M.A" = typeof M.A
-Line 59 col 25 IdentifierName "M" = typeof M
-Line 59 col 27 IdentifierName "A" = typeof M.A
-Line 60 col 6 IdentifierName "aClassInModule" = M.A
-Line 61 col 4 IdentifierName "aFunctionInModule" = typeof M.F2
-Line 61 col 24 MemberAccessExpression "M.F2" = typeof M.F2
-Line 61 col 24 IdentifierName "M" = typeof M
-Line 61 col 26 IdentifierName "F2" = typeof M.F2
-Line 62 col 6 IdentifierName "aFunctionInModule" = typeof M.F2
-Line 65 col 4 IdentifierName "x" = any
-Line 66 col 6 IdentifierName "x" = any
-Line 72 col 6 IdentifierName "undefined" = any
-Line 74 col 6 FunctionExpression "function () { return 'a string' }" = () => string
-Line 75 col 6 ParenthesizedArrowFunctionExpression "<T>(x:T) => 42" = <T>(x: T) => number
-Line 75 col 7 IdentifierName "T" = T
-Line 75 col 10 IdentifierName "x" = T
-Line 75 col 12 IdentifierName "T" = T
-Line 76 col 6 ObjectLiteralExpression "{ x: 12, y: 13 }" = { x: number; y: number; }
-Line 76 col 8 IdentifierName "x" = number
-Line 76 col 15 IdentifierName "y" = number
-Line 77 col 6 ArrayLiteralExpression "[]" = any[]
-Line 78 col 6 ArrayLiteralExpression "['a', ['b']]" = {}[]
-Line 78 col 12 ArrayLiteralExpression "['b']" = string[]
-Line 80 col 6 ObjectCreationExpression "new Date()" = Date
-Line 80 col 10 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 81 col 6 ObjectCreationExpression "new C()" = C
-Line 81 col 10 IdentifierName "C" = typeof C
-Line 82 col 6 ObjectCreationExpression "new Object()" = Object
-Line 82 col 10 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 83 col 6 ObjectCreationExpression "new D<number>()" = D<number>
-Line 83 col 10 IdentifierName "D" = typeof D
+// all legal
+
+interface I {
+>I : I
+
+    id: number;
+>id : number
+}
+
+class C implements I {
+>C : C
+>I : I
+
+    id: number;
+>id : number
+}
+
+class D<T>{
+>D : D<T>
+>T : T
+
+    source: T;
+>source : T
+>T : T
+
+    recurse: D<T>;
+>recurse : D<T>
+>D : D<T>
+>T : T
+
+    wrapped: D<D<T>>
+>wrapped : D<D<T>>
+>D : D<T>
+>D : D<T>
+>T : T
+}
+
+function F(x: string): number { return 42; }
+>F : typeof F
+>x : string
+
+module M {
+>M : M
+
+    export class A {
+>A : A
+
+        name: string;
+>name : string
+    }
+
+    export function F2(x: number): string { return x.toString(); }
+>F2 : typeof F2
+>x : number
+>x.toString() : string
+>x.toString : (radix?: number) => string
+>x : number
+>toString : (radix?: number) => string
+}
+
+var aNumber = 9.9;
+>aNumber : number
+
+throw aNumber;
+>aNumber : number
+
+var aString = 'this is a string';
+>aString : string
+
+throw aString;
+>aString : string
+
+var aDate = new Date(12);
+>aDate : Date
+>new Date(12) : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+throw aDate;
+>aDate : Date
+
+var anObject = new Object();
+>anObject : Object
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+
+throw anObject;
+>anObject : Object
+
+var anAny = null;
+>anAny : any
+
+throw anAny;
+>anAny : any
+
+var anOtherAny = <any> new C();
+>anOtherAny : any
+><any> new C() : any
+>new C() : C
+>C : typeof C
+
+throw anOtherAny;
+>anOtherAny : any
+
+var anUndefined = undefined;
+>anUndefined : any
+>undefined : any
+
+throw anUndefined;
+>anUndefined : any
+
+var aClass = new C();
+>aClass : C
+>new C() : C
+>C : typeof C
+
+throw aClass;
+>aClass : C
+
+var aGenericClass = new D<string>();
+>aGenericClass : D<string>
+>new D<string>() : D<string>
+>D : typeof D
+
+throw aGenericClass;
+>aGenericClass : D<string>
+
+var anObjectLiteral = { id: 12 };
+>anObjectLiteral : { id: number; }
+>{ id: 12 } : { id: number; }
+>id : number
+
+throw anObjectLiteral;
+>anObjectLiteral : { id: number; }
+
+var aFunction = F;
+>aFunction : typeof F
+>F : typeof F
+
+throw aFunction;
+>aFunction : typeof F
+
+throw aFunction('');
+>aFunction('') : number
+>aFunction : typeof F
+
+var aLambda = (x) => 2;
+>aLambda : (x: any) => number
+>(x) => 2 : (x: any) => number
+>x : any
+
+throw aLambda;
+>aLambda : (x: any) => number
+
+throw aLambda(1);
+>aLambda(1) : number
+>aLambda : (x: any) => number
+
+var aModule = M;
+>aModule : typeof M
+>M : typeof M
+
+throw aModule;
+>aModule : typeof M
+
+throw typeof M;
+>typeof M : string
+>M : typeof M
+
+var aClassInModule = new M.A();
+>aClassInModule : M.A
+>new M.A() : M.A
+>M.A : typeof M.A
+>M : typeof M
+>A : typeof M.A
+
+throw aClassInModule;
+>aClassInModule : M.A
+
+var aFunctionInModule = M.F2;
+>aFunctionInModule : typeof M.F2
+>M.F2 : typeof M.F2
+>M : typeof M
+>F2 : typeof M.F2
+
+throw aFunctionInModule;
+>aFunctionInModule : typeof M.F2
+
+// no initializer or annotation, so this is an 'any'
+var x;
+>x : any
+
+throw x;
+>x : any
+
+// literals
+throw 0.0;
+throw false;
+throw null;
+throw undefined;
+>undefined : any
+
+throw 'a string';
+throw function () { return 'a string' };
+>function () { return 'a string' } : () => string
+
+throw <T>(x:T) => 42;
+><T>(x:T) => 42 : <T>(x: T) => number
+>T : T
+>x : T
+>T : T
+
+throw { x: 12, y: 13 };
+>{ x: 12, y: 13 } : { x: number; y: number; }
+>x : number
+>y : number
+
+throw [];
+>[] : any[]
+
+throw ['a', ['b']];
+>['a', ['b']] : {}[]
+>['b'] : string[]
+
+throw /[a-z]/;
+throw new Date();
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+throw new C();
+>new C() : C
+>C : typeof C
+
+throw new Object();
+>new Object() : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+
+throw new D<number>();
+>new D<number>() : D<number>
+>D : typeof D
+

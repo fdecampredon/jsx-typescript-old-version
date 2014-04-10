@@ -1,3 +1,4 @@
+//// [constructorInvocationWithTooFewTypeArgs.js]
 var D = (function () {
     function D() {
     }

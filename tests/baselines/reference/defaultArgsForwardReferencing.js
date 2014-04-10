@@ -1,3 +1,4 @@
+//// [defaultArgsForwardReferencing.js]
 function left(a, b, c) {
     if (typeof b === "undefined") { b = a; }
     if (typeof c === "undefined") { c = b; }

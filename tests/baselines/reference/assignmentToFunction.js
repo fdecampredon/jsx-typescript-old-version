@@ -1,3 +1,4 @@
+//// [assignmentToFunction.js]
 function fn() {
 }
 fn = function () {

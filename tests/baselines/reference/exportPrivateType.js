@@ -1,3 +1,4 @@
+//// [exportPrivateType.js]
 var foo;
 (function (foo) {
     var C1 = (function () {

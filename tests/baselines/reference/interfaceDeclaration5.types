@@ -1,4 +1,8 @@
 === tests/cases/compiler/interfaceDeclaration5.ts ===
-Line 0 col 17 IdentifierName "I1" = I1
-Line 0 col 22 IdentifierName "item" = string
-Line 1 col 13 IdentifierName "C1" = C1
+export interface I1 { item:string; }
+>I1 : I1
+>item : string
+
+export class C1 { }
+>C1 : C1
+

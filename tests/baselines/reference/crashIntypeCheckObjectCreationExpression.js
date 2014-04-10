@@ -1,3 +1,4 @@
+//// [crashIntypeCheckObjectCreationExpression.js]
 define(["require", "exports"], function(require, exports) {
     var BuildWorkspaceService = (function () {
         function BuildWorkspaceService() {

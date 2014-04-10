@@ -1,3 +1,4 @@
+//// [grammarAmbiguities.js]
 function f(n) {
     return null;
 }

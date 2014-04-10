@@ -1,3 +1,4 @@
+//// [promiseChaining.js]
 // This exhibits the bug that you see with Promise typings having generic signatures in a generic type
 var Chain = (function () {
     function Chain(value) {

@@ -1,3 +1,4 @@
+//// [privateVisibility.js]
 var Foo = (function () {
     function Foo() {
         this.pubProp = 0;

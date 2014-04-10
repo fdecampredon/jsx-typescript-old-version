@@ -1,3 +1,4 @@
+//// [invalidUndefinedAssignments.js]
 var x;
 
 var E;

@@ -1,153 +1,228 @@
 === tests/cases/compiler/genericTypeParameterEquivalence2.ts ===
-Line 1 col 9 IdentifierName "compose" = typeof compose
-Line 1 col 17 IdentifierName "A" = A
-Line 1 col 20 IdentifierName "B" = B
-Line 1 col 23 IdentifierName "C" = C
-Line 1 col 26 IdentifierName "f" = (b: B) => C
-Line 1 col 30 IdentifierName "b" = B
-Line 1 col 33 IdentifierName "B" = B
-Line 1 col 39 IdentifierName "C" = C
-Line 1 col 42 IdentifierName "g" = (a: A) => B
-Line 1 col 46 IdentifierName "a" = A
-Line 1 col 48 IdentifierName "A" = A
-Line 1 col 54 IdentifierName "B" = B
-Line 1 col 59 IdentifierName "a" = A
-Line 1 col 61 IdentifierName "A" = A
-Line 1 col 67 IdentifierName "C" = C
-Line 2 col 11 FunctionExpression "function (a:A) : C {
+// compose :: (b->c) -> (a->b) -> (a->c)
+function compose<A, B, C>(f: (b: B) => C, g: (a:A) => B): (a:A) => C {
+>compose : typeof compose
+>A : A
+>B : B
+>C : C
+>f : (b: B) => C
+>b : B
+>B : B
+>C : C
+>g : (a: A) => B
+>a : A
+>A : A
+>B : B
+>a : A
+>A : A
+>C : C
+
+    return function (a:A) : C {
+>function (a:A) : C {
         return f(g.apply(null, a));
-    }" = (a: A) => C
-Line 2 col 21 IdentifierName "a" = A
-Line 2 col 23 IdentifierName "A" = A
-Line 2 col 28 IdentifierName "C" = C
-Line 3 col 15 InvocationExpression "f(g.apply(null, a))" = C
-Line 3 col 15 IdentifierName "f" = (b: B) => C
-Line 3 col 17 InvocationExpression "g.apply(null, a)" = any
-Line 3 col 17 MemberAccessExpression "g.apply" = (thisArg: any, argArray?: any) => any
-Line 3 col 17 IdentifierName "g" = (a: A) => B
-Line 3 col 19 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
-Line 3 col 31 IdentifierName "a" = A
-Line 8 col 9 IdentifierName "forEach" = typeof forEach
-Line 8 col 17 IdentifierName "A" = A
-Line 8 col 20 IdentifierName "list" = A[]
-Line 8 col 26 IdentifierName "A" = A
-Line 8 col 31 IdentifierName "f" = (a: A, n?: number) => void
-Line 8 col 35 IdentifierName "a" = A
-Line 8 col 38 IdentifierName "A" = A
-Line 8 col 41 IdentifierName "n" = number
-Line 9 col 13 IdentifierName "i" = number
-Line 9 col 20 LessThanExpression "i < list.length" = boolean
-Line 9 col 20 IdentifierName "i" = number
-Line 9 col 24 MemberAccessExpression "list.length" = number
-Line 9 col 24 IdentifierName "list" = A[]
-Line 9 col 29 IdentifierName "length" = number
-Line 9 col 37 PreIncrementExpression "++i" = number
-Line 9 col 39 IdentifierName "i" = number
-Line 10 col 0 InvocationExpression "f(list[i], i)" = void
-Line 10 col 0 IdentifierName "f" = (a: A, n?: number) => void
-Line 10 col 10 ElementAccessExpression "list[i]" = A
-Line 10 col 10 IdentifierName "list" = A[]
-Line 10 col 15 IdentifierName "i" = number
-Line 10 col 19 IdentifierName "i" = number
-Line 15 col 9 IdentifierName "filter" = typeof filter
-Line 15 col 16 IdentifierName "A" = A
-Line 15 col 19 IdentifierName "f" = (a: A) => boolean
-Line 15 col 23 IdentifierName "a" = A
-Line 15 col 26 IdentifierName "A" = A
-Line 15 col 41 IdentifierName "ar" = A[]
-Line 15 col 45 IdentifierName "A" = A
-Line 15 col 51 IdentifierName "A" = A
-Line 16 col 8 IdentifierName "ret" = any[]
-Line 16 col 14 ArrayLiteralExpression "[]" = any[]
-Line 17 col 0 InvocationExpression "forEach(ar, (el) => {
+    } : (a: A) => C
+>a : A
+>A : A
+>C : C
+
+        return f(g.apply(null, a));
+>f(g.apply(null, a)) : C
+>f : (b: B) => C
+>g.apply(null, a) : any
+>g.apply : (thisArg: any, argArray?: any) => any
+>g : (a: A) => B
+>apply : (thisArg: any, argArray?: any) => any
+>a : A
+
+    };
+}
+
+// forEach :: [a] -> (a -> ()) -> ()
+function forEach<A>(list: A[], f: (a: A, n?: number) => void ): void {
+>forEach : typeof forEach
+>A : A
+>list : A[]
+>A : A
+>f : (a: A, n?: number) => void
+>a : A
+>A : A
+>n : number
+
+    for (var i = 0; i < list.length; ++i) {
+>i : number
+>i < list.length : boolean
+>i : number
+>list.length : number
+>list : A[]
+>length : number
+>++i : number
+>i : number
+
+        f(list[i], i);
+>f(list[i], i) : void
+>f : (a: A, n?: number) => void
+>list[i] : A
+>list : A[]
+>i : number
+>i : number
+    }
+}
+
+// filter :: (a->bool) -> [a] -> [a]
+function filter<A>(f: (a: A) => boolean, ar: A[]): A[] {
+>filter : typeof filter
+>A : A
+>f : (a: A) => boolean
+>a : A
+>A : A
+>ar : A[]
+>A : A
+>A : A
+
+    var ret = [];
+>ret : any[]
+>[] : any[]
+
+    forEach(ar, (el) => {
+>forEach(ar, (el) => {
         if (f(el)) {
             ret.push(el);
         }
-    } )" = void
-Line 17 col 0 IdentifierName "forEach" = typeof forEach
-Line 17 col 12 IdentifierName "ar" = A[]
-Line 17 col 16 ParenthesizedArrowFunctionExpression "(el) => {
+    } ) : void
+>forEach : typeof forEach
+>ar : A[]
+>(el) => {
         if (f(el)) {
             ret.push(el);
         }
-    }" = (el: A) => void
-Line 17 col 17 IdentifierName "el" = A
-Line 18 col 12 InvocationExpression "f(el)" = boolean
-Line 18 col 12 IdentifierName "f" = (a: A) => boolean
-Line 18 col 14 IdentifierName "el" = A
-Line 19 col 0 InvocationExpression "ret.push(el)" = number
-Line 19 col 0 MemberAccessExpression "ret.push" = (...items: any[]) => number
-Line 19 col 0 IdentifierName "ret" = any[]
-Line 19 col 16 IdentifierName "push" = (...items: any[]) => number
-Line 19 col 21 IdentifierName "el" = A
-Line 23 col 11 IdentifierName "ret" = any[]
-Line 27 col 9 IdentifierName "length2" = typeof length2
-Line 27 col 17 IdentifierName "A" = A
-Line 27 col 20 IdentifierName "ar" = A[]
-Line 27 col 24 IdentifierName "A" = A
-Line 28 col 11 MemberAccessExpression "ar.length" = number
-Line 28 col 11 IdentifierName "ar" = A[]
-Line 28 col 14 IdentifierName "length" = number
-Line 32 col 9 IdentifierName "curry1" = typeof curry1
-Line 32 col 16 IdentifierName "A" = A
-Line 32 col 19 IdentifierName "B" = B
-Line 32 col 22 IdentifierName "C" = C
-Line 32 col 25 IdentifierName "f" = (a: A, b: B) => C
-Line 32 col 29 IdentifierName "a" = A
-Line 32 col 32 IdentifierName "A" = A
-Line 32 col 35 IdentifierName "b" = B
-Line 32 col 38 IdentifierName "B" = B
-Line 32 col 44 IdentifierName "C" = C
-Line 32 col 49 IdentifierName "ax" = A
-Line 32 col 53 IdentifierName "A" = A
-Line 32 col 60 IdentifierName "bx" = B
-Line 32 col 64 IdentifierName "B" = B
-Line 32 col 70 IdentifierName "C" = C
-Line 33 col 11 FunctionExpression "function (ay: A) {
+    } : (el: A) => void
+>el : A
+
+        if (f(el)) {
+>f(el) : boolean
+>f : (a: A) => boolean
+>el : A
+
+            ret.push(el);
+>ret.push(el) : number
+>ret.push : (...items: any[]) => number
+>ret : any[]
+>push : (...items: any[]) => number
+>el : A
+        }
+    } );
+
+    return ret;
+>ret : any[]
+}
+
+// length :: [a] -> Num
+function length2<A>(ar: A[]): number {
+>length2 : typeof length2
+>A : A
+>ar : A[]
+>A : A
+
+    return ar.length;
+>ar.length : number
+>ar : A[]
+>length : number
+}
+
+// curry1 :: ((a,b)->c) -> (a->(b->c))
+function curry1<A, B, C>(f: (a: A, b: B) => C): (ax: A) => (bx: B) => C {
+>curry1 : typeof curry1
+>A : A
+>B : B
+>C : C
+>f : (a: A, b: B) => C
+>a : A
+>A : A
+>b : B
+>B : B
+>C : C
+>ax : A
+>A : A
+>bx : B
+>B : B
+>C : C
+
+    return function (ay: A) {
+>function (ay: A) {
         return function (by: B) {
             return f(ay, by);
         };
-    }" = (ay: A) => (by: B) => C
-Line 33 col 21 IdentifierName "ay" = A
-Line 33 col 25 IdentifierName "A" = A
-Line 34 col 15 FunctionExpression "function (by: B) {
+    } : (ay: A) => (by: B) => C
+>ay : A
+>A : A
+
+        return function (by: B) {
+>function (by: B) {
             return f(ay, by);
-        }" = (by: B) => C
-Line 34 col 25 IdentifierName "by" = B
-Line 34 col 29 IdentifierName "B" = B
-Line 35 col 19 InvocationExpression "f(ay, by)" = C
-Line 35 col 19 IdentifierName "f" = (a: A, b: B) => C
-Line 35 col 21 IdentifierName "ay" = A
-Line 35 col 25 IdentifierName "by" = B
-Line 40 col 4 IdentifierName "cfilter" = (ax: {}) => (bx: {}) => {}[]
-Line 40 col 14 InvocationExpression "curry1(filter)" = (ax: {}) => (bx: {}) => {}[]
-Line 40 col 14 IdentifierName "curry1" = typeof curry1
-Line 40 col 21 IdentifierName "filter" = typeof filter
-Line 50 col 9 IdentifierName "countWhere_1" = typeof countWhere_1
-Line 50 col 22 IdentifierName "A" = A
-Line 50 col 25 IdentifierName "pred" = (a: A) => boolean
-Line 50 col 32 IdentifierName "a" = A
-Line 50 col 35 IdentifierName "A" = A
-Line 50 col 52 IdentifierName "a" = A[]
-Line 50 col 55 IdentifierName "A" = A
-Line 51 col 11 InvocationExpression "compose(length2, cfilter(pred))" = (a: {}) => number
-Line 51 col 11 IdentifierName "compose" = typeof compose
-Line 51 col 19 IdentifierName "length2" = typeof length2
-Line 51 col 28 InvocationExpression "cfilter(pred)" = (bx: {}) => {}[]
-Line 51 col 28 IdentifierName "cfilter" = (ax: {}) => (bx: {}) => {}[]
-Line 51 col 36 IdentifierName "pred" = (a: A) => boolean
-Line 54 col 9 IdentifierName "countWhere_2" = typeof countWhere_2
-Line 54 col 22 IdentifierName "A" = A
-Line 54 col 25 IdentifierName "pred" = (a: A) => boolean
-Line 54 col 32 IdentifierName "a" = A
-Line 54 col 35 IdentifierName "A" = A
-Line 54 col 52 IdentifierName "a" = A[]
-Line 54 col 55 IdentifierName "A" = A
-Line 55 col 8 IdentifierName "where" = (bx: {}) => {}[]
-Line 55 col 16 InvocationExpression "cfilter(pred)" = (bx: {}) => {}[]
-Line 55 col 16 IdentifierName "cfilter" = (ax: {}) => (bx: {}) => {}[]
-Line 55 col 24 IdentifierName "pred" = (a: A) => boolean
-Line 56 col 11 InvocationExpression "compose(length2, where)" = (a: {}) => number
-Line 56 col 11 IdentifierName "compose" = typeof compose
-Line 56 col 19 IdentifierName "length2" = typeof length2
-Line 56 col 28 IdentifierName "where" = (bx: {}) => {}[]
+        } : (by: B) => C
+>by : B
+>B : B
+
+            return f(ay, by);
+>f(ay, by) : C
+>f : (a: A, b: B) => C
+>ay : A
+>by : B
+
+        };
+    };
+}
+
+var cfilter = curry1(filter);
+>cfilter : (ax: {}) => (bx: {}) => {}[]
+>curry1(filter) : (ax: {}) => (bx: {}) => {}[]
+>curry1 : typeof curry1
+>filter : typeof filter
+
+// compose :: (b->c) -> (a->b) -> (a->c)
+// length :: [a] -> Num
+// cfilter :: {} -> {} -> [{}]
+// pred :: a -> Bool 
+// cfilter(pred) :: {} -> [{}]
+// length2 :: [a] -> Num
+// countWhere :: (a -> Bool) -> [a] -> Num
+
+function countWhere_1<A>(pred: (a: A) => boolean): (a: A[]) => number {
+>countWhere_1 : typeof countWhere_1
+>A : A
+>pred : (a: A) => boolean
+>a : A
+>A : A
+>a : A[]
+>A : A
+
+    return compose(length2, cfilter(pred));
+>compose(length2, cfilter(pred)) : (a: {}) => number
+>compose : typeof compose
+>length2 : typeof length2
+>cfilter(pred) : (bx: {}) => {}[]
+>cfilter : (ax: {}) => (bx: {}) => {}[]
+>pred : (a: A) => boolean
+}
+
+function countWhere_2<A>(pred: (a: A) => boolean): (a: A[]) => number {
+>countWhere_2 : typeof countWhere_2
+>A : A
+>pred : (a: A) => boolean
+>a : A
+>A : A
+>a : A[]
+>A : A
+
+    var where = cfilter(pred);
+>where : (bx: {}) => {}[]
+>cfilter(pred) : (bx: {}) => {}[]
+>cfilter : (ax: {}) => (bx: {}) => {}[]
+>pred : (a: A) => boolean
+
+    return compose(length2, where);
+>compose(length2, where) : (a: {}) => number
+>compose : typeof compose
+>length2 : typeof length2
+>where : (bx: {}) => {}[]
+}

@@ -1,3 +1,4 @@
+//// [anyIdenticalToItself.js]
 function foo(x, y) {
 }
 

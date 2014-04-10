@@ -1,3 +1,9 @@
+//// [quotedFunctionName2.ts]
+class Test1 {
+  static "prop1"() { }
+}
+
+//// [quotedFunctionName2.js]
 var Test1 = (function () {
     function Test1() {
     }

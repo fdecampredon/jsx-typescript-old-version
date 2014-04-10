@@ -1,3 +1,4 @@
+//// [overloadOnConstNoAnyImplementation.js]
 function x1(a, cb) {
     cb('hi');
     cb('bye');

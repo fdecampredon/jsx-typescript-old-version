@@ -1,3 +1,4 @@
+//// [noErrorsInCallback.js]
 var Bar = (function () {
     function Bar(foo) {
         this.foo = foo;

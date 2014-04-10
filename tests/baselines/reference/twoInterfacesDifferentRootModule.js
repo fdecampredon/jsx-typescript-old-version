@@ -1,3 +1,4 @@
+//// [twoInterfacesDifferentRootModule.js]
 // two interfaces with different root modules should not merge
 
 var M2;

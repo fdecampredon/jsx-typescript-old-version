@@ -1,33 +1,76 @@
 === tests/cases/compiler/dottedModuleName2.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 0 col 9 IdentifierName "B" = A.B
-Line 2 col 13 IdentifierName "x" = number
-Line 8 col 7 IdentifierName "AA" = AA
-Line 8 col 26 IdentifierName "B" = B
-Line 10 col 13 IdentifierName "x" = number
-Line 16 col 4 IdentifierName "tmpOK" = number
-Line 16 col 12 MemberAccessExpression "AA.B.x" = number
-Line 16 col 12 MemberAccessExpression "AA.B" = typeof AA.B
-Line 16 col 12 IdentifierName "AA" = typeof AA
-Line 16 col 15 IdentifierName "B" = typeof AA.B
-Line 16 col 17 IdentifierName "x" = number
-Line 18 col 4 IdentifierName "tmpError" = number
-Line 18 col 15 MemberAccessExpression "A.B.x" = number
-Line 18 col 15 MemberAccessExpression "A.B" = typeof A.B
-Line 18 col 15 IdentifierName "A" = typeof A
-Line 18 col 17 IdentifierName "B" = typeof A.B
-Line 18 col 19 IdentifierName "x" = number
-Line 21 col 7 IdentifierName "A" = A
-Line 21 col 9 IdentifierName "B" = A.B
-Line 21 col 11 IdentifierName "C" = A.B.C
-Line 25 col 15 IdentifierName "x" = number
-Line 31 col 7 IdentifierName "M" = M
-Line 35 col 11 IdentifierName "X1" = X1
-Line 35 col 16 IdentifierName "A" = A
-Line 37 col 11 IdentifierName "X2" = X2
-Line 37 col 16 IdentifierName "A" = A
-Line 37 col 18 IdentifierName "B" = typeof A.B
-Line 39 col 11 IdentifierName "X3" = X3
-Line 39 col 16 IdentifierName "A" = A
-Line 39 col 18 IdentifierName "B" = A.B
-Line 39 col 20 IdentifierName "C" = typeof A.B.C
+module A.B {
+>A : A
+>B : A.B
+ 
+  export var x = 1;
+>x : number
+ 
+}
+ 
+ 
+ 
+module AA { export module B {
+>AA : AA
+>B : B
+ 
+  export var x = 1;
+>x : number
+ 
+} }
+ 
+ 
+ 
+var tmpOK = AA.B.x;
+>tmpOK : number
+>AA.B.x : number
+>AA.B : typeof AA.B
+>AA : typeof AA
+>B : typeof AA.B
+>x : number
+ 
+var tmpError = A.B.x;
+>tmpError : number
+>A.B.x : number
+>A.B : typeof A.B
+>A : typeof A
+>B : typeof A.B
+>x : number
+
+
+module A.B.C
+>A : A
+>B : A.B
+>C : A.B.C
+ 
+{
+ 
+    export var x = 1;
+>x : number
+ 
+}
+ 
+ 
+ 
+module M
+>M : M
+ 
+{
+ 
+    import X1 = A;
+>X1 : X1
+>A : A
+ 
+    import X2 = A.B;
+>X2 : X2
+>A : A
+>B : typeof A.B
+ 
+    import X3 = A.B.C;
+>X3 : X3
+>A : A
+>B : A.B
+>C : typeof A.B.C
+ 
+}
+

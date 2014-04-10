@@ -1,3 +1,4 @@
+//// [ModuleWithExportedAndNonExportedImportAlias.js]
 var B;
 (function (B) {
     var Line = (function () {

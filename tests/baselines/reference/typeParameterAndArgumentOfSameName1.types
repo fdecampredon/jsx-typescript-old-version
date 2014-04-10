@@ -1,12 +1,18 @@
 === tests/cases/compiler/typeParameterAndArgumentOfSameName1.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "A" = A
-Line 0 col 21 IdentifierName "Number" = Number
-Line 0 col 29 IdentifierName "A" = A
-Line 0 col 32 IdentifierName "A" = A
-Line 0 col 36 IdentifierName "A" = A
-Line 1 col 8 IdentifierName "r" = string
-Line 1 col 12 InvocationExpression "A.toExponential(123)" = string
-Line 1 col 12 MemberAccessExpression "A.toExponential" = (fractionDigits?: number) => string
-Line 1 col 12 IdentifierName "A" = A
-Line 1 col 14 IdentifierName "toExponential" = (fractionDigits?: number) => string
+function f<A extends Number>(A: A): A {
+>f : typeof f
+>A : A
+>Number : Number
+>A : A
+>A : A
+>A : A
+
+    var r = A.toExponential(123);
+>r : string
+>A.toExponential(123) : string
+>A.toExponential : (fractionDigits?: number) => string
+>A : A
+>toExponential : (fractionDigits?: number) => string
+
+    return null;
+}

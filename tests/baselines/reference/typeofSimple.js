@@ -1,3 +1,4 @@
+//// [typeofSimple.js]
 var v = 3;
 var v2;
 var v3 = v2;

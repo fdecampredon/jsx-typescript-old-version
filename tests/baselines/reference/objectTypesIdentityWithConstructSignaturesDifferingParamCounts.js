@@ -1,3 +1,4 @@
+//// [objectTypesIdentityWithConstructSignaturesDifferingParamCounts.js]
 // object types are identical structurally
 var B = (function () {
     function B(x, y) {

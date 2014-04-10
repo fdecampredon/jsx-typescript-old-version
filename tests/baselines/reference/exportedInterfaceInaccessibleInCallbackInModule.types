@@ -1,29 +1,42 @@
 === tests/cases/compiler/exportedInterfaceInaccessibleInCallbackInModule.ts ===
-Line 0 col 17 IdentifierName "ProgressCallback" = ProgressCallback
-Line 1 col 2 IdentifierName "progress" = any
-Line 5 col 21 IdentifierName "TPromise" = TPromise<V>
-Line 5 col 30 IdentifierName "V" = V
-Line 7 col 13 IdentifierName "init" = (complete: (value: V) => void, error: (err: any) => void, progress: ProgressCallback) => void
-Line 7 col 19 IdentifierName "complete" = (value: V) => void
-Line 7 col 30 IdentifierName "value" = V
-Line 7 col 36 IdentifierName "V" = V
-Line 7 col 46 IdentifierName "error" = (err: any) => void
-Line 7 col 53 IdentifierName "err" = any
-Line 7 col 69 IdentifierName "progress" = ProgressCallback
-Line 7 col 78 IdentifierName "ProgressCallback" = ProgressCallback
-Line 7 col 103 IdentifierName "oncancel" = any
-Line 10 col 8 IdentifierName "then" = <U>(success?: (value: V) => TPromise<U>, error?: (err: any) => TPromise<U>, progress?: ProgressCallback) => TPromise<U>
-Line 10 col 13 IdentifierName "U" = U
-Line 10 col 16 IdentifierName "success" = (value: V) => TPromise<U>
-Line 10 col 27 IdentifierName "value" = V
-Line 10 col 33 IdentifierName "V" = V
-Line 10 col 37 IdentifierName "TPromise" = TPromise<V>
-Line 10 col 46 IdentifierName "U" = U
-Line 10 col 50 IdentifierName "error" = (err: any) => TPromise<U>
-Line 10 col 59 IdentifierName "err" = any
-Line 10 col 69 IdentifierName "TPromise" = TPromise<V>
-Line 10 col 78 IdentifierName "U" = U
-Line 10 col 82 IdentifierName "progress" = ProgressCallback
-Line 10 col 92 IdentifierName "ProgressCallback" = ProgressCallback
-Line 10 col 111 IdentifierName "TPromise" = TPromise<V>
-Line 10 col 120 IdentifierName "U" = U
+export interface ProgressCallback {
+>ProgressCallback : ProgressCallback
+
+	(progress:any):any;
+>progress : any
+}	
+
+// --- Generic promise
+export declare class TPromise<V> {
+>TPromise : TPromise<V>
+>V : V
+	
+	constructor(init:(complete: (value:V)=>void, error:(err:any)=>void, progress:ProgressCallback)=>void, oncancel?: any);
+>init : (complete: (value: V) => void, error: (err: any) => void, progress: ProgressCallback) => void
+>complete : (value: V) => void
+>value : V
+>V : V
+>error : (err: any) => void
+>err : any
+>progress : ProgressCallback
+>ProgressCallback : ProgressCallback
+>oncancel : any
+	
+    // removing this method fixes the error squiggle.....
+	public then<U>(success?: (value:V)=>TPromise<U>, error?: (err:any)=>TPromise<U>, progress?:ProgressCallback): TPromise<U>;
+>then : <U>(success?: (value: V) => TPromise<U>, error?: (err: any) => TPromise<U>, progress?: ProgressCallback) => TPromise<U>
+>U : U
+>success : (value: V) => TPromise<U>
+>value : V
+>V : V
+>TPromise : TPromise<V>
+>U : U
+>error : (err: any) => TPromise<U>
+>err : any
+>TPromise : TPromise<V>
+>U : U
+>progress : ProgressCallback
+>ProgressCallback : ProgressCallback
+>TPromise : TPromise<V>
+>U : U
+}

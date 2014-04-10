@@ -1,89 +1,146 @@
 === tests/cases/compiler/typeOfThisInInstanceMember2.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = C<T>
-Line 1 col 8 ThisKeyword "this" = C<T>
-Line 2 col 0 IdentifierName "foo" = () => C<T>
-Line 3 col 15 ThisKeyword "this" = C<T>
-Line 5 col 16 IdentifierName "x" = T
-Line 5 col 19 IdentifierName "T" = T
-Line 6 col 12 IdentifierName "t" = C<T>
-Line 6 col 16 ThisKeyword "this" = C<T>
-Line 7 col 0 MemberAccessExpression "t.x" = C<T>
-Line 7 col 0 IdentifierName "t" = C<T>
-Line 7 col 10 IdentifierName "x" = C<T>
-Line 8 col 0 MemberAccessExpression "t.y" = C<T>
-Line 8 col 0 IdentifierName "t" = C<T>
-Line 8 col 10 IdentifierName "y" = C<T>
-Line 9 col 0 MemberAccessExpression "t.z" = T
-Line 9 col 0 IdentifierName "t" = C<T>
-Line 9 col 10 IdentifierName "z" = T
-Line 10 col 12 IdentifierName "r" = C<T>
-Line 10 col 16 InvocationExpression "t.foo()" = C<T>
-Line 10 col 16 MemberAccessExpression "t.foo" = () => C<T>
-Line 10 col 16 IdentifierName "t" = C<T>
-Line 10 col 18 IdentifierName "foo" = () => C<T>
-Line 13 col 8 IdentifierName "y" = C<T>
-Line 14 col 15 ThisKeyword "this" = C<T>
-Line 16 col 0 IdentifierName "z" = T
-Line 17 col 7 IdentifierName "T" = T
-Line 20 col 4 IdentifierName "c" = C<string>
-Line 20 col 7 IdentifierName "C" = C<T>
-Line 22 col 4 IdentifierName "r" = C<string>
-Line 22 col 8 MemberAccessExpression "c.x" = C<string>
-Line 22 col 8 IdentifierName "c" = C<string>
-Line 22 col 10 IdentifierName "x" = C<string>
-Line 23 col 4 IdentifierName "ra" = C<string>
-Line 23 col 9 MemberAccessExpression "c.x.x.x" = C<string>
-Line 23 col 9 MemberAccessExpression "c.x.x" = C<string>
-Line 23 col 9 MemberAccessExpression "c.x" = C<string>
-Line 23 col 9 IdentifierName "c" = C<string>
-Line 23 col 11 IdentifierName "x" = C<string>
-Line 23 col 13 IdentifierName "x" = C<string>
-Line 23 col 15 IdentifierName "x" = C<string>
-Line 24 col 4 IdentifierName "r2" = C<string>
-Line 24 col 9 MemberAccessExpression "c.y" = C<string>
-Line 24 col 9 IdentifierName "c" = C<string>
-Line 24 col 11 IdentifierName "y" = C<string>
-Line 25 col 4 IdentifierName "r3" = C<string>
-Line 25 col 9 InvocationExpression "c.foo()" = C<string>
-Line 25 col 9 MemberAccessExpression "c.foo" = () => C<string>
-Line 25 col 9 IdentifierName "c" = C<string>
-Line 25 col 11 IdentifierName "foo" = () => C<string>
-Line 26 col 4 IdentifierName "r4" = string
-Line 26 col 9 MemberAccessExpression "c.z" = string
-Line 26 col 9 IdentifierName "c" = C<string>
-Line 26 col 11 IdentifierName "z" = string
-Line 27 col 4 IdentifierName "rs" = C<string>[]
-Line 27 col 9 ArrayLiteralExpression "[r, r2, r3]" = C<string>[]
-Line 27 col 10 IdentifierName "r" = C<string>
-Line 27 col 13 IdentifierName "r2" = C<string>
-Line 27 col 17 IdentifierName "r3" = C<string>
-Line 28 col 0 InvocationExpression "rs.forEach(x => {
+class C<T> {
+>C : C<T>
+>T : T
+
+    x = this;
+>x : C<T>
+>this : C<T>
+
+    foo() {
+>foo : () => C<T>
+
+        return this;
+>this : C<T>
+    }
+    constructor(x: T) {
+>x : T
+>T : T
+
+        var t = this;
+>t : C<T>
+>this : C<T>
+
+        t.x;
+>t.x : C<T>
+>t : C<T>
+>x : C<T>
+
+        t.y;
+>t.y : C<T>
+>t : C<T>
+>y : C<T>
+
+        t.z;
+>t.z : T
+>t : C<T>
+>z : T
+
+        var r = t.foo();
+>r : C<T>
+>t.foo() : C<T>
+>t.foo : () => C<T>
+>t : C<T>
+>foo : () => C<T>
+    }
+
+    get y() {
+>y : C<T>
+
+        return this;
+>this : C<T>
+    }
+
+>z : T
+
+    z: T;
+>T : T
+}
+
+var c: C<string>;
+>c : C<string>
+>C : C<T>
+
+// all ok
+var r = c.x;
+>r : C<string>
+>c.x : C<string>
+>c : C<string>
+>x : C<string>
+
+var ra = c.x.x.x;
+>ra : C<string>
+>c.x.x.x : C<string>
+>c.x.x : C<string>
+>c.x : C<string>
+>c : C<string>
+>x : C<string>
+>x : C<string>
+>x : C<string>
+
+var r2 = c.y;
+>r2 : C<string>
+>c.y : C<string>
+>c : C<string>
+>y : C<string>
+
+var r3 = c.foo();
+>r3 : C<string>
+>c.foo() : C<string>
+>c.foo : () => C<string>
+>c : C<string>
+>foo : () => C<string>
+
+var r4 = c.z;
+>r4 : string
+>c.z : string
+>c : C<string>
+>z : string
+
+var rs = [r, r2, r3];
+>rs : C<string>[]
+>[r, r2, r3] : C<string>[]
+>r : C<string>
+>r2 : C<string>
+>r3 : C<string>
+
+>rs.forEach(x => {
     x.foo;
     x.x;
     x.y;
     x.z;
-})" = void
-Line 28 col 0 MemberAccessExpression "rs.forEach" = (callbackfn: (value: C<string>, index: number, array: C<string>[]) => void, thisArg?: any) => void
-Line 28 col 0 IdentifierName "rs" = C<string>[]
-Line 29 col 3 IdentifierName "forEach" = (callbackfn: (value: C<string>, index: number, array: C<string>[]) => void, thisArg?: any) => void
-Line 29 col 11 SimpleArrowFunctionExpression "x => {
+}) : void
+>rs.forEach : (callbackfn: (value: C<string>, index: number, array: C<string>[]) => void, thisArg?: any) => void
+>rs : C<string>[]
+
+rs.forEach(x => {
+>forEach : (callbackfn: (value: C<string>, index: number, array: C<string>[]) => void, thisArg?: any) => void
+>x => {
     x.foo;
     x.x;
     x.y;
     x.z;
-}" = (x: C<string>) => void
-Line 29 col 11 IdentifierName "x" = C<string>
-Line 30 col 0 MemberAccessExpression "x.foo" = () => C<string>
-Line 30 col 0 IdentifierName "x" = C<string>
-Line 30 col 6 IdentifierName "foo" = () => C<string>
-Line 31 col 0 MemberAccessExpression "x.x" = C<string>
-Line 31 col 0 IdentifierName "x" = C<string>
-Line 31 col 6 IdentifierName "x" = C<string>
-Line 32 col 0 MemberAccessExpression "x.y" = C<string>
-Line 32 col 0 IdentifierName "x" = C<string>
-Line 32 col 6 IdentifierName "y" = C<string>
-Line 33 col 0 MemberAccessExpression "x.z" = string
-Line 33 col 0 IdentifierName "x" = C<string>
-Line 33 col 6 IdentifierName "z" = string
+} : (x: C<string>) => void
+>x : C<string>
+
+    x.foo;
+>x.foo : () => C<string>
+>x : C<string>
+>foo : () => C<string>
+
+    x.x;
+>x.x : C<string>
+>x : C<string>
+>x : C<string>
+
+    x.y;
+>x.y : C<string>
+>x : C<string>
+>y : C<string>
+
+    x.z;
+>x.z : string
+>x : C<string>
+>z : string
+
+});

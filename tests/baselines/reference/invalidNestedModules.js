@@ -1,3 +1,4 @@
+//// [invalidNestedModules.js]
 var A;
 (function (A) {
     (function (B) {

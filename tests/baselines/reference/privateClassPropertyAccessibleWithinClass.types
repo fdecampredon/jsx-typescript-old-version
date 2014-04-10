@@ -1,92 +1,139 @@
 === tests/cases/compiler/privateClassPropertyAccessibleWithinClass.ts ===
-Line 2 col 6 IdentifierName "C" = C
-Line 3 col 12 IdentifierName "x" = string
-Line 4 col 16 IdentifierName "y" = string
-Line 4 col 29 MemberAccessExpression "this.x" = string
-Line 4 col 29 ThisKeyword "this" = C
-Line 4 col 34 IdentifierName "x" = string
-Line 5 col 16 IdentifierName "y" = string
-Line 5 col 18 IdentifierName "x" = string
-Line 5 col 23 AssignmentExpression "this.y = this.x" = string
-Line 5 col 23 MemberAccessExpression "this.y" = string
-Line 5 col 23 ThisKeyword "this" = C
-Line 5 col 28 IdentifierName "y" = string
-Line 5 col 32 MemberAccessExpression "this.x" = string
-Line 5 col 32 ThisKeyword "this" = C
-Line 5 col 37 IdentifierName "x" = string
-Line 6 col 12 IdentifierName "foo" = () => any
-Line 6 col 27 MemberAccessExpression "this.foo" = () => any
-Line 6 col 27 ThisKeyword "this" = C
-Line 6 col 32 IdentifierName "foo" = () => any
-Line 8 col 19 IdentifierName "x" = string
-Line 9 col 23 IdentifierName "y" = string
-Line 9 col 36 MemberAccessExpression "this.x" = string
-Line 9 col 36 ThisKeyword "this" = typeof C
-Line 9 col 41 IdentifierName "x" = string
-Line 10 col 23 IdentifierName "y" = string
-Line 10 col 25 IdentifierName "x" = string
-Line 10 col 30 AssignmentExpression "this.y = this.x" = string
-Line 10 col 30 MemberAccessExpression "this.y" = string
-Line 10 col 30 ThisKeyword "this" = typeof C
-Line 10 col 35 IdentifierName "y" = string
-Line 10 col 39 MemberAccessExpression "this.x" = string
-Line 10 col 39 ThisKeyword "this" = typeof C
-Line 10 col 44 IdentifierName "x" = string
-Line 11 col 19 IdentifierName "foo" = () => any
-Line 11 col 34 MemberAccessExpression "this.foo" = () => any
-Line 11 col 34 ThisKeyword "this" = typeof C
-Line 11 col 39 IdentifierName "foo" = () => any
-Line 12 col 19 IdentifierName "bar" = () => void
-Line 12 col 27 InvocationExpression "this.foo()" = () => any
-Line 12 col 27 MemberAccessExpression "this.foo" = () => any
-Line 12 col 27 ThisKeyword "this" = typeof C
-Line 12 col 32 IdentifierName "foo" = () => any
-Line 16 col 6 IdentifierName "C2" = C2
-Line 17 col 12 IdentifierName "x" = string
-Line 18 col 16 IdentifierName "y" = any
-Line 18 col 22 ParenthesizedArrowFunctionExpression "() => this.x" = () => string
-Line 18 col 28 MemberAccessExpression "this.x" = string
-Line 18 col 28 ThisKeyword "this" = C2
-Line 18 col 33 IdentifierName "x" = string
-Line 19 col 16 IdentifierName "y" = any
-Line 19 col 18 IdentifierName "x" = any
-Line 19 col 23 ParenthesizedArrowFunctionExpression "() => { this.y = this.x; }" = () => void
-Line 19 col 31 AssignmentExpression "this.y = this.x" = string
-Line 19 col 31 MemberAccessExpression "this.y" = any
-Line 19 col 31 ThisKeyword "this" = C2
-Line 19 col 36 IdentifierName "y" = any
-Line 19 col 40 MemberAccessExpression "this.x" = string
-Line 19 col 40 ThisKeyword "this" = C2
-Line 19 col 45 IdentifierName "x" = string
-Line 20 col 12 IdentifierName "foo" = () => void
-Line 20 col 20 ParenthesizedArrowFunctionExpression "() => this.foo" = () => () => void
-Line 20 col 26 MemberAccessExpression "this.foo" = () => void
-Line 20 col 26 ThisKeyword "this" = C2
-Line 20 col 31 IdentifierName "foo" = () => void
-Line 22 col 19 IdentifierName "x" = string
-Line 23 col 23 IdentifierName "y" = any
-Line 23 col 29 ParenthesizedArrowFunctionExpression "() => this.x" = () => string
-Line 23 col 35 MemberAccessExpression "this.x" = string
-Line 23 col 35 ThisKeyword "this" = typeof C2
-Line 23 col 40 IdentifierName "x" = string
-Line 24 col 23 IdentifierName "y" = any
-Line 24 col 25 IdentifierName "x" = any
-Line 25 col 0 ParenthesizedArrowFunctionExpression "() => { this.y = this.x; }" = () => void
-Line 25 col 16 AssignmentExpression "this.y = this.x" = string
-Line 25 col 16 MemberAccessExpression "this.y" = any
-Line 25 col 16 ThisKeyword "this" = typeof C2
-Line 25 col 21 IdentifierName "y" = any
-Line 25 col 25 MemberAccessExpression "this.x" = string
-Line 25 col 25 ThisKeyword "this" = typeof C2
-Line 25 col 30 IdentifierName "x" = string
-Line 27 col 19 IdentifierName "foo" = () => void
-Line 27 col 27 ParenthesizedArrowFunctionExpression "() => this.foo" = () => () => void
-Line 27 col 33 MemberAccessExpression "this.foo" = () => void
-Line 27 col 33 ThisKeyword "this" = typeof C2
-Line 27 col 38 IdentifierName "foo" = () => void
-Line 28 col 19 IdentifierName "bar" = () => void
-Line 28 col 27 ParenthesizedArrowFunctionExpression "() => this.foo()" = () => void
-Line 28 col 33 InvocationExpression "this.foo()" = void
-Line 28 col 33 MemberAccessExpression "this.foo" = () => void
-Line 28 col 33 ThisKeyword "this" = typeof C2
-Line 28 col 38 IdentifierName "foo" = () => void
+// no errors
+
+class C {
+>C : C
+
+    private x: string;
+>x : string
+
+    private get y() { return this.x; }
+>y : string
+>this.x : string
+>this : C
+>x : string
+
+    private set y(x) { this.y = this.x; }
+>y : string
+>x : string
+>this.y = this.x : string
+>this.y : string
+>this : C
+>y : string
+>this.x : string
+>this : C
+>x : string
+
+    private foo() { return this.foo; }
+>foo : () => any
+>this.foo : () => any
+>this : C
+>foo : () => any
+
+    private static x: string;
+>x : string
+
+    private static get y() { return this.x; }
+>y : string
+>this.x : string
+>this : typeof C
+>x : string
+
+    private static set y(x) { this.y = this.x; }
+>y : string
+>x : string
+>this.y = this.x : string
+>this.y : string
+>this : typeof C
+>y : string
+>this.x : string
+>this : typeof C
+>x : string
+
+    private static foo() { return this.foo; }
+>foo : () => any
+>this.foo : () => any
+>this : typeof C
+>foo : () => any
+
+    private static bar() { this.foo(); }
+>bar : () => void
+>this.foo() : () => any
+>this.foo : () => any
+>this : typeof C
+>foo : () => any
+}
+
+// added level of function nesting
+class C2 {
+>C2 : C2
+
+    private x: string;
+>x : string
+
+    private get y() { () => this.x; return null; }
+>y : any
+>() => this.x : () => string
+>this.x : string
+>this : C2
+>x : string
+
+    private set y(x) { () => { this.y = this.x; } }
+>y : any
+>x : any
+>() => { this.y = this.x; } : () => void
+>this.y = this.x : string
+>this.y : any
+>this : C2
+>y : any
+>this.x : string
+>this : C2
+>x : string
+
+    private foo() { () => this.foo; }
+>foo : () => void
+>() => this.foo : () => () => void
+>this.foo : () => void
+>this : C2
+>foo : () => void
+
+    private static x: string;
+>x : string
+
+    private static get y() { () => this.x; return null; }
+>y : any
+>() => this.x : () => string
+>this.x : string
+>this : typeof C2
+>x : string
+
+    private static set y(x) {
+>y : any
+>x : any
+
+        () => { this.y = this.x; }
+>() => { this.y = this.x; } : () => void
+>this.y = this.x : string
+>this.y : any
+>this : typeof C2
+>y : any
+>this.x : string
+>this : typeof C2
+>x : string
+     }
+    private static foo() { () => this.foo; }
+>foo : () => void
+>() => this.foo : () => () => void
+>this.foo : () => void
+>this : typeof C2
+>foo : () => void
+
+    private static bar() { () => this.foo(); }
+>bar : () => void
+>() => this.foo() : () => void
+>this.foo() : void
+>this.foo : () => void
+>this : typeof C2
+>foo : () => void
+}
+

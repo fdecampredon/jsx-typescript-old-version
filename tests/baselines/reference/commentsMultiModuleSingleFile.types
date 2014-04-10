@@ -1,15 +1,43 @@
 === tests/cases/compiler/commentsMultiModuleSingleFile.ts ===
-Line 2 col 7 IdentifierName "multiM" = multiM
-Line 4 col 17 IdentifierName "b" = b
-Line 8 col 17 IdentifierName "d" = d
-Line 13 col 7 IdentifierName "multiM" = multiM
-Line 15 col 17 IdentifierName "c" = c
-Line 19 col 17 IdentifierName "e" = e
-Line 22 col 0 ObjectCreationExpression "new multiM.b()" = multiM.b
-Line 22 col 4 MemberAccessExpression "multiM.b" = typeof multiM.b
-Line 22 col 4 IdentifierName "multiM" = typeof multiM
-Line 22 col 11 IdentifierName "b" = typeof multiM.b
-Line 23 col 0 ObjectCreationExpression "new multiM.c()" = multiM.c
-Line 23 col 4 MemberAccessExpression "multiM.c" = typeof multiM.c
-Line 23 col 4 IdentifierName "multiM" = typeof multiM
-Line 23 col 11 IdentifierName "c" = typeof multiM.c
+
+/** this is multi declare module*/
+module multiM {
+>multiM : multiM
+
+    /** class b*/
+    export class b {
+>b : b
+    }
+
+    // class d
+    export class d {
+>d : d
+    }
+}
+
+/// this is multi module 2
+module multiM {
+>multiM : multiM
+
+    /** class c comment*/
+    export class c {
+>c : c
+    }
+
+    /// class e
+    export class e {
+>e : e
+    }
+}
+new multiM.b();
+>new multiM.b() : multiM.b
+>multiM.b : typeof multiM.b
+>multiM : typeof multiM
+>b : typeof multiM.b
+
+new multiM.c();
+>new multiM.c() : multiM.c
+>multiM.c : typeof multiM.c
+>multiM : typeof multiM
+>c : typeof multiM.c
+

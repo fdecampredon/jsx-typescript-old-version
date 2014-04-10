@@ -1,11 +1,15 @@
 === tests/cases/compiler/exportedVariable1.ts ===
-Line 0 col 11 IdentifierName "foo" = { name: string; }
-Line 0 col 17 ObjectLiteralExpression "{name: "Bill"}" = { name: string; }
-Line 0 col 18 IdentifierName "name" = string
-Line 1 col 4 IdentifierName "upper" = string
-Line 1 col 12 InvocationExpression "foo.name.toUpperCase()" = string
-Line 1 col 12 MemberAccessExpression "foo.name.toUpperCase" = () => string
-Line 1 col 12 MemberAccessExpression "foo.name" = string
-Line 1 col 12 IdentifierName "foo" = { name: string; }
-Line 1 col 16 IdentifierName "name" = string
-Line 1 col 21 IdentifierName "toUpperCase" = () => string
+export var foo = {name: "Bill"};
+>foo : { name: string; }
+>{name: "Bill"} : { name: string; }
+>name : string
+
+var upper = foo.name.toUpperCase();
+>upper : string
+>foo.name.toUpperCase() : string
+>foo.name.toUpperCase : () => string
+>foo.name : string
+>foo : { name: string; }
+>name : string
+>toUpperCase : () => string
+

@@ -1,3 +1,4 @@
+//// [infinitelyExpandingTypes2.js]
 function f(p) {
     console.log(p);
 }

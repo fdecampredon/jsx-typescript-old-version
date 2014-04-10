@@ -1,279 +1,402 @@
 === tests/cases/compiler/callSignatureAssignabilityInInheritance2.ts ===
-Line 2 col 6 IdentifierName "Base" = Base
-Line 2 col 13 IdentifierName "foo" = string
-Line 3 col 6 IdentifierName "Derived" = Derived
-Line 3 col 22 IdentifierName "Base" = Base
-Line 3 col 29 IdentifierName "bar" = string
-Line 4 col 6 IdentifierName "Derived2" = Derived2
-Line 4 col 23 IdentifierName "Derived" = Derived
-Line 4 col 33 IdentifierName "baz" = string
-Line 5 col 6 IdentifierName "OtherDerived" = OtherDerived
-Line 5 col 27 IdentifierName "Base" = Base
-Line 5 col 34 IdentifierName "bing" = string
-Line 7 col 10 IdentifierName "A" = A
-Line 8 col 0 IdentifierName "// M's
-    a" = (x: number) => number[]
-Line 9 col 8 IdentifierName "x" = number
-Line 10 col 0 IdentifierName "a2" = (x: number) => string[]
-Line 10 col 9 IdentifierName "x" = number
-Line 11 col 0 IdentifierName "a3" = (x: number) => void
-Line 11 col 9 IdentifierName "x" = number
-Line 12 col 0 IdentifierName "a4" = (x: string, y: number) => string
-Line 12 col 9 IdentifierName "x" = string
-Line 12 col 20 IdentifierName "y" = number
-Line 13 col 0 IdentifierName "a5" = (x: (arg: string) => number) => string
-Line 13 col 9 IdentifierName "x" = (arg: string) => number
-Line 13 col 13 IdentifierName "arg" = string
-Line 14 col 0 IdentifierName "a6" = (x: (arg: Base) => Derived) => Base
-Line 14 col 9 IdentifierName "x" = (arg: Base) => Derived
-Line 14 col 13 IdentifierName "arg" = Base
-Line 14 col 18 IdentifierName "Base" = Base
-Line 14 col 27 IdentifierName "Derived" = Derived
-Line 14 col 39 IdentifierName "Base" = Base
-Line 15 col 0 IdentifierName "a7" = (x: (arg: Base) => Derived) => (r: Base) => Derived
-Line 15 col 9 IdentifierName "x" = (arg: Base) => Derived
-Line 15 col 13 IdentifierName "arg" = Base
-Line 15 col 18 IdentifierName "Base" = Base
-Line 15 col 27 IdentifierName "Derived" = Derived
-Line 15 col 40 IdentifierName "r" = Base
-Line 15 col 43 IdentifierName "Base" = Base
-Line 15 col 52 IdentifierName "Derived" = Derived
-Line 16 col 0 IdentifierName "a8" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 16 col 9 IdentifierName "x" = (arg: Base) => Derived
-Line 16 col 13 IdentifierName "arg" = Base
-Line 16 col 18 IdentifierName "Base" = Base
-Line 16 col 27 IdentifierName "Derived" = Derived
-Line 16 col 36 IdentifierName "y" = (arg2: Base) => Derived
-Line 16 col 40 IdentifierName "arg2" = Base
-Line 16 col 46 IdentifierName "Base" = Base
-Line 16 col 55 IdentifierName "Derived" = Derived
-Line 16 col 68 IdentifierName "r" = Base
-Line 16 col 71 IdentifierName "Base" = Base
-Line 16 col 80 IdentifierName "Derived" = Derived
-Line 17 col 0 IdentifierName "a9" = (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
-Line 17 col 9 IdentifierName "x" = (arg: Base) => Derived
-Line 17 col 13 IdentifierName "arg" = Base
-Line 17 col 18 IdentifierName "Base" = Base
-Line 17 col 27 IdentifierName "Derived" = Derived
-Line 17 col 36 IdentifierName "y" = (arg2: Base) => Derived
-Line 17 col 40 IdentifierName "arg2" = Base
-Line 17 col 46 IdentifierName "Base" = Base
-Line 17 col 55 IdentifierName "Derived" = Derived
-Line 17 col 68 IdentifierName "r" = Base
-Line 17 col 71 IdentifierName "Base" = Base
-Line 17 col 80 IdentifierName "Derived" = Derived
-Line 18 col 0 IdentifierName "a10" = (...x: Derived[]) => Derived
-Line 18 col 13 IdentifierName "x" = Derived[]
-Line 18 col 16 IdentifierName "Derived" = Derived
-Line 18 col 30 IdentifierName "Derived" = Derived
-Line 19 col 0 IdentifierName "a11" = (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
-Line 19 col 10 IdentifierName "x" = { foo: string; }
-Line 19 col 15 IdentifierName "foo" = string
-Line 19 col 30 IdentifierName "y" = { foo: string; bar: string; }
-Line 19 col 35 IdentifierName "foo" = string
-Line 19 col 48 IdentifierName "bar" = string
-Line 19 col 66 IdentifierName "Base" = Base
-Line 20 col 0 IdentifierName "a12" = (x: Base[], y: Derived2[]) => Derived[]
-Line 20 col 10 IdentifierName "x" = Base[]
-Line 20 col 13 IdentifierName "Array" = Array<T>
-Line 20 col 19 IdentifierName "Base" = Base
-Line 20 col 26 IdentifierName "y" = Derived2[]
-Line 20 col 29 IdentifierName "Array" = Array<T>
-Line 20 col 35 IdentifierName "Derived2" = Derived2
-Line 20 col 49 IdentifierName "Array" = Array<T>
-Line 20 col 55 IdentifierName "Derived" = Derived
-Line 21 col 0 IdentifierName "a13" = (x: Base[], y: Derived[]) => Derived[]
-Line 21 col 10 IdentifierName "x" = Base[]
-Line 21 col 13 IdentifierName "Array" = Array<T>
-Line 21 col 19 IdentifierName "Base" = Base
-Line 21 col 26 IdentifierName "y" = Derived[]
-Line 21 col 29 IdentifierName "Array" = Array<T>
-Line 21 col 35 IdentifierName "Derived" = Derived
-Line 21 col 48 IdentifierName "Array" = Array<T>
-Line 21 col 54 IdentifierName "Derived" = Derived
-Line 22 col 0 IdentifierName "a14" = (x: { a: string; b: number; }) => Object
-Line 22 col 10 IdentifierName "x" = { a: string; b: number; }
-Line 22 col 15 IdentifierName "a" = string
-Line 22 col 26 IdentifierName "b" = number
-Line 22 col 42 IdentifierName "Object" = Object
-Line 23 col 0 IdentifierName "a15" = { (x: number): number[]; (x: string): string[]; }
-Line 24 col 9 IdentifierName "x" = number
-Line 25 col 9 IdentifierName "x" = string
-Line 27 col 0 IdentifierName "a16" = { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
-Line 28 col 9 IdentifierName "T" = T
-Line 28 col 19 IdentifierName "Derived" = Derived
-Line 28 col 28 IdentifierName "x" = T
-Line 28 col 31 IdentifierName "T" = T
-Line 29 col 9 IdentifierName "U" = U
-Line 29 col 19 IdentifierName "Base" = Base
-Line 29 col 25 IdentifierName "x" = U
-Line 29 col 28 IdentifierName "U" = U
-Line 31 col 0 IdentifierName "a17" = { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
-Line 32 col 9 IdentifierName "x" = (a: number) => number
-Line 32 col 13 IdentifierName "a" = number
-Line 33 col 9 IdentifierName "x" = (a: string) => string
-Line 33 col 13 IdentifierName "a" = string
-Line 35 col 0 IdentifierName "a18" = { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }
-Line 36 col 9 IdentifierName "x" = { (a: number): number; (a: string): string; }
-Line 37 col 13 IdentifierName "a" = number
-Line 38 col 13 IdentifierName "a" = string
-Line 40 col 9 IdentifierName "x" = { (a: boolean): boolean; (a: Date): Date; }
-Line 41 col 13 IdentifierName "a" = boolean
-Line 42 col 13 IdentifierName "a" = Date
-Line 42 col 16 IdentifierName "Date" = Date
-Line 42 col 23 IdentifierName "Date" = Date
-Line 48 col 10 IdentifierName "I" = I
-Line 48 col 20 IdentifierName "A" = A
-Line 49 col 0 IdentifierName "// N's
-    a" = <T>(x: T) => T[]
-Line 50 col 8 IdentifierName "T" = T
-Line 50 col 11 IdentifierName "x" = T
-Line 50 col 14 IdentifierName "T" = T
-Line 50 col 20 IdentifierName "T" = T
-Line 51 col 0 IdentifierName "a2" = <T>(x: T) => string[]
-Line 51 col 9 IdentifierName "T" = T
-Line 51 col 12 IdentifierName "x" = T
-Line 51 col 15 IdentifierName "T" = T
-Line 52 col 0 IdentifierName "a3" = <T>(x: T) => T
-Line 52 col 9 IdentifierName "T" = T
-Line 52 col 12 IdentifierName "x" = T
-Line 52 col 15 IdentifierName "T" = T
-Line 52 col 21 IdentifierName "T" = T
-Line 53 col 0 IdentifierName "a4" = <T, U>(x: T, y: U) => T
-Line 53 col 9 IdentifierName "T" = T
-Line 53 col 12 IdentifierName "U" = U
-Line 53 col 15 IdentifierName "x" = T
-Line 53 col 18 IdentifierName "T" = T
-Line 53 col 21 IdentifierName "y" = U
-Line 53 col 24 IdentifierName "U" = U
-Line 53 col 30 IdentifierName "T" = T
-Line 54 col 0 IdentifierName "a5" = <T, U>(x: (arg: T) => U) => T
-Line 54 col 9 IdentifierName "T" = T
-Line 54 col 12 IdentifierName "U" = U
-Line 54 col 15 IdentifierName "x" = (arg: T) => U
-Line 54 col 19 IdentifierName "arg" = T
-Line 54 col 24 IdentifierName "T" = T
-Line 54 col 30 IdentifierName "U" = U
-Line 54 col 36 IdentifierName "T" = T
-Line 55 col 0 IdentifierName "a6" = <T extends Base, U extends Derived>(x: (arg: T) => U) => T
-Line 55 col 9 IdentifierName "T" = T
-Line 55 col 19 IdentifierName "Base" = Base
-Line 55 col 25 IdentifierName "U" = U
-Line 55 col 35 IdentifierName "Derived" = Derived
-Line 55 col 44 IdentifierName "x" = (arg: T) => U
-Line 55 col 48 IdentifierName "arg" = T
-Line 55 col 53 IdentifierName "T" = T
-Line 55 col 59 IdentifierName "U" = U
-Line 55 col 65 IdentifierName "T" = T
-Line 56 col 0 IdentifierName "a7" = <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
-Line 56 col 9 IdentifierName "T" = T
-Line 56 col 19 IdentifierName "Base" = Base
-Line 56 col 25 IdentifierName "U" = U
-Line 56 col 35 IdentifierName "Derived" = Derived
-Line 56 col 44 IdentifierName "x" = (arg: T) => U
-Line 56 col 48 IdentifierName "arg" = T
-Line 56 col 53 IdentifierName "T" = T
-Line 56 col 59 IdentifierName "U" = U
-Line 56 col 66 IdentifierName "r" = T
-Line 56 col 69 IdentifierName "T" = T
-Line 56 col 75 IdentifierName "U" = U
-Line 57 col 0 IdentifierName "a8" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
-Line 57 col 9 IdentifierName "T" = T
-Line 57 col 19 IdentifierName "Base" = Base
-Line 57 col 25 IdentifierName "U" = U
-Line 57 col 35 IdentifierName "Derived" = Derived
-Line 57 col 44 IdentifierName "x" = (arg: T) => U
-Line 57 col 48 IdentifierName "arg" = T
-Line 57 col 53 IdentifierName "T" = T
-Line 57 col 59 IdentifierName "U" = U
-Line 57 col 62 IdentifierName "y" = (arg2: T) => U
-Line 57 col 66 IdentifierName "arg2" = T
-Line 57 col 72 IdentifierName "T" = T
-Line 57 col 78 IdentifierName "U" = U
-Line 57 col 85 IdentifierName "r" = T
-Line 57 col 88 IdentifierName "T" = T
-Line 57 col 94 IdentifierName "U" = U
-Line 58 col 0 IdentifierName "a9" = <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
-Line 58 col 9 IdentifierName "T" = T
-Line 58 col 19 IdentifierName "Base" = Base
-Line 58 col 25 IdentifierName "U" = U
-Line 58 col 35 IdentifierName "Derived" = Derived
-Line 58 col 44 IdentifierName "x" = (arg: T) => U
-Line 58 col 48 IdentifierName "arg" = T
-Line 58 col 53 IdentifierName "T" = T
-Line 58 col 59 IdentifierName "U" = U
-Line 58 col 62 IdentifierName "y" = (arg2: { foo: string; bing: number; }) => U
-Line 58 col 66 IdentifierName "arg2" = { foo: string; bing: number; }
-Line 58 col 74 IdentifierName "foo" = string
-Line 58 col 87 IdentifierName "bing" = number
-Line 58 col 106 IdentifierName "U" = U
-Line 58 col 113 IdentifierName "r" = T
-Line 58 col 116 IdentifierName "T" = T
-Line 58 col 122 IdentifierName "U" = U
-Line 59 col 0 IdentifierName "a10" = <T extends Derived>(...x: T[]) => T
-Line 59 col 10 IdentifierName "T" = T
-Line 59 col 20 IdentifierName "Derived" = Derived
-Line 59 col 32 IdentifierName "x" = T[]
-Line 59 col 35 IdentifierName "T" = T
-Line 59 col 43 IdentifierName "T" = T
-Line 60 col 0 IdentifierName "a11" = <T extends Base>(x: T, y: T) => T
-Line 60 col 10 IdentifierName "T" = T
-Line 60 col 20 IdentifierName "Base" = Base
-Line 60 col 26 IdentifierName "x" = T
-Line 60 col 29 IdentifierName "T" = T
-Line 60 col 32 IdentifierName "y" = T
-Line 60 col 35 IdentifierName "T" = T
-Line 60 col 41 IdentifierName "T" = T
-Line 61 col 0 IdentifierName "a12" = <T extends Base[]>(x: Base[], y: T) => Derived[]
-Line 61 col 10 IdentifierName "T" = T
-Line 61 col 20 IdentifierName "Array" = Array<T>
-Line 61 col 26 IdentifierName "Base" = Base
-Line 61 col 33 IdentifierName "x" = Base[]
-Line 61 col 36 IdentifierName "Array" = Array<T>
-Line 61 col 42 IdentifierName "Base" = Base
-Line 61 col 49 IdentifierName "y" = T
-Line 61 col 52 IdentifierName "T" = T
-Line 61 col 58 IdentifierName "Array" = Array<T>
-Line 61 col 64 IdentifierName "Derived" = Derived
-Line 62 col 0 IdentifierName "a13" = <T extends Derived[]>(x: Base[], y: T) => T
-Line 62 col 10 IdentifierName "T" = T
-Line 62 col 20 IdentifierName "Array" = Array<T>
-Line 62 col 26 IdentifierName "Derived" = Derived
-Line 62 col 36 IdentifierName "x" = Base[]
-Line 62 col 39 IdentifierName "Array" = Array<T>
-Line 62 col 45 IdentifierName "Base" = Base
-Line 62 col 52 IdentifierName "y" = T
-Line 62 col 55 IdentifierName "T" = T
-Line 62 col 61 IdentifierName "T" = T
-Line 63 col 0 IdentifierName "a14" = <T>(x: { a: T; b: T; }) => T
-Line 63 col 10 IdentifierName "T" = T
-Line 63 col 13 IdentifierName "x" = { a: T; b: T; }
-Line 63 col 18 IdentifierName "a" = T
-Line 63 col 21 IdentifierName "T" = T
-Line 63 col 24 IdentifierName "b" = T
-Line 63 col 27 IdentifierName "T" = T
-Line 63 col 35 IdentifierName "T" = T
-Line 64 col 0 IdentifierName "a15" = <T>(x: T) => T[]
-Line 64 col 10 IdentifierName "T" = T
-Line 64 col 13 IdentifierName "x" = T
-Line 64 col 16 IdentifierName "T" = T
-Line 64 col 22 IdentifierName "T" = T
-Line 65 col 0 IdentifierName "a16" = <T extends Base>(x: T) => number[]
-Line 65 col 10 IdentifierName "T" = T
-Line 65 col 20 IdentifierName "Base" = Base
-Line 65 col 26 IdentifierName "x" = T
-Line 65 col 29 IdentifierName "T" = T
-Line 66 col 0 IdentifierName "a17" = <T>(x: (a: T) => T) => T[]
-Line 66 col 10 IdentifierName "T" = T
-Line 66 col 13 IdentifierName "x" = (a: T) => T
-Line 66 col 17 IdentifierName "a" = T
-Line 66 col 20 IdentifierName "T" = T
-Line 66 col 26 IdentifierName "T" = T
-Line 66 col 32 IdentifierName "T" = T
-Line 67 col 0 IdentifierName "a18" = <T>(x: (a: T) => T) => T[]
-Line 67 col 10 IdentifierName "T" = T
-Line 67 col 13 IdentifierName "x" = (a: T) => T
-Line 67 col 17 IdentifierName "a" = T
-Line 67 col 20 IdentifierName "T" = T
-Line 67 col 26 IdentifierName "T" = T
-Line 67 col 32 IdentifierName "T" = T
+// checking subtype relations for function types as it relates to contextual signature instantiation
+
+class Base { foo: string; }
+>Base : Base
+>foo : string
+
+class Derived extends Base { bar: string; }
+>Derived : Derived
+>Base : Base
+>bar : string
+
+class Derived2 extends Derived { baz: string; }
+>Derived2 : Derived2
+>Derived : Derived
+>baz : string
+
+class OtherDerived extends Base { bing: string; }
+>OtherDerived : OtherDerived
+>Base : Base
+>bing : string
+
+interface A { // T
+>A : A
+
+    // M's
+>// M's
+    a : (x: number) => number[]
+
+    a: (x: number) => number[];
+>x : number
+
+    a2: (x: number) => string[];
+>a2 : (x: number) => string[]
+>x : number
+
+    a3: (x: number) => void;
+>a3 : (x: number) => void
+>x : number
+
+    a4: (x: string, y: number) => string;
+>a4 : (x: string, y: number) => string
+>x : string
+>y : number
+
+    a5: (x: (arg: string) => number) => string;
+>a5 : (x: (arg: string) => number) => string
+>x : (arg: string) => number
+>arg : string
+
+    a6: (x: (arg: Base) => Derived) => Base;
+>a6 : (x: (arg: Base) => Derived) => Base
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>Base : Base
+
+    a7: (x: (arg: Base) => Derived) => (r: Base) => Derived;
+>a7 : (x: (arg: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+    a8: (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived;
+>a8 : (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : (arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+    a9: (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived;
+>a9 : (x: (arg: Base) => Derived, y: (arg2: Base) => Derived) => (r: Base) => Derived
+>x : (arg: Base) => Derived
+>arg : Base
+>Base : Base
+>Derived : Derived
+>y : (arg2: Base) => Derived
+>arg2 : Base
+>Base : Base
+>Derived : Derived
+>r : Base
+>Base : Base
+>Derived : Derived
+
+    a10: (...x: Derived[]) => Derived;
+>a10 : (...x: Derived[]) => Derived
+>x : Derived[]
+>Derived : Derived
+>Derived : Derived
+
+    a11: (x: { foo: string }, y: { foo: string; bar: string }) => Base;
+>a11 : (x: { foo: string; }, y: { foo: string; bar: string; }) => Base
+>x : { foo: string; }
+>foo : string
+>y : { foo: string; bar: string; }
+>foo : string
+>bar : string
+>Base : Base
+
+    a12: (x: Array<Base>, y: Array<Derived2>) => Array<Derived>;
+>a12 : (x: Base[], y: Derived2[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived2[]
+>Array : Array<T>
+>Derived2 : Derived2
+>Array : Array<T>
+>Derived : Derived
+
+    a13: (x: Array<Base>, y: Array<Derived>) => Array<Derived>;
+>a13 : (x: Base[], y: Derived[]) => Derived[]
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : Derived[]
+>Array : Array<T>
+>Derived : Derived
+>Array : Array<T>
+>Derived : Derived
+
+    a14: (x: { a: string; b: number }) => Object;
+>a14 : (x: { a: string; b: number; }) => Object
+>x : { a: string; b: number; }
+>a : string
+>b : number
+>Object : Object
+
+    a15: {
+>a15 : { (x: number): number[]; (x: string): string[]; }
+
+        (x: number): number[];
+>x : number
+
+        (x: string): string[];
+>x : string
+
+    };
+    a16: {
+>a16 : { <T extends Derived>(x: T): number[]; <U extends Base>(x: U): number[]; }
+
+        <T extends Derived>(x: T): number[];
+>T : T
+>Derived : Derived
+>x : T
+>T : T
+
+        <U extends Base>(x: U): number[];
+>U : U
+>Base : Base
+>x : U
+>U : U
+
+    };
+    a17: {
+>a17 : { (x: (a: number) => number): number[]; (x: (a: string) => string): string[]; }
+
+        (x: (a: number) => number): number[];
+>x : (a: number) => number
+>a : number
+
+        (x: (a: string) => string): string[];
+>x : (a: string) => string
+>a : string
+
+    };
+    a18: {
+>a18 : { (x: { (a: number): number; (a: string): string; }): any[]; (x: { (a: boolean): boolean; (a: Date): Date; }): any[]; }
+
+        (x: {
+>x : { (a: number): number; (a: string): string; }
+
+            (a: number): number;
+>a : number
+
+            (a: string): string;
+>a : string
+
+        }): any[];
+        (x: {
+>x : { (a: boolean): boolean; (a: Date): Date; }
+
+            (a: boolean): boolean;
+>a : boolean
+
+            (a: Date): Date;
+>a : Date
+>Date : Date
+>Date : Date
+
+        }): any[];
+    };
+}
+
+// S's
+interface I extends A {
+>I : I
+>A : A
+
+    // N's
+>// N's
+    a : <T>(x: T) => T[]
+
+    a: <T>(x: T) => T[]; // ok, instantiation of N is a subtype of M, T is number
+>T : T
+>x : T
+>T : T
+>T : T
+
+    a2: <T>(x: T) => string[]; // ok
+>a2 : <T>(x: T) => string[]
+>T : T
+>x : T
+>T : T
+
+    a3: <T>(x: T) => T; // ok since Base returns void
+>a3 : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+    a4: <T, U>(x: T, y: U) => T; // ok, instantiation of N is a subtype of M, T is string, U is number
+>a4 : <T, U>(x: T, y: U) => T
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+>T : T
+
+    a5: <T, U>(x: (arg: T) => U) => T; // ok, U is in a parameter position so inferences can be made
+>a5 : <T, U>(x: (arg: T) => U) => T
+>T : T
+>U : U
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+    a6: <T extends Base, U extends Derived>(x: (arg: T) => U) => T; // ok, same as a5 but with object type hierarchy
+>a6 : <T extends Base, U extends Derived>(x: (arg: T) => U) => T
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>T : T
+
+    a7: <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U; // ok
+>a7 : <T extends Base, U extends Derived>(x: (arg: T) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>r : T
+>T : T
+>U : U
+
+    a8: <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U; // ok
+>a8 : <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: T) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>y : (arg2: T) => U
+>arg2 : T
+>T : T
+>U : U
+>r : T
+>T : T
+>U : U
+
+    a9: <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number }) => U) => (r: T) => U; // ok, same as a8 with compatible object literal
+>a9 : <T extends Base, U extends Derived>(x: (arg: T) => U, y: (arg2: { foo: string; bing: number; }) => U) => (r: T) => U
+>T : T
+>Base : Base
+>U : U
+>Derived : Derived
+>x : (arg: T) => U
+>arg : T
+>T : T
+>U : U
+>y : (arg2: { foo: string; bing: number; }) => U
+>arg2 : { foo: string; bing: number; }
+>foo : string
+>bing : number
+>U : U
+>r : T
+>T : T
+>U : U
+
+    a10: <T extends Derived>(...x: T[]) => T; // ok
+>a10 : <T extends Derived>(...x: T[]) => T
+>T : T
+>Derived : Derived
+>x : T[]
+>T : T
+>T : T
+
+    a11: <T extends Base>(x: T, y: T) => T; // ok
+>a11 : <T extends Base>(x: T, y: T) => T
+>T : T
+>Base : Base
+>x : T
+>T : T
+>y : T
+>T : T
+>T : T
+
+    a12: <T extends Array<Base>>(x: Array<Base>, y: T) => Array<Derived>; // ok, less specific parameter type
+>a12 : <T extends Base[]>(x: Base[], y: T) => Derived[]
+>T : T
+>Array : Array<T>
+>Base : Base
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : T
+>T : T
+>Array : Array<T>
+>Derived : Derived
+
+    a13: <T extends Array<Derived>>(x: Array<Base>, y: T) => T; // ok, T = Array<Derived>, satisfies constraint, contextual signature instantiation succeeds
+>a13 : <T extends Derived[]>(x: Base[], y: T) => T
+>T : T
+>Array : Array<T>
+>Derived : Derived
+>x : Base[]
+>Array : Array<T>
+>Base : Base
+>y : T
+>T : T
+>T : T
+
+    a14: <T>(x: { a: T; b: T }) => T; // ok, best common type yields T = {} but that's satisfactory for this signature
+>a14 : <T>(x: { a: T; b: T; }) => T
+>T : T
+>x : { a: T; b: T; }
+>a : T
+>T : T
+>b : T
+>T : T
+>T : T
+
+    a15: <T>(x: T) => T[]; // ok
+>a15 : <T>(x: T) => T[]
+>T : T
+>x : T
+>T : T
+>T : T
+
+    a16: <T extends Base>(x: T) => number[]; // ok
+>a16 : <T extends Base>(x: T) => number[]
+>T : T
+>Base : Base
+>x : T
+>T : T
+
+    a17: <T>(x: (a: T) => T) => T[]; // ok
+>a17 : <T>(x: (a: T) => T) => T[]
+>T : T
+>x : (a: T) => T
+>a : T
+>T : T
+>T : T
+>T : T
+
+    a18: <T>(x: (a: T) => T) => T[]; // ok, no inferences for T but assignable to any
+>a18 : <T>(x: (a: T) => T) => T[]
+>T : T
+>x : (a: T) => T
+>a : T
+>T : T
+>T : T
+>T : T
+}

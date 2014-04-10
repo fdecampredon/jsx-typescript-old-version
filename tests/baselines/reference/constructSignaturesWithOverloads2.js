@@ -1,3 +1,4 @@
+//// [constructSignaturesWithOverloads2.js]
 // No errors expected for basic overloads of construct signatures with merged declarations
 // clodules
 var C = (function () {

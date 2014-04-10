@@ -1,55 +1,91 @@
 === tests/cases/compiler/declFileTypeofInAnonymousType.ts ===
-Line 1 col 7 IdentifierName "m1" = m1
-Line 2 col 17 IdentifierName "c" = c
-Line 4 col 16 IdentifierName "e" = e
-Line 5 col 0 IdentifierName "weekday" = e
-Line 6 col 0 IdentifierName "weekend" = e
-Line 7 col 0 IdentifierName "holiday" = e
-Line 10 col 4 IdentifierName "a" = { c: m1.c; }
-Line 10 col 9 IdentifierName "c" = m1.c
-Line 10 col 12 IdentifierName "m1" = m1
-Line 10 col 15 IdentifierName "c" = m1.c
-Line 11 col 4 IdentifierName "b" = { c: typeof m1.c; m1: typeof m1; }
-Line 11 col 8 ObjectLiteralExpression "{
+
+module m1 {
+>m1 : m1
+
+    export class c {
+>c : c
+    }
+    export enum e {
+>e : e
+
+        weekday,
+>weekday : e
+
+        weekend,
+>weekend : e
+
+        holiday
+>holiday : e
+    }
+}
+var a: { c: m1.c; };
+>a : { c: m1.c; }
+>c : m1.c
+>m1 : m1
+>c : m1.c
+
+var b = {
+>b : { c: typeof m1.c; m1: typeof m1; }
+>{
     c: m1.c,
     m1: m1
-}" = { c: typeof m1.c; m1: typeof m1; }
-Line 12 col 0 IdentifierName "c" = typeof m1.c
-Line 12 col 7 MemberAccessExpression "m1.c" = typeof m1.c
-Line 12 col 7 IdentifierName "m1" = typeof m1
-Line 12 col 10 IdentifierName "c" = typeof m1.c
-Line 13 col 0 IdentifierName "m1" = typeof m1
-Line 13 col 8 IdentifierName "m1" = typeof m1
-Line 15 col 4 IdentifierName "c" = { m1: typeof m1; }
-Line 15 col 8 ObjectLiteralExpression "{ m1: m1 }" = { m1: typeof m1; }
-Line 15 col 10 IdentifierName "m1" = typeof m1
-Line 15 col 14 IdentifierName "m1" = typeof m1
-Line 16 col 4 IdentifierName "d" = { m: { mod: typeof m1; }; mc: { cl: typeof m1.c; }; me: { en: typeof m1.e; }; mh: m1.e; }
-Line 16 col 8 ObjectLiteralExpression "{
+} : { c: typeof m1.c; m1: typeof m1; }
+
+    c: m1.c,
+>c : typeof m1.c
+>m1.c : typeof m1.c
+>m1 : typeof m1
+>c : typeof m1.c
+
+    m1: m1
+>m1 : typeof m1
+>m1 : typeof m1
+
+};
+var c = { m1: m1 };
+>c : { m1: typeof m1; }
+>{ m1: m1 } : { m1: typeof m1; }
+>m1 : typeof m1
+>m1 : typeof m1
+
+var d = {
+>d : { m: { mod: typeof m1; }; mc: { cl: typeof m1.c; }; me: { en: typeof m1.e; }; mh: m1.e; }
+>{
     m: { mod: m1 },
     mc: { cl: m1.c },
     me: { en: m1.e },
     mh: m1.e.holiday
-}" = { m: { mod: typeof m1; }; mc: { cl: typeof m1.c; }; me: { en: typeof m1.e; }; mh: m1.e; }
-Line 17 col 0 IdentifierName "m" = { mod: typeof m1; }
-Line 17 col 7 ObjectLiteralExpression "{ mod: m1 }" = { mod: typeof m1; }
-Line 17 col 9 IdentifierName "mod" = typeof m1
-Line 17 col 14 IdentifierName "m1" = typeof m1
-Line 18 col 0 IdentifierName "mc" = { cl: typeof m1.c; }
-Line 18 col 8 ObjectLiteralExpression "{ cl: m1.c }" = { cl: typeof m1.c; }
-Line 18 col 10 IdentifierName "cl" = typeof m1.c
-Line 18 col 14 MemberAccessExpression "m1.c" = typeof m1.c
-Line 18 col 14 IdentifierName "m1" = typeof m1
-Line 18 col 17 IdentifierName "c" = typeof m1.c
-Line 19 col 0 IdentifierName "me" = { en: typeof m1.e; }
-Line 19 col 8 ObjectLiteralExpression "{ en: m1.e }" = { en: typeof m1.e; }
-Line 19 col 10 IdentifierName "en" = typeof m1.e
-Line 19 col 14 MemberAccessExpression "m1.e" = typeof m1.e
-Line 19 col 14 IdentifierName "m1" = typeof m1
-Line 19 col 17 IdentifierName "e" = typeof m1.e
-Line 20 col 0 IdentifierName "mh" = m1.e
-Line 20 col 8 MemberAccessExpression "m1.e.holiday" = m1.e
-Line 20 col 8 MemberAccessExpression "m1.e" = typeof m1.e
-Line 20 col 8 IdentifierName "m1" = typeof m1
-Line 20 col 11 IdentifierName "e" = typeof m1.e
-Line 20 col 13 IdentifierName "holiday" = m1.e
+} : { m: { mod: typeof m1; }; mc: { cl: typeof m1.c; }; me: { en: typeof m1.e; }; mh: m1.e; }
+
+    m: { mod: m1 },
+>m : { mod: typeof m1; }
+>{ mod: m1 } : { mod: typeof m1; }
+>mod : typeof m1
+>m1 : typeof m1
+
+    mc: { cl: m1.c },
+>mc : { cl: typeof m1.c; }
+>{ cl: m1.c } : { cl: typeof m1.c; }
+>cl : typeof m1.c
+>m1.c : typeof m1.c
+>m1 : typeof m1
+>c : typeof m1.c
+
+    me: { en: m1.e },
+>me : { en: typeof m1.e; }
+>{ en: m1.e } : { en: typeof m1.e; }
+>en : typeof m1.e
+>m1.e : typeof m1.e
+>m1 : typeof m1
+>e : typeof m1.e
+
+    mh: m1.e.holiday
+>mh : m1.e
+>m1.e.holiday : m1.e
+>m1.e : typeof m1.e
+>m1 : typeof m1
+>e : typeof m1.e
+>holiday : m1.e
+
+};

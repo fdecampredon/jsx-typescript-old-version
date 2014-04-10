@@ -1,5 +1,9 @@
 === tests/cases/compiler/noCollisionThisExpressionAndVarInGlobal.ts ===
-Line 0 col 4 IdentifierName "_this" = number
-Line 1 col 4 IdentifierName "f" = () => number
-Line 1 col 8 ParenthesizedArrowFunctionExpression "() => _this" = () => number
-Line 1 col 14 IdentifierName "_this" = number
+var _this = 1;
+>_this : number
+
+var f = () => _this;
+>f : () => number
+>() => _this : () => number
+>_this : number
+

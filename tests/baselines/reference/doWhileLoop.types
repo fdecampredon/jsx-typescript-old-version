@@ -1,2 +1,5 @@
 === tests/cases/compiler/doWhileLoop.ts ===
-Line 1 col 4 IdentifierName "n" = any
+do { } while (false);
+var n;
+>n : any
+

@@ -1,13 +1,40 @@
 === tests/cases/compiler/cyclicModuleImport.ts ===
-Line 1 col 11 IdentifierName "MainModule" = MainModule
-Line 2 col 10 IdentifierName "SubModule" = SubModule
-Line 3 col 22 IdentifierName "StaticVar" = number
-Line 4 col 15 IdentifierName "InstanceVar" = number
-Line 5 col 15 IdentifierName "main" = MainModule
-Line 5 col 21 IdentifierName "MainModule" = MainModule
-Line 8 col 13 IdentifierName "SubModule" = typeof SubModule
-Line 11 col 11 IdentifierName "SubModule" = SubModule
-Line 12 col 10 IdentifierName "MainModule" = MainModule
-Line 13 col 15 IdentifierName "SubModule" = SubModule
-Line 13 col 26 IdentifierName "SubModule" = SubModule
-Line 16 col 13 IdentifierName "MainModule" = typeof MainModule
+declare module "SubModule" {
+    import MainModule = require('MainModule');
+>MainModule : MainModule
+
+    class SubModule {
+>SubModule : SubModule
+
+        public static StaticVar: number;
+>StaticVar : number
+
+        public InstanceVar: number;
+>InstanceVar : number
+
+        public main: MainModule;
+>main : MainModule
+>MainModule : MainModule
+
+        constructor();
+    }
+    export = SubModule;
+>SubModule : typeof SubModule
+}
+declare module "MainModule" {
+    import SubModule = require('SubModule');
+>SubModule : SubModule
+
+    class MainModule {
+>MainModule : MainModule
+
+        public SubModule: SubModule;
+>SubModule : SubModule
+>SubModule : SubModule
+
+        constructor();
+    }
+    export = MainModule;
+>MainModule : typeof MainModule
+}
+

@@ -1,49 +1,93 @@
 === tests/cases/compiler/twoMergedInterfacesWithDifferingOverloads2.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 2 col 5 IdentifierName "x" = number
-Line 5 col 10 IdentifierName "A" = A
-Line 6 col 5 IdentifierName "x" = number
-Line 6 col 16 IdentifierName "y" = number
-Line 9 col 4 IdentifierName "a" = A
-Line 9 col 7 IdentifierName "A" = A
-Line 10 col 4 IdentifierName "r" = string
-Line 10 col 8 InvocationExpression "a()" = string
-Line 10 col 8 IdentifierName "a" = A
-Line 11 col 4 IdentifierName "r2" = number
-Line 11 col 9 InvocationExpression "a(1)" = number
-Line 11 col 9 IdentifierName "a" = A
-Line 12 col 4 IdentifierName "r3" = boolean
-Line 12 col 9 InvocationExpression "a(1, 2)" = boolean
-Line 12 col 9 IdentifierName "a" = A
-Line 14 col 7 IdentifierName "G" = G
-Line 15 col 14 IdentifierName "A" = A<T>
-Line 15 col 16 IdentifierName "T" = T
-Line 17 col 9 IdentifierName "x" = T
-Line 17 col 12 IdentifierName "T" = T
-Line 17 col 16 IdentifierName "T" = T
-Line 20 col 14 IdentifierName "A" = A<T>
-Line 20 col 16 IdentifierName "T" = T
-Line 21 col 9 IdentifierName "x" = T
-Line 21 col 12 IdentifierName "T" = T
-Line 21 col 15 IdentifierName "y" = number
-Line 21 col 27 IdentifierName "T" = T
-Line 22 col 9 IdentifierName "U" = U
-Line 22 col 12 IdentifierName "x" = U
-Line 22 col 15 IdentifierName "U" = U
-Line 22 col 18 IdentifierName "y" = T
-Line 22 col 21 IdentifierName "T" = T
-Line 22 col 25 IdentifierName "U" = U
-Line 25 col 8 IdentifierName "a" = A<boolean>
-Line 25 col 11 IdentifierName "A" = A<T>
-Line 26 col 8 IdentifierName "r" = string
-Line 26 col 12 InvocationExpression "a()" = string
-Line 26 col 12 IdentifierName "a" = A<boolean>
-Line 27 col 8 IdentifierName "r2" = boolean
-Line 27 col 13 InvocationExpression "a(true)" = boolean
-Line 27 col 13 IdentifierName "a" = A<boolean>
-Line 28 col 8 IdentifierName "r3" = boolean
-Line 28 col 13 InvocationExpression "a(true, 2)" = boolean
-Line 28 col 13 IdentifierName "a" = A<boolean>
-Line 29 col 8 IdentifierName "r4" = number
-Line 29 col 13 InvocationExpression "a(1, true)" = number
-Line 29 col 13 IdentifierName "a" = A<boolean>
+interface A {
+>A : A
+
+    (): string;
+    (x: number): number;
+>x : number
+}
+
+interface A {
+>A : A
+
+    (x: number, y: number): boolean;
+>x : number
+>y : number
+}
+
+var a: A;
+>a : A
+>A : A
+
+var r = a();
+>r : string
+>a() : string
+>a : A
+
+var r2 = a(1);
+>r2 : number
+>a(1) : number
+>a : A
+
+var r3 = a(1, 2);
+>r3 : boolean
+>a(1, 2) : boolean
+>a : A
+
+module G {
+>G : G
+
+    interface A<T> {
+>A : A<T>
+>T : T
+
+        (): string;
+        (x: T): T;
+>x : T
+>T : T
+>T : T
+    }
+
+    interface A<T> {
+>A : A<T>
+>T : T
+
+        (x: T, y: number): T;
+>x : T
+>T : T
+>y : number
+>T : T
+
+        <U>(x: U, y: T): U;
+>U : U
+>x : U
+>U : U
+>y : T
+>T : T
+>U : U
+    }
+
+    var a: A<boolean>;
+>a : A<boolean>
+>A : A<T>
+
+    var r = a();
+>r : string
+>a() : string
+>a : A<boolean>
+
+    var r2 = a(true);
+>r2 : boolean
+>a(true) : boolean
+>a : A<boolean>
+
+    var r3 = a(true, 2);
+>r3 : boolean
+>a(true, 2) : boolean
+>a : A<boolean>
+
+    var r4 = a(1, true);
+>r4 : number
+>a(1, true) : number
+>a : A<boolean>
+}

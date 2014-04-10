@@ -1,3 +1,4 @@
+//// [bind1.js]
 var M;
 (function (M) {
     var C = (function () {

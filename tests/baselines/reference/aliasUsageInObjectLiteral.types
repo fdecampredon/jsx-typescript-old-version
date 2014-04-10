@@ -1,36 +1,62 @@
 === tests/cases/compiler/aliasUsageInObjectLiteral_main.ts ===
-Line 0 col 7 IdentifierName "Backbone" = Backbone
-Line 1 col 7 IdentifierName "moduleA" = moduleA
-Line 2 col 10 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
-Line 3 col 0 IdentifierName "VisualizationModel" = typeof Backbone.Model
-Line 3 col 31 IdentifierName "Backbone" = typeof Backbone
-Line 3 col 40 IdentifierName "Model" = typeof Backbone.Model
-Line 5 col 4 IdentifierName "a" = { x: typeof moduleA; }
-Line 5 col 9 IdentifierName "x" = typeof moduleA
-Line 5 col 19 IdentifierName "moduleA" = typeof moduleA
-Line 5 col 31 ObjectLiteralExpression "{ x: moduleA }" = { x: typeof moduleA; }
-Line 5 col 33 IdentifierName "x" = typeof moduleA
-Line 5 col 36 IdentifierName "moduleA" = typeof moduleA
-Line 6 col 4 IdentifierName "b" = { x: IHasVisualizationModel; }
-Line 6 col 9 IdentifierName "x" = IHasVisualizationModel
-Line 6 col 12 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
-Line 6 col 39 ObjectLiteralExpression "{ x: moduleA }" = { x: typeof moduleA; }
-Line 6 col 41 IdentifierName "x" = typeof moduleA
-Line 6 col 44 IdentifierName "moduleA" = typeof moduleA
-Line 7 col 4 IdentifierName "c" = { y: { z: IHasVisualizationModel; }; }
-Line 7 col 9 IdentifierName "y" = { z: IHasVisualizationModel; }
-Line 7 col 14 IdentifierName "z" = IHasVisualizationModel
-Line 7 col 17 IdentifierName "IHasVisualizationModel" = IHasVisualizationModel
-Line 7 col 46 ObjectLiteralExpression "{ y: { z: moduleA } }" = { y: { z: typeof moduleA; }; }
-Line 7 col 48 IdentifierName "y" = { z: typeof moduleA; }
-Line 7 col 51 ObjectLiteralExpression "{ z: moduleA }" = { z: typeof moduleA; }
-Line 7 col 53 IdentifierName "z" = typeof moduleA
-Line 7 col 56 IdentifierName "moduleA" = typeof moduleA
+import Backbone = require("aliasUsageInObjectLiteral_backbone");
+>Backbone : Backbone
+
+import moduleA = require("aliasUsageInObjectLiteral_moduleA");
+>moduleA : moduleA
+
+interface IHasVisualizationModel {
+>IHasVisualizationModel : IHasVisualizationModel
+
+    VisualizationModel: typeof Backbone.Model;
+>VisualizationModel : typeof Backbone.Model
+>Backbone : typeof Backbone
+>Model : typeof Backbone.Model
+}
+var a: { x: typeof moduleA } = { x: moduleA };
+>a : { x: typeof moduleA; }
+>x : typeof moduleA
+>moduleA : typeof moduleA
+>{ x: moduleA } : { x: typeof moduleA; }
+>x : typeof moduleA
+>moduleA : typeof moduleA
+
+var b: { x: IHasVisualizationModel } = { x: moduleA };
+>b : { x: IHasVisualizationModel; }
+>x : IHasVisualizationModel
+>IHasVisualizationModel : IHasVisualizationModel
+>{ x: moduleA } : { x: typeof moduleA; }
+>x : typeof moduleA
+>moduleA : typeof moduleA
+
+var c: { y: { z: IHasVisualizationModel } } = { y: { z: moduleA } };
+>c : { y: { z: IHasVisualizationModel; }; }
+>y : { z: IHasVisualizationModel; }
+>z : IHasVisualizationModel
+>IHasVisualizationModel : IHasVisualizationModel
+>{ y: { z: moduleA } } : { y: { z: typeof moduleA; }; }
+>y : { z: typeof moduleA; }
+>{ z: moduleA } : { z: typeof moduleA; }
+>z : typeof moduleA
+>moduleA : typeof moduleA
+
 === tests/cases/compiler/aliasUsageInObjectLiteral_backbone.ts ===
-Line 0 col 13 IdentifierName "Model" = Model
-Line 1 col 11 IdentifierName "someData" = string
+export class Model {
+>Model : Model
+
+    public someData: string;
+>someData : string
+}
+
 === tests/cases/compiler/aliasUsageInObjectLiteral_moduleA.ts ===
-Line 0 col 7 IdentifierName "Backbone" = Backbone
-Line 1 col 13 IdentifierName "VisualizationModel" = VisualizationModel
-Line 1 col 40 IdentifierName "Backbone" = Backbone
-Line 1 col 49 IdentifierName "Model" = Backbone.Model
+import Backbone = require("aliasUsageInObjectLiteral_backbone");
+>Backbone : Backbone
+
+export class VisualizationModel extends Backbone.Model {
+>VisualizationModel : VisualizationModel
+>Backbone : Backbone
+>Model : Backbone.Model
+
+    // interesting stuff here
+}
+

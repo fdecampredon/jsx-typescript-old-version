@@ -1,9 +1,22 @@
 === tests/cases/compiler/internalAliasInterfaceInsideLocalModuleWithoutExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 21 IdentifierName "I" = I
-Line 5 col 14 IdentifierName "c" = c
-Line 6 col 11 IdentifierName "b" = b
-Line 6 col 15 IdentifierName "a" = a
-Line 6 col 17 IdentifierName "I" = a.I
-Line 7 col 15 IdentifierName "x" = a.I
-Line 7 col 18 IdentifierName "b" = b
+export module a {
+>a : a
+
+    export interface I {
+>I : I
+    }
+}
+
+export module c {
+>c : c
+
+    import b = a.I;
+>b : b
+>a : a
+>I : a.I
+
+    export var x: b;
+>x : a.I
+>b : b
+}
+

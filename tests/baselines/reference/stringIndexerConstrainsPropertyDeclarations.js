@@ -1,3 +1,4 @@
+//// [stringIndexerConstrainsPropertyDeclarations.js]
 // String indexer types constrain the types of named properties in their containing type
 
 var C = (function () {

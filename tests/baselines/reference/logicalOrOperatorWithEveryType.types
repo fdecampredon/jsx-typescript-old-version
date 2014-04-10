@@ -1,395 +1,618 @@
 === tests/cases/compiler/logicalOrOperatorWithEveryType.ts ===
-Line 5 col 5 IdentifierName "E" = E
-Line 5 col 9 IdentifierName "a" = E
-Line 5 col 12 IdentifierName "b" = E
-Line 5 col 15 IdentifierName "c" = E
-Line 7 col 4 IdentifierName "a1" = any
-Line 8 col 4 IdentifierName "a2" = boolean
-Line 9 col 4 IdentifierName "a3" = number
-Line 10 col 4 IdentifierName "a4" = string
-Line 11 col 4 IdentifierName "a5" = void
-Line 12 col 4 IdentifierName "a6" = E
-Line 12 col 8 IdentifierName "E" = E
-Line 13 col 4 IdentifierName "a7" = { a: string; }
-Line 13 col 9 IdentifierName "a" = string
-Line 14 col 4 IdentifierName "a8" = string[]
-Line 16 col 4 IdentifierName "ra1" = any
-Line 16 col 10 LogicalOrExpression "a1 || a1" = any
-Line 16 col 10 IdentifierName "a1" = any
-Line 16 col 16 IdentifierName "a1" = any
-Line 17 col 4 IdentifierName "ra2" = any
-Line 17 col 10 LogicalOrExpression "a2 || a1" = any
-Line 17 col 10 IdentifierName "a2" = boolean
-Line 17 col 16 IdentifierName "a1" = any
-Line 18 col 4 IdentifierName "ra3" = any
-Line 18 col 10 LogicalOrExpression "a3 || a1" = any
-Line 18 col 10 IdentifierName "a3" = number
-Line 18 col 16 IdentifierName "a1" = any
-Line 19 col 4 IdentifierName "ra4" = any
-Line 19 col 10 LogicalOrExpression "a4 || a1" = any
-Line 19 col 10 IdentifierName "a4" = string
-Line 19 col 16 IdentifierName "a1" = any
-Line 20 col 4 IdentifierName "ra5" = any
-Line 20 col 10 LogicalOrExpression "a5 || a1" = any
-Line 20 col 10 IdentifierName "a5" = void
-Line 20 col 16 IdentifierName "a1" = any
-Line 21 col 4 IdentifierName "ra6" = any
-Line 21 col 10 LogicalOrExpression "a6 || a1" = any
-Line 21 col 10 IdentifierName "a6" = E
-Line 21 col 16 IdentifierName "a1" = any
-Line 22 col 4 IdentifierName "ra7" = any
-Line 22 col 10 LogicalOrExpression "a7 || a1" = any
-Line 22 col 10 IdentifierName "a7" = { a: string; }
-Line 22 col 16 IdentifierName "a1" = any
-Line 23 col 4 IdentifierName "ra8" = any
-Line 23 col 10 LogicalOrExpression "a8 || a1" = any
-Line 23 col 10 IdentifierName "a8" = string[]
-Line 23 col 16 IdentifierName "a1" = any
-Line 24 col 4 IdentifierName "ra9" = any
-Line 24 col 10 LogicalOrExpression "null || a1" = any
-Line 24 col 18 IdentifierName "a1" = any
-Line 25 col 4 IdentifierName "ra10" = any
-Line 25 col 11 LogicalOrExpression "undefined || a1" = any
-Line 25 col 11 IdentifierName "undefined" = any
-Line 25 col 24 IdentifierName "a1" = any
-Line 27 col 4 IdentifierName "rb1" = any
-Line 27 col 10 LogicalOrExpression "a1 || a2" = any
-Line 27 col 10 IdentifierName "a1" = any
-Line 27 col 16 IdentifierName "a2" = boolean
-Line 28 col 4 IdentifierName "rb2" = boolean
-Line 28 col 10 LogicalOrExpression "a2 || a2" = boolean
-Line 28 col 10 IdentifierName "a2" = boolean
-Line 28 col 16 IdentifierName "a2" = boolean
-Line 29 col 4 IdentifierName "rb3" = {}
-Line 29 col 10 LogicalOrExpression "a3 || a2" = {}
-Line 29 col 10 IdentifierName "a3" = number
-Line 29 col 16 IdentifierName "a2" = boolean
-Line 30 col 4 IdentifierName "rb4" = {}
-Line 30 col 10 LogicalOrExpression "a4 || a2" = {}
-Line 30 col 10 IdentifierName "a4" = string
-Line 30 col 16 IdentifierName "a2" = boolean
-Line 31 col 4 IdentifierName "rb5" = {}
-Line 31 col 10 LogicalOrExpression "a5 || a2" = {}
-Line 31 col 10 IdentifierName "a5" = void
-Line 31 col 16 IdentifierName "a2" = boolean
-Line 32 col 4 IdentifierName "rb6" = {}
-Line 32 col 10 LogicalOrExpression "a6 || a2" = {}
-Line 32 col 10 IdentifierName "a6" = E
-Line 32 col 16 IdentifierName "a2" = boolean
-Line 33 col 4 IdentifierName "rb7" = {}
-Line 33 col 10 LogicalOrExpression "a7 || a2" = {}
-Line 33 col 10 IdentifierName "a7" = { a: string; }
-Line 33 col 16 IdentifierName "a2" = boolean
-Line 34 col 4 IdentifierName "rb8" = {}
-Line 34 col 10 LogicalOrExpression "a8 || a2" = {}
-Line 34 col 10 IdentifierName "a8" = string[]
-Line 34 col 16 IdentifierName "a2" = boolean
-Line 35 col 4 IdentifierName "rb9" = boolean
-Line 35 col 10 LogicalOrExpression "null || a2" = boolean
-Line 35 col 18 IdentifierName "a2" = boolean
-Line 36 col 4 IdentifierName "rb10" = boolean
-Line 36 col 10 LogicalOrExpression "undefined || a2" = boolean
-Line 36 col 10 IdentifierName "undefined" = any
-Line 36 col 23 IdentifierName "a2" = boolean
-Line 38 col 4 IdentifierName "rc1" = any
-Line 38 col 10 LogicalOrExpression "a1 || a3" = any
-Line 38 col 10 IdentifierName "a1" = any
-Line 38 col 16 IdentifierName "a3" = number
-Line 39 col 4 IdentifierName "rc2" = {}
-Line 39 col 10 LogicalOrExpression "a2 || a3" = {}
-Line 39 col 10 IdentifierName "a2" = boolean
-Line 39 col 16 IdentifierName "a3" = number
-Line 40 col 4 IdentifierName "rc3" = number
-Line 40 col 10 LogicalOrExpression "a3 || a3" = number
-Line 40 col 10 IdentifierName "a3" = number
-Line 40 col 16 IdentifierName "a3" = number
-Line 41 col 4 IdentifierName "rc4" = {}
-Line 41 col 10 LogicalOrExpression "a4 || a3" = {}
-Line 41 col 10 IdentifierName "a4" = string
-Line 41 col 16 IdentifierName "a3" = number
-Line 42 col 4 IdentifierName "rc5" = {}
-Line 42 col 10 LogicalOrExpression "a5 || a3" = {}
-Line 42 col 10 IdentifierName "a5" = void
-Line 42 col 16 IdentifierName "a3" = number
-Line 43 col 4 IdentifierName "rc6" = number
-Line 43 col 10 LogicalOrExpression "a6 || a3" = number
-Line 43 col 10 IdentifierName "a6" = E
-Line 43 col 16 IdentifierName "a3" = number
-Line 44 col 4 IdentifierName "rc7" = {}
-Line 44 col 10 LogicalOrExpression "a7 || a3" = {}
-Line 44 col 10 IdentifierName "a7" = { a: string; }
-Line 44 col 16 IdentifierName "a3" = number
-Line 45 col 4 IdentifierName "rc8" = {}
-Line 45 col 10 LogicalOrExpression "a8 || a3" = {}
-Line 45 col 10 IdentifierName "a8" = string[]
-Line 45 col 16 IdentifierName "a3" = number
-Line 46 col 4 IdentifierName "rc9" = number
-Line 46 col 10 LogicalOrExpression "null || a3" = number
-Line 46 col 18 IdentifierName "a3" = number
-Line 47 col 4 IdentifierName "rc10" = number
-Line 47 col 11 LogicalOrExpression "undefined || a3" = number
-Line 47 col 11 IdentifierName "undefined" = any
-Line 47 col 24 IdentifierName "a3" = number
-Line 49 col 4 IdentifierName "rd1" = any
-Line 49 col 10 LogicalOrExpression "a1 || a4" = any
-Line 49 col 10 IdentifierName "a1" = any
-Line 49 col 16 IdentifierName "a4" = string
-Line 50 col 4 IdentifierName "rd2" = {}
-Line 50 col 10 LogicalOrExpression "a2 || a4" = {}
-Line 50 col 10 IdentifierName "a2" = boolean
-Line 50 col 16 IdentifierName "a4" = string
-Line 51 col 4 IdentifierName "rd3" = {}
-Line 51 col 10 LogicalOrExpression "a3 || a4" = {}
-Line 51 col 10 IdentifierName "a3" = number
-Line 51 col 16 IdentifierName "a4" = string
-Line 52 col 4 IdentifierName "rd4" = string
-Line 52 col 10 LogicalOrExpression "a4 || a4" = string
-Line 52 col 10 IdentifierName "a4" = string
-Line 52 col 16 IdentifierName "a4" = string
-Line 53 col 4 IdentifierName "rd5" = {}
-Line 53 col 10 LogicalOrExpression "a5 || a4" = {}
-Line 53 col 10 IdentifierName "a5" = void
-Line 53 col 16 IdentifierName "a4" = string
-Line 54 col 4 IdentifierName "rd6" = {}
-Line 54 col 10 LogicalOrExpression "a6 || a4" = {}
-Line 54 col 10 IdentifierName "a6" = E
-Line 54 col 16 IdentifierName "a4" = string
-Line 55 col 4 IdentifierName "rd7" = {}
-Line 55 col 10 LogicalOrExpression "a7 || a4" = {}
-Line 55 col 10 IdentifierName "a7" = { a: string; }
-Line 55 col 16 IdentifierName "a4" = string
-Line 56 col 4 IdentifierName "rd8" = {}
-Line 56 col 10 LogicalOrExpression "a8 || a4" = {}
-Line 56 col 10 IdentifierName "a8" = string[]
-Line 56 col 16 IdentifierName "a4" = string
-Line 57 col 4 IdentifierName "rd9" = string
-Line 57 col 10 LogicalOrExpression "null || a4" = string
-Line 57 col 18 IdentifierName "a4" = string
-Line 58 col 4 IdentifierName "rd10" = string
-Line 58 col 11 LogicalOrExpression "undefined || a4" = string
-Line 58 col 11 IdentifierName "undefined" = any
-Line 58 col 24 IdentifierName "a4" = string
-Line 60 col 4 IdentifierName "re1" = any
-Line 60 col 10 LogicalOrExpression "a1 || a5" = any
-Line 60 col 10 IdentifierName "a1" = any
-Line 60 col 16 IdentifierName "a5" = void
-Line 61 col 4 IdentifierName "re2" = {}
-Line 61 col 10 LogicalOrExpression "a2 || a5" = {}
-Line 61 col 10 IdentifierName "a2" = boolean
-Line 61 col 16 IdentifierName "a5" = void
-Line 62 col 4 IdentifierName "re3" = {}
-Line 62 col 10 LogicalOrExpression "a3 || a5" = {}
-Line 62 col 10 IdentifierName "a3" = number
-Line 62 col 16 IdentifierName "a5" = void
-Line 63 col 4 IdentifierName "re4" = {}
-Line 63 col 10 LogicalOrExpression "a4 || a5" = {}
-Line 63 col 10 IdentifierName "a4" = string
-Line 63 col 16 IdentifierName "a5" = void
-Line 64 col 4 IdentifierName "re5" = void
-Line 64 col 10 LogicalOrExpression "a5 || a5" = void
-Line 64 col 10 IdentifierName "a5" = void
-Line 64 col 16 IdentifierName "a5" = void
-Line 65 col 4 IdentifierName "re6" = {}
-Line 65 col 10 LogicalOrExpression "a6 || a5" = {}
-Line 65 col 10 IdentifierName "a6" = E
-Line 65 col 16 IdentifierName "a5" = void
-Line 66 col 4 IdentifierName "re7" = {}
-Line 66 col 10 LogicalOrExpression "a7 || a5" = {}
-Line 66 col 10 IdentifierName "a7" = { a: string; }
-Line 66 col 16 IdentifierName "a5" = void
-Line 67 col 4 IdentifierName "re8" = {}
-Line 67 col 10 LogicalOrExpression "a8 || a5" = {}
-Line 67 col 10 IdentifierName "a8" = string[]
-Line 67 col 16 IdentifierName "a5" = void
-Line 68 col 4 IdentifierName "re9" = void
-Line 68 col 10 LogicalOrExpression "null || a5" = void
-Line 68 col 18 IdentifierName "a5" = void
-Line 69 col 4 IdentifierName "re10" = void
-Line 69 col 11 LogicalOrExpression "undefined || a5" = void
-Line 69 col 11 IdentifierName "undefined" = any
-Line 69 col 24 IdentifierName "a5" = void
-Line 71 col 4 IdentifierName "rg1" = any
-Line 71 col 10 LogicalOrExpression "a1 || a6" = any
-Line 71 col 10 IdentifierName "a1" = any
-Line 71 col 16 IdentifierName "a6" = E
-Line 72 col 4 IdentifierName "rg2" = {}
-Line 72 col 10 LogicalOrExpression "a2 || a6" = {}
-Line 72 col 10 IdentifierName "a2" = boolean
-Line 72 col 16 IdentifierName "a6" = E
-Line 73 col 4 IdentifierName "rg3" = number
-Line 73 col 10 LogicalOrExpression "a3 || a6" = number
-Line 73 col 10 IdentifierName "a3" = number
-Line 73 col 16 IdentifierName "a6" = E
-Line 74 col 4 IdentifierName "rg4" = {}
-Line 74 col 10 LogicalOrExpression "a4 || a6" = {}
-Line 74 col 10 IdentifierName "a4" = string
-Line 74 col 16 IdentifierName "a6" = E
-Line 75 col 4 IdentifierName "rg5" = {}
-Line 75 col 10 LogicalOrExpression "a5 || a6" = {}
-Line 75 col 10 IdentifierName "a5" = void
-Line 75 col 16 IdentifierName "a6" = E
-Line 76 col 4 IdentifierName "rg6" = E
-Line 76 col 10 LogicalOrExpression "a6 || a6" = E
-Line 76 col 10 IdentifierName "a6" = E
-Line 76 col 16 IdentifierName "a6" = E
-Line 77 col 4 IdentifierName "rg7" = {}
-Line 77 col 10 LogicalOrExpression "a7 || a6" = {}
-Line 77 col 10 IdentifierName "a7" = { a: string; }
-Line 77 col 16 IdentifierName "a6" = E
-Line 78 col 4 IdentifierName "rg8" = {}
-Line 78 col 10 LogicalOrExpression "a8 || a6" = {}
-Line 78 col 10 IdentifierName "a8" = string[]
-Line 78 col 16 IdentifierName "a6" = E
-Line 79 col 4 IdentifierName "rg9" = E
-Line 79 col 10 LogicalOrExpression "null || a6" = E
-Line 79 col 18 IdentifierName "a6" = E
-Line 80 col 4 IdentifierName "rg10" = E
-Line 80 col 11 LogicalOrExpression "undefined || a6" = E
-Line 80 col 11 IdentifierName "undefined" = any
-Line 80 col 24 IdentifierName "a6" = E
-Line 82 col 4 IdentifierName "rh1" = any
-Line 82 col 10 LogicalOrExpression "a1 || a7" = any
-Line 82 col 10 IdentifierName "a1" = any
-Line 82 col 16 IdentifierName "a7" = { a: string; }
-Line 83 col 4 IdentifierName "rh2" = {}
-Line 83 col 10 LogicalOrExpression "a2 || a7" = {}
-Line 83 col 10 IdentifierName "a2" = boolean
-Line 83 col 16 IdentifierName "a7" = { a: string; }
-Line 84 col 4 IdentifierName "rh3" = {}
-Line 84 col 10 LogicalOrExpression "a3 || a7" = {}
-Line 84 col 10 IdentifierName "a3" = number
-Line 84 col 16 IdentifierName "a7" = { a: string; }
-Line 85 col 4 IdentifierName "rh4" = {}
-Line 85 col 10 LogicalOrExpression "a4 || a7" = {}
-Line 85 col 10 IdentifierName "a4" = string
-Line 85 col 16 IdentifierName "a7" = { a: string; }
-Line 86 col 4 IdentifierName "rh5" = {}
-Line 86 col 10 LogicalOrExpression "a5 || a7" = {}
-Line 86 col 10 IdentifierName "a5" = void
-Line 86 col 16 IdentifierName "a7" = { a: string; }
-Line 87 col 4 IdentifierName "rh6" = {}
-Line 87 col 10 LogicalOrExpression "a6 || a7" = {}
-Line 87 col 10 IdentifierName "a6" = E
-Line 87 col 16 IdentifierName "a7" = { a: string; }
-Line 88 col 4 IdentifierName "rh7" = { a: string; }
-Line 88 col 10 LogicalOrExpression "a7 || a7" = { a: string; }
-Line 88 col 10 IdentifierName "a7" = { a: string; }
-Line 88 col 16 IdentifierName "a7" = { a: string; }
-Line 89 col 4 IdentifierName "rh8" = {}
-Line 89 col 10 LogicalOrExpression "a8 || a7" = {}
-Line 89 col 10 IdentifierName "a8" = string[]
-Line 89 col 16 IdentifierName "a7" = { a: string; }
-Line 90 col 4 IdentifierName "rh9" = { a: string; }
-Line 90 col 10 LogicalOrExpression "null || a7" = { a: string; }
-Line 90 col 18 IdentifierName "a7" = { a: string; }
-Line 91 col 4 IdentifierName "rh10" = { a: string; }
-Line 91 col 11 LogicalOrExpression "undefined || a7" = { a: string; }
-Line 91 col 11 IdentifierName "undefined" = any
-Line 91 col 24 IdentifierName "a7" = { a: string; }
-Line 93 col 4 IdentifierName "ri1" = any
-Line 93 col 10 LogicalOrExpression "a1 || a8" = any
-Line 93 col 10 IdentifierName "a1" = any
-Line 93 col 16 IdentifierName "a8" = string[]
-Line 94 col 4 IdentifierName "ri2" = {}
-Line 94 col 10 LogicalOrExpression "a2 || a8" = {}
-Line 94 col 10 IdentifierName "a2" = boolean
-Line 94 col 16 IdentifierName "a8" = string[]
-Line 95 col 4 IdentifierName "ri3" = {}
-Line 95 col 10 LogicalOrExpression "a3 || a8" = {}
-Line 95 col 10 IdentifierName "a3" = number
-Line 95 col 16 IdentifierName "a8" = string[]
-Line 96 col 4 IdentifierName "ri4" = {}
-Line 96 col 10 LogicalOrExpression "a4 || a8" = {}
-Line 96 col 10 IdentifierName "a4" = string
-Line 96 col 16 IdentifierName "a8" = string[]
-Line 97 col 4 IdentifierName "ri5" = {}
-Line 97 col 10 LogicalOrExpression "a5 || a8" = {}
-Line 97 col 10 IdentifierName "a5" = void
-Line 97 col 16 IdentifierName "a8" = string[]
-Line 98 col 4 IdentifierName "ri6" = {}
-Line 98 col 10 LogicalOrExpression "a6 || a8" = {}
-Line 98 col 10 IdentifierName "a6" = E
-Line 98 col 16 IdentifierName "a8" = string[]
-Line 99 col 4 IdentifierName "ri7" = {}
-Line 99 col 10 LogicalOrExpression "a7 || a8" = {}
-Line 99 col 10 IdentifierName "a7" = { a: string; }
-Line 99 col 16 IdentifierName "a8" = string[]
-Line 100 col 4 IdentifierName "ri8" = string[]
-Line 100 col 10 LogicalOrExpression "a8 || a8" = string[]
-Line 100 col 10 IdentifierName "a8" = string[]
-Line 100 col 16 IdentifierName "a8" = string[]
-Line 101 col 4 IdentifierName "ri9" = string[]
-Line 101 col 10 LogicalOrExpression "null || a8" = string[]
-Line 101 col 18 IdentifierName "a8" = string[]
-Line 102 col 4 IdentifierName "ri10" = string[]
-Line 102 col 11 LogicalOrExpression "undefined || a8" = string[]
-Line 102 col 11 IdentifierName "undefined" = any
-Line 102 col 24 IdentifierName "a8" = string[]
-Line 104 col 4 IdentifierName "rj1" = any
-Line 104 col 10 LogicalOrExpression "a1 || null" = any
-Line 104 col 10 IdentifierName "a1" = any
-Line 105 col 4 IdentifierName "rj2" = boolean
-Line 105 col 10 LogicalOrExpression "a2 || null" = boolean
-Line 105 col 10 IdentifierName "a2" = boolean
-Line 106 col 4 IdentifierName "rj3" = number
-Line 106 col 10 LogicalOrExpression "a3 || null" = number
-Line 106 col 10 IdentifierName "a3" = number
-Line 107 col 4 IdentifierName "rj4" = string
-Line 107 col 10 LogicalOrExpression "a4 || null" = string
-Line 107 col 10 IdentifierName "a4" = string
-Line 108 col 4 IdentifierName "rj5" = void
-Line 108 col 10 LogicalOrExpression "a5 || null" = void
-Line 108 col 10 IdentifierName "a5" = void
-Line 109 col 4 IdentifierName "rj6" = E
-Line 109 col 10 LogicalOrExpression "a6 || null" = E
-Line 109 col 10 IdentifierName "a6" = E
-Line 110 col 4 IdentifierName "rj7" = { a: string; }
-Line 110 col 10 LogicalOrExpression "a7 || null" = { a: string; }
-Line 110 col 10 IdentifierName "a7" = { a: string; }
-Line 111 col 4 IdentifierName "rj8" = string[]
-Line 111 col 10 LogicalOrExpression "a8 || null" = string[]
-Line 111 col 10 IdentifierName "a8" = string[]
-Line 112 col 4 IdentifierName "rj9" = any
-Line 112 col 10 LogicalOrExpression "null || null" = any
-Line 113 col 4 IdentifierName "rj10" = any
-Line 113 col 11 LogicalOrExpression "undefined || null" = any
-Line 113 col 11 IdentifierName "undefined" = any
-Line 115 col 4 IdentifierName "rf1" = any
-Line 115 col 10 LogicalOrExpression "a1 || undefined" = any
-Line 115 col 10 IdentifierName "a1" = any
-Line 115 col 16 IdentifierName "undefined" = any
-Line 116 col 4 IdentifierName "rf2" = boolean
-Line 116 col 10 LogicalOrExpression "a2 || undefined" = boolean
-Line 116 col 10 IdentifierName "a2" = boolean
-Line 116 col 16 IdentifierName "undefined" = any
-Line 117 col 4 IdentifierName "rf3" = number
-Line 117 col 10 LogicalOrExpression "a3 || undefined" = number
-Line 117 col 10 IdentifierName "a3" = number
-Line 117 col 16 IdentifierName "undefined" = any
-Line 118 col 4 IdentifierName "rf4" = string
-Line 118 col 10 LogicalOrExpression "a4 || undefined" = string
-Line 118 col 10 IdentifierName "a4" = string
-Line 118 col 16 IdentifierName "undefined" = any
-Line 119 col 4 IdentifierName "rf5" = void
-Line 119 col 10 LogicalOrExpression "a5 || undefined" = void
-Line 119 col 10 IdentifierName "a5" = void
-Line 119 col 16 IdentifierName "undefined" = any
-Line 120 col 4 IdentifierName "rf6" = E
-Line 120 col 10 LogicalOrExpression "a6 || undefined" = E
-Line 120 col 10 IdentifierName "a6" = E
-Line 120 col 16 IdentifierName "undefined" = any
-Line 121 col 4 IdentifierName "rf7" = { a: string; }
-Line 121 col 10 LogicalOrExpression "a7 || undefined" = { a: string; }
-Line 121 col 10 IdentifierName "a7" = { a: string; }
-Line 121 col 16 IdentifierName "undefined" = any
-Line 122 col 4 IdentifierName "rf8" = string[]
-Line 122 col 10 LogicalOrExpression "a8 || undefined" = string[]
-Line 122 col 10 IdentifierName "a8" = string[]
-Line 122 col 16 IdentifierName "undefined" = any
-Line 123 col 4 IdentifierName "rf9" = any
-Line 123 col 10 LogicalOrExpression "null || undefined" = any
-Line 123 col 18 IdentifierName "undefined" = any
-Line 124 col 4 IdentifierName "rf10" = any
-Line 124 col 11 LogicalOrExpression "undefined || undefined" = any
-Line 124 col 11 IdentifierName "undefined" = any
-Line 124 col 24 IdentifierName "undefined" = any
+// The || operator permits the operands to be of any type.
+// If the || expression is not contextually typed, the right operand is contextually typed
+// by the type of the left operand and the result is of the best common type of the two
+// operand types.
+
+enum E { a, b, c }
+>E : E
+>a : E
+>b : E
+>c : E
+
+var a1: any;
+>a1 : any
+
+var a2: boolean;
+>a2 : boolean
+
+var a3: number
+>a3 : number
+
+var a4: string;
+>a4 : string
+
+var a5: void;
+>a5 : void
+
+var a6: E;
+>a6 : E
+>E : E
+
+var a7: {a: string};
+>a7 : { a: string; }
+>a : string
+
+var a8: string[];
+>a8 : string[]
+
+var ra1 = a1 || a1;         // any       || any is any
+>ra1 : any
+>a1 || a1 : any
+>a1 : any
+>a1 : any
+
+var ra2 = a2 || a1;         // boolean   || any is any
+>ra2 : any
+>a2 || a1 : any
+>a2 : boolean
+>a1 : any
+
+var ra3 = a3 || a1;         // number    || any is any
+>ra3 : any
+>a3 || a1 : any
+>a3 : number
+>a1 : any
+
+var ra4 = a4 || a1;         // string    || any is any
+>ra4 : any
+>a4 || a1 : any
+>a4 : string
+>a1 : any
+
+var ra5 = a5 || a1;         // void      || any is any
+>ra5 : any
+>a5 || a1 : any
+>a5 : void
+>a1 : any
+
+var ra6 = a6 || a1;         // enum      || any is any
+>ra6 : any
+>a6 || a1 : any
+>a6 : E
+>a1 : any
+
+var ra7 = a7 || a1;         // object    || any is any
+>ra7 : any
+>a7 || a1 : any
+>a7 : { a: string; }
+>a1 : any
+
+var ra8 = a8 || a1;         // array     || any is any
+>ra8 : any
+>a8 || a1 : any
+>a8 : string[]
+>a1 : any
+
+var ra9 = null || a1;       // null      || any is any
+>ra9 : any
+>null || a1 : any
+>a1 : any
+
+var ra10 = undefined || a1; // undefined || any is any
+>ra10 : any
+>undefined || a1 : any
+>undefined : any
+>a1 : any
+
+var rb1 = a1 || a2;         // any       || boolean is any
+>rb1 : any
+>a1 || a2 : any
+>a1 : any
+>a2 : boolean
+
+var rb2 = a2 || a2;         // boolean   || boolean is boolean
+>rb2 : boolean
+>a2 || a2 : boolean
+>a2 : boolean
+>a2 : boolean
+
+var rb3 = a3 || a2;         // number    || boolean is {}
+>rb3 : {}
+>a3 || a2 : {}
+>a3 : number
+>a2 : boolean
+
+var rb4 = a4 || a2;         // string    || boolean is {}
+>rb4 : {}
+>a4 || a2 : {}
+>a4 : string
+>a2 : boolean
+
+var rb5 = a5 || a2;         // void      || boolean is {}
+>rb5 : {}
+>a5 || a2 : {}
+>a5 : void
+>a2 : boolean
+
+var rb6 = a6 || a2;         // enum      || boolean is {}
+>rb6 : {}
+>a6 || a2 : {}
+>a6 : E
+>a2 : boolean
+
+var rb7 = a7 || a2;         // object    || boolean is {}
+>rb7 : {}
+>a7 || a2 : {}
+>a7 : { a: string; }
+>a2 : boolean
+
+var rb8 = a8 || a2;         // array     || boolean is {}
+>rb8 : {}
+>a8 || a2 : {}
+>a8 : string[]
+>a2 : boolean
+
+var rb9 = null || a2;       // null      || boolean is boolean
+>rb9 : boolean
+>null || a2 : boolean
+>a2 : boolean
+
+var rb10= undefined || a2;  // undefined || boolean is boolean
+>rb10 : boolean
+>undefined || a2 : boolean
+>undefined : any
+>a2 : boolean
+
+var rc1 = a1 || a3;         // any       || number is any
+>rc1 : any
+>a1 || a3 : any
+>a1 : any
+>a3 : number
+
+var rc2 = a2 || a3;         // boolean   || number is {}
+>rc2 : {}
+>a2 || a3 : {}
+>a2 : boolean
+>a3 : number
+
+var rc3 = a3 || a3;         // number    || number is number
+>rc3 : number
+>a3 || a3 : number
+>a3 : number
+>a3 : number
+
+var rc4 = a4 || a3;         // string    || number is {}
+>rc4 : {}
+>a4 || a3 : {}
+>a4 : string
+>a3 : number
+
+var rc5 = a5 || a3;         // void      || number is {}
+>rc5 : {}
+>a5 || a3 : {}
+>a5 : void
+>a3 : number
+
+var rc6 = a6 || a3;         // enum      || number is number
+>rc6 : number
+>a6 || a3 : number
+>a6 : E
+>a3 : number
+
+var rc7 = a7 || a3;         // object    || number is {}
+>rc7 : {}
+>a7 || a3 : {}
+>a7 : { a: string; }
+>a3 : number
+
+var rc8 = a8 || a3;         // array     || number is {}
+>rc8 : {}
+>a8 || a3 : {}
+>a8 : string[]
+>a3 : number
+
+var rc9 = null || a3;       // null      || number is number
+>rc9 : number
+>null || a3 : number
+>a3 : number
+
+var rc10 = undefined || a3; // undefined || number is number
+>rc10 : number
+>undefined || a3 : number
+>undefined : any
+>a3 : number
+
+var rd1 = a1 || a4;         // any       || string is any
+>rd1 : any
+>a1 || a4 : any
+>a1 : any
+>a4 : string
+
+var rd2 = a2 || a4;         // boolean   || string is {}
+>rd2 : {}
+>a2 || a4 : {}
+>a2 : boolean
+>a4 : string
+
+var rd3 = a3 || a4;         // number    || string is {}
+>rd3 : {}
+>a3 || a4 : {}
+>a3 : number
+>a4 : string
+
+var rd4 = a4 || a4;         // string    || string is string
+>rd4 : string
+>a4 || a4 : string
+>a4 : string
+>a4 : string
+
+var rd5 = a5 || a4;         // void      || string is {}
+>rd5 : {}
+>a5 || a4 : {}
+>a5 : void
+>a4 : string
+
+var rd6 = a6 || a4;         // enum      || string is {}
+>rd6 : {}
+>a6 || a4 : {}
+>a6 : E
+>a4 : string
+
+var rd7 = a7 || a4;         // object    || string is {}
+>rd7 : {}
+>a7 || a4 : {}
+>a7 : { a: string; }
+>a4 : string
+
+var rd8 = a8 || a4;         // array     || string is {}
+>rd8 : {}
+>a8 || a4 : {}
+>a8 : string[]
+>a4 : string
+
+var rd9 = null || a4;       // null      || string is string
+>rd9 : string
+>null || a4 : string
+>a4 : string
+
+var rd10 = undefined || a4; // undefined || string is string
+>rd10 : string
+>undefined || a4 : string
+>undefined : any
+>a4 : string
+
+var re1 = a1 || a5;         // any       || void is any
+>re1 : any
+>a1 || a5 : any
+>a1 : any
+>a5 : void
+
+var re2 = a2 || a5;         // boolean   || void is {}
+>re2 : {}
+>a2 || a5 : {}
+>a2 : boolean
+>a5 : void
+
+var re3 = a3 || a5;         // number    || void is {}
+>re3 : {}
+>a3 || a5 : {}
+>a3 : number
+>a5 : void
+
+var re4 = a4 || a5;         // string    || void is {}
+>re4 : {}
+>a4 || a5 : {}
+>a4 : string
+>a5 : void
+
+var re5 = a5 || a5;         // void      || void is void
+>re5 : void
+>a5 || a5 : void
+>a5 : void
+>a5 : void
+
+var re6 = a6 || a5;         // enum      || void is {}
+>re6 : {}
+>a6 || a5 : {}
+>a6 : E
+>a5 : void
+
+var re7 = a7 || a5;         // object    || void is {}
+>re7 : {}
+>a7 || a5 : {}
+>a7 : { a: string; }
+>a5 : void
+
+var re8 = a8 || a5;         // array     || void is {}
+>re8 : {}
+>a8 || a5 : {}
+>a8 : string[]
+>a5 : void
+
+var re9 = null || a5;       // null      || void is void
+>re9 : void
+>null || a5 : void
+>a5 : void
+
+var re10 = undefined || a5; // undefined || void is void
+>re10 : void
+>undefined || a5 : void
+>undefined : any
+>a5 : void
+
+var rg1 = a1 || a6;         // any       || enum is any
+>rg1 : any
+>a1 || a6 : any
+>a1 : any
+>a6 : E
+
+var rg2 = a2 || a6;         // boolean   || enum is {}
+>rg2 : {}
+>a2 || a6 : {}
+>a2 : boolean
+>a6 : E
+
+var rg3 = a3 || a6;         // number    || enum is number
+>rg3 : number
+>a3 || a6 : number
+>a3 : number
+>a6 : E
+
+var rg4 = a4 || a6;         // string    || enum is {}
+>rg4 : {}
+>a4 || a6 : {}
+>a4 : string
+>a6 : E
+
+var rg5 = a5 || a6;         // void      || enum is {}
+>rg5 : {}
+>a5 || a6 : {}
+>a5 : void
+>a6 : E
+
+var rg6 = a6 || a6;         // enum      || enum is E
+>rg6 : E
+>a6 || a6 : E
+>a6 : E
+>a6 : E
+
+var rg7 = a7 || a6;         // object    || enum is {}
+>rg7 : {}
+>a7 || a6 : {}
+>a7 : { a: string; }
+>a6 : E
+
+var rg8 = a8 || a6;         // array     || enum is {}
+>rg8 : {}
+>a8 || a6 : {}
+>a8 : string[]
+>a6 : E
+
+var rg9 = null || a6;       // null      || enum is E
+>rg9 : E
+>null || a6 : E
+>a6 : E
+
+var rg10 = undefined || a6; // undefined || enum is E
+>rg10 : E
+>undefined || a6 : E
+>undefined : any
+>a6 : E
+
+var rh1 = a1 || a7;         // any       || object is any
+>rh1 : any
+>a1 || a7 : any
+>a1 : any
+>a7 : { a: string; }
+
+var rh2 = a2 || a7;         // boolean   || object is {}
+>rh2 : {}
+>a2 || a7 : {}
+>a2 : boolean
+>a7 : { a: string; }
+
+var rh3 = a3 || a7;         // number    || object is {}
+>rh3 : {}
+>a3 || a7 : {}
+>a3 : number
+>a7 : { a: string; }
+
+var rh4 = a4 || a7;         // string    || object is {}
+>rh4 : {}
+>a4 || a7 : {}
+>a4 : string
+>a7 : { a: string; }
+
+var rh5 = a5 || a7;         // void      || object is {}
+>rh5 : {}
+>a5 || a7 : {}
+>a5 : void
+>a7 : { a: string; }
+
+var rh6 = a6 || a7;         // enum      || object is {}
+>rh6 : {}
+>a6 || a7 : {}
+>a6 : E
+>a7 : { a: string; }
+
+var rh7 = a7 || a7;         // object    || object is object
+>rh7 : { a: string; }
+>a7 || a7 : { a: string; }
+>a7 : { a: string; }
+>a7 : { a: string; }
+
+var rh8 = a8 || a7;         // array     || object is {}
+>rh8 : {}
+>a8 || a7 : {}
+>a8 : string[]
+>a7 : { a: string; }
+
+var rh9 = null || a7;       // null      || object is object
+>rh9 : { a: string; }
+>null || a7 : { a: string; }
+>a7 : { a: string; }
+
+var rh10 = undefined || a7; // undefined || object is object
+>rh10 : { a: string; }
+>undefined || a7 : { a: string; }
+>undefined : any
+>a7 : { a: string; }
+
+var ri1 = a1 || a8;         // any       || array is any
+>ri1 : any
+>a1 || a8 : any
+>a1 : any
+>a8 : string[]
+
+var ri2 = a2 || a8;         // boolean   || array is {}
+>ri2 : {}
+>a2 || a8 : {}
+>a2 : boolean
+>a8 : string[]
+
+var ri3 = a3 || a8;         // number    || array is {}
+>ri3 : {}
+>a3 || a8 : {}
+>a3 : number
+>a8 : string[]
+
+var ri4 = a4 || a8;         // string    || array is {}
+>ri4 : {}
+>a4 || a8 : {}
+>a4 : string
+>a8 : string[]
+
+var ri5 = a5 || a8;         // void      || array is {}
+>ri5 : {}
+>a5 || a8 : {}
+>a5 : void
+>a8 : string[]
+
+var ri6 = a6 || a8;         // enum      || array is {}
+>ri6 : {}
+>a6 || a8 : {}
+>a6 : E
+>a8 : string[]
+
+var ri7 = a7 || a8;         // object    || array is {}
+>ri7 : {}
+>a7 || a8 : {}
+>a7 : { a: string; }
+>a8 : string[]
+
+var ri8 = a8 || a8;         // array     || array is array
+>ri8 : string[]
+>a8 || a8 : string[]
+>a8 : string[]
+>a8 : string[]
+
+var ri9 = null || a8;       // null      || array is array
+>ri9 : string[]
+>null || a8 : string[]
+>a8 : string[]
+
+var ri10 = undefined || a8; // undefined || array is array
+>ri10 : string[]
+>undefined || a8 : string[]
+>undefined : any
+>a8 : string[]
+
+var rj1 = a1 || null;         // any       || null is any
+>rj1 : any
+>a1 || null : any
+>a1 : any
+
+var rj2 = a2 || null;         // boolean   || null is boolean
+>rj2 : boolean
+>a2 || null : boolean
+>a2 : boolean
+
+var rj3 = a3 || null;         // number    || null is number
+>rj3 : number
+>a3 || null : number
+>a3 : number
+
+var rj4 = a4 || null;         // string    || null is string
+>rj4 : string
+>a4 || null : string
+>a4 : string
+
+var rj5 = a5 || null;         // void      || null is void
+>rj5 : void
+>a5 || null : void
+>a5 : void
+
+var rj6 = a6 || null;         // enum      || null is E
+>rj6 : E
+>a6 || null : E
+>a6 : E
+
+var rj7 = a7 || null;         // object    || null is object
+>rj7 : { a: string; }
+>a7 || null : { a: string; }
+>a7 : { a: string; }
+
+var rj8 = a8 || null;         // array     || null is array
+>rj8 : string[]
+>a8 || null : string[]
+>a8 : string[]
+
+var rj9 = null || null;       // null      || null is any
+>rj9 : any
+>null || null : any
+
+var rj10 = undefined || null; // undefined || null is any
+>rj10 : any
+>undefined || null : any
+>undefined : any
+
+var rf1 = a1 || undefined;         // any       || undefined is any
+>rf1 : any
+>a1 || undefined : any
+>a1 : any
+>undefined : any
+
+var rf2 = a2 || undefined;         // boolean   || undefined is boolean
+>rf2 : boolean
+>a2 || undefined : boolean
+>a2 : boolean
+>undefined : any
+
+var rf3 = a3 || undefined;         // number    || undefined is number
+>rf3 : number
+>a3 || undefined : number
+>a3 : number
+>undefined : any
+
+var rf4 = a4 || undefined;         // string    || undefined is string
+>rf4 : string
+>a4 || undefined : string
+>a4 : string
+>undefined : any
+
+var rf5 = a5 || undefined;         // void      || undefined is void
+>rf5 : void
+>a5 || undefined : void
+>a5 : void
+>undefined : any
+
+var rf6 = a6 || undefined;         // enum      || undefined is E
+>rf6 : E
+>a6 || undefined : E
+>a6 : E
+>undefined : any
+
+var rf7 = a7 || undefined;         // object    || undefined is object
+>rf7 : { a: string; }
+>a7 || undefined : { a: string; }
+>a7 : { a: string; }
+>undefined : any
+
+var rf8 = a8 || undefined;         // array     || undefined is array
+>rf8 : string[]
+>a8 || undefined : string[]
+>a8 : string[]
+>undefined : any
+
+var rf9 = null || undefined;       // null      || undefined is any
+>rf9 : any
+>null || undefined : any
+>undefined : any
+
+var rf10 = undefined || undefined; // undefined || undefined is any
+>rf10 : any
+>undefined || undefined : any
+>undefined : any
+>undefined : any
+

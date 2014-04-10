@@ -1,9 +1,15 @@
 === tests/cases/compiler/modKeyword.ts ===
-Line 0 col 4 IdentifierName "module" = any
-Line 1 col 4 IdentifierName "foo" = any
-Line 3 col 4 IdentifierName "_" = any
-Line 3 col 8 AssignmentExpression "module.exports = foo" = any
-Line 3 col 8 MemberAccessExpression "module.exports" = any
-Line 3 col 8 IdentifierName "module" = any
-Line 3 col 15 IdentifierName "exports" = any
-Line 3 col 25 IdentifierName "foo" = any
+var module:any;
+>module : any
+
+var foo:any;
+>foo : any
+
+var _ = module.exports = foo
+>_ : any
+>module.exports = foo : any
+>module.exports : any
+>module : any
+>exports : any
+>foo : any
+

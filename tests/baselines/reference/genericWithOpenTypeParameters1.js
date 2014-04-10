@@ -1,3 +1,4 @@
+//// [genericWithOpenTypeParameters1.js]
 var B = (function () {
     function B() {
     }

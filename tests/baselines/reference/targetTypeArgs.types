@@ -1,61 +1,83 @@
 === tests/cases/compiler/targetTypeArgs.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "callback" = (x: string) => void
-Line 0 col 24 IdentifierName "x" = string
-Line 1 col 0 InvocationExpression "callback("hello")" = void
-Line 1 col 0 IdentifierName "callback" = (x: string) => void
-Line 3 col 0 InvocationExpression "foo(function(x) { x })" = void
-Line 3 col 0 IdentifierName "foo" = typeof foo
-Line 4 col 4 FunctionExpression "function(x) { x }" = (x: string) => void
-Line 4 col 13 IdentifierName "x" = string
-Line 4 col 18 IdentifierName "x" = string
-Line 5 col 0 InvocationExpression "[1].forEach(function(v,i,a) { v })" = void
-Line 5 col 0 MemberAccessExpression "[1].forEach" = (callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void
-Line 5 col 0 ArrayLiteralExpression "[1]" = number[]
-Line 6 col 4 IdentifierName "forEach" = (callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void
-Line 6 col 12 FunctionExpression "function(v,i,a) { v }" = (v: number, i: number, a: number[]) => void
-Line 6 col 21 IdentifierName "v" = number
-Line 6 col 23 IdentifierName "i" = number
-Line 6 col 25 IdentifierName "a" = number[]
-Line 6 col 30 IdentifierName "v" = number
-Line 7 col 0 InvocationExpression "["hello"].every(function(v,i,a) {return true;})" = boolean
-Line 7 col 0 MemberAccessExpression "["hello"].every" = (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
-Line 7 col 0 ArrayLiteralExpression "["hello"]" = string[]
-Line 7 col 10 IdentifierName "every" = (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
-Line 7 col 16 FunctionExpression "function(v,i,a) {return true;}" = (v: string, i: number, a: string[]) => boolean
-Line 7 col 25 IdentifierName "v" = string
-Line 7 col 27 IdentifierName "i" = number
-Line 7 col 29 IdentifierName "a" = string[]
-Line 8 col 0 InvocationExpression "[1].every(function(v,i,a) {return true;})" = boolean
-Line 8 col 0 MemberAccessExpression "[1].every" = (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
-Line 8 col 0 ArrayLiteralExpression "[1]" = number[]
-Line 8 col 4 IdentifierName "every" = (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
-Line 8 col 10 FunctionExpression "function(v,i,a) {return true;}" = (v: number, i: number, a: number[]) => boolean
-Line 8 col 19 IdentifierName "v" = number
-Line 8 col 21 IdentifierName "i" = number
-Line 8 col 23 IdentifierName "a" = number[]
-Line 9 col 0 InvocationExpression "[1].every(function(v,i,a) {return true;})" = boolean
-Line 9 col 0 MemberAccessExpression "[1].every" = (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
-Line 9 col 0 ArrayLiteralExpression "[1]" = number[]
-Line 9 col 4 IdentifierName "every" = (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
-Line 9 col 10 FunctionExpression "function(v,i,a) {return true;}" = (v: number, i: number, a: number[]) => boolean
-Line 9 col 19 IdentifierName "v" = number
-Line 9 col 21 IdentifierName "i" = number
-Line 9 col 23 IdentifierName "a" = number[]
-Line 10 col 0 InvocationExpression "["s"].every(function(v,i,a) {return true;})" = boolean
-Line 10 col 0 MemberAccessExpression "["s"].every" = (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
-Line 10 col 0 ArrayLiteralExpression "["s"]" = string[]
-Line 10 col 6 IdentifierName "every" = (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
-Line 10 col 12 FunctionExpression "function(v,i,a) {return true;}" = (v: string, i: number, a: string[]) => boolean
-Line 10 col 21 IdentifierName "v" = string
-Line 10 col 23 IdentifierName "i" = number
-Line 10 col 25 IdentifierName "a" = string[]
-Line 11 col 0 InvocationExpression "["s"].forEach(function(v,i,a) { v })" = void
-Line 11 col 0 MemberAccessExpression "["s"].forEach" = (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
-Line 11 col 0 ArrayLiteralExpression "["s"]" = string[]
-Line 11 col 6 IdentifierName "forEach" = (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
-Line 11 col 14 FunctionExpression "function(v,i,a) { v }" = (v: string, i: number, a: string[]) => void
-Line 11 col 23 IdentifierName "v" = string
-Line 11 col 25 IdentifierName "i" = number
-Line 11 col 27 IdentifierName "a" = string[]
-Line 11 col 32 IdentifierName "v" = string
+function foo(callback: (x: string) => void) {
+>foo : typeof foo
+>callback : (x: string) => void
+>x : string
+
+    callback("hello");   
+>callback("hello") : void
+>callback : (x: string) => void
+}
+
+>foo(function(x) { x }) : void
+>foo : typeof foo
+
+foo(function(x) { x });
+>function(x) { x } : (x: string) => void
+>x : string
+>x : string
+
+>[1].forEach(function(v,i,a) { v }) : void
+>[1].forEach : (callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void
+>[1] : number[]
+
+[1].forEach(function(v,i,a) { v });
+>forEach : (callbackfn: (value: number, index: number, array: number[]) => void, thisArg?: any) => void
+>function(v,i,a) { v } : (v: number, i: number, a: number[]) => void
+>v : number
+>i : number
+>a : number[]
+>v : number
+
+["hello"].every(function(v,i,a) {return true;});
+>["hello"].every(function(v,i,a) {return true;}) : boolean
+>["hello"].every : (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
+>["hello"] : string[]
+>every : (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
+>function(v,i,a) {return true;} : (v: string, i: number, a: string[]) => boolean
+>v : string
+>i : number
+>a : string[]
+
+[1].every(function(v,i,a) {return true;});
+>[1].every(function(v,i,a) {return true;}) : boolean
+>[1].every : (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
+>[1] : number[]
+>every : (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
+>function(v,i,a) {return true;} : (v: number, i: number, a: number[]) => boolean
+>v : number
+>i : number
+>a : number[]
+
+[1].every(function(v,i,a) {return true;});
+>[1].every(function(v,i,a) {return true;}) : boolean
+>[1].every : (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
+>[1] : number[]
+>every : (callbackfn: (value: number, index: number, array: number[]) => boolean, thisArg?: any) => boolean
+>function(v,i,a) {return true;} : (v: number, i: number, a: number[]) => boolean
+>v : number
+>i : number
+>a : number[]
+
+["s"].every(function(v,i,a) {return true;});
+>["s"].every(function(v,i,a) {return true;}) : boolean
+>["s"].every : (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
+>["s"] : string[]
+>every : (callbackfn: (value: string, index: number, array: string[]) => boolean, thisArg?: any) => boolean
+>function(v,i,a) {return true;} : (v: string, i: number, a: string[]) => boolean
+>v : string
+>i : number
+>a : string[]
+
+["s"].forEach(function(v,i,a) { v });
+>["s"].forEach(function(v,i,a) { v }) : void
+>["s"].forEach : (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
+>["s"] : string[]
+>forEach : (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
+>function(v,i,a) { v } : (v: string, i: number, a: string[]) => void
+>v : string
+>i : number
+>a : string[]
+>v : string
+
+

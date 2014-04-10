@@ -1,3 +1,4 @@
+//// [collisionExportsRequireAndModule.js]
 define(["require", "exports"], function(require, exports) {
     (function (require) {
         var C = (function () {

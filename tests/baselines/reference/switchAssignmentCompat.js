@@ -1,3 +1,4 @@
+//// [switchAssignmentCompat.js]
 var Foo = (function () {
     function Foo() {
     }

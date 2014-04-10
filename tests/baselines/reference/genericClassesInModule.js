@@ -1,3 +1,14 @@
+//// [genericClassesInModule.ts]
+
+module Foo {
+
+    export class B<T>{ }
+
+    export class A { }
+}
+
+var a = new Foo.B<Foo.A>();
+
 //// [genericClassesInModule.js]
 var Foo;
 (function (Foo) {

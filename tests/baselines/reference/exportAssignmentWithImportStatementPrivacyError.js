@@ -1,3 +1,4 @@
+//// [exportAssignmentWithImportStatementPrivacyError.js]
 define(["require", "exports"], function(require, exports) {
     var M;
     (function (M) {

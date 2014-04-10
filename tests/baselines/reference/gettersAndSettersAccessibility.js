@@ -1,3 +1,4 @@
+//// [gettersAndSettersAccessibility.js]
 var C99 = (function () {
     function C99() {
     }

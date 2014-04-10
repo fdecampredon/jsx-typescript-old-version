@@ -1,3 +1,10 @@
+//// [declFileAmbientExternalModuleWithSingleExportedModule_1.ts]
+///<reference path='declFileAmbientExternalModuleWithSingleExportedModule_0.ts'/>
+import SubModule = require('SubModule');
+export var x: SubModule.m.m3.c;
+
+
+
 //// [declFileAmbientExternalModuleWithSingleExportedModule_0.js]
 //// [declFileAmbientExternalModuleWithSingleExportedModule_1.js]
 exports.x;

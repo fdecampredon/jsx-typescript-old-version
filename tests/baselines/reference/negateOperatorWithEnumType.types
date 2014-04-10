@@ -1,30 +1,54 @@
 === tests/cases/compiler/negateOperatorWithEnumType.ts ===
-Line 2 col 5 IdentifierName "ENUM" = ENUM
-Line 3 col 5 IdentifierName "ENUM1" = ENUM1
-Line 6 col 4 IdentifierName "ResultIsNumber1" = number
-Line 6 col 22 NegateExpression "-ENUM" = number
-Line 6 col 23 IdentifierName "ENUM" = typeof ENUM
-Line 9 col 4 IdentifierName "ResultIsNumber2" = number
-Line 9 col 22 NegateExpression "-ENUM1[1]" = number
-Line 9 col 23 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 9 col 23 IdentifierName "ENUM1" = typeof ENUM1
-Line 10 col 4 IdentifierName "ResultIsNumber3" = number
-Line 10 col 22 NegateExpression "-(ENUM1[1] + ENUM1[2])" = number
-Line 10 col 23 ParenthesizedExpression "(ENUM1[1] + ENUM1[2])" = number
-Line 10 col 24 AddExpression "ENUM1[1] + ENUM1[2]" = number
-Line 10 col 24 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 10 col 24 IdentifierName "ENUM1" = typeof ENUM1
-Line 10 col 35 ElementAccessExpression "ENUM1[2]" = ENUM1
-Line 10 col 35 IdentifierName "ENUM1" = typeof ENUM1
-Line 11 col 0 NegateExpression "// miss assignment operators
--ENUM" = number
-Line 13 col 1 IdentifierName "ENUM" = typeof ENUM
-Line 14 col 0 NegateExpression "-ENUM1" = number
-Line 14 col 1 IdentifierName "ENUM1" = typeof ENUM1
-Line 15 col 0 NegateExpression "-ENUM1[1]" = number
-Line 15 col 1 ElementAccessExpression "ENUM1[1]" = ENUM1
-Line 15 col 1 IdentifierName "ENUM1" = typeof ENUM1
-Line 16 col 0 CommaExpression "-ENUM, ENUM1" = typeof ENUM1
-Line 16 col 0 NegateExpression "-ENUM" = number
-Line 16 col 1 IdentifierName "ENUM" = typeof ENUM
-Line 16 col 7 IdentifierName "ENUM1" = typeof ENUM1
+// - operator on enum type
+
+enum ENUM { };
+>ENUM : ENUM
+
+enum ENUM1 { 1, 2, "" };
+>ENUM1 : ENUM1
+
+// enum type var
+var ResultIsNumber1 = -ENUM;
+>ResultIsNumber1 : number
+>-ENUM : number
+>ENUM : typeof ENUM
+
+// expressions
+var ResultIsNumber2 = -ENUM1[1];
+>ResultIsNumber2 : number
+>-ENUM1[1] : number
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+
+var ResultIsNumber3 = -(ENUM1[1] + ENUM1[2]);
+>ResultIsNumber3 : number
+>-(ENUM1[1] + ENUM1[2]) : number
+>(ENUM1[1] + ENUM1[2]) : number
+>ENUM1[1] + ENUM1[2] : number
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+>ENUM1[2] : ENUM1
+>ENUM1 : typeof ENUM1
+
+>// miss assignment operators
+-ENUM : number
+
+// miss assignment operators
+-ENUM;
+>ENUM : typeof ENUM
+
+-ENUM1;
+>-ENUM1 : number
+>ENUM1 : typeof ENUM1
+
+-ENUM1[1];
+>-ENUM1[1] : number
+>ENUM1[1] : ENUM1
+>ENUM1 : typeof ENUM1
+
+-ENUM, ENUM1;
+>-ENUM, ENUM1 : typeof ENUM1
+>-ENUM : number
+>ENUM : typeof ENUM
+>ENUM1 : typeof ENUM1
+

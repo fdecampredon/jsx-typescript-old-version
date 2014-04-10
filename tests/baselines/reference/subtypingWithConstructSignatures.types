@@ -1,44 +1,70 @@
 === tests/cases/compiler/subtypingWithConstructSignatures.ts ===
-Line 0 col 7 IdentifierName "ConstructSignature" = ConstructSignature
-Line 1 col 21 IdentifierName "foo1" = typeof foo1
-Line 1 col 26 IdentifierName "cb" = new(x: number) => void
-Line 1 col 35 IdentifierName "x" = number
-Line 1 col 63 IdentifierName "cb" = new(x: number) => void
-Line 2 col 21 IdentifierName "foo1" = typeof foo1
-Line 2 col 26 IdentifierName "cb" = any
-Line 3 col 8 IdentifierName "rarg1" = new(x: number) => number
-Line 3 col 20 IdentifierName "x" = number
-Line 4 col 8 IdentifierName "r" = new(x: number) => void
-Line 4 col 12 InvocationExpression "foo1(rarg1)" = new(x: number) => void
-Line 4 col 12 IdentifierName "foo1" = typeof foo1
-Line 4 col 17 IdentifierName "rarg1" = new(x: number) => number
-Line 5 col 8 IdentifierName "rarg2" = new<T>(x: T) => string
-Line 5 col 20 IdentifierName "T" = T
-Line 5 col 23 IdentifierName "x" = T
-Line 5 col 26 IdentifierName "T" = T
-Line 6 col 8 IdentifierName "r2" = new(x: number) => void
-Line 6 col 13 InvocationExpression "foo1(rarg2)" = new(x: number) => void
-Line 6 col 13 IdentifierName "foo1" = typeof foo1
-Line 6 col 18 IdentifierName "rarg2" = new<T>(x: T) => string
-Line 8 col 21 IdentifierName "foo2" = typeof foo2
-Line 8 col 26 IdentifierName "cb" = new(x: number, y: number) => void
-Line 8 col 35 IdentifierName "x" = number
-Line 8 col 46 IdentifierName "y" = number
-Line 8 col 74 IdentifierName "cb" = new(x: number, y: number) => void
-Line 9 col 21 IdentifierName "foo2" = typeof foo2
-Line 9 col 26 IdentifierName "cb" = any
-Line 10 col 8 IdentifierName "r3arg1" = new(x: number, y: number) => number
-Line 10 col 21 IdentifierName "x" = number
-Line 10 col 32 IdentifierName "y" = number
-Line 11 col 8 IdentifierName "r3" = new(x: number, y: number) => void
-Line 11 col 13 InvocationExpression "foo2(r3arg1)" = new(x: number, y: number) => void
-Line 11 col 13 IdentifierName "foo2" = typeof foo2
-Line 11 col 18 IdentifierName "r3arg1" = new(x: number, y: number) => number
-Line 12 col 8 IdentifierName "r4arg1" = new<T>(x: T) => string
-Line 12 col 21 IdentifierName "T" = T
-Line 12 col 24 IdentifierName "x" = T
-Line 12 col 27 IdentifierName "T" = T
-Line 13 col 8 IdentifierName "r4" = new(x: number, y: number) => void
-Line 13 col 13 InvocationExpression "foo2(r4arg1)" = new(x: number, y: number) => void
-Line 13 col 13 IdentifierName "foo2" = typeof foo2
-Line 13 col 18 IdentifierName "r4arg1" = new<T>(x: T) => string
+module ConstructSignature {
+>ConstructSignature : ConstructSignature
+
+    declare function foo1(cb: new (x: number) => void): typeof cb;
+>foo1 : typeof foo1
+>cb : new(x: number) => void
+>x : number
+>cb : new(x: number) => void
+
+    declare function foo1(cb: any): any;
+>foo1 : typeof foo1
+>cb : any
+
+    var rarg1: new (x: number) => number;
+>rarg1 : new(x: number) => number
+>x : number
+
+    var r = foo1(rarg1); // ok because base returns void
+>r : new(x: number) => void
+>foo1(rarg1) : new(x: number) => void
+>foo1 : typeof foo1
+>rarg1 : new(x: number) => number
+
+    var rarg2: new <T>(x: T) => string;
+>rarg2 : new<T>(x: T) => string
+>T : T
+>x : T
+>T : T
+
+    var r2 = foo1(rarg2); // ok because base returns void
+>r2 : new(x: number) => void
+>foo1(rarg2) : new(x: number) => void
+>foo1 : typeof foo1
+>rarg2 : new<T>(x: T) => string
+
+    declare function foo2(cb: new (x: number, y: number) => void): typeof cb;
+>foo2 : typeof foo2
+>cb : new(x: number, y: number) => void
+>x : number
+>y : number
+>cb : new(x: number, y: number) => void
+
+    declare function foo2(cb: any): any;
+>foo2 : typeof foo2
+>cb : any
+
+    var r3arg1: new (x: number, y: number) => number;
+>r3arg1 : new(x: number, y: number) => number
+>x : number
+>y : number
+
+    var r3 = foo2(r3arg1); // ok because base returns void
+>r3 : new(x: number, y: number) => void
+>foo2(r3arg1) : new(x: number, y: number) => void
+>foo2 : typeof foo2
+>r3arg1 : new(x: number, y: number) => number
+
+    var r4arg1: new <T>(x: T) => string;
+>r4arg1 : new<T>(x: T) => string
+>T : T
+>x : T
+>T : T
+
+    var r4 = foo2(r4arg1); // ok because base returns void
+>r4 : new(x: number, y: number) => void
+>foo2(r4arg1) : new(x: number, y: number) => void
+>foo2 : typeof foo2
+>r4arg1 : new<T>(x: T) => string
+}

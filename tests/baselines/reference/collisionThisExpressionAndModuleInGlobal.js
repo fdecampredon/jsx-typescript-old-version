@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndModuleInGlobal.js]
 var _this = this;
 var _this;
 (function (_this) {

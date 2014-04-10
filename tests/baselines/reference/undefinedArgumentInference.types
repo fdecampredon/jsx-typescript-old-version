@@ -1,18 +1,26 @@
 === tests/cases/compiler/undefinedArgumentInference.ts ===
-Line 0 col 9 IdentifierName "foo1" = typeof foo1
-Line 0 col 14 IdentifierName "T" = T
-Line 0 col 17 IdentifierName "f1" = { x: T; y: T; }
-Line 0 col 23 IdentifierName "x" = T
-Line 0 col 26 IdentifierName "T" = T
-Line 0 col 29 IdentifierName "y" = T
-Line 0 col 32 IdentifierName "T" = T
-Line 0 col 38 IdentifierName "T" = T
-Line 2 col 10 IdentifierName "undefined" = any
-Line 6 col 4 IdentifierName "z1" = any
-Line 6 col 9 InvocationExpression "foo1({ x: undefined, y: undefined })" = any
-Line 6 col 9 IdentifierName "foo1" = typeof foo1
-Line 6 col 14 ObjectLiteralExpression "{ x: undefined, y: undefined }" = { x: any; y: any; }
-Line 6 col 16 IdentifierName "x" = any
-Line 6 col 19 IdentifierName "undefined" = any
-Line 6 col 30 IdentifierName "y" = any
-Line 6 col 33 IdentifierName "undefined" = any
+function foo1<T>(f1: { x: T; y: T }): T {
+>foo1 : typeof foo1
+>T : T
+>f1 : { x: T; y: T; }
+>x : T
+>T : T
+>y : T
+>T : T
+>T : T
+
+   return undefined;
+>undefined : any
+
+}
+
+var z1 = foo1({ x: undefined, y: undefined }); 
+>z1 : any
+>foo1({ x: undefined, y: undefined }) : any
+>foo1 : typeof foo1
+>{ x: undefined, y: undefined } : { x: any; y: any; }
+>x : any
+>undefined : any
+>y : any
+>undefined : any
+

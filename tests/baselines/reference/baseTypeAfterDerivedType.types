@@ -1,15 +1,35 @@
 === tests/cases/compiler/baseTypeAfterDerivedType.ts ===
-Line 0 col 10 IdentifierName "Derived" = Derived
-Line 0 col 26 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "method" = (...args: any[]) => void
-Line 1 col 14 IdentifierName "args" = any[]
-Line 4 col 10 IdentifierName "Base" = Base
-Line 5 col 0 IdentifierName "method" = (...args: any[]) => void
-Line 5 col 14 IdentifierName "args" = any[]
-Line 8 col 6 IdentifierName "Derived2" = Derived2
-Line 8 col 26 IdentifierName "Base2" = Base2
-Line 9 col 0 IdentifierName "method" = (...args: any[]) => void
-Line 9 col 14 IdentifierName "args" = any[]
-Line 12 col 10 IdentifierName "Base2" = Base2
-Line 13 col 0 IdentifierName "method" = (...args: any[]) => void
-Line 13 col 14 IdentifierName "args" = any[]
+interface Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    method(...args: any[]): void;
+>method : (...args: any[]) => void
+>args : any[]
+}
+
+interface Base {
+>Base : Base
+
+    method(...args: any[]): void;
+>method : (...args: any[]) => void
+>args : any[]
+}
+
+class Derived2 implements Base2 {
+>Derived2 : Derived2
+>Base2 : Base2
+
+    method(...args: any[]): void { }
+>method : (...args: any[]) => void
+>args : any[]
+}
+
+interface Base2 {
+>Base2 : Base2
+
+    method(...args: any[]): void;
+>method : (...args: any[]) => void
+>args : any[]
+}
+

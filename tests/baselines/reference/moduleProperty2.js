@@ -1,3 +1,4 @@
+//// [moduleProperty2.js]
 var M;
 (function (M) {
     function f() {

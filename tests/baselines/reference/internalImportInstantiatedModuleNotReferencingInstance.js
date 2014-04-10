@@ -1,3 +1,4 @@
+//// [internalImportInstantiatedModuleNotReferencingInstance.js]
 var A;
 (function (A) {
     A.a = 10;

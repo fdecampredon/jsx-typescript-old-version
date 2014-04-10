@@ -1,14 +1,33 @@
 === tests/cases/compiler/objectIndexer.ts ===
-Line 0 col 17 IdentifierName "Callback" = Callback
-Line 1 col 5 IdentifierName "value" = any
-Line 4 col 10 IdentifierName "IMap" = IMap
-Line 5 col 5 IdentifierName "s" = string
-Line 5 col 17 IdentifierName "Callback" = Callback
-Line 8 col 6 IdentifierName "Emitter" = Emitter
-Line 9 col 12 IdentifierName "listeners" = IMap
-Line 9 col 23 IdentifierName "IMap" = IMap
-Line 11 col 0 AssignmentExpression "this.listeners = {}" = { [s: string]: Callback; }
-Line 11 col 0 MemberAccessExpression "this.listeners" = IMap
-Line 11 col 0 ThisKeyword "this" = Emitter
-Line 11 col 13 IdentifierName "listeners" = IMap
-Line 11 col 25 ObjectLiteralExpression "{}" = { [s: string]: Callback; }
+export interface Callback {
+>Callback : Callback
+
+    (value: any): void;
+>value : any
+}
+
+interface IMap {
+>IMap : IMap
+
+    [s: string]: Callback;
+>s : string
+>Callback : Callback
+}
+
+class Emitter {
+>Emitter : Emitter
+
+    private listeners: IMap;
+>listeners : IMap
+>IMap : IMap
+
+    constructor () {
+        this.listeners = {};
+>this.listeners = {} : { [s: string]: Callback; }
+>this.listeners : IMap
+>this : Emitter
+>listeners : IMap
+>{} : { [s: string]: Callback; }
+    }
+}
+

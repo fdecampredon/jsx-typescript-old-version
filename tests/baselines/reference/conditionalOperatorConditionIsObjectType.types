@@ -1,212 +1,306 @@
 === tests/cases/compiler/conditionalOperatorConditionIsObjectType.ts ===
-Line 1 col 4 IdentifierName "condObject" = Object
-Line 1 col 16 IdentifierName "Object" = Object
-Line 3 col 4 IdentifierName "exprAny1" = any
-Line 4 col 4 IdentifierName "exprBoolean1" = boolean
-Line 5 col 4 IdentifierName "exprNumber1" = number
-Line 6 col 4 IdentifierName "exprString1" = string
-Line 7 col 4 IdentifierName "exprIsObject1" = Object
-Line 7 col 19 IdentifierName "Object" = Object
-Line 9 col 4 IdentifierName "exprAny2" = any
-Line 10 col 4 IdentifierName "exprBoolean2" = boolean
-Line 11 col 4 IdentifierName "exprNumber2" = number
-Line 12 col 4 IdentifierName "exprString2" = string
-Line 13 col 4 IdentifierName "exprIsObject2" = Object
-Line 13 col 19 IdentifierName "Object" = Object
-Line 15 col 9 IdentifierName "foo" = typeof foo
-Line 16 col 6 IdentifierName "C" = C
-Line 16 col 17 IdentifierName "doIt" = () => void
-Line 17 col 0 ConditionalExpression "//Cond is an object type variable
-condObject ? exprAny1 : exprAny2" = any
-Line 17 col 0 IdentifierName "//Cond is an object type variable
-condObject" = Object
-Line 19 col 13 IdentifierName "exprAny1" = any
-Line 19 col 24 IdentifierName "exprAny2" = any
-Line 20 col 0 ConditionalExpression "condObject ? exprBoolean1 : exprBoolean2" = boolean
-Line 20 col 0 IdentifierName "condObject" = Object
-Line 20 col 13 IdentifierName "exprBoolean1" = boolean
-Line 20 col 28 IdentifierName "exprBoolean2" = boolean
-Line 21 col 0 ConditionalExpression "condObject ? exprNumber1 : exprNumber2" = number
-Line 21 col 0 IdentifierName "condObject" = Object
-Line 21 col 13 IdentifierName "exprNumber1" = number
-Line 21 col 27 IdentifierName "exprNumber2" = number
-Line 22 col 0 ConditionalExpression "condObject ? exprString1 : exprString2" = string
-Line 22 col 0 IdentifierName "condObject" = Object
-Line 22 col 13 IdentifierName "exprString1" = string
-Line 22 col 27 IdentifierName "exprString2" = string
-Line 23 col 0 ConditionalExpression "condObject ? exprIsObject1 : exprIsObject2" = Object
-Line 23 col 0 IdentifierName "condObject" = Object
-Line 23 col 13 IdentifierName "exprIsObject1" = Object
-Line 23 col 29 IdentifierName "exprIsObject2" = Object
-Line 24 col 0 ConditionalExpression "//Cond is an object type literal
-((a: string) => a.length) ? exprAny1 : exprAny2" = any
-Line 24 col 0 ParenthesizedExpression "//Cond is an object type literal
-((a: string) => a.length)" = (a: string) => number
-Line 26 col 1 ParenthesizedArrowFunctionExpression "(a: string) => a.length" = (a: string) => number
-Line 26 col 2 IdentifierName "a" = string
-Line 26 col 16 MemberAccessExpression "a.length" = number
-Line 26 col 16 IdentifierName "a" = string
-Line 26 col 18 IdentifierName "length" = number
-Line 26 col 28 IdentifierName "exprAny1" = any
-Line 26 col 39 IdentifierName "exprAny2" = any
-Line 27 col 0 ConditionalExpression "((a: string) => a.length) ? exprBoolean1 : exprBoolean2" = boolean
-Line 27 col 0 ParenthesizedExpression "((a: string) => a.length)" = (a: string) => number
-Line 27 col 1 ParenthesizedArrowFunctionExpression "(a: string) => a.length" = (a: string) => number
-Line 27 col 2 IdentifierName "a" = string
-Line 27 col 16 MemberAccessExpression "a.length" = number
-Line 27 col 16 IdentifierName "a" = string
-Line 27 col 18 IdentifierName "length" = number
-Line 27 col 28 IdentifierName "exprBoolean1" = boolean
-Line 27 col 43 IdentifierName "exprBoolean2" = boolean
-Line 28 col 0 ConditionalExpression "({}) ? exprNumber1 : exprNumber2" = number
-Line 28 col 0 ParenthesizedExpression "({})" = {}
-Line 28 col 1 ObjectLiteralExpression "{}" = {}
-Line 28 col 7 IdentifierName "exprNumber1" = number
-Line 28 col 21 IdentifierName "exprNumber2" = number
-Line 29 col 0 ConditionalExpression "({ a: 1, b: "s" }) ? exprString1 : exprString2" = string
-Line 29 col 0 ParenthesizedExpression "({ a: 1, b: "s" })" = { a: number; b: string; }
-Line 29 col 1 ObjectLiteralExpression "{ a: 1, b: "s" }" = { a: number; b: string; }
-Line 29 col 3 IdentifierName "a" = number
-Line 29 col 9 IdentifierName "b" = string
-Line 29 col 21 IdentifierName "exprString1" = string
-Line 29 col 35 IdentifierName "exprString2" = string
-Line 30 col 0 ConditionalExpression "({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2" = Object
-Line 30 col 0 ParenthesizedExpression "({ a: 1, b: "s" })" = { a: number; b: string; }
-Line 30 col 1 ObjectLiteralExpression "{ a: 1, b: "s" }" = { a: number; b: string; }
-Line 30 col 3 IdentifierName "a" = number
-Line 30 col 9 IdentifierName "b" = string
-Line 30 col 21 IdentifierName "exprIsObject1" = Object
-Line 30 col 37 IdentifierName "exprIsObject2" = Object
-Line 31 col 0 ConditionalExpression "//Cond is an object type expression
-foo() ? exprAny1 : exprAny2" = any
-Line 31 col 0 InvocationExpression "//Cond is an object type expression
-foo()" = void
-Line 31 col 0 IdentifierName "//Cond is an object type expression
-foo" = typeof foo
-Line 33 col 8 IdentifierName "exprAny1" = any
-Line 33 col 19 IdentifierName "exprAny2" = any
-Line 34 col 0 ConditionalExpression "new Date() ? exprBoolean1 : exprBoolean2" = boolean
-Line 34 col 0 ObjectCreationExpression "new Date()" = Date
-Line 34 col 4 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 34 col 13 IdentifierName "exprBoolean1" = boolean
-Line 34 col 28 IdentifierName "exprBoolean2" = boolean
-Line 35 col 0 ConditionalExpression "new C() ? exprNumber1 : exprNumber2" = number
-Line 35 col 0 ObjectCreationExpression "new C()" = C
-Line 35 col 4 IdentifierName "C" = typeof C
-Line 35 col 10 IdentifierName "exprNumber1" = number
-Line 35 col 24 IdentifierName "exprNumber2" = number
-Line 36 col 0 ConditionalExpression "C.doIt() ? exprString1 : exprString2" = string
-Line 36 col 0 InvocationExpression "C.doIt()" = void
-Line 36 col 0 MemberAccessExpression "C.doIt" = () => void
-Line 36 col 0 IdentifierName "C" = typeof C
-Line 36 col 2 IdentifierName "doIt" = () => void
-Line 36 col 11 IdentifierName "exprString1" = string
-Line 36 col 25 IdentifierName "exprString2" = string
-Line 37 col 0 ConditionalExpression "condObject.valueOf() ? exprIsObject1 : exprIsObject2" = Object
-Line 37 col 0 InvocationExpression "condObject.valueOf()" = Object
-Line 37 col 0 MemberAccessExpression "condObject.valueOf" = () => Object
-Line 37 col 0 IdentifierName "condObject" = Object
-Line 37 col 11 IdentifierName "valueOf" = () => Object
-Line 37 col 23 IdentifierName "exprIsObject1" = Object
-Line 37 col 39 IdentifierName "exprIsObject2" = Object
-Line 40 col 4 IdentifierName "resultIsAny1" = any
-Line 40 col 19 ConditionalExpression "condObject ? exprAny1 : exprAny2" = any
-Line 40 col 19 IdentifierName "condObject" = Object
-Line 40 col 32 IdentifierName "exprAny1" = any
-Line 40 col 43 IdentifierName "exprAny2" = any
-Line 41 col 4 IdentifierName "resultIsBoolean1" = boolean
-Line 41 col 23 ConditionalExpression "condObject ? exprBoolean1 : exprBoolean2" = boolean
-Line 41 col 23 IdentifierName "condObject" = Object
-Line 41 col 36 IdentifierName "exprBoolean1" = boolean
-Line 41 col 51 IdentifierName "exprBoolean2" = boolean
-Line 42 col 4 IdentifierName "resultIsNumber1" = number
-Line 42 col 22 ConditionalExpression "condObject ? exprNumber1 : exprNumber2" = number
-Line 42 col 22 IdentifierName "condObject" = Object
-Line 42 col 35 IdentifierName "exprNumber1" = number
-Line 42 col 49 IdentifierName "exprNumber2" = number
-Line 43 col 4 IdentifierName "resultIsString1" = string
-Line 43 col 22 ConditionalExpression "condObject ? exprString1 : exprString2" = string
-Line 43 col 22 IdentifierName "condObject" = Object
-Line 43 col 35 IdentifierName "exprString1" = string
-Line 43 col 49 IdentifierName "exprString2" = string
-Line 44 col 4 IdentifierName "resultIsObject1" = Object
-Line 44 col 22 ConditionalExpression "condObject ? exprIsObject1 : exprIsObject2" = Object
-Line 44 col 22 IdentifierName "condObject" = Object
-Line 44 col 35 IdentifierName "exprIsObject1" = Object
-Line 44 col 51 IdentifierName "exprIsObject2" = Object
-Line 46 col 4 IdentifierName "resultIsAny2" = any
-Line 46 col 19 ConditionalExpression "((a: string) => a.length) ? exprAny1 : exprAny2" = any
-Line 46 col 19 ParenthesizedExpression "((a: string) => a.length)" = (a: string) => number
-Line 46 col 20 ParenthesizedArrowFunctionExpression "(a: string) => a.length" = (a: string) => number
-Line 46 col 21 IdentifierName "a" = string
-Line 46 col 35 MemberAccessExpression "a.length" = number
-Line 46 col 35 IdentifierName "a" = string
-Line 46 col 37 IdentifierName "length" = number
-Line 46 col 47 IdentifierName "exprAny1" = any
-Line 46 col 58 IdentifierName "exprAny2" = any
-Line 47 col 4 IdentifierName "resultIsBoolean2" = boolean
-Line 47 col 23 ConditionalExpression "((a: string) => a.length) ? exprBoolean1 : exprBoolean2" = boolean
-Line 47 col 23 ParenthesizedExpression "((a: string) => a.length)" = (a: string) => number
-Line 47 col 24 ParenthesizedArrowFunctionExpression "(a: string) => a.length" = (a: string) => number
-Line 47 col 25 IdentifierName "a" = string
-Line 47 col 39 MemberAccessExpression "a.length" = number
-Line 47 col 39 IdentifierName "a" = string
-Line 47 col 41 IdentifierName "length" = number
-Line 47 col 51 IdentifierName "exprBoolean1" = boolean
-Line 47 col 66 IdentifierName "exprBoolean2" = boolean
-Line 48 col 4 IdentifierName "resultIsNumber2" = number
-Line 48 col 22 ConditionalExpression "({}) ? exprNumber1 : exprNumber2" = number
-Line 48 col 22 ParenthesizedExpression "({})" = {}
-Line 48 col 23 ObjectLiteralExpression "{}" = {}
-Line 48 col 29 IdentifierName "exprNumber1" = number
-Line 48 col 43 IdentifierName "exprNumber2" = number
-Line 49 col 4 IdentifierName "resultIsString2" = string
-Line 49 col 22 ConditionalExpression "({ a: 1, b: "s" }) ? exprString1 : exprString2" = string
-Line 49 col 22 ParenthesizedExpression "({ a: 1, b: "s" })" = { a: number; b: string; }
-Line 49 col 23 ObjectLiteralExpression "{ a: 1, b: "s" }" = { a: number; b: string; }
-Line 49 col 25 IdentifierName "a" = number
-Line 49 col 31 IdentifierName "b" = string
-Line 49 col 43 IdentifierName "exprString1" = string
-Line 49 col 57 IdentifierName "exprString2" = string
-Line 50 col 4 IdentifierName "resultIsObject2" = Object
-Line 50 col 22 ConditionalExpression "({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2" = Object
-Line 50 col 22 ParenthesizedExpression "({ a: 1, b: "s" })" = { a: number; b: string; }
-Line 50 col 23 ObjectLiteralExpression "{ a: 1, b: "s" }" = { a: number; b: string; }
-Line 50 col 25 IdentifierName "a" = number
-Line 50 col 31 IdentifierName "b" = string
-Line 50 col 43 IdentifierName "exprIsObject1" = Object
-Line 50 col 59 IdentifierName "exprIsObject2" = Object
-Line 52 col 4 IdentifierName "resultIsAny3" = any
-Line 52 col 19 ConditionalExpression "foo() ? exprAny1 : exprAny2" = any
-Line 52 col 19 InvocationExpression "foo()" = void
-Line 52 col 19 IdentifierName "foo" = typeof foo
-Line 52 col 27 IdentifierName "exprAny1" = any
-Line 52 col 38 IdentifierName "exprAny2" = any
-Line 53 col 4 IdentifierName "resultIsBoolean3" = boolean
-Line 53 col 23 ConditionalExpression "new Date() ? exprBoolean1 : exprBoolean2" = boolean
-Line 53 col 23 ObjectCreationExpression "new Date()" = Date
-Line 53 col 27 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 53 col 36 IdentifierName "exprBoolean1" = boolean
-Line 53 col 51 IdentifierName "exprBoolean2" = boolean
-Line 54 col 4 IdentifierName "resultIsNumber3" = number
-Line 54 col 22 ConditionalExpression "new C() ? exprNumber1 : exprNumber2" = number
-Line 54 col 22 ObjectCreationExpression "new C()" = C
-Line 54 col 26 IdentifierName "C" = typeof C
-Line 54 col 32 IdentifierName "exprNumber1" = number
-Line 54 col 46 IdentifierName "exprNumber2" = number
-Line 55 col 4 IdentifierName "resultIsString3" = string
-Line 55 col 22 ConditionalExpression "C.doIt() ? exprString1 : exprString2" = string
-Line 55 col 22 InvocationExpression "C.doIt()" = void
-Line 55 col 22 MemberAccessExpression "C.doIt" = () => void
-Line 55 col 22 IdentifierName "C" = typeof C
-Line 55 col 24 IdentifierName "doIt" = () => void
-Line 55 col 33 IdentifierName "exprString1" = string
-Line 55 col 47 IdentifierName "exprString2" = string
-Line 56 col 4 IdentifierName "resultIsObject3" = Object
-Line 56 col 22 ConditionalExpression "condObject.valueOf() ? exprIsObject1 : exprIsObject2" = Object
-Line 56 col 22 InvocationExpression "condObject.valueOf()" = Object
-Line 56 col 22 MemberAccessExpression "condObject.valueOf" = () => Object
-Line 56 col 22 IdentifierName "condObject" = Object
-Line 56 col 33 IdentifierName "valueOf" = () => Object
-Line 56 col 45 IdentifierName "exprIsObject1" = Object
-Line 56 col 61 IdentifierName "exprIsObject2" = Object
+//Cond ? Expr1 : Expr2,  Cond is of object type, Expr1 and Expr2 have the same type
+var condObject: Object;
+>condObject : Object
+>Object : Object
+
+var exprAny1: any;
+>exprAny1 : any
+
+var exprBoolean1: boolean;
+>exprBoolean1 : boolean
+
+var exprNumber1: number;
+>exprNumber1 : number
+
+var exprString1: string;
+>exprString1 : string
+
+var exprIsObject1: Object;
+>exprIsObject1 : Object
+>Object : Object
+
+var exprAny2: any;
+>exprAny2 : any
+
+var exprBoolean2: boolean;
+>exprBoolean2 : boolean
+
+var exprNumber2: number;
+>exprNumber2 : number
+
+var exprString2: string;
+>exprString2 : string
+
+var exprIsObject2: Object;
+>exprIsObject2 : Object
+>Object : Object
+
+function foo() { };
+>foo : typeof foo
+
+class C { static doIt: () => void };
+>C : C
+>doIt : () => void
+
+>//Cond is an object type variable
+condObject ? exprAny1 : exprAny2 : any
+>//Cond is an object type variable
+condObject : Object
+
+//Cond is an object type variable
+condObject ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+condObject ? exprBoolean1 : exprBoolean2;
+>condObject ? exprBoolean1 : exprBoolean2 : boolean
+>condObject : Object
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+condObject ? exprNumber1 : exprNumber2;
+>condObject ? exprNumber1 : exprNumber2 : number
+>condObject : Object
+>exprNumber1 : number
+>exprNumber2 : number
+
+condObject ? exprString1 : exprString2;
+>condObject ? exprString1 : exprString2 : string
+>condObject : Object
+>exprString1 : string
+>exprString2 : string
+
+condObject ? exprIsObject1 : exprIsObject2;
+>condObject ? exprIsObject1 : exprIsObject2 : Object
+>condObject : Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+>//Cond is an object type literal
+((a: string) => a.length) ? exprAny1 : exprAny2 : any
+>//Cond is an object type literal
+((a: string) => a.length) : (a: string) => number
+
+//Cond is an object type literal
+((a: string) => a.length) ? exprAny1 : exprAny2;
+>(a: string) => a.length : (a: string) => number
+>a : string
+>a.length : number
+>a : string
+>length : number
+>exprAny1 : any
+>exprAny2 : any
+
+((a: string) => a.length) ? exprBoolean1 : exprBoolean2;
+>((a: string) => a.length) ? exprBoolean1 : exprBoolean2 : boolean
+>((a: string) => a.length) : (a: string) => number
+>(a: string) => a.length : (a: string) => number
+>a : string
+>a.length : number
+>a : string
+>length : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+({}) ? exprNumber1 : exprNumber2;
+>({}) ? exprNumber1 : exprNumber2 : number
+>({}) : {}
+>{} : {}
+>exprNumber1 : number
+>exprNumber2 : number
+
+({ a: 1, b: "s" }) ? exprString1 : exprString2;
+>({ a: 1, b: "s" }) ? exprString1 : exprString2 : string
+>({ a: 1, b: "s" }) : { a: number; b: string; }
+>{ a: 1, b: "s" } : { a: number; b: string; }
+>a : number
+>b : string
+>exprString1 : string
+>exprString2 : string
+
+({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2;
+>({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2 : Object
+>({ a: 1, b: "s" }) : { a: number; b: string; }
+>{ a: 1, b: "s" } : { a: number; b: string; }
+>a : number
+>b : string
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+>//Cond is an object type expression
+foo() ? exprAny1 : exprAny2 : any
+>//Cond is an object type expression
+foo() : void
+>//Cond is an object type expression
+foo : typeof foo
+
+//Cond is an object type expression
+foo() ? exprAny1 : exprAny2;
+>exprAny1 : any
+>exprAny2 : any
+
+new Date() ? exprBoolean1 : exprBoolean2;
+>new Date() ? exprBoolean1 : exprBoolean2 : boolean
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+new C() ? exprNumber1 : exprNumber2;
+>new C() ? exprNumber1 : exprNumber2 : number
+>new C() : C
+>C : typeof C
+>exprNumber1 : number
+>exprNumber2 : number
+
+C.doIt() ? exprString1 : exprString2;
+>C.doIt() ? exprString1 : exprString2 : string
+>C.doIt() : void
+>C.doIt : () => void
+>C : typeof C
+>doIt : () => void
+>exprString1 : string
+>exprString2 : string
+
+condObject.valueOf() ? exprIsObject1 : exprIsObject2;
+>condObject.valueOf() ? exprIsObject1 : exprIsObject2 : Object
+>condObject.valueOf() : Object
+>condObject.valueOf : () => Object
+>condObject : Object
+>valueOf : () => Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+//Results shoud be same as Expr1 and Expr2
+var resultIsAny1 = condObject ? exprAny1 : exprAny2;
+>resultIsAny1 : any
+>condObject ? exprAny1 : exprAny2 : any
+>condObject : Object
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean1 = condObject ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean1 : boolean
+>condObject ? exprBoolean1 : exprBoolean2 : boolean
+>condObject : Object
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber1 = condObject ? exprNumber1 : exprNumber2;
+>resultIsNumber1 : number
+>condObject ? exprNumber1 : exprNumber2 : number
+>condObject : Object
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString1 = condObject ? exprString1 : exprString2;
+>resultIsString1 : string
+>condObject ? exprString1 : exprString2 : string
+>condObject : Object
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject1 = condObject ? exprIsObject1 : exprIsObject2;
+>resultIsObject1 : Object
+>condObject ? exprIsObject1 : exprIsObject2 : Object
+>condObject : Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny2 = ((a: string) => a.length) ? exprAny1 : exprAny2;
+>resultIsAny2 : any
+>((a: string) => a.length) ? exprAny1 : exprAny2 : any
+>((a: string) => a.length) : (a: string) => number
+>(a: string) => a.length : (a: string) => number
+>a : string
+>a.length : number
+>a : string
+>length : number
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean2 = ((a: string) => a.length) ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean2 : boolean
+>((a: string) => a.length) ? exprBoolean1 : exprBoolean2 : boolean
+>((a: string) => a.length) : (a: string) => number
+>(a: string) => a.length : (a: string) => number
+>a : string
+>a.length : number
+>a : string
+>length : number
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber2 = ({}) ? exprNumber1 : exprNumber2;
+>resultIsNumber2 : number
+>({}) ? exprNumber1 : exprNumber2 : number
+>({}) : {}
+>{} : {}
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString2 = ({ a: 1, b: "s" }) ? exprString1 : exprString2;
+>resultIsString2 : string
+>({ a: 1, b: "s" }) ? exprString1 : exprString2 : string
+>({ a: 1, b: "s" }) : { a: number; b: string; }
+>{ a: 1, b: "s" } : { a: number; b: string; }
+>a : number
+>b : string
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject2 = ({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2;
+>resultIsObject2 : Object
+>({ a: 1, b: "s" }) ? exprIsObject1 : exprIsObject2 : Object
+>({ a: 1, b: "s" }) : { a: number; b: string; }
+>{ a: 1, b: "s" } : { a: number; b: string; }
+>a : number
+>b : string
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+
+var resultIsAny3 = foo() ? exprAny1 : exprAny2;
+>resultIsAny3 : any
+>foo() ? exprAny1 : exprAny2 : any
+>foo() : void
+>foo : typeof foo
+>exprAny1 : any
+>exprAny2 : any
+
+var resultIsBoolean3 = new Date() ? exprBoolean1 : exprBoolean2;
+>resultIsBoolean3 : boolean
+>new Date() ? exprBoolean1 : exprBoolean2 : boolean
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>exprBoolean1 : boolean
+>exprBoolean2 : boolean
+
+var resultIsNumber3 = new C() ? exprNumber1 : exprNumber2;
+>resultIsNumber3 : number
+>new C() ? exprNumber1 : exprNumber2 : number
+>new C() : C
+>C : typeof C
+>exprNumber1 : number
+>exprNumber2 : number
+
+var resultIsString3 = C.doIt() ? exprString1 : exprString2;
+>resultIsString3 : string
+>C.doIt() ? exprString1 : exprString2 : string
+>C.doIt() : void
+>C.doIt : () => void
+>C : typeof C
+>doIt : () => void
+>exprString1 : string
+>exprString2 : string
+
+var resultIsObject3 = condObject.valueOf() ? exprIsObject1 : exprIsObject2;
+>resultIsObject3 : Object
+>condObject.valueOf() ? exprIsObject1 : exprIsObject2 : Object
+>condObject.valueOf() : Object
+>condObject.valueOf : () => Object
+>condObject : Object
+>valueOf : () => Object
+>exprIsObject1 : Object
+>exprIsObject2 : Object
+

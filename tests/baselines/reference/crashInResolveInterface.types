@@ -1,33 +1,53 @@
 === tests/cases/compiler/file2.ts ===
-Line 1 col 12 IdentifierName "c" = C
-Line 1 col 15 IdentifierName "C" = C
-Line 2 col 10 IdentifierName "C" = C
-Line 3 col 0 IdentifierName "count" = (countTitle?: string) => void
-Line 3 col 10 IdentifierName "countTitle" = string
-Line 5 col 10 IdentifierName "C" = C
-Line 6 col 0 IdentifierName "log" = (message?: any, ...optionalParams: any[]) => void
-Line 6 col 8 IdentifierName "message" = any
-Line 6 col 26 IdentifierName "optionalParams" = any[]
+///<reference path='file1.ts'/>
+declare var c: C;
+>c : C
+>C : C
+
+interface C {
+>C : C
+
+    count(countTitle?: string): void;
+>count : (countTitle?: string) => void
+>countTitle : string
+}
+interface C {
+>C : C
+
+    log(message?: any, ...optionalParams: any[]): void;
+>log : (message?: any, ...optionalParams: any[]) => void
+>message : any
+>optionalParams : any[]
+}
+
 === tests/cases/compiler/file1.ts ===
-Line 0 col 10 IdentifierName "Q" = Q<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "each" = (action: (item: T, index: number) => void) => void
-Line 1 col 9 IdentifierName "action" = (item: T, index: number) => void
-Line 1 col 18 IdentifierName "item" = T
-Line 1 col 24 IdentifierName "T" = T
-Line 1 col 27 IdentifierName "index" = number
-Line 3 col 4 IdentifierName "q1" = Q<{ a: number; }>
-Line 3 col 8 IdentifierName "Q" = Q<T>
-Line 3 col 12 IdentifierName "a" = number
-Line 4 col 4 IdentifierName "x" = void
-Line 4 col 8 InvocationExpression "q1.each(x => c.log(x))" = void
-Line 4 col 8 MemberAccessExpression "q1.each" = (action: (item: { a: number; }, index: number) => void) => void
-Line 4 col 8 IdentifierName "q1" = Q<{ a: number; }>
-Line 4 col 11 IdentifierName "each" = (action: (item: { a: number; }, index: number) => void) => void
-Line 4 col 16 SimpleArrowFunctionExpression "x => c.log(x)" = (x: { a: number; }) => void
-Line 4 col 16 IdentifierName "x" = { a: number; }
-Line 4 col 21 InvocationExpression "c.log(x)" = void
-Line 4 col 21 MemberAccessExpression "c.log" = (message?: any, ...optionalParams: any[]) => void
-Line 4 col 21 IdentifierName "c" = C
-Line 4 col 23 IdentifierName "log" = (message?: any, ...optionalParams: any[]) => void
-Line 4 col 27 IdentifierName "x" = { a: number; }
+interface Q<T> {
+>Q : Q<T>
+>T : T
+
+    each(action: (item: T, index: number) => void): void;
+>each : (action: (item: T, index: number) => void) => void
+>action : (item: T, index: number) => void
+>item : T
+>T : T
+>index : number
+}
+var q1: Q<{ a: number; }>;
+>q1 : Q<{ a: number; }>
+>Q : Q<T>
+>a : number
+
+var x = q1.each(x => c.log(x));
+>x : void
+>q1.each(x => c.log(x)) : void
+>q1.each : (action: (item: { a: number; }, index: number) => void) => void
+>q1 : Q<{ a: number; }>
+>each : (action: (item: { a: number; }, index: number) => void) => void
+>x => c.log(x) : (x: { a: number; }) => void
+>x : { a: number; }
+>c.log(x) : void
+>c.log : (message?: any, ...optionalParams: any[]) => void
+>c : C
+>log : (message?: any, ...optionalParams: any[]) => void
+>x : { a: number; }
+

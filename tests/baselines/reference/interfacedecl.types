@@ -1,37 +1,95 @@
 === tests/cases/compiler/interfacedecl.ts ===
-Line 0 col 10 IdentifierName "a0" = a0
-Line 2 col 5 IdentifierName "a" = any
-Line 2 col 8 IdentifierName "b" = any
-Line 2 col 11 IdentifierName "c" = string
-Line 5 col 9 IdentifierName "s" = string
-Line 7 col 5 IdentifierName "n" = number
-Line 8 col 5 IdentifierName "s" = string
-Line 9 col 0 IdentifierName "p1" = any
-Line 11 col 0 IdentifierName "p2" = string
-Line 12 col 0 IdentifierName "p3" = any
-Line 13 col 0 IdentifierName "p4" = number
-Line 14 col 0 IdentifierName "p5" = (s: number) => string
-Line 14 col 9 IdentifierName "s" = number
-Line 15 col 0 IdentifierName "f1" = () => any
-Line 17 col 0 IdentifierName "f2" = () => any
-Line 18 col 0 IdentifierName "f3" = (a: string) => number
-Line 18 col 7 IdentifierName "a" = string
-Line 19 col 0 IdentifierName "f4" = (s: number) => string
-Line 19 col 9 IdentifierName "s" = number
-Line 23 col 10 IdentifierName "a1" = a1
-Line 24 col 5 IdentifierName "n" = number
-Line 27 col 10 IdentifierName "a2" = a2
-Line 28 col 5 IdentifierName "s" = string
-Line 31 col 10 IdentifierName "a" = a
-Line 34 col 10 IdentifierName "b" = b
-Line 34 col 20 IdentifierName "a" = a
-Line 37 col 10 IdentifierName "c" = c
-Line 37 col 20 IdentifierName "a" = a
-Line 37 col 23 IdentifierName "b" = b
-Line 40 col 10 IdentifierName "d" = d
-Line 40 col 20 IdentifierName "a" = a
-Line 43 col 6 IdentifierName "c1" = c1
-Line 43 col 20 IdentifierName "a" = a
-Line 45 col 4 IdentifierName "instance2" = c1
-Line 45 col 16 ObjectCreationExpression "new c1()" = c1
-Line 45 col 20 IdentifierName "c1" = typeof c1
+interface a0 {
+>a0 : a0
+
+    (): string;
+    (a, b, c?: string): number;
+>a : any
+>b : any
+>c : string
+    
+    new (): string;
+    new (s: string);
+>s : string
+
+    [n: number]: ()=>string;
+>n : number
+
+    [s: string]: any;
+>s : string
+
+>p1 : any
+
+    p1;
+    p2: string;
+>p2 : string
+
+    p3?;
+>p3 : any
+
+    p4?: number;
+>p4 : number
+
+    p5: (s: number) =>string;
+>p5 : (s: number) => string
+>s : number
+
+>f1 : () => any
+
+    f1();
+    f2? ();
+>f2 : () => any
+
+    f3(a: string): number;
+>f3 : (a: string) => number
+>a : string
+
+    f4? (s: number): string;
+>f4 : (s: number) => string
+>s : number
+}
+
+
+interface a1 {
+>a1 : a1
+
+    [n: number]: number;
+>n : number
+}
+
+interface a2 {
+>a2 : a2
+
+    [s: string]: number;
+>s : string
+}
+
+interface a {
+>a : a
+}
+
+interface b extends a {
+>b : b
+>a : a
+}
+
+interface c extends a, b {
+>c : c
+>a : a
+>b : b
+}
+
+interface d extends a {
+>d : d
+>a : a
+}
+
+class c1 implements a {
+>c1 : c1
+>a : a
+}
+var instance2 = new c1();
+>instance2 : c1
+>new c1() : c1
+>c1 : typeof c1
+

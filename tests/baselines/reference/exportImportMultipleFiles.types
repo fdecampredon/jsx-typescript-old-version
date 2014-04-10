@@ -1,21 +1,31 @@
 === tests/cases/compiler/exportImportMultipleFiles_userCode.ts ===
-Line 0 col 7 IdentifierName "lib" = lib
-Line 1 col 0 InvocationExpression "lib.math.add(3, 4)" = any
-Line 1 col 0 MemberAccessExpression "lib.math.add" = typeof lib.math.add
-Line 1 col 0 MemberAccessExpression "lib.math" = lib.math
-Line 1 col 0 IdentifierName "lib" = typeof lib
-Line 1 col 4 IdentifierName "math" = lib.math
-Line 1 col 9 IdentifierName "add" = typeof lib.math.add
+import lib = require('./exportImportMultipleFiles_library');
+>lib : lib
+
+lib.math.add(3, 4); // Shouldnt be error
+>lib.math.add(3, 4) : any
+>lib.math.add : typeof lib.math.add
+>lib.math : lib.math
+>lib : typeof lib
+>math : lib.math
+>add : typeof lib.math.add
+
 === tests/cases/compiler/exportImportMultipleFiles_math.ts ===
-Line 0 col 16 IdentifierName "add" = typeof add
-Line 0 col 20 IdentifierName "a" = any
-Line 0 col 23 IdentifierName "b" = any
-Line 0 col 35 AddExpression "a + b" = any
-Line 0 col 35 IdentifierName "a" = any
-Line 0 col 39 IdentifierName "b" = any
+export function add(a, b) { return a + b; }
+>add : typeof add
+>a : any
+>b : any
+>a + b : any
+>a : any
+>b : any
+
 === tests/cases/compiler/exportImportMultipleFiles_library.ts ===
-Line 0 col 14 IdentifierName "math" = math
-Line 1 col 0 InvocationExpression "math.add(3, 4)" = any
-Line 1 col 0 MemberAccessExpression "math.add" = typeof math.add
-Line 1 col 0 IdentifierName "math" = typeof math
-Line 1 col 5 IdentifierName "add" = typeof math.add
+export import math = require("exportImportMultipleFiles_math");
+>math : math
+
+math.add(3, 4); // OK
+>math.add(3, 4) : any
+>math.add : typeof math.add
+>math : typeof math
+>add : typeof math.add
+

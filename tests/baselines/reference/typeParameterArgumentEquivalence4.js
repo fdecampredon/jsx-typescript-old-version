@@ -1,3 +1,4 @@
+//// [typeParameterArgumentEquivalence4.js]
 function foo() {
     var x;
     var y;

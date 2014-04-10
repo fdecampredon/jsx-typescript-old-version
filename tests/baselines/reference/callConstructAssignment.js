@@ -1,3 +1,4 @@
+//// [callConstructAssignment.js]
 var foo;
 
 var bar;

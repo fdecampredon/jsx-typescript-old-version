@@ -1,9 +1,15 @@
 === tests/cases/compiler/commentOnParenthesizedExpressionOpenParen1.ts ===
-Line 0 col 4 IdentifierName "j" = any
-Line 1 col 4 IdentifierName "f" = () => any
-Line 2 col 0 CastExpression "<any>( /* Preserve */ j = f())" = any
-Line 2 col 5 ParenthesizedExpression "( /* Preserve */ j = f())" = any
-Line 2 col 22 AssignmentExpression "j = f()" = any
-Line 2 col 22 IdentifierName "j" = any
-Line 2 col 26 InvocationExpression "f()" = any
-Line 2 col 26 IdentifierName "f" = () => any
+var j;
+>j : any
+
+var f: () => any;
+>f : () => any
+
+<any>( /* Preserve */ j = f());
+><any>( /* Preserve */ j = f()) : any
+>( /* Preserve */ j = f()) : any
+>j = f() : any
+>j : any
+>f() : any
+>f : () => any
+

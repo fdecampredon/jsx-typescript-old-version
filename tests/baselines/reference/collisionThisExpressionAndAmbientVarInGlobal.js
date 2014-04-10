@@ -1,3 +1,4 @@
+//// [collisionThisExpressionAndAmbientVarInGlobal.js]
 var _this = this;
 var f = function () {
     return _this;

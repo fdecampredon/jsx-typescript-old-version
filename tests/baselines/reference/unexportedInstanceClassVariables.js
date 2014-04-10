@@ -1,3 +1,18 @@
+//// [unexportedInstanceClassVariables.ts]
+module M{
+	class A{
+		constructor(val:string){}
+	}
+}
+
+module M{
+	class A {}  
+ 
+ 	var a = new A();
+}
+
+
+//// [unexportedInstanceClassVariables.js]
 var M;
 (function (M) {
     var A = (function () {

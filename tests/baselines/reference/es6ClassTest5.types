@@ -1,13 +1,29 @@
 === tests/cases/compiler/es6ClassTest5.ts ===
-Line 0 col 6 IdentifierName "C1T5" = C1T5
-Line 1 col 0 IdentifierName "foo" = (i: number, s: string) => number
-Line 1 col 10 IdentifierName "i" = number
-Line 1 col 21 IdentifierName "s" = string
-Line 2 col 0 ParenthesizedArrowFunctionExpression "(i) => {
+class C1T5 {
+>C1T5 : C1T5
+
+    foo: (i: number, s: string) => number = 
+>foo : (i: number, s: string) => number
+>i : number
+>s : string
+
+	   	(i) => {
+>(i) => {
 	        return i;
-	    }" = (i: number) => number
-Line 2 col 6 IdentifierName "i" = number
-Line 3 col 16 IdentifierName "i" = number
-Line 6 col 7 IdentifierName "C2T5" = C2T5
-Line 8 col 7 IdentifierName "bigClass" = bigClass
-Line 9 col 12 IdentifierName "break" = number
+	    } : (i: number) => number
+>i : number
+
+	        return i;
+>i : number
+	    }
+}
+module C2T5 {}
+>C2T5 : C2T5
+
+class  bigClass {
+>bigClass : bigClass
+
+     public break = 1;
+>break : number
+}
+

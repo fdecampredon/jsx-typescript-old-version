@@ -1,3 +1,4 @@
+//// [fieldAndGetterWithSameName.js]
 define(["require", "exports"], function(require, exports) {
     var C = (function () {
         function C() {

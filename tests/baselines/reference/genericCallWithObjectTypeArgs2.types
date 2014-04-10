@@ -1,87 +1,129 @@
 === tests/cases/compiler/genericCallWithObjectTypeArgs2.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 0 IdentifierName "x" = string
-Line 3 col 6 IdentifierName "Derived" = Derived
-Line 3 col 22 IdentifierName "Base" = Base
-Line 4 col 0 IdentifierName "y" = string
-Line 6 col 6 IdentifierName "Derived2" = Derived2
-Line 6 col 23 IdentifierName "Base" = Base
-Line 7 col 0 IdentifierName "z" = string
-Line 11 col 9 IdentifierName "f" = typeof f
-Line 11 col 11 IdentifierName "T" = T
-Line 11 col 21 IdentifierName "Base" = Base
-Line 11 col 27 IdentifierName "U" = U
-Line 11 col 37 IdentifierName "Base" = Base
-Line 11 col 43 IdentifierName "a" = { x: T; y: U; }
-Line 11 col 48 IdentifierName "x" = T
-Line 11 col 51 IdentifierName "T" = T
-Line 11 col 54 IdentifierName "y" = U
-Line 11 col 57 IdentifierName "U" = U
-Line 12 col 11 ArrayLiteralExpression "[a.x, a.y]" = {}[]
-Line 12 col 12 MemberAccessExpression "a.x" = T
-Line 12 col 12 IdentifierName "a" = { x: T; y: U; }
-Line 12 col 14 IdentifierName "x" = T
-Line 12 col 17 MemberAccessExpression "a.y" = U
-Line 12 col 17 IdentifierName "a" = { x: T; y: U; }
-Line 12 col 19 IdentifierName "y" = U
-Line 15 col 4 IdentifierName "r" = {}[]
-Line 15 col 8 InvocationExpression "f({ x: new Derived(), y: new Derived2() })" = {}[]
-Line 15 col 8 IdentifierName "f" = typeof f
-Line 15 col 10 ObjectLiteralExpression "{ x: new Derived(), y: new Derived2() }" = { x: Derived; y: Derived2; }
-Line 15 col 12 IdentifierName "x" = Derived
-Line 15 col 15 ObjectCreationExpression "new Derived()" = Derived
-Line 15 col 19 IdentifierName "Derived" = typeof Derived
-Line 15 col 30 IdentifierName "y" = Derived2
-Line 15 col 33 ObjectCreationExpression "new Derived2()" = Derived2
-Line 15 col 37 IdentifierName "Derived2" = typeof Derived2
-Line 16 col 4 IdentifierName "r2" = {}[]
-Line 16 col 9 InvocationExpression "f({ x: new Base(), y: new Derived2() })" = {}[]
-Line 16 col 9 IdentifierName "f" = typeof f
-Line 16 col 11 ObjectLiteralExpression "{ x: new Base(), y: new Derived2() }" = { x: Base; y: Derived2; }
-Line 16 col 13 IdentifierName "x" = Base
-Line 16 col 16 ObjectCreationExpression "new Base()" = Base
-Line 16 col 20 IdentifierName "Base" = typeof Base
-Line 16 col 28 IdentifierName "y" = Derived2
-Line 16 col 31 ObjectCreationExpression "new Derived2()" = Derived2
-Line 16 col 35 IdentifierName "Derived2" = typeof Derived2
-Line 19 col 9 IdentifierName "f2" = typeof f2
-Line 19 col 12 IdentifierName "T" = T
-Line 19 col 22 IdentifierName "Base" = Base
-Line 19 col 28 IdentifierName "U" = U
-Line 19 col 38 IdentifierName "Base" = Base
-Line 19 col 44 IdentifierName "a" = { x: T; y: U; }
-Line 19 col 49 IdentifierName "x" = T
-Line 19 col 52 IdentifierName "T" = T
-Line 19 col 55 IdentifierName "y" = U
-Line 19 col 58 IdentifierName "U" = U
-Line 20 col 11 ParenthesizedArrowFunctionExpression "(x: T) => a.y" = (x: T) => U
-Line 20 col 12 IdentifierName "x" = T
-Line 20 col 15 IdentifierName "T" = T
-Line 20 col 21 MemberAccessExpression "a.y" = U
-Line 20 col 21 IdentifierName "a" = { x: T; y: U; }
-Line 20 col 23 IdentifierName "y" = U
-Line 23 col 4 IdentifierName "r3" = (x: Derived) => Derived2
-Line 23 col 9 InvocationExpression "f2({ x: new Derived(), y: new Derived2() })" = (x: Derived) => Derived2
-Line 23 col 9 IdentifierName "f2" = typeof f2
-Line 23 col 12 ObjectLiteralExpression "{ x: new Derived(), y: new Derived2() }" = { x: Derived; y: Derived2; }
-Line 23 col 14 IdentifierName "x" = Derived
-Line 23 col 17 ObjectCreationExpression "new Derived()" = Derived
-Line 23 col 21 IdentifierName "Derived" = typeof Derived
-Line 23 col 32 IdentifierName "y" = Derived2
-Line 23 col 35 ObjectCreationExpression "new Derived2()" = Derived2
-Line 23 col 39 IdentifierName "Derived2" = typeof Derived2
-Line 25 col 10 IdentifierName "I" = I<T, U>
-Line 25 col 12 IdentifierName "T" = T
-Line 25 col 15 IdentifierName "U" = U
-Line 26 col 0 IdentifierName "x" = T
-Line 26 col 7 IdentifierName "T" = T
-Line 27 col 0 IdentifierName "y" = U
-Line 27 col 7 IdentifierName "U" = U
-Line 30 col 4 IdentifierName "i" = I<Base, Derived>
-Line 30 col 7 IdentifierName "I" = I<T, U>
-Line 30 col 9 IdentifierName "Base" = Base
-Line 30 col 15 IdentifierName "Derived" = Derived
-Line 31 col 4 IdentifierName "r4" = (x: Base) => Derived
-Line 31 col 9 InvocationExpression "f2(i)" = (x: Base) => Derived
-Line 31 col 9 IdentifierName "f2" = typeof f2
-Line 31 col 12 IdentifierName "i" = I<Base, Derived>
+class Base {
+>Base : Base
+
+    x: string;
+>x : string
+}
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    y: string;
+>y : string
+}
+class Derived2 extends Base {
+>Derived2 : Derived2
+>Base : Base
+
+    z: string;
+>z : string
+}
+
+// returns {}[]
+function f<T extends Base, U extends Base>(a: { x: T; y: U }) {
+>f : typeof f
+>T : T
+>Base : Base
+>U : U
+>Base : Base
+>a : { x: T; y: U; }
+>x : T
+>T : T
+>y : U
+>U : U
+
+    return [a.x, a.y];
+>[a.x, a.y] : {}[]
+>a.x : T
+>a : { x: T; y: U; }
+>x : T
+>a.y : U
+>a : { x: T; y: U; }
+>y : U
+}
+
+var r = f({ x: new Derived(), y: new Derived2() }); // {}[]
+>r : {}[]
+>f({ x: new Derived(), y: new Derived2() }) : {}[]
+>f : typeof f
+>{ x: new Derived(), y: new Derived2() } : { x: Derived; y: Derived2; }
+>x : Derived
+>new Derived() : Derived
+>Derived : typeof Derived
+>y : Derived2
+>new Derived2() : Derived2
+>Derived2 : typeof Derived2
+
+var r2 = f({ x: new Base(), y: new Derived2() }); // {}[]
+>r2 : {}[]
+>f({ x: new Base(), y: new Derived2() }) : {}[]
+>f : typeof f
+>{ x: new Base(), y: new Derived2() } : { x: Base; y: Derived2; }
+>x : Base
+>new Base() : Base
+>Base : typeof Base
+>y : Derived2
+>new Derived2() : Derived2
+>Derived2 : typeof Derived2
+
+
+function f2<T extends Base, U extends Base>(a: { x: T; y: U }) {
+>f2 : typeof f2
+>T : T
+>Base : Base
+>U : U
+>Base : Base
+>a : { x: T; y: U; }
+>x : T
+>T : T
+>y : U
+>U : U
+
+    return (x: T) => a.y;
+>(x: T) => a.y : (x: T) => U
+>x : T
+>T : T
+>a.y : U
+>a : { x: T; y: U; }
+>y : U
+}
+
+var r3 = f2({ x: new Derived(), y: new Derived2() }); // Derived => Derived2
+>r3 : (x: Derived) => Derived2
+>f2({ x: new Derived(), y: new Derived2() }) : (x: Derived) => Derived2
+>f2 : typeof f2
+>{ x: new Derived(), y: new Derived2() } : { x: Derived; y: Derived2; }
+>x : Derived
+>new Derived() : Derived
+>Derived : typeof Derived
+>y : Derived2
+>new Derived2() : Derived2
+>Derived2 : typeof Derived2
+
+interface I<T, U> {
+>I : I<T, U>
+>T : T
+>U : U
+
+    x: T;
+>x : T
+>T : T
+
+    y: U;
+>y : U
+>U : U
+}
+
+var i: I<Base, Derived>;
+>i : I<Base, Derived>
+>I : I<T, U>
+>Base : Base
+>Derived : Derived
+
+var r4 = f2(i); // Base => Derived
+>r4 : (x: Base) => Derived
+>f2(i) : (x: Base) => Derived
+>f2 : typeof f2
+>i : I<Base, Derived>
+

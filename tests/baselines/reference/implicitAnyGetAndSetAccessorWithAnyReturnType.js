@@ -1,3 +1,4 @@
+//// [implicitAnyGetAndSetAccessorWithAnyReturnType.js]
 // these should be errors
 var GetAndSet = (function () {
     function GetAndSet() {

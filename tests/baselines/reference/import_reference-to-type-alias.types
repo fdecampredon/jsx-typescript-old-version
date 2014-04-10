@@ -1,19 +1,39 @@
 === tests/cases/compiler/file2.ts ===
-Line 0 col 7 IdentifierName "appJs" = appJs
-Line 1 col 7 IdentifierName "Services" = Services
-Line 1 col 18 IdentifierName "appJs" = appJs
-Line 1 col 24 IdentifierName "App" = appJs.App
-Line 1 col 28 IdentifierName "Services" = typeof appJs.App.Services
-Line 2 col 4 IdentifierName "x" = string
-Line 2 col 8 InvocationExpression "new Services.UserServices().getUserName()" = string
-Line 2 col 8 MemberAccessExpression "new Services.UserServices().getUserName" = () => string
-Line 2 col 8 ObjectCreationExpression "new Services.UserServices()" = appJs.App.Services.UserServices
-Line 2 col 12 MemberAccessExpression "Services.UserServices" = typeof appJs.App.Services.UserServices
-Line 2 col 12 IdentifierName "Services" = typeof appJs.App.Services
-Line 2 col 21 IdentifierName "UserServices" = typeof appJs.App.Services.UserServices
-Line 2 col 36 IdentifierName "getUserName" = () => string
+import appJs = require("file1");
+>appJs : appJs
+
+import Services = appJs.App.Services;
+>Services : Services
+>appJs : appJs
+>App : appJs.App
+>Services : typeof appJs.App.Services
+
+var x = new Services.UserServices().getUserName();
+>x : string
+>new Services.UserServices().getUserName() : string
+>new Services.UserServices().getUserName : () => string
+>new Services.UserServices() : appJs.App.Services.UserServices
+>Services.UserServices : typeof appJs.App.Services.UserServices
+>Services : typeof appJs.App.Services
+>UserServices : typeof appJs.App.Services.UserServices
+>getUserName : () => string
+
 === tests/cases/compiler/file1.ts ===
-Line 0 col 14 IdentifierName "App" = App
-Line 1 col 18 IdentifierName "Services" = Services
-Line 2 col 21 IdentifierName "UserServices" = UserServices
-Line 3 col 19 IdentifierName "getUserName" = () => string
+export module App {
+>App : App
+
+    export module Services {
+>Services : Services
+
+        export class UserServices {
+>UserServices : UserServices
+
+            public getUserName(): string {
+>getUserName : () => string
+
+                return "Bill Gates";
+            }
+        }
+    }
+}
+

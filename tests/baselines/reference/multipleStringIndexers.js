@@ -1,3 +1,4 @@
+//// [multipleStringIndexers.js]
 // Multiple indexers of the same type are an error
 var C = (function () {
     function C() {

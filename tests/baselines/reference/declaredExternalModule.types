@@ -1,18 +1,49 @@
 === tests/cases/compiler/declaredExternalModule.ts ===
-Line 2 col 14 IdentifierName "connectModule" = connectModule
-Line 4 col 9 IdentifierName "res" = any
-Line 4 col 14 IdentifierName "req" = any
-Line 4 col 19 IdentifierName "next" = any
-Line 8 col 14 IdentifierName "connectExport" = connectExport
-Line 9 col 0 IdentifierName "use" = (mod: connectModule) => connectExport
-Line 10 col 14 IdentifierName "mod" = connectModule
-Line 10 col 19 IdentifierName "connectModule" = connectModule
-Line 10 col 37 IdentifierName "connectExport" = connectExport
-Line 11 col 0 IdentifierName "listen" = (port: number) => void
-Line 12 col 17 IdentifierName "port" = number
-Line 16 col 8 IdentifierName "server" = { test1: connectModule; test2(): connectModule; (): connectExport; }
-Line 18 col 12 IdentifierName "connectExport" = connectExport
-Line 19 col 0 IdentifierName "test1" = connectModule
-Line 20 col 15 IdentifierName "connectModule" = connectModule
-Line 21 col 0 IdentifierName "test2" = () => connectModule
-Line 22 col 17 IdentifierName "connectModule" = connectModule
+declare module 'connect' {
+
+    interface connectModule {
+>connectModule : connectModule
+
+        (res, req, next): void;
+>res : any
+>req : any
+>next : any
+
+    }
+
+    interface connectExport {
+>connectExport : connectExport
+
+>use : (mod: connectModule) => connectExport
+
+        use: (mod: connectModule) => connectExport;
+>mod : connectModule
+>connectModule : connectModule
+>connectExport : connectExport
+
+>listen : (port: number) => void
+
+        listen: (port: number) => void;
+>port : number
+
+    }
+
+    var server: {
+>server : { test1: connectModule; test2(): connectModule; (): connectExport; }
+
+        (): connectExport;
+>connectExport : connectExport
+
+>test1 : connectModule
+
+        test1: connectModule;   // No error
+>connectModule : connectModule
+
+>test2 : () => connectModule
+
+        test2(): connectModule; // ERROR: Return type of method from exported interface has or is using private type ''connect'.connectModule'.
+>connectModule : connectModule
+
+    };
+}
+

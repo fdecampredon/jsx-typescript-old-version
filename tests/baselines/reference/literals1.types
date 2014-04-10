@@ -1,15 +1,43 @@
 === tests/cases/compiler/literals1.ts ===
-Line 0 col 4 IdentifierName "a" = number
-Line 1 col 4 IdentifierName "b" = number
-Line 2 col 4 IdentifierName "c" = number
-Line 3 col 4 IdentifierName "d" = number
-Line 4 col 4 IdentifierName "e" = number
-Line 6 col 4 IdentifierName "f" = boolean
-Line 7 col 4 IdentifierName "g" = boolean
-Line 9 col 4 IdentifierName "h" = string
-Line 10 col 4 IdentifierName "i" = string
-Line 11 col 4 IdentifierName "j" = string
-Line 12 col 4 IdentifierName "k" = string
-Line 14 col 4 IdentifierName "m" = RegExp
-Line 15 col 4 IdentifierName "n" = RegExp
-Line 16 col 4 IdentifierName "o" = RegExp
+var a = 42;
+>a : number
+
+var b = 0xFA34;
+>b : number
+
+var c = 0.1715;
+>c : number
+
+var d = 3.14E5;
+>d : number
+
+var e = 8.14e-5;
+>e : number
+
+var f = true;
+>f : boolean
+
+var g = false;
+>g : boolean
+
+var h = "";
+>h : string
+
+var i = "hi";
+>i : string
+
+var j = '';
+>j : string
+
+var k = 'q\tq';
+>k : string
+
+var m = /q/;
+>m : RegExp
+
+var n = /\d+/g;
+>n : RegExp
+
+var o = /[3-5]+/i;
+>o : RegExp
+

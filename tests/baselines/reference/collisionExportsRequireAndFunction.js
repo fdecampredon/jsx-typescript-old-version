@@ -1,3 +1,4 @@
+//// [collisionExportsRequireAndFunction.js]
 define(["require", "exports"], function(require, exports) {
     function exports() {
         return 1;

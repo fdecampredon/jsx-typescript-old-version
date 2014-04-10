@@ -1,113 +1,174 @@
 === tests/cases/compiler/commaOperatorWithSecondOperandStringType.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 6 col 4 IdentifierName "resultIsString" = string
-Line 7 col 0 CommaExpression "//The second operand is string
-ANY, STRING" = string
-Line 7 col 0 IdentifierName "//The second operand is string
-ANY" = any
-Line 9 col 5 IdentifierName "STRING" = string
-Line 10 col 0 CommaExpression "BOOLEAN, STRING" = string
-Line 10 col 0 IdentifierName "BOOLEAN" = boolean
-Line 10 col 9 IdentifierName "STRING" = string
-Line 11 col 0 CommaExpression "NUMBER, STRING" = string
-Line 11 col 0 IdentifierName "NUMBER" = number
-Line 11 col 8 IdentifierName "STRING" = string
-Line 12 col 0 CommaExpression "STRING, STRING" = string
-Line 12 col 0 IdentifierName "STRING" = string
-Line 12 col 8 IdentifierName "STRING" = string
-Line 13 col 0 CommaExpression "OBJECT, STRING" = string
-Line 13 col 0 IdentifierName "OBJECT" = Object
-Line 13 col 8 IdentifierName "STRING" = string
-Line 16 col 4 IdentifierName "resultIsString1" = string
-Line 16 col 22 ParenthesizedExpression "(ANY, STRING)" = string
-Line 16 col 23 CommaExpression "ANY, STRING" = string
-Line 16 col 23 IdentifierName "ANY" = any
-Line 16 col 28 IdentifierName "STRING" = string
-Line 17 col 4 IdentifierName "resultIsString2" = string
-Line 17 col 22 ParenthesizedExpression "(BOOLEAN, STRING)" = string
-Line 17 col 23 CommaExpression "BOOLEAN, STRING" = string
-Line 17 col 23 IdentifierName "BOOLEAN" = boolean
-Line 17 col 32 IdentifierName "STRING" = string
-Line 18 col 4 IdentifierName "resultIsString3" = string
-Line 18 col 22 ParenthesizedExpression "(NUMBER, STRING)" = string
-Line 18 col 23 CommaExpression "NUMBER, STRING" = string
-Line 18 col 23 IdentifierName "NUMBER" = number
-Line 18 col 31 IdentifierName "STRING" = string
-Line 19 col 4 IdentifierName "resultIsString4" = string
-Line 19 col 22 ParenthesizedExpression "(STRING, STRING)" = string
-Line 19 col 23 CommaExpression "STRING, STRING" = string
-Line 19 col 23 IdentifierName "STRING" = string
-Line 19 col 31 IdentifierName "STRING" = string
-Line 20 col 4 IdentifierName "resultIsString5" = string
-Line 20 col 22 ParenthesizedExpression "(OBJECT, STRING)" = string
-Line 20 col 23 CommaExpression "OBJECT, STRING" = string
-Line 20 col 23 IdentifierName "OBJECT" = Object
-Line 20 col 31 IdentifierName "STRING" = string
-Line 21 col 0 CommaExpression "//Literal and expression
-null, STRING" = string
-Line 23 col 6 IdentifierName "STRING" = string
-Line 24 col 0 CommaExpression "ANY = new Date(), STRING" = string
-Line 24 col 0 AssignmentExpression "ANY = new Date()" = Date
-Line 24 col 0 IdentifierName "ANY" = any
-Line 24 col 6 ObjectCreationExpression "new Date()" = Date
-Line 24 col 10 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 24 col 18 IdentifierName "STRING" = string
-Line 25 col 0 CommaExpression "true, """ = string
-Line 26 col 0 CommaExpression "BOOLEAN == undefined, """ = string
-Line 26 col 0 EqualsWithTypeConversionExpression "BOOLEAN == undefined" = boolean
-Line 26 col 0 IdentifierName "BOOLEAN" = boolean
-Line 26 col 11 IdentifierName "undefined" = any
-Line 27 col 0 CommaExpression "["a", "b"], NUMBER.toString()" = string
-Line 27 col 0 ArrayLiteralExpression "["a", "b"]" = string[]
-Line 27 col 12 InvocationExpression "NUMBER.toString()" = string
-Line 27 col 12 MemberAccessExpression "NUMBER.toString" = (radix?: number) => string
-Line 27 col 12 IdentifierName "NUMBER" = number
-Line 27 col 19 IdentifierName "toString" = (radix?: number) => string
-Line 28 col 0 CommaExpression "OBJECT = new Object, STRING + "string"" = string
-Line 28 col 0 AssignmentExpression "OBJECT = new Object" = Object
-Line 28 col 0 IdentifierName "OBJECT" = Object
-Line 28 col 9 ObjectCreationExpression "new Object" = Object
-Line 28 col 13 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 28 col 21 AddExpression "STRING + "string"" = string
-Line 28 col 21 IdentifierName "STRING" = string
-Line 30 col 4 IdentifierName "resultIsString6" = string
-Line 30 col 22 ParenthesizedExpression "(null, STRING)" = string
-Line 30 col 23 CommaExpression "null, STRING" = string
-Line 30 col 29 IdentifierName "STRING" = string
-Line 31 col 4 IdentifierName "resultIsString7" = string
-Line 31 col 22 ParenthesizedExpression "(ANY = new Date(), STRING)" = string
-Line 31 col 23 CommaExpression "ANY = new Date(), STRING" = string
-Line 31 col 23 AssignmentExpression "ANY = new Date()" = Date
-Line 31 col 23 IdentifierName "ANY" = any
-Line 31 col 29 ObjectCreationExpression "new Date()" = Date
-Line 31 col 33 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 31 col 41 IdentifierName "STRING" = string
-Line 32 col 4 IdentifierName "resultIsString8" = string
-Line 32 col 22 ParenthesizedExpression "(true, "")" = string
-Line 32 col 23 CommaExpression "true, """ = string
-Line 33 col 4 IdentifierName "resultIsString9" = string
-Line 33 col 22 ParenthesizedExpression "(BOOLEAN == undefined, "")" = string
-Line 33 col 23 CommaExpression "BOOLEAN == undefined, """ = string
-Line 33 col 23 EqualsWithTypeConversionExpression "BOOLEAN == undefined" = boolean
-Line 33 col 23 IdentifierName "BOOLEAN" = boolean
-Line 33 col 34 IdentifierName "undefined" = any
-Line 34 col 4 IdentifierName "resultIsString10" = string
-Line 34 col 23 ParenthesizedExpression "(["a", "b"], NUMBER.toString())" = string
-Line 34 col 24 CommaExpression "["a", "b"], NUMBER.toString()" = string
-Line 34 col 24 ArrayLiteralExpression "["a", "b"]" = string[]
-Line 34 col 36 InvocationExpression "NUMBER.toString()" = string
-Line 34 col 36 MemberAccessExpression "NUMBER.toString" = (radix?: number) => string
-Line 34 col 36 IdentifierName "NUMBER" = number
-Line 34 col 43 IdentifierName "toString" = (radix?: number) => string
-Line 35 col 4 IdentifierName "resultIsString11" = string
-Line 35 col 23 ParenthesizedExpression "(new Object, STRING + "string")" = string
-Line 35 col 24 CommaExpression "new Object, STRING + "string"" = string
-Line 35 col 24 ObjectCreationExpression "new Object" = Object
-Line 35 col 28 IdentifierName "Object" = { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
-Line 35 col 36 AddExpression "STRING + "string"" = string
-Line 35 col 36 IdentifierName "STRING" = string
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+var resultIsString: string;
+>resultIsString : string
+
+>//The second operand is string
+ANY, STRING : string
+>//The second operand is string
+ANY : any
+
+//The second operand is string
+ANY, STRING;
+>STRING : string
+
+BOOLEAN, STRING;
+>BOOLEAN, STRING : string
+>BOOLEAN : boolean
+>STRING : string
+
+NUMBER, STRING;
+>NUMBER, STRING : string
+>NUMBER : number
+>STRING : string
+
+STRING, STRING;
+>STRING, STRING : string
+>STRING : string
+>STRING : string
+
+OBJECT, STRING;
+>OBJECT, STRING : string
+>OBJECT : Object
+>STRING : string
+
+//Return type is string
+var resultIsString1 = (ANY, STRING);
+>resultIsString1 : string
+>(ANY, STRING) : string
+>ANY, STRING : string
+>ANY : any
+>STRING : string
+
+var resultIsString2 = (BOOLEAN, STRING);
+>resultIsString2 : string
+>(BOOLEAN, STRING) : string
+>BOOLEAN, STRING : string
+>BOOLEAN : boolean
+>STRING : string
+
+var resultIsString3 = (NUMBER, STRING);
+>resultIsString3 : string
+>(NUMBER, STRING) : string
+>NUMBER, STRING : string
+>NUMBER : number
+>STRING : string
+
+var resultIsString4 = (STRING, STRING);
+>resultIsString4 : string
+>(STRING, STRING) : string
+>STRING, STRING : string
+>STRING : string
+>STRING : string
+
+var resultIsString5 = (OBJECT, STRING);
+>resultIsString5 : string
+>(OBJECT, STRING) : string
+>OBJECT, STRING : string
+>OBJECT : Object
+>STRING : string
+
+>//Literal and expression
+null, STRING : string
+
+//Literal and expression
+null, STRING;
+>STRING : string
+
+ANY = new Date(), STRING;
+>ANY = new Date(), STRING : string
+>ANY = new Date() : Date
+>ANY : any
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>STRING : string
+
+true, "";
+>true, "" : string
+
+BOOLEAN == undefined, "";
+>BOOLEAN == undefined, "" : string
+>BOOLEAN == undefined : boolean
+>BOOLEAN : boolean
+>undefined : any
+
+["a", "b"], NUMBER.toString();
+>["a", "b"], NUMBER.toString() : string
+>["a", "b"] : string[]
+>NUMBER.toString() : string
+>NUMBER.toString : (radix?: number) => string
+>NUMBER : number
+>toString : (radix?: number) => string
+
+OBJECT = new Object, STRING + "string";
+>OBJECT = new Object, STRING + "string" : string
+>OBJECT = new Object : Object
+>OBJECT : Object
+>new Object : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+>STRING + "string" : string
+>STRING : string
+
+var resultIsString6 = (null, STRING);
+>resultIsString6 : string
+>(null, STRING) : string
+>null, STRING : string
+>STRING : string
+
+var resultIsString7 = (ANY = new Date(), STRING);
+>resultIsString7 : string
+>(ANY = new Date(), STRING) : string
+>ANY = new Date(), STRING : string
+>ANY = new Date() : Date
+>ANY : any
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+>STRING : string
+
+var resultIsString8 = (true, "");
+>resultIsString8 : string
+>(true, "") : string
+>true, "" : string
+
+var resultIsString9 = (BOOLEAN == undefined, "");
+>resultIsString9 : string
+>(BOOLEAN == undefined, "") : string
+>BOOLEAN == undefined, "" : string
+>BOOLEAN == undefined : boolean
+>BOOLEAN : boolean
+>undefined : any
+
+var resultIsString10 = (["a", "b"], NUMBER.toString());
+>resultIsString10 : string
+>(["a", "b"], NUMBER.toString()) : string
+>["a", "b"], NUMBER.toString() : string
+>["a", "b"] : string[]
+>NUMBER.toString() : string
+>NUMBER.toString : (radix?: number) => string
+>NUMBER : number
+>toString : (radix?: number) => string
+
+var resultIsString11 = (new Object, STRING + "string");
+>resultIsString11 : string
+>(new Object, STRING + "string") : string
+>new Object, STRING + "string" : string
+>new Object : Object
+>Object : { prototype: Object; getPrototypeOf(o: any): any; getOwnPropertyDescriptor(o: any, p: string): PropertyDescriptor; getOwnPropertyNames(o: any): string[]; create(o: any, properties?: PropertyDescriptorMap): any; defineProperty(o: any, p: string, attributes: PropertyDescriptor): any; defineProperties(o: any, properties: PropertyDescriptorMap): any; seal(o: any): any; freeze(o: any): any; preventExtensions(o: any): any; isSealed(o: any): boolean; isFrozen(o: any): boolean; isExtensible(o: any): boolean; keys(o: any): string[]; (): any; (value: any): any; new(value?: any): Object; }
+>STRING + "string" : string
+>STRING : string
+

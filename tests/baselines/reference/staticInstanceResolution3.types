@@ -1,13 +1,26 @@
 === tests/cases/compiler/staticInstanceResolution3_1.ts ===
-Line 1 col 7 IdentifierName "WinJS" = WinJS
-Line 2 col 0 InvocationExpression "WinJS.Promise.timeout(10)" = WinJS.Promise
-Line 2 col 0 MemberAccessExpression "WinJS.Promise.timeout" = (delay: number) => WinJS.Promise
-Line 2 col 0 MemberAccessExpression "WinJS.Promise" = typeof WinJS.Promise
-Line 2 col 0 IdentifierName "WinJS" = typeof WinJS
-Line 2 col 6 IdentifierName "Promise" = typeof WinJS.Promise
-Line 2 col 14 IdentifierName "timeout" = (delay: number) => WinJS.Promise
+///<reference path='staticInstanceResolution3_0.ts'/>
+import WinJS = require('staticInstanceResolution3_0');
+>WinJS : WinJS
+
+WinJS.Promise.timeout(10);
+>WinJS.Promise.timeout(10) : WinJS.Promise
+>WinJS.Promise.timeout : (delay: number) => WinJS.Promise
+>WinJS.Promise : typeof WinJS.Promise
+>WinJS : typeof WinJS
+>Promise : typeof WinJS.Promise
+>timeout : (delay: number) => WinJS.Promise
+
 === tests/cases/compiler/staticInstanceResolution3_0.ts ===
-Line 0 col 13 IdentifierName "Promise" = Promise
-Line 1 col 11 IdentifierName "timeout" = (delay: number) => Promise
-Line 1 col 19 IdentifierName "delay" = number
-Line 1 col 35 IdentifierName "Promise" = Promise
+export class Promise {
+>Promise : Promise
+
+    static timeout(delay: number): Promise {
+>timeout : (delay: number) => Promise
+>delay : number
+>Promise : Promise
+
+        return null;
+    }
+}
+

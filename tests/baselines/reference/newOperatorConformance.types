@@ -1,69 +1,149 @@
 === tests/cases/compiler/newOperatorConformance.ts ===
-Line 1 col 6 IdentifierName "C0" = C0
-Line 4 col 6 IdentifierName "C1" = C1
-Line 5 col 16 IdentifierName "n" = number
-Line 5 col 27 IdentifierName "s" = string
-Line 8 col 6 IdentifierName "T" = T<T>
-Line 8 col 8 IdentifierName "T" = T
-Line 9 col 16 IdentifierName "n" = T
-Line 9 col 20 IdentifierName "T" = T
-Line 12 col 4 IdentifierName "anyCtor" = new() => any
-Line 16 col 4 IdentifierName "anyCtor1" = new(n: any) => any
-Line 17 col 9 IdentifierName "n" = any
-Line 20 col 10 IdentifierName "nestedCtor" = nestedCtor
-Line 21 col 12 IdentifierName "nestedCtor" = nestedCtor
-Line 23 col 4 IdentifierName "nestedCtor" = nestedCtor
-Line 23 col 16 IdentifierName "nestedCtor" = nestedCtor
-Line 26 col 4 IdentifierName "a" = C0
-Line 26 col 8 ObjectCreationExpression "new C0" = C0
-Line 26 col 12 IdentifierName "C0" = typeof C0
-Line 27 col 4 IdentifierName "a" = C0
-Line 27 col 7 IdentifierName "C0" = C0
-Line 31 col 4 IdentifierName "c1" = T<{}>
-Line 31 col 9 ObjectCreationExpression "new T" = T<{}>
-Line 31 col 13 IdentifierName "T" = typeof T
-Line 32 col 4 IdentifierName "c1" = T<{}>
-Line 32 col 8 IdentifierName "T" = T<T>
-Line 35 col 4 IdentifierName "d" = any
-Line 35 col 8 ObjectCreationExpression "new anyCtor" = any
-Line 35 col 12 IdentifierName "anyCtor" = new() => any
-Line 36 col 4 IdentifierName "d" = any
-Line 39 col 4 IdentifierName "d" = any
-Line 39 col 8 ObjectCreationExpression "new anyCtor1(undefined)" = any
-Line 39 col 12 IdentifierName "anyCtor1" = new(n: any) => any
-Line 39 col 21 IdentifierName "undefined" = any
-Line 42 col 9 IdentifierName "newFn1" = typeof newFn1
-Line 42 col 16 IdentifierName "T" = T
-Line 42 col 46 IdentifierName "s" = T
-Line 42 col 49 IdentifierName "T" = T
-Line 43 col 8 IdentifierName "p" = number
-Line 43 col 12 ObjectCreationExpression "new s" = number
-Line 43 col 16 IdentifierName "s" = T
-Line 44 col 8 IdentifierName "p" = number
-Line 48 col 9 IdentifierName "newFn2" = typeof newFn2
-Line 48 col 16 IdentifierName "T" = T
-Line 48 col 33 IdentifierName "s" = number
-Line 48 col 54 IdentifierName "s" = T
-Line 48 col 57 IdentifierName "T" = T
-Line 49 col 8 IdentifierName "p" = string
-Line 49 col 12 ObjectCreationExpression "new s(32)" = string
-Line 49 col 16 IdentifierName "s" = T
-Line 50 col 8 IdentifierName "p" = string
-Line 54 col 9 IdentifierName "fnVoid" = typeof fnVoid
-Line 55 col 4 IdentifierName "t" = any
-Line 55 col 8 ObjectCreationExpression "new fnVoid()" = any
-Line 55 col 12 IdentifierName "fnVoid" = typeof fnVoid
-Line 56 col 4 IdentifierName "t" = any
-Line 59 col 4 IdentifierName "nested" = nestedCtor
-Line 59 col 13 ObjectCreationExpression "new (new (new nestedCtor())())()" = nestedCtor
-Line 59 col 17 ParenthesizedExpression "(new (new nestedCtor())())" = nestedCtor
-Line 59 col 18 ObjectCreationExpression "new (new nestedCtor())()" = nestedCtor
-Line 59 col 22 ParenthesizedExpression "(new nestedCtor())" = nestedCtor
-Line 59 col 23 ObjectCreationExpression "new nestedCtor()" = nestedCtor
-Line 59 col 27 IdentifierName "nestedCtor" = nestedCtor
-Line 60 col 4 IdentifierName "n" = nestedCtor
-Line 60 col 8 ObjectCreationExpression "new nested()" = nestedCtor
-Line 60 col 12 IdentifierName "nested" = nestedCtor
-Line 61 col 4 IdentifierName "n" = nestedCtor
-Line 61 col 8 ObjectCreationExpression "new nested()" = nestedCtor
-Line 61 col 12 IdentifierName "nested" = nestedCtor
+
+class C0 {
+>C0 : C0
+
+}
+class C1 {
+>C1 : C1
+
+    constructor(n: number, s: string) { }
+>n : number
+>s : string
+}
+
+class T<T> {
+>T : T<T>
+>T : T
+
+    constructor(n?: T) { }
+>n : T
+>T : T
+}
+
+var anyCtor: {
+>anyCtor : new() => any
+
+    new (): any;
+};
+
+var anyCtor1: {
+>anyCtor1 : new(n: any) => any
+
+    new (n): any;
+>n : any
+
+};
+
+interface nestedCtor {
+>nestedCtor : nestedCtor
+
+    new (): nestedCtor;
+>nestedCtor : nestedCtor
+}
+var nestedCtor: nestedCtor;
+>nestedCtor : nestedCtor
+>nestedCtor : nestedCtor
+
+// Construct expression with no parentheses for construct signature with 0 parameters
+var a = new C0;
+>a : C0
+>new C0 : C0
+>C0 : typeof C0
+
+var a: C0;
+>a : C0
+>C0 : C0
+
+
+// Generic construct expression with no parentheses
+var c1 = new T;
+>c1 : T<{}>
+>new T : T<{}>
+>T : typeof T
+
+var c1: T<{}>;
+>c1 : T<{}>
+>T : T<T>
+
+// Construct expression where constructor is of type 'any' with no parentheses
+var d = new anyCtor;
+>d : any
+>new anyCtor : any
+>anyCtor : new() => any
+
+var d: any;
+>d : any
+
+// Construct expression where constructor is of type 'any' with > 1 arg
+var d = new anyCtor1(undefined);
+>d : any
+>new anyCtor1(undefined) : any
+>anyCtor1 : new(n: any) => any
+>undefined : any
+
+// Construct expression of type where apparent type has a construct signature with 0 arguments
+function newFn1<T extends { new (): number }>(s: T) {
+>newFn1 : typeof newFn1
+>T : T
+>s : T
+>T : T
+
+    var p = new s;
+>p : number
+>new s : number
+>s : T
+
+    var p: number;
+>p : number
+}
+
+// Construct expression of type where apparent type has a construct signature with 1 arguments
+function newFn2<T extends { new (s: number): string}>(s: T) {
+>newFn2 : typeof newFn2
+>T : T
+>s : number
+>s : T
+>T : T
+
+    var p = new s(32);
+>p : string
+>new s(32) : string
+>s : T
+
+    var p: string;
+>p : string
+}
+
+// Construct expression of void returning function
+function fnVoid(): void { }
+>fnVoid : typeof fnVoid
+
+var t = new fnVoid();
+>t : any
+>new fnVoid() : any
+>fnVoid : typeof fnVoid
+
+var t: any;
+>t : any
+
+// Chained new expressions
+var nested = new (new (new nestedCtor())())();
+>nested : nestedCtor
+>new (new (new nestedCtor())())() : nestedCtor
+>(new (new nestedCtor())()) : nestedCtor
+>new (new nestedCtor())() : nestedCtor
+>(new nestedCtor()) : nestedCtor
+>new nestedCtor() : nestedCtor
+>nestedCtor : nestedCtor
+
+var n = new nested();
+>n : nestedCtor
+>new nested() : nestedCtor
+>nested : nestedCtor
+
+var n = new nested();
+>n : nestedCtor
+>new nested() : nestedCtor
+>nested : nestedCtor
+

@@ -1,3 +1,4 @@
+//// [subtypingWithObjectMembersOptionality2.js]
 // Derived member is optional but base member is not, should be an error
 
 // object literal case

@@ -1,60 +1,107 @@
 === tests/cases/compiler/constraintSatisfactionWithEmptyObject.ts ===
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "T" = T
-Line 3 col 23 IdentifierName "Object" = Object
-Line 3 col 31 IdentifierName "x" = T
-Line 3 col 34 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "r" = void
-Line 4 col 8 InvocationExpression "foo({})" = void
-Line 4 col 8 IdentifierName "foo" = typeof foo
-Line 4 col 12 ObjectLiteralExpression "{}" = {}
-Line 5 col 4 IdentifierName "a" = {}
-Line 5 col 8 ObjectLiteralExpression "{}" = {}
-Line 6 col 4 IdentifierName "r" = void
-Line 6 col 8 InvocationExpression "foo({})" = void
-Line 6 col 8 IdentifierName "foo" = typeof foo
-Line 6 col 12 ObjectLiteralExpression "{}" = {}
-Line 8 col 6 IdentifierName "C" = C<T>
-Line 8 col 8 IdentifierName "T" = T
-Line 8 col 18 IdentifierName "Object" = Object
-Line 9 col 23 IdentifierName "x" = T
-Line 9 col 26 IdentifierName "T" = T
-Line 12 col 4 IdentifierName "r2" = C<{}>
-Line 12 col 9 ObjectCreationExpression "new C({})" = C<{}>
-Line 12 col 13 IdentifierName "C" = typeof C
-Line 12 col 15 ObjectLiteralExpression "{}" = {}
-Line 14 col 10 IdentifierName "I" = I<T>
-Line 14 col 12 IdentifierName "T" = T
-Line 14 col 22 IdentifierName "Object" = Object
-Line 15 col 0 IdentifierName "x" = T
-Line 15 col 7 IdentifierName "T" = T
-Line 17 col 4 IdentifierName "i" = I<{}>
-Line 17 col 7 IdentifierName "I" = I<T>
-Line 20 col 9 IdentifierName "foo2" = typeof foo2
-Line 20 col 14 IdentifierName "T" = T
-Line 20 col 28 IdentifierName "x" = T
-Line 20 col 31 IdentifierName "T" = T
-Line 21 col 4 IdentifierName "r" = void
-Line 21 col 8 InvocationExpression "foo2({})" = void
-Line 21 col 8 IdentifierName "foo2" = typeof foo2
-Line 21 col 13 ObjectLiteralExpression "{}" = {}
-Line 22 col 4 IdentifierName "a" = {}
-Line 22 col 8 ObjectLiteralExpression "{}" = {}
-Line 23 col 4 IdentifierName "r" = void
-Line 23 col 8 InvocationExpression "foo2({})" = void
-Line 23 col 8 IdentifierName "foo2" = typeof foo2
-Line 23 col 13 ObjectLiteralExpression "{}" = {}
-Line 25 col 6 IdentifierName "C2" = C2<T>
-Line 25 col 9 IdentifierName "T" = T
-Line 26 col 23 IdentifierName "x" = T
-Line 26 col 26 IdentifierName "T" = T
-Line 29 col 4 IdentifierName "r2" = C2<{}>
-Line 29 col 9 ObjectCreationExpression "new C2({})" = C2<{}>
-Line 29 col 13 IdentifierName "C2" = typeof C2
-Line 29 col 16 ObjectLiteralExpression "{}" = {}
-Line 31 col 10 IdentifierName "I2" = I2<T>
-Line 31 col 13 IdentifierName "T" = T
-Line 32 col 0 IdentifierName "x" = T
-Line 32 col 7 IdentifierName "T" = T
-Line 34 col 4 IdentifierName "i2" = I2<{}>
-Line 34 col 8 IdentifierName "I2" = I2<T>
+// valid uses of a basic object constraint, no errors expected
+
+// Object constraint
+function foo<T extends Object>(x: T) { }
+>foo : typeof foo
+>T : T
+>Object : Object
+>x : T
+>T : T
+
+var r = foo({});
+>r : void
+>foo({}) : void
+>foo : typeof foo
+>{} : {}
+
+var a = {};
+>a : {}
+>{} : {}
+
+var r = foo({});
+>r : void
+>foo({}) : void
+>foo : typeof foo
+>{} : {}
+
+class C<T extends Object> {
+>C : C<T>
+>T : T
+>Object : Object
+
+    constructor(public x: T) { }
+>x : T
+>T : T
+}
+
+var r2 = new C({});
+>r2 : C<{}>
+>new C({}) : C<{}>
+>C : typeof C
+>{} : {}
+
+interface I<T extends Object> {
+>I : I<T>
+>T : T
+>Object : Object
+
+    x: T;
+>x : T
+>T : T
+}
+var i: I<{}>;
+>i : I<{}>
+>I : I<T>
+
+// {} constraint
+function foo2<T extends {}>(x: T) { }
+>foo2 : typeof foo2
+>T : T
+>x : T
+>T : T
+
+var r = foo2({});
+>r : void
+>foo2({}) : void
+>foo2 : typeof foo2
+>{} : {}
+
+var a = {};
+>a : {}
+>{} : {}
+
+var r = foo2({});
+>r : void
+>foo2({}) : void
+>foo2 : typeof foo2
+>{} : {}
+
+class C2<T extends {}> {
+>C2 : C2<T>
+>T : T
+
+    constructor(public x: T) { }
+>x : T
+>T : T
+}
+
+var r2 = new C2({});
+>r2 : C2<{}>
+>new C2({}) : C2<{}>
+>C2 : typeof C2
+>{} : {}
+
+interface I2<T extends {}> {
+>I2 : I2<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+var i2: I2<{}>;
+>i2 : I2<{}>
+>I2 : I2<T>
+
+

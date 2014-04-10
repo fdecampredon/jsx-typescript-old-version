@@ -1,41 +1,85 @@
 === tests/cases/compiler/memberVariableDeclarations1.ts ===
-Line 2 col 6 IdentifierName "Employee" = Employee
-Line 3 col 11 IdentifierName "name" = string
-Line 4 col 11 IdentifierName "address" = string
-Line 5 col 11 IdentifierName "retired" = boolean
-Line 6 col 11 IdentifierName "manager" = Employee
-Line 6 col 20 IdentifierName "Employee" = Employee
-Line 7 col 11 IdentifierName "reports" = Employee[]
-Line 7 col 20 IdentifierName "Employee" = Employee
-Line 7 col 33 ArrayLiteralExpression "[]" = Employee[]
-Line 10 col 6 IdentifierName "Employee2" = Employee2
-Line 11 col 11 IdentifierName "name" = string
-Line 12 col 11 IdentifierName "address" = string
-Line 13 col 11 IdentifierName "retired" = boolean
-Line 14 col 11 IdentifierName "manager" = Employee
-Line 14 col 20 IdentifierName "Employee" = Employee
-Line 15 col 11 IdentifierName "reports" = Employee[]
-Line 15 col 20 IdentifierName "Employee" = Employee
-Line 17 col 0 AssignmentExpression "this.retired = false" = boolean
-Line 17 col 0 MemberAccessExpression "this.retired" = boolean
-Line 17 col 0 ThisKeyword "this" = Employee2
-Line 17 col 13 IdentifierName "retired" = boolean
-Line 18 col 0 AssignmentExpression "this.manager = null" = any
-Line 18 col 0 MemberAccessExpression "this.manager" = Employee
-Line 18 col 0 ThisKeyword "this" = Employee2
-Line 18 col 13 IdentifierName "manager" = Employee
-Line 19 col 0 AssignmentExpression "this.reports = []" = Employee[]
-Line 19 col 0 MemberAccessExpression "this.reports" = Employee[]
-Line 19 col 0 ThisKeyword "this" = Employee2
-Line 19 col 13 IdentifierName "reports" = Employee[]
-Line 19 col 23 ArrayLiteralExpression "[]" = Employee[]
-Line 23 col 4 IdentifierName "e1" = Employee
-Line 23 col 8 IdentifierName "Employee" = Employee
-Line 24 col 4 IdentifierName "e2" = Employee2
-Line 24 col 8 IdentifierName "Employee2" = Employee2
-Line 25 col 0 AssignmentExpression "e1 = e2" = Employee2
-Line 25 col 0 IdentifierName "e1" = Employee
-Line 25 col 5 IdentifierName "e2" = Employee2
-Line 26 col 0 AssignmentExpression "e2 = e1" = Employee
-Line 26 col 0 IdentifierName "e2" = Employee2
-Line 26 col 5 IdentifierName "e1" = Employee
+// from spec
+
+class Employee {
+>Employee : Employee
+
+    public name: string;
+>name : string
+
+    public address: string;
+>address : string
+
+    public retired = false;
+>retired : boolean
+
+    public manager: Employee = null;
+>manager : Employee
+>Employee : Employee
+
+    public reports: Employee[] = [];
+>reports : Employee[]
+>Employee : Employee
+>[] : Employee[]
+}
+
+class Employee2 {
+>Employee2 : Employee2
+
+    public name: string;
+>name : string
+
+    public address: string;
+>address : string
+
+    public retired: boolean;
+>retired : boolean
+
+    public manager: Employee;
+>manager : Employee
+>Employee : Employee
+
+    public reports: Employee[];
+>reports : Employee[]
+>Employee : Employee
+
+    constructor() {
+        this.retired = false;
+>this.retired = false : boolean
+>this.retired : boolean
+>this : Employee2
+>retired : boolean
+
+        this.manager = null;
+>this.manager = null : any
+>this.manager : Employee
+>this : Employee2
+>manager : Employee
+
+        this.reports = [];
+>this.reports = [] : Employee[]
+>this.reports : Employee[]
+>this : Employee2
+>reports : Employee[]
+>[] : Employee[]
+    }
+}
+
+var e1: Employee;
+>e1 : Employee
+>Employee : Employee
+
+var e2: Employee2;
+>e2 : Employee2
+>Employee2 : Employee2
+
+e1 = e2;
+>e1 = e2 : Employee2
+>e1 : Employee
+>e2 : Employee2
+
+e2 = e1;
+>e2 = e1 : Employee
+>e2 : Employee2
+>e1 : Employee
+

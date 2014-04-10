@@ -1,11 +1,20 @@
 === tests/cases/compiler/dynamicModuleTypecheckError.ts ===
-Line 0 col 11 IdentifierName "x" = number
-Line 2 col 8 IdentifierName "i" = number
-Line 2 col 15 LessThanExpression "i < 30" = boolean
-Line 2 col 15 IdentifierName "i" = number
-Line 2 col 23 PostIncrementExpression "i++" = number
-Line 2 col 23 IdentifierName "i" = number
-Line 3 col 0 AssignmentExpression "x = i * 1000" = number
-Line 3 col 0 IdentifierName "x" = number
-Line 4 col 8 MultiplyExpression "i * 1000" = number
-Line 4 col 8 IdentifierName "i" = number
+export var x = 1;
+>x : number
+ 
+for(var i = 0; i < 30; i++) {
+>i : number
+>i < 30 : boolean
+>i : number
+>i++ : number
+>i : number
+ 
+>x = i * 1000 : number
+>x : number
+
+    x = i * 1000; // should not be an error here
+>i * 1000 : number
+>i : number
+ 
+}
+

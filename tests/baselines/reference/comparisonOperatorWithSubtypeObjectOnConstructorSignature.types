@@ -1,647 +1,1023 @@
 === tests/cases/compiler/comparisonOperatorWithSubtypeObjectOnConstructorSignature.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 11 IdentifierName "a" = string
-Line 4 col 6 IdentifierName "Derived" = Derived
-Line 4 col 22 IdentifierName "Base" = Base
-Line 5 col 11 IdentifierName "b" = string
-Line 8 col 4 IdentifierName "a1" = new() => Base
-Line 8 col 18 IdentifierName "Base" = Base
-Line 9 col 4 IdentifierName "b1" = new() => Base
-Line 9 col 18 IdentifierName "Base" = Base
-Line 11 col 4 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 11 col 15 IdentifierName "a" = number
-Line 11 col 26 IdentifierName "b" = string
-Line 11 col 38 IdentifierName "Base" = Base
-Line 12 col 4 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 12 col 15 IdentifierName "a" = number
-Line 12 col 26 IdentifierName "b" = string
-Line 12 col 38 IdentifierName "Base" = Base
-Line 14 col 4 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 14 col 15 IdentifierName "a" = number
-Line 14 col 26 IdentifierName "b" = string
-Line 14 col 38 IdentifierName "Base" = Base
-Line 15 col 4 IdentifierName "b3" = new(a: number) => Base
-Line 15 col 15 IdentifierName "a" = number
-Line 15 col 27 IdentifierName "Base" = Base
-Line 17 col 4 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 17 col 15 IdentifierName "a" = number
-Line 17 col 26 IdentifierName "b" = string
-Line 17 col 38 IdentifierName "Base" = Base
-Line 18 col 4 IdentifierName "b4" = new() => Base
-Line 18 col 18 IdentifierName "Base" = Base
-Line 20 col 4 IdentifierName "a5" = new(a: Base) => Base
-Line 20 col 15 IdentifierName "a" = Base
-Line 20 col 18 IdentifierName "Base" = Base
-Line 20 col 25 IdentifierName "Base" = Base
-Line 21 col 4 IdentifierName "b5" = new(a: Derived) => Base
-Line 21 col 15 IdentifierName "a" = Derived
-Line 21 col 18 IdentifierName "Derived" = Derived
-Line 21 col 28 IdentifierName "Base" = Base
-Line 23 col 4 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 23 col 15 IdentifierName "a" = Derived
-Line 23 col 18 IdentifierName "Derived" = Derived
-Line 23 col 27 IdentifierName "b" = Base
-Line 23 col 30 IdentifierName "Base" = Base
-Line 23 col 37 IdentifierName "Base" = Base
-Line 24 col 4 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 24 col 15 IdentifierName "a" = Base
-Line 24 col 18 IdentifierName "Base" = Base
-Line 24 col 24 IdentifierName "b" = Derived
-Line 24 col 27 IdentifierName "Derived" = Derived
-Line 24 col 37 IdentifierName "Base" = Base
-Line 26 col 4 IdentifierName "a7" = new() => Base
-Line 26 col 18 IdentifierName "Base" = Base
-Line 27 col 4 IdentifierName "b7" = new() => Derived
-Line 27 col 18 IdentifierName "Derived" = Derived
-Line 29 col 4 IdentifierName "a8" = new(a?: Base) => Base
-Line 29 col 15 IdentifierName "a" = Base
-Line 29 col 19 IdentifierName "Base" = Base
-Line 29 col 26 IdentifierName "Base" = Base
-Line 30 col 4 IdentifierName "b8" = new(a?: Derived) => Base
-Line 30 col 15 IdentifierName "a" = Derived
-Line 30 col 19 IdentifierName "Derived" = Derived
-Line 30 col 29 IdentifierName "Base" = Base
-Line 32 col 4 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 32 col 18 IdentifierName "a" = Base[]
-Line 32 col 21 IdentifierName "Base" = Base
-Line 32 col 30 IdentifierName "Base" = Base
-Line 33 col 4 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 33 col 18 IdentifierName "a" = Derived[]
-Line 33 col 21 IdentifierName "Derived" = Derived
-Line 33 col 33 IdentifierName "Base" = Base
-Line 39 col 4 IdentifierName "r1a1" = boolean
-Line 39 col 11 LessThanExpression "a1 < b1" = boolean
-Line 39 col 11 IdentifierName "a1" = new() => Base
-Line 39 col 16 IdentifierName "b1" = new() => Base
-Line 40 col 4 IdentifierName "r1a2" = boolean
-Line 40 col 11 LessThanExpression "a2 < b2" = boolean
-Line 40 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 40 col 16 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 41 col 4 IdentifierName "r1a3" = boolean
-Line 41 col 11 LessThanExpression "a3 < b3" = boolean
-Line 41 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 41 col 16 IdentifierName "b3" = new(a: number) => Base
-Line 42 col 4 IdentifierName "r1a4" = boolean
-Line 42 col 11 LessThanExpression "a4 < b4" = boolean
-Line 42 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 42 col 16 IdentifierName "b4" = new() => Base
-Line 43 col 4 IdentifierName "r1a5" = boolean
-Line 43 col 11 LessThanExpression "a5 < b5" = boolean
-Line 43 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 43 col 16 IdentifierName "b5" = new(a: Derived) => Base
-Line 44 col 4 IdentifierName "r1a6" = boolean
-Line 44 col 11 LessThanExpression "a6 < b6" = boolean
-Line 44 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 44 col 16 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 45 col 4 IdentifierName "r1a7" = boolean
-Line 45 col 11 LessThanExpression "a7 < b7" = boolean
-Line 45 col 11 IdentifierName "a7" = new() => Base
-Line 45 col 16 IdentifierName "b7" = new() => Derived
-Line 46 col 4 IdentifierName "r1a8" = boolean
-Line 46 col 11 LessThanExpression "a8 < b8" = boolean
-Line 46 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 46 col 16 IdentifierName "b8" = new(a?: Derived) => Base
-Line 47 col 4 IdentifierName "r1a9" = boolean
-Line 47 col 11 LessThanExpression "a9 < b9" = boolean
-Line 47 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 47 col 16 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 50 col 4 IdentifierName "r1b1" = boolean
-Line 50 col 11 LessThanExpression "b1 < a1" = boolean
-Line 50 col 11 IdentifierName "b1" = new() => Base
-Line 50 col 16 IdentifierName "a1" = new() => Base
-Line 51 col 4 IdentifierName "r1b2" = boolean
-Line 51 col 11 LessThanExpression "b2 < a2" = boolean
-Line 51 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 51 col 16 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 52 col 4 IdentifierName "r1b3" = boolean
-Line 52 col 11 LessThanExpression "b3 < a3" = boolean
-Line 52 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 52 col 16 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 53 col 4 IdentifierName "r1b4" = boolean
-Line 53 col 11 LessThanExpression "b4 < a4" = boolean
-Line 53 col 11 IdentifierName "b4" = new() => Base
-Line 53 col 16 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 54 col 4 IdentifierName "r1b5" = boolean
-Line 54 col 11 LessThanExpression "b5 < a5" = boolean
-Line 54 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 54 col 16 IdentifierName "a5" = new(a: Base) => Base
-Line 55 col 4 IdentifierName "r1b6" = boolean
-Line 55 col 11 LessThanExpression "b6 < a6" = boolean
-Line 55 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 55 col 16 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 56 col 4 IdentifierName "r1b7" = boolean
-Line 56 col 11 LessThanExpression "b7 < a7" = boolean
-Line 56 col 11 IdentifierName "b7" = new() => Derived
-Line 56 col 16 IdentifierName "a7" = new() => Base
-Line 57 col 4 IdentifierName "r1b8" = boolean
-Line 57 col 11 LessThanExpression "b8 < a8" = boolean
-Line 57 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 57 col 16 IdentifierName "a8" = new(a?: Base) => Base
-Line 58 col 4 IdentifierName "r1b9" = boolean
-Line 58 col 11 LessThanExpression "b9 < a9" = boolean
-Line 58 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 58 col 16 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 62 col 4 IdentifierName "r2a1" = boolean
-Line 62 col 11 GreaterThanExpression "a1 > b1" = boolean
-Line 62 col 11 IdentifierName "a1" = new() => Base
-Line 62 col 16 IdentifierName "b1" = new() => Base
-Line 63 col 4 IdentifierName "r2a2" = boolean
-Line 63 col 11 GreaterThanExpression "a2 > b2" = boolean
-Line 63 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 63 col 16 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 64 col 4 IdentifierName "r2a3" = boolean
-Line 64 col 11 GreaterThanExpression "a3 > b3" = boolean
-Line 64 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 64 col 16 IdentifierName "b3" = new(a: number) => Base
-Line 65 col 4 IdentifierName "r2a4" = boolean
-Line 65 col 11 GreaterThanExpression "a4 > b4" = boolean
-Line 65 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 65 col 16 IdentifierName "b4" = new() => Base
-Line 66 col 4 IdentifierName "r2a5" = boolean
-Line 66 col 11 GreaterThanExpression "a5 > b5" = boolean
-Line 66 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 66 col 16 IdentifierName "b5" = new(a: Derived) => Base
-Line 67 col 4 IdentifierName "r2a6" = boolean
-Line 67 col 11 GreaterThanExpression "a6 > b6" = boolean
-Line 67 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 67 col 16 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 68 col 4 IdentifierName "r2a7" = boolean
-Line 68 col 11 GreaterThanExpression "a7 > b7" = boolean
-Line 68 col 11 IdentifierName "a7" = new() => Base
-Line 68 col 16 IdentifierName "b7" = new() => Derived
-Line 69 col 4 IdentifierName "r2a8" = boolean
-Line 69 col 11 GreaterThanExpression "a8 > b8" = boolean
-Line 69 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 69 col 16 IdentifierName "b8" = new(a?: Derived) => Base
-Line 70 col 4 IdentifierName "r2a9" = boolean
-Line 70 col 11 GreaterThanExpression "a9 > b9" = boolean
-Line 70 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 70 col 16 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 73 col 4 IdentifierName "r2b1" = boolean
-Line 73 col 11 GreaterThanExpression "b1 > a1" = boolean
-Line 73 col 11 IdentifierName "b1" = new() => Base
-Line 73 col 16 IdentifierName "a1" = new() => Base
-Line 74 col 4 IdentifierName "r2b2" = boolean
-Line 74 col 11 GreaterThanExpression "b2 > a2" = boolean
-Line 74 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 74 col 16 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 75 col 4 IdentifierName "r2b3" = boolean
-Line 75 col 11 GreaterThanExpression "b3 > a3" = boolean
-Line 75 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 75 col 16 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 76 col 4 IdentifierName "r2b4" = boolean
-Line 76 col 11 GreaterThanExpression "b4 > a4" = boolean
-Line 76 col 11 IdentifierName "b4" = new() => Base
-Line 76 col 16 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 77 col 4 IdentifierName "r2b5" = boolean
-Line 77 col 11 GreaterThanExpression "b5 > a5" = boolean
-Line 77 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 77 col 16 IdentifierName "a5" = new(a: Base) => Base
-Line 78 col 4 IdentifierName "r2b6" = boolean
-Line 78 col 11 GreaterThanExpression "b6 > a6" = boolean
-Line 78 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 78 col 16 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 79 col 4 IdentifierName "r2b7" = boolean
-Line 79 col 11 GreaterThanExpression "b7 > a7" = boolean
-Line 79 col 11 IdentifierName "b7" = new() => Derived
-Line 79 col 16 IdentifierName "a7" = new() => Base
-Line 80 col 4 IdentifierName "r2b8" = boolean
-Line 80 col 11 GreaterThanExpression "b8 > a8" = boolean
-Line 80 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 80 col 16 IdentifierName "a8" = new(a?: Base) => Base
-Line 81 col 4 IdentifierName "r2b9" = boolean
-Line 81 col 11 GreaterThanExpression "b9 > a9" = boolean
-Line 81 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 81 col 16 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 85 col 4 IdentifierName "r3a1" = boolean
-Line 85 col 11 LessThanOrEqualExpression "a1 <= b1" = boolean
-Line 85 col 11 IdentifierName "a1" = new() => Base
-Line 85 col 17 IdentifierName "b1" = new() => Base
-Line 86 col 4 IdentifierName "r3a2" = boolean
-Line 86 col 11 LessThanOrEqualExpression "a2 <= b2" = boolean
-Line 86 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 86 col 17 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 87 col 4 IdentifierName "r3a3" = boolean
-Line 87 col 11 LessThanOrEqualExpression "a3 <= b3" = boolean
-Line 87 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 87 col 17 IdentifierName "b3" = new(a: number) => Base
-Line 88 col 4 IdentifierName "r3a4" = boolean
-Line 88 col 11 LessThanOrEqualExpression "a4 <= b4" = boolean
-Line 88 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 88 col 17 IdentifierName "b4" = new() => Base
-Line 89 col 4 IdentifierName "r3a5" = boolean
-Line 89 col 11 LessThanOrEqualExpression "a5 <= b5" = boolean
-Line 89 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 89 col 17 IdentifierName "b5" = new(a: Derived) => Base
-Line 90 col 4 IdentifierName "r3a6" = boolean
-Line 90 col 11 LessThanOrEqualExpression "a6 <= b6" = boolean
-Line 90 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 90 col 17 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 91 col 4 IdentifierName "r3a7" = boolean
-Line 91 col 11 LessThanOrEqualExpression "a7 <= b7" = boolean
-Line 91 col 11 IdentifierName "a7" = new() => Base
-Line 91 col 17 IdentifierName "b7" = new() => Derived
-Line 92 col 4 IdentifierName "r3a8" = boolean
-Line 92 col 11 LessThanOrEqualExpression "a8 <= b8" = boolean
-Line 92 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 92 col 17 IdentifierName "b8" = new(a?: Derived) => Base
-Line 93 col 4 IdentifierName "r3a9" = boolean
-Line 93 col 11 LessThanOrEqualExpression "a9 <= b9" = boolean
-Line 93 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 93 col 17 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 96 col 4 IdentifierName "r3b1" = boolean
-Line 96 col 11 LessThanOrEqualExpression "b1 <= a1" = boolean
-Line 96 col 11 IdentifierName "b1" = new() => Base
-Line 96 col 17 IdentifierName "a1" = new() => Base
-Line 97 col 4 IdentifierName "r3b2" = boolean
-Line 97 col 11 LessThanOrEqualExpression "b2 <= a2" = boolean
-Line 97 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 97 col 17 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 98 col 4 IdentifierName "r3b3" = boolean
-Line 98 col 11 LessThanOrEqualExpression "b3 <= a3" = boolean
-Line 98 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 98 col 17 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 99 col 4 IdentifierName "r3b4" = boolean
-Line 99 col 11 LessThanOrEqualExpression "b4 <= a4" = boolean
-Line 99 col 11 IdentifierName "b4" = new() => Base
-Line 99 col 17 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 100 col 4 IdentifierName "r3b5" = boolean
-Line 100 col 11 LessThanOrEqualExpression "b5 <= a5" = boolean
-Line 100 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 100 col 17 IdentifierName "a5" = new(a: Base) => Base
-Line 101 col 4 IdentifierName "r3b6" = boolean
-Line 101 col 11 LessThanOrEqualExpression "b6 <= a6" = boolean
-Line 101 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 101 col 17 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 102 col 4 IdentifierName "r3b7" = boolean
-Line 102 col 11 LessThanOrEqualExpression "b7 <= a7" = boolean
-Line 102 col 11 IdentifierName "b7" = new() => Derived
-Line 102 col 17 IdentifierName "a7" = new() => Base
-Line 103 col 4 IdentifierName "r3b8" = boolean
-Line 103 col 11 LessThanOrEqualExpression "b8 <= a8" = boolean
-Line 103 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 103 col 17 IdentifierName "a8" = new(a?: Base) => Base
-Line 104 col 4 IdentifierName "r3b9" = boolean
-Line 104 col 11 LessThanOrEqualExpression "b9 <= a9" = boolean
-Line 104 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 104 col 17 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 108 col 4 IdentifierName "r4a1" = boolean
-Line 108 col 11 GreaterThanOrEqualExpression "a1 >= b1" = boolean
-Line 108 col 11 IdentifierName "a1" = new() => Base
-Line 108 col 17 IdentifierName "b1" = new() => Base
-Line 109 col 4 IdentifierName "r4a2" = boolean
-Line 109 col 11 GreaterThanOrEqualExpression "a2 >= b2" = boolean
-Line 109 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 109 col 17 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 110 col 4 IdentifierName "r4a3" = boolean
-Line 110 col 11 GreaterThanOrEqualExpression "a3 >= b3" = boolean
-Line 110 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 110 col 17 IdentifierName "b3" = new(a: number) => Base
-Line 111 col 4 IdentifierName "r4a4" = boolean
-Line 111 col 11 GreaterThanOrEqualExpression "a4 >= b4" = boolean
-Line 111 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 111 col 17 IdentifierName "b4" = new() => Base
-Line 112 col 4 IdentifierName "r4a5" = boolean
-Line 112 col 11 GreaterThanOrEqualExpression "a5 >= b5" = boolean
-Line 112 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 112 col 17 IdentifierName "b5" = new(a: Derived) => Base
-Line 113 col 4 IdentifierName "r4a6" = boolean
-Line 113 col 11 GreaterThanOrEqualExpression "a6 >= b6" = boolean
-Line 113 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 113 col 17 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 114 col 4 IdentifierName "r4a7" = boolean
-Line 114 col 11 GreaterThanOrEqualExpression "a7 >= b7" = boolean
-Line 114 col 11 IdentifierName "a7" = new() => Base
-Line 114 col 17 IdentifierName "b7" = new() => Derived
-Line 115 col 4 IdentifierName "r4a8" = boolean
-Line 115 col 11 GreaterThanOrEqualExpression "a8 >= b8" = boolean
-Line 115 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 115 col 17 IdentifierName "b8" = new(a?: Derived) => Base
-Line 116 col 4 IdentifierName "r4a9" = boolean
-Line 116 col 11 GreaterThanOrEqualExpression "a9 >= b9" = boolean
-Line 116 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 116 col 17 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 119 col 4 IdentifierName "r4b1" = boolean
-Line 119 col 11 GreaterThanOrEqualExpression "b1 >= a1" = boolean
-Line 119 col 11 IdentifierName "b1" = new() => Base
-Line 119 col 17 IdentifierName "a1" = new() => Base
-Line 120 col 4 IdentifierName "r4b2" = boolean
-Line 120 col 11 GreaterThanOrEqualExpression "b2 >= a2" = boolean
-Line 120 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 120 col 17 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 121 col 4 IdentifierName "r4b3" = boolean
-Line 121 col 11 GreaterThanOrEqualExpression "b3 >= a3" = boolean
-Line 121 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 121 col 17 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 122 col 4 IdentifierName "r4b4" = boolean
-Line 122 col 11 GreaterThanOrEqualExpression "b4 >= a4" = boolean
-Line 122 col 11 IdentifierName "b4" = new() => Base
-Line 122 col 17 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 123 col 4 IdentifierName "r4b5" = boolean
-Line 123 col 11 GreaterThanOrEqualExpression "b5 >= a5" = boolean
-Line 123 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 123 col 17 IdentifierName "a5" = new(a: Base) => Base
-Line 124 col 4 IdentifierName "r4b6" = boolean
-Line 124 col 11 GreaterThanOrEqualExpression "b6 >= a6" = boolean
-Line 124 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 124 col 17 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 125 col 4 IdentifierName "r4b7" = boolean
-Line 125 col 11 GreaterThanOrEqualExpression "b7 >= a7" = boolean
-Line 125 col 11 IdentifierName "b7" = new() => Derived
-Line 125 col 17 IdentifierName "a7" = new() => Base
-Line 126 col 4 IdentifierName "r4b8" = boolean
-Line 126 col 11 GreaterThanOrEqualExpression "b8 >= a8" = boolean
-Line 126 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 126 col 17 IdentifierName "a8" = new(a?: Base) => Base
-Line 127 col 4 IdentifierName "r4b9" = boolean
-Line 127 col 11 GreaterThanOrEqualExpression "b9 >= a9" = boolean
-Line 127 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 127 col 17 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 131 col 4 IdentifierName "r5a1" = boolean
-Line 131 col 11 EqualsWithTypeConversionExpression "a1 == b1" = boolean
-Line 131 col 11 IdentifierName "a1" = new() => Base
-Line 131 col 17 IdentifierName "b1" = new() => Base
-Line 132 col 4 IdentifierName "r5a2" = boolean
-Line 132 col 11 EqualsWithTypeConversionExpression "a2 == b2" = boolean
-Line 132 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 132 col 17 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 133 col 4 IdentifierName "r5a3" = boolean
-Line 133 col 11 EqualsWithTypeConversionExpression "a3 == b3" = boolean
-Line 133 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 133 col 17 IdentifierName "b3" = new(a: number) => Base
-Line 134 col 4 IdentifierName "r5a4" = boolean
-Line 134 col 11 EqualsWithTypeConversionExpression "a4 == b4" = boolean
-Line 134 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 134 col 17 IdentifierName "b4" = new() => Base
-Line 135 col 4 IdentifierName "r5a5" = boolean
-Line 135 col 11 EqualsWithTypeConversionExpression "a5 == b5" = boolean
-Line 135 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 135 col 17 IdentifierName "b5" = new(a: Derived) => Base
-Line 136 col 4 IdentifierName "r5a6" = boolean
-Line 136 col 11 EqualsWithTypeConversionExpression "a6 == b6" = boolean
-Line 136 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 136 col 17 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 137 col 4 IdentifierName "r5a7" = boolean
-Line 137 col 11 EqualsWithTypeConversionExpression "a7 == b7" = boolean
-Line 137 col 11 IdentifierName "a7" = new() => Base
-Line 137 col 17 IdentifierName "b7" = new() => Derived
-Line 138 col 4 IdentifierName "r5a8" = boolean
-Line 138 col 11 EqualsWithTypeConversionExpression "a8 == b8" = boolean
-Line 138 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 138 col 17 IdentifierName "b8" = new(a?: Derived) => Base
-Line 139 col 4 IdentifierName "r5a9" = boolean
-Line 139 col 11 EqualsWithTypeConversionExpression "a9 == b9" = boolean
-Line 139 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 139 col 17 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 142 col 4 IdentifierName "r5b1" = boolean
-Line 142 col 11 EqualsWithTypeConversionExpression "b1 == a1" = boolean
-Line 142 col 11 IdentifierName "b1" = new() => Base
-Line 142 col 17 IdentifierName "a1" = new() => Base
-Line 143 col 4 IdentifierName "r5b2" = boolean
-Line 143 col 11 EqualsWithTypeConversionExpression "b2 == a2" = boolean
-Line 143 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 143 col 17 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 144 col 4 IdentifierName "r5b3" = boolean
-Line 144 col 11 EqualsWithTypeConversionExpression "b3 == a3" = boolean
-Line 144 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 144 col 17 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 145 col 4 IdentifierName "r5b4" = boolean
-Line 145 col 11 EqualsWithTypeConversionExpression "b4 == a4" = boolean
-Line 145 col 11 IdentifierName "b4" = new() => Base
-Line 145 col 17 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 146 col 4 IdentifierName "r5b5" = boolean
-Line 146 col 11 EqualsWithTypeConversionExpression "b5 == a5" = boolean
-Line 146 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 146 col 17 IdentifierName "a5" = new(a: Base) => Base
-Line 147 col 4 IdentifierName "r5b6" = boolean
-Line 147 col 11 EqualsWithTypeConversionExpression "b6 == a6" = boolean
-Line 147 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 147 col 17 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 148 col 4 IdentifierName "r5b7" = boolean
-Line 148 col 11 EqualsWithTypeConversionExpression "b7 == a7" = boolean
-Line 148 col 11 IdentifierName "b7" = new() => Derived
-Line 148 col 17 IdentifierName "a7" = new() => Base
-Line 149 col 4 IdentifierName "r5b8" = boolean
-Line 149 col 11 EqualsWithTypeConversionExpression "b8 == a8" = boolean
-Line 149 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 149 col 17 IdentifierName "a8" = new(a?: Base) => Base
-Line 150 col 4 IdentifierName "r5b9" = boolean
-Line 150 col 11 EqualsWithTypeConversionExpression "b9 == a9" = boolean
-Line 150 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 150 col 17 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 154 col 4 IdentifierName "r6a1" = boolean
-Line 154 col 11 NotEqualsWithTypeConversionExpression "a1 != b1" = boolean
-Line 154 col 11 IdentifierName "a1" = new() => Base
-Line 154 col 17 IdentifierName "b1" = new() => Base
-Line 155 col 4 IdentifierName "r6a2" = boolean
-Line 155 col 11 NotEqualsWithTypeConversionExpression "a2 != b2" = boolean
-Line 155 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 155 col 17 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 156 col 4 IdentifierName "r6a3" = boolean
-Line 156 col 11 NotEqualsWithTypeConversionExpression "a3 != b3" = boolean
-Line 156 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 156 col 17 IdentifierName "b3" = new(a: number) => Base
-Line 157 col 4 IdentifierName "r6a4" = boolean
-Line 157 col 11 NotEqualsWithTypeConversionExpression "a4 != b4" = boolean
-Line 157 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 157 col 17 IdentifierName "b4" = new() => Base
-Line 158 col 4 IdentifierName "r6a5" = boolean
-Line 158 col 11 NotEqualsWithTypeConversionExpression "a5 != b5" = boolean
-Line 158 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 158 col 17 IdentifierName "b5" = new(a: Derived) => Base
-Line 159 col 4 IdentifierName "r6a6" = boolean
-Line 159 col 11 NotEqualsWithTypeConversionExpression "a6 != b6" = boolean
-Line 159 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 159 col 17 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 160 col 4 IdentifierName "r6a7" = boolean
-Line 160 col 11 NotEqualsWithTypeConversionExpression "a7 != b7" = boolean
-Line 160 col 11 IdentifierName "a7" = new() => Base
-Line 160 col 17 IdentifierName "b7" = new() => Derived
-Line 161 col 4 IdentifierName "r6a8" = boolean
-Line 161 col 11 NotEqualsWithTypeConversionExpression "a8 != b8" = boolean
-Line 161 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 161 col 17 IdentifierName "b8" = new(a?: Derived) => Base
-Line 162 col 4 IdentifierName "r6a9" = boolean
-Line 162 col 11 NotEqualsWithTypeConversionExpression "a9 != b9" = boolean
-Line 162 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 162 col 17 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 165 col 4 IdentifierName "r6b1" = boolean
-Line 165 col 11 NotEqualsWithTypeConversionExpression "b1 != a1" = boolean
-Line 165 col 11 IdentifierName "b1" = new() => Base
-Line 165 col 17 IdentifierName "a1" = new() => Base
-Line 166 col 4 IdentifierName "r6b2" = boolean
-Line 166 col 11 NotEqualsWithTypeConversionExpression "b2 != a2" = boolean
-Line 166 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 166 col 17 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 167 col 4 IdentifierName "r6b3" = boolean
-Line 167 col 11 NotEqualsWithTypeConversionExpression "b3 != a3" = boolean
-Line 167 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 167 col 17 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 168 col 4 IdentifierName "r6b4" = boolean
-Line 168 col 11 NotEqualsWithTypeConversionExpression "b4 != a4" = boolean
-Line 168 col 11 IdentifierName "b4" = new() => Base
-Line 168 col 17 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 169 col 4 IdentifierName "r6b5" = boolean
-Line 169 col 11 NotEqualsWithTypeConversionExpression "b5 != a5" = boolean
-Line 169 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 169 col 17 IdentifierName "a5" = new(a: Base) => Base
-Line 170 col 4 IdentifierName "r6b6" = boolean
-Line 170 col 11 NotEqualsWithTypeConversionExpression "b6 != a6" = boolean
-Line 170 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 170 col 17 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 171 col 4 IdentifierName "r6b7" = boolean
-Line 171 col 11 NotEqualsWithTypeConversionExpression "b7 != a7" = boolean
-Line 171 col 11 IdentifierName "b7" = new() => Derived
-Line 171 col 17 IdentifierName "a7" = new() => Base
-Line 172 col 4 IdentifierName "r6b8" = boolean
-Line 172 col 11 NotEqualsWithTypeConversionExpression "b8 != a8" = boolean
-Line 172 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 172 col 17 IdentifierName "a8" = new(a?: Base) => Base
-Line 173 col 4 IdentifierName "r6b9" = boolean
-Line 173 col 11 NotEqualsWithTypeConversionExpression "b9 != a9" = boolean
-Line 173 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 173 col 17 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 177 col 4 IdentifierName "r7a1" = boolean
-Line 177 col 11 EqualsExpression "a1 === b1" = boolean
-Line 177 col 11 IdentifierName "a1" = new() => Base
-Line 177 col 18 IdentifierName "b1" = new() => Base
-Line 178 col 4 IdentifierName "r7a2" = boolean
-Line 178 col 11 EqualsExpression "a2 === b2" = boolean
-Line 178 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 178 col 18 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 179 col 4 IdentifierName "r7a3" = boolean
-Line 179 col 11 EqualsExpression "a3 === b3" = boolean
-Line 179 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 179 col 18 IdentifierName "b3" = new(a: number) => Base
-Line 180 col 4 IdentifierName "r7a4" = boolean
-Line 180 col 11 EqualsExpression "a4 === b4" = boolean
-Line 180 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 180 col 18 IdentifierName "b4" = new() => Base
-Line 181 col 4 IdentifierName "r7a5" = boolean
-Line 181 col 11 EqualsExpression "a5 === b5" = boolean
-Line 181 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 181 col 18 IdentifierName "b5" = new(a: Derived) => Base
-Line 182 col 4 IdentifierName "r7a6" = boolean
-Line 182 col 11 EqualsExpression "a6 === b6" = boolean
-Line 182 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 182 col 18 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 183 col 4 IdentifierName "r7a7" = boolean
-Line 183 col 11 EqualsExpression "a7 === b7" = boolean
-Line 183 col 11 IdentifierName "a7" = new() => Base
-Line 183 col 18 IdentifierName "b7" = new() => Derived
-Line 184 col 4 IdentifierName "r7a8" = boolean
-Line 184 col 11 EqualsExpression "a8 === b8" = boolean
-Line 184 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 184 col 18 IdentifierName "b8" = new(a?: Derived) => Base
-Line 185 col 4 IdentifierName "r7a9" = boolean
-Line 185 col 11 EqualsExpression "a9 === b9" = boolean
-Line 185 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 185 col 18 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 188 col 4 IdentifierName "r7b1" = boolean
-Line 188 col 11 EqualsExpression "b1 === a1" = boolean
-Line 188 col 11 IdentifierName "b1" = new() => Base
-Line 188 col 18 IdentifierName "a1" = new() => Base
-Line 189 col 4 IdentifierName "r7b2" = boolean
-Line 189 col 11 EqualsExpression "b2 === a2" = boolean
-Line 189 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 189 col 18 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 190 col 4 IdentifierName "r7b3" = boolean
-Line 190 col 11 EqualsExpression "b3 === a3" = boolean
-Line 190 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 190 col 18 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 191 col 4 IdentifierName "r7b4" = boolean
-Line 191 col 11 EqualsExpression "b4 === a4" = boolean
-Line 191 col 11 IdentifierName "b4" = new() => Base
-Line 191 col 18 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 192 col 4 IdentifierName "r7b5" = boolean
-Line 192 col 11 EqualsExpression "b5 === a5" = boolean
-Line 192 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 192 col 18 IdentifierName "a5" = new(a: Base) => Base
-Line 193 col 4 IdentifierName "r7b6" = boolean
-Line 193 col 11 EqualsExpression "b6 === a6" = boolean
-Line 193 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 193 col 18 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 194 col 4 IdentifierName "r7b7" = boolean
-Line 194 col 11 EqualsExpression "b7 === a7" = boolean
-Line 194 col 11 IdentifierName "b7" = new() => Derived
-Line 194 col 18 IdentifierName "a7" = new() => Base
-Line 195 col 4 IdentifierName "r7b8" = boolean
-Line 195 col 11 EqualsExpression "b8 === a8" = boolean
-Line 195 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 195 col 18 IdentifierName "a8" = new(a?: Base) => Base
-Line 196 col 4 IdentifierName "r7b9" = boolean
-Line 196 col 11 EqualsExpression "b9 === a9" = boolean
-Line 196 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 196 col 18 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 200 col 4 IdentifierName "r8a1" = boolean
-Line 200 col 11 NotEqualsExpression "a1 !== b1" = boolean
-Line 200 col 11 IdentifierName "a1" = new() => Base
-Line 200 col 18 IdentifierName "b1" = new() => Base
-Line 201 col 4 IdentifierName "r8a2" = boolean
-Line 201 col 11 NotEqualsExpression "a2 !== b2" = boolean
-Line 201 col 11 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 201 col 18 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 202 col 4 IdentifierName "r8a3" = boolean
-Line 202 col 11 NotEqualsExpression "a3 !== b3" = boolean
-Line 202 col 11 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 202 col 18 IdentifierName "b3" = new(a: number) => Base
-Line 203 col 4 IdentifierName "r8a4" = boolean
-Line 203 col 11 NotEqualsExpression "a4 !== b4" = boolean
-Line 203 col 11 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 203 col 18 IdentifierName "b4" = new() => Base
-Line 204 col 4 IdentifierName "r8a5" = boolean
-Line 204 col 11 NotEqualsExpression "a5 !== b5" = boolean
-Line 204 col 11 IdentifierName "a5" = new(a: Base) => Base
-Line 204 col 18 IdentifierName "b5" = new(a: Derived) => Base
-Line 205 col 4 IdentifierName "r8a6" = boolean
-Line 205 col 11 NotEqualsExpression "a6 !== b6" = boolean
-Line 205 col 11 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 205 col 18 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 206 col 4 IdentifierName "r8a7" = boolean
-Line 206 col 11 NotEqualsExpression "a7 !== b7" = boolean
-Line 206 col 11 IdentifierName "a7" = new() => Base
-Line 206 col 18 IdentifierName "b7" = new() => Derived
-Line 207 col 4 IdentifierName "r8a8" = boolean
-Line 207 col 11 NotEqualsExpression "a8 !== b8" = boolean
-Line 207 col 11 IdentifierName "a8" = new(a?: Base) => Base
-Line 207 col 18 IdentifierName "b8" = new(a?: Derived) => Base
-Line 208 col 4 IdentifierName "r8a9" = boolean
-Line 208 col 11 NotEqualsExpression "a9 !== b9" = boolean
-Line 208 col 11 IdentifierName "a9" = new(...a: Base[]) => Base
-Line 208 col 18 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 211 col 4 IdentifierName "r8b1" = boolean
-Line 211 col 11 NotEqualsExpression "b1 !== a1" = boolean
-Line 211 col 11 IdentifierName "b1" = new() => Base
-Line 211 col 18 IdentifierName "a1" = new() => Base
-Line 212 col 4 IdentifierName "r8b2" = boolean
-Line 212 col 11 NotEqualsExpression "b2 !== a2" = boolean
-Line 212 col 11 IdentifierName "b2" = new(a: number, b: string) => Base
-Line 212 col 18 IdentifierName "a2" = new(a: number, b: string) => Base
-Line 213 col 4 IdentifierName "r8b3" = boolean
-Line 213 col 11 NotEqualsExpression "b3 !== a3" = boolean
-Line 213 col 11 IdentifierName "b3" = new(a: number) => Base
-Line 213 col 18 IdentifierName "a3" = new(a: number, b: string) => Base
-Line 214 col 4 IdentifierName "r8b4" = boolean
-Line 214 col 11 NotEqualsExpression "b4 !== a4" = boolean
-Line 214 col 11 IdentifierName "b4" = new() => Base
-Line 214 col 18 IdentifierName "a4" = new(a: number, b: string) => Base
-Line 215 col 4 IdentifierName "r8b5" = boolean
-Line 215 col 11 NotEqualsExpression "b5 !== a5" = boolean
-Line 215 col 11 IdentifierName "b5" = new(a: Derived) => Base
-Line 215 col 18 IdentifierName "a5" = new(a: Base) => Base
-Line 216 col 4 IdentifierName "r8b6" = boolean
-Line 216 col 11 NotEqualsExpression "b6 !== a6" = boolean
-Line 216 col 11 IdentifierName "b6" = new(a: Base, b: Derived) => Base
-Line 216 col 18 IdentifierName "a6" = new(a: Derived, b: Base) => Base
-Line 217 col 4 IdentifierName "r8b7" = boolean
-Line 217 col 11 NotEqualsExpression "b7 !== a7" = boolean
-Line 217 col 11 IdentifierName "b7" = new() => Derived
-Line 217 col 18 IdentifierName "a7" = new() => Base
-Line 218 col 4 IdentifierName "r8b8" = boolean
-Line 218 col 11 NotEqualsExpression "b8 !== a8" = boolean
-Line 218 col 11 IdentifierName "b8" = new(a?: Derived) => Base
-Line 218 col 18 IdentifierName "a8" = new(a?: Base) => Base
-Line 219 col 4 IdentifierName "r8b9" = boolean
-Line 219 col 11 NotEqualsExpression "b9 !== a9" = boolean
-Line 219 col 11 IdentifierName "b9" = new(...a: Derived[]) => Base
-Line 219 col 18 IdentifierName "a9" = new(...a: Base[]) => Base
+class Base {
+>Base : Base
+
+    public a: string;
+>a : string
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    public b: string;
+>b : string
+}
+
+var a1: { new (): Base };
+>a1 : new() => Base
+>Base : Base
+
+var b1: { new (): Base };
+>b1 : new() => Base
+>Base : Base
+
+var a2: { new (a: number, b: string): Base };
+>a2 : new(a: number, b: string) => Base
+>a : number
+>b : string
+>Base : Base
+
+var b2: { new (a: number, b: string): Base };
+>b2 : new(a: number, b: string) => Base
+>a : number
+>b : string
+>Base : Base
+
+var a3: { new (a: number, b: string): Base };
+>a3 : new(a: number, b: string) => Base
+>a : number
+>b : string
+>Base : Base
+
+var b3: { new (a: number): Base };
+>b3 : new(a: number) => Base
+>a : number
+>Base : Base
+
+var a4: { new (a: number, b: string): Base };
+>a4 : new(a: number, b: string) => Base
+>a : number
+>b : string
+>Base : Base
+
+var b4: { new (): Base };
+>b4 : new() => Base
+>Base : Base
+
+var a5: { new (a: Base): Base };
+>a5 : new(a: Base) => Base
+>a : Base
+>Base : Base
+>Base : Base
+
+var b5: { new (a: Derived): Base };
+>b5 : new(a: Derived) => Base
+>a : Derived
+>Derived : Derived
+>Base : Base
+
+var a6: { new (a: Derived, b: Base): Base };
+>a6 : new(a: Derived, b: Base) => Base
+>a : Derived
+>Derived : Derived
+>b : Base
+>Base : Base
+>Base : Base
+
+var b6: { new (a: Base, b: Derived): Base };
+>b6 : new(a: Base, b: Derived) => Base
+>a : Base
+>Base : Base
+>b : Derived
+>Derived : Derived
+>Base : Base
+
+var a7: { new (): Base };
+>a7 : new() => Base
+>Base : Base
+
+var b7: { new (): Derived };
+>b7 : new() => Derived
+>Derived : Derived
+
+var a8: { new (a?: Base): Base };
+>a8 : new(a?: Base) => Base
+>a : Base
+>Base : Base
+>Base : Base
+
+var b8: { new (a?: Derived): Base };
+>b8 : new(a?: Derived) => Base
+>a : Derived
+>Derived : Derived
+>Base : Base
+
+var a9: { new (...a: Base[]): Base };
+>a9 : new(...a: Base[]) => Base
+>a : Base[]
+>Base : Base
+>Base : Base
+
+var b9: { new (...a: Derived[]): Base };
+>b9 : new(...a: Derived[]) => Base
+>a : Derived[]
+>Derived : Derived
+>Base : Base
+
+//var a10: { <T, U extends T>(t: T, u: U): T[] };
+//var b10: { <A, B extends A>(a: A, b: B): A[] };
+
+// operator <
+var r1a1 = a1 < b1;
+>r1a1 : boolean
+>a1 < b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r1a2 = a2 < b2;
+>r1a2 : boolean
+>a2 < b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r1a3 = a3 < b3;
+>r1a3 : boolean
+>a3 < b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r1a4 = a4 < b4;
+>r1a4 : boolean
+>a4 < b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r1a5 = a5 < b5;
+>r1a5 : boolean
+>a5 < b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r1a6 = a6 < b6;
+>r1a6 : boolean
+>a6 < b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r1a7 = a7 < b7;
+>r1a7 : boolean
+>a7 < b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r1a8 = a8 < b8;
+>r1a8 : boolean
+>a8 < b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r1a9 = a9 < b9;
+>r1a9 : boolean
+>a9 < b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r1a10 = a10 < b10;
+
+var r1b1 = b1 < a1;
+>r1b1 : boolean
+>b1 < a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r1b2 = b2 < a2;
+>r1b2 : boolean
+>b2 < a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r1b3 = b3 < a3;
+>r1b3 : boolean
+>b3 < a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r1b4 = b4 < a4;
+>r1b4 : boolean
+>b4 < a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r1b5 = b5 < a5;
+>r1b5 : boolean
+>b5 < a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r1b6 = b6 < a6;
+>r1b6 : boolean
+>b6 < a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r1b7 = b7 < a7;
+>r1b7 : boolean
+>b7 < a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r1b8 = b8 < a8;
+>r1b8 : boolean
+>b8 < a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r1b9 = b9 < a9;
+>r1b9 : boolean
+>b9 < a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r1b10 = b10 < a10;
+
+// operator >
+var r2a1 = a1 > b1;
+>r2a1 : boolean
+>a1 > b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r2a2 = a2 > b2;
+>r2a2 : boolean
+>a2 > b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r2a3 = a3 > b3;
+>r2a3 : boolean
+>a3 > b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r2a4 = a4 > b4;
+>r2a4 : boolean
+>a4 > b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r2a5 = a5 > b5;
+>r2a5 : boolean
+>a5 > b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r2a6 = a6 > b6;
+>r2a6 : boolean
+>a6 > b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r2a7 = a7 > b7;
+>r2a7 : boolean
+>a7 > b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r2a8 = a8 > b8;
+>r2a8 : boolean
+>a8 > b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r2a9 = a9 > b9;
+>r2a9 : boolean
+>a9 > b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r2a10 = a10 > b10;
+
+var r2b1 = b1 > a1;
+>r2b1 : boolean
+>b1 > a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r2b2 = b2 > a2;
+>r2b2 : boolean
+>b2 > a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r2b3 = b3 > a3;
+>r2b3 : boolean
+>b3 > a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r2b4 = b4 > a4;
+>r2b4 : boolean
+>b4 > a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r2b5 = b5 > a5;
+>r2b5 : boolean
+>b5 > a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r2b6 = b6 > a6;
+>r2b6 : boolean
+>b6 > a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r2b7 = b7 > a7;
+>r2b7 : boolean
+>b7 > a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r2b8 = b8 > a8;
+>r2b8 : boolean
+>b8 > a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r2b9 = b9 > a9;
+>r2b9 : boolean
+>b9 > a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r2b10 = b10 > a10;
+
+// operator <=
+var r3a1 = a1 <= b1;
+>r3a1 : boolean
+>a1 <= b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r3a2 = a2 <= b2;
+>r3a2 : boolean
+>a2 <= b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r3a3 = a3 <= b3;
+>r3a3 : boolean
+>a3 <= b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r3a4 = a4 <= b4;
+>r3a4 : boolean
+>a4 <= b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r3a5 = a5 <= b5;
+>r3a5 : boolean
+>a5 <= b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r3a6 = a6 <= b6;
+>r3a6 : boolean
+>a6 <= b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r3a7 = a7 <= b7;
+>r3a7 : boolean
+>a7 <= b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r3a8 = a8 <= b8;
+>r3a8 : boolean
+>a8 <= b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r3a9 = a9 <= b9;
+>r3a9 : boolean
+>a9 <= b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r3a10 = a10 <= b10;
+
+var r3b1 = b1 <= a1;
+>r3b1 : boolean
+>b1 <= a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r3b2 = b2 <= a2;
+>r3b2 : boolean
+>b2 <= a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r3b3 = b3 <= a3;
+>r3b3 : boolean
+>b3 <= a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r3b4 = b4 <= a4;
+>r3b4 : boolean
+>b4 <= a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r3b5 = b5 <= a5;
+>r3b5 : boolean
+>b5 <= a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r3b6 = b6 <= a6;
+>r3b6 : boolean
+>b6 <= a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r3b7 = b7 <= a7;
+>r3b7 : boolean
+>b7 <= a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r3b8 = b8 <= a8;
+>r3b8 : boolean
+>b8 <= a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r3b9 = b9 <= a9;
+>r3b9 : boolean
+>b9 <= a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r3b10 = b10 <= a10;
+
+// operator >=
+var r4a1 = a1 >= b1;
+>r4a1 : boolean
+>a1 >= b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r4a2 = a2 >= b2;
+>r4a2 : boolean
+>a2 >= b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r4a3 = a3 >= b3;
+>r4a3 : boolean
+>a3 >= b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r4a4 = a4 >= b4;
+>r4a4 : boolean
+>a4 >= b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r4a5 = a5 >= b5;
+>r4a5 : boolean
+>a5 >= b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r4a6 = a6 >= b6;
+>r4a6 : boolean
+>a6 >= b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r4a7 = a7 >= b7;
+>r4a7 : boolean
+>a7 >= b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r4a8 = a8 >= b8;
+>r4a8 : boolean
+>a8 >= b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r4a9 = a9 >= b9;
+>r4a9 : boolean
+>a9 >= b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r4a10 = a10 >= b10;
+
+var r4b1 = b1 >= a1;
+>r4b1 : boolean
+>b1 >= a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r4b2 = b2 >= a2;
+>r4b2 : boolean
+>b2 >= a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r4b3 = b3 >= a3;
+>r4b3 : boolean
+>b3 >= a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r4b4 = b4 >= a4;
+>r4b4 : boolean
+>b4 >= a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r4b5 = b5 >= a5;
+>r4b5 : boolean
+>b5 >= a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r4b6 = b6 >= a6;
+>r4b6 : boolean
+>b6 >= a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r4b7 = b7 >= a7;
+>r4b7 : boolean
+>b7 >= a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r4b8 = b8 >= a8;
+>r4b8 : boolean
+>b8 >= a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r4b9 = b9 >= a9;
+>r4b9 : boolean
+>b9 >= a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r4b10 = b10 >= a10;
+
+// operator ==
+var r5a1 = a1 == b1;
+>r5a1 : boolean
+>a1 == b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r5a2 = a2 == b2;
+>r5a2 : boolean
+>a2 == b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r5a3 = a3 == b3;
+>r5a3 : boolean
+>a3 == b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r5a4 = a4 == b4;
+>r5a4 : boolean
+>a4 == b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r5a5 = a5 == b5;
+>r5a5 : boolean
+>a5 == b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r5a6 = a6 == b6;
+>r5a6 : boolean
+>a6 == b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r5a7 = a7 == b7;
+>r5a7 : boolean
+>a7 == b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r5a8 = a8 == b8;
+>r5a8 : boolean
+>a8 == b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r5a9 = a9 == b9;
+>r5a9 : boolean
+>a9 == b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r5a10 = a10 == b10;
+
+var r5b1 = b1 == a1;
+>r5b1 : boolean
+>b1 == a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r5b2 = b2 == a2;
+>r5b2 : boolean
+>b2 == a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r5b3 = b3 == a3;
+>r5b3 : boolean
+>b3 == a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r5b4 = b4 == a4;
+>r5b4 : boolean
+>b4 == a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r5b5 = b5 == a5;
+>r5b5 : boolean
+>b5 == a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r5b6 = b6 == a6;
+>r5b6 : boolean
+>b6 == a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r5b7 = b7 == a7;
+>r5b7 : boolean
+>b7 == a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r5b8 = b8 == a8;
+>r5b8 : boolean
+>b8 == a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r5b9 = b9 == a9;
+>r5b9 : boolean
+>b9 == a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r5b10 = b10 == a10;
+
+// operator !=
+var r6a1 = a1 != b1;
+>r6a1 : boolean
+>a1 != b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r6a2 = a2 != b2;
+>r6a2 : boolean
+>a2 != b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r6a3 = a3 != b3;
+>r6a3 : boolean
+>a3 != b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r6a4 = a4 != b4;
+>r6a4 : boolean
+>a4 != b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r6a5 = a5 != b5;
+>r6a5 : boolean
+>a5 != b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r6a6 = a6 != b6;
+>r6a6 : boolean
+>a6 != b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r6a7 = a7 != b7;
+>r6a7 : boolean
+>a7 != b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r6a8 = a8 != b8;
+>r6a8 : boolean
+>a8 != b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r6a9 = a9 != b9;
+>r6a9 : boolean
+>a9 != b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r6a10 = a10 != b10;
+
+var r6b1 = b1 != a1;
+>r6b1 : boolean
+>b1 != a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r6b2 = b2 != a2;
+>r6b2 : boolean
+>b2 != a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r6b3 = b3 != a3;
+>r6b3 : boolean
+>b3 != a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r6b4 = b4 != a4;
+>r6b4 : boolean
+>b4 != a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r6b5 = b5 != a5;
+>r6b5 : boolean
+>b5 != a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r6b6 = b6 != a6;
+>r6b6 : boolean
+>b6 != a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r6b7 = b7 != a7;
+>r6b7 : boolean
+>b7 != a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r6b8 = b8 != a8;
+>r6b8 : boolean
+>b8 != a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r6b9 = b9 != a9;
+>r6b9 : boolean
+>b9 != a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r6b10 = b10 != a10;
+
+// operator ===
+var r7a1 = a1 === b1;
+>r7a1 : boolean
+>a1 === b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r7a2 = a2 === b2;
+>r7a2 : boolean
+>a2 === b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r7a3 = a3 === b3;
+>r7a3 : boolean
+>a3 === b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r7a4 = a4 === b4;
+>r7a4 : boolean
+>a4 === b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r7a5 = a5 === b5;
+>r7a5 : boolean
+>a5 === b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r7a6 = a6 === b6;
+>r7a6 : boolean
+>a6 === b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r7a7 = a7 === b7;
+>r7a7 : boolean
+>a7 === b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r7a8 = a8 === b8;
+>r7a8 : boolean
+>a8 === b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r7a9 = a9 === b9;
+>r7a9 : boolean
+>a9 === b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r7a10 = a10 === b10;
+
+var r7b1 = b1 === a1;
+>r7b1 : boolean
+>b1 === a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r7b2 = b2 === a2;
+>r7b2 : boolean
+>b2 === a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r7b3 = b3 === a3;
+>r7b3 : boolean
+>b3 === a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r7b4 = b4 === a4;
+>r7b4 : boolean
+>b4 === a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r7b5 = b5 === a5;
+>r7b5 : boolean
+>b5 === a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r7b6 = b6 === a6;
+>r7b6 : boolean
+>b6 === a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r7b7 = b7 === a7;
+>r7b7 : boolean
+>b7 === a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r7b8 = b8 === a8;
+>r7b8 : boolean
+>b8 === a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r7b9 = b9 === a9;
+>r7b9 : boolean
+>b9 === a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r7b10 = b10 === a10;
+
+// operator !==
+var r8a1 = a1 !== b1;
+>r8a1 : boolean
+>a1 !== b1 : boolean
+>a1 : new() => Base
+>b1 : new() => Base
+
+var r8a2 = a2 !== b2;
+>r8a2 : boolean
+>a2 !== b2 : boolean
+>a2 : new(a: number, b: string) => Base
+>b2 : new(a: number, b: string) => Base
+
+var r8a3 = a3 !== b3;
+>r8a3 : boolean
+>a3 !== b3 : boolean
+>a3 : new(a: number, b: string) => Base
+>b3 : new(a: number) => Base
+
+var r8a4 = a4 !== b4;
+>r8a4 : boolean
+>a4 !== b4 : boolean
+>a4 : new(a: number, b: string) => Base
+>b4 : new() => Base
+
+var r8a5 = a5 !== b5;
+>r8a5 : boolean
+>a5 !== b5 : boolean
+>a5 : new(a: Base) => Base
+>b5 : new(a: Derived) => Base
+
+var r8a6 = a6 !== b6;
+>r8a6 : boolean
+>a6 !== b6 : boolean
+>a6 : new(a: Derived, b: Base) => Base
+>b6 : new(a: Base, b: Derived) => Base
+
+var r8a7 = a7 !== b7;
+>r8a7 : boolean
+>a7 !== b7 : boolean
+>a7 : new() => Base
+>b7 : new() => Derived
+
+var r8a8 = a8 !== b8;
+>r8a8 : boolean
+>a8 !== b8 : boolean
+>a8 : new(a?: Base) => Base
+>b8 : new(a?: Derived) => Base
+
+var r8a9 = a9 !== b9;
+>r8a9 : boolean
+>a9 !== b9 : boolean
+>a9 : new(...a: Base[]) => Base
+>b9 : new(...a: Derived[]) => Base
+
+//var r8a10 = a10 !== b10;
+
+var r8b1 = b1 !== a1;
+>r8b1 : boolean
+>b1 !== a1 : boolean
+>b1 : new() => Base
+>a1 : new() => Base
+
+var r8b2 = b2 !== a2;
+>r8b2 : boolean
+>b2 !== a2 : boolean
+>b2 : new(a: number, b: string) => Base
+>a2 : new(a: number, b: string) => Base
+
+var r8b3 = b3 !== a3;
+>r8b3 : boolean
+>b3 !== a3 : boolean
+>b3 : new(a: number) => Base
+>a3 : new(a: number, b: string) => Base
+
+var r8b4 = b4 !== a4;
+>r8b4 : boolean
+>b4 !== a4 : boolean
+>b4 : new() => Base
+>a4 : new(a: number, b: string) => Base
+
+var r8b5 = b5 !== a5;
+>r8b5 : boolean
+>b5 !== a5 : boolean
+>b5 : new(a: Derived) => Base
+>a5 : new(a: Base) => Base
+
+var r8b6 = b6 !== a6;
+>r8b6 : boolean
+>b6 !== a6 : boolean
+>b6 : new(a: Base, b: Derived) => Base
+>a6 : new(a: Derived, b: Base) => Base
+
+var r8b7 = b7 !== a7;
+>r8b7 : boolean
+>b7 !== a7 : boolean
+>b7 : new() => Derived
+>a7 : new() => Base
+
+var r8b8 = b8 !== a8;
+>r8b8 : boolean
+>b8 !== a8 : boolean
+>b8 : new(a?: Derived) => Base
+>a8 : new(a?: Base) => Base
+
+var r8b9 = b9 !== a9;
+>r8b9 : boolean
+>b9 !== a9 : boolean
+>b9 : new(...a: Derived[]) => Base
+>a9 : new(...a: Base[]) => Base
+
+//var r8b10 = b10 !== a10;

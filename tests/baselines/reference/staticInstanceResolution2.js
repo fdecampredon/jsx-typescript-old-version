@@ -1,3 +1,17 @@
+//// [staticInstanceResolution2.ts]
+class A { }
+A.hasOwnProperty('foo');
+
+class B {
+    constructor() { }
+}
+B.hasOwnProperty('foo');
+
+
+
+
+
+//// [staticInstanceResolution2.js]
 var A = (function () {
     function A() {
     }

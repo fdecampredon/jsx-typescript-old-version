@@ -1,3 +1,4 @@
+//// [genericCallWithObjectTypeArgsAndInitializers.js]
 // Generic typed parameters with initializers
 function foo(x) {
     if (typeof x === "undefined") { x = null; }

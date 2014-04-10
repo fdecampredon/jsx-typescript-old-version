@@ -1,18 +1,31 @@
 === tests/cases/compiler/generics3.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 0 col 21 IdentifierName "x" = T
-Line 0 col 24 IdentifierName "T" = T
-Line 1 col 10 IdentifierName "X" = X
-Line 1 col 14 IdentifierName "f" = () => string
-Line 2 col 10 IdentifierName "Y" = Y
-Line 2 col 14 IdentifierName "f" = () => string
-Line 3 col 4 IdentifierName "a" = C<X>
-Line 3 col 7 IdentifierName "C" = C<T>
-Line 3 col 9 IdentifierName "X" = X
-Line 4 col 4 IdentifierName "b" = C<Y>
-Line 4 col 7 IdentifierName "C" = C<T>
-Line 4 col 9 IdentifierName "Y" = Y
-Line 5 col 0 AssignmentExpression "a = b" = C<Y>
-Line 5 col 0 IdentifierName "a" = C<X>
-Line 6 col 4 IdentifierName "b" = C<Y>
+class C<T> { private x: T; }
+>C : C<T>
+>T : T
+>x : T
+>T : T
+
+interface X { f(): string; }
+>X : X
+>f : () => string
+
+interface Y { f(): string; }
+>Y : Y
+>f : () => string
+
+var a: C<X>;
+>a : C<X>
+>C : C<T>
+>X : X
+
+var b: C<Y>;
+>b : C<Y>
+>C : C<T>
+>Y : Y
+
+>a = b : C<Y>
+>a : C<X>
+
+a = b; // Ok - should be identical
+>b : C<Y>
+

@@ -1,3 +1,17 @@
+//// [classDeclarationMergedInModuleWithContinuation.ts]
+module M {
+    export class N { }
+    export module N {
+        export var v = 0;
+    }
+}
+
+module M {
+    export class O extends M.N {
+    }
+}
+
+//// [classDeclarationMergedInModuleWithContinuation.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

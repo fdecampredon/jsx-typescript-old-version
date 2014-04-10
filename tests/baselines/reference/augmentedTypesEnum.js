@@ -1,3 +1,4 @@
+//// [augmentedTypesEnum.js]
 // enum then var
 var e1111;
 (function (e1111) {

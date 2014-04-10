@@ -1,3 +1,4 @@
+//// [duplicateLocalVariable2.js]
 define(["require", "exports"], function(require, exports) {
     var TestCase = (function () {
         function TestCase(name, test, errorMessageRegEx) {

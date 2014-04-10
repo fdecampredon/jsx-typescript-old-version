@@ -1,51 +1,126 @@
 === tests/cases/compiler/typeQueryOnClass.ts ===
-Line 0 col 6 IdentifierName "C" = C<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 16 IdentifierName "x" = number
-Line 2 col 16 IdentifierName "x" = string
-Line 3 col 23 IdentifierName "x" = any
-Line 5 col 11 IdentifierName "foo" = { (x: number): any; (x: {}): any; }
-Line 5 col 15 IdentifierName "x" = number
-Line 6 col 11 IdentifierName "foo" = { (x: number): any; (x: {}): any; }
-Line 6 col 15 IdentifierName "x" = {}
-Line 7 col 11 IdentifierName "foo" = { (x: number): any; (x: {}): any; }
-Line 7 col 15 IdentifierName "x" = any
-Line 9 col 11 IdentifierName "bar" = (x: any) => void
-Line 9 col 15 IdentifierName "x" = any
-Line 11 col 11 IdentifierName "sa" = number
-Line 12 col 11 IdentifierName "sb" = () => number
-Line 12 col 16 ParenthesizedArrowFunctionExpression "() => 1" = () => number
-Line 14 col 15 IdentifierName "sc" = number
-Line 17 col 15 IdentifierName "sc" = number
-Line 17 col 18 IdentifierName "x" = number
-Line 20 col 15 IdentifierName "sd" = number
-Line 23 col 0 IdentifierName "baz" = (x: any) => string
-Line 24 col 8 IdentifierName "x" = any
-Line 25 col 0 IdentifierName "ia" = number
-Line 27 col 0 IdentifierName "ib" = () => number
-Line 27 col 9 ParenthesizedArrowFunctionExpression "() => this.ia" = () => number
-Line 27 col 15 MemberAccessExpression "this.ia" = number
-Line 27 col 15 ThisKeyword "this" = C<T>
-Line 27 col 20 IdentifierName "ia" = number
-Line 29 col 8 IdentifierName "ic" = number
-Line 32 col 8 IdentifierName "ic" = number
-Line 32 col 11 IdentifierName "x" = number
-Line 35 col 8 IdentifierName "id" = number
-Line 41 col 4 IdentifierName "c" = C<string>
-Line 41 col 7 IdentifierName "C" = C<T>
-Line 44 col 4 IdentifierName "r1" = typeof C
-Line 44 col 15 IdentifierName "C" = typeof C
-Line 45 col 4 IdentifierName "r2" = C<string>
-Line 45 col 15 IdentifierName "c" = C<string>
-Line 47 col 6 IdentifierName "D" = D<T>
-Line 47 col 8 IdentifierName "T" = T
-Line 48 col 23 IdentifierName "y" = any
-Line 49 col 0 IdentifierName "x" = T
-Line 49 col 7 IdentifierName "T" = T
-Line 50 col 0 IdentifierName "foo" = () => void
-Line 53 col 4 IdentifierName "d" = D<string>
-Line 53 col 7 IdentifierName "D" = D<T>
-Line 54 col 4 IdentifierName "r3" = typeof D
-Line 54 col 15 IdentifierName "D" = typeof D
-Line 55 col 4 IdentifierName "r4" = D<string>
-Line 55 col 15 IdentifierName "d" = D<string>
+class C<T> {
+>C : C<T>
+>T : T
+
+    constructor(x: number);
+>x : number
+
+    constructor(x: string);
+>x : string
+
+    constructor(public x) { }
+>x : any
+
+    static foo(x: number);
+>foo : { (x: number): any; (x: {}): any; }
+>x : number
+
+    static foo(x: {});
+>foo : { (x: number): any; (x: {}): any; }
+>x : {}
+
+    static foo(x) { }
+>foo : { (x: number): any; (x: {}): any; }
+>x : any
+
+    static bar(x) { }
+>bar : (x: any) => void
+>x : any
+
+    static sa = 1;
+>sa : number
+
+    static sb = () => 1;
+>sb : () => number
+>() => 1 : () => number
+
+    static get sc() {
+>sc : number
+
+        return 1;
+    }
+    static set sc(x) {
+>sc : number
+>x : number
+    }
+
+    static get sd() {
+>sd : number
+
+        return 1;
+    }
+
+>baz : (x: any) => string
+
+    baz(x): string { return ''; }
+>x : any
+
+>ia : number
+
+    ia = 1;
+    ib = () => this.ia;
+>ib : () => number
+>() => this.ia : () => number
+>this.ia : number
+>this : C<T>
+>ia : number
+
+    get ic() {
+>ic : number
+
+        return 1;
+    }
+    set ic(x) {
+>ic : number
+>x : number
+    }
+
+    get id() {
+>id : number
+
+        return 1;
+    }
+
+}
+
+var c: C<string>;
+>c : C<string>
+>C : C<T>
+
+// BUG 820454
+var r1: typeof C;
+>r1 : typeof C
+>C : typeof C
+
+var r2: typeof c;
+>r2 : C<string>
+>c : C<string>
+
+class D<T> {
+>D : D<T>
+>T : T
+
+    constructor(public y?) { }
+>y : any
+
+    x: T;
+>x : T
+>T : T
+
+    foo() { }
+>foo : () => void
+}
+
+var d: D<string>;
+>d : D<string>
+>D : D<T>
+
+var r3: typeof D;
+>r3 : typeof D
+>D : typeof D
+
+var r4: typeof d;
+>r4 : D<string>
+>d : D<string>
+

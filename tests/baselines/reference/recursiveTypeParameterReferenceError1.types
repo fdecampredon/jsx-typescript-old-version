@@ -1,31 +1,54 @@
 === tests/cases/compiler/recursiveTypeParameterReferenceError1.ts ===
-Line 0 col 6 IdentifierName "X" = X<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 10 IdentifierName "Foo" = Foo<T>
-Line 1 col 14 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "z" = Foo<X<T>>
-Line 2 col 7 IdentifierName "Foo" = Foo<T>
-Line 2 col 11 IdentifierName "X" = X<T>
-Line 2 col 13 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "f" = Foo<number>
-Line 4 col 7 IdentifierName "Foo" = Foo<T>
-Line 5 col 4 IdentifierName "r" = Foo<X<number>>
-Line 5 col 8 MemberAccessExpression "f.z" = Foo<X<number>>
-Line 5 col 8 IdentifierName "f" = Foo<number>
-Line 5 col 10 IdentifierName "z" = Foo<X<number>>
-Line 8 col 6 IdentifierName "C2" = C2<T>
-Line 8 col 9 IdentifierName "T" = T
-Line 9 col 0 IdentifierName "x" = T
-Line 9 col 7 IdentifierName "T" = T
-Line 11 col 10 IdentifierName "Foo2" = Foo2<T>
-Line 11 col 15 IdentifierName "T" = T
-Line 12 col 0 IdentifierName "ofC4" = C2<{ x: T; }>
-Line 12 col 10 IdentifierName "C2" = C2<T>
-Line 12 col 15 IdentifierName "x" = T
-Line 12 col 18 IdentifierName "T" = T
-Line 14 col 4 IdentifierName "f2" = Foo2<number>
-Line 14 col 8 IdentifierName "Foo2" = Foo2<T>
-Line 15 col 4 IdentifierName "r2" = C2<{ x: number; }>
-Line 15 col 9 MemberAccessExpression "f2.ofC4" = C2<{ x: number; }>
-Line 15 col 9 IdentifierName "f2" = Foo2<number>
-Line 15 col 12 IdentifierName "ofC4" = C2<{ x: number; }>
+class X<T> { }
+>X : X<T>
+>T : T
+
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+
+    z: Foo<X<T>>; // error
+>z : Foo<X<T>>
+>Foo : Foo<T>
+>X : X<T>
+>T : T
+}
+var f: Foo<number>;
+>f : Foo<number>
+>Foo : Foo<T>
+
+var r = f.z; 
+>r : Foo<X<number>>
+>f.z : Foo<X<number>>
+>f : Foo<number>
+>z : Foo<X<number>>
+
+
+class C2<T> {
+>C2 : C2<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+interface Foo2<T> {
+>Foo2 : Foo2<T>
+>T : T
+
+    ofC4: C2<{ x: T }> // ok
+>ofC4 : C2<{ x: T; }>
+>C2 : C2<T>
+>x : T
+>T : T
+}
+var f2: Foo2<number>;
+>f2 : Foo2<number>
+>Foo2 : Foo2<T>
+
+var r2 = f2.ofC4;
+>r2 : C2<{ x: number; }>
+>f2.ofC4 : C2<{ x: number; }>
+>f2 : Foo2<number>
+>ofC4 : C2<{ x: number; }>
+

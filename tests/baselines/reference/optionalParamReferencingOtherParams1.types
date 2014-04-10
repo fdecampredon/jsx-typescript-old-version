@@ -1,11 +1,15 @@
 === tests/cases/compiler/optionalParamReferencingOtherParams1.ts ===
-Line 0 col 9 IdentifierName "strange" = typeof strange
-Line 0 col 17 IdentifierName "x" = number
-Line 0 col 28 IdentifierName "y" = number
-Line 0 col 32 MultiplyExpression "x * 1" = number
-Line 0 col 32 IdentifierName "x" = number
-Line 0 col 39 IdentifierName "z" = number
-Line 0 col 43 AddExpression "x + y" = number
-Line 0 col 43 IdentifierName "x" = number
-Line 0 col 47 IdentifierName "y" = number
-Line 1 col 11 IdentifierName "z" = number
+function strange(x: number, y = x * 1, z = x + y) {
+>strange : typeof strange
+>x : number
+>y : number
+>x * 1 : number
+>x : number
+>z : number
+>x + y : number
+>x : number
+>y : number
+
+    return z;
+>z : number
+}

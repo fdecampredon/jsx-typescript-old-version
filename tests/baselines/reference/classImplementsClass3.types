@@ -1,18 +1,39 @@
 === tests/cases/compiler/classImplementsClass3.ts ===
-Line 0 col 6 IdentifierName "A" = A
-Line 0 col 10 IdentifierName "foo" = () => number
-Line 1 col 6 IdentifierName "C" = C
-Line 1 col 19 IdentifierName "A" = A
-Line 2 col 0 IdentifierName "foo" = () => number
-Line 7 col 6 IdentifierName "C2" = C2
-Line 7 col 17 IdentifierName "A" = A
-Line 10 col 4 IdentifierName "c" = C
-Line 10 col 7 IdentifierName "C" = C
-Line 11 col 4 IdentifierName "c2" = C2
-Line 11 col 8 IdentifierName "C2" = C2
-Line 12 col 0 AssignmentExpression "c = c2" = C2
-Line 12 col 0 IdentifierName "c" = C
-Line 12 col 4 IdentifierName "c2" = C2
-Line 13 col 0 AssignmentExpression "c2 = c" = C
-Line 13 col 0 IdentifierName "c2" = C2
-Line 13 col 5 IdentifierName "c" = C
+class A { foo(): number { return 1; } }
+>A : A
+>foo : () => number
+
+class C implements A {
+>C : C
+>A : A
+
+    foo() {
+>foo : () => number
+
+        return 1;
+    }
+}
+
+class C2 extends A {}
+>C2 : C2
+>A : A
+
+// no errors
+var c: C;
+>c : C
+>C : C
+
+var c2: C2;
+>c2 : C2
+>C2 : C2
+
+c = c2;
+>c = c2 : C2
+>c : C
+>c2 : C2
+
+c2 = c;
+>c2 = c : C
+>c2 : C2
+>c : C
+

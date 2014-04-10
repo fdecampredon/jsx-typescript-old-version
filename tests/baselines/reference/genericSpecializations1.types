@@ -1,23 +1,42 @@
 === tests/cases/compiler/genericSpecializations1.ts ===
-Line 0 col 10 IdentifierName "IFoo" = IFoo<T>
-Line 0 col 15 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "foo" = <T>(x: T) => T
-Line 1 col 8 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "x" = T
-Line 1 col 14 IdentifierName "T" = T
-Line 1 col 18 IdentifierName "T" = T
-Line 4 col 6 IdentifierName "IntFooBad" = IntFooBad
-Line 4 col 27 IdentifierName "IFoo" = IFoo<T>
-Line 5 col 0 IdentifierName "foo" = (x: string) => string
-Line 5 col 8 IdentifierName "x" = string
-Line 8 col 6 IdentifierName "StringFoo2" = StringFoo2
-Line 8 col 28 IdentifierName "IFoo" = IFoo<T>
-Line 9 col 0 IdentifierName "foo" = (x: string) => string
-Line 9 col 8 IdentifierName "x" = string
-Line 12 col 6 IdentifierName "StringFoo3" = StringFoo3
-Line 12 col 28 IdentifierName "IFoo" = IFoo<T>
-Line 13 col 0 IdentifierName "foo" = <T>(x: T) => T
-Line 13 col 8 IdentifierName "T" = T
-Line 13 col 11 IdentifierName "x" = T
-Line 13 col 14 IdentifierName "T" = T
-Line 13 col 18 IdentifierName "T" = T
+interface IFoo<T> {
+>IFoo : IFoo<T>
+>T : T
+
+    foo<T>(x: T): T; // no error on implementors because IFoo's T is different from foo's T
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+}
+
+class IntFooBad implements IFoo<number> {
+>IntFooBad : IntFooBad
+>IFoo : IFoo<T>
+
+    foo(x: string): string { return null; }
+>foo : (x: string) => string
+>x : string
+}
+
+class StringFoo2 implements IFoo<string> {
+>StringFoo2 : StringFoo2
+>IFoo : IFoo<T>
+
+    foo(x: string): string { return null; }
+>foo : (x: string) => string
+>x : string
+}
+
+class StringFoo3 implements IFoo<string> {
+>StringFoo3 : StringFoo3
+>IFoo : IFoo<T>
+
+    foo<T>(x: T): T { return null; }
+>foo : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+}

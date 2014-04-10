@@ -1,25 +1,46 @@
 === tests/cases/compiler/extendAndImplementTheSameBaseType.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 0 IdentifierName "foo" = number
-Line 2 col 0 IdentifierName "bar" = () => void
-Line 4 col 6 IdentifierName "D" = D
-Line 4 col 16 IdentifierName "C" = C
-Line 4 col 29 IdentifierName "C" = C
-Line 5 col 0 IdentifierName "baz" = () => void
-Line 8 col 4 IdentifierName "c" = C
-Line 8 col 7 IdentifierName "C" = C
-Line 9 col 4 IdentifierName "d" = D
-Line 9 col 7 IdentifierName "D" = D
-Line 9 col 11 ObjectCreationExpression "new D()" = D
-Line 9 col 15 IdentifierName "D" = typeof D
-Line 10 col 0 InvocationExpression "d.bar()" = void
-Line 10 col 0 MemberAccessExpression "d.bar" = () => void
-Line 10 col 0 IdentifierName "d" = D
-Line 10 col 2 IdentifierName "bar" = () => void
-Line 11 col 0 InvocationExpression "d.baz()" = void
-Line 11 col 0 MemberAccessExpression "d.baz" = () => void
-Line 11 col 0 IdentifierName "d" = D
-Line 11 col 2 IdentifierName "baz" = () => void
-Line 12 col 0 MemberAccessExpression "d.foo" = number
-Line 12 col 0 IdentifierName "d" = D
-Line 12 col 2 IdentifierName "foo" = number
+class C {
+>C : C
+
+    foo: number
+>foo : number
+
+    bar() {}
+>bar : () => void
+}
+class D extends C implements C {
+>D : D
+>C : C
+>C : C
+
+    baz() { }
+>baz : () => void
+}
+
+var c: C;
+>c : C
+>C : C
+
+var d: D = new D();
+>d : D
+>D : D
+>new D() : D
+>D : typeof D
+
+d.bar();
+>d.bar() : void
+>d.bar : () => void
+>d : D
+>bar : () => void
+
+d.baz();
+>d.baz() : void
+>d.baz : () => void
+>d : D
+>baz : () => void
+
+d.foo;
+>d.foo : number
+>d : D
+>foo : number
+

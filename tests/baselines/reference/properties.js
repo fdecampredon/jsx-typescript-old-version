@@ -1,3 +1,18 @@
+//// [properties.ts]
+
+class MyClass
+{
+    public get Count(): number
+    {
+        return 42;
+    }
+
+    public set Count(value: number)
+    {
+        //
+    }
+}
+
 //// [properties.js]
 var MyClass = (function () {
     function MyClass() {

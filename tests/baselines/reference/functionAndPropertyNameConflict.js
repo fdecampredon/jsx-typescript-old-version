@@ -1,3 +1,4 @@
+//// [functionAndPropertyNameConflict.js]
 var C65 = (function () {
     function C65() {
     }

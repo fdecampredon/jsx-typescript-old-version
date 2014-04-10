@@ -1,3 +1,7 @@
+//// [declarationEmit_array-types-from-generic-array-usage.ts]
+interface A extends Array<string> { }
+
+
 //// [declarationEmit_array-types-from-generic-array-usage.js]
 
 

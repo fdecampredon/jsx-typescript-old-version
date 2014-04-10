@@ -1,23 +1,46 @@
 === tests/cases/compiler/objectTypeWithCallSignatureAppearsToBeFunctionType.ts ===
-Line 3 col 10 IdentifierName "I" = I
-Line 7 col 4 IdentifierName "i" = I
-Line 7 col 7 IdentifierName "I" = I
-Line 8 col 4 IdentifierName "r2" = void
-Line 8 col 15 InvocationExpression "i()" = void
-Line 8 col 15 IdentifierName "i" = I
-Line 9 col 4 IdentifierName "r2b" = (x: any, y?: any) => any
-Line 9 col 10 IdentifierName "x" = any
-Line 9 col 18 IdentifierName "y" = any
-Line 9 col 36 MemberAccessExpression "i.apply" = (thisArg: any, argArray?: any) => any
-Line 9 col 36 IdentifierName "i" = I
-Line 9 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
-Line 11 col 4 IdentifierName "b" = () => void
-Line 15 col 4 IdentifierName "r4" = void
-Line 15 col 15 InvocationExpression "b()" = void
-Line 15 col 15 IdentifierName "b" = () => void
-Line 16 col 4 IdentifierName "rb4" = (x: any, y?: any) => any
-Line 16 col 10 IdentifierName "x" = any
-Line 16 col 18 IdentifierName "y" = any
-Line 16 col 36 MemberAccessExpression "b.apply" = (thisArg: any, argArray?: any) => any
-Line 16 col 36 IdentifierName "b" = () => void
-Line 16 col 38 IdentifierName "apply" = (thisArg: any, argArray?: any) => any
+// objects with call signatures should be permitted where function types are expected
+// no errors expected below
+
+interface I {
+>I : I
+
+    (): void;
+}
+
+var i: I;
+>i : I
+>I : I
+
+var r2: void = i();
+>r2 : void
+>i() : void
+>i : I
+
+var r2b: (x: any, y?: any) => any = i.apply;
+>r2b : (x: any, y?: any) => any
+>x : any
+>y : any
+>i.apply : (thisArg: any, argArray?: any) => any
+>i : I
+>apply : (thisArg: any, argArray?: any) => any
+
+var b: {
+>b : () => void
+
+    (): void;
+}
+
+var r4: void = b();
+>r4 : void
+>b() : void
+>b : () => void
+
+var rb4: (x: any, y?: any) => any = b.apply;
+>rb4 : (x: any, y?: any) => any
+>x : any
+>y : any
+>b.apply : (thisArg: any, argArray?: any) => any
+>b : () => void
+>apply : (thisArg: any, argArray?: any) => any
+

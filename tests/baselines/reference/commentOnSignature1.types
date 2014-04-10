@@ -1,7 +1,15 @@
 === tests/cases/compiler/commentOnSignature1.ts ===
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 13 IdentifierName "n" = number
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "s" = string
-Line 4 col 9 IdentifierName "foo" = typeof foo
-Line 4 col 13 IdentifierName "a" = any
+/*! Keep this pinned comment */
+function foo(n: number): void;
+>foo : typeof foo
+>n : number
+
+// Don't keep this comment.
+function foo(s: string): void;
+>foo : typeof foo
+>s : string
+
+function foo(a: any): void {
+>foo : typeof foo
+>a : any
+}

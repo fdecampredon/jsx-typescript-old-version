@@ -1,3 +1,4 @@
+//// [multiLineErrors.js]
 var t = 32;
 
 function noReturn() {

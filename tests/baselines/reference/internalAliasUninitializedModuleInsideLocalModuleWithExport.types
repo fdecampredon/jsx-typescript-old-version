@@ -1,16 +1,35 @@
 === tests/cases/compiler/internalAliasUninitializedModuleInsideLocalModuleWithExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 18 IdentifierName "b" = b
-Line 2 col 25 IdentifierName "I" = I
-Line 3 col 0 IdentifierName "foo" = () => any
-Line 8 col 14 IdentifierName "c" = c
-Line 9 col 18 IdentifierName "b" = b
-Line 9 col 22 IdentifierName "a" = a
-Line 9 col 24 IdentifierName "b" = any
-Line 10 col 15 IdentifierName "x" = b.I
-Line 10 col 18 IdentifierName "b" = b
-Line 10 col 20 IdentifierName "I" = b.I
-Line 11 col 0 InvocationExpression "x.foo()" = any
-Line 11 col 0 MemberAccessExpression "x.foo" = () => any
-Line 11 col 0 IdentifierName "x" = b.I
-Line 11 col 6 IdentifierName "foo" = () => any
+export module a {
+>a : a
+
+    export module b {
+>b : b
+
+        export interface I {
+>I : I
+
+            foo();
+>foo : () => any
+        }
+    }
+}
+
+export module c {
+>c : c
+
+    export import b = a.b;
+>b : b
+>a : a
+>b : any
+
+    export var x: b.I;
+>x : b.I
+>b : b
+>I : b.I
+
+    x.foo();
+>x.foo() : any
+>x.foo : () => any
+>x : b.I
+>foo : () => any
+}

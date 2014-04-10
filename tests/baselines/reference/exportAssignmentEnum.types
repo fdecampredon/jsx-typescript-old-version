@@ -1,20 +1,39 @@
 === tests/cases/compiler/exportAssignmentEnum_B.ts ===
-Line 0 col 7 IdentifierName "EnumE" = EnumE
-Line 2 col 4 IdentifierName "a" = EnumE
-Line 2 col 8 MemberAccessExpression "EnumE.A" = EnumE
-Line 2 col 8 IdentifierName "EnumE" = typeof EnumE
-Line 2 col 14 IdentifierName "A" = EnumE
-Line 3 col 4 IdentifierName "b" = EnumE
-Line 3 col 8 MemberAccessExpression "EnumE.B" = EnumE
-Line 3 col 8 IdentifierName "EnumE" = typeof EnumE
-Line 3 col 14 IdentifierName "B" = EnumE
-Line 4 col 4 IdentifierName "c" = EnumE
-Line 4 col 8 MemberAccessExpression "EnumE.C" = EnumE
-Line 4 col 8 IdentifierName "EnumE" = typeof EnumE
-Line 4 col 14 IdentifierName "C" = EnumE
+import EnumE = require("exportAssignmentEnum_A");
+>EnumE : EnumE
+
+var a = EnumE.A;
+>a : EnumE
+>EnumE.A : EnumE
+>EnumE : typeof EnumE
+>A : EnumE
+
+var b = EnumE.B;
+>b : EnumE
+>EnumE.B : EnumE
+>EnumE : typeof EnumE
+>B : EnumE
+
+var c = EnumE.C;
+>c : EnumE
+>EnumE.C : EnumE
+>EnumE : typeof EnumE
+>C : EnumE
+
 === tests/cases/compiler/exportAssignmentEnum_A.ts ===
-Line 0 col 5 IdentifierName "E" = E
-Line 1 col 0 IdentifierName "A" = E
-Line 2 col 0 IdentifierName "B" = E
-Line 3 col 0 IdentifierName "C" = E
-Line 6 col 9 IdentifierName "E" = typeof E
+enum E {
+>E : E
+
+	A,
+>A : E
+
+	B,
+>B : E
+
+	C,
+>C : E
+}
+
+export = E;
+>E : typeof E
+

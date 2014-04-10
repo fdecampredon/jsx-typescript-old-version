@@ -1,3 +1,30 @@
+//// [recursiveComplicatedClasses.ts]
+class Signature {
+    public parameters: ParameterSymbol[] = null;
+}
+
+function aEnclosesB(a: Symbol) {
+    return true;
+}
+
+class Symbol {
+    public bound: boolean;
+    public visible() {
+        var b: TypeSymbol;
+        return aEnclosesB(b);
+    }
+
+}
+class InferenceSymbol extends Symbol {
+}
+
+class ParameterSymbol extends InferenceSymbol {
+}
+
+class TypeSymbol extends InferenceSymbol {
+}
+
+//// [recursiveComplicatedClasses.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

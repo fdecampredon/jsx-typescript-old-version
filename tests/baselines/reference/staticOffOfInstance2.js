@@ -1,3 +1,4 @@
+//// [staticOffOfInstance2.js]
 var List = (function () {
     function List() {
     }

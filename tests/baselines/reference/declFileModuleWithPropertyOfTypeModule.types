@@ -1,5 +1,13 @@
 === tests/cases/compiler/declFileModuleWithPropertyOfTypeModule.ts ===
-Line 1 col 7 IdentifierName "m" = m
-Line 2 col 17 IdentifierName "c" = c
-Line 5 col 15 IdentifierName "a" = typeof m
-Line 5 col 19 IdentifierName "m" = typeof m
+
+module m {
+>m : m
+
+    export class c {
+>c : c
+    }
+
+    export var a = m;
+>a : typeof m
+>m : typeof m
+}

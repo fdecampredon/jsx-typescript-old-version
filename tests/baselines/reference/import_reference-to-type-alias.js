@@ -1,3 +1,9 @@
+//// [file2.ts]
+import appJs = require("file1");
+import Services = appJs.App.Services;
+var x = new Services.UserServices().getUserName();
+
+
 //// [file1.js]
 define(["require", "exports"], function(require, exports) {
     (function (App) {

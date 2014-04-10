@@ -1,3 +1,13 @@
+//// [selfInCallback.ts]
+class C {
+	public p1 = 0;
+	public callback(cb:()=>void) {cb();}
+	public doit() {
+		this.callback(()=>{this.p1+1});
+	}
+}
+
+//// [selfInCallback.js]
 var C = (function () {
     function C() {
         this.p1 = 0;

@@ -1,14 +1,20 @@
 === tests/cases/compiler/functionCall5.ts ===
-Line 0 col 7 IdentifierName "m1" = m1
-Line 0 col 25 IdentifierName "c1" = c1
-Line 0 col 37 IdentifierName "a" = any
-Line 1 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 15 IdentifierName "m1" = m1
-Line 1 col 18 IdentifierName "c1" = m1.c1
-Line 1 col 28 ObjectCreationExpression "new m1.c1()" = m1.c1
-Line 1 col 32 MemberAccessExpression "m1.c1" = typeof m1.c1
-Line 1 col 32 IdentifierName "m1" = typeof m1
-Line 1 col 35 IdentifierName "c1" = typeof m1.c1
-Line 2 col 4 IdentifierName "x" = m1.c1
-Line 2 col 8 InvocationExpression "foo()" = m1.c1
-Line 2 col 8 IdentifierName "foo" = typeof foo
+module m1 { export class c1 { public a; }} 
+>m1 : m1
+>c1 : c1
+>a : any
+
+function foo():m1.c1{return new m1.c1();}; 
+>foo : typeof foo
+>m1 : m1
+>c1 : m1.c1
+>new m1.c1() : m1.c1
+>m1.c1 : typeof m1.c1
+>m1 : typeof m1
+>c1 : typeof m1.c1
+
+var x = foo();
+>x : m1.c1
+>foo() : m1.c1
+>foo : typeof foo
+

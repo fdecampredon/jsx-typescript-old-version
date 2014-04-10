@@ -1,3 +1,4 @@
+//// [funClodule.js]
 function foo3() {
 }
 var foo3;

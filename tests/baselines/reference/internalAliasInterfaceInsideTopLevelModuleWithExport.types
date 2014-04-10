@@ -1,8 +1,18 @@
 === tests/cases/compiler/internalAliasInterfaceInsideTopLevelModuleWithExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 21 IdentifierName "I" = I
-Line 5 col 14 IdentifierName "b" = b
-Line 5 col 18 IdentifierName "a" = a
-Line 5 col 20 IdentifierName "I" = b
-Line 6 col 11 IdentifierName "x" = b
-Line 6 col 14 IdentifierName "b" = b
+export module a {
+>a : a
+
+    export interface I {
+>I : I
+    }
+}
+
+export import b = a.I;
+>b : b
+>a : a
+>I : b
+
+export var x: b;
+>x : b
+>b : b
+

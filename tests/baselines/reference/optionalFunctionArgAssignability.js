@@ -1,3 +1,4 @@
+//// [optionalFunctionArgAssignability.js]
 var a = function then(onFulfill, onReject) {
     return null;
 };

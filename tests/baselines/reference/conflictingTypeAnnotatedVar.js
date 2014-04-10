@@ -1,3 +1,4 @@
+//// [conflictingTypeAnnotatedVar.js]
 var foo;
 function foo() {
 }

@@ -1,4 +1,14 @@
 === tests/cases/compiler/functionInIfStatementInModule.ts ===
-Line 1 col 7 IdentifierName "Midori" = Midori
-Line 4 col 17 IdentifierName "Foo" = typeof Foo
-Line 4 col 21 IdentifierName "src" = any
+ 
+module Midori
+>Midori : Midori
+{
+    if (false) {
+        function Foo(src)
+>Foo : typeof Foo
+>src : any
+        {
+        }
+    }
+}
+

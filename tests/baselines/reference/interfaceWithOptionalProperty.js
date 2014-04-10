@@ -1,3 +1,9 @@
+//// [interfaceWithOptionalProperty.ts]
+
+interface I {
+    x?: number;
+}
+
 //// [interfaceWithOptionalProperty.js]
 
 

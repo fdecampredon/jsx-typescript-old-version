@@ -1,3 +1,10 @@
+//// [exportAssignmentEnum_B.ts]
+import EnumE = require("exportAssignmentEnum_A");
+
+var a = EnumE.A;
+var b = EnumE.B;
+var c = EnumE.C;
+
 //// [exportAssignmentEnum_A.js]
 var E;
 (function (E) {

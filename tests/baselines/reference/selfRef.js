@@ -1,3 +1,4 @@
+//// [selfRef.js]
 var M;
 (function (M) {
     var Test = (function () {

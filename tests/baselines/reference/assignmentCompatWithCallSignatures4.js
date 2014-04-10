@@ -1,3 +1,4 @@
+//// [assignmentCompatWithCallSignatures4.js]
 // These are mostly permitted with the current loose rules. All ok unless otherwise noted.
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

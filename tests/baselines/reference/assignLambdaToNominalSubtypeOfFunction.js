@@ -1,3 +1,4 @@
+//// [assignLambdaToNominalSubtypeOfFunction.js]
 function fn(cb) {
 }
 

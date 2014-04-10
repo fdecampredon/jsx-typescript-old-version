@@ -1,20 +1,43 @@
 === tests/cases/compiler/declFileExportImportChain_d.ts ===
-Line 0 col 7 IdentifierName "c" = c
-Line 1 col 11 IdentifierName "x" = c.b1.a.m2.c1
-Line 1 col 14 IdentifierName "c" = c
-Line 1 col 16 IdentifierName "b1" = c.b1
-Line 1 col 19 IdentifierName "a" = c.b1.a
-Line 1 col 21 IdentifierName "m2" = c.b1.a.m2
-Line 1 col 24 IdentifierName "c1" = c.b1.a.m2.c1
+import c = require("declFileExportImportChain_c");
+>c : c
+
+export var x: c.b1.a.m2.c1;
+>x : c.b1.a.m2.c1
+>c : c
+>b1 : c.b1
+>a : c.b1.a
+>m2 : c.b1.a.m2
+>c1 : c.b1.a.m2.c1
+
 === tests/cases/compiler/declFileExportImportChain_a.ts ===
-Line 1 col 7 IdentifierName "m1" = m1
-Line 2 col 18 IdentifierName "m2" = m2
-Line 3 col 21 IdentifierName "c1" = c1
-Line 7 col 9 IdentifierName "m1" = typeof m1
+
+module m1 {
+>m1 : m1
+
+    export module m2 {
+>m2 : m2
+
+        export class c1 {
+>c1 : c1
+        }
+    }
+}
+export = m1;
+>m1 : typeof m1
+
 === tests/cases/compiler/declFileExportImportChain_b.ts ===
-Line 0 col 14 IdentifierName "a" = a
+export import a = require("declFileExportImportChain_a");
+>a : a
+
 === tests/cases/compiler/declFileExportImportChain_b1.ts ===
-Line 0 col 7 IdentifierName "b" = b
-Line 1 col 9 IdentifierName "b" = typeof b
+import b = require("declFileExportImportChain_b");
+>b : b
+
+export = b;
+>b : typeof b
+
 === tests/cases/compiler/declFileExportImportChain_c.ts ===
-Line 0 col 14 IdentifierName "b1" = b1
+export import b1 = require("declFileExportImportChain_b1");
+>b1 : b1
+

@@ -1,15 +1,21 @@
 === tests/cases/compiler/genericParameterAssignability1.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 0 col 11 IdentifierName "T" = T
-Line 0 col 14 IdentifierName "x" = T
-Line 0 col 17 IdentifierName "T" = T
-Line 0 col 21 IdentifierName "T" = T
-Line 1 col 4 IdentifierName "r" = <T>(x: T) => T
-Line 1 col 8 ParenthesizedArrowFunctionExpression "<T>(x: T) => x" = <T>(x: T) => T
-Line 1 col 9 IdentifierName "T" = T
-Line 1 col 12 IdentifierName "x" = T
-Line 1 col 15 IdentifierName "T" = T
-Line 1 col 21 IdentifierName "x" = T
-Line 2 col 0 AssignmentExpression "r = f" = typeof f
-Line 2 col 0 IdentifierName "r" = <T>(x: T) => T
-Line 2 col 4 IdentifierName "f" = typeof f
+function f<T>(x: T): T { return null; }
+>f : typeof f
+>T : T
+>x : T
+>T : T
+>T : T
+
+var r = <T>(x: T) => x;
+>r : <T>(x: T) => T
+><T>(x: T) => x : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>x : T
+
+r = f; // should be allowed
+>r = f : typeof f
+>r : <T>(x: T) => T
+>f : typeof f
+

@@ -1,35 +1,51 @@
 === tests/cases/compiler/genericFunctionsWithOptionalParameters1.ts ===
-Line 0 col 10 IdentifierName "Utils" = Utils
-Line 1 col 0 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 1 col 8 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "S" = S
-Line 1 col 14 IdentifierName "c" = T[]
-Line 1 col 18 IdentifierName "Array" = Array<T>
-Line 1 col 24 IdentifierName "T" = T
-Line 1 col 28 IdentifierName "folder" = (s: S, t: T) => T
-Line 1 col 38 IdentifierName "s" = S
-Line 1 col 41 IdentifierName "S" = S
-Line 1 col 44 IdentifierName "t" = T
-Line 1 col 47 IdentifierName "T" = T
-Line 1 col 53 IdentifierName "T" = T
-Line 1 col 56 IdentifierName "init" = S
-Line 1 col 63 IdentifierName "S" = S
-Line 1 col 67 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "utils" = Utils
-Line 4 col 11 IdentifierName "Utils" = Utils
-Line 5 col 0 InvocationExpression "utils.fold()" = {}
-Line 5 col 0 MemberAccessExpression "utils.fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 5 col 0 IdentifierName "utils" = Utils
-Line 6 col 6 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 7 col 0 InvocationExpression "utils.fold(null)" = {}
-Line 7 col 0 MemberAccessExpression "utils.fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 7 col 0 IdentifierName "utils" = Utils
-Line 7 col 6 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 8 col 0 InvocationExpression "utils.fold(null, null)" = {}
-Line 8 col 0 MemberAccessExpression "utils.fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 8 col 0 IdentifierName "utils" = Utils
-Line 8 col 6 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 9 col 0 InvocationExpression "utils.fold(null, null, null)" = {}
-Line 9 col 0 MemberAccessExpression "utils.fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
-Line 9 col 0 IdentifierName "utils" = Utils
-Line 9 col 6 IdentifierName "fold" = <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+interface Utils {
+>Utils : Utils
+
+   fold<T, S>(c?: Array<T>, folder?: (s: S, t: T) => T, init?: S): T;
+>fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+>T : T
+>S : S
+>c : T[]
+>Array : Array<T>
+>T : T
+>folder : (s: S, t: T) => T
+>s : S
+>S : S
+>t : T
+>T : T
+>T : T
+>init : S
+>S : S
+>T : T
+}
+
+var utils: Utils;
+>utils : Utils
+>Utils : Utils
+
+>utils.fold() : {}
+>utils.fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+>utils : Utils
+
+utils.fold(); // no error
+>fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+
+utils.fold(null); // no error
+>utils.fold(null) : {}
+>utils.fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+>utils : Utils
+>fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+
+utils.fold(null, null); // no error
+>utils.fold(null, null) : {}
+>utils.fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+>utils : Utils
+>fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+
+utils.fold(null, null, null); // no error
+>utils.fold(null, null, null) : {}
+>utils.fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+>utils : Utils
+>fold : <T, S>(c?: T[], folder?: (s: S, t: T) => T, init?: S) => T
+

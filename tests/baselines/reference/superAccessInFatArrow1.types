@@ -1,21 +1,42 @@
 === tests/cases/compiler/superAccessInFatArrow1.ts ===
-Line 0 col 7 IdentifierName "test" = test
-Line 1 col 17 IdentifierName "A" = A
-Line 2 col 0 IdentifierName "foo" = () => void
-Line 5 col 17 IdentifierName "B" = B
-Line 5 col 27 IdentifierName "A" = A
-Line 6 col 0 IdentifierName "bar" = (callback: () => void) => void
-Line 6 col 12 IdentifierName "callback" = () => void
-Line 8 col 0 IdentifierName "runme" = () => void
-Line 9 col 0 InvocationExpression "this.bar(() => {
+module test {
+>test : test
+
+    export class A {
+>A : A
+
+        foo() {
+>foo : () => void
+        }
+    }
+    export class B extends A {
+>B : B
+>A : A
+
+        bar(callback: () => void ) {
+>bar : (callback: () => void) => void
+>callback : () => void
+        }
+        runme() {
+>runme : () => void
+
+            this.bar(() => {
+>this.bar(() => {
                 super.foo();
-            })" = void
-Line 9 col 0 MemberAccessExpression "this.bar" = (callback: () => void) => void
-Line 9 col 0 ThisKeyword "this" = B
-Line 9 col 17 IdentifierName "bar" = (callback: () => void) => void
-Line 9 col 21 ParenthesizedArrowFunctionExpression "() => {
+            }) : void
+>this.bar : (callback: () => void) => void
+>this : B
+>bar : (callback: () => void) => void
+>() => {
                 super.foo();
-            }" = () => void
-Line 10 col 0 InvocationExpression "super.foo()" = void
-Line 10 col 0 MemberAccessExpression "super.foo" = () => void
-Line 10 col 22 IdentifierName "foo" = () => void
+            } : () => void
+
+                super.foo();
+>super.foo() : void
+>super.foo : () => void
+>foo : () => void
+
+            });
+        }
+    }
+}

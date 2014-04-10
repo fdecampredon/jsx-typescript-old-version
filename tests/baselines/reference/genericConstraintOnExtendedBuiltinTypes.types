@@ -1,31 +1,67 @@
 === tests/cases/compiler/genericConstraintOnExtendedBuiltinTypes.ts ===
-Line 2 col 15 IdentifierName "EndGate" = EndGate
-Line 3 col 21 IdentifierName "ICloneable" = ICloneable
-Line 4 col 0 IdentifierName "Clone" = () => any
-Line 8 col 10 IdentifierName "Number" = Number
-Line 8 col 25 IdentifierName "EndGate" = EndGate
-Line 8 col 33 IdentifierName "ICloneable" = EndGate.ICloneable
-Line 10 col 7 IdentifierName "EndGate" = EndGate
-Line 10 col 15 IdentifierName "Tweening" = EndGate.Tweening
-Line 11 col 17 IdentifierName "Tween" = Tween<T>
-Line 11 col 23 IdentifierName "T" = T
-Line 11 col 33 IdentifierName "ICloneable" = ICloneable
-Line 12 col 16 IdentifierName "_from" = T
-Line 12 col 23 IdentifierName "T" = T
-Line 15 col 20 IdentifierName "from" = T
-Line 15 col 26 IdentifierName "T" = T
-Line 16 col 0 AssignmentExpression "this._from = from.Clone()" = any
-Line 16 col 0 MemberAccessExpression "this._from" = T
-Line 16 col 0 ThisKeyword "this" = Tween<T>
-Line 16 col 17 IdentifierName "_from" = T
-Line 16 col 25 InvocationExpression "from.Clone()" = any
-Line 16 col 25 MemberAccessExpression "from.Clone" = () => any
-Line 16 col 25 IdentifierName "from" = T
-Line 16 col 30 IdentifierName "Clone" = () => any
-Line 21 col 7 IdentifierName "EndGate" = EndGate
-Line 21 col 15 IdentifierName "Tweening" = EndGate.Tweening
-Line 22 col 17 IdentifierName "NumberTween" = NumberTween
-Line 22 col 37 IdentifierName "Tween" = Tween<T>
-Line 23 col 20 IdentifierName "from" = number
-Line 24 col 0 InvocationExpression "super(from)" = void
-Line 24 col 18 IdentifierName "from" = number
+// bug 757836: number not being Recognized as Number when extended and used as generic constraint
+
+declare module EndGate {
+>EndGate : EndGate
+
+    export interface ICloneable {
+>ICloneable : ICloneable
+
+        Clone(): any;
+>Clone : () => any
+    }
+}
+
+interface Number extends EndGate.ICloneable { }
+>Number : Number
+>EndGate : EndGate
+>ICloneable : EndGate.ICloneable
+
+module EndGate.Tweening {
+>EndGate : EndGate
+>Tweening : EndGate.Tweening
+
+    export class Tween<T extends ICloneable>{
+>Tween : Tween<T>
+>T : T
+>ICloneable : ICloneable
+
+        private _from: T;
+>_from : T
+>T : T
+
+
+        constructor(from: T) {
+>from : T
+>T : T
+
+            this._from = from.Clone();
+>this._from = from.Clone() : any
+>this._from : T
+>this : Tween<T>
+>_from : T
+>from.Clone() : any
+>from.Clone : () => any
+>from : T
+>Clone : () => any
+        }
+    }
+}
+
+module EndGate.Tweening {
+>EndGate : EndGate
+>Tweening : EndGate.Tweening
+
+    export class NumberTween extends Tween<number>{
+>NumberTween : NumberTween
+>Tween : Tween<T>
+
+        constructor(from: number) {
+>from : number
+
+            super(from);
+>super(from) : void
+>from : number
+        }
+    }
+}

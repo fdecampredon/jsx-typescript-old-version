@@ -1,3 +1,15 @@
+//// [staticMemberAccessOffDerivedType1.ts]
+class SomeBase {
+    static GetNumber() {
+        return 2;
+    }
+}
+class P extends SomeBase {
+    static SomeNumber = P.GetNumber();
+}
+
+
+//// [staticMemberAccessOffDerivedType1.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

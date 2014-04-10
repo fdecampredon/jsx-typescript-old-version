@@ -1,68 +1,160 @@
 === tests/cases/compiler/subtypingWithObjectMembersOptionality.ts ===
-Line 2 col 10 IdentifierName "Base" = Base
-Line 2 col 17 IdentifierName "foo" = string
-Line 3 col 10 IdentifierName "Derived" = Derived
-Line 3 col 26 IdentifierName "Base" = Base
-Line 3 col 33 IdentifierName "bar" = string
-Line 4 col 10 IdentifierName "Derived2" = Derived2
-Line 4 col 27 IdentifierName "Derived" = Derived
-Line 4 col 37 IdentifierName "baz" = string
-Line 14 col 10 IdentifierName "T" = T
-Line 15 col 0 IdentifierName "Foo" = Base
-Line 15 col 10 IdentifierName "Base" = Base
-Line 18 col 10 IdentifierName "S" = S
-Line 18 col 20 IdentifierName "T" = T
-Line 19 col 0 IdentifierName "Foo" = Derived
-Line 19 col 9 IdentifierName "Derived" = Derived
-Line 22 col 10 IdentifierName "T2" = T2
-Line 23 col 8 IdentifierName "Base" = Base
-Line 26 col 10 IdentifierName "S2" = S2
-Line 26 col 21 IdentifierName "T2" = T2
-Line 27 col 7 IdentifierName "Derived" = Derived
-Line 30 col 10 IdentifierName "T3" = T3
-Line 31 col 10 IdentifierName "Base" = Base
-Line 34 col 10 IdentifierName "S3" = S3
-Line 34 col 21 IdentifierName "T3" = T3
-Line 35 col 10 IdentifierName "Derived" = Derived
-Line 39 col 4 IdentifierName "a" = { Foo?: Base; }
-Line 39 col 9 IdentifierName "Foo" = Base
-Line 39 col 15 IdentifierName "Base" = Base
-Line 40 col 4 IdentifierName "b" = { Foo: Derived; }
-Line 40 col 8 ObjectLiteralExpression "{ Foo: <Derived>null }" = { Foo: Derived; }
-Line 40 col 10 IdentifierName "Foo" = Derived
-Line 40 col 15 CastExpression "<Derived>null" = Derived
-Line 40 col 16 IdentifierName "Derived" = Derived
-Line 41 col 4 IdentifierName "r" = { Foo?: Base; }
-Line 41 col 8 ConditionalExpression "true ? a : b" = { Foo?: Base; }
-Line 41 col 15 IdentifierName "a" = { Foo?: Base; }
-Line 41 col 19 IdentifierName "b" = { Foo: Derived; }
-Line 43 col 7 IdentifierName "TwoLevels" = TwoLevels
-Line 44 col 14 IdentifierName "T" = T
-Line 45 col 0 IdentifierName "Foo" = Base
-Line 45 col 14 IdentifierName "Base" = Base
-Line 48 col 14 IdentifierName "S" = S
-Line 48 col 24 IdentifierName "T" = T
-Line 49 col 0 IdentifierName "Foo" = Derived2
-Line 49 col 13 IdentifierName "Derived2" = Derived2
-Line 52 col 14 IdentifierName "T2" = T2
-Line 53 col 12 IdentifierName "Base" = Base
-Line 56 col 14 IdentifierName "S2" = S2
-Line 56 col 25 IdentifierName "T2" = T2
-Line 57 col 11 IdentifierName "Derived2" = Derived2
-Line 60 col 14 IdentifierName "T3" = T3
-Line 61 col 14 IdentifierName "Base" = Base
-Line 64 col 14 IdentifierName "S3" = S3
-Line 64 col 25 IdentifierName "T3" = T3
-Line 65 col 14 IdentifierName "Derived2" = Derived2
-Line 69 col 8 IdentifierName "a" = { Foo?: Base; }
-Line 69 col 13 IdentifierName "Foo" = Base
-Line 69 col 19 IdentifierName "Base" = Base
-Line 70 col 8 IdentifierName "b" = { Foo: Derived2; }
-Line 70 col 12 ObjectLiteralExpression "{ Foo: <Derived2>null }" = { Foo: Derived2; }
-Line 70 col 14 IdentifierName "Foo" = Derived2
-Line 70 col 19 CastExpression "<Derived2>null" = Derived2
-Line 70 col 20 IdentifierName "Derived2" = Derived2
-Line 71 col 8 IdentifierName "r" = { Foo?: Base; }
-Line 71 col 12 ConditionalExpression "true ? a : b" = { Foo?: Base; }
-Line 71 col 19 IdentifierName "a" = { Foo?: Base; }
-Line 71 col 23 IdentifierName "b" = { Foo: Derived2; }
+// Derived member is not optional but base member is, should be ok
+
+interface Base { foo: string; }
+>Base : Base
+>foo : string
+
+interface Derived extends Base { bar: string; }
+>Derived : Derived
+>Base : Base
+>bar : string
+
+interface Derived2 extends Derived { baz: string; }
+>Derived2 : Derived2
+>Derived : Derived
+>baz : string
+
+// S is a subtype of a type T, and T is a supertype of S, if one of the following is true, where S' denotes the apparent type (section 3.8.1) of S:
+//   - S' and T are object types and, for each member M in T, one of the following is true:
+//      - M is a property and S' contains a property N where
+//          M and N have the same name,
+//          the type of N is a subtype of that of M,
+//          M and N are both public or both private, and
+//          if M is a required property, N is also a required property.
+//      - M is an optional property and S' contains no property of the same name as M.
+interface T {
+>T : T
+
+    Foo?: Base;
+>Foo : Base
+>Base : Base
+}
+
+interface S extends T {
+>S : S
+>T : T
+
+    Foo: Derived
+>Foo : Derived
+>Derived : Derived
+}
+
+interface T2 {
+>T2 : T2
+
+    1?: Base; 
+>Base : Base
+}
+
+interface S2 extends T2 {
+>S2 : S2
+>T2 : T2
+
+    1: Derived;
+>Derived : Derived
+}
+
+interface T3 {
+>T3 : T3
+
+    '1'?: Base;
+>Base : Base
+}
+
+interface S3 extends T3 {
+>S3 : S3
+>T3 : T3
+
+    '1.': Derived;
+>Derived : Derived
+}
+
+// object literal case
+var a: { Foo?: Base; };
+>a : { Foo?: Base; }
+>Foo : Base
+>Base : Base
+
+var b = { Foo: <Derived>null };
+>b : { Foo: Derived; }
+>{ Foo: <Derived>null } : { Foo: Derived; }
+>Foo : Derived
+><Derived>null : Derived
+>Derived : Derived
+
+var r = true ? a : b;
+>r : { Foo?: Base; }
+>true ? a : b : { Foo?: Base; }
+>a : { Foo?: Base; }
+>b : { Foo: Derived; }
+
+module TwoLevels {
+>TwoLevels : TwoLevels
+
+    interface T {
+>T : T
+
+        Foo?: Base;
+>Foo : Base
+>Base : Base
+    }
+
+    interface S extends T {
+>S : S
+>T : T
+
+        Foo: Derived2 
+>Foo : Derived2
+>Derived2 : Derived2
+    }
+
+    interface T2 {
+>T2 : T2
+
+        1?: Base;
+>Base : Base
+    }
+
+    interface S2 extends T2 {
+>S2 : S2
+>T2 : T2
+
+        1: Derived2;
+>Derived2 : Derived2
+    }
+
+    interface T3 {
+>T3 : T3
+
+        '1'?: Base;
+>Base : Base
+    }
+
+    interface S3 extends T3 {
+>S3 : S3
+>T3 : T3
+
+        '1.': Derived2;
+>Derived2 : Derived2
+    }
+
+    // object literal case
+    var a: { Foo?: Base; };
+>a : { Foo?: Base; }
+>Foo : Base
+>Base : Base
+
+    var b = { Foo: <Derived2>null };
+>b : { Foo: Derived2; }
+>{ Foo: <Derived2>null } : { Foo: Derived2; }
+>Foo : Derived2
+><Derived2>null : Derived2
+>Derived2 : Derived2
+
+    var r = true ? a : b;
+>r : { Foo?: Base; }
+>true ? a : b : { Foo?: Base; }
+>a : { Foo?: Base; }
+>b : { Foo: Derived2; }
+}

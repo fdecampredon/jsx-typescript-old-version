@@ -1,27 +1,44 @@
 === tests/cases/compiler/namedFunctionExpressionCall.ts ===
-Line 0 col 4 IdentifierName "recurser" = () => void
-Line 0 col 15 FunctionExpression "function foo() {
+var recurser = function foo() {
+>recurser : () => void
+>function foo() {
     // using the local name
     foo();
 
     // using the globally visible name
     recurser();
-}" = () => void
-Line 0 col 24 IdentifierName "foo" = () => void
-Line 1 col 0 InvocationExpression "// using the local name
-    foo()" = void
-Line 1 col 0 IdentifierName "// using the local name
-    foo" = () => void
-Line 3 col 0 InvocationExpression "// using the globally visible name
-    recurser()" = void
-Line 3 col 0 IdentifierName "// using the globally visible name
-    recurser" = () => void
-Line 7 col 0 ParenthesizedExpression "(function bar() {
+} : () => void
+>foo : () => void
+
+    // using the local name
+>// using the local name
+    foo() : void
+>// using the local name
+    foo : () => void
+
+    foo();
+
+>// using the globally visible name
+    recurser() : void
+>// using the globally visible name
+    recurser : () => void
+
+    // using the globally visible name
+    recurser();
+};
+
+>(function bar() {
     bar();
-})" = () => void
-Line 9 col 1 FunctionExpression "function bar() {
+}) : () => void
+
+(function bar() {
+>function bar() {
     bar();
-}" = () => void
-Line 9 col 10 IdentifierName "bar" = () => void
-Line 10 col 0 InvocationExpression "bar()" = void
-Line 10 col 0 IdentifierName "bar" = () => void
+} : () => void
+>bar : () => void
+
+    bar();
+>bar() : void
+>bar : () => void
+
+});

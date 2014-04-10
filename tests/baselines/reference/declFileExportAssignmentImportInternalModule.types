@@ -1,26 +1,58 @@
 === tests/cases/compiler/declFileExportAssignmentImportInternalModule.ts ===
-Line 0 col 7 IdentifierName "m3" = m3
-Line 1 col 18 IdentifierName "m2" = m2
-Line 2 col 25 IdentifierName "connectModule" = connectModule
-Line 3 col 13 IdentifierName "res" = any
-Line 3 col 18 IdentifierName "req" = any
-Line 3 col 23 IdentifierName "next" = any
-Line 5 col 25 IdentifierName "connectExport" = connectExport
-Line 6 col 0 IdentifierName "use" = (mod: connectModule) => connectExport
-Line 6 col 18 IdentifierName "mod" = connectModule
-Line 6 col 23 IdentifierName "connectModule" = connectModule
-Line 6 col 41 IdentifierName "connectExport" = connectExport
-Line 7 col 0 IdentifierName "listen" = (port: number) => void
-Line 7 col 21 IdentifierName "port" = number
-Line 12 col 15 IdentifierName "server" = { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
-Line 13 col 12 IdentifierName "m2" = m2
-Line 13 col 15 IdentifierName "connectExport" = m2.connectExport
-Line 14 col 0 IdentifierName "test1" = m2.connectModule
-Line 14 col 15 IdentifierName "m2" = m2
-Line 14 col 18 IdentifierName "connectModule" = m2.connectModule
-Line 15 col 0 IdentifierName "test2" = () => m2.connectModule
-Line 15 col 17 IdentifierName "m2" = m2
-Line 15 col 20 IdentifierName "connectModule" = m2.connectModule
-Line 19 col 7 IdentifierName "m" = m
-Line 19 col 11 IdentifierName "m3" = m3
-Line 20 col 9 IdentifierName "m" = typeof m3
+module m3 {
+>m3 : m3
+
+    export module m2 {
+>m2 : m2
+
+        export interface connectModule {
+>connectModule : connectModule
+
+            (res, req, next): void;
+>res : any
+>req : any
+>next : any
+        }
+        export interface connectExport {
+>connectExport : connectExport
+
+            use: (mod: connectModule) => connectExport;
+>use : (mod: connectModule) => connectExport
+>mod : connectModule
+>connectModule : connectModule
+>connectExport : connectExport
+
+            listen: (port: number) => void;
+>listen : (port: number) => void
+>port : number
+        }
+
+    }
+
+    export var server: {
+>server : { test1: m2.connectModule; test2(): m2.connectModule; (): m2.connectExport; }
+
+        (): m2.connectExport;
+>m2 : m2
+>connectExport : m2.connectExport
+
+        test1: m2.connectModule;
+>test1 : m2.connectModule
+>m2 : m2
+>connectModule : m2.connectModule
+
+        test2(): m2.connectModule;
+>test2 : () => m2.connectModule
+>m2 : m2
+>connectModule : m2.connectModule
+
+    };
+}
+
+import m = m3
+>m : m
+>m3 : m3
+
+export = m;
+>m : typeof m3
+

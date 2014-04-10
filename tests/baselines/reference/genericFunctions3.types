@@ -1,18 +1,30 @@
 === tests/cases/compiler/genericFunctions3.ts ===
-Line 0 col 10 IdentifierName "Query" = Query<T>
-Line 0 col 16 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "foo" = (x: string) => Query<T[]>
-Line 1 col 8 IdentifierName "x" = string
-Line 1 col 20 IdentifierName "Query" = Query<T>
-Line 1 col 26 IdentifierName "T" = T
-Line 4 col 9 IdentifierName "from" = typeof from
-Line 4 col 14 IdentifierName "T" = T
-Line 4 col 17 IdentifierName "arg" = boolean
-Line 4 col 32 IdentifierName "Query" = Query<T>
-Line 4 col 38 IdentifierName "T" = T
-Line 5 col 9 IdentifierName "from" = typeof from
-Line 5 col 14 IdentifierName "T" = T
-Line 5 col 17 IdentifierName "arg" = any
-Line 5 col 28 IdentifierName "Query" = Query<T>
-Line 5 col 34 IdentifierName "T" = T
-Line 6 col 11 IdentifierName "undefined" = any
+interface Query<T> {
+>Query : Query<T>
+>T : T
+
+    foo(x: string): Query<T[]>;
+>foo : (x: string) => Query<T[]>
+>x : string
+>Query : Query<T>
+>T : T
+}
+ 
+function from<T>(arg: boolean): Query<T>; // was Error: Overload signature is not compatible with function definition.
+>from : typeof from
+>T : T
+>arg : boolean
+>Query : Query<T>
+>T : T
+
+function from<T>(arg: any): Query<T> {
+>from : typeof from
+>T : T
+>arg : any
+>Query : Query<T>
+>T : T
+
+    return undefined;
+>undefined : any
+}
+

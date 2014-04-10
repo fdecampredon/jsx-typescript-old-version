@@ -1,12 +1,24 @@
 === tests/cases/compiler/moduleAndInterfaceSharingName.ts ===
-Line 0 col 7 IdentifierName "X" = X
-Line 1 col 18 IdentifierName "Y" = Y
-Line 2 col 25 IdentifierName "Z" = Z
-Line 4 col 21 IdentifierName "Y" = Y
-Line 6 col 4 IdentifierName "z" = X.Y.Z
-Line 6 col 7 IdentifierName "X" = X
-Line 6 col 9 IdentifierName "Y" = X.Y
-Line 6 col 11 IdentifierName "Z" = X.Y.Z
-Line 7 col 4 IdentifierName "z2" = X.Y
-Line 7 col 8 IdentifierName "X" = X
-Line 7 col 10 IdentifierName "Y" = X.Y
+module X {
+>X : X
+
+    export module Y {
+>Y : Y
+
+        export interface Z { }
+>Z : Z
+    }
+    export interface Y { }
+>Y : Y
+}
+var z: X.Y.Z = null;
+>z : X.Y.Z
+>X : X
+>Y : X.Y
+>Z : X.Y.Z
+
+var z2: X.Y;
+>z2 : X.Y
+>X : X
+>Y : X.Y
+

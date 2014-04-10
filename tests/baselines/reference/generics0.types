@@ -1,11 +1,20 @@
 === tests/cases/compiler/generics0.ts ===
-Line 0 col 10 IdentifierName "G" = G<T>
-Line 0 col 12 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "x" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "v2" = G<string>
-Line 4 col 8 IdentifierName "G" = G<T>
-Line 6 col 4 IdentifierName "z" = string
-Line 6 col 8 MemberAccessExpression "v2.x" = string
-Line 6 col 8 IdentifierName "v2" = G<string>
-Line 6 col 11 IdentifierName "x" = string
+interface G<T> {
+>G : G<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+var v2: G<string>;
+>v2 : G<string>
+>G : G<T>
+
+var z = v2.x; // 'y' should be of type 'string'
+>z : string
+>v2.x : string
+>v2 : G<string>
+>x : string
+

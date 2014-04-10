@@ -1,25 +1,70 @@
 === tests/cases/compiler/forInBreakStatements.ts ===
-Line 0 col 8 IdentifierName "x" = any
-Line 0 col 13 ObjectLiteralExpression "{}" = {}
-Line 5 col 8 IdentifierName "x" = any
-Line 5 col 13 ObjectLiteralExpression "{}" = {}
-Line 11 col 8 IdentifierName "x" = any
-Line 11 col 13 ObjectLiteralExpression "{}" = {}
-Line 16 col 8 IdentifierName "x" = any
-Line 16 col 13 ObjectLiteralExpression "{}" = {}
-Line 18 col 12 IdentifierName "x" = any
-Line 18 col 17 ObjectLiteralExpression "{}" = {}
-Line 23 col 8 IdentifierName "x" = any
-Line 23 col 13 ObjectLiteralExpression "{}" = {}
-Line 25 col 12 IdentifierName "x" = any
-Line 25 col 17 ObjectLiteralExpression "{}" = {}
-Line 29 col 9 IdentifierName "x" = any
-Line 29 col 14 ObjectLiteralExpression "{}" = {}
-Line 29 col 27 IdentifierName "x" = any
-Line 29 col 32 ObjectLiteralExpression "{}" = {}
-Line 29 col 45 IdentifierName "x" = any
-Line 29 col 50 ObjectLiteralExpression "{}" = {}
-Line 32 col 9 IdentifierName "x" = any
-Line 32 col 14 ObjectLiteralExpression "{}" = {}
-Line 33 col 8 IdentifierName "fn" = () => void
-Line 33 col 13 FunctionExpression "function () { }" = () => void
+for(var x in {}) {
+>x : any
+>{} : {}
+
+    break;
+}
+
+ONE:
+for(var x in {}) {
+>x : any
+>{} : {}
+
+    break ONE;
+}
+
+TWO:
+THREE:
+for(var x in {}) {
+>x : any
+>{} : {}
+
+    break THREE;
+}
+
+FOUR:
+for(var x in {}) {
+>x : any
+>{} : {}
+
+    FIVE:
+    for(var x in {}) {
+>x : any
+>{} : {}
+
+        break FOUR;
+    }
+}
+
+for(var x in {}) {
+>x : any
+>{} : {}
+
+    SIX:
+    for(var x in {}) break SIX;
+>x : any
+>{} : {}
+}
+
+SEVEN:
+for (var x in {}) for (var x in {}) for (var x in {}) break SEVEN;
+>x : any
+>{} : {}
+>x : any
+>{} : {}
+>x : any
+>{} : {}
+
+EIGHT:
+for (var x in {}){
+>x : any
+>{} : {}
+
+    var fn = function () { }
+>fn : () => void
+>function () { } : () => void
+
+    break EIGHT;
+}
+

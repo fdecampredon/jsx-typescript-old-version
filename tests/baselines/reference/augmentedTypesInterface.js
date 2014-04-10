@@ -1,3 +1,4 @@
+//// [augmentedTypesInterface.js]
 // interface then interface
 
 

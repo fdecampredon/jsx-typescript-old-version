@@ -1,10 +1,27 @@
 === tests/cases/compiler/innerFunc.ts ===
-Line 0 col 9 IdentifierName "salt" = typeof salt
-Line 1 col 11 IdentifierName "pepper" = () => number
-Line 2 col 9 InvocationExpression "pepper()" = number
-Line 2 col 9 IdentifierName "pepper" = () => number
-Line 5 col 7 IdentifierName "M" = M
-Line 6 col 20 IdentifierName "tungsten" = typeof tungsten
-Line 7 col 17 IdentifierName "oxygen" = () => number
-Line 8 col 15 InvocationExpression "oxygen()" = number
-Line 8 col 15 IdentifierName "oxygen" = () => number
+function salt() {
+>salt : typeof salt
+
+  function pepper() { return 5;}
+>pepper : () => number
+
+  return pepper();  
+>pepper() : number
+>pepper : () => number
+}
+
+module M {
+>M : M
+
+    export function tungsten() {
+>tungsten : typeof tungsten
+
+        function oxygen() { return 6; };
+>oxygen : () => number
+
+        return oxygen();
+>oxygen() : number
+>oxygen : () => number
+    }
+}
+

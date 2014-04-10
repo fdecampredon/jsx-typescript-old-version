@@ -1,20 +1,30 @@
 === tests/cases/compiler/stringPropertyAccess.ts ===
-Line 0 col 4 IdentifierName "x" = string
-Line 1 col 4 IdentifierName "a" = string
-Line 1 col 8 InvocationExpression "x.charAt(0)" = string
-Line 1 col 8 MemberAccessExpression "x.charAt" = (pos: number) => string
-Line 1 col 8 IdentifierName "x" = string
-Line 1 col 10 IdentifierName "charAt" = (pos: number) => string
-Line 2 col 4 IdentifierName "b" = boolean
-Line 2 col 8 InvocationExpression "x.hasOwnProperty('charAt')" = boolean
-Line 2 col 8 MemberAccessExpression "x.hasOwnProperty" = (v: string) => boolean
-Line 2 col 8 IdentifierName "x" = string
-Line 2 col 10 IdentifierName "hasOwnProperty" = (v: string) => boolean
-Line 4 col 4 IdentifierName "c" = string
-Line 4 col 8 InvocationExpression "x['charAt'](0)" = string
-Line 4 col 8 ElementAccessExpression "x['charAt']" = (pos: number) => string
-Line 4 col 8 IdentifierName "x" = string
-Line 5 col 4 IdentifierName "e" = boolean
-Line 5 col 8 InvocationExpression "x['hasOwnProperty']('toFixed')" = boolean
-Line 5 col 8 ElementAccessExpression "x['hasOwnProperty']" = (v: string) => boolean
-Line 5 col 8 IdentifierName "x" = string
+var x = '';
+>x : string
+
+var a = x.charAt(0);
+>a : string
+>x.charAt(0) : string
+>x.charAt : (pos: number) => string
+>x : string
+>charAt : (pos: number) => string
+
+var b = x.hasOwnProperty('charAt');
+>b : boolean
+>x.hasOwnProperty('charAt') : boolean
+>x.hasOwnProperty : (v: string) => boolean
+>x : string
+>hasOwnProperty : (v: string) => boolean
+
+var c = x['charAt'](0);
+>c : string
+>x['charAt'](0) : string
+>x['charAt'] : (pos: number) => string
+>x : string
+
+var e = x['hasOwnProperty']('toFixed');
+>e : boolean
+>x['hasOwnProperty']('toFixed') : boolean
+>x['hasOwnProperty'] : (v: string) => boolean
+>x : string
+

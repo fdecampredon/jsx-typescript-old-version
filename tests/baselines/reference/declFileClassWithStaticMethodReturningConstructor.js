@@ -1,3 +1,11 @@
+//// [declFileClassWithStaticMethodReturningConstructor.ts]
+
+export class Enhancement {
+    public static getType() {
+        return this;
+    }
+}
+
 //// [declFileClassWithStaticMethodReturningConstructor.js]
 var Enhancement = (function () {
     function Enhancement() {

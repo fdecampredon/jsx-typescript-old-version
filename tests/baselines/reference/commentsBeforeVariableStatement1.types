@@ -1,2 +1,5 @@
 === tests/cases/compiler/commentsBeforeVariableStatement1.ts ===
-Line 1 col 11 IdentifierName "b" = number
+/** b's comment*/
+export var b: number;
+>b : number
+

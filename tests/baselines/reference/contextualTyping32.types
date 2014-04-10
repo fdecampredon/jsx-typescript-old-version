@@ -1,9 +1,11 @@
 === tests/cases/compiler/contextualTyping32.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "param" = { (): number; (i: number): number; }[]
-Line 0 col 33 IdentifierName "i" = number
-Line 0 col 61 InvocationExpression "foo([function(){return 1;}, function(){return 4}])" = void
-Line 0 col 61 IdentifierName "foo" = typeof foo
-Line 0 col 65 ArrayLiteralExpression "[function(){return 1;}, function(){return 4}]" = { (): number; (i: number): number; }[]
-Line 0 col 66 FunctionExpression "function(){return 1;}" = () => number
-Line 0 col 89 FunctionExpression "function(){return 4}" = () => number
+function foo(param: {():number; (i:number):number; }[]) { }; foo([function(){return 1;}, function(){return 4}]);
+>foo : typeof foo
+>param : { (): number; (i: number): number; }[]
+>i : number
+>foo([function(){return 1;}, function(){return 4}]) : void
+>foo : typeof foo
+>[function(){return 1;}, function(){return 4}] : { (): number; (i: number): number; }[]
+>function(){return 1;} : () => number
+>function(){return 4} : () => number
+

@@ -1,7 +1,22 @@
 === tests/cases/compiler/namedFunctionExpressionAssignedToClassProperty.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "a" = () => void
-Line 2 col 11 FunctionExpression "function bar(){
+class Foo{
+>Foo : Foo
 
-       }" = () => void
-Line 2 col 20 IdentifierName "bar" = () => void
+>a : () => void
+
+       a = function bar(){
+>function bar(){
+
+       } : () => void
+>bar : () => void
+
+       }; // this shouldn't crash the compiler...
+
+       
+
+       constructor(){
+
+       }
+
+}
+

@@ -1,4 +1,9 @@
 === tests/cases/compiler/strictMode1.ts ===
-Line 1 col 6 IdentifierName "A" = A
-Line 2 col 6 IdentifierName "B" = B
-Line 2 col 16 IdentifierName "A" = A
+"use strict";
+class A {}
+>A : A
+
+class B extends A {}
+>B : B
+>A : A
+

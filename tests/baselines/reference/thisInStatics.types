@@ -1,9 +1,23 @@
 === tests/cases/compiler/thisInStatics.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 11 IdentifierName "f" = () => void
-Line 2 col 12 IdentifierName "y/*1*/" = typeof C
-Line 2 col 21 ThisKeyword "this" = typeof C
-Line 5 col 15 IdentifierName "x" = typeof C
-Line 6 col 12 IdentifierName "y/*2*/" = typeof C
-Line 6 col 21 ThisKeyword "this" = typeof C
-Line 7 col 15 IdentifierName "y" = typeof C
+class C {
+>C : C
+
+    static f() {
+>f : () => void
+
+        var y/*1*/ = this;
+>y/*1*/ : typeof C
+>this : typeof C
+    }
+
+    static get x() {
+>x : typeof C
+
+        var y/*2*/ = this;
+>y/*2*/ : typeof C
+>this : typeof C
+
+        return y;
+>y : typeof C
+    }
+}

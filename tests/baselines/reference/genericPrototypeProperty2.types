@@ -1,19 +1,39 @@
 === tests/cases/compiler/genericPrototypeProperty2.ts ===
-Line 0 col 10 IdentifierName "EventTarget" = EventTarget
-Line 0 col 24 IdentifierName "x" = any
-Line 1 col 6 IdentifierName "BaseEvent" = BaseEvent
-Line 2 col 0 IdentifierName "target" = EventTarget
-Line 2 col 12 IdentifierName "EventTarget" = EventTarget
-Line 5 col 6 IdentifierName "MyEvent" = MyEvent<T>
-Line 5 col 14 IdentifierName "T" = T
-Line 5 col 24 IdentifierName "EventTarget" = EventTarget
-Line 5 col 45 IdentifierName "BaseEvent" = BaseEvent
-Line 6 col 0 IdentifierName "target" = T
-Line 6 col 12 IdentifierName "T" = T
-Line 8 col 6 IdentifierName "BaseEventWrapper" = BaseEventWrapper
-Line 9 col 0 IdentifierName "t" = BaseEvent
-Line 9 col 7 IdentifierName "BaseEvent" = BaseEvent
-Line 12 col 6 IdentifierName "MyEventWrapper" = MyEventWrapper
-Line 12 col 29 IdentifierName "BaseEventWrapper" = BaseEventWrapper
-Line 13 col 0 IdentifierName "t" = MyEvent<any>
-Line 13 col 7 IdentifierName "MyEvent" = MyEvent<T>
+interface EventTarget { x } 
+>EventTarget : EventTarget
+>x : any
+
+class BaseEvent {
+>BaseEvent : BaseEvent
+
+    target: EventTarget;
+>target : EventTarget
+>EventTarget : EventTarget
+}
+
+class MyEvent<T extends EventTarget> extends BaseEvent {
+>MyEvent : MyEvent<T>
+>T : T
+>EventTarget : EventTarget
+>BaseEvent : BaseEvent
+
+    target: T;
+>target : T
+>T : T
+}
+class BaseEventWrapper {
+>BaseEventWrapper : BaseEventWrapper
+
+    t: BaseEvent;
+>t : BaseEvent
+>BaseEvent : BaseEvent
+}
+
+class MyEventWrapper extends BaseEventWrapper {
+>MyEventWrapper : MyEventWrapper
+>BaseEventWrapper : BaseEventWrapper
+
+    t: MyEvent<any>; // any satisfies constraint and passes assignability check between 'target' properties
+>t : MyEvent<any>
+>MyEvent : MyEvent<T>
+}

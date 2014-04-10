@@ -1,22 +1,60 @@
 === tests/cases/compiler/duplicateVariablesByScope.ts ===
-Line 2 col 7 IdentifierName "M" = M
-Line 3 col 13 IdentifierName "j" = number
-Line 3 col 20 LessThanExpression "j < 10" = boolean
-Line 3 col 20 IdentifierName "j" = number
-Line 3 col 28 PostIncrementExpression "j++" = number
-Line 3 col 28 IdentifierName "j" = number
-Line 6 col 13 IdentifierName "j" = number
-Line 6 col 20 LessThanExpression "j < 10" = boolean
-Line 6 col 20 IdentifierName "j" = number
-Line 6 col 28 PostIncrementExpression "j++" = number
-Line 6 col 28 IdentifierName "j" = number
-Line 10 col 9 IdentifierName "foo" = typeof foo
-Line 11 col 8 IdentifierName "x" = number
-Line 12 col 8 IdentifierName "x" = number
-Line 14 col 12 IdentifierName "result" = number
-Line 17 col 12 IdentifierName "result" = number
-Line 21 col 6 IdentifierName "C" = C
-Line 22 col 0 IdentifierName "foo" = () => void
-Line 24 col 16 IdentifierName "x" = number
-Line 26 col 15 IdentifierName "e" = any
-Line 27 col 16 IdentifierName "x" = number
+// duplicate local variables are only reported at global scope
+
+module M {
+>M : M
+
+    for (var j = 0; j < 10; j++) {
+>j : number
+>j < 10 : boolean
+>j : number
+>j++ : number
+>j : number
+    }
+
+    for (var j = 0; j < 10; j++) {
+>j : number
+>j < 10 : boolean
+>j : number
+>j++ : number
+>j : number
+    }
+}
+
+function foo() {
+>foo : typeof foo
+
+    var x = 2;
+>x : number
+
+    var x = 1;
+>x : number
+
+    if (true) {
+        var result = 1;
+>result : number
+    }
+    else {
+        var result = 2;
+>result : number
+    }
+}
+
+class C {
+>C : C
+
+    foo() {
+>foo : () => void
+
+        try {
+            var x = 1;
+>x : number
+        }
+        catch (e) {
+>e : any
+
+            var x = 2;
+>x : number
+        }
+    }
+}

@@ -1,39 +1,69 @@
 === tests/cases/compiler/inOperatorWithValidOperands.ts ===
-Line 0 col 4 IdentifierName "x" = any
-Line 4 col 4 IdentifierName "a1" = string
-Line 5 col 4 IdentifierName "a2" = number
-Line 7 col 4 IdentifierName "ra1" = boolean
-Line 7 col 10 InExpression "x in x" = boolean
-Line 7 col 10 IdentifierName "x" = any
-Line 7 col 15 IdentifierName "x" = any
-Line 8 col 4 IdentifierName "ra2" = boolean
-Line 8 col 10 InExpression "a1 in x" = boolean
-Line 8 col 10 IdentifierName "a1" = string
-Line 8 col 16 IdentifierName "x" = any
-Line 9 col 4 IdentifierName "ra3" = boolean
-Line 9 col 10 InExpression "a2 in x" = boolean
-Line 9 col 10 IdentifierName "a2" = number
-Line 9 col 16 IdentifierName "x" = any
-Line 10 col 4 IdentifierName "ra4" = boolean
-Line 10 col 10 InExpression "'' in x" = boolean
-Line 10 col 16 IdentifierName "x" = any
-Line 11 col 4 IdentifierName "ra5" = boolean
-Line 11 col 10 InExpression "0 in x" = boolean
-Line 11 col 15 IdentifierName "x" = any
-Line 15 col 4 IdentifierName "b1" = {}
-Line 17 col 4 IdentifierName "rb1" = boolean
-Line 17 col 10 InExpression "x in b1" = boolean
-Line 17 col 10 IdentifierName "x" = any
-Line 17 col 15 IdentifierName "b1" = {}
-Line 18 col 4 IdentifierName "rb2" = boolean
-Line 18 col 10 InExpression "x in {}" = boolean
-Line 18 col 10 IdentifierName "x" = any
-Line 18 col 15 ObjectLiteralExpression "{}" = {}
-Line 20 col 9 IdentifierName "foo" = typeof foo
-Line 20 col 13 IdentifierName "T" = T
-Line 20 col 16 IdentifierName "t" = T
-Line 20 col 19 IdentifierName "T" = T
-Line 21 col 8 IdentifierName "rb3" = boolean
-Line 21 col 14 InExpression "x in t" = boolean
-Line 21 col 14 IdentifierName "x" = any
-Line 21 col 19 IdentifierName "t" = T
+var x: any;
+>x : any
+
+// valid left operands
+// the left operand is required to be of type Any, the String primitive type, or the Number primitive type
+var a1: string;
+>a1 : string
+
+var a2: number;
+>a2 : number
+
+var ra1 = x in x;
+>ra1 : boolean
+>x in x : boolean
+>x : any
+>x : any
+
+var ra2 = a1 in x;
+>ra2 : boolean
+>a1 in x : boolean
+>a1 : string
+>x : any
+
+var ra3 = a2 in x;
+>ra3 : boolean
+>a2 in x : boolean
+>a2 : number
+>x : any
+
+var ra4 = '' in x;
+>ra4 : boolean
+>'' in x : boolean
+>x : any
+
+var ra5 = 0 in x;
+>ra5 : boolean
+>0 in x : boolean
+>x : any
+
+// valid right operands
+// the right operand is required to be of type Any, an object type, or a type parameter type
+var b1: {};
+>b1 : {}
+
+var rb1 = x in b1;
+>rb1 : boolean
+>x in b1 : boolean
+>x : any
+>b1 : {}
+
+var rb2 = x in {};
+>rb2 : boolean
+>x in {} : boolean
+>x : any
+>{} : {}
+
+function foo<T>(t: T) {
+>foo : typeof foo
+>T : T
+>t : T
+>T : T
+
+    var rb3 = x in t;
+>rb3 : boolean
+>x in t : boolean
+>x : any
+>t : T
+}

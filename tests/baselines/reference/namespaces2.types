@@ -1,14 +1,24 @@
 === tests/cases/compiler/namespaces2.ts ===
-Line 0 col 7 IdentifierName "A" = A
-Line 1 col 18 IdentifierName "B" = B
-Line 2 col 21 IdentifierName "C" = C
-Line 6 col 4 IdentifierName "c" = A.B.C
-Line 6 col 7 IdentifierName "A" = A
-Line 6 col 9 IdentifierName "B" = A.B
-Line 6 col 11 IdentifierName "C" = A.B.C
-Line 6 col 15 ObjectCreationExpression "new A.B.C()" = A.B.C
-Line 6 col 19 MemberAccessExpression "A.B.C" = typeof A.B.C
-Line 6 col 19 MemberAccessExpression "A.B" = typeof A.B
-Line 6 col 19 IdentifierName "A" = typeof A
-Line 6 col 21 IdentifierName "B" = typeof A.B
-Line 6 col 23 IdentifierName "C" = typeof A.B.C
+module A {
+>A : A
+
+    export module B {
+>B : B
+
+        export class C { }
+>C : C
+    }
+}
+
+var c: A.B.C = new A.B.C();
+>c : A.B.C
+>A : A
+>B : A.B
+>C : A.B.C
+>new A.B.C() : A.B.C
+>A.B.C : typeof A.B.C
+>A.B : typeof A.B
+>A : typeof A
+>B : typeof A.B
+>C : typeof A.B.C
+

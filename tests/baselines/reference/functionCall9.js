@@ -1,3 +1,4 @@
+//// [functionCall9.js]
 function foo(a, b) {
 }
 ;

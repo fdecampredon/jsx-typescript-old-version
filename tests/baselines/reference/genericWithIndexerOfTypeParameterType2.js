@@ -1,3 +1,20 @@
+//// [genericWithIndexerOfTypeParameterType2.ts]
+export class Collection<TItem extends CollectionItem> {
+    _itemsByKey: { [key: string]: TItem; };
+}
+
+export class List extends Collection<ListItem>{
+    Bar() {}
+}
+
+export class CollectionItem {}
+
+export class ListItem extends CollectionItem {
+    __isNew: boolean;
+}
+
+
+//// [genericWithIndexerOfTypeParameterType2.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

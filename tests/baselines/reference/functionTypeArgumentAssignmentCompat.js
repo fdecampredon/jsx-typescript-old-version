@@ -1,3 +1,4 @@
+//// [functionTypeArgumentAssignmentCompat.js]
 var f;
 
 var g = function () {

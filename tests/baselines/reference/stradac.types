@@ -1,5 +1,18 @@
 === tests/cases/compiler/stradac.ts ===
-Line 0 col 4 IdentifierName "x" = number
-Line 9 col 9 IdentifierName "foo" = typeof foo
-Line 10 col 0 PostIncrementExpression "x++" = number
-Line 10 col 0 IdentifierName "x" = number
+var x = 10;
+>x : number
+
+// C++-style comment
+
+/*
+    C-Style comment
+    */
+    
+    
+function foo() {
+>foo : typeof foo
+
+    x++;
+>x++ : number
+>x : number
+}

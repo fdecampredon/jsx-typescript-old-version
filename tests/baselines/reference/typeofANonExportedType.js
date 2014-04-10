@@ -1,3 +1,4 @@
+//// [typeofANonExportedType.js]
 var x = 1;
 exports.r1;
 var y = { foo: '' };

@@ -1,21 +1,40 @@
 === tests/cases/compiler/2dArrays.ts ===
-Line 0 col 6 IdentifierName "Cell" = Cell
-Line 3 col 6 IdentifierName "Ship" = Ship
-Line 4 col 0 IdentifierName "isSunk" = boolean
-Line 7 col 6 IdentifierName "Board" = Board
-Line 8 col 0 IdentifierName "ships" = Ship[]
-Line 8 col 11 IdentifierName "Ship" = Ship
-Line 9 col 0 IdentifierName "cells" = Cell[]
-Line 9 col 11 IdentifierName "Cell" = Cell
-Line 11 col 12 IdentifierName "allShipsSunk" = () => boolean
-Line 12 col 15 InvocationExpression "this.ships.every(function (val) { return val.isSunk; })" = boolean
-Line 12 col 15 MemberAccessExpression "this.ships.every" = (callbackfn: (value: Ship, index: number, array: Ship[]) => boolean, thisArg?: any) => boolean
-Line 12 col 15 MemberAccessExpression "this.ships" = Ship[]
-Line 12 col 15 ThisKeyword "this" = Board
-Line 12 col 20 IdentifierName "ships" = Ship[]
-Line 12 col 26 IdentifierName "every" = (callbackfn: (value: Ship, index: number, array: Ship[]) => boolean, thisArg?: any) => boolean
-Line 12 col 32 FunctionExpression "function (val) { return val.isSunk; }" = (val: Ship) => boolean
-Line 12 col 42 IdentifierName "val" = Ship
-Line 12 col 56 MemberAccessExpression "val.isSunk" = boolean
-Line 12 col 56 IdentifierName "val" = Ship
-Line 12 col 60 IdentifierName "isSunk" = boolean
+class Cell {
+>Cell : Cell
+}
+
+class Ship {
+>Ship : Ship
+
+    isSunk: boolean;
+>isSunk : boolean
+}
+
+class Board {
+>Board : Board
+
+    ships: Ship[];
+>ships : Ship[]
+>Ship : Ship
+
+    cells: Cell[];
+>cells : Cell[]
+>Cell : Cell
+
+    private allShipsSunk() {
+>allShipsSunk : () => boolean
+
+        return this.ships.every(function (val) { return val.isSunk; });
+>this.ships.every(function (val) { return val.isSunk; }) : boolean
+>this.ships.every : (callbackfn: (value: Ship, index: number, array: Ship[]) => boolean, thisArg?: any) => boolean
+>this.ships : Ship[]
+>this : Board
+>ships : Ship[]
+>every : (callbackfn: (value: Ship, index: number, array: Ship[]) => boolean, thisArg?: any) => boolean
+>function (val) { return val.isSunk; } : (val: Ship) => boolean
+>val : Ship
+>val.isSunk : boolean
+>val : Ship
+>isSunk : boolean
+    }    
+}

@@ -1,8 +1,13 @@
 === tests/cases/compiler/commentsBeforeFunctionExpression1.ts ===
-Line 0 col 4 IdentifierName "v" = { f: (a: any) => number; }
-Line 0 col 8 ObjectLiteralExpression "{
+var v = {
+>v : { f: (a: any) => number; }
+>{
     f: /**own f*/ (a) => 0
-}" = { f: (a: any) => number; }
-Line 1 col 0 IdentifierName "f" = (a: any) => number
-Line 1 col 18 ParenthesizedArrowFunctionExpression "(a) => 0" = (a: any) => number
-Line 1 col 19 IdentifierName "a" = any
+} : { f: (a: any) => number; }
+
+    f: /**own f*/ (a) => 0
+>f : (a: any) => number
+>(a) => 0 : (a: any) => number
+>a : any
+}
+

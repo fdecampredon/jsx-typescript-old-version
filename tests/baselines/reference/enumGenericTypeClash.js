@@ -1,3 +1,4 @@
+//// [enumGenericTypeClash.js]
 var X = (function () {
     function X() {
     }

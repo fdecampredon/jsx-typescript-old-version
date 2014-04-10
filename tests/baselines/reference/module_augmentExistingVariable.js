@@ -1,3 +1,4 @@
+//// [module_augmentExistingVariable.js]
 var console;
 
 var console;

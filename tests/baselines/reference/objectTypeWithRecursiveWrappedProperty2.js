@@ -1,3 +1,4 @@
+//// [objectTypeWithRecursiveWrappedProperty2.js]
 // Basic recursive type
 var List = (function () {
     function List() {

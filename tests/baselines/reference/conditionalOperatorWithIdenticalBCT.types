@@ -1,132 +1,198 @@
 === tests/cases/compiler/conditionalOperatorWithIdenticalBCT.ts ===
-Line 1 col 6 IdentifierName "X" = X
-Line 1 col 10 IdentifierName "propertyX" = any
-Line 1 col 26 IdentifierName "propertyX1" = number
-Line 1 col 46 IdentifierName "propertyX2" = string
-Line 2 col 6 IdentifierName "A" = A
-Line 2 col 16 IdentifierName "X" = X
-Line 2 col 20 IdentifierName "propertyA" = number
-Line 3 col 6 IdentifierName "B" = B
-Line 3 col 16 IdentifierName "X" = X
-Line 3 col 20 IdentifierName "propertyB" = string
-Line 5 col 4 IdentifierName "x" = X
-Line 5 col 7 IdentifierName "X" = X
-Line 6 col 4 IdentifierName "a" = A
-Line 6 col 7 IdentifierName "A" = A
-Line 7 col 4 IdentifierName "b" = B
-Line 7 col 7 IdentifierName "B" = B
-Line 8 col 0 ConditionalExpression "//Cond ? Expr1 : Expr2,  Expr1 is supertype
+//Cond ? Expr1 : Expr2,  Expr1 and Expr2 have identical best common type
+class X { propertyX: any; propertyX1: number; propertyX2: string };
+>X : X
+>propertyX : any
+>propertyX1 : number
+>propertyX2 : string
+
+class A extends X { propertyA: number };
+>A : A
+>X : X
+>propertyA : number
+
+class B extends X { propertyB: string };
+>B : B
+>X : X
+>propertyB : string
+
+var x: X;
+>x : X
+>X : X
+
+var a: A;
+>a : A
+>A : A
+
+var b: B;
+>b : B
+>B : B
+
+>//Cond ? Expr1 : Expr2,  Expr1 is supertype
 //Be Not contextually typed
-true ? x : a" = X
-Line 11 col 7 IdentifierName "x" = X
-Line 11 col 11 IdentifierName "a" = A
-Line 12 col 4 IdentifierName "result1" = X
-Line 12 col 14 ConditionalExpression "true ? x : a" = X
-Line 12 col 21 IdentifierName "x" = X
-Line 12 col 25 IdentifierName "a" = A
-Line 13 col 0 ConditionalExpression "//Expr1 and Expr2 are literals
-true ? {} : 1" = {}
-Line 15 col 7 ObjectLiteralExpression "{}" = {}
-Line 16 col 0 ConditionalExpression "true ? { a: 1 } : { a: 2, b: 'string' }" = { a: number; }
-Line 16 col 7 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
-Line 16 col 9 IdentifierName "a" = number
-Line 16 col 18 ObjectLiteralExpression "{ a: 2, b: 'string' }" = { a: number; b: string; }
-Line 16 col 20 IdentifierName "a" = number
-Line 16 col 26 IdentifierName "b" = string
-Line 17 col 4 IdentifierName "result2" = {}
-Line 17 col 14 ConditionalExpression "true ? {} : 1" = {}
-Line 17 col 21 ObjectLiteralExpression "{}" = {}
-Line 18 col 4 IdentifierName "result3" = { a: number; }
-Line 18 col 14 ConditionalExpression "true ? { a: 1 } : { a: 2, b: 'string' }" = { a: number; }
-Line 18 col 21 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
-Line 18 col 23 IdentifierName "a" = number
-Line 18 col 32 ObjectLiteralExpression "{ a: 2, b: 'string' }" = { a: number; b: string; }
-Line 18 col 34 IdentifierName "a" = number
-Line 18 col 40 IdentifierName "b" = string
-Line 21 col 4 IdentifierName "resultIsX1" = X
-Line 21 col 16 IdentifierName "X" = X
-Line 21 col 20 ConditionalExpression "true ? x : a" = X
-Line 21 col 27 IdentifierName "x" = X
-Line 21 col 31 IdentifierName "a" = A
-Line 22 col 4 IdentifierName "result4" = (t: A) => any
-Line 22 col 14 IdentifierName "t" = A
-Line 22 col 17 IdentifierName "A" = A
-Line 22 col 29 ConditionalExpression "true ? (m) => m.propertyX : (n) => n.propertyA" = (t: A) => any
-Line 22 col 36 ParenthesizedArrowFunctionExpression "(m) => m.propertyX" = (m: A) => any
-Line 22 col 37 IdentifierName "m" = A
-Line 22 col 43 MemberAccessExpression "m.propertyX" = any
-Line 22 col 43 IdentifierName "m" = A
-Line 22 col 45 IdentifierName "propertyX" = any
-Line 22 col 57 ParenthesizedArrowFunctionExpression "(n) => n.propertyA" = (n: A) => number
-Line 22 col 58 IdentifierName "n" = A
-Line 22 col 64 MemberAccessExpression "n.propertyA" = number
-Line 22 col 64 IdentifierName "n" = A
-Line 22 col 66 IdentifierName "propertyA" = number
-Line 23 col 0 ConditionalExpression "//Cond ? Expr1 : Expr2,  Expr2 is supertype
+true ? x : a : X
+
+//Cond ? Expr1 : Expr2,  Expr1 is supertype
 //Be Not contextually typed
-true ? a : x" = X
-Line 26 col 7 IdentifierName "a" = A
-Line 26 col 11 IdentifierName "x" = X
-Line 27 col 4 IdentifierName "result5" = X
-Line 27 col 14 ConditionalExpression "true ? a : x" = X
-Line 27 col 21 IdentifierName "a" = A
-Line 27 col 25 IdentifierName "x" = X
-Line 28 col 0 ConditionalExpression "//Expr1 and Expr2 are literals
-true ? 1 : {}" = {}
-Line 30 col 11 ObjectLiteralExpression "{}" = {}
-Line 31 col 0 ConditionalExpression "true ? { a: 2, b: 'string' } : { a: 1 }" = { a: number; }
-Line 31 col 7 ObjectLiteralExpression "{ a: 2, b: 'string' }" = { a: number; b: string; }
-Line 31 col 9 IdentifierName "a" = number
-Line 31 col 15 IdentifierName "b" = string
-Line 31 col 31 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
-Line 31 col 33 IdentifierName "a" = number
-Line 32 col 4 IdentifierName "result6" = {}
-Line 32 col 14 ConditionalExpression "true ? 1 : {}" = {}
-Line 32 col 25 ObjectLiteralExpression "{}" = {}
-Line 33 col 4 IdentifierName "result7" = { a: number; }
-Line 33 col 14 ConditionalExpression "true ? { a: 2, b: 'string' } : { a: 1 }" = { a: number; }
-Line 33 col 21 ObjectLiteralExpression "{ a: 2, b: 'string' }" = { a: number; b: string; }
-Line 33 col 23 IdentifierName "a" = number
-Line 33 col 29 IdentifierName "b" = string
-Line 33 col 45 ObjectLiteralExpression "{ a: 1 }" = { a: number; }
-Line 33 col 47 IdentifierName "a" = number
-Line 36 col 4 IdentifierName "resultIsX2" = X
-Line 36 col 16 IdentifierName "X" = X
-Line 36 col 20 ConditionalExpression "true ? x : a" = X
-Line 36 col 27 IdentifierName "x" = X
-Line 36 col 31 IdentifierName "a" = A
-Line 37 col 4 IdentifierName "result8" = (t: A) => any
-Line 37 col 14 IdentifierName "t" = A
-Line 37 col 17 IdentifierName "A" = A
-Line 37 col 29 ConditionalExpression "true ? (m) => m.propertyA : (n) => n.propertyX" = (t: A) => any
-Line 37 col 36 ParenthesizedArrowFunctionExpression "(m) => m.propertyA" = (m: A) => number
-Line 37 col 37 IdentifierName "m" = A
-Line 37 col 43 MemberAccessExpression "m.propertyA" = number
-Line 37 col 43 IdentifierName "m" = A
-Line 37 col 45 IdentifierName "propertyA" = number
-Line 37 col 57 ParenthesizedArrowFunctionExpression "(n) => n.propertyX" = (n: A) => any
-Line 37 col 58 IdentifierName "n" = A
-Line 37 col 64 MemberAccessExpression "n.propertyX" = any
-Line 37 col 64 IdentifierName "n" = A
-Line 37 col 66 IdentifierName "propertyX" = any
-Line 41 col 4 IdentifierName "resultIsX3" = X
-Line 41 col 16 IdentifierName "X" = X
-Line 41 col 20 ConditionalExpression "true ? a : b" = X
-Line 41 col 27 IdentifierName "a" = A
-Line 41 col 31 IdentifierName "b" = B
-Line 42 col 4 IdentifierName "result10" = (t: X) => any
-Line 42 col 15 IdentifierName "t" = X
-Line 42 col 18 IdentifierName "X" = X
-Line 42 col 30 ConditionalExpression "true ? (m) => m.propertyX1 : (n) => n.propertyX2" = (t: X) => any
-Line 42 col 37 ParenthesizedArrowFunctionExpression "(m) => m.propertyX1" = (m: X) => number
-Line 42 col 38 IdentifierName "m" = X
-Line 42 col 44 MemberAccessExpression "m.propertyX1" = number
-Line 42 col 44 IdentifierName "m" = X
-Line 42 col 46 IdentifierName "propertyX1" = number
-Line 42 col 59 ParenthesizedArrowFunctionExpression "(n) => n.propertyX2" = (n: X) => string
-Line 42 col 60 IdentifierName "n" = X
-Line 42 col 66 MemberAccessExpression "n.propertyX2" = string
-Line 42 col 66 IdentifierName "n" = X
-Line 42 col 68 IdentifierName "propertyX2" = string
-Line 45 col 4 IdentifierName "result11" = any
-Line 45 col 20 ConditionalExpression "true ? 1 : 'string'" = any
+true ? x : a;
+>x : X
+>a : A
+
+var result1 = true ? x : a;
+>result1 : X
+>true ? x : a : X
+>x : X
+>a : A
+
+>//Expr1 and Expr2 are literals
+true ? {} : 1 : {}
+
+//Expr1 and Expr2 are literals
+true ? {} : 1;
+>{} : {}
+
+true ? { a: 1 } : { a: 2, b: 'string' };
+>true ? { a: 1 } : { a: 2, b: 'string' } : { a: number; }
+>{ a: 1 } : { a: number; }
+>a : number
+>{ a: 2, b: 'string' } : { a: number; b: string; }
+>a : number
+>b : string
+
+var result2 = true ? {} : 1;
+>result2 : {}
+>true ? {} : 1 : {}
+>{} : {}
+
+var result3 = true ? { a: 1 } : { a: 2, b: 'string' };
+>result3 : { a: number; }
+>true ? { a: 1 } : { a: 2, b: 'string' } : { a: number; }
+>{ a: 1 } : { a: number; }
+>a : number
+>{ a: 2, b: 'string' } : { a: number; b: string; }
+>a : number
+>b : string
+
+//Contextually typed
+var resultIsX1: X = true ? x : a;
+>resultIsX1 : X
+>X : X
+>true ? x : a : X
+>x : X
+>a : A
+
+var result4: (t: A) => any = true ? (m) => m.propertyX : (n) => n.propertyA;
+>result4 : (t: A) => any
+>t : A
+>A : A
+>true ? (m) => m.propertyX : (n) => n.propertyA : (t: A) => any
+>(m) => m.propertyX : (m: A) => any
+>m : A
+>m.propertyX : any
+>m : A
+>propertyX : any
+>(n) => n.propertyA : (n: A) => number
+>n : A
+>n.propertyA : number
+>n : A
+>propertyA : number
+
+>//Cond ? Expr1 : Expr2,  Expr2 is supertype
+//Be Not contextually typed
+true ? a : x : X
+
+//Cond ? Expr1 : Expr2,  Expr2 is supertype
+//Be Not contextually typed
+true ? a : x;
+>a : A
+>x : X
+
+var result5 = true ? a : x;
+>result5 : X
+>true ? a : x : X
+>a : A
+>x : X
+
+>//Expr1 and Expr2 are literals
+true ? 1 : {} : {}
+
+//Expr1 and Expr2 are literals
+true ? 1 : {};
+>{} : {}
+
+true ? { a: 2, b: 'string' } : { a: 1 };
+>true ? { a: 2, b: 'string' } : { a: 1 } : { a: number; }
+>{ a: 2, b: 'string' } : { a: number; b: string; }
+>a : number
+>b : string
+>{ a: 1 } : { a: number; }
+>a : number
+
+var result6 = true ? 1 : {};
+>result6 : {}
+>true ? 1 : {} : {}
+>{} : {}
+
+var result7 = true ? { a: 2, b: 'string' } : { a: 1 };
+>result7 : { a: number; }
+>true ? { a: 2, b: 'string' } : { a: 1 } : { a: number; }
+>{ a: 2, b: 'string' } : { a: number; b: string; }
+>a : number
+>b : string
+>{ a: 1 } : { a: number; }
+>a : number
+
+//Contextually typed
+var resultIsX2: X = true ? x : a;
+>resultIsX2 : X
+>X : X
+>true ? x : a : X
+>x : X
+>a : A
+
+var result8: (t: A) => any = true ? (m) => m.propertyA : (n) => n.propertyX;
+>result8 : (t: A) => any
+>t : A
+>A : A
+>true ? (m) => m.propertyA : (n) => n.propertyX : (t: A) => any
+>(m) => m.propertyA : (m: A) => number
+>m : A
+>m.propertyA : number
+>m : A
+>propertyA : number
+>(n) => n.propertyX : (n: A) => any
+>n : A
+>n.propertyX : any
+>n : A
+>propertyX : any
+
+//Result = Cond ? Expr1 : Expr2,  Result is supertype
+//Contextually typed
+var resultIsX3: X = true ? a : b;
+>resultIsX3 : X
+>X : X
+>true ? a : b : X
+>a : A
+>b : B
+
+var result10: (t: X) => any = true ? (m) => m.propertyX1 : (n) => n.propertyX2;
+>result10 : (t: X) => any
+>t : X
+>X : X
+>true ? (m) => m.propertyX1 : (n) => n.propertyX2 : (t: X) => any
+>(m) => m.propertyX1 : (m: X) => number
+>m : X
+>m.propertyX1 : number
+>m : X
+>propertyX1 : number
+>(n) => n.propertyX2 : (n: X) => string
+>n : X
+>n.propertyX2 : string
+>n : X
+>propertyX2 : string
+
+//Expr1 and Expr2 are literals
+var result11: any = true ? 1 : 'string';
+>result11 : any
+>true ? 1 : 'string' : any
+

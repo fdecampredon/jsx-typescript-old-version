@@ -1,3 +1,4 @@
+//// [assignToExistingClass.js]
 var Test;
 (function (Test) {
     var Mocked = (function () {

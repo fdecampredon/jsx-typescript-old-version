@@ -1,39 +1,60 @@
 === tests/cases/compiler/genericCallWithArrayLiteralArgs.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "T" = T
-Line 0 col 16 IdentifierName "t" = T
-Line 0 col 19 IdentifierName "T" = T
-Line 1 col 11 IdentifierName "t" = T
-Line 4 col 4 IdentifierName "r" = number[]
-Line 4 col 8 InvocationExpression "foo([1, 2])" = number[]
-Line 4 col 8 IdentifierName "foo" = typeof foo
-Line 4 col 12 ArrayLiteralExpression "[1, 2]" = number[]
-Line 5 col 4 IdentifierName "r" = number[]
-Line 5 col 8 InvocationExpression "foo<number[]>([1, 2])" = number[]
-Line 5 col 8 IdentifierName "foo" = typeof foo
-Line 5 col 22 ArrayLiteralExpression "[1, 2]" = number[]
-Line 6 col 4 IdentifierName "ra" = any[]
-Line 6 col 9 InvocationExpression "foo<any[]>([1, 2])" = any[]
-Line 6 col 9 IdentifierName "foo" = typeof foo
-Line 6 col 20 ArrayLiteralExpression "[1, 2]" = any[]
-Line 7 col 4 IdentifierName "r2" = any[]
-Line 7 col 9 InvocationExpression "foo([])" = any[]
-Line 7 col 9 IdentifierName "foo" = typeof foo
-Line 7 col 13 ArrayLiteralExpression "[]" = any[]
-Line 8 col 4 IdentifierName "r3" = number[]
-Line 8 col 9 InvocationExpression "foo<number[]>([])" = number[]
-Line 8 col 9 IdentifierName "foo" = typeof foo
-Line 8 col 23 ArrayLiteralExpression "[]" = number[]
-Line 9 col 4 IdentifierName "r4" = {}[]
-Line 9 col 9 InvocationExpression "foo([1, ''])" = {}[]
-Line 9 col 9 IdentifierName "foo" = typeof foo
-Line 9 col 13 ArrayLiteralExpression "[1, '']" = {}[]
-Line 10 col 4 IdentifierName "r5" = any[]
-Line 10 col 9 InvocationExpression "foo<any[]>([1, ''])" = any[]
-Line 10 col 9 IdentifierName "foo" = typeof foo
-Line 10 col 20 ArrayLiteralExpression "[1, '']" = any[]
-Line 11 col 4 IdentifierName "r6" = Object[]
-Line 11 col 9 InvocationExpression "foo<Object[]>([1, ''])" = Object[]
-Line 11 col 9 IdentifierName "foo" = typeof foo
-Line 11 col 13 IdentifierName "Object" = Object
-Line 11 col 23 ArrayLiteralExpression "[1, '']" = Object[]
+function foo<T>(t: T) {
+>foo : typeof foo
+>T : T
+>t : T
+>T : T
+
+    return t;
+>t : T
+}
+
+var r = foo([1, 2]); // number[]
+>r : number[]
+>foo([1, 2]) : number[]
+>foo : typeof foo
+>[1, 2] : number[]
+
+var r = foo<number[]>([1, 2]); // number[]
+>r : number[]
+>foo<number[]>([1, 2]) : number[]
+>foo : typeof foo
+>[1, 2] : number[]
+
+var ra = foo<any[]>([1, 2]); // any[]
+>ra : any[]
+>foo<any[]>([1, 2]) : any[]
+>foo : typeof foo
+>[1, 2] : any[]
+
+var r2 = foo([]); // any[]
+>r2 : any[]
+>foo([]) : any[]
+>foo : typeof foo
+>[] : any[]
+
+var r3 = foo<number[]>([]); // number[]
+>r3 : number[]
+>foo<number[]>([]) : number[]
+>foo : typeof foo
+>[] : number[]
+
+var r4 = foo([1, '']); // {}[]
+>r4 : {}[]
+>foo([1, '']) : {}[]
+>foo : typeof foo
+>[1, ''] : {}[]
+
+var r5 = foo<any[]>([1, '']); // any[]
+>r5 : any[]
+>foo<any[]>([1, '']) : any[]
+>foo : typeof foo
+>[1, ''] : any[]
+
+var r6 = foo<Object[]>([1, '']); // Object[]
+>r6 : Object[]
+>foo<Object[]>([1, '']) : Object[]
+>foo : typeof foo
+>Object : Object
+>[1, ''] : Object[]
+

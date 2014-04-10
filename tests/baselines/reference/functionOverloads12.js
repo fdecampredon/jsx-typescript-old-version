@@ -1,3 +1,4 @@
+//// [functionOverloads12.js]
 function foo() {
     if (true)
         return "";

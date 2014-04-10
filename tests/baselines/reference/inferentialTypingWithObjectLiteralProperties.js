@@ -1,3 +1,4 @@
+//// [inferentialTypingWithObjectLiteralProperties.js]
 function f(x, y) {
     return x;
 }

@@ -1,44 +1,73 @@
 === tests/cases/compiler/logicalNotOperatorWithEnumType.ts ===
-Line 2 col 5 IdentifierName "ENUM" = ENUM
-Line 3 col 5 IdentifierName "ENUM1" = ENUM1
-Line 6 col 4 IdentifierName "ResultIsBoolean1" = boolean
-Line 6 col 23 LogicalNotExpression "!ENUM" = boolean
-Line 6 col 24 IdentifierName "ENUM" = typeof ENUM
-Line 9 col 4 IdentifierName "ResultIsBoolean2" = boolean
-Line 9 col 23 LogicalNotExpression "!ENUM[1]" = boolean
-Line 9 col 24 ElementAccessExpression "ENUM[1]" = ENUM
-Line 9 col 24 IdentifierName "ENUM" = typeof ENUM
-Line 10 col 4 IdentifierName "ResultIsBoolean3" = boolean
-Line 10 col 23 LogicalNotExpression "!(ENUM[1] + ENUM[2])" = boolean
-Line 10 col 24 ParenthesizedExpression "(ENUM[1] + ENUM[2])" = number
-Line 10 col 25 AddExpression "ENUM[1] + ENUM[2]" = number
-Line 10 col 25 ElementAccessExpression "ENUM[1]" = ENUM
-Line 10 col 25 IdentifierName "ENUM" = typeof ENUM
-Line 10 col 35 ElementAccessExpression "ENUM[2]" = ENUM
-Line 10 col 35 IdentifierName "ENUM" = typeof ENUM
-Line 13 col 4 IdentifierName "ResultIsBoolean4" = boolean
-Line 13 col 23 LogicalNotExpression "!!ENUM" = boolean
-Line 13 col 24 LogicalNotExpression "!ENUM" = boolean
-Line 13 col 25 IdentifierName "ENUM" = typeof ENUM
-Line 14 col 4 IdentifierName "ResultIsBoolean5" = boolean
-Line 14 col 23 LogicalNotExpression "!!!(ENUM[1] + ENUM[2])" = boolean
-Line 14 col 24 LogicalNotExpression "!!(ENUM[1] + ENUM[2])" = boolean
-Line 14 col 25 LogicalNotExpression "!(ENUM[1] + ENUM[2])" = boolean
-Line 14 col 26 ParenthesizedExpression "(ENUM[1] + ENUM[2])" = number
-Line 14 col 27 AddExpression "ENUM[1] + ENUM[2]" = number
-Line 14 col 27 ElementAccessExpression "ENUM[1]" = ENUM
-Line 14 col 27 IdentifierName "ENUM" = typeof ENUM
-Line 14 col 37 ElementAccessExpression "ENUM[2]" = ENUM
-Line 14 col 37 IdentifierName "ENUM" = typeof ENUM
-Line 15 col 0 LogicalNotExpression "// miss assignment operators
-!ENUM" = boolean
-Line 17 col 1 IdentifierName "ENUM" = typeof ENUM
-Line 18 col 0 LogicalNotExpression "!ENUM1" = boolean
-Line 18 col 1 IdentifierName "ENUM1" = typeof ENUM1
-Line 19 col 0 LogicalNotExpression "!ENUM[1]" = boolean
-Line 19 col 1 ElementAccessExpression "ENUM[1]" = ENUM
-Line 19 col 1 IdentifierName "ENUM" = typeof ENUM
-Line 20 col 0 CommaExpression "!ENUM, ENUM1" = typeof ENUM1
-Line 20 col 0 LogicalNotExpression "!ENUM" = boolean
-Line 20 col 1 IdentifierName "ENUM" = typeof ENUM
-Line 20 col 7 IdentifierName "ENUM1" = typeof ENUM1
+// ! operator on enum type
+
+enum ENUM { 1, 2, 3 };
+>ENUM : ENUM
+
+enum ENUM1 { };
+>ENUM1 : ENUM1
+
+// enum type var
+var ResultIsBoolean1 = !ENUM;
+>ResultIsBoolean1 : boolean
+>!ENUM : boolean
+>ENUM : typeof ENUM
+
+// enum type expressions
+var ResultIsBoolean2 = !ENUM[1];
+>ResultIsBoolean2 : boolean
+>!ENUM[1] : boolean
+>ENUM[1] : ENUM
+>ENUM : typeof ENUM
+
+var ResultIsBoolean3 = !(ENUM[1] + ENUM[2]);
+>ResultIsBoolean3 : boolean
+>!(ENUM[1] + ENUM[2]) : boolean
+>(ENUM[1] + ENUM[2]) : number
+>ENUM[1] + ENUM[2] : number
+>ENUM[1] : ENUM
+>ENUM : typeof ENUM
+>ENUM[2] : ENUM
+>ENUM : typeof ENUM
+
+// multiple ! operators
+var ResultIsBoolean4 = !!ENUM;
+>ResultIsBoolean4 : boolean
+>!!ENUM : boolean
+>!ENUM : boolean
+>ENUM : typeof ENUM
+
+var ResultIsBoolean5 = !!!(ENUM[1] + ENUM[2]);
+>ResultIsBoolean5 : boolean
+>!!!(ENUM[1] + ENUM[2]) : boolean
+>!!(ENUM[1] + ENUM[2]) : boolean
+>!(ENUM[1] + ENUM[2]) : boolean
+>(ENUM[1] + ENUM[2]) : number
+>ENUM[1] + ENUM[2] : number
+>ENUM[1] : ENUM
+>ENUM : typeof ENUM
+>ENUM[2] : ENUM
+>ENUM : typeof ENUM
+
+>// miss assignment operators
+!ENUM : boolean
+
+// miss assignment operators
+!ENUM;
+>ENUM : typeof ENUM
+
+!ENUM1;
+>!ENUM1 : boolean
+>ENUM1 : typeof ENUM1
+
+!ENUM[1];
+>!ENUM[1] : boolean
+>ENUM[1] : ENUM
+>ENUM : typeof ENUM
+
+!ENUM, ENUM1;
+>!ENUM, ENUM1 : typeof ENUM1
+>!ENUM : boolean
+>ENUM : typeof ENUM
+>ENUM1 : typeof ENUM1
+

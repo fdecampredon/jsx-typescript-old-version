@@ -1,14 +1,31 @@
 === tests/cases/compiler/internalAliasFunctionInsideLocalModuleWithoutExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 20 IdentifierName "foo" = typeof foo
-Line 1 col 24 IdentifierName "x" = number
-Line 2 col 15 IdentifierName "x" = number
-Line 6 col 14 IdentifierName "c" = c
-Line 7 col 11 IdentifierName "b" = b
-Line 7 col 15 IdentifierName "a" = a
-Line 7 col 17 IdentifierName "foo" = typeof a.foo
-Line 8 col 8 IdentifierName "bVal" = number
-Line 8 col 15 InvocationExpression "b(10)" = number
-Line 8 col 15 IdentifierName "b" = typeof a.foo
-Line 9 col 15 IdentifierName "bVal2" = typeof a.foo
-Line 9 col 23 IdentifierName "b" = typeof a.foo
+export module a {
+>a : a
+
+    export function foo(x: number) {
+>foo : typeof foo
+>x : number
+
+        return x;
+>x : number
+    }
+}
+
+export module c {
+>c : c
+
+    import b = a.foo;
+>b : b
+>a : a
+>foo : typeof a.foo
+
+    var bVal = b(10);
+>bVal : number
+>b(10) : number
+>b : typeof a.foo
+
+    export var bVal2 = b;
+>bVal2 : typeof a.foo
+>b : typeof a.foo
+}
+

@@ -1,3 +1,4 @@
+//// [typeParametersShouldNotBeEqual2.js]
 function ff(x, y, z) {
     var zz;
     x = x; // Ok

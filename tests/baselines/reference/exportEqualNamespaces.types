@@ -1,14 +1,32 @@
 === tests/cases/compiler/exportEqualNamespaces.ts ===
-Line 0 col 15 IdentifierName "server" = server
-Line 1 col 14 IdentifierName "Server" = Server
-Line 1 col 29 IdentifierName "Object" = Object
-Line 4 col 10 IdentifierName "server" = server
-Line 5 col 8 IdentifierName "server" = server
-Line 5 col 15 IdentifierName "Server" = server.Server
-Line 6 col 0 IdentifierName "startTime" = Date
-Line 6 col 15 IdentifierName "Date" = Date
-Line 9 col 4 IdentifierName "x" = number
-Line 10 col 4 IdentifierName "server" = Date
-Line 10 col 13 ObjectCreationExpression "new Date()" = Date
-Line 10 col 17 IdentifierName "Date" = { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
-Line 11 col 9 IdentifierName "server" = Date
+declare module server {
+>server : server
+
+    interface Server extends Object { }
+>Server : Server
+>Object : Object
+}
+
+interface server {
+>server : server
+
+    (): server.Server;
+>server : server
+>Server : server.Server
+
+    startTime: Date;
+>startTime : Date
+>Date : Date
+}
+ 
+var x = 5;
+>x : number
+
+var server = new Date();
+>server : Date
+>new Date() : Date
+>Date : { prototype: Date; parse(s: string): number; UTC(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): number; now(): number; (): string; new(): Date; new(value: number): Date; new(value: string): Date; new(year: number, month: number, date?: number, hours?: number, minutes?: number, seconds?: number, ms?: number): Date; }
+
+export = server;
+>server : Date
+

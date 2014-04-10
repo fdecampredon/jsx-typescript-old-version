@@ -1,4 +1,8 @@
 === tests/cases/compiler/ambientClassDeclarationWithExtends.ts ===
-Line 0 col 14 IdentifierName "A" = A
-Line 1 col 14 IdentifierName "B" = B
-Line 1 col 24 IdentifierName "A" = A
+declare class A { }
+>A : A
+
+declare class B extends A { }
+>B : B
+>A : A
+

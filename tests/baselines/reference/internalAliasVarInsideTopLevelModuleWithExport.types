@@ -1,8 +1,18 @@
 === tests/cases/compiler/internalAliasVarInsideTopLevelModuleWithExport.ts ===
-Line 0 col 14 IdentifierName "a" = a
-Line 1 col 15 IdentifierName "x" = number
-Line 4 col 14 IdentifierName "b" = b
-Line 4 col 18 IdentifierName "a" = a
-Line 4 col 20 IdentifierName "x" = number
-Line 5 col 11 IdentifierName "bVal" = number
-Line 5 col 18 IdentifierName "b" = number
+export module a {
+>a : a
+
+    export var x = 10;
+>x : number
+}
+
+export import b = a.x;
+>b : b
+>a : a
+>x : number
+
+export var bVal = b;
+>bVal : number
+>b : number
+
+

@@ -1,30 +1,62 @@
 === tests/cases/compiler/typeParameterAsTypeArgument.ts ===
-Line 2 col 9 IdentifierName "foo" = typeof foo
-Line 2 col 13 IdentifierName "T" = T
-Line 2 col 16 IdentifierName "U" = U
-Line 2 col 19 IdentifierName "x" = T
-Line 2 col 22 IdentifierName "T" = T
-Line 2 col 25 IdentifierName "y" = U
-Line 2 col 28 IdentifierName "U" = U
-Line 3 col 0 InvocationExpression "foo<U, U>(y, y)" = C<U, U>
-Line 3 col 0 IdentifierName "foo" = typeof foo
-Line 3 col 8 IdentifierName "U" = U
-Line 3 col 11 IdentifierName "U" = U
-Line 3 col 14 IdentifierName "y" = U
-Line 3 col 17 IdentifierName "y" = U
-Line 4 col 11 ObjectCreationExpression "new C<U,T>()" = C<U, T>
-Line 4 col 15 IdentifierName "C" = typeof C
-Line 4 col 17 IdentifierName "U" = U
-Line 4 col 19 IdentifierName "T" = T
-Line 7 col 6 IdentifierName "C" = C<T, U>
-Line 7 col 8 IdentifierName "T" = T
-Line 7 col 11 IdentifierName "U" = U
-Line 8 col 0 IdentifierName "x" = T
-Line 8 col 7 IdentifierName "T" = T
-Line 11 col 10 IdentifierName "I" = I<T, U>
-Line 11 col 12 IdentifierName "T" = T
-Line 11 col 15 IdentifierName "U" = U
-Line 12 col 0 IdentifierName "x" = C<U, T>
-Line 12 col 7 IdentifierName "C" = C<T, U>
-Line 12 col 9 IdentifierName "U" = U
-Line 12 col 12 IdentifierName "T" = T
+// These are all errors because type parameters cannot reference other type parameters from the same list
+
+function foo<T, U>(x: T, y: U) {
+>foo : typeof foo
+>T : T
+>U : U
+>x : T
+>T : T
+>y : U
+>U : U
+
+    foo<U, U>(y, y);
+>foo<U, U>(y, y) : C<U, U>
+>foo : typeof foo
+>U : U
+>U : U
+>y : U
+>y : U
+
+    return new C<U,T>();
+>new C<U,T>() : C<U, T>
+>C : typeof C
+>U : U
+>T : T
+}
+
+class C<T, U> {
+>C : C<T, U>
+>T : T
+>U : U
+
+    x: T;
+>x : T
+>T : T
+}
+
+interface I<T, U> {
+>I : I<T, U>
+>T : T
+>U : U
+
+    x: C<U, T>;
+>x : C<U, T>
+>C : C<T, U>
+>U : U
+>T : T
+}
+
+//function foo<T, U extends T>(x: T, y: U) {
+//    foo<U, U>(y, y);
+//    return new C<U, T>();
+//}
+
+//class C<T extends U, U> {
+//    x: T;
+//}
+
+//interface I<T, U extends T> {
+//    x: C<U, T>;
+//}
+

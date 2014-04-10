@@ -1,3 +1,7 @@
+//// [foo3.ts]
+import foo2 = require('./foo2');
+var x = foo2(); // should be boolean
+
 //// [foo1.js]
 function x() {
     return true;

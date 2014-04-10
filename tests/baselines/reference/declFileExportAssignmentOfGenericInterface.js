@@ -1,3 +1,8 @@
+//// [declFileExportAssignmentOfGenericInterface_1.ts]
+import a = require('declFileExportAssignmentOfGenericInterface_0');
+export var x: a<a<string>>;
+x.a;
+
 //// [declFileExportAssignmentOfGenericInterface_0.js]
 define(["require", "exports"], function(require, exports) {
     

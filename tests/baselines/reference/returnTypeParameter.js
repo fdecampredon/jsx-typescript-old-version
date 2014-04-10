@@ -1,3 +1,4 @@
+//// [returnTypeParameter.js]
 function f(a) {
 }
 function f2(a) {

@@ -1,10 +1,33 @@
 === tests/cases/compiler/asiInES6Classes.ts ===
-Line 0 col 6 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "defaults" = { done: boolean; }
-Line 4 col 15 ObjectLiteralExpression "{
+class Foo {
+>Foo : Foo
+
+>defaults : { done: boolean; }
+ 
+
+    defaults = {
+>{
 
         done: false
 
-    }" = { done: boolean; }
-Line 5 col 0 IdentifierName "done" = boolean
-Line 9 col 0 IdentifierName "bar" = () => number
+    } : { done: boolean; }
+
+>done : boolean
+
+        done: false
+
+    }
+
+>bar : () => number
+ 
+
+    bar() {
+
+        return 3;
+
+    }
+
+ 
+
+}
+

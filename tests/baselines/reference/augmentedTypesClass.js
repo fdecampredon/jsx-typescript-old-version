@@ -1,3 +1,4 @@
+//// [augmentedTypesClass.js]
 //// class then var
 var c1 = (function () {
     function c1() {

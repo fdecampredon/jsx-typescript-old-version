@@ -1,3 +1,4 @@
+//// [functionLiterals.js]
 // PropName<TypeParamList>(ParamList):ReturnType is equivalent to PropName: { <TypeParamList>(ParamList): ReturnType }
 var b;
 

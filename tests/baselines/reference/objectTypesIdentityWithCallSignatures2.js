@@ -1,3 +1,4 @@
+//// [objectTypesIdentityWithCallSignatures2.js]
 // object types are identical structurally
 var A = (function () {
     function A() {

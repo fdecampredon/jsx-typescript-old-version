@@ -1,3 +1,21 @@
+//// [out-flag.ts]
+//// @out: bin\
+
+// my class comments
+class MyClass
+{
+    // my function comments
+    public Count(): number
+    {
+        return 42;
+    }
+
+    public SetCount(value: number)
+    {
+        //
+    }
+}
+
 //// [out-flag.js]
 //// @out: bin\
 // my class comments

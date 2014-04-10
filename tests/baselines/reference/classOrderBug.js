@@ -1,3 +1,21 @@
+//// [classOrderBug.ts]
+class bar {
+    public baz: foo;
+    constructor() {
+
+        this.baz = new foo();
+
+    }
+
+}
+
+class baz {}
+class foo extends baz {}
+
+
+
+
+//// [classOrderBug.js]
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

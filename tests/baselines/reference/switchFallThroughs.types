@@ -1,6 +1,27 @@
 === tests/cases/compiler/switchFallThroughs.ts ===
-Line 0 col 9 IdentifierName "R1" = typeof R1
-Line 0 col 12 IdentifierName "index" = number
-Line 1 col 12 IdentifierName "index" = number
-Line 5 col 16 IdentifierName "a" = string
-Line 6 col 19 IdentifierName "a" = string
+function R1(index: number) {
+>R1 : typeof R1
+>index : number
+
+    switch (index) {
+>index : number
+
+        case 0:
+        case 1:
+        case 2:
+            var a = 'a';
+>a : string
+
+            return a;
+>a : string
+
+        case 3:
+        case 4: {
+            return 'b';
+        }
+		case 5:
+		default:
+			return 'c';
+    }
+}
+

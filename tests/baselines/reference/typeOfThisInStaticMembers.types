@@ -1,53 +1,104 @@
 === tests/cases/compiler/typeOfThisInStaticMembers.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 16 IdentifierName "x" = number
-Line 2 col 11 IdentifierName "foo" = number
-Line 3 col 11 IdentifierName "bar" = () => typeof C
-Line 5 col 12 IdentifierName "t" = typeof C
-Line 5 col 16 ThisKeyword "this" = typeof C
-Line 6 col 15 ThisKeyword "this" = typeof C
-Line 10 col 4 IdentifierName "t" = typeof C
-Line 10 col 8 InvocationExpression "C.bar()" = typeof C
-Line 10 col 8 MemberAccessExpression "C.bar" = () => typeof C
-Line 10 col 8 IdentifierName "C" = typeof C
-Line 10 col 10 IdentifierName "bar" = () => typeof C
-Line 12 col 4 IdentifierName "r2" = number
-Line 12 col 9 AddExpression "t.foo + 1" = number
-Line 12 col 9 MemberAccessExpression "t.foo" = number
-Line 12 col 9 IdentifierName "t" = typeof C
-Line 12 col 11 IdentifierName "foo" = number
-Line 13 col 4 IdentifierName "r3" = typeof C
-Line 13 col 9 InvocationExpression "t.bar()" = typeof C
-Line 13 col 9 MemberAccessExpression "t.bar" = () => typeof C
-Line 13 col 9 IdentifierName "t" = typeof C
-Line 13 col 11 IdentifierName "bar" = () => typeof C
-Line 14 col 4 IdentifierName "r4" = C
-Line 14 col 9 ObjectCreationExpression "new t(1)" = C
-Line 14 col 13 IdentifierName "t" = typeof C
-Line 16 col 6 IdentifierName "C2" = C2<T>
-Line 16 col 9 IdentifierName "T" = T
-Line 17 col 11 IdentifierName "test" = number
-Line 18 col 16 IdentifierName "x" = string
-Line 19 col 11 IdentifierName "foo" = string
-Line 20 col 11 IdentifierName "bar" = () => typeof C2
-Line 22 col 12 IdentifierName "t" = typeof C2
-Line 22 col 16 ThisKeyword "this" = typeof C2
-Line 23 col 15 ThisKeyword "this" = typeof C2
-Line 27 col 4 IdentifierName "t2" = typeof C2
-Line 27 col 9 InvocationExpression "C2.bar()" = typeof C2
-Line 27 col 9 MemberAccessExpression "C2.bar" = () => typeof C2
-Line 27 col 9 IdentifierName "C2" = typeof C2
-Line 27 col 12 IdentifierName "bar" = () => typeof C2
-Line 29 col 4 IdentifierName "r5" = string
-Line 29 col 9 AddExpression "t2.foo + 1" = string
-Line 29 col 9 MemberAccessExpression "t2.foo" = string
-Line 29 col 9 IdentifierName "t2" = typeof C2
-Line 29 col 12 IdentifierName "foo" = string
-Line 30 col 4 IdentifierName "r6" = typeof C2
-Line 30 col 9 InvocationExpression "t2.bar()" = typeof C2
-Line 30 col 9 MemberAccessExpression "t2.bar" = () => typeof C2
-Line 30 col 9 IdentifierName "t2" = typeof C2
-Line 30 col 12 IdentifierName "bar" = () => typeof C2
-Line 31 col 4 IdentifierName "r7" = C2<{}>
-Line 31 col 9 ObjectCreationExpression "new t2('')" = C2<{}>
-Line 31 col 13 IdentifierName "t2" = typeof C2
+class C {
+>C : C
+
+    constructor(x: number) { }
+>x : number
+
+    static foo: number;
+>foo : number
+
+    static bar() {
+>bar : () => typeof C
+
+        // type of this is the constructor function type
+        var t = this;
+>t : typeof C
+>this : typeof C
+
+        return this;
+>this : typeof C
+    }
+}
+
+var t = C.bar();
+>t : typeof C
+>C.bar() : typeof C
+>C.bar : () => typeof C
+>C : typeof C
+>bar : () => typeof C
+
+// all ok
+var r2 = t.foo + 1;
+>r2 : number
+>t.foo + 1 : number
+>t.foo : number
+>t : typeof C
+>foo : number
+
+var r3 = t.bar();
+>r3 : typeof C
+>t.bar() : typeof C
+>t.bar : () => typeof C
+>t : typeof C
+>bar : () => typeof C
+
+var r4 = new t(1);
+>r4 : C
+>new t(1) : C
+>t : typeof C
+
+class C2<T> {
+>C2 : C2<T>
+>T : T
+
+    static test: number;
+>test : number
+
+    constructor(x: string) { }
+>x : string
+
+    static foo: string;
+>foo : string
+
+    static bar() {
+>bar : () => typeof C2
+
+        // type of this is the constructor function type
+        var t = this;
+>t : typeof C2
+>this : typeof C2
+
+        return this;
+>this : typeof C2
+    }
+}
+
+var t2 = C2.bar();
+>t2 : typeof C2
+>C2.bar() : typeof C2
+>C2.bar : () => typeof C2
+>C2 : typeof C2
+>bar : () => typeof C2
+
+// all ok
+var r5 = t2.foo + 1;
+>r5 : string
+>t2.foo + 1 : string
+>t2.foo : string
+>t2 : typeof C2
+>foo : string
+
+var r6 = t2.bar();
+>r6 : typeof C2
+>t2.bar() : typeof C2
+>t2.bar : () => typeof C2
+>t2 : typeof C2
+>bar : () => typeof C2
+
+var r7 = new t2('');
+>r7 : C2<{}>
+>new t2('') : C2<{}>
+>t2 : typeof C2
+
+

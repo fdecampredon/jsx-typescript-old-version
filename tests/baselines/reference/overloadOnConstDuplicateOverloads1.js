@@ -1,3 +1,4 @@
+//// [overloadOnConstDuplicateOverloads1.js]
 function foo(a, x) {
 }
 

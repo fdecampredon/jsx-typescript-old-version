@@ -1,11 +1,33 @@
 === tests/cases/compiler/identicalCallSignatures3.ts ===
-Line 3 col 10 IdentifierName "I" = I
-Line 4 col 5 IdentifierName "x" = number
-Line 7 col 10 IdentifierName "I" = I
-Line 8 col 5 IdentifierName "x" = number
-Line 11 col 10 IdentifierName "I2" = I2<T>
-Line 11 col 13 IdentifierName "T" = T
-Line 12 col 5 IdentifierName "x" = number
-Line 15 col 10 IdentifierName "I2" = I2<T>
-Line 15 col 13 IdentifierName "T" = T
-Line 16 col 5 IdentifierName "x" = number
+// Normally it is an error to have multiple overloads with identical signatures in a single type declaration.
+// Here the multiple overloads come from multiple merged declarations, so we do not report errors.
+
+interface I {
+>I : I
+
+    (x: number): string;
+>x : number
+}
+
+interface I {
+>I : I
+
+    (x: number): string;
+>x : number
+}
+
+interface I2<T> {
+>I2 : I2<T>
+>T : T
+
+    (x: number): string;
+>x : number
+}
+
+interface I2<T> {
+>I2 : I2<T>
+>T : T
+
+    (x: number): string;
+>x : number
+}

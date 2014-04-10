@@ -1,88 +1,175 @@
 === tests/cases/compiler/moduleVisibilityTest1.ts ===
-Line 2 col 7 IdentifierName "OuterMod" = OuterMod
-Line 3 col 17 IdentifierName "someExportedOuterFunc" = typeof someExportedOuterFunc
-Line 3 col 50 NegateExpression "-1" = number
-Line 5 col 15 IdentifierName "OuterInnerMod" = OuterInnerMod
-Line 6 col 18 IdentifierName "someExportedOuterInnerFunc" = typeof someExportedOuterInnerFunc
-Line 10 col 7 IdentifierName "OuterInnerAlias" = OuterInnerAlias
-Line 10 col 25 IdentifierName "OuterMod" = OuterMod
-Line 10 col 34 IdentifierName "OuterInnerMod" = typeof OuterMod.OuterInnerMod
-Line 12 col 7 IdentifierName "M" = M
-Line 14 col 15 IdentifierName "InnerMod" = InnerMod
-Line 15 col 18 IdentifierName "someExportedInnerFunc" = typeof someExportedInnerFunc
-Line 15 col 51 NegateExpression "-2" = number
-Line 18 col 13 IdentifierName "E" = E
-Line 19 col 0 IdentifierName "A" = E
-Line 20 col 0 IdentifierName "B" = E
-Line 21 col 0 IdentifierName "C" = E
-Line 24 col 12 IdentifierName "x" = number
-Line 25 col 20 IdentifierName "exported_var" = any
-Line 27 col 5 IdentifierName "y" = number
-Line 27 col 9 AddExpression "x + x" = number
-Line 27 col 9 IdentifierName "x" = number
-Line 27 col 13 IdentifierName "x" = number
-Line 30 col 18 IdentifierName "I" = I
-Line 31 col 0 IdentifierName "someMethod" = () => number
-Line 34 col 8 IdentifierName "B" = B
-Line 34 col 18 IdentifierName "b" = number
-Line 36 col 15 IdentifierName "C" = C
-Line 36 col 28 IdentifierName "I" = I
-Line 37 col 9 IdentifierName "someMethodThatCallsAnOuterMethod" = () => string
-Line 37 col 52 InvocationExpression "OuterInnerAlias.someExportedOuterInnerFunc()" = string
-Line 37 col 52 MemberAccessExpression "OuterInnerAlias.someExportedOuterInnerFunc" = typeof OuterMod.OuterInnerMod.someExportedOuterInnerFunc
-Line 37 col 52 IdentifierName "OuterInnerAlias" = typeof OuterMod.OuterInnerMod
-Line 37 col 68 IdentifierName "someExportedOuterInnerFunc" = typeof OuterMod.OuterInnerMod.someExportedOuterInnerFunc
-Line 38 col 9 IdentifierName "someMethodThatCallsAnInnerMethod" = () => number
-Line 38 col 52 InvocationExpression "InnerMod.someExportedInnerFunc()" = number
-Line 38 col 52 MemberAccessExpression "InnerMod.someExportedInnerFunc" = typeof InnerMod.someExportedInnerFunc
-Line 38 col 52 IdentifierName "InnerMod" = typeof InnerMod
-Line 38 col 61 IdentifierName "someExportedInnerFunc" = typeof InnerMod.someExportedInnerFunc
-Line 39 col 9 IdentifierName "someMethodThatCallsAnOuterInnerMethod" = () => number
-Line 39 col 57 InvocationExpression "OuterMod.someExportedOuterFunc()" = number
-Line 39 col 57 MemberAccessExpression "OuterMod.someExportedOuterFunc" = typeof OuterMod.someExportedOuterFunc
-Line 39 col 57 IdentifierName "OuterMod" = typeof OuterMod
-Line 39 col 66 IdentifierName "someExportedOuterFunc" = typeof OuterMod.someExportedOuterFunc
-Line 40 col 9 IdentifierName "someMethod" = () => number
-Line 41 col 9 IdentifierName "someProp" = number
-Line 44 col 15 IdentifierName "someInnerFunc" = () => number
-Line 45 col 16 IdentifierName "someInnerVar" = number
-Line 49 col 5 IdentifierName "someModuleVar" = number
-Line 51 col 10 IdentifierName "someModuleFunction" = typeof someModuleFunction
-Line 54 col 7 IdentifierName "M" = M
-Line 55 col 12 IdentifierName "c" = number
-Line 55 col 16 IdentifierName "x" = number
-Line 56 col 12 IdentifierName "meb" = E
-Line 56 col 18 MemberAccessExpression "M.E.B" = E
-Line 56 col 18 MemberAccessExpression "M.E" = typeof E
-Line 56 col 18 IdentifierName "M" = typeof M
-Line 56 col 20 IdentifierName "E" = typeof E
-Line 56 col 22 IdentifierName "B" = E
-Line 59 col 4 IdentifierName "cprime" = M.I
-Line 59 col 13 IdentifierName "M" = M
-Line 59 col 15 IdentifierName "I" = M.I
-Line 59 col 19 CastExpression "<M.I>null" = M.I
-Line 59 col 20 IdentifierName "M" = M
-Line 59 col 22 IdentifierName "I" = M.I
-Line 61 col 4 IdentifierName "c" = M.C
-Line 61 col 8 ObjectCreationExpression "new M.C()" = M.C
-Line 61 col 12 MemberAccessExpression "M.C" = typeof M.C
-Line 61 col 12 IdentifierName "M" = typeof M
-Line 61 col 14 IdentifierName "C" = typeof M.C
-Line 62 col 4 IdentifierName "z" = number
-Line 62 col 8 MemberAccessExpression "M.x" = number
-Line 62 col 8 IdentifierName "M" = typeof M
-Line 62 col 10 IdentifierName "x" = number
-Line 63 col 4 IdentifierName "alpha" = M.E
-Line 63 col 12 MemberAccessExpression "M.E.A" = M.E
-Line 63 col 12 MemberAccessExpression "M.E" = typeof M.E
-Line 63 col 12 IdentifierName "M" = typeof M
-Line 63 col 14 IdentifierName "E" = typeof M.E
-Line 63 col 16 IdentifierName "A" = M.E
-Line 64 col 4 IdentifierName "omega" = any
-Line 64 col 12 MemberAccessExpression "M.exported_var" = any
-Line 64 col 12 IdentifierName "M" = typeof M
-Line 64 col 14 IdentifierName "exported_var" = any
-Line 65 col 0 InvocationExpression "c.someMethodThatCallsAnOuterMethod()" = string
-Line 65 col 0 MemberAccessExpression "c.someMethodThatCallsAnOuterMethod" = () => string
-Line 65 col 0 IdentifierName "c" = M.C
-Line 65 col 2 IdentifierName "someMethodThatCallsAnOuterMethod" = () => string
+
+
+module OuterMod {
+>OuterMod : OuterMod
+
+	export function someExportedOuterFunc() { return -1; }
+>someExportedOuterFunc : typeof someExportedOuterFunc
+>-1 : number
+
+	export module OuterInnerMod {
+>OuterInnerMod : OuterInnerMod
+
+		export function someExportedOuterInnerFunc() { return "foo"; }
+>someExportedOuterInnerFunc : typeof someExportedOuterInnerFunc
+	}
+}
+
+import OuterInnerAlias = OuterMod.OuterInnerMod;
+>OuterInnerAlias : OuterInnerAlias
+>OuterMod : OuterMod
+>OuterInnerMod : typeof OuterMod.OuterInnerMod
+
+module M {
+>M : M
+
+	export module InnerMod {
+>InnerMod : InnerMod
+
+		export function someExportedInnerFunc() { return -2; }
+>someExportedInnerFunc : typeof someExportedInnerFunc
+>-2 : number
+	}
+
+	export enum E {
+>E : E
+
+		A,
+>A : E
+
+		B,
+>B : E
+
+		C,
+>C : E
+	}
+
+	export var x = 5;
+>x : number
+
+	export declare var exported_var;
+>exported_var : any
+
+	var y = x + x;
+>y : number
+>x + x : number
+>x : number
+>x : number
+
+
+	export interface I {
+>I : I
+
+		someMethod():number;
+>someMethod : () => number
+	}
+
+	 class B {public b = 0;}
+>B : B
+>b : number
+
+	 export class C implements I {
+>C : C
+>I : I
+
+		public someMethodThatCallsAnOuterMethod() {return OuterInnerAlias.someExportedOuterInnerFunc();}
+>someMethodThatCallsAnOuterMethod : () => string
+>OuterInnerAlias.someExportedOuterInnerFunc() : string
+>OuterInnerAlias.someExportedOuterInnerFunc : typeof OuterMod.OuterInnerMod.someExportedOuterInnerFunc
+>OuterInnerAlias : typeof OuterMod.OuterInnerMod
+>someExportedOuterInnerFunc : typeof OuterMod.OuterInnerMod.someExportedOuterInnerFunc
+
+		public someMethodThatCallsAnInnerMethod() {return InnerMod.someExportedInnerFunc();}
+>someMethodThatCallsAnInnerMethod : () => number
+>InnerMod.someExportedInnerFunc() : number
+>InnerMod.someExportedInnerFunc : typeof InnerMod.someExportedInnerFunc
+>InnerMod : typeof InnerMod
+>someExportedInnerFunc : typeof InnerMod.someExportedInnerFunc
+
+		public someMethodThatCallsAnOuterInnerMethod() {return OuterMod.someExportedOuterFunc();}
+>someMethodThatCallsAnOuterInnerMethod : () => number
+>OuterMod.someExportedOuterFunc() : number
+>OuterMod.someExportedOuterFunc : typeof OuterMod.someExportedOuterFunc
+>OuterMod : typeof OuterMod
+>someExportedOuterFunc : typeof OuterMod.someExportedOuterFunc
+
+		public someMethod() { return 0; }
+>someMethod : () => number
+
+		public someProp = 1;
+>someProp : number
+
+		constructor() {
+		    function someInnerFunc() { return 2; }
+>someInnerFunc : () => number
+
+            var someInnerVar = 3;
+>someInnerVar : number
+		}
+	}
+
+	var someModuleVar = 4;
+>someModuleVar : number
+
+	function someModuleFunction() { return 5;}
+>someModuleFunction : typeof someModuleFunction
+}
+
+module M {
+>M : M
+
+	export var c = x;
+>c : number
+>x : number
+
+	export var meb = M.E.B;
+>meb : E
+>M.E.B : E
+>M.E : typeof E
+>M : typeof M
+>E : typeof E
+>B : E
+}
+
+var cprime : M.I = <M.I>null;
+>cprime : M.I
+>M : M
+>I : M.I
+><M.I>null : M.I
+>M : M
+>I : M.I
+
+var c = new M.C();
+>c : M.C
+>new M.C() : M.C
+>M.C : typeof M.C
+>M : typeof M
+>C : typeof M.C
+
+var z = M.x;
+>z : number
+>M.x : number
+>M : typeof M
+>x : number
+
+var alpha = M.E.A;
+>alpha : M.E
+>M.E.A : M.E
+>M.E : typeof M.E
+>M : typeof M
+>E : typeof M.E
+>A : M.E
+
+var omega = M.exported_var;
+>omega : any
+>M.exported_var : any
+>M : typeof M
+>exported_var : any
+
+c.someMethodThatCallsAnOuterMethod();
+>c.someMethodThatCallsAnOuterMethod() : string
+>c.someMethodThatCallsAnOuterMethod : () => string
+>c : M.C
+>someMethodThatCallsAnOuterMethod : () => string
+

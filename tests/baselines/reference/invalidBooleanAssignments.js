@@ -1,3 +1,4 @@
+//// [invalidBooleanAssignments.js]
 var x = true;
 
 var a = x;

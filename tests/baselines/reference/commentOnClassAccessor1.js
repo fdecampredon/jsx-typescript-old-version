@@ -1,3 +1,12 @@
+//// [commentOnClassAccessor1.ts]
+class C {
+  /**
+   * @type {number}
+   */
+  get bar(): number { return 1;}
+}
+
+//// [commentOnClassAccessor1.js]
 var C = (function () {
     function C() {
     }

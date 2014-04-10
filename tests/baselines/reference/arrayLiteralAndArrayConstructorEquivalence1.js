@@ -1,3 +1,4 @@
+//// [arrayLiteralAndArrayConstructorEquivalence1.js]
 var myCars = new Array();
 var myCars3 = new Array({});
 var myCars4;

@@ -1,7 +1,16 @@
 === tests/cases/compiler/functionOverloads6.ts ===
-Line 0 col 6 IdentifierName "foo" = foo
-Line 1 col 10 IdentifierName "fnOverload" = { (): any; (foo: string): any; }
-Line 2 col 10 IdentifierName "fnOverload" = { (): any; (foo: string): any; }
-Line 2 col 21 IdentifierName "foo" = string
-Line 3 col 10 IdentifierName "fnOverload" = { (): any; (foo: string): any; }
-Line 3 col 21 IdentifierName "foo" = any
+class foo { 
+>foo : foo
+
+   static fnOverload();
+>fnOverload : { (): any; (foo: string): any; }
+
+   static fnOverload(foo:string);
+>fnOverload : { (): any; (foo: string): any; }
+>foo : string
+
+   static fnOverload(foo?: any){ }
+>fnOverload : { (): any; (foo: string): any; }
+>foo : any
+}
+

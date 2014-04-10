@@ -1,3 +1,4 @@
+//// [ExportClassWhichExtendsInterfaceWithInaccessibleType.js]
 var A;
 (function (A) {
     var Point2d = (function () {

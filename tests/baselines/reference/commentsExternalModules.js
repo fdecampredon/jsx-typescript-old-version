@@ -1,3 +1,12 @@
+//// [commentsExternalModules_1.ts]
+/**This is on import declaration*/
+import extMod = require("commentsExternalModules_0");
+extMod.m1.fooExport();
+var newVar = new extMod.m1.m2.c();
+extMod.m4.fooExport();
+var newVar2 = new extMod.m4.m2.c();
+
+
 //// [commentsExternalModules_0.js]
 define(["require", "exports"], function(require, exports) {
     /** Module comment*/

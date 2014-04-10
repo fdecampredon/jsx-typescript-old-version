@@ -1,5 +1,14 @@
 === tests/cases/compiler/enumCodeGenNewLines1.ts ===
-Line 0 col 5 IdentifierName "foo" = foo
-Line 1 col 0 IdentifierName "b" = foo
-Line 2 col 0 IdentifierName "c" = foo
-Line 3 col 0 IdentifierName "d" = foo
+enum foo {
+>foo : foo
+
+  b = 1,
+>b : foo
+
+  c = 2,
+>c : foo
+
+  d = 3
+>d : foo
+}
+

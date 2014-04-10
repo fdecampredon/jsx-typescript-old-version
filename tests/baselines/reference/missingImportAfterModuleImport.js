@@ -1,3 +1,15 @@
+//// [missingImportAfterModuleImport_1.ts]
+///<reference path='missingImportAfterModuleImport_0.ts'/>
+import SubModule = require('SubModule');
+class MainModule {
+    // public static SubModule: SubModule;
+    public SubModule: SubModule;
+    constructor() { }
+}
+export = MainModule;
+
+
+
 //// [missingImportAfterModuleImport_0.js]
 //// [missingImportAfterModuleImport_1.js]
 var MainModule = (function () {

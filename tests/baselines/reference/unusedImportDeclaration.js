@@ -1,3 +1,12 @@
+//// [unusedImportDeclaration_testerA.ts]
+import B = require("unusedImportDeclaration_testerB");
+var thingy: B = {
+    me: "A"
+};
+declare function foo(a: string): void;
+foo("IN " + thingy.me + "!");
+
+
 //// [unusedImportDeclaration_testerB.js]
 var TesterB = (function () {
     function TesterB() {

@@ -1,3 +1,4 @@
+//// [moduleClassArrayCodeGenTest.js]
 // Invalid code gen for Array of Module class
 var M;
 (function (M) {

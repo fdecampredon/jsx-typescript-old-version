@@ -1,16 +1,25 @@
 === tests/cases/compiler/assignToPrototype1.ts ===
-Line 0 col 14 IdentifierName "Point" = Point
-Line 1 col 0 IdentifierName "add" = (dx: number, dy: number) => void
-Line 1 col 6 IdentifierName "dx" = number
-Line 1 col 18 IdentifierName "dy" = number
-Line 3 col 0 AssignmentExpression "Point.prototype.add = function(dx, dy) {
-}" = (dx: number, dy: number) => void
-Line 3 col 0 MemberAccessExpression "Point.prototype.add" = (dx: number, dy: number) => void
-Line 3 col 0 MemberAccessExpression "Point.prototype" = Point
-Line 3 col 0 IdentifierName "Point" = typeof Point
-Line 4 col 6 IdentifierName "prototype" = Point
-Line 4 col 16 IdentifierName "add" = (dx: number, dy: number) => void
-Line 4 col 22 FunctionExpression "function(dx, dy) {
-}" = (dx: number, dy: number) => void
-Line 4 col 31 IdentifierName "dx" = number
-Line 4 col 35 IdentifierName "dy" = number
+declare class Point {
+>Point : Point
+
+  add(dx: number, dy: number): void;
+>add : (dx: number, dy: number) => void
+>dx : number
+>dy : number
+}
+
+>Point.prototype.add = function(dx, dy) {
+} : (dx: number, dy: number) => void
+>Point.prototype.add : (dx: number, dy: number) => void
+>Point.prototype : Point
+>Point : typeof Point
+
+Point.prototype.add = function(dx, dy) {
+>prototype : Point
+>add : (dx: number, dy: number) => void
+>function(dx, dy) {
+} : (dx: number, dy: number) => void
+>dx : number
+>dy : number
+
+};

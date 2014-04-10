@@ -1,3 +1,7 @@
 === tests/cases/compiler/duplicateVariableDeclaration1.ts ===
-Line 0 col 4 IdentifierName "v" = any
-Line 1 col 4 IdentifierName "v" = any
+var v
+>v : any
+
+var v
+>v : any
+

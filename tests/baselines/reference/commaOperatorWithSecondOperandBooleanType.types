@@ -1,104 +1,163 @@
 === tests/cases/compiler/commaOperatorWithSecondOperandBooleanType.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 5 col 0 CommaExpression "//The second operand type is boolean
-ANY, BOOLEAN" = boolean
-Line 5 col 0 IdentifierName "//The second operand type is boolean
-ANY" = any
-Line 7 col 5 IdentifierName "BOOLEAN" = boolean
-Line 8 col 0 CommaExpression "BOOLEAN, BOOLEAN" = boolean
-Line 8 col 0 IdentifierName "BOOLEAN" = boolean
-Line 8 col 9 IdentifierName "BOOLEAN" = boolean
-Line 9 col 0 CommaExpression "NUMBER, BOOLEAN" = boolean
-Line 9 col 0 IdentifierName "NUMBER" = number
-Line 9 col 8 IdentifierName "BOOLEAN" = boolean
-Line 10 col 0 CommaExpression "STRING, BOOLEAN" = boolean
-Line 10 col 0 IdentifierName "STRING" = string
-Line 10 col 8 IdentifierName "BOOLEAN" = boolean
-Line 11 col 0 CommaExpression "OBJECT, BOOLEAN" = boolean
-Line 11 col 0 IdentifierName "OBJECT" = Object
-Line 11 col 8 IdentifierName "BOOLEAN" = boolean
-Line 14 col 4 IdentifierName "resultIsBoolean1" = boolean
-Line 14 col 23 ParenthesizedExpression "(ANY, BOOLEAN)" = boolean
-Line 14 col 24 CommaExpression "ANY, BOOLEAN" = boolean
-Line 14 col 24 IdentifierName "ANY" = any
-Line 14 col 29 IdentifierName "BOOLEAN" = boolean
-Line 15 col 4 IdentifierName "resultIsBoolean2" = boolean
-Line 15 col 23 ParenthesizedExpression "(BOOLEAN, BOOLEAN)" = boolean
-Line 15 col 24 CommaExpression "BOOLEAN, BOOLEAN" = boolean
-Line 15 col 24 IdentifierName "BOOLEAN" = boolean
-Line 15 col 33 IdentifierName "BOOLEAN" = boolean
-Line 16 col 4 IdentifierName "resultIsBoolean3" = boolean
-Line 16 col 23 ParenthesizedExpression "(NUMBER, BOOLEAN)" = boolean
-Line 16 col 24 CommaExpression "NUMBER, BOOLEAN" = boolean
-Line 16 col 24 IdentifierName "NUMBER" = number
-Line 16 col 32 IdentifierName "BOOLEAN" = boolean
-Line 17 col 4 IdentifierName "resultIsBoolean4" = boolean
-Line 17 col 23 ParenthesizedExpression "(STRING, BOOLEAN)" = boolean
-Line 17 col 24 CommaExpression "STRING, BOOLEAN" = boolean
-Line 17 col 24 IdentifierName "STRING" = string
-Line 17 col 32 IdentifierName "BOOLEAN" = boolean
-Line 18 col 4 IdentifierName "resultIsBoolean5" = boolean
-Line 18 col 23 ParenthesizedExpression "(OBJECT, BOOLEAN)" = boolean
-Line 18 col 24 CommaExpression "OBJECT, BOOLEAN" = boolean
-Line 18 col 24 IdentifierName "OBJECT" = Object
-Line 18 col 32 IdentifierName "BOOLEAN" = boolean
-Line 19 col 0 CommaExpression "//Literal and expression
-null, BOOLEAN" = boolean
-Line 21 col 6 IdentifierName "BOOLEAN" = boolean
-Line 22 col 0 CommaExpression "ANY = undefined, BOOLEAN" = boolean
-Line 22 col 0 AssignmentExpression "ANY = undefined" = any
-Line 22 col 0 IdentifierName "ANY" = any
-Line 22 col 6 IdentifierName "undefined" = any
-Line 22 col 17 IdentifierName "BOOLEAN" = boolean
-Line 23 col 0 CommaExpression "1, true" = boolean
-Line 24 col 0 CommaExpression "++NUMBER, true" = boolean
-Line 24 col 0 PreIncrementExpression "++NUMBER" = number
-Line 24 col 2 IdentifierName "NUMBER" = number
-Line 25 col 0 CommaExpression "[1, 2, 3], !BOOLEAN" = boolean
-Line 25 col 0 ArrayLiteralExpression "[1, 2, 3]" = number[]
-Line 25 col 11 LogicalNotExpression "!BOOLEAN" = boolean
-Line 25 col 12 IdentifierName "BOOLEAN" = boolean
-Line 26 col 0 CommaExpression "OBJECT = [1, 2, 3], BOOLEAN = false" = boolean
-Line 26 col 0 AssignmentExpression "OBJECT = [1, 2, 3]" = number[]
-Line 26 col 0 IdentifierName "OBJECT" = Object
-Line 26 col 9 ArrayLiteralExpression "[1, 2, 3]" = number[]
-Line 26 col 20 AssignmentExpression "BOOLEAN = false" = boolean
-Line 26 col 20 IdentifierName "BOOLEAN" = boolean
-Line 28 col 4 IdentifierName "resultIsBoolean6" = boolean
-Line 28 col 23 ParenthesizedExpression "(null, BOOLEAN)" = boolean
-Line 28 col 24 CommaExpression "null, BOOLEAN" = boolean
-Line 28 col 30 IdentifierName "BOOLEAN" = boolean
-Line 29 col 4 IdentifierName "resultIsBoolean7" = boolean
-Line 29 col 23 ParenthesizedExpression "(ANY = undefined, BOOLEAN)" = boolean
-Line 29 col 24 CommaExpression "ANY = undefined, BOOLEAN" = boolean
-Line 29 col 24 AssignmentExpression "ANY = undefined" = any
-Line 29 col 24 IdentifierName "ANY" = any
-Line 29 col 30 IdentifierName "undefined" = any
-Line 29 col 41 IdentifierName "BOOLEAN" = boolean
-Line 30 col 4 IdentifierName "resultIsBoolean8" = boolean
-Line 30 col 23 ParenthesizedExpression "(1, true)" = boolean
-Line 30 col 24 CommaExpression "1, true" = boolean
-Line 31 col 4 IdentifierName "resultIsBoolean9" = boolean
-Line 31 col 23 ParenthesizedExpression "(++NUMBER, true)" = boolean
-Line 31 col 24 CommaExpression "++NUMBER, true" = boolean
-Line 31 col 24 PreIncrementExpression "++NUMBER" = number
-Line 31 col 26 IdentifierName "NUMBER" = number
-Line 32 col 4 IdentifierName "resultIsBoolean10" = boolean
-Line 32 col 24 ParenthesizedExpression "([1, 2, 3], !BOOLEAN)" = boolean
-Line 32 col 25 CommaExpression "[1, 2, 3], !BOOLEAN" = boolean
-Line 32 col 25 ArrayLiteralExpression "[1, 2, 3]" = number[]
-Line 32 col 36 LogicalNotExpression "!BOOLEAN" = boolean
-Line 32 col 37 IdentifierName "BOOLEAN" = boolean
-Line 33 col 4 IdentifierName "resultIsBoolean11" = boolean
-Line 33 col 24 ParenthesizedExpression "(OBJECT = [1, 2, 3], BOOLEAN = false)" = boolean
-Line 33 col 25 CommaExpression "OBJECT = [1, 2, 3], BOOLEAN = false" = boolean
-Line 33 col 25 AssignmentExpression "OBJECT = [1, 2, 3]" = number[]
-Line 33 col 25 IdentifierName "OBJECT" = Object
-Line 33 col 34 ArrayLiteralExpression "[1, 2, 3]" = number[]
-Line 33 col 45 AssignmentExpression "BOOLEAN = false" = boolean
-Line 33 col 45 IdentifierName "BOOLEAN" = boolean
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+>//The second operand type is boolean
+ANY, BOOLEAN : boolean
+>//The second operand type is boolean
+ANY : any
+
+//The second operand type is boolean
+ANY, BOOLEAN;
+>BOOLEAN : boolean
+
+BOOLEAN, BOOLEAN;
+>BOOLEAN, BOOLEAN : boolean
+>BOOLEAN : boolean
+>BOOLEAN : boolean
+
+NUMBER, BOOLEAN;
+>NUMBER, BOOLEAN : boolean
+>NUMBER : number
+>BOOLEAN : boolean
+
+STRING, BOOLEAN;
+>STRING, BOOLEAN : boolean
+>STRING : string
+>BOOLEAN : boolean
+
+OBJECT, BOOLEAN;
+>OBJECT, BOOLEAN : boolean
+>OBJECT : Object
+>BOOLEAN : boolean
+
+//Return type is boolean
+var resultIsBoolean1 = (ANY, BOOLEAN);
+>resultIsBoolean1 : boolean
+>(ANY, BOOLEAN) : boolean
+>ANY, BOOLEAN : boolean
+>ANY : any
+>BOOLEAN : boolean
+
+var resultIsBoolean2 = (BOOLEAN, BOOLEAN);
+>resultIsBoolean2 : boolean
+>(BOOLEAN, BOOLEAN) : boolean
+>BOOLEAN, BOOLEAN : boolean
+>BOOLEAN : boolean
+>BOOLEAN : boolean
+
+var resultIsBoolean3 = (NUMBER, BOOLEAN);
+>resultIsBoolean3 : boolean
+>(NUMBER, BOOLEAN) : boolean
+>NUMBER, BOOLEAN : boolean
+>NUMBER : number
+>BOOLEAN : boolean
+
+var resultIsBoolean4 = (STRING, BOOLEAN);
+>resultIsBoolean4 : boolean
+>(STRING, BOOLEAN) : boolean
+>STRING, BOOLEAN : boolean
+>STRING : string
+>BOOLEAN : boolean
+
+var resultIsBoolean5 = (OBJECT, BOOLEAN);
+>resultIsBoolean5 : boolean
+>(OBJECT, BOOLEAN) : boolean
+>OBJECT, BOOLEAN : boolean
+>OBJECT : Object
+>BOOLEAN : boolean
+
+>//Literal and expression
+null, BOOLEAN : boolean
+
+//Literal and expression
+null, BOOLEAN;
+>BOOLEAN : boolean
+
+ANY = undefined, BOOLEAN;
+>ANY = undefined, BOOLEAN : boolean
+>ANY = undefined : any
+>ANY : any
+>undefined : any
+>BOOLEAN : boolean
+
+1, true;
+>1, true : boolean
+
+++NUMBER, true;
+>++NUMBER, true : boolean
+>++NUMBER : number
+>NUMBER : number
+
+[1, 2, 3], !BOOLEAN;
+>[1, 2, 3], !BOOLEAN : boolean
+>[1, 2, 3] : number[]
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+
+OBJECT = [1, 2, 3], BOOLEAN = false;
+>OBJECT = [1, 2, 3], BOOLEAN = false : boolean
+>OBJECT = [1, 2, 3] : number[]
+>OBJECT : Object
+>[1, 2, 3] : number[]
+>BOOLEAN = false : boolean
+>BOOLEAN : boolean
+
+var resultIsBoolean6 = (null, BOOLEAN);
+>resultIsBoolean6 : boolean
+>(null, BOOLEAN) : boolean
+>null, BOOLEAN : boolean
+>BOOLEAN : boolean
+
+var resultIsBoolean7 = (ANY = undefined, BOOLEAN);
+>resultIsBoolean7 : boolean
+>(ANY = undefined, BOOLEAN) : boolean
+>ANY = undefined, BOOLEAN : boolean
+>ANY = undefined : any
+>ANY : any
+>undefined : any
+>BOOLEAN : boolean
+
+var resultIsBoolean8 = (1, true);
+>resultIsBoolean8 : boolean
+>(1, true) : boolean
+>1, true : boolean
+
+var resultIsBoolean9 = (++NUMBER, true);
+>resultIsBoolean9 : boolean
+>(++NUMBER, true) : boolean
+>++NUMBER, true : boolean
+>++NUMBER : number
+>NUMBER : number
+
+var resultIsBoolean10 = ([1, 2, 3], !BOOLEAN);
+>resultIsBoolean10 : boolean
+>([1, 2, 3], !BOOLEAN) : boolean
+>[1, 2, 3], !BOOLEAN : boolean
+>[1, 2, 3] : number[]
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+
+var resultIsBoolean11 = (OBJECT = [1, 2, 3], BOOLEAN = false);
+>resultIsBoolean11 : boolean
+>(OBJECT = [1, 2, 3], BOOLEAN = false) : boolean
+>OBJECT = [1, 2, 3], BOOLEAN = false : boolean
+>OBJECT = [1, 2, 3] : number[]
+>OBJECT : Object
+>[1, 2, 3] : number[]
+>BOOLEAN = false : boolean
+>BOOLEAN : boolean
+

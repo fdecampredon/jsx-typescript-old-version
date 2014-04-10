@@ -27,7 +27,13 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
     private syntaxTree: TypeScript.SyntaxTree;
     private currentPosition = 0;
 
-    public results: string[] = [];
+    public results: {
+        line: number;
+        column: number;
+        syntaxKind: string;
+        identifierName: string;
+        type: string;
+    }[] = [];
 
     constructor(public filename: string, public compiler: TypeScript.TypeScriptCompiler) {
         super();
@@ -194,6 +200,6 @@ class TypeWriterWalker extends TypeScript.PositionTrackingWalker {
 
     public log(node: TypeScript.ISyntaxNodeOrToken) {
         var pos = this.document.lineMap().getLineAndCharacterFromPosition(this.position());
-        this.results.push('Line ' + pos.line() + ' col ' + pos.character() + ' ' + TypeScript.SyntaxKind[node.kind()] + ' "' + node.fullText().trim() + '" = ' + this.getTypeOfElement(node));
+        this.results.push({ line: pos.line(), column: pos.character(), syntaxKind: TypeScript.SyntaxKind[node.kind()], identifierName: node.fullText().trim(), type: this.getTypeOfElement(node) });
     }
 }

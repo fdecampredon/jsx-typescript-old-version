@@ -1,3 +1,19 @@
+//// [declFileWithInternalModuleNameConflictsInExtendsClause3.ts]
+
+module X.A.C {
+    export interface Z {
+    }
+}
+module X.A.B.C {
+    export class W implements X.A.C.Z { // This needs to be refered as X.A.C.Z as A has conflict
+    }
+}
+
+module X.A.B.C {
+    export module A {
+    }
+}
+
 //// [declFileWithInternalModuleNameConflictsInExtendsClause3.js]
 var X;
 (function (X) {

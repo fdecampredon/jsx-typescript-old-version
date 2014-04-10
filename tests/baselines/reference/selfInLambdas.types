@@ -1,15 +1,30 @@
 === tests/cases/compiler/selfInLambdas.ts ===
-Line 0 col 10 IdentifierName "MouseEvent" = MouseEvent
-Line 1 col 0 IdentifierName "x" = number
-Line 2 col 0 IdentifierName "y" = number
-Line 5 col 12 IdentifierName "window" = Window
-Line 5 col 20 IdentifierName "Window" = Window
-Line 6 col 10 IdentifierName "Window" = Window
-Line 7 col 0 IdentifierName "onmousemove" = (ev: MouseEvent) => any
-Line 7 col 18 IdentifierName "ev" = MouseEvent
-Line 7 col 22 IdentifierName "MouseEvent" = MouseEvent
-Line 10 col 4 IdentifierName "o" = { counter: number; start: () => void; }
-Line 10 col 8 ObjectLiteralExpression "{
+interface MouseEvent {
+>MouseEvent : MouseEvent
+
+    x: number;
+>x : number
+
+    y: number;
+>y : number
+}
+
+declare var window: Window;
+>window : Window
+>Window : Window
+
+interface Window {
+>Window : Window
+
+    onmousemove: (ev: MouseEvent) => any;
+>onmousemove : (ev: MouseEvent) => any
+>ev : MouseEvent
+>MouseEvent : MouseEvent
+    
+}
+var o = {
+>o : { counter: number; start: () => void; }
+>{
 
     counter: 0,
 
@@ -23,10 +38,16 @@ Line 10 col 8 ObjectLiteralExpression "{
 
     }
 
-}" = { counter: number; start: () => void; }
-Line 11 col 0 IdentifierName "counter" = number
-Line 13 col 0 IdentifierName "start" = () => void
-Line 14 col 11 FunctionExpression "function() {
+} : { counter: number; start: () => void; }
+
+>counter : number
+
+    counter: 0,
+
+>start : () => void
+
+    start: function() {
+>function() {
 
         window.onmousemove = () => {
             this.counter++
@@ -34,34 +55,57 @@ Line 14 col 11 FunctionExpression "function() {
 
         }
 
-    }" = () => void
-Line 15 col 0 AssignmentExpression "window.onmousemove = () => {
+    } : () => void
+
+>window.onmousemove = () => {
             this.counter++
             var f = () => this.counter;
 
-        }" = () => void
-Line 15 col 0 MemberAccessExpression "window.onmousemove" = (ev: MouseEvent) => any
-Line 15 col 0 IdentifierName "window" = Window
-Line 16 col 15 IdentifierName "onmousemove" = (ev: MouseEvent) => any
-Line 16 col 29 ParenthesizedArrowFunctionExpression "() => {
+        } : () => void
+>window.onmousemove : (ev: MouseEvent) => any
+>window : Window
+
+        window.onmousemove = () => {
+>onmousemove : (ev: MouseEvent) => any
+>() => {
             this.counter++
             var f = () => this.counter;
 
-        }" = () => void
-Line 17 col 0 PostIncrementExpression "this.counter++" = number
-Line 17 col 0 MemberAccessExpression "this.counter" = any
-Line 17 col 0 ThisKeyword "this" = any
-Line 17 col 17 IdentifierName "counter" = any
-Line 18 col 16 IdentifierName "f" = () => any
-Line 18 col 20 ParenthesizedArrowFunctionExpression "() => this.counter" = () => any
-Line 18 col 26 MemberAccessExpression "this.counter" = any
-Line 18 col 26 ThisKeyword "this" = any
-Line 18 col 31 IdentifierName "counter" = any
-Line 28 col 6 IdentifierName "X" = X
-Line 29 col 9 IdentifierName "value" = string
-Line 31 col 8 IdentifierName "foo" = () => void
-Line 32 col 6 IdentifierName "outer" = () => void
-Line 32 col 13 ParenthesizedArrowFunctionExpression "() => {
+        } : () => void
+
+            this.counter++
+>this.counter++ : number
+>this.counter : any
+>this : any
+>counter : any
+
+            var f = () => this.counter;
+>f : () => any
+>() => this.counter : () => any
+>this.counter : any
+>this : any
+>counter : any
+
+        }
+
+    }
+
+}
+
+
+
+class X {
+>X : X
+
+	private value = "value";
+>value : string
+
+	public foo() {
+>foo : () => void
+
+		var outer= () => {
+>outer : () => void
+>() => {
             var x = this.value;
             var inner = () => {
                 var y = this.value;
@@ -69,20 +113,37 @@ Line 32 col 13 ParenthesizedArrowFunctionExpression "() => {
 
 			inner();
 
-		}" = () => void
-Line 33 col 16 IdentifierName "x" = string
-Line 33 col 20 MemberAccessExpression "this.value" = string
-Line 33 col 20 ThisKeyword "this" = X
-Line 33 col 25 IdentifierName "value" = string
-Line 34 col 16 IdentifierName "inner" = () => void
-Line 34 col 24 ParenthesizedArrowFunctionExpression "() => {
+		} : () => void
+
+            var x = this.value;
+>x : string
+>this.value : string
+>this : X
+>value : string
+
+            var inner = () => {
+>inner : () => void
+>() => {
                 var y = this.value;
-			}" = () => void
-Line 35 col 20 IdentifierName "y" = string
-Line 35 col 24 MemberAccessExpression "this.value" = string
-Line 35 col 24 ThisKeyword "this" = X
-Line 35 col 29 IdentifierName "value" = string
-Line 37 col 0 InvocationExpression "inner()" = void
-Line 37 col 0 IdentifierName "inner" = () => void
-Line 41 col 0 InvocationExpression "outer()" = void
-Line 41 col 0 IdentifierName "outer" = () => void
+			} : () => void
+
+                var y = this.value;
+>y : string
+>this.value : string
+>this : X
+>value : string
+			}
+
+>inner() : void
+>inner : () => void
+
+			inner();
+
+		};
+		outer();
+>outer() : void
+>outer : () => void
+	}
+
+}
+

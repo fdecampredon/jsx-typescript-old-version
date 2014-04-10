@@ -1,3 +1,4 @@
+//// [classWithMultipleBaseClasses.js]
 var A = (function () {
     function A() {
     }

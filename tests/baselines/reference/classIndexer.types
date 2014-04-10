@@ -1,3 +1,10 @@
 === tests/cases/compiler/classIndexer.ts ===
-Line 0 col 6 IdentifierName "C123" = C123
-Line 1 col 5 IdentifierName "s" = string
+class C123 {
+>C123 : C123
+
+    [s: string]: number;
+>s : string
+
+    constructor() {
+    }
+}

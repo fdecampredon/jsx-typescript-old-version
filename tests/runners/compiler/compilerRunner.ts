@@ -215,21 +215,28 @@ class CompilerBaselineRunner extends RunnerBase {
 
                     // check js output
                     Harness.Baseline.runBaseline('Correct JS output for ' + fileName, justName.replace(/\.ts/, '.js'), () => {
-                        var code = '';
-                        for (var i = 0; i < result.files.length; i++) {
-                            if (result.files.length > 1 || result.declFilesCode.length > 0) {
-                                code += '//// [' + Harness.getFileName(result.files[i].fileName) + ']\r\n';
+                        var tsCode = '';
+                        if (result.errors.length === 0) {
+                            for (var i = 0; i < toBeCompiled.length; i++) {
+                                tsCode += '//// [' + Harness.getFileName(toBeCompiled[i].unitName) + ']\r\n';
+                                tsCode += toBeCompiled[i].content;
                             }
-                            code += result.files[i].code;
+                            tsCode += '\r\n\r\n';
+                        }
+
+                        var jsCode = '';
+                        for (var i = 0; i < result.files.length; i++) {
+                            jsCode += '//// [' + Harness.getFileName(result.files[i].fileName) + ']\r\n';
+                            jsCode += result.files[i].code;
                         }
 
                         if (result.declFilesCode.length > 0) {
-                            code += '\r\n\r\n';
+                            jsCode += '\r\n\r\n';
                             for (var i = 0; i < result.files.length; i++) {
-                                code += result.declFilesCode[i].code;
+                                jsCode += result.declFilesCode[i].code;
                             }
                         }
-                        return code;
+                        return tsCode + jsCode;
                     });
                 }
             }
@@ -252,15 +259,40 @@ class CompilerBaselineRunner extends RunnerBase {
                         compiler.getSemanticDiagnostics(file.unitName);
                     });
 
+                    var typeBaselineText = '';
                     var typeLines: string[] = [];
+                    var typeMap: { [fileName: string]: { [lineNum: number]: string[]; } } = {};
                     allFiles.forEach(file => {
-                        typeLines.push('=== ' + file.unitName + ' ===');
+                        var codeLines = file.content.split('\n');
                         var walker = new TypeWriterWalker(file.unitName, compiler);
                         walker.run();
-                        walker.results.forEach(line => typeLines.push(line));
-                    });
+                        walker.results.forEach(result => {                            var formattedLine = result.identifierName + " : " + result.type;
+                            if (!typeMap[file.unitName]) {
+                                typeMap[file.unitName] = {}
+                            }                                                        var typeInfo = [formattedLine];                            var existingTypeInfo = typeMap[file.unitName][result.line];                            if (existingTypeInfo) {                                typeInfo = existingTypeInfo.concat(typeInfo);                            }                            typeMap[file.unitName][result.line] = typeInfo;                        });                        typeLines.push('=== ' + file.unitName + ' ===\r\n');
+                        for (var i = 0; i < codeLines.length; i++) {
+                            var currentCodeLine = codeLines[i];
+                            var lastLine = typeLines[typeLines.length];
+                            typeLines.push(currentCodeLine + '\r\n');
+                            if (typeMap[file.unitName]) {
+                                var typeInfo = typeMap[file.unitName][i];
+                                if (typeInfo) {
+                                    var leadingSpaces = '';
+                                    typeInfo.forEach(ty => {
+                                        typeLines.push('>' + ty + '\r\n');
+                                    });
+                                    if (i + 1 < codeLines.length && (codeLines[i + 1].match(/^\s*[{|}]\s*$/) || codeLines[i + 1].trim() === '')) {
+                                    } else {
+                                        typeLines.push('\r\n');
+                                    }
+                                }
+                            } else {
+                                typeLines.push('No type information for this code.');
+                            } 
+                        }
+                    });                   
 
-                    return typeLines.join('\r\n');
+                    return typeLines.join('');
                 });
             }
 

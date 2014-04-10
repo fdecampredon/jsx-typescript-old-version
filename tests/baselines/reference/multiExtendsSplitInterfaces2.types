@@ -1,29 +1,59 @@
 === tests/cases/compiler/multiExtendsSplitInterfaces2.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "a" = number
-Line 4 col 10 IdentifierName "I" = I
-Line 4 col 20 IdentifierName "A" = A
-Line 5 col 0 IdentifierName "i1" = number
-Line 8 col 10 IdentifierName "B" = B
-Line 9 col 0 IdentifierName "b" = number
-Line 12 col 10 IdentifierName "I" = I
-Line 12 col 20 IdentifierName "B" = B
-Line 13 col 0 IdentifierName "i2" = number
-Line 16 col 4 IdentifierName "i" = I
-Line 16 col 7 IdentifierName "I" = I
-Line 18 col 4 IdentifierName "a" = number
-Line 18 col 8 MemberAccessExpression "i.a" = number
-Line 18 col 8 IdentifierName "i" = I
-Line 18 col 10 IdentifierName "a" = number
-Line 19 col 4 IdentifierName "i1" = number
-Line 19 col 9 MemberAccessExpression "i.i1" = number
-Line 19 col 9 IdentifierName "i" = I
-Line 19 col 11 IdentifierName "i1" = number
-Line 20 col 4 IdentifierName "b" = number
-Line 20 col 8 MemberAccessExpression "i.b" = number
-Line 20 col 8 IdentifierName "i" = I
-Line 20 col 10 IdentifierName "b" = number
-Line 21 col 4 IdentifierName "i2" = number
-Line 21 col 9 MemberAccessExpression "i.i2" = number
-Line 21 col 9 IdentifierName "i" = I
-Line 21 col 11 IdentifierName "i2" = number
+interface A {
+>A : A
+
+	a: number;
+>a : number
+}
+
+interface I extends A {
+>I : I
+>A : A
+
+	i1: number;
+>i1 : number
+}
+
+interface B {
+>B : B
+
+	b: number;
+>b : number
+}
+
+interface I extends B {
+>I : I
+>B : B
+
+	i2: number;
+>i2 : number
+}
+
+var i: I;
+>i : I
+>I : I
+
+var a = i.a;
+>a : number
+>i.a : number
+>i : I
+>a : number
+
+var i1 = i.i1;
+>i1 : number
+>i.i1 : number
+>i : I
+>i1 : number
+
+var b = i.b;
+>b : number
+>i.b : number
+>i : I
+>b : number
+
+var i2 = i.i2;
+>i2 : number
+>i.i2 : number
+>i : I
+>i2 : number
+

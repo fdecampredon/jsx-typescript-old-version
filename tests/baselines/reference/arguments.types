@@ -1,5 +1,9 @@
 === tests/cases/compiler/arguments.ts ===
-Line 0 col 9 IdentifierName "f" = typeof f
-Line 1 col 8 IdentifierName "x" = any
-Line 1 col 10 ElementAccessExpression "arguments[12]" = any
-Line 1 col 10 IdentifierName "arguments" = IArguments
+function f() {
+>f : typeof f
+
+    var x=arguments[12];
+>x : any
+>arguments[12] : any
+>arguments : IArguments
+}

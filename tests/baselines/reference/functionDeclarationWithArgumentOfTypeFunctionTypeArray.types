@@ -1,7 +1,12 @@
 === tests/cases/compiler/functionDeclarationWithArgumentOfTypeFunctionTypeArray.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 0 col 13 IdentifierName "args" = { (x: any): number; }[]
-Line 0 col 22 IdentifierName "x" = any
-Line 1 col 11 MemberAccessExpression "args.length" = number
-Line 1 col 11 IdentifierName "args" = { (x: any): number; }[]
-Line 1 col 16 IdentifierName "length" = number
+function foo(args: { (x): number }[]) {
+>foo : typeof foo
+>args : { (x: any): number; }[]
+>x : any
+
+    return args.length;
+>args.length : number
+>args : { (x: any): number; }[]
+>length : number
+}
+

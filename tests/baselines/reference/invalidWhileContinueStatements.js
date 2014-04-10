@@ -1,3 +1,4 @@
+//// [invalidWhileContinueStatements.js]
 continue;
 
 ONE:

@@ -1,3 +1,9 @@
 === tests/cases/compiler/commentOnAmbientVariable1.ts ===
-Line 1 col 12 IdentifierName "v" = number
-Line 4 col 12 IdentifierName "y" = number
+/*! Keep this pinned comment */
+declare var v: number;
+>v : number
+
+// Don't keep this comment.
+declare var y: number;
+>y : number
+

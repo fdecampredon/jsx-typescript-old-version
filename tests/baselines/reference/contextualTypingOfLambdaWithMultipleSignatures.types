@@ -1,14 +1,25 @@
 === tests/cases/compiler/contextualTypingOfLambdaWithMultipleSignatures.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo
-Line 1 col 0 IdentifierName "getFoo" = { (n: number): void; (s: string): void; }
-Line 1 col 11 IdentifierName "n" = number
-Line 2 col 0 IdentifierName "getFoo" = { (n: number): void; (s: string): void; }
-Line 2 col 11 IdentifierName "s" = string
-Line 5 col 4 IdentifierName "foo" = Foo
-Line 5 col 9 IdentifierName "Foo" = Foo
-Line 6 col 0 AssignmentExpression "foo.getFoo = bar => { }" = (bar: any) => void
-Line 6 col 0 MemberAccessExpression "foo.getFoo" = { (n: number): void; (s: string): void; }
-Line 6 col 0 IdentifierName "foo" = Foo
-Line 6 col 4 IdentifierName "getFoo" = { (n: number): void; (s: string): void; }
-Line 6 col 13 SimpleArrowFunctionExpression "bar => { }" = (bar: any) => void
-Line 6 col 13 IdentifierName "bar" = any
+interface Foo {
+>Foo : Foo
+
+    getFoo(n: number): void;
+>getFoo : { (n: number): void; (s: string): void; }
+>n : number
+
+    getFoo(s: string): void;
+>getFoo : { (n: number): void; (s: string): void; }
+>s : string
+}
+
+var foo: Foo;
+>foo : Foo
+>Foo : Foo
+
+foo.getFoo = bar => { };
+>foo.getFoo = bar => { } : (bar: any) => void
+>foo.getFoo : { (n: number): void; (s: string): void; }
+>foo : Foo
+>getFoo : { (n: number): void; (s: string): void; }
+>bar => { } : (bar: any) => void
+>bar : any
+

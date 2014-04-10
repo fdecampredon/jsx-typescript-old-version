@@ -1,18 +1,36 @@
 === tests/cases/compiler/augmentedTypeBracketAccessIndexSignature.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo
-Line 0 col 16 IdentifierName "a" = any
-Line 1 col 10 IdentifierName "Bar" = Bar
-Line 1 col 16 IdentifierName "b" = any
-Line 3 col 10 IdentifierName "Object" = Object
-Line 4 col 5 IdentifierName "n" = number
-Line 4 col 17 IdentifierName "Foo" = Foo
-Line 7 col 10 IdentifierName "Function" = Function
-Line 8 col 5 IdentifierName "n" = number
-Line 8 col 17 IdentifierName "Bar" = Bar
-Line 11 col 4 IdentifierName "a" = Foo
-Line 11 col 8 ElementAccessExpression "{}[0]" = Foo
-Line 11 col 8 ObjectLiteralExpression "{}" = {}
-Line 12 col 4 IdentifierName "b" = Bar
-Line 12 col 8 ElementAccessExpression "(() => { })[0]" = Bar
-Line 12 col 8 ParenthesizedExpression "(() => { })" = () => void
-Line 12 col 9 ParenthesizedArrowFunctionExpression "() => { }" = () => void
+interface Foo { a }
+>Foo : Foo
+>a : any
+
+interface Bar { b }
+>Bar : Bar
+>b : any
+
+interface Object {
+>Object : Object
+
+    [n: number]: Foo;
+>n : number
+>Foo : Foo
+}
+
+interface Function {
+>Function : Function
+
+    [n: number]: Bar;
+>n : number
+>Bar : Bar
+}
+
+var a = {}[0]; // Should be Foo
+>a : Foo
+>{}[0] : Foo
+>{} : {}
+
+var b = (() => { })[0]; // Should be Bar
+>b : Bar
+>(() => { })[0] : Bar
+>(() => { }) : () => void
+>() => { } : () => void
+

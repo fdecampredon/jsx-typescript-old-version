@@ -1,19 +1,37 @@
 === tests/cases/compiler/importAliasWithDottedName.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 15 IdentifierName "x" = number
-Line 2 col 18 IdentifierName "N" = N
-Line 3 col 19 IdentifierName "y" = number
-Line 7 col 7 IdentifierName "A" = A
-Line 8 col 11 IdentifierName "N" = N
-Line 8 col 15 IdentifierName "M" = M
-Line 8 col 17 IdentifierName "N" = typeof M.N
-Line 9 col 8 IdentifierName "r" = number
-Line 9 col 12 MemberAccessExpression "N.y" = number
-Line 9 col 12 IdentifierName "N" = typeof M.N
-Line 9 col 14 IdentifierName "y" = number
-Line 10 col 8 IdentifierName "r2" = number
-Line 10 col 13 MemberAccessExpression "M.N.y" = number
-Line 10 col 13 MemberAccessExpression "M.N" = typeof M.N
-Line 10 col 13 IdentifierName "M" = typeof M
-Line 10 col 15 IdentifierName "N" = typeof M.N
-Line 10 col 17 IdentifierName "y" = number
+module M {
+>M : M
+
+    export var x = 1;
+>x : number
+
+    export module N {
+>N : N
+
+        export var y = 2;
+>y : number
+    }
+}
+
+module A {
+>A : A
+
+    import N = M.N;
+>N : N
+>M : M
+>N : typeof M.N
+
+    var r = N.y;
+>r : number
+>N.y : number
+>N : typeof M.N
+>y : number
+
+    var r2 = M.N.y;
+>r2 : number
+>M.N.y : number
+>M.N : typeof M.N
+>M : typeof M
+>N : typeof M.N
+>y : number
+}

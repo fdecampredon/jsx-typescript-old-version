@@ -1,17 +1,32 @@
 === tests/cases/compiler/enumMapBackIntoItself.ts ===
-Line 0 col 5 IdentifierName "TShirtSize" = TShirtSize
-Line 1 col 0 IdentifierName "Small" = TShirtSize
-Line 2 col 0 IdentifierName "Medium" = TShirtSize
-Line 3 col 0 IdentifierName "Large" = TShirtSize
-Line 5 col 4 IdentifierName "mySize" = TShirtSize
-Line 5 col 13 MemberAccessExpression "TShirtSize.Large" = TShirtSize
-Line 5 col 13 IdentifierName "TShirtSize" = typeof TShirtSize
-Line 5 col 24 IdentifierName "Large" = TShirtSize
-Line 6 col 4 IdentifierName "test" = string
-Line 6 col 11 ElementAccessExpression "TShirtSize[mySize]" = string
-Line 6 col 11 IdentifierName "TShirtSize" = typeof TShirtSize
-Line 6 col 22 IdentifierName "mySize" = TShirtSize
-Line 7 col 0 AddExpression "// specifically checking output here, bug was that test used to be undefined at runtime
-test + ''" = string
-Line 7 col 0 IdentifierName "// specifically checking output here, bug was that test used to be undefined at runtime
-test" = string
+enum TShirtSize {
+>TShirtSize : TShirtSize
+
+   Small,
+>Small : TShirtSize
+
+   Medium,
+>Medium : TShirtSize
+
+   Large
+>Large : TShirtSize
+}
+var mySize = TShirtSize.Large;
+>mySize : TShirtSize
+>TShirtSize.Large : TShirtSize
+>TShirtSize : typeof TShirtSize
+>Large : TShirtSize
+
+var test = TShirtSize[mySize];
+>test : string
+>TShirtSize[mySize] : string
+>TShirtSize : typeof TShirtSize
+>mySize : TShirtSize
+
+// specifically checking output here, bug was that test used to be undefined at runtime
+>// specifically checking output here, bug was that test used to be undefined at runtime
+test + '' : string
+>// specifically checking output here, bug was that test used to be undefined at runtime
+test : string
+
+test + ''

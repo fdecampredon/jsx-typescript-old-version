@@ -1,3 +1,4 @@
+//// [invalidInstantiatedModule.js]
 var M;
 (function (M) {
     var Point = (function () {

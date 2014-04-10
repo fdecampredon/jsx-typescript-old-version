@@ -1,13 +1,18 @@
 === tests/cases/compiler/noImplicitAnyInContextuallyTypesFunctionParamter.ts ===
-Line 1 col 4 IdentifierName "regexMatchList" = string[]
-Line 1 col 21 ArrayLiteralExpression "['', '']" = string[]
-Line 2 col 0 InvocationExpression "regexMatchList.forEach(match => ''.replace(match, ''))" = void
-Line 2 col 0 MemberAccessExpression "regexMatchList.forEach" = (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
-Line 2 col 0 IdentifierName "regexMatchList" = string[]
-Line 2 col 15 IdentifierName "forEach" = (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
-Line 2 col 23 SimpleArrowFunctionExpression "match => ''.replace(match, '')" = (match: string) => string
-Line 2 col 23 IdentifierName "match" = string
-Line 2 col 32 InvocationExpression "''.replace(match, '')" = string
-Line 2 col 32 MemberAccessExpression "''.replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
-Line 2 col 35 IdentifierName "replace" = { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
-Line 2 col 43 IdentifierName "match" = string
+
+var regexMatchList = ['', ''];
+>regexMatchList : string[]
+>['', ''] : string[]
+
+regexMatchList.forEach(match => ''.replace(match, ''));
+>regexMatchList.forEach(match => ''.replace(match, '')) : void
+>regexMatchList.forEach : (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
+>regexMatchList : string[]
+>forEach : (callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void
+>match => ''.replace(match, '') : (match: string) => string
+>match : string
+>''.replace(match, '') : string
+>''.replace : { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
+>replace : { (searchValue: string, replaceValue: string): string; (searchValue: string, replaceValue: (substring: string, ...args: any[]) => string): string; (searchValue: RegExp, replaceValue: string): string; (searchValue: RegExp, replaceValue: (substring: string, ...args: any[]) => string): string; }
+>match : string
+

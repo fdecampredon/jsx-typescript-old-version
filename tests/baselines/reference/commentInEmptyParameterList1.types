@@ -1,2 +1,4 @@
 === tests/cases/compiler/commentInEmptyParameterList1.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
+function foo(/** nothing */) {
+>foo : typeof foo
+}

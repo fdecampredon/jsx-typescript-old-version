@@ -1,5 +1,11 @@
 === tests/cases/compiler/nestedIndexer.ts ===
-Line 0 col 9 IdentifierName "then" = typeof then
-Line 0 col 14 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "match" = { [index: number]: string; }
-Line 2 col 14 IdentifierName "index" = number
+function then(x) {
+>then : typeof then
+>x : any
+
+var match: { [index: number]: string; }
+>match : { [index: number]: string; }
+>index : number
+
+}
+

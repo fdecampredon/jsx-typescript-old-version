@@ -1,27 +1,48 @@
 === tests/cases/compiler/genericClasses3.ts ===
-Line 0 col 6 IdentifierName "B" = B<T>
-Line 0 col 8 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "a" = T
-Line 1 col 7 IdentifierName "T" = T
-Line 2 col 0 IdentifierName "b" = T
-Line 2 col 7 IdentifierName "T" = T
-Line 5 col 6 IdentifierName "C" = C<T>
-Line 5 col 8 IdentifierName "T" = T
-Line 5 col 19 IdentifierName "B" = B<T>
-Line 5 col 21 IdentifierName "T" = T
-Line 6 col 11 IdentifierName "x" = T
-Line 6 col 14 IdentifierName "T" = T
-Line 9 col 4 IdentifierName "v2" = C<string>
-Line 9 col 8 IdentifierName "C" = C<T>
-Line 11 col 4 IdentifierName "y" = string
-Line 11 col 8 MemberAccessExpression "v2.x" = string
-Line 11 col 8 IdentifierName "v2" = C<string>
-Line 11 col 11 IdentifierName "x" = string
-Line 12 col 4 IdentifierName "u" = string
-Line 12 col 8 MemberAccessExpression "v2.a" = string
-Line 12 col 8 IdentifierName "v2" = C<string>
-Line 12 col 11 IdentifierName "a" = string
-Line 14 col 4 IdentifierName "z" = string
-Line 14 col 8 MemberAccessExpression "v2.b" = string
-Line 14 col 8 IdentifierName "v2" = C<string>
-Line 14 col 11 IdentifierName "b" = string
+class B<T> {
+>B : B<T>
+>T : T
+
+    a: T;
+>a : T
+>T : T
+
+    b: T;
+>b : T
+>T : T
+}
+
+class C<T> extends B<T> {
+>C : C<T>
+>T : T
+>B : B<T>
+>T : T
+
+    public x: T;
+>x : T
+>T : T
+}
+
+var v2: C <string>;
+>v2 : C<string>
+>C : C<T>
+
+var y = v2.x; // should be 'string'
+>y : string
+>v2.x : string
+>v2 : C<string>
+>x : string
+
+var u = v2.a; // should be 'string'
+>u : string
+>v2.a : string
+>v2 : C<string>
+>a : string
+
+var z = v2.b;
+>z : string
+>v2.b : string
+>v2 : C<string>
+>b : string
+
+

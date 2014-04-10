@@ -1,3 +1,4 @@
+//// [thisInModule.js]
 var myMod;
 (function (myMod) {
     var x;

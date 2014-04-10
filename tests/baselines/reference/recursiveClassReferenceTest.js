@@ -1,3 +1,4 @@
+//// [recursiveClassReferenceTest.js]
 // Scenario 1: Test reqursive function call with "this" parameter
 // Scenario 2: Test recursive function call with cast and "this" parameter
 var __extends = this.__extends || function (d, b) {

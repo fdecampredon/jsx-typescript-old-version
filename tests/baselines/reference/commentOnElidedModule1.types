@@ -1,3 +1,10 @@
 === tests/cases/compiler/commentOnElidedModule1.ts ===
-Line 1 col 7 IdentifierName "ElidedModule" = ElidedModule
-Line 5 col 7 IdentifierName "ElidedModule2" = ElidedModule2
+/*! Keep this pinned comment */
+module ElidedModule {
+>ElidedModule : ElidedModule
+}
+
+// Don't keep this comment.
+module ElidedModule2 {
+>ElidedModule2 : ElidedModule2
+}

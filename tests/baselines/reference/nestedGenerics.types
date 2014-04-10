@@ -1,8 +1,15 @@
 === tests/cases/compiler/nestedGenerics.ts ===
-Line 0 col 10 IdentifierName "Foo" = Foo<T>
-Line 0 col 14 IdentifierName "T" = T
-Line 1 col 0 IdentifierName "t" = T
-Line 1 col 4 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "f" = Foo<Foo<number>>
-Line 4 col 7 IdentifierName "Foo" = Foo<T>
-Line 4 col 11 IdentifierName "Foo" = Foo<T>
+interface Foo<T> {
+>Foo : Foo<T>
+>T : T
+
+	t: T;
+>t : T
+>T : T
+}
+
+var f: Foo<Foo<number>>;
+>f : Foo<Foo<number>>
+>Foo : Foo<T>
+>Foo : Foo<T>
+

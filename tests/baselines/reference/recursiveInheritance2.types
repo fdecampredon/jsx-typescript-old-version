@@ -1,25 +1,46 @@
 === tests/cases/compiler/recursiveInheritance2.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 0 col 18 IdentifierName "B" = B
-Line 1 col 12 IdentifierName "a" = A
-Line 1 col 15 IdentifierName "A" = A
-Line 2 col 4 IdentifierName "x" = B
-Line 2 col 8 InvocationExpression "a()" = B
-Line 2 col 8 IdentifierName "a" = A
-Line 4 col 10 IdentifierName "B" = B
-Line 4 col 18 IdentifierName "C" = C
-Line 5 col 12 IdentifierName "b" = B
-Line 5 col 15 IdentifierName "B" = B
-Line 6 col 4 IdentifierName "y" = C
-Line 6 col 8 InvocationExpression "b()" = C
-Line 6 col 8 IdentifierName "b" = B
-Line 8 col 10 IdentifierName "C" = C
-Line 8 col 18 IdentifierName "A" = A
-Line 9 col 12 IdentifierName "c" = C
-Line 9 col 15 IdentifierName "C" = C
-Line 10 col 4 IdentifierName "z" = A
-Line 10 col 8 InvocationExpression "c()" = A
-Line 10 col 8 IdentifierName "c" = C
-Line 11 col 0 AssignmentExpression "x = y" = C
-Line 11 col 0 IdentifierName "x" = B
-Line 12 col 4 IdentifierName "y" = C
+interface A { (): B; };
+>A : A
+>B : B
+
+declare var a: A;
+>a : A
+>A : A
+
+var x = a();
+>x : B
+>a() : B
+>a : A
+
+interface B { (): C; };
+>B : B
+>C : C
+
+declare var b: B;
+>b : B
+>B : B
+
+var y = b();
+>y : C
+>b() : C
+>b : B
+
+interface C { (): A; };
+>C : C
+>A : A
+
+declare var c: C;
+>c : C
+>C : C
+
+var z = c();
+>z : A
+>c() : A
+>c : C
+
+>x = y : C
+>x : B
+
+x = y;
+>y : C
+

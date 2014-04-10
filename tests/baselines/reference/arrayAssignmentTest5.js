@@ -1,3 +1,4 @@
+//// [arrayAssignmentTest5.js]
 var Test;
 (function (Test) {
     var Bug = (function () {

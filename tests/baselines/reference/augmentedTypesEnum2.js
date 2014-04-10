@@ -1,3 +1,4 @@
+//// [augmentedTypesEnum2.js]
 // enum then interface
 var e1;
 (function (e1) {

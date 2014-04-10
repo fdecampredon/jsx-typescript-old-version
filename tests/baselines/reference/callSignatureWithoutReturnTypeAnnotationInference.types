@@ -1,123 +1,276 @@
 === tests/cases/compiler/callSignatureWithoutReturnTypeAnnotationInference.ts ===
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 3 col 13 IdentifierName "x" = any
-Line 6 col 4 IdentifierName "r" = number
-Line 6 col 8 InvocationExpression "foo(1)" = number
-Line 6 col 8 IdentifierName "foo" = typeof foo
-Line 8 col 9 IdentifierName "foo2" = typeof foo2
-Line 8 col 14 IdentifierName "x" = any
-Line 9 col 11 InvocationExpression "foo(x)" = number
-Line 9 col 11 IdentifierName "foo" = typeof foo
-Line 9 col 15 IdentifierName "x" = any
-Line 11 col 4 IdentifierName "r2" = number
-Line 11 col 9 InvocationExpression "foo2(1)" = number
-Line 11 col 9 IdentifierName "foo2" = typeof foo2
-Line 13 col 9 IdentifierName "foo3" = typeof foo3
-Line 14 col 11 InvocationExpression "foo3()" = any
-Line 14 col 11 IdentifierName "foo3" = typeof foo3
-Line 16 col 4 IdentifierName "r3" = any
-Line 16 col 9 InvocationExpression "foo3()" = any
-Line 16 col 9 IdentifierName "foo3" = typeof foo3
-Line 18 col 9 IdentifierName "foo4" = typeof foo4
-Line 18 col 14 IdentifierName "T" = T
-Line 18 col 17 IdentifierName "x" = T
-Line 18 col 20 IdentifierName "T" = T
-Line 19 col 11 IdentifierName "x" = T
-Line 21 col 4 IdentifierName "r4" = number
-Line 21 col 9 InvocationExpression "foo4(1)" = number
-Line 21 col 9 IdentifierName "foo4" = typeof foo4
-Line 23 col 9 IdentifierName "foo5" = typeof foo5
-Line 23 col 14 IdentifierName "x" = any
-Line 30 col 4 IdentifierName "r5" = number
-Line 30 col 9 InvocationExpression "foo5(1)" = number
-Line 30 col 9 IdentifierName "foo5" = typeof foo5
-Line 32 col 9 IdentifierName "foo6" = typeof foo6
-Line 32 col 14 IdentifierName "x" = any
-Line 35 col 11 IdentifierName "e" = any
-Line 36 col 15 ArrayLiteralExpression "[]" = any[]
-Line 39 col 15 ArrayLiteralExpression "[]" = any[]
-Line 42 col 4 IdentifierName "r6" = any[]
-Line 42 col 9 InvocationExpression "foo6(1)" = any[]
-Line 42 col 9 IdentifierName "foo6" = typeof foo6
-Line 44 col 9 IdentifierName "foo7" = typeof foo7
-Line 44 col 14 IdentifierName "x" = any
-Line 45 col 11 TypeOfExpression "typeof x" = string
-Line 45 col 18 IdentifierName "x" = any
-Line 47 col 4 IdentifierName "r7" = string
-Line 47 col 9 InvocationExpression "foo7(1)" = string
-Line 47 col 9 IdentifierName "foo7" = typeof foo7
-Line 50 col 9 IdentifierName "foo8" = typeof foo8
-Line 50 col 14 IdentifierName "x" = number
-Line 51 col 11 ObjectLiteralExpression "{ x: x }" = { x: number; }
-Line 51 col 13 IdentifierName "x" = number
-Line 51 col 16 IdentifierName "x" = number
-Line 53 col 4 IdentifierName "r8" = { x: number; }
-Line 53 col 9 InvocationExpression "foo8(1)" = { x: number; }
-Line 53 col 9 IdentifierName "foo8" = typeof foo8
-Line 55 col 10 IdentifierName "I" = I
-Line 56 col 0 IdentifierName "foo" = string
-Line 58 col 9 IdentifierName "foo9" = typeof foo9
-Line 58 col 14 IdentifierName "x" = number
-Line 59 col 8 IdentifierName "i" = I
-Line 59 col 11 IdentifierName "I" = I
-Line 60 col 11 IdentifierName "i" = I
-Line 62 col 4 IdentifierName "r9" = I
-Line 62 col 9 InvocationExpression "foo9(1)" = I
-Line 62 col 9 IdentifierName "foo9" = typeof foo9
-Line 64 col 6 IdentifierName "C" = C
-Line 65 col 0 IdentifierName "foo" = string
-Line 67 col 9 IdentifierName "foo10" = typeof foo10
-Line 67 col 15 IdentifierName "x" = number
-Line 68 col 8 IdentifierName "c" = C
-Line 68 col 11 IdentifierName "C" = C
-Line 69 col 11 IdentifierName "c" = C
-Line 71 col 4 IdentifierName "r10" = C
-Line 71 col 10 InvocationExpression "foo10(1)" = C
-Line 71 col 10 IdentifierName "foo10" = typeof foo10
-Line 73 col 7 IdentifierName "M" = M
-Line 74 col 15 IdentifierName "x" = number
-Line 75 col 17 IdentifierName "C" = C
-Line 75 col 21 IdentifierName "foo" = string
-Line 77 col 9 IdentifierName "foo11" = typeof foo11
-Line 78 col 11 IdentifierName "M" = typeof M
-Line 80 col 4 IdentifierName "r11" = typeof M
-Line 80 col 10 InvocationExpression "foo11()" = typeof M
-Line 80 col 10 IdentifierName "foo11" = typeof foo11
-Line 83 col 10 IdentifierName "I2" = I2
-Line 84 col 0 IdentifierName "x" = number
-Line 86 col 10 IdentifierName "I2" = I2
-Line 87 col 0 IdentifierName "y" = number
-Line 89 col 9 IdentifierName "foo12" = typeof foo12
-Line 90 col 8 IdentifierName "i2" = I2
-Line 90 col 12 IdentifierName "I2" = I2
-Line 91 col 11 IdentifierName "i2" = I2
-Line 93 col 4 IdentifierName "r12" = I2
-Line 93 col 10 InvocationExpression "foo12()" = I2
-Line 93 col 10 IdentifierName "foo12" = typeof foo12
-Line 95 col 9 IdentifierName "m1" = typeof m1
-Line 96 col 7 IdentifierName "m1" = m1
-Line 96 col 23 IdentifierName "y" = number
-Line 97 col 9 IdentifierName "foo13" = typeof foo13
-Line 98 col 11 IdentifierName "m1" = typeof m1
-Line 100 col 4 IdentifierName "r13" = typeof m1
-Line 100 col 10 InvocationExpression "foo13()" = typeof m1
-Line 100 col 10 IdentifierName "foo13" = typeof foo13
-Line 102 col 6 IdentifierName "c1" = c1
-Line 103 col 0 IdentifierName "foo" = string
-Line 104 col 16 IdentifierName "x" = any
-Line 106 col 7 IdentifierName "c1" = c1
-Line 107 col 15 IdentifierName "x" = number
-Line 109 col 9 IdentifierName "foo14" = typeof foo14
-Line 110 col 11 IdentifierName "c1" = typeof c1
-Line 112 col 4 IdentifierName "r14" = typeof c1
-Line 112 col 10 InvocationExpression "foo14()" = typeof c1
-Line 112 col 10 IdentifierName "foo14" = typeof foo14
-Line 114 col 5 IdentifierName "e1" = e1
-Line 114 col 10 IdentifierName "A" = e1
-Line 115 col 7 IdentifierName "e1" = e1
-Line 115 col 23 IdentifierName "y" = number
-Line 116 col 9 IdentifierName "foo15" = typeof foo15
-Line 117 col 11 IdentifierName "e1" = typeof e1
-Line 119 col 4 IdentifierName "r15" = typeof e1
-Line 119 col 10 InvocationExpression "foo15()" = typeof e1
-Line 119 col 10 IdentifierName "foo15" = typeof foo15
+// Call signatures without a return type should infer one from the function body (if present)
+
+// Simple types
+function foo(x) {
+>foo : typeof foo
+>x : any
+
+    return 1;
+}
+var r = foo(1);
+>r : number
+>foo(1) : number
+>foo : typeof foo
+
+function foo2(x) {
+>foo2 : typeof foo2
+>x : any
+
+    return foo(x);
+>foo(x) : number
+>foo : typeof foo
+>x : any
+}
+var r2 = foo2(1);
+>r2 : number
+>foo2(1) : number
+>foo2 : typeof foo2
+
+function foo3() {
+>foo3 : typeof foo3
+
+    return foo3();
+>foo3() : any
+>foo3 : typeof foo3
+}
+var r3 = foo3();
+>r3 : any
+>foo3() : any
+>foo3 : typeof foo3
+
+function foo4<T>(x: T) {
+>foo4 : typeof foo4
+>T : T
+>x : T
+>T : T
+
+    return x;
+>x : T
+}
+var r4 = foo4(1);
+>r4 : number
+>foo4(1) : number
+>foo4 : typeof foo4
+
+function foo5(x) {
+>foo5 : typeof foo5
+>x : any
+
+    if (true) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
+var r5 = foo5(1);
+>r5 : number
+>foo5(1) : number
+>foo5 : typeof foo5
+
+function foo6(x) {
+>foo6 : typeof foo6
+>x : any
+
+    try {
+    }
+    catch (e) {
+>e : any
+
+        return [];
+>[] : any[]
+    }
+    finally {
+        return [];
+>[] : any[]
+    }
+}
+var r6 = foo6(1);
+>r6 : any[]
+>foo6(1) : any[]
+>foo6 : typeof foo6
+
+function foo7(x) {
+>foo7 : typeof foo7
+>x : any
+
+    return typeof x;
+>typeof x : string
+>x : any
+}
+var r7 = foo7(1);
+>r7 : string
+>foo7(1) : string
+>foo7 : typeof foo7
+
+// object types
+function foo8(x: number) {
+>foo8 : typeof foo8
+>x : number
+
+    return { x: x };
+>{ x: x } : { x: number; }
+>x : number
+>x : number
+}
+var r8 = foo8(1);
+>r8 : { x: number; }
+>foo8(1) : { x: number; }
+>foo8 : typeof foo8
+
+interface I {
+>I : I
+
+    foo: string;
+>foo : string
+}
+function foo9(x: number) {
+>foo9 : typeof foo9
+>x : number
+
+    var i: I;
+>i : I
+>I : I
+
+    return i;    
+>i : I
+}
+var r9 = foo9(1);
+>r9 : I
+>foo9(1) : I
+>foo9 : typeof foo9
+
+class C {
+>C : C
+
+    foo: string;
+>foo : string
+}
+function foo10(x: number) {
+>foo10 : typeof foo10
+>x : number
+
+    var c: C;
+>c : C
+>C : C
+
+    return c;
+>c : C
+}
+var r10 = foo10(1);
+>r10 : C
+>foo10(1) : C
+>foo10 : typeof foo10
+
+module M {
+>M : M
+
+    export var x = 1;
+>x : number
+
+    export class C { foo: string }
+>C : C
+>foo : string
+}
+function foo11() {
+>foo11 : typeof foo11
+
+    return M;
+>M : typeof M
+}
+var r11 = foo11();
+>r11 : typeof M
+>foo11() : typeof M
+>foo11 : typeof foo11
+
+// merged declarations
+interface I2 {
+>I2 : I2
+
+    x: number;
+>x : number
+}
+interface I2 {
+>I2 : I2
+
+    y: number;
+>y : number
+}
+function foo12() {
+>foo12 : typeof foo12
+
+    var i2: I2;
+>i2 : I2
+>I2 : I2
+
+    return i2;
+>i2 : I2
+}
+var r12 = foo12();
+>r12 : I2
+>foo12() : I2
+>foo12 : typeof foo12
+
+function m1() { return 1; }
+>m1 : typeof m1
+
+module m1 { export var y = 2; }
+>m1 : m1
+>y : number
+
+function foo13() {
+>foo13 : typeof foo13
+
+    return m1;
+>m1 : typeof m1
+}
+var r13 = foo13();
+>r13 : typeof m1
+>foo13() : typeof m1
+>foo13 : typeof foo13
+
+class c1 {
+>c1 : c1
+
+    foo: string;
+>foo : string
+
+    constructor(x) { }
+>x : any
+}
+module c1 {
+>c1 : c1
+
+    export var x = 1;
+>x : number
+}
+function foo14() {
+>foo14 : typeof foo14
+
+    return c1;
+>c1 : typeof c1
+}
+var r14 = foo14();
+>r14 : typeof c1
+>foo14() : typeof c1
+>foo14 : typeof foo14
+
+enum e1 { A }
+>e1 : e1
+>A : e1
+
+module e1 { export var y = 1; }
+>e1 : e1
+>y : number
+
+function foo15() {
+>foo15 : typeof foo15
+
+    return e1;
+>e1 : typeof e1
+}
+var r15 = foo15();
+>r15 : typeof e1
+>foo15() : typeof e1
+>foo15 : typeof foo15
+

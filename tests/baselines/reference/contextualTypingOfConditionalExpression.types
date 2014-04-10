@@ -1,38 +1,55 @@
 === tests/cases/compiler/contextualTypingOfConditionalExpression.ts ===
-Line 0 col 4 IdentifierName "x" = (a: number) => void
-Line 0 col 8 IdentifierName "a" = number
-Line 0 col 29 ConditionalExpression "true ? (a) => a.toExponential() : (b) => b.toFixed()" = (a: number) => void
-Line 0 col 36 ParenthesizedArrowFunctionExpression "(a) => a.toExponential()" = (a: number) => string
-Line 0 col 37 IdentifierName "a" = number
-Line 0 col 43 InvocationExpression "a.toExponential()" = string
-Line 0 col 43 MemberAccessExpression "a.toExponential" = (fractionDigits?: number) => string
-Line 0 col 43 IdentifierName "a" = number
-Line 0 col 45 IdentifierName "toExponential" = (fractionDigits?: number) => string
-Line 0 col 63 ParenthesizedArrowFunctionExpression "(b) => b.toFixed()" = (b: number) => string
-Line 0 col 64 IdentifierName "b" = number
-Line 0 col 70 InvocationExpression "b.toFixed()" = string
-Line 0 col 70 MemberAccessExpression "b.toFixed" = (fractionDigits?: number) => string
-Line 0 col 70 IdentifierName "b" = number
-Line 0 col 72 IdentifierName "toFixed" = (fractionDigits?: number) => string
-Line 2 col 6 IdentifierName "A" = A
-Line 3 col 0 IdentifierName "foo" = number
-Line 5 col 6 IdentifierName "B" = B
-Line 5 col 16 IdentifierName "A" = A
-Line 6 col 0 IdentifierName "bar" = number
-Line 8 col 6 IdentifierName "C" = C
-Line 8 col 16 IdentifierName "A" = A
-Line 9 col 0 IdentifierName "baz" = number
-Line 12 col 4 IdentifierName "x2" = (a: A) => void
-Line 12 col 9 IdentifierName "a" = A
-Line 12 col 12 IdentifierName "A" = A
-Line 12 col 25 ConditionalExpression "true ? (a) => a.foo : (b) => b.foo" = (a: A) => void
-Line 12 col 32 ParenthesizedArrowFunctionExpression "(a) => a.foo" = (a: A) => number
-Line 12 col 33 IdentifierName "a" = A
-Line 12 col 39 MemberAccessExpression "a.foo" = number
-Line 12 col 39 IdentifierName "a" = A
-Line 12 col 41 IdentifierName "foo" = number
-Line 12 col 47 ParenthesizedArrowFunctionExpression "(b) => b.foo" = (b: A) => number
-Line 12 col 48 IdentifierName "b" = A
-Line 12 col 54 MemberAccessExpression "b.foo" = number
-Line 12 col 54 IdentifierName "b" = A
-Line 12 col 56 IdentifierName "foo" = number
+var x: (a: number) => void = true ? (a) => a.toExponential() : (b) => b.toFixed();
+>x : (a: number) => void
+>a : number
+>true ? (a) => a.toExponential() : (b) => b.toFixed() : (a: number) => void
+>(a) => a.toExponential() : (a: number) => string
+>a : number
+>a.toExponential() : string
+>a.toExponential : (fractionDigits?: number) => string
+>a : number
+>toExponential : (fractionDigits?: number) => string
+>(b) => b.toFixed() : (b: number) => string
+>b : number
+>b.toFixed() : string
+>b.toFixed : (fractionDigits?: number) => string
+>b : number
+>toFixed : (fractionDigits?: number) => string
+
+class A {
+>A : A
+
+    foo: number;
+>foo : number
+}
+class B extends A {
+>B : B
+>A : A
+
+    bar: number;
+>bar : number
+}
+class C extends A {
+>C : C
+>A : A
+
+    baz: number;
+>baz : number
+}
+
+var x2: (a: A) => void = true ? (a) => a.foo : (b) => b.foo;
+>x2 : (a: A) => void
+>a : A
+>A : A
+>true ? (a) => a.foo : (b) => b.foo : (a: A) => void
+>(a) => a.foo : (a: A) => number
+>a : A
+>a.foo : number
+>a : A
+>foo : number
+>(b) => b.foo : (b: A) => number
+>b : A
+>b.foo : number
+>b : A
+>foo : number
+

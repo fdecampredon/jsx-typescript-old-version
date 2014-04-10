@@ -1,8 +1,16 @@
 === tests/cases/compiler/overloadOnGenericArity.ts ===
-Line 0 col 10 IdentifierName "Test" = Test
-Line 1 col 0 IdentifierName "then" = { <U>(p: string): string; (p: string): Date; }
-Line 1 col 9 IdentifierName "U" = U
-Line 1 col 12 IdentifierName "p" = string
-Line 2 col 0 IdentifierName "then" = { <U>(p: string): string; (p: string): Date; }
-Line 2 col 9 IdentifierName "p" = string
-Line 2 col 21 IdentifierName "Date" = Date
+interface Test {
+>Test : Test
+
+    then<U>(p: string): string;
+>then : { <U>(p: string): string; (p: string): Date; }
+>U : U
+>p : string
+
+    then(p: string): Date; // Error: Overloads cannot differ only by return type
+>then : { <U>(p: string): string; (p: string): Date; }
+>p : string
+>Date : Date
+}
+  
+

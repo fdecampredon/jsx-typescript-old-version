@@ -1,7 +1,16 @@
 === tests/cases/compiler/optionalParamInOverride.ts ===
-Line 0 col 6 IdentifierName "Z" = Z
-Line 1 col 11 IdentifierName "func" = () => void
-Line 3 col 6 IdentifierName "Y" = Y
-Line 3 col 16 IdentifierName "Z" = Z
-Line 4 col 11 IdentifierName "func" = (value?: any) => void
-Line 4 col 16 IdentifierName "value" = any
+class Z {
+>Z : Z
+
+    public func(): void { }
+>func : () => void
+}
+class Y extends Z {
+>Y : Y
+>Z : Z
+
+    public func(value?: any): void { }
+>func : (value?: any) => void
+>value : any
+}
+

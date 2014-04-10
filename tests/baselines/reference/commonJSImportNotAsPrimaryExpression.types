@@ -1,40 +1,82 @@
 === tests/cases/compiler/foo_1.ts ===
-Line 0 col 7 IdentifierName "foo" = foo
-Line 2 col 7 IdentifierName "f" = f
-Line 2 col 11 IdentifierName "foo" = foo
-Line 2 col 15 IdentifierName "M1" = any
-Line 3 col 4 IdentifierName "i" = foo.M1.I2
-Line 3 col 7 IdentifierName "f" = f
-Line 3 col 9 IdentifierName "I2" = foo.M1.I2
-Line 4 col 4 IdentifierName "x" = foo.C1
-Line 4 col 7 IdentifierName "foo" = foo
-Line 4 col 11 IdentifierName "C1" = foo.C1
-Line 4 col 16 CastExpression "<{m1: number}>{}" = { m1: number; }
-Line 4 col 18 IdentifierName "m1" = number
-Line 4 col 30 ObjectLiteralExpression "{}" = {}
-Line 5 col 4 IdentifierName "y" = boolean
-Line 5 col 14 IdentifierName "foo" = typeof foo
-Line 5 col 18 IdentifierName "C1" = typeof foo.C1
-Line 5 col 21 IdentifierName "s1" = boolean
-Line 6 col 4 IdentifierName "z" = foo.M1.I2
-Line 6 col 7 IdentifierName "foo" = foo
-Line 6 col 11 IdentifierName "M1" = foo.M1
-Line 6 col 14 IdentifierName "I2" = foo.M1.I2
-Line 7 col 4 IdentifierName "e" = number
-Line 7 col 16 CastExpression "<foo.E1>0" = foo.E1
-Line 7 col 17 IdentifierName "foo" = foo
-Line 7 col 21 IdentifierName "E1" = foo.E1
+import foo = require("./foo_0");
+>foo : foo
+
+// None of the below should cause a runtime dependency on foo_0
+import f = foo.M1;
+>f : f
+>foo : foo
+>M1 : any
+
+var i: f.I2;
+>i : foo.M1.I2
+>f : f
+>I2 : foo.M1.I2
+
+var x: foo.C1 = <{m1: number}>{};
+>x : foo.C1
+>foo : foo
+>C1 : foo.C1
+><{m1: number}>{} : { m1: number; }
+>m1 : number
+>{} : {}
+
+var y: typeof foo.C1.s1 = false;
+>y : boolean
+>foo : typeof foo
+>C1 : typeof foo.C1
+>s1 : boolean
+
+var z: foo.M1.I2;
+>z : foo.M1.I2
+>foo : foo
+>M1 : foo.M1
+>I2 : foo.M1.I2
+
+var e: number = <foo.E1>0;
+>e : number
+><foo.E1>0 : foo.E1
+>foo : foo
+>E1 : foo.E1
+
 === tests/cases/compiler/foo_0.ts ===
-Line 0 col 13 IdentifierName "C1" = C1
-Line 1 col 0 IdentifierName "m1" = number
-Line 2 col 8 IdentifierName "s1" = boolean
-Line 5 col 17 IdentifierName "I1" = I1
-Line 6 col 0 IdentifierName "name" = string
-Line 7 col 0 IdentifierName "age" = number
-Line 10 col 14 IdentifierName "M1" = M1
-Line 11 col 18 IdentifierName "I2" = I2
-Line 12 col 0 IdentifierName "foo" = string
-Line 16 col 12 IdentifierName "E1" = E1
-Line 17 col 0 IdentifierName "A" = E1
-Line 17 col 3 IdentifierName "B" = E1
-Line 17 col 5 IdentifierName "C" = E1
+export class C1 {
+>C1 : C1
+
+	m1 = 42;
+>m1 : number
+
+	static s1 = true;
+>s1 : boolean
+}
+
+export interface I1 {
+>I1 : I1
+
+	name: string;
+>name : string
+
+	age: number;
+>age : number
+}
+
+export module M1 {
+>M1 : M1
+
+	export interface I2 {
+>I2 : I2
+
+		foo: string;
+>foo : string
+	}
+}
+
+export enum E1 {
+>E1 : E1
+
+	A,B,C
+>A : E1
+>B : E1
+>C : E1
+}
+

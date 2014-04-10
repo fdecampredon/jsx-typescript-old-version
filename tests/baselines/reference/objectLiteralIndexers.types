@@ -1,32 +1,54 @@
 === tests/cases/compiler/objectLiteralIndexers.ts ===
-Line 0 col 10 IdentifierName "A" = A
-Line 1 col 0 IdentifierName "x" = number
-Line 4 col 10 IdentifierName "B" = B
-Line 4 col 20 IdentifierName "A" = A
-Line 5 col 0 IdentifierName "y" = string
-Line 8 col 4 IdentifierName "a" = A
-Line 8 col 7 IdentifierName "A" = A
-Line 9 col 4 IdentifierName "b" = B
-Line 9 col 7 IdentifierName "B" = B
-Line 10 col 4 IdentifierName "c" = any
-Line 12 col 4 IdentifierName "o1" = { [s: string]: A; [n: number]: B; }
-Line 12 col 11 IdentifierName "s" = string
-Line 12 col 23 IdentifierName "A" = A
-Line 12 col 26 IdentifierName "n" = number
-Line 12 col 38 IdentifierName "B" = B
-Line 12 col 45 ObjectLiteralExpression "{ x: a, 0: b }" = { x: A; 0: B; [s: string]: A; [n: number]: B; }
-Line 12 col 47 IdentifierName "x" = A
-Line 12 col 50 IdentifierName "a" = A
-Line 12 col 56 IdentifierName "b" = B
-Line 13 col 0 AssignmentExpression "o1 = { x: b, 0: c }" = { x: B; 0: any; [s: string]: any; [n: number]: any; }
-Line 13 col 0 IdentifierName "o1" = { [s: string]: A; [n: number]: B; }
-Line 13 col 5 ObjectLiteralExpression "{ x: b, 0: c }" = { x: B; 0: any; [s: string]: any; [n: number]: any; }
-Line 13 col 7 IdentifierName "x" = B
-Line 13 col 10 IdentifierName "b" = B
-Line 13 col 16 IdentifierName "c" = any
-Line 14 col 0 AssignmentExpression "o1 = { x: c, 0: b }" = { x: any; 0: B; [s: string]: any; [n: number]: B; }
-Line 14 col 0 IdentifierName "o1" = { [s: string]: A; [n: number]: B; }
-Line 14 col 5 ObjectLiteralExpression "{ x: c, 0: b }" = { x: any; 0: B; [s: string]: any; [n: number]: B; }
-Line 14 col 7 IdentifierName "x" = any
-Line 14 col 10 IdentifierName "c" = any
-Line 14 col 16 IdentifierName "b" = B
+interface A {
+>A : A
+
+    x: number;
+>x : number
+}
+
+interface B extends A {
+>B : B
+>A : A
+
+    y: string;
+>y : string
+}
+
+var a: A;
+>a : A
+>A : A
+
+var b: B;
+>b : B
+>B : B
+
+var c: any;
+>c : any
+
+var o1: { [s: string]: A;[n: number]: B; } = { x: a, 0: b }; // string indexer is A, number indexer is B
+>o1 : { [s: string]: A; [n: number]: B; }
+>s : string
+>A : A
+>n : number
+>B : B
+>{ x: a, 0: b } : { x: A; 0: B; [s: string]: A; [n: number]: B; }
+>x : A
+>a : A
+>b : B
+
+o1 = { x: b, 0: c }; // both indexers are any
+>o1 = { x: b, 0: c } : { x: B; 0: any; [s: string]: any; [n: number]: any; }
+>o1 : { [s: string]: A; [n: number]: B; }
+>{ x: b, 0: c } : { x: B; 0: any; [s: string]: any; [n: number]: any; }
+>x : B
+>b : B
+>c : any
+
+o1 = { x: c, 0: b }; // string indexer is any, number indexer is B
+>o1 = { x: c, 0: b } : { x: any; 0: B; [s: string]: any; [n: number]: B; }
+>o1 : { [s: string]: A; [n: number]: B; }
+>{ x: c, 0: b } : { x: any; 0: B; [s: string]: any; [n: number]: B; }
+>x : any
+>c : any
+>b : B
+

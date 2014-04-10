@@ -1,3 +1,4 @@
+//// [noImplicitAnyFunctionExpressionAssignment.js]
 var x = function (x) {
     return null;
 };

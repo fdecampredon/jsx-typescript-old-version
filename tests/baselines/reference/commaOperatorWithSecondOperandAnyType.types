@@ -1,107 +1,168 @@
 === tests/cases/compiler/commaOperatorWithSecondOperandAnyType.ts ===
-Line 0 col 4 IdentifierName "ANY" = any
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 2 col 4 IdentifierName "NUMBER" = number
-Line 3 col 4 IdentifierName "STRING" = string
-Line 4 col 4 IdentifierName "OBJECT" = Object
-Line 4 col 12 IdentifierName "Object" = Object
-Line 5 col 0 CommaExpression "//The second operand type is any
-ANY, ANY" = any
-Line 5 col 0 IdentifierName "//The second operand type is any
-ANY" = any
-Line 7 col 5 IdentifierName "ANY" = any
-Line 8 col 0 CommaExpression "BOOLEAN, ANY" = any
-Line 8 col 0 IdentifierName "BOOLEAN" = boolean
-Line 8 col 9 IdentifierName "ANY" = any
-Line 9 col 0 CommaExpression "NUMBER, ANY" = any
-Line 9 col 0 IdentifierName "NUMBER" = number
-Line 9 col 8 IdentifierName "ANY" = any
-Line 10 col 0 CommaExpression "STRING, ANY" = any
-Line 10 col 0 IdentifierName "STRING" = string
-Line 10 col 8 IdentifierName "ANY" = any
-Line 11 col 0 CommaExpression "OBJECT, ANY" = any
-Line 11 col 0 IdentifierName "OBJECT" = Object
-Line 11 col 8 IdentifierName "ANY" = any
-Line 14 col 4 IdentifierName "resultIsAny1" = any
-Line 14 col 19 ParenthesizedExpression "(ANY, ANY)" = any
-Line 14 col 20 CommaExpression "ANY, ANY" = any
-Line 14 col 20 IdentifierName "ANY" = any
-Line 14 col 25 IdentifierName "ANY" = any
-Line 15 col 4 IdentifierName "resultIsAny2" = any
-Line 15 col 19 ParenthesizedExpression "(BOOLEAN, ANY)" = any
-Line 15 col 20 CommaExpression "BOOLEAN, ANY" = any
-Line 15 col 20 IdentifierName "BOOLEAN" = boolean
-Line 15 col 29 IdentifierName "ANY" = any
-Line 16 col 4 IdentifierName "resultIsAny3" = any
-Line 16 col 19 ParenthesizedExpression "(NUMBER, ANY)" = any
-Line 16 col 20 CommaExpression "NUMBER, ANY" = any
-Line 16 col 20 IdentifierName "NUMBER" = number
-Line 16 col 28 IdentifierName "ANY" = any
-Line 17 col 4 IdentifierName "resultIsAny4" = any
-Line 17 col 19 ParenthesizedExpression "(STRING, ANY)" = any
-Line 17 col 20 CommaExpression "STRING, ANY" = any
-Line 17 col 20 IdentifierName "STRING" = string
-Line 17 col 28 IdentifierName "ANY" = any
-Line 18 col 4 IdentifierName "resultIsAny5" = any
-Line 18 col 19 ParenthesizedExpression "(OBJECT, ANY)" = any
-Line 18 col 20 CommaExpression "OBJECT, ANY" = any
-Line 18 col 20 IdentifierName "OBJECT" = Object
-Line 18 col 28 IdentifierName "ANY" = any
-Line 21 col 4 IdentifierName "x" = any
-Line 22 col 0 CommaExpression "1, ANY" = any
-Line 23 col 3 IdentifierName "ANY" = any
-Line 24 col 0 CommaExpression "++NUMBER, ANY" = any
-Line 24 col 0 PreIncrementExpression "++NUMBER" = number
-Line 24 col 2 IdentifierName "NUMBER" = number
-Line 24 col 10 IdentifierName "ANY" = any
-Line 25 col 0 CommaExpression ""string", [null, 1]" = number[]
-Line 25 col 10 ArrayLiteralExpression "[null, 1]" = number[]
-Line 26 col 0 CommaExpression ""string".charAt(0), [null, 1]" = number[]
-Line 26 col 0 InvocationExpression ""string".charAt(0)" = string
-Line 26 col 0 MemberAccessExpression ""string".charAt" = (pos: number) => string
-Line 26 col 9 IdentifierName "charAt" = (pos: number) => string
-Line 26 col 20 ArrayLiteralExpression "[null, 1]" = number[]
-Line 27 col 0 CommaExpression "true, x("any")" = any
-Line 27 col 6 InvocationExpression "x("any")" = any
-Line 27 col 6 IdentifierName "x" = any
-Line 28 col 0 CommaExpression "!BOOLEAN, x.doSomeThing()" = any
-Line 28 col 0 LogicalNotExpression "!BOOLEAN" = boolean
-Line 28 col 1 IdentifierName "BOOLEAN" = boolean
-Line 28 col 10 InvocationExpression "x.doSomeThing()" = any
-Line 28 col 10 MemberAccessExpression "x.doSomeThing" = any
-Line 28 col 10 IdentifierName "x" = any
-Line 28 col 12 IdentifierName "doSomeThing" = any
-Line 30 col 4 IdentifierName "resultIsAny6" = any
-Line 30 col 19 ParenthesizedExpression "(1, ANY)" = any
-Line 30 col 20 CommaExpression "1, ANY" = any
-Line 30 col 23 IdentifierName "ANY" = any
-Line 31 col 4 IdentifierName "resultIsAny7" = any
-Line 31 col 19 ParenthesizedExpression "(++NUMBER, ANY)" = any
-Line 31 col 20 CommaExpression "++NUMBER, ANY" = any
-Line 31 col 20 PreIncrementExpression "++NUMBER" = number
-Line 31 col 22 IdentifierName "NUMBER" = number
-Line 31 col 30 IdentifierName "ANY" = any
-Line 32 col 4 IdentifierName "resultIsAny8" = any
-Line 32 col 19 ParenthesizedExpression "("string", null)" = any
-Line 32 col 20 CommaExpression ""string", null" = any
-Line 33 col 4 IdentifierName "resultIsAny9" = any
-Line 33 col 19 ParenthesizedExpression "("string".charAt(0), undefined)" = any
-Line 33 col 20 CommaExpression ""string".charAt(0), undefined" = any
-Line 33 col 20 InvocationExpression ""string".charAt(0)" = string
-Line 33 col 20 MemberAccessExpression ""string".charAt" = (pos: number) => string
-Line 33 col 29 IdentifierName "charAt" = (pos: number) => string
-Line 33 col 40 IdentifierName "undefined" = any
-Line 34 col 4 IdentifierName "resultIsAny10" = any
-Line 34 col 20 ParenthesizedExpression "(true, x("any"))" = any
-Line 34 col 21 CommaExpression "true, x("any")" = any
-Line 34 col 27 InvocationExpression "x("any")" = any
-Line 34 col 27 IdentifierName "x" = any
-Line 35 col 4 IdentifierName "resultIsAny11" = any
-Line 35 col 20 ParenthesizedExpression "(!BOOLEAN, x.doSomeThing())" = any
-Line 35 col 21 CommaExpression "!BOOLEAN, x.doSomeThing()" = any
-Line 35 col 21 LogicalNotExpression "!BOOLEAN" = boolean
-Line 35 col 22 IdentifierName "BOOLEAN" = boolean
-Line 35 col 31 InvocationExpression "x.doSomeThing()" = any
-Line 35 col 31 MemberAccessExpression "x.doSomeThing" = any
-Line 35 col 31 IdentifierName "x" = any
-Line 35 col 33 IdentifierName "doSomeThing" = any
+var ANY: any;
+>ANY : any
+
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+var NUMBER: number;
+>NUMBER : number
+
+var STRING: string;
+>STRING : string
+
+var OBJECT: Object;
+>OBJECT : Object
+>Object : Object
+
+>//The second operand type is any
+ANY, ANY : any
+>//The second operand type is any
+ANY : any
+
+//The second operand type is any
+ANY, ANY;
+>ANY : any
+
+BOOLEAN, ANY;
+>BOOLEAN, ANY : any
+>BOOLEAN : boolean
+>ANY : any
+
+NUMBER, ANY;
+>NUMBER, ANY : any
+>NUMBER : number
+>ANY : any
+
+STRING, ANY;
+>STRING, ANY : any
+>STRING : string
+>ANY : any
+
+OBJECT, ANY;
+>OBJECT, ANY : any
+>OBJECT : Object
+>ANY : any
+
+//Return type is any
+var resultIsAny1 = (ANY, ANY);
+>resultIsAny1 : any
+>(ANY, ANY) : any
+>ANY, ANY : any
+>ANY : any
+>ANY : any
+
+var resultIsAny2 = (BOOLEAN, ANY);
+>resultIsAny2 : any
+>(BOOLEAN, ANY) : any
+>BOOLEAN, ANY : any
+>BOOLEAN : boolean
+>ANY : any
+
+var resultIsAny3 = (NUMBER, ANY);
+>resultIsAny3 : any
+>(NUMBER, ANY) : any
+>NUMBER, ANY : any
+>NUMBER : number
+>ANY : any
+
+var resultIsAny4 = (STRING, ANY);
+>resultIsAny4 : any
+>(STRING, ANY) : any
+>STRING, ANY : any
+>STRING : string
+>ANY : any
+
+var resultIsAny5 = (OBJECT, ANY);
+>resultIsAny5 : any
+>(OBJECT, ANY) : any
+>OBJECT, ANY : any
+>OBJECT : Object
+>ANY : any
+
+//Literal and expression
+var x: any;
+>x : any
+
+>1, ANY : any
+
+1, ANY;
+>ANY : any
+
+++NUMBER, ANY;
+>++NUMBER, ANY : any
+>++NUMBER : number
+>NUMBER : number
+>ANY : any
+
+"string", [null, 1];
+>"string", [null, 1] : number[]
+>[null, 1] : number[]
+
+"string".charAt(0), [null, 1];
+>"string".charAt(0), [null, 1] : number[]
+>"string".charAt(0) : string
+>"string".charAt : (pos: number) => string
+>charAt : (pos: number) => string
+>[null, 1] : number[]
+
+true, x("any");
+>true, x("any") : any
+>x("any") : any
+>x : any
+
+!BOOLEAN, x.doSomeThing();
+>!BOOLEAN, x.doSomeThing() : any
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+>x.doSomeThing() : any
+>x.doSomeThing : any
+>x : any
+>doSomeThing : any
+
+var resultIsAny6 = (1, ANY);
+>resultIsAny6 : any
+>(1, ANY) : any
+>1, ANY : any
+>ANY : any
+
+var resultIsAny7 = (++NUMBER, ANY);
+>resultIsAny7 : any
+>(++NUMBER, ANY) : any
+>++NUMBER, ANY : any
+>++NUMBER : number
+>NUMBER : number
+>ANY : any
+
+var resultIsAny8 = ("string", null);
+>resultIsAny8 : any
+>("string", null) : any
+>"string", null : any
+
+var resultIsAny9 = ("string".charAt(0), undefined);
+>resultIsAny9 : any
+>("string".charAt(0), undefined) : any
+>"string".charAt(0), undefined : any
+>"string".charAt(0) : string
+>"string".charAt : (pos: number) => string
+>charAt : (pos: number) => string
+>undefined : any
+
+var resultIsAny10 = (true, x("any"));
+>resultIsAny10 : any
+>(true, x("any")) : any
+>true, x("any") : any
+>x("any") : any
+>x : any
+
+var resultIsAny11 = (!BOOLEAN, x.doSomeThing());
+>resultIsAny11 : any
+>(!BOOLEAN, x.doSomeThing()) : any
+>!BOOLEAN, x.doSomeThing() : any
+>!BOOLEAN : boolean
+>BOOLEAN : boolean
+>x.doSomeThing() : any
+>x.doSomeThing : any
+>x : any
+>doSomeThing : any
+

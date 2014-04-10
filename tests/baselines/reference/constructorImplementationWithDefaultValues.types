@@ -1,21 +1,50 @@
 === tests/cases/compiler/constructorImplementationWithDefaultValues.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 16 IdentifierName "x" = any
-Line 2 col 16 IdentifierName "x" = number
-Line 3 col 12 IdentifierName "y" = number
-Line 3 col 16 IdentifierName "x" = number
-Line 7 col 6 IdentifierName "D" = D<T>
-Line 7 col 8 IdentifierName "T" = T
-Line 8 col 16 IdentifierName "x" = any
-Line 9 col 16 IdentifierName "x" = T
-Line 9 col 18 IdentifierName "T" = T
-Line 10 col 12 IdentifierName "y" = T
-Line 10 col 16 IdentifierName "x" = T
-Line 14 col 6 IdentifierName "E" = E<T>
-Line 14 col 8 IdentifierName "T" = T
-Line 14 col 18 IdentifierName "Date" = Date
-Line 15 col 16 IdentifierName "x" = any
-Line 16 col 16 IdentifierName "x" = T
-Line 16 col 19 IdentifierName "T" = T
-Line 17 col 12 IdentifierName "y" = T
-Line 17 col 16 IdentifierName "x" = T
+class C {
+>C : C
+
+    constructor(x);
+>x : any
+
+    constructor(x = 1) {
+>x : number
+
+        var y = x;
+>y : number
+>x : number
+    }
+}
+
+class D<T> {
+>D : D<T>
+>T : T
+
+    constructor(x);
+>x : any
+
+    constructor(x:T = null) {
+>x : T
+>T : T
+
+        var y = x;
+>y : T
+>x : T
+    }
+}
+
+class E<T extends Date> {
+>E : E<T>
+>T : T
+>Date : Date
+
+    constructor(x);
+>x : any
+
+    constructor(x: T = null) {
+>x : T
+>T : T
+
+        var y = x;
+>y : T
+>x : T
+    }
+}

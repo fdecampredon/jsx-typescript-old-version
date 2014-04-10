@@ -1,3 +1,25 @@
+//// [innerAliases2.ts]
+module _provider {
+                export class UsefulClass {
+                                public foo() {
+                                }
+                }
+}
+
+module consumer {
+                import provider = _provider;
+                
+                var g:provider.UsefulClass= null;
+                
+                function use():provider.UsefulClass { 
+                                var p2:provider.UsefulClass= new provider.UsefulClass();
+                                return p2; 
+                }
+}
+
+
+
+//// [innerAliases2.js]
 var _provider;
 (function (_provider) {
     var UsefulClass = (function () {

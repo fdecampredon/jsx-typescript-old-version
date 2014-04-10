@@ -1,6 +1,13 @@
 === tests/cases/compiler/commentOnAmbientVariable2_2.ts ===
-Line 1 col 12 IdentifierName "x" = number
-Line 2 col 0 AssignmentExpression "x = 2" = number
-Line 2 col 0 IdentifierName "x" = number
+/// <reference path='commentOnAmbientVariable2_1.ts'/>
+declare var x: number;
+>x : number
+
+x = 2;
+>x = 2 : number
+>x : number
+
 === tests/cases/compiler/commentOnAmbientVariable2_1.ts ===
-Line 0 col 4 IdentifierName "y" = number
+var y = 1;
+>y : number
+

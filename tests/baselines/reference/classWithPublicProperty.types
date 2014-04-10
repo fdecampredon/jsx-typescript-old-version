@@ -1,51 +1,89 @@
 === tests/cases/compiler/classWithPublicProperty.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 11 IdentifierName "x" = any
-Line 2 col 11 IdentifierName "a" = string
-Line 3 col 11 IdentifierName "b" = string
-Line 4 col 11 IdentifierName "c" = () => string
-Line 5 col 11 IdentifierName "d" = () => string
-Line 5 col 15 ParenthesizedArrowFunctionExpression "() => ''" = () => string
-Line 6 col 18 IdentifierName "e" = any
-Line 7 col 18 IdentifierName "f" = () => string
-Line 8 col 18 IdentifierName "g" = () => string
-Line 8 col 22 ParenthesizedArrowFunctionExpression "() => ''" = () => string
-Line 12 col 4 IdentifierName "c" = C
-Line 12 col 8 ObjectCreationExpression "new C()" = C
-Line 12 col 12 IdentifierName "C" = typeof C
-Line 13 col 4 IdentifierName "r1" = string
-Line 13 col 17 MemberAccessExpression "c.x" = any
-Line 13 col 17 IdentifierName "c" = C
-Line 13 col 19 IdentifierName "x" = any
-Line 14 col 4 IdentifierName "r2" = string
-Line 14 col 17 MemberAccessExpression "c.a" = string
-Line 14 col 17 IdentifierName "c" = C
-Line 14 col 19 IdentifierName "a" = string
-Line 15 col 4 IdentifierName "r3" = string
-Line 15 col 17 MemberAccessExpression "c.b" = string
-Line 15 col 17 IdentifierName "c" = C
-Line 15 col 19 IdentifierName "b" = string
-Line 16 col 4 IdentifierName "r4" = string
-Line 16 col 17 InvocationExpression "c.c()" = string
-Line 16 col 17 MemberAccessExpression "c.c" = () => string
-Line 16 col 17 IdentifierName "c" = C
-Line 16 col 19 IdentifierName "c" = () => string
-Line 17 col 4 IdentifierName "r5" = string
-Line 17 col 17 InvocationExpression "c.d()" = string
-Line 17 col 17 MemberAccessExpression "c.d" = () => string
-Line 17 col 17 IdentifierName "c" = C
-Line 17 col 19 IdentifierName "d" = () => string
-Line 18 col 4 IdentifierName "r6" = string
-Line 18 col 17 MemberAccessExpression "C.e" = any
-Line 18 col 17 IdentifierName "C" = typeof C
-Line 18 col 19 IdentifierName "e" = any
-Line 19 col 4 IdentifierName "r7" = string
-Line 19 col 17 InvocationExpression "C.f()" = string
-Line 19 col 17 MemberAccessExpression "C.f" = () => string
-Line 19 col 17 IdentifierName "C" = typeof C
-Line 19 col 19 IdentifierName "f" = () => string
-Line 20 col 4 IdentifierName "r8" = string
-Line 20 col 17 InvocationExpression "C.g()" = string
-Line 20 col 17 MemberAccessExpression "C.g" = () => string
-Line 20 col 17 IdentifierName "C" = typeof C
-Line 20 col 19 IdentifierName "g" = () => string
+class C {
+>C : C
+
+    public x;
+>x : any
+
+    public a = '';
+>a : string
+
+    public b: string = '';
+>b : string
+
+    public c() { return '' }
+>c : () => string
+
+    public d = () => '';
+>d : () => string
+>() => '' : () => string
+
+    public static e;
+>e : any
+
+    public static f() { return '' }
+>f : () => string
+
+    public static g = () => '';
+>g : () => string
+>() => '' : () => string
+}
+
+// all of these are valid
+var c = new C();
+>c : C
+>new C() : C
+>C : typeof C
+
+var r1: string = c.x;
+>r1 : string
+>c.x : any
+>c : C
+>x : any
+
+var r2: string = c.a;
+>r2 : string
+>c.a : string
+>c : C
+>a : string
+
+var r3: string = c.b;
+>r3 : string
+>c.b : string
+>c : C
+>b : string
+
+var r4: string = c.c();
+>r4 : string
+>c.c() : string
+>c.c : () => string
+>c : C
+>c : () => string
+
+var r5: string = c.d();
+>r5 : string
+>c.d() : string
+>c.d : () => string
+>c : C
+>d : () => string
+
+var r6: string = C.e;
+>r6 : string
+>C.e : any
+>C : typeof C
+>e : any
+
+var r7: string = C.f();
+>r7 : string
+>C.f() : string
+>C.f : () => string
+>C : typeof C
+>f : () => string
+
+var r8: string = C.g();
+>r8 : string
+>C.g() : string
+>C.g : () => string
+>C : typeof C
+>g : () => string
+

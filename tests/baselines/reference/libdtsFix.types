@@ -1,3 +1,8 @@
 === tests/cases/compiler/libdtsFix.ts ===
-Line 0 col 10 IdentifierName "HTMLElement" = HTMLElement
-Line 1 col 0 IdentifierName "type" = string
+interface HTMLElement {
+>HTMLElement : HTMLElement
+
+    type: string;
+>type : string
+}
+

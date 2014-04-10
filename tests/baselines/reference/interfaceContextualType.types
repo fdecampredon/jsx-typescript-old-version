@@ -1,36 +1,67 @@
 === tests/cases/compiler/interfaceContextualType.ts ===
-Line 0 col 17 IdentifierName "IOptions" = IOptions
-Line 1 col 0 IdentifierName "italic" = boolean
-Line 2 col 0 IdentifierName "bold" = boolean
-Line 4 col 17 IdentifierName "IMap" = IMap
-Line 5 col 5 IdentifierName "s" = string
-Line 5 col 17 IdentifierName "IOptions" = IOptions
-Line 8 col 6 IdentifierName "Bug" = Bug
-Line 9 col 11 IdentifierName "values" = IMap
-Line 9 col 19 IdentifierName "IMap" = IMap
-Line 10 col 0 IdentifierName "ok" = () => void
-Line 11 col 0 AssignmentExpression "this.values = {}" = { [s: string]: IOptions; }
-Line 11 col 0 MemberAccessExpression "this.values" = IMap
-Line 11 col 0 ThisKeyword "this" = Bug
-Line 11 col 13 IdentifierName "values" = IMap
-Line 11 col 22 ObjectLiteralExpression "{}" = { [s: string]: IOptions; }
-Line 12 col 0 AssignmentExpression "this.values['comments'] = { italic: true }" = { italic: boolean; }
-Line 12 col 0 ElementAccessExpression "this.values['comments']" = IOptions
-Line 12 col 0 MemberAccessExpression "this.values" = IMap
-Line 12 col 0 ThisKeyword "this" = Bug
-Line 12 col 13 IdentifierName "values" = IMap
-Line 12 col 34 ObjectLiteralExpression "{ italic: true }" = { italic: boolean; }
-Line 12 col 36 IdentifierName "italic" = boolean
-Line 14 col 0 IdentifierName "shouldBeOK" = () => void
-Line 15 col 0 AssignmentExpression "this.values = {
+export interface IOptions {
+>IOptions : IOptions
+
+    italic?: boolean;
+>italic : boolean
+
+    bold?: boolean;
+>bold : boolean
+}
+export interface IMap {
+>IMap : IMap
+
+    [s: string]: IOptions;
+>s : string
+>IOptions : IOptions
+}
+
+class Bug {
+>Bug : Bug
+
+    public values: IMap;
+>values : IMap
+>IMap : IMap
+
+    ok() {
+>ok : () => void
+
+        this.values = {};
+>this.values = {} : { [s: string]: IOptions; }
+>this.values : IMap
+>this : Bug
+>values : IMap
+>{} : { [s: string]: IOptions; }
+
+        this.values['comments'] = { italic: true };
+>this.values['comments'] = { italic: true } : { italic: boolean; }
+>this.values['comments'] : IOptions
+>this.values : IMap
+>this : Bug
+>values : IMap
+>{ italic: true } : { italic: boolean; }
+>italic : boolean
+    }
+    shouldBeOK() {
+>shouldBeOK : () => void
+
+        this.values = {
+>this.values = {
             comments: { italic: true }
-        }" = { comments: { italic: boolean; }; [s: string]: IOptions; }
-Line 15 col 0 MemberAccessExpression "this.values" = IMap
-Line 15 col 0 ThisKeyword "this" = Bug
-Line 15 col 13 IdentifierName "values" = IMap
-Line 15 col 22 ObjectLiteralExpression "{
+        } : { comments: { italic: boolean; }; [s: string]: IOptions; }
+>this.values : IMap
+>this : Bug
+>values : IMap
+>{
             comments: { italic: true }
-        }" = { comments: { italic: boolean; }; [s: string]: IOptions; }
-Line 16 col 0 IdentifierName "comments" = { italic: boolean; }
-Line 16 col 22 ObjectLiteralExpression "{ italic: true }" = { italic: boolean; }
-Line 16 col 24 IdentifierName "italic" = boolean
+        } : { comments: { italic: boolean; }; [s: string]: IOptions; }
+
+            comments: { italic: true }
+>comments : { italic: boolean; }
+>{ italic: true } : { italic: boolean; }
+>italic : boolean
+
+        };
+    }
+}
+

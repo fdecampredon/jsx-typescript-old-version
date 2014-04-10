@@ -1,14 +1,25 @@
 === tests/cases/compiler/importUsedInExtendsList1_1.ts ===
-Line 1 col 7 IdentifierName "foo" = foo
-Line 2 col 6 IdentifierName "Sub" = Sub
-Line 2 col 18 IdentifierName "foo" = foo
-Line 2 col 22 IdentifierName "Super" = foo.Super
-Line 3 col 4 IdentifierName "s" = Sub
-Line 3 col 7 IdentifierName "Sub" = Sub
-Line 4 col 4 IdentifierName "r" = string
-Line 4 col 16 MemberAccessExpression "s.foo" = string
-Line 4 col 16 IdentifierName "s" = Sub
-Line 4 col 18 IdentifierName "foo" = string
+///<reference path='importUsedInExtendsList1_require.ts'/>
+import foo = require('importUsedInExtendsList1_require');
+>foo : foo
+
+class Sub extends foo.Super { }
+>Sub : Sub
+>foo : foo
+>Super : foo.Super
+
+var s: Sub;
+>s : Sub
+>Sub : Sub
+
+var r: string = s.foo;
+>r : string
+>s.foo : string
+>s : Sub
+>foo : string
+
 === tests/cases/compiler/importUsedInExtendsList1_require.ts ===
-Line 0 col 13 IdentifierName "Super" = Super
-Line 0 col 21 IdentifierName "foo" = string
+export class Super { foo: string; }
+>Super : Super
+>foo : string
+

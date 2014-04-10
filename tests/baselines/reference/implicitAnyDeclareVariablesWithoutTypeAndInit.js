@@ -1,3 +1,4 @@
+//// [implicitAnyDeclareVariablesWithoutTypeAndInit.js]
 // this should be an error
 var x;
 

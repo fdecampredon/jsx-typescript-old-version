@@ -1,38 +1,68 @@
 === tests/cases/compiler/genericCallWithObjectTypeArgs.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 12 IdentifierName "x" = string
-Line 4 col 6 IdentifierName "D" = D
-Line 5 col 12 IdentifierName "x" = string
-Line 8 col 6 IdentifierName "X" = X<T>
-Line 8 col 8 IdentifierName "T" = T
-Line 9 col 0 IdentifierName "x" = T
-Line 9 col 7 IdentifierName "T" = T
-Line 12 col 9 IdentifierName "foo" = typeof foo
-Line 12 col 13 IdentifierName "T" = T
-Line 12 col 16 IdentifierName "t" = X<T>
-Line 12 col 19 IdentifierName "X" = X<T>
-Line 12 col 21 IdentifierName "T" = T
-Line 12 col 25 IdentifierName "t2" = X<T>
-Line 12 col 29 IdentifierName "X" = X<T>
-Line 12 col 31 IdentifierName "T" = T
-Line 13 col 8 IdentifierName "x" = T
-Line 13 col 11 IdentifierName "T" = T
-Line 14 col 11 IdentifierName "x" = T
-Line 17 col 4 IdentifierName "c1" = X<C>
-Line 17 col 9 ObjectCreationExpression "new X<C>()" = X<C>
-Line 17 col 13 IdentifierName "X" = typeof X
-Line 17 col 15 IdentifierName "C" = C
-Line 18 col 4 IdentifierName "d1" = X<D>
-Line 18 col 9 ObjectCreationExpression "new X<D>()" = X<D>
-Line 18 col 13 IdentifierName "X" = typeof X
-Line 18 col 15 IdentifierName "D" = D
-Line 19 col 4 IdentifierName "r" = {}
-Line 19 col 8 InvocationExpression "foo(c1, d1)" = {}
-Line 19 col 8 IdentifierName "foo" = typeof foo
-Line 19 col 12 IdentifierName "c1" = X<C>
-Line 19 col 16 IdentifierName "d1" = X<D>
-Line 20 col 4 IdentifierName "r2" = C
-Line 20 col 9 InvocationExpression "foo(c1, c1)" = C
-Line 20 col 9 IdentifierName "foo" = typeof foo
-Line 20 col 13 IdentifierName "c1" = X<C>
-Line 20 col 17 IdentifierName "c1" = X<C>
+class C {
+>C : C
+
+    private x: string;
+>x : string
+}
+
+class D {
+>D : D
+
+    private x: string;
+>x : string
+}
+
+class X<T> {
+>X : X<T>
+>T : T
+
+    x: T;
+>x : T
+>T : T
+}
+
+function foo<T>(t: X<T>, t2: X<T>) {
+>foo : typeof foo
+>T : T
+>t : X<T>
+>X : X<T>
+>T : T
+>t2 : X<T>
+>X : X<T>
+>T : T
+
+    var x: T;
+>x : T
+>T : T
+
+    return x;
+>x : T
+}
+
+var c1 = new X<C>();
+>c1 : X<C>
+>new X<C>() : X<C>
+>X : typeof X
+>C : C
+
+var d1 = new X<D>();
+>d1 : X<D>
+>new X<D>() : X<D>
+>X : typeof X
+>D : D
+
+var r = foo(c1, d1); // error
+>r : {}
+>foo(c1, d1) : {}
+>foo : typeof foo
+>c1 : X<C>
+>d1 : X<D>
+
+var r2 = foo(c1, c1); // ok
+>r2 : C
+>foo(c1, c1) : C
+>foo : typeof foo
+>c1 : X<C>
+>c1 : X<C>
+

@@ -1,18 +1,41 @@
 === tests/cases/compiler/arrayOfExportedClass_1.ts ===
-Line 1 col 7 IdentifierName "Car" = Car
-Line 3 col 6 IdentifierName "Road" = Road
-Line 5 col 11 IdentifierName "cars" = Car[]
-Line 5 col 17 IdentifierName "Car" = Car
-Line 7 col 11 IdentifierName "AddCars" = (cars: Car[]) => void
-Line 7 col 19 IdentifierName "cars" = Car[]
-Line 7 col 25 IdentifierName "Car" = Car
-Line 8 col 0 AssignmentExpression "this.cars = cars" = Car[]
-Line 8 col 0 MemberAccessExpression "this.cars" = Car[]
-Line 8 col 0 ThisKeyword "this" = Road
-Line 9 col 13 IdentifierName "cars" = Car[]
-Line 9 col 20 IdentifierName "cars" = Car[]
-Line 13 col 9 IdentifierName "Road" = typeof Road
+///<reference path='arrayOfExportedClass_0.ts'/>
+import Car = require('arrayOfExportedClass_0');
+>Car : Car
+
+class Road {
+>Road : Road
+
+    public cars: Car[];
+>cars : Car[]
+>Car : Car
+
+    public AddCars(cars: Car[]) {
+>AddCars : (cars: Car[]) => void
+>cars : Car[]
+>Car : Car
+
+>this.cars = cars : Car[]
+>this.cars : Car[]
+>this : Road
+
+        this.cars = cars;
+>cars : Car[]
+>cars : Car[]
+    }
+}
+
+export = Road;
+>Road : typeof Road
+
 === tests/cases/compiler/arrayOfExportedClass_0.ts ===
-Line 0 col 6 IdentifierName "Car" = Car
-Line 1 col 0 IdentifierName "foo" = string
-Line 4 col 9 IdentifierName "Car" = typeof Car
+class Car {
+>Car : Car
+
+    foo: string;
+>foo : string
+}
+
+export = Car;
+>Car : typeof Car
+

@@ -1,52 +1,61 @@
 === tests/cases/compiler/contextualSignatureInstantiation2.ts ===
-Line 1 col 4 IdentifierName "dot" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
-Line 1 col 10 IdentifierName "T" = T
-Line 1 col 13 IdentifierName "S" = S
-Line 1 col 16 IdentifierName "f" = (_: T) => S
-Line 1 col 20 IdentifierName "_" = T
-Line 1 col 23 IdentifierName "T" = T
-Line 1 col 29 IdentifierName "S" = S
-Line 1 col 36 IdentifierName "U" = U
-Line 1 col 39 IdentifierName "g" = (_: U) => T
-Line 1 col 43 IdentifierName "_" = U
-Line 1 col 46 IdentifierName "U" = U
-Line 1 col 52 IdentifierName "T" = T
-Line 1 col 59 IdentifierName "_" = U
-Line 1 col 62 IdentifierName "U" = U
-Line 1 col 68 IdentifierName "S" = S
-Line 2 col 0 AssignmentExpression "dot = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x))" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (r: U) => S
-Line 2 col 0 IdentifierName "dot" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
-Line 2 col 6 ParenthesizedArrowFunctionExpression "<T, S>(f: (_: T) => S) => <U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x))" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (r: U) => S
-Line 2 col 7 IdentifierName "T" = T
-Line 2 col 10 IdentifierName "S" = S
-Line 2 col 13 IdentifierName "f" = (_: T) => S
-Line 2 col 17 IdentifierName "_" = T
-Line 2 col 20 IdentifierName "T" = T
-Line 2 col 26 IdentifierName "S" = S
-Line 2 col 32 ParenthesizedArrowFunctionExpression "<U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x))" = <U>(g: (_: U) => T) => (r: U) => S
-Line 2 col 33 IdentifierName "U" = U
-Line 2 col 36 IdentifierName "g" = (_: U) => T
-Line 2 col 40 IdentifierName "_" = U
-Line 2 col 43 IdentifierName "U" = U
-Line 2 col 49 IdentifierName "T" = T
-Line 2 col 54 IdentifierName "r" = U
-Line 2 col 56 IdentifierName "U" = U
-Line 2 col 62 IdentifierName "S" = S
-Line 2 col 67 ParenthesizedArrowFunctionExpression "(x) => f(g(x))" = (x: U) => S
-Line 2 col 68 IdentifierName "x" = U
-Line 2 col 74 InvocationExpression "f(g(x))" = S
-Line 2 col 74 IdentifierName "f" = (_: T) => S
-Line 2 col 76 InvocationExpression "g(x)" = T
-Line 2 col 76 IdentifierName "g" = (_: U) => T
-Line 2 col 78 IdentifierName "x" = U
-Line 3 col 4 IdentifierName "id" = <T>(x: T) => T
-Line 3 col 9 IdentifierName "T" = T
-Line 3 col 12 IdentifierName "x" = T
-Line 3 col 14 IdentifierName "T" = T
-Line 3 col 20 IdentifierName "T" = T
-Line 4 col 4 IdentifierName "r23" = (_: {}) => {}
-Line 4 col 10 InvocationExpression "dot(id)(id)" = (_: {}) => {}
-Line 4 col 10 InvocationExpression "dot(id)" = <U>(g: (_: U) => {}) => (_: U) => {}
-Line 4 col 10 IdentifierName "dot" = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
-Line 4 col 14 IdentifierName "id" = <T>(x: T) => T
-Line 4 col 18 IdentifierName "id" = <T>(x: T) => T
+// dot f g x = f(g(x))
+var dot: <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S;
+>dot : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
+>T : T
+>S : S
+>f : (_: T) => S
+>_ : T
+>T : T
+>S : S
+>U : U
+>g : (_: U) => T
+>_ : U
+>U : U
+>T : T
+>_ : U
+>U : U
+>S : S
+
+dot = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x));
+>dot = <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x)) : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (r: U) => S
+>dot : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
+><T, S>(f: (_: T) => S) => <U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x)) : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (r: U) => S
+>T : T
+>S : S
+>f : (_: T) => S
+>_ : T
+>T : T
+>S : S
+><U>(g: (_: U) => T): (r:U) => S => (x) => f(g(x)) : <U>(g: (_: U) => T) => (r: U) => S
+>U : U
+>g : (_: U) => T
+>_ : U
+>U : U
+>T : T
+>r : U
+>U : U
+>S : S
+>(x) => f(g(x)) : (x: U) => S
+>x : U
+>f(g(x)) : S
+>f : (_: T) => S
+>g(x) : T
+>g : (_: U) => T
+>x : U
+
+var id: <T>(x:T) => T;
+>id : <T>(x: T) => T
+>T : T
+>x : T
+>T : T
+>T : T
+
+var r23 = dot(id)(id);
+>r23 : (_: {}) => {}
+>dot(id)(id) : (_: {}) => {}
+>dot(id) : <U>(g: (_: U) => {}) => (_: U) => {}
+>dot : <T, S>(f: (_: T) => S) => <U>(g: (_: U) => T) => (_: U) => S
+>id : <T>(x: T) => T
+>id : <T>(x: T) => T
+

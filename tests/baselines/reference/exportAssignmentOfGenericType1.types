@@ -1,16 +1,29 @@
 === tests/cases/compiler/exportAssignmentOfGenericType1_1.ts ===
-Line 1 col 7 IdentifierName "q" = q
-Line 3 col 6 IdentifierName "M" = M
-Line 3 col 16 IdentifierName "q" = q
-Line 4 col 4 IdentifierName "m" = M
-Line 4 col 7 IdentifierName "M" = M
-Line 5 col 4 IdentifierName "r" = string
-Line 5 col 16 MemberAccessExpression "m.foo" = string
-Line 5 col 16 IdentifierName "m" = M
-Line 5 col 18 IdentifierName "foo" = string
+///<reference path='exportAssignmentOfGenericType1_0.ts'/>
+import q = require("exportAssignmentOfGenericType1_0");
+>q : q
+
+class M extends q<string> { }
+>M : M
+>q : q
+
+var m: M;
+>m : M
+>M : M
+
+var r: string = m.foo;
+>r : string
+>m.foo : string
+>m : M
+>foo : string
+
 === tests/cases/compiler/exportAssignmentOfGenericType1_0.ts ===
-Line 0 col 9 IdentifierName "T" = typeof T
-Line 1 col 6 IdentifierName "T" = T<X>
-Line 1 col 8 IdentifierName "X" = X
-Line 1 col 13 IdentifierName "foo" = X
-Line 1 col 18 IdentifierName "X" = X
+export = T;
+>T : typeof T
+
+class T<X> { foo: X; }
+>T : T<X>
+>X : X
+>foo : X
+>X : X
+

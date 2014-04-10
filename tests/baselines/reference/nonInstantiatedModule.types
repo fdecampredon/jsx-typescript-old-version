@@ -1,50 +1,111 @@
 === tests/cases/compiler/nonInstantiatedModule.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 21 IdentifierName "Point" = Point
-Line 1 col 29 IdentifierName "x" = number
-Line 1 col 40 IdentifierName "y" = number
-Line 2 col 15 IdentifierName "a" = number
-Line 6 col 4 IdentifierName "m" = typeof M
-Line 6 col 15 IdentifierName "M" = typeof M
-Line 7 col 4 IdentifierName "m" = typeof M
-Line 7 col 8 IdentifierName "M" = typeof M
-Line 9 col 4 IdentifierName "a1" = number
-Line 10 col 4 IdentifierName "a1" = number
-Line 10 col 9 MemberAccessExpression "M.a" = number
-Line 10 col 9 IdentifierName "M" = typeof M
-Line 10 col 11 IdentifierName "a" = number
-Line 12 col 4 IdentifierName "a2" = number
-Line 13 col 4 IdentifierName "a2" = number
-Line 13 col 9 MemberAccessExpression "m.a" = number
-Line 13 col 9 IdentifierName "m" = typeof M
-Line 13 col 11 IdentifierName "a" = number
-Line 15 col 7 IdentifierName "M2" = M2
-Line 16 col 18 IdentifierName "Point" = Point
-Line 17 col 24 IdentifierName "Origin" = typeof Origin
-Line 17 col 34 IdentifierName "Point" = Point
-Line 18 col 19 ObjectLiteralExpression "{ x: 0, y: 0 }" = { x: number; y: number; }
-Line 18 col 21 IdentifierName "x" = number
-Line 18 col 27 IdentifierName "y" = number
-Line 22 col 21 IdentifierName "Point" = Point
-Line 23 col 0 IdentifierName "x" = number
-Line 24 col 0 IdentifierName "y" = number
-Line 28 col 4 IdentifierName "p" = { x: number; y: number; }
-Line 28 col 9 IdentifierName "x" = number
-Line 28 col 20 IdentifierName "y" = number
-Line 29 col 4 IdentifierName "p" = M2.Point
-Line 29 col 7 IdentifierName "M2" = M2
-Line 29 col 10 IdentifierName "Point" = M2.Point
-Line 31 col 4 IdentifierName "p2" = { Origin(): { x: number; y: number; }; }
-Line 31 col 10 IdentifierName "Origin" = () => { x: number; y: number; }
-Line 31 col 23 IdentifierName "x" = number
-Line 31 col 34 IdentifierName "y" = number
-Line 32 col 4 IdentifierName "p2" = typeof M2.Point
-Line 32 col 15 IdentifierName "M2" = typeof M2
-Line 32 col 18 IdentifierName "Point" = typeof M2.Point
-Line 34 col 7 IdentifierName "M3" = M3
-Line 35 col 18 IdentifierName "Utils" = Utils
-Line 36 col 25 IdentifierName "Point" = Point
-Line 37 col 0 IdentifierName "x" = number
-Line 37 col 23 IdentifierName "y" = number
-Line 41 col 17 IdentifierName "Utils" = Utils
-Line 42 col 0 IdentifierName "name" = string
+module M {
+>M : M
+
+    export interface Point { x: number; y: number }
+>Point : Point
+>x : number
+>y : number
+
+    export var a = 1;
+>a : number
+}
+
+// primary expression
+var m : typeof M;
+>m : typeof M
+>M : typeof M
+
+var m = M;
+>m : typeof M
+>M : typeof M
+
+var a1: number;
+>a1 : number
+
+var a1 = M.a;
+>a1 : number
+>M.a : number
+>M : typeof M
+>a : number
+
+var a2: number;
+>a2 : number
+
+var a2 = m.a;
+>a2 : number
+>m.a : number
+>m : typeof M
+>a : number
+
+module M2 {
+>M2 : M2
+
+    export module Point {
+>Point : Point
+
+        export function Origin(): Point {
+>Origin : typeof Origin
+>Point : Point
+
+            return { x: 0, y: 0 };
+>{ x: 0, y: 0 } : { x: number; y: number; }
+>x : number
+>y : number
+        }
+    }
+
+    export interface Point {
+>Point : Point
+
+        x: number;
+>x : number
+
+        y: number;
+>y : number
+    }
+}
+
+var p: { x: number; y: number; };
+>p : { x: number; y: number; }
+>x : number
+>y : number
+
+var p: M2.Point;
+>p : M2.Point
+>M2 : M2
+>Point : M2.Point
+
+var p2: { Origin() : { x: number; y: number; } };
+>p2 : { Origin(): { x: number; y: number; }; }
+>Origin : () => { x: number; y: number; }
+>x : number
+>y : number
+
+var p2: typeof M2.Point;
+>p2 : typeof M2.Point
+>M2 : typeof M2
+>Point : typeof M2.Point
+
+module M3 {
+>M3 : M3
+
+    export module Utils {
+>Utils : Utils
+
+        export interface Point {
+>Point : Point
+
+            x: number; y: number;
+>x : number
+>y : number
+        }
+    }
+
+    export class Utils {
+>Utils : Utils
+
+        name: string;
+>name : string
+    }
+}

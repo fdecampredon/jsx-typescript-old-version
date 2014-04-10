@@ -1,180 +1,451 @@
 === tests/cases/compiler/commentsOverloads.ts ===
-Line 1 col 9 IdentifierName "f1" = typeof f1
-Line 1 col 24 IdentifierName "a" = number
-Line 2 col 9 IdentifierName "f1" = typeof f1
-Line 2 col 12 IdentifierName "b" = string
-Line 3 col 9 IdentifierName "f1" = typeof f1
-Line 3 col 12 IdentifierName "aOrb" = any
-Line 6 col 0 InvocationExpression "f1("hello")" = number
-Line 6 col 0 IdentifierName "f1" = typeof f1
-Line 7 col 0 InvocationExpression "f1(10)" = number
-Line 7 col 0 IdentifierName "f1" = typeof f1
-Line 8 col 9 IdentifierName "f2" = typeof f2
-Line 8 col 12 IdentifierName "a" = number
-Line 10 col 9 IdentifierName "f2" = typeof f2
-Line 10 col 12 IdentifierName "b" = string
-Line 12 col 9 IdentifierName "f2" = typeof f2
-Line 12 col 12 IdentifierName "aOrb" = any
-Line 15 col 0 InvocationExpression "f2("hello")" = number
-Line 15 col 0 IdentifierName "f2" = typeof f2
-Line 16 col 0 InvocationExpression "f2(10)" = number
-Line 16 col 0 IdentifierName "f2" = typeof f2
-Line 17 col 9 IdentifierName "f3" = typeof f3
-Line 17 col 12 IdentifierName "a" = number
-Line 18 col 9 IdentifierName "f3" = typeof f3
-Line 18 col 12 IdentifierName "b" = string
-Line 19 col 9 IdentifierName "f3" = typeof f3
-Line 19 col 12 IdentifierName "aOrb" = any
-Line 22 col 0 InvocationExpression "f3("hello")" = number
-Line 22 col 0 IdentifierName "f3" = typeof f3
-Line 23 col 0 InvocationExpression "f3(10)" = number
-Line 23 col 0 IdentifierName "f3" = typeof f3
-Line 25 col 9 IdentifierName "f4" = typeof f4
-Line 25 col 24 IdentifierName "a" = number
-Line 27 col 9 IdentifierName "f4" = typeof f4
-Line 27 col 12 IdentifierName "b" = string
-Line 28 col 9 IdentifierName "f4" = typeof f4
-Line 28 col 12 IdentifierName "aOrb" = any
-Line 31 col 0 InvocationExpression "f4("hello")" = number
-Line 31 col 0 IdentifierName "f4" = typeof f4
-Line 32 col 0 InvocationExpression "f4(10)" = number
-Line 32 col 0 IdentifierName "f4" = typeof f4
-Line 33 col 10 IdentifierName "i1" = i1
-Line 35 col 18 IdentifierName "a" = number
-Line 37 col 5 IdentifierName "b" = string
-Line 38 col 0 IdentifierName "/** foo 1*/
-    foo" = { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
-Line 39 col 8 IdentifierName "a" = number
-Line 40 col 0 IdentifierName "/** foo 2*/
-    foo" = { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
-Line 41 col 8 IdentifierName "b" = string
-Line 42 col 0 IdentifierName "// foo 3
-    foo" = { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
-Line 43 col 8 IdentifierName "arr" = number[]
-Line 44 col 0 IdentifierName "/** foo 4 */
-    foo" = { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
-Line 45 col 8 IdentifierName "arr" = string[]
-Line 46 col 0 IdentifierName "foo2" = { (a: number): number; (b: string): number; }
-Line 47 col 9 IdentifierName "a" = number
-Line 48 col 0 IdentifierName "/** foo2 2*/
-    foo2" = { (a: number): number; (b: string): number; }
-Line 49 col 9 IdentifierName "b" = string
-Line 50 col 0 IdentifierName "foo3" = { (a: number): number; (b: string): number; }
-Line 50 col 9 IdentifierName "a" = number
-Line 51 col 0 IdentifierName "foo3" = { (a: number): number; (b: string): number; }
-Line 51 col 9 IdentifierName "b" = string
-Line 52 col 0 IdentifierName "/** foo4 1*/
-    foo4" = { (a: number): number; (b: string): number; (c: any): any; }
-Line 53 col 9 IdentifierName "a" = number
-Line 54 col 0 IdentifierName "foo4" = { (a: number): number; (b: string): number; (c: any): any; }
-Line 54 col 9 IdentifierName "b" = string
-Line 55 col 0 IdentifierName "/** foo4 any */
-    foo4" = { (a: number): number; (b: string): number; (c: any): any; }
-Line 56 col 9 IdentifierName "c" = any
-Line 58 col 9 IdentifierName "a" = string
-Line 60 col 9 IdentifierName "b" = number
-Line 62 col 4 IdentifierName "i1_i" = i1
-Line 62 col 10 IdentifierName "i1" = i1
-Line 63 col 10 IdentifierName "i2" = i2
-Line 64 col 9 IdentifierName "a" = string
-Line 66 col 9 IdentifierName "b" = number
-Line 67 col 5 IdentifierName "a" = number
-Line 69 col 5 IdentifierName "b" = string
-Line 71 col 4 IdentifierName "i2_i" = i2
-Line 71 col 10 IdentifierName "i2" = i2
-Line 72 col 10 IdentifierName "i3" = i3
-Line 74 col 9 IdentifierName "a" = string
-Line 76 col 9 IdentifierName "b" = number
-Line 78 col 5 IdentifierName "a" = number
-Line 79 col 5 IdentifierName "b" = string
-Line 81 col 4 IdentifierName "i3_i" = i3
-Line 81 col 10 IdentifierName "i3" = i3
-Line 82 col 10 IdentifierName "i4" = i4
-Line 83 col 9 IdentifierName "a" = string
-Line 84 col 9 IdentifierName "b" = number
-Line 85 col 5 IdentifierName "a" = number
-Line 86 col 5 IdentifierName "b" = string
-Line 88 col 6 IdentifierName "c" = c
-Line 89 col 11 IdentifierName "prop1" = { (a: number): number; (b: string): number; }
-Line 89 col 17 IdentifierName "a" = number
-Line 90 col 11 IdentifierName "prop1" = { (a: number): number; (b: string): number; }
-Line 90 col 17 IdentifierName "b" = string
-Line 91 col 11 IdentifierName "prop1" = { (a: number): number; (b: string): number; }
-Line 91 col 17 IdentifierName "aorb" = any
-Line 95 col 11 IdentifierName "prop2" = { (a: number): number; (b: string): number; }
-Line 95 col 17 IdentifierName "a" = number
-Line 96 col 11 IdentifierName "prop2" = { (a: number): number; (b: string): number; }
-Line 96 col 17 IdentifierName "b" = string
-Line 97 col 11 IdentifierName "prop2" = { (a: number): number; (b: string): number; }
-Line 97 col 17 IdentifierName "aorb" = any
-Line 100 col 11 IdentifierName "prop3" = { (a: number): number; (b: string): number; }
-Line 100 col 17 IdentifierName "a" = number
-Line 102 col 11 IdentifierName "prop3" = { (a: number): number; (b: string): number; }
-Line 102 col 17 IdentifierName "b" = string
-Line 103 col 11 IdentifierName "prop3" = { (a: number): number; (b: string): number; }
-Line 103 col 17 IdentifierName "aorb" = any
-Line 107 col 11 IdentifierName "prop4" = { (a: number): number; (b: string): number; }
-Line 107 col 17 IdentifierName "a" = number
-Line 109 col 11 IdentifierName "prop4" = { (a: number): number; (b: string): number; }
-Line 109 col 17 IdentifierName "b" = string
-Line 110 col 11 IdentifierName "prop4" = { (a: number): number; (b: string): number; }
-Line 110 col 17 IdentifierName "aorb" = any
-Line 114 col 11 IdentifierName "prop5" = { (a: number): number; (b: string): number; }
-Line 114 col 17 IdentifierName "a" = number
-Line 116 col 11 IdentifierName "prop5" = { (a: number): number; (b: string): number; }
-Line 116 col 17 IdentifierName "b" = string
-Line 118 col 11 IdentifierName "prop5" = { (a: number): number; (b: string): number; }
-Line 118 col 17 IdentifierName "aorb" = any
-Line 122 col 6 IdentifierName "c1" = c1
-Line 123 col 16 IdentifierName "a" = number
-Line 124 col 16 IdentifierName "b" = string
-Line 125 col 16 IdentifierName "aorb" = any
-Line 128 col 6 IdentifierName "c2" = c2
-Line 130 col 16 IdentifierName "a" = number
-Line 132 col 16 IdentifierName "b" = string
-Line 133 col 16 IdentifierName "aorb" = any
-Line 136 col 6 IdentifierName "c3" = c3
-Line 137 col 16 IdentifierName "a" = number
-Line 139 col 16 IdentifierName "b" = string
-Line 140 col 16 IdentifierName "aorb" = any
-Line 143 col 6 IdentifierName "c4" = c4
-Line 145 col 16 IdentifierName "a" = number
-Line 147 col 16 IdentifierName "b" = string
-Line 149 col 16 IdentifierName "aorb" = any
-Line 152 col 6 IdentifierName "c5" = c5
-Line 154 col 16 IdentifierName "a" = number
-Line 156 col 16 IdentifierName "b" = string
-Line 158 col 16 IdentifierName "aorb" = any
-Line 161 col 4 IdentifierName "c_i" = c
-Line 161 col 10 ObjectCreationExpression "new c()" = c
-Line 161 col 14 IdentifierName "c" = typeof c
-Line 163 col 4 IdentifierName "c1_i_1" = c1
-Line 163 col 13 ObjectCreationExpression "new c1(10)" = c1
-Line 163 col 17 IdentifierName "c1" = typeof c1
-Line 164 col 4 IdentifierName "c1_i_2" = c1
-Line 164 col 13 ObjectCreationExpression "new c1("hello")" = c1
-Line 164 col 17 IdentifierName "c1" = typeof c1
-Line 165 col 4 IdentifierName "c2_i_1" = c2
-Line 165 col 13 ObjectCreationExpression "new c2(10)" = c2
-Line 165 col 17 IdentifierName "c2" = typeof c2
-Line 166 col 4 IdentifierName "c2_i_2" = c2
-Line 166 col 13 ObjectCreationExpression "new c2("hello")" = c2
-Line 166 col 17 IdentifierName "c2" = typeof c2
-Line 167 col 4 IdentifierName "c3_i_1" = c3
-Line 167 col 13 ObjectCreationExpression "new c3(10)" = c3
-Line 167 col 17 IdentifierName "c3" = typeof c3
-Line 168 col 4 IdentifierName "c3_i_2" = c3
-Line 168 col 13 ObjectCreationExpression "new c3("hello")" = c3
-Line 168 col 17 IdentifierName "c3" = typeof c3
-Line 169 col 4 IdentifierName "c4_i_1" = c4
-Line 169 col 13 ObjectCreationExpression "new c4(10)" = c4
-Line 169 col 17 IdentifierName "c4" = typeof c4
-Line 170 col 4 IdentifierName "c4_i_2" = c4
-Line 170 col 13 ObjectCreationExpression "new c4("hello")" = c4
-Line 170 col 17 IdentifierName "c4" = typeof c4
-Line 171 col 4 IdentifierName "c5_i_1" = c5
-Line 171 col 13 ObjectCreationExpression "new c5(10)" = c5
-Line 171 col 17 IdentifierName "c5" = typeof c5
-Line 172 col 4 IdentifierName "c5_i_2" = c5
-Line 172 col 13 ObjectCreationExpression "new c5("hello")" = c5
-Line 172 col 17 IdentifierName "c5" = typeof c5
+/** this is signature 1*/
+function f1(/**param a*/a: number): number;
+>f1 : typeof f1
+>a : number
+
+function f1(b: string): number;
+>f1 : typeof f1
+>b : string
+
+function f1(aOrb: any) {
+>f1 : typeof f1
+>aOrb : any
+
+    return 10;
+}
+f1("hello");
+>f1("hello") : number
+>f1 : typeof f1
+
+f1(10);
+>f1(10) : number
+>f1 : typeof f1
+
+function f2(a: number): number;
+>f2 : typeof f2
+>a : number
+
+/** this is signature 2*/
+function f2(b: string): number;
+>f2 : typeof f2
+>b : string
+
+/** this is f2 var comment*/
+function f2(aOrb: any) {
+>f2 : typeof f2
+>aOrb : any
+
+    return 10;
+}
+f2("hello");
+>f2("hello") : number
+>f2 : typeof f2
+
+f2(10);
+>f2(10) : number
+>f2 : typeof f2
+
+function f3(a: number): number;
+>f3 : typeof f3
+>a : number
+
+function f3(b: string): number;
+>f3 : typeof f3
+>b : string
+
+function f3(aOrb: any) {
+>f3 : typeof f3
+>aOrb : any
+
+    return 10;
+}
+f3("hello");
+>f3("hello") : number
+>f3 : typeof f3
+
+f3(10);
+>f3(10) : number
+>f3 : typeof f3
+
+/** this is signature 4 - with number parameter*/
+function f4(/**param a*/a: number): number;
+>f4 : typeof f4
+>a : number
+
+/** this is signature 4 - with string parameter*/
+function f4(b: string): number;
+>f4 : typeof f4
+>b : string
+
+function f4(aOrb: any) {
+>f4 : typeof f4
+>aOrb : any
+
+    return 10;
+}
+f4("hello");
+>f4("hello") : number
+>f4 : typeof f4
+
+f4(10);
+>f4(10) : number
+>f4 : typeof f4
+
+interface i1 {
+>i1 : i1
+
+    /**this signature 1*/
+    (/**param a*/ a: number): number;
+>a : number
+
+    /**this is signature 2*/
+    (b: string): number;
+>b : string
+
+    /** foo 1*/
+>/** foo 1*/
+    foo : { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
+
+    foo(a: number): number;
+>a : number
+
+    /** foo 2*/
+>/** foo 2*/
+    foo : { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
+
+    foo(b: string): number;
+>b : string
+
+    // foo 3
+>// foo 3
+    foo : { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
+
+    foo(arr: number[]): number;
+>arr : number[]
+
+    /** foo 4 */
+>/** foo 4 */
+    foo : { (a: number): number; (b: string): number; (arr: number[]): number; (arr: string[]): number; }
+
+    foo(arr: string[]): number;
+>arr : string[]
+
+>foo2 : { (a: number): number; (b: string): number; }
+
+    foo2(a: number): number;
+>a : number
+
+    /** foo2 2*/
+>/** foo2 2*/
+    foo2 : { (a: number): number; (b: string): number; }
+
+    foo2(b: string): number;
+>b : string
+
+    foo3(a: number): number;
+>foo3 : { (a: number): number; (b: string): number; }
+>a : number
+
+    foo3(b: string): number;
+>foo3 : { (a: number): number; (b: string): number; }
+>b : string
+
+    /** foo4 1*/
+>/** foo4 1*/
+    foo4 : { (a: number): number; (b: string): number; (c: any): any; }
+
+    foo4(a: number): number;
+>a : number
+
+    foo4(b: string): number;
+>foo4 : { (a: number): number; (b: string): number; (c: any): any; }
+>b : string
+
+    /** foo4 any */
+>/** foo4 any */
+    foo4 : { (a: number): number; (b: string): number; (c: any): any; }
+
+    foo4(c: any): any;
+>c : any
+
+    /// new 1
+    new (a: string);
+>a : string
+
+    /** new 1*/
+    new (b: number);
+>b : number
+}
+var i1_i: i1;
+>i1_i : i1
+>i1 : i1
+
+interface i2 {
+>i2 : i2
+
+    new (a: string);
+>a : string
+
+    /** new 2*/
+    new (b: number);
+>b : number
+
+    (a: number): number;
+>a : number
+
+    /**this is signature 2*/
+    (b: string): number;
+>b : string
+}
+var i2_i: i2;
+>i2_i : i2
+>i2 : i2
+
+interface i3 {
+>i3 : i3
+
+    /** new 1*/
+    new (a: string);
+>a : string
+
+    /** new 2*/
+    new (b: number);
+>b : number
+
+    /**this is signature 1*/
+    (a: number): number;
+>a : number
+
+    (b: string): number;
+>b : string
+}
+var i3_i: i3;
+>i3_i : i3
+>i3 : i3
+
+interface i4 {
+>i4 : i4
+
+    new (a: string);
+>a : string
+
+    new (b: number);
+>b : number
+
+    (a: number): number;
+>a : number
+
+    (b: string): number;
+>b : string
+}
+class c {
+>c : c
+
+    public prop1(a: number): number;
+>prop1 : { (a: number): number; (b: string): number; }
+>a : number
+
+    public prop1(b: string): number;
+>prop1 : { (a: number): number; (b: string): number; }
+>b : string
+
+    public prop1(aorb: any) {
+>prop1 : { (a: number): number; (b: string): number; }
+>aorb : any
+
+        return 10;
+    }
+    /** prop2 1*/
+    public prop2(a: number): number;
+>prop2 : { (a: number): number; (b: string): number; }
+>a : number
+
+    public prop2(b: string): number;
+>prop2 : { (a: number): number; (b: string): number; }
+>b : string
+
+    public prop2(aorb: any) {
+>prop2 : { (a: number): number; (b: string): number; }
+>aorb : any
+
+        return 10;
+    }
+    public prop3(a: number): number;
+>prop3 : { (a: number): number; (b: string): number; }
+>a : number
+
+    /** prop3 2*/
+    public prop3(b: string): number;
+>prop3 : { (a: number): number; (b: string): number; }
+>b : string
+
+    public prop3(aorb: any) {
+>prop3 : { (a: number): number; (b: string): number; }
+>aorb : any
+
+        return 10;
+    }
+    /** prop4 1*/
+    public prop4(a: number): number;
+>prop4 : { (a: number): number; (b: string): number; }
+>a : number
+
+    /** prop4 2*/
+    public prop4(b: string): number;
+>prop4 : { (a: number): number; (b: string): number; }
+>b : string
+
+    public prop4(aorb: any) {
+>prop4 : { (a: number): number; (b: string): number; }
+>aorb : any
+
+        return 10;
+    }
+    /** prop5 1*/
+    public prop5(a: number): number;
+>prop5 : { (a: number): number; (b: string): number; }
+>a : number
+
+    /** prop5 2*/
+    public prop5(b: string): number;
+>prop5 : { (a: number): number; (b: string): number; }
+>b : string
+
+    /** Prop5 implementaion*/
+    public prop5(aorb: any) {
+>prop5 : { (a: number): number; (b: string): number; }
+>aorb : any
+
+        return 10;
+    }
+}
+class c1 {
+>c1 : c1
+
+    constructor(a: number);
+>a : number
+
+    constructor(b: string);
+>b : string
+
+    constructor(aorb: any) {
+>aorb : any
+    }
+}
+class c2 {
+>c2 : c2
+
+    /** c2 1*/
+    constructor(a: number);
+>a : number
+
+    // c2 2
+    constructor(b: string);
+>b : string
+
+    constructor(aorb: any) {
+>aorb : any
+    }
+}
+class c3 {
+>c3 : c3
+
+    constructor(a: number);
+>a : number
+
+    /** c3 2*/
+    constructor(b: string);
+>b : string
+
+    constructor(aorb: any) {
+>aorb : any
+    }
+}
+class c4 {
+>c4 : c4
+
+    /** c4 1*/
+    constructor(a: number);
+>a : number
+
+    /** c4 2*/
+    constructor(b: string);
+>b : string
+
+    /** c4 3 */
+    constructor(aorb: any) {
+>aorb : any
+    }
+}
+class c5 {
+>c5 : c5
+
+    /** c5 1*/
+    constructor(a: number);
+>a : number
+
+    /** c5 2*/
+    constructor(b: string);
+>b : string
+
+    /** c5 implementation*/
+    constructor(aorb: any) {
+>aorb : any
+    }
+}
+var c_i = new c();
+>c_i : c
+>new c() : c
+>c : typeof c
+
+var c1_i_1 = new c1(10);
+>c1_i_1 : c1
+>new c1(10) : c1
+>c1 : typeof c1
+
+var c1_i_2 = new c1("hello");
+>c1_i_2 : c1
+>new c1("hello") : c1
+>c1 : typeof c1
+
+var c2_i_1 = new c2(10);
+>c2_i_1 : c2
+>new c2(10) : c2
+>c2 : typeof c2
+
+var c2_i_2 = new c2("hello");
+>c2_i_2 : c2
+>new c2("hello") : c2
+>c2 : typeof c2
+
+var c3_i_1 = new c3(10);
+>c3_i_1 : c3
+>new c3(10) : c3
+>c3 : typeof c3
+
+var c3_i_2 = new c3("hello");
+>c3_i_2 : c3
+>new c3("hello") : c3
+>c3 : typeof c3
+
+var c4_i_1 = new c4(10);
+>c4_i_1 : c4
+>new c4(10) : c4
+>c4 : typeof c4
+
+var c4_i_2 = new c4("hello");
+>c4_i_2 : c4
+>new c4("hello") : c4
+>c4 : typeof c4
+
+var c5_i_1 = new c5(10);
+>c5_i_1 : c5
+>new c5(10) : c5
+>c5 : typeof c5
+
+var c5_i_2 = new c5("hello");
+>c5_i_2 : c5
+>new c5("hello") : c5
+>c5 : typeof c5
+

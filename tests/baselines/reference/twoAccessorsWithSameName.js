@@ -1,3 +1,4 @@
+//// [twoAccessorsWithSameName.js]
 var C = (function () {
     function C() {
     }

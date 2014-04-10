@@ -1,3 +1,4 @@
+//// [additionOperatorWithInvalidOperands.js]
 function foo() {
 }
 var C = (function () {

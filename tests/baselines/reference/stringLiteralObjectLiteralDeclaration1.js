@@ -1,3 +1,9 @@
+//// [stringLiteralObjectLiteralDeclaration1.ts]
+module m1 {
+  export var n = { 'foo bar': 4 };
+}
+
+
 //// [stringLiteralObjectLiteralDeclaration1.js]
 var m1;
 (function (m1) {

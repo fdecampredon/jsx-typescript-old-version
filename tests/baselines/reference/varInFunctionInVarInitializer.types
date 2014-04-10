@@ -1,9 +1,18 @@
 === tests/cases/compiler/varInFunctionInVarInitializer.ts ===
-Line 0 col 4 IdentifierName "a" = () => number
-Line 0 col 8 FunctionExpression "function () {
+var a = function () {
+>a : () => number
+>function () {
     var c = 1;
     return c;
-}" = () => number
-Line 1 col 8 IdentifierName "c" = number
-Line 2 col 11 IdentifierName "c" = number
-Line 4 col 0 IdentifierName "b" = number
+} : () => number
+
+    var c = 1;
+>c : number
+
+    return c;
+>c : number
+
+},
+    b = 1;
+>b : number
+

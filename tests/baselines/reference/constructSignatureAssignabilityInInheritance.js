@@ -1,3 +1,4 @@
+//// [constructSignatureAssignabilityInInheritance.js]
 // Checking basic subtype relations with construct signatures
 
 var MemberWithConstructSignature;

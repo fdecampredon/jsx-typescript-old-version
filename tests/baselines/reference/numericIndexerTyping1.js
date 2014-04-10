@@ -1,3 +1,4 @@
+//// [numericIndexerTyping1.js]
 var i;
 var r = i[1];
 

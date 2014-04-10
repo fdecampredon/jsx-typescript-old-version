@@ -1,10 +1,23 @@
 === tests/cases/compiler/moduleIdentifiers.ts ===
-Line 0 col 7 IdentifierName "M" = M
-Line 1 col 14 IdentifierName "P" = P
-Line 1 col 18 IdentifierName "x" = number
-Line 1 col 29 IdentifierName "y" = number
-Line 2 col 15 IdentifierName "a" = number
-Line 7 col 4 IdentifierName "x1" = number
-Line 7 col 9 MemberAccessExpression "M.a" = number
-Line 7 col 9 IdentifierName "M" = typeof M
-Line 7 col 11 IdentifierName "a" = number
+module M {
+>M : M
+
+    interface P { x: number; y: number; }
+>P : P
+>x : number
+>y : number
+
+    export var a = 1
+>a : number
+}
+
+//var p: M.P;
+//var m: M = M;
+var x1 = M.a;
+>x1 : number
+>M.a : number
+>M : typeof M
+>a : number
+
+//var x2 = m.a;
+//var q: m.P;

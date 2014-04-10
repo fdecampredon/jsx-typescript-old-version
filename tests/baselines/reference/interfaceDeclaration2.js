@@ -1,3 +1,4 @@
+//// [interfaceDeclaration2.js]
 var I2 = (function () {
     function I2() {
     }

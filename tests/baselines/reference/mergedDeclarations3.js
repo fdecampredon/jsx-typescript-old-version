@@ -1,3 +1,4 @@
+//// [mergedDeclarations3.js]
 var M;
 (function (M) {
     (function (Color) {

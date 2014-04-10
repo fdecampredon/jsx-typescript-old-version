@@ -1,3 +1,4 @@
+//// [callSignaturesThatDifferOnlyByReturnType.js]
 
 var a;
 

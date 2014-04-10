@@ -1,25 +1,44 @@
 === tests/cases/compiler/genericBaseClassLiteralProperty2.ts ===
-Line 0 col 6 IdentifierName "CollectionItem2" = CollectionItem2
-Line 2 col 6 IdentifierName "BaseCollection2" = BaseCollection2<TItem>
-Line 2 col 22 IdentifierName "TItem" = TItem
-Line 2 col 36 IdentifierName "CollectionItem2" = CollectionItem2
-Line 3 col 0 IdentifierName "_itemsByKey" = { [key: string]: TItem; }
-Line 3 col 20 IdentifierName "key" = string
-Line 3 col 34 IdentifierName "TItem" = TItem
-Line 5 col 0 AssignmentExpression "this._itemsByKey = {}" = { [key: string]: TItem; }
-Line 5 col 0 MemberAccessExpression "this._itemsByKey" = { [key: string]: TItem; }
-Line 5 col 0 ThisKeyword "this" = BaseCollection2<TItem>
-Line 5 col 13 IdentifierName "_itemsByKey" = { [key: string]: TItem; }
-Line 5 col 27 ObjectLiteralExpression "{}" = { [key: string]: TItem; }
-Line 9 col 6 IdentifierName "DataView2" = DataView2
-Line 9 col 24 IdentifierName "BaseCollection2" = BaseCollection2<TItem>
-Line 9 col 40 IdentifierName "CollectionItem2" = CollectionItem2
-Line 10 col 0 IdentifierName "fillItems" = (item: CollectionItem2) => void
-Line 10 col 14 IdentifierName "item" = CollectionItem2
-Line 10 col 20 IdentifierName "CollectionItem2" = CollectionItem2
-Line 11 col 0 AssignmentExpression "this._itemsByKey['dummy'] = item" = CollectionItem2
-Line 11 col 0 ElementAccessExpression "this._itemsByKey['dummy']" = CollectionItem2
-Line 11 col 0 MemberAccessExpression "this._itemsByKey" = { [key: string]: CollectionItem2; }
-Line 11 col 0 ThisKeyword "this" = DataView2
-Line 11 col 13 IdentifierName "_itemsByKey" = { [key: string]: CollectionItem2; }
-Line 11 col 36 IdentifierName "item" = CollectionItem2
+class CollectionItem2 { }
+>CollectionItem2 : CollectionItem2
+
+class BaseCollection2<TItem extends CollectionItem2> {
+>BaseCollection2 : BaseCollection2<TItem>
+>TItem : TItem
+>CollectionItem2 : CollectionItem2
+
+    _itemsByKey: { [key: string]: TItem; };
+>_itemsByKey : { [key: string]: TItem; }
+>key : string
+>TItem : TItem
+
+    constructor() {
+        this._itemsByKey = {};
+>this._itemsByKey = {} : { [key: string]: TItem; }
+>this._itemsByKey : { [key: string]: TItem; }
+>this : BaseCollection2<TItem>
+>_itemsByKey : { [key: string]: TItem; }
+>{} : { [key: string]: TItem; }
+    }
+}
+
+class DataView2 extends BaseCollection2<CollectionItem2> {
+>DataView2 : DataView2
+>BaseCollection2 : BaseCollection2<TItem>
+>CollectionItem2 : CollectionItem2
+
+    fillItems(item: CollectionItem2) {
+>fillItems : (item: CollectionItem2) => void
+>item : CollectionItem2
+>CollectionItem2 : CollectionItem2
+
+        this._itemsByKey['dummy'] = item;
+>this._itemsByKey['dummy'] = item : CollectionItem2
+>this._itemsByKey['dummy'] : CollectionItem2
+>this._itemsByKey : { [key: string]: CollectionItem2; }
+>this : DataView2
+>_itemsByKey : { [key: string]: CollectionItem2; }
+>item : CollectionItem2
+    }
+}
+

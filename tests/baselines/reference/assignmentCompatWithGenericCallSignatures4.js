@@ -1,3 +1,4 @@
+//// [assignmentCompatWithGenericCallSignatures4.js]
 // some complex cases of assignment compat of generic signatures.
 
 var x;

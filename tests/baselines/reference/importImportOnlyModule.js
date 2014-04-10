@@ -1,3 +1,8 @@
+//// [foo_2.ts]
+import foo = require("./foo_1");
+var x = foo; // Cause a runtime dependency
+
+
 //// [foo_0.js]
 define(["require", "exports"], function(require, exports) {
     var C1 = (function () {

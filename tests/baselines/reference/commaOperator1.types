@@ -1,18 +1,27 @@
 === tests/cases/compiler/commaOperator1.ts ===
-Line 0 col 4 IdentifierName "v1" = number
-Line 0 col 9 ParenthesizedExpression "((1, 2, 3), 4, 5, (6, 7))" = number
-Line 0 col 10 CommaExpression "(1, 2, 3), 4, 5, (6, 7)" = number
-Line 0 col 10 CommaExpression "(1, 2, 3), 4, 5" = number
-Line 0 col 10 CommaExpression "(1, 2, 3), 4" = number
-Line 0 col 10 ParenthesizedExpression "(1, 2, 3)" = number
-Line 0 col 11 CommaExpression "1, 2, 3" = number
-Line 0 col 11 CommaExpression "1, 2" = number
-Line 0 col 27 ParenthesizedExpression "(6, 7)" = number
-Line 0 col 28 CommaExpression "6, 7" = number
-Line 1 col 9 IdentifierName "f1" = typeof f1
-Line 2 col 8 IdentifierName "a" = number
-Line 3 col 11 CommaExpression "a, v1, a" = number
-Line 3 col 11 CommaExpression "a, v1" = number
-Line 3 col 11 IdentifierName "a" = number
-Line 3 col 14 IdentifierName "v1" = number
-Line 3 col 18 IdentifierName "a" = number
+var v1 = ((1, 2, 3), 4, 5, (6, 7));
+>v1 : number
+>((1, 2, 3), 4, 5, (6, 7)) : number
+>(1, 2, 3), 4, 5, (6, 7) : number
+>(1, 2, 3), 4, 5 : number
+>(1, 2, 3), 4 : number
+>(1, 2, 3) : number
+>1, 2, 3 : number
+>1, 2 : number
+>(6, 7) : number
+>6, 7 : number
+
+function f1() {
+>f1 : typeof f1
+
+    var a = 1;
+>a : number
+
+    return a, v1, a;
+>a, v1, a : number
+>a, v1 : number
+>a : number
+>v1 : number
+>a : number
+}
+

@@ -1,3 +1,4 @@
+//// [augmentedTypesModules.js]
 var m1 = 1;
 
 var m1a;

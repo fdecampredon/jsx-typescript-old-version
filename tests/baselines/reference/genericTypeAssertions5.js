@@ -1,3 +1,4 @@
+//// [genericTypeAssertions5.js]
 var a;
 var b;
 var c;

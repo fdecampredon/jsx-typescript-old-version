@@ -1,88 +1,157 @@
 === tests/cases/compiler/assignmentCompatWithObjectMembers2.ts ===
-Line 3 col 6 IdentifierName "S" = S
-Line 3 col 10 IdentifierName "foo" = string
-Line 4 col 6 IdentifierName "T" = T
-Line 4 col 10 IdentifierName "foo" = string
-Line 5 col 4 IdentifierName "s" = S
-Line 5 col 7 IdentifierName "S" = S
-Line 6 col 4 IdentifierName "t" = T
-Line 6 col 7 IdentifierName "T" = T
-Line 8 col 10 IdentifierName "S2" = S2
-Line 8 col 15 IdentifierName "foo" = string
-Line 8 col 28 IdentifierName "bar" = string
-Line 9 col 10 IdentifierName "T2" = T2
-Line 9 col 15 IdentifierName "foo" = string
-Line 9 col 28 IdentifierName "baz" = string
-Line 10 col 4 IdentifierName "s2" = S2
-Line 10 col 8 IdentifierName "S2" = S2
-Line 11 col 4 IdentifierName "t2" = T2
-Line 11 col 8 IdentifierName "T2" = T2
-Line 13 col 4 IdentifierName "a" = { foo: string; bar?: string; }
-Line 13 col 9 IdentifierName "foo" = string
-Line 13 col 22 IdentifierName "bar" = string
-Line 14 col 4 IdentifierName "b" = { foo: string; baz?: string; }
-Line 14 col 9 IdentifierName "foo" = string
-Line 14 col 22 IdentifierName "baz" = string
-Line 16 col 4 IdentifierName "a2" = { foo: string; }
-Line 16 col 9 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
-Line 16 col 11 IdentifierName "foo" = string
-Line 17 col 4 IdentifierName "b2" = { foo: string; }
-Line 17 col 9 ObjectLiteralExpression "{ foo: '' }" = { foo: string; }
-Line 17 col 11 IdentifierName "foo" = string
-Line 18 col 0 AssignmentExpression "s = t" = T
-Line 18 col 0 IdentifierName "s" = S
-Line 19 col 4 IdentifierName "t" = T
-Line 20 col 0 AssignmentExpression "t = s" = S
-Line 20 col 0 IdentifierName "t" = T
-Line 20 col 4 IdentifierName "s" = S
-Line 21 col 0 AssignmentExpression "s = s2" = S2
-Line 21 col 0 IdentifierName "s" = S
-Line 21 col 4 IdentifierName "s2" = S2
-Line 22 col 0 AssignmentExpression "s = a2" = { foo: string; }
-Line 22 col 0 IdentifierName "s" = S
-Line 22 col 4 IdentifierName "a2" = { foo: string; }
-Line 23 col 0 AssignmentExpression "s2 = t2" = T2
-Line 23 col 0 IdentifierName "s2" = S2
-Line 24 col 5 IdentifierName "t2" = T2
-Line 25 col 0 AssignmentExpression "t2 = s2" = S2
-Line 25 col 0 IdentifierName "t2" = T2
-Line 25 col 5 IdentifierName "s2" = S2
-Line 26 col 0 AssignmentExpression "s2 = t" = T
-Line 26 col 0 IdentifierName "s2" = S2
-Line 26 col 5 IdentifierName "t" = T
-Line 27 col 0 AssignmentExpression "s2 = b" = { foo: string; baz?: string; }
-Line 27 col 0 IdentifierName "s2" = S2
-Line 27 col 5 IdentifierName "b" = { foo: string; baz?: string; }
-Line 28 col 0 AssignmentExpression "s2 = a2" = { foo: string; }
-Line 28 col 0 IdentifierName "s2" = S2
-Line 28 col 5 IdentifierName "a2" = { foo: string; }
-Line 29 col 0 AssignmentExpression "a = b" = { foo: string; baz?: string; }
-Line 29 col 0 IdentifierName "a" = { foo: string; bar?: string; }
-Line 30 col 4 IdentifierName "b" = { foo: string; baz?: string; }
-Line 31 col 0 AssignmentExpression "b = a" = { foo: string; bar?: string; }
-Line 31 col 0 IdentifierName "b" = { foo: string; baz?: string; }
-Line 31 col 4 IdentifierName "a" = { foo: string; bar?: string; }
-Line 32 col 0 AssignmentExpression "a = s" = S
-Line 32 col 0 IdentifierName "a" = { foo: string; bar?: string; }
-Line 32 col 4 IdentifierName "s" = S
-Line 33 col 0 AssignmentExpression "a = s2" = S2
-Line 33 col 0 IdentifierName "a" = { foo: string; bar?: string; }
-Line 33 col 4 IdentifierName "s2" = S2
-Line 34 col 0 AssignmentExpression "a = a2" = { foo: string; }
-Line 34 col 0 IdentifierName "a" = { foo: string; bar?: string; }
-Line 34 col 4 IdentifierName "a2" = { foo: string; }
-Line 35 col 0 AssignmentExpression "a2 = b2" = { foo: string; }
-Line 35 col 0 IdentifierName "a2" = { foo: string; }
-Line 36 col 5 IdentifierName "b2" = { foo: string; }
-Line 37 col 0 AssignmentExpression "b2 = a2" = { foo: string; }
-Line 37 col 0 IdentifierName "b2" = { foo: string; }
-Line 37 col 5 IdentifierName "a2" = { foo: string; }
-Line 38 col 0 AssignmentExpression "a2 = b" = { foo: string; baz?: string; }
-Line 38 col 0 IdentifierName "a2" = { foo: string; }
-Line 38 col 5 IdentifierName "b" = { foo: string; baz?: string; }
-Line 39 col 0 AssignmentExpression "a2 = t2" = T2
-Line 39 col 0 IdentifierName "a2" = { foo: string; }
-Line 39 col 5 IdentifierName "t2" = T2
-Line 40 col 0 AssignmentExpression "a2 = t" = T
-Line 40 col 0 IdentifierName "a2" = { foo: string; }
-Line 40 col 5 IdentifierName "t" = T
+// members N and M of types S and T have the same name, same accessibility, same optionality, and N is assignable M
+// additional optional properties do not cause errors
+
+class S { foo: string; }
+>S : S
+>foo : string
+
+class T { foo: string; }
+>T : T
+>foo : string
+
+var s: S;
+>s : S
+>S : S
+
+var t: T;
+>t : T
+>T : T
+
+interface S2 { foo: string; bar?: string }
+>S2 : S2
+>foo : string
+>bar : string
+
+interface T2 { foo: string; baz?: string }
+>T2 : T2
+>foo : string
+>baz : string
+
+var s2: S2;
+>s2 : S2
+>S2 : S2
+
+var t2: T2;
+>t2 : T2
+>T2 : T2
+
+var a: { foo: string; bar?: string }
+>a : { foo: string; bar?: string; }
+>foo : string
+>bar : string
+
+var b: { foo: string; baz?: string }
+>b : { foo: string; baz?: string; }
+>foo : string
+>baz : string
+
+var a2 = { foo: '' };
+>a2 : { foo: string; }
+>{ foo: '' } : { foo: string; }
+>foo : string
+
+var b2 = { foo: '' };
+>b2 : { foo: string; }
+>{ foo: '' } : { foo: string; }
+>foo : string
+
+>s = t : T
+>s : S
+
+s = t;
+>t : T
+
+t = s;
+>t = s : S
+>t : T
+>s : S
+
+s = s2;
+>s = s2 : S2
+>s : S
+>s2 : S2
+
+s = a2;
+>s = a2 : { foo: string; }
+>s : S
+>a2 : { foo: string; }
+
+>s2 = t2 : T2
+>s2 : S2
+
+s2 = t2;
+>t2 : T2
+
+t2 = s2;
+>t2 = s2 : S2
+>t2 : T2
+>s2 : S2
+
+s2 = t;
+>s2 = t : T
+>s2 : S2
+>t : T
+
+s2 = b;
+>s2 = b : { foo: string; baz?: string; }
+>s2 : S2
+>b : { foo: string; baz?: string; }
+
+s2 = a2;
+>s2 = a2 : { foo: string; }
+>s2 : S2
+>a2 : { foo: string; }
+
+>a = b : { foo: string; baz?: string; }
+>a : { foo: string; bar?: string; }
+
+a = b;
+>b : { foo: string; baz?: string; }
+
+b = a;
+>b = a : { foo: string; bar?: string; }
+>b : { foo: string; baz?: string; }
+>a : { foo: string; bar?: string; }
+
+a = s;
+>a = s : S
+>a : { foo: string; bar?: string; }
+>s : S
+
+a = s2;
+>a = s2 : S2
+>a : { foo: string; bar?: string; }
+>s2 : S2
+
+a = a2;
+>a = a2 : { foo: string; }
+>a : { foo: string; bar?: string; }
+>a2 : { foo: string; }
+
+>a2 = b2 : { foo: string; }
+>a2 : { foo: string; }
+
+a2 = b2;
+>b2 : { foo: string; }
+
+b2 = a2;
+>b2 = a2 : { foo: string; }
+>b2 : { foo: string; }
+>a2 : { foo: string; }
+
+a2 = b;
+>a2 = b : { foo: string; baz?: string; }
+>a2 : { foo: string; }
+>b : { foo: string; baz?: string; }
+
+a2 = t2;
+>a2 = t2 : T2
+>a2 : { foo: string; }
+>t2 : T2
+
+a2 = t;
+>a2 = t : T
+>a2 : { foo: string; }
+>t : T
+

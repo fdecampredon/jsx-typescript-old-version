@@ -1,3 +1,4 @@
+//// [genericMergedDeclarationUsingTypeParameter2.js]
 var foo = (function () {
     function foo(x) {
     }

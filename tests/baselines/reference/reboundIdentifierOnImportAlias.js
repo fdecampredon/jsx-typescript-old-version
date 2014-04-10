@@ -1,3 +1,4 @@
+//// [reboundIdentifierOnImportAlias.js]
 var Foo;
 (function (Foo) {
     Foo.x = "hello";

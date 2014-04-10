@@ -1,16 +1,51 @@
 === tests/cases/compiler/concatError.ts ===
-Line 1 col 4 IdentifierName "n1" = number[]
-Line 8 col 4 IdentifierName "fa" = number[]
-Line 9 col 0 AssignmentExpression "fa = fa.concat([0])" = number[]
-Line 9 col 0 IdentifierName "fa" = number[]
-Line 10 col 5 InvocationExpression "fa.concat([0])" = number[]
-Line 10 col 5 MemberAccessExpression "fa.concat" = { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
-Line 10 col 5 IdentifierName "fa" = number[]
-Line 10 col 8 IdentifierName "concat" = { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
-Line 10 col 15 ArrayLiteralExpression "[0]" = number[]
-Line 11 col 0 AssignmentExpression "fa = fa.concat(0)" = number[]
-Line 11 col 0 IdentifierName "fa" = number[]
-Line 11 col 5 InvocationExpression "fa.concat(0)" = number[]
-Line 11 col 5 MemberAccessExpression "fa.concat" = { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
-Line 11 col 5 IdentifierName "fa" = number[]
-Line 11 col 8 IdentifierName "concat" = { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
+
+var n1: number[];
+>n1 : number[]
+
+/*
+interface Array<T> {
+    concat(...items: T[][]): T[]; // Note: This overload needs to be picked for arrays of arrays, even though both are applicable
+    concat(...items: T[]): T[];
+}
+*/
+var fa: number[];
+>fa : number[]
+
+>fa = fa.concat([0]) : number[]
+>fa : number[]
+
+fa = fa.concat([0]);
+>fa.concat([0]) : number[]
+>fa.concat : { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
+>fa : number[]
+>concat : { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
+>[0] : number[]
+
+fa = fa.concat(0);
+>fa = fa.concat(0) : number[]
+>fa : number[]
+>fa.concat(0) : number[]
+>fa.concat : { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
+>fa : number[]
+>concat : { <U extends number[]>(...items: U[]): number[]; (...items: number[]): number[]; }
+
+
+
+
+
+/*
+
+
+
+
+declare class C<T> {
+	public m(p1: C<C<T>>): C<T>;
+	//public p: T;
+}
+
+var c: C<number>;
+var cc: C<C<number>>;
+
+c = c.m(cc);
+*/

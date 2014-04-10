@@ -1,103 +1,168 @@
 === tests/cases/compiler/additionOperatorWithAnyAndEveryType.ts ===
-Line 0 col 9 IdentifierName "foo" = typeof foo
-Line 1 col 6 IdentifierName "C" = C
-Line 2 col 11 IdentifierName "a" = string
-Line 3 col 11 IdentifierName "foo" = () => void
-Line 5 col 5 IdentifierName "E" = E
-Line 5 col 9 IdentifierName "a" = E
-Line 5 col 12 IdentifierName "b" = E
-Line 5 col 15 IdentifierName "c" = E
-Line 6 col 7 IdentifierName "M" = M
-Line 6 col 22 IdentifierName "a" = any
-Line 8 col 4 IdentifierName "a" = any
-Line 9 col 4 IdentifierName "b" = boolean
-Line 10 col 4 IdentifierName "c" = number
-Line 11 col 4 IdentifierName "d" = string
-Line 12 col 4 IdentifierName "e" = Object
-Line 12 col 7 IdentifierName "Object" = Object
-Line 15 col 4 IdentifierName "r1" = any
-Line 15 col 9 AddExpression "a + a" = any
-Line 15 col 9 IdentifierName "a" = any
-Line 15 col 13 IdentifierName "a" = any
-Line 16 col 4 IdentifierName "r2" = any
-Line 16 col 9 AddExpression "a + b" = any
-Line 16 col 9 IdentifierName "a" = any
-Line 16 col 13 IdentifierName "b" = boolean
-Line 17 col 4 IdentifierName "r3" = any
-Line 17 col 9 AddExpression "a + c" = any
-Line 17 col 9 IdentifierName "a" = any
-Line 17 col 13 IdentifierName "c" = number
-Line 18 col 4 IdentifierName "r4" = string
-Line 18 col 9 AddExpression "a + d" = string
-Line 18 col 9 IdentifierName "a" = any
-Line 18 col 13 IdentifierName "d" = string
-Line 19 col 4 IdentifierName "r5" = any
-Line 19 col 9 AddExpression "a + e" = any
-Line 19 col 9 IdentifierName "a" = any
-Line 19 col 13 IdentifierName "e" = Object
-Line 22 col 4 IdentifierName "r6" = any
-Line 22 col 9 AddExpression "b + a" = any
-Line 22 col 9 IdentifierName "b" = boolean
-Line 22 col 13 IdentifierName "a" = any
-Line 23 col 4 IdentifierName "r7" = any
-Line 23 col 9 AddExpression "c + a" = any
-Line 23 col 9 IdentifierName "c" = number
-Line 23 col 13 IdentifierName "a" = any
-Line 24 col 4 IdentifierName "r8" = string
-Line 24 col 9 AddExpression "d + a" = string
-Line 24 col 9 IdentifierName "d" = string
-Line 24 col 13 IdentifierName "a" = any
-Line 25 col 4 IdentifierName "r9" = any
-Line 25 col 9 AddExpression "e + a" = any
-Line 25 col 9 IdentifierName "e" = Object
-Line 25 col 13 IdentifierName "a" = any
-Line 28 col 4 IdentifierName "r10" = any
-Line 28 col 10 AddExpression "a + foo" = any
-Line 28 col 10 IdentifierName "a" = any
-Line 28 col 14 IdentifierName "foo" = typeof foo
-Line 29 col 4 IdentifierName "r11" = any
-Line 29 col 10 AddExpression "a + foo()" = any
-Line 29 col 10 IdentifierName "a" = any
-Line 29 col 14 InvocationExpression "foo()" = void
-Line 29 col 14 IdentifierName "foo" = typeof foo
-Line 30 col 4 IdentifierName "r12" = any
-Line 30 col 10 AddExpression "a + C" = any
-Line 30 col 10 IdentifierName "a" = any
-Line 30 col 14 IdentifierName "C" = typeof C
-Line 31 col 4 IdentifierName "r13" = any
-Line 31 col 10 AddExpression "a + new C()" = any
-Line 31 col 10 IdentifierName "a" = any
-Line 31 col 14 ObjectCreationExpression "new C()" = C
-Line 31 col 18 IdentifierName "C" = typeof C
-Line 32 col 4 IdentifierName "r14" = any
-Line 32 col 10 AddExpression "a + E" = any
-Line 32 col 10 IdentifierName "a" = any
-Line 32 col 14 IdentifierName "E" = typeof E
-Line 33 col 4 IdentifierName "r15" = any
-Line 33 col 10 AddExpression "a + E.a" = any
-Line 33 col 10 IdentifierName "a" = any
-Line 33 col 14 MemberAccessExpression "E.a" = E
-Line 33 col 14 IdentifierName "E" = typeof E
-Line 33 col 16 IdentifierName "a" = E
-Line 34 col 4 IdentifierName "r16" = any
-Line 34 col 10 AddExpression "a + M" = any
-Line 34 col 10 IdentifierName "a" = any
-Line 34 col 14 IdentifierName "M" = typeof M
-Line 35 col 4 IdentifierName "r17" = string
-Line 35 col 10 AddExpression "a + ''" = string
-Line 35 col 10 IdentifierName "a" = any
-Line 36 col 4 IdentifierName "r18" = any
-Line 36 col 10 AddExpression "a + 123" = any
-Line 36 col 10 IdentifierName "a" = any
-Line 37 col 4 IdentifierName "r19" = any
-Line 37 col 10 AddExpression "a + { a: '' }" = any
-Line 37 col 10 IdentifierName "a" = any
-Line 37 col 14 ObjectLiteralExpression "{ a: '' }" = { a: string; }
-Line 37 col 16 IdentifierName "a" = string
-Line 38 col 4 IdentifierName "r20" = any
-Line 38 col 10 AddExpression "a + ((a: string) => { return a })" = any
-Line 38 col 10 IdentifierName "a" = any
-Line 38 col 14 ParenthesizedExpression "((a: string) => { return a })" = (a: string) => string
-Line 38 col 15 ParenthesizedArrowFunctionExpression "(a: string) => { return a }" = (a: string) => string
-Line 38 col 16 IdentifierName "a" = string
-Line 38 col 39 IdentifierName "a" = string
+function foo() { }
+>foo : typeof foo
+
+class C {
+>C : C
+
+    public a: string;
+>a : string
+
+    static foo() { }
+>foo : () => void
+}
+enum E { a, b, c }
+>E : E
+>a : E
+>b : E
+>c : E
+
+module M { export var a }
+>M : M
+>a : any
+
+var a: any;
+>a : any
+
+var b: boolean;
+>b : boolean
+
+var c: number;
+>c : number
+
+var d: string;
+>d : string
+
+var e: Object;
+>e : Object
+>Object : Object
+
+// any as left operand, result is type Any except plusing string
+var r1 = a + a;
+>r1 : any
+>a + a : any
+>a : any
+>a : any
+
+var r2 = a + b;
+>r2 : any
+>a + b : any
+>a : any
+>b : boolean
+
+var r3 = a + c;
+>r3 : any
+>a + c : any
+>a : any
+>c : number
+
+var r4 = a + d;
+>r4 : string
+>a + d : string
+>a : any
+>d : string
+
+var r5 = a + e;
+>r5 : any
+>a + e : any
+>a : any
+>e : Object
+
+// any as right operand, result is type Any except plusing string
+var r6 = b + a;
+>r6 : any
+>b + a : any
+>b : boolean
+>a : any
+
+var r7 = c + a;
+>r7 : any
+>c + a : any
+>c : number
+>a : any
+
+var r8 = d + a;
+>r8 : string
+>d + a : string
+>d : string
+>a : any
+
+var r9 = e + a;
+>r9 : any
+>e + a : any
+>e : Object
+>a : any
+
+// other cases
+var r10 = a + foo;
+>r10 : any
+>a + foo : any
+>a : any
+>foo : typeof foo
+
+var r11 = a + foo();
+>r11 : any
+>a + foo() : any
+>a : any
+>foo() : void
+>foo : typeof foo
+
+var r12 = a + C;
+>r12 : any
+>a + C : any
+>a : any
+>C : typeof C
+
+var r13 = a + new C();
+>r13 : any
+>a + new C() : any
+>a : any
+>new C() : C
+>C : typeof C
+
+var r14 = a + E;
+>r14 : any
+>a + E : any
+>a : any
+>E : typeof E
+
+var r15 = a + E.a;
+>r15 : any
+>a + E.a : any
+>a : any
+>E.a : E
+>E : typeof E
+>a : E
+
+var r16 = a + M;
+>r16 : any
+>a + M : any
+>a : any
+>M : typeof M
+
+var r17 = a + '';
+>r17 : string
+>a + '' : string
+>a : any
+
+var r18 = a + 123;
+>r18 : any
+>a + 123 : any
+>a : any
+
+var r19 = a + { a: '' };
+>r19 : any
+>a + { a: '' } : any
+>a : any
+>{ a: '' } : { a: string; }
+>a : string
+
+var r20 = a + ((a: string) => { return a });
+>r20 : any
+>a + ((a: string) => { return a }) : any
+>a : any
+>((a: string) => { return a }) : (a: string) => string
+>(a: string) => { return a } : (a: string) => string
+>a : string
+>a : string
+

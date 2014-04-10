@@ -1,111 +1,205 @@
 === tests/cases/compiler/objectTypesIdentity2.ts ===
-Line 2 col 6 IdentifierName "A" = A
-Line 3 col 0 IdentifierName "foo" = number
-Line 6 col 6 IdentifierName "B" = B
-Line 7 col 0 IdentifierName "foo" = boolean
-Line 10 col 6 IdentifierName "C" = C<T>
-Line 10 col 8 IdentifierName "T" = T
-Line 11 col 0 IdentifierName "foo" = T
-Line 11 col 9 IdentifierName "T" = T
-Line 14 col 10 IdentifierName "I" = I
-Line 15 col 0 IdentifierName "foo" = Date
-Line 15 col 9 IdentifierName "Date" = Date
-Line 18 col 4 IdentifierName "a" = { foo: RegExp; }
-Line 18 col 9 IdentifierName "foo" = RegExp
-Line 18 col 14 IdentifierName "RegExp" = RegExp
-Line 19 col 5 IdentifierName "E" = E
-Line 19 col 9 IdentifierName "A" = E
-Line 20 col 4 IdentifierName "b" = { foo: E; }
-Line 20 col 8 ObjectLiteralExpression "{ foo: E.A }" = { foo: E; }
-Line 20 col 10 IdentifierName "foo" = E
-Line 20 col 15 MemberAccessExpression "E.A" = E
-Line 20 col 15 IdentifierName "E" = typeof E
-Line 20 col 17 IdentifierName "A" = E
-Line 22 col 9 IdentifierName "foo5" = typeof foo5
-Line 22 col 14 IdentifierName "x" = A
-Line 22 col 17 IdentifierName "A" = A
-Line 23 col 9 IdentifierName "foo5" = typeof foo5
-Line 23 col 14 IdentifierName "x" = B
-Line 23 col 17 IdentifierName "B" = B
-Line 24 col 9 IdentifierName "foo5" = typeof foo5
-Line 24 col 14 IdentifierName "x" = any
-Line 26 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 26 col 15 IdentifierName "x" = A
-Line 26 col 18 IdentifierName "A" = A
-Line 27 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 27 col 15 IdentifierName "x" = C<string>
-Line 27 col 18 IdentifierName "C" = C<T>
-Line 28 col 9 IdentifierName "foo5b" = typeof foo5b
-Line 28 col 15 IdentifierName "x" = any
-Line 30 col 9 IdentifierName "foo6" = typeof foo6
-Line 30 col 14 IdentifierName "x" = A
-Line 30 col 17 IdentifierName "A" = A
-Line 31 col 9 IdentifierName "foo6" = typeof foo6
-Line 31 col 14 IdentifierName "x" = I
-Line 31 col 17 IdentifierName "I" = I
-Line 32 col 9 IdentifierName "foo6" = typeof foo6
-Line 32 col 14 IdentifierName "x" = any
-Line 34 col 9 IdentifierName "foo7" = typeof foo7
-Line 34 col 14 IdentifierName "x" = A
-Line 34 col 17 IdentifierName "A" = A
-Line 35 col 9 IdentifierName "foo7" = typeof foo7
-Line 35 col 14 IdentifierName "x" = { foo: RegExp; }
-Line 35 col 24 IdentifierName "a" = { foo: RegExp; }
-Line 36 col 9 IdentifierName "foo7" = typeof foo7
-Line 36 col 14 IdentifierName "x" = any
-Line 38 col 9 IdentifierName "foo8" = typeof foo8
-Line 38 col 14 IdentifierName "x" = B
-Line 38 col 17 IdentifierName "B" = B
-Line 39 col 9 IdentifierName "foo8" = typeof foo8
-Line 39 col 14 IdentifierName "x" = I
-Line 39 col 17 IdentifierName "I" = I
-Line 40 col 9 IdentifierName "foo8" = typeof foo8
-Line 40 col 14 IdentifierName "x" = any
-Line 42 col 9 IdentifierName "foo9" = typeof foo9
-Line 42 col 14 IdentifierName "x" = B
-Line 42 col 17 IdentifierName "B" = B
-Line 43 col 9 IdentifierName "foo9" = typeof foo9
-Line 43 col 14 IdentifierName "x" = C<string>
-Line 43 col 17 IdentifierName "C" = C<T>
-Line 44 col 9 IdentifierName "foo9" = typeof foo9
-Line 44 col 14 IdentifierName "x" = any
-Line 46 col 9 IdentifierName "foo10" = typeof foo10
-Line 46 col 15 IdentifierName "x" = B
-Line 46 col 18 IdentifierName "B" = B
-Line 47 col 9 IdentifierName "foo10" = typeof foo10
-Line 47 col 15 IdentifierName "x" = { foo: RegExp; }
-Line 47 col 25 IdentifierName "a" = { foo: RegExp; }
-Line 48 col 9 IdentifierName "foo10" = typeof foo10
-Line 48 col 15 IdentifierName "x" = any
-Line 50 col 9 IdentifierName "foo11" = typeof foo11
-Line 50 col 15 IdentifierName "x" = B
-Line 50 col 18 IdentifierName "B" = B
-Line 51 col 9 IdentifierName "foo11" = typeof foo11
-Line 51 col 15 IdentifierName "x" = { foo: E; }
-Line 51 col 25 IdentifierName "b" = { foo: E; }
-Line 52 col 9 IdentifierName "foo11" = typeof foo11
-Line 52 col 15 IdentifierName "x" = any
-Line 54 col 9 IdentifierName "foo12" = typeof foo12
-Line 54 col 15 IdentifierName "x" = I
-Line 54 col 18 IdentifierName "I" = I
-Line 55 col 9 IdentifierName "foo12" = typeof foo12
-Line 55 col 15 IdentifierName "x" = C<string>
-Line 55 col 18 IdentifierName "C" = C<T>
-Line 56 col 9 IdentifierName "foo12" = typeof foo12
-Line 56 col 15 IdentifierName "x" = any
-Line 58 col 9 IdentifierName "foo13" = typeof foo13
-Line 58 col 15 IdentifierName "x" = I
-Line 58 col 18 IdentifierName "I" = I
-Line 59 col 9 IdentifierName "foo13" = typeof foo13
-Line 59 col 15 IdentifierName "x" = { foo: RegExp; }
-Line 59 col 25 IdentifierName "a" = { foo: RegExp; }
-Line 60 col 9 IdentifierName "foo13" = typeof foo13
-Line 60 col 15 IdentifierName "x" = any
-Line 62 col 9 IdentifierName "foo14" = typeof foo14
-Line 62 col 15 IdentifierName "x" = I
-Line 62 col 18 IdentifierName "I" = I
-Line 63 col 9 IdentifierName "foo14" = typeof foo14
-Line 63 col 15 IdentifierName "x" = { foo: E; }
-Line 63 col 25 IdentifierName "b" = { foo: E; }
-Line 64 col 9 IdentifierName "foo14" = typeof foo14
-Line 64 col 15 IdentifierName "x" = any
+// object types are identical structurally
+
+class A {
+>A : A
+
+    foo: number;
+>foo : number
+}
+
+class B {
+>B : B
+
+    foo: boolean;
+>foo : boolean
+}
+
+class C<T> {
+>C : C<T>
+>T : T
+
+    foo: T;
+>foo : T
+>T : T
+}
+
+interface I {
+>I : I
+
+    foo: Date;
+>foo : Date
+>Date : Date
+}
+
+var a: { foo: RegExp; }
+>a : { foo: RegExp; }
+>foo : RegExp
+>RegExp : RegExp
+
+enum E { A }
+>E : E
+>A : E
+
+var b = { foo: E.A };
+>b : { foo: E; }
+>{ foo: E.A } : { foo: E; }
+>foo : E
+>E.A : E
+>E : typeof E
+>A : E
+
+function foo5(x: A);
+>foo5 : typeof foo5
+>x : A
+>A : A
+
+function foo5(x: B); // ok
+>foo5 : typeof foo5
+>x : B
+>B : B
+
+function foo5(x: any) { }
+>foo5 : typeof foo5
+>x : any
+
+function foo5b(x: A);
+>foo5b : typeof foo5b
+>x : A
+>A : A
+
+function foo5b(x: C<string>); // ok
+>foo5b : typeof foo5b
+>x : C<string>
+>C : C<T>
+
+function foo5b(x: any) { }
+>foo5b : typeof foo5b
+>x : any
+
+function foo6(x: A);
+>foo6 : typeof foo6
+>x : A
+>A : A
+
+function foo6(x: I); // ok
+>foo6 : typeof foo6
+>x : I
+>I : I
+
+function foo6(x: any) { }
+>foo6 : typeof foo6
+>x : any
+
+function foo7(x: A);
+>foo7 : typeof foo7
+>x : A
+>A : A
+
+function foo7(x: typeof a); // ok
+>foo7 : typeof foo7
+>x : { foo: RegExp; }
+>a : { foo: RegExp; }
+
+function foo7(x: any) { }
+>foo7 : typeof foo7
+>x : any
+
+function foo8(x: B);
+>foo8 : typeof foo8
+>x : B
+>B : B
+
+function foo8(x: I); // ok
+>foo8 : typeof foo8
+>x : I
+>I : I
+
+function foo8(x: any) { }
+>foo8 : typeof foo8
+>x : any
+
+function foo9(x: B);
+>foo9 : typeof foo9
+>x : B
+>B : B
+
+function foo9(x: C<string>); // ok
+>foo9 : typeof foo9
+>x : C<string>
+>C : C<T>
+
+function foo9(x: any) { }
+>foo9 : typeof foo9
+>x : any
+
+function foo10(x: B);
+>foo10 : typeof foo10
+>x : B
+>B : B
+
+function foo10(x: typeof a); // ok
+>foo10 : typeof foo10
+>x : { foo: RegExp; }
+>a : { foo: RegExp; }
+
+function foo10(x: any) { }
+>foo10 : typeof foo10
+>x : any
+
+function foo11(x: B);
+>foo11 : typeof foo11
+>x : B
+>B : B
+
+function foo11(x: typeof b); // ok
+>foo11 : typeof foo11
+>x : { foo: E; }
+>b : { foo: E; }
+
+function foo11(x: any) { }
+>foo11 : typeof foo11
+>x : any
+
+function foo12(x: I);
+>foo12 : typeof foo12
+>x : I
+>I : I
+
+function foo12(x: C<string>); // ok
+>foo12 : typeof foo12
+>x : C<string>
+>C : C<T>
+
+function foo12(x: any) { }
+>foo12 : typeof foo12
+>x : any
+
+function foo13(x: I);
+>foo13 : typeof foo13
+>x : I
+>I : I
+
+function foo13(x: typeof a); // ok
+>foo13 : typeof foo13
+>x : { foo: RegExp; }
+>a : { foo: RegExp; }
+
+function foo13(x: any) { }
+>foo13 : typeof foo13
+>x : any
+
+function foo14(x: I);
+>foo14 : typeof foo14
+>x : I
+>I : I
+
+function foo14(x: typeof b); // ok
+>foo14 : typeof foo14
+>x : { foo: E; }
+>b : { foo: E; }
+
+function foo14(x: any) { }
+>foo14 : typeof foo14
+>x : any
+

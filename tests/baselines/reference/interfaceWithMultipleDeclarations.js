@@ -1,3 +1,4 @@
+//// [interfaceWithMultipleDeclarations.js]
 var Foo = (function () {
     function Foo() {
     }

@@ -1,3 +1,4 @@
+//// [assignToEnum.js]
 var A;
 (function (A) {
     A[A["foo"] = 0] = "foo";

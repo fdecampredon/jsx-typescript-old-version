@@ -1,3 +1,5 @@
 === tests/cases/compiler/nullKeyword.ts ===
-Line 0 col 0 MemberAccessExpression "null.foo" = any
-Line 0 col 5 IdentifierName "foo" = any
+null.foo;
+>null.foo : any
+>foo : any
+

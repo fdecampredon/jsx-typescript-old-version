@@ -1,11 +1,20 @@
 === tests/cases/compiler/consumer.ts ===
-Line 1 col 7 IdentifierName "host" = host
-Line 2 col 4 IdentifierName "hostVar" = typeof host
-Line 2 col 14 IdentifierName "host" = typeof host
-Line 3 col 4 IdentifierName "v" = host.Host
-Line 3 col 8 ObjectCreationExpression "new hostVar.Host()" = host.Host
-Line 3 col 12 MemberAccessExpression "hostVar.Host" = typeof host.Host
-Line 3 col 12 IdentifierName "hostVar" = typeof host
-Line 3 col 20 IdentifierName "Host" = typeof host.Host
+
+import host = require("host");
+>host : host
+
+var hostVar = host;
+>hostVar : typeof host
+>host : typeof host
+
+var v = new hostVar.Host();
+>v : host.Host
+>new hostVar.Host() : host.Host
+>hostVar.Host : typeof host.Host
+>hostVar : typeof host
+>Host : typeof host.Host
+ 
 === tests/cases/compiler/host.ts ===
-Line 0 col 13 IdentifierName "Host" = Host
+export class Host { }
+>Host : Host
+

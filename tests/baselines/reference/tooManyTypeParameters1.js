@@ -1,3 +1,4 @@
+//// [tooManyTypeParameters1.js]
 function f() {
 }
 f();

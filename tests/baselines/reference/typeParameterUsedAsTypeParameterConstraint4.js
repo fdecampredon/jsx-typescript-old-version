@@ -1,3 +1,4 @@
+//// [typeParameterUsedAsTypeParameterConstraint4.js]
 // Type parameters are in scope in their own and other type parameter lists
 // Some negative cases
 var C = (function () {

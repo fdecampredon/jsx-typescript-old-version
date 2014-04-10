@@ -1,3 +1,4 @@
+//// [augmentedTypesVar.js]
 // var then var
 var x1 = 1;
 var x1 = 2;

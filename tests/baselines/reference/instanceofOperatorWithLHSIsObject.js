@@ -1,3 +1,18 @@
+//// [instanceofOperatorWithLHSIsObject.ts]
+class C { }
+
+var x1: any;
+var x2: Function;
+
+var a: {};
+var b: Object;
+var c: C;
+
+var r1 = a instanceof x1;
+var r2 = b instanceof x2;
+var r3 = c instanceof x1;
+
+//// [instanceofOperatorWithLHSIsObject.js]
 var C = (function () {
     function C() {
     }

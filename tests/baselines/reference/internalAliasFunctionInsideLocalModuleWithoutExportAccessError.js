@@ -1,3 +1,4 @@
+//// [internalAliasFunctionInsideLocalModuleWithoutExportAccessError.js]
 (function (a) {
     function foo(x) {
         return x;

@@ -1,11 +1,22 @@
 === tests/cases/compiler/validUseOfThisInSuper.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 23 IdentifierName "b" = Base
-Line 1 col 26 IdentifierName "Base" = Base
-Line 4 col 6 IdentifierName "Super" = Super
-Line 4 col 20 IdentifierName "Base" = Base
-Line 6 col 0 InvocationExpression "super((() => this)())" = void
-Line 6 col 14 InvocationExpression "(() => this)()" = Super
-Line 6 col 14 ParenthesizedExpression "(() => this)" = () => Super
-Line 6 col 15 ParenthesizedArrowFunctionExpression "() => this" = () => Super
-Line 6 col 21 ThisKeyword "this" = Super
+class Base {
+>Base : Base
+
+    constructor(public b: Base) {
+>b : Base
+>Base : Base
+    }
+}
+class Super extends Base {
+>Super : Super
+>Base : Base
+
+    constructor() {
+        super((() => this)()); // ok since this is not the case: The constructor declares parameter properties or the containing class declares instance member variables with initializers.
+>super((() => this)()) : void
+>(() => this)() : Super
+>(() => this) : () => Super
+>() => this : () => Super
+>this : Super
+    }
+}

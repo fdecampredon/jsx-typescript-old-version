@@ -1,3 +1,4 @@
+//// [arrayTypeOfFunctionTypes.js]
 // valid uses of arrays of function types
 var x;
 var r = x[1];

@@ -1,5 +1,10 @@
 === tests/cases/compiler/structuralTypeInDeclareFileForModule.ts ===
-Line 1 col 7 IdentifierName "M" = M
-Line 1 col 22 IdentifierName "x" = any
-Line 2 col 4 IdentifierName "m" = typeof M
-Line 2 col 8 IdentifierName "M" = typeof M
+
+module M { export var x; }
+>M : M
+>x : any
+
+var m = M;
+>m : typeof M
+>M : typeof M
+

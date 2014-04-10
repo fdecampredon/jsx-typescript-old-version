@@ -1,3 +1,4 @@
+//// [instancePropertyInClassType.js]
 var NonGeneric;
 (function (NonGeneric) {
     var C = (function () {

@@ -1,3 +1,4 @@
+//// [superCallInConstructorWithNoBaseType.js]
 var C = (function () {
     function C() {
         _super.call(this); // error

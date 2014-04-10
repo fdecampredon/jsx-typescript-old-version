@@ -1,282 +1,444 @@
 === tests/cases/compiler/comparisonOperatorWithSubtypeObjectOnIndexSignature.ts ===
-Line 0 col 6 IdentifierName "Base" = Base
-Line 1 col 11 IdentifierName "a" = string
-Line 4 col 6 IdentifierName "Derived" = Derived
-Line 4 col 22 IdentifierName "Base" = Base
-Line 5 col 11 IdentifierName "b" = string
-Line 8 col 4 IdentifierName "a1" = { [a: string]: string; }
-Line 8 col 11 IdentifierName "a" = string
-Line 9 col 4 IdentifierName "b1" = { [b: string]: string; }
-Line 9 col 11 IdentifierName "b" = string
-Line 11 col 4 IdentifierName "a2" = { [index: string]: Base; }
-Line 11 col 11 IdentifierName "index" = string
-Line 11 col 27 IdentifierName "Base" = Base
-Line 12 col 4 IdentifierName "b2" = { [index: string]: Derived; }
-Line 12 col 11 IdentifierName "index" = string
-Line 12 col 27 IdentifierName "Derived" = Derived
-Line 14 col 4 IdentifierName "a3" = { [index: number]: string; }
-Line 14 col 11 IdentifierName "index" = number
-Line 15 col 4 IdentifierName "b3" = { [index: number]: string; }
-Line 15 col 11 IdentifierName "index" = number
-Line 17 col 4 IdentifierName "a4" = { [index: number]: Base; }
-Line 17 col 11 IdentifierName "index" = number
-Line 17 col 27 IdentifierName "Base" = Base
-Line 18 col 4 IdentifierName "b4" = { [index: string]: Derived; }
-Line 18 col 11 IdentifierName "index" = string
-Line 18 col 27 IdentifierName "Derived" = Derived
-Line 21 col 4 IdentifierName "r1a1" = boolean
-Line 21 col 11 LessThanExpression "a1 < b1" = boolean
-Line 21 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 21 col 16 IdentifierName "b1" = { [b: string]: string; }
-Line 22 col 4 IdentifierName "r1a1" = boolean
-Line 22 col 11 LessThanExpression "a2 < b2" = boolean
-Line 22 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 22 col 16 IdentifierName "b2" = { [index: string]: Derived; }
-Line 23 col 4 IdentifierName "r1a1" = boolean
-Line 23 col 11 LessThanExpression "a3 < b3" = boolean
-Line 23 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 23 col 16 IdentifierName "b3" = { [index: number]: string; }
-Line 24 col 4 IdentifierName "r1a1" = boolean
-Line 24 col 11 LessThanExpression "a4 < b4" = boolean
-Line 24 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 24 col 16 IdentifierName "b4" = { [index: string]: Derived; }
-Line 26 col 4 IdentifierName "r1b1" = boolean
-Line 26 col 11 LessThanExpression "b1 < a1" = boolean
-Line 26 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 26 col 16 IdentifierName "a1" = { [a: string]: string; }
-Line 27 col 4 IdentifierName "r1b1" = boolean
-Line 27 col 11 LessThanExpression "b2 < a2" = boolean
-Line 27 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 27 col 16 IdentifierName "a2" = { [index: string]: Base; }
-Line 28 col 4 IdentifierName "r1b1" = boolean
-Line 28 col 11 LessThanExpression "b3 < a3" = boolean
-Line 28 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 28 col 16 IdentifierName "a3" = { [index: number]: string; }
-Line 29 col 4 IdentifierName "r1b1" = boolean
-Line 29 col 11 LessThanExpression "b4 < a4" = boolean
-Line 29 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 29 col 16 IdentifierName "a4" = { [index: number]: Base; }
-Line 32 col 4 IdentifierName "r2a1" = boolean
-Line 32 col 11 GreaterThanExpression "a1 > b1" = boolean
-Line 32 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 32 col 16 IdentifierName "b1" = { [b: string]: string; }
-Line 33 col 4 IdentifierName "r2a1" = boolean
-Line 33 col 11 GreaterThanExpression "a2 > b2" = boolean
-Line 33 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 33 col 16 IdentifierName "b2" = { [index: string]: Derived; }
-Line 34 col 4 IdentifierName "r2a1" = boolean
-Line 34 col 11 GreaterThanExpression "a3 > b3" = boolean
-Line 34 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 34 col 16 IdentifierName "b3" = { [index: number]: string; }
-Line 35 col 4 IdentifierName "r2a1" = boolean
-Line 35 col 11 GreaterThanExpression "a4 > b4" = boolean
-Line 35 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 35 col 16 IdentifierName "b4" = { [index: string]: Derived; }
-Line 37 col 4 IdentifierName "r2b1" = boolean
-Line 37 col 11 GreaterThanExpression "b1 > a1" = boolean
-Line 37 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 37 col 16 IdentifierName "a1" = { [a: string]: string; }
-Line 38 col 4 IdentifierName "r2b1" = boolean
-Line 38 col 11 GreaterThanExpression "b2 > a2" = boolean
-Line 38 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 38 col 16 IdentifierName "a2" = { [index: string]: Base; }
-Line 39 col 4 IdentifierName "r2b1" = boolean
-Line 39 col 11 GreaterThanExpression "b3 > a3" = boolean
-Line 39 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 39 col 16 IdentifierName "a3" = { [index: number]: string; }
-Line 40 col 4 IdentifierName "r2b1" = boolean
-Line 40 col 11 GreaterThanExpression "b4 > a4" = boolean
-Line 40 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 40 col 16 IdentifierName "a4" = { [index: number]: Base; }
-Line 43 col 4 IdentifierName "r3a1" = boolean
-Line 43 col 11 LessThanOrEqualExpression "a1 <= b1" = boolean
-Line 43 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 43 col 17 IdentifierName "b1" = { [b: string]: string; }
-Line 44 col 4 IdentifierName "r3a1" = boolean
-Line 44 col 11 LessThanOrEqualExpression "a2 <= b2" = boolean
-Line 44 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 44 col 17 IdentifierName "b2" = { [index: string]: Derived; }
-Line 45 col 4 IdentifierName "r3a1" = boolean
-Line 45 col 11 LessThanOrEqualExpression "a3 <= b3" = boolean
-Line 45 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 45 col 17 IdentifierName "b3" = { [index: number]: string; }
-Line 46 col 4 IdentifierName "r3a1" = boolean
-Line 46 col 11 LessThanOrEqualExpression "a4 <= b4" = boolean
-Line 46 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 46 col 17 IdentifierName "b4" = { [index: string]: Derived; }
-Line 48 col 4 IdentifierName "r3b1" = boolean
-Line 48 col 11 LessThanOrEqualExpression "b1 <= a1" = boolean
-Line 48 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 48 col 17 IdentifierName "a1" = { [a: string]: string; }
-Line 49 col 4 IdentifierName "r3b1" = boolean
-Line 49 col 11 LessThanOrEqualExpression "b2 <= a2" = boolean
-Line 49 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 49 col 17 IdentifierName "a2" = { [index: string]: Base; }
-Line 50 col 4 IdentifierName "r3b1" = boolean
-Line 50 col 11 LessThanOrEqualExpression "b3 <= a3" = boolean
-Line 50 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 50 col 17 IdentifierName "a3" = { [index: number]: string; }
-Line 51 col 4 IdentifierName "r3b1" = boolean
-Line 51 col 11 LessThanOrEqualExpression "b4 <= a4" = boolean
-Line 51 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 51 col 17 IdentifierName "a4" = { [index: number]: Base; }
-Line 54 col 4 IdentifierName "r4a1" = boolean
-Line 54 col 11 GreaterThanOrEqualExpression "a1 >= b1" = boolean
-Line 54 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 54 col 17 IdentifierName "b1" = { [b: string]: string; }
-Line 55 col 4 IdentifierName "r4a1" = boolean
-Line 55 col 11 GreaterThanOrEqualExpression "a2 >= b2" = boolean
-Line 55 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 55 col 17 IdentifierName "b2" = { [index: string]: Derived; }
-Line 56 col 4 IdentifierName "r4a1" = boolean
-Line 56 col 11 GreaterThanOrEqualExpression "a3 >= b3" = boolean
-Line 56 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 56 col 17 IdentifierName "b3" = { [index: number]: string; }
-Line 57 col 4 IdentifierName "r4a1" = boolean
-Line 57 col 11 GreaterThanOrEqualExpression "a4 >= b4" = boolean
-Line 57 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 57 col 17 IdentifierName "b4" = { [index: string]: Derived; }
-Line 59 col 4 IdentifierName "r4b1" = boolean
-Line 59 col 11 GreaterThanOrEqualExpression "b1 >= a1" = boolean
-Line 59 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 59 col 17 IdentifierName "a1" = { [a: string]: string; }
-Line 60 col 4 IdentifierName "r4b1" = boolean
-Line 60 col 11 GreaterThanOrEqualExpression "b2 >= a2" = boolean
-Line 60 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 60 col 17 IdentifierName "a2" = { [index: string]: Base; }
-Line 61 col 4 IdentifierName "r4b1" = boolean
-Line 61 col 11 GreaterThanOrEqualExpression "b3 >= a3" = boolean
-Line 61 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 61 col 17 IdentifierName "a3" = { [index: number]: string; }
-Line 62 col 4 IdentifierName "r4b1" = boolean
-Line 62 col 11 GreaterThanOrEqualExpression "b4 >= a4" = boolean
-Line 62 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 62 col 17 IdentifierName "a4" = { [index: number]: Base; }
-Line 65 col 4 IdentifierName "r5a1" = boolean
-Line 65 col 11 EqualsWithTypeConversionExpression "a1 == b1" = boolean
-Line 65 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 65 col 17 IdentifierName "b1" = { [b: string]: string; }
-Line 66 col 4 IdentifierName "r5a1" = boolean
-Line 66 col 11 EqualsWithTypeConversionExpression "a2 == b2" = boolean
-Line 66 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 66 col 17 IdentifierName "b2" = { [index: string]: Derived; }
-Line 67 col 4 IdentifierName "r5a1" = boolean
-Line 67 col 11 EqualsWithTypeConversionExpression "a3 == b3" = boolean
-Line 67 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 67 col 17 IdentifierName "b3" = { [index: number]: string; }
-Line 68 col 4 IdentifierName "r5a1" = boolean
-Line 68 col 11 EqualsWithTypeConversionExpression "a4 == b4" = boolean
-Line 68 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 68 col 17 IdentifierName "b4" = { [index: string]: Derived; }
-Line 70 col 4 IdentifierName "r5b1" = boolean
-Line 70 col 11 EqualsWithTypeConversionExpression "b1 == a1" = boolean
-Line 70 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 70 col 17 IdentifierName "a1" = { [a: string]: string; }
-Line 71 col 4 IdentifierName "r5b1" = boolean
-Line 71 col 11 EqualsWithTypeConversionExpression "b2 == a2" = boolean
-Line 71 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 71 col 17 IdentifierName "a2" = { [index: string]: Base; }
-Line 72 col 4 IdentifierName "r5b1" = boolean
-Line 72 col 11 EqualsWithTypeConversionExpression "b3 == a3" = boolean
-Line 72 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 72 col 17 IdentifierName "a3" = { [index: number]: string; }
-Line 73 col 4 IdentifierName "r5b1" = boolean
-Line 73 col 11 EqualsWithTypeConversionExpression "b4 == a4" = boolean
-Line 73 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 73 col 17 IdentifierName "a4" = { [index: number]: Base; }
-Line 76 col 4 IdentifierName "r6a1" = boolean
-Line 76 col 11 NotEqualsWithTypeConversionExpression "a1 != b1" = boolean
-Line 76 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 76 col 17 IdentifierName "b1" = { [b: string]: string; }
-Line 77 col 4 IdentifierName "r6a1" = boolean
-Line 77 col 11 NotEqualsWithTypeConversionExpression "a2 != b2" = boolean
-Line 77 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 77 col 17 IdentifierName "b2" = { [index: string]: Derived; }
-Line 78 col 4 IdentifierName "r6a1" = boolean
-Line 78 col 11 NotEqualsWithTypeConversionExpression "a3 != b3" = boolean
-Line 78 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 78 col 17 IdentifierName "b3" = { [index: number]: string; }
-Line 79 col 4 IdentifierName "r6a1" = boolean
-Line 79 col 11 NotEqualsWithTypeConversionExpression "a4 != b4" = boolean
-Line 79 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 79 col 17 IdentifierName "b4" = { [index: string]: Derived; }
-Line 81 col 4 IdentifierName "r6b1" = boolean
-Line 81 col 11 NotEqualsWithTypeConversionExpression "b1 != a1" = boolean
-Line 81 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 81 col 17 IdentifierName "a1" = { [a: string]: string; }
-Line 82 col 4 IdentifierName "r6b1" = boolean
-Line 82 col 11 NotEqualsWithTypeConversionExpression "b2 != a2" = boolean
-Line 82 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 82 col 17 IdentifierName "a2" = { [index: string]: Base; }
-Line 83 col 4 IdentifierName "r6b1" = boolean
-Line 83 col 11 NotEqualsWithTypeConversionExpression "b3 != a3" = boolean
-Line 83 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 83 col 17 IdentifierName "a3" = { [index: number]: string; }
-Line 84 col 4 IdentifierName "r6b1" = boolean
-Line 84 col 11 NotEqualsWithTypeConversionExpression "b4 != a4" = boolean
-Line 84 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 84 col 17 IdentifierName "a4" = { [index: number]: Base; }
-Line 87 col 4 IdentifierName "r7a1" = boolean
-Line 87 col 11 EqualsExpression "a1 === b1" = boolean
-Line 87 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 87 col 18 IdentifierName "b1" = { [b: string]: string; }
-Line 88 col 4 IdentifierName "r7a1" = boolean
-Line 88 col 11 EqualsExpression "a2 === b2" = boolean
-Line 88 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 88 col 18 IdentifierName "b2" = { [index: string]: Derived; }
-Line 89 col 4 IdentifierName "r7a1" = boolean
-Line 89 col 11 EqualsExpression "a3 === b3" = boolean
-Line 89 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 89 col 18 IdentifierName "b3" = { [index: number]: string; }
-Line 90 col 4 IdentifierName "r7a1" = boolean
-Line 90 col 11 EqualsExpression "a4 === b4" = boolean
-Line 90 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 90 col 18 IdentifierName "b4" = { [index: string]: Derived; }
-Line 92 col 4 IdentifierName "r7b1" = boolean
-Line 92 col 11 EqualsExpression "b1 === a1" = boolean
-Line 92 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 92 col 18 IdentifierName "a1" = { [a: string]: string; }
-Line 93 col 4 IdentifierName "r7b1" = boolean
-Line 93 col 11 EqualsExpression "b2 === a2" = boolean
-Line 93 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 93 col 18 IdentifierName "a2" = { [index: string]: Base; }
-Line 94 col 4 IdentifierName "r7b1" = boolean
-Line 94 col 11 EqualsExpression "b3 === a3" = boolean
-Line 94 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 94 col 18 IdentifierName "a3" = { [index: number]: string; }
-Line 95 col 4 IdentifierName "r7b1" = boolean
-Line 95 col 11 EqualsExpression "b4 === a4" = boolean
-Line 95 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 95 col 18 IdentifierName "a4" = { [index: number]: Base; }
-Line 98 col 4 IdentifierName "r8a1" = boolean
-Line 98 col 11 NotEqualsExpression "a1 !== b1" = boolean
-Line 98 col 11 IdentifierName "a1" = { [a: string]: string; }
-Line 98 col 18 IdentifierName "b1" = { [b: string]: string; }
-Line 99 col 4 IdentifierName "r8a1" = boolean
-Line 99 col 11 NotEqualsExpression "a2 !== b2" = boolean
-Line 99 col 11 IdentifierName "a2" = { [index: string]: Base; }
-Line 99 col 18 IdentifierName "b2" = { [index: string]: Derived; }
-Line 100 col 4 IdentifierName "r8a1" = boolean
-Line 100 col 11 NotEqualsExpression "a3 !== b3" = boolean
-Line 100 col 11 IdentifierName "a3" = { [index: number]: string; }
-Line 100 col 18 IdentifierName "b3" = { [index: number]: string; }
-Line 101 col 4 IdentifierName "r8a1" = boolean
-Line 101 col 11 NotEqualsExpression "a4 !== b4" = boolean
-Line 101 col 11 IdentifierName "a4" = { [index: number]: Base; }
-Line 101 col 18 IdentifierName "b4" = { [index: string]: Derived; }
-Line 103 col 4 IdentifierName "r8b1" = boolean
-Line 103 col 11 NotEqualsExpression "b1 !== a1" = boolean
-Line 103 col 11 IdentifierName "b1" = { [b: string]: string; }
-Line 103 col 18 IdentifierName "a1" = { [a: string]: string; }
-Line 104 col 4 IdentifierName "r8b1" = boolean
-Line 104 col 11 NotEqualsExpression "b2 !== a2" = boolean
-Line 104 col 11 IdentifierName "b2" = { [index: string]: Derived; }
-Line 104 col 18 IdentifierName "a2" = { [index: string]: Base; }
-Line 105 col 4 IdentifierName "r8b1" = boolean
-Line 105 col 11 NotEqualsExpression "b3 !== a3" = boolean
-Line 105 col 11 IdentifierName "b3" = { [index: number]: string; }
-Line 105 col 18 IdentifierName "a3" = { [index: number]: string; }
-Line 106 col 4 IdentifierName "r8b1" = boolean
-Line 106 col 11 NotEqualsExpression "b4 !== a4" = boolean
-Line 106 col 11 IdentifierName "b4" = { [index: string]: Derived; }
-Line 106 col 18 IdentifierName "a4" = { [index: number]: Base; }
+class Base {
+>Base : Base
+
+    public a: string;
+>a : string
+}
+
+class Derived extends Base {
+>Derived : Derived
+>Base : Base
+
+    public b: string;
+>b : string
+}
+
+var a1: { [a: string]: string };
+>a1 : { [a: string]: string; }
+>a : string
+
+var b1: { [b: string]: string };
+>b1 : { [b: string]: string; }
+>b : string
+
+var a2: { [index: string]: Base };
+>a2 : { [index: string]: Base; }
+>index : string
+>Base : Base
+
+var b2: { [index: string]: Derived };
+>b2 : { [index: string]: Derived; }
+>index : string
+>Derived : Derived
+
+var a3: { [index: number]: string };
+>a3 : { [index: number]: string; }
+>index : number
+
+var b3: { [index: number]: string };
+>b3 : { [index: number]: string; }
+>index : number
+
+var a4: { [index: number]: Base };
+>a4 : { [index: number]: Base; }
+>index : number
+>Base : Base
+
+var b4: { [index: string]: Derived };
+>b4 : { [index: string]: Derived; }
+>index : string
+>Derived : Derived
+
+// operator <
+var r1a1 = a1 < b1;
+>r1a1 : boolean
+>a1 < b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r1a1 = a2 < b2;
+>r1a1 : boolean
+>a2 < b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r1a1 = a3 < b3;
+>r1a1 : boolean
+>a3 < b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r1a1 = a4 < b4;
+>r1a1 : boolean
+>a4 < b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r1b1 = b1 < a1;
+>r1b1 : boolean
+>b1 < a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r1b1 = b2 < a2;
+>r1b1 : boolean
+>b2 < a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r1b1 = b3 < a3;
+>r1b1 : boolean
+>b3 < a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r1b1 = b4 < a4;
+>r1b1 : boolean
+>b4 < a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator >
+var r2a1 = a1 > b1;
+>r2a1 : boolean
+>a1 > b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r2a1 = a2 > b2;
+>r2a1 : boolean
+>a2 > b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r2a1 = a3 > b3;
+>r2a1 : boolean
+>a3 > b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r2a1 = a4 > b4;
+>r2a1 : boolean
+>a4 > b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r2b1 = b1 > a1;
+>r2b1 : boolean
+>b1 > a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r2b1 = b2 > a2;
+>r2b1 : boolean
+>b2 > a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r2b1 = b3 > a3;
+>r2b1 : boolean
+>b3 > a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r2b1 = b4 > a4;
+>r2b1 : boolean
+>b4 > a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator <=
+var r3a1 = a1 <= b1;
+>r3a1 : boolean
+>a1 <= b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r3a1 = a2 <= b2;
+>r3a1 : boolean
+>a2 <= b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r3a1 = a3 <= b3;
+>r3a1 : boolean
+>a3 <= b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r3a1 = a4 <= b4;
+>r3a1 : boolean
+>a4 <= b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r3b1 = b1 <= a1;
+>r3b1 : boolean
+>b1 <= a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r3b1 = b2 <= a2;
+>r3b1 : boolean
+>b2 <= a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r3b1 = b3 <= a3;
+>r3b1 : boolean
+>b3 <= a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r3b1 = b4 <= a4;
+>r3b1 : boolean
+>b4 <= a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator >=
+var r4a1 = a1 >= b1;
+>r4a1 : boolean
+>a1 >= b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r4a1 = a2 >= b2;
+>r4a1 : boolean
+>a2 >= b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r4a1 = a3 >= b3;
+>r4a1 : boolean
+>a3 >= b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r4a1 = a4 >= b4;
+>r4a1 : boolean
+>a4 >= b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r4b1 = b1 >= a1;
+>r4b1 : boolean
+>b1 >= a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r4b1 = b2 >= a2;
+>r4b1 : boolean
+>b2 >= a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r4b1 = b3 >= a3;
+>r4b1 : boolean
+>b3 >= a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r4b1 = b4 >= a4;
+>r4b1 : boolean
+>b4 >= a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator ==
+var r5a1 = a1 == b1;
+>r5a1 : boolean
+>a1 == b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r5a1 = a2 == b2;
+>r5a1 : boolean
+>a2 == b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r5a1 = a3 == b3;
+>r5a1 : boolean
+>a3 == b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r5a1 = a4 == b4;
+>r5a1 : boolean
+>a4 == b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r5b1 = b1 == a1;
+>r5b1 : boolean
+>b1 == a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r5b1 = b2 == a2;
+>r5b1 : boolean
+>b2 == a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r5b1 = b3 == a3;
+>r5b1 : boolean
+>b3 == a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r5b1 = b4 == a4;
+>r5b1 : boolean
+>b4 == a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator !=
+var r6a1 = a1 != b1;
+>r6a1 : boolean
+>a1 != b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r6a1 = a2 != b2;
+>r6a1 : boolean
+>a2 != b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r6a1 = a3 != b3;
+>r6a1 : boolean
+>a3 != b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r6a1 = a4 != b4;
+>r6a1 : boolean
+>a4 != b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r6b1 = b1 != a1;
+>r6b1 : boolean
+>b1 != a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r6b1 = b2 != a2;
+>r6b1 : boolean
+>b2 != a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r6b1 = b3 != a3;
+>r6b1 : boolean
+>b3 != a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r6b1 = b4 != a4;
+>r6b1 : boolean
+>b4 != a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator ===
+var r7a1 = a1 === b1;
+>r7a1 : boolean
+>a1 === b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r7a1 = a2 === b2;
+>r7a1 : boolean
+>a2 === b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r7a1 = a3 === b3;
+>r7a1 : boolean
+>a3 === b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r7a1 = a4 === b4;
+>r7a1 : boolean
+>a4 === b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r7b1 = b1 === a1;
+>r7b1 : boolean
+>b1 === a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r7b1 = b2 === a2;
+>r7b1 : boolean
+>b2 === a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r7b1 = b3 === a3;
+>r7b1 : boolean
+>b3 === a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r7b1 = b4 === a4;
+>r7b1 : boolean
+>b4 === a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+
+// operator !==
+var r8a1 = a1 !== b1;
+>r8a1 : boolean
+>a1 !== b1 : boolean
+>a1 : { [a: string]: string; }
+>b1 : { [b: string]: string; }
+
+var r8a1 = a2 !== b2;
+>r8a1 : boolean
+>a2 !== b2 : boolean
+>a2 : { [index: string]: Base; }
+>b2 : { [index: string]: Derived; }
+
+var r8a1 = a3 !== b3;
+>r8a1 : boolean
+>a3 !== b3 : boolean
+>a3 : { [index: number]: string; }
+>b3 : { [index: number]: string; }
+
+var r8a1 = a4 !== b4;
+>r8a1 : boolean
+>a4 !== b4 : boolean
+>a4 : { [index: number]: Base; }
+>b4 : { [index: string]: Derived; }
+
+var r8b1 = b1 !== a1;
+>r8b1 : boolean
+>b1 !== a1 : boolean
+>b1 : { [b: string]: string; }
+>a1 : { [a: string]: string; }
+
+var r8b1 = b2 !== a2;
+>r8b1 : boolean
+>b2 !== a2 : boolean
+>b2 : { [index: string]: Derived; }
+>a2 : { [index: string]: Base; }
+
+var r8b1 = b3 !== a3;
+>r8b1 : boolean
+>b3 !== a3 : boolean
+>b3 : { [index: number]: string; }
+>a3 : { [index: number]: string; }
+
+var r8b1 = b4 !== a4;
+>r8b1 : boolean
+>b4 !== a4 : boolean
+>b4 : { [index: string]: Derived; }
+>a4 : { [index: number]: Base; }
+

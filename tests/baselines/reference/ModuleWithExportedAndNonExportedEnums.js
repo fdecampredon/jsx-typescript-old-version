@@ -1,3 +1,4 @@
+//// [ModuleWithExportedAndNonExportedEnums.js]
 var A;
 (function (A) {
     (function (Color) {

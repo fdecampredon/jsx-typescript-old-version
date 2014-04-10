@@ -1,3 +1,7 @@
 === tests/cases/compiler/classMethodWithKeywordName1.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 8 IdentifierName "try" = () => void
+class C {
+>C : C
+
+ static try() {}
+>try : () => void
+}

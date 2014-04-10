@@ -1,62 +1,113 @@
 === tests/cases/compiler/voidOperatorWithBooleanType.ts ===
-Line 1 col 4 IdentifierName "BOOLEAN" = boolean
-Line 3 col 9 IdentifierName "foo" = typeof foo
-Line 5 col 6 IdentifierName "A" = A
-Line 6 col 11 IdentifierName "a" = boolean
-Line 7 col 11 IdentifierName "foo" = () => boolean
-Line 9 col 7 IdentifierName "M" = M
-Line 10 col 15 IdentifierName "n" = boolean
-Line 13 col 4 IdentifierName "objA" = A
-Line 13 col 11 ObjectCreationExpression "new A()" = A
-Line 13 col 15 IdentifierName "A" = typeof A
-Line 16 col 4 IdentifierName "ResultIsAny1" = any
-Line 16 col 19 VoidExpression "void BOOLEAN" = any
-Line 16 col 24 IdentifierName "BOOLEAN" = boolean
-Line 19 col 4 IdentifierName "ResultIsAny2" = any
-Line 19 col 19 VoidExpression "void true" = any
-Line 20 col 4 IdentifierName "ResultIsAny3" = any
-Line 20 col 19 VoidExpression "void { x: true, y: false }" = any
-Line 20 col 24 ObjectLiteralExpression "{ x: true, y: false }" = { x: boolean; y: boolean; }
-Line 20 col 26 IdentifierName "x" = boolean
-Line 20 col 35 IdentifierName "y" = boolean
-Line 23 col 4 IdentifierName "ResultIsAny4" = any
-Line 23 col 19 VoidExpression "void objA.a" = any
-Line 23 col 24 MemberAccessExpression "objA.a" = boolean
-Line 23 col 24 IdentifierName "objA" = A
-Line 23 col 29 IdentifierName "a" = boolean
-Line 24 col 4 IdentifierName "ResultIsAny5" = any
-Line 24 col 19 VoidExpression "void M.n" = any
-Line 24 col 24 MemberAccessExpression "M.n" = boolean
-Line 24 col 24 IdentifierName "M" = typeof M
-Line 24 col 26 IdentifierName "n" = boolean
-Line 25 col 4 IdentifierName "ResultIsAny6" = any
-Line 25 col 19 VoidExpression "void foo()" = any
-Line 25 col 24 InvocationExpression "foo()" = boolean
-Line 25 col 24 IdentifierName "foo" = typeof foo
-Line 26 col 4 IdentifierName "ResultIsAny7" = any
-Line 26 col 19 VoidExpression "void A.foo()" = any
-Line 26 col 24 InvocationExpression "A.foo()" = boolean
-Line 26 col 24 MemberAccessExpression "A.foo" = () => boolean
-Line 26 col 24 IdentifierName "A" = typeof A
-Line 26 col 26 IdentifierName "foo" = () => boolean
-Line 29 col 4 IdentifierName "ResultIsAny8" = any
-Line 29 col 19 VoidExpression "void void BOOLEAN" = any
-Line 29 col 24 VoidExpression "void BOOLEAN" = any
-Line 29 col 29 IdentifierName "BOOLEAN" = boolean
-Line 30 col 0 VoidExpression "// miss assignment operators
-void true" = any
-Line 33 col 0 VoidExpression "void BOOLEAN" = any
-Line 33 col 5 IdentifierName "BOOLEAN" = boolean
-Line 34 col 0 VoidExpression "void foo()" = any
-Line 34 col 5 InvocationExpression "foo()" = boolean
-Line 34 col 5 IdentifierName "foo" = typeof foo
-Line 35 col 0 CommaExpression "void true, false" = boolean
-Line 35 col 0 VoidExpression "void true" = any
-Line 36 col 0 VoidExpression "void objA.a" = any
-Line 36 col 5 MemberAccessExpression "objA.a" = boolean
-Line 36 col 5 IdentifierName "objA" = A
-Line 36 col 10 IdentifierName "a" = boolean
-Line 37 col 0 VoidExpression "void M.n" = any
-Line 37 col 5 MemberAccessExpression "M.n" = boolean
-Line 37 col 5 IdentifierName "M" = typeof M
-Line 37 col 7 IdentifierName "n" = boolean
+// void  operator on boolean type
+var BOOLEAN: boolean;
+>BOOLEAN : boolean
+
+function foo(): boolean { return true; }
+>foo : typeof foo
+
+class A {
+>A : A
+
+    public a: boolean;
+>a : boolean
+
+    static foo() { return false; }
+>foo : () => boolean
+}
+module M {
+>M : M
+
+    export var n: boolean;
+>n : boolean
+}
+
+var objA = new A();
+>objA : A
+>new A() : A
+>A : typeof A
+
+// boolean type var
+var ResultIsAny1 = void BOOLEAN;
+>ResultIsAny1 : any
+>void BOOLEAN : any
+>BOOLEAN : boolean
+
+// boolean type literal
+var ResultIsAny2 = void true;
+>ResultIsAny2 : any
+>void true : any
+
+var ResultIsAny3 = void { x: true, y: false };
+>ResultIsAny3 : any
+>void { x: true, y: false } : any
+>{ x: true, y: false } : { x: boolean; y: boolean; }
+>x : boolean
+>y : boolean
+
+// boolean type expressions
+var ResultIsAny4 = void objA.a;
+>ResultIsAny4 : any
+>void objA.a : any
+>objA.a : boolean
+>objA : A
+>a : boolean
+
+var ResultIsAny5 = void M.n;
+>ResultIsAny5 : any
+>void M.n : any
+>M.n : boolean
+>M : typeof M
+>n : boolean
+
+var ResultIsAny6 = void foo();
+>ResultIsAny6 : any
+>void foo() : any
+>foo() : boolean
+>foo : typeof foo
+
+var ResultIsAny7 = void A.foo();
+>ResultIsAny7 : any
+>void A.foo() : any
+>A.foo() : boolean
+>A.foo : () => boolean
+>A : typeof A
+>foo : () => boolean
+
+// multiple void  operator
+var ResultIsAny8 = void void BOOLEAN;
+>ResultIsAny8 : any
+>void void BOOLEAN : any
+>void BOOLEAN : any
+>BOOLEAN : boolean
+
+>// miss assignment operators
+void true : any
+
+// miss assignment operators
+void true;
+void BOOLEAN;
+>void BOOLEAN : any
+>BOOLEAN : boolean
+
+void foo();
+>void foo() : any
+>foo() : boolean
+>foo : typeof foo
+
+void true, false;
+>void true, false : boolean
+>void true : any
+
+void objA.a;
+>void objA.a : any
+>objA.a : boolean
+>objA : A
+>a : boolean
+
+void M.n;
+>void M.n : any
+>M.n : boolean
+>M : typeof M
+>n : boolean
+

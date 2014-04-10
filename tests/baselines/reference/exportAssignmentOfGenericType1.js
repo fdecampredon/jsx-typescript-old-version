@@ -1,3 +1,12 @@
+//// [exportAssignmentOfGenericType1_1.ts]
+///<reference path='exportAssignmentOfGenericType1_0.ts'/>
+import q = require("exportAssignmentOfGenericType1_0");
+
+class M extends q<string> { }
+var m: M;
+var r: string = m.foo;
+
+
 //// [exportAssignmentOfGenericType1_0.js]
 define(["require", "exports"], function(require, exports) {
     

@@ -1,25 +1,55 @@
 === tests/cases/compiler/typeofClass2.ts ===
-Line 0 col 6 IdentifierName "C" = C
-Line 1 col 16 IdentifierName "x" = number
-Line 2 col 16 IdentifierName "x" = string
-Line 3 col 16 IdentifierName "x" = any
-Line 5 col 11 IdentifierName "foo" = { (x: number): any; (x: C): any; }
-Line 5 col 15 IdentifierName "x" = number
-Line 6 col 11 IdentifierName "foo" = { (x: number): any; (x: C): any; }
-Line 6 col 15 IdentifierName "x" = C
-Line 6 col 18 IdentifierName "C" = C
-Line 7 col 11 IdentifierName "foo" = { (x: number): any; (x: C): any; }
-Line 7 col 15 IdentifierName "x" = any
-Line 9 col 11 IdentifierName "bar" = (x: any) => void
-Line 9 col 15 IdentifierName "x" = any
-Line 12 col 6 IdentifierName "D" = D
-Line 12 col 16 IdentifierName "C" = C
-Line 13 col 11 IdentifierName "baz" = (x: number) => void
-Line 13 col 15 IdentifierName "x" = number
-Line 14 col 0 IdentifierName "foo" = () => void
-Line 17 col 4 IdentifierName "d" = D
-Line 17 col 7 IdentifierName "D" = D
-Line 19 col 4 IdentifierName "r1" = typeof D
-Line 19 col 15 IdentifierName "D" = typeof D
-Line 20 col 4 IdentifierName "r2" = D
-Line 20 col 15 IdentifierName "d" = D
+class C {
+>C : C
+
+    constructor(x: number);
+>x : number
+
+    constructor(x: string);
+>x : string
+
+    constructor(x) { }
+>x : any
+
+    static foo(x: number);
+>foo : { (x: number): any; (x: C): any; }
+>x : number
+
+    static foo(x: C);
+>foo : { (x: number): any; (x: C): any; }
+>x : C
+>C : C
+
+    static foo(x) { }
+>foo : { (x: number): any; (x: C): any; }
+>x : any
+
+    static bar(x) { }
+>bar : (x: any) => void
+>x : any
+}
+
+class D extends C {
+>D : D
+>C : C
+
+    static baz(x: number) { }
+>baz : (x: number) => void
+>x : number
+
+    foo() { }
+>foo : () => void
+}
+
+var d: D;
+>d : D
+>D : D
+
+var r1: typeof D;
+>r1 : typeof D
+>D : typeof D
+
+var r2: typeof d;
+>r2 : D
+>d : D
+
