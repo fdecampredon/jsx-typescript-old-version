@@ -1517,7 +1517,8 @@ module TypeScript {
         // While it would be intuitive to return a boolean, this actually doesn't work
         // for the WrapsTypeParameterCache. See the comment at the top of the WrapsTypeParameterCache
         // class for an explanation.
-        public getWrappingTypeParameterID(typeParameterArgumentMap: TypeSubstitutionMap): number {            if (this.inWrapCheck) {
+        public getWrappingTypeParameterID(typeParameterArgumentMap: TypeSubstitutionMap): number {
+            if (this.inWrapCheck) {
                 return 0;
             }
 
@@ -1531,7 +1532,9 @@ module TypeScript {
                 this.inWrapCheck = false;
                 this._wrapsTypeParameterCache.setWrapsTypeParameter(typeParameterArgumentMap, wrappingTypeParameterID);
             }
-            return wrappingTypeParameterID;        }
+
+            return wrappingTypeParameterID;
+        }
 
         // A signature wraps a type parameter if any of the following are true:
         // 1. Return type wraps the type parameter
@@ -2975,7 +2978,10 @@ module TypeScript {
             Debug.assert(this.isNamedTypeSymbol());
             Debug.assert(PullHelpers.getRootType(enclosingType) == enclosingType); // Enclosing type passed has to be the root symbol
             var knownWrapMap = BitMatrix.getBitMatrix(/*allowUndefinedValues:*/ true);
-            var wrapsIntoInfinitelyExpandingTypeReference =                this._wrapsSomeTypeParameterIntoInfinitelyExpandingTypeReferenceRecurse(enclosingType, knownWrapMap);            knownWrapMap.release();            return wrapsIntoInfinitelyExpandingTypeReference;
+            var wrapsIntoInfinitelyExpandingTypeReference =
+                this._wrapsSomeTypeParameterIntoInfinitelyExpandingTypeReferenceRecurse(enclosingType, knownWrapMap);
+            knownWrapMap.release();
+            return wrapsIntoInfinitelyExpandingTypeReference;
         }
 
         public _wrapsSomeTypeParameterIntoInfinitelyExpandingTypeReferenceRecurse(enclosingType: PullTypeSymbol, knownWrapMap: IBitMatrix): boolean {

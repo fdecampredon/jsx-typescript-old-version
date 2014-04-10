@@ -64,7 +64,8 @@ module TypeScript.Services {
                     completions.push(entry);
                 }
 
-                KeywordCompletions.keywordCompletions = completions;            }
+                KeywordCompletions.keywordCompletions = completions;
+            }
 
             return KeywordCompletions.keywordCompletions;
         }
