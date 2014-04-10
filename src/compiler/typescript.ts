@@ -935,7 +935,7 @@ module TypeScript {
             }
 
             if (symbol.isTypeReference()) {
-                symbol = (<PullTypeReferenceSymbol>symbol).getReferencedTypeSymbol();
+                symbol = (<TypeReferenceSymbol>symbol).getReferencedTypeSymbol();
             }
 
             var aliasSymbol = this.semanticInfoChain.getAliasSymbolForAST(ast);

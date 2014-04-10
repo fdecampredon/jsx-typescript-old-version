@@ -1425,7 +1425,7 @@ module TypeScript {
                 typeParameterArgumentMap[typeParameters[i].pullSymbolID] = typeArguments[i] || new PullErrorTypeSymbol(this.semanticInfoChain.anyTypeSymbol, typeParameters[i].name);
             }
 
-            return PullInstantiatedTypeReferenceSymbol.create(this, type, typeParameterArgumentMap);
+            return InstantiatedTypeReferenceSymbol.create(this, type, typeParameterArgumentMap);
         }
 
         //
@@ -6800,7 +6800,7 @@ module TypeScript {
             }
 
             if (!typeNameSymbol.isGeneric() && (typeNameSymbol.isClass() || typeNameSymbol.isInterface())) {
-                typeNameSymbol = PullTypeReferenceSymbol.createTypeReference(typeNameSymbol);
+                typeNameSymbol = TypeReferenceSymbol.createTypeReference(typeNameSymbol);
             }
 
             return typeNameSymbol;
@@ -6939,7 +6939,7 @@ module TypeScript {
                     }
 
                     // handle cases where the type argument is a wrapped name type, that's being recursively resolved
-                    if (typeArg.inResolution || (typeArg.isTypeReference() && (<PullTypeReferenceSymbol>typeArg).referencedTypeSymbol.inResolution)) {
+                    if (typeArg.inResolution || (typeArg.isTypeReference() && (<TypeReferenceSymbol>typeArg).referencedTypeSymbol.inResolution)) {
                         return specializedSymbol;
                     }
 
@@ -8768,7 +8768,7 @@ module TypeScript {
                         continue;
                     }
 
-                    specializedSignature = this.instantiateSignature(signatures[i], typeReplacementMap, /*shouldStayGeneric*/ false);
+                    specializedSignature = this.instantiateSignature(signatures[i], typeReplacementMap);
 
                     if (specializedSignature) {
                         resolvedSignatures[resolvedSignatures.length] = specializedSignature;
@@ -9129,7 +9129,7 @@ module TypeScript {
                                 continue;
                             }
 
-                            specializedSignature = this.instantiateSignature(constructSignatures[i], typeReplacementMap, /*shouldStayGeneric*/ false);
+                            specializedSignature = this.instantiateSignature(constructSignatures[i], typeReplacementMap);
 
                             if (specializedSignature) {
                                 resolvedSignatures[resolvedSignatures.length] = specializedSignature;
@@ -9332,7 +9332,7 @@ module TypeScript {
 
             PullInstantiationHelpers.updateTypeParameterSubstitutionMap(typeParameters, inferredTypeArgs, typeReplacementMap);
 
-            return this.instantiateSignature(signatureAToInstantiate, typeReplacementMap, /*shouldStayGeneric*/ false);
+            return this.instantiateSignature(signatureAToInstantiate, typeReplacementMap);
         }
 
         private resolveCastExpression(assertionExpression: CastExpressionSyntax, context: PullTypeResolutionContext): PullTypeSymbol {
@@ -10093,7 +10093,7 @@ module TypeScript {
 
         private getSymbolForRelationshipCheck(symbol: PullTypeSymbol) {
             if (symbol && symbol.isTypeReference()) {
-                return (<PullTypeReferenceSymbol>symbol).getReferencedTypeSymbol();
+                return (<TypeReferenceSymbol>symbol).getReferencedTypeSymbol();
             }
 
             return symbol;
@@ -11711,7 +11711,7 @@ module TypeScript {
             }
 
             var typeParameterArgumentMap = PullInstantiationHelpers.createTypeParameterSubstitutionMap(typeParameters, typeArguments);
-            return this.instantiateSignature(signature, typeParameterArgumentMap, /*shouldStayGeneric*/ false);
+            return this.instantiateSignature(signature, typeParameterArgumentMap);
         }
 
         public static globalTypeCheckPhase = 0;
@@ -13471,48 +13471,71 @@ module TypeScript {
             type._resolveDeclaredSymbol();
 
             if (type.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
-                return PullInstantiatedTypeReferenceSymbol.create(this, type, typeParameterArgumentMap);
+                return InstantiatedTypeReferenceSymbol.create(this, type, typeParameterArgumentMap);
             }
 
             return type;
         }
 
-        // Note that the code below does not cache initializations of signatures.  We do this because we were only utilizing the cache on 1 our of
-        // every 6 instantiations, and we would run the risk of getting this wrong when type checking calls within generic type declarations:
-        // For example, if the signature is the root signature, it may not be safe to cache.  For example:
-        //
-        //  class C<T> {
-        //      public p: T;
-        //      public m<U>(u: U, t: T): void {}
-        //      public n<U>() { m(null, this.p); }
-        //  }
-        //
-        // In the code above, we don't want to cache the invocation of 'm' in 'n' against 'any', since the
-        // signature to 'm' is only partially specialized 
-        public instantiateSignature(signature: PullSignatureSymbol, typeParameterArgumentMap: TypeSubstitutionMap, shouldStayGeneric: boolean): PullSignatureSymbol {
-            if (!signature.wrapsSomeTypeParameter(typeParameterArgumentMap)) {
+        public instantiateSignature(signature: PullSignatureSymbol, typeParameterSubstitutionMap: TypeSubstitutionMap): PullSignatureSymbol {
+            return this.getOrCreateSignatureWithSubstitutionOrInstantiation(signature, typeParameterSubstitutionMap, /*isInstantiation*/ true);
+        }
+
+        public getOrCreateSignatureWithSubstitution(signature: PullSignatureSymbol, typeParameterSubstitutionMap: TypeSubstitutionMap): PullSignatureSymbol {
+            return this.getOrCreateSignatureWithSubstitutionOrInstantiation(signature, typeParameterSubstitutionMap, /*isInstantiation*/ false);
+        }
+
+        // This method is a helper to be called by instantiateSignature, as well as getOrCreateSignatureWithSubstitution,
+        // since they are almost the same. The only difference is that one produces an InstantiatedSignatureSymbol,
+        // and the other produces 
+        private getOrCreateSignatureWithSubstitutionOrInstantiation(signature: PullSignatureSymbol, typeParameterSubstitutionMap: TypeSubstitutionMap, isInstantiation: boolean): PullSignatureSymbol {
+            if (!signature.wrapsSomeTypeParameter(typeParameterSubstitutionMap)) {
                 return signature;
             }
 
             var rootSignature = <PullSignatureSymbol>signature.getRootSymbol();
-            var mutableTypeParameterMap = new PullInstantiationHelpers.MutableTypeParameterSubstitutionMap(typeParameterArgumentMap);
+            var mutableTypeParameterMap = new PullInstantiationHelpers.MutableTypeParameterSubstitutionMap(typeParameterSubstitutionMap);
             PullInstantiationHelpers.instantiateTypeArgument(this, signature, mutableTypeParameterMap);
 
-            var instantiatedSignature = rootSignature.getSpecialization(mutableTypeParameterMap.typeParameterSubstitutionMap);
-            if (instantiatedSignature) {
-                return instantiatedSignature;
+            // Note that instantiated signatures and signatures with substitution are stored in the
+            // same cache! The reason this is safe is that the substitution map uniquely identifies
+            // a signature as instantiated or not. Namely, there are 3 cases:
+            //
+            // 1. The map does not contain any substitutions for the signature's own type parameters:
+            //    In this case, the signature has a substitution for surrounding type parameters,
+            //    but it is not an instantiated signature.
+            // 2. The map contains substitutions for the signature's own type parameters, but the
+            //    substituted types are not synthesized type parameters:
+            //    In this case, we have an instantiated signature, since a signature with substitution
+            //    either lacks mappings for its own type parameters, or has them mapped to synthesized
+            //    type parameters.
+            // 3. The map contains substitutions for the signature's own type parameters, and the
+            //    substituted types are synthesized type parameters:
+            //    In this case, it clearly could be a signature with substitution. Also, it cannot
+            //    be an instantiated signature because an instantiated signature has type arguments.
+            //    These type arguments can be referenced types or referenced values with certain types.
+            //    But a synthesized type parameter is impossible to reference, even through a value.
+            //
+            // This is the reasoning. We also have the assert below to enforce this.
+            var instantiatedSignatureOrSignatureWithSubstitution = rootSignature.getSpecialization(mutableTypeParameterMap.typeParameterSubstitutionMap);
+            if (instantiatedSignatureOrSignatureWithSubstitution) {
+                var symbolFromCacheIsInstantiatedSignature = instantiatedSignatureOrSignatureWithSubstitution.getIsInstantiated();
+                Debug.assert(symbolFromCacheIsInstantiatedSignature === isInstantiation);
+                return instantiatedSignatureOrSignatureWithSubstitution;
             }
 
             // Cleanup the type parameter argument map
             PullInstantiationHelpers.cleanUpTypeParameterSubstitutionMap(signature, mutableTypeParameterMap);
-            typeParameterArgumentMap = mutableTypeParameterMap.typeParameterSubstitutionMap;
+            typeParameterSubstitutionMap = mutableTypeParameterMap.typeParameterSubstitutionMap;
 
             // Create a new one
-            instantiatedSignature = new PullInstantiatedSignatureSymbol(rootSignature, typeParameterArgumentMap, shouldStayGeneric);
+            instantiatedSignatureOrSignatureWithSubstitution = isInstantiation ?
+                new InstantiatedSignatureSymbol(rootSignature, typeParameterSubstitutionMap):
+                new SignatureSymbolWithSubstitution(rootSignature, typeParameterSubstitutionMap);
 
             // if the instantiation occurred via a recursive funciton invocation, the return type may be null so we should set it to any
-            instantiatedSignature.returnType = this.instantiateType((rootSignature.returnType || this.semanticInfoChain.anyTypeSymbol), typeParameterArgumentMap);
-            instantiatedSignature.functionType = this.instantiateType(rootSignature.functionType, typeParameterArgumentMap);
+            instantiatedSignatureOrSignatureWithSubstitution.returnType = this.instantiateType((rootSignature.returnType || this.semanticInfoChain.anyTypeSymbol), typeParameterSubstitutionMap);
+            instantiatedSignatureOrSignatureWithSubstitution.functionType = this.instantiateType(rootSignature.functionType, typeParameterSubstitutionMap);
 
             var parameters = rootSignature.parameters;
             var parameter: PullSymbol = null;
@@ -13527,15 +13550,15 @@ module TypeScript {
                     }
                     if (parameters[j].isVarArg) {
                         parameter.isVarArg = true;
-                        instantiatedSignature.hasVarArgs = true;
+                        instantiatedSignatureOrSignatureWithSubstitution.hasVarArgs = true;
                     }
-                    instantiatedSignature.addParameter(parameter, parameter.isOptional);
+                    instantiatedSignatureOrSignatureWithSubstitution.addParameter(parameter, parameter.isOptional);
 
-                    parameter.type = this.instantiateType(parameters[j].type, typeParameterArgumentMap);
+                    parameter.type = this.instantiateType(parameters[j].type, typeParameterSubstitutionMap);
                 }
             }
 
-            return instantiatedSignature;
+            return instantiatedSignatureOrSignatureWithSubstitution;
         }
     }
 

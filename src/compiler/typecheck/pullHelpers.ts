@@ -122,11 +122,11 @@ module TypeScript {
             // initialized types are omitted, since the type reference points back to the generic type
             // declaration.  (E.g., the referencedTypeSymbol of 'Foo<number>' would be 'Foo<T>'
             if (a.isTypeReference() && !a.getIsSpecialized()) {
-                a = (<PullTypeReferenceSymbol>a).referencedTypeSymbol;
+                a = (<TypeReferenceSymbol>a).referencedTypeSymbol;
             }
 
             if (b.isTypeReference() && !b.getIsSpecialized()) {
-                b = (<PullTypeReferenceSymbol>b).referencedTypeSymbol;
+                b = (<TypeReferenceSymbol>b).referencedTypeSymbol;
             }
 
             return a === b;

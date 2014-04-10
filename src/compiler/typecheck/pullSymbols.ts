@@ -1267,6 +1267,10 @@ module TypeScript {
             return this._allowedToReferenceTypeParameters;
         }
 
+        public getIsInstantiated() {
+            return false;
+        }
+
         public addSpecialization(specializedVersionOfThisSignature: PullSignatureSymbol, typeArgumentMap: TypeSubstitutionMap): void {
             Debug.assert(this.getRootSymbol() == this);
             if (!this._instantiationCache) {
@@ -1669,7 +1673,7 @@ module TypeScript {
         public inWrapCheck = false;
         public inWrapInfiniteExpandingReferenceCheck = false;
 
-        public typeReference: PullTypeReferenceSymbol = null;
+        public typeReference: TypeReferenceSymbol = null;
 
         private _widenedType: PullTypeSymbol = null;
 
@@ -3035,7 +3039,7 @@ module TypeScript {
                 }
 
                 // Type arguments wraps type parameter
-                if (typeArguments[i].wrapsSomeTypeParameter((<PullInstantiatedTypeReferenceSymbol>this).getTypeParameterSubstitutionMap())) {
+                if (typeArguments[i].wrapsSomeTypeParameter((<InstantiatedTypeReferenceSymbol>this).getTypeParameterSubstitutionMap())) {
                     return true;
                 }
             }
@@ -3084,10 +3088,6 @@ module TypeScript {
                 this._widenedType = resolver.widenType(this, ast, context);
             }
             return this._widenedType;
-        }
-
-        public isSynthesizedTypeParameter(): boolean {
-            return false;
         }
     }
 
